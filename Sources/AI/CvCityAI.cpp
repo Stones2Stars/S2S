@@ -80,6 +80,8 @@ namespace
 		case CIT_ASSIGN_RUN:          return "[CIT/assign/run]";
 		case CIT_BILLBOARD_POLL:      return "[CIT/billboard]";
 		case CIT_ASSIGN_CAND:         return "[CIT/assign/cand]";
+		case CIT_ASSIGN_SPECVAL:      return "[CIT/assign/specval]";
+		case CIT_ASSIGN_PLOTVAL:      return "[CIT/assign/plotval]";
 		case CIT_PUSH_REJECT_UNIT:    return "[CIT/push/reject] kind=unit reason=spamGuard";
 		case CIT_PUSH_REJECT_BUILDING:return "[CIT/push/reject] kind=building reason=dupGuard";
 		case CIT_PUSH_UNIT:           return "[CIT/push] kind=unit";
@@ -170,6 +172,13 @@ namespace
 		case CITF_specialistVal: return "specialistVal";
 		case CITF_plot:         return "plot";
 		case CITF_plotVal:      return "plotVal";
+		case CITF_yieldPart:    return "yieldPart";
+		case CITF_finalVal:     return "finalVal";
+		case CITF_gppPart:      return "gppPart";
+		case CITF_xpPart:       return "xpPart";
+		case CITF_wellbeingPart:return "wellbeingPart";
+		case CITF_propertyPart: return "propertyPart";
+		case CITF_underworldPart: return "underworldPart";
 		default:              return NULL;
 		}
 	}
@@ -715,15 +724,8 @@ void CvCityAI::AI_assignWorkingPlots()
 		// extraSpecialists() is less than extraPopulation()
 		FASSERT_NOT_NEGATIVE(extraSpecialists());
 
-		// do we have population unassigned
-		while (extraPopulation() > 0)
-		{
-			// (AI_addBestCitizen now handles forced specialist logic)
-			if (!AI_addBestCitizen(/*bWorkers*/ true, /*bSpecialists*/ true))
-			{
-				break;
-			}
-		}
+		// do we have population unassigned -- score every option ONCE, order by value, walk the order
+		AI_fillCitizensByPriority();
 
 		// if we still have population to assign, assign specialists
 		while (extraSpecialists() > 0)
@@ -907,7 +909,11 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 
 	int iValue = AI_yieldValue(aiYields, aiCommerceYields, bAvoidGrowth, bRemove);
 
-	int iGreatPeopleRate = GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
+	//	The shared term, kept for attribution: this is the ONLY part a specialist and a plot compute the same
+	//	way, so `final - yieldPart` isolates everything that is specialist-only ([CIT/assign/specval]).
+	const int iYieldPart = iValue;
+
+	int iGreatPeopleRate = GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT);
 	if (iGreatPeopleRate != 0)
 	{
 		int iEmphasisCount = 0;
@@ -1024,6 +1030,10 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		}
 	}
 
+	//	Tail attribution: each component captured as a DELTA off the running total, so the parts sum to
+	//	`finalVal - yieldPart` by construction and no contributor can be silently missed.
+	const int iGppPart = iValue - iYieldPart;
+
 	// Keyed XP: this specialist trains the combat classes it names, so walk THOSE, not a
 	// scope-wide sum (modifier.md §5 -- folding a keyed deposit would credit every class).
 	int iExperience = 0;
@@ -1052,8 +1062,10 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		iValue += ((getMilitaryProductionModifier() * iExperience * 10) / 100);
 	}
 
-	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100;
-	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) / 100;
+	const int iXpPart = iValue - iYieldPart - iGppPart;
+
+	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
+	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
 	int iHappinessLevel = netHappiness(1) + getEspionageHappinessCounter();
 	int iHealthLevel = netHealth(std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter();
 
@@ -1070,6 +1082,8 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	{
 		iValue += (happynessValue(iSpecialistHappiness, iHappinessLevel, iHealthLevel) * 2);
 	}
+
+	const int iWellbeingPart = iValue - iYieldPart - iGppPart - iXpPart;
 
 	//	Koshling - evaluate properties
 	int iPropertyValue = 0;
@@ -1101,16 +1115,36 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	//TB Insidiousness/Investigation
 	int iNumCriminals = plot()->getNumCriminals();
 	int iMultiplier = (iNumCriminals * iNumCriminals);
-	int iInvestigate = (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY) / 100);
-	int iInsidious = (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_CITY) / 100);
+	int iInvestigate = GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY);
+	int iInsidious = GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_CITY);
+	const int iUnderworldPart = (iInvestigate + (iMultiplier * iInvestigate)) - (iInsidious + (iMultiplier * iInsidious));
 	iValue += iInvestigate + (iMultiplier * iInvestigate);
 	iValue -= (iInsidious + (iMultiplier * iInsidious));
 
 	//	⛔ NO SCALING EITHER WAY (owner): an evaluation neither reduces nor manufactures a scale -- it trusts the
 	//	numbers coming in and returns iValue. The old `* 100` here scaled the yield term AND every non-yield term
-	//	summed above it, so a specialist's GPP / wellbeing / property contributions outweighed any plot by a
-	//	hundredfold -- specialists infinitely prioritized. The emphasis survives as what it always meant, x1.75.
-	return AI_isEmphasizeSpecialist(eSpecialist) ? (iValue * 175 / 100) : iValue;
+	//	summed above it. The emphasis survives as what it always meant, x1.75.
+	//	⚠ THE POSITION OF THAT RETIRED `* 100` WAS NOT THE SAME AS THE PLOT SIDE'S, and the asymmetry is the open
+	//	question this instrument exists to settle: AI_plotValue's `100 *` scaled its YIELD TERM ONLY and sat
+	//	BEFORE that function's integer divides (the /16 potential-plot penalty, the 40/60 improvement blend), so
+	//	it doubled as precision headroom; this one sat at the RETURN, after every term. Removing both was treated
+	//	as one symmetric change and it is not one. ⛔ Do NOT "restore" either constant to correct it -- that is
+	//	manufacturing a scale inside an evaluation, which is the banned move; the reading below is what decides
+	//	where the real asymmetry lives.
+	const int iFinalValue = AI_isEmphasizeSpecialist(eSpecialist) ? (iValue * 175 / 100) : iValue;
+
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_SPECVAL, 3)
+		.addI(CITF_city, getID())
+		.addI(CITF_specialist, (int)eSpecialist)
+		.addI(CITF_yieldPart, iYieldPart)
+		.addI(CITF_gppPart, iGppPart)
+		.addI(CITF_xpPart, iXpPart)
+		.addI(CITF_wellbeingPart, iWellbeingPart)
+		.addI(CITF_propertyPart, iPropertyValue)
+		.addI(CITF_underworldPart, iUnderworldPart)
+		.addI(CITF_finalVal, iFinalValue));
+
+	return iFinalValue;
 }
 
 void CvCityAI::AI_chooseProduction()
@@ -9120,50 +9154,35 @@ bool CvCityAI::AI_chooseProcess(CommerceTypes eCommerceType, int64_t* commerceWe
 }
 
 
-// Returns true if a worker was added to a plot...
-bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot, SpecialistTypes* peBestSpecialist)
+//	The ONE scoring body: every option a citizen could take, scored once, into a caller-owned list.
+//	⛔ A PLOT AND A SPECIALIST ARE ONE SET OF OPTIONS, NOT TWO QUESTIONS (owner). Scoring them together is what
+//	lets the assignment ORDER them; the retired shape searched each side for its own winner and compared the two,
+//	which is a priority list of length two rebuilt from scratch for every single citizen.
+void CvCityAI::AI_scoreCitizenOptions(std::vector<CitizenOption>& kOptions, bool bWorkers, bool bSpecialists, bool bAvoidGrowth, bool bIgnoreGrowth) const
 {
 	PROFILE_FUNC();
 
-	const bool bAvoidGrowth = AI_avoidGrowth();
-	const bool bIgnoreGrowth = AI_ignoreGrowth();
+	kOptions.clear();
 
-	int iBestSpecialistValue = 0;
-	SpecialistTypes eBestSpecialist = NO_SPECIALIST;
-
-	// --- Specialist selection ---
 	if (bSpecialists)
 	{
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 		{
-			const SpecialistTypes eSpec = static_cast<SpecialistTypes>(iI);
-			const int iForced = getForceSpecialistCount(eSpec);
-			if (iForced > 0 && isSpecialistValid(eSpec, 1))
+			const SpecialistTypes eSpecialist = static_cast<SpecialistTypes>(iI);
+
+			//	Validity is re-asked at ASSIGN time, not baked into the list: isSpecialistValid reads a
+			//	city-wide total-specialist cap, so taking any specialist can close every specialist option.
+			//	Scoring one that is currently full still costs nothing to carry -- the walk skips it.
+			if (isSpecialistValid(eSpecialist, 1))
 			{
-				// Forced specialist: assign immediately
-				changeSpecialistCount(eSpec, 1);
-				if (piBestPlot && peBestSpecialist)
-				{
-					*peBestSpecialist = eSpec;
-					*piBestPlot = -1;
-				}
-				return true;
-			}
-			if (isSpecialistValid(eSpec, 1))
-			{
-				const int iValue = AI_specialistValue(eSpec, bAvoidGrowth, false);
-				if (iValue > iBestSpecialistValue)
-				{
-					iBestSpecialistValue = iValue;
-					eBestSpecialist = eSpec;
-				}
+				CitizenOption kOption;
+				kOption.eSpecialist = eSpecialist;
+				kOption.iValue = AI_specialistValue(eSpecialist, bAvoidGrowth, /*bRemove*/ false);
+				kOptions.push_back(kOption);
 			}
 		}
 	}
 
-	// --- Worker plot selection ---
-	int iBestPlotValue = 0;
-	int iBestPlot = -1;
 	if (bWorkers)
 	{
 		for (int iI = SKIP_CITY_HOME_PLOT; iI < NUM_CITY_PLOTS; ++iI)
@@ -9171,25 +9190,206 @@ bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPl
 			if (!isWorkingPlot(iI))
 			{
 				const CvPlot* pLoopPlot = getCityIndexPlot(iI);
-				if (pLoopPlot && canWork(pLoopPlot))
+				if (pLoopPlot != NULL && canWork(pLoopPlot))
 				{
-					const int iValue = AI_plotValue(pLoopPlot, bAvoidGrowth, /*bRemove*/ false, /*bIgnoreFood*/ false, bIgnoreGrowth);
-					if (iValue > iBestPlotValue)
-					{
-						iBestPlotValue = iValue;
-						iBestPlot = iI;
-					}
+					CitizenOption kOption;
+					kOption.iPlotIndex = iI;
+					kOption.iValue = AI_plotValue(pLoopPlot, bAvoidGrowth, /*bRemove*/ false, /*bIgnoreFood*/ false, bIgnoreGrowth);
+					kOptions.push_back(kOption);
 				}
 			}
 		}
 	}
+}
 
-	//	⚑ THE COMPARISON ITSELF, on one line. The assign instrument recorded that a run HAPPENED and never what
-	//	it decided, so "specialists are preferred over plots" was an impression with no reading behind it. Both
-	//	values side by side make the ratio directly observable -- and per [fixed-point-and-scales] §5 a side that
-	//	always wins is the signature of a mis-scaled or truncated INPUT rather than of the AI's weighting.
-	//	⚠ Level 3 is the per-candidate tier ([observability.md]), so this is off at the owner's usual level and
-	//	costs nothing until it is asked for.
+
+//	A forced specialist is the player's standing instruction, so it outranks every scored option and is asked
+//	before the list is consulted. (Behaviour-preserving: the retired loop returned on the first forced-and-valid
+//	specialist in index order, discarding any scores it had computed on the way.)
+bool CvCityAI::AI_assignForcedSpecialist(int* piBestPlot, SpecialistTypes* peBestSpecialist)
+{
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
+	{
+		const SpecialistTypes eSpecialist = static_cast<SpecialistTypes>(iI);
+
+		if (getForceSpecialistCount(eSpecialist) > 0 && isSpecialistValid(eSpecialist, 1))
+		{
+			changeSpecialistCount(eSpecialist, 1);
+			if (piBestPlot != NULL && peBestSpecialist != NULL)
+			{
+				*peBestSpecialist = eSpecialist;
+				*piBestPlot = -1;
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+
+//	⚖ SCORE ONCE, ORDER BY VALUE, WALK -- the whole unassigned population in one pass (owner).
+//	The retired fill called AI_addBestCitizen once per citizen, and each call re-scored every specialist type and
+//	every free plot: a 40-pop city paid ~2,400 scored evaluations to re-derive an ordering that had barely moved.
+//	Here the values are computed ONCE and the assignment walks the resulting order.
+//
+//	⚑ THE TWO OPTION KINDS CONSUME DIFFERENTLY, and that is what the walk encodes rather than a sort alone:
+//	  - a SPECIALIST slot is REPEATABLE at a constant score (a city can hold many merchants), so the walk HOLDS
+//	    position on it while it stays valid;
+//	  - a PLOT is UNIQUE, so it is consumed and the walk advances past it.
+//	Both cursors only ever move FORWARD, so the whole fill is O(options) rather than O(citizens x options).
+//
+//	⚠ What genuinely re-orders the list mid-fill is the GROWTH GATE pair, because those are what the scores are
+//	conditioned on -- so they are re-read per citizen (cheap) and a flip triggers exactly one re-score. A
+//	specialist hitting its cap needs NO re-score: it simply leaves the list.
+void CvCityAI::AI_fillCitizensByPriority()
+{
+	PROFILE_FUNC();
+
+	std::vector<CitizenOption> kOptions;
+
+	bool bAvoidGrowth = AI_avoidGrowth();
+	bool bIgnoreGrowth = AI_ignoreGrowth();
+
+	AI_scoreCitizenOptions(kOptions, /*bWorkers*/ true, /*bSpecialists*/ true, bAvoidGrowth, bIgnoreGrowth);
+	std::sort(kOptions.begin(), kOptions.end(), CitizenOptionIsBetter());
+
+	size_t iSpecialistCursor = 0;
+	size_t iPlotCursor = 0;
+
+	while (extraPopulation() > 0)
+	{
+		if (AI_assignForcedSpecialist())
+		{
+			continue;
+		}
+
+		const bool bAvoidGrowthNow = AI_avoidGrowth();
+		const bool bIgnoreGrowthNow = AI_ignoreGrowth();
+
+		if (bAvoidGrowthNow != bAvoidGrowth || bIgnoreGrowthNow != bIgnoreGrowth)
+		{
+			bAvoidGrowth = bAvoidGrowthNow;
+			bIgnoreGrowth = bIgnoreGrowthNow;
+
+			AI_scoreCitizenOptions(kOptions, /*bWorkers*/ true, /*bSpecialists*/ true, bAvoidGrowth, bIgnoreGrowth);
+			std::sort(kOptions.begin(), kOptions.end(), CitizenOptionIsBetter());
+
+			iSpecialistCursor = 0;
+			iPlotCursor = 0;
+		}
+
+		//	Advance each cursor to the best option of its kind that is STILL takeable. The list is sorted, so
+		//	the first survivor each cursor reaches is that kind's best remaining option.
+		//	⛔ A NON-POSITIVE OPTION IS NOT TAKEABLE, and that is a rule rather than a tie-break: the retired
+		//	search seeded both bests at 0 and compared with `>`, so an option scoring <= 0 could never win and
+		//	the citizen was left UNASSIGNED instead. Dropping that would start seating citizens on tiles the
+		//	valuation has already judged worthless -- and it is not a rare corner: a third of the recorded
+		//	decisions have no positively-valued plot available at all.
+		while (iSpecialistCursor < kOptions.size()
+		&& (!kOptions[iSpecialistCursor].isSpecialist()
+			|| kOptions[iSpecialistCursor].iValue <= 0
+			|| !isSpecialistValid(kOptions[iSpecialistCursor].eSpecialist, 1)))
+		{
+			++iSpecialistCursor;
+		}
+		while (iPlotCursor < kOptions.size()
+		&& (kOptions[iPlotCursor].iValue <= 0 || !AI_isPlotOptionOpen(kOptions[iPlotCursor])))
+		{
+			++iPlotCursor;
+		}
+
+		const bool bHaveSpecialist = iSpecialistCursor < kOptions.size();
+		const bool bHavePlot = iPlotCursor < kOptions.size();
+
+		const int iBestSpecialistValue = bHaveSpecialist ? kOptions[iSpecialistCursor].iValue : 0;
+		const int iBestPlotValue = bHavePlot ? kOptions[iPlotCursor].iValue : 0;
+		const SpecialistTypes eBestSpecialist = bHaveSpecialist ? kOptions[iSpecialistCursor].eSpecialist : NO_SPECIALIST;
+		const int iBestPlot = bHavePlot ? kOptions[iPlotCursor].iPlotIndex : -1;
+
+		//	⚑ THE COMPARISON ITSELF, on one line -- the two kinds' best remaining options side by side, so the
+		//	specialist-vs-plot ratio is directly readable. Unchanged in shape from the retired instrument, so a
+		//	capture taken before this restructure is still directly comparable to one taken after it.
+		//	⚠ Level 3 is the per-candidate tier ([observability.md]), so it costs nothing until it is asked for.
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_CAND, 3)
+			.addI(CITF_city, getID())
+			.addI(CITF_specialist, (int)eBestSpecialist)
+			.addI(CITF_specialistVal, iBestSpecialistValue)
+			.addI(CITF_plot, iBestPlot)
+			.addI(CITF_plotVal, iBestPlotValue));
+
+		if (!bHaveSpecialist && !bHavePlot)
+		{
+			break;
+		}
+
+		if (bHavePlot && (!bHaveSpecialist || iBestPlotValue > iBestSpecialistValue))
+		{
+			setWorkingPlot(iBestPlot, true);
+			++iPlotCursor;	// a plot is consumed by being taken
+		}
+		else
+		{
+			changeSpecialistCount(eBestSpecialist, 1);
+			// the specialist cursor deliberately does NOT advance -- the slot is repeatable at the same score,
+			// and the validity re-check at the top of the next round is what retires it when its cap closes.
+		}
+	}
+}
+
+
+//	Is this option a plot that is still free and workable? (The walk's per-round plot test.)
+bool CvCityAI::AI_isPlotOptionOpen(const CitizenOption& kOption) const
+{
+	if (kOption.isSpecialist() || kOption.iPlotIndex == -1 || isWorkingPlot(kOption.iPlotIndex))
+	{
+		return false;
+	}
+	const CvPlot* pPlot = getCityIndexPlot(kOption.iPlotIndex);
+	return pPlot != NULL && canWork(pPlot);
+}
+
+
+// Returns true if a worker was added to a plot...
+//	⚑ The single-placement entry point, kept for the JUGGLE pass (which removes one citizen and re-adds one).
+//	It reads the SAME scoring body as the priority fill ([DEC-single-implementation]) rather than carrying its
+//	own copy of "score every option".
+bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot, SpecialistTypes* peBestSpecialist)
+{
+	PROFILE_FUNC();
+
+	if (bSpecialists && AI_assignForcedSpecialist(piBestPlot, peBestSpecialist))
+	{
+		return true;
+	}
+
+	const bool bAvoidGrowth = AI_avoidGrowth();
+	const bool bIgnoreGrowth = AI_ignoreGrowth();
+
+	std::vector<CitizenOption> kOptions;
+	AI_scoreCitizenOptions(kOptions, bWorkers, bSpecialists, bAvoidGrowth, bIgnoreGrowth);
+
+	int iBestSpecialistValue = 0;
+	SpecialistTypes eBestSpecialist = NO_SPECIALIST;
+	int iBestPlotValue = 0;
+	int iBestPlot = -1;
+
+	for (std::vector<CitizenOption>::const_iterator itOption = kOptions.begin(); itOption != kOptions.end(); ++itOption)
+	{
+		if (itOption->isSpecialist())
+		{
+			if (itOption->iValue > iBestSpecialistValue)
+			{
+				iBestSpecialistValue = itOption->iValue;
+				eBestSpecialist = itOption->eSpecialist;
+			}
+		}
+		else if (itOption->iValue > iBestPlotValue)
+		{
+			iBestPlotValue = itOption->iValue;
+			iBestPlot = itOption->iPlotIndex;
+		}
+	}
+
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_CAND, 3)
 		.addI(CITF_city, getID())
 		.addI(CITF_specialist, (int)eBestSpecialist)
@@ -9197,7 +9397,6 @@ bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPl
 		.addI(CITF_plot, iBestPlot)
 		.addI(CITF_plotVal, iBestPlotValue));
 
-	// --- Decision: assign best option ---
 	if (iBestPlot != -1 && iBestPlotValue > iBestSpecialistValue)
 	{
 		eBestSpecialist = NO_SPECIALIST;
@@ -9206,7 +9405,7 @@ bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPl
 	if (eBestSpecialist != NO_SPECIALIST)
 	{
 		changeSpecialistCount(eBestSpecialist, 1);
-		if (piBestPlot && peBestSpecialist)
+		if (piBestPlot != NULL && peBestSpecialist != NULL)
 		{
 			*peBestSpecialist = eBestSpecialist;
 			*piBestPlot = -1;
@@ -9216,7 +9415,7 @@ bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPl
 	if (iBestPlot != -1)
 	{
 		setWorkingPlot(iBestPlot, true);
-		if (piBestPlot && peBestSpecialist)
+		if (piBestPlot != NULL && peBestSpecialist != NULL)
 		{
 			*peBestSpecialist = NO_SPECIALIST;
 			*piBestPlot = iBestPlot;
@@ -10278,7 +10477,10 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 
 	int aiCityYields[NUM_YIELD_TYPES];
 	getYields(aiCityYields);
-	int iTotalPotential = aiCityYields[YIELD_FOOD] / 100 + pPlot->getYield(YIELD_FOOD);
+	int aiPlotYields100[NUM_YIELD_TYPES];
+	pPlot->getYields(aiPlotYields100);
+	//	the potential test is a whole-food question, so it reduces at THAT point of use -- both operands together
+	int iTotalPotential = (aiCityYields[YIELD_FOOD] + aiPlotYields100[YIELD_FOOD]) / 100;
 
 	short aiYields[NUM_YIELD_TYPES];
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -10293,10 +10495,17 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 		}
 		else
 		{
-			aiYields[iI] = pPlot->getYield((YieldTypes)iI);
+			//	the ×100 GROUP read, not the reducing single-yield getter: every term this score sums must
+			//	arrive on ONE scale, and an evaluation never converts ([DEC-fixedpoint-x100]).
+			aiYields[iI] = aiPlotYields100[iI];
 		}
 	}
 	int iValue = AI_yieldValue(aiYields, NULL, bAvoidGrowth, bRemove, bIgnoreFood, bIgnoreGrowth, bIgnoreStarvation);
+
+	//	The shared term, kept for attribution -- the specialist side's twin ([CIT/assign/plotval]). Everything
+	//	added below it is plot-only: the improvement blend, the /16 potential-plot penalty, the bonus-discovery
+	//	adds and the upgrade bonus. `final - yieldPart` isolates exactly that.
+	const int iYieldPart = iValue;
 
 	const ImprovementTypes eCurrentImprovement = pPlot->getImprovementType();
 
@@ -10361,6 +10570,12 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 			iValue -= pPlot->getUpgradeTimeLeft(eCurrentImprovement, NO_PLAYER);
 		}
 	}
+
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_PLOTVAL, 3)
+		.addI(CITF_city, getID())
+		.addI(CITF_yieldPart, iYieldPart)
+		.addI(CITF_finalVal, iValue));
+
 	return iValue;
 }
 

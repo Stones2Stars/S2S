@@ -95,6 +95,36 @@ public:
 };
 #endif
 
+//	⚖ ONE PRIORITY LIST, ORDERED BY VALUE -- NOT A PER-CITIZEN DUEL BETWEEN TWO WINNERS (owner).
+//	A citizen may go to a workable PLOT or to a SPECIALIST slot, and those are not two questions: they are one
+//	set of options with one comparable score. The retired shape searched each side for its own winner and then
+//	compared the two, once per citizen -- so every placement re-scored every specialist type and every free plot
+//	to re-derive an ordering that had not moved. This carries ONE option, so the whole set sorts and the
+//	assignment walks it.
+struct CitizenOption
+{
+	CitizenOption()
+		: iValue(0)
+		, iPlotIndex(-1)
+		, eSpecialist(NO_SPECIALIST)
+	{}
+
+	int iValue;
+	int iPlotIndex;					// the city-plot index this option works, or -1 when it is a specialist
+	SpecialistTypes eSpecialist;	// the specialist type, or NO_SPECIALIST when it is a plot
+
+	bool isSpecialist() const { return eSpecialist != NO_SPECIALIST; }
+};
+
+//	Descending by value -- the ordering the assignment walks. (C++03: a functor, not a lambda.)
+struct CitizenOptionIsBetter
+{
+	bool operator()(const CitizenOption& kLeft, const CitizenOption& kRight) const
+	{
+		return kLeft.iValue > kRight.iValue;
+	}
+};
+
 typedef std::vector<std::pair<UnitAITypes, int> > UnitTypeWeightArray;
 
 typedef struct
@@ -715,6 +745,16 @@ protected:
 	int	getPlayerDangerPercentage(PlayerTypes ePlayer, int& iModifier) const;
 
 	bool AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseChance, UnitTypes* eBestSpreadUnit, int* iBestSpreadUnitValue) const;
+	//	The ONE place every assignable citizen option is scored ([DEC-single-implementation]) -- both the
+	//	priority-list fill and AI_addBestCitizen read it, so "what is this option worth" has a single body.
+	//	Fills a CALLER-OWNED list (the patterns.md group-read shape); clears it first.
+	void AI_scoreCitizenOptions(std::vector<CitizenOption>& kOptions, bool bWorkers, bool bSpecialists, bool bAvoidGrowth, bool bIgnoreGrowth) const;
+	//	A forced specialist outranks every scored option, so it is asked before the list is consulted.
+	bool AI_assignForcedSpecialist(int* piBestPlot = NULL, SpecialistTypes* peBestSpecialist = NULL);
+	//	Score once, order by value, walk -- the whole unassigned population, in one pass.
+	void AI_fillCitizensByPriority();
+	//	Is this option a plot that is still free and workable? (The priority walk's per-round plot test.)
+	bool AI_isPlotOptionOpen(const CitizenOption& kOption) const;
 	bool AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot = NULL, SpecialistTypes* peBestSpecialist = NULL);
 	bool AI_removeWorstCitizen(SpecialistTypes eIgnoreSpecialist = NO_SPECIALIST);
 	void AI_juggleCitizens();

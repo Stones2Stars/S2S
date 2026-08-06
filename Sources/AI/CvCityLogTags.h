@@ -45,7 +45,15 @@ enum CitEvent
 	CIT_ASSIGN_FAN,          // [CIT/assign/fan] -- a WHOLE-SCOPE assign-dirty fan + the RVA of whoever asked for it (see the header note)
 	CIT_ASSIGN_RUN,          // [CIT/assign/run] -- one AI_assignWorkingPlots run completed (runs/city/turn = the storm shape)
 	CIT_BILLBOARD_POLL,      // [CIT/billboard] -- an EXE billboard entry point was called (fn = the census index; the exhaustive billboard-feed trace)
-	CIT_ASSIGN_CAND          // [CIT/assign/cand] -- one citizen placement decided: the best specialist and best plot with their VALUES, and which won
+	CIT_ASSIGN_CAND,         // [CIT/assign/cand] -- one citizen placement decided: the best specialist and best plot with their VALUES, and which won
+	//	The ATTRIBUTION half of the specialist-vs-plot question. [CIT/assign/cand] shows THAT one side wins and by
+	//	how much; it cannot show WHERE that side's number comes from, so the cause stayed a matter of opinion.
+	//	Each of these splits ONE candidate's score into the YIELD term (the AI_yieldValue return, the only part the
+	//	two kinds compute the same way) and the FINAL value. The difference is the non-yield contribution --
+	//	specialist: GPP + XP + wellbeing + property + underworld; plot: the improvement blend, the potential-plot
+	//	penalty and the bonus-discovery adds. Which term carries the advantage is then a reading, not a theory.
+	CIT_ASSIGN_SPECVAL,      // [CIT/assign/specval] -- one specialist's score, yield term vs final
+	CIT_ASSIGN_PLOTVAL       // [CIT/assign/plotval] -- one plot's score, yield term vs final
 };
 
 // CIT LOCAL field tags. city/owner are ints (city ID / PlayerTypes); prop is a PropertyTypes index (rendered as int).
@@ -69,10 +77,23 @@ enum CitField
 	CITF_cities,     // how many cities one assign-dirty FAN reached
 	CITF_fn,         // the billboard entry-point census index (gPerfBillboardFnNames)
 	//	The specialist-vs-plot COMPARISON, which is the one thing the assign instrument could not show: it
-	//	recorded that a run happened, never what it decided or why. Both bests on one line make the ratio
-	//	readable directly ([fixed-point-and-scales] §5: the decision log is a scale instrument -- a side that
-	//	always wins is the signature of a truncated or mis-scaled input, not of AI logic).
-	CITF_specialist, CITF_specialistVal, CITF_plot, CITF_plotVal
+	//	recorded that a run happened, never what it decided or why. Both kinds' best REMAINING option on one
+	//	line makes the ratio readable directly, and the shape is unchanged across the priority-list restructure
+	//	so captures either side of it stay comparable.
+	//	⚠ THE SCALE THEORY IS CLOSED -- do not re-open it. A side that always wins is normally the signature of
+	//	a truncated or mis-scaled input ([fixed-point-and-scales] §5), and that was checked here: BOTH sides
+	//	enter AI_yieldValue as HUMAN values (CvPlayer::specialistYield / specialistCommerce each reduce /100,
+	//	matching pPlot->getYield), so the specialist advantage this log shows is genuine AI WEIGHTING and is a
+	//	tuning question, not a scale defect to hunt again.
+	CITF_specialist, CITF_specialistVal, CITF_plot, CITF_plotVal,
+	//	The attribution split (CIT_ASSIGN_SPECVAL / CIT_ASSIGN_PLOTVAL): the shared YIELD term, and the FINAL
+	//	score. final - yield IS the non-yield contribution, which is the axis the two kinds differ on.
+	CITF_yieldPart, CITF_finalVal,
+	//	The specialist tail, one level deeper (CIT_ASSIGN_SPECVAL). The tail is ~95% of a specialist's score and
+	//	lands at nearly the SAME magnitude on unrelated specialist types, which is the signature of a shared term
+	//	rather than of what any specialist produces -- so it is split into its five actual contributors instead
+	//	of being reasoned about from the source.
+	CITF_gppPart, CITF_xpPart, CITF_wellbeingPart, CITF_propertyPart, CITF_underworldPart
 };
 
 // ⛔ WHY THE FAN NEEDS ITS OWN TAG: the per-city [CIT/assign/dirty] line captures the return address inside

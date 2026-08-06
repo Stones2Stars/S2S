@@ -1024,3 +1024,45 @@ the handlers, never to re-widen the payload back into a data-carrying wrapper.
 traceback and the handler's whole body. **Consider it a suspect for the turn-time signal above**, not merely a
 correctness one.
 
+
+## ⛔ THE REDUCING GETTERS — `÷100` still living away from the read edge
+
+**×100 is native everywhere in C++; the ONLY `÷100` belongs at the read edge — Python, or the `Cy` binding that
+serves it** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100),
+[fixed-point-and-scales.md §1](../../specs/curators/fixed-point-and-scales.md)). ⛔ There is no locally
+justifiable interior reduction, and the reason is DATA rather than tidiness: the ×100 exists so an amount can
+carry TWO DECIMALS ([json.md §3.6](../../specs/json.md) — a modder authors `1.5`, `0.4`), so a reduction
+anywhere upstream of the edge **destroys authored precision for every consumer after it**. `1.5` becomes `1`;
+`0.4` becomes `0`.
+⚠ A `× percent / 100` is APPLYING a percentage, not reducing a scale. Those stay.
+
+**Still reducing, with their consumer census (the compiler cannot find these — a changed scale compiles
+silently):**
+
+| getter | sites | note |
+|---|--:|---|
+| `CvPlot::getYield` | 23 | the `getX`/`getX100` pair the spec bans; `getYields()` is the ×100 surface beside it |
+| `CvPlot::getYieldWithBuild` | — | same defect, same cluster |
+| `CvCity::getBaseGreatPeopleRate` | 10 | two reducing sites |
+
+**⛔ THE BLOCKER, and it is a real one rather than a scoping excuse: `CvYieldInfo::getCityChange` /
+`getMinCity` are bare `int`s with NO established scale**, and they mix directly into the plot chain at
+`CvPlayerAI.cpp:2649`. Converting `CvPlot::getYield` without settling them means guessing at a mixing site.
+⚑ Convert by arithmetic CLUSTER, never by getter ([fixed-point-and-scales.md §4c-bis](../../specs/curators/fixed-point-and-scales.md)):
+the cluster here is the plot-yield / food / growth chain, and if a conversion forces compensating constants the
+boundary was drawn wrong.
+
+**The located worklist:**
+
+- **Literal thresholds to lift ×100** (never reduce the value to meet them): `CvCityAI` 8668 / 8673 / 8678
+  (`iFoodPerPop`, `3`, `4`, `9`), 7735 / 7825 / 7955 (`21`), 5860 (`kTargetGPRate 10`); `CvPlayerAI` 2923 (`1`),
+  3400 (`FOOD_CONSUMPTION_PER_POPULATION`).
+- **Re-inflations to DELETE** — `CvCityAI:11183` and its `getYieldWithBuild` sibling both do `* 100` to undo the
+  getter's reduce. ⚑ That pair is the standing proof the reduce is in the wrong place.
+- **Read edges that must GAIN the `÷100`:** `CyPlot:458`, `CyCity:620`, `CvGameTextMgr:1642` (UI),
+  `CvCityAI:10720` (the snapshot CSV).
+- **Already safe, do not touch:** the weighted sums (`CvUnitAI` 25767-69, `CvPlayerAI` 2891-93) and anything
+  feeding `AI_yieldValue` — every constant there multiplies, so those are scale-invariant.
+- **Inside `AI_specialistValue`:** `iBaseFoodDifference` still reduces to sit beside
+  `getFoodConsumedByPopulation()`, and `getPropertySourceValue`'s scale is unestablished. Neither distorts the
+  specialist-vs-plot comparison; both are on this list.

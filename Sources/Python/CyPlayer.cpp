@@ -578,7 +578,9 @@ int CyPlayer::getGreatGeneralsThresholdModifier() const
 
 int CyPlayer::specialistYield(int /*SpecialistTypes*/ eSpecialist, int /*YieldTypes*/ eCommerce) const
 {
-	return m_pPlayer->specialistYield((SpecialistTypes)eSpecialist, (YieldTypes)eCommerce);
+	// THE READ EDGE -- the one place a ×100 amount becomes human ([DEC-fixedpoint-x100]). The engine carries
+	// ×100 natively end to end; Python is a reader, so the ÷100 happens HERE and nowhere upstream.
+	return m_pPlayer->specialistYield((SpecialistTypes)eSpecialist, (YieldTypes)eCommerce) / 100;
 }
 
 CyPlot* CyPlayer::getStartingPlot() const

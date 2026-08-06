@@ -8650,15 +8650,16 @@ int CvPlayer::greatPeopleThresholdNonMilitary() const
 
 int CvPlayer::specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) const
 {
-	// The intrinsic is the specialist's own CITY-scope flat; it is ×100, so it reduces here where the terms
-	// beside it are whole yields ([DEC-fixedpoint-x100]).
-	return ((GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) / 100) + getExtraSpecialistYield(eSpecialist, eYield) + (getSpecialistYieldPercentChanges(eSpecialist, eYield) / 100));
+	// ×100 NATIVE, like every other cascade read -- a getter never reduces ([DEC-fixedpoint-x100]); the
+	// consumer reduces at its own point of use, and an EVALUATION never scales at all.
+	return (GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) + getExtraSpecialistYield(eSpecialist, eYield) + getSpecialistYieldPercentChanges(eSpecialist, eYield));
 }
 
 
 int CvPlayer::specialistCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const
 {
-	return specialistCommerceTimes100(eSpecialist, eCommerce)/100;
+	// ×100 NATIVE -- the Times100 twin IS this value; a getter never reduces ([DEC-fixedpoint-x100]).
+	return specialistCommerceTimes100(eSpecialist, eCommerce);
 }
 
 int CvPlayer::specialistCommerceTimes100(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const
