@@ -6,6 +6,7 @@ import CvUtil
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 STATE = CyState()
 ACT = CyAct()   # the ACTION surface
 ENABLER = CyEnabler()
@@ -232,7 +233,7 @@ def updateAliveCivsOption():
 	for iPlayer in range(GC.getMAX_PC_PLAYERS()):
 		CyPlayer = GC.getPlayer(iPlayer)
 		if CyPlayer.isHuman() and CyPlayer.isAlive():
-			descs.append(GC.getCivilizationInfo(CyPlayer.getCivilizationType()).getShortDescription())
+			descs.append(INFO.getShortDescription("CIVILIZATION_", CyPlayer.getCivilizationType(), 0))
 	descs.sort()
 	aliveCivsOption.setValues(descs)
 

@@ -70,8 +70,6 @@ class CvGameUtils:
 			"CULTURE"	: ["PROCESS_CULTURE_MEAGER", "PROCESS_CULTURE_LESSER", "PROCESS_CULTURE"],
 			"SPY"		: ["PROCESS_SPY_MEAGER", "PROCESS_SPY_LESSER", "PROCESS_SPY"]
 		}
-		CyTeam = GC.getTeam(CyCity.getTeam())
-
 		TYPE = INFO.getType("PROCESS_", iProcess)
 
 		if not TYPE.count("_"): return False
@@ -79,13 +77,18 @@ class CvGameUtils:
 		KEY = TYPE.split("_")[1]
 		if not KEY in aMap: return False
 
+		iOwner = CyCity.getOwner()
+
+		#	A lesser process is not worth maintaining once a BETTER rung of its ladder is available. Ask the
+		#	ENABLER for that verdict rather than testing the rung's prereq tech by hand: availability is the
+		#	enabler's own maintained tri-state ([DEC-enabler-not-cascade]), and the hand-rolled test saw only
+		#	the tech -- it missed every other reason a rung is or is not offered.
 		bFound = False
 		for PROCESS in aMap[KEY]:
 			if bFound:
-				iProcess = GC.getInfoTypeForString(PROCESS)
-				if iProcess > -1:
-					iTech = GC.getProcessInfo(iProcess).getTechPrereq()
-					if iTech == -1 or CyTeam.isHasTech(iTech):
+				iBetter = GC.getInfoTypeForString(PROCESS)
+				if iBetter > -1:
+					if ENABLER.getProcessAvailability(iOwner, iBetter) == EnablerState.ENABLER_LISTED:
 						return True
 			elif PROCESS == TYPE:
 				bFound = True

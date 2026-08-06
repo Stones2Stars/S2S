@@ -60,6 +60,7 @@
 // Both reach the identity plane by the derived->base conversion, which the compiler can only check against a
 // COMPLETE type -- a forward declaration compiles everywhere else and fails exactly at that return.
 #include "Infos/CvEffectInfo.h"
+#include "Infos/CvMapInfo.h"
 #include "Defines/CvDiplomacyClasses.h"
 // The AUTHORED IDENTITY TEXTS that are not on CvInfoBase -- the civilization's name forms, and the two
 // key-backed siblings ([json.md] §7).
@@ -132,6 +133,9 @@ namespace
 		if (szTypePrefix == "EVENT_")            return iId < GC.getNumEventInfos()            ? &GC.getEventInfo((EventTypes)iId) : NULL;
 		if (szTypePrefix == "EVENTTRIGGER_")     return iId < GC.getNumEventTriggerInfos()     ? &GC.getEventTriggerInfo((EventTriggerTypes)iId) : NULL;
 		if (szTypePrefix == "EFFECT_")           return iId < GC.getNumEffectInfos()           ? &GC.getEffectInfo(iId) : NULL;
+		//	The MULTIMAP registry -- the maps a game may hold, not a map SCRIPT (those are their own boundary and
+		//	are not served here, [python-read-map.md] par.7).
+		if (szTypePrefix == "MAP_")              return iId < GC.getNumMapInfos()              ? &GC.getMapInfo((MapTypes)iId) : NULL;
 		// ⛔ THE PREFIX ROUTES A REGISTRY, AND USUALLY -- BUT NOT ALWAYS -- EQUALS THE AUTHORED INFOTYPE PREFIX
 		// ([naming.md]). Two registries below break that coincidence, so the token names the REGISTRY:
 		//   · DIPLOMACY_  holds TWO authored prefixes, AI_DIPLOCOMMENT_* and USER_DIPLOCOMMENT_*, so no single
