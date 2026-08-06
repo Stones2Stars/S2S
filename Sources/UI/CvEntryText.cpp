@@ -18,6 +18,7 @@
 #include "CvYieldInfo.h"
 #include "CvCommerceInfo.h"
 #include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
+#include "Data/CvDepositRead.h"     // MMKernel::unitIsPercentSide -- the ONE "is this a percent" test
 #include "Defines/CvGlobals.h"
 
 namespace
@@ -206,9 +207,17 @@ namespace
 	// The signed magnitude + unit marker ("+2", "-25%", "x1.5"). /100 happens here.
 	CvWString etx_signedMagnitude(const CvModEntry& entry)
 	{
-		const int iAbsValue100 = (entry.value < 0) ? -entry.value : entry.value;
+		const int iAbsValue = (entry.value < 0) ? -entry.value : entry.value;
 		const wchar_t* szSign = (entry.value < 0) ? L"-" : L"+";
-		const CvWString szNumber = etx_number100(iAbsValue100);
+		//	⛔ THE REDUCE IS PER UNIT, NEVER BLANKET ([fixed-point-and-scales] §4d). A percent is stored PLAIN --
+		//	`mod_valueForUnit` scales every unit EXCEPT the percent side, because a percent carries no decimals --
+		//	so reducing one here renders a +3% civic as "+0.03%", and a 1% entry as "+0%". Flats and multipliers
+		//	genuinely are x100 and still reduce.
+		//	⚑ The test is the ONE predicate the parse, the deposit index and the gather already share
+		//	([DEC-single-implementation]); a second copy of "is this a percent" is what would drift.
+		const CvWString szNumber = MMKernel::unitIsPercentSide(entry.unit)
+			? CvWString::format(L"%d", iAbsValue)
+			: etx_number100(iAbsValue);
 		switch (entry.unit)
 		{
 		case CASC_UNIT_PERCENT:
