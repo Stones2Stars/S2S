@@ -44,10 +44,9 @@ class CvForeignAdvisor:
 		aBonusList1 = []
 		aBonusList2 = []
 		for iBonus in xrange(GC.getNumBonusInfos()):
-			CvBonusInfo = GC.getBonusInfo(iBonus)
-			if CvBonusInfo.isMapBonus(): # Map resource
+			if INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_IS_MAP_BONUS): # Map resource
 				aBonusList0.append(iBonus)
-			elif CvBonusInfo.getBonusClassType() != BONUSCLASS_CULTURE:
+			elif INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_BONUS_CLASS) != BONUSCLASS_CULTURE:
 				aBonusList1.append(iBonus)
 			else:
 				aBonusList2.append(iBonus)

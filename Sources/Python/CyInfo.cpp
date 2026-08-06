@@ -503,6 +503,24 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isSeeResearch() ? 1 : 0;
 		break;
 
+	case PYINT_IS_PASSIVE:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isPassive() ? 1 : 0;
+		break;
+
+	case PYINT_IS_INVESTIGATE_CITY:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isInvestigateCity() ? 1 : 0;
+		break;
+
+	//	⚠ The INFO-side getter is still named for the legacy XML tag (`getDiploVoteType`); the slot is named for
+	//	what the value IS, which is the direction the rename goes ([todo.md]: diploVoteType -> the `voteSource`
+	//	section). A consumer therefore never learns the legacy spelling.
+	case PYINT_VOTE_SOURCE:
+		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
+			return GC.getBuildingInfo((BuildingTypes)iId).getDiploVoteType();
+		break;
+
 	case PYINT_IS_SPACESHIP:
 		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
 			return GC.getProjectInfo((ProjectTypes)iId).isSpaceship() ? 1 : 0;

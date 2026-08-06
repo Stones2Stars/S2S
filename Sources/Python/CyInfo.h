@@ -73,6 +73,12 @@ enum PyIntrinsicSlot
 	                            // count -- TRADE_ROUTE_AMOUNT, CvInfoKinds.h)
 	PYINT_IS_NO_INSTANCE_LIMIT, // is this building RELOCATABLE -- it waives the empire (national-wonder)
 	                            // cap, so a palace / culture building can be rebuilt elsewhere (json identity)        // is this project a spaceship part (the build-progress readout)
+	PYINT_IS_PASSIVE,           // ESPIONAGEMISSION_ is this a PASSIVE mission (a standing capability the
+	                            // advisor lists, not an action a spy performs)
+	PYINT_IS_INVESTIGATE_CITY,  // ESPIONAGEMISSION_ does it reveal a city's detail -- the sibling of
+	                            // IS_SEE_DEMOGRAPHICS / IS_SEE_RESEARCH, which the same screens read together
+	PYINT_VOTE_SOURCE,          // BUILDING_ VOTESOURCE_* FK -- the diplomatic body this building CONVENES
+	                            // (json par.9 `voteSource`); -1 for the overwhelming majority
 	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.
 	                            // ⛔ It is a genuine INTRINSIC, never a tag read ([json.md] par.7, [tags.md]): a
 	                            // tag says what a unit IS, a domain says where it OPERATES, and answering the

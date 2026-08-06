@@ -122,13 +122,13 @@ class TheScreen:
 
 		# mission constants
 		for iMissionLoop in range(GC.getNumEspionageMissionInfos()):
-			pMission = GC.getEspionageMissionInfo(iMissionLoop)
-			if pMission.getCost() != -1 and pMission.isPassive():
-				if pMission.isInvestigateCity():
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_COST) != -1 \
+			and INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_PASSIVE):
+				if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_INVESTIGATE_CITY):
 					self.MissionInvestigateCity = iMissionLoop
-				elif pMission.isSeeDemographics():
+				elif INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_DEMOGRAPHICS):
 					self.MissionSeeDemo = iMissionLoop
-				elif pMission.isSeeResearch():
+				elif INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_RESEARCH):
 					self.MissionSeeResearch = iMissionLoop
 				else:
 					self.MissionCityVisibility = iMissionLoop

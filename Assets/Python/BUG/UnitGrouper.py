@@ -161,10 +161,10 @@ class PromotionGrouping(Grouping):
 		self.NONE = 0
 		self.NO_PROMOS = (0,)
 		self._addGroup(Group(self, self.NONE, "TXT_KEY_UNITGROUPER_PROMOTION_GROUP_NONE"))
-		for i in range(gc.getNumPromotionInfos()):
-			info = gc.getPromotionInfo(i)
-			if info:
-				self._addGroup(Group(self, i + 1, u'<img=%s size=16></img> %s' % (info.getButton(), info.getDescription())))
+		#	ONE crossing for the whole registry -- identity is all this grouper renders.
+		for kPromotion in INFO.getIndex("PROMOTION_"):
+			self._addGroup(Group(self, kPromotion["id"] + 1,
+				u'<img=%s size=16></img> %s' % (kPromotion["button"], kPromotion["description"])))
 
 	def calcGroupKeys(self, unit, player, team):
 		promos = []

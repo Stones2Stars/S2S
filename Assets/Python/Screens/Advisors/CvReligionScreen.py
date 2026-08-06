@@ -263,11 +263,13 @@ class CvReligionScreen:
 				if pHolyCity is None:
 					szFounded = localText.getText("TXT_KEY_NONE", ())
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-				elif not pHolyCity.isRevealed(GC.getPlayer(self.iActivePlayer).getTeam(), False):
+				#	The handle carries the ADDRESS (owner + id) and nothing else, so the fog verdict and the
+				#	name are both asked of CyState by that address ([patterns.md] THE IDENTITY SET).
+				elif not STATE.isCityRevealed(pHolyCity.getOwner(), pHolyCity.getID(), GC.getPlayer(self.iActivePlayer).getTeam()):
 					szFounded = localText.getText("TXT_KEY_UNKNOWN", ())
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				else:
-					szFounded = pHolyCity.getName()
+					szFounded = STATE.getCityName(pHolyCity.getOwner(), pHolyCity.getID())
 					screen.setLabelAt("", szArea, u"(%s)" % GC.getPlayer(pHolyCity.getOwner()).getCivilizationAdjective(0), 1<<2, xLoop, self.Y_HOLY_CITY+8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY-8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			xLoop += self.DX_RELIGION

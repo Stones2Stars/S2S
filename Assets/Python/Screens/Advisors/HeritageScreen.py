@@ -8,6 +8,7 @@ import HandleInputUtil
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -173,17 +174,19 @@ class HeritageScreen:
 		dy = iSize + 8
 		y0 = y1 = 0
 		iOff = self.iOff
-		for iType in xrange(GC.getNumHeritageInfos()):
-			heritageX = GC.getHeritageInfo(iType)
+		#	ONE crossing for the whole registry rather than one per heritage: the index carries the identity
+		#	block (id / type / description / textKey / button), which is all this screen renders.
+		for kHeritage in INFO.getIndex("HERITAGE_"):
+			iType = kHeritage["id"]
 
 			if player.hasHeritage(iType):
-				screen.setImageButtonAt("WID|HERITAGE|IMG%d" % iType, ScPnl1, heritageX.getButton(), 8, y1, iSize, iSize, eWidGen, 1, 2)
-				screen.setTextAt("WID|HERITAGE|TEXT%d" % iType, ScPnl1, uFont3b + heritageX.getDescription(), 1<<0, 2+dy, iOff + y1, 0, eFontGame, eWidGen, 1, 2)
+				screen.setImageButtonAt("WID|HERITAGE|IMG%d" % iType, ScPnl1, kHeritage["button"], 8, y1, iSize, iSize, eWidGen, 1, 2)
+				screen.setTextAt("WID|HERITAGE|TEXT%d" % iType, ScPnl1, uFont3b + kHeritage["description"], 1<<0, 2+dy, iOff + y1, 0, eFontGame, eWidGen, 1, 2)
 				y1 += dy
 			else:
-				screen.addDDSGFCAt("", ScPnl0, heritageX.getButton(), 8, y0, iSize, iSize, eWidGen, 1, 1, False)
+				screen.addDDSGFCAt("", ScPnl0, kHeritage["button"], 8, y0, iSize, iSize, eWidGen, 1, 1, False)
 				screen.setImageButtonAt("WID|HERITAGE|IMG%d" % iType, ScPnl0, CANCEL, 8, y0, iSize, iSize, eWidGen, 1, 2)
-				screen.setTextAt("WID|HERITAGE|TEXT%d" % iType, ScPnl0, uFont3 + heritageX.getDescription(), 1<<0, 2+dy, iOff + y0, 0, eFontGame, eWidGen, 1, 2)
+				screen.setTextAt("WID|HERITAGE|TEXT%d" % iType, ScPnl0, uFont3 + kHeritage["description"], 1<<0, 2+dy, iOff + y0, 0, eFontGame, eWidGen, 1, 2)
 				y0 += dy
 
 

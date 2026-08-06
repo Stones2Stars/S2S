@@ -12,6 +12,7 @@
 #include "Engine/CvPlayer.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "Enabler/CvEnabler.h"
+#include "Enabler/CvEnablerKernel.h"   // everAvailable -- the ONE can-I-ever implementation
 #include "Conditions/CvConditionQuery.h"   // collectIds -- the ONE requires-tree walker
 #include "Repos/InfoRepo.h"
 #include "Infos/CvCorporationInfo.h"      // EnablerDomain::State -- the tri-state this surface returns
@@ -184,6 +185,12 @@ int CyEnabler::getBuildingAvailabilityAnywhere(int iPlayer, int eBuilding) const
 	return p ? (int)p->getBuildingAvailabilityAnywhere((BuildingTypes)eBuilding) : (int)EnablerDomain::STATE_HIDDEN;
 }
 
+bool CyEnabler::isEverAvailable(int eBucket, int iId) const
+{
+	if (eBucket < 0 || eBucket >= (int)NUM_EDGEB || iId < 0) return false;
+	return EnablerKernel::everAvailable((EnEdgeBucket)eBucket, iId);
+}
+
 // The publication. ONE class, id-based, no CyCity/CyPlayer anywhere in the signature -- so the legacy
 // wrappers can be cut away without touching this ([DEC-cy-not-fixed]: the replacement is a NEW surface,
 // never a widened binding).
@@ -212,6 +219,8 @@ void CyEnabler::pythonPublish()
 		// the empire-wide FAN (the BEST state any of the player's cities holds)
 		.def("getUnitAvailabilityAnywhere",     &CyEnabler::getUnitAvailabilityAnywhere)
 		.def("getBuildingAvailabilityAnywhere", &CyEnabler::getBuildingAvailabilityAnywhere)
+		// CAN-I-EVER -- the whole-game entity gate, keyed by edge BUCKET (not a per-city verdict)
+		.def("isEverAvailable",                 &CyEnabler::isEverAvailable)
 		;
 
 	// The tri-state, exposed as constants rather than left as bare ints: the verdict is returned WHOLE, so a

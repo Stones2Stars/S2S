@@ -161,9 +161,9 @@ class CvInfoScreen:
 		self.iDemographicsMission = -1
 		self.iInvestigateCityMission = -1
 		for iMissionLoop in xrange(GC.getNumEspionageMissionInfos()):
-			if GC.getEspionageMissionInfo(iMissionLoop).isSeeDemographics():
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_DEMOGRAPHICS):
 				self.iDemographicsMission = iMissionLoop
-			if GC.getEspionageMissionInfo(iMissionLoop).isInvestigateCity():
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_INVESTIGATE_CITY):
 				self.iInvestigateCityMission = iMissionLoop
 		# Cache player specifics
 		self.iPlayer = iPlayer = GAME.getActivePlayer()

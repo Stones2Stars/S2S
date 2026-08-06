@@ -168,13 +168,13 @@ class CvCorporationScreen:
 
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
-			if GC.getGame().canEverSpread(i):
+			if ENABLER.isEverAvailable(EdgeBucket.EDGEB_CORPORATIONS, i):
 				screen.attachPanelAt("CivicList", "CorporationsScreenArea", "", "", True, True, PanelStyles.PANEL_STYLE_MAIN, self.X_CORPORATION, self.Y_CORPORATION_AREA, self.X_CORPORATION_DIFF + ((i + 1) * self.DX_CORPORATION), self.H_CORPORATION_AREA, WidgetTypes.WIDGET_GENERAL, i, -1)
 				xLoop += self.DX_CORPORATION
 
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
-			if GC.getGame().canEverSpread(i):
+			if ENABLER.isEverAvailable(EdgeBucket.EDGEB_CORPORATIONS, i):
 				screen.addCheckBoxGFCAt("CivicList", self.getCorporationButtonName(i), INFO.getButton("CORPORATION_", i), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_CORPORATION_AREA + xLoop - 25, self.Y_CORPORATION_AREA + 10, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
 				screen.setActivation(self.getCorporationButtonName(i), ActivationTypes.ACTIVATE_NORMAL)
 				xLoop += self.DX_CORPORATION
@@ -194,7 +194,7 @@ class CvCorporationScreen:
 		# Great Person
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
-			if (GC.getGame().canEverSpread(i)):
+			if (ENABLER.isEverAvailable(EdgeBucket.EDGEB_CORPORATIONS, i)):
 				szGreatPerson = ""
 				for iBuilding in range(GC.getNumBuildingInfos()):
 					if (GC.getBuildingInfo(iBuilding).getFoundsCorporation() == i):
@@ -210,7 +210,7 @@ class CvCorporationScreen:
 		# Bonuses
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
-			if (GC.getGame().canEverSpread(i)):
+			if (ENABLER.isEverAvailable(EdgeBucket.EDGEB_CORPORATIONS, i)):
 				szListLabels = []
 				iNum = 0
 				szList = u""
@@ -243,7 +243,7 @@ class CvCorporationScreen:
 		# Date Founded:
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
-			if (GC.getGame().canEverSpread(i)):
+			if (ENABLER.isEverAvailable(EdgeBucket.EDGEB_CORPORATIONS, i)):
 				if (GC.getGame().getCorporationGameTurnFounded(i) < 0):
 					szFounded = localText.getText("TXT_KEY_RELIGION_SCREEN_NOT_FOUNDED", ())
 				else:
@@ -257,7 +257,7 @@ class CvCorporationScreen:
 
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
-			if (GC.getGame().canEverSpread(i)):
+			if (ENABLER.isEverAvailable(EdgeBucket.EDGEB_CORPORATIONS, i)):
 				pHeadquarters = GC.getGame().getHeadquarters(i)
 				if pHeadquarters is None:
 					szFounded = u"-"

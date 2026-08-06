@@ -146,6 +146,9 @@ void CyEnums::pythonPublish()
 		.value("PYINT_GRID_Y",           PYINT_GRID_Y)
 		.value("PYINT_TRADE_ROUTE_AMOUNT", PYINT_TRADE_ROUTE_AMOUNT)
 		.value("PYINT_DOMAIN",           PYINT_DOMAIN)
+		.value("PYINT_IS_PASSIVE",       PYINT_IS_PASSIVE)
+		.value("PYINT_IS_INVESTIGATE_CITY", PYINT_IS_INVESTIGATE_CITY)
+		.value("PYINT_VOTE_SOURCE",      PYINT_VOTE_SOURCE)
 		;
 
 	//	The generated CAPABILITY ids ([DEC-classification-infos]) -- CONSTANTS, not a read surface, so this is

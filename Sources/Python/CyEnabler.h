@@ -69,6 +69,18 @@ public:
 	int getUnitAvailabilityAnywhere(int iPlayer, int /*UnitTypes*/ eUnit) const;
 	int getBuildingAvailabilityAnywhere(int iPlayer, int /*BuildingTypes*/ eBuilding) const;
 
+	//	---- CAN-I-EVER: is this entity barred for the WHOLE GAME by its entity-level gate?
+	//	⛔ A DIFFERENT QUESTION FROM THE TRI-STATE, not a variant of it. The tri-state answers CAN-I-NOW and is
+	//	per (player, city); this answers whether a game option bars the thing outright, so the verdict is the
+	//	SAME for every player and city and takes no owner ([enabler.md] par.8: where the bar IS an entity gate,
+	//	the ever-question is the enabler's, and so is the option read).
+	//	⚑ Parameterized over the EDGE BUCKET rather than split per domain, exactly as the kernel is -- so it
+	//	answers for domains that are not enabler DOMAINS at all (corporations, religions), which is precisely
+	//	what the removed `CyGame::canEverSpread` was asking.
+	//	⚠ It is TOTAL: a type whose data authors no gate answers "never barred", so a newly-authored gate lights
+	//	up as pure DATA with no engine change.
+	bool isEverAvailable(int /*EnEdgeBucket*/ eBucket, int iId) const;
+
 	// Publishes this surface + the three tri-state constants a script compares against
 	// (ENABLER_HIDDEN / ENABLER_GREYED / ENABLER_LISTED). Called from DLLPublishToPython.
 	// The BONUSES a corporation's `requires` names -- the forward "what does this need?" read, answered from the

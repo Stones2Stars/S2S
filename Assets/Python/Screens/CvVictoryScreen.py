@@ -262,9 +262,9 @@ class CvVictoryScreen:
 		# Vote
 		aiVoteBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
+			iVoteSource = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_VOTE_SOURCE)
 			for j in xrange(GC.getNumVoteSourceInfos()):
-				if CvBuildingInfo.getVoteSourceType() == j:
+				if iVoteSource == j:
 					iUNTeam = -1
 					bUnknown = True
 
@@ -1039,9 +1039,9 @@ class CvVictoryScreen:
 
 		aiVoteBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
+			iVoteSource = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_VOTE_SOURCE)
 			for j in xrange(GC.getNumVoteSourceInfos()):
-				if CvBuildingInfo.getVoteSourceType() == j:
+				if iVoteSource == j:
 					iUNTeam = -1
 					bUnknown = True
 
@@ -1604,9 +1604,9 @@ class CvVictoryScreen:
 
 	def getAP_UN_OwnerTeam(self):
 		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
+			iVoteSource = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_VOTE_SOURCE)
 			for j in xrange(GC.getNumVoteSourceInfos()):
-				if CvBuildingInfo.getVoteSourceType() == j:
+				if iVoteSource == j:
 					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 						CyPlayerX = GC.getPlayer(iPlayerX)
 						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
