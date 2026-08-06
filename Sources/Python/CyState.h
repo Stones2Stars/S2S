@@ -161,6 +161,22 @@ public:
 	//	built; a unit stays trainable") -- so the frontier rightly keeps offering it. What a RECOMMENDER wants is
 	//	the different question "am I about to nag about something already ordered", which is city STATE.
 	bool isUnitQueued(int iPlayer, int iCity, int iUnit) const;
+
+	//	---- The city's ONE-SHOT GRANTED state, and the scenario reads that go with it ----
+	//	⚑ These exist for the SCENARIO SERIALIZER, and that is not a second-class consumer: an event/vote grant
+	//	is genuine non-derivable state kept in its own persisted store ([state-repositories.md]), so a scenario
+	//	that could not carry it would silently drop it on every round trip. Nothing else can re-derive it.
+	std::string  getCityScriptData(int iPlayer, int iCity) const;
+	python::list getCityGrantedExtras(int iPlayer, int iCity) const;            // CityGrantedExtra
+	python::list getBuildingGrantedWellbeing(int iPlayer, int iCity, int iBuilding) const;  // BuildingGrantedKind
+	python::list getBuildingGrantedYields(int iPlayer, int iCity, int iBuilding) const;     // YieldTypes
+	python::list getBuildingGrantedCommerces(int iPlayer, int iCity, int iBuilding) const;  // CommerceTypes
+	//	When this building was BUILT here (the ledger's own record), and how many free specialists were ADDED to
+	//	this city beyond what its live sources supply.
+	//	⚠ The added count is NOT CITY_SPECIALIST_FREE: that one is the engine-derived total, so writing it into a
+	//	scenario and reading it back would grant the derived half a second time.
+	int getBuildingBuiltTime(int iPlayer, int iCity, int iBuilding) const;
+	int getAddedFreeSpecialists(int iPlayer, int iCity, int iSpecialist) const;
 	python::list getGrowth(int iPlayer, int iCity) const;
 	python::list getCulture(int iPlayer, int iCity) const;
 	// The city's parameterless predicates, as ONE group (CityFlagKind) -- occupation, disorder, capital,

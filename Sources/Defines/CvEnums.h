@@ -1380,6 +1380,29 @@ enum CityCountRead
 	NUM_CITY_COUNT_READS
 };
 
+//	The city's ONE-SHOT GRANTED extras -- what an EVENT or a VOTE handed this city, over and above anything a
+//	live source deposits. They are genuine non-derivable state and are SEPARATELY PERSISTED for exactly that
+//	reason ([state-repositories.md]: "having events just be stored in the cache is lunacy"), which is why a
+//	scenario serializer has to be able to read them back out.
+enum CityGrantedExtra
+{
+	GRANTED_EXTRA_HAPPINESS = 0,
+	GRANTED_EXTRA_HEALTH,
+	GRANTED_EXTRA_TRADE_ROUTES,
+
+	NUM_CITY_GRANTED_EXTRAS
+};
+
+//	The same store, per BUILDING: the wellbeing an event/vote pinned to one building in this city. Its yield and
+//	commerce siblings are indexed by the engine's own YieldTypes / CommerceTypes and so need no enum here.
+enum BuildingGrantedKind
+{
+	BUILDING_GRANTED_HAPPINESS = 0,
+	BUILDING_GRANTED_HEALTH,
+
+	NUM_BUILDING_GRANTED_KINDS
+};
+
 //	The city's FOOD/GROWTH state: what is in the store, what this turn adds, what the next citizen costs, and
 //	how far off it is. One group, because every consumer that asks one of these asks three of them.
 //	⚠ GROWTH_READ_FOOD_PER_TURN is the BOTTOMED difference (the engine's own default) -- a starving city

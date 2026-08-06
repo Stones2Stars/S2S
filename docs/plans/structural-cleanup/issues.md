@@ -308,7 +308,7 @@ callbacks and BUG config decide what executes). The log is the only thing that s
 
 | failing read | path | note |
 |---|---|---|
-| `CyCity.getName` (and `getPopulation` / `getFood` behind it) | `CvWBInterface.writeDesc` → `CvWBDesc.write` (`:1819`/`:1483`/`:1067`) | WORLDBUILDER — accepted breakage ([roadmap.md](roadmap.md) § scope decision 1b) but recorded here because that ruling requires a knowingly-broken WB path to be SAID, not left silent. ⚠ NOT one method: `CyCity` publishes only the IDENTITY SET (`getID`/`getOwner`/`getX`/`getY`), so the whole city writer wants `CyState` reads (`getCityName` / `getCityPopulation` / `getGrowth`) |
+| `CyCity.getName` (and `getPopulation` / `getFood` behind it) | `CvWBInterface.writeDesc` → `CvWBDesc.write` | WORLDBUILDER. ⛔ **NOT accepted breakage** — scope decision 1b is about sequencing and about what may constrain a cut, and the owner has ruled plainly: *"we cannot accept actually breaking worldbuilder stuff, we fix things we see."* ⚠ NOT one method: `CyCity` publishes only the IDENTITY SET (`getID`/`getOwner`/`getX`/`getY`), so the whole city writer goes onto `CyState` reads by ADDRESS |
 | `CyGlobalContext.getBonusInfo` | `MoreCiv4lerts.buildBonusString` | the same defect as entry 3 |
 
 **PROVEN — the shape of the demand is narrow.** Every live failure is one of two kinds: an **info-registry read**

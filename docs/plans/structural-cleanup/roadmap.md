@@ -341,6 +341,16 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    never a reason to preserve a shape, keep a legacy call alive, or narrow a cut — it gets its own deliberate
    review pass afterwards. ⛔ This does NOT license breaking it carelessly or leaving it undocumented: when a
    change knowingly breaks a WB path, SAY SO in the change so the later pass has a worklist.
+   **⛔ AND IT IS NOT A LICENCE TO LEAVE A BREAK YOU CAN SEE (owner): *"we cannot accept actually breaking
+   worldbuilder stuff, we fix things we see."*** The carve-out is about SEQUENCING and about what may
+   constrain a cut — it never made a WB failure an acceptable outcome. ⇒ A WB path that shows up BROKEN, in a
+   log or on screen, is wired onto the new surface like any other consumer; it is deferred only where its
+   replacement MACHINE does not exist yet, and then it is named
+   ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking) still forbids reaching back
+   to a legacy binding to do it).
+   ⚠ **The misreading to avoid** — and it has already cost a pass: reading "not a constraint" as "WB errors are
+   accepted breakage" and skipping them in a sweep. What the ruling accepts is that WB may TEMPORARILY lag a
+   cut, not that a visible break is left standing once seen.
    **⚑ WHY it needs its OWN pass rather than riding along (owner): *"WorldBuilder can add or remove anything, at
    will."*** That is a categorically different relationship to the model than any other consumer. Every other
    surface reaches state through a genuine acquisition — a building is CONSTRUCTED, a unit is TRAINED, a tech is

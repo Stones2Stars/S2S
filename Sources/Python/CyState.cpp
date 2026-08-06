@@ -423,6 +423,79 @@ bool CyState::isUnitQueued(int iPlayer, int iCity, int iUnit) const
 	return pCity ? (pCity->getFirstUnitOrder((UnitTypes)iUnit) != -1) : false;
 }
 
+std::string CyState::getCityScriptData(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->getScriptData() : std::string();
+}
+
+python::list CyState::getCityGrantedExtras(int iPlayer, int iCity) const
+{
+	int values[NUM_CITY_GRANTED_EXTRAS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity)
+	{
+		values[GRANTED_EXTRA_HAPPINESS]    = pCity->getExtraHappiness();
+		values[GRANTED_EXTRA_HEALTH]       = pCity->getExtraHealth();
+		values[GRANTED_EXTRA_TRADE_ROUTES] = pCity->getExtraTradeRoutes();
+	}
+	return cys_toList(values);
+}
+
+python::list CyState::getBuildingGrantedWellbeing(int iPlayer, int iCity, int iBuilding) const
+{
+	int values[NUM_BUILDING_GRANTED_KINDS] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity && iBuilding >= 0 && iBuilding < GC.getNumBuildingInfos())
+	{
+		values[BUILDING_GRANTED_HAPPINESS] = pCity->getBuildingHappyChange((BuildingTypes)iBuilding);
+		values[BUILDING_GRANTED_HEALTH]    = pCity->getBuildingHealthChange((BuildingTypes)iBuilding);
+	}
+	return cys_toList(values);
+}
+
+python::list CyState::getBuildingGrantedYields(int iPlayer, int iCity, int iBuilding) const
+{
+	int values[NUM_YIELD_TYPES] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity && iBuilding >= 0 && iBuilding < GC.getNumBuildingInfos())
+	{
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		{
+			values[i] = pCity->getBuildingYieldChange((BuildingTypes)iBuilding, (YieldTypes)i);
+		}
+	}
+	return cys_toList(values);
+}
+
+python::list CyState::getBuildingGrantedCommerces(int iPlayer, int iCity, int iBuilding) const
+{
+	int values[NUM_COMMERCE_TYPES] = { 0 };
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity && iBuilding >= 0 && iBuilding < GC.getNumBuildingInfos())
+	{
+		for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
+		{
+			values[i] = pCity->getBuildingCommerceChange((BuildingTypes)iBuilding, (CommerceTypes)i);
+		}
+	}
+	return cys_toList(values);
+}
+
+int CyState::getBuildingBuiltTime(int iPlayer, int iCity, int iBuilding) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iBuilding < 0 || iBuilding >= GC.getNumBuildingInfos()) return -1;
+	return pCity->getBuildingData((BuildingTypes)iBuilding).iTimeBuilt;
+}
+
+int CyState::getAddedFreeSpecialists(int iPlayer, int iCity, int iSpecialist) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iSpecialist < 0 || iSpecialist >= GC.getNumSpecialistInfos()) return 0;
+	return pCity->getAddedFreeSpecialistCount((SpecialistTypes)iSpecialist);
+}
+
 python::list CyState::getGrowth(int iPlayer, int iCity) const
 {
 	PERF_SCOPE("CyState::getGrowth", -1);
@@ -1189,6 +1262,14 @@ void CyState::pythonPublish()
 		.def("getCountdowns",            &CyState::getCountdowns)
 		.def("getOrder",                 &CyState::getOrder)
 		.def("isUnitQueued",             &CyState::isUnitQueued)
+		// the one-shot GRANTED store + the scenario reads over it
+		.def("getCityScriptData",        &CyState::getCityScriptData)
+		.def("getCityGrantedExtras",     &CyState::getCityGrantedExtras)
+		.def("getBuildingGrantedWellbeing", &CyState::getBuildingGrantedWellbeing)
+		.def("getBuildingGrantedYields", &CyState::getBuildingGrantedYields)
+		.def("getBuildingGrantedCommerces", &CyState::getBuildingGrantedCommerces)
+		.def("getBuildingBuiltTime",     &CyState::getBuildingBuiltTime)
+		.def("getAddedFreeSpecialists",  &CyState::getAddedFreeSpecialists)
 		.def("getGrowth",                &CyState::getGrowth)
 		.def("getCulture",               &CyState::getCulture)
 		.def("getCityFlags",             &CyState::getCityFlags)
