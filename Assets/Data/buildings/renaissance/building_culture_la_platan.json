@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_LA_PLATAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_LA_PLATAN_PEDIA",
+  "pediaCategory": "culture",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

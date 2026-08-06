@@ -96,6 +96,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_APOSTOLIC_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_APOSTOLIC_PALACE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 15,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

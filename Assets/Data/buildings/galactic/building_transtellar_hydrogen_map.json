@@ -35,6 +35,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP",
   "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_HYDROGEN_MAP_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

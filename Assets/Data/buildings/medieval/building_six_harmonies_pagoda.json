@@ -96,6 +96,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SIX_HARMONIES_PAGODA",
   "civilopedia": "TXT_KEY_BUILDING_SIX_HARMONIES_PAGODA_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

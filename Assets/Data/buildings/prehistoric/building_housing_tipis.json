@@ -90,6 +90,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_TIPIS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_TIPIS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

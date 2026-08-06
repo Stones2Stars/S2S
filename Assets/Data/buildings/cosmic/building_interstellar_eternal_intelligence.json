@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

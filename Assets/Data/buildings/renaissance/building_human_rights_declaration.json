@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_RIGHTS_DECLARATION",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_RIGHTS_DECLARATION_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",

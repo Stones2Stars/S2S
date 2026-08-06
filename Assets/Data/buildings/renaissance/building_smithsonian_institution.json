@@ -115,6 +115,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SMITHSONIAN_INSTITUTION",
   "civilopedia": "TXT_KEY_BUILDING_SMITHSONIAN_INSTITUTION_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

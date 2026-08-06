@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GLOBAL_STOCK_EXCHANGE",
   "civilopedia": "TXT_KEY_BUILDING_GLOBAL_STOCK_EXCHANGE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 7,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

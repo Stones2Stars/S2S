@@ -108,6 +108,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RED_CROSS",
   "civilopedia": "TXT_KEY_BUILDING_RED_CROSS_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "militaryWorth": 4,
   "greatPeopleUnitType": "UNIT_DOCTOR",

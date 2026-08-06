@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_APARTMENTS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_APARTMENTS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

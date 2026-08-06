@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENUS_CARBONWORKS",
   "civilopedia": "TXT_KEY_BUILDING_VENUS_CARBONWORKS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

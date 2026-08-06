@@ -81,6 +81,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAPTURED_FIRE",
   "civilopedia": "TXT_KEY_BUILDING_CAPTURED_FIRE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,
   "mapCategories": [

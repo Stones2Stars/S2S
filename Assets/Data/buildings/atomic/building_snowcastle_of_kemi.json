@@ -90,6 +90,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI",
   "civilopedia": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "militaryWorth": 3,
   "conquestProbability": 100,

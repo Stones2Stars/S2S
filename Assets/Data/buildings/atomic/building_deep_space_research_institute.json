@@ -88,6 +88,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
   "advisor": "ADVISOR_SCIENCE",

@@ -142,6 +142,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EDINBURGH_CASTLE",
   "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

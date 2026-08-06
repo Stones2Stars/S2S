@@ -106,6 +106,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CN_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_CN_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "militaryWorth": 4,
   "conquestProbability": 100,

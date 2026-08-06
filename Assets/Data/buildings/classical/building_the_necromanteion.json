@@ -125,6 +125,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_NECROMANTEION",
   "civilopedia": "TXT_KEY_BUILDING_THE_NECROMANTEION_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY",
   "civilopedia": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

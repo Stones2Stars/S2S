@@ -89,6 +89,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_TREEHOUSES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_TREEHOUSES_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

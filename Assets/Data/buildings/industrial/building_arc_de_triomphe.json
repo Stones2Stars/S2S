@@ -112,6 +112,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ARC_DE_TRIOMPHE",
   "civilopedia": "TXT_KEY_BUILDING_ARC_DE_TRIOMPHE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 18,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

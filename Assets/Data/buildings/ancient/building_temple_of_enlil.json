@@ -112,6 +112,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_ENLIL",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ENLIL_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

@@ -101,6 +101,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_IDOL",
   "civilopedia": "TXT_KEY_BUILDING_IDOL_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_RODNOVERA",

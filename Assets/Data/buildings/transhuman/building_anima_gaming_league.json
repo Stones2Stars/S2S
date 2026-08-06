@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANIMA_GAMING_LEAGUE",
   "civilopedia": "TXT_KEY_BUILDING_ANIMA_GAMING_LEAGUE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

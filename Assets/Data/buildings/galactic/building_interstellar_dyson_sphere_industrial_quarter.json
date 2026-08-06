@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

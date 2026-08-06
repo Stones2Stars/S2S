@@ -124,6 +124,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MAUSOLEUM_OF_MAUSSOLLOS",
   "civilopedia": "TXT_KEY_BUILDING_MAUSOLEUM_OF_MAUSSOLLOS_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

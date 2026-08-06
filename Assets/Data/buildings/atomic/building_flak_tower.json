@@ -90,6 +90,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FLAK_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_FLAK_TOWER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "militaryWorth": 5,
   "advisor": "ADVISOR_MILITARY",

@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ACHIEVEMENT_CULTURAL",
   "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
   "advisor": "ADVISOR_CULTURE",

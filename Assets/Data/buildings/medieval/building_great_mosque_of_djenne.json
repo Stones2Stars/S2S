@@ -237,6 +237,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

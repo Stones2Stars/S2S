@@ -42,6 +42,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_HEAT_RECOVERY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_HEAT_RECOVERY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

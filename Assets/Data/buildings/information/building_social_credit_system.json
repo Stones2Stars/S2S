@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_SOCIAL_CREDIT_SYSTEM_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -131,6 +131,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NOBLEGARDEN",
   "civilopedia": "TXT_KEY_BUILDING_NOBLEGARDEN_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

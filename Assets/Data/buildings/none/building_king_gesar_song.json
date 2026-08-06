@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KING_GESAR_SONG",
   "civilopedia": "TXT_KEY_BUILDING_KING_GESAR_SONG_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL_II",
   "religion": "RELIGION_TENGRIISM",

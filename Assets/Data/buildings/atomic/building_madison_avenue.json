@@ -129,6 +129,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MADISON_AVENUE",
   "civilopedia": "TXT_KEY_BUILDING_MADISON_AVENUE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

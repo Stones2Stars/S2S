@@ -90,6 +90,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GUILD_ARTISTS",
   "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_ARTIST",
   "specialBuildingType": "SPECIALBUILDING_GUILD",
   "advisor": "ADVISOR_CULTURE",

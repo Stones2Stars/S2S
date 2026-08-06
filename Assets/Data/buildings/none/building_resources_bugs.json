@@ -87,6 +87,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RESOURCES_BUGS",
   "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_ECONOMY",

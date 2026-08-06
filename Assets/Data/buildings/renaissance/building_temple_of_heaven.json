@@ -161,6 +161,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_HEAVEN_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

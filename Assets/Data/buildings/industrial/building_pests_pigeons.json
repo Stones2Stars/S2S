@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PESTS_PIGEONS",
   "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "conquestProbability": 100,

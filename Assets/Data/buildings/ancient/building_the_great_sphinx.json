@@ -131,6 +131,7 @@
   "description": "TXT_KEY_BUILDING_THE_GREAT_SPHINX",
   "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_SPHINX_PEDIA",
   "help": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -55,6 +55,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_NETWORK_NODE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NETWORK_NODE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

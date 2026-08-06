@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENUS_CLAYTRONIC_CITY",
   "civilopedia": "TXT_KEY_BUILDING_VENUS_CLAYTRONIC_CITY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

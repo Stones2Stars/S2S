@@ -59,6 +59,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE",
   "civilopedia": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

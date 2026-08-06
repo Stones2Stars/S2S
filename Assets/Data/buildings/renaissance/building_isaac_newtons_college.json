@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE",
   "civilopedia": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

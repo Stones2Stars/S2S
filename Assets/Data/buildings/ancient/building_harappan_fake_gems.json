@@ -103,6 +103,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HARAPPAN_FAKE_GEMS",
   "civilopedia": "TXT_KEY_BUILDING_HARAPPAN_FAKE_GEMS_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

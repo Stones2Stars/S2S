@@ -97,6 +97,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INVOCATION_HUT",
   "civilopedia": "TXT_KEY_BUILDING_INVOCATION_HUT_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
   "religion": "RELIGION_SHAMANISM",

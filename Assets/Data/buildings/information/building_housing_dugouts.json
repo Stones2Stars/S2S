@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_DUGOUTS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_DUGOUTS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

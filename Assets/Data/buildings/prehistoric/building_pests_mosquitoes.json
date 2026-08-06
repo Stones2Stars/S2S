@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PESTS_MOSQUITOES",
   "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "conquestProbability": 100,

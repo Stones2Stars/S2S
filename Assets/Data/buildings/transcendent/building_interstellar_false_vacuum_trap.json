@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

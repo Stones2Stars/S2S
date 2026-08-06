@@ -54,6 +54,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COSMIC_EXPANSION_POWER_PLANT",
   "civilopedia": "TXT_KEY_BUILDING_COSMIC_EXPANSION_POWER_PLANT_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -45,6 +45,7 @@
   "description": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION",
   "civilopedia": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_PEDIA",
   "help": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_HELP",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

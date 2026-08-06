@@ -59,6 +59,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GRAVITY_TRAIN_NETWORK",
   "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAIN_NETWORK_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -103,6 +103,7 @@
   "description": "TXT_KEY_BUILDING_LUXOR_CASINO",
   "civilopedia": "TXT_KEY_BUILDING_LUXOR_CASINO_PEDIA",
   "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SKYLAB",
   "civilopedia": "TXT_KEY_BUILDING_SKYLAB_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

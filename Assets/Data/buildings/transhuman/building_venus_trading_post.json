@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENUS_TRADING_POST",
   "civilopedia": "TXT_KEY_BUILDING_VENUS_TRADING_POST_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

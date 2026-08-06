@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VOYAGER_PROGRAM",
   "civilopedia": "TXT_KEY_BUILDING_VOYAGER_PROGRAM_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

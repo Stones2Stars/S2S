@@ -88,6 +88,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CANADIAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CANADIAN_PEDIA",
+  "pediaCategory": "culture",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

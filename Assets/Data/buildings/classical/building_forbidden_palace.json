@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FORBIDDEN_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_FORBIDDEN_PALACE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",
   "advisor": "ADVISOR_ECONOMY",

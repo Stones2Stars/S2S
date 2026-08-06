@@ -92,6 +92,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MURANO_GLASSMAKERS",
   "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_GLASSWARE_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

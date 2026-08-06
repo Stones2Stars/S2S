@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOUNDLING_HOSPITAL",
   "civilopedia": "TXT_KEY_BUILDING_FOUNDLING_HOSPITAL_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

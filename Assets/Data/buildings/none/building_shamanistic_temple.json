@@ -89,6 +89,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "religion": "RELIGION_SHAMANISM",
   "advisor": "ADVISOR_RELIGION",

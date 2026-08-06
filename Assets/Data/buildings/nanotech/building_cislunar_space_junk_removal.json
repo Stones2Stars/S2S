@@ -29,6 +29,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_MOONBEAN_COFFEE",
   "civilopedia": "TXT_KEY_BUILDING_HQ_MOONBEAN_COFFEE_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

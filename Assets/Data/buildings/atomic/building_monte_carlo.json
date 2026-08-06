@@ -134,6 +134,7 @@
   "description": "TXT_KEY_BUILDING_MONTE_CARLO",
   "civilopedia": "TXT_KEY_BUILDING_MONTE_CARLO_PEDIA",
   "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

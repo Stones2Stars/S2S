@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPIRAL_MINARET",
   "civilopedia": "TXT_KEY_BUILDING_SPIRAL_MINARET_PEDIA",
+  "pediaCategory": "greatWonder",
   "stateReligionCommerce": {
    "gold": 2
   },

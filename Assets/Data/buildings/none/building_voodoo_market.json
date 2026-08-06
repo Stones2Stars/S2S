@@ -119,6 +119,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VOODOO_MARKET",
   "civilopedia": "TXT_KEY_BUILDING_VOODOO_MARKET_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_VOODOO",

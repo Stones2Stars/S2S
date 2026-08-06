@@ -100,6 +100,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_OLYMPIC_GAMES",
   "civilopedia": "TXT_KEY_BUILDING_OLYMPIC_GAMES_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 20,
   "militaryWorth": 4,
   "conquestProbability": 100,

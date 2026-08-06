@@ -144,6 +144,7 @@
   "description": "TXT_KEY_BUILDING_NATIONAL_MINT",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_MINT_PEDIA",
   "help": "TXT_KEY_BUILDING_NATIONAL_MINT_HELP",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "militaryWorth": 2,
   "advisor": "ADVISOR_ECONOMY",

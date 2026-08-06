@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ROKOS_BASILISK",
   "civilopedia": "TXT_KEY_BUILDING_ROKOS_BASILISK_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

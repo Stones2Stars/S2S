@@ -68,6 +68,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INVOCATION_HUT_COW",
   "civilopedia": "TXT_KEY_BUILDING_INVOCATION_HUT_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "religion": "RELIGION_SHAMANISM",
   "advisor": "ADVISOR_RELIGION",

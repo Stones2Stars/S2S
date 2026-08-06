@@ -56,6 +56,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_NANOMORPHISM",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_NANOMORPHISM_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

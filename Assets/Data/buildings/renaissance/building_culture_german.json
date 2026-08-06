@@ -101,6 +101,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_GERMAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_GERMAN_PEDIA",
+  "pediaCategory": "culture",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

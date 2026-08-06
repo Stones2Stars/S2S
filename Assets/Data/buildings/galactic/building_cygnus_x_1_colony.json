@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CYGNUS_X_1_COLONY",
   "civilopedia": "TXT_KEY_BUILDING_CYGNUS_X_1_COLONY_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -138,6 +138,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MEENAKSHI_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_MEENAKSHI_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

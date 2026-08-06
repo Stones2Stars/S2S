@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_WHITE_HOLE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WHITE_HOLE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

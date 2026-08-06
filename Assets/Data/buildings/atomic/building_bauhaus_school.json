@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BAUHAUS_SCHOOL",
   "civilopedia": "TXT_KEY_BUILDING_BAUHAUS_SCHOOL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -139,6 +139,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_OSIRIS",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_OSIRIS_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "advisor": "ADVISOR_RELIGION",
   "visibilityPriority": 1,

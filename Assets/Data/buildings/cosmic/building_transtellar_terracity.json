@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSTELLAR_TERRACITY",
   "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_TERRACITY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

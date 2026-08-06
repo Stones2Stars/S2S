@@ -61,6 +61,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
   "civilopedia": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

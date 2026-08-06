@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BUREAU_OF_FARM_MANAGEMENT",
   "civilopedia": "TXT_KEY_BUILDING_BUREAU_OF_FARM_MANAGEMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 20,
   "militaryWorth": 10,
   "advisor": "ADVISOR_GROWTH",

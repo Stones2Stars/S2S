@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ODEON",
   "civilopedia": "TXT_KEY_BUILDING_ODEON_PEDIA",
+  "pediaCategory": "religious",
   "worth": 5,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

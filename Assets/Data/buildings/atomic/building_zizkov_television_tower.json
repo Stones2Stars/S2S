@@ -65,6 +65,7 @@
   "description": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_PEDIA",
   "help": "TXT_KEY_BUILDING_ZIZKOV_TELEVISION_TOWER_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "militaryWorth": 8,
   "conquestProbability": 100,

@@ -55,6 +55,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AI_SINGLETON",
   "civilopedia": "TXT_KEY_BUILDING_AI_SINGLETON_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

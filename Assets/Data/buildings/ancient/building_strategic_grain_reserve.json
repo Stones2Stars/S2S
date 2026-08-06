@@ -128,6 +128,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE",
   "civilopedia": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_GROWTH",

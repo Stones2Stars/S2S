@@ -121,6 +121,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_T_RAPTORS",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

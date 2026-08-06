@@ -63,6 +63,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GIGAVERSE_PORTAL",
   "civilopedia": "TXT_KEY_BUILDING_GIGAVERSE_PORTAL_PEDIA",
+  "pediaCategory": "space",
   "forceNoPrereqScaling": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

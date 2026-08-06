@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_HIGHRISES_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

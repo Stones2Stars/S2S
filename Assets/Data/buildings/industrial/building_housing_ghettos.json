@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_GHETTOS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_GHETTOS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

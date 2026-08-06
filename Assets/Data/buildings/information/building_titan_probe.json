@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TITAN_PROBE",
   "civilopedia": "TXT_KEY_BUILDING_TITAN_PROBE_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

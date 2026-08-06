@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERNET_ARCHIVE",
   "civilopedia": "TXT_KEY_BUILDING_INTERNET_ARCHIVE_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

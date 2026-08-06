@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CARAL_SUPE",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CARAL_SUPE_PEDIA",
+  "pediaCategory": "culture",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

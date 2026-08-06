@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ARCHIMEDES_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_ARCHIMEDES_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

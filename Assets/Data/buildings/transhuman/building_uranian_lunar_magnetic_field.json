@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
   "civilopedia": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_HACKED_SOURCE_CODE",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_HACKED_SOURCE_CODE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

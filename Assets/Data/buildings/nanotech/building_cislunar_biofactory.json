@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_BIOFACTORY",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_BIOFACTORY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

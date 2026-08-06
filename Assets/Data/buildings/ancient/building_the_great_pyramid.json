@@ -127,6 +127,7 @@
   "description": "TXT_KEY_BUILDING_THE_GREAT_PYRAMID",
   "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_PYRAMID_PEDIA",
   "help": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

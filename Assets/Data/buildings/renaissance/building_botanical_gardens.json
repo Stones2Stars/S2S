@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BOTANICAL_GARDENS",
   "civilopedia": "TXT_KEY_BUILDING_BOTANICAL_GARDENS_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 6,
   "militaryWorth": 3,
   "advisor": "ADVISOR_ECONOMY",

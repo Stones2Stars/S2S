@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_DONKEY",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_DONKEY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRITON_HEAT_RING",
   "civilopedia": "TXT_KEY_BUILDING_TRITON_HEAT_RING_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

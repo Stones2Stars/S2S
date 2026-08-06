@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_HOLO_SUITES_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

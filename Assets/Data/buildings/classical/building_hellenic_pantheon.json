@@ -123,6 +123,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HELLENIC_PANTHEON",
   "civilopedia": "TXT_KEY_BUILDING_HELLENIC_PANTHEON_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_PANTHEON",
   "religion": "RELIGION_HELLENISM",

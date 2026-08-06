@@ -81,6 +81,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CRISTO_REDENTOR",
   "civilopedia": "TXT_KEY_BUILDING_CRISTO_REDENTOR_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 100,

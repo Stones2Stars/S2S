@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_ACCELERATOR",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ACCELERATOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

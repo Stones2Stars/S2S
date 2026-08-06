@@ -99,6 +99,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WILLIS_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_WILLIS_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

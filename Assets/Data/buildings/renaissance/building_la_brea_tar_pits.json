@@ -130,6 +130,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LA_BREA_TAR_PITS",
   "civilopedia": "TXT_KEY_BUILDING_LA_BREA_TAR_PITS_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

@@ -97,6 +97,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER",
   "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_WATER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

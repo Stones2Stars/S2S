@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BOSTON_ARCOLOGY",
   "civilopedia": "TXT_KEY_BUILDING_BOSTON_ARCOLOGY_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

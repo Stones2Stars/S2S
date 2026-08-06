@@ -55,6 +55,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE",
   "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE_PEDIA",
+  "pediaCategory": "space",
   "notConstructible": true,
   "autoBuild": true,
   "conquestProbability": 100,

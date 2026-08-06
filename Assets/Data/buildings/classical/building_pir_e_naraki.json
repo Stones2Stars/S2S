@@ -97,6 +97,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PIR_E_NARAKI",
   "civilopedia": "TXT_KEY_BUILDING_PIR_E_NARAKI_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

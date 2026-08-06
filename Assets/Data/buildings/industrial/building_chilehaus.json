@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHILEHAUS",
   "civilopedia": "TXT_KEY_BUILDING_CHILEHAUS_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_STATESMAN",
   "advisor": "ADVISOR_SCIENCE",

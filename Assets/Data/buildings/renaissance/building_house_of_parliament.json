@@ -112,6 +112,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT",
   "civilopedia": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "militaryWorth": 5,
   "advisor": "ADVISOR_ECONOMY",

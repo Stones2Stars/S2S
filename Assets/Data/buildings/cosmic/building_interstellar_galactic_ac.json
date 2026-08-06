@@ -59,6 +59,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_AC",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_AC_PEDIA",
+  "pediaCategory": "space",
   "forceNoPrereqScaling": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

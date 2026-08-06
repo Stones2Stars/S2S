@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAPITOL_RECORDS_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_CAPITOL_RECORDS_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

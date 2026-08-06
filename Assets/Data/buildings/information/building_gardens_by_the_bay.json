@@ -90,6 +90,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GARDENS_BY_THE_BAY",
   "civilopedia": "TXT_KEY_BUILDING_GARDENS_BY_THE_BAY_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

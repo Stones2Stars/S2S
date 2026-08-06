@@ -110,6 +110,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BURJ_KHALIFA",
   "civilopedia": "TXT_KEY_BUILDING_BURJ_KHALIFA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

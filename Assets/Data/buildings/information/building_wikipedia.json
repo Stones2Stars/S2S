@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WIKIPEDIA",
   "civilopedia": "TXT_KEY_BUILDING_WIKIPEDIA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

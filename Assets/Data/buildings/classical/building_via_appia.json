@@ -95,6 +95,7 @@
   "description": "TXT_KEY_BUILDING_VIA_APPIA",
   "civilopedia": "TXT_KEY_BUILDING_VIA_APPIA_PEDIA",
   "help": "TXT_KEY_BUILDING_VIA_APPIA_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

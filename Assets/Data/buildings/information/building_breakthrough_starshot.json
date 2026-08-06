@@ -56,6 +56,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BREAKTHROUGH_STARSHOT",
   "civilopedia": "TXT_KEY_BUILDING_BREAKTHROUGH_STARSHOT_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

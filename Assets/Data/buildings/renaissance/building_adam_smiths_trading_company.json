@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY",
   "civilopedia": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

@@ -106,6 +106,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_E_MERMAID",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

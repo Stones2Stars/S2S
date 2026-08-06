@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_TEMPLE_OF_SOLOMON",
   "civilopedia": "TXT_KEY_BUILDING_THE_TEMPLE_OF_SOLOMON_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

@@ -117,6 +117,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_APADANA_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_APADANA_PALACE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -89,6 +89,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_PARK",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_PARK_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 7,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_GROWTH",

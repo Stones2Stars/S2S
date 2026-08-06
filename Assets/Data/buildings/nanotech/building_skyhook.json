@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SKYHOOK",
   "civilopedia": "TXT_KEY_BUILDING_SKYHOOK_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE",
   "civilopedia": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 15,
   "conquestProbability": 100,
   "advisor": "ADVISOR_MILITARY",

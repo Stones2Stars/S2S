@@ -142,6 +142,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TOTH_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_KEMETISM",

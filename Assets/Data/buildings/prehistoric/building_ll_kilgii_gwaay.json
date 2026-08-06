@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LL_KILGII_GWAAY",
   "civilopedia": "TXT_KEY_BUILDING_LL_KILGII_GWAAY_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

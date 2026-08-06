@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_HOLLOW_PLANET_INTERIOR_STAR",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_HOLLOW_PLANET_INTERIOR_STAR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

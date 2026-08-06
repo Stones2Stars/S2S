@@ -116,6 +116,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MESA_VERDE",
   "civilopedia": "TXT_KEY_BUILDING_MESA_VERDE_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -88,6 +88,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NEO_PYRAMID",
   "civilopedia": "TXT_KEY_BUILDING_NEO_PYRAMID_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "specialBuildingType": "SPECIALBUILDING_PUNK_STAR",

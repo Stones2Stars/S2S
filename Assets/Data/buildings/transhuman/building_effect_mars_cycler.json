@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EFFECT_MARS_CYCLER",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_MARS_CYCLER_PEDIA",
+  "pediaCategory": "space",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

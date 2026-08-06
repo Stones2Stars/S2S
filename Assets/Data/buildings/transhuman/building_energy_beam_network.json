@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ENERGY_BEAM_NETWORK",
   "civilopedia": "TXT_KEY_BUILDING_ENERGY_BEAM_NETWORK_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

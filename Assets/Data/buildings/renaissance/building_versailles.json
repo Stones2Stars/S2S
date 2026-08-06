@@ -95,6 +95,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VERSAILLES",
   "civilopedia": "TXT_KEY_BUILDING_VERSAILLES_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 16,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

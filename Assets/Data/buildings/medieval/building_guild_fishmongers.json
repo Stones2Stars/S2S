@@ -93,6 +93,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GUILD_FISHMONGERS",
   "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "specialBuildingType": "SPECIALBUILDING_GUILD",
   "advisor": "ADVISOR_GROWTH",

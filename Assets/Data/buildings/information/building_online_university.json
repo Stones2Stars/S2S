@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY",
   "civilopedia": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

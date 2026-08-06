@@ -29,6 +29,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CLUSTER_BRAIN_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

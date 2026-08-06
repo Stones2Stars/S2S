@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

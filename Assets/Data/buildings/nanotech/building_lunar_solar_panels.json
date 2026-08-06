@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_SOLAR_PANELS",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOLAR_PANELS_PEDIA",
+  "pediaCategory": "space",
   "forceNoPrereqScaling": true,
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",

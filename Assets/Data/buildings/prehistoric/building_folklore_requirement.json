@@ -186,6 +186,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_REQUIREMENT",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_REQUIREMENT_PEDIA",
+  "pediaCategory": "animalistic",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

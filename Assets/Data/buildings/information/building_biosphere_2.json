@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BIOSPHERE_2",
   "civilopedia": "TXT_KEY_BUILDING_BIOSPHERE_2_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TENGRII_HORSE_TRAINER",
   "civilopedia": "TXT_KEY_BUILDING_TENGRII_HORSE_TRAINER_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "religion": "RELIGION_TENGRIISM",
   "advisor": "ADVISOR_RELIGION",

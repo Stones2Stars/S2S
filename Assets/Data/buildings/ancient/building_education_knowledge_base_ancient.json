@@ -43,6 +43,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT",
   "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_ANCIENT_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

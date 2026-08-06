@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_I",
   "civilopedia": "TXT_KEY_BUILDING_SLAVERY_ZORO_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "autoBuild": true,
   "religion": "RELIGION_ZOROASTRIANISM",

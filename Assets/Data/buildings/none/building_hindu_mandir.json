@@ -122,6 +122,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HINDU_MANDIR",
   "civilopedia": "TXT_KEY_BUILDING_HINDU_MANDIR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_HINDUISM",

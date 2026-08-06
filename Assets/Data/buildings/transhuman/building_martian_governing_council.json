@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_GOVERNING_COUNCIL",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_GOVERNING_COUNCIL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

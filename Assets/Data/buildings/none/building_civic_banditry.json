@@ -38,6 +38,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CIVIC_BANDITRY",
   "civilopedia": "TXT_KEY_BUILDING_CIVIC_BANDITRY_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_DIESELPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_DIESELPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",

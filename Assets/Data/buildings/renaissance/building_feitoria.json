@@ -108,6 +108,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FEITORIA",
   "civilopedia": "TXT_KEY_BUILDING_FEITORIA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 4,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

@@ -107,6 +107,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HAGIA_SOPHIA",
   "civilopedia": "TXT_KEY_BUILDING_HAGIA_SOPHIA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

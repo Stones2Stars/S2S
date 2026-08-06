@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SETI_PIR",
   "civilopedia": "TXT_KEY_BUILDING_SETI_PIR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

@@ -38,6 +38,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA",
   "civilopedia": "TXT_KEY_BUILDING_VOYAGE_TO_ANDROMEDA_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -59,6 +59,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATURE_CIRCLE_MUSHROOMS",
   "civilopedia": "TXT_KEY_BUILDING_NATURE_CIRCLE_OF_POWER_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "religion": "RELIGION_DRUIDIC_TRADITIONS",
   "advisor": "ADVISOR_RELIGION",

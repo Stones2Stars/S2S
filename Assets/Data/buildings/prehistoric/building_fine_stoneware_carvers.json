@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FINE_STONEWARE_CARVERS",
   "civilopedia": "TXT_KEY_BUILDING_FINE_STONEWARE_CARVERS_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

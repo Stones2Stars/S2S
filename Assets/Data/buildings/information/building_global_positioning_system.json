@@ -68,6 +68,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

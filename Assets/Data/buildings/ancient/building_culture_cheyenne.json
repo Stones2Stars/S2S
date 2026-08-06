@@ -63,6 +63,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CHEYENNE",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CHEYENNE_PEDIA",
+  "pediaCategory": "culture",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

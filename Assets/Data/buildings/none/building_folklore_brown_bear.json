@@ -95,6 +95,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_BROWN_BEAR",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

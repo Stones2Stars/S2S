@@ -94,6 +94,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL",
   "civilopedia": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 6,
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",

@@ -108,6 +108,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR",
   "civilopedia": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_BAHAI",

@@ -135,6 +135,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION",
   "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

@@ -61,6 +61,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

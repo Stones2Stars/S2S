@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MADRASSA",
   "civilopedia": "TXT_KEY_BUILDING_MADRASSA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 5,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

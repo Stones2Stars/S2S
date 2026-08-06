@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CRYSTAL_ISLAND",
   "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_ISLAND_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

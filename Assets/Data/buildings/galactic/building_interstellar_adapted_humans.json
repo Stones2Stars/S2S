@@ -56,6 +56,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE",
   "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLODUMARE_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

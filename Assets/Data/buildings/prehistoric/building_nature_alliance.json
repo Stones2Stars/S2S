@@ -115,6 +115,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATURE_ALLIANCE",
   "civilopedia": "TXT_KEY_BUILDING_NATURE_ALLIANCE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL_II",
   "religion": "RELIGION_DRUIDIC_TRADITIONS",

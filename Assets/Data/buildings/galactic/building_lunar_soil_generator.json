@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_SOIL_GENERATOR",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOIL_GENERATOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

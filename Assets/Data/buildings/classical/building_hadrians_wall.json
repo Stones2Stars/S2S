@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HADRIANS_WALL",
   "civilopedia": "TXT_KEY_BUILDING_HADRIANS_WALL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 100,

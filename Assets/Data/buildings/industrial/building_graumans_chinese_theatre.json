@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GRAUMANS_CHINESE_THEATRE",
   "civilopedia": "TXT_KEY_BUILDING_GRAUMANS_CHINESE_THEATRE_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

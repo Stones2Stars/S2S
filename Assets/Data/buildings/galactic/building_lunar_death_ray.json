@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_DEATH_RAY",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_DEATH_RAY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

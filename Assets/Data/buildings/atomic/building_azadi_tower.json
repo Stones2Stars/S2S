@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AZADI_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_AZADI_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

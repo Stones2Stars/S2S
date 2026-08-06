@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOLAR_SATELLITE_ARRAY",
   "civilopedia": "TXT_KEY_BUILDING_SOLAR_SATELLITE_ARRAY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

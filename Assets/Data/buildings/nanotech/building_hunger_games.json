@@ -54,6 +54,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUNGER_GAMES",
   "civilopedia": "TXT_KEY_BUILDING_HUNGER_GAMES_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

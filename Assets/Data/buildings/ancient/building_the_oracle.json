@@ -108,6 +108,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_ORACLE",
   "civilopedia": "TXT_KEY_BUILDING_THE_ORACLE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

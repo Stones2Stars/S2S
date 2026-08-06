@@ -41,6 +41,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_TIMELINE_STABILIZERS",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_TIMELINE_STABILIZERS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

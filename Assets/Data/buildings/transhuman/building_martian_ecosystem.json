@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_ECOSYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ECOSYSTEM_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

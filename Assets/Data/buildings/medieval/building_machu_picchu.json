@@ -176,6 +176,7 @@
   "description": "TXT_KEY_BUILDING_MACHU_PICCHU",
   "civilopedia": "TXT_KEY_BUILDING_MACHU_PICCHU_PEDIA",
   "help": "TXT_KEY_BUILDING_MACHU_PICCHU_HELP",
+  "pediaCategory": "religious",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

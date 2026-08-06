@@ -26,6 +26,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CIVIC_CASTE",
   "civilopedia": "TXT_KEY_BUILDING_CIVIC_CASTE_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

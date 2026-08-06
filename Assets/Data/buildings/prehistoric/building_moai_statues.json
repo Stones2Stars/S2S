@@ -98,6 +98,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOAI_STATUES",
   "civilopedia": "TXT_KEY_BUILDING_MOAI_STATUES_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 100,

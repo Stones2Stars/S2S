@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_LEAN_TOS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

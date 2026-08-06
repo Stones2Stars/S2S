@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOLLYWOOD",
   "civilopedia": "TXT_KEY_BUILDING_HOLLYWOOD_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 18,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

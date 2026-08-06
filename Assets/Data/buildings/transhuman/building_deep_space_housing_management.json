@@ -58,6 +58,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

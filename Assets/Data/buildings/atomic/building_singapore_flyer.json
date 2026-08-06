@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SINGAPORE_FLYER",
   "civilopedia": "TXT_KEY_BUILDING_SINGAPORE_FLYER_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

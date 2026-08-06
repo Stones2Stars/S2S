@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

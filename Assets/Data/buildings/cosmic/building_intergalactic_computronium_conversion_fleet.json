@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

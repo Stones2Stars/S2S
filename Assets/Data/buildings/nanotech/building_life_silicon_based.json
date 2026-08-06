@@ -79,6 +79,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_SILICON_BASED",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_BASED_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

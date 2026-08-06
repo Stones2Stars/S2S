@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

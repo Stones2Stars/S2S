@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHRINE_OF_BAB",
   "civilopedia": "TXT_KEY_BUILDING_SHRINE_OF_BAB_PEDIA",
+  "pediaCategory": "religious",
   "stateReligionCommerce": {
    "research": 1
   },

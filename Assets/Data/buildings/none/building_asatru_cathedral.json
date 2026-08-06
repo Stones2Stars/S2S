@@ -131,6 +131,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ASATRU_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_ASATRU_CATHEDRAL_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_ASATRU",

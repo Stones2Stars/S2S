@@ -93,6 +93,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER",
   "civilopedia": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_CENTRIFUGAL_HABITAT",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_CENTRIFUGAL_HABITAT_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

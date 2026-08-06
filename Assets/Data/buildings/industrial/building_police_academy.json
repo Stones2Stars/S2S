@@ -125,6 +125,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_POLICE_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_POLICE_ACADEMY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

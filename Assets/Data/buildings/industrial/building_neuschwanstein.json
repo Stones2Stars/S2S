@@ -117,6 +117,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NEUSCHWANSTEIN",
   "civilopedia": "TXT_KEY_BUILDING_NEUSCHWANSTEIN_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 16,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

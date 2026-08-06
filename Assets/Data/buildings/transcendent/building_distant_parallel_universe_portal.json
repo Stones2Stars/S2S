@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

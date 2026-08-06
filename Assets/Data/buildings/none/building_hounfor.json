@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUNFOR",
   "civilopedia": "TXT_KEY_BUILDING_HOUNFOR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_VOODOO",

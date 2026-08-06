@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DUBAI_WORLD_CENTRAL",
   "civilopedia": "TXT_KEY_BUILDING_DUBAI_WORLD_CENTRAL_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

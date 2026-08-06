@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COW_SHRINE",
   "civilopedia": "TXT_KEY_BUILDING_COW_SHRINE_PEDIA",
+  "pediaCategory": "religious",
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

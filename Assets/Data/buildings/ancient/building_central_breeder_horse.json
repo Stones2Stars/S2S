@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_HORSE",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_HORSE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

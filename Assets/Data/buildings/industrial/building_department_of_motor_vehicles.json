@@ -117,6 +117,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
   "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

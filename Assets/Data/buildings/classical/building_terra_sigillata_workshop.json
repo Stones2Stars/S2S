@@ -111,6 +111,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TERRA_SIGILLATA_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_TERRA_SIGILLATA_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

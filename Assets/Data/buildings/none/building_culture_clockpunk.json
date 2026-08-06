@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CLOCKPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CLOCKPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
   "noInstanceLimit": true,
   "worth": 5,
   "conquestProbability": 100,

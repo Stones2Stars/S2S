@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DW_VINTAGE_RED",
   "civilopedia": "TXT_KEY_BUILDING_VINTAGE_WINERY_PEDIA",
+  "pediaCategory": "groupWonder",
   "worth": 10,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_GROUP_DELUXE_WINERIES",

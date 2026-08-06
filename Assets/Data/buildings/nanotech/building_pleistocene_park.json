@@ -106,6 +106,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PLEISTOCENE_PARK",
   "civilopedia": "TXT_KEY_BUILDING_PLEISTOCENE_PARK_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

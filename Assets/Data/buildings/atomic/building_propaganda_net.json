@@ -94,6 +94,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PROPAGANDA_NET",
   "civilopedia": "TXT_KEY_BUILDING_PROPAGANDA_NET_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",
   "advisor": "ADVISOR_CULTURE",

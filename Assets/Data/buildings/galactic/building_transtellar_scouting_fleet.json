@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSTELLAR_SCOUTING_FLEET",
   "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_SCOUTING_FLEET_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

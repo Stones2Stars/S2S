@@ -73,6 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TIME_SHIP",
   "civilopedia": "TXT_KEY_BUILDING_TIME_SHIP_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

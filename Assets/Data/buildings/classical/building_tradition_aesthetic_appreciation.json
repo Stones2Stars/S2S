@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION",
   "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 6,
   "advisor": "ADVISOR_CULTURE",

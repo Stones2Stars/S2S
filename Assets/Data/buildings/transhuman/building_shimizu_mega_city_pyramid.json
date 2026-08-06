@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
   "civilopedia": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

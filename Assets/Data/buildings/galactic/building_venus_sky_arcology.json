@@ -59,6 +59,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY",
   "civilopedia": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

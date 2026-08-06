@@ -73,6 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_FIREWALL",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_FIREWALL_PEDIA",
+  "pediaCategory": "greatWonder",
   "militaryWorth": 5,
   "conquestProbability": 100,
   "advisor": "ADVISOR_MILITARY",

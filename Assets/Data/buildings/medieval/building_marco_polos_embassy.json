@@ -94,6 +94,7 @@
   "description": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY",
   "civilopedia": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_PEDIA",
   "help": "TXT_KEY_BUILDING_MARCO_POLOS_EMBASSY_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

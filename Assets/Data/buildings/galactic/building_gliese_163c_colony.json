@@ -73,6 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GLIESE_163C_COLONY",
   "civilopedia": "TXT_KEY_BUILDING_GLIESE_163C_COLONY_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_OLDOINYO_NGAI",
   "civilopedia": "TXT_KEY_BUILDING_OLDOINYO_NGAI_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

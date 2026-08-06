@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_FASHION_HOUSE",
   "civilopedia": "TXT_KEY_BUILDING_HQ_FASHION_HOUSE_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

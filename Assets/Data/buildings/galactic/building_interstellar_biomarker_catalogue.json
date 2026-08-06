@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

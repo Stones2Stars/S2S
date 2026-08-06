@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_FLUORESCENT_BACTERIA",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_FLUORESCENT_BACTERIA_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

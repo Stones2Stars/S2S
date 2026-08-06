@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

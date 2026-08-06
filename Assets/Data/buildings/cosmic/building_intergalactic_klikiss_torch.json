@@ -33,6 +33,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_KLIKISS_TORCH",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_KLIKISS_TORCH_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

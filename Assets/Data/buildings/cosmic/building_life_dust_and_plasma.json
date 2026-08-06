@@ -68,6 +68,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_DUST_AND_PLASMA",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_DUST_AND_PLASMA_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

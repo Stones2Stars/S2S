@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_FLIGHT_LANES",
   "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_FLIGHT_LANES_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

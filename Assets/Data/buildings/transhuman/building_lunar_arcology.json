@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -135,6 +135,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LOKI_SANCTUARY",
   "civilopedia": "TXT_KEY_BUILDING_LOKI_SANCTUARY_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_ASATRU",

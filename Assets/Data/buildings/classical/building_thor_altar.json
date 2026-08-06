@@ -97,6 +97,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THOR_ALTAR",
   "civilopedia": "TXT_KEY_BUILDING_THOR_ALTAR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "religion": "RELIGION_ASATRU",
   "advisor": "ADVISOR_CULTURE",

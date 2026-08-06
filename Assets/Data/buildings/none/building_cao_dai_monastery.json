@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAO_DAI_MONASTERY",
   "civilopedia": "TXT_KEY_BUILDING_CAO_DAI_MONASTERY_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_CAO_DAI",

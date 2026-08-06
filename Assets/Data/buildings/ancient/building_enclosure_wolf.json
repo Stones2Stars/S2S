@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ENCLOSURE_WOLF",
   "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
+  "pediaCategory": "animalistic",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

@@ -29,6 +29,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

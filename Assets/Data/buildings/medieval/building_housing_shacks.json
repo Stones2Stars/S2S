@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_SHACKS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHACKS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

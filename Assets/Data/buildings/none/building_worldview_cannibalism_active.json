@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
   "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "forceNoPrereqScaling": true,

@@ -123,6 +123,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA",
   "civilopedia": "TXT_KEY_BUILDING_HELLENIC_GYMNASIA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_HELLENISM",

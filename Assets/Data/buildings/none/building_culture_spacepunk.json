@@ -43,6 +43,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_SPACEPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_SPACEPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_PUNK_SPACE",

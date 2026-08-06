@@ -26,6 +26,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY",
   "civilopedia": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_BURGERWORLD",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

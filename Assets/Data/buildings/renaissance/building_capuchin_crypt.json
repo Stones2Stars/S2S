@@ -82,6 +82,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAPUCHIN_CRYPT",
   "civilopedia": "TXT_KEY_BUILDING_CAPUCHIN_CRYPT_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

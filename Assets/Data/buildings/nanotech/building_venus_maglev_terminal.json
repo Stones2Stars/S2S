@@ -38,6 +38,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENUS_MAGLEV_TERMINAL",
   "civilopedia": "TXT_KEY_BUILDING_VENUS_MAGLEV_TERMINAL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -142,6 +142,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MASADA",
   "civilopedia": "TXT_KEY_BUILDING_MASADA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

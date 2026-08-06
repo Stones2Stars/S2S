@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

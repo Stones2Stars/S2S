@@ -92,6 +92,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AQUARIUM_PEDIA",
+  "pediaCategory": "nationalWonder",
   "centerInCity": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

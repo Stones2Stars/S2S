@@ -42,6 +42,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

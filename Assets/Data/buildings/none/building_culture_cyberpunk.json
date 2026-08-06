@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CYBERPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CYBERPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",

@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

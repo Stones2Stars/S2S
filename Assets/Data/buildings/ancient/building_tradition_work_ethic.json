@@ -63,6 +63,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC",
   "civilopedia": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",

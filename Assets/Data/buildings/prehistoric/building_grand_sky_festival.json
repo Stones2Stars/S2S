@@ -275,6 +275,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GRAND_SKY_FESTIVAL",
   "civilopedia": "TXT_KEY_BUILDING_GRAND_SKY_FESTIVAL_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

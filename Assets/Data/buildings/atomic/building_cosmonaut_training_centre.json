@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE",
   "civilopedia": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

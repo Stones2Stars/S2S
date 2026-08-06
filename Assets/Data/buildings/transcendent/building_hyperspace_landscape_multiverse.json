@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_LANDSCAPE_MULTIVERSE",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_LANDSCAPE_MULTIVERSE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

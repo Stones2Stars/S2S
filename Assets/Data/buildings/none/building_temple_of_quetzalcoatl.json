@@ -89,6 +89,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_QUETZALCOATL",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_QUETZALCOATL_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_NAGHUALISM",

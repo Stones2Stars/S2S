@@ -103,6 +103,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

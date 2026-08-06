@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_CONCRETE_MILL",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_CONCRETE_MILL_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

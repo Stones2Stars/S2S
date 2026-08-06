@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_TRAILER_PARK_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

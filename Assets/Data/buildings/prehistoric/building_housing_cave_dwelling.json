@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "worth": 1,

@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_YASNAYA_POLYANA",
   "civilopedia": "TXT_KEY_BUILDING_YASNAYA_POLYANA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

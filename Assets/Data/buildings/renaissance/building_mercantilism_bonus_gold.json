@@ -36,6 +36,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_GOLD",
   "civilopedia": "TXT_KEY_BUILDING_MERCANTILISM_BONUS_GOLD_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "worth": 3,

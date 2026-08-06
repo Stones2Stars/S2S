@@ -121,6 +121,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_E_EARTH",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
+  "pediaCategory": "animalistic",
   "forceNoPrereqScaling": true,
   "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
   "advisor": "ADVISOR_SCIENCE",

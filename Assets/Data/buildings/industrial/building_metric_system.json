@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_METRIC_SYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_METRIC_SYSTEM_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

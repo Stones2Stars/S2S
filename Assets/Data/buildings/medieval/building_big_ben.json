@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BIG_BEN",
   "civilopedia": "TXT_KEY_BUILDING_BIG_BEN_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

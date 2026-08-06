@@ -38,6 +38,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CIVIC_MILITIA",
   "civilopedia": "TXT_KEY_BUILDING_CIVIC_MILITIA_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

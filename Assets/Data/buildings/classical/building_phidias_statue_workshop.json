@@ -130,6 +130,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

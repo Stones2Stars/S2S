@@ -93,6 +93,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL",
   "civilopedia": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCOMPUTER",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCOMPUTER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

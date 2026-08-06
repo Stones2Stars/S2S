@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCIENTOLOGY_MONASTERY",
   "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_MONASTERY_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "religion": "RELIGION_SCIENTOLOGY",
   "advisor": "ADVISOR_RELIGION",

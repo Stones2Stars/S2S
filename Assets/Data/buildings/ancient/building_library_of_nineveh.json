@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIBRARY_OF_NINEVEH",
   "civilopedia": "TXT_KEY_BUILDING_LIBRARY_OF_NINEVEH_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

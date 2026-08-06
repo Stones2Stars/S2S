@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_4_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

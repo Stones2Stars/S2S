@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAT_SHRINE",
   "civilopedia": "TXT_KEY_BUILDING_CAT_SHRINE_PEDIA",
+  "pediaCategory": "religious",
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

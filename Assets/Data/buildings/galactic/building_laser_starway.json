@@ -68,6 +68,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LASER_STARWAY",
   "civilopedia": "TXT_KEY_BUILDING_LASER_STARWAY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

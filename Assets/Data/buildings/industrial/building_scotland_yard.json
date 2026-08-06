@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCOTLAND_YARD",
   "civilopedia": "TXT_KEY_BUILDING_SCOTLAND_YARD_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 10,
   "militaryWorth": 5,

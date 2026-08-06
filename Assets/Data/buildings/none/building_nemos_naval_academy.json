@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_NEMOS_NAVAL_ACADEMY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 6,
   "militaryWorth": 6,
   "conquestProbability": 100,

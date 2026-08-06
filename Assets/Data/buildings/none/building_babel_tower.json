@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BABEL_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_TMESO_SHRINE_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

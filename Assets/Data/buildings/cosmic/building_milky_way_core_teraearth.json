@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH",
   "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

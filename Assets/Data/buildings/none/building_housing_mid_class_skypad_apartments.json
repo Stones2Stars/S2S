@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",

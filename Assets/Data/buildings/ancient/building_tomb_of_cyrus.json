@@ -84,6 +84,7 @@
   "description": "TXT_KEY_BUILDING_TOMB_OF_CYRUS",
   "civilopedia": "TXT_KEY_BUILDING_TOMB_OF_CYRUS_PEDIA",
   "help": "TXT_KEY_BUILDING_TOMB_OF_CYRUS_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 6,
   "militaryWorth": 6,
   "conquestProbability": 100,

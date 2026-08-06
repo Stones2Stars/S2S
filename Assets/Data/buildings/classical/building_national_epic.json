@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_EPIC",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_EPIC_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

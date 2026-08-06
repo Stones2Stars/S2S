@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SUBURBS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_ARCOLOGY_SUBURBS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

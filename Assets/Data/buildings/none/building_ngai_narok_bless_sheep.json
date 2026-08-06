@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_SHEEP",
   "civilopedia": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_PEDIA",
+  "pediaCategory": "religious",
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_NGAIISM",
   "advisor": "ADVISOR_RELIGION",

@@ -106,6 +106,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ORBITAL_BASE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

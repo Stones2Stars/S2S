@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PC_KLASIES_RIVER_CAVES",
   "civilopedia": "TXT_KEY_BUILDING_PC_KLASIES_RIVER_CAVES_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

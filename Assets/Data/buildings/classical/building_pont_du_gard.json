@@ -98,6 +98,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PONT_DU_GARD",
   "civilopedia": "TXT_KEY_BUILDING_PONT_DU_GARD_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 4,
   "conquestProbability": 100,

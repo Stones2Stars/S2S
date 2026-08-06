@@ -123,6 +123,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

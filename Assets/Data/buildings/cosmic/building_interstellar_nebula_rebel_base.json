@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEBULA_REBEL_BASE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEBULA_REBEL_BASE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

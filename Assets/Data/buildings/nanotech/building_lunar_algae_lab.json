@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_ALGAE_LAB",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_ALGAE_LAB_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 70,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": "1.0",

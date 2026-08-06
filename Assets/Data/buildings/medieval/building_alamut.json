@@ -137,6 +137,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ALAMUT",
   "civilopedia": "TXT_KEY_BUILDING_ALAMUT_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "militaryWorth": 2,
   "conquestProbability": 100,

@@ -80,6 +80,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WALL_STREET",
   "civilopedia": "TXT_KEY_BUILDING_WALL_STREET_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

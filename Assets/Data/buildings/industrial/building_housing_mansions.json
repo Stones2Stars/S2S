@@ -73,6 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_MANSIONS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_MANSIONS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

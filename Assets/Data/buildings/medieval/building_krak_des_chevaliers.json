@@ -99,6 +99,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KRAK_DES_CHEVALIERS",
   "civilopedia": "TXT_KEY_BUILDING_KRAK_DES_CHEVALIERS_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

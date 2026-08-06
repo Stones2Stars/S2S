@@ -79,6 +79,7 @@
   "description": "TXT_KEY_BUILDING_TAIPEI_101",
   "civilopedia": "TXT_KEY_BUILDING_TAIPEI_101_PEDIA",
   "help": "TXT_KEY_BUILDING_TAIPEI_101_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 15,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

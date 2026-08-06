@@ -154,6 +154,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_ERECHTHEUM",
   "civilopedia": "TXT_KEY_BUILDING_THE_ERECHTHEUM_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

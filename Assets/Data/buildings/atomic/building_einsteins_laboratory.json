@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY",
   "civilopedia": "TXT_KEY_BUILDING_EINSTEINS_LABORATORY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MOVIE_STUDIO",
   "civilopedia": "TXT_KEY_BUILDING_MOVIE_STUDIO_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

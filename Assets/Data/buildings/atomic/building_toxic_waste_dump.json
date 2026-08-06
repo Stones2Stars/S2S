@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TOXIC_WASTE_DUMP",
   "civilopedia": "TXT_KEY_BUILDING_TOXIC_WASTE_DUMP_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 5,
   "militaryWorth": 5,
   "advisor": "ADVISOR_GROWTH",

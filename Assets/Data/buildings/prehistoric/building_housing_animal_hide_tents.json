@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

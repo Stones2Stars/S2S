@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LAS_MEDULAS",
   "civilopedia": "TXT_KEY_BUILDING_LAS_MEDULAS_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_SCIENCE",

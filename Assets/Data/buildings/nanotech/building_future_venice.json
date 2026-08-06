@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FUTURE_VENICE",
   "civilopedia": "TXT_KEY_BUILDING_FUTURE_VENICE_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

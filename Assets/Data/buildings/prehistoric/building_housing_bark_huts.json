@@ -73,6 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_BARK_HUTS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_BARK_HUTS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

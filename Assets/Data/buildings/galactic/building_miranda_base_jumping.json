@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MIRANDA_BASE_JUMPING",
   "civilopedia": "TXT_KEY_BUILDING_MIRANDA_BASE_JUMPING_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_MEGACITY",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MEGACITY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

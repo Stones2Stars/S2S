@@ -68,6 +68,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_DOMUS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_DOMUS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

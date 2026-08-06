@@ -97,6 +97,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LOA_HWE",
   "civilopedia": "TXT_KEY_BUILDING_LOA_HWE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_VOODOO",

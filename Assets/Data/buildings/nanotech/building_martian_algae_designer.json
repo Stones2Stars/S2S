@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_ALGAE_DESIGNER",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ALGAE_DESIGNER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

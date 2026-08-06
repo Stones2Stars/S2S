@@ -88,6 +88,7 @@
   "description": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
   "civilopedia": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD_PEDIA",
   "help": "TXT_KEY_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

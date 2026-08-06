@@ -117,6 +117,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_IRONWORKS",
   "civilopedia": "TXT_KEY_BUILDING_IRONWORKS_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "militaryWorth": 4,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

@@ -92,6 +92,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT",
   "civilopedia": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT_PEDIA",
+  "pediaCategory": "religious",
   "stateReligionCommerce": {
    "gold": 1
   },

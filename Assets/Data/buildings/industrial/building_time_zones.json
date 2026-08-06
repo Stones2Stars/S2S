@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TIME_ZONES",
   "civilopedia": "TXT_KEY_BUILDING_TIME_ZONES_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

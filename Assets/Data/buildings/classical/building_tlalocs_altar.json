@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TLALOCS_ALTAR",
   "civilopedia": "TXT_KEY_BUILDING_TLALOCS_ALTAR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 5,
   "conquestProbability": 100,
   "advisor": "ADVISOR_RELIGION",

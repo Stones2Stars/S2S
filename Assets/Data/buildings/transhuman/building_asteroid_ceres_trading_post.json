@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ASTEROID_CERES_TRADING_POST",
   "civilopedia": "TXT_KEY_BUILDING_ASTEROID_CERES_TRADING_POST_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

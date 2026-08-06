@@ -33,6 +33,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

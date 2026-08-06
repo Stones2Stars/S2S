@@ -63,6 +63,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MILKY_WAY_CLUSTER_BRAIN",
   "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CLUSTER_BRAIN_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

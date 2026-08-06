@@ -99,6 +99,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ROSETTA_STONE",
   "civilopedia": "TXT_KEY_BUILDING_ROSETTA_STONE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

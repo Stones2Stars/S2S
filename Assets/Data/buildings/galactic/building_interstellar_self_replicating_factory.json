@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

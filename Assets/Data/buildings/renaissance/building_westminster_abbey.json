@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY",
   "civilopedia": "TXT_KEY_BUILDING_WESTMINSTER_ABBEY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

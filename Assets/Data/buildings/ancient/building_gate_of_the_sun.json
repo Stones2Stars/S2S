@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GATE_OF_THE_SUN",
   "civilopedia": "TXT_KEY_BUILDING_GATE_OF_THE_SUN_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

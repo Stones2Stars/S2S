@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LL_MCCALLUM",
   "civilopedia": "TXT_KEY_BUILDING_LL_MCCALLUM_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

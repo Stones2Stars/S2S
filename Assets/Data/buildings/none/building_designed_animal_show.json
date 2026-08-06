@@ -82,6 +82,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW",
   "civilopedia": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_SHOW_PEDIA",
+  "pediaCategory": "nationalWonder",
   "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

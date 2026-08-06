@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -81,6 +81,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JADE_DEATH_MASK_CARVER",
   "civilopedia": "TXT_KEY_BUILDING_JADE_DEATH_MASK_CARVER_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

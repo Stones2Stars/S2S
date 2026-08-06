@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_SMELTER_TITANIUM",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

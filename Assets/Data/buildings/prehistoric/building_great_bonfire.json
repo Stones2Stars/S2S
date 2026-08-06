@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_BONFIRE",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_BONFIRE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "centerInCity": true,
   "worth": 10,
   "advisor": "ADVISOR_CULTURE",

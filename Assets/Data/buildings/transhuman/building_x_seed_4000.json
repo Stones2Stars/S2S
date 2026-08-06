@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_X_SEED_4000",
   "civilopedia": "TXT_KEY_BUILDING_X_SEED_4000_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -63,6 +63,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

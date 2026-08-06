@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATURE_ALTAR",
   "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "religion": "RELIGION_DRUIDIC_TRADITIONS",
   "advisor": "ADVISOR_RELIGION",

@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_RED_GLOBULAR_GALAXY",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_RED_GLOBULAR_GALAXY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

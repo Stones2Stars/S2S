@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RELIC_ANGKOR_WAT",
   "civilopedia": "TXT_KEY_BUILDING_ANGKOR_WAT_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "noInstanceLimit": true,
   "worth": 12,

@@ -94,6 +94,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTRICT_COURTHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_DISTRICT_COURTHOUSE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 4,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

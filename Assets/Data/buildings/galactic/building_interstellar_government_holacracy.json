@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

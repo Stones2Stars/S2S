@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_CITY",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CITY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

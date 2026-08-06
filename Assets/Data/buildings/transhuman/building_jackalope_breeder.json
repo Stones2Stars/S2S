@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JACKALOPE_BREEDER",
   "civilopedia": "TXT_KEY_BUILDING_MYTHICAL_BREEDER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

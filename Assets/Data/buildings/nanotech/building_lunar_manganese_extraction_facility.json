@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

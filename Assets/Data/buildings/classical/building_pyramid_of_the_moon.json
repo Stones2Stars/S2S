@@ -144,6 +144,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PYRAMID_OF_THE_MOON",
   "civilopedia": "TXT_KEY_BUILDING_PYRAMID_OF_THE_MOON_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

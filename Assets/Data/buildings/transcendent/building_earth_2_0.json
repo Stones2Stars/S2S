@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EARTH_2_0",
   "civilopedia": "TXT_KEY_BUILDING_EARTH_2_0_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

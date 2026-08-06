@@ -102,6 +102,7 @@
   "description": "TXT_KEY_BUILDING_WOODSTOCK",
   "civilopedia": "TXT_KEY_BUILDING_WOODSTOCK_PEDIA",
   "help": "TXT_KEY_BUILDING_WOODSTOCK_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -103,6 +103,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
   "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

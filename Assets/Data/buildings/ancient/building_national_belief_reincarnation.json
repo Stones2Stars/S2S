@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_REINCARNATION",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_REINCARNATION_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 10,
   "advisor": "ADVISOR_RELIGION",

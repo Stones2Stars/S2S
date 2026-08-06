@@ -86,6 +86,7 @@
   "description": "TXT_KEY_BUILDING_HELSINKI_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_HELSINKI_CATHEDRAL_PEDIA",
   "help": "TXT_KEY_BUILDING_HELSINKI_CATHEDRAL_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

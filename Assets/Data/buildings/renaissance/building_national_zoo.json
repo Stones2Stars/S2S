@@ -92,6 +92,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_ZOO",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_ZOO_PEDIA",
+  "pediaCategory": "nationalWonder",
   "centerInCity": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

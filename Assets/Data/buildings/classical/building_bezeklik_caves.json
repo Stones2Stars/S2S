@@ -121,6 +121,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BEZEKLIK_CAVES",
   "civilopedia": "TXT_KEY_BUILDING_BEZEKLIK_CAVES_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

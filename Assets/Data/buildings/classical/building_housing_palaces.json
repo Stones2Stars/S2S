@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_PALACES",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_PALACES_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

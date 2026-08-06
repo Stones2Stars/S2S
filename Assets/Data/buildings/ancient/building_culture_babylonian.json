@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_BABYLONIAN",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_BABYLONIAN_PEDIA",
+  "pediaCategory": "culture",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

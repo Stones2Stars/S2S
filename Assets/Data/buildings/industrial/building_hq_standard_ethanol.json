@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_STANDARD_ETHANOL",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_3_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

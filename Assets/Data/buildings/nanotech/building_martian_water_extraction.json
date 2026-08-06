@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_WATER_EXTRACTION",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_WATER_EXTRACTION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

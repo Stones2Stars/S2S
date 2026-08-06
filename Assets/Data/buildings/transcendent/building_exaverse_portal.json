@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EXAVERSE_PORTAL",
   "civilopedia": "TXT_KEY_BUILDING_EXAVERSE_PORTAL_PEDIA",
+  "pediaCategory": "space",
   "forceNoPrereqScaling": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

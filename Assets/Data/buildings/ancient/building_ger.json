@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GER",
   "civilopedia": "TXT_KEY_BUILDING_GER_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "militaryWorth": 4,
   "advisor": "ADVISOR_MILITARY",

@@ -36,6 +36,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EFFECT_PRIME_DIRECTIVE",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_PRIME_DIRECTIVE_PEDIA",
+  "pediaCategory": "space",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

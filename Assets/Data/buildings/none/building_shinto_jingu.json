@@ -140,6 +140,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHINTO_JINGU",
   "civilopedia": "TXT_KEY_BUILDING_SHINTO_JINGU_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_SHINTO",

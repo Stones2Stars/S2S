@@ -73,6 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ATOMIUM",
   "civilopedia": "TXT_KEY_BUILDING_ATOMIUM_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_SCIENCE",

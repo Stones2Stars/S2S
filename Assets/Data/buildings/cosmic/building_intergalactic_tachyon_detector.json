@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

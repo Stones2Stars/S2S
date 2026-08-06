@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTER_FOR_NANOTECH_SAFETY",
   "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_NANOTECH_SAFETY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

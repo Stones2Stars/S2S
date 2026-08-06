@@ -41,6 +41,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
   "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

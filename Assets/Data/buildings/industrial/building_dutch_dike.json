@@ -109,6 +109,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DUTCH_DIKE",
   "civilopedia": "TXT_KEY_BUILDING_DUTCH_DIKE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 4,
   "militaryWorth": 2,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

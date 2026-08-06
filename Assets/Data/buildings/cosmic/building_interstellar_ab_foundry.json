@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_AB_FOUNDRY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_AB_FOUNDRY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

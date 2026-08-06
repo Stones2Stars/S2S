@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

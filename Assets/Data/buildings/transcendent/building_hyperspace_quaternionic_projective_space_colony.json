@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_QUATERNIONIC_PROJECTIVE_SPACE_COLONY",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_QUATERNIONIC_PROJECTIVE_SPACE_COLONY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

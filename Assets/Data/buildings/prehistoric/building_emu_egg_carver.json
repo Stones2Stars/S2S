@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EMU_EGG_CARVER",
   "civilopedia": "TXT_KEY_BUILDING_EMU_EGG_CARVER_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

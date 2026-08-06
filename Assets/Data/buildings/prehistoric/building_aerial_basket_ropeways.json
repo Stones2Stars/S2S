@@ -116,6 +116,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AERIAL_BASKET_ROPEWAYS",
   "civilopedia": "TXT_KEY_BUILDING_AERIAL_BASKET_ROPEWAYS_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

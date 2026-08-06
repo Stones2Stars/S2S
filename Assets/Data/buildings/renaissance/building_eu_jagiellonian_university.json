@@ -153,6 +153,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EU_JAGIELLONIAN_UNIVERSITY",
   "civilopedia": "TXT_KEY_BUILDING_EU_JAGIELLONIAN_UNIVERSITY_PEDIA",
+  "pediaCategory": "groupWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -56,6 +56,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
   "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_MARS",
   "civilopedia": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_MARS_PEDIA",
+  "pediaCategory": "space",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -118,6 +118,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DINOSAUR_PARK",
   "civilopedia": "TXT_KEY_BUILDING_DINOSAUR_PARK_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_GREEN_WALL",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_GREEN_WALL_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

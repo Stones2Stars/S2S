@@ -61,6 +61,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LL_MONTE_VERDE",
   "civilopedia": "TXT_KEY_BUILDING_LL_MONTE_VERDE_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

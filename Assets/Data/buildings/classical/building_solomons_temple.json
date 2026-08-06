@@ -139,6 +139,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

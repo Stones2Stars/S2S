@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TOTEM_POLE",
   "civilopedia": "TXT_KEY_BUILDING_TOTEM_POLE_PEDIA",
+  "pediaCategory": "religious",
   "centerInCity": true,
   "worth": 2,
   "militaryWorth": 1,

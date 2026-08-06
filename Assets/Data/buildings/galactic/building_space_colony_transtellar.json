@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR",
   "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR_PEDIA",
+  "pediaCategory": "space",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

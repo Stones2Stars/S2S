@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_INNER_CITY",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_INNER_CITY_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

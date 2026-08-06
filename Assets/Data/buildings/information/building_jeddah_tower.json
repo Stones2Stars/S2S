@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JEDDAH_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_JEDDAH_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

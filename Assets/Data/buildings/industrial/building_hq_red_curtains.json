@@ -81,6 +81,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_RED_CURTAINS",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_RED_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

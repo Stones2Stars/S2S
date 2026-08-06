@@ -117,6 +117,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_UNIVERSITY_OF_SANKORE",
   "civilopedia": "TXT_KEY_BUILDING_UNIVERSITY_OF_SANKORE_PEDIA",
+  "pediaCategory": "greatWonder",
   "stateReligionCommerce": {
    "research": 2
   },

@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_SUPER_JUPITER",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_SUPER_JUPITER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

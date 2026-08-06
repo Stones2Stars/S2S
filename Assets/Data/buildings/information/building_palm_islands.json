@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PALM_ISLANDS",
   "civilopedia": "TXT_KEY_BUILDING_PALM_ISLANDS_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_SCIENCE",

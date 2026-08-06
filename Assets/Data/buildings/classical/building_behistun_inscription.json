@@ -96,6 +96,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BEHISTUN_INSCRIPTION",
   "civilopedia": "TXT_KEY_BUILDING_BEHISTUN_INSCRIPTION_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

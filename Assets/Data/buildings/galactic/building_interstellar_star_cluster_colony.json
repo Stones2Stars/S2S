@@ -56,6 +56,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

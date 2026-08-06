@@ -82,6 +82,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL",
   "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

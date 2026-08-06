@@ -29,6 +29,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

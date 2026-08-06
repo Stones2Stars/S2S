@@ -112,6 +112,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BULL_LEAPING",
   "civilopedia": "TXT_KEY_BUILDING_BULL_LEAPING_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 1,
   "militaryWorth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",

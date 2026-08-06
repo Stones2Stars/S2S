@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BROADWAY",
   "civilopedia": "TXT_KEY_BUILDING_BROADWAY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 18,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

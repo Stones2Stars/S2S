@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_SLUMS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_SLUMS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

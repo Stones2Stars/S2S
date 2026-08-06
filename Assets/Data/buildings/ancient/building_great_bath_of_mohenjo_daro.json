@@ -104,6 +104,7 @@
   "description": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_PEDIA",
   "help": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_DOCTOR",

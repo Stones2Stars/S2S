@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PC_CAVE_OF_ALTAMIRA",
   "civilopedia": "TXT_KEY_BUILDING_PC_CAVE_OF_ALTAMIRA_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

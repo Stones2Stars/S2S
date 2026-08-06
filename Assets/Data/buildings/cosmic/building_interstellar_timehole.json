@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TIMEHOLE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -113,6 +113,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_MUT",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_MUT_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_PANTHEON",
   "religion": "RELIGION_KEMETISM",

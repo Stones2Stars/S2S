@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

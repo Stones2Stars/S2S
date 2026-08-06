@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_AGRICULTURAL_LAB",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_AGRICULTURAL_LAB_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -107,6 +107,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BANK",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BANK_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 5,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "advisor": "ADVISOR_ECONOMY",

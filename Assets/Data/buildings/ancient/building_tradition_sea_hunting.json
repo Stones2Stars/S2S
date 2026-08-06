@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRADITION_SEA_HUNTING",
   "civilopedia": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],

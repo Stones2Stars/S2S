@@ -130,6 +130,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THOR_SANCTUARY",
   "civilopedia": "TXT_KEY_BUILDING_THOR_SANCTUARY_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_ASATRU",

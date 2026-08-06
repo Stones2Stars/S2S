@@ -112,6 +112,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENETIAN_ARSENAL",
   "civilopedia": "TXT_KEY_BUILDING_VENETIAN_ARSENAL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 13,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

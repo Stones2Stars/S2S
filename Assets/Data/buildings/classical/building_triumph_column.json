@@ -115,6 +115,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRIUMPH_COLUMN",
   "civilopedia": "TXT_KEY_BUILDING_TRIUMPH_COLUMN_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 2,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_CULTURE",

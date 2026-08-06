@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_WONKA_CONFECTIONERIES",
   "civilopedia": "TXT_KEY_BUILDING_CORPORATION_WONKA_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

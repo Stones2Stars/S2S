@@ -81,6 +81,7 @@
   "description": "TXT_KEY_BUILDING_NAZCA_LINES",
   "civilopedia": "TXT_KEY_BUILDING_NAZCA_LINES_PEDIA",
   "help": "TXT_KEY_BUILDING_NAZCA_LINES_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 6,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

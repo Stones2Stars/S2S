@@ -56,6 +56,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

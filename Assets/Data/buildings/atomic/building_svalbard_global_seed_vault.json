@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
   "civilopedia": "TXT_KEY_BUILDING_SVALBARD_GLOBAL_SEED_VAULT_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

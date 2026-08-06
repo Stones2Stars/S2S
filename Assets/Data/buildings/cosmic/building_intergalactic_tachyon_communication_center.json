@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

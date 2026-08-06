@@ -110,6 +110,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SISTINE_CHAPEL",
   "civilopedia": "TXT_KEY_BUILDING_SISTINE_CHAPEL_PEDIA",
+  "pediaCategory": "greatWonder",
   "stateReligionCommerce": {
    "culture": 5
   },

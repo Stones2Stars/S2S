@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
   "civilopedia": "TXT_KEY_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -120,6 +120,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_ENKI",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ENKI_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

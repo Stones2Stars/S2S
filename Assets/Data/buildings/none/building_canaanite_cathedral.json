@@ -101,6 +101,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CANAANITE_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_JEWISH_SYNAGOGUE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_CANAANISM",

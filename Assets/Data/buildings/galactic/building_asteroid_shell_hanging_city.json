@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_HANGING_CITY",
   "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_HANGING_CITY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

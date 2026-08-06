@@ -101,6 +101,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BERLIN_WALL",
   "civilopedia": "TXT_KEY_BUILDING_BERLIN_WALL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

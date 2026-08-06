@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS",
   "civilopedia": "TXT_KEY_BUILDING_THE_STATUE_OF_ZEUS_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "militaryWorth": 4,

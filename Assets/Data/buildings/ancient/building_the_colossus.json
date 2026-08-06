@@ -129,6 +129,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_COLOSSUS",
   "civilopedia": "TXT_KEY_BUILDING_THE_COLOSSUS_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

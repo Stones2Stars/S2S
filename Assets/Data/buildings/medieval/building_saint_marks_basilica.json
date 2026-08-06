@@ -158,6 +158,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA",
   "civilopedia": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 100,

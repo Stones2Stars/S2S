@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

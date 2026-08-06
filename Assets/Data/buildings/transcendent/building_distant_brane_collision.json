@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_BRANE_COLLISION",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_BRANE_COLLISION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

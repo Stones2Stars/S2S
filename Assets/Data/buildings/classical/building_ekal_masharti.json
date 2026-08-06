@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EKAL_MASHARTI",
   "civilopedia": "TXT_KEY_BUILDING_EKAL_MASHARTI_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 3,
   "militaryWorth": 3,
   "conquestProbability": 100,

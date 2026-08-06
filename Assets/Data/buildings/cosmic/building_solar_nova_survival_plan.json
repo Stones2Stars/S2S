@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
   "civilopedia": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

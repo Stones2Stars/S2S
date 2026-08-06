@@ -93,6 +93,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LAXMINARAYAN_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_LAXMINARAYAN_TEMPLE_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

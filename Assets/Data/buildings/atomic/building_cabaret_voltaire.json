@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CABARET_VOLTAIRE",
   "civilopedia": "TXT_KEY_BUILDING_CABARET_VOLTAIRE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

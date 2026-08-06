@@ -140,6 +140,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AKSHARDHAM",
   "civilopedia": "TXT_KEY_BUILDING_AKSHARDHAM_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

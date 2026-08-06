@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_REMAINS_GIANT_RHINOCEROS",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
   "notConstructible": true,
   "worth": 1,
   "conquestProbability": 90,

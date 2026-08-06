@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WORLD_ELECTRIC_GRID",
   "civilopedia": "TXT_KEY_BUILDING_WORLD_ELECTRIC_GRID_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

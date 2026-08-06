@@ -100,6 +100,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS",
   "civilopedia": "TXT_KEY_BUILDING_NGAI_NAROK_BLESS_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_NGAIISM",

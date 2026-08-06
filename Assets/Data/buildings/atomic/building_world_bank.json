@@ -88,6 +88,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WORLD_BANK",
   "civilopedia": "TXT_KEY_BUILDING_WORLD_BANK_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "greatPeopleUnitType": "UNIT_MERCHANT",
   "specialBuildingType": "SPECIALBUILDING_WORLD_BANK",

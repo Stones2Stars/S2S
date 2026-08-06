@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ASTEROID_DEFLECTION_SYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_ASTEROID_DEFLECTION_SYSTEM_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

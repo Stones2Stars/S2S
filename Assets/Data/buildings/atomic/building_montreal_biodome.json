@@ -137,6 +137,7 @@
   "description": "TXT_KEY_BUILDING_MONTREAL_BIODOME",
   "civilopedia": "TXT_KEY_BUILDING_MONTREAL_BIODOME_PEDIA",
   "help": "TXT_KEY_BUILDING_MONTREAL_BIODOME_HELP",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "militaryWorth": 4,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

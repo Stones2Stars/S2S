@@ -123,6 +123,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EL_DORADO",
   "civilopedia": "TXT_KEY_BUILDING_EL_DORADO_PEDIA",
+  "pediaCategory": "religious",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

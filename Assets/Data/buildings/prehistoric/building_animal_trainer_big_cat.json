@@ -81,6 +81,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BIG_CAT",
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BIG_CAT_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

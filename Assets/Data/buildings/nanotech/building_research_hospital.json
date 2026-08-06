@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RESEARCH_HOSPITAL",
   "civilopedia": "TXT_KEY_BUILDING_RESEARCH_HOSPITAL_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

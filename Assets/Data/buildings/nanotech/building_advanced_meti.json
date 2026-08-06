@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ADVANCED_METI",
   "civilopedia": "TXT_KEY_BUILDING_ADVANCED_METI_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

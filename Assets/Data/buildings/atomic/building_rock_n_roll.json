@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ROCK_N_ROLL",
   "civilopedia": "TXT_KEY_BUILDING_ROCK_N_ROLL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 18,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

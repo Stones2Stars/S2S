@@ -135,6 +135,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHICHEN_ITZA",
   "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "militaryWorth": 8,
   "conquestProbability": 100,

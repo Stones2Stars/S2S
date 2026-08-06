@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_ARTISAN_PLANET_DESIGNER",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_ARTISAN_PLANET_DESIGNER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

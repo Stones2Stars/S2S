@@ -37,6 +37,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_EMP_POWER_SUPPLY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

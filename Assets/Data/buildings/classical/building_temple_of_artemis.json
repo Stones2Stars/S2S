@@ -111,6 +111,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_ARTEMIS",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_ARTEMIS_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

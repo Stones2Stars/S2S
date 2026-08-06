@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

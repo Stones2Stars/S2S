@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MT_RUSHMORE",
   "civilopedia": "TXT_KEY_BUILDING_MT_RUSHMORE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "militaryWorth": 4,
   "conquestProbability": 100,

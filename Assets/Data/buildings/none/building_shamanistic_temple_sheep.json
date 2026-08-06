@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_SHEEP",
   "civilopedia": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [

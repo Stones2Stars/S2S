@@ -128,6 +128,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NARAS_GIANT_BUDDHA",
   "civilopedia": "TXT_KEY_BUILDING_NARAS_GIANT_BUDDHA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

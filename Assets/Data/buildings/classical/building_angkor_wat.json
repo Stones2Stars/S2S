@@ -129,6 +129,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANGKOR_WAT",
   "civilopedia": "TXT_KEY_BUILDING_ANGKOR_WAT_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

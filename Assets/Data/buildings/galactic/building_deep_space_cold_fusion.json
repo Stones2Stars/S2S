@@ -36,6 +36,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_COLD_FUSION",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_COLD_FUSION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

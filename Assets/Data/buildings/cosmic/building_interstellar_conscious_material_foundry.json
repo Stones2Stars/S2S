@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_CONSCIOUS_MATERIAL_FOUNDRY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CONSCIOUS_MATERIAL_FOUNDRY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

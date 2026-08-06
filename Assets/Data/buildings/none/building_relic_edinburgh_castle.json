@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RELIC_EDINBURGH_CASTLE",
   "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "noInstanceLimit": true,
   "worth": 5,

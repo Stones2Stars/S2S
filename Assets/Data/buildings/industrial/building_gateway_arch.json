@@ -95,6 +95,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GATEWAY_ARCH",
   "civilopedia": "TXT_KEY_BUILDING_GATEWAY_ARCH_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "militaryWorth": 8,
   "conquestProbability": 100,

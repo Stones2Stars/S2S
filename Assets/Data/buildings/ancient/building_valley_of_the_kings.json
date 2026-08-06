@@ -82,6 +82,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS",
   "civilopedia": "TXT_KEY_BUILDING_VALLEY_OF_THE_KINGS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "noInstanceLimit": true,

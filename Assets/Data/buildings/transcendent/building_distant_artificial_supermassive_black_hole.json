@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PROJECT_PERSEPHONE",
   "civilopedia": "TXT_KEY_BUILDING_PROJECT_PERSEPHONE_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_PUNK_SPACE",
   "advisor": "ADVISOR_SCIENCE",

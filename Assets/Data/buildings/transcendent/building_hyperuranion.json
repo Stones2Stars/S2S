@@ -54,6 +54,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERURANION",
   "civilopedia": "TXT_KEY_BUILDING_HYPERURANION_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -93,6 +93,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_IKHANDA",
   "civilopedia": "TXT_KEY_BUILDING_IKHANDA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 3,
   "militaryWorth": 3,
   "conquestProbability": 100,

@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
   "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

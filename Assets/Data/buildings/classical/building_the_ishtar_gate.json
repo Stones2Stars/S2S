@@ -128,6 +128,7 @@
   "description": "TXT_KEY_BUILDING_THE_ISHTAR_GATE",
   "civilopedia": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_PEDIA",
   "help": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_HELP",
+  "pediaCategory": "religious",
   "stateReligionCommerce": {
    "espionage": 1
   },

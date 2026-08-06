@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM",
   "civilopedia": "TXT_KEY_BUILDING_LIFE_TRUE_VACUUM_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

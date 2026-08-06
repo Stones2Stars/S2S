@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

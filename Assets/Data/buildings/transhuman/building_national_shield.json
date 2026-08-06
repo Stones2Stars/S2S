@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_SHIELD",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SHIELD_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

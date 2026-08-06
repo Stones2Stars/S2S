@@ -41,6 +41,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CLAYTRONIC_STATION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

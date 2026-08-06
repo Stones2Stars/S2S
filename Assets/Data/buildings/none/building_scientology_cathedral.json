@@ -116,6 +116,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCIENTOLOGY_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_CATHEDRAL_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_SCIENTOLOGY",

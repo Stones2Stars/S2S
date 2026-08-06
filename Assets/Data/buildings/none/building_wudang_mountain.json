@@ -129,6 +129,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WUDANG_MOUNTAIN",
   "civilopedia": "TXT_KEY_BUILDING_WUDANG_MOUNTAIN_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_TAOISM",

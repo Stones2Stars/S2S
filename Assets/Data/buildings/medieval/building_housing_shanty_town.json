@@ -77,6 +77,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_SHANTY_TOWN_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

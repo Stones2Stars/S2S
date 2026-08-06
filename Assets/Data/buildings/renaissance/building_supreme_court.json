@@ -111,6 +111,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SUPREME_COURT",
   "civilopedia": "TXT_KEY_BUILDING_SUPREME_COURT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 4,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

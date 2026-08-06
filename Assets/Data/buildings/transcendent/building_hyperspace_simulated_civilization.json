@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

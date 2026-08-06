@@ -83,6 +83,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HEROIC_EPIC",
   "civilopedia": "TXT_KEY_BUILDING_HEROIC_EPIC_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "militaryWorth": 8,
   "greatPeopleUnitType": "UNIT_ARTIST",

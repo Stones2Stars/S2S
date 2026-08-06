@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SEMANTIC_WEB",
   "civilopedia": "TXT_KEY_BUILDING_SEMANTIC_WEB_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRON_STAR_COLONY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRON_STAR_COLONY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

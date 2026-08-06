@@ -82,6 +82,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 70,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": "1.0",

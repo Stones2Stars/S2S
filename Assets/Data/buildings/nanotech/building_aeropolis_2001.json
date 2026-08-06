@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AEROPOLIS_2001",
   "civilopedia": "TXT_KEY_BUILDING_AEROPOLIS_2001_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

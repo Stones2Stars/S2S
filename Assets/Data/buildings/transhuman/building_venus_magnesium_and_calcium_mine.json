@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENUS_MAGNESIUM_AND_CALCIUM_MINE",
   "civilopedia": "TXT_KEY_BUILDING_VENUS_MAGNESIUM_AND_CALCIUM_MINE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

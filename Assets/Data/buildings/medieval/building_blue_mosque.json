@@ -115,6 +115,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BLUE_MOSQUE",
   "civilopedia": "TXT_KEY_BUILDING_BLUE_MOSQUE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

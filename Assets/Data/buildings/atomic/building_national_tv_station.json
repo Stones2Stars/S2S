@@ -107,6 +107,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_TV_STATION",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_TV_STATION_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "militaryWorth": 10,
   "advisor": "ADVISOR_CULTURE",

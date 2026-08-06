@@ -89,6 +89,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH",
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 100,

@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PRESENCE_OF_VOLCANO",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

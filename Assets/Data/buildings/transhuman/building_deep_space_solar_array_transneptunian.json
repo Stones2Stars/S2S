@@ -85,6 +85,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_GUANACO",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
   "notConstructible": true,
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

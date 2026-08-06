@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_CHONS",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_CHONS_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_KEMETISM",

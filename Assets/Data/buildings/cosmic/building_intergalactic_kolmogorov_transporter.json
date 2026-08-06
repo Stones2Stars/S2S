@@ -35,6 +35,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_KOLMOGOROV_TRANSPORTER",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_KOLMOGOROV_TRANSPORTER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

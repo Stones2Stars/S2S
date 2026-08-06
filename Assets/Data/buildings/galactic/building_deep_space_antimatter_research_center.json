@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

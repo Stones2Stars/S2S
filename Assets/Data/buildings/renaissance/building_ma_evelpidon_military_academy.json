@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MA_EVELPIDON_MILITARY_ACADEMY",
   "civilopedia": "TXT_KEY_BUILDING_MA_EVELPIDON_MILITARY_ACADEMY_PEDIA",
+  "pediaCategory": "groupWonder",
   "worth": 8,
   "militaryWorth": 8,
   "conquestProbability": 100,

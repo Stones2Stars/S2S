@@ -122,6 +122,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BELL_LABS",
   "civilopedia": "TXT_KEY_BUILDING_BELL_LABS_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

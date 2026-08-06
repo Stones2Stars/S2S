@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ZOROASTRIAN_SHRINE",
   "civilopedia": "TXT_KEY_BUILDING_ZOROASTRIAN_SHRINE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_ZOROASTRIANISM",

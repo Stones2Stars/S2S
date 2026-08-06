@@ -109,6 +109,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KENTUCKY_DERBY",
   "civilopedia": "TXT_KEY_BUILDING_KENTUCKY_DERBY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

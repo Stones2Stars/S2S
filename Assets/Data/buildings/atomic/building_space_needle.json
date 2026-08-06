@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPACE_NEEDLE",
   "civilopedia": "TXT_KEY_BUILDING_SPACE_NEEDLE_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

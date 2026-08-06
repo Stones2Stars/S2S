@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STATUE_OF_GOMATESHWARA",
   "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_GOMATESHWARA_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

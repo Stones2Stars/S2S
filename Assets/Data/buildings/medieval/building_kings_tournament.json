@@ -148,6 +148,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KINGS_TOURNAMENT",
   "civilopedia": "TXT_KEY_BUILDING_KINGS_TOURNAMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 10,
   "militaryWorth": 3,
   "greatPeopleUnitType": "UNIT_ARTIST",

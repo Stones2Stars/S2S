@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_PARADISE",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_PARADISE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

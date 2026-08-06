@@ -33,6 +33,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

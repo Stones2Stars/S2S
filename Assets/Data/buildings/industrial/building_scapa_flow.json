@@ -125,6 +125,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SCAPA_FLOW",
   "civilopedia": "TXT_KEY_BUILDING_SCAPA_FLOW_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

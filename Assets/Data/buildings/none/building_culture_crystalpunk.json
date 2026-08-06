@@ -43,6 +43,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_PUNK_CRYSTAL",

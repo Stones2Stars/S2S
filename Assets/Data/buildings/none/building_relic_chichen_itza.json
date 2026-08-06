@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RELIC_CHICHEN_ITZA",
   "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "noInstanceLimit": true,
   "worth": 5,

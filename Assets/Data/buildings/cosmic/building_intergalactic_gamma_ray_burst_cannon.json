@@ -60,6 +60,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

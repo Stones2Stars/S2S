@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LOUVRE_MUSEUM",
   "civilopedia": "TXT_KEY_BUILDING_LOUVRE_MUSEUM_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

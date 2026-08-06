@@ -54,6 +54,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ACHIEVEMENT_MEDICAL",
   "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_MEDICAL_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 10,
   "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",

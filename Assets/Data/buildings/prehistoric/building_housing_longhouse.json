@@ -79,6 +79,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_LONGHOUSE_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "visibilityPriority": "2.8",

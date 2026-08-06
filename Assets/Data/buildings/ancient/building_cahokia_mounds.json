@@ -118,6 +118,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS",
   "civilopedia": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

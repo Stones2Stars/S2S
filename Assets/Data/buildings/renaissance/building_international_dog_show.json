@@ -98,6 +98,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERNATIONAL_DOG_SHOW",
   "civilopedia": "TXT_KEY_BUILDING_INTERNATIONAL_DOG_SHOW_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",
   "advisor": "ADVISOR_ECONOMY",

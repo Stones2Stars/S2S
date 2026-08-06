@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RELIC_ALHAMBRA",
   "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "noInstanceLimit": true,
   "worth": 4,

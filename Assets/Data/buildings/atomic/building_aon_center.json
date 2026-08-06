@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AON_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_AON_CENTER_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

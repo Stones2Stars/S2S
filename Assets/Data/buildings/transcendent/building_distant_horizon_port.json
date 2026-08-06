@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_HORIZON_PORT_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

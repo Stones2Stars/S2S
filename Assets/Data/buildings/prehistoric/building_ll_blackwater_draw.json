@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW",
   "civilopedia": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

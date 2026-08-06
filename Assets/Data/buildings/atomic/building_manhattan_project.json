@@ -98,6 +98,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MANHATTAN_PROJECT",
   "civilopedia": "TXT_KEY_BUILDING_MANHATTAN_PROJECT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "allowsNukes": true,
   "worth": 6,
   "advisor": "ADVISOR_SCIENCE",

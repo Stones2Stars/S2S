@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_X_GAMES",
   "civilopedia": "TXT_KEY_BUILDING_X_GAMES_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 15,
   "militaryWorth": 4,
   "conquestProbability": 100,

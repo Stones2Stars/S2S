@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RELIC_CHEOMSEONGDAE",
   "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "noInstanceLimit": true,
   "worth": 4,

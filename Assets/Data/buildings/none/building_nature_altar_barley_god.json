@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATURE_ALTAR_BARLEY_GOD",
   "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "advisor": "ADVISOR_RELIGION",
   "mapCategories": [

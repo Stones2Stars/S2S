@@ -153,6 +153,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_BASEL",
   "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_BASEL_PEDIA",
+  "pediaCategory": "groupWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -54,6 +54,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_PRISON_PLANET",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PRISON_PLANET_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -92,6 +92,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY",
   "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
   "notConstructible": true,
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

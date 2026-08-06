@@ -100,6 +100,7 @@
   "description": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE",
   "civilopedia": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_PEDIA",
   "help": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

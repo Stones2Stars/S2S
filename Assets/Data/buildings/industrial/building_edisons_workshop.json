@@ -96,6 +96,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EDISONS_WORKSHOP",
   "civilopedia": "TXT_KEY_BUILDING_EDISONS_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

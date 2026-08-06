@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

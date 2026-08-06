@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHURCH_TURING_THESIS",
   "civilopedia": "TXT_KEY_BUILDING_CHURCH_TURING_THESIS_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

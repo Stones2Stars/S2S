@@ -90,6 +90,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY",
   "civilopedia": "TXT_KEY_BUILDING_SPY_TRAINING_FACILITY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "militaryWorth": 8,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

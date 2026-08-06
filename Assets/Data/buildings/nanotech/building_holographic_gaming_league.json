@@ -80,6 +80,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_GAMING_LEAGUE",
   "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_GAMING_LEAGUE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

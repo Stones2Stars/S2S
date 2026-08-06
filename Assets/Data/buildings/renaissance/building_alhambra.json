@@ -148,6 +148,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ALHAMBRA",
   "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

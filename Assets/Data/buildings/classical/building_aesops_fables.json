@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AESOPS_FABLES",
   "civilopedia": "TXT_KEY_BUILDING_AESOPS_FABLES_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSAMERICA_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_TRANSAMERICA_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 20,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

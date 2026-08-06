@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_HOTEL",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_HOTEL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

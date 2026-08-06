@@ -161,6 +161,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_SALAMANCA",
   "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_SALAMANCA_PEDIA",
+  "pediaCategory": "groupWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_STATESMAN",

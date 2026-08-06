@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LABOR_UNION",
   "civilopedia": "TXT_KEY_BUILDING_LABOR_UNION_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 5,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

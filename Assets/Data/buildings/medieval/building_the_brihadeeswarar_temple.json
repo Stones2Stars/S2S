@@ -149,6 +149,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_BRIHADEESWARAR_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_THE_BRIHADEESWARAR_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "conquestProbability": 100,
   "religion": "RELIGION_HINDUISM",

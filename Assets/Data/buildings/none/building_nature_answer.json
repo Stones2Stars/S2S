@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATURE_ANSWER",
   "civilopedia": "TXT_KEY_BUILDING_NATURE_ANSWER_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

@@ -29,6 +29,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -61,6 +61,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY",
   "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_ECONOMY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

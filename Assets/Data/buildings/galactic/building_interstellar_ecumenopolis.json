@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_ECUMENOPOLIS",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ECUMENOPOLIS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

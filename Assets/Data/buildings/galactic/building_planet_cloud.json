@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PLANET_CLOUD",
   "civilopedia": "TXT_KEY_BUILDING_PLANET_CLOUD_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

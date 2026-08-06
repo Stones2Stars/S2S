@@ -32,6 +32,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_NUCLEAR_DAMPER",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_NUCLEAR_DAMPER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

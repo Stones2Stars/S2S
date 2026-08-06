@@ -113,6 +113,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_PARTHENON",
   "civilopedia": "TXT_KEY_BUILDING_THE_PARTHENON_PEDIA",
+  "pediaCategory": "religious",
   "stateReligionCommerce": {
    "research": 1,
    "culture": 1

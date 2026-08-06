@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_MULTIVERSE_MINE",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_MULTIVERSE_MINE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

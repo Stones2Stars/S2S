@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CULTURE_STEAMPUNK",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_STEAMPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
   "noInstanceLimit": true,
   "worth": 5,
   "conquestProbability": 100,

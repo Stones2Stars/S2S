@@ -80,6 +80,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WALK_OF_FAME",
   "civilopedia": "TXT_KEY_BUILDING_WALK_OF_FAME_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

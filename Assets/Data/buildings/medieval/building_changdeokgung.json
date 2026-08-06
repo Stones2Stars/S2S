@@ -82,6 +82,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHANGDEOKGUNG",
   "civilopedia": "TXT_KEY_BUILDING_CHANGDEOKGUNG_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

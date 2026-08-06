@@ -96,6 +96,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GUILD_BLACKSMITHS",
   "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "specialBuildingType": "SPECIALBUILDING_GUILD",
   "advisor": "ADVISOR_GROWTH",

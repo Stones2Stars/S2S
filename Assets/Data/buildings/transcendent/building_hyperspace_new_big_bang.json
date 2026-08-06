@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_NEW_BIG_BANG",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_NEW_BIG_BANG_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -159,6 +159,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHEOMSEONGDAE",
   "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

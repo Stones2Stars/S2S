@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

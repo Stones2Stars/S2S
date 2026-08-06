@@ -46,6 +46,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_BIOMASS_POWERPLANT",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_BIOMASS_POWERPLANT_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

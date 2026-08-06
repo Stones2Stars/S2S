@@ -127,6 +127,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_TLALOC_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_PANTHEON",
   "religion": "RELIGION_NAGHUALISM",

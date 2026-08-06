@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PRIME_DIRECTIVE",
   "civilopedia": "TXT_KEY_BUILDING_PRIME_DIRECTIVE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

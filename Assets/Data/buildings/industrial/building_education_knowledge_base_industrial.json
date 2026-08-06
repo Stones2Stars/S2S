@@ -37,6 +37,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
   "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

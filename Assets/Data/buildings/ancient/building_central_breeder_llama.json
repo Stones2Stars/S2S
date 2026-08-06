@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_LLAMA",
   "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_LLAMA_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 4,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

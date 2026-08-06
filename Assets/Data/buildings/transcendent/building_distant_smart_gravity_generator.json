@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_SMART_GRAVITY_GENERATOR",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_SMART_GRAVITY_GENERATOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

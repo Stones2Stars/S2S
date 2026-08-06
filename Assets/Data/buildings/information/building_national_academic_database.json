@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_ACADEMIC_DATABASE",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_ACADEMIC_DATABASE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

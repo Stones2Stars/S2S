@@ -41,6 +41,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_MINE",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MINE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

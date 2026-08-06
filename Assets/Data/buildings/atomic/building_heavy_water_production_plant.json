@@ -86,6 +86,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HEAVY_WATER_PRODUCTION_PLANT",
   "civilopedia": "TXT_KEY_BUILDING_HEAVY_WATER_PRODUCTION_PLANT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 6,
   "militaryWorth": 30,
   "advisor": "ADVISOR_MILITARY",

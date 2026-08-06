@@ -119,6 +119,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS",
   "civilopedia": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_MESOPOTAMISM",

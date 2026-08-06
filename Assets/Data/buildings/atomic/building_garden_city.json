@@ -68,6 +68,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GARDEN_CITY",
   "civilopedia": "TXT_KEY_BUILDING_GARDEN_CITY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_DOCTOR",
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [

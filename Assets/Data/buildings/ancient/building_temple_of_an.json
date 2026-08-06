@@ -135,6 +135,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_AN",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_AN_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",

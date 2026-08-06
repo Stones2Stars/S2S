@@ -128,6 +128,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE",
   "civilopedia": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

@@ -46,6 +46,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_RECONNAISSANCE",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_RECONNAISSANCE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -98,6 +98,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HO_TRAI_LIBRARY",
   "civilopedia": "TXT_KEY_BUILDING_HO_TRAI_LIBRARY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 3,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

@@ -87,6 +87,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_REVIVALIST_CHURCH",
   "civilopedia": "TXT_KEY_BUILDING_REVIVALIST_CHURCH_PEDIA",
+  "pediaCategory": "religious",
   "worth": 5,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "advisor": "ADVISOR_MILITARY",

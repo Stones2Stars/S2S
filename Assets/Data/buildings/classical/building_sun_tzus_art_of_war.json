@@ -76,6 +76,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SUN_TZUS_ART_OF_WAR",
   "civilopedia": "TXT_KEY_BUILDING_SUN_TZUS_ART_OF_WAR_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "advisor": "ADVISOR_MILITARY",

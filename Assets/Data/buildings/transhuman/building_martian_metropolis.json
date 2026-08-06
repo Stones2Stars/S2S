@@ -95,6 +95,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_METROPOLIS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

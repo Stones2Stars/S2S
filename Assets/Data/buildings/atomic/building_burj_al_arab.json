@@ -123,6 +123,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BURJ_AL_ARAB",
   "civilopedia": "TXT_KEY_BUILDING_BURJ_AL_ARAB_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

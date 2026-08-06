@@ -77,6 +77,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUNAR_PARCOLOGY",
   "civilopedia": "TXT_KEY_BUILDING_LUNAR_PARCOLOGY_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": "1.0",

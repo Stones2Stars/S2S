@@ -157,6 +157,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EU_MONTPELLIER_UNIVERSITY",
   "civilopedia": "TXT_KEY_BUILDING_EU_MONTPELLIER_UNIVERSITY_PEDIA",
+  "pediaCategory": "groupWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_DOCTOR",

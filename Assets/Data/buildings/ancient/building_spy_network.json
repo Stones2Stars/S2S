@@ -98,6 +98,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPY_NETWORK",
   "civilopedia": "TXT_KEY_BUILDING_SPY_NETWORK_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 8,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

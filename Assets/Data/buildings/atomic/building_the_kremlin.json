@@ -97,6 +97,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_KREMLIN",
   "civilopedia": "TXT_KEY_BUILDING_THE_KREMLIN_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 16,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_SPY",

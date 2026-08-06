@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

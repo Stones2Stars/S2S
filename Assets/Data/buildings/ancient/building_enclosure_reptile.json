@@ -61,6 +61,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ENCLOSURE_REPTILE",
   "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
+  "pediaCategory": "animalistic",
   "worth": 2,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARTIAN_ALBEDO_REDUCTION",
   "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ALBEDO_REDUCTION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

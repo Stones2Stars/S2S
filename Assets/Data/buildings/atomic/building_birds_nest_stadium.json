@@ -106,6 +106,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BIRDS_NEST_STADIUM",
   "civilopedia": "TXT_KEY_BUILDING_BIRDS_NEST_STADIUM_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

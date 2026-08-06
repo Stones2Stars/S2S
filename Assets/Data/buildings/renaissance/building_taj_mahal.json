@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TAJ_MAHAL",
   "civilopedia": "TXT_KEY_BUILDING_TAJ_MAHAL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

@@ -99,6 +99,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EJE_SONG",
   "civilopedia": "TXT_KEY_BUILDING_EJE_SONG_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "religion": "RELIGION_TENGRIISM",
   "advisor": "ADVISOR_RELIGION",

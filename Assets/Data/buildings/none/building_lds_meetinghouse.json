@@ -113,6 +113,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LDS_MEETINGHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_LDS_MEETINGHOUSE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_MORMON",

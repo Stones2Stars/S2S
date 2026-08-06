@@ -159,6 +159,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FLAVIAN_AMPHITHEATRE",
   "civilopedia": "TXT_KEY_BUILDING_FLAVIAN_AMPHITHEATRE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",

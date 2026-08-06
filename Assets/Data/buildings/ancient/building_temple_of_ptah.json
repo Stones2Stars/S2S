@@ -127,6 +127,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_PTAH",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_PTAH_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "religion": "RELIGION_KEMETISM",

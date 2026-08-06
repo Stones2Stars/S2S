@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_SMELTER_ALUMINUM",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SMELTER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 6,
   "militaryWorth": 1,
   "advisor": "ADVISOR_ECONOMY",

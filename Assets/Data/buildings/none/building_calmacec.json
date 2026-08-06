@@ -96,6 +96,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CALMACEC",
   "civilopedia": "TXT_KEY_BUILDING_CALMACEC_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_NAGHUALISM",

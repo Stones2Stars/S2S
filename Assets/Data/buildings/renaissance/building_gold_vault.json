@@ -55,6 +55,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GOLD_VAULT",
   "civilopedia": "TXT_KEY_BUILDING_GOLD_VAULT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 4,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

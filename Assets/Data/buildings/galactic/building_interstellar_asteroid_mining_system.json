@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

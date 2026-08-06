@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_AACHEN_CATHEDRAL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
   "civilopedia": "TXT_KEY_BUILDING_GODELS_INCOMPLETENESS_THEOREMS_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

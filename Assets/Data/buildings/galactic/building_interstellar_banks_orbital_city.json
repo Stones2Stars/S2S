@@ -43,6 +43,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

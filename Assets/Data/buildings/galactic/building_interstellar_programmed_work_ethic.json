@@ -35,6 +35,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_TREE_HOLLOW_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

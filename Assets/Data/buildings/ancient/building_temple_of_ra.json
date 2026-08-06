@@ -91,6 +91,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_RA",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_RA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_KEMETISM",

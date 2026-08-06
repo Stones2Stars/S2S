@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRADITION_NAVAL_MASCOT",
   "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",

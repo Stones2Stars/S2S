@@ -58,6 +58,7 @@
   "description": "TXT_KEY_BUILDING_C_AD_NEANDERTHAL",
   "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
   "help": "TXT_KEY_BUILDING_C_AD_HELP",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "noInstanceLimit": true,

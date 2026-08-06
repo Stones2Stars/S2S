@@ -97,6 +97,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPACE_LABORATORY",
   "civilopedia": "TXT_KEY_BUILDING_SPACE_LABORATORY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_SPACE_LABORATORY",
   "advisor": "ADVISOR_MILITARY",

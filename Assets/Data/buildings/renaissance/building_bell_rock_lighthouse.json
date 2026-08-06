@@ -95,6 +95,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BELL_ROCK_LIGHTHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_BELL_ROCK_LIGHTHOUSE_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

@@ -115,6 +115,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK",
   "civilopedia": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 12,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

@@ -127,6 +127,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_KOTOKU_IN",
   "civilopedia": "TXT_KEY_BUILDING_KOTOKU_IN_PEDIA",
+  "pediaCategory": "religious",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

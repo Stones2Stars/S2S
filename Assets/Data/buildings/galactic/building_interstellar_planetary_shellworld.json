@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

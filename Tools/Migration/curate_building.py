@@ -1337,6 +1337,47 @@ def allowed_building(rec):
     return allowed or None
 
 
+#	The pedia BUCKET a building is listed in -> identity.pediaCategory (json.md §7). The taxonomy becomes DATA
+#	here, once, so no consumer re-derives it: the pedia classified in Python from seven legacy getters plus a
+#	SUBSTRING MATCH ON THE LOCALIZED DISPLAY NAME, which is wrong in every non-English localization.
+#	⚑ CRAZY -> curator, offline, once (the curate_trait precedent). Precedence is the legacy classifier's, kept
+#	so the buckets come out the same; the names are the pedia's own (PEDIA_SUB_BUILDINGS_2), not invented.
+#	⚠ Absent = the ORDINARY bucket, which the pedia sub-buckets by era -- never encoded as a value.
+PEDIA_NAME_BUCKET = ("FOLKLORE", "ENCLOSURE", "REMAINS")
+
+
+def pedia_category_building(rec, allowed):
+    # Off-world: the legacy test is "not placeable on Earth", read off the placement gate.
+    mapcats = _typelist(rec, "MapCategoryTypes")
+    if mapcats and "MAPCATEGORY_EARTH" not in mapcats:
+        return "space"
+    sbt = _txt(rec, "SpecialBuildingType")
+    if sbt and sbt != "NONE":
+        if sbt == "SPECIALBUILDING_C2C_CULTURE":
+            return "culture"
+        if "_GROUP_" in sbt:
+            return "groupWonder"
+    #	The one bucket no other datum expresses. Matched on the TXT KEY rather than the resolved description:
+    #	the key is stable and localization-independent, which is the whole defect being retired.
+    desc = _txt(rec, "Description") or ""
+    for tok in PEDIA_NAME_BUCKET:
+        if desc.startswith("TXT_KEY_BUILDING_" + tok + "_"):
+            return "animalistic"
+    if (_txt(rec, "ReligionType") or "NONE") != "NONE" or (_txt(rec, "PrereqReligion") or "NONE") != "NONE":
+        return "religious"
+    #	System-placed: no production cost to pay, or the engine places it. Both are identity markers already.
+    if _int(rec, "iProductionCost") == -1 or _txt(rec, "bAutoBuild") == "1":
+        return "specialBuilding"
+    #	⚑ The wonder categories ARE the self-cap's scope ([enabler.md] §4: never an isWorldWonder mirror), so
+    #	they read off the `allowed` block this curator already produced rather than a second source.
+    kAllowed = allowed or {}
+    if kAllowed.get("world"):
+        return "greatWonder"
+    if kAllowed.get("empire"):
+        return "nationalWonder"
+    return None
+
+
 def _typelist_struct(rec, wrapper, keytag):
     """Struct-list wrapper: each child carries a <keytag> ref (+ maybe a count). Returns [TYPE,...]."""
     node = rec.find(wrapper)
@@ -1557,6 +1598,9 @@ def curate(typ, rec, store):
         provides["bonuses"] = _pb
     requires = requires_building(rec, store)
     allowed = allowed_building(rec)
+    _pedcat = pedia_category_building(rec, allowed)
+    if _pedcat:
+        identity["pediaCategory"] = _pedcat
     gate_on, gate_off = gate_building(rec)
     # EnabledCivilizationTypes -> identity whitelist (NPC-only gate; dry-calc ignores it; remodel post-rework).
     _civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")

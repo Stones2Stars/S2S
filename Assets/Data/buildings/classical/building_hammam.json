@@ -94,6 +94,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HAMMAM",
   "civilopedia": "TXT_KEY_BUILDING_HAMMAM_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 5,
   "conquestProbability": 100,

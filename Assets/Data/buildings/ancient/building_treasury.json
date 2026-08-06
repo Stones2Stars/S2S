@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TREASURY",
   "civilopedia": "TXT_KEY_BUILDING_TREASURY_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 100,

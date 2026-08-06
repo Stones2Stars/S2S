@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORICHALCUM_FORGE",
   "civilopedia": "TXT_KEY_BUILDING_ORICHALCUM_FORGE_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_SCIENCE",

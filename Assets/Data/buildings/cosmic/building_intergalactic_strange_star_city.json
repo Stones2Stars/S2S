@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

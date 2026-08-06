@@ -47,6 +47,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

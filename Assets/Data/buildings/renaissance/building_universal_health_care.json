@@ -56,6 +56,7 @@
   "description": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE",
   "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_PEDIA",
   "help": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_HELP",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 10,
   "greatPeopleUnitType": "UNIT_DOCTOR",

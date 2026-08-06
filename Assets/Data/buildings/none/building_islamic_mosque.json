@@ -124,6 +124,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ISLAMIC_MOSQUE",
   "civilopedia": "TXT_KEY_BUILDING_ISLAMIC_MOSQUE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_ISLAM",

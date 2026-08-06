@@ -53,6 +53,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS",
   "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HOUSING_WORKERS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

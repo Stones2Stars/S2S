@@ -121,6 +121,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SIKH_CATHEDRAL",
   "civilopedia": "TXT_KEY_BUILDING_SIKH_CATHEDRAL_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_SIKHISM",

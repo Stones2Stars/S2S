@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BAIKONUR_COSMODROME",
   "civilopedia": "TXT_KEY_BUILDING_BAIKONUR_COSMODROME_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

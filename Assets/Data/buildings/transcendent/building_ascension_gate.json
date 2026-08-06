@@ -86,6 +86,7 @@
   "description": "TXT_KEY_BUILDING_ASCENSION_GATE",
   "civilopedia": "TXT_KEY_BUILDING_ASCENSION_GATE_PEDIA",
   "help": "TXT_KEY_BUILDING_ASCENSION_GATE_HELP",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "forceNoPrereqScaling": true,
   "worth": 100,

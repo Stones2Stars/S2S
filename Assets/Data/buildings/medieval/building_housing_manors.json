@@ -80,6 +80,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_MANORS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_MANORS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

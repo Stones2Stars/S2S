@@ -127,6 +127,7 @@
   "description": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL",
   "civilopedia": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_PEDIA",
   "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
+  "pediaCategory": "culture",
   "noInstanceLimit": true,
   "conquestProbability": 100,
   "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",

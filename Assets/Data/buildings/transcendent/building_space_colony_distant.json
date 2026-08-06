@@ -41,6 +41,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT",
   "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_DISTANT_PEDIA",
+  "pediaCategory": "space",
   "notConstructible": true,
   "autoBuild": true,
   "advisor": "ADVISOR_SCIENCE",

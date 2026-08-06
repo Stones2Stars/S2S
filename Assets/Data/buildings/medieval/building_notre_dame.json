@@ -112,6 +112,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NOTRE_DAME",
   "civilopedia": "TXT_KEY_BUILDING_NOTRE_DAME_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 14,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

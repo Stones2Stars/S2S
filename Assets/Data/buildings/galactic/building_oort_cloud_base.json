@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_OORT_CLOUD_BASE",
   "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_BASE_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MIND_STORAGE",
   "civilopedia": "TXT_KEY_BUILDING_MIND_STORAGE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "centerInCity": true,
   "worth": 10,
   "advisor": "ADVISOR_GROWTH",

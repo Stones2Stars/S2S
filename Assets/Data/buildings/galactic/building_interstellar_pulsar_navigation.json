@@ -46,6 +46,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

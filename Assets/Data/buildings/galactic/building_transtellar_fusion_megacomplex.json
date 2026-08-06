@@ -37,6 +37,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
   "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

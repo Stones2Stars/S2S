@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_BIOGEOCOMPUTER",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BIOGEOCOMPUTER_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

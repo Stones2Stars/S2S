@@ -100,6 +100,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GAJ",
   "civilopedia": "TXT_KEY_BUILDING_GAJ_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",
   "religion": "RELIGION_RODNOVERA",

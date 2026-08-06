@@ -39,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -46,6 +46,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

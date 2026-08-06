@@ -109,6 +109,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BALL_COURT",
   "civilopedia": "TXT_KEY_BUILDING_BALL_COURT_PEDIA",
+  "pediaCategory": "religious",
   "worth": 5,
   "conquestProbability": 75,
   "advisor": "ADVISOR_ECONOMY",

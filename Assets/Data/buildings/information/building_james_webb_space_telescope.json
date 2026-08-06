@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
   "civilopedia": "TXT_KEY_BUILDING_JAMES_WEBB_SPACE_TELESCOPE_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

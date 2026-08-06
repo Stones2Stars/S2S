@@ -83,6 +83,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
   "civilopedia": "TXT_KEY_BUILDING_LDS_MISSIONARY_TRAINING_CENTRE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "religion": "RELIGION_MORMON",
   "advisor": "ADVISOR_RELIGION",

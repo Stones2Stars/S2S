@@ -78,6 +78,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_GREAT_SPY",
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [

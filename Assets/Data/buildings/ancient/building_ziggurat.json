@@ -77,6 +77,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ZIGGURAT",
   "civilopedia": "TXT_KEY_BUILDING_ZIGGURAT_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "conquestProbability": 75,
   "advisor": "ADVISOR_ECONOMY",

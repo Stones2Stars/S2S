@@ -130,6 +130,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_AIRCRAFT_MUSEUM",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AIRCRAFT_MUSEUM_PEDIA",
+  "pediaCategory": "nationalWonder",
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

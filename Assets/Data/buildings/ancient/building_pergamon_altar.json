@@ -86,6 +86,7 @@
   "description": "TXT_KEY_BUILDING_PERGAMON_ALTAR",
   "civilopedia": "TXT_KEY_BUILDING_PERGAMON_ALTAR_PEDIA",
   "help": "TXT_KEY_BUILDING_PERGAMON_ALTAR_HELP",
+  "pediaCategory": "greatWonder",
   "worth": 6,
   "militaryWorth": 4,
   "conquestProbability": 100,

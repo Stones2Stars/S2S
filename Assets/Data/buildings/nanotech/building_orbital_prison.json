@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ORBITAL_PRISON",
   "civilopedia": "TXT_KEY_BUILDING_ORBITAL_PRISON_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -33,6 +33,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_FOOD_REPLICATOR",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_FOOD_REPLICATOR_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

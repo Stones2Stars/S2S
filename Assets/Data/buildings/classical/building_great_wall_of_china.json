@@ -106,6 +106,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GREAT_WALL_OF_CHINA",
   "civilopedia": "TXT_KEY_BUILDING_GREAT_WALL_OF_CHINA_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 5,
   "militaryWorth": 10,
   "conquestProbability": 100,

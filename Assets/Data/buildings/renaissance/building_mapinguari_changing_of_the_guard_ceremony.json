@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
   "civilopedia": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "worth": 2,

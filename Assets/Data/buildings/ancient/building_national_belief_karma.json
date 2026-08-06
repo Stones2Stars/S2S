@@ -46,6 +46,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_KARMA",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_KARMA_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 10,
   "advisor": "ADVISOR_RELIGION",

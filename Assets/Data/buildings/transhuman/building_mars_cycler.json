@@ -54,6 +54,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MARS_CYCLER",
   "civilopedia": "TXT_KEY_BUILDING_MARS_CYCLER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

@@ -80,6 +80,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

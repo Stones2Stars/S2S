@@ -144,6 +144,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PYRAMID_OF_THE_SUN",
   "civilopedia": "TXT_KEY_BUILDING_PYRAMID_OF_THE_SUN_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

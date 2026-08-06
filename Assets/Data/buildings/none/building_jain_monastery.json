@@ -105,6 +105,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JAIN_MONASTERY",
   "civilopedia": "TXT_KEY_BUILDING_JAIN_MONASTERY_PEDIA",
+  "pediaCategory": "religious",
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY",
   "religion": "RELIGION_JAINISM",

@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EL_CAMINO_DE_SANTIAGO",
   "civilopedia": "TXT_KEY_BUILDING_EL_CAMINO_DE_SANTIAGO_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

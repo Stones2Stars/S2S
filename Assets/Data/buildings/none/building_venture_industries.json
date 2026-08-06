@@ -109,6 +109,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES",
   "civilopedia": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES_PEDIA",
+  "pediaCategory": "nationalWonder",
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [

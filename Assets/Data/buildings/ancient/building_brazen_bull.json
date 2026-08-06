@@ -100,6 +100,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BRAZEN_BULL",
   "civilopedia": "TXT_KEY_BUILDING_BRAZEN_BULL_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 4,
   "militaryWorth": 4,
   "conquestProbability": 100,

@@ -112,6 +112,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SHAMANS_YURTA",
   "civilopedia": "TXT_KEY_BUILDING_SHAMANS_YURTA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
   "religion": "RELIGION_TENGRIISM",

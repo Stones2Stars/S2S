@@ -113,6 +113,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COMPUTER_CENTER",
   "civilopedia": "TXT_KEY_BUILDING_COMPUTER_CENTER_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 6,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

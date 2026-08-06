@@ -42,6 +42,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
   "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

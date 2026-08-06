@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GOBEKLI_TEPE",
   "civilopedia": "TXT_KEY_BUILDING_GOBEKLI_TEPE_PEDIA",
+  "pediaCategory": "greatWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

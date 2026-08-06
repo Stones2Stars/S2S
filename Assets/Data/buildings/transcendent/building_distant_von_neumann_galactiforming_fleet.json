@@ -38,6 +38,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET",
   "civilopedia": "TXT_KEY_BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

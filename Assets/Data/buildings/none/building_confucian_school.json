@@ -159,6 +159,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL",
   "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_SCIENTIST",

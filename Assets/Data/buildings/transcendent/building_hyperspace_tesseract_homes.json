@@ -46,6 +46,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HYPERSPACE_TESSERACT_HOMES",
   "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TESSERACT_HOMES_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

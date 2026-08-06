@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ELEPHANT_SHRINE",
   "civilopedia": "TXT_KEY_BUILDING_ELEPHANT_SHRINE_PEDIA",
+  "pediaCategory": "religious",
   "advisor": "ADVISOR_RELIGION",
   "visibilityPriority": 10000,
   "mapCategories": [

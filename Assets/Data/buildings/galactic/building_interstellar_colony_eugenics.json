@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_COLONY_EUGENICS",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COLONY_EUGENICS_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

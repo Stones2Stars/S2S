@@ -122,6 +122,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_GREAT_LIGHTHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_THE_GREAT_LIGHTHOUSE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 10,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_MERCHANT",

@@ -102,6 +102,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SOLAR_UPDRAFT_TOWER",
   "civilopedia": "TXT_KEY_BUILDING_SOLAR_UPDRAFT_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
   "advisor": "ADVISOR_ECONOMY",

@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_MISSION_TO_MARS",
   "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_MARS_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

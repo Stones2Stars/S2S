@@ -110,6 +110,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LDS_TEMPLE",
   "civilopedia": "TXT_KEY_BUILDING_LDS_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
   "religion": "RELIGION_MORMON",

@@ -153,6 +153,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NIMRUD_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_NIMRUD_PALACE_PEDIA",
+  "pediaCategory": "religious",
   "worth": 2,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_PROPHET",

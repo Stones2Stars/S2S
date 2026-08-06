@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STANDARD_MODEL",
   "civilopedia": "TXT_KEY_BUILDING_STANDARD_MODEL_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

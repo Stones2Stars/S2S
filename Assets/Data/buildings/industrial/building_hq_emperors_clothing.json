@@ -71,6 +71,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HQ_EMPERORS_CLOTHING",
   "civilopedia": "TXT_KEY_BUILDING_HQ_EMPERORS_CLOTHING_PEDIA",
+  "pediaCategory": "greatWonder",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

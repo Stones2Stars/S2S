@@ -61,6 +61,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_FRATERNITY_HOUSE",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_FRATERNITY_HOUSE_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

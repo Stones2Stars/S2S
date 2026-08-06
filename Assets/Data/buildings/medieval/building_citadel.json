@@ -107,6 +107,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CITADEL",
   "civilopedia": "TXT_KEY_BUILDING_CITADEL_PEDIA",
+  "pediaCategory": "religious",
   "centerInCity": true,
   "worth": 2,
   "militaryWorth": 3,

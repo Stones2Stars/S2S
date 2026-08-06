@@ -26,6 +26,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CIVIC_EGALITARIAN",
   "civilopedia": "TXT_KEY_BUILDING_CIVIC_EGALITARIAN_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "autoBuild": true,
   "mapCategories": [

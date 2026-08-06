@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NATIONAL_LEGAL_DATABASE",
   "civilopedia": "TXT_KEY_BUILDING_NATIONAL_LEGAL_DATABASE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_YOTTAVERSE_PORTAL",
   "civilopedia": "TXT_KEY_BUILDING_YOTTAVERSE_PORTAL_PEDIA",
+  "pediaCategory": "space",
   "forceNoPrereqScaling": true,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

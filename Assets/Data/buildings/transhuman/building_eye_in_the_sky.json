@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EYE_IN_THE_SKY",
   "civilopedia": "TXT_KEY_BUILDING_EYE_IN_THE_SKY_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

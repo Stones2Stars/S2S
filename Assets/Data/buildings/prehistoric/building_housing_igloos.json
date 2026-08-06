@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HOUSING_IGLOOS",
   "civilopedia": "TXT_KEY_BUILDING_HOUSING_IGLOOS_PEDIA",
+  "pediaCategory": "specialBuilding",
   "notConstructible": true,
   "centerInCity": true,
   "autoBuild": true,

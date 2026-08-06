@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TERRACOTTA_ARMY",
   "civilopedia": "TXT_KEY_BUILDING_TERRACOTTA_ARMY_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

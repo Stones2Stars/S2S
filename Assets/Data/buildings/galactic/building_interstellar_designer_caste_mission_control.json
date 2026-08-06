@@ -44,6 +44,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

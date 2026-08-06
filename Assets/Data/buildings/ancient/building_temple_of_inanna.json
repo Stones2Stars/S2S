@@ -107,6 +107,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TEMPLE_OF_INANNA",
   "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_INANNA_PEDIA",
+  "pediaCategory": "religious",
   "worth": 4,
   "greatPeopleUnitType": "UNIT_PROPHET",
   "specialBuildingType": "SPECIALBUILDING_TEMPLE",

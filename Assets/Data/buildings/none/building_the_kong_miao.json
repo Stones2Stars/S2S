@@ -80,6 +80,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_THE_KONG_MIAO",
   "civilopedia": "TXT_KEY_BUILDING_THE_KONG_MIAO_PEDIA",
+  "pediaCategory": "religious",
   "notConstructible": true,
   "worth": 8,
   "conquestProbability": 100,

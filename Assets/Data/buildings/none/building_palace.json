@@ -193,6 +193,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PALACE",
   "civilopedia": "TXT_KEY_BUILDING_PALACE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "noInstanceLimit": true,
   "maxPlayerInstancesExtra": 1,
   "advisor": "ADVISOR_ECONOMY",

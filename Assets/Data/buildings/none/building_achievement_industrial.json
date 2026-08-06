@@ -52,6 +52,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ACHIEVEMENT_INDUSTRIAL",
   "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
   "notConstructible": true,
   "worth": 10,
   "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",

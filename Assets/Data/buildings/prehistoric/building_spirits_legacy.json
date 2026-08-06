@@ -108,6 +108,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPIRITS_LEGACY",
   "civilopedia": "TXT_KEY_BUILDING_SPIRITS_LEGACY_PEDIA",
+  "pediaCategory": "religious",
   "worth": 6,
   "specialBuildingType": "SPECIALBUILDING_CATHEDRAL_II",
   "religion": "RELIGION_SHAMANISM",

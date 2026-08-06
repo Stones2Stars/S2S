@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PROJECT_MERCURY",
   "civilopedia": "TXT_KEY_BUILDING_PROJECT_MERCURY_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

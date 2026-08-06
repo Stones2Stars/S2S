@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE",
   "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_HEAT_TOLERANCE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

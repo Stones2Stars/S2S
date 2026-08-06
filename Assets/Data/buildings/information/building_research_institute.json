@@ -113,6 +113,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE",
   "civilopedia": "TXT_KEY_BUILDING_RESEARCH_INSTITUTE_PEDIA",
+  "pediaCategory": "nationalWonder",
   "worth": 8,
   "greatPeopleUnitType": "UNIT_SCIENTIST",
   "advisor": "ADVISOR_SCIENCE",

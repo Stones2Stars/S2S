@@ -58,6 +58,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
   "civilopedia": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE_PEDIA",
+  "pediaCategory": "greatWonder",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

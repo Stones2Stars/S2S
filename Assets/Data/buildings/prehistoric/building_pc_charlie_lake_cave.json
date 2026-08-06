@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PC_CHARLIE_LAKE_CAVE",
   "civilopedia": "TXT_KEY_BUILDING_PC_CHARLIE_LAKE_CAVE_PEDIA",
+  "pediaCategory": "groupWonder",
   "centerInCity": true,
   "worth": 10,
   "conquestProbability": 100,

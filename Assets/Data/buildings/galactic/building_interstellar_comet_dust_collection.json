@@ -58,6 +58,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION",
   "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION_PEDIA",
+  "pediaCategory": "space",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
   "mapCategories": [

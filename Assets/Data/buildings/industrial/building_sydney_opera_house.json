@@ -123,6 +123,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SYDNEY_OPERA_HOUSE",
   "civilopedia": "TXT_KEY_BUILDING_SYDNEY_OPERA_HOUSE_PEDIA",
+  "pediaCategory": "greatWonder",
   "worth": 8,
   "conquestProbability": 100,
   "greatPeopleUnitType": "UNIT_ARTIST",

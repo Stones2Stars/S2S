@@ -55,6 +55,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_JOVIAN_CORE_PROBE",
   "civilopedia": "TXT_KEY_BUILDING_JOVIAN_CORE_PROBE_PEDIA",
+  "pediaCategory": "space",
   "conquestProbability": 100,
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,
