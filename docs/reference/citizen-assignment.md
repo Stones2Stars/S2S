@@ -94,6 +94,21 @@ military-production modifier, the 40/60 improvement blend). Those stay.
 ⚠ And the tell that a reduce is misplaced is a caller **re-inflating** it: a `* 100` on the far side of a
 getter that just divided by 100 means the reduce belongs at neither site.
 
+⚑ **Unifying a fractured scale is BEHAVIOUR-NEUTRAL wherever the data carries no decimals, and that is
+checkable rather than asserted.** The plot substrate (terrains · features · improvements · bonuses · routes)
+authors **zero** fractional yields, so `CvPlot::getYield`'s retired `÷100` was lossless and every threshold
+lifted ×100 ranks identically — the conversion changed no decision. Where the data DOES carry decimals the
+change is the repair, not a rebalance: **20 specialist flats are fractional**, and the reductions were
+flattening `1.5 → 1` and `0.4 → 0`.
+
+> **⚖ WELLBEING IS COUNTED IN WHOLE FACES, AND THAT IS THE EXPECTED BEHAVIOUR (owner).**
+> `healthValue` / `happynessValue` iterate ONCE PER health or happiness face
+> (`for (iI = 0; iI < iAddedHealth; ++iI)`), so their first argument is a **LOOP BOUND, not a magnitude** and
+> reduces at that point of use — you cannot iterate 1.5 times. ⛔ This is NOT the banned interior reduction and
+> must not be "fixed" by passing the ×100 value: doing so runs the loop a hundred times over and inflates every
+> wellbeing term by the same factor. ⚠ A fractional authored face is therefore floored HERE by design; the other
+> reader of the same data (`AI_countGoodSpecialists`) sums rather than loops, so it keeps the fraction.
+
 ## Observability
 
 - **`[CIT/assign/cand]`** — one placement decided: both kinds' best REMAINING option with their values on one

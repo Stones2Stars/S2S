@@ -8030,7 +8030,8 @@ int CvPlot::getYield(YieldTypes eIndex) const
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
 	int aiYields[NUM_YIELD_TYPES];
 	getYields(aiYields);
-	return aiYields[eIndex] / 100;
+	// ×100 NATIVE -- a getter never reduces ([DEC-fixedpoint-x100]); the READ EDGE reduces.
+	return aiYields[eIndex];
 }
 
 
@@ -8050,7 +8051,8 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
 		(!bIgnoreFeature && getFeatureType() != NO_FEATURE) ? GC.getFeatureInfo(getFeatureType()).getModifiers() : NULL,
 		eBonus != NO_BONUS ? GC.getBonusInfo(eBonus).getModifiers() : NULL,
 		NULL, NULL, evalCtx, aiYields);
-	return aiYields[eYield] / 100;   // x100 native; this read answers whole yields ([DEC-fixedpoint-x100])
+	// ×100 NATIVE -- a getter never reduces ([DEC-fixedpoint-x100]); the READ EDGE reduces.
+	return aiYields[eYield];
 }
 
 
@@ -11704,7 +11706,8 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 		eRoute != NO_ROUTE ? GC.getRouteInfo(eRoute).getModifiers() : NULL,
 		evalCtx, aiYields);
 	// x100 native; this read answers WHOLE yields, as its callers weigh them ([DEC-fixedpoint-x100])
-	return aiYields[eYield] / 100;
+	// ×100 NATIVE -- a getter never reduces ([DEC-fixedpoint-x100]); the READ EDGE reduces.
+	return aiYields[eYield];
 }
 
 bool CvPlot::canTrigger(EventTriggerTypes eTrigger, PlayerTypes ePlayer) const

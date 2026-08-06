@@ -2651,21 +2651,21 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				if (iI == CITY_HOME_PLOT)
 				{
 					int iBasePlotYield = aiYield[eYield];
-					aiYield[eYield] += GC.getYieldInfo(eYield).getCityChange();
+					aiYield[eYield] += GC.getYieldInfo(eYield).getCityChange() * 100;  // CvYieldInfo is legacy XML => human; LIFT it
 
 					if (eFeature != NO_FEATURE)
 					{
-						aiYield[eYield] -= GC.getFeatureInfo(eFeature).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
+						aiYield[eYield] -= GC.getFeatureInfo(eFeature).getFlatYield(eYield, CASC_SCOPE_PLOT);
 						iBasePlotYield = std::max(iBasePlotYield, aiYield[eYield]);
 					}
 
 					if (eBonus != NO_BONUS)
 					{
-						const int iBonusYieldChange = GC.getBonusInfo(eBonus).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
+						const int iBonusYieldChange = GC.getBonusInfo(eBonus).getFlatYield(eYield, CASC_SCOPE_PLOT);
 						aiYield[eYield] += iBonusYieldChange;
 						iBasePlotYield += iBonusYieldChange;
 					}
-					aiYield[eYield] = std::max(aiYield[eYield], GC.getYieldInfo(eYield).getMinCity());
+					aiYield[eYield] = std::max(aiYield[eYield], GC.getYieldInfo(eYield).getMinCity() * 100);  // XML => human; LIFT it
 				}
 			}
 
@@ -2920,7 +2920,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			if (pLoopPlot != NULL && pLoopPlot->isWater())
 			{
 				iWaterCount++;
-				if (pLoopPlot->getYield(YIELD_FOOD) <= 1)
+				if (pLoopPlot->getYield(YIELD_FOOD) <= 100)
 				{
 					iWaterCount++;
 				}
@@ -3397,7 +3397,7 @@ CvCity* CvPlayerAI::AI_findTargetCity(const CvArea* pArea) const
 
 bool CvPlayerAI::AI_isCommercePlot(const CvPlot* pPlot) const
 {
-	return pPlot->getYield(YIELD_FOOD) >= GC.getFOOD_CONSUMPTION_PER_POPULATION();
+	return pPlot->getYield(YIELD_FOOD) >= GC.getFOOD_CONSUMPTION_PER_POPULATION() * 100;
 }
 
 bool CvPlayerAI::AI_getVisiblePlotDanger(const CvPlot* pPlot, int iRange, bool bAnimalOnly, CvSelectionGroup* group, int acceptableOdds) const

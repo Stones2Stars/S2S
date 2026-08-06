@@ -1025,44 +1025,46 @@ traceback and the handler's whole body. **Consider it a suspect for the turn-tim
 correctness one.
 
 
-## ⛔ THE REDUCING GETTERS — `÷100` still living away from the read edge
+## ⛔ `CvCity::getBaseGreatPeopleRate` STILL REDUCES — and converting it is a SAVE decision
 
-**×100 is native everywhere in C++; the ONLY `÷100` belongs at the read edge — Python, or the `Cy` binding that
-serves it** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100),
-[fixed-point-and-scales.md §1](../../specs/curators/fixed-point-and-scales.md)). ⛔ There is no locally
-justifiable interior reduction, and the reason is DATA rather than tidiness: the ×100 exists so an amount can
-carry TWO DECIMALS ([json.md §3.6](../../specs/json.md) — a modder authors `1.5`, `0.4`), so a reduction
-anywhere upstream of the edge **destroys authored precision for every consumer after it**. `1.5` becomes `1`;
-`0.4` becomes `0`.
-⚠ A `× percent / 100` is APPLYING a percentage, not reducing a scale. Those stay.
+The last interior `÷100` on the yield/GPP surface. ⛔ It is NOT parked for convenience: converting it is a
+**save-semantics change and therefore an owner call**, which is the one thing that outranks the scale rule here.
 
-**Still reducing, with their consumer census (the compiler cannot find these — a changed scale compiles
-silently):**
+`getBaseGreatPeopleRate` feeds `getGreatPeopleRate()` → `changeGreatPeopleProgress()` → the **SERIALIZED**
+`m_iGreatPeopleProgress`, which is compared against `greatPeopleThresholdNonMilitary()` (human). Making the rate
+×100 changes what an existing save's stored progress MEANS — real save-break #1, the silent-wrong-load class
+([save.md §7](../../specs/save.md)), not the soft field-widening class. Lifting the threshold to match leaves
+every existing save's progress reading 100× short, so great people would effectively stop arriving.
 
-| getter | sites | note |
-|---|--:|---|
-| `CvPlot::getYield` | 23 | the `getX`/`getX100` pair the spec bans; `getYields()` is the ×100 surface beside it |
-| `CvPlot::getYieldWithBuild` | — | same defect, same cluster |
-| `CvCity::getBaseGreatPeopleRate` | 10 | two reducing sites |
+**What it needs:** an owner ruling on whether to take the break (and mark it `@SAVEBREAK`), or to leave this one
+getter reducing as the point of use for a whole-count accumulator. ⚠ One consumer already assumes human and
+would move with it either way: `CvCityAI:5860` compares against a literal `kTargetGPRate = 10`.
 
-**⛔ THE BLOCKER, and it is a real one rather than a scoping excuse: `CvYieldInfo::getCityChange` /
-`getMinCity` are bare `int`s with NO established scale**, and they mix directly into the plot chain at
-`CvPlayerAI.cpp:2649`. Converting `CvPlot::getYield` without settling them means guessing at a mixing site.
-⚑ Convert by arithmetic CLUSTER, never by getter ([fixed-point-and-scales.md §4c-bis](../../specs/curators/fixed-point-and-scales.md)):
-the cluster here is the plot-yield / food / growth chain, and if a conversion forces compensating constants the
-boundary was drawn wrong.
+## ⛔ THE COMMERCE SLIDER MOVES NOTHING — the empire receiver is not summing its cities
 
-**The located worklist:**
+**Symptom (owner, live): raising or lowering the commerce slider changes nothing at all.**
 
-- **Literal thresholds to lift ×100** (never reduce the value to meet them): `CvCityAI` 8668 / 8673 / 8678
-  (`iFoodPerPop`, `3`, `4`, `9`), 7735 / 7825 / 7955 (`21`), 5860 (`kTargetGPRate 10`); `CvPlayerAI` 2923 (`1`),
-  3400 (`FOOD_CONSUMPTION_PER_POPULATION`).
-- **Re-inflations to DELETE** — `CvCityAI:11183` and its `getYieldWithBuild` sibling both do `* 100` to undo the
-  getter's reduce. ⚑ That pair is the standing proof the reduce is in the wrong place.
-- **Read edges that must GAIN the `÷100`:** `CyPlot:458`, `CyCity:620`, `CvGameTextMgr:1642` (UI),
-  `CvCityAI:10720` (the snapshot CSV).
-- **Already safe, do not touch:** the weighted sums (`CvUnitAI` 25767-69, `CvPlayerAI` 2891-93) and anything
-  feeding `AI_yieldValue` — every constant there multiplies, so those are scale-invariant.
-- **Inside `AI_specialistValue`:** `iBaseFoodDifference` still reduces to sit beside
-  `getFoodConsumedByPopulation()`, and `getPropertySourceValue`'s scale is unestablished. Neither distorts the
-  specialist-vs-plot comparison; both are on this list.
+`CvPlayer::getCommerces` returns `InfoValuation::realizedAtEmpire(*this, iChannel)` — the empire's OWN package
+roll-up — where [state-repositories.md](../../architecture/state-repositories.md) requires the opposite:
+
+> *"A CROSS-SCOPE receiver total is the Σ of its MEMBERS' REALIZED values — the empire's gold / research /
+> culture / espionage sums are Σ over the player's cities of each city's realized rate of that channel."*
+
+⚑ **The city half is CORRECT and is simply not consumed.** `CvCity::getCommerces` splits the city's commerce
+yield by the empire sliders through the ONE combine (`InfoValuation::commerceSplit`, fed
+`EmpireContext::commerceRates`), so each city's split does move with the slider — and the empire total is
+derived from a different quantity the slider never touches. Hence a slider move with no visible effect.
+⛔ The same doc names the shape directly: *"An upper scope's own package is NEVER added on top of that Σ: its
+deposits roll DOWN and are therefore already inside every member's realized value"* — so `realizedAtEmpire` is
+not merely incomplete here, it is the wrong source for a RECEIVER channel.
+
+**What the fix owes, so it is not done by halves:**
+
+- the Σ over the player's cities of each city's REALIZED commerce (not a deposit sum);
+- the **participation gate at the Σ** — a city under DISORDER or WLTKD contributes 0 rather than being marked
+  ([economy.md](../../reference/economy.md); the gate belongs at the sum, never on a maintained membership delta);
+- a check of which OTHER channels read `realizedAtEmpire` where they should sum members. ⚠ **CULTURE is the
+  lone dual consumer** (city and empire both sum the same packages), and MAINTENANCE is the one non-commerce
+  receiver — both need deciding explicitly rather than swept with the commerce four.
+
+⚠ Unrelated to the scale unification; found by testing after it, not caused by it.

@@ -1064,8 +1064,13 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 
 	const int iXpPart = iValue - iYieldPart - iGppPart;
 
-	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
-	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
+	// ⛔ THESE TWO ARE LOOP BOUNDS, NOT MAGNITUDES -- healthValue/happynessValue iterate ONCE PER health or
+	// happiness FACE (`for (iI = 0; iI < iAddedHealth; ++iI)`), so this is the whole-count POINT OF USE the
+	// scale rule names, and it reduces HERE ([DEC-fixedpoint-x100]). It is not a scale conversion for
+	// comparison: you cannot iterate 1.5 times. Passing the x100 value ran the loop 100x over and inflated
+	// every wellbeing term by the same factor.
+	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100;
+	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) / 100;
 	int iHappinessLevel = netHappiness(1) + getEspionageHappinessCounter();
 	int iHealthLevel = netHealth(std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter();
 
@@ -7729,12 +7734,12 @@ int CvCityAI::AI_getGoodTileCount() const
 					aiFinalYields[iJ] = pLoopPlot->getYield((YieldTypes)iJ);
 					if (pLoopPlot->getFeatureType() != NO_FEATURE)
 					{
-						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT) / 100);
+						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT));
 					}
 				}
 			}
 
-			if (((aiFinalYields[YIELD_FOOD] * 10) + (aiFinalYields[YIELD_PRODUCTION] * 6) + (aiFinalYields[YIELD_COMMERCE] * 4)) > 21)
+			if (((aiFinalYields[YIELD_FOOD] * 10) + (aiFinalYields[YIELD_PRODUCTION] * 6) + (aiFinalYields[YIELD_COMMERCE] * 4)) > 2100)
 			{
 				iGoodTileCount++;
 			}
@@ -7819,12 +7824,12 @@ int CvCityAI::AI_countWorkedPoorTiles() const
 					aiFinalYields[iJ] = pLoopPlot->getYield((YieldTypes)iJ);
 					if (pLoopPlot->getFeatureType() != NO_FEATURE)
 					{
-						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT) / 100);
+						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT));
 					}
 				}
 			}
 
-			if (((aiFinalYields[YIELD_FOOD] * 10) + (aiFinalYields[YIELD_PRODUCTION] * 6) + (aiFinalYields[YIELD_COMMERCE] * 4)) <= 21)
+			if (((aiFinalYields[YIELD_FOOD] * 10) + (aiFinalYields[YIELD_PRODUCTION] * 6) + (aiFinalYields[YIELD_COMMERCE] * 4)) <= 2100)
 			{
 				iWorkedPoorTileCount++;
 			}
@@ -7949,12 +7954,12 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 					aiFinalYields[iJ] = pLoopPlot->getYield((YieldTypes)iJ);
 					if (pLoopPlot->getFeatureType() != NO_FEATURE)
 					{
-						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT) / 100);
+						aiFinalYields[iJ] += std::max(0, -GC.getFeatureInfo(pLoopPlot->getFeatureType()).getFlatYield((YieldTypes)iJ, CASC_SCOPE_PLOT));
 					}
 				}
 			}
 
-			if (pLoopPlot->isBeingWorked() || 21 < aiFinalYields[YIELD_FOOD] * 10 + aiFinalYields[YIELD_PRODUCTION] * 6 + aiFinalYields[YIELD_COMMERCE] * 4)
+			if (pLoopPlot->isBeingWorked() || 2100 < aiFinalYields[YIELD_FOOD] * 10 + aiFinalYields[YIELD_PRODUCTION] * 6 + aiFinalYields[YIELD_COMMERCE] * 4)
 			{
 				if (pLoopPlot->isBeingWorked())
 				{
@@ -7985,12 +7990,12 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 
 			if (pLoopPlot->getFeatureType() != NO_FEATURE)
 			{
-				iFeatureFoodSurplus += std::max(0, pLoopPlot->calculateNatureYield(YIELD_FOOD) - GC.getFOOD_CONSUMPTION_PER_POPULATION());
+				iFeatureFoodSurplus += std::max(0, pLoopPlot->calculateNatureYield(YIELD_FOOD) - GC.getFOOD_CONSUMPTION_PER_POPULATION() * 100);
 			}
 
 			if ((pLoopPlot->isHills()))
 			{
-				iHillFoodDeficit += std::max(0, GC.getFOOD_CONSUMPTION_PER_POPULATION() - pLoopPlot->calculateNatureYield(YIELD_FOOD));
+				iHillFoodDeficit += std::max(0, GC.getFOOD_CONSUMPTION_PER_POPULATION() * 100 - pLoopPlot->calculateNatureYield(YIELD_FOOD));
 			}
 		}
 	}
@@ -8664,20 +8669,20 @@ void CvCityAI::AI_doEmphasize()
 					if (pLoopPlot->getWorkingCity() == this)
 					{
 						const int iFood = pLoopPlot->getYield(YIELD_FOOD);
-						if (iFood > iFoodPerPop)
+						if (iFood > iFoodPerPop * 100)
 						{
 							iHighFoodTotal += iFood;
 							iHighFoodPlotCount++;
 						}
 						const int iHammers = pLoopPlot->getYield(YIELD_PRODUCTION);
-						if (iHammers >= 3 && iHammers + iFood >= 4)
+						if (iHammers >= 300 && iHammers + iFood >= 400)
 						{
 							iHighHammerPlotCount++;
 							iHighHammerTotal += iHammers;
 						}
-						if (pLoopPlot->getYield(YIELD_COMMERCE) * 2 + iHammers * 3 > 9)
+						if (pLoopPlot->getYield(YIELD_COMMERCE) * 2 + iHammers * 3 > 900)
 						{
-							iGoodFoodSink += std::max(0, iFoodPerPop - iFood);
+							iGoodFoodSink += std::max(0, iFoodPerPop * 100 - iFood);
 						}
 					}
 				}
@@ -9668,10 +9673,6 @@ bool CvCityAI::AI_foodAvailable(int iExtra) const
 			// the plot's group read, reduced to the whole yields this heuristic weighs ([DEC-fixedpoint-x100])
 			int aiPlotYields[NUM_YIELD_TYPES];
 			pLoopPlot->getYields(aiPlotYields);
-			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
-			{
-				aiPlotYields[iYield] /= 100;
-			}
 			if (iI == CITY_HOME_PLOT)
 			{
 				iFoodCount += aiPlotYields[YIELD_FOOD];
@@ -9723,10 +9724,10 @@ bool CvCityAI::AI_foodAvailable(int iExtra) const
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		iFoodCount += (GC.getSpecialistInfo((SpecialistTypes)iI).getFlatYield(YIELD_FOOD, CASC_SCOPE_CITY) / 100 * getFreeSpecialistCount((SpecialistTypes)iI));
+		iFoodCount += (GC.getSpecialistInfo((SpecialistTypes)iI).getFlatYield(YIELD_FOOD, CASC_SCOPE_CITY) * getFreeSpecialistCount((SpecialistTypes)iI));
 	}
 
-	if (iFoodCount < foodConsumption(false, iExtra))
+	if (iFoodCount < foodConsumption(false, iExtra) * 100)
 	{
 		return false;
 	}
@@ -9991,19 +9992,22 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		// we still prefer more food if everything else is equal
 		iValue += (aiYields[YIELD_FOOD] * 1);
 
-		int iFoodPerTurn = (foodDifference(false) - ((bRemove) ? aiYields[YIELD_FOOD] : 0));
-		int iFoodLevel = getFood();
-		int iFoodToGrow = growthThreshold();
+		// ⛔ THE FOOD-STATE LOCALS LIFT TO x100 HERE, ONCE -- the yields arriving are x100, and a value is never
+		// reduced to meet a count ([DEC-fixedpoint-x100]). Lifting at the declaration keeps every use below
+		// uniform instead of scattering conversions through the arithmetic.
+		int iFoodPerTurn = (foodDifference(false) * 100 - ((bRemove) ? aiYields[YIELD_FOOD] : 0));
+		int iFoodLevel = getFood() * 100;
+		int iFoodToGrow = growthThreshold() * 100;
 		int iHealthLevel = netHealth(0);
 		int iHappinessLevel = (isNoUnhappiness() ? std::max(3, iHealthLevel + 5) : netHappiness(0));
 		int iPopulation = getPopulation();
 		int	iExtraPopulationThatCanWork = std::min(iPopulation - range(-iHappinessLevel, 0, iPopulation) + std::min(0, extraFreeSpecialists()), NUM_CITY_PLOTS) - getWorkingPopulation() + ((bRemove) ? 1 : 0);
 
-		int iConsumptionByPopulation = getFoodConsumedByPopulation();
+		int iConsumptionByPopulation = getFoodConsumedByPopulation() * 100;
 
 		int aiCityYields[NUM_YIELD_TYPES];
 		getYields(aiCityYields);
-		int iAdjustedFoodDifference = (aiCityYields[YIELD_FOOD] / 100 + std::min(0, iHealthLevel)) - iConsumptionByPopulation;
+		int iAdjustedFoodDifference = (aiCityYields[YIELD_FOOD] + std::min(0, iHealthLevel) * 100) - iConsumptionByPopulation;
 
 		// if we not human, allow us to starve to half full if avoiding growth
 		if (!bIgnoreStarvation)
@@ -10274,7 +10278,7 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 			{
 				int aiCityYields[NUM_YIELD_TYPES];
 				getYields(aiCityYields);
-				if (aiCityYields[YIELD_PRODUCTION] / 100 < (1 + getPopulation() / 3))
+				if (aiCityYields[YIELD_PRODUCTION] < (1 + getPopulation() / 3) * 100)
 				{
 					iValue += 128 + 8 * aiYields[YIELD_PRODUCTION];
 				}
@@ -10717,7 +10721,7 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 	for (int yieldCounter = 0; yieldCounter < NUM_YIELD_TYPES; yieldCounter++)
 	{
 		plotInfo->yields[yieldCounter] = 0;
-		plotInfo->yields[yieldCounter] = pPlot->getYield((YieldTypes)yieldCounter);
+		plotInfo->yields[yieldCounter] = pPlot->getYield((YieldTypes)yieldCounter) / 100;  // snapshot = a read edge
 	}
 
 	const FeatureTypes eFeature = pPlot->getFeatureType();
@@ -10814,7 +10818,7 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 		for (int yieldCounter = 0; yieldCounter < NUM_YIELD_TYPES; yieldCounter++)
 		{
 			plotInfo->newYields[yieldCounter] = 0;
-			plotInfo->newYields[yieldCounter] = pPlot->calculateNatureYield((YieldTypes)yieldCounter, bIgnoreFeature);
+			plotInfo->newYields[yieldCounter] = pPlot->calculateNatureYield((YieldTypes)yieldCounter, bIgnoreFeature) / 100;  // snapshot = a read edge
 			plotInfo->newYields[yieldCounter] += pPlot->calculateImprovementYieldChange(ePotentialImprovement, (YieldTypes)yieldCounter);
 		}
 
@@ -11176,11 +11180,11 @@ int CvCityAI::AI_getPlotMagicValue(const CvPlot* pPlot, bool bHealthy, bool bWor
 	{
 		if (bWorkerOptimization && pPlot->getWorkingCity() == this && AI_getBestBuild(getCityPlotIndex(pPlot)) != NO_BUILD)
 		{
-			yields100[iI] = pPlot->getYieldWithBuild(AI_getBestBuild(getCityPlotIndex(pPlot)), (YieldTypes)iI, true) * 100;
+			yields100[iI] = pPlot->getYieldWithBuild(AI_getBestBuild(getCityPlotIndex(pPlot)), (YieldTypes)iI, true);
 		}
 		else
 		{
-			yields100[iI] = pPlot->getYield((YieldTypes)iI) * 100;
+			yields100[iI] = pPlot->getYield((YieldTypes)iI);
 		}
 	}
 	const ImprovementTypes eCurrentImprovement = pPlot->getImprovementType();
@@ -11315,14 +11319,15 @@ int CvCityAI::AI_countGoodSpecialists(bool bHealthy) const
 		iValue += 40 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_GOLD);
 		iValue += 20 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_ESPIONAGE);
 		iValue += 15 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_CULTURE);
-		iValue += 25 * (GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100);
+		// every term x100, nothing reduced -- the thresholds LIFT to meet them ([DEC-fixedpoint-x100]).
+		iValue += 25 * GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT);
 
 		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
 		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
-		iValue += (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY) / 100);
-		iValue -= (GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_CITY) / 100);
+		iValue += GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_CITY);
+		iValue -= GC.getSpecialistInfo(eSpecialist).getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_CITY);
 
-		if (iValue >= (bHealthy ? 200 : 300))
+		if (iValue >= (bHealthy ? 20000 : 30000))
 		{
 			iCount += getMaxSpecialistCount(eSpecialist);
 		}

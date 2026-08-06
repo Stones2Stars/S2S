@@ -7520,9 +7520,11 @@ int CvCity::getFreeSpecialist() const
 	// The realized free-specialist AMOUNT -- the cascade's half of the two-part seam (modifier.md §6); the
 	// engine still picks WHICH specialist each untyped slot becomes. It is the cross-scope roll-up over the
 	// chain this city sits under (team + empire + city), so the empire-authored civic / trait / building slots
-	// are ALREADY inside it. The COUNT unit is stored x100, so it reduces here.
+	// are ALREADY inside it. ⛔ A COUNT IS NOT SCALED (owner: a count is game state, not a yield), so this
+	// read does NOT reduce -- the freeSpecialists leaf parses as CASC_UNIT_COUNT and mod_valueForUnit leaves
+	// COUNT alone. A ÷100 here returned 0 for every count below 100, i.e. no free specialists at all.
 	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1);
-	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel) / 100);
+	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel));
 }
 
 
@@ -14994,7 +14996,7 @@ int CvCity::getBestYieldAvailable(YieldTypes eYield) const
 	{
 		if (isSpecialistValid((SpecialistTypes)iJ, 1))
 		{
-			const int iYield = GC.getSpecialistInfo((SpecialistTypes)iJ).getFlatYield(eYield, CASC_SCOPE_CITY) / 100;
+			const int iYield = GC.getSpecialistInfo((SpecialistTypes)iJ).getFlatYield(eYield, CASC_SCOPE_CITY);
 			if (iYield > iBestYieldAvailable)
 			{
 				iBestYieldAvailable = iYield;

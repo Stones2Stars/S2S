@@ -455,7 +455,8 @@ void CyPlot::setRiverID(int iNewValue)
 
 int CyPlot::getYield(YieldTypes eIndex) const
 {
-	return m_pPlot ? m_pPlot->getYield(eIndex) : -1;
+	// THE READ EDGE -- ×100 becomes human here and nowhere upstream ([DEC-fixedpoint-x100]).
+	return m_pPlot ? m_pPlot->getYield(eIndex) / 100 : -1;
 }
 
 void CyPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
