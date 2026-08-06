@@ -79,6 +79,7 @@ namespace
 		case CIT_ASSIGN_FAN:          return "[CIT/assign/fan]";
 		case CIT_ASSIGN_RUN:          return "[CIT/assign/run]";
 		case CIT_BILLBOARD_POLL:      return "[CIT/billboard]";
+		case CIT_ASSIGN_CAND:         return "[CIT/assign/cand]";
 		case CIT_PUSH_REJECT_UNIT:    return "[CIT/push/reject] kind=unit reason=spamGuard";
 		case CIT_PUSH_REJECT_BUILDING:return "[CIT/push/reject] kind=building reason=dupGuard";
 		case CIT_PUSH_UNIT:           return "[CIT/push] kind=unit";
@@ -165,6 +166,10 @@ namespace
 		case CITF_callerRva:    return "callerRva";
 		case CITF_cities:       return "cities";
 		case CITF_fn:           return "fn";
+		case CITF_specialist:   return "specialist";
+		case CITF_specialistVal: return "specialistVal";
+		case CITF_plot:         return "plot";
+		case CITF_plotVal:      return "plotVal";
 		default:              return NULL;
 		}
 	}
@@ -9178,6 +9183,19 @@ bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPl
 			}
 		}
 	}
+
+	//	⚑ THE COMPARISON ITSELF, on one line. The assign instrument recorded that a run HAPPENED and never what
+	//	it decided, so "specialists are preferred over plots" was an impression with no reading behind it. Both
+	//	values side by side make the ratio directly observable -- and per [fixed-point-and-scales] §5 a side that
+	//	always wins is the signature of a mis-scaled or truncated INPUT rather than of the AI's weighting.
+	//	⚠ Level 3 is the per-candidate tier ([observability.md]), so this is off at the owner's usual level and
+	//	costs nothing until it is asked for.
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_CAND, 3)
+		.addI(CITF_city, getID())
+		.addI(CITF_specialist, (int)eBestSpecialist)
+		.addI(CITF_specialistVal, iBestSpecialistValue)
+		.addI(CITF_plot, iBestPlot)
+		.addI(CITF_plotVal, iBestPlotValue));
 
 	// --- Decision: assign best option ---
 	if (iBestPlot != -1 && iBestPlotValue > iBestSpecialistValue)

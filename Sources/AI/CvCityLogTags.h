@@ -44,7 +44,8 @@ enum CitEvent
 	CIT_ASSIGN_DIRTY,        // [CIT/assign/dirty] -- assignWork false->true transition + the caller's RVA (the churn-storm attribution instrument)
 	CIT_ASSIGN_FAN,          // [CIT/assign/fan] -- a WHOLE-SCOPE assign-dirty fan + the RVA of whoever asked for it (see the header note)
 	CIT_ASSIGN_RUN,          // [CIT/assign/run] -- one AI_assignWorkingPlots run completed (runs/city/turn = the storm shape)
-	CIT_BILLBOARD_POLL       // [CIT/billboard] -- an EXE billboard entry point was called (fn = the census index; the exhaustive billboard-feed trace)
+	CIT_BILLBOARD_POLL,      // [CIT/billboard] -- an EXE billboard entry point was called (fn = the census index; the exhaustive billboard-feed trace)
+	CIT_ASSIGN_CAND          // [CIT/assign/cand] -- one citizen placement decided: the best specialist and best plot with their VALUES, and which won
 };
 
 // CIT LOCAL field tags. city/owner are ints (city ID / PlayerTypes); prop is a PropertyTypes index (rendered as int).
@@ -66,7 +67,12 @@ enum CitField
 	CITF_lostProd, CITF_gold,
 	CITF_callerRva,  // the dirty-setter caller's RVA (module-relative return address; resolve via the PDB: `ln CvGameCoreDLL+<val>`)
 	CITF_cities,     // how many cities one assign-dirty FAN reached
-	CITF_fn          // the billboard entry-point census index (gPerfBillboardFnNames)
+	CITF_fn,         // the billboard entry-point census index (gPerfBillboardFnNames)
+	//	The specialist-vs-plot COMPARISON, which is the one thing the assign instrument could not show: it
+	//	recorded that a run happened, never what it decided or why. Both bests on one line make the ratio
+	//	readable directly ([fixed-point-and-scales] §5: the decision log is a scale instrument -- a side that
+	//	always wins is the signature of a truncated or mis-scaled input, not of AI logic).
+	CITF_specialist, CITF_specialistVal, CITF_plot, CITF_plotVal
 };
 
 // ⛔ WHY THE FAN NEEDS ITS OWN TAG: the per-city [CIT/assign/dirty] line captures the return address inside
