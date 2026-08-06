@@ -5976,7 +5976,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 		// COUNT unit stores ×100.
 		const int iTypedFreeSlots =
 			InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_FREE_SPECIALISTS,
-				CHANNEL_AMOUNT, -1, iI) / 100;
+				CHANNEL_AMOUNT, -1, iI);
 		if (iTypedFreeSlots != 0)
 		{
 			iExtraRate += getAdditionalBaseGreatPeopleRateBySpecialist((SpecialistTypes)iI, iTypedFreeSlots);
@@ -5985,7 +5985,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
 	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
-	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -6843,7 +6843,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
 	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
-	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -6965,7 +6965,7 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
 	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
-	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -10145,7 +10145,7 @@ int CvCity::getFreeSpecialistCount(SpecialistTypes eIndex) const
 		iCityScope += InfoValuation::keyedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
 			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, (int)eIndex, evalCtx);
 	}
-	const int iDerivable = (int)std::max((int64_t)0, iCityScope / 100) + kOwner.getFreeSpecialistCount(eIndex);
+	const int iDerivable = (int)std::max((int64_t)0, iCityScope) + kOwner.getFreeSpecialistCount(eIndex);
 
 	return std::max(0, iDerivable + m_paiFreeSpecialistCountUnattributed[eIndex]);
 }

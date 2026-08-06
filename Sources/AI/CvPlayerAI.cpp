@@ -4805,7 +4805,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
 		const int iTechFreeSpecialists =
-			InfoValuation::keyedTarget(kTech.getModifiers(), MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, iI) / 100;
+			InfoValuation::keyedTarget(kTech.getModifiers(), MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, iI);
 		if (iTechFreeSpecialists != 0)
 		{
 			iValue += 50 * getNumCities() * iTechFreeSpecialists;
@@ -6057,7 +6057,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 						(InfoValuation::expectedKeyedTarget(kLoopBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
 							CHANNEL_AMOUNT, -1, iJ, kCityCtx, kEmpireCtx, pCapitalGroup, &kTechWith)
 						- InfoValuation::expectedKeyedTarget(kLoopBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
-							CHANNEL_AMOUNT, -1, iJ, kCityCtx, kEmpireCtx, pCapitalGroup, &kTechWithout)) / 100;
+							CHANNEL_AMOUNT, -1, iJ, kCityCtx, kEmpireCtx, pCapitalGroup, &kTechWithout));
 
 					if (iSpecialistChange != 0)
 					{
@@ -13840,7 +13840,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
 		const int iCivicFreeSpecialists =
-			InfoValuation::keyedTarget(kCivic.getModifiers(), MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, iI) / 100;
+			InfoValuation::keyedTarget(kCivic.getModifiers(), MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, iI);
 		if (iCivicFreeSpecialists > 0)
 		{
 			iTempValue += getNumCities() * iCivicFreeSpecialists * 12;
@@ -14120,7 +14120,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	
 	iValue += iTempValue;
 	// The civic's untyped slots reach EVERY city of the empire, so they scale by the city count.
-	iTempValue = (kCivic.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) / 100 * getNumCities() * 12);
+	iTempValue = (kCivic.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) * getNumCities() * 12);
 	
 	iValue += iTempValue;
 

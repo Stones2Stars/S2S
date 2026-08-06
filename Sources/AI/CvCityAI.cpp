@@ -5114,7 +5114,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 		// The untyped slots this building opens IN THIS CITY -- the engine picks each one's type at placement
 		// (modifier.md §6), so the loop asks it per slot. The COUNT unit stores ×100, so it reduces here.
-		const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
+		const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 		for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 		{
 			const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -5215,7 +5215,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						const int iDefensePercent =
 							kBuilding.expectedModifier(
 								MODFAM_DEFENSE, DEFENSE_AMOUNT, CASC_UNIT_PERCENT,
-								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
+								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
 
 						// The building/natural offset modelled a max that no longer exists (ONE additive stack),
 						// so the candidate's own contribution is the whole of what it is worth here.
@@ -5705,7 +5705,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						const int iAllowedSlots =
 							InfoValuation::expectedKeyedTarget(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
 								CHANNEL_AMOUNT, -1, iI,
-								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
+								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
 
 						if (iAllowedSlots > 0)
 						{
@@ -5853,8 +5853,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				// The slots this building opens here, and the empire-scope ones it opens in every city. One
 				// empire read covers both legacy legs: the area term authors at EMPIRE too (a landmass is not
 				// an ownable scope), so it reaches the whole empire rather than stopping at the coastline.
-				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100 * 16;
-				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) / 100 * iNumCities * 12;
+				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) * 16;
+				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) * iNumCities * 12;
 				iValue += kBuilding.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
 
 				int iMilitaryProductionModifier = kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY);

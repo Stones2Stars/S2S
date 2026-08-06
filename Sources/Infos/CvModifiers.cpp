@@ -30,6 +30,16 @@ namespace
 		{
 			return (int)(dHuman >= 0 ? dHuman + 0.5 : dHuman - 0.5);
 		}
+		// ⛔ A COUNT IS NOT A FLAT AND TAKES NO x100 (owner). The x100 exists so an AMOUNT can carry two
+		// decimals; a count of THINGS -- specialist slots here, as population and era are elsewhere -- has no
+		// decimals to carry, and the test that separates them is whether the value BEHAVES LIKE A YIELD. A
+		// headcount does not: it is not modified, not combined, and half of one does not exist.
+		// ⚑ Scaling it bought nothing and cost a magic constant at EVERY reader -- which is the fudge-factor
+		// tell that the parse was the wrong side ([fixed-point-and-scales] §4c-bis), not the readers.
+		if (eUnit == CASC_UNIT_COUNT)
+		{
+			return (int)(dHuman >= 0 ? dHuman + 0.5 : dHuman - 0.5);
+		}
 		return jsonX100(dHuman);
 	}
 }
