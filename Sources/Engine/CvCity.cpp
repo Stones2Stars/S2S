@@ -5973,7 +5973,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	{
 		// The TYPED free slots this building opens for this specialist. The address is keyed directly by
 		// the type with no container token, which is what the -1 segment selects ([modifier.md §5]); the
-		// COUNT unit stores ×100.
+		// A COUNT takes no ×100 -- read as authored.
 		const int iTypedFreeSlots =
 			InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_FREE_SPECIALISTS,
 				CHANNEL_AMOUNT, -1, iI);
@@ -5984,7 +5984,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	}
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
-	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
+	// ([modifier.md §6]), so the loop asks it per slot. A COUNT takes no ×100.
 	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
@@ -6842,7 +6842,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	int iSpecialistExtraHappy = 0;
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
-	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
+	// ([modifier.md §6]), so the loop asks it per slot. A COUNT takes no ×100.
 	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
@@ -6964,7 +6964,7 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	int iSpecialistExtraHealth = 0;
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
-	// ([modifier.md §6]), so the loop asks it per slot. The COUNT unit stores ×100.
+	// ([modifier.md §6]), so the loop asks it per slot. A COUNT takes no ×100.
 	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
@@ -10047,7 +10047,8 @@ int CvCity::getMaxSpecialistCount() const
 //	evaluator against this city's contexts, so a slot appears exactly when its tech is held -- which is what the
 //	team ledger was pre-computing on every tech acquire.
 //	⛔ OPERATING buildings only: a dormant or obsolete building confers nothing ([enabler.md §3.2]).
-//	⚠ The COUNT unit stores ×100 ([DEC-fixedpoint-x100]), so the reader reduces here at its point of use.
+//	⚠ A COUNT takes no ×100 ([DEC-fixedpoint-x100]: the scaling exists to carry two decimals, and a headcount has
+//	none), so the cap is read exactly as authored -- nothing to reduce.
 int CvCity::getMaxSpecialistCount(SpecialistTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
@@ -10061,7 +10062,7 @@ int CvCity::getMaxSpecialistCount(SpecialistTypes eIndex) const
 		iTotal += InfoValuation::keyedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
 			MODFAM_ALLOWED_SPECIALISTS, CHANNEL_AMOUNT, -1, (int)eIndex, evalCtx);
 	}
-	return (int)std::max((int64_t)0, iTotal / 100);
+	return (int)std::max((int64_t)0, iTotal);
 }
 
 bool CvCity::isSpecialistValid(SpecialistTypes eIndex, int iExtra) const

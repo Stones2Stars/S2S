@@ -1101,7 +1101,11 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	iValue += iInvestigate + (iMultiplier * iInvestigate);
 	iValue -= (iInsidious + (iMultiplier * iInsidious));
 
-	return AI_isEmphasizeSpecialist(eSpecialist) ? (iValue * 175) : (iValue * 100);
+	//	⛔ NO SCALING EITHER WAY (owner): an evaluation neither reduces nor manufactures a scale -- it trusts the
+	//	numbers coming in and returns iValue. The old `* 100` here scaled the yield term AND every non-yield term
+	//	summed above it, so a specialist's GPP / wellbeing / property contributions outweighed any plot by a
+	//	hundredfold -- specialists infinitely prioritized. The emphasis survives as what it always meant, x1.75.
+	return AI_isEmphasizeSpecialist(eSpecialist) ? (iValue * 175 / 100) : iValue;
 }
 
 void CvCityAI::AI_chooseProduction()
@@ -5113,7 +5117,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		SAFE_DELETE_ARRAY(paiFreeSpecialistYield);
 
 		// The untyped slots this building opens IN THIS CITY -- the engine picks each one's type at placement
-		// (modifier.md §6), so the loop asks it per slot. The COUNT unit stores ×100, so it reduces here.
+		// (modifier.md §6), so the loop asks it per slot. A COUNT takes no ×100 -- read as authored.
 		const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
 		for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 		{
@@ -5697,7 +5701,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 						// The manual-assign slots this building opens for this specialist type. The address is keyed
 						// DIRECTLY by the type with no container token (`allowedSpecialists.city.{SPECIALIST_X}`), which
-						// is exactly what the -1 segment selects ([modifier.md §5]); the COUNT unit stores ×100.
+						// is exactly what the -1 segment selects ([modifier.md §5]); a COUNT takes no ×100.
 						// ⚑ The KEYED TWIN, because this family authors BOTH shapes: the plain slots a building always
 						// opens, and the tech-gated ones beside them (a University's scientist slots arriving with
 						// Biology / Physics / Psychology). The twin evaluates that conditioned tail through the ONE
@@ -10274,7 +10278,7 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 			aiYields[iI] = pPlot->getYield((YieldTypes)iI);
 		}
 	}
-	int iValue = 100 * AI_yieldValue(aiYields, NULL, bAvoidGrowth, bRemove, bIgnoreFood, bIgnoreGrowth, bIgnoreStarvation);
+	int iValue = AI_yieldValue(aiYields, NULL, bAvoidGrowth, bRemove, bIgnoreFood, bIgnoreGrowth, bIgnoreStarvation);
 
 	const ImprovementTypes eCurrentImprovement = pPlot->getImprovementType();
 
@@ -10289,7 +10293,7 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 				int iYieldDiff = (pPlot->calculateImprovementYieldChange(eFinalImprovement, ((YieldTypes)iI)) - pPlot->calculateImprovementYieldChange(eCurrentImprovement, ((YieldTypes)iI)));
 				aiYields[iI] += iYieldDiff;
 			}
-			const int iFinalYieldValue = (AI_yieldValue(aiYields, NULL, bAvoidGrowth, bRemove, bIgnoreFood, bIgnoreGrowth, bIgnoreStarvation) * 100);
+			const int iFinalYieldValue = AI_yieldValue(aiYields, NULL, bAvoidGrowth, bRemove, bIgnoreFood, bIgnoreGrowth, bIgnoreStarvation);
 
 			if (iFinalYieldValue > iValue)
 			{
