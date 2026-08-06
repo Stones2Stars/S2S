@@ -846,8 +846,13 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   because a value has no obvious home is the anti-pattern.
   > **⚖ `identity.pediaCategory` IS THE PEDIA-PLACEMENT MEMBER (owner)** — the concrete form of the
   > "display/pedia placement" clause above: which pedia bucket an entity is listed in. It passes identity's own
-  > test outright, producing nothing on its own, and it is per-ENTITY rather than building-only (every paged type
-  > categorises the same way).
+  > test outright, producing nothing on its own.
+  > **⚑ AND UNIVERSALITY IS WHY IT IS ON IDENTITY AT ALL (owner): *"that is why I wanted it on identity, because
+  > it lives on all of them."*** That is the discriminator to reuse, not a fact about this one field: a datum
+  > every entity KIND carries belongs on the shared identity plane, while one only some kinds carry belongs to
+  > their own block (a unit's `skills`, a building's `attributes`, a plot substrate's `characteristics` — §8).
+  > ⇒ Pedia placement is asked of buildings, units, techs, promotions and the rest identically, so putting it on
+  > any per-type block would mint the same member N times and leave each type free to drift on its meaning.
   > ⛔ **THE POINT IS THAT THE TAXONOMY BECOMES DATA — a consumer must never RE-DERIVE a category.** The pedia
   > classified buildings in Python from seven legacy per-field getters plus, for three buckets, a **substring
   > match on the localized DISPLAY NAME** (`"Folklore -"`, `"Enclosure -"`, `"Remains -"`) — a taxonomy built out
