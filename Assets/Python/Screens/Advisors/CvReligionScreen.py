@@ -297,10 +297,12 @@ class CvReligionScreen:
 
 			for cityX in cityList:
 
-				for iRel in self.RELIGIONS:
+				#	ONE crossing per city for the religions it HAS, then filter -- instead of asking the
+				#	city once per religion. The rows are [religionId, bIsHolyCity].
+				for kReligion in STATE.getCityReligions(cityX.getOwner(), cityX.getID()):
 					# count the number of cities
-					if cityX.isHasReligion(iRel):
-						iCities[iRel] += 1
+					if kReligion[0] in self.RELIGIONS:
+						iCities[kReligion[0]] += 1
 
 			# number of cities...
 			iY = self.Y_INFLUENCE + 20
@@ -455,17 +457,21 @@ class CvReligionScreen:
 
 				screen.appendTableRow(self.TABLE_ID)
 				screen.setTableText(self.TABLE_ID, self.COL_ZOOM_CITY, i, "" , self.zoomArt, WidgetTypes.WIDGET_ZOOM_CITY, cityX.getOwner(), cityX.getID(), 1<<0)
-				screen.setTableText(self.TABLE_ID, self.COL_CITY_NAME, i, cityX.getName(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
+				screen.setTableText(self.TABLE_ID, self.COL_CITY_NAME, i, STATE.getCityName(cityX.getOwner(), cityX.getID()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
+				#	ONE crossing answers BOTH questions below: the rows are [religionId, bIsHolyCity] over
+				#	exactly the religions this city HAS, so neither is asked per religion.
 				lReligions = []
-				for iRel in range(self.NUM_RELIGIONS):
-					if cityX.isHasReligion(iRel):
-						lReligions.append(iRel)
+				lHolyCity = []
+				for kReligion in STATE.getCityReligions(cityX.getOwner(), cityX.getID()):
+					lReligions.append(kReligion[0])
+					if kReligion[1]:
+						lHolyCity.append(kReligion[0])
 
 				for iRel in range(self.NUM_RELIGIONS):
 					if GAME.getReligionGameTurnFounded(iRel) >= 0:
 						szReligionIcon = ""
-						if cityX.isHolyCityByType(iRel):
+						if iRel in lHolyCity:
 							szReligionIcon = u"<font=2>%c</font>" %(TEXT.getHolyCitySymbolChar(iRel))
 						elif iRel in lReligions:
 							szReligionIcon = u"<font=2>%c</font>" %(TEXT.getSymbolChar("RELIGION_", iRel))

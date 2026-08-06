@@ -215,12 +215,10 @@ class CvForeignAdvisor:
 		# City trade list
 		self.tuCity = tuCity = []
 		for CyCity in CyPlayer.cities():
-			liCity = []
-			for iCity in xrange(CyCity.getTradeRoutes()):
-				cityTrade = CyCity.getTradeCity(iCity)
-				if cityTrade:
-					liCity.append(cityTrade)
-				else: print "[WARNING] Mismatch! 'CyCity.getTradeCity(iCity) = None' in 'for iCity in range(CyCity.getTradeRoutes()):'"
+			#	ONE crossing per city. Each row is [partnerOwner, partnerCityId, profitTimes100] and empty
+			#	slots are already dropped engine-side -- which is why the old None-slot warning is gone
+			#	rather than silenced: a missing partner can no longer reach this list.
+			liCity = STATE.getTradeRoutes(CyCity.getOwner(), CyCity.getID())
 			if liCity:
 				tuCity.append([CyCity, liCity])
 
@@ -1005,9 +1003,11 @@ class CvForeignAdvisor:
 				iTradeCommerce = iTradeRoutes = 0
 
 				for CyCityX, liCity in tuCity:
-					for CyCityY in liCity:
-						if iPlayerX == CyCityY.getOwner():
-							fProfit = CyCityX.calculateTradeYield(YieldTypes.YIELD_COMMERCE, CyCityX.calculateTradeProfitTimes100(CyCityY))
+					#	The row already carries the partner's owner and the route's profit, so the profit is
+					#	NOT re-derived per partner -- the yield read is paired with it by design.
+					for kRoute in liCity:
+						if iPlayerX == kRoute[0]:
+							fProfit = STATE.getTradeYield(CyCityX.getOwner(), CyCityX.getID(), YieldTypes.YIELD_COMMERCE, kRoute[2])
 							iTradeCommerce += fProfit
 							iTradeRoutes += 1
 

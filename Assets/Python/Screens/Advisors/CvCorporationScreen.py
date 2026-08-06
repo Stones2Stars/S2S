@@ -195,14 +195,17 @@ class CvCorporationScreen:
 		xLoop = self.X_CORPORATION_START
 		for i in range(GC.getNumCorporationInfos()):
 			if (ENABLER.isEverAvailable(EdgeBucket.EDGEB_CORPORATIONS, i)):
+				#	Ask the CORPORATION which building is its headquarters, then ask that BUILDING which unit
+				#	grants it -- both are own-data reads landed by the readJson reverse pass
+				#	([DEC-one-reverse-view]). The two whole-registry scans this replaces were the own-data
+				#	INVERSION: sweeping every building to find one corp's HQ, then every unit to find who
+				#	builds it.
 				szGreatPerson = ""
-				for iBuilding in range(GC.getNumBuildingInfos()):
-					if (GC.getBuildingInfo(iBuilding).getFoundsCorporation() == i):
-						break
-				for iUnit in range(GC.getNumUnitInfos()):
-					if GC.getUnitInfo(iUnit).getHasBuilding(iBuilding):
+				for iBuilding in INFO.getIdList("CORPORATION_", i, IdListSlot.PYLIST_HEADQUARTERS_BUILDINGS):
+					for iUnit in INFO.getEdgeIds("BUILDING_", iBuilding, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_UNITS):
 						szGreatPerson = INFO.getDescription("UNIT_", iUnit)
 						break
+					break
 				screen.setLabelAt("", "CivicList", szGreatPerson, 1<<2, xLoop, self.Y_GREAT_PERSON, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 				xLoop += self.DX_CORPORATION
@@ -310,7 +313,7 @@ class CvCorporationScreen:
 			bFirstColumn = (i % 2 == 0)
 
 			szCityName = ""
-			if cityX.isCapital():
+			if STATE.getCityFlags(cityX.getOwner(), cityX.getID())[CityFlagKind.CITY_FLAG_CAPITAL]:
 				szCityName += u"%c" % CyGame().getSymbolID(FontSymbols.STAR_CHAR)
 
 			lCorporations = []

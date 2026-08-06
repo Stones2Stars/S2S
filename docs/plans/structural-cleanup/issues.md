@@ -356,6 +356,41 @@ way. Worth tracing what the pre-rework tree actually drew before choosing.
 
 ---
 
+## 10. The finance advisor rebuilds the empire's commerce by walking every city and plot
+
+**Observed:** `CvFinanceAdvisor.drawBase` raises `AttributeError: 'CyCity' object has no attribute
+'getCityIndexPlot'`, and behind it `isWorkingPlot` / `getTradeRoutes` / `getTradeCity` /
+`calculateTradeYield` / `getCorporationYield` — all on `CyCity`, which carries only the IDENTITY SET.
+⚠ Its two `yCommerceSlider` errors are DOWNSTREAM of this: `interfaceScreen` aborts before the attribute is
+set, so `update`/`onClose` then fail on it. They are not a second defect and should clear with this one.
+
+**PROVEN — the walk computes nothing.** The panel takes the real total in ONE call
+(`CyPlayer.calculateTotalYield(YIELD_COMMERCE)`) and the entire loop exists only to ATTRIBUTE that total
+across five labels — worked tiles, domestic trade, foreign trade, corporations, specialists — with the sixth,
+buildings, taken as the RESIDUAL (`iBuildings = iTotalCommerce - iCommerce`). No bucket is a number the
+machine does not already hold.
+
+**PROVEN — it is the cost class the model exists to delete.** The shape is every city × 21 plots × every
+trade route × every specialist type, per draw. `getPlotYield` is named in
+[state-repositories.md](../../architecture/state-repositories.md) as **a DELETION, not a value to re-home**,
+measured there at *913M plot reads in one turn* for exactly this per-read walk.
+
+**RULED OUT — it is NOT the per-source decomposition the oracle owns.** That rule governs
+`(scope × channel × SOURCE)` accumulators — per building, per bonus. These five buckets are the
+[modifier.md §2a](../../specs/modifier.md) BASE TERMS (plot yield · `tradeYield` · specialists · corporation ·
+building flats), which is a different and legitimate question. ⛔ Do not close this by reviving per-source
+getters, and do not cite the oracle rule to park it.
+
+**NOT YET KNOWN — whether the five-way split survives at all.** The empire TOTAL is already served
+(`calculateTotalYield`; `STATE.getCommerces(iPlayer, -1)`, which this same screen's income line already
+uses). The SPLIT is stored nowhere — a package holds Σflat/Σpercent per channel, not per term — so it is not
+a read that was cut, it never existed as a stored quantity. Either it collapses to the total, or it earns a
+defined decomposition read against the §2a terms.
+⚑ [patterns.md](../../architecture/patterns.md) makes display shape DEMAND-DRIVEN and END-STAGE, which is the
+argument for collapsing it and letting a real request bring it back.
+
+---
+
 ---
 
 # Migrated from the todo

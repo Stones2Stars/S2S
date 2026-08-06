@@ -22,6 +22,7 @@
 #include "Python/CyPlot.h"
 #include "Python/CyUnit.h"
 #include "Python/CySelectionGroup.h"
+#include "Python/CyGameCoreUtils.h"   // the shared calc helpers published as free functions
 #include "Tools/SCyDebug.h"
 #include "IDValueMap.h"
 #include "Tools/Win32.h"
@@ -233,6 +234,10 @@ DllExport void DLLPublishToPython()
 	//	game object and no per-owner state, so there is nothing here for a consumer to reach legacy THROUGH.
 	//
 	python::def("getModifiedIntValue", getModifiedIntValue);
+	//	The espionage point-cost multiplier between two teams. Same justification as above and the same shape --
+	//	two ints in, one int out -- and the espionage advisor SHOWS the number the engine actually charges, so a
+	//	script-side copy would be a second implementation of a live game formula.
+	python::def("getEspionageModifier", cyGetEspionageModifier);
 
 	Win32::pythonPublish();
 
