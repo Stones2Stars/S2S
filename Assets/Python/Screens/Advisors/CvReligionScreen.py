@@ -489,7 +489,8 @@ class CvReligionScreen:
 							sHelp += szTempBuffer
 							bFirst = False
 				else:
-					sHelp = CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX, False, False, True, False)
+					#	The composer takes the city by ADDRESS now, not as a handle.
+					sHelp = CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX.getOwner(), cityX.getID(), False, False, True, False)
 
 				screen.setTableText(self.TABLE_ID, self.COL_EFFECTS, i, sHelp, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 

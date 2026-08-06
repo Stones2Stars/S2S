@@ -217,7 +217,9 @@ class CvCorporationScreen:
 				szListLabels = []
 				iNum = 0
 				szList = u""
-				for eBonus in GC.getCorporationInfo(i).getPrereqBonuses():
+				#	The corporation's consumed bonuses, collected off its own requires tree by the ONE shared
+				#	walker rather than re-derived here.
+				for eBonus in ENABLER.getRequiredBonuses(i):
 					if iNum == 0:
 						szList = u""
 					else:
@@ -316,11 +318,13 @@ class CvCorporationScreen:
 			if STATE.getCityFlags(cityX.getOwner(), cityX.getID())[CityFlagKind.CITY_FLAG_CAPITAL]:
 				szCityName += u"%c" % CyGame().getSymbolID(FontSymbols.STAR_CHAR)
 
+			#	ONE crossing for the corporations this city HAS -- rows are [corporationId, bIsHeadquarters],
+			#	so both questions are answered without asking the city once per corporation.
 			lCorporations = []
-			for iI in range(GC.getNumCorporationInfos()):
-				if cityX.isHasCorporation(iI):
+			for kCorporation in STATE.getCityCorporations(cityX.getOwner(), cityX.getID()):
+					iI = kCorporation[0]
 					lCorporations.append(iI)
-					if cityX.isHeadquartersByType(iI):
+					if kCorporation[1]:
 						szCityName += u"%c" % TEXT.getHeadquarterSymbolChar(iI)
 					else: szCityName += u"%c" % TEXT.getSymbolChar("CORPORATION_", iI)
 

@@ -391,6 +391,34 @@ argument for collapsing it and letting a real request bring it back.
 
 ---
 
+## 11. The pedia hub is built on ACCESSOR FUNCTIONS, so it cannot be re-pointed call-site by call-site
+
+**Observed:** `AttributeError: 'CyGlobalContext' object has no attribute 'getHeritageInfo'` /
+`getUnitInfo` / `getPromotionInfo` / `getBuildingInfo` / `getTechInfo`, from `Pedia.placeHeritage`,
+`Pedia.getBuildingList`, `Index_Pedia.interfaceScreen` and `UnitUpgradesGraph.getGraphEdges`.
+
+**PROVEN — they are not reads, they are FUNCTION REFERENCES.** The hub's generic machinery is parameterized
+over the accessor itself: `self.getSortedList(GC.getNumHeritageInfos, GC.getHeritageInfo)` and
+`self.placeItems(widget, GC.getHeritageInfo)`; `Index_Pedia` holds a 19-row table of
+`(countFn, accessorFn, widget)`. So there is no per-call re-point to make — the SHAPE is the accessor,
+and every category flows through it.
+
+⚑ **The replacement shape already exists and is one crossing:** `INFO.getIndex(prefix)` returns the whole
+registry's identity block, which is exactly what these render. The table becomes `(prefix, widget)`.
+⚠ **But it is a hub refactor, not a sweep** — the helpers, the sort, the sub-category mapping and the
+jump-widget payloads all thread the accessor.
+
+**PROVEN — one leg is blocked on a KNOWN GAP, not on this.** `Pedia.getBuildingList` reads
+`isGraphicalOnly()` and `getBuildingType()` — the pedia's category/sort TAXONOMY, which
+[pedia-read-map.md](../../reference/pedia-read-map.md) finding 4 records as having no home yet. That
+decision is upstream of the refactor: re-shaping the table does not answer where category tags live.
+
+⚖ **The full-registry SCAN itself is NOT the defect here** ([patterns.md](../../architecture/patterns.md)):
+enumerating every entity IS the pedia's job and those loops STAY. What changes is the COST — one crossing
+per registry instead of one per entity.
+
+---
+
 ---
 
 # Migrated from the todo

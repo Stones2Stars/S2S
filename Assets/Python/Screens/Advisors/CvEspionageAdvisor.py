@@ -121,6 +121,13 @@ class TheScreen:
 		iFontTitle = FontTypes.TITLE_FONT
 
 		# mission constants
+		#	Seeded first: the loop below only assigns inside its branch, so a data set with no matching
+		#	mission left these UNBOUND and every later read raised AttributeError on the instance rather
+		#	than reporting a missing mission. -1 is the id space's own "none".
+		self.MissionInvestigateCity = -1
+		self.MissionSeeDemo = -1
+		self.MissionSeeResearch = -1
+		self.MissionCityVisibility = -1
 		for iMissionLoop in range(GC.getNumEspionageMissionInfos()):
 			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_COST) != -1 \
 			and INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_PASSIVE):
