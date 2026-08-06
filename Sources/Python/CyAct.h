@@ -61,6 +61,12 @@ public:
 	bool invalidateUnitList(int iPlayer, int iCity) const;
 	bool invalidateBuildingList(int iPlayer, int iCity) const;
 
+	// Give or take a unit's PROMOTION. ⚖ This earns its place the way this surface requires -- by an existing
+	// call site that needs it: CvEventManager.onUnitPromoted redirects an AI's promotion pick, which is EXISTING
+	// gameplay being kept working, not new logic authored in script. It routes through CvUnit::setHasPromotion,
+	// so the promotion fact is emitted and the resolved plane re-gathers exactly as an engine-side promote does.
+	bool setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewValue) const;
+
 	static void pythonPublish();
 };
 

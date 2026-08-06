@@ -358,7 +358,7 @@ def doSpicy2(argsList):
 	return 1
 
 def getHelpSpicy2(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", (GC.getImprovementInfo(GC.getInfoTypeForString("IMPROVEMENT_PLANTATION")).getTextKey(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", (INFO.getTextKey("IMPROVEMENT_", GC.getInfoTypeForString("IMPROVEMENT_PLANTATION")), ))
 
 ######## BABY BOOM ###########
 
@@ -1027,7 +1027,7 @@ def doWiningMonks2(argsList):
 	return 1
 
 def getHelpWiningMonks2(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", (GC.getImprovementInfo(GC.getInfoTypeForString("IMPROVEMENT_WINERY")).getTextKey(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", (INFO.getTextKey("IMPROVEMENT_", GC.getInfoTypeForString("IMPROVEMENT_WINERY")), ))
 
 
 ######## INDEPENDENTFILMS ###########
@@ -1130,7 +1130,7 @@ def canTriggerInterstate(argsList):
 	return GC.getPlayer(data.ePlayer).isCivic(GC.getInfoTypeForString("CIVIC_EGALITARIAN"))
 
 def getHelpInterstate(argsList):
-	return TRNSLTR.getText("TXT_KEY_UNITHELP_MOVEMENT", (1, GC.getRouteInfo(GC.getInfoTypeForString("ROUTE_HIGHWAY")).getTextKey()))
+	return TRNSLTR.getText("TXT_KEY_UNITHELP_MOVEMENT", (1, INFO.getTextKey("ROUTE_", GC.getInfoTypeForString("ROUTE_HIGHWAY"))))
 
 def applyInterstate(argsList):
 	data = argsList[1]
@@ -1424,7 +1424,7 @@ def doImpactCrater2(argsList):
 	return 1
 
 def getHelpImpactCrater2(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", (GC.getImprovementInfo(GC.getInfoTypeForString("IMPROVEMENT_SHAFT_MINE")).getTextKey(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", (INFO.getTextKey("IMPROVEMENT_", GC.getInfoTypeForString("IMPROVEMENT_SHAFT_MINE")), ))
 
 ######## THE_HUNS ###########
 
@@ -2008,7 +2008,7 @@ def getHelpClassicLiteratureDone3(argsList):
 			szCityName = city.getNameKey()
 			break
 
-	return TRNSLTR.getText("TXT_KEY_EVENT_FREE_SPECIALIST", (1, GC.getSpecialistInfo(GC.getInfoTypeForString("SPECIALIST_SCIENTIST")).getTextKey(), szCityName))
+	return TRNSLTR.getText("TXT_KEY_EVENT_FREE_SPECIALIST", (1, INFO.getTextKey("SPECIALIST_", GC.getInfoTypeForString("SPECIALIST_SCIENTIST")), szCityName))
 
 def canApplyClassicLiteratureDone3(argsList):
 	iGreatLibrary = GC.getInfoTypeForString("BUILDING_THE_GREAT_LIBRARY")
@@ -2170,7 +2170,7 @@ def getHelpSportsLeague1(argsList):
 			"TXT_KEY_EVENT_SPORTS_LEAGUE_HELP_1",
 			(
 				GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(),
-				GC.getBuildingInfo(GC.getInfoTypeForString("BUILDING_CIRCUS_MAXIMUS")).getTextKey()
+				INFO.getTextKey("BUILDING_", GC.getInfoTypeForString("BUILDING_CIRCUS_MAXIMUS"))
 			)
 		)
 	)
@@ -2256,7 +2256,7 @@ def canTriggerCrusadeDone(argsList):
 
 def getHelpCrusadeDone1(argsList):
 	holyCity = GAME.getHolyCity(argsList[1].eReligion)
-	szUnit = GC.getUnitInfo(holyCity.getConscriptUnit()).getTextKey()
+	szUnit = INFO.getTextKey("UNIT_", holyCity.getConscriptUnit())
 	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() / 2 + 1
 
 	return TRNSLTR.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_1", (iNumUnits, szUnit, holyCity.getNameKey()))
@@ -5333,7 +5333,7 @@ def canTriggerCityRuinsTreasure1(argsList):
   return True
 
 def getHelpCityRuinsTreasure1(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_BONUS_UNIT", (1, GC.getUnitInfo(GC.getInfoTypeForString("UNIT_TREASURE")).getTextKey()))
+	return TRNSLTR.getText("TXT_KEY_EVENT_BONUS_UNIT", (1, INFO.getTextKey("UNIT_", GC.getInfoTypeForString("UNIT_TREASURE"))))
 
 def applyCityRuinsTreasure1(argsList):
   data = argsList[1]
@@ -5469,13 +5469,13 @@ def getHelpCompulsoryDem2(argsList):
 	else:
 		print "Event #3"
 		if CyPlayer.canDoCivics(GC.getInfoTypeForString("CIVIC_TOTALITARIANISM")):
-			szType = GC.getCivicInfo(GC.getInfoTypeForString("CIVIC_TOTALITARIANISM")).getTextKey()
+			szType = INFO.getTextKey("CIVIC_", GC.getInfoTypeForString("CIVIC_TOTALITARIANISM"))
 			print "Can Switch to Fascist"
 		elif CyPlayer.canDoCivics(GC.getInfoTypeForString("CIVIC_MONARCHY")):
-			szType = GC.getCivicInfo(GC.getInfoTypeForString("CIVIC_MONARCHY")).getTextKey()
+			szType = INFO.getTextKey("CIVIC_", GC.getInfoTypeForString("CIVIC_MONARCHY"))
 			print "Can Switch to Monarchy"
 		elif CyPlayer.canDoCivics(GC.getInfoTypeForString("CIVIC_DESPOTISM")):
-			szType = GC.getCivicInfo(GC.getInfoTypeForString("CIVIC_DESPOTISM")).getTextKey()
+			szType = INFO.getTextKey("CIVIC_", GC.getInfoTypeForString("CIVIC_DESPOTISM"))
 			print "Can Switch to Despotism"
 
 	return TRNSLTR.getText("TXT_KEY_EVENT_CHANGE_CIVICS", (szType,))
@@ -5502,7 +5502,7 @@ def TriggerHarryPotter2(argsList):
 			CyPlayerX.AI_changeMemoryCount(iPlayer, MemoryTypes.MEMORY_EVENT_BAD_TO_US, 1)
 
 def getHelpHarryPotter2(argsList):
-	szHelp = TRNSLTR.getText("TXT_KEY_EVENT_FREE_BUILDING_GLOBAL", (GC.getBuildingInfo(GC.getInfoTypeForString("BUILDING_LIBRARY")).getTextKey(),))
+	szHelp = TRNSLTR.getText("TXT_KEY_EVENT_FREE_BUILDING_GLOBAL", (INFO.getTextKey("BUILDING_", GC.getInfoTypeForString("BUILDING_LIBRARY")),))
 	szHelp += "\n" + TRNSLTR.getText("TXT_KEY_EVENT_CAUSES_HOLY_ANGER",())
 	szHelp += "\n" + TRNSLTR.getText("TXT_KEY_EVENT_CAUSES_FOREIGN_HOLY_ANGER",())
 	return szHelp
@@ -5742,7 +5742,7 @@ def getHelpSuperVirus3(argsList):
 	CyCity = CyPlayer.getCity(data.iCityId)
 
 	szCityNameKey = CyCity.getNameKey()
-	szHelp = TRNSLTR.getText("TXT_KEY_EVENT_FREE_SPECIALISTS", (2, GC.getSpecialistInfo(GC.getInfoTypeForString("SPECIALIST_GREAT_SCIENTIST")).getTextKey(), szCityNameKey))
+	szHelp = TRNSLTR.getText("TXT_KEY_EVENT_FREE_SPECIALISTS", (2, INFO.getTextKey("SPECIALIST_", GC.getInfoTypeForString("SPECIALIST_GREAT_SCIENTIST")), szCityNameKey))
 	szHelp += "\n" + TRNSLTR.getText("TXT_KEY_EVENT_LOSE_POPULATION", (CyCity.getPopulation()*25/100, szCityNameKey))
 
 	iGold = 100 + CyPlayer.getNumCities() * 65
@@ -5809,7 +5809,7 @@ def getHelpSuperVirus4(argsList):
   iChangePopulation = eventCity.getPopulation() * 75
   iChangePopulation /= 100
 
-  szHelp = TRNSLTR.getText("TXT_KEY_EVENT_FREE_SPECIALISTS", (1, GC.getSpecialistInfo(GC.getInfoTypeForString("SPECIALIST_GREAT_MILITARY_INSTRUCTOR")).getTextKey(), eventCity.getNameKey() , ))
+  szHelp = TRNSLTR.getText("TXT_KEY_EVENT_FREE_SPECIALISTS", (1, INFO.getTextKey("SPECIALIST_", GC.getInfoTypeForString("SPECIALIST_GREAT_MILITARY_INSTRUCTOR")), eventCity.getNameKey() , ))
   szHelp += u"\n"
   szHelp += TRNSLTR.getText("TXT_KEY_EVENT_LOSE_POPULATION", (iChangePopulation, eventCity.getNameKey() , ))
   szHelp += u"\n"

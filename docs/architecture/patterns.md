@@ -635,8 +635,25 @@ of them:
   as "Python owns this forever", and equally do not start the move inside #430. The triggers machine
   ([triggers.md](../specs/triggers.md)) is where it lands when its own work item is taken.
 - ⚑ Consequence: the `Cy*` WRAPPER classes (`CyCity`/`CyUnit`/`CyPlayer`/…) STAY while their bindings do not —
-  33 engine files hold them for that direction. **A wrapper with no binding is the CORRECT end state here**, and
+  33 engine files hold them for that direction. **A wrapper carries its IDENTITY SET and nothing else**, and
   reading it as a half-cut to complete would delete working gameplay.
+
+  > **⚖ THE IDENTITY SET — A HANDLE PUBLISHES OWNER + ID + POSITION, AND THE REFACTOR STOPS THERE (owner).**
+  > *"Carry identity set — if that is what it takes for legacy to keep working then it's an obvious tradeoff. I
+  > only want to refactor the python I have to, otherwise we **never** will be done."* A legacy consumer holding
+  > a handle must be able to say WHICH object it holds; re-pointing every such site onto the read planes is
+  > refactoring that buys nothing and does not converge.
+  > ⛔ **It is an IDENTITY set, not a read surface, and it never grows.** Owner, id, position — the axes that
+  > ADDRESS the object. [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed)'s ban on the info/state GETTER contract
+  > is untouched: a consumer wanting DATA asks `CyInfo` / `CyState` / `CyEnabler` **by that address**. Anything
+  > beyond the address added to a handle is the escape hatch reopening, and is the thing to refuse.
+  > ⚑ **Each publish lives in the file named for its type** (`CyCity::pythonPublish`, the `CyInfo` pattern), never
+  > piled into the composition root — the numbered-bucket shape (`CyGameCoreInterface1/2/3`) is the disorganization
+  > this avoids (owner: *"when it's called CyPythonLoad1-4 or whatever, that's when it's silly, and
+  > unorganized"*).
+  > ⚠ This SUPERSEDES the earlier "a wrapper with no binding is the correct end state": zero-`.def` registration
+  > was right about the DIRECTION (the read surface is gone) and wrong about the ADDRESS (a handle that cannot
+  > name itself makes every legacy consumer a rewrite).
 
   > **⛔ "NO BINDING" MEANS NO `.def` — IT DOES NOT MEAN NO `class_<>`. The TYPE REGISTRATION IS THE KEPT
   > DIRECTION'S CARRIER, AND CUTTING IT BREAKS THAT DIRECTION.** A boost::python `class_<CyX>("CyX")` carrying

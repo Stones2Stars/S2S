@@ -231,7 +231,7 @@ class WBInfoScreen:
 				iCount += 1
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
 				sText = sColor + pCity.getName()
-				sButton = GC.getCivilizationInfo(pCity.getCivilizationType()).getButton()
+				sButton = INFO.getButton("CIVILIZATION_", pCity.getCivilizationType())
 				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", sButton, WidgetTypes.WIDGET_PYTHON, 7200 + iPlayer, iCity, 1<<0)
 				screen.minimapFlashPlot(iX, iY, iColorB, -1)
 				if lSelectedItem == lPlots:
@@ -255,7 +255,7 @@ class WBInfoScreen:
 				if iOwner > -1:
 					pPlayer = GC.getPlayer(iOwner)
 					sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
-					sButton = GC.getCivilizationInfo(pPlayer.getCivilizationType()).getButton()
+					sButton = INFO.getButton("CIVILIZATION_", pPlayer.getCivilizationType())
 				sText = u"%s(%d, %d)" % (sColor, iX, iY)
 				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", sButton, WidgetTypes.WIDGET_PYTHON, 1027, iX * 10000 + iY, 1<<2)
 				screen.minimapFlashPlot(iX, iY, iColorB, -1)

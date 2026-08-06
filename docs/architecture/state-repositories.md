@@ -721,6 +721,18 @@ replaces them lands, never polished or re-homed onto the component on the way ou
     silently DOUBLE-COUNTS every unit's authored base. ⚠ It is therefore NOT a
     [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted) violation — the value is genuine
     per-unit state that no amount of re-derivation can reconstruct, which is exactly why it is stored.
+    ⚖ **A SECTION FOLDS BESIDE THE SLOT TABLE, ON THE SAME MARK — it does not become a slot, and it does not
+    become a hand-named pair either.** The slot table addresses modifier-FAMILY entries by
+    `(family, kind, scope, unit)`; a `hideAndSeek`-shaped SECTION ([json.md §9](../specs/json.md)) has no such
+    address, so it cannot ride the table — and a scalar pair beside it would be the shape
+    [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) calls a defect. It gets its own cached block
+    on the SAME two facts, so ONE route maintains one unit's whole resolved state.
+    ⚑ **What earns a section that block is the CARRIER SET, and it is the test to apply to the next one:** it
+    folds over exactly the unit's own info ∪ held promotions ∪ held unit-combat classes — the same three the slot
+    table folds over — so the two facts that move the table are precisely the two that move it, with no third
+    trigger to find. ⛔ A per-read fold over those carriers is the O(registry) walk this plane exists to delete,
+    and converting it to walk the HELD containers instead is NOT the fix — that is the same walk with a better
+    receiver ([contexts.md](contexts.md)). The read becomes a bare fetch or nothing has been done.
   ⚠ Hand-maintained duplicates DRIFT — that is not theoretical: the maintenance decomposition and its cached fill
   duplicated five terms, and the L8 home/otherArea overlay landed in one and not the other, so `/computed`
   under-reported by 39 against the served value until the duplicate was replaced by a delegation.

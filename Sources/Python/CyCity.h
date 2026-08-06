@@ -302,6 +302,15 @@ public:
 	bool isRevealed(int /*TeamTypes*/ eIndex, bool bDebug) const;
 	void setRevealed(int /*TeamTypes*/ eIndex, bool bNewValue);
 	bool getEspionageVisibility(int /*TeamTypes*/ eIndex) const;
+	// ⚖ THE IDENTITY SET -- the ONLY thing this handle publishes (owner). A wrapper is a marshalling handle, and
+	// the READ planes (CyInfo / CyState / CyEnabler) are where data is asked for; but a legacy consumer holding a
+	// handle needs to say WHICH object it holds, and re-pointing every such site is refactoring we are not doing
+	// ("I only want to refactor the python I have to, otherwise we never will be done").
+	// ⛔ SO THIS STAYS AN IDENTITY SET AND NEVER GROWS INTO THE LEGACY GETTER SURFACE: owner + id + position, the
+	// axes that ADDRESS a city ([DEC-cy-not-fixed] still bans the info/state getter contract). A consumer wanting
+	// DATA asks CyState by that address; anything else added here is the escape hatch reopening.
+	static void pythonPublish();
+
 	std::wstring getName() const;
 	std::wstring getNameForm(int iForm) const;
 	std::wstring getNameKey() const;

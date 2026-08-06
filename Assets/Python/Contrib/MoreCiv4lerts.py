@@ -12,6 +12,7 @@ GC = CyGlobalContext()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
@@ -351,16 +352,23 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 		return aSet
 
 	def buildTechString(self, techs):
-		return self.buildItemString(techs, GC.getTechInfo, CvTechInfo.getDescription)
+		return self.buildInfoString(techs, "TECH_")
 
 	def buildBonusString(self, bonuses):
-		return self.buildItemString(bonuses, GC.getBonusInfo, CvBonusInfo.getDescription)
+		return self.buildInfoString(bonuses, "BONUS_")
 
+	# A PLAYER is not an entity -- its name is live state, so it stays on its own read rather than being
+	# forced through the entity shape below.
 	def buildPlayerString(self, players):
-		return self.buildItemString(players, GC.getPlayer, CyPlayer.getName)
+		names = [GC.getPlayer(ePlayer).getName() for ePlayer in players]
+		names.sort()
+		return u", ".join(names)
 
-	def buildItemString(self, items, getItemFunc, getNameFunc):
-		names = [getNameFunc(getItemFunc(eItem)) for eItem in items]
+	# THE UNIVERSAL ENTITY-NAME SHAPE: a type PREFIX and an id, served by CyInfo. Never an accessor function
+	# and never a per-type method -- the global context hands out no info objects ([DEC-cy-not-fixed]), and
+	# addressing by (prefix, id) is what lets ONE helper serve every registry.
+	def buildInfoString(self, items, szTypePrefix):
+		names = [INFO.getDescription(szTypePrefix, iItem) for iItem in items]
 		names.sort()
 		return u", ".join(names)
 

@@ -8,6 +8,7 @@ import BugFile
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -100,7 +101,7 @@ class StatusDumpEvent(AbstractStatusDumpEvent):
 		sMsg = TRNSLTR.getText("TXT_KEY_STATUS_DUMP_PLAYER_NAME", (pPlayer.getName(),))
 		self._writeMsg(sMsg, vColor="Black", vBold=False, vUnderline=False, vOpenSpoiler="", vCloseSpoiler=False)
 		# leader / civ name
-		aList = (GC.getLeaderHeadInfo(pPlayer.getLeaderType()).getDescription(), pPlayer.getCivilizationShortDescription(0))
+		aList = (INFO.getDescription("LEADER_", pPlayer.getLeaderType()), pPlayer.getCivilizationShortDescription(0))
 		sMsg = TRNSLTR.getText("TXT_KEY_STATUS_DUMP_LEADER_CIV", aList)
 		self._writeMsg(sMsg, vColor="Black", vBold=False, vUnderline=False, vOpenSpoiler="", vCloseSpoiler=False)
 

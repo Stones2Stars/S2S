@@ -14,7 +14,8 @@
 #include "Engine/CvUnit.h"       // the unit plane + the selection reads
 #include "Engine/CvPlot.h"
 #include "Engine/CvMap.h"        // the plot enumeration resolves its plot through the map
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
+#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
+#include <ctime>  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
 #include "AI/BetterBTSAI.h"   // PERF_SCOPE -- the ONE instrument, gated by gPerfLogLevel
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "Infos/CvInfoKinds.h"      // the NUM_<FAMILY>_KINDS the groups are sized by
@@ -850,6 +851,7 @@ python::list CyState::getUnitPromotions(int iPlayer, int iUnit) const
 	return ids;
 }
 
+
 bool CyState::hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const
 {
 	g_szLastCyRead = "CyState::hasUnitPromotion";
@@ -859,6 +861,28 @@ bool CyState::hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const
 		return false;
 	}
 	return pUnit->isHasPromotion((PromotionTypes)iPromotion);
+}
+
+bool CyState::hasUnitCombat(int iPlayer, int iUnit, int iUnitCombat) const
+{
+	g_szLastCyRead = "CyState::hasUnitCombat";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL || iUnitCombat < 0 || iUnitCombat >= GC.getNumUnitCombatInfos())
+	{
+		return false;
+	}
+	return pUnit->isHasUnitCombat((UnitCombatTypes)iUnitCombat);
+}
+
+bool CyState::canUnitAcquirePromotion(int iPlayer, int iUnit, int iPromotion) const
+{
+	g_szLastCyRead = "CyState::canUnitAcquirePromotion";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->canAcquirePromotion((PromotionTypes)iPromotion);
 }
 
 bool CyState::isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) const
@@ -1192,6 +1216,8 @@ void CyState::pythonPublish()
 		.def("hasUnitPromotion",         &CyState::hasUnitPromotion)
 		.def("getUnitPromotions",        &CyState::getUnitPromotions)
 		.def("isUnitPromotionOverridden",&CyState::isUnitPromotionOverridden)
+		.def("hasUnitCombat",           &CyState::hasUnitCombat)
+		.def("canUnitAcquirePromotion",  &CyState::canUnitAcquirePromotion)
 		.def("isUnitActionRecommended",  &CyState::isUnitActionRecommended)
 		.def("canUnitUpgrade",           &CyState::canUnitUpgrade)
 		.def("canUnitUpgradeToAny",      &CyState::canUnitUpgradeToAny)

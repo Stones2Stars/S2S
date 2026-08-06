@@ -534,9 +534,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraDropRange = 0;
 
 	m_iSurvivorChance = 0;
-	m_iVictoryAdjacentHeal = 0;
-	m_iVictoryHeal = 0;
-	m_iVictoryStackHeal = 0;
 
 	m_iExtraMoves = 0;
 	m_iUpkeep100 = 0;
@@ -672,8 +669,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_eGGExperienceEarnedTowardsType = NO_UNIT;
 	m_iCargoCapacity = 0;
 	m_iSMCargoCapacity = 0;
-	m_iExtraSelfHealModifier = 0;
-	m_iExtraNumHealSupport = 0;
 	m_iHealSupportUsed = 0;
 	m_iExtraInsidiousness = 0;
 	m_iExtraInvestigation = 0;
@@ -800,9 +795,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iCombatLimitChange = other.m_iCombatLimitChange;
 	m_iExtraDropRange = other.m_iExtraDropRange;
 	m_iSurvivorChance = other.m_iSurvivorChance;
-	m_iVictoryAdjacentHeal = other.m_iVictoryAdjacentHeal;
-	m_iVictoryHeal = other.m_iVictoryHeal;
-	m_iVictoryStackHeal = other.m_iVictoryStackHeal;
 	m_iExtraMoves = other.m_iExtraMoves;
 	m_iExtraMoveDiscount = other.m_iExtraMoveDiscount;
 	m_iStampedeCount = other.m_iStampedeCount;
@@ -903,8 +895,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_eGGExperienceEarnedTowardsType = other.m_eGGExperienceEarnedTowardsType;
 	m_iCargoCapacity = other.m_iCargoCapacity;
 	m_iSMCargoCapacity = other.m_iSMCargoCapacity;
-	m_iExtraSelfHealModifier = other.m_iExtraSelfHealModifier;
-	m_iExtraNumHealSupport = other.m_iExtraNumHealSupport;
 	m_iHealSupportUsed = other.m_iHealSupportUsed;
 	m_iExtraInsidiousness = other.m_iExtraInsidiousness;
 	m_iExtraInvestigation = other.m_iExtraInvestigation;
@@ -4197,6 +4187,10 @@ bool CvUnit::canDoCommand(CommandTypes eCommand, int iData1, int iData2, bool bT
 
 void CvUnit::doCommand(CommandTypes eCommand, int iData1, int iData2)
 {
+	//	The shared entry for EVERY unit command -- sleep, fortify, promote -- so one scope brackets the whole
+	//	action and the nested scopes below it attribute where the time actually goes. `eCommand` is carried in
+	//	the phase name rather than a payload field so the log separates the commands without a second reader.
+	PERF_SCOPE("CvUnit::doCommand", getOwner());
 	FAssert(getOwner() != NO_PLAYER);
 
 	if (!canDoCommand(eCommand, iData1, iData2))
@@ -5966,23 +5960,9 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
 
     if (!GET_TEAM(getTeam()).isFriendlyTerritory(pPlot->getTeam()) && !isAnimal() && !isNPC())
     {
-        bool bCanHealOutside = false;
-
-        for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
-        {
-            if (!isHasPromotion((PromotionTypes)iPromotion))
-                continue;
-
-            PromotionLineTypes eLine =
-                GC.getPromotionInfo((PromotionTypes)iPromotion).getPromotionLine();
-
-            if (eLine == GC.getInfoTypeForString("PROMOTIONLINE_SELF_HEAL") ||
-                eLine == GC.getInfoTypeForString("PROMOTIONLINE_SELF_REPAIR"))
-            {
-                bCanHealOutside = true;
-                break;
-            }
-        }
+        // The self-recovery verdict is a BARE FETCH off the resolved HEAL block -- folded when the promotion
+        // landed, never rediscovered by sweeping the promotion registry per call.
+        const bool bCanHealOutside = healsOutsideFriendlyTerritory();
 
         if (!bCanHealOutside && !GET_TEAM(getTeam()).isHasTech((TechTypes)iBattlefieldMedicine))
             {
@@ -6277,23 +6257,8 @@ int CvUnit::healTurns(const CvPlot* pPlot) const
 	int iBattlefieldMedicine = GC.getInfoTypeForString("TECH_BATTLEFIELD_MEDICINE");
     if (!GET_TEAM(getTeam()).isFriendlyTerritory(pPlot->getTeam()) && !isAnimal() && !isNPC())
     {
-        bool bCanHealOutside = false;
-
-        for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
-        {
-            if (!isHasPromotion((PromotionTypes)iPromotion))
-                continue;
-
-            PromotionLineTypes eLine =
-                GC.getPromotionInfo((PromotionTypes)iPromotion).getPromotionLine();
-
-            if (eLine == GC.getInfoTypeForString("PROMOTIONLINE_SELF_HEAL") ||
-                eLine == GC.getInfoTypeForString("PROMOTIONLINE_SELF_REPAIR"))
-            {
-                bCanHealOutside = true;
-                break;
-            }
-        }
+        // The self-recovery verdict is a BARE FETCH off the resolved HEAL block -- see healRate() above.
+        const bool bCanHealOutside = healsOutsideFriendlyTerritory();
 
         if (!bCanHealOutside && !GET_TEAM(getTeam()).isHasTech((TechTypes)iBattlefieldMedicine))
         {
@@ -12515,69 +12480,22 @@ void CvUnit::changeNoInvisibilityCount(int iChange)
 }
 
 
-namespace
-{
-	// The hide-and-seek contest is the `hideAndSeek` BLOCK, never the `vision` family (json.md §9): vision says
-	// how FAR this unit sees, the block says whether it perceives what stands inside that reach. Both sides of
-	// the contest gather over the SAME three carriers the resolved plane uses -- the unit's own info, its held
-	// promotions, and its combat classes -- because a promotion grants both a METHOD (a skill) and a strength.
-	template <class VisitorT>
-	void uv_visitHideAndSeek(const CvUnit& kUnit, VisitorT& kVisitor)
-	{
-		kVisitor.visit(kUnit.getUnitInfo().getHideAndSeek());
-
-		for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); ++iPromotion)
-		{
-			if (kUnit.isHasPromotion((PromotionTypes)iPromotion))
-			{
-				kVisitor.visit(GC.getPromotionInfo((PromotionTypes)iPromotion).getHideAndSeek());
-			}
-		}
-		for (int iCombat = 0; iCombat < GC.getNumUnitCombatInfos(); ++iCombat)
-		{
-			if (kUnit.isHasUnitCombat((UnitCombatTypes)iCombat))
-			{
-				kVisitor.visit(GC.getUnitCombatInfo((UnitCombatTypes)iCombat).getHideAndSeek());
-			}
-		}
-	}
-
-	struct uv_ConcealmentSum
-	{
-		uv_ConcealmentSum() : iTotal(0) {}
-		void visit(const CvHideAndSeekSection& kBlock) { iTotal += kBlock.concealment; }
-		int iTotal;
-	};
-
-	struct uv_DetectionSum
-	{
-		explicit uv_DetectionSum(int iMethodSkill) : iMethod(iMethodSkill), iTotal(0) {}
-		void visit(const CvHideAndSeekSection& kBlock) { iTotal += kBlock.detectionAgainst(iMethod); }
-		int iMethod;
-		int iTotal;
-	};
-}
-
 int CvUnit::concealment() const
 {
 	// How well this unit hides. ONE number -- the METHOD it hides by is a SKILL, and a seeker's detection
 	// against THAT method is what this is weighed against (vision.md §4: one detection type counters one
-	// concealment type). NOT a resolved slot: the resolved plane gathers modifier-FAMILY entries and this is a
-	// section, so it is summed over the same three carriers directly.
-	uv_ConcealmentSum kSum;
-	uv_visitHideAndSeek(*this, kSum);
-	return kSum.iTotal;
+	// concealment type).
+	// A BARE FETCH. The fold over the unit's own info + held promotions + held unit-combat classes happened once,
+	// at the promotion / combat-class fact that moved the held set ([state-repositories.md] THE UNIT PLANE).
+	return m_resolvedValues.concealment();
 }
 
 int CvUnit::detectionAgainst(int iMethodSkill) const
 {
-	// Walked at SIGHT REGISTRATION (per move), never per read -- isInvisible is one of the hottest reads in the
-	// engine and reads the plot's already-registered value instead.
+	// A BARE FETCH, per the method asked -- see concealment() above for where the fold happens.
 	// ⚠ The method is a SKILL id ([skills.md]), not the retired INVISIBLE_* axis: a promotion can grant a
 	// hiding method (optical camouflage), which is what makes it a skill rather than a tag.
-	uv_DetectionSum kSum(iMethodSkill);
-	uv_visitHideAndSeek(*this, kSum);
-	return kSum.iTotal;
+	return m_resolvedValues.detectionAgainst(iMethodSkill);
 }
 
 bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
@@ -12631,8 +12549,7 @@ bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
 					return true;
 				}
 				// THE CONTEST (vision.md §4): this unit's concealment against the best DETECTION any of that
-				// team's seers has registered here for this method. A bare fetch -- the walk happened once, at
-				// registration.
+				// team's seers has registered here for this method. A bare fetch of the resolved block.
 				const int iConcealment = concealment();
 
 				if ((iConcealment > 0 || GC.getInvisibleInfo(eInvisible).isIntrinsic())
@@ -12939,10 +12856,39 @@ int CvUnit::hillsDefenseModifier() const
 }
 
 
+//	THE COMMANDER RIDES ON TOP OF A UNIT EXACTLY AS A UNIT RIDES ON TOP OF A CITY ([modifier.md] §2b, owner).
+//	Whichever leader supports this unit for a combat -- the commander, else the commodore -- resolved ONCE at the
+//	combat seam and folded live.
+//
+//	⛔ IT IS DELIBERATELY NOT PART OF THE UNIT'S OWN STATE. Attaching, detaching or moving a commander is neither
+//	a promotion nor a combat-class change, so NO fact would ever move a cached copy and one would be permanently
+//	stale the moment the commander moved. That is why the resolved plane is commander-free by construction and
+//	why this fold lives here rather than inside the per-keyed getters, where it used to re-walk the player's
+//	commander list on EVERY read of every terrain, feature, domain and unit-combat row.
+const CvUnit* CvUnit::supportingLeader() const
+{
+	if (!isCommander())
+	{
+		const CvUnit* pCommander = getCommander();
+		if (pCommander != NULL)
+		{
+			return pCommander;
+		}
+	}
+	if (!isCommodore())
+	{
+		return getCommodore();
+	}
+	return NULL;
+}
+
 int CvUnit::terrainAttackModifier(TerrainTypes eTerrain) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eTerrain);
-	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, eTerrain, COMBAT_ATTACK) + getExtraTerrainAttackPercent(eTerrain));
+	const CvUnit* pLeader = supportingLeader();
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, eTerrain, COMBAT_ATTACK)
+		+ getExtraTerrainAttackPercent(eTerrain)
+		+ (pLeader != NULL ? pLeader->getExtraTerrainAttackPercent(eTerrain) : 0));
 }
 
 
@@ -12953,14 +12899,20 @@ int CvUnit::terrainDefenseModifier(TerrainTypes eTerrain) const
 		return 0;
 	}
 	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eTerrain);
-	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, eTerrain, COMBAT_DEFENSE) + getExtraTerrainDefensePercent(eTerrain));
+	const CvUnit* pLeader = supportingLeader();
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, eTerrain, COMBAT_DEFENSE)
+		+ getExtraTerrainDefensePercent(eTerrain)
+		+ (pLeader != NULL ? pLeader->getExtraTerrainDefensePercent(eTerrain) : 0));
 }
 
 
 int CvUnit::featureAttackModifier(FeatureTypes eFeature) const
 {
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eFeature);
-	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, eFeature, COMBAT_ATTACK) + getExtraFeatureAttackPercent(eFeature));
+	const CvUnit* pLeader = supportingLeader();
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, eFeature, COMBAT_ATTACK)
+		+ getExtraFeatureAttackPercent(eFeature)
+		+ (pLeader != NULL ? pLeader->getExtraFeatureAttackPercent(eFeature) : 0));
 }
 
 int CvUnit::featureDefenseModifier(FeatureTypes eFeature) const
@@ -12970,7 +12922,10 @@ int CvUnit::featureDefenseModifier(FeatureTypes eFeature) const
 		return 0;
 	}
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eFeature);
-	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, eFeature, COMBAT_DEFENSE) + getExtraFeatureDefensePercent(eFeature));
+	const CvUnit* pLeader = supportingLeader();
+	return (InfoValuation::keyedCombat(m_pUnitInfo->getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE, eFeature, COMBAT_DEFENSE)
+		+ getExtraFeatureDefensePercent(eFeature)
+		+ (pLeader != NULL ? pLeader->getExtraFeatureDefensePercent(eFeature) : 0));
 }
 
 int CvUnit::unitAttackModifier(UnitTypes eUnit) const
@@ -15095,47 +15050,19 @@ void CvUnit::changeSurvivorChance(int iChange)
 
 int CvUnit::getVictoryAdjacentHeal() const
 {
-	return m_iVictoryAdjacentHeal;
-}
-
-void CvUnit::changeVictoryAdjacentHeal(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iVictoryAdjacentHeal += iChange;
-
-		setInfoBarDirty(true);
-	}
+	return resolvedValue(URS_HEAL_VICTORY_ADJACENT) / 100;
 }
 
 int CvUnit::getVictoryHeal() const
 {
-	return m_iVictoryHeal;
-}
-
-void CvUnit::changeVictoryHeal(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iVictoryHeal += iChange;
-
-		setInfoBarDirty(true);
-	}
+	// A RESOLVED SLOT like every other heal magnitude -- gathered over the unit's own info + held promotions +
+	// held unit-combat classes when the promotion landed, never pushed in by a per-source changer.
+	return resolvedValue(URS_HEAL_VICTORY) / 100;
 }
 
 int CvUnit::getVictoryStackHeal() const
 {
-	return m_iVictoryStackHeal;
-}
-
-void CvUnit::changeVictoryStackHeal(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iVictoryStackHeal += iChange;
-
-		setInfoBarDirty(true);
-	}
+	return resolvedValue(URS_HEAL_VICTORY_STACK) / 100;
 }
 
 
@@ -16276,22 +16203,6 @@ int CvUnit::getExtraTerrainAttackPercent(TerrainTypes eIndex) const
 
 	const TerrainKeyedInfo* info = findTerrainKeyedInfo(eIndex);
 
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return (info ? info->m_iExtraTerrainAttackPercent : 0) + pCommander->getExtraTerrainAttackPercent(eIndex);
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return (info ? info->m_iExtraTerrainAttackPercent : 0) + pCommodore->getExtraTerrainAttackPercent(eIndex);
-    		}
-    	}
 	return info ? info->m_iExtraTerrainAttackPercent : 0;
 }
 
@@ -16314,22 +16225,6 @@ int CvUnit::getExtraTerrainDefensePercent(TerrainTypes eIndex) const
 
 	const TerrainKeyedInfo* info = findTerrainKeyedInfo(eIndex);
 
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return (info ? info->m_iExtraTerrainDefensePercent : 0) + pCommander->getExtraTerrainDefensePercent(eIndex);
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return (info ? info->m_iExtraTerrainDefensePercent : 0) + pCommodore->getExtraTerrainDefensePercent(eIndex);
-    		}
-    	}
 	return info ? info->m_iExtraTerrainDefensePercent : 0;
 }
 
@@ -16352,22 +16247,6 @@ int CvUnit::getExtraFeatureAttackPercent(FeatureTypes eIndex) const
 
 	const FeatureKeyedInfo* info = findFeatureKeyedInfo(eIndex);
 
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return (info ? info->m_iExtraFeatureAttackPercent : 0) + pCommander->getExtraFeatureAttackPercent(eIndex);
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return (info ? info->m_iExtraFeatureAttackPercent : 0) + pCommodore->getExtraFeatureAttackPercent(eIndex);
-    		}
-    	}
 	return info ? info->m_iExtraFeatureAttackPercent : 0;
 }
 
@@ -16389,22 +16268,6 @@ int CvUnit::getExtraFeatureDefensePercent(FeatureTypes eIndex) const
 
 	const FeatureKeyedInfo* info = findFeatureKeyedInfo(eIndex);
 
-	if (!isCommander())
-	{
-		const CvUnit* pCommander = getCommander();
-		if (pCommander)
-		{
-			return (info ? info->m_iExtraFeatureDefensePercent : 0) + pCommander->getExtraFeatureDefensePercent(eIndex);
-		}
-	}
-	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return (info ? info->m_iExtraFeatureDefensePercent : 0) + pCommodore->getExtraFeatureDefensePercent(eIndex);
-    		}
-    	}
 	return info ? info->m_iExtraFeatureDefensePercent : 0;
 }
 
@@ -16469,6 +16332,48 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirement
 		requirements & PromotionRequirements::ForBuildUp,
 		requirements & PromotionRequirements::ForStatus
 	);
+}
+
+
+//	IS THIS PROMOTION EVEN IN THE UNIT'S TREE? -- a BARE FETCH of the maintained enabler state, asked BEFORE any
+//	evaluation happens ([enabler.md] par.8: "every read is a BARE O(1) FETCH of the maintained tri-state -- no gate
+//	runs, no calculator is called").
+//
+//	⚖ THE CANDIDATE SET HAS TWO SOURCES, AND TAKING EITHER ALONE IS WRONG:
+//	  1. the PLAYER's unlocked-promotions domain -- what TECHS have unlocked;
+//	  2. the LADDER SUCCESSORS of promotions THIS UNIT HOLDS -- per-unit state the player domain cannot carry.
+//	⛔ Narrowing to (1) alone fails SILENTLY in the direction that looks like a filter bug: every ladder rung
+//	reachable only from another promotion drops out, so the next rung stops being offered.
+//	⚑ (2) is a FORWARD EDGE FETCH off each held promotion's own compiled `enables` -- O(held x fanout), never
+//	O(registry).
+bool CvUnit::enablerOffersPromotion(PromotionTypes ePromotion) const
+{
+	const CvPlayer& kOwner = GET_PLAYER(getOwner());
+	if (kOwner.getPromotionUnlocked(ePromotion) >= EnablerDomain::STATE_GREYED)
+	{
+		return true;
+	}
+	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeld = getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator it = kHeld.begin(); it != kHeld.end(); ++it)
+	{
+		if (!it->second.m_bHasPromotion)
+		{
+			continue;
+		}
+		const std::vector<int>* pSuccessors = GC.getPromotionInfo(it->first).edge(EDGEF_ENABLES, EDGEB_PROMOTIONS);
+		if (pSuccessors == NULL)
+		{
+			continue;
+		}
+		for (size_t iEdge = 0; iEdge < pSuccessors->size(); ++iEdge)
+		{
+			if ((*pSuccessors)[iEdge] == (int)ePromotion)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, bool bEquip, bool bForLeader, bool bForOffset, bool bForFree, bool bForBuildUp, bool bForStatus) const
@@ -16544,6 +16449,14 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	//	set, so the gate is evaluated HERE, at the decision point, exactly as specced.
 	if (!bForFree || bForBuildUp)
 	{
+		//	THE ENABLER ANSWERS FIRST -- a bare fetch of the maintained tree, before any evaluation runs.
+		//	⚠ This is only correct on a ROOTED tree: TECH_GAME_START carries the start-available promotions,
+		//	and a save predating that concept holds it nowhere until CvGame's load backfill grants it. Without
+		//	that backfill this prune is right and the tree is empty, so every promotion reads as unavailable.
+		if (!enablerOffersPromotion(ePromotion))
+		{
+			return false;
+		}
 		CvCascadeEvalCtx promoCtx;
 		promoCtx.unit = this;
 		promoCtx.empireContext = &GET_PLAYER(getOwner()).getEmpireContext();
@@ -16837,18 +16750,53 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 }
 
 
+//	Does this unit still have SOMETHING it can pick when taking a skill-based promotion? Asked so a level-up
+//	does not offer a choice with nothing behind it.
+//
+//	⛔ IT ASKS THE ENABLER FIRST, THEN GATES -- the two-stage decision protocol ([patterns.md] THE DECISION
+//	PROTOCOL: "first it should ask enabler what is possible, and then it asks cascade"). Sweeping the promotion
+//	registry and running the full per-unit gate per id is the whole-database scan the maintained frontier exists
+//	to delete ([enabler.md] §6: the AI's decisions iterate ONLY the frontier).
+//
+//	⚖ THE CANDIDATE SET HAS TWO SOURCES, AND TAKING EITHER ALONE IS WRONG:
+//	  1. the PLAYER's unlocked-promotions domain -- what TECHS have unlocked (the §7.1 carve-out: one player-scope
+//	     set, no per-unit maintained sets);
+//	  2. the LADDER SUCCESSORS of the promotions THIS UNIT HOLDS -- a rung is unlocked by holding the rung
+//	     beneath it, which is per-UNIT state the player-scope domain structurally cannot carry.
+//	⛔ Narrowing to (1) alone is the trap, and it fails SILENTLY in the direction that looks like a filter bug:
+//	every ladder rung reachable only from another promotion drops out, so the next rung stops being offered. That
+//	is not a domain to "fix" -- the ladder is per-unit by construction, so the union is the answer.
+//	⚑ (2) is a FORWARD EDGE FETCH off each held promotion's own compiled `enables` ([patterns.md] THE WHAT-IF
+//	DRIVER: the entity's own edge list IS the answer; asking it backwards is the database scan). It costs
+//	O(held x fanout), never O(registry).
 bool CvUnit::canAcquirePromotionAny() const
 {
 	PROFILE_EXTRA_FUNC();
-	//TB Debug note: I had not originally considered how this was really only to be used for determination of the unit being able to access any
-	//skill based promos only.  This is here to check if any skill promos are left that can be accessed right now and my previous considerations
-	//to include the potential to receive equipments and afflictions will now be disincluded from this routine to avoid screwing up the entire purpose
-	//of this function.  A check through reveals I never utilize this function in the processing of those features anyhow and it is only used for
-	//its original purpose of making sure the unit still has something it can select when taking a skill-based promo.
 
-	for (int iI = GC.getNumPromotionInfos() - 1; iI > -1; iI--)
+	std::vector<int> aCandidates;
+	GET_PLAYER(getOwner()).getUnlockedPromotions(aCandidates);
+
+	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeldPromotions = getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator itPromotion = kHeldPromotions.begin();
+		itPromotion != kHeldPromotions.end(); ++itPromotion)
 	{
-		const PromotionTypes ePromotion = static_cast<PromotionTypes>(iI);
+		if (!itPromotion->second.m_bHasPromotion)
+		{
+			continue;
+		}
+		const std::vector<int>* pSuccessors =
+			GC.getPromotionInfo(itPromotion->first).edge(EDGEF_ENABLES, EDGEB_PROMOTIONS);
+		if (pSuccessors != NULL)
+		{
+			aCandidates.insert(aCandidates.end(), pSuccessors->begin(), pSuccessors->end());
+		}
+	}
+
+	// The per-unit gate decides each survivor -- level, unit-combat, the `requires.build` ladder atom, the line
+	// rules. A duplicate between the two sources costs one extra gate call and cannot change the verdict.
+	for (size_t iCandidate = 0; iCandidate < aCandidates.size(); ++iCandidate)
+	{
+		const PromotionTypes ePromotion = static_cast<PromotionTypes>(aCandidates[iCandidate]);
 
 		PromotionRequirements::flags promoFlags = PromotionRequirements::Promote;
 
@@ -17203,9 +17151,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraNoDefensiveBonusCount((kUnitCombat.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS) ? 1 : 0) * iChange);
 	changeExtraGatherHerdCount((kUnitCombat.hasSkill(CLS_SKILL_GATHER_HERD) ? 1 : 0) * iChange);
 	changeSurvivorChance((kUnitCombat.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);//no merge/split
-	changeVictoryAdjacentHeal(kUnitCombat.getFlatHeal(HEAL_VICTORY_ADJACENT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
-	changeVictoryHeal(kUnitCombat.getFlatHeal(HEAL_VICTORY, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
-	changeVictoryStackHeal(kUnitCombat.getFlatHeal(HEAL_VICTORY_STACK, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
 	// The combat FLATS are ×100; the reader reduces at its point of use ([DEC-fixedpoint-x100]).
 	changeExtraBreakdownChance(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (larger/smaller just more/less survivable)
 	changeExtraBreakdownDamage(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
@@ -17262,8 +17207,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeZoneOfControlCount((kUnitCombat.hasSkill(CLS_SKILL_ZONE_OF_CONTROL)) ? iChange : 0);
 	changeCannotMergeSplitCount((kUnitCombat.hasSkill(CLS_SKILL_CANNOT_MERGE_SPLIT)) ? iChange : 0);
 	changeNoSelfHealCount((kUnitCombat.hasSkill(CLS_SKILL_NO_SELF_HEAL)) ? iChange : 0);
-	changeExtraSelfHealModifier(kUnitCombat.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
-	changeExtraNumHealSupport(kUnitCombat.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100 * iChange);
 	//	⛔ insidiousness/investigation are UNDERWORLD, never espionage ([json.md §6]: espionage is what SPY
 	//	units do; a criminal hiding from an investigator is neither). Mis-filed in three curators historically,
 	//	which is precisely why the boundary is written down.
@@ -17572,9 +17515,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 
 	changeSurvivorChance((kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);
 	//	the heal accumulators carry whole hit points; the deposits are ×100 flats ([DEC-fixedpoint-x100])
-	changeVictoryAdjacentHeal((kPromotion.getFlatHeal(HEAL_VICTORY_ADJACENT, CASC_SCOPE_UNIT) / 100) * iChange);
-	changeVictoryHeal((kPromotion.getFlatHeal(HEAL_VICTORY, CASC_SCOPE_UNIT) / 100) * iChange);
-	changeVictoryStackHeal((kPromotion.getFlatHeal(HEAL_VICTORY_STACK, CASC_SCOPE_UNIT) / 100) * iChange);
 
 	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraMoveDiscount(kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);
@@ -17685,8 +17625,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraCombatModifierPerVolumeLess(kPromotion.getSizeMatters().combatModifierPerVolumeLess * iChange);//no merge/split
 
 	changeNoSelfHealCount((kPromotion.providesSkill(CLS_SKILL_NO_SELF_HEAL)) ? iChange : 0);
-	changeExtraSelfHealModifier(kPromotion.getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) * iChange);
-	changeExtraNumHealSupport(kPromotion.getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraInsidiousness(kPromotion.getUnderworld(UNDERWORLD_INSIDIOUSNESS, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraInvestigation(kPromotion.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeAssassinCount((kPromotion.providesSkill(CLS_SKILL_ASSASSIN) ? 1 : 0) * iChange);
@@ -18486,11 +18424,8 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCollateralDamageMaxUnitsChange);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCombatLimitChange);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDropRange);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iVictoryHeal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOneUpCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSurvivorChance);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iVictoryAdjacentHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iVictoryStackHeal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bSurvivor);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBreakdownChance);
@@ -18574,7 +18509,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCombatModifierPerVolumeLess);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iAlwaysInvisibleCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHealUnitCombatCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraSelfHealModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNoSelfHealCount);
 
 	// Read compressed data format
@@ -18607,7 +18541,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 		}
 	}
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNumHealSupport);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHealSupportUsed);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_MISSIONS, (int*)&m_eSleepType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bHasBuildUp);
@@ -19184,11 +19117,8 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCollateralDamageMaxUnitsChange);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCombatLimitChange);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraDropRange);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iVictoryHeal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOneUpCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSurvivorChance);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iVictoryAdjacentHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iVictoryStackHeal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bSurvivor);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBreakdownChance);
@@ -19236,7 +19166,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCombatModifierPerVolumeLess);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iAlwaysInvisibleCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iHealUnitCombatCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraSelfHealModifier);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoSelfHealCount);
 	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 	{
@@ -19247,7 +19176,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 		}
 	}
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraNumHealSupport);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iHealSupportUsed);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_MISSIONS, m_eSleepType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bHasBuildUp);
@@ -22649,30 +22577,16 @@ bool CvUnit::isArcher() const
 }
 
 //TB Combat Mods begin
+//	Is this promotion SUPERSEDED by a higher rung of its own line that the unit also holds?
+//
+//	⛔ A BARE FETCH of the resolved set, folded when the promotion landed. It used to sweep the WHOLE promotion
+//	registry per ask -- and the unit panel asks it once per promotion the unit carries, on every redraw, so the
+//	cost was `held x REGISTRY` and grew QUADRATICALLY with promotions held while an unpromoted unit paid nothing.
+//	That is the own-data inversion ([DEC-one-reverse-view]): the answer needs only what the unit HOLDS, and the
+//	unit already enumerates that.
 bool CvUnit::isPromotionOverriden(PromotionTypes ePromotionType) const
 {
-	PROFILE_EXTRA_FUNC();
-	if (isHasPromotion(ePromotionType))
-	{
-		for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-		{
-			const PromotionTypes ePromotion = ((PromotionTypes)iI);
-			if (isHasPromotion(ePromotion))
-			{
-				if (GC.getPromotionInfo(ePromotionType).getPromotionLine() != NO_PROMOTIONLINE)
-				{
-					if (GC.getPromotionInfo(ePromotionType).getPromotionLine() == GC.getPromotionInfo(ePromotion).getPromotionLine())
-					{
-						if (GC.getPromotionInfo(ePromotionType).getLinePriority() < GC.getPromotionInfo(ePromotion).getLinePriority())
-						{
-							return true;
-						}
-					}
-				}
-			}
-		}
-	}
-	return false;
+	return m_resolvedValues.isPromotionOverridden((int)ePromotionType);
 }
 
 
@@ -24895,22 +24809,15 @@ void CvUnit::changeNoSelfHealCount(int iChange)
 
 int CvUnit::getSelfHealModifierTotal() const
 {
-	return m_pUnitInfo->getHealModifier(HEAL_SELF_MODIFIER, CASC_SCOPE_UNIT) + m_iExtraSelfHealModifier;
-}
-
-void CvUnit::changeExtraSelfHealModifier(int iChange)
-{
-	m_iExtraSelfHealModifier += iChange;
+	// A PERCENT, so unscaled; the gather already includes the unit's own type.
+	return resolvedValue(URS_HEAL_SELF_MODIFIER);
 }
 
 int CvUnit::getNumHealSupportTotal() const
 {
-	return std::max(0, m_pUnitInfo->getFlatHeal(HEAL_SUPPORT, CASC_SCOPE_UNIT) / 100 + m_iExtraNumHealSupport);
-}
-
-void CvUnit::changeExtraNumHealSupport(int iChange)
-{
-	m_iExtraNumHealSupport += iChange;
+	// The gather ALREADY includes the unit's own type, so the type is not added a second time here -- that
+	// separate add is exactly what the resolved plane replaces.
+	return std::max(0, resolvedValue(URS_HEAL_SUPPORT) / 100);
 }
 
 int CvUnit::getHealSupportUsedTotal() const

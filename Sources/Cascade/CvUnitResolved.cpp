@@ -10,9 +10,22 @@
 #include "Infos/CvUnitInfo.h"
 #include "Infos/CvPromotionInfo.h"
 #include "Infos/CvUnitCombatInfo.h"
+#include "Infos/CvHideAndSeekSection.h"
+#include <algorithm>
 
 namespace
 {
+	//	One held promotion's LINE MEMBERSHIP, kept while the held walk is already in hand so the supersession
+	//	verdict needs no second pass over the unit's promotions.
+	struct UnitHeldRung
+	{
+		UnitHeldRung(int iPromotionId, int iLineId, int iPriorityValue)
+			: iPromotion(iPromotionId), iLine(iLineId), iPriority(iPriorityValue) {}
+		int iPromotion;
+		int iLine;
+		int iPriority;
+	};
+
 	// How each resolved slot is addressed on a contributing info. Two homes, because the vocabulary has two:
 	// a family+kind pair, or an InfoScalar straggler (patterns.md's getScalar row). `scalar` >= 0 selects the
 	// straggler form; otherwise (family, kind) is used. The table IS the spec of this plane -- adding a unit
@@ -41,6 +54,11 @@ namespace
 		{ -1,                          MODFAM_HEAL,         HEAL_FRIENDLY_TERRITORY,CASC_UNIT_FLAT    }, // URS_HEAL_FRIENDLY
 		{ -1,                          MODFAM_HEAL,         HEAL_SAME_TILE,         CASC_UNIT_FLAT    }, // URS_HEAL_SAME_TILE
 		{ -1,                          MODFAM_HEAL,         HEAL_ADJACENT,          CASC_UNIT_FLAT    }, // URS_HEAL_ADJACENT
+		{ -1,                          MODFAM_HEAL,         HEAL_VICTORY,           CASC_UNIT_FLAT    }, // URS_HEAL_VICTORY
+		{ -1,                          MODFAM_HEAL,         HEAL_SUPPORT,           CASC_UNIT_FLAT    }, // URS_HEAL_SUPPORT
+		{ -1,                          MODFAM_HEAL,         HEAL_VICTORY_STACK,     CASC_UNIT_FLAT    }, // URS_HEAL_VICTORY_STACK
+		{ -1,                          MODFAM_HEAL,         HEAL_VICTORY_ADJACENT,  CASC_UNIT_FLAT    }, // URS_HEAL_VICTORY_ADJACENT
+		{ -1,                          MODFAM_HEAL,         HEAL_SELF_MODIFIER,     CASC_UNIT_PERCENT }, // URS_HEAL_SELF_MODIFIER
 		{ -1,                          MODFAM_AIR,          AIR_EVASION,            CASC_UNIT_PERCENT }, // URS_EVASION
 		{ -1,                          MODFAM_AIR,          AIR_INTERCEPT,          CASC_UNIT_PERCENT }, // URS_INTERCEPT
 		{ -1,                          MODFAM_AIR,          AIR_RANGE,              UNIT_CANONICAL    }, // URS_AIR_RANGE
@@ -71,6 +89,22 @@ namespace
 		{ -1, MODFAM_COMBAT, COMBAT_STEALTH_STRIKES,  UNIT_CANONICAL }, // URS_STEALTH_STRIKES
 	};
 
+	// ONE contributor's share of the `hideAndSeek` BLOCK, added in. The block is a SECTION rather than a
+	// modifier-family address, so it folds beside the slot table rather than into it (see the header).
+	void urs_addHideAndSeek(const CvHideAndSeekSection& kBlock, UnitResolvedHideAndSeek& kOut)
+	{
+		kOut.concealment += kBlock.concealment;
+
+		// The carrier's rows, method ids already resolved through the section's ONE resolve path -- so a
+		// late-minted SKILL_* cannot resolve differently here than it does at the section's own read.
+		std::vector<std::pair<int, int> > aRows;
+		kBlock.collectDetectionInto(aRows);
+		for (size_t iRow = 0; iRow < aRows.size(); ++iRow)
+		{
+			kOut.addDetection(aRows[iRow].first, aRows[iRow].second);
+		}
+	}
+
 	// ONE contributor's share of every slot, added in. A bare compiled-sum fetch per slot -- no anatomy walk,
 	// no string address, nothing evaluated ([DEC-materialize-at-mapfrom]).
 	void urs_addContributor(const CvInfo* pInfo, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS])
@@ -95,17 +129,31 @@ namespace
 	}
 }
 
-void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS])
+//	ONE WALK OF THE HELD SET, FILLING EVERY HALF ([DEC-single-implementation]). The slot table, the `hideAndSeek`
+//	block and the `heal` block fold over exactly the same three carriers and move on exactly the same two facts,
+//	so walking three times would be three implementations of one traversal -- and the extras would be the ones
+//	that drift.
+static void urs_gatherAll(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS],
+	UnitResolvedHideAndSeek& kBlockOut, UnitResolvedHeal& kHealOut, std::vector<int>& aOverriddenOut)
 {
 	for (int iSlot = 0; iSlot < NUM_UNIT_RESOLVED_SLOTS; ++iSlot)
 	{
 		aiOut[iSlot] = 0;   // fully define the output every call (the derived-cache contract's rule 2)
 	}
+	kBlockOut.clear();
+	kHealOut.clear();
+	aOverriddenOut.clear();
+
+	// The self-recovery LINES, resolved ONCE per gather rather than once per candidate promotion. A per-call
+	// string-keyed lookup is what [DEC-materialize-at-mapfrom] bans; paying two at MARK cadence is not that.
+	const int iSelfHealLine = GC.getInfoTypeForString("PROMOTIONLINE_SELF_HEAL", /*bHideAssert*/true);
+	const int iSelfRepairLine = GC.getInfoTypeForString("PROMOTIONLINE_SELF_REPAIR", /*bHideAssert*/true);
 
 	// THE HELD SET, in full: the unit's own type, every held promotion, every held unit-combat class. A unit's
 	// combat classes are its primary + subs + promotion-granted, and CvUnit::isHasUnitCombat already answers the
 	// composed question, so this needs no second derivation of the class set.
 	urs_addContributor(&kUnit.getUnitInfo(), aiOut);
+	urs_addHideAndSeek(kUnit.getUnitInfo().getHideAndSeek(), kBlockOut);
 
 	// ⛔ STRENGTH IS THE ONE SLOT WHOSE BASE IS PER-UNIT STATE, NOT A FUNCTION OF THE TYPE (owner): WorldBuilder
 	// edits an individual unit's strength, and the WBS scenario format persists it (`CombatStr=`, written only
@@ -124,13 +172,26 @@ void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_R
 	// reject in review) and it is the same own-data inversion [DEC-one-reverse-view] bans one plane over.
 	// The keyed maps hold an entry per promotion / class the unit has ever touched, and the has-flag tested here
 	// is the SAME test isHasPromotion / isHasUnitCombat apply -- so the contributor set is identical.
+	std::vector<UnitHeldRung> aHeldLineRungs;
 	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeldPromotions = kUnit.getPromotionKeyedInfo();
 	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator itPromotion = kHeldPromotions.begin();
 		itPromotion != kHeldPromotions.end(); ++itPromotion)
 	{
 		if (itPromotion->second.m_bHasPromotion)
 		{
-			urs_addContributor(&GC.getPromotionInfo(itPromotion->first), aiOut);
+			const CvPromotionInfo& kPromotion = GC.getPromotionInfo(itPromotion->first);
+			urs_addContributor(&kPromotion, aiOut);
+			urs_addHideAndSeek(kPromotion.getHideAndSeek(), kBlockOut);
+
+			const int iLine = (int)kPromotion.getPromotionLine();
+			if (iLine >= 0 && (iLine == iSelfHealLine || iLine == iSelfRepairLine))
+			{
+				kHealOut.healsOutsideFriendlyTerritory = true;
+			}
+			if (iLine >= 0)
+			{
+				aHeldLineRungs.push_back(UnitHeldRung((int)itPromotion->first, iLine, kPromotion.getLinePriority()));
+			}
 		}
 	}
 
@@ -140,9 +201,84 @@ void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_R
 	{
 		if (itCombat->second.m_bHasUnitCombat)
 		{
-			urs_addContributor(&GC.getUnitCombatInfo(itCombat->first), aiOut);
+			const CvUnitCombatInfo& kCombat = GC.getUnitCombatInfo(itCombat->first);
+			urs_addContributor(&kCombat, aiOut);
+			urs_addHideAndSeek(kCombat.getHideAndSeek(), kBlockOut);
 		}
 	}
+
+	//	THE SUPERSESSION VERDICT, resolved over the HELD rungs alone. A rung is overridden when the unit ALSO
+	//	holds a higher-priority rung of the same line -- so the answer needs only what the unit carries, never
+	//	the promotion registry. `held x held` over a handful, once per promotion change, replacing the
+	//	`held x REGISTRY` sweep every read of the unit panel used to pay.
+	for (size_t iMine = 0; iMine < aHeldLineRungs.size(); ++iMine)
+	{
+		for (size_t iOther = 0; iOther < aHeldLineRungs.size(); ++iOther)
+		{
+			if (aHeldLineRungs[iMine].iLine == aHeldLineRungs[iOther].iLine
+				&& aHeldLineRungs[iMine].iPriority < aHeldLineRungs[iOther].iPriority)
+			{
+				aOverriddenOut.push_back(aHeldLineRungs[iMine].iPromotion);
+				break;
+			}
+		}
+	}
+	std::sort(aOverriddenOut.begin(), aOverriddenOut.end());
+}
+
+int UnitResolvedHideAndSeek::detectionAgainst(int iMethodSkillId) const
+{
+	if (iMethodSkillId < 0)
+	{
+		return 0;
+	}
+	for (size_t iRow = 0; iRow < detection.size(); ++iRow)
+	{
+		if (detection[iRow].first == iMethodSkillId)
+		{
+			return detection[iRow].second;
+		}
+	}
+	return 0;   // this unit answers that method not at all
+}
+
+void UnitResolvedHideAndSeek::addDetection(int iMethodSkillId, int iValue)
+{
+	// The rows SUM rather than max, so counter-detection stays an ordinary negative deposit -- the same rule the
+	// section applies within one carrier, applied across the carriers a unit holds.
+	for (size_t iRow = 0; iRow < detection.size(); ++iRow)
+	{
+		if (detection[iRow].first == iMethodSkillId)
+		{
+			detection[iRow].second += iValue;
+			return;
+		}
+	}
+	detection.push_back(std::make_pair(iMethodSkillId, iValue));
+}
+
+void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS])
+{
+	UnitResolvedHideAndSeek kUnusedBlock;
+	UnitResolvedHeal kUnusedHeal;
+	std::vector<int> aUnusedOverridden;
+	urs_gatherAll(kUnit, aiOut, kUnusedBlock, kUnusedHeal, aUnusedOverridden);
+}
+
+void UnitResolvedValues::gatherHideAndSeekInto(const CvUnit& kUnit, UnitResolvedHideAndSeek& kOut)
+{
+	int aiUnusedSlots[NUM_UNIT_RESOLVED_SLOTS];
+	UnitResolvedHeal kUnusedHeal;
+	std::vector<int> aUnusedOverridden;
+	urs_gatherAll(kUnit, aiUnusedSlots, kOut, kUnusedHeal, aUnusedOverridden);
+}
+
+void UnitResolvedValues::gatherHealInto(const CvUnit& kUnit, UnitResolvedHeal& kOut)
+{
+	int aiUnusedSlots[NUM_UNIT_RESOLVED_SLOTS];
+	UnitResolvedHideAndSeek kUnusedBlock;
+	std::vector<int> aUnusedOverridden;
+	urs_gatherAll(kUnit, aiUnusedSlots, kUnusedBlock, kOut, aUnusedOverridden);
 }
 
 void UnitResolvedValues::markDirty(const CvUnit& kUnit)
@@ -151,5 +287,10 @@ void UnitResolvedValues::markDirty(const CvUnit& kUnit)
 	// load bracket is not special-cased here: the held set is restored by the save read and the two dirty facts
 	// are emitted from inside it, so a unit gathers once its own promotions/combats have streamed in.
 	m_bDirty = false;
-	gatherInto(kUnit, m_aiValue);
+	urs_gatherAll(kUnit, m_aiValue, m_hideAndSeek, m_heal, m_aOverriddenPromotions);
+}
+
+bool UnitResolvedValues::isPromotionOverridden(int iPromotion) const
+{
+	return std::binary_search(m_aOverriddenPromotions.begin(), m_aOverriddenPromotions.end(), iPromotion);
 }

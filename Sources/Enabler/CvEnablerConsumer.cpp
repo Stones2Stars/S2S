@@ -17,6 +17,96 @@
 #include "CvPromotionEnabler.h"
 #include "AI/CvPlayerAI.h"
 
+// ===================== [ENABLER] spine domain (logging.md: logging is a spine CONSUMER) =====================
+//	⛔ ON THE SPINE, NOT gDLL->logMsg. A legacy sink is HELD OPEN by the process, so it cannot be read while the
+//	game runs -- which is worthless for a load-time census whose whole job is to be read after a load -- and those
+//	call sites are being retired wholesale ([observability.md], todo.md).
+enum EnEvt
+{
+	ENE_DOMAIN_CENSUS = 1   // what the reseed ACTUALLY BUILT in a player's domains, once the load gate pass has run
+};
+
+enum EnFld
+{
+	ENF_OWNER = 1,   // the player
+	ENF_DOMAIN,      // which domain, by name
+	ENF_INTREE,      // members at >= GREYED -- the edges APPLIED
+	ENF_LISTED,      // members the gate PASSED -- offerable now
+	ENF_TOTAL        // the registry size, so an empty domain is legible without a second lookup
+};
+
+static const char* en_prefix(int evt)
+{
+	switch (evt)
+	{
+	case ENE_DOMAIN_CENSUS: return "[ENABLER/census]";
+	default:                return "[ENABLER]";
+	}
+}
+
+static const char* en_field(int tag, SpineFieldType* peType)
+{
+	switch (tag)
+	{
+	case ENF_OWNER:  return "owner";
+	case ENF_DOMAIN: *peType = SFT_STR; return "domain";
+	case ENF_INTREE: return "inTree";
+	case ENF_LISTED: return "listed";
+	case ENF_TOTAL:  return "of";
+	default:         return NULL;
+	}
+}
+
+static void en_registerDomain()
+{
+	static bool s_reg = false;
+	if (!s_reg) { spineRegisterDomain(SD_ENABLER, en_prefix, "Cascade.log", en_field); s_reg = true; }
+}
+
+//	THE DOMAIN CENSUS -- what the reseed BUILT, read rather than inferred.
+//	⛔ It exists because "the domain is empty" was concluded three times from a vanishing UI list and never once
+//	from the domain itself. It separates the two failures that are indistinguishable from outside: NOTHING IN THE
+//	TREE (the edges never applied) versus IN THE TREE BUT GATED OUT (membership landed, the gate rejected it) --
+//	which have completely different fixes.
+static void en_emitDomainCensus()
+{
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kPlayer.isAlive())
+		{
+			continue;
+		}
+		//	EVERY player-held domain, not just the one under suspicion -- that is what makes the reading
+		//	DISCRIMINATING rather than merely confirming. A promotions-only census cannot tell "the promotion
+		//	applier is broken" from "no player domain builds at all", and those have opposite fixes.
+		for (int iDomain = 0; iDomain < 3; ++iDomain)
+		{
+			const char* szDomain = "promotions";
+			int iTotal = GC.getNumPromotionInfos();
+			if (iDomain == 1) { szDomain = "techs";  iTotal = GC.getNumTechInfos(); }
+			if (iDomain == 2) { szDomain = "civics"; iTotal = GC.getNumCivicInfos(); }
+
+			int iInTree = 0;
+			int iListed = 0;
+			for (int iId = 0; iId < iTotal; iId++)
+			{
+				EnablerDomain::State eState = EnablerDomain::STATE_HIDDEN;
+				if (iDomain == 0) eState = kPlayer.getPromotionUnlocked((PromotionTypes)iId);
+				else if (iDomain == 1) eState = kPlayer.getTechAvailability((TechTypes)iId);
+				else eState = kPlayer.getCivicAvailability((CivicTypes)iId);
+
+				if (eState >= EnablerDomain::STATE_GREYED) ++iInTree;
+				if (eState == EnablerDomain::STATE_LISTED) ++iListed;
+			}
+			CvSpineEvent e(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_DOMAIN_CENSUS, 0);
+			e.addI(ENF_OWNER, iPlayer).addStr(ENF_DOMAIN, szDomain)
+			 .addI(ENF_INTREE, iInTree).addI(ENF_LISTED, iListed).addI(ENF_TOTAL, iTotal);
+			eventSpine().emit(e);
+		}
+	}
+}
+
 // Resolve a per-city event's (owner, cityId) to the live CvCity. A negative owner/id => NULL (an empire/world
 // event). Works during the load reseed too: the two-phase city stream read (FFreeListTrashArray.h) registers a
 // city in its owner's m_cities off readIdentity, BEFORE its body streams its in-read emits.
@@ -127,7 +217,17 @@ private:
 				// what a city HOLDS without any network count moving. There is nothing to refresh (the plot group
 				// owns the number and the city only relays it, [enabler.md] RESIDENCY); what is owed is the
 				// PRESENCE CROSSING, announced here for exactly the bonuses this tech gates.
-				const bool bTechAcquired = (kEvent.iA != 0);
+				//
+				// ⛔ THE DIRECTION IS THE EVENT'S IDENTITY, NEVER A PAYLOAD FLAG
+				// ([DEC-facts-name-happenings]: "a consumer learns what happened BY WHICH EVENT IT RECEIVED, and
+				// reads the payload only for how much"). The emit carries `iA = 0` on BOTH ends -- the fact split
+				// into _ADDED / _REMOVED precisely so no discriminator is needed -- so decoding `iA != 0` reads
+				// EVERY tech acquisition as a REMOVAL.
+				// ⚠ Measured cost of that one expression: `TechEnabler` then hit `isHeld(eTech) == bHas`
+				// (false == false) and skipped, so NO tech was ever marked held on a player domain -- and every
+				// domain fed off that flag (promotions, civics, projects, processes, builds) built EMPTY, for
+				// every player, on every load. Buildings survived only because their own city facts feed them.
+				const bool bTechAcquired = (kEvent.iEventId == SEVT_EMPIRE_TECH_ADDED);
 				for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
 				{
 					const BonusTypes eBonus = static_cast<BonusTypes>(iBonus);
@@ -153,14 +253,14 @@ private:
 				// vectors' tech axis. iType=Tech, iA=has, iC=triggering player (the team resolves from it).
 				// ORDERING CONTRACT: every domain whose flip guard reads the PLAYER tech domain's held flag
 				// MUST run BEFORE TechEnabler::onTechChanged flips that flag.
-				BuildingEnabler::onCityTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
-				UnitEnabler::onCityTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
-				CivicEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
-				ProjectEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
-				ProcessEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
-				BuildEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
-				PromotionEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
-				TechEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				BuildingEnabler::onCityTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				UnitEnabler::onCityTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				CivicEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				ProjectEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				ProcessEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				BuildEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				PromotionEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				TechEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
 			}
 			break;
 		case SEVT_EMPIRE_TRAIT_ADDED:
@@ -168,10 +268,13 @@ private:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				// the HELD-TRAIT axis: a rung's own `enables.traits` edge is the developing ladder, so acquiring
-				// one is what puts the next rung in the tree (iType=Trait, iC=player, iA=add)
+				// one is what puts the next rung in the tree (iType=Trait, iC=player).
+				// ⛔ The direction is the EVENT ID, like every other case here -- the emit carries iA = 0 on BOTH
+				// ends ([DEC-facts-name-happenings]), so reading a payload flag makes every acquisition a removal.
 				const CvPlayer& kTraitOwner = GET_PLAYER((PlayerTypes)kEvent.iC);
 				EnablerKernel::applyPlayerHave(kTraitOwner, kTraitOwner.m_enabler.traits, EDGEB_TRAITS,
-					InfoRepo<CvTraitInfo>::get().get(kEvent.iType), kEvent.iA != 0);
+					InfoRepo<CvTraitInfo>::get().get(kEvent.iType),
+					kEvent.iEventId == SEVT_EMPIRE_TRAIT_ADDED);
 			}
 			break;
 		case SEVT_CIVIC_ADOPTED:
@@ -255,6 +358,7 @@ private:
 		case SEVT_GAME_LOAD_FINISHED:
 			BuildingEnabler::onLoadFinished();
 			UnitEnabler::onLoadFinished();
+			en_emitDomainCensus();
 			break;
 		// ---- a GAME OPTION flipped: re-gate EVERY city ----
 		// The entity-level gate is read at gate time and an option is its ONE axis ([DEC-entity-gate]), so a flip
@@ -283,5 +387,6 @@ static CvEnablerSpineConsumer s_enablerConsumer;
 
 void enablerRegisterConsumer()
 {
+	en_registerDomain();
 	eventSpine().registerConsumer(&s_enablerConsumer);
 }

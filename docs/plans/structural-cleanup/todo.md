@@ -15,6 +15,18 @@
 
 ## Blocked on an owner ruling
 
+- Decide HOW PYTHON NAMES A CLASSIFICATION ID, because the tree carries two live precedents pulling opposite
+  ways and the choice governs the whole `CyInfo` classification plane. `CyEnums` publishes the generated ids as
+  boost enums for the capability and policy domains (a consumer writes `CapabilityId.CLS_CAPABILITY_…`), while
+  `CyInfo::canTradeItem` resolves the AUTHORED KEY by name through `ClassificationRegistry::keyId` — on the
+  stated grounds that "the Python surface resolves by authored key, not by generated id". Both cannot be the
+  rule. ⚠ The id-enum form needs the remaining domains published, and hand-listing them is the shape that
+  DRIFTS from the generated table — so if that form wins, the emit belongs in
+  `curate_classification_ids.py` beside the header it already generates, never in a hand-kept list. The
+  key-resolve form needs one parameterized lookup and no generated Python at all.
+  ⛔ Not an agent call: [patterns.md](../../architecture/patterns.md)'s ask-by-generated-id ruling is written
+  about the C++ consumer, where the id is a compile-time constant — Python has no such constant, which is
+  precisely why the second precedent exists.
 - Make the `savemigration.txt` parser honour its documented `CUT:` / `RENAME:` prefixes. It changes save-load
   behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
 - Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same
@@ -305,18 +317,11 @@
   per-player handicap (saved) drives human-facing economics, while every `getAI*` advantage reads the GAME handicap
   (the average of alive humans) — [engine.md](../../reference/engine.md). Keep them separately named.
 
-- Make `hideAndSeek` a CACHED BLOCK on the UNIT and the CITY, not a per-read walk of the info (owner). Today
-  `CvUnit::concealment()` / `detectionAgainst(methodSkill)` re-walk the unit's info ∪ promotions ∪ combat
-  classes on every call, and `getInvisibleType()` reads the INFO alone — so a **promotion-granted method does
-  not work at all**, which is the whole reason the method is a skill.
-  ⚑ The mark triggers already exist and are exactly right: a unit's resolved values move ONLY on a promotion
-  or combat-class change (`SEVT_UNIT_PROMOTION_ADDED / _REMOVED` / `SEVT_UNIT_COMBAT_ADDED / _REMOVED`,
-  [state-repositories.md](../../architecture/state-repositories.md)), and those are precisely the three
-  carriers the block gathers over. The CITY side dirties on its building facts.
-  ⛔ It is a SECTION, so it cannot ride the `URS_*` resolved table, which gathers modifier-FAMILY entries —
-  it wants its own cached block on the same mark protocol, never a hand-named scalar pair beside it
-  ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
-  ⚠ `isInvisible` is one of the hottest reads in the engine, which is why the walk must not stay on it.
+- Make `hideAndSeek` a CACHED BLOCK on the CITY, as the UNIT side already is
+  ([state-repositories.md](../../architecture/state-repositories.md) — a SECTION folds beside the slot table on
+  the same mark). The city side marks on its building facts.
+  ⚠ `getInvisibleType()` still reads the INFO alone, so a **promotion-granted invisibility type does not work
+  at all** — which is the whole reason the method is a skill. It wants the same folded read.
 - The PLAYER-ALERT consumer, and the alerts owed to it — including "power restored"
   (`TXT_KEY_MISC_POWER_RESTORED`), which rode the per-turn maintainer the blackout status replaced and now hangs
   on `SEVT_CITY_STATUS_REMOVED` carrying `CITYSTATUS_POWER_DISABLED`; and the CAN_RETRAIN / NO_RETRAIN pairs the
@@ -490,6 +495,21 @@
 > as you meet it — parking it spends the census budget the rest of the worklist needs. ⛔ Never borrow legacy as
 > a "temporary solution" for a read the library does not answer yet: add the read.
 
+- **RE-POINT THE SURVIVING `GC.get<X>Info` READS.** They are published NOWHERE, so each one is an
+  `AttributeError` the moment its handler fires — not a slow read, and not something a playtest surfaces until
+  that exact code path runs. ⚑ The IDENTITY plane is already total across both halves of the prefix dispatch
+  (JSON-backed and XML-only alike), so an identity read — description, text key, civilopedia, strategy, type
+  key, button — re-points mechanically onto `CyInfo` for EVERY registry, and a caller never learns which half
+  answered.
+  ⚠ **The rest is not a port list.** What remains under those call sites is the legacy per-field getter
+  contract, which is a DELETION LIST plus a COVERAGE CHECKLIST
+  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — each one is answered by
+  a GROUP read, an intrinsic slot, an edge family or a classification test, or it is dead. ⛔ Adding a getter
+  per legacy name is the half-migration reflex in its purest form.
+  ⚑ Two genuine surface gaps the sweep named, each needing the library to GROW rather than a consumer to be
+  re-pointed: the pedia's category/sort taxonomy still has no home
+  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4), and `getNewConceptInfo` reaches a
+  registry the prefix dispatch does not carry.
 - **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
   *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
   everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read

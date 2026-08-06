@@ -3,6 +3,7 @@
 #include "CyArea.h"
 #include "CyPlot.h"
 #include "CySelectionGroup.h"
+#include <boost/python/class.hpp>
 #include "CyUnit.h"
 
 //
@@ -709,4 +710,16 @@ float CyUnit::getRealExperience() const
 bool CyUnit::isHiddenNationality() const
 {
 	return m_pUnit->isHiddenNationality();
+}
+
+//	⚖ THE IDENTITY SET (CyUnit.h). Owner + id + position only -- what a legacy consumer needs to name the unit
+//	it holds. Unit DATA is asked of CyState / CyInfo, never of this handle.
+void CyUnit::pythonPublish()
+{
+	python::class_<CyUnit>("CyUnit", python::no_init)
+		.def("getOwner", &CyUnit::getOwner)
+		.def("getID",    &CyUnit::getID)
+		.def("getX",     &CyUnit::getX)
+		.def("getY",     &CyUnit::getY)
+		;
 }

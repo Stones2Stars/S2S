@@ -252,7 +252,21 @@ public:
 	// a display cares about, and every caller was already filtering them out by hand.
 	python::list getUnitPromotions(int iPlayer, int iUnit) const;
 	bool isUnitPromotionOverridden(int iPlayer, int iUnit, int iPromotion) const;
+	// Does this unit hold that COMBAT CLASS? Its primary + subs + promotion-granted, composed -- the same
+	// question CvUnit::isHasUnitCombat answers, asked by (owner, id) like every other read here.
+	bool hasUnitCombat(int iPlayer, int iUnit, int iUnitCombat) const;
+	// CAN this unit take that promotion right now? The per-unit applicability leg the enabler evaluates on
+	// demand at level-up ([enabler.md] par.7.1 carve-out) -- a POINTED question about one candidate.
+	bool canUnitAcquirePromotion(int iPlayer, int iUnit, int iPromotion) const;
 	bool isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const;
+	//	The action bar's ENABLED flags for the whole action list, in ONE crossing.
+	//	⛔ It exists because the per-action route is measurably ruinous, and NOT in our code: CvGame::canHandleAction
+	//	itself measures ~0ms across 200 calls (every leg), while the EXE's CyInterface wrapper around it costs ~96ms
+	//	PER CALL -- so a bar of 40 actions spent ~3.8 SECONDS crossing the boundary to reach a function that is
+	//	free. This asks the same verdict directly, N times inside ONE crossing.
+	//	⚑ It also engages the ACTION CACHE the per-action path structurally cannot: setupActionCache() is a
+	//	once-per-rebuild call, so `bUseCache` is finally true here (the EXE's own bar has always done this; the
+	//	Python route could not, because the wrapper exposes no cache flag).
 	// Can this unit become that one -- a PAIR question (this unit, that target type), so the target is in
 	// the call. bTestVisible asks the display question ("show the button") rather than the strict one.
 	bool canUnitUpgrade(int iPlayer, int iUnit, int iToUnit, bool bTestVisible) const;

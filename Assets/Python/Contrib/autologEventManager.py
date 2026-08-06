@@ -392,7 +392,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					Logger.writeLog(message, vColor="Red")
 
 				if iCurrentConstrictCounter > self.CityConscriptCounter[i]:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CONSCRIPT", (GC.getUnitInfo(iCity.getConscriptUnit()).getDescription(), iCity.getName()))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CONSCRIPT", (INFO.getDescription("UNIT_", iCity.getConscriptUnit()), iCity.getName()))
 					Logger.writeLog(message, vColor="Red")
 
 				if (self.CityWhipCounter[i] != 0
@@ -437,7 +437,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 				for iPlayer in xrange(GC.getMAX_PLAYERS()):
 					if GC.getPlayer(iPlayer).getTeam() == iHasMetTeamY:
-						sLeader = GC.getLeaderHeadInfo(GC.getPlayer(iPlayer).getLeaderType()).getDescription()
+						sLeader = INFO.getDescription("LEADER_", GC.getPlayer(iPlayer).getLeaderType())
 						sCivName = GC.getPlayer(iPlayer).getCivilizationShortDescription(0)
 
 						message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FIRST_CONTACT_PLAYER", (sLeader, sCivName))
@@ -585,7 +585,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			pCity = argsList[0]
 			unit = argsList[1]
 			if pCity.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (pCity.getName(), GC.getUnitInfo(unit.getUnitType()).getDescription()))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (pCity.getName(), INFO.getDescription("UNIT_", unit.getUnitType())))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onUnitPromoted(self, argsList):
@@ -1517,7 +1517,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					if iPlayerX == iPlayerY: continue
 					if GC.getPlayer(iPlayerY).isAlive():
 						zKey = MAX_PC_PLAYERS * iPlayerX + iPlayerY
-						self.CIVAttitude[zKey] = GC.getAttitudeInfo(CyPlayerX.AI_getAttitude(iPlayerY)).getDescription()
+						self.CIVAttitude[zKey] = INFO.getDescription("ATTITUDE_", CyPlayerX.AI_getAttitude(iPlayerY))
 				# store the civ's civics
 				for iCivic in xrange(iCivicOptions):
 					zKey = iCivicOptions * iPlayerX + iCivic
@@ -1579,7 +1579,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					if not (CyPlayerY.isAlive() and GC.getTeam(CyPlayerY.getTeam()).isHasMet(iActiveTeam)):
 						continue
 					zKey = MAX_PC_PLAYERS * iPlayerX + iPlayerY
-					zsNewAttitude = GC.getAttitudeInfo(CyPlayerX.AI_getAttitude(iPlayerY)).getDescription()
+					zsNewAttitude = INFO.getDescription("ATTITUDE_", CyPlayerX.AI_getAttitude(iPlayerY))
 					if self.CIVAttitude[zKey] != zsNewAttitude:
 						zsCiv2 = CyPlayerY.getName() + " (" + CyPlayerY.getCivilizationShortDescription(0) + ")"
 						message = TRNSLTR.getText("TXT_KEY_AUTOLOG_ATTITUDE_CHANGE", (szCivX, zsCiv2, self.CIVAttitude[zKey], zsNewAttitude))
@@ -1591,7 +1591,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					zKey = iCivicOptions * iPlayerX + iCivic
 					if self.CIVCivics[zKey] != CyPlayerX.getCivics(iCivic):
 						zsOldCiv = INFO.getDescription("CIVIC_", self.CIVCivics[zKey])
-						zsNewCiv = GC.getCivicInfo(CyPlayerX.getCivics(iCivic)).getDescription()
+						zsNewCiv = INFO.getDescription("CIVIC_", CyPlayerX.getCivics(iCivic))
 						message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CIVIC_CHANGE", (szCivX, zsOldCiv, zsNewCiv))
 						Logger.writeLog(message, vColor="SeaGreen")
 
@@ -1604,7 +1604,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		for iI in xrange( CommerceTypes.NUM_COMMERCE_TYPES ):
 			eCommerce = (iI + 1) % CommerceTypes.NUM_COMMERCE_TYPES
 
-			zDesc = GC.getCommerceInfo(CommerceTypes(eCommerce)).getDescription()
+			zDesc = INFO.getDescription("COMMERCE_", CommerceTypes(eCommerce))
 			if (eCommerce == CommerceTypes.COMMERCE_GOLD):
 				zPercent = pPlayer.getCommercePercent(eCommerce)
 				zRate = pPlayer.calculateGoldRate()

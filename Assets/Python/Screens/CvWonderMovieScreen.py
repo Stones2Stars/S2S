@@ -3,6 +3,7 @@ from CvPythonExtensions import *
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -128,7 +129,7 @@ class CvWonderMovieScreen:
 				szHelp = CyGameTextMgr().getProjectHelp(self.iWonderId, False, -1, -1)
 
 			elif self.iMovieType == 3:
-				szHelp = GC.getFeatureInfo(self.iWonderId).getCivilopedia()
+				szHelp = INFO.getCivilopedia("FEATURE_", self.iWonderId)
 			else:
 				szHelp = ""
 

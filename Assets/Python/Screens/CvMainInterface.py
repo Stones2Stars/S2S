@@ -55,6 +55,7 @@ def onSwitchHotSeatPlayer(argsList):
 	g_mainInterface.resetEndTurnObjects()
 
 
+
 class CvMainInterface:
 
 	def __init__(self):
@@ -4251,12 +4252,12 @@ class CvMainInterface:
 						szTxt2 = ""
 						if GC.getMissionInfo(CySelectionGroup.getMissionType(i)).isBuild():
 							if not i:
-								szTxt1 = GC.getBuildInfo(CySelectionGroup.getMissionData1(i)).getDescription()
+								szTxt1 = INFO.getDescription("BUILD_", CySelectionGroup.getMissionData1(i))
 								szTxt2 = TRNSLTR.getText("INTERFACE_CITY_TURNS", (CySelectionGroup.plot().getBuildTurnsLeft(CySelectionGroup.getMissionData1(i), 0, 0), ))
 							else:
-								szTxt1 = u"%s..." %(GC.getBuildInfo(CySelectionGroup.getMissionData1(i)).getDescription())
+								szTxt1 = u"%s..." %(INFO.getDescription("BUILD_", CySelectionGroup.getMissionData1(i)))
 						else:
-							szTxt1 = u"%s..." %(GC.getMissionInfo(CySelectionGroup.getMissionType(i)).getDescription())
+							szTxt1 = u"%s..." %(INFO.getDescription("MISSION_", CySelectionGroup.getMissionType(i)))
 						screen.appendTableRow(unitTable)
 						screen.setTableText(unitTable, 0, iRow, "<font=1>" + szTxt1, "", eWidGen, 0, 0, 1<<0)
 						screen.setTableText(unitTable, 1, iRow, "<font=1>" + szTxt2, "", eWidGen, 0, 0, 1<<0)
@@ -5692,7 +5693,7 @@ class CvMainInterface:
 				self.updateTooltip(screen, TRNSLTR.getText("TXT_KEY_PARALLEL_MAPS_SCREEN_HOVER", ()))
 
 			elif NAME == "EraIndicator":
-				self.updateTooltip(screen, GC.getEraInfo(self.CyPlayer.getCurrentEra()).getDescription())
+				self.updateTooltip(screen, INFO.getDescription("C2C_ERA_", self.CyPlayer.getCurrentEra()))
 
 			elif NAME == "CivilizationFlag":
 				self.updateTooltip(screen, CyGTM.getFlagHelp(), -12, self.yBotBar + 8)

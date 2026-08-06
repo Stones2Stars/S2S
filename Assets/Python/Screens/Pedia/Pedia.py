@@ -633,7 +633,7 @@ class Pedia:
 			if bNewConcept:
 				szText = GC.getNewConceptInfo(iObjectType).getCivilopedia()
 			else:
-				szText = GC.getConceptInfo(iObjectType).getCivilopedia()
+				szText = INFO.getCivilopedia("CONCEPT_", iObjectType)
 			screen.attachMultilineText(panelName, "", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 		elif bFuncByGroupCat:
 			self.mapScreenFunctions[iGroupCategory].interfaceScreen(iObjectType)

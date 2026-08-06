@@ -29,6 +29,7 @@
 //
 
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace picojson { class value; }
@@ -69,7 +70,17 @@ public:
 	// The rows sum rather than max, so counter-detection is an ordinary negative deposit.
 	int detectionAgainst(int iMethodSkillId) const;
 
+	// Append this entity's rows as resolved `(methodSkill, value)` pairs. This is what lets a HOLDER fold the
+	// block once at its own mark instead of asking `detectionAgainst` per method per read: the holder needs the
+	// row SET, which a per-method query cannot hand back.
+	// ⛔ Rows whose method never minted are skipped, exactly as `detectionAgainst` declines to match them.
+	void collectDetectionInto(std::vector<std::pair<int, int> >& aResolvedRowsOut) const;
+
 private:
+	// THE ONE RESOLVE PATH ([DEC-single-implementation]). The id mints AFTER the entities parse, so it resolves
+	// lazily on first ask; both readers above go through here so a late-minted method cannot resolve two ways.
+	int resolveMethodSkill(const CvDetectionRow& kRow) const;
+
 	CvHideAndSeekSection(const CvHideAndSeekSection&);              // noncopyable (held by-value on a noncopyable info)
 	CvHideAndSeekSection& operator=(const CvHideAndSeekSection&);
 };

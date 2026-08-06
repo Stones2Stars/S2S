@@ -367,7 +367,7 @@ class CvForeignAdvisor:
 
 				# Our leader head
 				chBox = self.getNextWidget()
-				BTN = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getButton()
+				BTN = INFO.getButton("LEADER_", CyPlayer.getLeaderType())
 				screen.addCheckBoxGFC(chBox, BTN, hiLi, fX, fY, iSize, iSize, eWidLeader, iPlayer, -1, eBtnLbl)
 				screen.setState(chBox, iPlayer in selectedLeaders)
 				screen.setLabel(self.getNextWidget(), "", uFont3 + CyPlayer.getName(), 1<<2, fX0, fY + iSize + 4, 0, eFontGame, eWidGen, 1, 1)
@@ -389,14 +389,14 @@ class CvForeignAdvisor:
 				fY = int(fY0) - iSizeHalf
 
 				chBox = self.getNextWidget()
-				BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+				BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 				screen.addCheckBoxGFC(chBox, BTN, hiLi, fX, fY, iSize, iSize, eWidLeader, iPlayerX, iLeaderBase, eBtnLbl)
 				screen.setState(chBox, iPlayerX in selectedLeaders)
 				screen.setLabel(self.getNextWidget(), "", uFont3 + CyPlayerX.getName(), 1<<2, int(fX0), fY + iSize + 4, 0, eFontGame, eWidGen, 1, 1)
 
 				# Leader attitude towards base leader
 				if iLeaderBase != iPlayerX and CyTeamX.isHasMet(iTeamBase):
-					szTxt = GC.getAttitudeInfo(CyPlayerX.AI_getAttitude(iLeaderBase)).getDescription()
+					szTxt = INFO.getDescription("ATTITUDE_", CyPlayerX.AI_getAttitude(iLeaderBase))
 					if CyTeamX.isVassal(iTeamBase):
 						szTxt += ", " + szVassal
 					elif CyTeamBase.isVassal(iTeamX):
@@ -486,7 +486,7 @@ class CvForeignAdvisor:
 			else:
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				CyTeamX = GC.getTeam(CyPlayerX.getTeam())
-			BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX) + "|" + str(n), Pnl, BTN, 0, 8, 64, 64, eWidGen, 1, 1)
 			n += 1
 
@@ -501,7 +501,7 @@ class CvForeignAdvisor:
 				CyPlayerY = GC.getPlayer(iPlayerY)
 				iTeamY = CyPlayerY.getTeam()
 
-				BTN = GC.getLeaderHeadInfo(CyPlayerY.getLeaderType()).getButton()
+				BTN = INFO.getButton("LEADER_", CyPlayerY.getLeaderType())
 				screen.setImageButtonAt("WID|LEADER" + str(iPlayerY) + "|" + str(n), Pnl, BTN, x, 2, 44, 44, eWidGen, 1, 1)
 				n += 1
 
@@ -568,7 +568,7 @@ class CvForeignAdvisor:
 				h = 72
 			yImg = y0 + h / 2 - 32
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", False, True, ePnlHelpHUD, 0, y0, w, h, eWidGen, 1, 1)
-			BTN = GC.getLeaderHeadInfo(GC.getPlayer(iPlayerX).getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", GC.getPlayer(iPlayerX).getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, 8, yImg, 64, 64, eWidGen, 1, 1)
 			y1 = y0 + 4
 			for CyDeal in deals:
@@ -628,7 +628,7 @@ class CvForeignAdvisor:
 		w = w0 - 8
 		Pnl = self.getNextWidget()
 		screen.addPanel(Pnl, "", "", True, True, 10, yTop + 6, w, 72, ePnlSTD)
-		BTN = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getButton()
+		BTN = INFO.getButton("LEADER_", CyPlayer.getLeaderType())
 		screen.setImageButtonAt("WID|LEADER" + str(iPlayer), Pnl, BTN, 2, 4, 64, 64, eWidGen, 1, 1)
 
 		ourBonuses = []
@@ -794,7 +794,7 @@ class CvForeignAdvisor:
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlSTD, 8, y, w, h, eWidGen, 1, 1)
 			h -= 6
 
-			BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, 12, yImg, 64, 64, eWidGen, 1, 1)
 
 			if iPosGPT:
@@ -1166,7 +1166,7 @@ class CvForeignAdvisor:
 			# Fill row
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlSTD, 8, y, w, h, eWidGen, 1, 1)
 			h -= 6
-			BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, 12, yImg, 64, 64, eWidGen, 1, 1)
 
 			if iGold:
@@ -1293,7 +1293,7 @@ class CvForeignAdvisor:
 
 				elif TYPE == "LEADER":
 					CyPlayer = GC.getPlayer(ID)
-					szLeader = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getDescription()
+					szLeader = INFO.getDescription("LEADER_", CyPlayer.getLeaderType())
 
 					if CyPlayer.isHuman():
 						szTxt = CyPlayer.getName()

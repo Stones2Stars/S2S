@@ -145,6 +145,10 @@ public:
 	bool isPromotionReady() const;
 	void setPromotionReady(bool bNewValue);
 	int getOwner() const;
+
+	// ⚖ THE IDENTITY SET -- see CyCity.h. Owner + id + position only: what a legacy consumer needs to say WHICH
+	// unit it holds. ⛔ Never the legacy stat surface; a consumer wanting unit DATA asks CyState / CyInfo.
+	static void pythonPublish();
 	int getVisualOwner() const;
 	int getTeam() const;
 

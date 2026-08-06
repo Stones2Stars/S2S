@@ -6,11 +6,21 @@
 >
 > Per [DEC-cy-not-fixed](../architecture/decisions.md#dec-cy-not-fixed) and
 > [DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface) this maps **NEEDS, not getters
-> to port**. The legacy `Cy*` read bindings are GONE: the composition root
-> (`DLLPublishToPython`, `Infrastructure/CvDLLPython.cpp`) publishes the enum int-conversions, the vector +
-> `IDValueMap` container interfaces, the debug/Win32 helpers, and **`CyEnabler` — 17 availability reads, the only
-> info/state surface Python can reach**. The `Cy*` WRAPPER classes stay for the engine→Python direction; a wrapper
-> with no binding is the correct end state ([patterns.md](../architecture/patterns.md)).
+> to port**. The legacy `Cy*` read bindings are GONE, and the replacement surface stands beside their absence:
+> the composition root (`DLLPublishToPython`, `Infrastructure/CvDLLPython.cpp`) publishes the enum
+> int-conversions, the vector + `IDValueMap` container interfaces, the debug/Win32 helpers, and the four
+> planes of the read library — **`CyEnums`** (the vocabulary, published FIRST because a group read is indexed
+> by it), **`CyEnabler`** ("can I?"), **`CyState`** ("what do I HAVE?") and **`CyInfo`** ("what do I CARRY?",
+> the ONLY home for infos). Beside them stand the kept boundaries that were never the cut's target — TXT, ART,
+> the command/net layer, and the CONFIG half of the global context.
+> ⚠ **`GC.get<X>Info` is published NOWHERE**, so a surviving one is not a slow read — it is an `AttributeError`
+> at the moment its handler fires. That is the shape of what is left to wire, and it is why the counts below
+> are DEMAND rather than a surviving-call census.
+> The `Cy*` WRAPPER classes stay for the engine→Python direction, and each carries its **IDENTITY SET** — owner,
+> id, position, and nothing else ([patterns.md](../architecture/patterns.md) § THE IDENTITY SET). ⛔ The earlier
+> reading here — *"a wrapper with no binding is the correct end state"* — is SUPERSEDED: it was right about the
+> DIRECTION (the read surface is gone) and wrong about the ADDRESS, since a handle that cannot name which object
+> it holds makes every legacy consumer a rewrite.
 >
 > So every count below is **DEMAND** — what a consumer must be SERVED by the one data-fetching library — never
 > what call survives. Counts are script-derived from the current tree; the method is in §1 so every number can be
@@ -61,7 +71,7 @@ overcounts by thousands. And the published surface no longer answers reads, so a
 | Python files | **206** |
 | Lines | **107,650** |
 | Distinct methods called on any receiver | 3,286 |
-| Published `.def` names (read half — `CyEnabler`) | **17** |
+| Published `.def` names (the read library: `CyInfo` + `CyState` + `CyEnabler`) | **152** |
 | **UNSERVED engine-shaped reads** | **2,070 names / 21,279 call sites** |
 
 That second row is the whole Python→C++ read surface today, and the third is the size of the gap it leaves.

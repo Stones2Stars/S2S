@@ -48,7 +48,7 @@ class NaturalWonders:
                         pAdjacentPlot = MAP.plot(x, y)
                         if not pAdjacentPlot: continue
 
-                        if pAdjacentPlot.getFeatureType() > -1 and GC.getFeatureInfo(pAdjacentPlot.getFeatureType()).getType().find("FEATURE_PLATY_") > -1:
+                        if pAdjacentPlot.getFeatureType() > -1 and INFO.getType("FEATURE_", pAdjacentPlot.getFeatureType()).find("FEATURE_PLATY_") > -1:
                             bUnsuitable = True
                             break
                         ## Big Wonders ##

@@ -100,7 +100,7 @@ class HelperFunctions:
 			if iPrereqBuilding == GC.getInfoTypeForString("BUILDING_FOLKLORE_REQUIREMENT"):
 				iTechAnimalLoc = GC.getTechInfo(GC.getBuildingInfo(iPrereqBuilding).getPrereqAndTech()).getGridX()
 				iTechAnimalRow = GC.getTechInfo(GC.getBuildingInfo(iPrereqBuilding).getPrereqAndTech()).getGridY()
-				aTechList.append(GC.getTechInfo(GC.getBuildingInfo(iPrereqBuilding).getPrereqAndTech()).getType())
+				aTechList.append(INFO.getType("TECH_", GC.getBuildingInfo(iPrereqBuilding).getPrereqAndTech()))
 				aTechGridXList.append(iTechAnimalLoc)
 				aTechXY.append(100*iTechAnimalLoc+iTechAnimalRow)
 

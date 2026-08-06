@@ -1504,7 +1504,7 @@ class Revolution:
 			#Afforess Revolution Difficulty Scaling
 			iRevolutionHandicap = (GC.getHandicapInfo(pPlayer.getHandicapType()).getRevolutionIndexPercent() - 100) / 10
 			localRevIdx += iRevolutionHandicap
-			szText = GC.getHandicapInfo(pPlayer.getHandicapType()).getDescription() + TRNSLTR.getText("TXT_KEY_DIFFICULTY_LEVEL",())
+			szText = INFO.getDescription("HANDICAP_", pPlayer.getHandicapType()) + TRNSLTR.getText("TXT_KEY_DIFFICULTY_LEVEL",())
 			if iRevolutionHandicap > 0:
 				negList.append((iRevolutionHandicap, szText))
 			elif iRevolutionHandicap < 0:
@@ -2678,14 +2678,14 @@ class Revolution:
 
 					if( not newRelCivic == None and newLevel > level ) :
 						if( level < -5 or (newLevel > 5 and level < 0) ) :
-							if self.LOG_DEBUG: print "[REV] Revolt: Asking for change from %s to %s"%(GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription(),INFO.getDescription("CIVIC_", newRelCivic))
+							if self.LOG_DEBUG: print "[REV] Revolt: Asking for change from %s to %s"%(INFO.getDescription("CIVIC_", pPlayer.getCivics(optionType)),INFO.getDescription("CIVIC_", newRelCivic))
 
 							bodStr = RevUtils.getCityTextList(relCities, bPreCity = True, bPostIs = True)
 
 							# Can't pay them enough so they don't feel oppressed
 
 							if( level < -5 ) :
-								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY1",()) + ' ' + GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription() + ".  " + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY2",()) + ' ' + INFO.getDescription("CIVIC_", newRelCivic) + '.'
+								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY1",()) + ' ' + INFO.getDescription("CIVIC_", pPlayer.getCivics(optionType)) + ".  " + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY2",()) + ' ' + INFO.getDescription("CIVIC_", newRelCivic) + '.'
 							else :
 								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL1",()) + ' ' + INFO.getDescription("CIVIC_", newRelCivic) + '.  ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL2",()) + ' ' + INFO.getDescription("RELIGION_", stateRel)
 								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PRACTICE",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
@@ -2793,7 +2793,7 @@ class Revolution:
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_2",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_3",())
 					else :
 						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_1",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
-						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_2",()) + ' ' + GC.getReligionInfo(pPlayer.getStateReligion()).getDescription() + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_3",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + '.'
+						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_2",()) + ' ' + INFO.getDescription("RELIGION_", pPlayer.getStateReligion()) + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_3",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + '.'
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE",())
 
 					if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution, buyoff cost %d" % (len(indCities), iBuyOffCost)
@@ -2841,7 +2841,7 @@ class Revolution:
 					bodStr = RevUtils.getCityTextList(indCities, bPreCity = True, bPostIs = True)
 
 					bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_1",()) + ' %s.'%(INFO.getDescription("RELIGION_", revRel))
-					bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_2",()) + ' %s '%(GC.getReligionInfo( pPlayer.getStateReligion() ).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_3",())
+					bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_2",()) + ' %s '%(INFO.getDescription("RELIGION_", pPlayer.getStateReligion())) + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_3",())
 					bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND",())
 
 					[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = revRel )

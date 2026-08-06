@@ -1321,3 +1321,23 @@ The city's DISABLED-POWER timer, re-homed onto the city STATUS store rather than
 | transient counter is not worth a migration for a short-term changeover.
 | REPLACEMENT: CvCity::hasStatus(CITYSTATUS_POWER_DISABLED), read through CvCity::isPower.
 CvCity::m_iDisabledPowerTimer
+
+The two remaining per-unit HEAL accumulators, REPLACED by the resolved UNIT plane. Both were hand-named
+| members fed from BOTH processPromotion and processUnitCombat into one slot -- the dual-feed shape -- while
+| every other heal magnitude was already gathered over the unit's held set. They are now the ordinary slots
+| URS_HEAL_VICTORY / URS_HEAL_SUPPORT, so heal is uniform: one gather, one mark, no per-source push.
+| The contributor set is unchanged (victory is authored by promotions only; support by units and promotions),
+| so the value is the same -- what goes is the second maintenance surface, not a term.
+| REPLACEMENT: CvUnit::getVictoryHeal / getNumHealSupportTotal, over Cascade/CvUnitResolved.h.
+CvUnit::m_iVictoryHeal
+CvUnit::m_iExtraNumHealSupport
+
+The last three per-unit HEAL accumulators, REPLACED by the resolved UNIT plane on the same terms as the two
+| above -- each was fed from BOTH processPromotion and processUnitCombat into one hand-named member. With
+| these the heal set is UNIFORM: every unit-scope heal magnitude is a gathered slot, none is pushed.
+| Contributor sets are unchanged, so the values are unchanged.
+| REPLACEMENT: CvUnit::getVictoryStackHeal / getVictoryAdjacentHeal / getSelfHealModifierTotal,
+| over Cascade/CvUnitResolved.h.
+CvUnit::m_iVictoryStackHeal
+CvUnit::m_iVictoryAdjacentHeal
+CvUnit::m_iExtraSelfHealModifier

@@ -144,7 +144,16 @@ bool CvSelectionGroup::sentryAlert() const
 	{
 		const CvPlot* myPlot = unit->plot();
 
-		foreach_(const CvPlot* plotX, myPlot->rect(iMaxRange, iMaxRange))
+		//	⛔ THE RECT BOUND IS A PLOT COUNT, SO IT REDUCES -- and ONLY it ([DEC-fixedpoint-x100]: reduce at the
+		//	point of use). sight() answers the vision BUDGET on the x100 native scale, which is the scale
+		//	canSeePlot below SPENDS it in (per-100 terrain costs), so the budget itself must stay whole. What is
+		//	NOT on that scale is the scan radius: handing the raw budget to rect() asks for a square 100x too
+		//	wide, i.e. 10,000x the plots, each running a line-of-sight test.
+		//	⚠ Silent, and only on units carrying VISION promotions -- the inflation rides URS_VISION (base +
+		//	combat classes + promotions), and the area grows with the SQUARE of it. That is how ONE
+		//	interface-mode gate reached 7 SECONDS while every other measurement on the path read ~0.
+		const int iScanPlots = iMaxRange / 100;
+		foreach_(const CvPlot* plotX, myPlot->rect(iScanPlots, iScanPlots))
 		{
 			if (myPlot->canSeePlot(plotX, iMaxRange) && plotX->isVisibleEnemyUnit(unit))
 			{
@@ -180,7 +189,16 @@ bool CvSelectionGroup::sentryAlertSameDomainType() const
 	{
 		const CvPlot* myPlot = unit->plot();
 
-		foreach_(const CvPlot* plotX, myPlot->rect(iMaxRange, iMaxRange))
+		//	⛔ THE RECT BOUND IS A PLOT COUNT, SO IT REDUCES -- and ONLY it ([DEC-fixedpoint-x100]: reduce at the
+		//	point of use). sight() answers the vision BUDGET on the x100 native scale, which is the scale
+		//	canSeePlot below SPENDS it in (per-100 terrain costs), so the budget itself must stay whole. What is
+		//	NOT on that scale is the scan radius: handing the raw budget to rect() asks for a square 100x too
+		//	wide, i.e. 10,000x the plots, each running a line-of-sight test.
+		//	⚠ Silent, and only on units carrying VISION promotions -- the inflation rides URS_VISION (base +
+		//	combat classes + promotions), and the area grows with the SQUARE of it. That is how ONE
+		//	interface-mode gate reached 7 SECONDS while every other measurement on the path read ~0.
+		const int iScanPlots = iMaxRange / 100;
+		foreach_(const CvPlot* plotX, myPlot->rect(iScanPlots, iScanPlots))
 		{
 			if (myPlot->canSeePlot(plotX, iMaxRange) && plotX->isVisibleEnemyUnit(unit))
 			{

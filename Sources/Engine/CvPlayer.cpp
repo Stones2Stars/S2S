@@ -4219,6 +4219,11 @@ void CvPlayer::verifyCivics()
 void CvPlayer::updatePlotGroups(const CvArea* possibleNewInAreaOnly, bool reInitialize)
 {
 	PROFILE_FUNC();
+	//	⚑ THE TRADE-NETWORK RECOMPUTE, AND IT WAS INVISIBLE. `PROFILE_FUNC` compiles to NOTHING outside the dead
+	//	Profile configs ([AGENTS.md]), so this pass has never been measured -- while the `updateTradeRoutes()` it
+	//	ENDS with carries a real PERF scope. That is why a measured burst attributed ~5% of its own wall clock:
+	//	we were timing the tip of this. [PERF] ships in every build, which is exactly why it is the ONE instrument.
+	PERF_SCOPE("CvPlayer::updatePlotGroups", getID());
 
 	if (!(GC.getGame().isFinalInitialized()))
 	{

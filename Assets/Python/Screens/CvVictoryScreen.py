@@ -878,7 +878,7 @@ class CvVictoryScreen:
 									elif ourBestCities[i][2] < 1000:
 										szText += TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (ourBestCities[i][2],))
 									else:
-										szText += GC.getCultureLevelInfo(ourBestCities[i][1].getCultureLevel()).getDescription()
+										szText += INFO.getDescription("CULTURELEVEL_", ourBestCities[i][1].getCultureLevel())
 									screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
 
 								if len(theirBestCities) > i:
@@ -888,7 +888,7 @@ class CvVictoryScreen:
 									elif theirBestCities[i][2] < 1000:
 										szText += TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (theirBestCities[i][2],))
 									else:
-										szText += GC.getCultureLevelInfo(theirBestCities[i][1].getCultureLevel()).getDescription()
+										szText += INFO.getDescription("CULTURELEVEL_", theirBestCities[i][1].getCultureLevel())
 									screen.setTableText(szTable, 2, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
 							else:
 								break
@@ -929,10 +929,10 @@ class CvVictoryScreen:
 			szTxt = ufont1 + "\t<color=200,200,200>(" + szTxt + ")\n"
 			screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_GAME", (GC.getHandicapInfo(GAME.getHandicapType()).getTextKey(),))
+		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_GAME", (INFO.getTextKey("HANDICAP_", GAME.getHandicapType()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_PLAYER", (GC.getHandicapInfo(CyPlayer.getHandicapType()).getTextKey(),))
+		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_PLAYER", (INFO.getTextKey("HANDICAP_", CyPlayer.getHandicapType()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
 		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_GAME_SPEED", (INFO.getTextKey("GAMESPEED_", GAME.getGameSpeedType()),))
@@ -950,17 +950,17 @@ class CvVictoryScreen:
 			szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_MAP_WRAP_FLAT", ())
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_MAP_SIZE", (GC.getWorldInfo(CyMap.getWorldSize()).getTextKey(),))
+		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_MAP_SIZE", (INFO.getTextKey("WORLDSIZE_", CyMap.getWorldSize()),))
 		szTxt += u"  (%dx%d)" %(CyMap.getGridWidth(), CyMap.getGridHeight())
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_CLIMATE", (GC.getClimateInfo(CyMap.getClimate()).getTextKey(),))
+		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_CLIMATE", (INFO.getTextKey("CLIMATE_", CyMap.getClimate()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_SEA_LEVEL", (GC.getSeaLevelInfo(CyMap.getSeaLevel()).getTextKey(),)) + "\n"
+		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_SEA_LEVEL", (INFO.getTextKey("SEALEVEL_", CyMap.getSeaLevel()),)) + "\n"
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = BULLET + TRNSLTR.getText("TXT_KEY_SETTINGS_STARTING_ERA", (GC.getEraInfo(GAME.getStartEra()).getTextKey(),))
+		szTxt = BULLET + TRNSLTR.getText("TXT_KEY_SETTINGS_STARTING_ERA", (INFO.getTextKey("C2C_ERA_", GAME.getStartEra()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
 		screen.updateListBox(szSettingsTable)
@@ -1168,7 +1168,7 @@ class CvVictoryScreen:
 		kVoteSource = GC.getVoteSourceInfo(iVoteBody)
 		sTableHeader = "<font=4b>" + kVoteSource.getDescription().upper() + "</font>"
 		if GAME.getVoteSourceReligion(iVoteBody) != -1:
-			sTableHeader += " (" + GC.getReligionInfo(GAME.getVoteSourceReligion(iVoteBody)).getDescription() + ")"
+			sTableHeader += " (" + INFO.getDescription("RELIGION_", GAME.getVoteSourceReligion(iVoteBody)) + ")"
 
 		screen.setTableText(szHeading, 0, iRow, sTableHeader, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 

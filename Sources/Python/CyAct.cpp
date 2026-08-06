@@ -132,6 +132,16 @@ bool CyAct::invalidateBuildingList(int iPlayer, int iCity) const
 	return true;
 }
 
+bool CyAct::setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewValue) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	if (iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos()) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->setHasPromotion((PromotionTypes)iPromotion, bNewValue);
+	return true;
+}
+
 bool CyAct::setBuildDisabled(int iBuild, bool bDisabled) const
 {
 	if (iBuild < 0 || iBuild >= GC.getNumBuildInfos()) return false;
@@ -154,5 +164,6 @@ void CyAct::pythonPublish()
 		.def("invalidateUnitList", &CyAct::invalidateUnitList)
 		.def("invalidateBuildingList", &CyAct::invalidateBuildingList)
 		.def("setBuildDisabled", &CyAct::setBuildDisabled)
+		.def("setUnitPromotion", &CyAct::setUnitPromotion)
 		;
 }

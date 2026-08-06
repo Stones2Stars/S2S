@@ -170,7 +170,7 @@ def getModInfo(mapVersion=None, defLatitude=None, sMapInfo=None):
 		###############################
 		### user selected map constants
 		###############################
-		sClimateType = GC.getClimateInfo(MAP.getClimate()).getType()
+		sClimateType = INFO.getType("CLIMATE_", MAP.getClimate())
 
 		bTeams = teamStart.getTeams() # check if there are teams
 

@@ -339,7 +339,7 @@ class WBUnitScreen:
 			if self.currentPlot.isCity():
 				pCity = self.currentPlot.getPlotCity()
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %s" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
+				sText = u"%c %s" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
 				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), pCity.getCulture(pCity.getOwner()), pCity.getCultureThreshold())

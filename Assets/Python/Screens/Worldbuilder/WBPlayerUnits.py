@@ -363,7 +363,7 @@ class WBPlayerUnits:
 		if iGPRate > 0 or iProgress > 0:
 			sText += u"\n%s: %d/%d %+d" %(CyTranslator().getText("[ICON_GREATPEOPLE]", ()), iProgress, pPlayer.greatPeopleThresholdNonMilitary(), iGPRate)
 
-		sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iCityOwner), pCity.getCultureThreshold(), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
+		sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iCityOwner), pCity.getCultureThreshold(), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
 
 		lTemp = []
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):

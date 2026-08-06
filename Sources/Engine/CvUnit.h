@@ -1067,13 +1067,10 @@ public:
 	void changeSurvivorChance(int iChange);
 
 	int getVictoryAdjacentHeal() const;
-	void changeVictoryAdjacentHeal(int iChange);
 
 	int getVictoryHeal() const;
-	void changeVictoryHeal(int iChange);
 
 	int getVictoryStackHeal() const;
-	void changeVictoryStackHeal(int iChange);
 
 
 	int getExtraMoves() const;
@@ -1208,6 +1205,8 @@ public:
 	const CvUnitInfo& getUnitInfo() const;
 	// The UNIT plane read -- a bare fetch of the resolved value (no gather, no evaluation).
 	int resolvedValue(UnitResolvedSlot eSlot) const { return m_resolvedValues.get(eSlot); }
+	// The HEAL block's verdict -- a bare fetch, folded when the promotion landed (Cascade/CvUnitResolved.h).
+	bool healsOutsideFriendlyTerritory() const { return m_resolvedValues.healsOutsideFriendlyTerritory(); }
 	// The dirty entry point: the two spine facts that can move a unit's resolved values.
 	void markResolvedValuesDirty() const { m_resolvedValues.markDirty(*this); }
 
@@ -1260,6 +1259,10 @@ public:
 	int buildWorkPercent(BuildTypes eIndex) const;
 
 	int getExtraUnitCombatModifier(UnitCombatTypes eIndex, const bool bCommander = true, const bool bCommodore = true) const;
+	// The leader supporting this unit for a combat -- commander, else commodore. NULL if none (modifier.md §2b).
+	const CvUnit* supportingLeader() const;
+	// Is this promotion in the unit's tree at all? A bare fetch of the maintained enabler state.
+	bool enablerOffersPromotion(PromotionTypes ePromotion) const;
 	void changeExtraUnitCombatModifier(UnitCombatTypes eIndex, int iChange);
 	bool canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirements::flags requirements) const;
 	// Deprecated, use the one above that takes enum flags instead for increased readability.
@@ -1496,9 +1499,6 @@ protected:
 	int m_iExtraDropRange;
 
 	int m_iSurvivorChance;
-	int m_iVictoryAdjacentHeal;
-	int m_iVictoryHeal;
-	int m_iVictoryStackHeal;
 
 	int m_iExtraMoves;
 	// The unit's stored per-turn upkeep (x100). DERIVED -- recomputed by calcUpkeep from the flat model
@@ -1515,8 +1515,6 @@ protected:
 	int m_iFliesToMoveCount;
 	int m_iSMStrength;
 	int m_iOnslaughtCount;
-	int m_iExtraSelfHealModifier;
-	int m_iExtraNumHealSupport;
 	int m_iHealSupportUsed;
 	int m_iNoSelfHealCount;
 	int m_iExcileCount;
@@ -1945,10 +1943,8 @@ public:
 	void changeNoSelfHealCount(int iChange);
 
 	int getSelfHealModifierTotal() const;
-	void changeExtraSelfHealModifier(int iChange);
 
 	int getNumHealSupportTotal() const;
-	void changeExtraNumHealSupport(int iChange);
 
 	int getHealSupportUsedTotal() const;
 	void changeHealSupportUsed(int iChange);

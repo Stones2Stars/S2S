@@ -8,6 +8,7 @@ import CvScreenEnums
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -241,7 +242,7 @@ class TheScreen:
 			screen.setLabelAt(self.getNextWidgetName(), LeaderPanel, szText, 1<<0, 0, SIZE - y4, 0, iFontTitle, iWidGen, 0, 0)
 			# leader image
 			leaderBtn = "LeaderBtn" + szPlayerX
-			Btn = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			Btn = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.addCheckBoxGFCAt(PanelLeft, leaderBtn, Btn, artPath0, x1, y1, SIZE, SIZE, iWidGen, 0, 0, iBtnLabel, False)
 			x1 += SIZE
 			# leader name
@@ -558,7 +559,7 @@ class TheScreen:
 
 					szText = uFont2 + pMission.getDescription()
 					if iTech != -1 and not CyTeamAct.isHasTech(iTech):
-						szText += " (<color=255,0,0>%s</color>)" %(GC.getTechInfo(pMission.getTechPrereq()).getDescription())
+						szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", pMission.getTechPrereq()))
 
 					iRow = screen.appendTableRow(EffectsTable)
 					screen.setTableText(EffectsTable, 0, iRow, szText, "", iWidGen, 0, 0, 1<<0)
@@ -574,7 +575,7 @@ class TheScreen:
 
 				szText = uFont2 + pMission.getDescription()
 				if iTech != -1 and not CyTeamAct.isHasTech(iTech):
-					szText += " (<color=255,0,0>%s</color>)" %(GC.getTechInfo(pMission.getTechPrereq()).getDescription())
+					szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", pMission.getTechPrereq()))
 
 				iRow = screen.appendTableRow(TABLE)
 				screen.setTableText(TABLE, 0, iRow, szText, "", iWidGen, 0, 0, 1<<0)
@@ -666,7 +667,7 @@ class TheScreen:
 			else:
 				bSeeDetails = False
 
-			artPath = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			artPath = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 
 			# top leader icon
 			screen.setImageButtonAt(self.getNextWidgetName(), TopPanel, artPath, iRow * W_CELL + X_OFFSET, 0, SIZE, SIZE, iWidGen, iPlayerX, 0)

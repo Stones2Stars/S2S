@@ -163,8 +163,14 @@ DllExport void DLLPublishToPython()
 	// for a wrapper whose read surface is deliberately gone ([DEC-cy-not-fixed]) -- the legacy getters stay cut.
 	// The Cy* BINDING purge took these registrations out along with the read surfaces it was aimed at; only the
 	// second half was ever the target.
-	python::class_<CyCity>("CyCity", python::no_init);
-	python::class_<CyUnit>("CyUnit", python::no_init);
+	// ⚖ THE HANDLES CARRY AN IDENTITY SET (owner) -- owner + id + position, and nothing else. A legacy consumer
+	// holding a handle must be able to say WHICH object it holds, and re-pointing every such site onto the read
+	// planes is refactoring we are deliberately not doing: *"I only want to refactor the python I have to,
+	// otherwise we never will be done."* ⛔ The registration-is-not-binding rule still governs everything ELSE --
+	// the info/state getter contract stays cut ([DEC-cy-not-fixed]); a consumer wanting DATA asks CyInfo /
+	// CyState / CyEnabler by that address. Each publish lives in the file named for its type, never here.
+	CyCity::pythonPublish();
+	CyUnit::pythonPublish();
 	python::class_<CySelectionGroup>("CySelectionGroup", python::no_init);
 
 	// ⛔ THE PLAIN-STRUCT MARSHALLING VOCABULARY -- the SAME registration-is-not-binding rule as the wrappers

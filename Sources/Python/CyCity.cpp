@@ -4,6 +4,7 @@
 #include "Engine/CvArea.h"
 #include "Engine/CvCity.h"
 #include "CyArea.h"
+#include <boost/python/class.hpp>
 #include "CyCity.h"
 #include "CyPlot.h"
 #include "AI/CvGameAI.h"
@@ -1659,4 +1660,16 @@ int CyCity::AI_bestUnitAI(UnitAITypes eUnitAITypes) const
 {
 	int iDummyValue;
 	return m_pCity->AI_bestUnitAI(eUnitAITypes, iDummyValue, true, true, &CvUnitSelectionCriteria().IgnoreGrowth(true));
+}
+
+//	⚖ THE IDENTITY SET (CyCity.h). Owner + id + position: the axes that ADDRESS a city, so a legacy consumer
+//	holding a handle can say WHICH one it holds. Data is asked of CyState by that address, never of this handle.
+void CyCity::pythonPublish()
+{
+	python::class_<CyCity>("CyCity", python::no_init)
+		.def("getOwner", &CyCity::getOwner)
+		.def("getID",    &CyCity::getID)
+		.def("getX",     &CyCity::getX)
+		.def("getY",     &CyCity::getY)
+		;
 }

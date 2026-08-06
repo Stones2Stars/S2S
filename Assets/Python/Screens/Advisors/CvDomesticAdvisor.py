@@ -752,7 +752,7 @@ class CvDomesticAdvisor:
 
 	def calculateConscriptUnit(self, city, szKey, arg):
 		if city.canConscript():
-			return unicode(GC.getUnitInfo(city.getConscriptUnit()).getDescription())
+			return unicode(INFO.getDescription("UNIT_", city.getConscriptUnit()))
 		return u""
 
 	def calculateReligions(self, city, szKey, arg):

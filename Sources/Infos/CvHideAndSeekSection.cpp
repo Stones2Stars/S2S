@@ -101,6 +101,16 @@ void CvHideAndSeekSection::parse(const picojson::value& entity)
 	}
 }
 
+int CvHideAndSeekSection::resolveMethodSkill(const CvDetectionRow& kRow) const
+{
+	if (kRow.methodSkill < 0 && !kRow.methodSkillType.empty())
+	{
+		// lazy, like the IS_TAG predicate: the SKILL_* infotypes mint after the entities parse
+		kRow.methodSkill = GC.getInfoTypeForString(kRow.methodSkillType.c_str(), /*bHideAssert*/true);
+	}
+	return kRow.methodSkill;
+}
+
 int CvHideAndSeekSection::detectionAgainst(int iMethodSkillId) const
 {
 	if (iMethodSkillId < 0)
@@ -110,16 +120,22 @@ int CvHideAndSeekSection::detectionAgainst(int iMethodSkillId) const
 	int iTotal = 0;
 	for (size_t iRow = 0; iRow < detection.size(); ++iRow)
 	{
-		const CvDetectionRow& kRow = detection[iRow];
-		if (kRow.methodSkill < 0 && !kRow.methodSkillType.empty())
+		if (resolveMethodSkill(detection[iRow]) == iMethodSkillId)
 		{
-			// lazy, like the IS_TAG predicate: the SKILL_* infotypes mint after the entities parse
-			kRow.methodSkill = GC.getInfoTypeForString(kRow.methodSkillType.c_str(), /*bHideAssert*/true);
-		}
-		if (kRow.methodSkill == iMethodSkillId)
-		{
-			iTotal += kRow.value;
+			iTotal += detection[iRow].value;
 		}
 	}
 	return iTotal;
+}
+
+void CvHideAndSeekSection::collectDetectionInto(std::vector<std::pair<int, int> >& aResolvedRowsOut) const
+{
+	for (size_t iRow = 0; iRow < detection.size(); ++iRow)
+	{
+		const int iMethodSkill = resolveMethodSkill(detection[iRow]);
+		if (iMethodSkill >= 0)
+		{
+			aResolvedRowsOut.push_back(std::make_pair(iMethodSkill, detection[iRow].value));
+		}
+	}
 }

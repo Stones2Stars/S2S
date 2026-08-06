@@ -202,6 +202,6 @@ class EnhancedTechConquest:
 
 			CvUtil.sendMessage(
 				szTxt, iOwnerNew, 20,
-				GC.getCivilizationInfo(CyPlayerO.getCivilizationType()).getButton(),
+				INFO.getButton("CIVILIZATION_", CyPlayerO.getCivilizationType()),
 				col, city.getX(), city.getY(), True, True
 			)

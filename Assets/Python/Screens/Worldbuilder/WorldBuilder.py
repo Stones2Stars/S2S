@@ -681,7 +681,7 @@ class WorldBuilder:
 		iY = iScreenHeight
 		if self.iPlayerAddMode in self.PlayerMode:
 			iX = iXStart + 8
-			screen.addCheckBoxGFC("AddOwnershipButton", GC.getCivilizationInfo(GC.getPlayer(self.iCurrentPlayer).getCivilizationType()).getButton(), CyArtFileMgr().getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(),
+			screen.addCheckBoxGFC("AddOwnershipButton", INFO.getButton("CIVILIZATION_", GC.getPlayer(self.iCurrentPlayer).getCivilizationType()), CyArtFileMgr().getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(),
 				 iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_PYTHON, 1029, 28, ButtonStyles.BUTTON_STYLE_LABEL)
 			iX += iAdjust
 			screen.addDropDownBoxGFC("WorldBuilderPlayerChoice", iX, iY, self.xRes - 8 - iX, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
@@ -695,7 +695,7 @@ class WorldBuilder:
 					screen.addPullDownString("WorldBuilderPlayerChoice", sName, iPlayer, iPlayer, self.iCurrentPlayer == iPlayer)
 			iX = self.xRes - iScreenWidth + 8
 			iY += iAdjust
-			screen.setImageButton("EditPlayerData", GC.getLeaderHeadInfo(GC.getPlayer(self.iCurrentPlayer).getLeaderType()).getButton(), iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_PYTHON, 1029, 1)
+			screen.setImageButton("EditPlayerData", INFO.getButton("LEADER_", GC.getPlayer(self.iCurrentPlayer).getLeaderType()), iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_PYTHON, 1029, 1)
 			iX += iAdjust
 			screen.setImageButton("EditTeamData", ",Art/Interface/Buttons/Buildings/SDI.dds,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,8,7", iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_PYTHON, 1029, 2)
 			iX += iAdjust
@@ -793,7 +793,7 @@ class WorldBuilder:
 			screen.addPullDownString("RevealMode", CyTranslator().getText("TXT_KEY_REVEAL_PLOT",()), 0, 0, self.iPlayerAddMode == self.RevealMode[0])
 			screen.addPullDownString("RevealMode", CyTranslator().getText("TXT_KEY_REVEAL_SUBMARINE",()), 1, 1, self.iPlayerAddMode == self.RevealMode[1])
 			screen.addPullDownString("RevealMode", CyTranslator().getText("TXT_KEY_REVEAL_STEALTH",()), 2, 2, self.iPlayerAddMode == self.RevealMode[2])
-			screen.addPullDownString("RevealMode", GC.getMissionInfo(GC.getInfoTypeForString("MISSION_PLUNDER")).getDescription(), 3, 3, self.iPlayerAddMode == self.RevealMode[3])
+			screen.addPullDownString("RevealMode", INFO.getDescription("MISSION_", GC.getInfoTypeForString("MISSION_PLUNDER")), 3, 3, self.iPlayerAddMode == self.RevealMode[3])
 
 			iY += iAdjust
 			screen.setImageButton("WorldBuilderRevealAll", CyArtFileMgr().getInterfaceArtInfo("WORLDBUILDER_REVEAL_ALL_TILES").getPath(), iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_WB_REVEAL_ALL_BUTTON, -1, -1)
@@ -994,7 +994,7 @@ class WorldBuilder:
 			iY = 25
 			lItems = []
 			for i in xrange(GC.getNumMapBonuses()):
-				lItems.append([GC.getBonusInfo(GC.getMapBonus(i)).getDescription(), GC.getMapBonus(i)])
+				lItems.append([INFO.getDescription("BONUS_", GC.getMapBonus(i)), GC.getMapBonus(i)])
 			lItems.sort()
 
 			iHeight = min(len(lItems) * 24 + 2, self.yRes - iY)

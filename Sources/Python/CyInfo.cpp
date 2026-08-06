@@ -246,6 +246,36 @@ python::list CyInfo::getProductionToCommerce(const std::string& szTypePrefix, in
 	return values;
 }
 
+bool CyInfo::hasSkill(const std::string& szTypePrefix, int iId, int iSkillId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	return pInfo ? pInfo->hasSkill(iSkillId) : false;
+}
+bool CyInfo::hasTag(const std::string& szTypePrefix, int iId, int iTagId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	return pInfo ? pInfo->hasTag(iTagId) : false;
+}
+bool CyInfo::hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	return pInfo ? pInfo->hasAttribute(iAttributeId) : false;
+}
+bool CyInfo::hasCharacteristic(const std::string& szTypePrefix, int iId, int iCharacteristicId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	return pInfo ? pInfo->hasCharacteristic(iCharacteristicId) : false;
+}
+bool CyInfo::providesAmenity(const std::string& szTypePrefix, int iId, int iAmenityId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	return pInfo ? pInfo->providesAmenity(iAmenityId) : false;
+}
+bool CyInfo::revokesSkill(const std::string& szTypePrefix, int iId, int iSkillId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	return pInfo ? pInfo->revokesSkill(iSkillId) : false;
+}
 bool CyInfo::providesCapability(const std::string& szTypePrefix, int iId, int iCapabilityId) const
 {
 	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
@@ -599,8 +629,14 @@ void CyInfo::pythonPublish()
 		.def("getWellbeing",   &CyInfo::getWellbeing)
 		.def("getRevolution",  &CyInfo::getRevolution)
 		.def("getProductionToCommerce", &CyInfo::getProductionToCommerce)
+		.def("hasSkill",           &CyInfo::hasSkill)
+		.def("hasTag",             &CyInfo::hasTag)
+		.def("hasAttribute",       &CyInfo::hasAttribute)
+		.def("hasCharacteristic",  &CyInfo::hasCharacteristic)
+		.def("providesAmenity",    &CyInfo::providesAmenity)
 		.def("providesCapability", &CyInfo::providesCapability)
 		.def("providesPolicy", &CyInfo::providesPolicy)
+		.def("revokesSkill",       &CyInfo::revokesSkill)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)

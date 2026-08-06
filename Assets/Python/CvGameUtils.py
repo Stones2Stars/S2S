@@ -389,8 +389,8 @@ class CvGameUtils:
 						sText += u"\n%s: %d/%d %+d" %(CyTranslator().getText("[ICON_GREATPEOPLE]", ()), iProgress, pPlayer.greatPeopleThresholdNonMilitary(), iGPRate)
 
 					if pCity.getCultureThreshold() > 0:
-						sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), pCity.getCultureThreshold(), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
-					else: sText += u"\n%s: %d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
+						sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), pCity.getCultureThreshold(), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
+					else: sText += u"\n%s: %d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
 
 
 					lTemp = []
@@ -512,7 +512,7 @@ class CvGameUtils:
 			elif iData1 == 8205 or iData1 == 8206:
 				sText = CyGameTextMgr().parseCivicInfo(iData2, False, True, False)
 				if GC.getCivicInfo(iData2).getUpkeep() > -1:
-					sText += "\n" + GC.getUpkeepInfo(GC.getCivicInfo(iData2).getUpkeep()).getDescription()
+					sText += "\n" + INFO.getDescription("UPKEEP_", GC.getCivicInfo(iData2).getUpkeep())
 				else:
 					sText += "\n" + CyTranslator().getText("TXT_KEY_CIVICS_SCREEN_NO_UPKEEP", ())
 				return sText

@@ -9,6 +9,7 @@ import UnitGrouper
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -187,7 +188,7 @@ class CvMilitaryAdvisor:
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and CyTeam.isHasMet(CyPlayerX.getTeam()):
 
-				BTN = GC.getCivilizationInfo(CyPlayerX.getCivilizationType()).getButton()
+				BTN = INFO.getButton("CIVILIZATION_", CyPlayerX.getCivilizationType())
 
 				ID = str(iPlayerX)
 				screen.setImageButtonAt("WID|LEADER|Base" + ID, ScPnl, BTN, x, 5, 64, 64, eWidGen, 1, 1)
@@ -432,7 +433,7 @@ class CvMilitaryAdvisor:
 			if BASE == "WID":
 				if TYPE == "LEADER":
 					CyPlayer = GC.getPlayer(ID)
-					szLeader = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getDescription()
+					szLeader = INFO.getDescription("LEADER_", CyPlayer.getLeaderType())
 
 					if CyPlayer.isHuman():
 						szTxt = CyPlayer.getName()

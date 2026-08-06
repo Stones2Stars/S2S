@@ -48,7 +48,68 @@
 
 #include "Infos/CvInfoKinds.h"
 
+#include <utility>
+#include <vector>
+
 class CvUnit;
+
+//	The unit's folded `hideAndSeek` block -- how well it HIDES, and how well it SEES each hiding METHOD.
+//
+//	⛔ IT IS ITS OWN BLOCK BESIDE THE SLOT TABLE, NOT A `URS_*` ROW, AND THAT IS THE SPEC. The slot table
+//	addresses modifier-FAMILY entries by `(family, kind, scope, unit)`; `hideAndSeek` is a SECTION
+//	([json.md] §9) with no such address, so it cannot ride the table -- and a hand-named scalar pair beside it
+//	would be the shape [DEC-uniform-cache-shape] calls a defect. It gets a cached block on the SAME MARK
+//	PROTOCOL instead, which is what keeps one fact route maintaining one unit's whole resolved state.
+//
+//	⚑ WHY IT BELONGS HERE AT ALL: it folds over EXACTLY the three carriers the slot table already folds over --
+//	the unit's own info, its held promotions, its held unit-combat classes -- so the two facts that move the slot
+//	table are precisely the two that move this. There is no third trigger to find and none to invent.
+struct UnitResolvedHideAndSeek
+{
+	UnitResolvedHideAndSeek() : concealment(0) {}
+
+	void clear()
+	{
+		concealment = 0;
+		detection.clear();
+	}
+
+	// Detection against ONE method (×100). A linear scan of a HANDFUL -- the rows a unit's own carriers actually
+	// author -- never the method registry, and never the promotion/unit-combat registries.
+	int detectionAgainst(int iMethodSkillId) const;
+
+	// Fold one carrier's resolved rows in, summing per method.
+	void addDetection(int iMethodSkillId, int iValue);
+
+	int concealment;                                  // ×100; MAY BE NEGATIVE (a negative row strips cover)
+	std::vector<std::pair<int, int> > detection;      // (methodSkill, summed value), one entry per method answered
+};
+
+//	The unit's folded HEAL block. Heal is its OWN SET, not a skill: a skill is a pure boolean enabler carrying no
+//	value ([skills.md]), and heal carries magnitudes -- which is why its rates already occupy `URS_HEAL_*` slots.
+//	What lives HERE is the part of the set that is not a `(family, kind)` magnitude: the VERDICTS the heal
+//	arithmetic gates on.
+//
+//	⚑ IT IS UPDATED WHEN THE PROMOTION LANDS, which is the whole point of it. The verdict below is a pure
+//	function of the unit's held promotions, so it is resolved ONCE on the promotion / combat-class fact and read
+//	as a bare fetch -- never re-derived by the reader.
+//
+//	⛔ THE MECHANIC IS UNTOUCHED, ONLY THE FEED ([roadmap.md]: "we don't change how heal works, but we have to
+//	change how the data is fed to heal"). The arithmetic that consumes this stands exactly as it did; what
+//	changed is that it is HANDED the verdict instead of rediscovering it per call.
+struct UnitResolvedHeal
+{
+	UnitResolvedHeal() : healsOutsideFriendlyTerritory(false) {}
+
+	void clear()
+	{
+		healsOutsideFriendlyTerritory = false;
+	}
+
+	// May this unit recover outside friendly territory on its own? Legacy expresses it as membership of the
+	// self-heal / self-repair promotion LINES, so the fold asks the lines once per mark rather than per read.
+	bool healsOutsideFriendlyTerritory;
+};
 
 // The resolved slots a unit carries. Enum-indexed rather than hand-named scalars: "stored individually" is
 // satisfied by one value per slot, while an enum keeps the set addressable and extensible by DATA -- a new unit
@@ -68,6 +129,11 @@ enum UnitResolvedSlot
 	URS_HEAL_FRIENDLY,            // heal.unit.friendly
 	URS_HEAL_SAME_TILE,           // heal.unit.sameTile
 	URS_HEAL_ADJACENT,            // heal.unit.adjacent
+	URS_HEAL_VICTORY,             // heal.unit.victory   -- recovery on winning; promotions author it
+	URS_HEAL_SUPPORT,             // heal.unit.support   -- how many others this unit can support-heal
+	URS_HEAL_VICTORY_STACK,       // heal.unit.victoryStack
+	URS_HEAL_VICTORY_ADJACENT,    // heal.unit.victoryAdjacent
+	URS_HEAL_SELF_MODIFIER,       // heal.unit.selfModifier -- a PERCENT, so unscaled ([DEC-fixedpoint-x100])
 	URS_EVASION,                  // air.unit.evasion
 	URS_INTERCEPT,                // air.unit.intercept
 	URS_AIR_RANGE,                // air.unit.range                -- the unit's OWN air range. The team's
@@ -121,12 +187,32 @@ public:
 	void markDirty(const CvUnit& kUnit);
 	int get(UnitResolvedSlot eSlot) const { return m_aiValue[eSlot]; }
 
-	// The gather, exposed so an endpoint can recompute FROM SOURCE into a caller-owned buffer without ever being
+	// The `hideAndSeek` reads -- bare fetches, exactly like the slot read above.
+	int concealment() const { return m_hideAndSeek.concealment; }
+	int detectionAgainst(int iMethodSkillId) const { return m_hideAndSeek.detectionAgainst(iMethodSkillId); }
+
+	// The HEAL block's verdicts -- bare fetches on the same terms.
+	bool healsOutsideFriendlyTerritory() const { return m_heal.healsOutsideFriendlyTerritory; }
+
+	//	Is this held promotion SUPERSEDED by a higher rung of its own line that the unit also holds?
+	//	⛔ A BARE FETCH over a HANDFUL. This is a pure function of the held set, so it is resolved ONCE when the
+	//	promotion landed. Asked per read it was `held x REGISTRY` -- the panel asks it for every promotion a unit
+	//	carries, and each ask swept every promotion in the game to rediscover the unit's own lines, so the cost
+	//	grew QUADRATICALLY with promotions held and an unpromoted unit paid nothing. That shape is the own-data
+	//	inversion ([DEC-one-reverse-view]) and the per-read scan the event-built state exists to delete.
+	bool isPromotionOverridden(int iPromotion) const;
+
+	// The gathers, exposed so an endpoint can recompute FROM SOURCE into a caller-owned buffer without ever being
 	// handed the stored values -- the oracle shape that makes "never repairs" structural, not a discipline.
 	static void gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS]);
+	static void gatherHideAndSeekInto(const CvUnit& kUnit, UnitResolvedHideAndSeek& kOut);
+	static void gatherHealInto(const CvUnit& kUnit, UnitResolvedHeal& kOut);
 
 private:
 	int m_aiValue[NUM_UNIT_RESOLVED_SLOTS];
+	UnitResolvedHideAndSeek m_hideAndSeek;
+	UnitResolvedHeal m_heal;
+	std::vector<int> m_aOverriddenPromotions;   // ascending; the held rungs a higher held rung supersedes
 	bool m_bDirty;
 };
 

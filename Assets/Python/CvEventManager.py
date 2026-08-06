@@ -26,6 +26,7 @@ GAME = GC.getGame()
 MAP = GC.getMap()
 INFO = CyInfo()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -646,7 +647,13 @@ class CvEventManager:
 			iBuilding = mapBuildingType.get(KEY, -1)
 			if iBuilding > -1:
 				aList1.append(iBuilding)
-				aList2.append(GC.getBuildingInfo(iBuilding).getObsoleteTech())
+				# The obsoleting tech is an EDGE, so it comes off the info's own reverse family rather than a
+				# per-relation getter -- the readJson reverse pass already lands it ([DEC-one-reverse-view]).
+				aObsoleteTechs = INFO.getEdgeIds("BUILDING_", iBuilding, EdgeFamily.EDGEF_OBSOLETED_BY, EdgeBucket.EDGEB_TECHS)
+				if aObsoleteTechs:
+					aList2.append(aObsoleteTechs[0])
+				else:
+					aList2.append(-1)
 				i += 1
 			else:
 				print "\nWarning, CvEventManager expected a building with this KEY end [%s] to exist.\n" %KEY
@@ -1978,7 +1985,7 @@ class CvEventManager:
 		# Subdued/Tamed animal graphical attachment
 		iStoryTeller = getattr(self, "UNIT_STORY_TELLER", -1)
 		if iStoryTeller != -1:
-			KEY = GC.getUnitInfo(CyUnit.getUnitType()).getType()
+			KEY = INFO.getType("UNIT_", CyUnit.getUnitType())
 			if KEY[:13] == 'UNIT_SUBDUED_' or KEY[:11] == 'UNIT_TAMED_':
 				CyUnit.setLeaderUnitType(iStoryTeller)
 
@@ -2074,16 +2081,20 @@ class CvEventManager:
 
 
 	def onUnitPromoted(self, argsList):
-		CyUnit, iPromotion = argsList
-		CyPlayer = GC.getPlayer(CyUnit.getOwner())
+		#	The callback hands over an IDENTITY, not a handle: a cut Cy* wrapper carries zero defs, so a script
+		#	given one could not even ask which unit it is. Everything below therefore addresses the unit by its
+		#	(owner, id) pair -- reads through STATE, the promotion write through ACT.
+		aUnitId, iPromotion = argsList
+		iOwner, iUnitID = aUnitId
+		CyPlayer = GC.getPlayer(iOwner)
 
 		# AI promotion redirection
 		if not CyPlayer.isHuman():
-			iDomainType = CyUnit.getDomainType()
+			iDomainType = STATE.getUnitRead(iOwner, iUnitID)[UnitReadKind.UNIT_READ_DOMAIN]
 			mapDomain = self.mapDomain
-			if iDomainType == mapDomain['DOMAIN_LAND'] and CyUnit.isHasUnitCombat(self.UNITCOMBAT_HUNTER):
+			if iDomainType == mapDomain['DOMAIN_LAND'] and STATE.hasUnitCombat(iOwner, iUnitID, self.UNITCOMBAT_HUNTER):
 				aHiPriList = self.aHiPriListLandHunter
-			elif iDomainType == mapDomain['DOMAIN_SEA'] and CyUnit.isHasUnitCombat(self.UNITCOMBAT_RECON):
+			elif iDomainType == mapDomain['DOMAIN_SEA'] and STATE.hasUnitCombat(iOwner, iUnitID, self.UNITCOMBAT_RECON):
 				aHiPriList = self.aHiPriListSeaHunter
 			else:
 				aHiPriList = self.aHiPriListBase
@@ -2111,10 +2122,10 @@ class CvEventManager:
 					aList += aList2
 
 			for iPromo, iChance in aList:
-				if CyUnit.canAcquirePromotion(iPromo):
+				if STATE.canUnitAcquirePromotion(iOwner, iUnitID, iPromo):
 					if iChance and GAME.getSorenRandNum(iChance, "Generic"): continue
-					CyUnit.setHasPromotion(iPromotion, False)
-					CyUnit.setHasPromotion(iPromo, True)
+					ACT.setUnitPromotion(iOwner, iUnitID, iPromotion, False)
+					ACT.setUnitPromotion(iOwner, iUnitID, iPromo, True)
 					break
 
 	def onUnitUpgraded(self, argsList):
@@ -2227,7 +2238,7 @@ class CvEventManager:
 						X = CyPlot.getX(); Y = CyPlot.getY()
 
 			if -1 not in (X, Y):
-				if GC.getCivilizationInfo(CyPlayer.getCivilizationType()).getType() == "CIVILIZATION_NEANDERTHAL":
+				if INFO.getType("CIVILIZATION_", CyPlayer.getCivilizationType()) == "CIVILIZATION_NEANDERTHAL":
 					iWorker = GC.getInfoTypeForString("UNIT_NEANDERTHAL_CHASER")
 				else:
 					iWorker = GC.getInfoTypeForString("UNIT_CHASER")
@@ -2255,7 +2266,7 @@ class CvEventManager:
 						X = CyPlot.getX(); Y = CyPlot.getY()
 
 			if -1 not in (X, Y):
-				if GC.getCivilizationInfo(CyPlayer.getCivilizationType()).getType() == "CIVILIZATION_NEANDERTHAL":
+				if INFO.getType("CIVILIZATION_", CyPlayer.getCivilizationType()) == "CIVILIZATION_NEANDERTHAL":
 					iWorker = GC.getInfoTypeForString("UNIT_NEANDERTHAL_GATHERER")
 				else:
 					iWorker = GC.getInfoTypeForString("UNIT_GATHERER")
@@ -2454,7 +2465,7 @@ class CvEventManager:
 			# Give a free defender to the first city when it is built
 			if iUnit == self.UNIT_BAND:
 				CyPlayer = GC.getPlayer(iPlayer)
-				if GC.getCivilizationInfo(CyPlayer.getCivilizationType()).getType() == "CIVILIZATION_NEANDERTHAL":
+				if INFO.getType("CIVILIZATION_", CyPlayer.getCivilizationType()) == "CIVILIZATION_NEANDERTHAL":
 					iUnitTG = GC.getInfoTypeForString("UNIT_NEANDERTHAL_TRIBAL_GUARDIAN")
 				else:
 					iUnitTG = GC.getInfoTypeForString("UNIT_TRIBAL_GUARDIAN")

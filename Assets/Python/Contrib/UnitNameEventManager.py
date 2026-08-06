@@ -83,6 +83,7 @@ RENAME_EVENT_ID = CvUtil.getNewEventID()
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -114,7 +115,7 @@ class UnitNameEventManager:
 			return
 
 		if UnitNamingOpt.isAdvanced():
-			zsUnitNameConv = UnitNamingOpt.getByEraAndClass(GC.getEraInfo(GC.getPlayer(iPlayer).getCurrentEra()).getType()[4:], GC.getUnitInfo(pUnit.getUnitType()).getType()[5:])
+			zsUnitNameConv = UnitNamingOpt.getByEraAndClass(INFO.getType("C2C_ERA_", GC.getPlayer(iPlayer).getCurrentEra())[4:], INFO.getType("UNIT_", pUnit.getUnitType())[5:])
 		else: zsUnitNameConv = UnitNamingOpt.getDefault()
 
 		zsUnitName = UnitReName().getUnitName(zsUnitNameConv, pUnit, argsList[0], True)
@@ -139,8 +140,8 @@ class UnitReName(object):
 		zsCiv = pPlayer.getCivilizationAdjective(0)
 		zsLeader = pPlayer.getName()
 		zsUnitCombat = self.getUnitCombat(pUnit)
-		zsUnitDomain = BugUtil.getPlainText("TXT_KEY_BUG_UNIT_NAMING_" + GC.getDomainInfo(pUnit.getDomainType()).getType())
-		zsUnit = GC.getUnitInfo(pUnit.getUnitType()).getDescription()
+		zsUnitDomain = BugUtil.getPlainText("TXT_KEY_BUG_UNIT_NAMING_" + INFO.getType("DOMAIN_", pUnit.getDomainType()))
+		zsUnit = INFO.getDescription("UNIT_", pUnit.getUnitType())
 		if pCity:
 			zsCity = pCity.getName()
 		else: zsCity = ""

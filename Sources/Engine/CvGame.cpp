@@ -2554,6 +2554,10 @@ void CvGame::updateScore(bool bForce)
 void CvGame::updatePlotGroups(bool reInitialize)
 {
 	PROFILE_FUNC();
+	//	The ALL-PLAYER fan. Scoped so the log answers the question that actually matters: HOW MANY whole-world
+	//	rebuilds does ONE player action cause? (A measured burst implied ~7, inferred from the per-player
+	//	updateTradeRoutes count -- this makes it a direct reading instead of an inference.)
+	PERF_SCOPE("CvGame::updatePlotGroups", -1);
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{

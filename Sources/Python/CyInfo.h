@@ -161,9 +161,28 @@ public:
 
 	// A CLASSIFICATION test -- O(1) bitset, the parameterized read ([patterns.md] THE GETTER SETUP category 2:
 	// a consumer asks by generated ID, never by key NAME, and no per-key getter is ever added).
+	//
+	// ⚑ ALL SEVEN DOMAINS, because the plane is only usable if it is COMPLETE. The name encodes HOLD vs PROVIDE
+	// exactly as the C++ surface does ([patterns.md] category 2, [json.md] §8): what the entity IS or HAS is
+	// `has*`, what it hands to another scope is `provides*` -- a building's `attributes` are its own, its
+	// `amenities` go to its CITY, its `capabilities` go to the EMPIRE. Publishing only two of the seven left
+	// script with no way to ask the other five and no way to tell that it could not.
+	//
+	// ⛔ Whose question it is decides the RECEIVER, not this surface: a GATE ("does this city have power?") is
+	// the city's FOLD (CyState), while a VALUATION or a DISPLAY ("what would this building give me?") asks the
+	// GRANTOR, which is here ([contexts.md] `CityContext.amenities`). Re-pointing a gate at `providesAmenity`
+	// would leave it doing exactly what it did before while reading as migrated.
+	bool hasSkill(const std::string& szTypePrefix, int iId, int iSkillId) const;
+	bool hasTag(const std::string& szTypePrefix, int iId, int iTagId) const;
+	bool hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const;
+	bool hasCharacteristic(const std::string& szTypePrefix, int iId, int iCharacteristicId) const;
+	bool providesAmenity(const std::string& szTypePrefix, int iId, int iAmenityId) const;
 	bool providesCapability(const std::string& szTypePrefix, int iId, int iCapabilityId) const;
 	// The empire-STATE sibling ([json.md] §9 `policies`) -- same parameterized bitset read, by generated id.
 	bool providesPolicy(const std::string& szTypePrefix, int iId, int iPolicyId) const;
+	// The REVOKE plane ([skills.md] §4): a PROMOTION authoring `false` takes a skill away. A separate read
+	// because absent and revoked are different answers, and `hasSkill` cannot express the second.
+	bool revokesSkill(const std::string& szTypePrefix, int iId, int iSkillId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
 	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.
