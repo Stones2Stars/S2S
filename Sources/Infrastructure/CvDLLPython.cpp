@@ -17,6 +17,7 @@
 #include "Python/CyMap.h"
 #include "Python/CyMessageControl.h"
 #include "Python/CyState.h"
+#include "Python/CyWorldInfo.h"
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
 #include "Python/CyUnit.h"
@@ -108,7 +109,11 @@ DllExport void DLLPublishToPython()
 	CyEnums::pythonPublish();     // the engine enum constants + name->id resolution
 	CyEnabler::pythonPublish();   // "can I, right now?"      -- the availability half
 	CyState::pythonPublish();     // "what do I HAVE, now?"   -- the live-state half
-	CyInfo::pythonPublish();      // "what do I CARRY?"       -- the info half (the ONLY home for infos)
+	CyInfo::pythonPublish();      // "what do I CARRY?"       -- the GENERIC info half: identity text,
+	                              //                            classification, edges -- what every registry shares
+	// The PER-INFO accessors, for what belongs to ONE type. A script binds these BY NAME, so its bindings list is
+	// its dependency list ([patterns.md]: explicit imports, always -- you see what is used).
+	CyWorldInfo::pythonPublish();
 
 	// NOT the library, and not the banned surface: TXT is an UNMIGRATED SYSTEM BOUNDARY that stays, and Python
 	// screen chrome calls it directly (patterns.md § THE PYTHON READ BOUNDARY). It was collateral in the Cy

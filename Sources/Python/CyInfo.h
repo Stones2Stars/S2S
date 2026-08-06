@@ -20,6 +20,16 @@
 //	([DEC-single-implementation]), so a new category is served the moment it is registered there -- no method is
 //	added here, and the two cannot drift. That is the same "extensible by DATA" rule the rest of the surface obeys.
 //
+//	⛔ THE PREFIX NAMES THE REGISTRY, AND THAT IS USUALLY -- BUT NOT ALWAYS -- THE AUTHORED INFOTYPE PREFIX
+//	([naming.md]). The coincidence breaks in BOTH directions, and each break is silent rather than loud:
+//	  · ONE registry, SEVERAL authored prefixes -- Diplomacy holds AI_DIPLOCOMMENT_* beside USER_DIPLOCOMMENT_*,
+//	    so no authored prefix addresses the registry at all.
+//	  · TWO registries, ONE authored prefix -- NewConcept authors CONCEPT_*, exactly as the separate Concept
+//	    registry does, so routing on the authored token answers from whichever registry the dispatch reached
+//	    first: a wrong-registry read that returns a plausible string for an id that means something else.
+//	⇒ When adding a registry, take the routing token from the REGISTRY, then check no other registry already
+//	claims it. A collision here cannot be caught by the compiler and does not fail loud -- it answers.
+//
 //	⚠ DELIBERATELY SMALL. This serves the per-type INDEX shape (pedia-read-map § shape 2: id -> name/type), which
 //	is what every enumeration in script actually asks for. The per-entity PAYLOAD, the edge lists and the rendered
 //	entry lines are the rest of the shape and are NOT here yet; a consumer needing one gets a loud AttributeError
@@ -106,10 +116,19 @@ public:
 	// getDescription above returns RESOLVED TEXT. A name that hides which one you hold is how a raw key ends up
 	// rendered to a player, or a resolved string ends up fed back into getText.
 	std::wstring getTextKey(const std::string& szTypePrefix, int iId) const;
-	// The other two GENERIC CvInfoBase texts, on the same prefix dispatch: every registry carries them, so they
+	// The other GENERIC CvInfoBase texts, on the same prefix dispatch: every registry carries them, so they
 	// belong on the generic plane rather than a per-type accessor. RESOLVED TEXT, like getDescription.
 	std::wstring getCivilopedia(const std::string& szTypePrefix, int iId) const;
 	std::wstring getStrategy(const std::string& szTypePrefix, int iId) const;
+	std::wstring getHelp(const std::string& szTypePrefix, int iId) const;
+	// The other two AUTHORED IDENTITY TEXTS ([json.md] §7: identity carries description, help, civilopedia,
+	// message, quote, strategy, ADJECTIVE and SHORT DESCRIPTION). They are genuinely distinct content, not a
+	// legacy per-field getter to collapse: a civilization carries a NAME, a SHORT name and an ADJECTIVE
+	// ("Rome" / "Rome" / "Roman"), and the dynamic-naming code composes from exactly these.
+	// ⛔ uiForm is LOAD-BEARING and is passed through, never defaulted away -- it selects the grammatical form
+	// localization needs, so dropping it silently collapses every declined variant onto the nominative.
+	std::wstring getAdjective(const std::string& szTypePrefix, int iId, int iForm) const;
+	std::wstring getShortDescription(const std::string& szTypePrefix, int iId, int iForm) const;
 	// The entity's stable TYPE KEY ("UNIT_AXEMAN") -- what a scenario serializer and a config string need.
 	std::string getType(const std::string& szTypePrefix, int iId) const;
 	// The entity's BUTTON/icon art reference (the `ui` block, json.md §7). ART is an unmigrated system boundary

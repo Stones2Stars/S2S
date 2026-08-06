@@ -57,6 +57,15 @@
 #include "Infos/CvInvisibleInfo.h"
 #include "Infos/CvEventInfo.h"
 #include "Infos/CvEventTriggerInfo.h"
+// Both reach the identity plane by the derived->base conversion, which the compiler can only check against a
+// COMPLETE type -- a forward declaration compiles everywhere else and fails exactly at that return.
+#include "Infos/CvEffectInfo.h"
+#include "Defines/CvDiplomacyClasses.h"
+// The AUTHORED IDENTITY TEXTS that are not on CvInfoBase -- the civilization's name forms, and the two
+// key-backed siblings ([json.md] §7).
+#include "Infos/CvCivilizationInfo.h"
+#include "Infos/CvReligionInfo.h"
+#include "Infos/CvTraitInfo.h"
 #include "Defines/CvGlobals.h"        // GC.getNumCivicInfos / getCivicInfo
 
 namespace
@@ -122,6 +131,16 @@ namespace
 		if (szTypePrefix == "CONCEPT_")          return iId < GC.getNumConceptInfos()          ? &GC.getConceptInfo((ConceptTypes)iId) : NULL;
 		if (szTypePrefix == "EVENT_")            return iId < GC.getNumEventInfos()            ? &GC.getEventInfo((EventTypes)iId) : NULL;
 		if (szTypePrefix == "EVENTTRIGGER_")     return iId < GC.getNumEventTriggerInfos()     ? &GC.getEventTriggerInfo((EventTriggerTypes)iId) : NULL;
+		if (szTypePrefix == "EFFECT_")           return iId < GC.getNumEffectInfos()           ? &GC.getEffectInfo(iId) : NULL;
+		// ⛔ THE PREFIX ROUTES A REGISTRY, AND USUALLY -- BUT NOT ALWAYS -- EQUALS THE AUTHORED INFOTYPE PREFIX
+		// ([naming.md]). Two registries below break that coincidence, so the token names the REGISTRY:
+		//   · DIPLOMACY_  holds TWO authored prefixes, AI_DIPLOCOMMENT_* and USER_DIPLOCOMMENT_*, so no single
+		//     authored prefix addresses it -- and CvDiplomacy.py string-compares getType() against both.
+		//   · NEWCONCEPT_ authors CONCEPT_*, the SAME prefix the separate Concept registry authors, so routing on
+		//     the authored token would silently answer from the wrong registry. That collision is precisely why
+		//     this one was unreachable rather than merely unwired.
+		if (szTypePrefix == "DIPLOMACY_")        return iId < GC.getNumDiplomacyInfos()        ? &GC.getDiplomacyInfo(iId) : NULL;
+		if (szTypePrefix == "NEWCONCEPT_")       return iId < GC.getNumNewConceptInfos()       ? &GC.getNewConceptInfo((NewConceptTypes)iId) : NULL;
 		// ⛔ ACTION_ is the one registry whose entry is NOT an info: a CvActionInfo is a SLOT in the hotkey
 		// table, holding an index and a subtype, and it MIRRORS the CvInfoBase reads by delegating each one to
 		// the entity the slot stands for. So the identity plane resolves through that entity, which is a real
@@ -190,6 +209,48 @@ std::wstring CyInfo::getStrategy(const std::string& szTypePrefix, int iId) const
 {
 	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
 	return pInfo ? std::wstring(pInfo->getStrategy()) : std::wstring();
+}
+
+std::wstring CyInfo::getHelp(const std::string& szTypePrefix, int iId) const
+{
+	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
+	return pInfo ? std::wstring(pInfo->getHelp()) : std::wstring();
+}
+
+//	⚑ RESOLVED TEXT, like every bare identity read here ([patterns.md]: a `*Key` returns a key, the bare form
+//	returns text). Where a type stores the authored value as a TXT_KEY rather than a resolved form, the key is
+//	resolved HERE -- the library returns localized display strings for what it serves, which is the sanctioned
+//	shape; handing a raw key back under a bare name is what puts one in front of a player.
+//	⚠ uiForm selects the grammatical variant and only CIVILIZATION_ carries the forms; the key-backed types hold
+//	a single authored string, so the form has nothing to select there.
+std::wstring CyInfo::getAdjective(const std::string& szTypePrefix, int iId, int iForm) const
+{
+	if (iId < 0) return std::wstring();
+
+	if (szTypePrefix == "CIVILIZATION_" && iId < GC.getNumCivilizationInfos())
+	{
+		return std::wstring(GC.getCivilizationInfo((CivilizationTypes)iId).getAdjective((uint)std::max(0, iForm)));
+	}
+	if (szTypePrefix == "RELIGION_" && iId < GC.getNumReligionInfos())
+	{
+		return std::wstring(gDLL->getText(CvString(GC.getReligionInfo((ReligionTypes)iId).getAdjectiveKey()).c_str()));
+	}
+	return std::wstring();
+}
+
+std::wstring CyInfo::getShortDescription(const std::string& szTypePrefix, int iId, int iForm) const
+{
+	if (iId < 0) return std::wstring();
+
+	if (szTypePrefix == "CIVILIZATION_" && iId < GC.getNumCivilizationInfos())
+	{
+		return std::wstring(GC.getCivilizationInfo((CivilizationTypes)iId).getShortDescription((uint)std::max(0, iForm)));
+	}
+	if (szTypePrefix == "TRAIT_" && iId < GC.getNumTraitInfos())
+	{
+		return std::wstring(gDLL->getText(CvString(GC.getTraitInfo((TraitTypes)iId).getShortDescriptionKey()).c_str()));
+	}
+	return std::wstring();
 }
 
 std::wstring CyInfo::getTextKey(const std::string& szTypePrefix, int iId) const
@@ -621,6 +682,9 @@ void CyInfo::pythonPublish()
 		.def("getTextKey",     &CyInfo::getTextKey)
 		.def("getCivilopedia", &CyInfo::getCivilopedia)
 		.def("getStrategy",    &CyInfo::getStrategy)
+		.def("getHelp",        &CyInfo::getHelp)
+		.def("getAdjective",        &CyInfo::getAdjective)
+		.def("getShortDescription", &CyInfo::getShortDescription)
 		.def("getType",        &CyInfo::getType)
 		.def("getButton",      &CyInfo::getButton)
 		.def("exists",         &CyInfo::exists)
