@@ -337,6 +337,21 @@ that needs the **complete per-type index across every registered type**, includi
 `Upkeep`, `Victory`, `Vote`, `VoteSource`, `World`, `Denial`). Treat it as the acceptance case for
 "the library can enumerate every type", not as a long-tail screen.
 
+> **⛔ IT IS A WANTED MODDER-INFO SURFACE AND IT STAYS — do not sweep it as dead code (owner).** *"We do need to
+> have modder info in the future, even if no one knows of it."* The screen is an XML-tag REFERENCE
+> (`TXT_KEY_XML_TAGS`): a dropdown of every info category over a table of **ID · NAME · TYPE · TEXT**, i.e. the
+> `BUILDING_FORGE`-style type key and `TXT_KEY_` for any entity — *for when you forget one*.
+> ⚠ **It reads EXACTLY like an abandoned screen, which is the hazard:** it is reached only by an undocumented
+> **Ctrl+F1** (`CvEventManager.onKbdEvent`), appears on no menu, and no XML or BUG config names it. Every
+> mechanical dead-code test flags it. It is un-killed forward intent
+> ([DEC-keep-unkilled-ideas](../architecture/decisions.md#dec-keep-unkilled-ideas)), and the reason it looks dead
+> is recorded here precisely so the next sweep does not eat it.
+> ⚑ **Its second job is why it is worth more than its player-facing value: it is the TEST HARNESS for the prefix
+> plane.** Being the one file that enumerates every registry, converting it exercises `INFO.getIndex` across all
+> of them at once — which is what surfaced `COMMAND_` as the single unrouted registry and what falsified a
+> written claim that seven others were unrouted (§2.3). A harness that covers the whole surface is worth keeping
+> for that alone.
+
 ### 3.7 `Screens/Advisors/`
 
 `RevolutionWatchAdvisor.py`, `CvDomesticAdvisor.py`, `CvForeignAdvisor.py`, `CvTechChooser.py`,
