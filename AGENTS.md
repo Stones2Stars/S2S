@@ -118,6 +118,24 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     `Build/<Config>/`, or grep the binary for a string your change introduced. Never infer deployment from build
     output. (`agentstart.bat` closes the game too, but it runs AFTER deploy — it cannot rescue a copy that already
     failed.)
+  - **⛔ HARD RULE — `Assets/` IS THE LIVE GAME, SO A PYTHON EDIT SHIPS THE INSTANT YOU SAVE IT.**
+    `Mods/<mod>/Assets` is a SYMLINK to the repo's `Assets/` (`DevSetup.bat`), so there is no copy step and no
+    deploy for Python: the file you just wrote is the file the running game imports. **Editing Python while the
+    owner is loading or playing is editing the running game.** ⇒ Do not touch `Assets/Python` while a load is in
+    flight; the C++ half is the opposite (a build lands in `Build/<Config>/` and reaches the game only on
+    `deploy`), and that ASYMMETRY is what makes the ordering below a rule rather than a preference.
+  - **⛔ THE ORDER IS DLL FIRST, THEN THE PYTHON THAT CALLS IT — a new binding referenced from module scope is a
+    HARD IMPORT BREAK, not a missing feature.** A Python module that binds a not-yet-published type
+    (`WORLD = CyWorldInfo()` at module scope) raises `NameError` AT IMPORT against a DLL that predates it. That
+    kills the module, and because the engine enters Python through one import chain
+    (`CvEventInterface` → `BugEventManager` → `CvEventManager` → `CvScreensInterface`,
+    [python-load-sequence.md](docs/reference/python-load-sequence.md)) one dead module takes the WHOLE UI down —
+    which is the signature to recognise: *the UI vanished and the tracebacks name modules you never touched.*
+    ⚠ **The traceback points AWAY from the cause.** The chain dies at the first import it cannot complete, so the
+    reported file is whichever module imported the broken one — the failing line is not the guilty line, and the
+    guilty file may not appear in the trace at all. ⛔ So do NOT debug the named module; check first whether any
+    NEW module-scope binding outruns the deployed DLL. *(Measured: six files gained a `CyWorldInfo` binding at
+    09:50 and the DLL publishing it deployed at 09:54 — every load in that window lost the entire interface.)*
 - **Quick compile check after an edit:** `Assert rebuild` from `Sources/`.
   **⚑ CLEAN-REBUILD WALL CLOCK, per config — the spread is what decides which one you reach for:**
 

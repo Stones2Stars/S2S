@@ -608,6 +608,24 @@ Four words carry the whole requirement:
   `InputTypes` is the EXE's and was never DLL-published. The DLL owes the vocabulary for the enums it DEFINES,
   and a name absent from `CvEnums.h` is the EXE's to serve, never a hole in the library.
 
+> **⛔ EXPLICIT IMPORTS, ALWAYS — A MODULE'S BINDINGS MUST SHOW WHAT IT USES (owner): *"I will always prefer
+> explicit imports, so you see what is used in python."*** This is what the `Cy*` cut was actually FOR, and
+> stating it as "no getter per registry" understated it in one direction and overstated it in the other.
+> ⚑ **What was wrong with the old surface was the GC COUPLING and the OPACITY, not per-info accessors (owner):**
+> *"I don't mind having a CyAccessor per info; what I didn't like was how it was coupled together with GC, so you
+> didn't actually see the imports, and didn't know what you would fetch."* `GC.getBuildingInfo(i).getFoo()`
+> declares nothing — a reader cannot tell from the module which registries it touches, and the god object hands
+> out everything.
+> ⇒ **So a PER-INFO accessor, explicitly bound at module scope, is the WANTED shape** — the bindings list then IS
+> the module's dependency list. ⛔ What stays banned is unchanged and is a different axis: the ~300 hand-named
+> getters mirroring the legacy per-FIELD contract ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)).
+> A named accessor per info TYPE is not that.
+> ⚠ **And an opaque SLOT enum re-creates the very fault it was meant to cure.**
+> `INFO.getIntrinsic("WORLD_", id, PYINT_CORP_MAINT_PERCENT)` is decoupled from `GC` and still fails the test —
+> the call site names a slot rather than the thing, so a reader again "doesn't know what you would fetch".
+> ⇒ Reserve the generic prefix-addressed plane for what is genuinely UNIFORM across every registry (identity
+> text, classification tests, edge families); a value that belongs to ONE type is named on that type's accessor.
+
 **⚑ BUILD IT FOR THE PEDIA — but know exactly what that proves (owner).** The pedia's purpose is to display every
 entity exhaustively, so it is not a sample of the info surface, it **is** the info surface rendered. Therefore:
 
@@ -618,6 +636,30 @@ entity exhaustively, so it is not a sample of the info surface, it **is** the in
   never touches. The residue is an appendix — whole info types with no pedia page (map-gen, game-config,
   diplomacy/victory/vote, command/UI-action) plus per-field reads. **Serving the pedia completes the INFO plane
   and the shapes; it does not complete the boundary.** Treating it as a coverage oracle is the mistake to avoid.
+
+> **⛔ WHAT IS ACTUALLY WRONG WITH THE OLD SURFACE IS THE LOOPING, NOT THE READS (owner): *"if it is naming, or
+> gametext, we reintroduce it — they are not the root of evil here, the looping of all infos are."*** This is the
+> ruling that scopes the whole rewire, and getting it backwards wastes the effort in both directions.
+> - **A TEXT or NAMING read is CHEAP and is simply SERVED.** An entity's authored identity text — description,
+>   help, civilopedia, strategy, adjective, short description ([json.md §7](../specs/json.md)) — is content, not a
+>   legacy getter contract, so it goes on the identity plane without deliberation. ⛔ Do not ration it, and do not
+>   file one as "per-type tail" merely because it is absent from `CvInfoBase`: several are genuinely distinct
+>   authored strings (a civilization's NAME, SHORT name and ADJECTIVE are three different texts, and the dynamic
+>   naming composes from them), so collapsing them destroys content. Their `uiForm` argument is carried through —
+>   it selects the grammatical variant localization needs.
+> - **A WHOLE-REGISTRY LOOP is the actual defect.** Sweeping every id to ask a per-id predicate re-derives what the
+>   entity already carries ([DEC-one-reverse-view](decisions.md#dec-one-reverse-view)), and it does not survive the
+>   rewire: the per-id reads it walks are the ones being deleted. It converts to the maintained set, the entity's
+>   own compiled entries, or its reverse edge families — never to a faster per-id getter, which leaves the loop
+>   doing exactly what it did before while reading as migrated.
+>
+> **⚖ THE PEDIA IS THE ONE PLACE A FULL SCAN IS UNAVOIDABLE, AND IT IS NOT A DEFECT (owner)** — *"it is the pedia,
+> it is where all info is stored, as an encyclopedia."* Enumerating a registry to display every entity IS its job,
+> so those loops STAY. ⚑ What still changes there is the COST, not the shape: an enumeration that crosses the
+> boundary once per entity becomes ONE crossing via the per-type index read, since a `boost::python` call costs far
+> more than the lookup inside it. ⛔ And the carve-out is for ENUMERATION only — a pedia page walking a DIFFERENT
+> registry to find "what needs me" is a cross-link, which the load-time reverse families already answer
+> ([pedia-read-map.md](../reference/pedia-read-map.md) finding 2 separates the two motives).
 
 **⛔ THE CUT IS DIRECTIONAL — only the READ surface dies (owner).** The bridge runs both ways, and #430 owns one
 of them:
