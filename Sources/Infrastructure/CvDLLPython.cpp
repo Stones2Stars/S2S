@@ -19,6 +19,9 @@
 #include "Python/CyState.h"
 #include "Python/CyWorldInfo.h"
 #include "Python/CyGameSpeedInfo.h"
+#include "Python/CyEspionageMissionInfo.h"
+#include "Python/CyVictoryInfo.h"
+#include "Python/CyCultureLevelInfo.h"
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
 #include "Python/CyUnit.h"
@@ -117,6 +120,9 @@ DllExport void DLLPublishToPython()
 	// its dependency list ([patterns.md]: explicit imports, always -- you see what is used).
 	CyWorldInfo::pythonPublish();
 	CyGameSpeedInfo::pythonPublish();
+	CyEspionageMissionInfo::pythonPublish();
+	CyVictoryInfo::pythonPublish();
+	CyCultureLevelInfo::pythonPublish();
 
 	// NOT the library, and not the banned surface: TXT is an UNMIGRATED SYSTEM BOUNDARY that stays, and Python
 	// screen chrome calls it directly (patterns.md § THE PYTHON READ BOUNDARY). It was collateral in the Cy

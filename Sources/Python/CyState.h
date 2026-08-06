@@ -326,6 +326,15 @@ public:
 	int getDefineINT(const std::string& szName) const;
 	float getDefineFLOAT(const std::string& szName) const;
 	int getAIAutoPlay(int iPlayer) const;
+	// The empire's colour on the map (and on its unit sprites), resolved to a COLOR_ id in ONE crossing. The
+	// legacy shape was a two-hop -- ask the player for its PLAYERCOLOR_, then ask that info for its primary --
+	// which is plumbing rather than a question: every consumer wants the colour, none wants the intermediate.
+	// ⚠ It is the PRIMARY only, because that is what the live consumers draw with; a secondary read is added
+	// when something actually wants one, never mirrored ahead of demand.
+	// ⛔ Deliberately NOT a slot on the generic intrinsic plane: this value belongs to ONE registry, and that
+	// plane answers -1 for a prefix it was never wired for, which reads as a legitimate "no colour"
+	// ([patterns.md] -- an opaque slot re-creates the fault it was meant to cure).
+	int getPlayerColorPrimary(int iPlayer) const;
 	std::wstring getPlayerName(int iPlayer) const;
 	std::wstring getCityName(int iPlayer, int iCity) const;
 	// What the city is building, already localized -- the engine composes it from the order, so a script that

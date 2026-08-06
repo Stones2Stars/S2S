@@ -267,11 +267,11 @@ class CvCorporationScreen:
 				if pHeadquarters is None:
 					szFounded = u"-"
 					screen.setLabelAt("", "CivicList", szFounded, 1<<2, xLoop, self.Y_HEADQUARTERS, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-				elif not pHeadquarters.isRevealed(GC.getPlayer(self.iActivePlayer).getTeam(), False):
+				elif not STATE.isCityRevealed(pHeadquarters.getOwner(), pHeadquarters.getID(), STATE.getPlayerTeam(self.iActivePlayer)):
 					szFounded = localText.getText("TXT_KEY_UNKNOWN", ())
 					screen.setLabelAt("", "CivicList", szFounded, 1<<2, xLoop, self.Y_HEADQUARTERS, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				else:
-					szFounded = pHeadquarters.getName()
+					szFounded = STATE.getCityName(pHeadquarters.getOwner(), pHeadquarters.getID())
 					screen.setLabelAt("", "CivicList", "(%s)" % GC.getPlayer(pHeadquarters.getOwner()).getCivilizationAdjective(0), 1<<2, xLoop, self.Y_HEADQUARTERS+8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 					screen.setLabelAt("", "CivicList", szFounded, 1<<2, xLoop, self.Y_HEADQUARTERS-8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				xLoop += self.DX_CORPORATION
@@ -328,7 +328,7 @@ class CvCorporationScreen:
 						szCityName += u"%c" % TEXT.getHeadquarterSymbolChar(iI)
 					else: szCityName += u"%c" % TEXT.getSymbolChar("CORPORATION_", iI)
 
-			szCityName += cityX.getName()[0:17] + "  "
+			szCityName += STATE.getCityName(cityX.getOwner(), cityX.getID())[0:17] + "  "
 
 			if iLinkCorporation == -1:
 				bFirst = True

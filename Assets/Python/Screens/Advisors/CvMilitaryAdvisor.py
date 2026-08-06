@@ -361,7 +361,7 @@ class CvMilitaryAdvisor:
 
 					iPlayerX = CyUnit.getVisualOwner()
 					CyPlayerX = GC.getPlayer(iPlayerX)
-					iColor = GC.getPlayerColorInfo(CyPlayerX.getPlayerColor()).getColorTypePrimary()
+					iColor = STATE.getPlayerColorPrimary(iPlayerX)
 					iX = MAP.getViewportXFromMapX(CyUnit.getX())
 					iY = MAP.getViewportYFromMapY(CyUnit.getY())
 					screen.setMinimapColor(MinimapModeTypes.MINIMAPMODE_MILITARY, iX, iY, iColor, 0.6)

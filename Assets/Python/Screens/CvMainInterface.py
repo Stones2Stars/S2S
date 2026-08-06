@@ -13,6 +13,7 @@ import RevInstances
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 STATE = CyState()
 
 # The yield/commerce ICON tokens, in ENGINE ENUM ORDER. A font glyph is text-plane rather than info data
@@ -4511,7 +4512,7 @@ class CvMainInterface:
 					if self.iDemographicsMission is None:
 						self.iDemographicsMission = -1
 						for iMissionLoop in xrange(len(INFO.getIndex("ESPIONAGEMISSION_"))):
-							if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_DEMOGRAPHICS) > 0:
+							if ESPIONAGEMISSION.isSeeDemographics(iMissionLoop):
 								self.iDemographicsMission = iMissionLoop
 								break
 					iDemographicsMission = self.iDemographicsMission
@@ -4754,7 +4755,7 @@ class CvMainInterface:
 									if iTeamSpyPointAgainstYou < iYouSpyPointAgainstTeam:
 										scores.setEspionage()
 									for iMissionLoop in xrange(GC.getNumEspionageMissionInfos()):
-										if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_RESEARCH) > 0:
+										if ESPIONAGEMISSION.isSeeResearch(iMissionLoop):
 											bEspionageCanSeeResearch = CyPlayerAct.canDoEspionageMission(iMissionLoop, iPlayer, None, -1)
 											break
 									if bSameTeam or bEspionageCanSeeResearch or GC.getTeam(iPlayerTeam).isVassal(iTeamAct) or bDebug:

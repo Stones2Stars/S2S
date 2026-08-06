@@ -14,6 +14,7 @@
 #include "Engine/CvUnit.h"       // the unit plane + the selection reads
 #include "Engine/CvPlot.h"
 #include "Engine/CvMap.h"        // the plot enumeration resolves its plot through the map
+#include "Infos/CvPlayerColorInfo.h"   // the empire-colour hop: PLAYERCOLOR_ -> its primary COLOR_
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include <ctime>  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
 #include "AI/BetterBTSAI.h"   // PERF_SCOPE -- the ONE instrument, gated by gPerfLogLevel
@@ -1189,6 +1190,18 @@ float CyState::getDefineFLOAT(const std::string& szName) const
 	return GC.getDefineFLOAT(szName.c_str());
 }
 
+int CyState::getPlayerColorPrimary(int iPlayer) const
+{
+	const CvPlayer* pPlayer = cys_player(iPlayer);
+	if (pPlayer == NULL) return -1;
+
+	const PlayerColorTypes ePlayerColor = pPlayer->getPlayerColor();
+	//	A player genuinely may hold no colour, so -1 is an ANSWER here rather than a failure -- every caller
+	//	already guards on it before drawing.
+	if (ePlayerColor == NO_PLAYERCOLOR || ePlayerColor >= GC.getNumPlayerColorInfos()) return -1;
+
+	return GC.getPlayerColorInfo(ePlayerColor).getColorTypePrimary();
+}
 std::wstring CyState::getPlayerName(int iPlayer) const
 {
 	const CvPlayer* pPlayer = cys_player(iPlayer);
@@ -1342,6 +1355,7 @@ void CyState::pythonPublish()
 		.def("getDefineINT",             &CyState::getDefineINT)
 		.def("getDefineFLOAT",           &CyState::getDefineFLOAT)
 		.def("getAIAutoPlay",            &CyState::getAIAutoPlay)
+		.def("getPlayerColorPrimary",    &CyState::getPlayerColorPrimary)
 		.def("getPlayerName",            &CyState::getPlayerName)
 		.def("getCityName",              &CyState::getCityName)
 		.def("getProductionName",        &CyState::getProductionName)

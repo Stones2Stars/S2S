@@ -11,6 +11,7 @@ import math
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -161,9 +162,9 @@ class CvInfoScreen:
 		self.iDemographicsMission = -1
 		self.iInvestigateCityMission = -1
 		for iMissionLoop in xrange(GC.getNumEspionageMissionInfos()):
-			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_DEMOGRAPHICS):
+			if ESPIONAGEMISSION.isSeeDemographics(iMissionLoop):
 				self.iDemographicsMission = iMissionLoop
-			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_INVESTIGATE_CITY):
+			if ESPIONAGEMISSION.isInvestigateCity(iMissionLoop):
 				self.iInvestigateCityMission = iMissionLoop
 		# Cache player specifics
 		self.iPlayer = iPlayer = GAME.getActivePlayer()
@@ -545,7 +546,7 @@ class CvInfoScreen:
 				if not self.bPlayerInclude[p]:
 					continue
 
-				color = GC.getPlayerColorInfo(GC.getPlayer(p).getPlayerColor()).getColorTypePrimary()
+				color = STATE.getPlayerColorPrimary(p)
 				oldX = -1
 				oldY = iH_GRAPH
 				turn = lastTurn
@@ -895,7 +896,7 @@ class CvInfoScreen:
 
 			for cityX in GC.getPlayer(i).cities():
 
-				iPop = cityX.getPopulation()
+				iPop = STATE.getCityPopulation(i, cityX.getID())
 				# Filter out small cities, after the first 5, as an optimization.
 				if topCities[4] and iPop < iMedianPop:
 					continue
@@ -1182,13 +1183,7 @@ class CvInfoScreen:
 			pCity = aaWondersBeingBuilt[i][2]
 			iPlayer = aaWondersBeingBuilt[i][3]
 
-			color = -1
-			if iPlayer >= 0:
-				ePlayerColor = GC.getPlayer(iPlayer).getPlayerColor()
-				if ePlayerColor != -1:
-					playerColor = GC.getPlayerColorInfo(ePlayerColor)
-					if playerColor:
-						color = playerColor.getColorTypePrimary()
+			color = STATE.getPlayerColorPrimary(iPlayer)
 
 			if self.szWonderDisplayMode == "Projects":
 				pWonderInfo = GC.getProjectInfo(iWonderType)
@@ -1227,13 +1222,7 @@ class CvInfoScreen:
 			pCity = aaWondersBuilt[i][4]
 			iPlayer = aaWondersBuilt[i][5]
 
-			color = -1
-			if iPlayer >= 0:
-				ePlayerColor = GC.getPlayer(iPlayer).getPlayerColor()
-				if ePlayerColor != -1:
-					playerColor = GC.getPlayerColorInfo(ePlayerColor)
-					if playerColor:
-						color = playerColor.getColorTypePrimary()
+			color = STATE.getPlayerColorPrimary(iPlayer)
 
 			if self.szWonderDisplayMode == "Projects":
 				pWonderInfo = GC.getProjectInfo(iWonderType)
@@ -1333,7 +1322,7 @@ class CvInfoScreen:
 
 		player = GC.getPlayer(self.iPlayer)
 		for unitX in player.units():
-			iType = unitX.getUnitType()
+			iType = STATE.getUnitRead(self.iPlayer, unitX.getID())[UnitReadKind.UNIT_READ_TYPE]
 			aiUnitsCurrent[iType] += 1
 
 		aiImprovementsCurrent = []

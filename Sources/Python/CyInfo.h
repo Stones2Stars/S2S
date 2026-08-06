@@ -60,8 +60,6 @@ enum PyIntrinsicSlot
 	PYINT_IS_REPEAT,           // is this tech REPEATABLE (researchable more than once)
 	PYINT_DEFAULT_PLAYERS,     // a world size's default player count (the map-setup straggler)
 	PYINT_HEADQUARTERS_CORPORATION, // CORPORATION_* FK -- the corp this building is the HEADQUARTERS of (json §9)
-	PYINT_IS_SEE_DEMOGRAPHICS, // does this espionage mission reveal demographics (the scoreboard's power column)
-	PYINT_IS_SEE_RESEARCH,     // does this espionage mission reveal research (the scoreboard's research column)
 	PYINT_IS_SPACESHIP,
 	PYINT_WONDER_SCOPE,         // WHICH scope a building's self-cap sits at -- the wonder CATEGORY
 	PYINT_ERA,                  // TECH_ era FK (identity.era) -- the tech tree's era banding
@@ -73,10 +71,6 @@ enum PyIntrinsicSlot
 	                            // count -- TRADE_ROUTE_AMOUNT, CvInfoKinds.h)
 	PYINT_IS_NO_INSTANCE_LIMIT, // is this building RELOCATABLE -- it waives the empire (national-wonder)
 	                            // cap, so a palace / culture building can be rebuilt elsewhere (json identity)        // is this project a spaceship part (the build-progress readout)
-	PYINT_IS_PASSIVE,           // ESPIONAGEMISSION_ is this a PASSIVE mission (a standing capability the
-	                            // advisor lists, not an action a spy performs)
-	PYINT_IS_INVESTIGATE_CITY,  // ESPIONAGEMISSION_ does it reveal a city's detail -- the sibling of
-	                            // IS_SEE_DEMOGRAPHICS / IS_SEE_RESEARCH, which the same screens read together
 	PYINT_VOTE_SOURCE,          // BUILDING_ VOTESOURCE_* FK -- the diplomatic body this building CONVENES
 	                            // (json par.9 `voteSource`); -1 for the overwhelming majority
 	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.

@@ -9,6 +9,9 @@ import CvScreenEnums
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
+# The per-info accessor for this registry. Named reads, because these values belong to ESPIONAGEMISSION_ alone
+# -- asking the generic slot plane for them is what silently classified NO mission and crashed this screen.
+ESPIONAGEMISSION = CyEspionageMissionInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -128,14 +131,14 @@ class TheScreen:
 		self.MissionSeeDemo = -1
 		self.MissionSeeResearch = -1
 		self.MissionCityVisibility = -1
-		for iMissionLoop in range(GC.getNumEspionageMissionInfos()):
-			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_COST) != -1 \
-			and INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_PASSIVE):
-				if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_INVESTIGATE_CITY):
+		for kMission in INFO.getIndex("ESPIONAGEMISSION_"):
+			iMissionLoop = kMission["id"]
+			if ESPIONAGEMISSION.getCost(iMissionLoop) != -1 and ESPIONAGEMISSION.isPassive(iMissionLoop):
+				if ESPIONAGEMISSION.isInvestigateCity(iMissionLoop):
 					self.MissionInvestigateCity = iMissionLoop
-				elif INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_DEMOGRAPHICS):
+				elif ESPIONAGEMISSION.isSeeDemographics(iMissionLoop):
 					self.MissionSeeDemo = iMissionLoop
-				elif INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionLoop, IntrinsicSlot.PYINT_IS_SEE_RESEARCH):
+				elif ESPIONAGEMISSION.isSeeResearch(iMissionLoop):
 					self.MissionSeeResearch = iMissionLoop
 				else:
 					self.MissionCityVisibility = iMissionLoop

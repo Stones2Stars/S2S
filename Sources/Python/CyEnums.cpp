@@ -29,6 +29,7 @@
 #include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
 #include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
 #include "Infos/CvInfoKinds.h"  // WellbeingChannel -- the group enum getRealizedWellbeing is indexed by
+#include "Infos/CvVictoryInfo.h" // VictoryConditionFlag / Value -- CyVictoryInfo's two grouped reads' key spaces
 #include "Infos/CvClassificationIds.h"  // CapabilityClsTypes -- the GENERATED capability ids ([DEC-classification-infos])
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingGrouping.h"
@@ -114,6 +115,28 @@ void CyEnums::pythonPublish()
 		.value("CASC_UNIT_PERCENT", CASC_UNIT_PERCENT)
 		;
 
+	//	The VICTORY `condition` block's two key spaces -- the vocabulary CyVictoryInfo's two grouped reads are
+	//	indexed by. Published as the CALLER's vocabulary ([patterns.md]: the existing enum indexes the RESULT,
+	//	so the call carries no channel argument of its own invention), which is what lets the whole registry be
+	//	served by two reads instead of a getter per condition key.
+	python::enum_<VictoryConditionFlag>("VictoryConditionFlag")
+		.value("VICTORY_CONDITION_CONQUEST",       VICTORY_CONDITION_CONQUEST)
+		.value("VICTORY_CONDITION_DIPLO_VOTE",     VICTORY_CONDITION_DIPLO_VOTE)
+		.value("VICTORY_CONDITION_TARGET_SCORE",   VICTORY_CONDITION_TARGET_SCORE)
+		.value("VICTORY_CONDITION_END_SCORE",      VICTORY_CONDITION_END_SCORE)
+		.value("VICTORY_CONDITION_PERMANENT",      VICTORY_CONDITION_PERMANENT)
+		.value("VICTORY_CONDITION_TOTAL_VICTORY",  VICTORY_CONDITION_TOTAL_VICTORY)
+		;
+
+	python::enum_<VictoryConditionValue>("VictoryConditionValue")
+		.value("VICTORY_CONDITION_LAND_PERCENT",            VICTORY_CONDITION_LAND_PERCENT)
+		.value("VICTORY_CONDITION_MIN_LAND_PERCENT",        VICTORY_CONDITION_MIN_LAND_PERCENT)
+		.value("VICTORY_CONDITION_POPULATION_PERCENT_LEAD", VICTORY_CONDITION_POPULATION_PERCENT_LEAD)
+		.value("VICTORY_CONDITION_RELIGION_PERCENT",        VICTORY_CONDITION_RELIGION_PERCENT)
+		.value("VICTORY_CONDITION_NUM_CULTURE_CITIES",      VICTORY_CONDITION_NUM_CULTURE_CITIES)
+		.value("VICTORY_CONDITION_DELAY_TURNS",             VICTORY_CONDITION_DELAY_TURNS)
+		;
+
 	python::enum_<PyIdListSlot>("IdListSlot")
 		.value("PYLIST_HEADQUARTERS_BUILDINGS", PYLIST_HEADQUARTERS_BUILDINGS)
 		.value("PYLIST_CONSUMED_BONUSES", PYLIST_CONSUMED_BONUSES)
@@ -134,8 +157,6 @@ void CyEnums::pythonPublish()
 		.value("PYINT_IS_REPEAT",         PYINT_IS_REPEAT)
 		.value("PYINT_DEFAULT_PLAYERS",   PYINT_DEFAULT_PLAYERS)
 		.value("PYINT_HEADQUARTERS_CORPORATION", PYINT_HEADQUARTERS_CORPORATION)
-		.value("PYINT_IS_SEE_DEMOGRAPHICS", PYINT_IS_SEE_DEMOGRAPHICS)
-		.value("PYINT_IS_SEE_RESEARCH",  PYINT_IS_SEE_RESEARCH)
 		.value("PYINT_IS_SPACESHIP",     PYINT_IS_SPACESHIP)
 		.value("PYINT_IS_NO_INSTANCE_LIMIT", PYINT_IS_NO_INSTANCE_LIMIT)
 		.value("PYINT_WONDER_SCOPE",     PYINT_WONDER_SCOPE)
@@ -146,8 +167,6 @@ void CyEnums::pythonPublish()
 		.value("PYINT_GRID_Y",           PYINT_GRID_Y)
 		.value("PYINT_TRADE_ROUTE_AMOUNT", PYINT_TRADE_ROUTE_AMOUNT)
 		.value("PYINT_DOMAIN",           PYINT_DOMAIN)
-		.value("PYINT_IS_PASSIVE",       PYINT_IS_PASSIVE)
-		.value("PYINT_IS_INVESTIGATE_CITY", PYINT_IS_INVESTIGATE_CITY)
 		.value("PYINT_VOTE_SOURCE",      PYINT_VOTE_SOURCE)
 		;
 

@@ -505,26 +505,6 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getBuildingInfo((BuildingTypes)iId).getHeadquartersCorporation();
 		break;
 
-	case PYINT_IS_SEE_DEMOGRAPHICS:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isSeeDemographics() ? 1 : 0;
-		break;
-
-	case PYINT_IS_SEE_RESEARCH:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isSeeResearch() ? 1 : 0;
-		break;
-
-	case PYINT_IS_PASSIVE:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isPassive() ? 1 : 0;
-		break;
-
-	case PYINT_IS_INVESTIGATE_CITY:
-		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
-			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isInvestigateCity() ? 1 : 0;
-		break;
-
 	//	⚠ The INFO-side getter is still named for the legacy XML tag (`getDiploVoteType`); the slot is named for
 	//	what the value IS, which is the direction the rename goes ([todo.md]: diploVoteType -> the `voteSource`
 	//	section). A consumer therefore never learns the legacy spelling.

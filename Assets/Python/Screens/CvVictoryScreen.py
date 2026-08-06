@@ -7,6 +7,8 @@ import AttitudeUtil
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+VICTORY = CyVictoryInfo()   # the per-info accessor: the whole `condition` block in two grouped reads
+CULTURELEVEL = CyCultureLevelInfo()   # the culture threshold a city counts toward, per (level x gamespeed)
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -317,8 +319,7 @@ class CvVictoryScreen:
 		szTable = self.getNextWidgetName()
 		# Mastery
 		for iLoopVC in xrange(GC.getNumVictoryInfos()):
-			CvVictoryInfo = GC.getVictoryInfo(iLoopVC)
-			if CvVictoryInfo.isTotalVictory():
+			if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_TOTAL_VICTORY):
 				if GAME.isVictoryValid(iLoopVC):
 
 					if iBestTeam != -1 and bMetHuman:
@@ -339,7 +340,7 @@ class CvVictoryScreen:
 					del xRes, dx, a18thX, iTemp1, iTemp2, iTemp3
 
 					# Headings
-					szVictoryType = ufont3b + CvVictoryInfo.getDescription()
+					szVictoryType = ufont3b + INFO.getDescription("VICTORY_", iLoopVC)
 					if iMaxTurns > iTurn:
 						szVictoryType += ufont2 + "\t\t(" + TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (iMaxTurns - iTurn,)) + ")"
 
@@ -588,8 +589,7 @@ class CvVictoryScreen:
 		szUnknown = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_UNKNOWN", ())
 		szTeamName = CyTeam.getName()
 		for iLoopVC in xrange(GC.getNumVictoryInfos()):
-			CvVictoryInfo = GC.getVictoryInfo(iLoopVC)
-			if CvVictoryInfo.isTargetScore(): continue
+			if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_TARGET_SCORE): continue
 			if GAME.isVictoryValid(iLoopVC):
 				if iRow:
 					screen.appendTableRow(szTable)
@@ -597,13 +597,13 @@ class CvVictoryScreen:
 
 				iRow = screen.appendTableRow(szTable)
 
-				szText = ufont3b + CvVictoryInfo.getDescription()
+				szText = ufont3b + INFO.getDescription("VICTORY_", iLoopVC)
 
 				iCategoryRow = iRow
 				screen.setTableText(szTable, 0, iRow, szText, "", eWidGen, 1, 2, 1<<1)
 				bSpaceshipFound = False
 
-				if CvVictoryInfo.isEndScore():
+				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_END_SCORE):
 					if iMaxTurns > iTurn:
 						szText = ufont2 + TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (iMaxTurns - iTurn,))
 						screen.setTableText(szTable, 1, iRow, szText, "", eWidGen, 1, 2, 1<<2)
@@ -617,7 +617,7 @@ class CvVictoryScreen:
 						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestScoreTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
 						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%d" % iBestScore), "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.isConquest():
+				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_CONQUEST):
 					iRow = screen.appendTableRow(szTable)
 					screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELIMINATE_ALL", ()), "", eWidGen, 1, 2, 1<<1)
 					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_RIVALS_LEFT", ()) + " "
@@ -654,9 +654,9 @@ class CvVictoryScreen:
 						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestLandTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
 						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%.2f%%" % (iBestLand * 100 / iTotalLand)), "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.getReligionPercent() > 0:
+				if VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_RELIGION_PERCENT) > 0:
 					iRow = screen.appendTableRow(szTable)
-					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_RELIGION", (CvVictoryInfo.getReligionPercent(),))
+					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_RELIGION", (VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_RELIGION_PERCENT),))
 					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 					if iOurReligion != -1:
 						szText = INFO.getDescription("RELIGION_", iOurReligion) + u": %d%%" % ourReligionPercent
@@ -668,14 +668,6 @@ class CvVictoryScreen:
 						szText = INFO.getDescription("RELIGION_", iBestReligion) + u": %d%%" % bestReligionPercent
 						screen.setTableText(szTable, 2, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.getTotalCultureRatio() > 0:
-					iRow = screen.appendTableRow(szTable)
-					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_CULTURE", (int((100.0 * iBestCulture) / CvVictoryInfo.getTotalCultureRatio()),))
-					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-					screen.setTableText(szTable, 1, iRow, ufont2 + unicode(iOurCulture), "", eWidGen, 1, 2, 1<<2)
-					if iBestCultureTeam  != -1:
-						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestCultureTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
-						screen.setTableText(szTable, 3, iRow, ufont2 + unicode(iBestCulture), "", eWidGen, 1, 2, 1<<0)
 
 				iBestBuildingTeam = -1
 				bestBuilding = 0
@@ -815,7 +807,7 @@ class CvVictoryScreen:
 								screen.setTableText(szTable, 2, iRow, ufont2 + sSSPlayer, "", eWidGen, 1, 2, 1<<0)
 								screen.setTableText(szTable, 3, iRow, ufont2 + sSSCount, "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.isDiploVote() and not GAME.isOption(GameOptionTypes.GAMEOPTION_ENABLE_UNITED_NATIONS):
+				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_DIPLO_VOTE) and not GAME.isOption(GameOptionTypes.GAMEOPTION_ENABLE_UNITED_NATIONS):
 					for (iVoteBuilding, iUNTeam, bUnknown) in aiVoteBuilding:
 						iRow = screen.appendTableRow(szTable)
 						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (INFO.getTextKey("BUILDING_", iVoteBuilding),))
@@ -829,22 +821,22 @@ class CvVictoryScreen:
 						else:
 							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", eWidGen, 1, 2, 1<<2)
 
-				eVictoryCulture = CvVictoryInfo.getCityCulture()
+				eVictoryCulture = VICTORY.getCityCulture(iLoopVC)
 				if eVictoryCulture != CultureLevelTypes.NO_CULTURELEVEL:
 
-					iNumCultureCities = CvVictoryInfo.getNumCultureCities()
+					iNumCultureCities = VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_NUM_CULTURE_CITIES)
 					if iNumCultureCities > 0:
-						ourBestCities = self.getListCultureCities(iActivePlayer, CvVictoryInfo)[0:iNumCultureCities]
+						ourBestCities = self.getListCultureCities(iActivePlayer, iLoopVC)[0:iNumCultureCities]
 
 						iBestCulturePlayer = -1
 						bestCityCulture = 0
-						maxCityCulture = GC.getCultureLevelInfo(eVictoryCulture).getSpeedThreshold(GAME.getGameSpeedType())
+						maxCityCulture = CULTURELEVEL.getSpeedThreshold(eVictoryCulture, GAME.getGameSpeedType())
 
 						for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 							CyPlayerX = GC.getPlayer(iPlayerX)
 							if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and not CyPlayerX.isNPC():
 								if iPlayerX != iActivePlayer and (CyTeam.isHasMet(CyPlayerX.getTeam()) or bDebugModeDLL):
-									theirBestCities = self.getListCultureCities(iPlayerX, CvVictoryInfo)[0:iNumCultureCities]
+									theirBestCities = self.getListCultureCities(iPlayerX, iLoopVC)[0:iNumCultureCities]
 
 									iTotalCulture = 0
 									for loopCity in theirBestCities:
@@ -858,7 +850,7 @@ class CvVictoryScreen:
 										iBestCulturePlayer = iPlayerX
 
 						if iBestCulturePlayer != -1:
-							theirBestCities = self.getListCultureCities(iBestCulturePlayer, CvVictoryInfo)[0:iNumCultureCities]
+							theirBestCities = self.getListCultureCities(iBestCulturePlayer, iLoopVC)[0:iNumCultureCities]
 						else:
 							theirBestCities = []
 
@@ -1442,20 +1434,20 @@ class CvVictoryScreen:
 		return -1
 
 
-	def getListCultureCities(self, iPlayer, CvVictoryInfo):
+	def getListCultureCities(self, iPlayer, iVictory):
 
 		if iPlayer != -1:
 			CyPlayer = GC.getPlayer(iPlayer)
 			if CyPlayer.isAlive():
-				iThreshold = GC.getCultureLevelInfo(CvVictoryInfo.getCityCulture()).getSpeedThreshold(GAME.getGameSpeedType())
+				iThreshold = CULTURELEVEL.getSpeedThreshold(VICTORY.getCityCulture(iVictory), GAME.getGameSpeedType())
 				aList = []
 
 				for CyCity in CyPlayer.cities():
-					iRate = CyCity.getCommerceRateTimes100(CommerceTypes.COMMERCE_CULTURE)
+					iRate = STATE.getCommerces(iPlayer, CyCity.getID())[CommerceTypes.COMMERCE_CULTURE]
 					if not iRate:
 						iTurns = -1
 					else:
-						iCultureLeftTimes100 = 100 * iThreshold - CyCity.getCultureTimes100(CyCity.getOwner())
+						iCultureLeftTimes100 = 100 * iThreshold - STATE.getCultureForPlayer(iPlayer, CyCity.getID(), iPlayer)
 						iTurns = int((iCultureLeftTimes100 + iRate - 1) / iRate)
 					aList.append((CyCity.getCulture(iPlayer), CyCity, iTurns))
 
@@ -1484,7 +1476,7 @@ class CvVictoryScreen:
 	def getMonumentalCities(self, iTeam):
 		iMonumentalCities = 0
 		iTeamCities = 0
-		iThreshold = GC.getCultureLevelInfo(GC.getNumCultureLevelInfos()-1).getSpeedThreshold(GAME.getGameSpeedType())
+		iThreshold = CULTURELEVEL.getSpeedThreshold(GC.getNumCultureLevelInfos()-1, GAME.getGameSpeedType())
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
