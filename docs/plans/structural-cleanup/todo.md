@@ -506,10 +506,9 @@
   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — each one is answered by
   a GROUP read, an intrinsic slot, an edge family or a classification test, or it is dead. ⛔ Adding a getter
   per legacy name is the half-migration reflex in its purest form.
-  ⚑ Two genuine surface gaps the sweep named, each needing the library to GROW rather than a consumer to be
+  ⚑ A genuine surface gap the sweep named, needing the library to GROW rather than a consumer to be
   re-pointed: the pedia's category/sort taxonomy still has no home
-  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4), and `getNewConceptInfo` reaches a
-  registry the prefix dispatch does not carry.
+  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
 - **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
   *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
   everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read
@@ -583,6 +582,21 @@
 - Serve the free-function map helpers (plot direction / XY / distance / step distance). Their registrar went with
   the binding purge; the map-generation utilities call them throughout. ⚠ A map script's failure is SILENT — it
   lands inside the override protocol and falls back to DLL-default generation, so a wrong map is the symptom.
+- Give WorldBuilder's two `CyMapGenerator` calls a home. The wrapper's **BINDING** is gone — it publishes no
+  `class_<>`, no `.def` and has no `pythonPublish` — so `CyMapGenerator()` raises `NameError` at the click
+  ([roadmap.md](roadmap.md) § scope decision 1b requires a knowingly-broken WB path to be recorded rather than
+  silently left). ⚠ **The CLASS itself is NOT gone** — `Sources/Python/CyMapGenerator.{h,cpp}` are still in the
+  tree and still compile; what was cut is only the registrar. ⛔ So do not read the surviving file as evidence
+  the binding lives, and do not read this entry as licence to re-register it
+  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) — the answer is the new surface).
+  ⚑ It is a DEAD TRANSLATION UNIT meanwhile: nothing but its own `.cpp` includes the header, so it compiles a
+  class nobody can reach, and it carries a commented-out constructor
+  ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
+  ⚠ **The two callers want DIFFERENT things, and only one of them ever existed on this wrapper:**
+  `CvWBDesc.py`'s `addBonuses()` is a real method on it; `WBGameDataScreen.py`'s `eraseGoodies()` **is not on
+  `CyMapGenerator` at all** — it is `CvMapGenerator::eraseGoodies`, and the Python-reachable route to it is
+  `CyMap`, not this wrapper. So the goody-erase would have failed on the missing METHOD even with the binding
+  restored, which is why "re-register the wrapper" was never the fix.
 - Widen `CyInfo` to the per-type INDEX shape the whole-registry screens need — the text key and the button
   reference beside the description and type key it already serves. That shape is what every enumeration screen
   renders, across every registered category, and the prefix dispatch already reaches them all.
