@@ -2,7 +2,9 @@ from CvPythonExtensions import *
 import os
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# ENUMS = the engine enum vocabulary + name->id resolution. ACT is the WRITE side -- the scenario APPLY asks the
+# engine to do things, which is not a read, so it addresses each subject by its (owner, id) pair like every other
+# surface here ([roadmap] scope decision 6).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
@@ -10,6 +12,7 @@ MAP = GC.getMap()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+ACT = CyAct()
 VERSION = "C2C_2"
 fEncode = "utf-8"
 
@@ -1145,8 +1148,6 @@ class CvCityDesc:
 			f.write("\t\tExtraHappiness=%d\n" %(kExtras[CityGrantedExtra.GRANTED_EXTRA_HAPPINESS],))
 		if kExtras[CityGrantedExtra.GRANTED_EXTRA_HEALTH] != 0:
 			f.write("\t\tExtraHealth=%d\n" %(kExtras[CityGrantedExtra.GRANTED_EXTRA_HEALTH],))
-		if kExtras[CityGrantedExtra.GRANTED_EXTRA_TRADE_ROUTES] != 0:
-			f.write("\t\tExtraTrade=%d\n" %(kExtras[CityGrantedExtra.GRANTED_EXTRA_TRADE_ROUTES],))
 		for i in xrange(GC.getNumBuildingInfos()):
 			szType = INFO.getType("BUILDING_", i)
 			kYields = STATE.getBuildingGrantedYields(iOwner, iCity, i)
@@ -1189,7 +1190,6 @@ class CvCityDesc:
 		self.iOccupation = 0
 		self.iExtraHappiness = 0
 		self.iExtraHealth = 0
-		self.iExtraTrade = 0
 		self.lBuildingYield = []
 		self.lBuildingCommerce = []
 		self.lBuildingHappy = []
@@ -1361,107 +1361,98 @@ class CvCityDesc:
 				self.iExtraHealth = int(v)
 				continue
 
-			v = parser.findTokenValue(toks, "ExtraTrade")
-			if v != -1:
-				self.iExtraTrade = int(v)
-				continue
-
 			if parser.findTokenValue(toks, "EndCity") != -1:
 				break
 
 	# after reading, this will actually apply the data
 	def apply(self):
 		print "CvCityDesc.apply"
+		#	initCity is the one call that still takes the handle, because it is what MAKES the city; everything
+		#	after it addresses that city by its (owner, id) pair. A handle publishes owner + id + position and
+		#	nothing else ([patterns.md] THE IDENTITY SET), so the apply asks ACT rather than the object.
 		self.city = city = GC.getPlayer(self.owner).initCity(self.plotX, self.plotY)
+		iOwner = self.owner
+		iCity = city.getID()
 
 		if self.name != None:
-			city.setName(self.name, False)
+			ACT.setCityName(iOwner, iCity, self.name)
 
 		if self.iPopulation:
-			city.setPopulation(self.iPopulation)
+			ACT.setCityPopulation(iOwner, iCity, self.iPopulation)
 		if self.iFood:
-			city.setFood(self.iFood)
+			ACT.setCityStoredFood(iOwner, iCity, self.iFood)
 
 		for item in self.lCulture:
-			city.setCultureTimes100(item[0], item[1], False)
+			ACT.setCityCulture(iOwner, iCity, item[0], item[1])
 
 		for key, date in self.bldgType:
 			iBuilding = GC.getInfoTypeForString(key)
 			if iBuilding > -1:
-				city.changeHasBuilding(iBuilding, True)
+				ACT.addCityBuilding(iOwner, iCity, iBuilding)
 
+		#	The holy-city / headquarters designation rides the SAME verb as the presence, so the two lists fold
+		#	into one pass instead of a second one re-resolving the same ids.
 		for key in self.religions:
 			iReligion = GC.getInfoTypeForString(key)
 			if iReligion > -1:
-				city.setHasReligion(iReligion, True, False, True)
-
-		for key in self.holyCityReligions:
-			iReligion = GC.getInfoTypeForString(key)
-			if iReligion > -1:
-				GAME.setHolyCity(iReligion, city, False)
+				ACT.setCityReligion(iOwner, iCity, iReligion, key in self.holyCityReligions)
 
 		for key in self.corporations:
 			iCorporation = GC.getInfoTypeForString(key)
 			if iCorporation > -1:
-				city.setHasCorporation(iCorporation, True, False, True)
-
-		for key in self.headquarterCorporations:
-			iCorporation = GC.getInfoTypeForString(key)
-			if iCorporation > -1:
-				GAME.setHeadquarters(iCorporation, city, False)
+				ACT.setCityCorporation(iOwner, iCity, iCorporation, key in self.headquarterCorporations)
 
 		for key in self.freeSpecialists:
 			iSpecialist = GC.getInfoTypeForString(key)
 			if iSpecialist > -1:
-				city.changeFreeSpecialistCount(iSpecialist, 1)
+				ACT.addCityFreeSpecialist(iOwner, iCity, iSpecialist, 1)
 
 		iProd = -1
 		if self.productionUnit != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionUnit)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_TRAIN, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_TRAIN, iProd)
 
 		if iProd == -1 and self.productionBuilding != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionBuilding)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_CONSTRUCT, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_CONSTRUCT, iProd)
 
 		if iProd == -1 and self.productionProject != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionProject)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_CREATE, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_CREATE, iProd)
 
 		if iProd == -1 and self.productionProcess != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionProcess)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_MAINTAIN, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_MAINTAIN, iProd)
 
 		if self.sScriptData:
-			city.setScriptData(self.sScriptData)
+			ACT.setCityScriptData(iOwner, iCity, self.sScriptData)
 
 		if self.iDamage > 0:
-			city.changeDefenseDamage(self.iDamage)
+			ACT.setCityDefenseDamage(iOwner, iCity, self.iDamage)
 		if self.iOccupation > 0:
-			city.setOccupationTimer(self.iOccupation)
+			ACT.setCityOccupation(iOwner, iCity, self.iOccupation)
 
 	def postApply(self):
 		print "CvCityDesc.postApply"
-		city = self.city
-		city.changeExtraHappiness(self.iExtraHappiness - city.getExtraHappiness())
-		city.changeExtraHealth(self.iExtraHealth - city.getExtraHealth())
-		city.changeExtraTradeRoutes(self.iExtraTrade - city.getExtraTradeRoutes())
+		iOwner = self.city.getOwner()
+		iCity = self.city.getID()
+		#	Each verb SETS the stored grant, so the legacy zero-it-then-add-it dance is gone: it existed only
+		#	because the old bindings could do nothing but CHANGE by a delta, which forced a read of the current
+		#	value purely to cancel it out first.
+		ACT.setCityGrantedExtra(iOwner, iCity, CityGrantedExtra.GRANTED_EXTRA_HAPPINESS, self.iExtraHappiness)
+		ACT.setCityGrantedExtra(iOwner, iCity, CityGrantedExtra.GRANTED_EXTRA_HEALTH, self.iExtraHealth)
 		for item in self.lBuildingYield:
-			city.setBuildingYieldChange(item[0], item[1], -city.getBuildingYieldChange(item[0], item[1]))
-			city.setBuildingYieldChange(item[0], item[1], item[2])
+			ACT.setBuildingGrantedYield(iOwner, iCity, item[0], item[1], item[2])
 		for item in self.lBuildingCommerce:
-			city.setBuildingCommerceChange(item[0], item[1], -city.getBuildingCommerceChange(item[0], item[1]))
-			city.setBuildingCommerceChange(item[0], item[1], item[2])
+			ACT.setBuildingGrantedCommerce(iOwner, iCity, item[0], item[1], item[2])
 		for item in self.lBuildingHappy:
-			city.setBuildingHappyChange(item[0], -city.getBuildingHappyChange(item[0]))
-			city.setBuildingHappyChange(item[0], item[1])
+			ACT.setBuildingGrantedWellbeing(iOwner, iCity, item[0], BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS, item[1])
 		for item in self.lBuildingHealth:
-			city.setBuildingHealthChange(item[0], -city.getBuildingHealthChange(item[0]))
-			city.setBuildingHealthChange(item[0], item[1])
+			ACT.setBuildingGrantedWellbeing(iOwner, iCity, item[0], BuildingGrantedKind.BUILDING_GRANTED_HEALTH, item[1])
 
 
 ##########

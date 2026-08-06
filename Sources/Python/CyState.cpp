@@ -437,7 +437,6 @@ python::list CyState::getCityGrantedExtras(int iPlayer, int iCity) const
 	{
 		values[GRANTED_EXTRA_HAPPINESS]    = pCity->getExtraHappiness();
 		values[GRANTED_EXTRA_HEALTH]       = pCity->getExtraHealth();
-		values[GRANTED_EXTRA_TRADE_ROUTES] = pCity->getExtraTradeRoutes();
 	}
 	return cys_toList(values);
 }

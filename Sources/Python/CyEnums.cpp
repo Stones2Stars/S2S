@@ -604,7 +604,6 @@ void CyEnums::pythonPublish()
 	python::enum_<CityGrantedExtra>("CityGrantedExtra")
 		.value("GRANTED_EXTRA_HAPPINESS",    GRANTED_EXTRA_HAPPINESS)
 		.value("GRANTED_EXTRA_HEALTH",       GRANTED_EXTRA_HEALTH)
-		.value("GRANTED_EXTRA_TRADE_ROUTES", GRANTED_EXTRA_TRADE_ROUTES)
 		.value("NUM_CITY_GRANTED_EXTRAS",    NUM_CITY_GRANTED_EXTRAS)
 	;
 

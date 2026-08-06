@@ -1384,11 +1384,14 @@ enum CityCountRead
 //	live source deposits. They are genuine non-derivable state and are SEPARATELY PERSISTED for exactly that
 //	reason ([state-repositories.md]: "having events just be stored in the cache is lunacy"), which is why a
 //	scenario serializer has to be able to read them back out.
+//	⛔ TRADE ROUTES ARE NOT ONE OF THESE, and the reason is the test for anything proposed here: the city's
+//	extra trade routes are a DERIVED cascade read (`cascadeValue(MODFAM_TRADE_ROUTES, …)`), so there is no
+//	stored value to grant and no setter to write one. A derived value falls out of its sources
+//	([DEC-derived-never-trusted]) -- it is never handed over and never restored.
 enum CityGrantedExtra
 {
 	GRANTED_EXTRA_HAPPINESS = 0,
 	GRANTED_EXTRA_HEALTH,
-	GRANTED_EXTRA_TRADE_ROUTES,
 
 	NUM_CITY_GRANTED_EXTRAS
 };

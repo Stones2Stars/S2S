@@ -419,6 +419,41 @@ per registry instead of one per entity.
 
 ---
 
+## 12. The WorldBuilder SCREENS mutate through the city handle, which now carries the identity set only
+
+**Observed:** every `pCity.<mutator>` call under `Screens/Worldbuilder/` is dead. `CyCity` publishes exactly
+four defs — `getOwner` / `getID` / `getX` / `getY` ([patterns.md](../../architecture/patterns.md) THE IDENTITY
+SET) — so each of these raises `AttributeError` the moment its handler fires.
+
+**PROVEN — it is a BLOCK, not a set of call sites.** `WBCityEditScreen.handleInput` is one `elif` chain of
+~20 structurally identical handlers (`CityFoodPlus/Minus`, `CityDefensePlus/Minus`,
+`CityTradeRoutePlus/Minus`, `CityChangeCulture`, …), each a `pCity.change*` pair; `WorldBuilder.copyCityStats`
+is a ~60-line run in which every line is one of these. Fixing one branch leaves the chain it sits in dead, so
+a per-branch repair is the partial fix [DEC-WF-surface-sprawl](../../architecture/decisions.md#dec-wf-surface-sprawl)
+bans rather than progress.
+
+⚑ **The scenario serializer is the worked precedent and is DONE:** `pyWB/CvWBDesc.py`'s `CvCityDesc.apply` /
+`postApply` are wired onto `CyAct` by (owner, id), which is the shape the screens take too.
+
+⛔ **What blocks the screens is a STRUCTURE call, not effort: WHICH mutators the WB write surface carries.**
+The verbs `CvWBDesc` needed already exist; the screens additionally reach for ~40 more
+(`setProgressOnBuilding`, `changeReligionInfluence`, `setForceSpecialistCount`, `setGreatPeopleUnitProgress`,
+`changeSpecialistCommerce`, `changeFreeBonus`, and a run of anger/espionage timers). Minting that set is the
+owner's call on what WorldBuilder may edit at all — several of those values are now DERIVED and have no setter
+to publish.
+
+⚠ **`ExtraTrade` is the case that proves the last point and is already resolved on the data side:** a city's
+extra trade routes is a derived cascade read (`cascadeValue(MODFAM_TRADE_ROUTES, …)`), so there is no stored
+value to write. The scenario format's `ExtraTrade` field, its parse and its apply are REMOVED; the screens'
+`CityTradeRoutePlus/Minus` control edits a value that cannot exist and goes with the pass rather than being
+given a setter ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)).
+
+⚖ This is the WorldBuilder pass [roadmap](roadmap.md) § scope decision 1b names — *"we cannot accept actually
+breaking worldbuilder stuff, we fix things we see"* — and it is deferred here only on the ground that ruling
+allows: the replacement MACHINE (the verb set) does not exist yet, and it is NAMED.
+
+---
+
 ---
 
 # Migrated from the todo

@@ -71,10 +71,10 @@ overcounts by thousands. And the published surface no longer answers reads, so a
 | Measure | Value |
 |---|---|
 | Python files | **205** |
-| Lines | **105,454** |
-| Distinct methods called on any receiver | 3,223 |
-| Published `.def` names under `Sources/` | **1,147** |
-| **UNSERVED engine-shaped reads** | **1,298 names / 7,458 call sites** |
+| Lines | **105,512** |
+| Distinct methods called on any receiver | 3,244 |
+| Published `.def` names under `Sources/` | **1,172** |
+| **UNSERVED engine-shaped reads** | **1,292 names / 7,363 call sites** |
 
 That last row is the whole Python→C++ read surface today, and it is the size of the gap the library is built
 toward answering; **it is an END STATE, never a gate on cutting**
@@ -90,25 +90,25 @@ Unserved engine-shaped reads, per §1.1. This is the demand each family places o
 
 | Directory | Files | Unserved sites |
 |---|--:|--:|
-| `Screens/Worldbuilder/` | 19 | 1851 |
-| `Screens/` | 23 | 1318 |
-| `Screens/Advisors/` | 10 | 729 |
-| *(repo root)* | 10 | 546 |
+| `Screens/Worldbuilder/` | 19 | 1850 |
+| `Screens/` | 23 | 1310 |
+| `Screens/Advisors/` | 10 | 708 |
 | `Revolution/Gameready/` | 3 | 543 |
+| *(repo root)* | 10 | 537 |
 | **`Screens/Pedia/`** | 21 | 534 |
 | `EntryPoints/` | 14 | 525 |
 | `Contrib/` | 23 | 399 |
 | `Revolution/` | 7 | 232 |
-| `BUG/` | 28 | 127 |
-| `Afforess/` | 3 | 123 |
+| `BUG/` | 28 | 126 |
+| `Afforess/` | 3 | 122 |
 | `PitBoss/` | 2 | 112 |
 | `DancingHoskuld/` | 4 | 79 |
 | `Screens/Debug/` | 2 | 72 |
-| `pyWB/` | 1 | 70 |
 | `Utilities/` | 4 | 58 |
 | `Screens/SimpleScreens/` | 3 | 41 |
 | `Screens/ExtensionScreens/` | 1 | 28 |
 | `Revolution/Development/` | 1 | 23 |
+| `pyWB/` | 1 | 16 |
 | `Screens/Sevopedia/` | 2 | 11 |
 | `BUG/Tabs/` | 16 | 9 |
 | `EnhancedTechConquestUtils/` | 2 | 9 |
@@ -118,9 +118,15 @@ Unserved engine-shaped reads, per §1.1. This is the demand each family places o
 
 ⚑ **`EntryPoints/` has moved from the heaviest family to seventh, and that is the library working rather than a
 measurement artefact** — the engine's call-in surface was re-pointed first because it is where a failed read
-raises. **WorldBuilder is now the largest remaining block by a wide margin**, which is the expected shape: it is
-the one family a scope decision explicitly declines to hold work up for
-([roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision 1b).
+raises. **`Screens/Worldbuilder/` is now the largest remaining block by a wide margin.**
+⛔ **That is a block awaiting its own pass, NOT a family whose breakage is accepted** — scope decision 1b says
+WorldBuilder may temporarily LAG a cut, never that a visible break may stand
+([roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision 1b; the misreading it warns about has
+already cost one pass). What actually holds it is a structure call — which mutators the WB write surface
+carries — recorded as [issues.md](../plans/structural-cleanup/issues.md) § 12.
+⚑ **`pyWB/` is the same shape ALREADY DONE, which is why it fell from 70 sites to 16:** the scenario
+serializer's city half reads through `CyState`/`CyInfo` and writes through `CyAct` by (owner, id). It is the
+worked precedent the screens follow, not a different problem.
 
 ### 1.4 Reconciliation with the pedia slice
 
@@ -133,7 +139,7 @@ Python defines itself and `CyGInterfaceScreen` accessors like `getXResolution` �
 reads nothing in the tree answers. **Both stand; use pedia-map's for the pedia's own work and this one when
 reconciling against the unserved total.**
 
-**Excluding the pedia, this census covers 6,878 unserved sites.**
+**Excluding the pedia, this census covers 6,783 unserved sites.**
 
 ## 2. ⚑ The owner's hypothesis: is the pedia a completeness oracle?
 
@@ -173,36 +179,40 @@ That residue is not homogeneous. Grouped by what it actually is:
 | Mutations on globals (`setDefineINT`, `changeDefineINT`) | 2 | 70 | **No** — a write. §4 MUTATION boundary. |
 | Engine HANDLE accessors (`getMap`, `getMapByIndex`, …) | 7 | 285 | **No** — object handles, not data. |
 | Global DEFINE / constant reads (`getMAX_PC_PLAYERS`, `getMAX_PLAYERS`, `getBARBARIAN_PLAYER`, …) | 6 | 350 | **Yes, but trivially** — a closed constants block. |
-| **Whole info TYPES with no pedia page** | **59** | **328** | **YES — the real appendix.** |
+| **Whole info TYPES with no pedia page** | **9** | **~68** | **YES — the real appendix (§2.3).** ⚠ Names + sites are the REMAINDER, counted off §2.3's own per-type figures; two of the nine carry no site count, so the sites column is a floor. |
 | **Per-field reads on types the pedia DOES page** | **219** | **599** | **Partly — see 2.4.** |
 
-### 2.3 The appendix that matters: 59 info types the pedia never touches
+### 2.3 The appendix that matters: the info types the pedia never touches
 
-These types have **no pedia page at all**, so serving the pedia yields *nothing* for them. Highest-weight first:
+These types have **no pedia page at all**, so serving the pedia yields *nothing* for them — which is the sense
+in which the pedia under-specifies the library.
 
-`getWorldInfo` (60) · `getNumCivicOptionInfos` (31) · `getClimateInfo` (20) · `getEventTriggerInfo` (18) ·
-`getCultureLevelInfo` (16) · `getProcessInfo` (11) · `getControlInfo` (10) · `getMissionInfo` (9) ·
-`getVoteSourceInfo` (8) · `getVictoryInfo` (8) · `getEspionageMissionInfo` (7) · `getPropertyInfo` (4+6) ·
-`getDomainInfo` (5) · `getAttitudeInfo` (5) · `getUnitAIInfo` (4) · `getEventInfo` (4) · `getColorInfo` (4) ·
-`getSeaLevelInfo` (3) · `getVoteInfo` (3) · `getDiplomacyInfo` (3) · `getHurryInfo` (2) · `getMemoryInfo` (2) ·
-`getGraphicOptionsInfo` (2) · `getMPOptionInfo` (2) · `getBonusClassInfo` (4) · `getGameOptionInfo` ·
-`getCalendarInfo` · `getSpecialUnitInfo` · `getEffectInfo` · `getAdvisorInfo` · `getArtInfo` ·
-`getActionInfo` · `getForceControlInfo` · plus the matching `getNum<X>Infos` counters.
+**What is LEFT — nine registries the prefix plane does not route:**
 
-Four clusters, each with a distinct owner:
+`CIVICOPTION_` (31) · `CULTURELEVEL_` (16) · `PROPERTY_` (4+6) · `BONUSCLASS_` (4) · `VOTE_` (3) ·
+`HURRY_` (2) · `GRAPHICOPTION_` (2) · `SPECIALUNIT_` · `PLAYEROPTION_` — plus the matching `getNum<X>Infos`
+counters. ⚑ `CIVICOPTION_` is the heaviest single item remaining in this appendix and is what
+`Contrib/DynamicCivNames.py` is blocked on (§6.3).
 
-1. **Map-generation types** — `WorldInfo`, `ClimateInfo`, `SeaLevelInfo`, `MapInfo`. Consumed by
-   `CvMapGeneratorUtil.py` and the map scripts. See the §7 open question on whether map scripts sit behind
-   this library at all.
-2. **Game-configuration types** — `GameOptionInfo`, `MPOptionInfo`, `ForceControlInfo`, `GraphicOptionsInfo`,
-   `PlayerOptionsInfo`, `CalendarInfo`, `HandicapInfo`, `GameSpeedInfo`. Consumed by WorldBuilder, `pyWB`,
-   the options screen and `RevolutionInit`.
-3. **Diplomacy / victory / vote types** — `VictoryInfo`, `VoteInfo`, `VoteSourceInfo`, `AttitudeInfo`,
-   `MemoryInfo`, `DiplomacyInfo`, `EspionageMissionInfo`. Consumed by `CvVictoryScreen`, `CvForeignAdvisor`,
-   `CvDiplomacy.py`, `BUG/AttitudeUtil.py`.
-4. **Command / UI-action types** — `ControlInfo`, `MissionInfo`, `ActionInfo`, `CommandInfo`, `AdvisorInfo`,
-   `ArtInfo`, `EffectInfo`, `ColorInfo`, `DomainInfo`, `UnitAIInfo`. Consumed by `CvMainInterface` and the
-   debug/log surfaces.
+⛔ **`ART_` is NOT on that list and is not a gap** — art is an untouched system boundary, JSON carries only the
+tag id and `ARTFILEMGR` keeps resolving it ([roadmap](../plans/structural-cleanup/roadmap.md) § scope
+decision 3). Do not "complete" the appendix by routing it.
+
+The four clusters this split into, and where each now stands:
+
+1. **Map-generation types** — `WorldInfo`, `ClimateInfo`, `SeaLevelInfo`. **Routed**, and `WorldInfo` also has
+   the per-info accessor `CyWorldInfo` — the exemplar for the shape [patterns.md](../architecture/patterns.md)
+   calls the wanted one (a named accessor per info TYPE, explicitly bound, so the module's bindings list IS its
+   dependency list). ⚠ The map SCRIPTS themselves sit outside this library entirely (§7 ruling 1).
+2. **Game-configuration types** — `GameOptionInfo`, `MPOptionInfo`, `ForceControlInfo`, `CalendarInfo`,
+   `GameSpeedInfo` routed; `GraphicOptionsInfo` and `PlayerOptionsInfo` are the remainder. Consumed by
+   WorldBuilder, `pyWB`, the options screen and `RevolutionInit`.
+3. **Diplomacy / victory / vote types** — `VictoryInfo`, `VoteSourceInfo`, `AttitudeInfo`, `MemoryInfo`,
+   `DiplomacyInfo`, `EspionageMissionInfo` routed; **`VoteInfo` is the one hold-out**, which matters because
+   `CvVictoryScreen` reads votes and vote-sources together.
+4. **Command / UI-action types** — `ControlInfo`, `MissionInfo`, `ActionInfo`, `AdvisorInfo`, `EffectInfo`,
+   `ColorInfo`, `DomainInfo`, `UnitAIInfo` **all routed**; this cluster is done apart from `ArtInfo`, which is
+   the carve-out above.
 
 **Note the overlap with the info rebuild's own scope:** `CvVictoryInfo`, `CvVoteInfo`, `CvHurryInfo`,
 `CvWorldInfo`, `CvHandicapInfo` and `CvProcessInfo` are all rebuilt types per
@@ -228,13 +238,13 @@ The pedia is **almost purely a static-info reader**: of its 934 unserved sites, 
 
 | Kind | Whole tree | Pedia | **Non-pedia** | Pedia's share |
 |---|--:|--:|--:|--:|
-| INFO | 1,503 | 411 | 1,092 | 27.3% |
-| STATE | 799 | 1 | 798 | **0.1%** |
-| COMPUTED | 273 | 0 | 273 | **0%** |
-| MUTATION | 413 | 0 | 413 | **0%** |
-| other / UI | 4,390 | 167 | 4,223 | 3.8% |
+| INFO | 1,480 | 411 | 1,069 | 27.8% |
+| STATE | 769 | 1 | 768 | **0.1%** |
+| COMPUTED | 254 | 0 | 254 | **0%** |
+| MUTATION | 395 | 0 | 395 | **0%** |
+| other / UI | 4,385 | 167 | 4,218 | 3.8% |
 
-**The pedia exercises essentially none of the LIVE-STATE, COMPUTED or MUTATION planes — 1,484 call sites the
+**The pedia exercises essentially none of the LIVE-STATE, COMPUTED or MUTATION planes — 1,417 call sites the
 pedia never touches.** Building only what the pedia needs would leave the majority of Python's engine
 traffic unserved. This is not an argument against the hypothesis — those planes are not what an *info* library
 is for — but a completeness claim scoped to "the reader surface" must say so explicitly, because
@@ -243,10 +253,16 @@ reach-around is the second live surface the ruling forbids.
 
 ### 2.6 The verdict, operationally
 
-Serving the pedia gives: **every shape, and the INFO plane for the paged types.** It does not give: **59
+Serving the pedia gives: **every shape, and the INFO plane for the paged types.** It does not give: **the
 unpaged info types, ~129 per-field reads concentrated in the Revolution stack, the global DEFINEs block, and
 the entire STATE / COMPUTED / MUTATION surface.** The stage-4 tick-list is therefore
 **pedia-map.md + §2.3 + §2.4 + §3 of this document**, not pedia-map.md alone.
+
+⚑ **The unpaged-types half of that verdict is now MOSTLY ANSWERED and the hypothesis held up where it mattered:**
+the prefix plane routes the map-generation, command/UI-action, and all but one of the diplomacy/victory/vote
+registries, so what is left is the nine of §2.3 — none of which is a new SHAPE, which is exactly what §2.1
+predicted. ⛔ What has NOT moved is the part the hypothesis was silent about (§2.5): STATE, COMPUTED and
+MUTATION are still where the bulk of the tree's traffic sits.
 
 ## 3. Consumer families, ranked by weight
 
@@ -277,6 +293,12 @@ Needs served: **per-type index payloads** (every editor drop-down is "give me [(
 boundary**: this family carries the densest MUTATION concentration in the tree. `CvWBDesc.py` additionally needs
 **stable type KEYS, not ids** — it serializes scenarios to text, so it reads `getType()` strings rather than
 indices, which the identity block must keep serving.
+
+⚑ **`CvWBDesc.py`'s city half is the worked precedent for the whole family** — its write boundary is `CyAct`
+addressed by (owner, id), the reads are `CyState`/`CyInfo`, and the handle is used only to CREATE the city and
+then to name it. ⛔ The SCREENS are not the same job merely because they sit in the same folder: they still
+mutate through the handle and are blocked on which mutators the WB write surface should carry, which is a
+structure call rather than a sweep ([issues.md](../plans/structural-cleanup/issues.md) § 12).
 
 ### 3.3 The Revolution stack
 
@@ -354,20 +376,20 @@ between STATE and COMPUTED moves, the totals do not.
 
 | Kind | Sites | Distinct names | Receivers |
 |---|--:|--:|---|
-| **other / UI widget** | 4,390 | 773 | `CyGInterfaceScreen` chrome and friends — **not this library's job** |
-| **(a) INFO — static data** | 1,503 | 360 | `GC.`/`gc.` info registry + `*Info` objects |
-| **(b) STATE — live game state** | 799 | 150 | city · player · plot · unit · team · game · area · deal |
-| **(d) MUTATION — writes** | 413 | 83 | same objects, `set*`/`change*`/`do*`/`create*`/… |
-| **(c) COMPUTED — verdicts/rates** | 273 | 68 | same objects, `can*`/`is*`/`AI_*`/`calculate*`/`find*`/`has*` |
+| **other / UI widget** | 4,385 | 770 | `CyGInterfaceScreen` chrome and friends — **not this library's job** |
+| **(a) INFO — static data** | 1,480 | 358 | `GC.`/`gc.` info registry + `*Info` objects |
+| **(b) STATE — live game state** | 769 | 148 | city · player · plot · unit · team · game · area · deal |
+| **(d) MUTATION — writes** | 395 | 83 | same objects, `set*`/`change*`/`do*`/`create*`/… |
+| **(c) COMPUTED — verdicts/rates** | 254 | 68 | same objects, `can*`/`is*`/`AI_*`/`calculate*`/`find*`/`has*` |
 | **(e) TEXT — residue only** | 80 | 5 | text-manager receivers; the PLANE itself is excluded — below |
-| **Total** | **7,458** | 1,298 | |
+| **Total** | **7,363** | 1,292 | |
 
-⚠ Distinct names do **not** sum down the column (1,439 > 1,298): one name reached on two receiver kinds counts
+⚠ Distinct names do **not** sum down the column (1,432 > 1,292): one name reached on two receiver kinds counts
 in both. Sites do sum.
 
 ⚑ **`other / UI` now DOMINATES the remainder, and that is the shape to read the table by.** It is the one row
 the library explicitly does not own (screen chrome), so the residue is increasingly *not the library's work* —
-the three planes it does own (INFO + STATE + COMPUTED) are down to 2,575 sites between them.
+the three planes it does own (INFO + STATE + COMPUTED) are down to 2,503 sites between them.
 
 ⚠ **TEXT is absent by construction, not by being small** — `getText` is Python-defined, so §1.1's exclusion rule
 drops all **3,131** of its sites; the 80 above are only what other text-manager receivers leave behind. TEXT
@@ -743,7 +765,13 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    And the completeness argument that makes it load-bearing: a library WITHOUT name→type resolution forces those
    consumers to keep a legacy reach-around — the second live surface the one-surface ruling forbids.
 
-6. **What is the MUTATION boundary's shape, and is it stage 4's job?**
+6. **~~What is the MUTATION boundary's shape, and is it stage 4's job?~~ — CLOSED: THE WRITE SURFACE EXISTS
+   (owner).** *"We have a write surface."* ~144 `set*`/`change*`/`do*`/`create*` defs are published across
+   `CvPythonPlayerLoader` / `CvPythonPlotLoader` / `CyGame` / `CyTeam` / `CyMap` / `CyArea` / `CyAct` — the cut
+   was DIRECTIONAL and took the READ bindings only. ⛔ So this is not an open question and must not be cited as
+   one: a mutating consumer that fails is WIRED, and a write it needs that is not published yet is ADDED to that
+   surface ([roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision 6). The paragraph below is the
+   ORIGINAL framing, kept only because its LAST sentence is the thing that was wrong:
    987 sites are writes. They are explicitly out of scope for a *data-fetching* library, but the same handlers
    read through it, and the legacy `Cy*` surface cannot be disconnected while a write path still depends on it.
    Stage 4 needs a decision on whether the write boundary is designed alongside the library or sequenced after.

@@ -425,18 +425,22 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    reactions). ⚑ **Their absence from any migration inventory is the scope boundary working, not a gap** — and
    there is **no exposure by construction**: the grants machine applies only what is in the XML-derived JSON, so
    an effect that was never in XML never enters the JSON and can never double-up or be lost.
-6. **⚖ THE MUTATING PYTHON EVENT HANDLERS ARE LEFT NONFUNCTIONING, AND THEIR SCOPE IS ASSESSED AT THE END
-   (owner).** The `Cy*` read cut removed the only path Python had for APPLYING gameplay: these handlers do not
-   merely read, they mutate (`setPopulation` / `changeCulture` / `setHasReligion` / `setHasPromotion`), and the
-   replacement library is a READ surface by contract
-   ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md): data fetching, not gameplay). So
-   there is nowhere for those writes to go.
-   ⚑ **The reason it is PARKED rather than solved is historical and specific (owner): the Python events were
-   carved out BEFORE the trigger system was specced.** The triggers machine now exists but the Python events do
-   not route through it, so the destination for this behaviour is known
-   ([triggers.md](../../specs/triggers.md)) while the mapping is not.
-   ⚖ **PYTHON DOES NEED A WRITE SURFACE, for the foreseeable future (owner).** The read-only library is therefore
-   NOT the end state of the boundary — the missing write path is a real gap with a real answer.
+6. **⛔ THERE IS A WRITE SURFACE, AND "THE WRITE SURFACE IS PARKED" IS NOT A REASON TO SKIP A FIX (owner).**
+   *"The amount of fixes getting skipped because of that excuse is starting to drive me nuts — we have a write
+   surface."* This entry previously claimed the `Cy*` cut left *"nowhere for those writes to go"* and that the
+   handlers wait *"until the write surface lands"*. **Both were false**, and agents were citing them to leave
+   working fixes undone.
+   ⚑ **The mutation surface is PUBLISHED and live** — ~144 `set*`/`change*`/`do*`/`create*`/`push*` defs across
+   `CvPythonPlayerLoader` / `CvPythonPlotLoader` / `CyGame` / `CyTeam` / `CyMap` / `CyArea` / `CyAct`. Nothing
+   about it landed later; it was never cut, because the cut was DIRECTIONAL and took the READ bindings only
+   ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)).
+   ⇒ **So a broken mutating handler is ORDINARY WORK: wire it.** Where the write it needs is not published yet
+   (the `CyCity` mutators are the live instance — that wrapper carries the identity set alone), the answer is to
+   ADD it to the surface that already exists, exactly as a missing READ is added to `CyState`. It is not a gap
+   to record and it is not a phase to wait for.
+   ⛔ **What "read surface by contract" actually constrains** is the *data-fetching library* (`CyInfo`/`CyState`/
+   `CyEnabler`): those answer questions and never mutate. That is a statement about THOSE classes, never a claim
+   that Python cannot write — and reading it as the second is the misreading that produced this entry.
    ⚖ **AND THE LINE IS *DEVELOP* vs *KEEP WORKING* (owner): what is banned is DEVELOPING game logic in Python.
    Keeping the EXISTING logic functional until it can be tackled properly is NOT banned.** So this is a
    SEQUENCING choice, never a prohibition on the behaviour: the effects are not being killed, they are waiting
@@ -447,6 +451,7 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)), and half-converting a handler so its
    arguments are ids while its body still calls a method that does not exist — which relocates the failure
    instead of fixing it, the same move the lazy screens made.
-   ⚠ Until the write surface lands they stay nonfunctioning, which means the handler RAISES and the event manager
-   logs it — the failure stays visible, which is the point. It is NOT to be silenced with a no-op body or a
-   swallowed exception, because a quiet handler is indistinguishable from a working one when the scope pass runs.
+   ⚠ A handler that is not yet wired RAISES and the event manager logs it — the failure stays visible, which is
+   the point. It is NOT to be silenced with a no-op body or a swallowed exception, because a quiet handler is
+   indistinguishable from a working one. ⛔ But "it raises" is the SIGNAL TO WIRE IT, never a resting state to
+   report: a raise you have seen and left is the skipped fix this entry now exists to stop.
