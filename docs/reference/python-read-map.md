@@ -74,7 +74,7 @@ overcounts by thousands. And the published surface no longer answers reads, so a
 | Lines | **105,512** |
 | Distinct methods called on any receiver | 3,244 |
 | Published `.def` names under `Sources/` | **1,172** |
-| **UNSERVED engine-shaped reads** | **1,292 names / 7,363 call sites** |
+| **UNSERVED engine-shaped reads** | **1,292 names / 7,359 call sites** |
 
 That last row is the whole Python→C++ read surface today, and it is the size of the gap the library is built
 toward answering; **it is an END STATE, never a gate on cutting**
@@ -139,7 +139,7 @@ Python defines itself and `CyGInterfaceScreen` accessors like `getXResolution` �
 reads nothing in the tree answers. **Both stand; use pedia-map's for the pedia's own work and this one when
 reconciling against the unserved total.**
 
-**Excluding the pedia, this census covers 6,783 unserved sites.**
+**Excluding the pedia, this census covers 6,779 unserved sites.**
 
 ## 2. ⚑ The owner's hypothesis: is the pedia a completeness oracle?
 
@@ -179,7 +179,7 @@ That residue is not homogeneous. Grouped by what it actually is:
 | Mutations on globals (`setDefineINT`, `changeDefineINT`) | 2 | 70 | **No** — a write. §4 MUTATION boundary. |
 | Engine HANDLE accessors (`getMap`, `getMapByIndex`, …) | 7 | 285 | **No** — object handles, not data. |
 | Global DEFINE / constant reads (`getMAX_PC_PLAYERS`, `getMAX_PLAYERS`, `getBARBARIAN_PLAYER`, …) | 6 | 350 | **Yes, but trivially** — a closed constants block. |
-| **Whole info TYPES with no pedia page** | **9** | **~68** | **YES — the real appendix (§2.3).** ⚠ Names + sites are the REMAINDER, counted off §2.3's own per-type figures; two of the nine carry no site count, so the sites column is a floor. |
+| **Whole info TYPES with no pedia page** | **2** | **~2** | **Nearly closed — see §2.3.** ⚠ The remainder is `GRAPHICOPTION_` + `PLAYEROPTION_`; the latter carries no site count, so the sites column is a floor. |
 | **Per-field reads on types the pedia DOES page** | **219** | **599** | **Partly — see 2.4.** |
 
 ### 2.3 The appendix that matters: the info types the pedia never touches
@@ -187,12 +187,15 @@ That residue is not homogeneous. Grouped by what it actually is:
 These types have **no pedia page at all**, so serving the pedia yields *nothing* for them — which is the sense
 in which the pedia under-specifies the library.
 
-**What is LEFT — nine registries the prefix plane does not route:**
+**What is LEFT — two registries the prefix plane does not route:** `GRAPHICOPTION_` (2) and `PLAYEROPTION_`.
 
-`CIVICOPTION_` (31) · `CULTURELEVEL_` (16) · `PROPERTY_` (4+6) · `BONUSCLASS_` (4) · `VOTE_` (3) ·
-`HURRY_` (2) · `GRAPHICOPTION_` (2) · `SPECIALUNIT_` · `PLAYEROPTION_` — plus the matching `getNum<X>Infos`
-counters. ⚑ `CIVICOPTION_` is the heaviest single item remaining in this appendix and is what
-`Contrib/DynamicCivNames.py` is blocked on (§6.3).
+⛔ **THE PREFIX PLANE HAS TWO HALVES, AND CHECKING ONLY ONE UNDER-REPORTS BADLY.** A JSON-backed registry is
+routed GENERICALLY by the `RJ_REPO_TYPES` table (`Data/CvReadJson.cpp`) that `rjInfoForTypeConst` dispatches
+through — it is never named in `CyInfo.cpp`. Only the XML-only registries are spelled out there
+(`cyi_xmlOnlyInfo`). ⚠ So a grep of `CyInfo.cpp` alone reports every JSON registry as unrouted, which is
+exactly wrong for the biggest ones: `CIVICOPTION_`, `CULTURELEVEL_`, `PROPERTY_`, `BONUSCLASS_`, `VOTE_`,
+`HURRY_` and `SPECIALUNIT_` are all routed and were all mis-reported here on one such grep. **Check BOTH
+tables, or check behaviour.**
 
 ⛔ **`ART_` is NOT on that list and is not a gap** — art is an untouched system boundary, JSON carries only the
 tag id and `ARTFILEMGR` keeps resolving it ([roadmap](../plans/structural-cleanup/roadmap.md) § scope
@@ -205,14 +208,13 @@ The four clusters this split into, and where each now stands:
    calls the wanted one (a named accessor per info TYPE, explicitly bound, so the module's bindings list IS its
    dependency list). ⚠ The map SCRIPTS themselves sit outside this library entirely (§7 ruling 1).
 2. **Game-configuration types** — `GameOptionInfo`, `MPOptionInfo`, `ForceControlInfo`, `CalendarInfo`,
-   `GameSpeedInfo` routed; `GraphicOptionsInfo` and `PlayerOptionsInfo` are the remainder. Consumed by
-   WorldBuilder, `pyWB`, the options screen and `RevolutionInit`.
-3. **Diplomacy / victory / vote types** — `VictoryInfo`, `VoteSourceInfo`, `AttitudeInfo`, `MemoryInfo`,
-   `DiplomacyInfo`, `EspionageMissionInfo` routed; **`VoteInfo` is the one hold-out**, which matters because
-   `CvVictoryScreen` reads votes and vote-sources together.
-4. **Command / UI-action types** — `ControlInfo`, `MissionInfo`, `ActionInfo`, `AdvisorInfo`, `EffectInfo`,
-   `ColorInfo`, `DomainInfo`, `UnitAIInfo` **all routed**; this cluster is done apart from `ArtInfo`, which is
-   the carve-out above.
+   `GameSpeedInfo`, `HandicapInfo` routed; **`GraphicOptionsInfo` and `PlayerOptionsInfo` are the whole of
+   what is left in this appendix.** Consumed by WorldBuilder, `pyWB`, the options screen and `RevolutionInit`.
+3. **Diplomacy / victory / vote types** — **all routed** (`VictoryInfo`, `VoteInfo`, `VoteSourceInfo`,
+   `AttitudeInfo`, `MemoryInfo`, `DiplomacyInfo`, `EspionageMissionInfo`).
+4. **Command / UI-action types** — **all routed**, apart from `ArtInfo`, which is the carve-out above.
+   ⚑ `CommandInfo` was the one genuine hole in this cluster and is now routed beside its `ControlInfo` sibling
+   on the fixed-enum half.
 
 **Note the overlap with the info rebuild's own scope:** `CvVictoryInfo`, `CvVoteInfo`, `CvHurryInfo`,
 `CvWorldInfo`, `CvHandicapInfo` and `CvProcessInfo` are all rebuilt types per
@@ -238,7 +240,7 @@ The pedia is **almost purely a static-info reader**: of its 934 unserved sites, 
 
 | Kind | Whole tree | Pedia | **Non-pedia** | Pedia's share |
 |---|--:|--:|--:|--:|
-| INFO | 1,480 | 411 | 1,069 | 27.8% |
+| INFO | 1,476 | 411 | 1,065 | 27.8% |
 | STATE | 769 | 1 | 768 | **0.1%** |
 | COMPUTED | 254 | 0 | 254 | **0%** |
 | MUTATION | 395 | 0 | 395 | **0%** |
@@ -258,11 +260,11 @@ unpaged info types, ~129 per-field reads concentrated in the Revolution stack, t
 the entire STATE / COMPUTED / MUTATION surface.** The stage-4 tick-list is therefore
 **pedia-map.md + §2.3 + §2.4 + §3 of this document**, not pedia-map.md alone.
 
-⚑ **The unpaged-types half of that verdict is now MOSTLY ANSWERED and the hypothesis held up where it mattered:**
-the prefix plane routes the map-generation, command/UI-action, and all but one of the diplomacy/victory/vote
-registries, so what is left is the nine of §2.3 — none of which is a new SHAPE, which is exactly what §2.1
-predicted. ⛔ What has NOT moved is the part the hypothesis was silent about (§2.5): STATE, COMPUTED and
-MUTATION are still where the bulk of the tree's traffic sits.
+⚑ **The unpaged-types half of that verdict is now ESSENTIALLY CLOSED, and the hypothesis held where it
+mattered:** the prefix plane routes every cluster bar two config registries (§2.3), and none of what it took
+was a new SHAPE — exactly what §2.1 predicted. ⛔ What has NOT moved is the part the hypothesis was silent
+about (§2.5): STATE, COMPUTED and MUTATION are still where the bulk of the tree's traffic sits, so "the
+appendix is nearly done" must not be read as "the library is nearly done".
 
 ## 3. Consumer families, ranked by weight
 
@@ -377,19 +379,19 @@ between STATE and COMPUTED moves, the totals do not.
 | Kind | Sites | Distinct names | Receivers |
 |---|--:|--:|---|
 | **other / UI widget** | 4,385 | 770 | `CyGInterfaceScreen` chrome and friends — **not this library's job** |
-| **(a) INFO — static data** | 1,480 | 358 | `GC.`/`gc.` info registry + `*Info` objects |
+| **(a) INFO — static data** | 1,476 | 358 | `GC.`/`gc.` info registry + `*Info` objects |
 | **(b) STATE — live game state** | 769 | 148 | city · player · plot · unit · team · game · area · deal |
 | **(d) MUTATION — writes** | 395 | 83 | same objects, `set*`/`change*`/`do*`/`create*`/… |
 | **(c) COMPUTED — verdicts/rates** | 254 | 68 | same objects, `can*`/`is*`/`AI_*`/`calculate*`/`find*`/`has*` |
 | **(e) TEXT — residue only** | 80 | 5 | text-manager receivers; the PLANE itself is excluded — below |
-| **Total** | **7,363** | 1,292 | |
+| **Total** | **7,359** | 1,292 | |
 
 ⚠ Distinct names do **not** sum down the column (1,432 > 1,292): one name reached on two receiver kinds counts
 in both. Sites do sum.
 
 ⚑ **`other / UI` now DOMINATES the remainder, and that is the shape to read the table by.** It is the one row
 the library explicitly does not own (screen chrome), so the residue is increasingly *not the library's work* —
-the three planes it does own (INFO + STATE + COMPUTED) are down to 2,503 sites between them.
+the three planes it does own (INFO + STATE + COMPUTED) are down to 2,499 sites between them.
 
 ⚠ **TEXT is absent by construction, not by being small** — `getText` is Python-defined, so §1.1's exclusion rule
 drops all **3,131** of its sites; the 80 above are only what other text-manager receivers leave behind. TEXT

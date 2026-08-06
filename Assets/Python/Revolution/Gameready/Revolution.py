@@ -4762,7 +4762,7 @@ class Revolution:
 			if termsAccepted:
 				if self.LOG_DEBUG: print "[REV] Revolt: Player opts to switch, lowering rev indices"
 				# Do switch
-				newCivicOption = GC.getCivicInfo( newCivic ).getCivicOptionType()
+				newCivicOption = INFO.civicOptions().getValue( newCivic )
 				pPlayer.setCivics( newCivicOption, newCivic )
 				iSpiritual = GC.getInfoTypeForString(RevDefs.sXMLSpiritual)
 				pPlayer.changeRevolutionTimer(5)

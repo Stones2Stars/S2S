@@ -266,6 +266,12 @@ class WBPlayerScreen:
 		iMaxRow = -1
 		iCurrentMaxRow = 0
 
+		#	ONE crossing each, hoisted OUT of the option loop: the whole civic registry, and the civic->option
+		#	column. The inner sweep below used to ask every civic its own option once per option -- the own-data
+		#	inversion ([DEC-one-reverse-view]), paid options x civics times.
+		kCivics = INFO.getIndex("CIVIC_")
+		kCivicOptions = INFO.civicOptions()
+
 		for iCivicOption in xrange(GC.getNumCivicOptionInfos()):
 			iColumn = iCivicOption % iColumns
 			iRow = iCurrentMaxRow
@@ -274,9 +280,9 @@ class WBPlayerScreen:
 				iMaxRow = iRow
 			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("CIVICOPTION_", iCivicOption) + "</font></color>"
 			screen.setTableText("WBPlayerCivics", iColumn, iRow, sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
-			for item in xrange(GC.getNumCivicInfos()):
-				ItemInfo = GC.getCivicInfo(item)
-				if ItemInfo.getCivicOptionType() != iCivicOption: continue
+			for kCivic in kCivics:
+				item = kCivic["id"]
+				if kCivicOptions.getValue(item) != iCivicOption: continue
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 				if pPlayer.isCivic(item):
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
@@ -286,7 +292,7 @@ class WBPlayerScreen:
 				if iRow > iMaxRow:
 					screen.appendTableRow("WBPlayerCivics")
 					iMaxRow = iRow
-				screen.setTableText("WBPlayerCivics", iColumn, iRow,"<font=3>" + sColor + ItemInfo.getDescription() + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 8205, item, 1<<0)
+				screen.setTableText("WBPlayerCivics", iColumn, iRow,"<font=3>" + sColor + kCivic["description"] + "</font></color>", kCivic["button"], WidgetTypes.WIDGET_PYTHON, 8205, item, 1<<0)
 			if iCivicOption % iColumns == iColumns -1 and iCivicOption < GC.getNumCivicOptionInfos() -1:
 				screen.appendTableRow("WBPlayerCivics")
 				iCurrentMaxRow = iMaxRow + 2
@@ -410,7 +416,7 @@ class WBPlayerScreen:
 		elif inputClass.getFunctionName() == "WBPlayerCivics":
 			iCivic = inputClass.getData2()
 			if pPlayer.canDoCivics(iCivic):
-				pPlayer.setCivics(GC.getCivicInfo(iCivic).getCivicOptionType(), iCivic)
+				pPlayer.setCivics(INFO.civicOptions().getValue(iCivic), iCivic)
 			self.interfaceScreen(iPlayer)
 
 		elif inputClass.getFunctionName() == "PlayerEditScriptData":

@@ -24,6 +24,7 @@
 #include "Infos/CvSpecialistInfo.h"
 #include "Infos/CvYieldInfo.h"
 #include "Infos/CvControlInfo.h"
+#include "Infos/CvCommandInfo.h"          // COMMAND_ -- the sibling fixed-enum registry beside CONTROL_
 //
 //	The XML-ONLY registries the identity dispatch serves. They are listed one per line, SPECIFICALLY, because a
 //	derived->base conversion needs the COMPLETE type -- an incomplete one fails to compile rather than silently
@@ -104,6 +105,7 @@ namespace
 		if (szTypePrefix == "YIELD_")       return iId < NUM_YIELD_TYPES     ? &GC.getYieldInfo((YieldTypes)iId) : NULL;
 		if (szTypePrefix == "COMMERCE_")    return iId < NUM_COMMERCE_TYPES  ? &GC.getCommerceInfo((CommerceTypes)iId) : NULL;
 		if (szTypePrefix == "CONTROL_")     return iId < NUM_CONTROL_TYPES   ? &GC.getControlInfo((ControlTypes)iId) : NULL;
+		if (szTypePrefix == "COMMAND_")     return iId < NUM_COMMAND_TYPES   ? &GC.getCommandInfo((CommandTypes)iId) : NULL;
 		if (szTypePrefix == "DOMAIN_")      return iId < NUM_DOMAIN_TYPES    ? &GC.getDomainInfo((DomainTypes)iId) : NULL;
 		if (szTypePrefix == "UNITAI_")      return iId < NUM_UNITAI_TYPES    ? &GC.getUnitAIInfo((UnitAITypes)iId) : NULL;
 		if (szTypePrefix == "ATTITUDE_")    return iId < NUM_ATTITUDE_TYPES  ? &GC.getAttitudeInfo((AttitudeTypes)iId) : NULL;
