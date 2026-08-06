@@ -18,6 +18,7 @@
 #include "Python/CyMessageControl.h"
 #include "Python/CyState.h"
 #include "Python/CyWorldInfo.h"
+#include "Python/CyGameSpeedInfo.h"
 #include "Python/CyPlayer.h"
 #include "Python/CyPlot.h"
 #include "Python/CyUnit.h"
@@ -115,6 +116,7 @@ DllExport void DLLPublishToPython()
 	// The PER-INFO accessors, for what belongs to ONE type. A script binds these BY NAME, so its bindings list is
 	// its dependency list ([patterns.md]: explicit imports, always -- you see what is used).
 	CyWorldInfo::pythonPublish();
+	CyGameSpeedInfo::pythonPublish();
 
 	// NOT the library, and not the banned surface: TXT is an UNMIGRATED SYSTEM BOUNDARY that stays, and Python
 	// screen chrome calls it directly (patterns.md § THE PYTHON READ BOUNDARY). It was collateral in the Cy

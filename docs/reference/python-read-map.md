@@ -207,6 +207,10 @@ The four clusters this split into, and where each now stands:
    the per-info accessor `CyWorldInfo` — the exemplar for the shape [patterns.md](../architecture/patterns.md)
    calls the wanted one (a named accessor per info TYPE, explicitly bound, so the module's bindings list IS its
    dependency list). ⚠ The map SCRIPTS themselves sit outside this library entirely (§7 ruling 1).
+   ⚑ **`CyGameSpeedInfo` is its sibling and shows when to mint one:** era pacing (`getTurnsInEra` /
+   `getEraStartTurn` / `getTicksPerTurnInEra` / `getTotalTurns`) belongs to ONE registry, so it is NAMED on that
+   type rather than hidden behind a generic slot read. ⛔ The bar for a new one is a live call site — all four
+   are earned by the TimeKeeper screen — never a pre-emptive mirror of the legacy field set.
 2. **Game-configuration types** — `GameOptionInfo`, `MPOptionInfo`, `ForceControlInfo`, `CalendarInfo`,
    `GameSpeedInfo`, `HandicapInfo` routed; **`GraphicOptionsInfo` and `PlayerOptionsInfo` are the whole of
    what is left in this appendix.** Consumed by WorldBuilder, `pyWB`, the options screen and `RevolutionInit`.
@@ -346,6 +350,21 @@ that needs the **complete per-type index across every registered type**, includi
 > mechanical dead-code test flags it. It is un-killed forward intent
 > ([DEC-keep-unkilled-ideas](../architecture/decisions.md#dec-keep-unkilled-ideas)), and the reason it looks dead
 > is recorded here precisely so the next sweep does not eat it.
+>
+> **⚑ AND IT IS NOT ALONE — `CvEventManager.onKbdEvent` HIDES A WHOLE DEV KEYMAP, THREE OF IT UNGATED.** The
+> owner did not know these existed, so they are named here once rather than rediscovered:
+>
+> | keys | screen | gated? |
+> |---|---|---|
+> | **Ctrl+F1** | Forgetful — the XML tag reference above | **no — ships to players** |
+> | **Ctrl+F2** | `GameFontScreen` — the font-symbol sheet | **no** |
+> | **Ctrl+F3** | `TimeKeeper` — the era x gamespeed pacing table | **no** |
+> | Ctrl+F4…F7 | replay · `DebugInfo` · `DanQuayle` · `UnVictory` | debug mode |
+> | Shift+T / W / E, Ctrl+Shift+P | techs cheat · wonder movie · effect viewer · change-player | debug mode |
+> | **Ctrl+Shift+Alt+D** | toggles DEBUG MODE itself | **no — so a player can unlock the gated half** |
+>
+> ⚠ The three ungated ones are shipped, reachable in any game, and therefore ordinary consumers of the read
+> surface rather than debug-only code a cut may ignore.
 > ⚑ **Its second job is why it is worth more than its player-facing value: it is the TEST HARNESS for the prefix
 > plane.** Being the one file that enumerates every registry, converting it exercises `INFO.getIndex` across all
 > of them at once — which is what surfaced `COMMAND_` as the single unrouted registry and what falsified a
