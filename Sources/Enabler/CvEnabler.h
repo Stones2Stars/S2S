@@ -80,6 +80,13 @@ public:
 	// listed = the FRESH OFFER (canConstruct bContinue=false): gate-passed AND not currently queued. The QUEUED
 	// overlay (FLAG_QUEUED, the enabler.md par.8 "!bContinue getFirstBuildingOrder exclusion") is a read-time
 	// filter, NOT a gate/membership reason -- kept separate so a CONTINUE check can see past it.
+	// ⛔ THE QUEUED OVERLAY IS A **BUILDING** RULE, AND UNITS MUST NEVER SET IT (owner: you can build multiple
+	// copies). A city holds at most ONE of a building, so queueing it withdraws the fresh offer; a UNIT stays
+	// trainable however many are queued or already built -- it leaves only on a CAP or a SUPERSESSION
+	// ([enabler.md] par.7.1: "the leave-rules differ per domain"). ⚠ `CvBuildingEnabler` is therefore the ONLY
+	// caller of setQueued, and that asymmetry is the DESIGN, not an unfinished half: wiring setQueued for units
+	// "for symmetry" would silently delete every queued unit from the frontier, and the AI production loops
+	// iterate exactly this list.
 	bool listed(int iId) const { return state(iId) == (unsigned char)STATE_LISTED && !isQueued(iId); }
 	// listedForContinue = the CONTINUE verdict (canConstruct bContinue=true): gate-passed, IGNORING the queued
 	// overlay. A building already in the queue IS queued by definition, so excluding it here would cancel every

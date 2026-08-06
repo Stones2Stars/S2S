@@ -153,6 +153,14 @@ public:
 	// reader never divides one ([DEC-fixedpoint-x100] scales AMOUNTS; these are counts).
 	python::list getCountdowns(int iPlayer, int iCity) const;
 	python::list getOrder(int iPlayer, int iCity) const;
+	//	Is this unit TYPE already somewhere in the city's build queue? A POINTED question about one candidate,
+	//	the `canUnitAcquirePromotion` shape -- getOrder answers only the HEAD order, so the queue cannot be
+	//	scanned from script.
+	//	⛔ IT IS NOT AN AVAILABILITY QUESTION, AND THE ENABLER MUST NOT ANSWER IT. A unit STAYS TRAINABLE while
+	//	queued, because you can build MANY copies ([enabler.md] par.7.1: "a building leaves the frontier when
+	//	built; a unit stays trainable") -- so the frontier rightly keeps offering it. What a RECOMMENDER wants is
+	//	the different question "am I about to nag about something already ordered", which is city STATE.
+	bool isUnitQueued(int iPlayer, int iCity, int iUnit) const;
 	python::list getGrowth(int iPlayer, int iCity) const;
 	python::list getCulture(int iPlayer, int iCity) const;
 	// The city's parameterless predicates, as ONE group (CityFlagKind) -- occupation, disorder, capital,

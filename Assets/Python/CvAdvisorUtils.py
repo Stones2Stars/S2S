@@ -312,14 +312,18 @@ def cityAdvise(CyCity, iPlayer):
 							iBestValue = 0
 							eBestUnit = -1
 
-							#	Iterate the ENABLER's maintained frontier, never the whole unit registry.
-							#	It answers what this city can actually train right now, and it already
-							#	EXCLUDES what is queued here ([enabler.md] par.6/par.8) -- so the old
-							#	canTrain call and the getFirstUnitOrder queue test are both subsumed, not
-							#	dropped.
+							#	Iterate the ENABLER's maintained frontier, never the whole unit registry --
+							#	it answers what this city can actually train, so canTrain is subsumed.
+							#	BUT a QUEUED unit is STILL offered, and must be: you can build multiple
+							#	copies, so a unit leaves the frontier only on a cap or supersession
+							#	([enabler.md] par.7.1 -- the leave-rules differ per domain). Not nagging
+							#	about what is already ordered is the RECOMMENDER's own concern, so it is
+							#	asked of the CITY, never of availability.
 							for iUnitX in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
 
 								if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+									continue
+								if STATE.isUnitQueued(iPlayer, CyCity.getID(), iUnitX):
 									continue
 
 								iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_SETTLE, CyArea)
@@ -351,8 +355,12 @@ def cityAdvise(CyCity, iPlayer):
 
 						if CyCity.AI_countBestBuilds(CyArea) > 3:
 							iBestValue = 0
+							#	A queued unit stays on the frontier by design (multiple copies), so the
+							#	'already ordered' suppression is the recommender's, asked of the city.
 							for iUnit in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
 								if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+									continue
+								if STATE.isUnitQueued(iPlayer, CyCity.getID(), iUnit):
 									continue
 
 								iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_WORKER, CyArea)
@@ -383,8 +391,9 @@ def cityAdvise(CyCity, iPlayer):
 						iBestValue = 0
 						eBestUnit = -1
 
-						#	The maintained frontier, not a registry sweep -- already gated, and already
-						#	without what is queued here ([enabler.md] par.6/par.8), so canTrain is subsumed.
+						#	The maintained frontier, not a registry sweep -- already gated, so canTrain is
+						#	subsumed. NO queued-suppression here, deliberately: this fires only when the
+						#	city has NO defender at all, and the legacy path did not suppress either.
 						for iUnit in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
 
 							if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:

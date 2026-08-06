@@ -417,6 +417,12 @@ python::list CyState::getOrder(int iPlayer, int iCity) const
 	return cys_toList(values);
 }
 
+bool CyState::isUnitQueued(int iPlayer, int iCity, int iUnit) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? (pCity->getFirstUnitOrder((UnitTypes)iUnit) != -1) : false;
+}
+
 python::list CyState::getGrowth(int iPlayer, int iCity) const
 {
 	PERF_SCOPE("CyState::getGrowth", -1);
@@ -1182,6 +1188,7 @@ void CyState::pythonPublish()
 		.def("getMilitaryHappinessUnits",&CyState::getMilitaryHappinessUnits)
 		.def("getCountdowns",            &CyState::getCountdowns)
 		.def("getOrder",                 &CyState::getOrder)
+		.def("isUnitQueued",             &CyState::isUnitQueued)
 		.def("getGrowth",                &CyState::getGrowth)
 		.def("getCulture",               &CyState::getCulture)
 		.def("getCityFlags",             &CyState::getCityFlags)

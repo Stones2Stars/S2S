@@ -121,6 +121,9 @@ void EnablerDomain::listedIds(std::vector<int>& out) const
 	{
 		// the FRESH OFFER: LISTED and not currently queued (FLAG_QUEUED overlay) -- the AI's production loops
 		// iterate only what they can newly START, exactly as canConstruct(bContinue=false) answers per id.
+		// ⚠ The overlay only ever bites on the BUILDING domain, because only that domain sets it: a UNIT stays
+		// trainable while queued (you can build multiple copies), so its ids are never filtered here. See the
+		// ruling at FLAG_QUEUED in CvEnabler.h before making this read look symmetric.
 		if (m_aState[iId] == (unsigned char)STATE_LISTED
 			&& (m_aFlags[iId] & (unsigned char)FLAG_QUEUED) == 0) out.push_back(iId);
 	}
