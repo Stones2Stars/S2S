@@ -273,7 +273,7 @@ class CvHallOfFameScreen:
 						replayInfo.getFinalScore(),
 						szVictory,
 						gc.getHandicapInfo(replayInfo.getDifficulty()).getDescription(),
-						gc.getWorldInfo(replayInfo.getWorldSize()).getDescription(),
+						INFO.getDescription("WORLD_", replayInfo.getWorldSize()),
 						gc.getEraInfo(replayInfo.getEra()).getDescription(),
 						INFO.getDescription("GAMESPEED_", replayInfo.getGameSpeed()),
 						i)

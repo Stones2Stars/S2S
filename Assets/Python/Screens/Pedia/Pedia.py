@@ -602,7 +602,7 @@ class Pedia:
 					szSubCatSimple = szSubCat
 					bFuncBySubCatSimple = True
 					bNewConcept = True
-					szInfoType = GC.getNewConceptInfo(iObjectType).getType()
+					szInfoType = INFO.getType("NEWCONCEPT_", iObjectType)
 					print "Selected concept type %s" %(szInfoType)
 					if szInfoType.find("STRATEGY") != -1:
 						szSubCat = self.mapSubCat.get(iCategory)[2]
@@ -631,7 +631,7 @@ class Pedia:
 			panelName = self.getNextWidgetName()
 			screen.addPanel(panelName, "", "", True, True, self.X_PEDIA_PAGE, self.Y_PEDIA_PAGE, self.W_PEDIA_PAGE, self.H_PEDIA_PAGE, PanelStyles.PANEL_STYLE_BLUE50)
 			if bNewConcept:
-				szText = GC.getNewConceptInfo(iObjectType).getCivilopedia()
+				szText = INFO.getCivilopedia("NEWCONCEPT_", iObjectType)
 			else:
 				szText = INFO.getCivilopedia("CONCEPT_", iObjectType)
 			screen.attachMultilineText(panelName, "", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
@@ -1605,7 +1605,7 @@ class Pedia:
 				elif "CONCEPT" in szSplit:
 					self.tooltip.handle(screen, INFO.getDescription("CONCEPT_", ID))
 				elif "CONCEPT_NEW" in szSplit:
-					self.tooltip.handle(screen, GC.getNewConceptInfo(ID).getDescription())
+					self.tooltip.handle(screen, INFO.getDescription("NEWCONCEPT_", ID))
 				return 1
 			return
 

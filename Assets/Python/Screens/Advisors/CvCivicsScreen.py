@@ -330,7 +330,7 @@ class CvCivicsScreen:
 		else:
 			iCivicOption = 0
 			for civics in CivicData.civicLists:
-				for _, iCivicX in civics:
+				for iCivicX in civics:
 					if iCivicX == iCivic:
 						iCivic = self.originalCivics[iCivicOption]
 						szTxt += self.aFontList[1] + INFO.getDescription("CIVIC_", iCivic) + "\n"
@@ -347,7 +347,7 @@ class CvCivicsScreen:
 		iCivicOption = 0
 		for civics in CivicData.civicLists:
 			iCount = 0
-			for _, iCivicX in civics:
+			for iCivicX in civics:
 				if iCivicX == iCivic:
 					iCivicY = self.currentCivics[iCivicOption]
 					if self.iType:

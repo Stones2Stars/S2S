@@ -27,6 +27,7 @@ TRNSLTR = CyTranslator()
 
 
 TEXT = CyGameTextMgr()
+WORLD = CyWorldInfo()
 def isLocalHumanPlayer(iPlayer):
 	CyPlayer = GC.getPlayer(iPlayer)
 	return (CyPlayer.isHuman() or CyPlayer.isHumanDisabled()) and GAME.getActivePlayer() == iPlayer and not GAME.getAIAutoPlay(iPlayer)
@@ -35,7 +36,7 @@ def isLocalHumanPlayer(iPlayer):
 ######## BLESSED SEA ###########
 
 def getHelpBlessedSea1(argsList):
-	iOurMinLandmass = (3 * GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()) / 2
+	iOurMinLandmass = (3 * WORLD.getDefaultPlayers(GC.getMap().getWorldSize())) / 2
 	return TRNSLTR.getText("TXT_KEY_EVENT_BLESSED_SEA_HELP", (iOurMinLandmass, ))
 
 def canTriggerBlessedSea(argsList):
@@ -45,7 +46,7 @@ def canTriggerBlessedSea(argsList):
 	if GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY):
 		return False
 
-	iMapMinLandmass = 2 * GC.getWorldInfo(MAP.getWorldSize()).getDefaultPlayers()
+	iMapMinLandmass = 2 * WORLD.getDefaultPlayers(MAP.getWorldSize())
 	iOurMaxLandmass = iMapMinLandmass / 4
 
 	if (MAP.getNumLandAreas() < iMapMinLandmass):
@@ -72,7 +73,7 @@ def canTriggerBlessedSea(argsList):
 def canTriggerBlessedSea2(argsList):
   data = argsList[0]
   map = GC.getMap()
-  iOurMinLandmass = (3 * GC.getWorldInfo(map.getWorldSize()).getDefaultPlayers()) / 2
+  iOurMinLandmass = (3 * WORLD.getDefaultPlayers(map.getWorldSize())) / 2
 
   iOurLandmasses = 0
   for area in map.areas():
@@ -145,7 +146,7 @@ def getHelpHolyMountain1(argsList):
 				iBuilding = i
 				break
 
-		iMinPoints = 2 * GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+		iMinPoints = 2 * WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 		szHelp = TRNSLTR.getText("TXT_KEY_EVENT_HOLY_MOUNTAIN_PART_1_HELP", (iMinPoints, ))
 		if iBuilding != -1:
 			szHelp += TRNSLTR.getText("TXT_KEY_EVENT_HOLY_MOUNTAIN_PART_2_HELP", ( INFO.getTextKey("BUILDING_", iBuilding), ))
@@ -222,7 +223,7 @@ def canTriggerHolyMountainRevealed(argsList):
 				iPoints += CyPlayer.countNumBuildings(i)
 
 	MAP = GC.getMap()
-	if iPoints < 2 * GC.getWorldInfo(MAP.getWorldSize()).getDefaultPlayers():
+	if iPoints < 2 * WORLD.getDefaultPlayers(MAP.getWorldSize()):
 		return False
 	# No reason not to do this here when we already have the player and map objects.
 	MAP.plot(dataOriginal.iPlotX, dataOriginal.iPlotY).setRevealed(CyPlayer.getTeam(), True, True, -1)
@@ -529,7 +530,7 @@ def canTriggerHurricaneCity(argsList):
 	if CyCity is None:
 		return False
 
-	if not CyCity.isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()):
+	if not CyCity.isCoastal(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
 		return False
 
 	iLat = CyCity.plot().getLatitude()
@@ -592,7 +593,7 @@ def canTriggerCycloneCity(argsList):
 	if CyCity is None:
 		return False
 
-	if not CyCity.isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()):
+	if not CyCity.isCoastal(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
 		return False
 
 	iLat = CyCity.plot().getLatitude()
@@ -607,7 +608,7 @@ def canTriggerTsunamiCity(argsList):
   ePlayer = argsList[1]
   iCity = argsList[2]
   city = GC.getPlayer(ePlayer).getCity(iCity)
-  if city is None or not city.isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()):
+  if city is None or not city.isCoastal(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
     return False
   return True
 
@@ -662,7 +663,7 @@ def canTriggerMonsoonCity(argsList):
 
   city = GC.getPlayer(ePlayer).getCity(iCity)
 
-  if city is None or city.isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()):
+  if city is None or city.isCoastal(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
     return False
 
   iJungleType = GC.getFEATURE_JUNGLE()
@@ -1888,16 +1889,16 @@ def canTriggerHorseWhispering(argsList):
 	return not GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY)
 
 def getHelpHorseWhispering1(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_HORSE_WHISPERING_HELP", (GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_HORSE_WHISPERING_HELP", (WORLD.getDefaultPlayers(GC.getMap().getWorldSize()), ))
 
 def canTriggerHorseWhisperingDone(argsList):
 	return (
-		GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() <=
+		WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) <=
 		GC.getPlayer(argsList[0].ePlayer).getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_STABLE"))
 	)
 
 def getHelpHorseWhisperingDone1(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_HORSE_WHISPERING_DONE_HELP_1", (GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_HORSE_WHISPERING_DONE_HELP_1", (WORLD.getDefaultPlayers(GC.getMap().getWorldSize()), ))
 
 def applyHorseWhisperingDone1(argsList):
 	data = argsList[1]
@@ -1908,7 +1909,7 @@ def applyHorseWhisperingDone1(argsList):
 	x = plot.getX()
 	y = plot.getY()
 	iUnit = GC.getInfoTypeForString("UNIT_HORSE_ARCHER")
-	iCount = GC.getWorldInfo(MAP.getWorldSize()).getDefaultPlayers()
+	iCount = WORLD.getDefaultPlayers(MAP.getWorldSize())
 	while iCount > 0:
 		CyPlayer.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 		iCount -= 1
@@ -1916,7 +1917,7 @@ def applyHorseWhisperingDone1(argsList):
 ######## HARBORMASTER ###########
 
 def getHelpHarbormaster1(argsList):
-	iHarborsRequired = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	iHarborsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 	iCaravelsRequired = iHarborsRequired / 2 + 1
 	return TRNSLTR.getText("TXT_KEY_EVENT_HARBORMASTER_HELP", (iHarborsRequired, iCaravelsRequired))
 
@@ -1945,7 +1946,7 @@ def canTriggerHarbormasterDone(argsList):
   player = GC.getPlayer(data.ePlayer)
 
   iHarbor = GC.getInfoTypeForString("BUILDING_PORT")
-  iHarborsRequired = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+  iHarborsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
   if iHarborsRequired > player.getBuildingCountWithUpgrades(iHarbor):
     return False
 
@@ -1961,11 +1962,11 @@ def canTriggerClassicLiterature(argsList):
 	return not GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY)
 
 def getHelpClassicLiterature1(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_CLASSIC_LITERATURE_HELP_1", (GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_CLASSIC_LITERATURE_HELP_1", (WORLD.getDefaultPlayers(GC.getMap().getWorldSize()), ))
 
 def canTriggerClassicLiteratureDone(argsList):
 	return (
-		GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() <=
+		WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) <=
 		GC.getPlayer(argsList[0].ePlayer).getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_LIBRARY"))
 	)
 
@@ -1976,10 +1977,8 @@ def canApplyClassicLiteratureDone2(argsList):
 	player = GC.getPlayer(argsList[1].ePlayer)
 	iEraAncient = GC.getInfoTypeForString("C2C_ERA_ANCIENT")
 
-	team = GC.getTeam(player.getTeam())
-	for i in xrange(team.getNumAdjacentResearch()):
-		iTechX = team.getAdjacentResearch(i)
-		if INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_ERA) == iEraAncient and player.canResearch(iTechX, True, True):
+	for iTechX in ENABLER.getAvailableTechs(player.getID()):
+		if INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_ERA) == iEraAncient:
 			return True
 	return False
 
@@ -1990,10 +1989,8 @@ def applyClassicLiteratureDone2(argsList):
 	iEraAncient = GC.getInfoTypeForString("C2C_ERA_ANCIENT")
 
 	listTechs = []
-	team = GC.getTeam(player.getTeam())
-	for i in xrange(team.getNumAdjacentResearch()):
-		iTechX = team.getAdjacentResearch(i)
-		if INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_ERA) == iEraAncient and player.canResearch(iTechX, True, True):
+	for iTechX in ENABLER.getAvailableTechs(player.getID()):
+		if INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_ERA) == iEraAncient:
 			listTechs.append(iTechX)
 
 	if listTechs:
@@ -2036,7 +2033,7 @@ def getHelpMasterBlacksmith1(argsList):
 		TRNSLTR.getText(
 			"TXT_KEY_EVENT_MASTER_BLACKSMITH_HELP_1",
 			(
-				GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(),
+				WORLD.getDefaultPlayers(GC.getMap().getWorldSize()),
 				GC.getPlayer(argsList[1].ePlayer).getCity(argsList[1].iCityId).getNameKey()
 			)
 		)
@@ -2051,7 +2048,7 @@ def canTriggerMasterBlacksmithDone(argsList):
 	data = argsList[0]
 	player = GC.getPlayer(data.ePlayer)
 
-	if GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() > player.getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_FORGE")):
+	if WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) > player.getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_FORGE")):
 		return False
 
 	prereqEventData = player.getEventOccured(GC.getEventTriggerInfo(data.eTrigger).getPrereqEvent(0))
@@ -2123,7 +2120,7 @@ def canTriggerBestDefense(argsList):
 	return not GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY)
 
 def getHelpBestDefense1(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_BEST_DEFENSE_HELP_1", (GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_BEST_DEFENSE_HELP_1", (WORLD.getDefaultPlayers(GC.getMap().getWorldSize()), ))
 
 def canTriggerBestDefenseDone(argsList):
   data = argsList[0]
@@ -2131,7 +2128,7 @@ def canTriggerBestDefenseDone(argsList):
   player = GC.getPlayer(data.ePlayer)
 
   iCastle = GC.getInfoTypeForString("BUILDING_CASTLE")
-  iBuildingsRequired = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+  iBuildingsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
   if iBuildingsRequired > player.getBuildingCountWithUpgrades(iCastle):
     return False
 
@@ -2169,7 +2166,7 @@ def getHelpSportsLeague1(argsList):
 		TRNSLTR.getText(
 			"TXT_KEY_EVENT_SPORTS_LEAGUE_HELP_1",
 			(
-				GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(),
+				WORLD.getDefaultPlayers(GC.getMap().getWorldSize()),
 				INFO.getTextKey("BUILDING_", GC.getInfoTypeForString("BUILDING_CIRCUS_MAXIMUS"))
 			)
 		)
@@ -2181,7 +2178,7 @@ def canTriggerSportsLeagueDone(argsList):
   player = GC.getPlayer(data.ePlayer)
 
   iColosseum = GC.getInfoTypeForString("BUILDING_COLOSSEUM")
-  iBuildingsRequired = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+  iBuildingsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
   if iBuildingsRequired > player.getBuildingCountWithUpgrades(iColosseum):
     return False
 
@@ -2257,7 +2254,7 @@ def canTriggerCrusadeDone(argsList):
 def getHelpCrusadeDone1(argsList):
 	holyCity = GAME.getHolyCity(argsList[1].eReligion)
 	szUnit = INFO.getTextKey("UNIT_", holyCity.getConscriptUnit())
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() / 2 + 1
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) / 2 + 1
 
 	return TRNSLTR.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_1", (iNumUnits, szUnit, holyCity.getNameKey()))
 
@@ -2273,7 +2270,7 @@ def applyCrusadeDone1(argsList):
 
 	if iUnitType != -1:
 		player = GC.getPlayer(data.ePlayer)
-		for i in xrange(GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() / 2 + 1):
+		for i in xrange(WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) / 2 + 1):
 			player.initUnit(iUnitType, holyCity.getX(), holyCity.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
 
 def getHelpCrusadeDone2(argsList):
@@ -2307,12 +2304,12 @@ def applyCrusadeDone2(argsList):
 
 def getHelpCrusadeDone3(argsList):
 	data = argsList[1]
-	iNumCities = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	iNumCities = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 	return TRNSLTR.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_3", (INFO.getTextKey("RELIGION_", data.eReligion), iNumCities))
 
 def canApplyCrusadeDone3(argsList):
 	data = argsList[1]
-	#iNumCities = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	#iNumCities = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 	if GAME.getNumCities() == GAME.countReligionLevels(data.eReligion):
 		return False
 	return True
@@ -2332,7 +2329,7 @@ def applyCrusadeDone3(argsList):
 
   listCities.sort(key=itemgetter(0))
 
-  iNumCities = min(GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(), len(listCities))
+  iNumCities = min(WORLD.getDefaultPlayers(GC.getMap().getWorldSize()), len(listCities))
 
   for i in xrange(iNumCities):
     iDistance, loopCity = listCities[i]
@@ -2518,7 +2515,7 @@ def getHelpGreedDone1(argsList):
 	CyPlayer = GC.getPlayer(data.ePlayer)
 	CyPlot = GC.getMap().plot(data.iPlotX, data.iPlotY)
 
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 	iUnitType = getGreedUnit(CyPlayer, CyPlot)
 	szHelp = ""
 
@@ -2532,7 +2529,7 @@ def applyGreedDone1(argsList):
 	CyPlot = GC.getMap().plot(data.iPlotX, data.iPlotY)
 
 	iUnitType = getGreedUnit(CyPlayer, CyPlot)
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 
 	for i in xrange(iNumUnits):
 		CyPlayer.initUnit(iUnitType, CyPlot.getX(), CyPlot.getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
@@ -2550,7 +2547,7 @@ def canTriggerWarChariots(argsList):
   return True
 
 def getHelpWarChariots1(argsList):
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
 	return TRNSLTR.getText("TXT_KEY_EVENT_WAR_CHARIOTS_HELP_1", (iNumUnits, ))
 
 def canTriggerWarChariotsDone(argsList):
@@ -2558,7 +2555,7 @@ def canTriggerWarChariotsDone(argsList):
   trigger = GC.getEventTriggerInfo(data.eTrigger)
   player = GC.getPlayer(data.ePlayer)
 
-  iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
+  iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
 
   if player.getUnitCount(GC.getInfoTypeForString("UNIT_CHARIOT")) < iNumUnits:
     return False
@@ -2572,14 +2569,14 @@ def canTriggerWarChariotsDone(argsList):
 ######## ELITE SWORDSMEN ###########
 
 def getHelpEliteSwords1(argsList):
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 5
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 5
 	return TRNSLTR.getText("TXT_KEY_EVENT_ELITE_SWORDS_HELP_1", (iNumUnits, ))
 
 def canTriggerEliteSwordsDone(argsList):
   data = argsList[0]
   player = GC.getPlayer(data.ePlayer)
 
-  iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 5
+  iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 5
   iUnit1 = GC.getInfoTypeForString("UNIT_LIGHT_SWORDSMAN")
   iUnit2 = GC.getInfoTypeForString("UNIT_SWORDSMAN")
   iUnit3 = GC.getInfoTypeForString("UNIT_HEAVY_SWORDSMAN")
@@ -2607,7 +2604,7 @@ def canTriggerWarships(argsList):
   return False
 
 def getHelpWarships1(argsList):
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 	iBuilding = GC.getInfoTypeForString("BUILDING_THE_GREAT_LIGHTHOUSE")
 	return TRNSLTR.getText("TXT_KEY_EVENT_WARSHIPS_HELP_1", (iNumUnits, INFO.getTextKey("BUILDING_", iBuilding)))
 
@@ -2615,7 +2612,7 @@ def canTriggerWarshipsDone(argsList):
   data = argsList[0]
   player = GC.getPlayer(data.ePlayer)
 
-  iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+  iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 
   if player.getUnitCount(GC.getInfoTypeForString("UNIT_TRIREME")) < iNumUnits:
     return False
@@ -2636,14 +2633,14 @@ def canApplyWarshipsDone2(argsList):
 ######## GUNS NOT BUTTER ###########
 
 def getHelpGunsButter1(argsList):
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
 	iBuilding = GC.getInfoTypeForString("BUILDING_TAJ_MAHAL")
 
 	return TRNSLTR.getText("TXT_KEY_EVENT_GUNS_BUTTER_HELP_1", (iNumUnits, INFO.getTextKey("BUILDING_", iBuilding)))
 
 def canTriggerGunsButterDone(argsList):
 	data = argsList[0]
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
 	return GC.getPlayer(data.ePlayer).getUnitCount(GC.getInfoTypeForString("UNIT_MUSKETMAN")) >= iNumUnits
 
 
@@ -2673,7 +2670,7 @@ def canTriggerNobleKnights(argsList):
   return True
 
 def getHelpNobleKnights1(argsList):
-	iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
+	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
 	iBuilding = GC.getInfoTypeForString("BUILDING_THE_ORACLE")
 	return TRNSLTR.getText("TXT_KEY_EVENT_NOBLE_KNIGHTS_HELP_1", (iNumUnits, INFO.getTextKey("BUILDING_", iBuilding)))
 
@@ -2681,7 +2678,7 @@ def canTriggerNobleKnightsDone(argsList):
   data = argsList[0]
   player = GC.getPlayer(data.ePlayer)
 
-  iNumUnits = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
+  iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
 
   if player.getUnitCount(GC.getInfoTypeForString("UNIT_KNIGHT")) < iNumUnits:
     return False
@@ -2825,7 +2822,7 @@ def expireCorporateExpansion1(argsList):
 
 def getHelpCorporateExpansion1(argsList):
 	data = argsList[1]
-	iNumCities = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1
+	iNumCities = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
 	return TRNSLTR.getText("TXT_KEY_EVENT_CORPORATE_EXPANSION_HELP_1", (INFO.getTextKey("CORPORATION_", data.eCorporation), iNumCities))
 
 def canTriggerCorporateExpansionDone(argsList):
@@ -2834,7 +2831,7 @@ def canTriggerCorporateExpansionDone(argsList):
   trigger = GC.getEventTriggerInfo(data.eTrigger)
   kOrigTriggeredData = player.getEventOccured(trigger.getPrereqEvent(0))
 
-  iNumCitiesRequired = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers() + 1 + kOrigTriggeredData.iOtherPlayerCityId
+  iNumCitiesRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1 + kOrigTriggeredData.iOtherPlayerCityId
 
   if iNumCitiesRequired > GAME.countCorporationLevels(kOrigTriggeredData.eCorporation):
     return False
@@ -3497,7 +3494,7 @@ def canTriggerAlternativeEnergy(argsList):
 
 
 def getHelpAlternativeEnergy1(argsList):
-	return TRNSLTR.getText("TXT_KEY_EVENT_ALTERNATIVE_ENERGY_HELP_1", (GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(), ))
+	return TRNSLTR.getText("TXT_KEY_EVENT_ALTERNATIVE_ENERGY_HELP_1", (WORLD.getDefaultPlayers(GC.getMap().getWorldSize()), ))
 
 def expireAlternativeEnergy1(argsList):
 	return GC.getPlayer(argsList[1].ePlayer).getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_THREE_GORGES_DAM"))
@@ -3512,7 +3509,7 @@ def canTriggerAlternativeEnergyDone(argsList):
 	iNuke = GC.getInfoTypeForString("BUILDING_NUCLEAR_PLANT")
 	iHydro = GC.getInfoTypeForString("BUILDING_HYDRO_PLANT")
 	iTotal = iNuke+iHydro
-	iBuildingsRequired = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	iBuildingsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 
 	if iBuildingsRequired > (pPlayer.getBuildingCountWithUpgrades(iHydro) + pPlayer.getBuildingCountWithUpgrades(iNuke)):
 		return False
@@ -4745,7 +4742,7 @@ def canTriggerSailingFounded(argsList):
   if city is None:
     return False
 
-  if not city.isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()):
+  if not city.isCoastal(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
     return False
 
   if city.plot().getLatitude() <= 0:

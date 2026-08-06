@@ -671,7 +671,7 @@ class CvEventManager:
 				if CyPlayer.hasBuilding(iBuilding):
 					aList4[k] = iPlayer
 					for CyCity in CyPlayer.cities():
-						if CyCity.hasBuilding(iBuilding):
+						if STATE.getBuildingInCity(iPlayer, CyCity.getID(), iBuilding)[CityBuildingRead.CITY_BUILDING_HAS]:
 							aList3[k] = CyCity.getID()
 							break
 		# Get rid of wonders that is lost when a city is razed.

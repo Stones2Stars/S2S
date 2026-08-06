@@ -3,6 +3,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
 INFO = CyInfo()
+WORLD = CyWorldInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 
@@ -976,7 +977,7 @@ class TerrainGenerator:
 		self.GC = CyGlobalContext()
 		self.map = CyMap()
 
-		grain_amount += self.GC.getWorldInfo(self.map.getWorldSize()).getTerrainGrainChange()
+		grain_amount += WORLD.getTerrainGrainChange(self.map.getWorldSize())
 
 		self.grain_amount = grain_amount
 
@@ -1181,7 +1182,7 @@ class FeatureGenerator:
 		self.iJunglePercent = iJunglePercent
 		self.iForestPercent = iForestPercent
 
-		iFeatureGrain = GC.getWorldInfo(MAP.getWorldSize()).getFeatureGrainChange()
+		iFeatureGrain = WORLD.getFeatureGrainChange(MAP.getWorldSize())
 
 		self.jungle_grain = jungle_grain + iFeatureGrain
 		self.forest_grain = forest_grain + iFeatureGrain

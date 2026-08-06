@@ -24,6 +24,7 @@ STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
+WORLD = CyWorldInfo()
 
 class BarbarianCiv:
 
@@ -387,7 +388,7 @@ class BarbarianCiv:
 	def getCloseCivs(self, iPlayer, CyArea, iX, iY):
 		closeTeams = []
 		iTemp = self.RevOpt.getCloseDist()
-		iTemp *= GC.getWorldInfo(MAP.getWorldSize()).getDefaultPlayers() - 1
+		iTemp *= WORLD.getDefaultPlayers(MAP.getWorldSize()) - 1
 		for iPlayerX in xrange(self.MAX_PC_PLAYERS):
 			if iPlayerX == iPlayer: continue
 			if CyArea.getCitiesPerPlayer(iPlayerX) > 0:
@@ -635,7 +636,7 @@ class BarbarianCiv:
 
 		odds += iTemp # Value from contact with other minor civs.
 		odds += 12*iCities + CyPlayer.getTotalPopulation() + 32*CyPlayer.countHolyCities()
-		odds += CyPlayer.getNumMilitaryUnits()/(4*GC.getWorldInfo(GC.getMap().getWorldSize()).getTargetNumCities())
+		odds += CyPlayer.getNumMilitaryUnits()/(4*WORLD.getTargetNumCities(GC.getMap().getWorldSize()))
 		odds += 4*CyPlayer.getWondersScore() # 20 points per wonder, see getWonderScore in CvGameCoreUtils.cpp.
 		if odds < 512: return
 
@@ -675,7 +676,7 @@ class BarbarianCiv:
 
 			# Pickup nearby barb cities, search a 4x area if in new world.
 			iAreaID = CyArea.getID()
-			iMaxDistance = (iHighestEra + 10) * (1 + 3*bNewWorld) * GC.getWorldInfo(MAP.getWorldSize()).getDefaultPlayers() / 8
+			iMaxDistance = (iHighestEra + 10) * (1 + 3*bNewWorld) * WORLD.getDefaultPlayers(MAP.getWorldSize()) / 8
 			CyPlayerBarb = GC.getPlayer(iPlayerBarb)
 			aList = ()
 			for cityX in CyPlayerBarb.cities():

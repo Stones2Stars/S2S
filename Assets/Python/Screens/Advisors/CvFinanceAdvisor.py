@@ -137,8 +137,9 @@ class CvFinanceAdvisor:
 		############
 		iCommerce = iTiles = iYield0 = iYield1 = iYield2 = iYield3 = iYield4 = 0
 		iTeam = CyPlayer.getTeam()
+		iPlayerID = CyPlayer.getID()
 		for CyCity in CyPlayer.cities():
-			if not CyCity.isDisorder():
+			if not STATE.getCityFlags(iPlayerID, CyCity.getID())[CityFlagKind.CITY_FLAG_DISORDER]:
 				# Work plots
 				for j in range(GC.getNUM_CITY_PLOTS()):
 					CyPlot = CyCity.getCityIndexPlot(j)
@@ -322,7 +323,7 @@ class CvFinanceAdvisor:
 		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2, uFont1b, uFont1 = self.aFontList
 		iconCommerceList = self.iconCommerceList
 		CyPlayer = self.CyPlayer
-		iIncome = CyPlayer.getCommerceRate(eComGold)
+		iIncome = STATE.getCommerces(CyPlayer.getID(), -1)[eComGold] / 100
 
 		# Treasury footer
 		szTxt = self.szTreasury
@@ -436,8 +437,9 @@ class CvFinanceAdvisor:
 		iWealthCount = 0
 		fWealth = 0.0
 		eWealth = GC.getInfoTypeForString("PROCESS_WEALTH")
+		iPlayerID = CyPlayer.getID()
 		for CyCity in CyPlayer.cities():
-			if not CyCity.isDisorder():
+			if not STATE.getCityFlags(iPlayerID, CyCity.getID())[CityFlagKind.CITY_FLAG_DISORDER]:
 				fCityTaxes = CyCity.getYieldRate(YieldTypes.YIELD_COMMERCE) * iTaxRate / 100.0
 				fTaxes += fCityTaxes
 

@@ -2205,25 +2205,24 @@ class CvMainInterface:
 				iCount = 0
 				xStart = xywh[0] + 8
 				aMap = self.aRel2TechMap
-				team = self.CyTeam
-				for i in xrange(team.getNumAdjacentResearch()):
-					iTechX = team.getAdjacentResearch(i)
-					# Toffer - canResearch can fail as adjacent research is cached even...
-					#	if special requirements like building requirements are not met.
-					if player.canResearch(iTechX, True, True):
-						szName = "WID|TECH|Selection" + str(iTechX)
-						# The tech's own button, from the info library by infotype prefix. ⚠ BEHAVIOUR CHANGE,
-						# stated rather than hidden: a religion-founding tech used to show the RELIGION's own
-						# tech-tree art (ui.art.techButton / genericTechButton). That art is still authored and
-						# the info still serves it -- what is missing is a Python route to a per-type art slot,
-						# which is a shape decision rather than a getter to mint here.
-						artPath = INFO.getButton("TECH_", iTechX)
-						# Set the selection button position
-						x = xStart + 50 * (iCount % iNumTechBtnPerRow)
-						y = 50 * (iCount / iNumTechBtnPerRow)
-						screen.setImageButton(szName, artPath, x, y, 48, 48, eWidGen, 0, 0)
-						aList.append(szName)
-						iCount += 1
+				# The enabler's maintained LISTED set IS "what may be researched now" -- the gate is already
+				# applied, so no second verdict is asked here. It also retires the stale-cache caveat the old
+				# adjacent-research list carried: the frontier is kept current by the facts, never cached behind
+				# a condition it cannot see.
+				for iTechX in ENABLER.getAvailableTechs(self.iPlayer):
+					szName = "WID|TECH|Selection" + str(iTechX)
+					# The tech's own button, from the info library by infotype prefix. ⚠ BEHAVIOUR CHANGE,
+					# stated rather than hidden: a religion-founding tech used to show the RELIGION's own
+					# tech-tree art (ui.art.techButton / genericTechButton). That art is still authored and
+					# the info still serves it -- what is missing is a Python route to a per-type art slot,
+					# which is a shape decision rather than a getter to mint here.
+					artPath = INFO.getButton("TECH_", iTechX)
+					# Set the selection button position
+					x = xStart + 50 * (iCount % iNumTechBtnPerRow)
+					y = 50 * (iCount / iNumTechBtnPerRow)
+					screen.setImageButton(szName, artPath, x, y, 48, 48, eWidGen, 0, 0)
+					aList.append(szName)
+					iCount += 1
 				self.shownResearchSelection = aList
 				return
 			else:
@@ -5471,12 +5470,15 @@ class CvMainInterface:
 						self.updateTooltip(screen, szTxt)
 					elif TYPE == "PROCESS":
 						y = self.yBotBar + 12
-						CvProcessInfo = GC.getProcessInfo(iType)
 						eYieldProd = YieldTypes.YIELD_PRODUCTION
 						fProd = STATE.getYields(iCityOwner, iCityID)[eYieldProd] / 100.0
-						szTxt = CvProcessInfo.getDescription()
+						szTxt = INFO.getDescription("PROCESS_", iType)
+						# The WHOLE conversion group in one crossing. Only the CITY scope answers it -- the
+						# conversion is the city's hammers-fold ([modifier.md] 2a, the EXTRA leg
+						# `production x prodToCommerce`).
+						aConversion = INFO.getProductionToCommerce("PROCESS_", iType, CascScope.CASC_SCOPE_CITY)
 						for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-							iValue = CvProcessInfo.getProductionToCommerceModifier(i)
+							iValue = aConversion[i]
 							if not iValue: continue
 							szTxt += "\n" + TRNSLTR.getText("TXT_KEY_PROCESS_CONVERTS", (iValue, TEXT.getSymbolChar("YIELD_", eYieldProd), TEXT.getSymbolChar("COMMERCE_", i)),)
 							szTxt += r" -> " + "%.1f" %(fProd * iValue)

@@ -24,7 +24,7 @@ class CvDiplomacy:
 
 	def determineResponses(self, eComment):
 		"Will determine the user responses given an AI comment"
-		szType = GC.getDiplomacyInfo(eComment).getType()
+		szType = INFO.getType("DIPLOMACY_", eComment)
 		if DebugLogging:
 			print "CvDiplomacy.determineResponses: \n\t%s\n\t%s" %(eComment, szType)
 
@@ -234,12 +234,9 @@ class CvDiplomacy:
 			self.addUserComment("USER_DIPLOCOMMENT_EXIT")
 
 		elif szType == "AI_DIPLOCOMMENT_RESEARCH":
-			player = GC.getPlayer(self.diploScreen.getWhoTradingWith())
-			team = GC.getTeam(player.getTeam())
-			for i in xrange(team.getNumAdjacentResearch()):
-				iTechX = team.getAdjacentResearch(i)
-				if player.canResearch(iTechX, True, True):
-					self.addUserComment("USER_DIPLOCOMMENT_RESEARCH_TECH", iTechX, -1, INFO.getTextKey("TECH_", iTechX))
+			iWhom = self.diploScreen.getWhoTradingWith()
+			for iTechX in ENABLER.getAvailableTechs(iWhom):
+				self.addUserComment("USER_DIPLOCOMMENT_RESEARCH_TECH", iTechX, -1, INFO.getTextKey("TECH_", iTechX))
 
 			self.addUserComment("USER_DIPLOCOMMENT_SOMETHING_ELSE")
 			self.addUserComment("USER_DIPLOCOMMENT_EXIT")
@@ -468,7 +465,7 @@ class CvDiplomacy:
 			print "CvDiplomacy.handleUserResponse: %s" %(eComment,)
 
 		diploScreen = CyDiplomacy()
-		szType = GC.getDiplomacyInfo(eComment).getType()
+		szType = INFO.getType("DIPLOMACY_", eComment)
 
 		# If we accept peace
 		if szType == "USER_DIPLOCOMMENT_PEACE":

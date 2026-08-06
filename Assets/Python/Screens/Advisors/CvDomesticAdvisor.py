@@ -14,6 +14,7 @@ AFM = CyArtFileMgr()
 TRNSLTR = CyTranslator()
 
 TEXT = CyGameTextMgr()
+WORLD = CyWorldInfo()
 class CvDomesticAdvisor:
 
 	def __init__(self, screenId):
@@ -118,7 +119,7 @@ class CvDomesticAdvisor:
 
 			# Corporation Yield and Commerce values by Bonus
 			# Maps are { bonus -> { yield/commerce -> { corporation -> value } } }
-			self.corpMaintPercent = GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent()
+			self.corpMaintPercent = WORLD.getCorporationMaintenancePercent(GC.getMap().getWorldSize())
 			self.bonusCorpYields = {}
 			self.bonusCorpCommerces = {}
 			for eCorp in xrange(GC.getNumCorporationInfos()):

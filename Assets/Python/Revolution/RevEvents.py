@@ -22,6 +22,7 @@ STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
+WORLD = CyWorldInfo()
 
 RevOpt = None
 
@@ -852,7 +853,7 @@ def checkForAssimilation():
 		CyPlot0 = None
 		szCiv = CyPlayerX.getCivilizationDescription(0)
 
-		iMinCities = GC.getWorldInfo(MAP.getWorldSize()).getTargetNumCities()
+		iMinCities = WORLD.getTargetNumCities(MAP.getWorldSize())
 		iNumCities = CyPlayerX.getNumCities() # We know this is greater than 0 as a capital city has been confirmed.
 
 		bRiskWar = False

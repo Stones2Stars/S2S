@@ -150,7 +150,7 @@ def initEffectViewer(px, py):
 	# Pulldown0 - Player Selection
 	popup.createPythonPullDown("Choose an Effect", 0)
 	for i in xrange(GC.getNumEffectInfos()):
-		popup.addPullDownString(GC.getEffectInfo(i).getType(), i, 0)
+		popup.addPullDownString(INFO.getType("EFFECT_", i), i, 0)
 
 	popup.createPythonEditBox("Default", "Modify the scale of the effect", 0)
 	popup.createPythonEditBox("Default", "Modify the update rate", 0)

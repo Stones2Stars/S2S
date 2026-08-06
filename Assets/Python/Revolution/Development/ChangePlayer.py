@@ -62,7 +62,7 @@ def changeCivPopup():
 
 	popup.createPythonPullDown(' ... to this civ', 2)
 	for i in range(GC.getNumCivilizationInfos()):
-		popup.addPullDownString("%s Empire" %(GC.getCivilizationInfo(i).getAdjective(0)), i, 2)
+		popup.addPullDownString("%s Empire" %(INFO.getAdjective("CIVILIZATION_", i, 0)), i, 2)
 
 	popup.setSelectedPulldownID(CyPlayer.getCivilizationType(), 2)
 

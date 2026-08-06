@@ -10,6 +10,8 @@ from CvPythonExtensions import *
 import BugOptionsTab
 GC = CyGlobalContext()
 INFO = CyInfo()
+ENABLER = CyEnabler()
+STATE = CyState()
 GAME = GC.getGame()
 TRNSLTR = CyTranslator()
 
@@ -210,7 +212,7 @@ class ANDAutomationsTab(BugOptionsTab.BugOptionsTab):
 					self.addSpacer(screen, left, "City Spacer")
 				bFirst = False
 
-				szCityName = TextUtil.convertToAscii(cityX.getName())
+				szCityName = TextUtil.convertToAscii(STATE.getCityName(player.getID(), cityX.getID()))
 				n += 1
 				self.addLabel(screen, left, szCityName + str(n), TRNSLTR.getText("TXT_KEY_AUTOMATED_WORKERS_CAN_BUILD_CITY", (szCityName,)), None, False, True)
 
@@ -218,12 +220,13 @@ class ANDAutomationsTab(BugOptionsTab.BugOptionsTab):
 
 				iCount = 0
 				for j in range(iNumBuilds):
-					CvBuildInfo = GC.getBuildInfo(j)
-					if team.isHasTech(CvBuildInfo.getTechPrereq()):
+					# The enabler's own unlock verdict, not a re-derived prereq-tech test (see the national
+					# loop below for the full reasoning).
+					if ENABLER.getBuildUnlocked(player.getID(), j) == EnablerState.ENABLER_LISTED:
 
 						columnKey = (col1, col2, col3, col4, col5)[iCount % 5]
 
-						control = str(szCityName + CvBuildInfo.getDescription() + "Check")
+						control = str(szCityName + INFO.getDescription("BUILD_", j) + "Check")
 						bEnabled = cityX.isAutomatedCanBuild(j)
 
 						szNewDescription = self.buildNames[j]
@@ -240,13 +243,17 @@ class ANDAutomationsTab(BugOptionsTab.BugOptionsTab):
 
 		szNameKey = player.getNameKey()
 		iCount = 0
+		iPlayerID = player.getID()
 		for i in range(iNumBuilds):
-			CvBuildInfo = GC.getBuildInfo(i)
-			if team.isHasTech(CvBuildInfo.getTechPrereq()):
+			# Ask the ENABLER whether the build is unlocked, rather than re-deriving it from the prereq tech.
+			# The unlock verdict is the enabler's own maintained tri-state ([DEC-enabler-not-cascade]); testing
+			# the tech by hand re-derives a gate the machine already answers, and the build's OTHER half (plot
+			# validity) is deliberately a live per-plot check ([enabler.md] par.7.1), not part of this question.
+			if ENABLER.getBuildUnlocked(iPlayerID, i) == EnablerState.ENABLER_LISTED:
 
 				columnKey = (col1, col2, col3, col4, col5)[iCount % 5]
 
-				control = TextUtil.convertToAscii(szNameKey + CvBuildInfo.getDescription() + "Check")
+				control = TextUtil.convertToAscii(szNameKey + INFO.getDescription("BUILD_", i) + "Check")
 				bEnabled = player.isAutomatedCanBuild(i)
 
 				szNewDescription = self.buildNames[i]

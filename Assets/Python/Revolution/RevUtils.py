@@ -19,6 +19,7 @@ ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
 TRNSLTR = CyTranslator()
+WORLD = CyWorldInfo()
 RevOpt = BugCore.game.Revolution
 RevDCMOpt = BugCore.game.RevDCM
 
@@ -667,7 +668,7 @@ def doRevRequestDeniedPenalty(CyCity, iHomeArea, iRevIdxInc=100, bExtraHomeland=
 
 def computeCivSizeRaw(iOwnedPlots):
 	# Ratio of amount of land player owns to what would be equal for this map for national effects, effective radius of civ's empire for comparing with city distance
-	fPlotsRatio = 1.0*CyMap().getLandPlots() / GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	fPlotsRatio = 1.0*CyMap().getLandPlots() / WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 
 	fSizeValueRaw = iOwnedPlots / fPlotsRatio
 	fCivEffRadRaw = ((.5*iOwnedPlots + .5*fPlotsRatio) / 3.4)**.5
@@ -676,7 +677,7 @@ def computeCivSizeRaw(iOwnedPlots):
 
 def computeCivSize(player):
 	# Ratio of amount of land player owns to what would be equal for this map for national effects, effective radius of civ's empire for comparing with city distance
-	fPlotsRatio = 1.0*CyMap().getLandPlots() / GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	fPlotsRatio = 1.0*CyMap().getLandPlots() / WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 	iOwnedPlots = player.getTotalLand()
 
 	civSizeEraMod = 0.85 - 0.20 * player.getCurrentEra()

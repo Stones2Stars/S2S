@@ -104,7 +104,7 @@ class WBPlayerScreen:
 		if len(lTraits):
 			sText += " ["
 			for iTrait in xrange(len(lTraits)):
-				sText += CyTranslator().getText(GC.getTraitInfo(lTraits[iTrait]).getShortDescription(),())
+				sText += INFO.getShortDescription("TRAIT_", lTraits[iTrait], 0)
 				if iTrait != len(lTraits) -1:
 					sText += "/"
 			sText += "]"
@@ -189,22 +189,20 @@ class WBPlayerScreen:
 		sCurrentTech = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		screen.setTableText("WBPlayerResearch", 0, 0, "<font=3>" + sColor + sCurrentTech + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), WidgetTypes.WIDGET_PYTHON, 7871, -1, 1<<0 )
 
-		for i in xrange(pTeam.getNumAdjacentResearch()):
-			iTechX = pTeam.getAdjacentResearch(i)
-			if pPlayer.canResearch(iTechX, True, True):
-				iColumn = iCount % nColumns
-				iRow = iCount /nColumns
-				if iRow > iMaxRows:
-					screen.appendTableRow("WBPlayerResearch")
-					iMaxRows = iRow
-				iCount += 1
-				ItemInfo = GC.getTechInfo(iTechX)
-				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-				sText = u"%s (%d/%d)%c" %(ItemInfo.getDescription(), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
-				if iCurrentTech == iTechX:
-					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-					sCurrentTech = sText
-				screen.setTableText("WBPlayerResearch", iColumn, iRow, "<font=3>" + sColor + sText + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7871, iTechX, 1<<0)
+		for iTechX in ENABLER.getAvailableTechs(pPlayer.getID()):
+			iColumn = iCount % nColumns
+			iRow = iCount /nColumns
+			if iRow > iMaxRows:
+				screen.appendTableRow("WBPlayerResearch")
+				iMaxRows = iRow
+			iCount += 1
+			ItemInfo = GC.getTechInfo(iTechX)
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			sText = u"%s (%d/%d)%c" %(ItemInfo.getDescription(), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
+			if iCurrentTech == iTechX:
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+				sCurrentTech = sText
+			screen.setTableText("WBPlayerResearch", iColumn, iRow, "<font=3>" + sColor + sText + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7871, iTechX, 1<<0)
 
 		if iCurrentTech > -1:
 			screen.setButtonGFC("CurrentResearchPlus", "", "", iX + iWidth - 50, iY - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)

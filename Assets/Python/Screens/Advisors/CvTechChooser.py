@@ -109,8 +109,12 @@ class CvTechChooser:
 		if self.CyTeam.isHasTech(iTech):
 			return CIV_HAS_TECH
 		# Availability is the ENABLER's own maintained verdict, never a re-derived gate ([DEC-enabler-not-cascade]).
-		# The tri-state is returned whole; "offerable now" is == ENABLER_LISTED.
-		if ENABLER.getTechAvailability(self.iPlayer, iTech) != ENABLER_LISTED:
+		# The tri-state is read WHOLE, and only HIDDEN means "never": HIDDEN is "not in the tree at all", while
+		# GREYED is "in the tree, requirements not yet met" -- an ordinary future tech. Collapsing GREYED into
+		# NO_RESEARCH painted everything beyond the frontier as permanently unavailable AND refused the queue
+		# click, because this one state drives both. Queueing further than the frontier is the picking logic's
+		# job, not the enabler's ([enabler.md] par.8: the enabler answers CAN-I-NOW and stops there).
+		if ENABLER.getTechAvailability(self.iPlayer, iTech) == ENABLER_HIDDEN:
 			return CIV_NO_RESEARCH
 		if not self.CyPlayer.isResearchingTech(iTech):
 			return CIV_TECH_AVAILABLE
@@ -397,8 +401,12 @@ class CvTechChooser:
 						iX -= dx
 						screen.setImageButtonAt(TECH_REQ + str(iTechX) + "|" + iTechStr, techCellId, INFO.getButton("TECH_", iTechX), iX, iY, self.sIcon1, self.sIcon1, eWidGen, 1, 2)
 
-					# Draw connecting arrows
-					for iTechX in INFO.getIdList("TECH_", iTech, IdListSlot.PYLIST_PREREQ_OR_TECHS):
+					# Draw connecting arrows from the ENABLES edge -- what puts a tech in the tree at all.
+					# The `enables` family is the SOLE authority on tree membership ([enabler.md] par.1/2);
+					# `requires` is only the GATE, so drawing from it draws the wrong relation. It also avoids
+					# the OR problem by construction: an OR-group means "any ONE of these", so an arrow per
+					# member would read as "all of these are required" -- the opposite of what it says.
+					for iTechX in INFO.getEdgeIds("TECH_", iTech, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS):
 						x1 = INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_GRID_X)
 						y1 = INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_GRID_Y)
 						iX = x1 * self.xCellDist + self.wCell + CELL_BORDER_W * 2 - self.minX

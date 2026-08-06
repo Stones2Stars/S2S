@@ -586,7 +586,7 @@ class WBGameDataScreen:
 		if iCode == 4: # Mouse Enter
 
 			if NAME == "GameOption":
-				self.WB.tooltip.handle(screen, self.GC.getGameOptionInfo(ID).getHelp())
+				self.WB.tooltip.handle(screen, INFO.getHelp("GAMEOPTION_", ID))
 
 		elif not iCode: # click
 
