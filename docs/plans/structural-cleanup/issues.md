@@ -949,3 +949,78 @@ allows: the replacement MACHINE (the verb set) does not exist yet, and it is NAM
   ⚑ The tell: the SAME function already reads `enables.specialBuildings` off the tech's own edge a few lines
   below, citing the ruling.
 
+## ⛔ FOUND IN PLAY — the rendered surface, once the screens came back up
+
+> These are owner observations from a live turn, i.e. the first look at the rebuilt composers with real data
+> behind them. ⚑ They are grouped because they share a cause-class rather than a screen: the entry renderer is
+> now the ONE surface every entity's effect lines go through ([patterns.md] category 5), so a defect in it is
+> visible on every screen at once — which is also why each is cheap to fix in one place.
+
+- **⚖ A CIVIC'S ENTRIES FILL THE SCREEN, SO OLD-vs-NEW CANNOT BE COMPARED (owner).** The civic screen renders
+  the whole entry list as one block per civic, and a swap decision is inherently a COMPARISON — *"it's impossible
+  to compare old and new civic when entries of 1 civic take the full screen"*. They need to sit **side by side**.
+  ⚑ This is a LAYOUT question, not a renderer one: the per-entry lines are already tagged by family
+  ([pedia-read-map] need-class 2 — entries arrive tagged so a page can group and lay out by family), so the
+  comparison view is a consumer of the same rendered lines, never a second render path.
+  ⚠ It also sharpens what the renderer owes: a side-by-side view wants the entries GROUPED, so a flat
+  newline-joined blob is the shape to move away from.
+- **⛔ A POLICY SCREEN NOBODY RECOGNISES, AND CLICKING IT DOES NOTHING (owner).** A screen reachable from the
+  civics UI that the owner has not seen before and that is inert on click. ⚠ Do NOT assume it is dead and sweep
+  it — `Forgetful` is the standing exhibit for a screen that reads exactly like abandoned code and is wanted
+  ([python-read-map] §3.6). Establish what registers it and whether its handler ever bound, THEN decide.
+- **⛔ ENTERING A CITY IS FAR SLOWER THAN IT SHOULD BE — "like it tries to calculate something upon entering"
+  (owner).** The city screen is the densest read surface in the game, so it is exactly where a per-read walk
+  that should be a bare fetch shows up ([contexts.md]: a read that walks per call is the efficiency defect to
+  reject in review). ⚑ The suspects to check before theorising: a composer or screen asking a valuation
+  per (building × candidate) on open, and the `expected*` what-if being called inside a loop rather than once
+  per decision ([patterns.md]: `expected*` is a per-DECISION read; an AI caching its own scores is the sanctioned
+  shape, re-asking it in an inner loop is not).
+- **⛔ THE AI'S PLOT-vs-SPECIALIST VALUATION IS WILDLY OFF, AND A ×100 SEAM IS THE PRIME SUSPECT (owner).**
+  Plot and specialist yields are compared against each other in the citizen-assignment decision, so a scale
+  mismatch on ONE side does not merely mis-tune it — it makes one option dominate absolutely.
+  ⚑ Why the suspicion is well-founded rather than a guess: a specialist's yield carries its OWN percent layer
+  before it joins BASE and takes the city modifier ([legacy-value-calc-map] §1.5 — two distinct percent stacks),
+  and the per-specialist "all" source is EMPIRE-wide, so the two sides of this comparison genuinely travel
+  different paths to the same unit.
+  ⚠ The failure signature to look for is [fixed-point-and-scales] §5's: a decision that never varies, or one
+  side always winning, is a truncated-to-zero input — not an AI-logic problem. Read the scale at the boundary
+  where the two are compared, against each side's DECLARED unit, before touching any weighting.
+- **⛔ TURN TIME IS FAR LONGER THAN EXPECTED — AND THE REAL ISSUE IS THAT LEGACY IS RUNNING ON A HOT PATH AT ALL,
+  WHEN IT EXPLICITLY SHOULD NOT (owner).** ⚠ Do NOT read this as the poisoned-measurement caveat and stop there.
+  [DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) says a
+  number taken with legacy on a read path measures legacy's decache penalty — true, and it is the SMALLER point.
+  The larger one is that a surviving legacy calc on the turn path is a DEFECT to DELETE, not a condition to
+  measure around ([roadmap.md](roadmap.md) § LEGACY STILL BREATHING: surviving legacy is never a gap, a stage or
+  a transitional shape).
+  ⇒ **So the slowness is not the problem to solve — it is the INSTRUMENT that reveals which legacy is still
+  breathing.** Follow it to the surviving caller and cut that; the time comes back as a consequence. ⛔ What is
+  banned is the inverse move: treating the number as the deliverable and optimising around a path that should
+  not execute.
+- **⚠ A CPP_EXCEPTION CRASH ON END TURN.** `code=0xE06D7363` (a thrown C++ exception, not an access violation)
+  with `lastCyRead=CyState::canUnitAcquirePromotion` and a minidump beside it. ⚑ The breadcrumb names the last
+  PYTHON→C++ read, which is not necessarily the faulting frame — the wrapper itself guards both ids and cannot
+  throw, so the throw is inside the engine's own `canAcquirePromotion` or somewhere after it. Symbolize the dump
+  before theorising ([external-tools-and-workflows.md](../../reference/external-tools-and-workflows.md) carries
+  the cdb recipe; use the **x86** debugger — the game is 32-bit).
+
+## ⛔ THE ENGINE→PYTHON CALLBACK PAYLOAD IS HANDING OVER TUPLES WHERE HANDLERS EXPECT OBJECTS
+
+**This is the KEPT direction breaking, which is what makes it different in kind from a missing read.** The
+`Cy*` cut was DIRECTIONAL — engine→Python CALLBACKS are required functionality and stay
+([patterns.md](../../architecture/patterns.md) § THE CUT IS DIRECTIONAL) — so a callback whose payload no longer
+matches its handlers is not migration residue, it is the surviving half broken.
+
+The signature is uniform and spans unrelated files, which is what says it is the PAYLOAD rather than four bugs:
+
+- `CvEventManager.onUnitKilled` / `onCombatResult` — `'tuple' object has no attribute 'getOwner'`
+- `DancingHoskuld/CaptureSlaves.onCombatResult` — `'tuple' object has no attribute 'isMadeAttack'`
+- `DancingHoskuld/Partisan.onCombatResult` — `'tuple' object has no attribute 'getUnitType'`
+
+⚑ **The argument is now the (owner, id) ADDRESS the identity set prescribes, and the handlers were never moved
+onto it.** That is the right destination — a handler resolves data through `CyState`/`CyInfo` BY that address
+([patterns.md](../../architecture/patterns.md) § THE IDENTITY SET) — so the fix is to finish the conversion at
+the handlers, never to re-widen the payload back into a data-carrying wrapper.
+⚠ Combat is a per-kill, per-battle path, so every one of these raises repeatedly during a turn; a raise costs a
+traceback and the handler's whole body. **Consider it a suspect for the turn-time signal above**, not merely a
+correctness one.
+

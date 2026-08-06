@@ -625,6 +625,37 @@ Four words carry the whole requirement:
 > the call site names a slot rather than the thing, so a reader again "doesn't know what you would fetch".
 > ⇒ Reserve the generic prefix-addressed plane for what is genuinely UNIFORM across every registry (identity
 > text, classification tests, edge families); a value that belongs to ONE type is named on that type's accessor.
+>
+> **⚖ THE REASON IS TRACING, AND IT IS THE POINT THE OTHER TWO SERVE (owner): *"it infinitely helps tracing —
+> for me, other modders, and agents; when you read the python code today anyone is hard pressed to figure out
+> where things come from."*** Not style, not hygiene: the question a reader must be able to answer is **where
+> does this come from**, and today they cannot. ⛔ **The root is named: GLOBAL imports and IMPLICIT imports.**
+> They are two different failures wearing one symptom, and only the first is the star import:
+> - a **GLOBAL/star import** leaves the name but erases its ORIGIN — `CyInfo` could come from anywhere, and the
+>   module does not say;
+> - an **IMPLICIT import** was never written in Python at all. This tree's extreme form is the config- and
+>   XML-bound dispatch — the BUG `lookupModule`/`lookupFunction` graph and the `<PythonCallback>` family
+>   ([python-read-map.md](../reference/python-read-map.md) §5.3/§5.4) — which no grep of the Python can see.
+> ⚑ That second one is why *"just read the code"* fails here, and why a read found is a read to SERVE while a
+> read not found is never evidence of absence.
+> ⚑ **The standard is the ordinary one: named imports, as any JavaScript project expects** —
+> `from CvPythonExtensions import CyInfo, CyState, CyVictoryInfo` — so the import block IS the dependency list.
+>
+> **⚖ BUT THE SEQUENCING IS DISCOVERY-FIRST, AND THAT IS A RULING TOO (owner): *"I do not need the import
+> structure to be perfect yet — restructuring the Cy layer is not hard after we know what we need and where to
+> get it from."*** The expensive work is finding every read and homing it on the right surface; re-pointing the
+> layer afterwards is mechanical. ⛔ So converting imports AHEAD of the demand map is the failure — it is done
+> twice, and the second pass is the expensive one. ⚠ Equally, this is not licence to call the star import
+> acceptable: it is a real defect with a scheduled fix, not a sanctioned shape
+> ([DEC-no-deferred](decisions.md#dec-no-deferred) does not reach an owner-ruled ORDERING).
+>
+> ⚑ **The corroboration, because it shows the cost is not hypothetical: the espionage advisor crash.**
+> `INFO.getIntrinsic("ESPIONAGEMISSION_", i, PYINT_COST)` names a SLOT, so nothing at the call site said where
+> the value came from — and `PYINT_COST` was wired for `BUILDING_` only. The unwired prefix fell through to the
+> shared `-1`, which is indistinguishable from a real answer, so every mission failed its guard, none was
+> classified, and a `-1` mission id reached the engine: an ACCESS_VIOLATION inside a boost::python call, in a
+> different screen from the read that was wrong. **A named accessor cannot fail that way — an unwired read does
+> not compile.** Provenance at the call site is what turns that from an archaeology exercise into a compile error.
 
 **⚑ BUILD IT FOR THE PEDIA — but know exactly what that proves (owner).** The pedia's purpose is to display every
 entity exhaustively, so it is not a sample of the info surface, it **is** the info surface rendered. Therefore:
