@@ -55,8 +55,38 @@ struct CascadeCondDeps
 	std::set<int> units;      // specific UNIT_ ids referenced -- only collected under bTrackUnits
 	std::set<int> religions;  // specific RELIGION_ ids referenced (the id half of the `religion` flag above)
 	std::map<int, std::pair<int, int> > propertyBands;  // PROPERTY_ id -> the operate band [min,max] (F5: -1 = unset)
+	// ==== THE PLOT-SUBSTRATE AXES -- the ids a plot fact carries ====
+	// ⛔ These do NOT ride EDGEF_REQUIRED_BY, and that is a DELIBERATE exclusion, not a hole to route around:
+	// CvReversePass's rp_requiredByRefInfo returns NULL for every plot-substrate prefix, so no terrain / feature
+	// / improvement / route / mapcategory info ever carries a REQUIRED_BY edge. enabler.md par.8 states the
+	// shape that replaces it -- "a coarse list matches a coarse event" -- so the ids are collected HERE and each
+	// enabler compiles its own id -> dependents list from them.
+	// ⚠ Reading the empty reverse edge instead is silent: the walk succeeds, finds nothing, and re-gates nobody,
+	// which is indistinguishable from "no candidate needed re-gating" at every observation point.
+	std::set<int> terrains;        // TERRAIN_ ids (presence, or a parameterized HAS_TERRAIN)
+	std::set<int> features;        // FEATURE_ ids (presence, or a parameterized HAS_FEATURE)
+	std::set<int> improvements;    // IMPROVEMENT_ ids (presence, or a parameterized HAS_IMPROVEMENT)
+	std::set<int> routes;          // ROUTE_ ids
+	std::set<int> mapCategories;   // MAPCATEGORY_ ids -- a plot's categories are DERIVED from its terrain
+	                               // (CvPlot::getMapCategories forwards to the terrain info), so a TERRAIN fact
+	                               // is what moves them and there is no mapcategory fact of its own
+	std::set<int> plotPredicates;  // the bare CASC_PRED_* plot bits (HAS_RIVER / IS_WATER / HAS_COAST / ...),
+	                               // which carry no id and ride SEVT_PLOT_PREDICATE_ADDED / _REMOVED
 	CascadeCondDeps() : pop(false), power(false), religion(false), corp(false), goldenAge(false),
 		stateReligion(false), stateReligionInCity(false), civicAny(false), coastal(false), dynamic(false) {}
+};
+
+// The plot atom a re-gate keys on. The id spaces overlap across kinds, so a candidate index keys on the PAIR
+// (kind, id) -- never on the id alone.
+enum PlotAtomKind
+{
+	PLOTATOM_TERRAIN = 0,
+	PLOTATOM_FEATURE,
+	PLOTATOM_IMPROVEMENT,
+	PLOTATOM_ROUTE,
+	PLOTATOM_MAPCATEGORY,
+	PLOTATOM_PREDICATE,
+	NUM_PLOTATOM_KINDS
 };
 
 class EnablerDomain;
@@ -72,6 +102,13 @@ class EnablerKernel
 public:
 	// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket + id.
 	static const CvInfo* infoFor(EnEdgeBucket eBucket, int id);
+
+	// THE PLOT-ATOM SEEDS a fact resolves to -- the ONE place the terrain -> mapcategory hop lives, so both
+	// domains ask rather than each carrying a copy ([DEC-single-implementation]).
+	// ⚑ A TERRAIN fact seeds its own (PLOTATOM_TERRAIN, id) AND one (PLOTATOM_MAPCATEGORY, id) per category that
+	// terrain carries, because a plot's map categories are DERIVED from its terrain and have no fact of their
+	// own; every other kind seeds itself alone.
+	static void plotAtomSeeds(int eKind, int iId, std::vector<std::pair<int, int> >& atomsOut);
 
 	// Insert the (family, bucket) edge's targets (if present) into out.
 	static void addEdge(const CvInfo* j, EnEdgeFamily eFamily, EnEdgeBucket eBucket, std::set<int>& out);

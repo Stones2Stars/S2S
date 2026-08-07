@@ -381,7 +381,18 @@ static void bd_touched(const CvInfo* j, std::set<int>& touched)
 // edge, the buildings whose requires (build ∧ operate) reference it -- EnablerKernel::scanCondDeps, the ONE
 // dependency-signature scanner. GATE_DYNAMIC = the live non-HAVE atoms (the bounded per-turn re-check set).
 static std::set<int> s_gateClass[BuildingEnabler::NUM_GATE_CLASSES];
+// The PLOT-ATOM candidate index: (atom kind, atom id) -> the buildings whose requires names it. This is
+// enabler.md par.8's "a coarse list matches a coarse event" -- the plot substrate is deliberately absent from
+// EDGEF_REQUIRED_BY (CvReversePass routes none of its prefixes), so the reverse view it needs is compiled here.
+static std::map<std::pair<int, int>, std::vector<int> > s_gatePlotAtomConsumers;
 static bool s_gateClassBuilt = false;
+static void bd_recordPlotAtoms(int eKind, const std::set<int>& ids, int b)
+{
+	for (std::set<int>::const_iterator it = ids.begin(); it != ids.end(); ++it)
+	{
+		s_gatePlotAtomConsumers[std::make_pair(eKind, *it)].push_back(b);
+	}
+}
 static void bd_buildGateClasses()
 {
 	if (s_gateClassBuilt) return;
@@ -398,6 +409,12 @@ static void bd_buildGateClasses()
 		if (deps.goldenAge)     s_gateClass[BuildingEnabler::GATE_GOLDEN_AGE].insert(b);
 		if (deps.stateReligion) s_gateClass[BuildingEnabler::GATE_STATE_RELIGION].insert(b);
 		if (deps.dynamic)       s_gateClass[BuildingEnabler::GATE_DYNAMIC].insert(b);
+		bd_recordPlotAtoms(PLOTATOM_TERRAIN,     deps.terrains,       b);
+		bd_recordPlotAtoms(PLOTATOM_FEATURE,     deps.features,       b);
+		bd_recordPlotAtoms(PLOTATOM_IMPROVEMENT, deps.improvements,   b);
+		bd_recordPlotAtoms(PLOTATOM_ROUTE,       deps.routes,         b);
+		bd_recordPlotAtoms(PLOTATOM_MAPCATEGORY, deps.mapCategories,  b);
+		bd_recordPlotAtoms(PLOTATOM_PREDICATE,   deps.plotPredicates, b);
 	}
 }
 
@@ -638,12 +655,33 @@ void BuildingEnabler::onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding)
 // ⛔ It must NOT ride the GATE_DYNAMIC class the rare player/city facts use: that class is effectively the whole
 // registry (anything the deps scanner does not recognise falls through to it), and plot facts are HIGH frequency
 // -- a worked-plot flip would re-gate every building in the city. The reverse edge is what makes this affordable.
-void BuildingEnabler::onPlotSubstrateChanged(const CvCity& kCity, const CvInfo* pSubstrate)
+// The plot-atom index's own census -- distinct atom keys, and the total candidate entries behind them. Reported
+// at load so an index that compiled EMPTY says so, which is the one failure this route cannot show any other way.
+void BuildingEnabler::plotAtomCensus(int& iKeysOut, int& iEntriesOut)
 {
-	if (pSubstrate == NULL) return;
+	bd_buildGateClasses();
+	iKeysOut = (int)s_gatePlotAtomConsumers.size();
+	iEntriesOut = 0;
+	for (std::map<std::pair<int, int>, std::vector<int> >::const_iterator it = s_gatePlotAtomConsumers.begin();
+	     it != s_gatePlotAtomConsumers.end(); ++it)
+	{
+		iEntriesOut += (int)it->second.size();
+	}
+}
+
+void BuildingEnabler::onPlotAtomChanged(const CvCity& kCity, int eKind, int iId)
+{
+	if (iId < 0) return;
+	bd_buildGateClasses();
+	std::vector<std::pair<int, int> > atoms;
+	EnablerKernel::plotAtomSeeds(eKind, iId, atoms);   // a TERRAIN fact also seeds its map categories
 	std::set<int> touched;
-	bd_touched(pSubstrate, touched);
-	bd_gateSet(kCity, touched);   // no-ops on an empty set, so a substrate nothing requires costs one lookup
+	for (size_t iAtom = 0; iAtom < atoms.size(); ++iAtom)
+	{
+		std::map<std::pair<int, int>, std::vector<int> >::const_iterator it = s_gatePlotAtomConsumers.find(atoms[iAtom]);
+		if (it != s_gatePlotAtomConsumers.end()) touched.insert(it->second.begin(), it->second.end());
+	}
+	bd_gateSet(kCity, touched);   // no-ops on an empty set, so an atom nothing requires costs one lookup
 }
 
 void BuildingEnabler::onCityOrderChanged(const CvCity& kCity, int iBuilding)

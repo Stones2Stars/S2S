@@ -30,6 +30,7 @@
 #include "CvPromotionInfo.h"
 #include "CvBuildInfo.h"
 #include "CvCorporationInfo.h"   // the CAN-I-EVER bar reads a corporation's own entity gate
+#include "CvTerrainInfo.h"       // plotAtomSeeds -- a plot's MAPCATEGORY set is derived from its terrain
 #include "Engine/CvGame.h"
 
 // The enables buckets this pass generates over (one HAVE traversal fills them all).
@@ -734,6 +735,15 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		else if (t.compare(0, 9, "BUILDING_") == 0) { if (c->id >= 0) d.buildings.insert(c->id); }
 		else if (bTrackUnits && t.compare(0, 5, "UNIT_") == 0) { if (c->id >= 0) d.units.insert(c->id); }
 		else if (t.compare(0, 9, "PROPERTY_") == 0) { if (c->id >= 0) d.propertyBands[c->id] = std::make_pair(c->min, c->max); }  // F5: a property OPERATE band -- NOT dynamic; the watermark emits a targeted band-hit on a threshold crossing
+		// The PLOT SUBSTRATE. These used to fall through to the catch-all below, which is what made GATE_DYNAMIC
+		// the WHOLE building registry (MAPCATEGORY_EARTH alone names 4,341 of them) -- so the class was unusable
+		// as the bounded per-turn set par.7.1 specifies, and every fact routed through it re-gated everything.
+		// They are recorded per-id instead and re-gate off their own plot fact.
+		else if (t.compare(0, 8, "TERRAIN_") == 0)      { if (c->id >= 0) d.terrains.insert(c->id); }
+		else if (t.compare(0, 8, "FEATURE_") == 0)      { if (c->id >= 0) d.features.insert(c->id); }
+		else if (t.compare(0, 12, "IMPROVEMENT_") == 0) { if (c->id >= 0) d.improvements.insert(c->id); }
+		else if (t.compare(0, 6, "ROUTE_") == 0)        { if (c->id >= 0) d.routes.insert(c->id); }
+		else if (t.compare(0, 12, "MAPCATEGORY_") == 0) { if (c->id >= 0) d.mapCategories.insert(c->id); }
 		else if (bMarkDynamic) d.dynamic = true;
 		return;
 	}
@@ -756,11 +766,55 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		// carries no isWater(), because "needs a coast" is something the city must supply, not something the
 		// building IS. A consumer weighting a coastal-only candidate by how much coastline the empire has reads
 		// it from HERE rather than re-walking the tree ([DEC-single-implementation]).
-		case CASC_PRED_HAS_COAST:               d.coastal = true; break;
-		case CASC_PRED_HAS_BONUS:               if (c->id >= 0) d.bonuses.insert(c->id); if (bMarkDynamic) d.dynamic = true; break;
-		default:                                if (bMarkDynamic) d.dynamic = true; break;   // IS_CAPITAL / counts / plot / connection -- read LIVE at eval
+		// HAS_COAST keeps the precise `coastal` flag its valuation consumer reads, and ALSO indexes as a plot
+		// bit: the flag is not a re-gate route (nothing fires on it), so without the second half a coastal-gated
+		// candidate re-gates on nothing at all.
+		case CASC_PRED_HAS_COAST:               d.coastal = true; d.plotPredicates.insert(c->predKind); break;
+		// A BONUS is fully routed on both planes -- onCityBonusChanged / onCityVicinityBonusChanged on the build
+		// side, s_operateBonusConsumers on the operate side -- so it records its id and marks nothing. It used to
+		// mark dynamic too, on the note that "trade/map/vicinity shifts aren't a discrete event"; those facts
+		// exist now and are consumed, so the second route was pure width.
+		case CASC_PRED_HAS_BONUS:               if (c->id >= 0) d.bonuses.insert(c->id); break;
+		// The parameterized plot-substrate predicates: an id names one substrate, a bare one is the "any" form
+		// (a bare HAS_FEATURE = has ANY feature) and rides the plot's own stored bit.
+		case CASC_PRED_HAS_TERRAIN:             if (c->id >= 0) d.terrains.insert(c->id);     else d.plotPredicates.insert(c->predKind); break;
+		case CASC_PRED_HAS_FEATURE:             if (c->id >= 0) d.features.insert(c->id);     else d.plotPredicates.insert(c->predKind); break;
+		case CASC_PRED_HAS_IMPROVEMENT:         if (c->id >= 0) d.improvements.insert(c->id); else d.plotPredicates.insert(c->predKind); break;
+		// The bare plot BITS. Each is a row in PlotContext's per-bit derivation table, so each announces its own
+		// crossing as SEVT_PLOT_PREDICATE_ADDED / _REMOVED carrying this id -- which is what makes indexing by
+		// the predicate id a real route rather than a rename of the catch-all.
+		case CASC_PRED_IS_WATER:
+		case CASC_PRED_IS_LAND:
+		case CASC_PRED_IS_FLATLANDS:
+		case CASC_PRED_HAS_HILLS:
+		case CASC_PRED_HAS_PEAK:
+		case CASC_PRED_HAS_RIVER:
+		case CASC_PRED_HAS_IRRIGATION:
+		case CASC_PRED_HAS_LANDMARK:
+		case CASC_PRED_HAS_FRESHWATER:
+		case CASC_PRED_IS_OWNED:
+		case CASC_PRED_IS_WORKED:               d.plotPredicates.insert(c->predKind); break;
+		default:                                if (bMarkDynamic) d.dynamic = true; break;   // IS_CAPITAL / latitude / existedFor / counts / connection -- read LIVE at eval
 		}
 		return;
+	}
+}
+
+// A plot fact names ONE atom; this expands it to every atom a candidate could have gated on.
+// ⚑ The TERRAIN hop is the whole reason this exists: a plot's MAPCATEGORY set is not stored and has no fact --
+// CvPlot::getMapCategories forwards to the terrain info -- so the terrain fact is the only thing that can move a
+// mapcategory-gated verdict, and 4,341 buildings gate on MAPCATEGORY_EARTH alone.
+void EnablerKernel::plotAtomSeeds(int eKind, int iId, std::vector<std::pair<int, int> >& atomsOut)
+{
+	if (iId < 0) return;
+	atomsOut.push_back(std::make_pair(eKind, iId));
+	if (eKind != PLOTATOM_TERRAIN) return;
+	const CvTerrainInfo* pTerrain = static_cast<const CvTerrainInfo*>(InfoRepo<CvTerrainInfo>::get().get(iId));
+	if (pTerrain == NULL) return;
+	const std::vector<MapCategoryTypes>& kCategories = pTerrain->getMapCategories();
+	for (size_t iCategory = 0; iCategory < kCategories.size(); ++iCategory)
+	{
+		atomsOut.push_back(std::make_pair((int)PLOTATOM_MAPCATEGORY, (int)kCategories[iCategory]));
 	}
 }
 

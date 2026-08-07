@@ -32,7 +32,11 @@ public:
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
 	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);   // network count delta; re-gates on a 0-crossing
 	static void onCityVicinityBonusChanged(const CvCity& kCity, int iBonus);        // LOCAL presence flip; re-gates vicinity dependents
-	static void onPlotSubstrateChanged(const CvCity& kCity, const CvInfo* pSubstrate);   // par.7.1 step 2: the EDGEF_REQUIRED_BY re-gate for a plot substrate atom
+	// par.7.1 step 2 for the PLOT plane -- the twin of BuildingEnabler::onPlotAtomChanged, reading the enabler's
+	// own compiled (kind, id) index rather than EDGEF_REQUIRED_BY, which carries no plot substrate. eKind is a
+	// PlotAtomKind.
+	static void onPlotAtomChanged(const CvCity& kCity, int eKind, int iId);
+	static void plotAtomCensus(int& iKeysOut, int& iEntriesOut);   // the twin of BuildingEnabler::plotAtomCensus
 	static void onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic);
 
 	// ==== THE REQUIRES GATE (enabler.md par.7.1 steps 2+3; the par.3 unit machine -- see the .cpp header):

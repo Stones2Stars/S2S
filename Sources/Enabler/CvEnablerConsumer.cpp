@@ -23,7 +23,11 @@
 //	call sites are being retired wholesale ([observability.md], todo.md).
 enum EnEvt
 {
-	ENE_DOMAIN_CENSUS = 1   // what the reseed ACTUALLY BUILT in a player's domains, once the load gate pass has run
+	ENE_DOMAIN_CENSUS = 1,   // what the reseed ACTUALLY BUILT in a player's domains, once the load gate pass has run
+	// What the PLOT-ATOM index actually compiled. It exists because the failure mode of this index is SILENT: an
+	// empty one re-gates nobody, which is indistinguishable from "no candidate needed re-gating" at every other
+	// observation point -- a reverse walk that found nothing already shipped once looking verified.
+	ENE_PLOTATOM_CENSUS = 2
 };
 
 enum EnFld
@@ -32,7 +36,9 @@ enum EnFld
 	ENF_DOMAIN,      // which domain, by name
 	ENF_INTREE,      // members at >= GREYED -- the edges APPLIED
 	ENF_LISTED,      // members the gate PASSED -- offerable now
-	ENF_TOTAL        // the registry size, so an empty domain is legible without a second lookup
+	ENF_TOTAL,       // the registry size, so an empty domain is legible without a second lookup
+	ENF_ATOMKEYS,    // distinct (kind, id) plot atoms any candidate names -- 0 means the index built EMPTY
+	ENF_ATOMENTRIES  // total candidate entries across those keys (the re-gate work one atom can cost)
 };
 
 static const char* en_prefix(int evt)
@@ -40,6 +46,7 @@ static const char* en_prefix(int evt)
 	switch (evt)
 	{
 	case ENE_DOMAIN_CENSUS: return "[ENABLER/census]";
+	case ENE_PLOTATOM_CENSUS: return "[ENABLER/plotatoms]";
 	default:                return "[ENABLER]";
 	}
 }
@@ -53,6 +60,8 @@ static const char* en_field(int tag, SpineFieldType* peType)
 	case ENF_INTREE: return "inTree";
 	case ENF_LISTED: return "listed";
 	case ENF_TOTAL:  return "of";
+	case ENF_ATOMKEYS:    return "atomKeys";
+	case ENF_ATOMENTRIES: return "atomEntries";
 	default:         return NULL;
 	}
 }
@@ -68,8 +77,29 @@ static void en_registerDomain()
 //	from the domain itself. It separates the two failures that are indistinguishable from outside: NOTHING IN THE
 //	TREE (the edges never applied) versus IN THE TREE BUT GATED OUT (membership landed, the gate rejected it) --
 //	which have completely different fixes.
+//	THE PLOT-ATOM CENSUS -- load-compiled static data, so it is emitted ONCE and not per player.
+//	⚑ Read it against the authored data: every candidate whose `requires` names a terrain / feature / improvement
+//	/ route / mapcategory / plot bit is one entry, so `atomKeys=0` means the index compiled empty and the whole
+//	plot plane re-gates nobody.
+static void en_emitPlotAtomCensus()
+{
+	int iBuildingKeys = 0;
+	int iBuildingEntries = 0;
+	int iUnitKeys = 0;
+	int iUnitEntries = 0;
+	BuildingEnabler::plotAtomCensus(iBuildingKeys, iBuildingEntries);
+	UnitEnabler::plotAtomCensus(iUnitKeys, iUnitEntries);
+	CvSpineEvent eBuildings(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_PLOTATOM_CENSUS, 0);
+	eBuildings.addStr(ENF_DOMAIN, "buildings").addI(ENF_ATOMKEYS, iBuildingKeys).addI(ENF_ATOMENTRIES, iBuildingEntries);
+	eventSpine().emit(eBuildings);
+	CvSpineEvent eUnits(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_PLOTATOM_CENSUS, 0);
+	eUnits.addStr(ENF_DOMAIN, "units").addI(ENF_ATOMKEYS, iUnitKeys).addI(ENF_ATOMENTRIES, iUnitEntries);
+	eventSpine().emit(eUnits);
+}
+
 static void en_emitDomainCensus()
 {
+	en_emitPlotAtomCensus();
 	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
@@ -476,14 +506,17 @@ private:
 			}
 			break;
 		}
-		// ---- THE PLOT SUBSTRATE -- par.7.1 step 2, the narrow EDGEF_REQUIRED_BY re-gate ----
+		// ---- THE PLOT PLANE -- par.7.1 step 2, the narrow per-atom re-gate ----
 		// The single largest gate axis in the authored data (MAPCATEGORY_ / TERRAIN_ / FEATURE_ / IMPROVEMENT_ /
-		// HAS_COAST / HAS_RIVER across thousands of entities) and it reached NO enabler route at all: a terraform,
-		// a chop, an improvement built or pillaged moved no verdict, and a tri-state read is a bare fetch that
-		// nothing recomputes ([DEC-no-self-heal]), so the stale verdict simply stood for the session.
+		// HAS_COAST / HAS_RIVER across thousands of entities): a terraform, a chop, an improvement built or
+		// pillaged must move the verdicts that named it, and a tri-state read is a bare fetch that nothing
+		// recomputes ([DEC-no-self-heal]), so a missed route leaves the stale verdict standing for the session.
 		// ⚑ TWO things keep it affordable at plot-fact frequency, and both are required:
-		//   - the CANDIDATES come from the substrate's own EDGEF_REQUIRED_BY (only what actually requires it),
-		//     never the GATE_DYNAMIC class, which is effectively the whole registry;
+		//   - the CANDIDATES come from the enabler's own (kind, id) plot-atom index -- only what actually names
+		//     the atom. ⛔ NOT EDGEF_REQUIRED_BY: the reverse pass deliberately routes no plot-substrate prefix
+		//     (CvReversePass::rp_requiredByRefInfo returns NULL for every one), so that walk finds nothing and
+		//     re-gates nobody -- silently, since an empty result is indistinguishable from "nothing to do".
+		//     ⛔ And NOT the GATE_DYNAMIC class, which is effectively the whole registry.
 		//   - the CITIES come from the plot's own workableBy list, so a plot no city can work re-gates nobody.
 		case SEVT_PLOT_TERRAIN_ADDED:
 		case SEVT_PLOT_TERRAIN_REMOVED:
@@ -493,29 +526,36 @@ private:
 		case SEVT_PLOT_IMPROVEMENT_REMOVED:
 		case SEVT_PLOT_ROUTE_ADDED:
 		case SEVT_PLOT_ROUTE_REMOVED:
+		// The plot's own derived VERDICT crossed (PlotContext's per-bit table). It is a different question from a
+		// substrate fact -- that says what the tile now CARRIES, this says what it MEANS -- and it is the only
+		// route the bare bits have: HAS_RIVER / HAS_FRESHWATER / IS_WATER / HAS_COAST and their kin name no
+		// entity, so no substrate id could ever reach them.
+		case SEVT_PLOT_PREDICATE_ADDED:
+		case SEVT_PLOT_PREDICATE_REMOVED:
 		{
 			if (spineGameLoadInProgress()) break;   // the load-end pass gates every city once
 			const CvPlot* pPlot = GC.getMap().plotByIndex(kEvent.iSrcLoc);
 			if (pPlot == NULL || kEvent.iType < 0) break;
-			const CvInfo* pSubstrate = NULL;
+			int eAtomKind = PLOTATOM_PREDICATE;
 			switch (kEvent.iEventId)
 			{
 			case SEVT_PLOT_TERRAIN_ADDED:
-			case SEVT_PLOT_TERRAIN_REMOVED:     pSubstrate = InfoRepo<CvTerrainInfo>::get().get(kEvent.iType); break;
+			case SEVT_PLOT_TERRAIN_REMOVED:     eAtomKind = PLOTATOM_TERRAIN; break;
 			case SEVT_PLOT_FEATURE_ADDED:
-			case SEVT_PLOT_FEATURE_REMOVED:     pSubstrate = InfoRepo<CvFeatureInfo>::get().get(kEvent.iType); break;
+			case SEVT_PLOT_FEATURE_REMOVED:     eAtomKind = PLOTATOM_FEATURE; break;
 			case SEVT_PLOT_IMPROVEMENT_ADDED:
-			case SEVT_PLOT_IMPROVEMENT_REMOVED: pSubstrate = InfoRepo<CvImprovementInfo>::get().get(kEvent.iType); break;
-			default:                            pSubstrate = InfoRepo<CvRouteInfo>::get().get(kEvent.iType); break;
+			case SEVT_PLOT_IMPROVEMENT_REMOVED: eAtomKind = PLOTATOM_IMPROVEMENT; break;
+			case SEVT_PLOT_ROUTE_ADDED:
+			case SEVT_PLOT_ROUTE_REMOVED:       eAtomKind = PLOTATOM_ROUTE; break;
+			default:                            eAtomKind = PLOTATOM_PREDICATE; break;
 			}
-			if (pSubstrate == NULL) break;
 			const std::vector<IDInfo>& kWorkableBy = pPlot->workableByCities();
 			for (size_t iCity = 0; iCity < kWorkableBy.size(); ++iCity)
 			{
 				const CvCity* pCity = ::getCity(kWorkableBy[iCity]);
 				if (pCity == NULL) continue;
-				BuildingEnabler::onPlotSubstrateChanged(*pCity, pSubstrate);
-				UnitEnabler::onPlotSubstrateChanged(*pCity, pSubstrate);
+				BuildingEnabler::onPlotAtomChanged(*pCity, eAtomKind, kEvent.iType);
+				UnitEnabler::onPlotAtomChanged(*pCity, eAtomKind, kEvent.iType);
 			}
 			break;
 		}

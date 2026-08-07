@@ -213,6 +213,14 @@
 
 ## Not built yet
 
+- Model the `MAPCATEGORY_` gate. `cascadeEvalCondition` returns TRUE for every `MAPCATEGORY_` atom — the clause
+  is not evaluated at all — while it is the most-authored plot atom in the data by a wide margin, so an
+  off-world building is gated on nothing today. ⚑ The re-gate ROUTE is already wired (a terrain fact seeds the
+  atom, [enabler.md §8](../../specs/enabler.md)), so this closes by giving the predicate a body, not by
+  touching the enabler. ⚠ `MAPCATEGORY_` is XML-only ([naming.md](../../specs/naming.md)) and a plot's set is
+  derived from its terrain, so the evaluator's input is the terrain's own list — there is no plot-side store to
+  build.
+
 - Convert the PLOT-YIELD AI CALLERS, the residue of that plane's cut.
   ⚠ **`calculateNatureYield` still has its AI callers, and they are NOT a segment re-point.** The genuine
   consumers of the plot's actual substrate value are served; what is left on the legacy walk is AI yield

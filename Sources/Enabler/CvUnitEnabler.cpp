@@ -176,19 +176,6 @@ void UnitEnabler::onCityVicinityBonusChanged(const CvCity& kCity, int iBonus)
 	ud_gateSet(kCity, touched);
 }
 
-// The unit twin of BuildingEnabler::onPlotSubstrateChanged: a substrate entity moved on a plot this city can
-// work, so exactly the units whose `requires` references it re-gate (par.7.1 step 2). Units carry `build` only,
-// but that build gate reads the same plot atoms a building's does.
-void UnitEnabler::onPlotSubstrateChanged(const CvCity& kCity, const CvInfo* pSubstrate)
-{
-	EnablerDomain& d = kCity.m_enabler.units;
-	if (!d.isSeeded() || pSubstrate == NULL) return;
-	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
-	std::set<int> touched;
-	ud_touched(pSubstrate, touched);
-	ud_gateSet(kCity, touched);
-}
-
 void UnitEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic)
 {
 	if (ePlayer == NO_PLAYER || iOldCivic == iNewCivic) return;
@@ -373,7 +360,17 @@ static void ud_touched(const CvInfo* j, std::set<int>& touched)
 static std::set<int> s_udClass[UnitEnabler::NUM_GATE_CLASSES];
 static std::map<int, std::vector<int> > s_udUnitDeps;      // referencedUnitId -> {units whose requires references it}
 static std::map<int, std::vector<int> > s_udUpgradePred;   // upgradeUnitId  -> {units that name it as a dormant-trigger}
+// The unit twin of the building enabler's plot-atom index: (atom kind, atom id) -> the units whose requires
+// names it. Same reason it exists there -- the plot substrate carries no EDGEF_REQUIRED_BY.
+static std::map<std::pair<int, int>, std::vector<int> > s_udPlotAtomConsumers;
 static bool s_udClassBuilt = false;
+static void ud_recordPlotAtoms(int eKind, const std::set<int>& ids, int u)
+{
+	for (std::set<int>::const_iterator it = ids.begin(); it != ids.end(); ++it)
+	{
+		s_udPlotAtomConsumers[std::make_pair(eKind, *it)].push_back(u);
+	}
+}
 static void ud_buildClasses()
 {
 	if (s_udClassBuilt) return;
@@ -389,6 +386,12 @@ static void ud_buildClasses()
 		if (deps.goldenAge)     s_udClass[UnitEnabler::GATE_GOLDEN_AGE].insert(u);
 		if (deps.stateReligion) s_udClass[UnitEnabler::GATE_STATE_RELIGION].insert(u);
 		if (deps.dynamic)       s_udClass[UnitEnabler::GATE_DYNAMIC].insert(u);
+		ud_recordPlotAtoms(PLOTATOM_TERRAIN,     deps.terrains,       u);
+		ud_recordPlotAtoms(PLOTATOM_FEATURE,     deps.features,       u);
+		ud_recordPlotAtoms(PLOTATOM_IMPROVEMENT, deps.improvements,   u);
+		ud_recordPlotAtoms(PLOTATOM_ROUTE,       deps.routes,         u);
+		ud_recordPlotAtoms(PLOTATOM_MAPCATEGORY, deps.mapCategories,  u);
+		ud_recordPlotAtoms(PLOTATOM_PREDICATE,   deps.plotPredicates, u);
 		for (std::set<int>::const_iterator it = deps.units.begin(); it != deps.units.end(); ++it) s_udUnitDeps[*it].push_back(u);
 		const std::vector<int>& dorm = j->dormantTriggers();
 		for (size_t i = 0; i < dorm.size(); ++i) s_udUpgradePred[dorm[i]].push_back(u);
@@ -474,6 +477,39 @@ void UnitEnabler::onCityTurn(const CvCity& kCity)
 	if (spineGameLoadInProgress()) return;
 	ud_buildClasses();
 	ud_gateSet(kCity, s_udClass[GATE_DYNAMIC]);
+}
+
+// The unit twin of BuildingEnabler::plotAtomCensus.
+void UnitEnabler::plotAtomCensus(int& iKeysOut, int& iEntriesOut)
+{
+	ud_buildClasses();
+	iKeysOut = (int)s_udPlotAtomConsumers.size();
+	iEntriesOut = 0;
+	for (std::map<std::pair<int, int>, std::vector<int> >::const_iterator it = s_udPlotAtomConsumers.begin();
+	     it != s_udPlotAtomConsumers.end(); ++it)
+	{
+		iEntriesOut += (int)it->second.size();
+	}
+}
+
+// The unit twin of BuildingEnabler::onPlotAtomChanged: a plot atom moved on a tile this city can work, so
+// exactly the units whose `requires` names it re-gate (par.7.1 step 2). Units carry `build` only, but that
+// build gate reads the same plot atoms a building's does.
+void UnitEnabler::onPlotAtomChanged(const CvCity& kCity, int eKind, int iId)
+{
+	EnablerDomain& d = kCity.m_enabler.units;
+	if (!d.isSeeded() || iId < 0) return;
+	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
+	ud_buildClasses();
+	std::vector<std::pair<int, int> > atoms;
+	EnablerKernel::plotAtomSeeds(eKind, iId, atoms);   // a TERRAIN fact also seeds its map categories
+	std::set<int> touched;
+	for (size_t iAtom = 0; iAtom < atoms.size(); ++iAtom)
+	{
+		std::map<std::pair<int, int>, std::vector<int> >::const_iterator it = s_udPlotAtomConsumers.find(atoms[iAtom]);
+		if (it != s_udPlotAtomConsumers.end()) touched.insert(it->second.begin(), it->second.end());
+	}
+	ud_gateSet(kCity, touched);
 }
 
 // The CAP/RELATION crossing (par.7.1 step 3): a unit's empire count changed (trained / lost / queued --

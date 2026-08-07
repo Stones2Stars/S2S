@@ -76,7 +76,14 @@ public:
 	static void onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
 	static void onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool bPresent);
 	static void onCityOrderChanged(const CvCity& kCity, int iBuilding);   // queue push/pop of THIS building: the one-id re-gate (par.7.1 step 3)
-	static void onPlotSubstrateChanged(const CvCity& kCity, const CvInfo* pSubstrate);   // par.7.1 step 2: the EDGEF_REQUIRED_BY re-gate for a plot substrate atom
+	// par.7.1 step 2 for the PLOT plane: re-gate exactly the buildings whose requires names this atom.
+	// ⛔ It reads the enabler's own compiled (kind, id) index, NOT EDGEF_REQUIRED_BY -- the reverse pass lands no
+	// edge for any plot-substrate prefix, so that walk finds nothing and silently re-gates nobody (enabler.md
+	// par.8: a coarse list matches a coarse event). eKind is a PlotAtomKind.
+	static void onPlotAtomChanged(const CvCity& kCity, int eKind, int iId);
+	// The index's own census (distinct atom keys, total candidate entries) -- reported at load, because an index
+	// that compiled EMPTY re-gates nobody and looks exactly like one with nothing to do.
+	static void plotAtomCensus(int& iKeysOut, int& iEntriesOut);
 	static void onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding);   // the empire per-type COUNT moved: re-check its `allowed` self-cap across the cap's own scope
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
 	static void onCityCorporationChanged(const CvCity& kCity, int iCorporation, bool bHas);

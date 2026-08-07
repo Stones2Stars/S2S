@@ -866,6 +866,32 @@ must not be swept into one: the reverse pass deliberately excludes engine tokens
 "operate index" is exactly the mistake the spelled-out naming rule exists to prevent
 ([Sources/AGENTS.md](../../Sources/AGENTS.md) § Code Style).
 
+⛔ **THE PLOT PLANE CARRIES NO `EDGEF_REQUIRED_BY` AT ALL, AND ITS COARSE LIST IS THE `(kind, id)` PLOT-ATOM
+INDEX.** `CvReversePass::rp_requiredByRefInfo` routes nine infotype prefixes and returns NULL for every other,
+so **no terrain / feature / improvement / route / mapcategory info ever gains a REQUIRED_BY edge.** The coarse
+list this section prescribes is therefore built by the enabler itself: `scanCondDeps` records each substrate id
+the `requires` names, and each domain compiles `(PlotAtomKind, id) → candidates` — read by
+`onPlotAtomChanged`, fanned over the plot's own `workableByCities()`.
+⚑ **A TERRAIN fact also seeds the MAPCATEGORY atoms**, because a plot's categories are derived from its terrain
+(`CvPlot::getMapCategories` forwards to the terrain info) and have no fact of their own; `plotAtomSeeds` is the
+one place that hop lives.
+⚑ **The bare plot BITS ride the verdict fact, not a substrate id.** `HAS_RIVER` / `HAS_COAST` / `IS_WATER` and
+their kin name no entity, so they index by their `CASC_PRED_*` id and re-gate off
+`SEVT_PLOT_PREDICATE_ADDED / _REMOVED` — which is exactly why that fact exists beside the substrate ones
+([event-spine.md](event-spine.md): one says what the tile CARRIES, the other what it MEANS).
+⚠ **Reading the empty reverse edge instead FAILS SILENTLY, which is why this is spelled out**: the walk
+succeeds, finds nothing, and re-gates nobody — indistinguishable from "no candidate needed re-gating" at every
+observation point, including a stored-vs-oracle diff taken when nothing has changed since load. The index
+therefore reports its own size at load (`[ENABLER/plotatoms] atomKeys=… atomEntries=…`), so an index that
+compiled EMPTY says so.
+
+⚑ **And this is what keeps `GATE_DYNAMIC` meaning what §7.1 says it means.** `scanCondDeps` marks `dynamic` for
+any atom it does not NAME, so every axis that later gained a precise route must also gain a case there — or it
+keeps marking the catch-all, and the "small load-compiled set" becomes the whole registry (the plot substrate
+alone put every building in it, and every fact routed through the class then re-gated everything). ⛔ So when
+you wire a new route, remove its axis from the catch-all in the same change; the residue is the genuinely live
+state — latitude, `existedFor`, `IS_CAPITAL`, the count tokens, connection.
+
 ### Load-end reconciliation
 
 - **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
