@@ -2,7 +2,9 @@
  "type": "BONUS_CARVED_EMU_EGGS",
  "happiness": {
   "empire": {
-   "flat": 1
+   "cities": {
+    "flat": 1
+   }
   }
  },
  "world": {

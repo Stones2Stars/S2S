@@ -57,12 +57,20 @@ BONUS_MAP_GEN = {
 }
 
 # Scope of the bonus's OWN deposits (verified families OVERRIDE the mapping's first-pass flat `city`):
-#   YieldChanges -> plot (the map bonus buffs its tile); iHealth/iHappiness -> empire (connected-resource benefit).
+#   YieldChanges -> plot (the map bonus buffs its tile); iHealth/iHappiness -> empire.cities.
+#
+# ⛔ THE WELLBEING FAMILIES CARRY THE `cities` TARGET, NEVER A BARE `empire` (owner) -- the SPECIALIST precedent
+# one entity over ([legacy-value-calc-map.md] §1.5: "NEVER a bare `empire.flat` ... the effect cascades with city
+# count"). A bare `empire.flat` lands in the EMPIRE package and ROLLS DOWN to every city, and the engine applies
+# it on the per-city presence fact (SEVT_CITY_BONUS_ADDED), so one connected luxury was counted once per city
+# holding it and the product handed back to every city -- measured at ~240x the whole dataset's authored total on
+# a 26-city empire, while a 2-city empire read correctly. The `cities` target lands the deposit in the HOLDING
+# city's package instead, which is what a luxury actually means: the cities that HAVE it are happier.
 BONUS_FAMILIES = {
     "YieldChanges": {"scope": "plot",   "channel": "yield",     "kind": "flat",
                      "valueKeys": ["food", "production", "commerce"]},
-    "iHealth":      {"scope": "empire", "channel": "health",    "kind": "flat"},
-    "iHappiness":   {"scope": "empire", "channel": "happiness", "kind": "flat"},
+    "iHealth":      {"scope": "empire.cities", "channel": "health",    "kind": "flat"},
+    "iHappiness":   {"scope": "empire.cities", "channel": "happiness", "kind": "flat"},
 }
 
 # TechObsolete is the obsoleting tech's edge (store OBSOLETE_FIELDS -> tech.obsoletes.bonuses), dropped here.

@@ -46,9 +46,6 @@
  },
  "health": {
   "city": {
-   "flat": -10
-  },
-  "empire": {
    "flat": -2
   }
  },

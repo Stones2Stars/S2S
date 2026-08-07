@@ -2,7 +2,7 @@
  "type": "TRAIT_AGRICULTURAL1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_AGRICULTURAL2"
+   "TRAIT_COMPLEX_AGRICULTURAL2"
   ]
  },
  "food": {

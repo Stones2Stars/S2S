@@ -2,7 +2,9 @@
  "type": "BONUS_FAKE_GEMS",
  "happiness": {
   "empire": {
-   "flat": 1
+   "cities": {
+    "flat": 1
+   }
   }
  },
  "world": {

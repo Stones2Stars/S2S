@@ -125,7 +125,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_TEMPERAMENTAL2"
+   "TRAIT_COMPLEX_TEMPERAMENTAL2"
   ]
  }
 }

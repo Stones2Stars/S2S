@@ -74,7 +74,7 @@
  "health": {
   "city": {
    "flat": [
-    2,
+    1,
     {
      "value": 1,
      "enabled": "TECH_ANIMISM"
@@ -92,9 +92,6 @@
      "enabled": "TECH_MOLECULAR_MEDICINE"
     }
    ]
-  },
-  "empire": {
-   "flat": 1
   }
  },
  "greatPeopleRate": {

@@ -2,7 +2,7 @@
  "type": "TRAIT_HUNTER_GATHERER1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_HUNTER_GATHERER2"
+   "TRAIT_COMPLEX_HUNTER_GATHERER2"
   ]
  },
  "food": {

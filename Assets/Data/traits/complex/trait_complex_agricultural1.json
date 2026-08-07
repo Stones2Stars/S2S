@@ -356,7 +356,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_AGRICULTURAL2"
+   "TRAIT_COMPLEX_AGRICULTURAL2"
   ]
  }
 }

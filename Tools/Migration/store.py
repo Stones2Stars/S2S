@@ -406,9 +406,58 @@ class Store:
     def get(self, ent, typ):
         return self.tables.get(ent, {}).get(typ)
 
+    def trait_rekey(self):
+        """{oldTraitId: newTraitId} -- the COMPLEX-ONLY RUNG re-key, defined ONCE here.
+
+        A developing line's upper rungs exist only in the complex set (the simple ladder tops out early), so they
+        are not `CvInfoReplacements` variants and kept their authored `TRAIT_` id -- leaving a chain that read
+        TRAIT_COMPLEX_SEAFARING -> TRAIT_COMPLEX_SEAFARING1 -> TRAIT_SEAFARING2. The LINE is the complex variant,
+        so every rung of it is (owner).
+
+        It lives on the STORE because a trait id is named from several curators -- above all the TECH edge that
+        GATES a rung, without which every upper rung is permanently unreachable and silently so. One definition,
+        applied where the inverted edges are handed out, so no curator can emit an id nothing defines.
+        """
+        if getattr(self, "_trait_rekey_cache", None) is not None:
+            return self._trait_rekey_cache
+        table = self.tables.get("TraitInfo", {})
+        repl = self.replacements.get("TraitInfo", {})
+        complex_ids = set(v["replacement"] for v in repl.values())
+        rid_to_base = dict((v["replacement"], b) for b, v in repl.items())
+
+        def _is_complex(typ, rec):
+            if typ in complex_ids:
+                return True
+            og = rec.find("OnGameOptions")
+            if og is not None:
+                for x in og:
+                    for txt in [engine.text(x)] + [engine.text(c) for c in x]:
+                        if txt and "COMPLEX" in txt:
+                            return True
+            return False
+
+        lineOf = {}
+        for typ, rec in table.items():
+            line = engine.text(rec.find("PromotionLine"))
+            if line:
+                lineOf[typ] = line
+        simpleLines = set(lineOf[t] for t, rec in table.items()
+                          if t in lineOf and not _is_complex(t, rec))
+        out = {}
+        for typ, rec in table.items():
+            if typ in rid_to_base or not _is_complex(typ, rec):
+                continue
+            if typ.startswith("TRAIT_COMPLEX_") or not typ.startswith("TRAIT_"):
+                continue
+            if lineOf.get(typ) in simpleLines:
+                out[typ] = "TRAIT_COMPLEX_" + typ[len("TRAIT_"):]
+        self._trait_rekey_cache = out
+        return out
+
     def enabled_by(self, typ):
         """What does `typ` enable? -> {bucket: [sorted referrer types]}."""
-        return {b: sorted(s) for b, s in self.enables.get(typ, {}).items()}
+        rekey = self.trait_rekey()
+        return {b: sorted(rekey.get(t, t) for t in s) for b, s in self.enables.get(typ, {}).items()}
 
     def obsoletes_of(self, typ):
         """What does `typ` obsolete? -> {bucket: [sorted referrer types]}."""

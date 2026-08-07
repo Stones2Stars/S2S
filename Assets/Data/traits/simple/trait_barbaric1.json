@@ -2,7 +2,7 @@
  "type": "TRAIT_BARBARIC1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_BARBARIC2"
+   "TRAIT_COMPLEX_BARBARIC2"
   ]
  },
  "buildRate": {

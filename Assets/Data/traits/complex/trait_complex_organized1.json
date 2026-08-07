@@ -145,7 +145,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_ORGANIZED2"
+   "TRAIT_COMPLEX_ORGANIZED2"
   ]
  }
 }

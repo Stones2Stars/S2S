@@ -2,7 +2,7 @@
  "type": "TRAIT_AGGRESSIVE1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_AGGRESSIVE2"
+   "TRAIT_COMPLEX_AGGRESSIVE2"
   ]
  },
  "buildRate": {

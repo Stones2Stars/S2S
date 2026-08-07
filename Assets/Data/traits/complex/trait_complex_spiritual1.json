@@ -347,7 +347,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_SPIRITUAL2"
+   "TRAIT_COMPLEX_SPIRITUAL2"
   ]
  }
 }

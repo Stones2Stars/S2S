@@ -5,49 +5,53 @@
    "flat": 1
   },
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ANGKOR_WAT",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ANGKOR_WAT",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ARK_OF_THE_COVENANT",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_MASADA",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_THE_NECROMANTEION",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ARK_OF_THE_COVENANT",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_MASADA",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_THE_NECROMANTEION",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "commerce": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_THE_NECROMANTEION",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_THE_NECROMANTEION",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "gold": {
@@ -85,28 +89,32 @@
    ]
   },
   "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "BUILDING_HOUSE_OF_WISDOM",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "research": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_HOUSE_OF_WISDOM",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   },
   "city": {
    "percent": [

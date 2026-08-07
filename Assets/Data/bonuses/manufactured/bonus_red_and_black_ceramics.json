@@ -2,7 +2,9 @@
  "type": "BONUS_RED_AND_BLACK_CERAMICS",
  "health": {
   "empire": {
-   "flat": 1
+   "cities": {
+    "flat": 1
+   }
   }
  },
  "world": {

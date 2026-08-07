@@ -586,7 +586,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_CREATIVE2"
+   "TRAIT_COMPLEX_CREATIVE2"
   ]
  }
 }

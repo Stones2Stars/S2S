@@ -2,7 +2,7 @@
  "type": "TRAIT_ANTI_CLERICAL1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_ANTI_CLERICAL2"
+   "TRAIT_COMPLEX_ANTI_CLERICAL2"
   ]
  },
  "production": {

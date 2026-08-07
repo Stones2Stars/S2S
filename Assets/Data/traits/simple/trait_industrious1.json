@@ -2,7 +2,7 @@
  "type": "TRAIT_INDUSTRIOUS1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_INDUSTRIOUS2"
+   "TRAIT_COMPLEX_INDUSTRIOUS2"
   ]
  },
  "production": {

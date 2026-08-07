@@ -418,7 +418,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_SEAFARING2"
+   "TRAIT_COMPLEX_SEAFARING2"
   ]
  }
 }

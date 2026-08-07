@@ -2,49 +2,53 @@
  "type": "SPECIALIST_SCIENTIST",
  "food": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "production": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_EINSTEINS_LABORATORY",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_EINSTEINS_LABORATORY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HIPPOCRATIC_OATH",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ATOMIUM",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_HIPPOCRATIC_OATH",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ATOMIUM",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "research": {

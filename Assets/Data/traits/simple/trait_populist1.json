@@ -2,7 +2,7 @@
  "type": "TRAIT_POPULIST1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_POPULIST2"
+   "TRAIT_COMPLEX_POPULIST2"
   ]
  },
  "food": {

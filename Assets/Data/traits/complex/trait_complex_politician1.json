@@ -172,7 +172,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_POLITICIAN2"
+   "TRAIT_COMPLEX_POLITICIAN2"
   ]
  }
 }

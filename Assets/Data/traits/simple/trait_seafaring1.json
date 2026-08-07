@@ -2,7 +2,7 @@
  "type": "TRAIT_SEAFARING1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_SEAFARING2"
+   "TRAIT_COMPLEX_SEAFARING2"
   ]
  },
  "buildRate": {

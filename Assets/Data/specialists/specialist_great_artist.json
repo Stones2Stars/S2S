@@ -2,15 +2,17 @@
  "type": "SPECIALIST_GREAT_ARTIST",
  "commerce": {
   "empire": {
-   "flat": [
-    {
-     "value": 5,
-     "enabled": {
-      "type": "BUILDING_WALK_OF_FAME",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 5,
+      "enabled": {
+       "type": "BUILDING_WALK_OF_FAME",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "culture": {

@@ -2,7 +2,7 @@
  "type": "TRAIT_REVOLUTIONARY1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_REVOLUTIONARY2"
+   "TRAIT_COMPLEX_REVOLUTIONARY2"
   ]
  },
  "gold": {

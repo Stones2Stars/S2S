@@ -2,7 +2,9 @@
  "type": "BONUS_CRYSTAL_GLASSWARE",
  "happiness": {
   "empire": {
-   "flat": 1
+   "cities": {
+    "flat": 1
+   }
   }
  },
  "world": {

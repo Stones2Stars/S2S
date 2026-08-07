@@ -2,7 +2,7 @@
  "type": "TRAIT_POLITICIAN1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_POLITICIAN2"
+   "TRAIT_COMPLEX_POLITICIAN2"
   ]
  },
  "buildRate": {

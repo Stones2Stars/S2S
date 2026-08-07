@@ -277,7 +277,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_SCIENTIFIC2"
+   "TRAIT_COMPLEX_SCIENTIFIC2"
   ]
  }
 }

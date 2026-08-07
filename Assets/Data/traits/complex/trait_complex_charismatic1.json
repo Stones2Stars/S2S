@@ -122,7 +122,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_CHARISMATIC2"
+   "TRAIT_COMPLEX_CHARISMATIC2"
   ]
  }
 }

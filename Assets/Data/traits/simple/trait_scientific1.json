@@ -2,7 +2,7 @@
  "type": "TRAIT_SCIENTIFIC1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_SCIENTIFIC2"
+   "TRAIT_COMPLEX_SCIENTIFIC2"
   ]
  },
  "buildRate": {

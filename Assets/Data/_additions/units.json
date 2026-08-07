@@ -37,11 +37,11 @@
     },
     {
      "value": 10,
-     "enabled": "TRAIT_CREATIVE2"
+     "enabled": "TRAIT_COMPLEX_CREATIVE2"
     },
     {
      "value": 20,
-     "enabled": "TRAIT_CREATIVE3"
+     "enabled": "TRAIT_COMPLEX_CREATIVE3"
     },
     {
      "value": 5,

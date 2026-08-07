@@ -2,7 +2,9 @@
  "type": "BONUS_WINE_VINTAGE_WHITE",
  "happiness": {
   "empire": {
-   "flat": 1
+   "cities": {
+    "flat": 1
+   }
   }
  },
  "world": {

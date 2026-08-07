@@ -2,7 +2,9 @@
  "type": "BONUS_OLMEC_JADE_FIGURINES",
  "happiness": {
   "empire": {
-   "flat": 1
+   "cities": {
+    "flat": 1
+   }
   }
  },
  "world": {

@@ -2,7 +2,7 @@
  "type": "TRAIT_EXCESSIVE1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_EXCESSIVE2"
+   "TRAIT_COMPLEX_EXCESSIVE2"
   ]
  },
  "health": {

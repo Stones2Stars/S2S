@@ -2,7 +2,7 @@
  "type": "TRAIT_DECEIVER1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_DECEIVER2"
+   "TRAIT_COMPLEX_DECEIVER2"
   ]
  },
  "buildRate": {

@@ -2,7 +2,7 @@
  "type": "TRAIT_FINANCIAL1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_FINANCIAL2"
+   "TRAIT_COMPLEX_FINANCIAL2"
   ]
  },
  "buildRate": {

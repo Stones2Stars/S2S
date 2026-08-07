@@ -2,22 +2,24 @@
  "type": "SPECIALIST_NOBLE",
  "production": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_NEUSCHWANSTEIN",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_NEUSCHWANSTEIN",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_VERSAILLES",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_VERSAILLES",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "gold": {

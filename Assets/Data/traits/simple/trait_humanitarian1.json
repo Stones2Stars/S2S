@@ -2,7 +2,7 @@
  "type": "TRAIT_HUMANITARIAN1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_HUMANITARIAN2"
+   "TRAIT_COMPLEX_HUMANITARIAN2"
   ]
  },
  "buildRate": {

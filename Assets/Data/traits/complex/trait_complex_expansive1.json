@@ -140,7 +140,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_EXPANSIVE2"
+   "TRAIT_COMPLEX_EXPANSIVE2"
   ]
  }
 }

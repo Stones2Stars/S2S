@@ -147,7 +147,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_BARBARIC2"
+   "TRAIT_COMPLEX_BARBARIC2"
   ]
  }
 }

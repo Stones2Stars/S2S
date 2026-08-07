@@ -2,7 +2,7 @@
  "type": "TRAIT_ORGANIZED1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_ORGANIZED2"
+   "TRAIT_COMPLEX_ORGANIZED2"
   ]
  },
  "buildRate": {

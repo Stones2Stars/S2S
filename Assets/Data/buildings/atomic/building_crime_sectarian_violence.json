@@ -34,9 +34,6 @@
  },
  "happiness": {
   "city": {
-   "flat": -10
-  },
-  "empire": {
    "flat": -1
   }
  },

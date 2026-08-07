@@ -646,6 +646,16 @@ def merge_vision(out, vision):
         else:
             node[scope] = value
 
+def _scope_node(families, family, scope):
+    """The node a deposit lands in, given a scope that MAY carry a plural TARGET (`empire.cities`, json §3.3).
+    A target is a level BELOW the scope -- `<family>.<scope>.<target>.<unit>` -- so a dotted scope nests rather
+    than minting a key literally named "empire.cities". Plain scopes are unaffected (one segment, one level)."""
+    node = families.setdefault(family, {})
+    for key in scope.split("."):
+        node = node.setdefault(key, {})
+    return node
+
+
 def apply_channel(families, spec, c, enabler_block=None):
     """Deposit a scope-wide modifier into its FAMILY (flat-family layout, §3): <family>.<scope>[.<member>].<unit>.
     The mapping `channel` IS the family; named valueKeys (food/gold/…) are members; a scalar has no member."""
@@ -720,11 +730,11 @@ def apply_channel(families, spec, c, enabler_block=None):
     if isinstance(val, dict):                  # named members (food/gold/…)
         for member, v in val.items():
             if family in SPLIT_FAMILIES:       # split: the member IS the family (food.scope.unit) — no wrapper
-                _deposit(families.setdefault(member, {}).setdefault(scope, {}), kind, v, enabled)
+                _deposit(_scope_node(families, member, scope), kind, v, enabled)
             else:                              # grouped concept: family.scope.member.unit (vicinityYield, …)
-                _deposit(families.setdefault(family, {}).setdefault(scope, {}).setdefault(member, {}), kind, v, enabled)
+                _deposit(_scope_node(families, family, scope).setdefault(member, {}), kind, v, enabled)
     else:                                      # scalar family: family.scope[.member].unit
-        node = families.setdefault(family, {}).setdefault(scope, {})
+        node = _scope_node(families, family, scope)
         member = spec.get("member")            # explicit grouped member (maintenance.distance, movement.cost, …)
         if member:
             node = node.setdefault(member, {})
@@ -1153,3 +1163,23 @@ def skip_inert(results, store, label, keep=()):
         print("INERT but REFERENCED, kept %d %s: %s%s"
               % (len(held), label, ", ".join(shown[:12]), tail))
     return results
+
+
+# ⚖ THE COMPLEX-ONLY RUNG RE-KEY -- ONE definition, shared by EVERY curator that names a trait id.
+#
+# A developing line's upper rungs exist only in the complex set (the simple ladder tops out early), so they are
+# not `CvInfoReplacements` variants and used to keep their authored `TRAIT_` id -- leaving a chain that read
+# TRAIT_COMPLEX_SEAFARING -> TRAIT_COMPLEX_SEAFARING1 -> TRAIT_SEAFARING2. The LINE is the complex variant, so
+# every rung of it is (owner).
+#
+# ⛔ IT LIVES HERE, NOT IN curate_trait, BECAUSE A TRAIT ID IS NAMED FROM SEVERAL CURATORS. The tech curator
+# emits the `enables.traits` edge that GATES a rung ([enabler.md]: without it every upper rung is permanently
+# unreachable, silently), and units name traits in their grant conditions. A per-curator copy of this rule would
+# drift, and a curator that missed it would emit an id nothing resolves -- a severed edge with no error
+# ([DEC-single-implementation]).
+_TRAIT_REKEY_CACHE = {}
+
+
+def trait_rekey_map(store):
+    """{oldTraitId: newTraitId} -- delegates to the ONE definition on the store."""
+    return store.trait_rekey()

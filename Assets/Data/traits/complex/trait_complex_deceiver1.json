@@ -338,7 +338,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_DECEIVER2"
+   "TRAIT_COMPLEX_DECEIVER2"
   ]
  }
 }

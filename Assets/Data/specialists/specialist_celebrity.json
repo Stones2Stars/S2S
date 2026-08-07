@@ -5,29 +5,31 @@
    "flat": 2
   },
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_GLOBE_THEATRE",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_GLOBE_THEATRE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ROCK_N_ROLL",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_WALK_OF_FAME",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ROCK_N_ROLL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_WALK_OF_FAME",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "culture": {

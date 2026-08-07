@@ -412,7 +412,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_INDUSTRIOUS2"
+   "TRAIT_COMPLEX_INDUSTRIOUS2"
   ]
  }
 }

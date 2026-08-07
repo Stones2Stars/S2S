@@ -55,6 +55,26 @@ from store import Store, REPO
 # itself rather than inherited from the deposit.
 _PER_SPECIALIST_IN_CITY = OrderedDict([("type", "SPECIALIST"), ("scope", "city")])
 
+# ⛔ A BARE `empire` DEPOSIT IS ONLY LEGITIMATE ON A CAPPED BUILDING -- THE `allowed` CAP IS THE DISCRIMINATOR.
+# A bare `<family>.empire.<unit>` lands in the player's EMPIRE package and ROLLS DOWN to every city
+# (modifier.md §1), and it is applied once per SOURCE, so an UNCAPPED building -- one that may stand in every
+# city at once -- multiplies its own effect by the city count and then hands the product back to every city.
+# That is the leak legacy-value-calc-map.md §1.5 names for specialists ("NEVER a bare `empire.flat` ... the
+# effect cascades with city count"); the specialist and corporation curators already refuse it, and this one
+# did not, because the legacy `iGlobal*` / `*AllCities` tags were mapped to empire scope UNCONDITIONALLY.
+# ⚑ The cap is exactly the right test and needs no new data: `allowed:{world|team|empire: N}` is what makes a
+# building a wonder ([enabler.md §4]: the category IS the cap's scope), and a wonder is the one building whose
+# empire-wide reach is both intended and bounded to a single instance.
+# ⚠ BEHAVIOUR CHANGE, stated rather than hidden (validation.md: the spec leads): an uncapped building carrying
+# a legacy `iGlobal*` tag used to reach every city and now reaches its own. The legacy reach was never
+# survivable at this scale -- the population it actually hits is the property-band pseudo-buildings, which
+# enabler.md §3 places in EVERY city, so the old shape squared with city count.
+def _deposit_scope(rec, scope):
+    if scope != "empire":
+        return scope
+    return "empire" if allowed_building(rec) else "city"
+
+
 # ---- scalar/percent modifier families: tag -> (family, scope, member|None, unit). Corrected scopes from the
 # classification (the mapping's were often wrong). Names PROVISIONAL (reader-pass refines). ----
 SCALAR_FAMILIES = {
@@ -527,6 +547,7 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
         node = rec.find(tag)
         if node is None:
             continue
+        scope = _deposit_scope(rec, scope)   # empire only on a CAPPED building (a wonder)
         for ref, val in _keyed(node, vkeys):
             if tag in PER100_TAGS:                       # one-time de-scale x100 -> human (cascade-fixed-point.md §2)
                 val = _descale100(val)
@@ -645,6 +666,7 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
 
     # --- CvProperties: Properties (city) / PropertiesAllCities (empire) -> per-PROPERTY family deposits ---
     for tag, scope in (("Properties", "city"), ("PropertiesAllCities", "empire")):
+        scope = _deposit_scope(rec, scope)   # `AllCities` is empire-wide only from a CAPPED building
         node = rec.find(tag)
         if node is not None:
             for c in node:
@@ -1505,6 +1527,7 @@ def curate(typ, rec, store):
     for tag, (family, scope, member, unit) in SCALAR_FAMILIES.items():
         v = _int(rec, tag)
         if v:
+            scope = _deposit_scope(rec, scope)   # empire only on a CAPPED building (a wonder)
             if unit == "perPopulation":
                 _inject_per(fams, family, scope, "flat", v, per_100_pop)
             else:
@@ -1514,7 +1537,7 @@ def curate(typ, rec, store):
         node = rec.find(tag)
         if node is None:
             continue
-        scope, keys, unit = spec[0], spec[1], spec[2]
+        scope, keys, unit = _deposit_scope(rec, spec[0]), spec[1], spec[2]
         for member, v in engine.named_array(node, keys).items():
             # per-pop (Yield/CommercePerPopChanges): engine adds the RAW value ×pop into the ×100-space rate
             # (CvCity.cpp:12346 / getExtraYield100) -> human effect = value × pop / 100 -> a §3.7 per-scaler

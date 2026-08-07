@@ -150,7 +150,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_HUNTER_GATHERER2"
+   "TRAIT_COMPLEX_HUNTER_GATHERER2"
   ]
  }
 }

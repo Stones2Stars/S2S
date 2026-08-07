@@ -204,7 +204,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_HUMANITARIAN2"
+   "TRAIT_COMPLEX_HUMANITARIAN2"
   ]
  }
 }

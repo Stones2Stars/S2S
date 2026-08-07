@@ -2,8 +2,8 @@
  "type": "TRAIT_TEMPERAMENTAL1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_TEMPERAMENTAL2",
-   "TRAIT_TEMPERAMENTAL3"
+   "TRAIT_COMPLEX_TEMPERAMENTAL2",
+   "TRAIT_COMPLEX_TEMPERAMENTAL3"
   ]
  },
  "buildRate": {

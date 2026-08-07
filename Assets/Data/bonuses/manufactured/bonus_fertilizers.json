@@ -8,7 +8,9 @@
  },
  "health": {
   "empire": {
-   "flat": 3
+   "cities": {
+    "flat": 3
+   }
   }
  },
  "ai": {

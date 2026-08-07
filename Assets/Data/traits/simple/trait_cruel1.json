@@ -2,7 +2,7 @@
  "type": "TRAIT_CRUEL1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_CRUEL2"
+   "TRAIT_COMPLEX_CRUEL2"
   ]
  },
  "buildRate": {

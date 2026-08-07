@@ -2,7 +2,7 @@
  "type": "TRAIT_IMPERIALIST1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_IMPERIALIST2"
+   "TRAIT_COMPLEX_IMPERIALIST2"
   ]
  },
  "buildRate": {

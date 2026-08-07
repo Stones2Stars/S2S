@@ -157,7 +157,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_PHILOSOPHICAL2"
+   "TRAIT_COMPLEX_PHILOSOPHICAL2"
   ]
  }
 }

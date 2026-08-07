@@ -2,7 +2,7 @@
  "type": "TRAIT_IDEALISTIC1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_IDEALISTIC2"
+   "TRAIT_COMPLEX_IDEALISTIC2"
   ]
  },
  "culture": {

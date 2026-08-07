@@ -10,28 +10,32 @@
    "flat": 5
   },
   "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "BUILDING_HOUSE_OF_WISDOM",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "research": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_HOUSE_OF_WISDOM",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "experience": {

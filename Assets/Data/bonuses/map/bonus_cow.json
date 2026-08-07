@@ -43,7 +43,9 @@
  },
  "health": {
   "empire": {
-   "flat": 1
+   "cities": {
+    "flat": 1
+   }
   }
  },
  "world": {

@@ -5,69 +5,75 @@
    "flat": 2
   },
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ARCHIMEDES_WORKSHOP",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ARCHIMEDES_WORKSHOP",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_EDISONS_WORKSHOP",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_GREAT_WALL_OF_CHINA",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HADRIANS_WALL",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_LEONARDOS_WORKSHOP",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_EDISONS_WORKSHOP",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_GREAT_WALL_OF_CHINA",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_HADRIANS_WALL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_LEONARDOS_WORKSHOP",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "commerce": {
   "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_LONDON_EYE",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_LONDON_EYE",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "research": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ATOMIUM",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ATOMIUM",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   },
   "city": {
    "percent": [
@@ -90,15 +96,17 @@
  },
  "culture": {
   "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_BAUHAUS_SCHOOL",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_BAUHAUS_SCHOOL",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "greatPeopleRate": {

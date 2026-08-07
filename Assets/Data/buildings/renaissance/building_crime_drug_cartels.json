@@ -25,7 +25,7 @@
  "happiness": {
   "city": {
    "flat": [
-    -6,
+    -1,
     {
      "value": -40,
      "per": {
@@ -34,9 +34,6 @@
      }
     }
    ]
-  },
-  "empire": {
-   "flat": -1
   }
  },
  "health": {

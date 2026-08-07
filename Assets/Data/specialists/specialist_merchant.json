@@ -5,29 +5,31 @@
    "flat": 3
   },
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_MARCO_POLOS_EMBASSY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_SILK_ROAD",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_MARCO_POLOS_EMBASSY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_SILK_ROAD",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "gold": {

@@ -2,7 +2,7 @@
  "type": "TRAIT_MEGALOMANIAC1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_MEGALOMANIAC2"
+   "TRAIT_COMPLEX_MEGALOMANIAC2"
   ]
  },
  "production": {

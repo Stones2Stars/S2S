@@ -2,7 +2,7 @@
  "type": "TRAIT_EXPANSIVE1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_EXPANSIVE2"
+   "TRAIT_COMPLEX_EXPANSIVE2"
   ]
  },
  "buildRate": {

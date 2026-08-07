@@ -141,7 +141,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_MEGALOMANIAC2"
+   "TRAIT_COMPLEX_MEGALOMANIAC2"
   ]
  }
 }

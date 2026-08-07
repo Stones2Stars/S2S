@@ -465,7 +465,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_PROTECTIVE2"
+   "TRAIT_COMPLEX_PROTECTIVE2"
   ]
  }
 }

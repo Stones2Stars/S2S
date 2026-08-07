@@ -146,7 +146,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_AGGRESSIVE2"
+   "TRAIT_COMPLEX_AGGRESSIVE2"
   ]
  }
 }

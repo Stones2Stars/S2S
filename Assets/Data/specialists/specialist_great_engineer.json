@@ -12,15 +12,17 @@
  },
  "culture": {
   "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_BAUHAUS_SCHOOL",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_BAUHAUS_SCHOOL",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "experience": {

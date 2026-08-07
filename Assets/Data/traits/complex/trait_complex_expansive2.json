@@ -1,0 +1,146 @@
+{
+ "type": "TRAIT_COMPLEX_EXPANSIVE2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_EXPANSIVE3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_EXPANSIVE3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_MINIMALIST1"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": -20
+   },
+   "unitCombats": {
+    "UNITCOMBAT_SETTLER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WORKER": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": -1
+    },
+    "SPECIALIST_NOBLE": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -15
+   },
+   "numCities": {
+    "percent": -15
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "perPopulation": 30
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 35
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": -5
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -10
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": -5
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 11
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExpansive2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE2",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY"
+ }
+}

@@ -2,35 +2,39 @@
  "type": "SPECIALIST_ARTIST",
  "production": {
   "empire": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_BAUHAUS_SCHOOL",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_BAUHAUS_SCHOOL",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "commerce": {
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_MADISON_AVENUE",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_MADISON_AVENUE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_WALK_OF_FAME",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_WALK_OF_FAME",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "research": {

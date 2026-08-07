@@ -2,7 +2,7 @@
  "type": "TRAIT_CREATIVE1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_CREATIVE2"
+   "TRAIT_COMPLEX_CREATIVE2"
   ]
  },
  "buildRate": {

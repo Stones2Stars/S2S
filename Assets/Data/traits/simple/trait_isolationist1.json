@@ -2,7 +2,7 @@
  "type": "TRAIT_ISOLATIONIST1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_ISOLATIONIST2"
+   "TRAIT_COMPLEX_ISOLATIONIST2"
   ]
  },
  "food": {

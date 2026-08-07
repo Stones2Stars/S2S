@@ -99,8 +99,13 @@ FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture",
 # src_ent, field, _ttype, family, valueKeys, unit, deposit_scope[, cond_scope]). The cond_scope 8th element
 # overrides the conditioner's PRESENCE scope where it differs from the deposit scope (non-local building = empire).
 SPECIALIST_BOOSTS = [
-    ("BuildingInfo", "SpecialistYieldChanges",           "buildings", "yield",    engine.YIELDS,    "flat",    "empire", "empire"),
-    ("BuildingInfo", "SpecialistCommerceChanges",        "buildings", "commerce", engine.COMMERCES, "flat",    "empire", "empire"),
+    # ⛔ A SPECIALIST VIRTUALLY NEVER AUTHORS `empire.flat` (owner). An empire-scope FLAT deposits into the
+    # EMPIRE package and rolls down as a lump, so ONE engineer would hand its hammer to every city. The bonus is
+    # not empire-wide output -- it is "+N per specialist of this type, in whichever city that specialist sits".
+    # The `cities` plural target (json.md §3.3) is what scopes it: an EMPIRE-scope deposit onto EVERY city lands
+    # in EACH CITY's package, resolved per city, and applies there locally per the specialist present.
+    ("BuildingInfo", "SpecialistYieldChanges",           "buildings", "yield",    engine.YIELDS,    "flat",    "empire.cities", "empire"),
+    ("BuildingInfo", "SpecialistCommerceChanges",        "buildings", "commerce", engine.COMMERCES, "flat",    "empire.cities", "empire"),
     ("BuildingInfo", "LocalSpecialistYieldChanges",      "buildings", "yield",    engine.YIELDS,    "flat",    "city"),
     ("BuildingInfo", "LocalSpecialistCommerceChanges",   "buildings", "commerce", engine.COMMERCES, "flat",    "city"),
     ("CivicInfo",    "SpecialistYieldPercentChanges",    "civics",    "yield",    engine.YIELDS,    "percent", "city"),
@@ -125,7 +130,10 @@ def _put(fam, family, member, unit, val):
 def _inject_cond(fam, family, scope, unit, value, enabled):
     """Keep-on-self conditioned deposit: family.scope.unit gets [{value, enabled}, ...] coexisting with the
     base value (int|list-safe — modifier.md §6.5)."""
-    node = fam.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
+    # scope may carry a plural TARGET as a dotted path ("empire.cities", json.md §3.3) -- nest each segment
+    node = fam.setdefault(family, OrderedDict())
+    for szSegment in scope.split("."):
+        node = node.setdefault(szSegment, OrderedDict())
     entry = OrderedDict([("value", value), ("enabled", enabled)])
     cur = node.get(unit)
     if cur is None:

@@ -86,63 +86,39 @@
   }
  },
  "costs": {
-  "empire": {
+  "city": {
    "percent": [
     {
      "value": 10,
-     "enabled": {
-      "type": "BUILDING_C_L_AFRICAN",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_AFRICAN"
     },
     {
      "value": -5,
-     "enabled": {
-      "type": "BUILDING_C_L_ASIAN",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_ASIAN"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "BUILDING_C_L_EUROPEAN",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_EUROPEAN"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "BUILDING_C_L_MIDDLE_EASTERN",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_MIDDLE_EASTERN"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "BUILDING_C_L_NEANDERTHAL",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_NEANDERTHAL"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "BUILDING_C_L_NORTH_AMERICAN",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_NORTH_AMERICAN"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "BUILDING_C_L_OCEANIAN",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_OCEANIAN"
     },
     {
      "value": 10,
-     "enabled": {
-      "type": "BUILDING_C_L_SOUTH_AMERICAN",
-      "scope": "empire"
-     }
+     "enabled": "BUILDING_C_L_SOUTH_AMERICAN"
     }
    ]
   }

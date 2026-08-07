@@ -5,15 +5,17 @@
    "flat": 1
   },
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_CIVIC_FEUDAL",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_FEUDAL",
+       "scope": "empire"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "production": {
@@ -21,36 +23,38 @@
    "flat": 3
   },
   "empire": {
-   "flat": [
-    {
-     "value": -1,
-     "enabled": {
-      "type": "BUILDING_CIVIC_EGALITARIAN",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_EGALITARIAN",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_MARTIAL_LAW",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 3,
+      "enabled": {
+       "type": "BUILDING_CIVIC_MIND_CONTROL",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_POST_SCARCITY",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_CIVIC_MARTIAL_LAW",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 3,
-     "enabled": {
-      "type": "BUILDING_CIVIC_MIND_CONTROL",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "BUILDING_CIVIC_POST_SCARCITY",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "commerce": {
@@ -58,36 +62,38 @@
    "flat": 2
   },
   "empire": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": {
-      "type": "BUILDING_CIVIC_CASTE",
-      "scope": "empire"
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_CASTE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_DEMOCRACY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_CIVIC_FREE_MARKET",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_REPUBLIC",
+       "scope": "empire"
+      }
      }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "BUILDING_CIVIC_DEMOCRACY",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": 2,
-     "enabled": {
-      "type": "BUILDING_CIVIC_FREE_MARKET",
-      "scope": "empire"
-     }
-    },
-    {
-     "value": -1,
-     "enabled": {
-      "type": "BUILDING_CIVIC_REPUBLIC",
-      "scope": "empire"
-     }
-    }
-   ]
+    ]
+   }
   }
  },
  "gold": {

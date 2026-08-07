@@ -443,7 +443,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_FINANCIAL2"
+   "TRAIT_COMPLEX_FINANCIAL2"
   ]
  }
 }

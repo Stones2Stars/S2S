@@ -199,7 +199,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_EXCESSIVE2"
+   "TRAIT_COMPLEX_EXCESSIVE2"
   ]
  }
 }

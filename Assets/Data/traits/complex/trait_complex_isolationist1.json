@@ -170,7 +170,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_ISOLATIONIST2"
+   "TRAIT_COMPLEX_ISOLATIONIST2"
   ]
  }
 }

@@ -2,7 +2,7 @@
  "type": "TRAIT_CHARISMATIC1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_CHARISMATIC2"
+   "TRAIT_COMPLEX_CHARISMATIC2"
   ]
  },
  "buildRate": {

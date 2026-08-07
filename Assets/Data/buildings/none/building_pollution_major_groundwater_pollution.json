@@ -38,9 +38,6 @@
  },
  "health": {
   "city": {
-   "flat": -5
-  },
-  "empire": {
    "flat": -1
   }
  },

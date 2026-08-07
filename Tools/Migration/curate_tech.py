@@ -253,6 +253,11 @@ def synthesize_game_start(store, result):
         ("units",        "UnitInfo",        ["units"],        lambda t, r: cost(r) != -1 and not cap0(r)),
     ):
         ids = _start_enabled(store, ent, sbuckets, keep)
+        if bucket == "traits":
+            # the ONE complex-only rung re-key (curate_common) -- a tech's trait edge GATES that rung, so an
+            # un-remapped id severs the gate silently ([enabler.md])
+            rekey = cc.trait_rekey_map(store)
+            ids = [rekey.get(t, t) for t in ids]
         if ids:
             enables[bucket] = ids
 
