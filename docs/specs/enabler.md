@@ -207,16 +207,26 @@ toggles it active/dormant as the value crosses the threshold — no per-turn add
 non-constructibility (it is placed by the property system, not the production queue) authors as `notConstructible`
 (an `identity` flag, [json](json.md) §7).
 
-**⛔ THE BAND MODEL IS THE WHOLE QUEUE-EXCLUDED CLASS, NOT A PROPERTY SPECIAL CASE (owner): a `notConstructible`
-entity is PLACED IN EVERY CITY UNCONDITIONALLY, and DORMANCY decides everything after that.** Bands, autobuilds and
-every other system-placed building work identically — *"they should just get placed, then dormancy checked"* — so no
-placing system evaluates a placement gate, and the per-turn add/remove churn disappears for all of them at once
-rather than for bands alone.
+**⛔ `notConstructible` MEANS ONE THING: IT NEVER GOES THROUGH THE `canConstruct` GATE, EVER (owner).** It is a
+statement about the PRODUCTION QUEUE and nothing else — the entity is not offered, not greyed, not evaluated as a
+build candidate. ⛔ **It does NOT mean "build it in every city"** (owner), and reading it that way is what this
+callout exists to stop.
 
-**The seam.** `notConstructible` collects the class into `BuildingsRepo::systemPlacedBuildings`, and
-`CvCity::placeSystemBuildings` puts every member into the city — at founding, and once over existing cities on load
-for saves predating the class. It evaluates no gate and it removes nothing; the `requires.operate` clause is the
-only thing that decides active vs dormant afterwards.
+⇒ **WHO places it, and WHERE, belongs to the PLACING SYSTEM — never to this flag.** The property solver places its
+bands; `CvGame::setHeadquarters` places a corporate HQ in the ONE city that holds it; the achievement system awards
+one per player. Those systems already know their own answer, and the flag's job is only to keep the production
+queue out of it.
+
+⛔ **SO A BLANKET "PUT EVERY QUEUE-EXCLUDED MEMBER IN EVERY CITY" PASS IS A DEFECT, NOT THE MODEL.** It hands every
+city a copy of entities whose own data says one may exist — a `{world: 1}` corporate headquarters or relic, an
+`{empire: 1}` achievement — and `allowed` cannot refuse it, because `allowed` gates a BUILD (§4) and a
+queue-excluded entity is never a build candidate. ⚑ **The damage is not confined to over-offering:** an entity
+that is ACTIVE in N cities deposits N times, so a scope-wide deposit it carries is multiplied by the city count —
+silently, on a plausible-looking number ([modifier.md §5](modifier.md)).
+⚠ **A per-city population is the BAND's property, not the class's.** A band genuinely belongs in every city and is
+toggled by its `requires.operate` threshold, which is what deletes the legacy per-turn add/remove churn; that is
+the property system placing its own entities, and it stays exactly as it is. What does not follow is the
+generalization from it.
 
 ⛔ **A band bound is a SIGNED threshold, so "absent" can never be encoded as a negative.** A property value is
 legitimately negative (the low-education ladder is authored entirely in negative bands), so a `min`/`max` absent-test
@@ -225,8 +235,8 @@ outside the value domain.
 
 ⚑ **The consequence is that such an entity carries NO `requires.build`, and this is structural rather than a
 convention to remember.** `build` only ever greys a QUEUE candidate and is checked ONCE (§3 above); the ongoing
-dormancy gate reads `operate` alone. A queue-excluded entity is never a queue candidate, so its `build` clause had
-exactly one consumer — the placement gate this ruling deletes — and anything left there would silently never be
+dormancy gate reads `operate` alone. A queue-excluded entity is never a queue candidate, so its `build` clause has
+no consumer at all, and anything left there would silently never be
 evaluated again (a cliff dwelling placed in a flat city would come up ACTIVE, its `TERRAIN_PEAK` clause sitting in
 the half nothing reads). The curator therefore folds `build` into `operate` for the whole class
 ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)).
@@ -234,11 +244,12 @@ the half nothing reads). The curator therefore folds `build` into `operate` for 
 the entity correctly dorms if the ground it needed stops existing (terrain levelled to sea level — the WMD case),
 which a checked-once `build` clause could never do.
 
-⚠ **Cost, stated so it is not re-litigated:** this places ~705 buildings in every city. It allocates nothing new —
-the per-city building arrays are already dimensioned by `NUM_BUILDING_TYPES`
+⚠ **Cost, for the population a placing system genuinely does put in every city (the bands):** it allocates nothing
+new — the per-city building arrays are already dimensioned by `NUM_BUILDING_TYPES`
 ([memory-footprint.md §2](../reference/memory-footprint.md)) — and it is not a per-turn cost, because the operate
 fixpoint is targeted-propagation maintained (§3.2) and re-walks only what an event touched. The load seed pays it
-once.
+once. ⛔ That is a cost argument for the BAND population, and it was never a licence to widen the population it
+is paid for.
 Where the bands form a succession chain (the **Education ladder**) a higher band dorms the lower via
 `requires.operate.dormant` (only-highest-active, no stacking) — the **same uniform `ReplacementBuildings → dormant`
 mirror as §2, not a special case** (there is no separate "education" ruling); chainless bands (crime/disease/
