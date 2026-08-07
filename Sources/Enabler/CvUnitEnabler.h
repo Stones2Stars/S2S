@@ -32,6 +32,7 @@ public:
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
 	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);   // network count delta; re-gates on a 0-crossing
 	static void onCityVicinityBonusChanged(const CvCity& kCity, int iBonus);        // LOCAL presence flip; re-gates vicinity dependents
+	static void onPlotSubstrateChanged(const CvCity& kCity, const CvInfo* pSubstrate);   // par.7.1 step 2: the EDGEF_REQUIRED_BY re-gate for a plot substrate atom
 	static void onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic);
 
 	// ==== THE REQUIRES GATE (enabler.md par.7.1 steps 2+3; the par.3 unit machine -- see the .cpp header):

@@ -629,6 +629,23 @@ void BuildingEnabler::onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding)
 	}
 }
 
+// A PLOT SUBSTRATE entity arrived on / left a plot this city can work -- re-gate exactly the candidates whose
+// `requires` REFERENCES that entity (par.7.1 step 2, the EDGEF_REQUIRED_BY re-gate), and nothing else.
+// ⚑ THIS IS THE ROUTE THE PLOT PLANE NEVER HAD. The substrate atoms are the single largest gate axis in the
+// authored data -- MAPCATEGORY_ / TERRAIN_ / FEATURE_ / HAS_COAST / HAS_RIVER across thousands of entities -- and
+// none of them re-gated at all: a terraform, a chop, an improvement built or pillaged moved no verdict, and the
+// tri-state is a BARE FETCH that nothing recomputes ([DEC-no-self-heal]), so the stale verdict simply stood.
+// ⛔ It must NOT ride the GATE_DYNAMIC class the rare player/city facts use: that class is effectively the whole
+// registry (anything the deps scanner does not recognise falls through to it), and plot facts are HIGH frequency
+// -- a worked-plot flip would re-gate every building in the city. The reverse edge is what makes this affordable.
+void BuildingEnabler::onPlotSubstrateChanged(const CvCity& kCity, const CvInfo* pSubstrate)
+{
+	if (pSubstrate == NULL) return;
+	std::set<int> touched;
+	bd_touched(pSubstrate, touched);
+	bd_gateSet(kCity, touched);   // no-ops on an empty set, so a substrate nothing requires costs one lookup
+}
+
 void BuildingEnabler::onCityOrderChanged(const CvCity& kCity, int iBuilding)
 {
 	// queue push/pop of iBuilding (par.7.1 step 3): membership untouched -- ONE id re-gates, its verdict

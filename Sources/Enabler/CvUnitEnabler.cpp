@@ -176,6 +176,19 @@ void UnitEnabler::onCityVicinityBonusChanged(const CvCity& kCity, int iBonus)
 	ud_gateSet(kCity, touched);
 }
 
+// The unit twin of BuildingEnabler::onPlotSubstrateChanged: a substrate entity moved on a plot this city can
+// work, so exactly the units whose `requires` references it re-gate (par.7.1 step 2). Units carry `build` only,
+// but that build gate reads the same plot atoms a building's does.
+void UnitEnabler::onPlotSubstrateChanged(const CvCity& kCity, const CvInfo* pSubstrate)
+{
+	EnablerDomain& d = kCity.m_enabler.units;
+	if (!d.isSeeded() || pSubstrate == NULL) return;
+	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
+	std::set<int> touched;
+	ud_touched(pSubstrate, touched);
+	ud_gateSet(kCity, touched);
+}
+
 void UnitEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic)
 {
 	if (ePlayer == NO_PLAYER || iOldCivic == iNewCivic) return;

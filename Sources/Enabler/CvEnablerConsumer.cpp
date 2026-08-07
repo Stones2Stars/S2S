@@ -476,6 +476,49 @@ private:
 			}
 			break;
 		}
+		// ---- THE PLOT SUBSTRATE -- par.7.1 step 2, the narrow EDGEF_REQUIRED_BY re-gate ----
+		// The single largest gate axis in the authored data (MAPCATEGORY_ / TERRAIN_ / FEATURE_ / IMPROVEMENT_ /
+		// HAS_COAST / HAS_RIVER across thousands of entities) and it reached NO enabler route at all: a terraform,
+		// a chop, an improvement built or pillaged moved no verdict, and a tri-state read is a bare fetch that
+		// nothing recomputes ([DEC-no-self-heal]), so the stale verdict simply stood for the session.
+		// ⚑ TWO things keep it affordable at plot-fact frequency, and both are required:
+		//   - the CANDIDATES come from the substrate's own EDGEF_REQUIRED_BY (only what actually requires it),
+		//     never the GATE_DYNAMIC class, which is effectively the whole registry;
+		//   - the CITIES come from the plot's own workableBy list, so a plot no city can work re-gates nobody.
+		case SEVT_PLOT_TERRAIN_ADDED:
+		case SEVT_PLOT_TERRAIN_REMOVED:
+		case SEVT_PLOT_FEATURE_ADDED:
+		case SEVT_PLOT_FEATURE_REMOVED:
+		case SEVT_PLOT_IMPROVEMENT_ADDED:
+		case SEVT_PLOT_IMPROVEMENT_REMOVED:
+		case SEVT_PLOT_ROUTE_ADDED:
+		case SEVT_PLOT_ROUTE_REMOVED:
+		{
+			if (spineGameLoadInProgress()) break;   // the load-end pass gates every city once
+			const CvPlot* pPlot = GC.getMap().plotByIndex(kEvent.iSrcLoc);
+			if (pPlot == NULL || kEvent.iType < 0) break;
+			const CvInfo* pSubstrate = NULL;
+			switch (kEvent.iEventId)
+			{
+			case SEVT_PLOT_TERRAIN_ADDED:
+			case SEVT_PLOT_TERRAIN_REMOVED:     pSubstrate = InfoRepo<CvTerrainInfo>::get().get(kEvent.iType); break;
+			case SEVT_PLOT_FEATURE_ADDED:
+			case SEVT_PLOT_FEATURE_REMOVED:     pSubstrate = InfoRepo<CvFeatureInfo>::get().get(kEvent.iType); break;
+			case SEVT_PLOT_IMPROVEMENT_ADDED:
+			case SEVT_PLOT_IMPROVEMENT_REMOVED: pSubstrate = InfoRepo<CvImprovementInfo>::get().get(kEvent.iType); break;
+			default:                            pSubstrate = InfoRepo<CvRouteInfo>::get().get(kEvent.iType); break;
+			}
+			if (pSubstrate == NULL) break;
+			const std::vector<IDInfo>& kWorkableBy = pPlot->workableByCities();
+			for (size_t iCity = 0; iCity < kWorkableBy.size(); ++iCity)
+			{
+				const CvCity* pCity = ::getCity(kWorkableBy[iCity]);
+				if (pCity == NULL) continue;
+				BuildingEnabler::onPlotSubstrateChanged(*pCity, pSubstrate);
+				UnitEnabler::onPlotSubstrateChanged(*pCity, pSubstrate);
+			}
+			break;
+		}
 		// ---- CONQUEST: the city's whole HAVE basis is a different player's ----
 		// Every axis the gate reads moves at once (techs, civics, traits, the empire's counts and caps), and the
 		// tri-state is a bare fetch that nothing re-derives -- so a conquered city would otherwise serve the PREVIOUS
