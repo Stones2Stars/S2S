@@ -577,7 +577,14 @@ private:
 		case SEVT_PLOT_SERVED_BONUS_ADDED:
 		case SEVT_PLOT_SERVED_BONUS_REMOVED:
 		{
-			if (spineGameLoadInProgress()) break;   // the load-end pass gates every city once
+			// ⛔ NO LOAD GUARD, deliberately. `spineGameLoadInProgress` is the RESULT-PRODUCER suppression -- it
+			// stops the trigger/grant machinery handing things out for a load that is not an acquisition
+			// ([event-spine.md], [DEC-spine-reseed]) -- and the enabler is a LOAD-ACTIVE consumer that BUILDS from
+			// the reseed's own facts. Borrowing it here would assert that the load cannot be trusted to build this,
+			// which is the claim the reseed exists to falsify.
+			// ⚑ Nothing is needed in its place: the map streams BEFORE the players, so while these facts fire no
+			// city has established a work area yet and `workableByCities` is empty -- the fan reaches nobody by
+			// construction rather than by a guard. The domain's own `isSeeded()` covers a candidate arriving early.
 			const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
 			if (pPlot == NULL || kEvent.iType < 0) break;
 			// The CITIES come from the plot's own workableBy list, so a tile no city can work re-gates nobody.
