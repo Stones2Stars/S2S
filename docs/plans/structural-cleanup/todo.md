@@ -94,20 +94,6 @@
 
 ## Data — curator
 
-- Stop a `notConstructible` building emitting a SCOPE-WIDE `plots` deposit — it is a city-count multiplier by
-  construction (owner: *"if a building is placed in every city that has water, and that single building buffs
-  every water plot, then this is what we get"*). An autoplaced building exists in EVERY city, so an
-  `empire`-scope `plots` entry on one is applied once per holding city, each time over the whole empire.
-  ⚑ The authored shape for such a building is `city.plots`, which is what a building's plot-deposits use almost
-  without exception; a scope-wide one is the outlier, not the pattern.
-  ⚠ **The CURATOR MAPPING IS FAITHFUL AND IS NOT THE DEFECT**, so do not "fix" it by re-pointing the tag
-  wholesale: `GlobalSeaPlotYieldChanges` → `empire.plots` and `SeaPlotYieldChanges` → `city.plots` is a correct
-  distinction, and a genuine world wonder authoring the Global tag (`BUILDING_THE_COLOSSUS`) is served right by
-  it — being constructible and world-capped, it is held once and multiplies nothing. What is wrong is the Global
-  tag sitting on a queue-excluded entity, which legacy never had to reason about because it placed exactly one.
-  ⛔ The scope re-home stops the multiplication; it does NOT close the unenforced-cap ruling above, which reaches
-  every channel and every reader of presence/count, not just this one yield.
-
 - Re-scope the PROJECT `health.world` / `happiness.world` / `tradeRoutes.world` authorings. WORLD is CONFIG and
   carries no package ([state-repositories.md](../../architecture/state-repositories.md)), so a deposit landing
   there reaches nobody — a project granting something to every player authors the plural TARGET `world.empires`,
@@ -216,6 +202,11 @@
   city (that population is correct and stays), `CvGame::setHeadquarters` places a corporate HQ in the one city
   holding it, the achievement system awards one per player. The pass to delete is the blanket one, never the
   per-system placement.
+  ⚖ **A CAPPED ENTITY IS PLACED ONCE, AS IT ALWAYS HAS BEEN (owner)** — so the repair is the PLACEMENT, and the
+  authored deposit scope is left alone. ⛔ Do NOT "fix" the multiplication by re-scoping an `empire`-scope
+  deposit down to `city`: the curator mapping is faithful (`GlobalSeaPlotYieldChanges` → `empire.plots` beside
+  `SeaPlotYieldChanges` → `city.plots`), a single copy makes it correct, and re-scoping would change what the
+  effect MEANS while leaving every other reader of presence and count still seeing N copies.
   ⚠ The load-time half rides with it — the once-over-existing-cities seed for saves predating the class places
   the same entities the same wrong way.
 
