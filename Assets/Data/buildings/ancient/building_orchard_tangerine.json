@@ -29,13 +29,13 @@
      "type": "BONUS_BANANA",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "type": "BONUS_LEMONS",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

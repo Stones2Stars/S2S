@@ -29,13 +29,13 @@
      "type": "BONUS_PARROTS",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "type": "BONUS_COCONUT",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

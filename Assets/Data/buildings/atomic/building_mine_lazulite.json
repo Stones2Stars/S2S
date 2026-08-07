@@ -25,13 +25,13 @@
      "type": "BONUS_BAUXITE_ORE",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "type": "BONUS_SAPPHIRES",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

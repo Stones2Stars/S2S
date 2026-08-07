@@ -22,13 +22,13 @@
        "type": "BONUS_CARCASS",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       },
       {
        "type": "BONUS_GRAINS",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       }
      ]
     },

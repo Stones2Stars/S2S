@@ -29,7 +29,7 @@
      "type": "BONUS_MELONS",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "type": "BONUS_SUGAR",

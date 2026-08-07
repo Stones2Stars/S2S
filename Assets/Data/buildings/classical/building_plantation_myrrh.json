@@ -29,13 +29,13 @@
      "type": "BONUS_INCENSE",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "type": "BONUS_TEA",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

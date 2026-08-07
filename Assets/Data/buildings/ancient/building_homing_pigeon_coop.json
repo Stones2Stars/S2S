@@ -29,7 +29,7 @@
      "type": "BONUS_POULTRY",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "any": [
@@ -54,7 +54,7 @@
      "type": "BONUS_STONE",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

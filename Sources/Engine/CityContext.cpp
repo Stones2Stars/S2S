@@ -226,7 +226,7 @@ bool CityContext::hasVicinityBonusAt(int eBonus, CvCascVicinity eTier) const
 		return (m_vicinityAll.count(eBonus) - m_vicinityForeign.count(eBonus)) > 0;
 	// The OBTAINED tier: on an owned radius tile AND actually reaching this city through the network. The second
 	// half is the plot group's, forwarded -- never a second store here ([enabler.md] §8 RESIDENCY).
-	case CASC_VIC_CONNECTED:
+	case CASC_VIC_ONSITE:
 		return m_vicinityOwned.has(eBonus) && tradedBonusCount(eBonus) > 0;
 	default:
 		return vicinityTier(eTier).has(eBonus);
@@ -253,12 +253,6 @@ void CityContext::applyVicinityBonus(int iBonus, CityVicinityPartition ePartitio
 // the city HAVING the bonus at all before it looks at any tile, so a resource whose TechCityTrade gate is shut reads
 // false even with the tile sitting in the radius. Composing at the read keeps the two derivations independent of
 // each other's ordering.
-bool CityContext::hasVicinityBonus(int eBonus) const
-{
-	// The OBTAINED semantic, composed once in hasVicinityBonusAt -- not restated here, or the two would be free
-	// to drift ([DEC-single-implementation](../../docs/architecture/decisions.md)).
-	return hasVicinityBonusAt(eBonus, CASC_VIC_CONNECTED);
-}
 
 // FORWARDED, never stored: the count belongs to the plot group, which owns it O(1), and the city relays it through
 // its group pointer ([state-repositories.md]). A third copy here bought nothing and cost a sweep of every bonus on

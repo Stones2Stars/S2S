@@ -36,7 +36,7 @@
      "type": "BONUS_BEAVERS",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "type": "BONUS_PRIME_TIMBER",

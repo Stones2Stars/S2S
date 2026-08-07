@@ -287,14 +287,14 @@ def requires_unit(rec, store):
     if orb:
         anyc.append([_atom(x, "city", connection="trade|vicinity") for x in orb])
     # Vicinity bonus = the engine's hasVicinityBonus (CvCity::canTrainInternal:2241 single, :2250 OR) -- the OBTAINED
-    # level (owned+valid+connected), so it carries the `vicinity:"connected"` discriminator (json.md §3.4), IDENTICAL
+    # level (owned+valid+connected), so it carries the `vicinity:"onSite"` discriminator (json.md §3.4), IDENTICAL
     # to the building curator's VicinityBonus. (A bare `connection:"vicinity"` would loosely accept any radius tile.)
     vb = _txt(rec, "VicinityBonusType")
     if vb:
-        allc.append(_atom(vb, "city", connection="vicinity", vicinity="connected"))
+        allc.append(_atom(vb, "city", connection="vicinity", vicinity="onSite"))
     ovb = _typelist_struct(rec, "PrereqVicinityBonuses", "BonusType")
     if ovb:
-        anyc.append([_atom(x, "city", connection="vicinity", vicinity="connected") for x in ovb])
+        anyc.append([_atom(x, "city", connection="vicinity", vicinity="onSite") for x in ovb])
     for x in _typelist_struct(rec, "PrereqAndBuildings", "BuildingType"):
         allc.append(_atom(x, "city"))
     orbld = _typelist_struct(rec, "PrereqOrBuildings", "BuildingType")

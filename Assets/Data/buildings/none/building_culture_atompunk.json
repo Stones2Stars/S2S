@@ -16,7 +16,7 @@
      "type": "BONUS_URANIUM",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ]
   }

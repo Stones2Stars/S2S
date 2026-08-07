@@ -463,8 +463,8 @@ def _enabled(ref_kind, ref, scope):
     if ref_kind == "bonus":
         return _atom(ref, "city", min=1)
     if ref_kind == "vicinityBonus":
-        # VicinityBonusYieldChanges keys off hasVicinityBonus (obtained) -> the "connected" discriminator (json.md S3.4).
-        return _atom(ref, "city", connection="vicinity", min=1, vicinity="connected")
+        # VicinityBonusYieldChanges keys off hasVicinityBonus (obtained) -> the "onSite" discriminator (json.md S3.4).
+        return _atom(ref, "city", connection="vicinity", min=1, vicinity="onSite")
     if ref_kind == "building":
         return _atom(ref, "empire" if scope == "empire" else "city")
     if ref_kind == "power":
@@ -1039,14 +1039,14 @@ def requires_building(rec, store):
     # Vicinity bonus REFINEMENT (owner ruling 2026-06-24, supersedes the 2026-06-16 "fold raw into vicinity"): bare
     # `connection:"vicinity"` = the bonus on ANY radius tile; a `vicinity` DISCRIMINATOR tightens which tiles count.
     # The engine has TWO flavors with OPPOSITE strictness, so they CANNOT fold to one (json.md S3.4):
-    #   VicinityBonus    -> hasVicinityBonus    (owned+valid+connected)  -> vicinity:"connected"  (the obtained semantic)
+    #   VicinityBonus    -> hasVicinityBonus    (owned+valid+connected)  -> vicinity:"onSite"  (the resource is available AT this city)
     #   RawVicinityBonus -> hasRawVicinityBonus (centre OR owned radius tile, no connection) -> vicinity:"owned"
     # (e.g. MINE_GOLD VicinityBonus needs the connected gate; NET_SHRIMP/MUREX RawVicinityBonus need only owned presence.)
-    for tag, disc in (("VicinityBonus", "connected"), ("RawVicinityBonus", "owned")):
+    for tag, disc in (("VicinityBonus", "onSite"), ("RawVicinityBonus", "owned")):
         v = _txt(rec, tag)
         if v:
             bonus_all.append(_atom(v, "city", connection="vicinity", vicinity=disc))
-    for tag, disc in (("PrereqVicinityBonuses", "connected"), ("PrereqRawVicinityBonuses", "owned")):
+    for tag, disc in (("PrereqVicinityBonuses", "onSite"), ("PrereqRawVicinityBonuses", "owned")):
         lst = _typelist(rec, tag)
         if lst:
             bonus_any.append([_atom(x, "city", connection="vicinity", vicinity=disc) for x in lst])

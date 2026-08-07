@@ -1642,7 +1642,7 @@ void CvCity::doTurn()
 		PERF_SCOPE("city.vicinitySnapshot", getOwner());
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			m_pabHadVicinityBonus[iI] = hasVicinityBonus((BonusTypes)iI);
+			m_pabHadVicinityBonus[iI] = hasObtainedBonus((BonusTypes)iI);
 			m_pabHadRawVicinityBonus[iI] = hasRawVicinityBonus((BonusTypes)iI);
 		}
 	}
@@ -15728,7 +15728,7 @@ void CvCity::clearVicinityBonusCache(BonusTypes eBonus)
 	}
 }
 
-bool CvCity::hasVicinityBonus(BonusTypes eBonus) const
+bool CvCity::hasObtainedBonus(BonusTypes eBonus) const
 {
 	PROFILE_FUNC();
 	if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))

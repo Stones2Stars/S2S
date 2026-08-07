@@ -109,7 +109,7 @@ static CvCascConnection cp_parseConnection(const std::string& c)
 static CvCascVicinity cp_parseVicinity(const std::string& v)
 {
 	if (v == "owned") return CASC_VIC_OWNED;   if (v == "worked") return CASC_VIC_WORKED;
-	if (v == "connected") return CASC_VIC_CONNECTED; if (v == "crossBorder") return CASC_VIC_CROSSBORDER;
+	if (v == "onSite") return CASC_VIC_ONSITE; if (v == "crossBorder") return CASC_VIC_CROSSBORDER;
 	return CASC_VIC_NONE;
 }
 

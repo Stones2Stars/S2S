@@ -20,7 +20,7 @@
      "type": "BONUS_WHEAT",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ]
   }

@@ -29,7 +29,7 @@
      "type": "BONUS_PISTACHIO",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

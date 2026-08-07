@@ -62,7 +62,7 @@
       "scope": "city",
       "connection": "vicinity",
       "min": 1,
-      "vicinity": "connected"
+      "vicinity": "onSite"
      }
     },
     {
@@ -72,7 +72,7 @@
       "scope": "city",
       "connection": "vicinity",
       "min": 1,
-      "vicinity": "connected"
+      "vicinity": "onSite"
      }
     }
    ]

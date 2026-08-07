@@ -125,7 +125,7 @@ supply is a union of two independently-owned halves, and storing either one twic
 
 - **MAP providers** (a bonus on a radius tile providing itself) are per-scope live state with no other home, so
   `CityContext` holds them — tiered by the §3.4 ownership discriminator (`owned` / owned+neutral / `crossBorder` /
-  `worked` / `connected`), since a `connection:"vicinity"` atom selects which tiles count.
+  `worked` / `onSite`), since a `connection:"vicinity"` atom selects which tiles count.
 - **ACTIVE BUILDING providers** (`provides.bonuses`) are the operate/provides **least fixpoint**, which only the
   enabler can resolve — an operate condition may consume a bonus another active building provides. They stay
   `OperatingBuildings::provided`, reached through `CvCascadeEvalCtx::vicinityProvidedBonuses`.
@@ -170,8 +170,8 @@ mutates its set in place as the fixpoint ripples.
 > `GAME_LOAD_FINISHED` fold as its load-time twin — the map streams before the players, so at load the radius
 > facts reach no city at all (the amenity fold guards its play-time fan the same way, for the same reason).
 >
-> `worked` and `connected` are different predicates rather than ownership bands, so they stay their own — and
-> `connected` is COMPOSED rather than stored: on an owned radius tile AND reaching this city through the network,
+> `worked` and `onSite` are different predicates rather than ownership bands, so they stay their own — and
+> `onSite` is COMPOSED rather than stored: on an owned radius tile AND reaching this city through the network,
 > the second half forwarded from the plot group that owns it ([enabler.md §8](../specs/enabler.md) RESIDENCY).
 
 ⚖ **`CityContext.amenities` — THE CITY'S OWN FEATURE LIST, AND THE CITY IS WHAT GETS CHECKED (owner).** A

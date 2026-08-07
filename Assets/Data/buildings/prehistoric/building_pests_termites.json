@@ -19,13 +19,13 @@
        "type": "BONUS_WOOD",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       },
       {
        "type": "BONUS_PRIME_TIMBER",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       }
      ]
     },

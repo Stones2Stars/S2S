@@ -30,7 +30,7 @@
      "type": "BONUS_AMBER",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

@@ -34,7 +34,7 @@
      "type": "BONUS_BISON",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

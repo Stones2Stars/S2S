@@ -19,13 +19,13 @@
        "type": "BONUS_DOG",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       },
       {
        "type": "BONUS_CAT",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       }
      ]
     },

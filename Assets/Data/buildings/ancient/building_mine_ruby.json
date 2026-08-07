@@ -30,7 +30,7 @@
      "type": "BONUS_RUBIES",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

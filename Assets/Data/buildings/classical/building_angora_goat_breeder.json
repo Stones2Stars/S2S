@@ -35,7 +35,7 @@
      "type": "BONUS_SHEEP",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

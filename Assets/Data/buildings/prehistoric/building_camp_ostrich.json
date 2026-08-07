@@ -42,7 +42,7 @@
      "type": "BONUS_ELEPHANTS",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

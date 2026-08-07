@@ -34,7 +34,7 @@
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     }
    ],
    "dormant": [

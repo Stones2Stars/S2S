@@ -44,7 +44,7 @@ enum CvCascScope
 enum CvCascConnection { CASC_CONN_NONE, CASC_CONN_TRADE, CASC_CONN_VICINITY, CASC_CONN_TRADE_OR_VICINITY };
 
 // Which radius tiles a vicinity bonus counts (json §3.4; NONE = the DEFAULT owned+neutral, NOT foreign).
-enum CvCascVicinity { CASC_VIC_NONE, CASC_VIC_OWNED, CASC_VIC_WORKED, CASC_VIC_CONNECTED, CASC_VIC_CROSSBORDER };
+enum CvCascVicinity { CASC_VIC_NONE, CASC_VIC_OWNED, CASC_VIC_WORKED, CASC_VIC_ONSITE, CASC_VIC_CROSSBORDER };
 
 // The canonical predicate vocabulary (json §3.5) -- bare + parameterized share the enum; param/min/max carry the
 // parameters. (Order/membership mirrors StoneBase PredicateKind; UNKNOWN=0 is IGNORED by the evaluator, never false.)

@@ -151,9 +151,11 @@ public:
 	// `connection:"vicinity"` atom must ALSO consult the enabler's active-building supply
 	// (CvCascadeEvalCtx::vicinityProvidedBonuses); see the header note on the vicinity split.
 	bool hasVicinityBonusAt(int eBonus, CvCascVicinity eTier) const;
-	// The CONNECTED (json par.3.4 "obtained": owned + valid + connected) tier, the name/signature the evaluator's
-	// connected leg already calls. Semantics are unchanged; it is now a bare fetch instead of a radius scan.
-	bool hasVicinityBonus(int eBonus) const;
+	// ⛔ There is deliberately NO tier-less `hasVicinityBonus` here. A vicinity read WITHOUT a tier is the shape
+	// that teaches vicinity == connected -- the one that existed answered `CASC_VIC_ONSITE`, so a caller
+	// asking for vicinity silently got the far stricter OBTAINED verdict. VICINITY (is it on my ground) and
+	// CONNECTED (does it reach me through the network) are ORTHOGONAL, not nested: a resource can be either
+	// without the other. Ask `hasVicinityBonusAt` and NAME the tier ([json.md par.3.4](../../docs/specs/json.md)).
 	// The city's TRADED bonus count -- the plot-group-backed network count with the TechCityTrade + minted gates
 	// applied (enabler.md par.8 the residency/counting rule: "a maintained number, added and subtracted on spine
 	// events, never calculated per read"). Traded MEMBERSHIP still belongs to CvPlotGroup (contexts.md) -- what is

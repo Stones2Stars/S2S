@@ -1306,7 +1306,9 @@ public:
 	void changeLandmarkAngerTimer(int iChange);
 	int getLandmarkAnger() const;
 	void clearVicinityBonusCache(BonusTypes eBonus);
-	bool hasVicinityBonus(BonusTypes eBonus) const;
+	// The OBTAINED verdict (json par.3.4 "connected": owned + valid + reaching this city through the network).
+	// ⛔ NOT "vicinity" -- it was named that, and the name is what taught every reader the two are the same.
+	bool hasObtainedBonus(BonusTypes eBonus) const;
 	void clearRawVicinityBonusCache(BonusTypes eBonus);
 	bool hasRawVicinityBonus(BonusTypes eBonus) const;
 	void doVicinityBonus();

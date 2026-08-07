@@ -19,13 +19,13 @@
        "type": "BONUS_CLOTH",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       },
       {
        "type": "BONUS_CLOTHING",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       }
      ]
     },

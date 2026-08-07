@@ -184,12 +184,21 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
     `all`/`any`/`noneOf` combinators (§3.4). A foreign tile's bonus is revealed per its OWN team, so it can read
     differently per asking city — exactly why foreign is gated behind this explicit opt-in rather than the default.
   - `"worked"` = a tile a citizen **works** this turn (implies owned).
-  - `"connected"` = the bonus is **obtained** — owned + valid + connected to the city. *(`owned` and `connected` have
-    OPPOSITE strictness — raw owned-presence vs a fully-obtained resource — so they are distinct, never folded.)*
+  - `"onSite"` = the resource is **actually available AT this city** — however it got there. Improving a resource
+    on a workable plot puts it here, and so does a building in the city that supplies it (a herd, a factory —
+    `provides.bonuses`, §5a): those are the SAME act as far as this list is concerned, and the list cares only
+    about what is there, never about provenance.
+    > **⛔ IT IS NAMED `onSite` BECAUSE "vicinity" AND "connected" BOTH MISLEAD, REPEATEDLY (owner).** The two
+    > sets are ORTHOGONAL, not nested: **onSite** = the resource is here; **`connection:"trade"`** = the plot
+    > group reaches it. A resource can be either without the other, and a gate asks for exactly one — a mounted
+    > unit needs horses ON SITE, a swordsman only needs iron wares in the NETWORK.
+    > ⚠ The retired spelling was `"connected"`, which took the trade side's word for a local question and is
+    > what made the two read as one thing. `owned` (raw presence on an owned tile, improved or not) stays its
+    > own tier and is strictly weaker than `onSite`.
 
   ```jsonc
   { "type": "BONUS_SHRIMP",   "scope": "city", "connection": "vicinity", "vicinity": "owned" }      // raw presence on an owned tile
-  { "type": "BONUS_GOLD_ORE", "scope": "city", "connection": "vicinity", "vicinity": "connected" }  // must be obtained
+  { "type": "BONUS_GOLD_ORE", "scope": "city", "connection": "vicinity", "vicinity": "onSite" }     // must be available here
   ```
 
 - **`PROPERTY_*` band atom** `{type:PROPERTY_X, scope, min?, max?}` — its "count" is the city's property value;

@@ -22,19 +22,19 @@
        "type": "BONUS_GRAINS",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       },
       {
        "type": "BONUS_CHEESE",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       },
       {
        "type": "BONUS_VEGETABLES",
        "scope": "city",
        "connection": "vicinity",
-       "vicinity": "connected"
+       "vicinity": "onSite"
       }
      ]
     },

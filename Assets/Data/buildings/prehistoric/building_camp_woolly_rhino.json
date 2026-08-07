@@ -45,7 +45,7 @@
      "type": "BONUS_MAMMOTH",
      "scope": "city",
      "connection": "vicinity",
-     "vicinity": "connected"
+     "vicinity": "onSite"
     },
     {
      "type": "BONUS_PIG",
