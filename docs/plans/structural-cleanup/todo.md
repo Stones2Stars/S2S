@@ -213,6 +213,23 @@
 
 ## Not built yet
 
+- Serve a city's OFFERED RESOURCES, and give the city screen a VICINITY tab that shows them (owner) — a city
+  currently has no readable list of what its plot group supplies, so the axis most `requires` gates on is the one
+  nothing can be checked against. ⚑ The point is TRACKING: the gate is only trustworthy if the supply behind it
+  is visible.
+  ⛔ **It is a READ, and nothing is mirrored onto the city** ([enabler.md §8](../../specs/enabler.md) RESIDENCY:
+  the plot group is the ONLY authoritative list for trade resources and NOTHING mirrors it; `CvCity::getNumBonuses`
+  is a relay). A stored per-city copy is the third copy of one number and is the banned shape.
+  ⛔ **VICINITY is TWO independently-owned halves and the reader UNIONS them** ([contexts.md](../../architecture/contexts.md)
+  THE VICINITY SPLIT): the MAP half is `CityContext`'s radius bonus dictionary, the BUILDING half is
+  `OperatingBuildings::provided` (the operate/provides fixpoint, which only the enabler can resolve). Neither may
+  be mirrored onto the other — the enabler mutates its set in place as the fixpoint ripples.
+  ⚠ The tab must distinguish TRADED (the plot-group relay, `connection:"trade"`) from VICINITY
+  (`connection:"vicinity"`), because the two are different atoms with opposite strictness and a merged list
+  cannot answer either gate ([json.md §3.4](../../specs/json.md)).
+  ⛔ It is served through the NEW Python surface, never a revived `Cy` binding
+  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+
 - Model the `MAPCATEGORY_` gate. `cascadeEvalCondition` returns TRUE for every `MAPCATEGORY_` atom — the clause
   is not evaluated at all — while it is the most-authored plot atom in the data by a wide margin.
   ⚠ **Its impact is ZERO until the off-world content is reachable (owner)**, so this is LATENT, not a live wrong

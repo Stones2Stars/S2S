@@ -316,12 +316,26 @@ operating right now").
 
 It is **maintained by targeted propagation, never a blanket recompute**: computed once at load, then each
 HAVE-change ripples only the affected buildings into the authoritative set in place (via an operate reverse-index)
-— see [state-repositories](../architecture/state-repositories.md) and
-[enabler-frontier-perf](enabler.md) Stage 2. In code it is
+— see [state-repositories](../architecture/state-repositories.md). In code it is
 `CvCity::m_operatingBuildings` (type **`OperatingBuildings`** — its `active` + `provided` + `obsolete` sets), read via
 `EnablerKernel::operatingBuildings` / `wireOperatingBuildings`; the full recompute
-`recomputeOperatingBuildingsInto` is the load seed and the validation oracle. *(Historical note: this was the
-undefined internal name "facts"; it is the operating-building set.)*
+`recomputeOperatingBuildingsInto` is the load seed and the validation oracle.
+
+> **⛔ THERE IS NO PER-TURN RE-CHECK OF ANY KIND, AND A "BOUNDED" ONE IS NOT AN EXCEPTION (owner).** A sweep that
+> re-gates a set once a turn — however small the set — **jumps over the core system**: the fact is what moves a
+> verdict, and a periodic pass is a second maintenance surface running beside it. It is
+> [DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal) (no blanket per-turn rebuild) and
+> [DEC-flag-is-fossil](../architecture/decisions.md#dec-flag-is-fossil) (a periodic re-check ASSERTS that we
+> cannot know what changed, which a saturated emit surface falsifies by construction).
+> ⚑ **Its real cost is not the cycles, it is the CONCEALMENT:** a sweep silently repairs the verdict a missing
+> route left wrong, so the gap stops being observable and the enable-side over-offer that would have named it
+> never appears. ⇒ **Over-offer is always the same diagnosis — a fact that is not being read** — so the fix is
+> the ROUTE, every time.
+> ⛔ So a candidate whose `requires` reads live state does not earn a sweep: either its axis has a fact and is
+> routed on it, or the axis is STATIC for the city's life (a plot's latitude, a victory condition) and is gated
+> once at creation. Nothing in the authored data falls outside those two, and a future atom that appears to must
+> get its fact ([DEC-close-event-gaps-now](../architecture/decisions.md#dec-close-event-gaps-now)), never a
+> re-check.
 
 **Obsolescence is the THIRD outcome of this same pass.** A present building whose `obsoletedBy` tech is held is
 neither active nor dormant — it goes into the `obsolete` set (excluded from `active`, provides nothing), and the

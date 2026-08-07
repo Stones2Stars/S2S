@@ -545,7 +545,7 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 namespace {
 
 static bool s_operateIndexBuilt = false;
-static std::vector<int> s_operateNeedsPopulation, s_operateNeedsPower, s_operateNeedsReligion, s_operateNeedsCorporation, s_operateNeedsGoldenAge, s_operateNeedsStateReligion, s_operateNeedsCivic, s_operateNeedsTech, s_operateNeedsLiveState;
+static std::vector<int> s_operateNeedsPopulation, s_operateNeedsPower, s_operateNeedsReligion, s_operateNeedsCorporation, s_operateNeedsGoldenAge, s_operateNeedsStateReligion, s_operateNeedsCivic, s_operateNeedsTech;
 static std::map<int, std::vector<int> > s_operatePropertyBandConsumers;   // F5: PROPERTY_ id -> buildings whose requires.operate has a band on it
 static std::map<int, std::set<int> > s_operatePropertyBandThresholds;         // F5: PROPERTY_ id -> the sorted union of its band thresholds (the watermark's window boundaries)
 static std::vector<int> s_operateNeedsAnyBonus;                         // {buildings whose operate references ANY bonus} -- the whole-set re-check (plot-group membership change)
@@ -838,7 +838,6 @@ void EnablerKernel::buildActiveIndex()
 		if (d.stateReligion)  s_operateNeedsStateReligion.push_back(b);
 		if (d.civicAny)       s_operateNeedsCivic.push_back(b);
 		if (!d.techs.empty()) s_operateNeedsTech.push_back(b);
-		if (d.dynamic)        s_operateNeedsLiveState.push_back(b);
 		if (!d.bonuses.empty()) s_operateNeedsAnyBonus.push_back(b);   // #430 G3: the whole-set bucket (a plot-group membership shift may move any of them)
 		for (std::set<int>::const_iterator it = d.bonuses.begin(); it != d.bonuses.end(); ++it) s_operateBonusConsumers[*it].push_back(b);
 		for (std::set<int>::const_iterator it = d.buildings.begin(); it != d.buildings.end(); ++it) s_operateBuildingDependents[*it].push_back(b);

@@ -68,10 +68,6 @@ public:
 	enum GateClass { GATE_POP = 0, GATE_POWER = 1, GATE_GOLDEN_AGE = 2, GATE_STATE_RELIGION = 3, GATE_DYNAMIC = 4, NUM_GATE_CLASSES = 5 };
 	static void onCityGateClass(const CvCity& kCity, int eClass);      // pop / power (city-scope events)
 	static void onPlayerGateClass(PlayerTypes ePlayer, int eClass);    // golden-age / state-religion (player-scope)
-	// The bounded DYNAMIC re-check (enabler-frontier-perf Stage 2 step 5): once per city turn, re-gate ONLY the
-	// small load-compiled set whose requires read live non-HAVE state (latitude/existedFor/IS_CAPITAL/vicinity
-	// connection/count tokens) -- a targeted sweep of that list, never a blanket.
-	static void onCityTurn(const CvCity& kCity);
 	// MUST run BEFORE TechEnabler::onTechChanged (the player tech domain's held flag is the broad-emit flip guard)
 	static void onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
 	static void onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool bPresent);

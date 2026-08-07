@@ -482,13 +482,6 @@ void BuildingEnabler::onPlayerGateClass(PlayerTypes ePlayer, int eClass)
 		bd_gateSet(*pCity, s_gateClass[eClass]);
 }
 
-void BuildingEnabler::onCityTurn(const CvCity& kCity)
-{
-	if (spineGameLoadInProgress()) return;
-	bd_buildGateClasses();
-	bd_gateSet(kCity, s_gateClass[GATE_DYNAMIC]);
-}
-
 // The tech delta. SEVT_TECH_CHANGED is documented BROAD (fires on any set), so the flip guard is the PLAYER tech
 // domain's held flag -- which means this MUST run BEFORE TechEnabler::onTechChanged flips it (the invalidation
 // route owns that ordering).

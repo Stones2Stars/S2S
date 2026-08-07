@@ -51,7 +51,6 @@ public:
 	enum GateClass { GATE_POP = 0, GATE_POWER = 1, GATE_GOLDEN_AGE = 2, GATE_STATE_RELIGION = 3, GATE_DYNAMIC = 4, NUM_GATE_CLASSES = 5 };
 	static void onCityGateClass(const CvCity& kCity, int eClass);
 	static void onPlayerGateClass(PlayerTypes ePlayer, int eClass);
-	static void onCityTurn(const CvCity& kCity);   // the bounded DYNAMIC re-check (frontier-perf St.2 step 5)
 	// SEVT_UNIT_COUNT (par.7.1 step 3): the changed unit's cap/relations re-gate (skip-guarded for the
 	// uncapped, unreferenced, non-upgrade common case -- combat births/deaths stay free).
 	static void onUnitCountChanged(PlayerTypes ePlayer, int eUnit);

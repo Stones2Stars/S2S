@@ -472,13 +472,6 @@ void UnitEnabler::onPlayerGateClass(PlayerTypes ePlayer, int eClass)
 		ud_gateSet(*pCity, s_udClass[eClass]);
 }
 
-void UnitEnabler::onCityTurn(const CvCity& kCity)
-{
-	if (spineGameLoadInProgress()) return;
-	ud_buildClasses();
-	ud_gateSet(kCity, s_udClass[GATE_DYNAMIC]);
-}
-
 // The unit twin of BuildingEnabler::plotAtomCensus.
 void UnitEnabler::plotAtomCensus(int& iKeysOut, int& iEntriesOut)
 {
