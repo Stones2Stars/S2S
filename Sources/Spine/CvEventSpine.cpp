@@ -493,6 +493,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_UNIT_COMBAT_REMOVED:              return "[SPINE] unitCombatRemoved";
 	case SEVT_PROPERTY_ADDED:                   return "[SPINE] propertyAdded";
 	case SEVT_PROPERTY_REMOVED:                 return "[SPINE] propertyRemoved";
+	case SEVT_CITY_PROPERTY_BAND_ADDED:         return "[SPINE] cityPropertyBandAdded";
+	case SEVT_CITY_PROPERTY_BAND_REMOVED:       return "[SPINE] cityPropertyBandRemoved";
 	case SEVT_TECH_ACQUIRED:                    return "[SPINE] techAcquired";
 	case SEVT_RELIGION_FOUNDED:                 return "[SPINE] religionFounded";
 	case SEVT_CIVIC_ADOPTED:                    return "[SPINE] civicAdopted";
@@ -1688,6 +1690,25 @@ void emitPropertyRemoved(int iObjectKind, int iObjectId, int iOwner, int iProper
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROPERTY_REMOVED, iProperty, iAmount, iObjectKind, iOwner, iObjectId);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_PROPERTY, iProperty).addI(SPF_COUNT, iAmount).addI(SPF_OBJECT_KIND, iObjectKind).addI(SPF_OWNER, iOwner).addI(SPF_ID, iObjectId);
+	eventSpine().emit(e);
+}
+
+// The BAND-BOUNDARY crossing, announced by the value's own holder beside the value fact above -- the amenity
+// fold's shape (a verdict crossing is announced, a move between two values on the same side of it is not).
+// ⚑ A consumer routes on THIS and does no arithmetic; the raw value fact is far too frequent to gate on.
+void emitCityPropertyBandAdded(int iCityId, int iOwner, int iProperty)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_PROPERTY_BAND_ADDED, iProperty, 0, 0, iOwner, iCityId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROPERTY, iProperty).addI(SPF_OWNER, iOwner).addI(SPF_ID, iCityId);
+	eventSpine().emit(e);
+}
+
+void emitCityPropertyBandRemoved(int iCityId, int iOwner, int iProperty)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_PROPERTY_BAND_REMOVED, iProperty, 0, 0, iOwner, iCityId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROPERTY, iProperty).addI(SPF_OWNER, iOwner).addI(SPF_ID, iCityId);
 	eventSpine().emit(e);
 }
 

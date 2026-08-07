@@ -57,6 +57,7 @@ CvMap::CvMap(MapTypes eType)
 	, m_paiNumBonusOnLand(NULL)
 	, m_bCitiesDisplayed(true)
 	, m_bUnitsDisplayed(true)
+	, m_bRecalculatingAreas(false)
 	, m_pMapPlots(NULL)
 	, m_climateZones(NULL)
 {
@@ -1179,6 +1180,11 @@ void CvMap::recalculateAreas()
 {
 	PROFILE("CvMap::recalculateAreas");
 
+	// The BRACKET. Every plot leaves its area and every id is reassigned, so the per-area tile facts this pass
+	// fires by the thousand describe a map that does not exist yet. A consumer tests isRecalculatingAreas() and
+	// declines; the wholesale fact below is what it acts on instead.
+	m_bRecalculatingAreas = true;
+
 	for (int iI = 0; iI < numPlots(); iI++)
 	{
 		plotByIndex(iI)->setArea(FFreeList::INVALID_INDEX);
@@ -1187,6 +1193,8 @@ void CvMap::recalculateAreas()
 	m_areas.removeAll();
 
 	calculateAreas();
+
+	m_bRecalculatingAreas = false;
 
 	// #430 event spine: EVERY area id has just been reassigned, so announce the wholesale reassignment AFTER the new
 	// areas exist -- a holder re-reading on this fact must find the rebuilt map, not the emptied one.

@@ -693,6 +693,10 @@ bool CityContext::wantsEvent(int iEventId)
 	// Every area id was reassigned, so every city re-reads its area facts. Rare by construction and not
 	// addressable per-source, which is why it is announced wholesale rather than being a self-heal.
 	case SEVT_AREAS_RECALCULATED:
+	// ONE area's tile count moved (a plot flipped land <-> water). m_areaTileCount is a STORED fact here -- the
+	// AREA_SIZE token is served from it -- so without this route it is seeded once and then frozen for the game.
+	case SEVT_AREA_TILE_ADDED:
+	case SEVT_AREA_TILE_REMOVED:
 	// A plot ENTERED / LEFT a city's potential work area -- the membership the city defines, and both the
 	// maintenance and the seeding path for the vicinity store.
 	case SEVT_PLOT_WORKABLE_BY_ADDED:
@@ -827,6 +831,40 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 	case SEVT_AREAS_RECALCULATED:
 		cc_refreshAreaFactsForAllCities();
 		break;
+	// ONE area's tile count moved: only the cities sitting IN that area re-read. iSrcLoc = the area id.
+	// ⛔ DECLINED while recalculateAreas is mid-pass. That pass fires this fact once per plot with every id being
+	// reassigned, so a per-tile refresh there would be O(plots x cities) of work against a map that does not
+	// exist yet -- and SEVT_AREAS_RECALCULATED closes the bracket by refreshing every city once, which is the
+	// answer for that window. ⚑ The EMIT is untouched: the fact fires, this consumer declines it
+	// ([event-spine.md] -- never suppress an emit to fix a consumer).
+	case SEVT_AREA_TILE_ADDED:
+	case SEVT_AREA_TILE_REMOVED:
+	{
+		if (GC.getMap().isRecalculatingAreas())
+		{
+			break;
+		}
+		const int iArea = kEvent.iSrcLoc;
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive())
+			{
+				continue;
+			}
+			int iLoop = 0;
+			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				// Re-READ rather than apply the payload delta: refreshAreaFacts also re-derives the coastal
+				// water-body size, which a tile count moving next door can move too.
+				if (pCity->getCityContext().areaId() == iArea)
+				{
+					pCity->getCityContext().refreshAreaFacts();
+				}
+			}
+		}
+		break;
+	}
 
 	case SEVT_CITY_FOUNDED:
 	{

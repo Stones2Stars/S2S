@@ -212,7 +212,7 @@ public:
 	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power/bonus-whole-set (CASC_HAVE_*)
 	static void onBonusAccessChangedActive(const CvCity* pCity, int eBonus);   // #430 G3: a SINGLE bonus's access (trade/vicinity) flipped -> re-check its operate consumers (reverse-FK targeted)
 	static void onPropertyBandHitActive(const CvCity* pCity, int eProperty);   // F5: a property crossed a band threshold in pCity -> re-check its operate-band consumers (reverse-FK targeted)
-	static const std::map<int, std::set<int> >& propertyBandThresholds();      // F5: PROPERTY_ id -> the sorted union of its operate-band thresholds (the property-engine watermark reads this)
+	static const std::map<int, std::set<int> >& propertyBandThresholds();      // PROPERTY_ id -> the sorted union of its operate-band boundaries; the enabler's own consumer reads it to tell a value MOVE from a band CROSSING
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
 	static void seedOperatingBuildings(const CvCity* pCity);                          // the LOAD seed: full recompute + the provider ref-count
 

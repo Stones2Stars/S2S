@@ -177,7 +177,30 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   blackout moves the store and delivers nothing; a blackout lifting delivers power with the store unmoved), and
   routing several legs into one plane-C application would double-apply. ⚠ A status TICKS DOWN every turn, so it
   emits at the derived 0-CROSSING only, never per decrement — a counter that moves on a schedule is not a state
-  change until its verdict flips, and this is the general rule for every timer-backed fact. Beside them:
+  change until its verdict flips, and this is the general rule for every timer-backed fact.
+
+  > **⚖ THE THRESHOLD CROSSING IS ITS OWN FACT, AND THE HOLDER OF THE VALUE ANNOUNCES IT (owner).** *"There
+  > should be events for when a threshold actually changes; that is done on the holder … if power goes from 0 to
+  > 1 an event is emitted, but another event is not emitted from 1 to 2 — and if 1 to 0, then power removed is
+  > emitted."* So a value's own fact says the VALUE moved, and a SECOND fact beside it says a VERDICT built on
+  > that value crossed. The two are different happenings with different consumers, and the second is the one a
+  > gate routes on.
+  > ⚑ **Power is the shape; it generalizes to every threshold.** The second instance is the PROPERTY BAND:
+  > `SEVT_PROPERTY_ADDED / _REMOVED` announces the value, which the solver moves for nearly every property of
+  > every city every turn, while **`SEVT_CITY_PROPERTY_BAND_ADDED / _REMOVED`** announces the far rarer crossing
+  > of a boundary some `requires.operate` clause actually declares ([enabler.md §3](enabler.md)).
+  > ⛔ **The detection belongs to the HOLDER, never to each consumer.** A consumer that gates on the raw value
+  > fact re-derives the same sweep once per consumer AND pays it per event — and the boundaries are one registry
+  > (`EnablerKernel::propertyBandThresholds`), so testing them anywhere else is a second implementation
+  > ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+  > ⚑ **And it is what makes plane C's WITHDRAWAL exact.** If the fact IS the crossing, a consumer applies or
+  > withdraws on the fact's IDENTITY and never re-tests the atom — so it never depends on reading state the
+  > mutation has already moved past, which is the one thing
+  > [state-repositories.md](../architecture/state-repositories.md) § THE INVARIANT cannot enforce for itself.
+  > ⚠ A band fact is deliberately DIRECTION-LESS in effect: the consumer re-reads the live value against each
+  > band, so which way the boundary was crossed is redundant once the fact says one was.
+
+  Beside them:
   **`SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED`** (`CvGame::setHeadquarters`, per affected city — the `setHolyCity` shape, and
   **not** a duplicate of the building/corporation PRESENCE facts the same setter drives),
   **`SEVT_PLOT_CITY_ADDED / _REMOVED`** (`CvPlot::setPlotCity` — the ONE emit covering its `changeCityRadiusCount` /

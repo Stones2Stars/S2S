@@ -143,6 +143,14 @@ private:
 				// ORDER: UnitEnabler first (its flip guard reads the buildings domain's held flag PRE-flip).
 				UnitEnabler::onCityBuildingChanged(*pCity, kEvent.iType, bHeld);
 				BuildingEnabler::onCityBuildingChanged(*pCity, kEvent.iType, bHeld);   // idempotency = the domain's held guard
+				// ⛔ THE OPERATE SET IS THE OTHER HALF, AND IT IS NOT THE FRONTIER'S. The lines above move what the
+				// city may BUILD; this moves what it is RUNNING. A building arriving must resolve ITS OWN dormancy --
+				// added and dormant is an ordinary outcome, not a contradiction -- and must re-check the buildings
+				// whose operate references it and those it dorm-triggers. Without it a new building never enters the
+				// active set, so it never deposits and never supplies its `provides.bonuses`, and a manufactured
+				// chain cannot light its next tier (enabler.md §3.2 / §7: the set is seeded once and maintained
+				// thereafter by exactly this targeted propagation).
+				EnablerKernel::onBuildingChangedActive(pCity, kEvent.iType);
 			}
 			break;
 		}
@@ -155,6 +163,7 @@ private:
 				const bool bHeld = (kEvent.iEventId == SEVT_CITY_RELIGION_ADDED);
 				BuildingEnabler::onCityReligionChanged(*pCity, kEvent.iType, bHeld);
 				UnitEnabler::onCityReligionChanged(*pCity, kEvent.iType, bHeld);
+				EnablerKernel::onHaveChangedActive(pCity, CASC_HAVE_RELIGION);   // the operate half of the same axis
 			}
 			break;
 		}
@@ -162,7 +171,11 @@ private:
 		case SEVT_CITY_CORPORATION_REMOVED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
-			if (pCity != NULL) BuildingEnabler::onCityCorporationChanged(*pCity, kEvent.iType, kEvent.iEventId == SEVT_CITY_CORPORATION_ADDED);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::onCityCorporationChanged(*pCity, kEvent.iType, kEvent.iEventId == SEVT_CITY_CORPORATION_ADDED);
+				EnablerKernel::onHaveChangedActive(pCity, CASC_HAVE_CORP);   // the operate half of the same HAVE axis
+			}
 			break;
 		}
 		// The NETWORK supply presence crossing. The direction is the event id ([DEC-facts-name-happenings]); the
@@ -176,6 +189,10 @@ private:
 				const int iCrossing = (kEvent.iEventId == SEVT_CITY_BONUS_ADDED) ? 1 : -1;
 				BuildingEnabler::onCityBonusChanged(*pCity, kEvent.iType, iCrossing);
 				UnitEnabler::onCityBonusChanged(*pCity, kEvent.iType, iCrossing);
+				// The OPERATE half: this bonus becoming (un)available re-checks exactly the buildings whose
+				// requires.operate consumes it, and the provides-ripple inside carries the cascading flips -- which
+				// is how a manufactured chain lights tier by tier instead of stopping at whatever the load resolved.
+				EnablerKernel::onBonusAccessChangedActive(pCity, kEvent.iType);
 			}
 			break;
 		}
@@ -187,7 +204,31 @@ private:
 			{
 				BuildingEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
 				UnitEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
+				// The LOCAL half of the same supply (json §5a: a vicinity provider satisfies the same atom as a
+				// traded one), so the operate consumers re-check on it too.
+				EnablerKernel::onBonusAccessChangedActive(pCity, kEvent.iType);
 			}
+			break;
+		}
+		// ---- THE PROPERTY BAND CROSSING -- the operate half of the PROPERTY_ axis (enabler.md §3). ----
+		// A band is a `requires.operate` {PROPERTY_X, min/max} clause, and it is what decides active-vs-dormant for
+		// the whole system-placed band class (crime / disease / education / pollution): the building is placed once
+		// and never removed, so this crossing is the ONLY thing that ever moves its verdict.
+		// ⚑ The re-check is gated on a BOUNDARY crossing rather than fired on every property move, and that is
+		// what makes it affordable: the solver runs propagators -> interactions -> sources every doTurn, so a
+		// property value moves constantly in every city while a band verdict moves only when the value passes a
+		// threshold some clause actually declares. s_operatePropertyBandThresholds holds exactly those boundaries,
+		// which is why it is built beside the consumer index.
+		// ⚑ The consumer does NO arithmetic: the HOLDER announces the crossing (CvProperties, beside the value
+		// fact), so this routes the happening and nothing more. The raw SEVT_PROPERTY_ADDED / _REMOVED value fact
+		// is deliberately NOT handled here -- it fires for nearly every property of every city every turn.
+		case SEVT_CITY_PROPERTY_BAND_ADDED:
+		case SEVT_CITY_PROPERTY_BAND_REMOVED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			// Direction-less by design: ek_classifyBuilding re-reads the live value against each band, so which
+			// way the boundary was crossed is redundant once the fact says one WAS.
+			if (pCity != NULL) EnablerKernel::onPropertyBandHitActive(pCity, kEvent.iType);
 			break;
 		}
 		case SEVT_CITY_CULTURE_LEVEL_ADDED:
@@ -261,6 +302,13 @@ private:
 				BuildEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
 				PromotionEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
 				TechEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				// The OPERATE half. A tech moves two things this set depends on: an operate condition that reads a
+				// tech, and OBSOLESCENCE -- and a tech is the only thing that can obsolete (enabler.md §3.2), so
+				// this is where a building's obsolete verdict is re-derived at all.
+				foreach_(const CvCity* pLoopCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+				{
+					EnablerKernel::onPlayerScopeChangedActive(pLoopCity);
+				}
 			}
 			break;
 		case SEVT_EMPIRE_TRAIT_ADDED:
@@ -283,6 +331,11 @@ private:
 				// the civic HAVE axis -- the emit carries the swap fact (adopted iType, swapped-out iB)
 				BuildingEnabler::onPlayerCivicsChanged((PlayerTypes)kEvent.iC, kEvent.iB, kEvent.iType);
 				UnitEnabler::onPlayerCivicsChanged((PlayerTypes)kEvent.iC, kEvent.iB, kEvent.iType);
+				// The OPERATE half: a civic swap moves what an operate condition reading a civic resolves to.
+				foreach_(const CvCity* pLoopCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+				{
+					EnablerKernel::onPlayerScopeChangedActive(pLoopCity);
+				}
 			}
 			break;
 		case SEVT_EMPIRE_PROJECT_ADDED:
@@ -305,6 +358,7 @@ private:
 			{
 				BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POP);
 				UnitEnabler::onCityGateClass(*pCity, UnitEnabler::GATE_POP);
+				EnablerKernel::onHaveChangedActive(pCity, CASC_HAVE_POP);   // the operate half of the same axis
 			}
 			break;
 		}
@@ -316,6 +370,7 @@ private:
 			{
 				BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POWER);
 				UnitEnabler::onCityGateClass(*pCity, UnitEnabler::GATE_POWER);
+				EnablerKernel::onHaveChangedActive(pCity, CASC_HAVE_POWER);   // the operate half of the same axis
 			}
 			break;
 		}
@@ -325,6 +380,12 @@ private:
 			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_GOLDEN_AGE);
 				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_GOLDEN_AGE);
+				// The OPERATE half: a golden age is a player-scope axis an operate condition may read, so every
+				// city of that player re-checks the buildings whose operate references one.
+				foreach_(const CvCity* pLoopCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+				{
+					EnablerKernel::onPlayerScopeChangedActive(pLoopCity);
+				}
 			}
 			break;
 		case SEVT_EMPIRE_STATE_RELIGION_ADDED:
@@ -353,6 +414,76 @@ private:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 				UnitEnabler::onUnitCountChanged((PlayerTypes)kEvent.iC, kEvent.iType);
 			break;
+		// ---- the BUILDING-count crossing: the `allowed` self-cap's own re-check (par.7.1 step 3) ----
+		// The twin of the unit case above. A world/team/national wonder's cap is CROSS-CITY, so the per-city
+		// presence fact cannot serve it: the city that BUILT it re-gates through onCityBuildingChanged, and every
+		// other city of every affected player re-gates here.
+		case SEVT_EMPIRE_BUILDING_COUNT_ADDED:
+		case SEVT_EMPIRE_BUILDING_COUNT_REMOVED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+				BuildingEnabler::onBuildingCountChanged((PlayerTypes)kEvent.iC, kEvent.iType);
+			break;
+		// ---- THE LIVE-STATE (GATE_DYNAMIC) AXES, on the facts that actually move them ----
+		// These atoms carry no reverse FK -- IS_CAPITAL, IS_HOLY_CITY, IS_GOVERNMENT_CENTER, a HERITAGE_ presence,
+		// an ERA threshold -- so the load-compiled DYNAMIC class list is the re-gate set, exactly as the game-option
+		// and nukes-ban flips already use it.
+		// ⚑ WHY THESE FACTS AND NOT THE PLOT SUBSTRATE: the dynamic class is ~every building (MAPCATEGORY_ alone is
+		// on ~5.2k of them and falls through to it), so a whole-set re-gate is only affordable on a RARE happening.
+		// Each fact below is rare -- a capital moves, an era advances, a religion founds, a city is conquered. ⛔ The
+		// plot substrate is NOT rare and must NOT be routed here: it wants the narrower `EDGEF_REQUIRED_BY` re-gate
+		// over the specific terrain / feature / improvement id ([enabler.md §7.1](../../docs/specs/enabler.md) step 2),
+		// or a worked-plot flip would re-gate every building in the city.
+		case SEVT_EMPIRE_ERA_ADDED:
+		case SEVT_EMPIRE_ERA_REMOVED:
+		case SEVT_EMPIRE_CAPITAL_ADDED:
+		case SEVT_EMPIRE_CAPITAL_REMOVED:
+		case SEVT_EMPIRE_REBEL_ADDED:
+		case SEVT_EMPIRE_REBEL_REMOVED:
+		case SEVT_EMPIRE_HERITAGE_ADDED:
+		case SEVT_EMPIRE_HERITAGE_REMOVED:
+			// A heritage is a HAVE axis the player holds but NOT an enabler DOMAIN (nothing offers heritages through
+			// the frontier -- they arrive by mission), so it re-gates its dependents and applies no edges.
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_DYNAMIC);
+				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_DYNAMIC);
+			}
+			break;
+		case SEVT_CITY_HOLY_CITY_ADDED:
+		case SEVT_CITY_HOLY_CITY_REMOVED:
+		case SEVT_CITY_GOVERNMENT_CENTER_ADDED:
+		case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:
+		case SEVT_CITY_HEADQUARTERS_ADDED:
+		case SEVT_CITY_HEADQUARTERS_REMOVED:
+		case SEVT_CITY_FRESH_WATER_ADDED:
+		case SEVT_CITY_FRESH_WATER_REMOVED:
+		{
+			// The city-scope twins of the above: one city's designation moved, so only that city re-gates.
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_DYNAMIC);
+				UnitEnabler::onCityGateClass(*pCity, UnitEnabler::GATE_DYNAMIC);
+			}
+			break;
+		}
+		// ---- CONQUEST: the city's whole HAVE basis is a different player's ----
+		// Every axis the gate reads moves at once (techs, civics, traits, the empire's counts and caps), and the
+		// tri-state is a bare fetch that nothing re-derives -- so a conquered city would otherwise serve the PREVIOUS
+		// owner's verdicts for the rest of the game. The full per-city pass is the honest derivation, and a capture is
+		// rare enough to pay for it.
+		// ⚠ The ADDED end only: on _REMOVED the city has already left the old owner's list, so there is nothing to
+		// resolve and nothing that still needs gating -- the ADDED twin re-gates it under whoever now owns it.
+		case SEVT_CITY_OWNER_ADDED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::gateCity(*pCity);
+				UnitEnabler::gateCity(*pCity);
+			}
+			break;
+		}
 		// ---- the load-end gate pass (the par.7.1 order rule's "gate once after the stream ends" option --
 		// fires while the bracket is still open, at the end of onFinalInitialized, state fully final) ----
 		case SEVT_GAME_LOAD_FINISHED:

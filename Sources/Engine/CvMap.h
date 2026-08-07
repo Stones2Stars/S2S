@@ -225,6 +225,12 @@ public:
 	CvArea* nextArea(int *pIterIdx, bool bRev=false) const;
 
 	void recalculateAreas();
+	// TRUE while recalculateAreas is tearing the area map down and rebuilding it. A consumer of the per-area
+	// SEVT_AREA_TILE_ADDED / _REMOVED facts tests this and declines: every id is being reassigned, so a per-tile
+	// verdict is meaningless mid-pass and SEVT_AREAS_RECALCULATED announces the finished map at the end.
+	// ⛔ The EMITS still fire -- a consumer decides its own handling and an emit is never suppressed to serve one
+	// ([event-spine.md]: "emit every distinct fact, always; decide handling per consumer, separately").
+	bool isRecalculatingAreas() const { return m_bRecalculatingAreas; }
 	void resetPathDistance();
 
 	// Super Forts *canal* *choke*
@@ -270,6 +276,7 @@ private:
 
 	bool m_bCitiesDisplayed;
 	bool m_bUnitsDisplayed;
+	bool m_bRecalculatingAreas;   // the recalculateAreas bracket (isRecalculatingAreas) -- derived, never serialized
 
 	static bool m_bSwitchInProgress;
 

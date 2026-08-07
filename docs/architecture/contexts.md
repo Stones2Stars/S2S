@@ -565,7 +565,15 @@ CAPSTONE — LOAD is the only full build).
     > a city from the previous world ([DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted)).
     > ⚠ `m_iCityRadiusCount` / `m_aiPlayerCityRadiusCount` keep their own readers and stay — what this replaces is
     > the vicinity fold's need to re-derive membership, never those counters.
-  - the **AREA facts** ← the plot-TYPE fact near the city, and the wholesale **areas-recalculated** fact below.
+  - the **AREA facts** ← the plot-TYPE fact near the city, the per-area **`SEVT_AREA_TILE_ADDED / _REMOVED`**
+    (one area's tile count moved — only the cities IN that area re-read), and the wholesale
+    **areas-recalculated** fact below.
+    > ⛔ **The per-area route DECLINES while `CvMap::recalculateAreas` is mid-pass** (`isRecalculatingAreas`).
+    > That pass clears every plot's area and reassigns every id, firing the per-area fact once per plot, so a
+    > per-tile refresh inside it would be O(plots × cities) of work against a map that does not exist yet — and
+    > the wholesale fact closes the bracket by refreshing every city once, which is the answer for that window.
+    > ⚑ The EMIT is untouched: the fact fires and the CONSUMER declines it
+    > ([event-spine.md](../specs/event-spine.md) — never suppress an emit to fix a consumer).
   - the **holy-city and HEADQUARTERS counts** ← their own facts, applied `±1`.
     > **⚖ THE DESIGNATION LIVES ON `CvGame`, AND THE CITY HOLDS ONLY HOW MANY NAME IT.** The authoritative
     > assignment is `CvGame`'s, keyed by religion / corporation — exactly one city each, so uniqueness is

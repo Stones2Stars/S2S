@@ -453,6 +453,18 @@ enum SpineDomainEvent
 	// iC = player. DOMAIN.
 	SEVT_EMPIRE_REBEL_ADDED          = 194,
 	SEVT_EMPIRE_REBEL_REMOVED        = 195,
+	// A city's PROPERTY value crossed one of the band BOUNDARIES the authored `requires.operate` clauses declare
+	// -- the value ROSE across one (_ADDED) or FELL across one (_REMOVED). iType = the PROPERTY_, iC = owner,
+	// iSrcLoc = cityId. DOMAIN.
+	// ⚖ THE HOLDER ANNOUNCES THE THRESHOLD CROSSING, exactly as the amenity fold announces power's 0 <-> non-zero
+	// verdict and stays silent from 1 -> 2 (owner). SEVT_PROPERTY_ADDED / _REMOVED beside it is the VALUE moving,
+	// which happens to nearly every property of every city every turn as the solver runs; this is the far rarer
+	// happening a band consumer actually cares about, so that consumer routes on it with ZERO arithmetic.
+	// ⛔ The crossing is NOT re-derived per consumer. The boundaries live in ONE registry
+	// (EnablerKernel::propertyBandThresholds) and ONE place tests them, or every future consumer -- a trigger, a
+	// player alert -- re-implements the same sweep ([DEC-single-implementation]).
+	SEVT_CITY_PROPERTY_BAND_ADDED    = 196,
+	SEVT_CITY_PROPERTY_BAND_REMOVED  = 197,
 	// The city GAINED / LOST fresh-water ACCESS (CvCity::changeFreshWater, at its count crossing) -- the
 	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
 	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
@@ -923,6 +935,8 @@ void emitGameGlobalDefineRemoved(const char* szName, int eKind, int iValue, floa
 // iAmount = HOW MUCH the value moved, unsigned.
 void emitPropertyAdded(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount);
 void emitPropertyRemoved(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount);
+void emitCityPropertyBandAdded(int iCityId, int iOwner, int iProperty);
+void emitCityPropertyBandRemoved(int iCityId, int iOwner, int iProperty);
 // ===== NAMED HAPPENINGS + lifecycle =====
 // Turn boundaries. iPlayer = -1 for the GAME-scope boundary, else the player whose turn opened/closed. These
 // REPLACE the bespoke CvHttpServer::publishEvent("turnStart"/...) side-channel: a happening lives on the spine

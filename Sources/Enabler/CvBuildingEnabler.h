@@ -76,6 +76,7 @@ public:
 	static void onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
 	static void onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool bPresent);
 	static void onCityOrderChanged(const CvCity& kCity, int iBuilding);   // queue push/pop of THIS building: the one-id re-gate (par.7.1 step 3)
+	static void onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding);   // the empire per-type COUNT moved: re-check its `allowed` self-cap across the cap's own scope
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
 	static void onCityCorporationChanged(const CvCity& kCity, int iCorporation, bool bHas);
 	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);     // network count delta; re-gates on a 0-crossing

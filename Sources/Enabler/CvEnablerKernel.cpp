@@ -496,9 +496,18 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 	// dormancy" the owner flagged); the self-contained enabler must solve the fixpoint itself. LEAST fixpoint:
 	// start with an EMPTY supply, iterate active→provides until stable (bounded; provides only ever ADD, so
 	// convergence is fast — typically 2 scans).
+	// ⛔ THE BOUND IS A RUNAWAY GUARD, NOT A TIER BUDGET. A manufactured chain lights TIER BY TIER (grain -> flour
+	// -> bread -> deli, enabler.md § Load-end reconciliation), so each iteration admits exactly one more tier and a
+	// low cap silently truncates the deep end of the chain -- every consumer above it dorms, and nothing re-derives
+	// it ([DEC-no-self-heal]). The supply only ever GROWS (provides never retract inside the least fixpoint), so the
+	// loop converges in at most one iteration per providing building; the bound only has to exceed the longest
+	// possible chain. It mirrors the targeted ripple's own guard in this file, ASSERT included -- a truncated
+	// fixpoint leaves the operating set WRONG and is a defect to fix at its cause, never a state to accept.
+	const int iFixpointGuard = GC.getNumBuildingInfos() + 8;
+	int iIterations = 0;
 	std::set<int> prov;
 	ecOp.vicinityProvidedBonuses = &prov;
-	for (int iter = 0; iter < 5; ++iter)
+	for (; iIterations < iFixpointGuard; ++iIterations)
 	{
 		activeOut.clear();
 		std::set<int> provNext;
@@ -523,6 +532,7 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 		if (provNext == prov) break;   // supply stable -> the active set is the fixpoint
 		prov.swap(provNext);
 	}
+	FAssertMsg(iIterations < iFixpointGuard, "the operate/provides fixpoint hit its runaway guard -- the operating set is left incomplete");
 	providedOut = prov;
 }
 
@@ -561,6 +571,15 @@ static std::vector<int> s_operateObsoletableBuildings;                      // b
 static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& seeds)
 {
 	if (pCity == NULL || seeds.empty()) return;
+	// ⚖ SET UP -> POPULATE -> ANNOUNCE (owner). The WORK runs during the load read and must: each building
+	// deserializing does its own dormancy check, which is what lights a manufactured chain tier by tier (a
+	// building that never checks itself never provides, so the next tier never lights). ⛔ What must NOT run
+	// mid-read is the ANNOUNCE -- seedOperatingBuildings announces the settled set once at GAME_LOAD_FINISHED,
+	// so an in-read emit would announce an activation a second time and a consumer APPLIES the moved source's
+	// deposits on that fact.
+	// ⚠ The set is idempotent and the deposits are NOT, so the enabler's own stored-vs-oracle tripwire is blind
+	// to a double announce -- it is the modifier packages that carry the damage.
+	const bool bAnnounce = !spineGameLoadInProgress();
 	OperatingBuildings& f = pCity->m_operatingBuildings;   // AUTHORITATIVE
 	const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ecOp;
@@ -619,7 +638,11 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 		// exactly as they see a construction, which is what makes a dormant building stop contributing.
 		// ⛔ It is NOT a duplicate of the building-PRESENCE facts: presence cannot tell dormant from operating
 		// (event-spine.md), and this fires only on a genuine active<->dormant change (`now == was` returned above).
-		if (now)
+		if (!bAnnounce)
+		{
+			// inside the load bracket: the set still MOVES (above), the seed announces it once at the end
+		}
+		else if (now)
 		{
 			emitCityBuildingActivated(pCity->getID(), pCity->getOwner(), b);
 		}
@@ -825,10 +848,11 @@ void EnablerKernel::onBonusAccessChangedActive(const CvCity* pCity, int eBonus)
 	if (it != s_operateBonusConsumers.end()) ek_recheckActiveSet(pCity, it->second);
 }
 
-// F5: a property crossed one of its operate-band thresholds in pCity (the property-engine watermark detected it) ->
-// re-check ONLY the buildings whose requires.operate consumes THAT property's band into the authoritative operating
-// set. Direction-less by design: ek_classifyBuilding re-reads the live value against the band, so high/low is
-// redundant. Mirrors onBonusAccessChangedActive; the operate fixpoint below is the authoritative verdict.
+// A property crossed one of its operate-band boundaries in pCity (the enabler's own spine consumer detects it off
+// SEVT_PROPERTY_ADDED / _REMOVED against propertyBandThresholds) -> re-check ONLY the buildings whose
+// requires.operate consumes THAT property's band into the authoritative operating set. Direction-less by design:
+// ek_classifyBuilding re-reads the live value against the band, so high/low is redundant. Mirrors
+// onBonusAccessChangedActive; the operate fixpoint below is the authoritative verdict.
 void EnablerKernel::onPropertyBandHitActive(const CvCity* pCity, int eProperty)
 {
 	buildActiveIndex();

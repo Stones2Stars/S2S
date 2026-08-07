@@ -23,6 +23,7 @@
 #include "Infrastructure/CvXMLLoadUtility.h"
 #include "Tools/CheckSum.h"
 #include "Spine/CvEventSpine.h"   // the property DOMAIN fact -- the mutation choke points + the in-read reseed
+#include "Enabler/CvEnablerKernel.h"   // propertyBandThresholds -- the ONE registry of authored operate-band boundaries
 
 CvProperties::CvProperties()
 {
@@ -164,6 +165,41 @@ static void emitPropertyFact(const CvGameObject* pObject, PropertyTypes ePropert
 	{
 		emitPropertyRemoved((int)pObject->getGameObjectType(), pObject->getObjectInstanceId(),
 			(int)pObject->getOwnerPlayerId(), (int)eProperty, iOldValue - iNewValue);
+	}
+	// ⚖ AND THE HOLDER ANNOUNCES THE THRESHOLD CROSSING BESIDE THE VALUE (owner) -- the amenity fold's shape:
+	// power announces 0 -> 1 and 1 -> 0 and says nothing about 1 -> 2, because only the VERDICT moved.
+	// The verdict here is a `requires.operate` band boundary, and the whole authored set of them is one registry
+	// (EnablerKernel::propertyBandThresholds), so this is where they are tested -- ONCE, for every consumer.
+	// ⛔ Not in a consumer: the raw value fact fires for nearly every property of every city every turn as the
+	// solver runs, so a consumer gating on it would re-derive this sweep per consumer and pay it per event
+	// ([DEC-single-implementation]).
+	if (pObject->getGameObjectType() != GAMEOBJECT_CITY || iNewValue == iOldValue)
+	{
+		return;   // only a CITY carries an operate band; the other bags announce the value alone
+	}
+	const std::map<int, std::set<int> >& kThresholds = EnablerKernel::propertyBandThresholds();
+	const std::map<int, std::set<int> >::const_iterator itProperty = kThresholds.find((int)eProperty);
+	if (itProperty == kThresholds.end())
+	{
+		return;   // no authored clause bands on this property -- there is no verdict to cross
+	}
+	const int iLow  = (iOldValue < iNewValue) ? iOldValue : iNewValue;
+	const int iHigh = (iOldValue < iNewValue) ? iNewValue : iOldValue;
+	// A boundary sitting in the CLOSED interval the value swept is a crossing for BOTH band senses: a `min: T`
+	// clause flips between T-1 and T, a `max: T` clause between T and T+1, so the closed test catches each.
+	// ⛔ Testing only `>= T` on both ends would miss every max-band's upper flip.
+	const std::set<int>::const_iterator itBoundary = itProperty->second.lower_bound(iLow);
+	if (itBoundary == itProperty->second.end() || *itBoundary > iHigh)
+	{
+		return;
+	}
+	if (iNewValue > iOldValue)
+	{
+		emitCityPropertyBandAdded(pObject->getObjectInstanceId(), (int)pObject->getOwnerPlayerId(), (int)eProperty);
+	}
+	else
+	{
+		emitCityPropertyBandRemoved(pObject->getObjectInstanceId(), (int)pObject->getOwnerPlayerId(), (int)eProperty);
 	}
 }
 

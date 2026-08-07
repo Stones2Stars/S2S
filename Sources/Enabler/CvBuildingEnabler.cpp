@@ -586,6 +586,49 @@ static void bd_applyAxisGated(const CvCity& kCity, EnablerDomain& d, int eAxis, 
 	bd_gateSet(kCity, touched);
 }
 
+// The empire's per-type building COUNT moved -> re-check the `allowed` SELF-CAP for that one type
+// (par.7.1 step 3), across exactly the cities the cap's SCOPE reaches. The twin of
+// UnitEnabler::onUnitCountChanged, and the reason the count fact exists at all.
+// ⚠ DISTINCT from onCityBuildingChanged, which re-gates the DEPENDENTS of a building present in ONE city. A cap
+// is cross-city by construction: a world wonder completed in city A must leave the buildable set of every OTHER
+// city -- of every player, for a world cap -- and no per-city presence fact reaches them, so without this the
+// wonder stays offered everywhere until something else happens to re-gate.
+void BuildingEnabler::onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding)
+{
+	if (spineGameLoadInProgress() || ePlayer == NO_PLAYER || eBuilding < 0) return;
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(eBuilding);
+	const CvAllowed* a = (j != NULL) ? j->getAllowed() : NULL;
+	if (a == NULL) return;
+	const bool bWorldCap  = (a->cap(ALLOWEDCAP_WORLD)  >= 0);
+	const bool bTeamCap   = (a->cap(ALLOWEDCAP_TEAM)   >= 0);
+	const bool bEmpireCap = (a->cap(ALLOWEDCAP_EMPIRE) >= 0);
+	if (!bWorldCap && !bTeamCap && !bEmpireCap) return;   // uncapped: its count moves no verdict anywhere
+	std::set<int> one;
+	one.insert(eBuilding);
+	const TeamTypes eOwnerTeam = GET_PLAYER(ePlayer).getTeam();
+	for (int iP = 0; iP < MAX_PLAYERS; iP++)
+	{
+		const PlayerTypes eP = (PlayerTypes)iP;
+		// The cap's own scope decides the reach: a WORLD cap re-gates everyone, a TEAM cap the team, an EMPIRE
+		// cap only the owner. Widening any of them would re-gate cities whose verdict cannot have moved.
+		if (!bWorldCap)
+		{
+			if (bTeamCap)
+			{
+				if (GET_PLAYER(eP).getTeam() != eOwnerTeam) continue;
+			}
+			else if (eP != ePlayer)
+			{
+				continue;
+			}
+		}
+		foreach_(const CvCity* pCity, GET_PLAYER(eP).cities())
+		{
+			bd_gateSet(*pCity, one);
+		}
+	}
+}
+
 void BuildingEnabler::onCityOrderChanged(const CvCity& kCity, int iBuilding)
 {
 	// queue push/pop of iBuilding (par.7.1 step 3): membership untouched -- ONE id re-gates, its verdict
