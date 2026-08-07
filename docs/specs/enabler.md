@@ -631,29 +631,10 @@ never the home of that answer.
 > PLOT-RESIDENT source, so a plot-scope route with no named plot has no target by construction, and declining to
 > fan drops nothing.
 
-**⛔ The `CvPlotGroup` is the ONLY authoritative list for trade resources, and NOTHING mirrors it.** The group is
-where the number is formed (`CvPlot::updatePlotGroupBonus` → `CvPlotGroup::changeNumBonuses`); every reader below
-it RELAYS.
-
-> **⛔ ONLY A CITY PLACES A BONUS INTO A PLOT GROUP (owner) — the plot never injects, it only holds.** A fort
-> participates as a city-like member through the `actsAsCity` characteristic ([json.md §8](json.md)); nothing
-> else contributes. That is what makes the city the natural home of a "what do I put in" read, and it is why the
-> group is *"always funneled through the cities / forts that participate in it"* rather than summed from tiles.
->
-> **⚖ THE SAME BONUS EXISTS IN BOTH PLACES, AND THAT IS THE MODEL — NOT A DUPLICATE TO RESOLVE (owner).** A
-> pasture in a city's radius is in that city's VICINITY *and*, once the city places it, in the group's TRADED
-> list. Both statements are true at once.
-> ⛔ **Which is precisely why they never SUM** — "one pasture is ONE horse, not vicinity+network=2". The two
-> answer different questions and each gate reads exactly one list:
->
-> | the gate | reads | means |
-> |---|---|---|
-> | `connection: "trade"` | the PLOT GROUP list, and nothing else | the network holds it, wherever it sits |
-> | `connection: "vicinity"` | this city's own radius (+ active buildings' `provides`) | it is on the ground here, connected or not |
->
-> ⚠ **`vicinity:"connected"` is the near-miss that causes the confusion**: it is a RADIUS TILE that is owned,
-> valid and connected — still local, still not the network. A building or unit needing a TRADED resource checks
-> the group list ONLY, so a vicinity tier can never satisfy it however "connected" it reads.
+**⛔ The `CvPlotGroup` is the ONLY authoritative list for trade resources, and NOTHING mirrors it.** Its content
+is placed by the member CITIES (and `actsAsCity` forts) — never by a plot, which only holds the resource — so the
+group is where the number is formed; every reader below it RELAYS. A `connection:"trade"` gate reads that list
+and nothing else.
 
 - **`CvCity::getNumBonuses` is a relay**, not a stored count: it reads the group through the city's plot-group
   pointer and applies the three things that are genuinely per-asker — the bonus's `TechCityTrade` gate, the

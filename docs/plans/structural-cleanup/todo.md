@@ -224,22 +224,12 @@
   THE VICINITY SPLIT): the MAP half is `CityContext`'s radius bonus dictionary, the BUILDING half is
   `OperatingBuildings::provided` (the operate/provides fixpoint, which only the enabler can resolve). Neither may
   be mirrored onto the other — the enabler mutates its set in place as the fixpoint ripples.
-  ⛔ **THE TAB SHOWS VICINITY, AND VICINITY IS NOT TRADED — this is the distinction agents reliably fail to grasp
-  (owner), so the surface must make it unsayable to merge.** VICINITY is a MAP fact about THIS CITY'S GROUND: the
-  bonus sits on a tile in the workable radius (which GROWS with culture), needing no connection, no improvement
-  and not even ownership — the default tier is owned+neutral — plus whatever an ACTIVE building supplies
-  (`provides.bonuses`). TRADED is a NETWORK fact about the PLOT GROUP: what the group holds anywhere, gated
-  per-asker by `TechCityTrade`, the minted suppression and the corp add-on.
-  ⚠ **`vicinity:"connected"` is the near-miss that causes it** — it is a RADIUS TILE that happens to be owned,
-  valid and connected, NOT the network. Both spellings say "connected"; one is about a tile, the other about
-  reach ([json.md §3.4](../../specs/json.md)).
-  ⛔ **They must never SUM** ([enabler.md §8](../../specs/enabler.md)): vicinity satisfies `connection:"vicinity"`
-  atoms and NOTHING else — "one pasture is ONE horse, not vicinity+network=2".
-  ⚑ The accessor the owner names is `getVicinityBonuses` — the bonuses that ORIGINATE FROM the city — and the
-  stores already answer it: the tier `ContextDict`s are enumerable, so it is a listing of the MAP half unioned
-  with `OperatingBuildings::provided`, never a new store. ⚠ What does NOT exist today is any LIST accessor at
-  all: `hasVicinityBonus` is per-bonus, so a tab built on it would sweep every bonus id per render — the
-  own-data inversion ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
+  ⛔ The tab shows VICINITY, which is NOT traded — the split, its two halves and the never-sum rule are
+  [enabler.md §8](../../specs/enabler.md) + [json.md §5a/§3.4](../../specs/json.md); do not restate them here.
+  ⚑ The accessor is `getVicinityBonuses` — the bonuses that ORIGINATE FROM the city — and the stores already
+  answer it, so it is a listing over what exists, never a new store. ⚠ What is missing is any LIST accessor at
+  all: `hasVicinityBonus` is per-bonus, so a tab built on it sweeps every bonus id per render — the own-data
+  inversion ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
   ⛔ It is served through the NEW Python surface, never a revived `Cy` binding
   ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
 
