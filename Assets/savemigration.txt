@@ -1341,3 +1341,12 @@ The last three per-unit HEAL accumulators, REPLACED by the resolved UNIT plane o
 CvUnit::m_iVictoryStackHeal
 CvUnit::m_iVictoryAdjacentHeal
 CvUnit::m_iExtraSelfHealModifier
+
+The two per-turn VICINITY SNAPSHOT arrays. Derived state that was serialized, which the model forbids outright
+| (DEC-derived-never-trusted), and derived for NOBODY: each was rewritten every turn by a full sweep over every
+| bonus id -- through a memoized recompute-on-read that doTurn cleared wholesale the same turn -- and neither
+| had a single reader. The whole loop produced nothing.
+| REPLACEMENT: none is owed. The question they answered is the city's onSite set, which CityContext holds as an
+| event-maintained store (contexts.md) -- a stored fact, not a per-turn recompute.
+CvCity::m_pabHadVicinityBonus
+CvCity::m_pabHadRawVicinityBonus

@@ -488,12 +488,6 @@ CvCity::CvCity()
 	m_cachedPropertyNeeds = NULL;
 	m_paiFreeBonus = NULL;
 	m_paiFreeBonusEvents = NULL;
-	m_pabHadVicinityBonus = NULL;
-	m_pabHasVicinityBonus = NULL;
-	m_pabHadRawVicinityBonus = NULL;
-	m_pabHasRawVicinityBonus = NULL;
-	m_pabHasVicinityBonusCached = NULL;
-	m_pabHasRawVicinityBonusCached = NULL;
 	m_paiUnitCombatExtraStrength = NULL;
 	m_pabAutomatedCanBuild = NULL;
 	m_paiAidRate = NULL;
@@ -757,14 +751,8 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiImprovementFreeSpecialists);
 	SAFE_DELETE_ARRAY(m_paiReligionInfluence);
 	SAFE_DELETE_ARRAY(m_cachedPropertyNeeds);
-	SAFE_DELETE_ARRAY(m_pabHadVicinityBonus);
-	SAFE_DELETE_ARRAY(m_pabHasVicinityBonus);
-	SAFE_DELETE_ARRAY(m_pabHadRawVicinityBonus);
 	SAFE_DELETE_ARRAY(m_paiFreeBonus);
 	SAFE_DELETE_ARRAY(m_paiFreeBonusEvents);
-	SAFE_DELETE_ARRAY(m_pabHasRawVicinityBonus);
-	SAFE_DELETE_ARRAY(m_pabHasVicinityBonusCached);
-	SAFE_DELETE_ARRAY(m_pabHasRawVicinityBonusCached);
 	SAFE_DELETE_ARRAY(m_paiUnitCombatExtraStrength);
 	SAFE_DELETE_ARRAY(m_pabAutomatedCanBuild);
 	SAFE_DELETE_ARRAY(m_pabWorkingPlot);
@@ -1109,14 +1097,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		FAssertMsg((0 < iMaxTradeRoutes), "Max Trade Routes is not greater than zero but an array is being allocated in CvCity::reset");
 		m_paTradeCities = std::vector<IDInfo>(iMaxTradeRoutes);
 
-		m_pabHadVicinityBonus = new bool[GC.getNumBonusInfos()];
-		m_pabHadRawVicinityBonus = new bool[GC.getNumBonusInfos()];
 		m_paiFreeBonus = new int[GC.getNumBonusInfos()];
 		m_paiFreeBonusEvents = new int[GC.getNumBonusInfos()];
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			m_pabHadVicinityBonus[iI] = false;
-			m_pabHadRawVicinityBonus[iI] = false;
 			m_paiFreeBonus[iI] = 0;
 			m_paiFreeBonusEvents[iI] = 0;
 		}
@@ -1516,8 +1500,6 @@ void CvCity::doTurn()
 	setAirliftTargeted(false);
 	setBuiltFoodProducedUnit(false);
 	//Promotes Units if there is a building that allows it
-	//Does vicinity bonus checks
-	{ PERF_SCOPE("city.doVicinityBonus", getOwner()); doVicinityBonus(); }
 	//Checks conditions of buildings, may disable or enable some
 
 	//Damages enemy units around the city, if applicable
@@ -1636,15 +1618,6 @@ void CvCity::doTurn()
 	else
 	{
 		setWeLoveTheKingDay(false);
-	}
-
-	{
-		PERF_SCOPE("city.vicinitySnapshot", getOwner());
-		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-		{
-			m_pabHadVicinityBonus[iI] = hasObtainedBonus((BonusTypes)iI);
-			m_pabHadRawVicinityBonus[iI] = hasRawVicinityBonus((BonusTypes)iI);
-		}
 	}
 
 	clearUpgradeCache(NO_UNIT);
@@ -3727,8 +3700,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		const BonusTypes eFreeBonus = (BonusTypes)iFreeBonus;
 		const int iSuppliedDelta = pProvides->countOf(iFreeBonus) * iChange;
 		changeFreeBonus(eFreeBonus, iSuppliedDelta);
-		clearVicinityBonusCache(eFreeBonus);
-		clearRawVicinityBonusCache(eFreeBonus);
 		// the event carries the applied local DELTA (a city can hold several of a bonus locally --
 		// a presence-flip gate would hide the 1->2/2->1 transitions and undercount downstream)
 		if (iSuppliedDelta > 0)
@@ -12941,7 +12912,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 
 
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, &m_iCiv);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iLandmarkAngerTimer);
@@ -13204,7 +13174,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	}
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROPERTIES, GC.getNumPropertyInfos(), m_paiAidRate);
 	WRAPPER_READ(wrapper, "CvCity", &m_iQuarantinedCount);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
 	// The EVENT/WB half only -- the building half is derived and rebuilt by the reseed (save.md par.5).
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
 	WRAPPER_READ(wrapper, "CvCity", &m_bPropertyControlBuildingQueued);
@@ -13534,7 +13503,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_pabHasCorporation);
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEventAnger);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, m_iCiv);
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLandmarkAngerTimer);
@@ -13641,7 +13609,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROPERTIES, GC.getNumPropertyInfos(), m_paiAidRate);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iQuarantinedCount);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bPropertyControlBuildingQueued);
 
@@ -15485,18 +15452,6 @@ int CvCity::calculateBonusDefense() const
 }
 
 
-bool CvCity::hadVicinityBonus(BonusTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
-	return m_pabHadVicinityBonus[eIndex];
-}
-
-bool CvCity::hadRawVicinityBonus(BonusTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
-	return m_pabHadRawVicinityBonus[eIndex];
-}
-
 
 // The city's population-growth-rate percent, read as the ordinary cascade channel it is
 // (populationGrowthRate.city -- the SCALAR_POPULATION_GROWTH_RATE straggler slot). What this replaces was a
@@ -15720,172 +15675,7 @@ static bool bonusAvailableFromBuildings(BonusTypes eBonus)
 	return bBonusAvailability[eBonus];
 }
 
-void CvCity::clearVicinityBonusCache(BonusTypes eBonus)
-{
-	if (m_pabHasVicinityBonusCached != NULL)
-	{
-		m_pabHasVicinityBonusCached[eBonus] = false;
-	}
-}
 
-bool CvCity::hasObtainedBonus(BonusTypes eBonus) const
-{
-	PROFILE_FUNC();
-	if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
-	{
-		if (m_pabHasVicinityBonusCached == NULL)
-		{
-			m_pabHasVicinityBonusCached = new bool[GC.getNumBonusInfos()];
-			SAFE_DELETE_ARRAY(m_pabHasVicinityBonus);
-			m_pabHasVicinityBonus = new bool[GC.getNumBonusInfos()];
-
-			for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-			{
-				m_pabHasVicinityBonusCached[iI] = false;
-			}
-		}
-
-		if (m_pabHasVicinityBonusCached[eBonus])
-		{
-			return m_pabHasVicinityBonus[eBonus];
-		}
-	}
-
-	bool bResult = false;
-
-	//No sense in checking...
-	if (hasBonus(eBonus))
-	{
-		if (plot()->getBonusType() == eBonus)
-		{
-			bResult = true;
-		}
-
-		if (!bResult)
-		{
-			for (int iI = 0; iI < getNumCityPlots(); iI++)
-			{
-				CvPlot* pLoopPlot = plotCity(getX(), getY(), iI);
-				if (pLoopPlot != NULL
-				&& pLoopPlot->getBonusType() == eBonus
-				&& pLoopPlot->getOwner() == getOwner()
-				&& pLoopPlot->isHasValidBonus()
-				&& pLoopPlot->isConnectedTo(this))
-				{
-					bResult = true;
-					break;
-				}
-			}
-		}
-
-		if (!bResult && bonusAvailableFromBuildings(eBonus))
-		{
-			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-			{
-				if (GC.getBuildingInfo((BuildingTypes)iI).getProvides()->has(eBonus) && isActiveBuilding((BuildingTypes)iI))
-				{
-					bResult = true;
-					break;
-				}
-			}
-		}
-	}
-
-	if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
-	{
-		m_pabHasVicinityBonus[eBonus] = bResult;
-		m_pabHasVicinityBonusCached[eBonus] = true;
-	}
-
-	return bResult;
-}
-
-void CvCity::clearRawVicinityBonusCache(BonusTypes eBonus)
-{
-	if (m_pabHasRawVicinityBonusCached != NULL)
-	{
-		m_pabHasRawVicinityBonusCached[eBonus] = false;
-	}
-}
-
-bool CvCity::hasRawVicinityBonus(BonusTypes eBonus) const
-{
-	PROFILE_FUNC();
-
-	const int numBonusInfos = GC.getNumBonusInfos();
-	const int numBuildingInfos = GC.getNumBuildingInfos();
-
-	// --- Cache check (single-threaded only) ---
-	if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
-	{
-		if (m_pabHasRawVicinityBonusCached == NULL)
-		{
-			m_pabHasRawVicinityBonusCached = new bool[numBonusInfos]();
-			SAFE_DELETE_ARRAY(m_pabHasRawVicinityBonus);
-			m_pabHasRawVicinityBonus = new bool[numBonusInfos]();
-		}
-
-		if (m_pabHasRawVicinityBonusCached[eBonus])
-		{
-			return m_pabHasRawVicinityBonus[eBonus];
-		}
-	}
-
-	// --- Direct city plot check ---
-	if (plot()->getBonusType() == eBonus)
-	{
-		if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
-		{
-			m_pabHasRawVicinityBonus[eBonus] = true;
-			m_pabHasRawVicinityBonusCached[eBonus] = true;
-		}
-		return true;
-	}
-
-	// --- City plots check ---
-	for (int iI = 0, n = getNumCityPlots(); iI < n; ++iI)
-	{
-		CvPlot* pLoopPlot = plotCity(getX(), getY(), iI);
-		if (pLoopPlot != NULL
-			&& pLoopPlot->getBonusType() == eBonus
-			&& pLoopPlot->getOwner() == getOwner())
-		{
-			if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
-			{
-				m_pabHasRawVicinityBonus[eBonus] = true;
-				m_pabHasRawVicinityBonusCached[eBonus] = true;
-			}
-			return true;
-		}
-	}
-
-	// --- Building-provided bonus check ---
-	if (bonusAvailableFromBuildings(eBonus))
-	{
-		for (int iI = 0; iI < numBuildingInfos; ++iI)
-		{
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
-			if (kBuilding.getProvides()->has(eBonus) && isActiveBuilding((BuildingTypes)iI))
-			{
-				if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
-				{
-					m_pabHasRawVicinityBonus[eBonus] = true;
-					m_pabHasRawVicinityBonusCached[eBonus] = true;
-				}
-				return true;
-			}
-		}
-	}
-
-	// --- Cache result if applicable ---
-	if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
-	{
-		m_pabHasRawVicinityBonus[eBonus] = false;
-		m_pabHasRawVicinityBonusCached[eBonus] = true;
-	}
-
-	return false;
-}
 
 bool CvCity::isDevelopingCity() const
 {
@@ -15897,18 +15687,6 @@ bool CvCity::isDevelopingCity() const
 	);
 }
 
-void CvCity::doVicinityBonus()
-{
-	PROFILE_FUNC();
-
-	// Per-turn cache refresh: hasVicinityBonus recomputes on demand after the clear. Vicinity is a FORWARDED read on
-	// the city (the cascade reads it via cityContext.hasVicinityBonus) -- no stored context copy, so no transition to apply here.
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		clearVicinityBonusCache((BonusTypes)iI);
-		clearRawVicinityBonusCache((BonusTypes)iI);
-	}
-}
 
 int CvCity::getUnitCombatExtraStrength(UnitCombatTypes eIndex) const
 {
