@@ -27,6 +27,25 @@
   ⛔ Not an agent call: [patterns.md](../../architecture/patterns.md)'s ask-by-generated-id ruling is written
   about the C++ consumer, where the id is a compile-time constant — Python has no such constant, which is
   precisely why the second precedent exists.
+- Decide the ENABLER's load-gating policy, because the code and its own stated contract disagree.
+  `CvEnablerConsumer`'s header declares the consumer LOAD-ACTIVE *with no `spineGameLoadInProgress()`
+  suppression* — and cases below it, plus much of `CvBuildingEnabler` / `CvUnitEnabler`, suppress on exactly
+  that. One of the two is wrong and an agent cannot tell which.
+  ⛔ **It is NOT a delete-the-guards sweep**, and reading it as one is the trap: [enabler.md §7.1](../../specs/enabler.md)
+  sanctions BOTH policies — every event's re-gates applying as they arrive, or gating running once after the
+  stream ends — and says **the MIX is the bug**. The guards implement the second consistently, with the load-end
+  pass as their twin, so removing them SWITCHES policy rather than tidying: every candidate would then re-gate
+  repeatedly during the read, against half-built state.
+  ⚑ So the deliverable is the RULING plus making the two agree — whichever way it goes, the header comment and
+  the guards stop contradicting each other. The gate's own meaning is settled and is not what is open here
+  ([event-spine.md](../../specs/event-spine.md) § `spineGameLoadInProgress()` IS RESULT-PRODUCER SUPPRESSION).
+- Rule on the operating-set seed's ANNOUNCE suppression in `CvEnablerKernel`, which silences the emit while the
+  save streams. Suppressing an EMIT to fix a CONSUMER is banned outright ([event-spine.md](../../specs/event-spine.md)),
+  and the reason given is real rather than lazy: the set is idempotent but the DEPOSITS are not, so an in-read
+  announce double-applies into the modifier packages — and the enabler's own stored-vs-oracle tripwire is blind
+  to it, because the damage lands on the other plane. ⇒ The fix belongs on the CONSUMER side (the modifier
+  declining an in-read activation it will fold at the drain), never on the emit; which shape it takes is the
+  ruling.
 - Make the `savemigration.txt` parser honour its documented `CUT:` / `RENAME:` prefixes. It changes save-load
   behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
 - Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same

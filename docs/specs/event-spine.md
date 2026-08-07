@@ -605,6 +605,36 @@ consumes the in-read events to build the cascade. New game builds the same way: 
 with grants active because those are genuine acquisitions. Ledgered as
 [DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed).
 
+> **⛔ `spineGameLoadInProgress()` IS RESULT-PRODUCER SUPPRESSION, AND AGENTS KEEP MISCONSTRUING IT (owner —
+> repeatedly, across sessions).** It answers ONE question: *would acting on this fact HAND SOMETHING OUT for a
+> load, which is not an acquisition?* That is why the trigger/grant machinery consults it. ⛔ It is **NOT** a
+> licence for a LOAD-ACTIVE consumer to skip work the reseed exists to perform — reaching for it there asserts
+> that the load cannot be trusted to build the state, which is precisely the claim
+> [DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) exists to falsify.
+> ⚑ **THE MECHANISM OF THE MISTAKE IS COPYING, not reasoning** — the guard is read off an adjacent case in the
+> same `switch` and carried into a new one, so it spreads without anyone deciding it. ⇒ **Never inherit one from
+> a neighbouring case. Ask what YOUR handler does**, and answer the test below.
+>
+> **THE TEST — what does acting on this fact PRODUCE?**
+>
+> | the handler | verdict |
+> |---|---|
+> | hands an entity / payload over, or takes an AI DECISION | **guard it** — a load is not an acquisition, and the AI re-decides against state the save already carries |
+> | BUILDS derived state (a context store, an enabler domain, a package) | ⛔ **no guard** — this is the reseed's whole job |
+> | needs an object the stream has not delivered yet | ⛔ **not a guard — a BUFFER with a load-end DRAIN.** The two are not the same shape: a guard DROPS the fact, a buffer KEEPS it. Dropping a fact you needed is a permanent hole ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)) |
+>
+> ⚠ **The over-correction is equally wrong, so three legitimate non-result-producer uses are named here rather
+> than rediscovered:** the ORDERING BUFFER above (the city membership fold, the modifier's `plots` fan); the
+> TWO-LEG FOLD whose play-time fan would otherwise double-count against the load build
+> ([contexts.md](../architecture/contexts.md)); and reading the bracket as the **new-game-vs-load discriminator**,
+> which suppresses nothing at all. ⛔ Do not sweep those out in the name of this rule.
+> ⛔ **And a guard must never suppress an EMIT** — that is the separate, absolute ban (§ THE RECEIVED LINE: emit
+> every distinct fact, decide handling per consumer). A consumer that would double-apply on an in-read fact is a
+> CONSUMER defect; silencing the fact hides it from every other consumer too.
+> ⚑ **When a handler genuinely needs neither, say so where the next reader will look.** A comment stating why a
+> guard is ABSENT is what stops the copy: the enabler's consumer already carries one, and the guards that grew
+> underneath it are what that line was meant to prevent.
+
 ## See also
 - [logging.md](logging.md) — the broad consumer (what to log). [tally.md](tally.md) — the read-only count accessor
   (reads object-owned counts; NOT a spine consumer). [../architecture/patterns.md](../architecture/patterns.md) — the `IEventConsumer` interface pattern.
