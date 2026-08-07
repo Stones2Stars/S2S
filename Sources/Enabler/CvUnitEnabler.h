@@ -49,6 +49,9 @@ public:
 	static void gateAllCities();
 	static void onLoadFinished();
 	enum GateClass { GATE_POP = 0, GATE_POWER = 1, GATE_GOLDEN_AGE = 2, GATE_STATE_RELIGION = 3, GATE_DYNAMIC = 4, NUM_GATE_CLASSES = 5 };
+	// Per-class member counts + the registry size -- the twin of BuildingEnabler::gateClassCensus. Declared
+	// BELOW the enum it is dimensioned by.
+	static void gateClassCensus(int (&aiCountsOut)[NUM_GATE_CLASSES], int& iTotalOut);
 	static void onCityGateClass(const CvCity& kCity, int eClass);
 	static void onPlayerGateClass(PlayerTypes ePlayer, int eClass);
 	// SEVT_UNIT_COUNT (par.7.1 step 3): the changed unit's cap/relations re-gate (skip-guarded for the

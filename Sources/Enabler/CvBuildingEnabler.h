@@ -80,6 +80,8 @@ public:
 	// The index's own census (distinct atom keys, total candidate entries) -- reported at load, because an index
 	// that compiled EMPTY re-gates nobody and looks exactly like one with nothing to do.
 	static void plotAtomCensus(int& iKeysOut, int& iEntriesOut);
+	// Per-class member counts + the registry size -- the instrument that makes a class WIDENING observable.
+	static void gateClassCensus(int (&aiCountsOut)[NUM_GATE_CLASSES], int& iTotalOut);
 	static void onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding);   // the empire per-type COUNT moved: re-check its `allowed` self-cap across the cap's own scope
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
 	static void onCityCorporationChanged(const CvCity& kCity, int iCorporation, bool bHas);

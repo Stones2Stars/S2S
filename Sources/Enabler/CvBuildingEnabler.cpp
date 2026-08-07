@@ -662,6 +662,22 @@ void BuildingEnabler::plotAtomCensus(int& iKeysOut, int& iEntriesOut)
 	}
 }
 
+// The GATE-CLASS census: how many candidates each coarse class holds, and the registry it is drawn from.
+// ⚑ It exists because the class SIZE decides whether routing a fact through one is affordable at all -- a class
+// holding most of the registry makes every fact that names it a whole-registry re-gate, which is the shape
+// par.7.1's "small load-compiled set" rules out. Without this the size is invisible, so a class quietly widening
+// (an axis that gained a precise route but kept marking the catch-all) is unobservable -- the plot-atom census
+// beside it exists for the same reason, one plane over.
+void BuildingEnabler::gateClassCensus(int (&aiCountsOut)[NUM_GATE_CLASSES], int& iTotalOut)
+{
+	bd_buildGateClasses();
+	for (int iClass = 0; iClass < NUM_GATE_CLASSES; ++iClass)
+	{
+		aiCountsOut[iClass] = (int)s_gateClass[iClass].size();
+	}
+	iTotalOut = GC.getNumBuildingInfos();
+}
+
 void BuildingEnabler::onPlotAtomChanged(const CvCity& kCity, int eKind, int iId)
 {
 	if (iId < 0) return;

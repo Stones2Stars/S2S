@@ -27,7 +27,11 @@ enum EnEvt
 	// What the PLOT-ATOM index actually compiled. It exists because the failure mode of this index is SILENT: an
 	// empty one re-gates nobody, which is indistinguishable from "no candidate needed re-gating" at every other
 	// observation point -- a reverse walk that found nothing already shipped once looking verified.
-	ENE_PLOTATOM_CENSUS = 2
+	ENE_PLOTATOM_CENSUS = 2,
+	// How many candidates each COARSE gate class holds. A class holding most of the registry makes every fact
+	// routed through it a whole-registry re-gate -- the shape par.7.1's "small load-compiled set" rules out -- and
+	// without this line that widening is invisible.
+	ENE_GATECLASS_CENSUS = 3
 };
 
 enum EnFld
@@ -38,7 +42,9 @@ enum EnFld
 	ENF_LISTED,      // members the gate PASSED -- offerable now
 	ENF_TOTAL,       // the registry size, so an empty domain is legible without a second lookup
 	ENF_ATOMKEYS,    // distinct (kind, id) plot atoms any candidate names -- 0 means the index built EMPTY
-	ENF_ATOMENTRIES  // total candidate entries across those keys (the re-gate work one atom can cost)
+	ENF_ATOMENTRIES, // total candidate entries across those keys (the re-gate work one atom can cost)
+	ENF_CLASS,       // the gate class, by name
+	ENF_MEMBERS      // candidates in it -- read against `of` (the registry size) to see how coarse it is
 };
 
 static const char* en_prefix(int evt)
@@ -47,6 +53,7 @@ static const char* en_prefix(int evt)
 	{
 	case ENE_DOMAIN_CENSUS: return "[ENABLER/census]";
 	case ENE_PLOTATOM_CENSUS: return "[ENABLER/plotatoms]";
+	case ENE_GATECLASS_CENSUS: return "[ENABLER/gateclass]";
 	default:                return "[ENABLER]";
 	}
 }
@@ -62,6 +69,8 @@ static const char* en_field(int tag, SpineFieldType* peType)
 	case ENF_TOTAL:  return "of";
 	case ENF_ATOMKEYS:    return "atomKeys";
 	case ENF_ATOMENTRIES: return "atomEntries";
+	case ENF_CLASS:   *peType = SFT_STR; return "class";
+	case ENF_MEMBERS: return "members";
 	default:         return NULL;
 	}
 }
@@ -97,9 +106,40 @@ static void en_emitPlotAtomCensus()
 	eventSpine().emit(eUnits);
 }
 
+//	THE GATE-CLASS CENSUS -- load-compiled static data like the plot atoms, so once, not per player.
+//	⚑ Read `members` against `of`: a class approaching the registry size is NOT a bounded re-gate set, and every
+//	fact routed through it re-gates nearly everything. That is the number the coarse-class routing lives or dies
+//	on, and it is what makes an axis quietly keeping the catch-all (one that gained a precise route but still
+//	marks `dynamic`) visible instead of merely suspected.
+static void en_emitGateClassCensus()
+{
+	static const char* const szClassNames[] = { "pop", "power", "goldenAge", "stateReligion", "dynamic" };
+	int aiBuildings[BuildingEnabler::NUM_GATE_CLASSES];
+	int aiUnits[UnitEnabler::NUM_GATE_CLASSES];
+	int iBuildingTotal = 0;
+	int iUnitTotal = 0;
+	BuildingEnabler::gateClassCensus(aiBuildings, iBuildingTotal);
+	UnitEnabler::gateClassCensus(aiUnits, iUnitTotal);
+	for (int iClass = 0; iClass < BuildingEnabler::NUM_GATE_CLASSES; ++iClass)
+	{
+		CvSpineEvent e(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_GATECLASS_CENSUS, 0);
+		e.addStr(ENF_DOMAIN, "buildings").addStr(ENF_CLASS, szClassNames[iClass])
+		 .addI(ENF_MEMBERS, aiBuildings[iClass]).addI(ENF_TOTAL, iBuildingTotal);
+		eventSpine().emit(e);
+	}
+	for (int iClass = 0; iClass < UnitEnabler::NUM_GATE_CLASSES; ++iClass)
+	{
+		CvSpineEvent e(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_GATECLASS_CENSUS, 0);
+		e.addStr(ENF_DOMAIN, "units").addStr(ENF_CLASS, szClassNames[iClass])
+		 .addI(ENF_MEMBERS, aiUnits[iClass]).addI(ENF_TOTAL, iUnitTotal);
+		eventSpine().emit(e);
+	}
+}
+
 static void en_emitDomainCensus()
 {
 	en_emitPlotAtomCensus();
+	en_emitGateClassCensus();
 	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);

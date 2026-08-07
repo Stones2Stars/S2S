@@ -728,7 +728,15 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		const std::string& t = c->type;
 		if (t == "POPULATION") d.pop = true;
 		else if (t.compare(0, 5, "TECH_") == 0)  { if (c->id >= 0) d.techs.insert(c->id); }
-		else if (t.compare(0, 6, "BONUS_") == 0) { if (c->id >= 0) d.bonuses.insert(c->id); if (bMarkDynamic) d.dynamic = true; }  // trade/map/vicinity shifts aren't a discrete event
+		// A BONUS records its id and marks NOTHING -- the same disposition its PREDICATE spelling
+		// (CASC_PRED_HAS_BONUS) already took, and for the same reason. It used to also mark dynamic on the note
+		// that "trade/map/vicinity shifts aren't a discrete event"; all three are discrete facts now and all three
+		// are consumed -- the NETWORK crossing (SEVT_CITY_BONUS_*), the BUILDING supply
+		// (SEVT_CITY_VICINITY_BONUS_*) and the MAP half (the PLOT_BONUS / PLOT_SERVED_BONUS routes) -- so the
+		// second route was pure width.
+		// ⛔ The two spellings of ONE axis must not disagree: leaving the presence form marking the catch-all while
+		// the predicate form does not is how an axis stays in a class it has been routed out of.
+		else if (t.compare(0, 6, "BONUS_") == 0) { if (c->id >= 0) d.bonuses.insert(c->id); }
 		else if (t.compare(0, 6, "CIVIC_") == 0) d.civicAny = true;
 		else if (t.compare(0, 9, "RELIGION_") == 0) { d.religion = true; if (c->id >= 0) d.religions.insert(c->id); }
 		else if (t.compare(0, 12, "CORPORATION_") == 0) d.corp = true;

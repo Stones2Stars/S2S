@@ -485,6 +485,17 @@ void UnitEnabler::plotAtomCensus(int& iKeysOut, int& iEntriesOut)
 	}
 }
 
+// The unit twin of BuildingEnabler::gateClassCensus -- same instrument, the other registry.
+void UnitEnabler::gateClassCensus(int (&aiCountsOut)[NUM_GATE_CLASSES], int& iTotalOut)
+{
+	ud_buildClasses();
+	for (int iClass = 0; iClass < NUM_GATE_CLASSES; ++iClass)
+	{
+		aiCountsOut[iClass] = (int)s_udClass[iClass].size();
+	}
+	iTotalOut = GC.getNumUnitInfos();
+}
+
 // The unit twin of BuildingEnabler::onPlotAtomChanged: a plot atom moved on a tile this city can work, so
 // exactly the units whose `requires` names it re-gate (par.7.1 step 2). Units carry `build` only, but that
 // build gate reads the same plot atoms a building's does.
