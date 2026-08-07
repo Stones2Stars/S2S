@@ -86,6 +86,11 @@ static bool evp_workedFeature(const PlotContext& plotContext, const CvCondition*
 { return plotContext.isWorked() && plotContext.hasFeature(a->id); }
 static bool evp_workedImprovement(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
 { return plotContext.isWorked() && plotContext.hasImprovement(a->id); }
+// ⚠ NO_TEAM -- the tile's bonus UNFILTERED BY REVEAL. A plot resolves in ISOLATION ([modifier.md] par.2: its
+// substrate carries ONE value), so what a tile yields is not a per-observer question; the vicinity store beside
+// this reads the same way and for the same reason.
+static bool evp_workedBonus(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
+{ return plotContext.isWorked() && plotContext.hasBonus(a->id, (int)NO_TEAM); }
 
 // ---- BonusPresent / VicinityHas (StoneBase) ---------------------------------------------------------------------
 
@@ -436,6 +441,17 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_HAS_FEATURE:     return pr->id < 0 ? ev_cityPlotHas(cityContext, evp_workedFeatureAny, pr)
 	                                                   : ev_cityPlotHas(cityContext, evp_workedFeature, pr);
 	case CASC_PRED_HAS_IMPROVEMENT: return ev_cityPlotHas(cityContext, evp_workedImprovement, pr);
+	// ⚖ TARGET-RELATIVE, like HAS_COAST and HAS_FRESHWATER above -- a predicate is evaluated against the DEPOSIT'S
+	// TARGET (json par.3.5), and this one is authored overwhelmingly on PLOT-scope improvement yields ("+N food, but
+	// only on a tile carrying salt"), which is the deliveryguy shape: the improvement owns its own output and the
+	// bonus is the condition ([modifier.md] par.4). So a bound PLOT answers about ITSELF; with only a CITY in
+	// context it takes the worked-radius reading its HAS_TERRAIN / HAS_IMPROVEMENT siblings take.
+	// ⛔ It used to fall to `default: return true`, so every one of those deposits applied on EVERY tile the
+	// improvement stood on -- a silent, plausible over-yield rather than a visible failure, which is why it
+	// survived: the predicate was parsed and even indexed for re-gating, and only the EVALUATION was missing.
+	case CASC_PRED_HAS_BONUS:       return plotContext != NULL
+	                                     ? (pr->id >= 0 && plotContext->hasBonus(pr->id, (int)NO_TEAM))
+	                                     : ev_cityPlotHas(cityContext, evp_workedBonus, pr);
 	case CASC_PRED_IS_CAPITAL:            return cityContext != NULL && cityContext->isCapital();
 	// Both predicates below read the CITY's own verdict through the context's forwards, and neither is a
 	// self-containment violation to re-flag.
