@@ -752,6 +752,9 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		else if (t.compare(0, 12, "IMPROVEMENT_") == 0) { if (c->id >= 0) d.improvements.insert(c->id); }
 		else if (t.compare(0, 6, "ROUTE_") == 0)        { if (c->id >= 0) d.routes.insert(c->id); }
 		else if (t.compare(0, 12, "MAPCATEGORY_") == 0) { if (c->id >= 0) d.mapCategories.insert(c->id); }
+		// A VICTORY condition is fixed at game SETUP, so it is the other half of par.3.2's static case and marks
+		// nothing -- the creation gate is the whole of its life.
+		else if (t.compare(0, 8, "VICTORY_") == 0) { }
 		else if (bMarkDynamic) d.dynamic = true;
 		return;
 	}
@@ -802,7 +805,15 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		case CASC_PRED_HAS_FRESHWATER:
 		case CASC_PRED_IS_OWNED:
 		case CASC_PRED_IS_WORKED:               d.plotPredicates.insert(c->predKind); break;
-		default:                                if (bMarkDynamic) d.dynamic = true; break;   // IS_CAPITAL / latitude / existedFor / counts / connection -- read LIVE at eval
+		// ⚖ STATIC FOR THE CITY'S LIFE, so it marks NOTHING and is gated once at creation
+		// ([enabler.md] par.3.2: an axis either has a fact and is routed on it, OR is static -- there is no third
+		// case). A plot's LATITUDE cannot change and a city cannot move, so a latitude-gated candidate has no
+		// crossing to wait for; marking it dynamic bought a re-gate on every rare player fact and could never
+		// change its verdict.
+		// ⛔ NOT its neighbour `existedFor`, which is genuinely live -- the game YEAR advances, so a candidate
+		// gated on age really does cross a threshold with no fact naming it, and it is the residue's honest member.
+		case CASC_PRED_LATITUDE:                break;
+		default:                                if (bMarkDynamic) d.dynamic = true; break;   // IS_CAPITAL / existedFor / counts / connection -- read LIVE at eval
 		}
 		return;
 	}

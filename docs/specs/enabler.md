@@ -907,7 +907,28 @@ any atom it does not NAME, so every axis that later gained a precise route must 
 keeps marking the catch-all, and the "small load-compiled set" becomes the whole registry (the plot substrate
 alone put every building in it, and every fact routed through the class then re-gated everything). ⛔ So when
 you wire a new route, remove its axis from the catch-all in the same change; the residue is the genuinely live
-state — latitude, `existedFor`, `IS_CAPITAL`, the count tokens, connection.
+state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
+
+> **⛔ AN AXIS HAS TWO SPELLINGS AND THEY MUST NOT DISAGREE — this is the failure mode, not a tidiness point.**
+> `scanCondDeps` meets most axes twice: as a PRESENCE atom (`BONUS_IRON`) and as a PREDICATE
+> (`{HAS_BONUS: BONUS_IRON}`). Narrowing one and leaving the other keeps the whole axis in the catch-all while
+> the code reads as though it were routed — and the note justifying the surviving half is typically the one
+> already retired beside it. ⚑ **Measured: the bonus axis had exactly that split, and closing it took the class
+> from 2,674 of 5,180 buildings to 423.** ⇒ When you route an axis, grep BOTH branches.
+>
+> **⚖ THE THIRD DISPOSITION IS *STATIC*, and forgetting it is what puts a never-moving axis in a live class.**
+> §3.2's rule is that an axis either has a fact and is routed on it, or is STATIC for the city's life and gated
+> once at creation. A static axis therefore marks **nothing at all** — a plot's LATITUDE cannot change and a city
+> cannot move, and a VICTORY condition is fixed at setup, so neither has a crossing to wait for and marking them
+> dynamic bought a re-gate that could never change a verdict.
+> ⚠ **`existedFor` is the neighbour that is NOT static and must stay in the residue:** the game YEAR advances, so
+> an age-gated candidate genuinely crosses a threshold with no fact naming it.
+>
+> ⚑ **THE CLASS SIZE IS INSTRUMENTED, so a widening is observable rather than suspected** —
+> `[ENABLER/gateclass] domain=… class=… members=… of=…` at load, beside `[ENABLER/plotatoms]`. Read `members`
+> against `of`: a class approaching the registry size is not a bounded re-gate set, and every fact routed through
+> it re-gates nearly everything. ⛔ Do not narrow this class by reasoning alone — the number is one line in
+> `Cascade.log`, and the last two attempts to estimate it from the authored JSON were both wrong.
 
 ### Load-end reconciliation
 

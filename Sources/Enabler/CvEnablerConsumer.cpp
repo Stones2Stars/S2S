@@ -497,9 +497,12 @@ private:
 		// These atoms carry no reverse FK -- IS_CAPITAL, IS_HOLY_CITY, IS_GOVERNMENT_CENTER, a HERITAGE_ presence,
 		// an ERA threshold -- so the load-compiled DYNAMIC class list is the re-gate set, exactly as the game-option
 		// and nukes-ban flips already use it.
-		// ⚑ WHY THESE FACTS AND NOT THE PLOT SUBSTRATE: the dynamic class is ~every building (MAPCATEGORY_ alone is
-		// on ~5.2k of them and falls through to it), so a whole-set re-gate is only affordable on a RARE happening.
-		// Each fact below is rare -- a capital moves, an era advances, a religion founds, a city is conquered. ⛔ The
+		// ⚑ WHY THESE FACTS AND NOT THE PLOT SUBSTRATE: a whole-CLASS re-gate is only affordable on a RARE
+		// happening, and each fact below is rare -- a capital moves, an era advances, a religion founds, a city is
+		// conquered. ⚠ It is affordable only while the CLASS stays bounded, which is a property of what
+		// `scanCondDeps` marks rather than of this switch: read `[ENABLER/gateclass]` at load before adding a fact
+		// here, because an axis that quietly kept the catch-all turns every one of these into a whole-registry
+		// pass. ⛔ The
 		// plot substrate is NOT rare and must NOT be routed here: it wants the narrower `EDGEF_REQUIRED_BY` re-gate
 		// over the specific terrain / feature / improvement id ([enabler.md §7.1](../../docs/specs/enabler.md) step 2),
 		// or a worked-plot flip would re-gate every building in the city.
