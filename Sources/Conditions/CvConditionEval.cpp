@@ -178,7 +178,29 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 	if (en_starts(t, "GAMEOPTION_")) return id >= 0 && GC.getGame().isOption((GameOptionTypes)id);
 	if (en_starts(t, "BONUS_"))    return ev_hypothetical(ctx, EDGEB_BONUSES, id,
 		ev_bonusPresent(ctx, id, a->connection, a->vicinity));
-	if (en_starts(t, "MAPCATEGORY_")) return true;   // map-category gate: not modelled (json §3.5 in-flight) -> ignored
+	// ⚖ THE MAP-CATEGORY GATE -- WHERE ON (or off) THE WORLD this may be built. It is a CITY-LOCAL plot check
+	// ([enabler.md] par.7.1: the one city-local project fact stays a live check at the gate), so it asks the CITY'S OWN
+	// plot, never the radius: a building is built IN the city, and a category is a property of the ground it
+	// stands on rather than of a tile it can work.
+	// ⛔ It answered TRUE unconditionally while unmodelled, which is the enable-side OVER-OFFER: the off-world
+	// content gates on this and nothing else keeps it out of an Earth city's build list, so a Martian or lunar
+	// building became offerable the moment its tech landed.
+	// ⚑ The verdict is CvPlot::isMapCategoryType and nothing is re-expressed here
+	// ([DEC-single-implementation]) -- including its own permissive leg, where a plot whose terrain names NO
+	// category is allowed everything. ⚠ A plot's categories are DERIVED from its terrain and have no fact of
+	// their own, which is exactly why the terrain fact seeds the map-category atom in the plot-atom index
+	// ([enabler.md] par.8) -- the re-gate route was already wired and waiting for this body.
+	if (en_starts(t, "MAPCATEGORY_"))
+	{
+		// Unresolved id, or no city to stand in: the atom cannot be ANSWERED, and an unanswerable one is IGNORED
+		// rather than refused (json par.3.5). ⚠ Deliberately not the fail-closed shape its plot-substrate siblings
+		// take: they ask about a RADIUS tile, which a city-less caller genuinely lacks, while this asks about the
+		// asker's own ground -- so refusing here would HIDE every Earth-gated building (the overwhelming majority
+		// of the registry) from any evaluation without a city, which is a far quieter failure than the over-offer.
+		if (id < 0 || cityContext == NULL) return true;
+		const CvPlot* pCityPlot = cityContext->cityPlot();
+		return pCityPlot == NULL || pCityPlot->isMapCategoryType((MapCategoryTypes)id);
+	}
 	// plot-substrate vicinity scans (owned, culture-grown radius)
 	if (en_starts(t, "FEATURE_"))     return ev_cityPlotHas(cityContext, evp_feature, a);
 	if (t == "TERRAIN_PEAK")          return ev_cityPlotHas(cityContext, evp_peak, a);

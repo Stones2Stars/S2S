@@ -174,6 +174,40 @@ static void en_emitDomainCensus()
 			 .addI(ENF_INTREE, iInTree).addI(ENF_LISTED, iListed).addI(ENF_TOTAL, iTotal);
 			eventSpine().emit(e);
 		}
+
+		//	⚑ THE CITY DOMAINS, SUMMED OVER THE PLAYER'S CITIES -- the frontier that is actually OFFERED, and the
+		//	one an OVER-OFFER shows up in. Without it the census could say every player domain built correctly
+		//	while every city offered things it must not, which is the half that faces the player.
+		//	⛔ Summed rather than per-city on purpose: this is a load-time reading of whether the GATE STAGES ran,
+		//	not a per-city inventory, and one line per city over a large empire would bury it.
+		int iCityBuildingsInTree = 0, iCityBuildingsListed = 0;
+		int iCityUnitsInTree = 0, iCityUnitsListed = 0;
+		int iLoop = 0;
+		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+		{
+			for (int iId = 0; iId < GC.getNumBuildingInfos(); ++iId)
+			{
+				const EnablerDomain::State e = pCity->getBuildingAvailability((BuildingTypes)iId);
+				if (e >= EnablerDomain::STATE_GREYED) ++iCityBuildingsInTree;
+				if (e == EnablerDomain::STATE_LISTED) ++iCityBuildingsListed;
+			}
+			for (int iId = 0; iId < GC.getNumUnitInfos(); ++iId)
+			{
+				const EnablerDomain::State e = pCity->getUnitAvailability((UnitTypes)iId);
+				if (e >= EnablerDomain::STATE_GREYED) ++iCityUnitsInTree;
+				if (e == EnablerDomain::STATE_LISTED) ++iCityUnitsListed;
+			}
+		}
+		CvSpineEvent eB(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_DOMAIN_CENSUS, 0);
+		eB.addI(ENF_OWNER, iPlayer).addStr(ENF_DOMAIN, "buildings")
+		  .addI(ENF_INTREE, iCityBuildingsInTree).addI(ENF_LISTED, iCityBuildingsListed)
+		  .addI(ENF_TOTAL, GC.getNumBuildingInfos());
+		eventSpine().emit(eB);
+		CvSpineEvent eU(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_DOMAIN_CENSUS, 0);
+		eU.addI(ENF_OWNER, iPlayer).addStr(ENF_DOMAIN, "units")
+		  .addI(ENF_INTREE, iCityUnitsInTree).addI(ENF_LISTED, iCityUnitsListed)
+		  .addI(ENF_TOTAL, GC.getNumUnitInfos());
+		eventSpine().emit(eU);
 	}
 }
 
