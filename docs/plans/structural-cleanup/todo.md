@@ -214,12 +214,17 @@
 ## Not built yet
 
 - Model the `MAPCATEGORY_` gate. `cascadeEvalCondition` returns TRUE for every `MAPCATEGORY_` atom — the clause
-  is not evaluated at all — while it is the most-authored plot atom in the data by a wide margin, so an
-  off-world building is gated on nothing today. ⚑ The re-gate ROUTE is already wired (a terrain fact seeds the
-  atom, [enabler.md §8](../../specs/enabler.md)), so this closes by giving the predicate a body, not by
-  touching the enabler. ⚠ `MAPCATEGORY_` is XML-only ([naming.md](../../specs/naming.md)) and a plot's set is
-  derived from its terrain, so the evaluator's input is the terrain's own list — there is no plot-side store to
-  build.
+  is not evaluated at all — while it is the most-authored plot atom in the data by a wide margin.
+  ⚠ **Its impact is ZERO until the off-world content is reachable (owner)**, so this is LATENT, not a live wrong
+  verdict: nothing that gates on a map category has been researched yet.
+  ⛔ **That is what makes it worth writing down rather than leaving to be noticed** — it is unexercised AND
+  uninstrumented, so no playtest of the standing save can ever surface it, and the clause will start silently
+  admitting everything the moment the space line becomes buildable ([roadmap.md](roadmap.md) § the worst
+  offenders are the ones off the core loop).
+  ⚑ The re-gate ROUTE is already wired (a terrain fact seeds the atom, [enabler.md §8](../../specs/enabler.md)),
+  so this closes by giving the predicate a body, not by touching the enabler. ⚠ `MAPCATEGORY_` is XML-only
+  ([naming.md](../../specs/naming.md)) and a plot's set is derived from its terrain, so the evaluator's input is
+  the terrain's own list — there is no plot-side store to build.
 
 - Convert the PLOT-YIELD AI CALLERS, the residue of that plane's cut.
   ⚠ **`calculateNatureYield` still has its AI callers, and they are NOT a segment re-point.** The genuine
