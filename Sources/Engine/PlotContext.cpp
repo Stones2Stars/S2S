@@ -21,6 +21,7 @@
 #include "CvCity.h"                 // the fresh-water counter's city -> its plot
 #include "AI/CvPlayerAI.h"          // GET_PLAYER -- a city fact names its owner, never a map index
 #include "CvGameCoreUtils.h"        // plotDirection -- the one-hop neighbour fan-out
+#include "CvImprovementInfo.h"      // isImprovementBonusTrade -- the SERVED-RESOURCE verdict's second leg
 #include "Defines/CvGlobals.h"      // GC
 #include "Spine/CvEventSpine.h"     // IEventConsumer / SEVT_* / the crossing emit
 
@@ -78,6 +79,35 @@ namespace
 		return pPlot->isFreshWater() || pPlot->isRiver();
 	}
 
+	// ⚖ THE SERVED-RESOURCE VERDICT -- which resource this tile makes available ON SITE, or -1.
+	// Two legs and both are necessary: the tile CARRIES a bonus, and the improvement standing on it TRADES that
+	// bonus. Either can move without the other, which is exactly why this is a verdict of its own rather than
+	// something a consumer could read off the bonus fact.
+	// ⚠ NO worked test and NO ownership test, deliberately. A fort cannot be worked by definition and a fort is
+	// precisely how a resource gets served (owner); and ownership is a per-ASKER question -- "is this tile MY
+	// owner's" has a different answer for each city that can work it, so no single per-plot verdict can hold it.
+	// The CITY applies that half where it knows its own owner.
+	// ⛔ The bonus is read UNFILTERED BY REVEAL (NO_TEAM), matching the vicinity store this feeds: these are
+	// per-CITY live state, not a per-team view.
+	int pc_deriveServedBonus(const CvPlot* pPlot)
+	{
+		const int iBonus = (int)pPlot->getBonusType(NO_TEAM);
+		if (iBonus < 0)
+		{
+			return -1;
+		}
+		const ImprovementTypes eImprovement = pPlot->getImprovementType();
+		if (eImprovement == NO_IMPROVEMENT)
+		{
+			return -1;
+		}
+		return GC.getImprovementInfo(eImprovement).isImprovementBonusTrade(iBonus) ? iBonus : -1;
+	}
+
+	// The axes the served-resource verdict reads -- stated once, beside the derivation, exactly as a bit row states
+	// its own ([contexts.md]: the dependency lives next to the derivation, never in a switch somewhere else).
+	const int PLOT_SERVED_BONUS_AXES = PLOTAXIS_BONUS | PLOTAXIS_IMPROVEMENT;
+
 	typedef bool (*PlotBitDerive)(const CvPlot*);
 
 	struct PlotBitRule
@@ -134,6 +164,10 @@ namespace
 		case SEVT_PLOT_OWNER_REMOVED:        return PLOTAXIS_OWNER;
 		case SEVT_PLOT_WORKED_ADDED:
 		case SEVT_PLOT_WORKED_REMOVED:       return PLOTAXIS_WORKED;
+		case SEVT_PLOT_IMPROVEMENT_ADDED:
+		case SEVT_PLOT_IMPROVEMENT_REMOVED:  return PLOTAXIS_IMPROVEMENT;
+		case SEVT_PLOT_BONUS_ADDED:
+		case SEVT_PLOT_BONUS_REMOVED:        return PLOTAXIS_BONUS;
 		case SEVT_PLOT_CITY_ADDED:
 		case SEVT_PLOT_CITY_REMOVED:         return PLOTAXIS_CITY;
 		default:                             return 0;
@@ -238,6 +272,13 @@ void PlotContext::applyAxes(int iAxisMask) const
 			setPredicate(s_plotBitRules[iRule].iPredicateId, s_plotBitRules[iRule].pfnDerive(m_plot));
 		}
 	}
+	// The served-resource verdict rides the same routing rule as every bit row -- re-derived exactly when an axis it
+	// READS moves -- and differs only in holding an id rather than a bit, so it needs its own write point rather
+	// than a row in the table.
+	if ((PLOT_SERVED_BONUS_AXES & iAxisMask) != 0)
+	{
+		setServedBonus(pc_deriveServedBonus(m_plot));
+	}
 }
 
 // A NEIGHBOUR moved: only the rows that read neighbours can have changed.
@@ -284,6 +325,32 @@ void PlotContext::setPredicate(int predicateId, bool bHeld) const
 	else
 	{
 		emitPlotPredicateRemoved(iPlotIndex, iOwner, predicateId);
+	}
+}
+
+// THE SERVED-RESOURCE WRITE POINT, and the same contract as setPredicate: commit, then announce the CROSSING alone.
+// ⚑ A tile MOVING from one served resource to another announces BOTH halves -- the old at REMOVED, the new at ADDED
+// -- so a counting consumer withdraws exactly what it deposited and never has to reconstruct the old value
+// ([state-repositories.md] § THE INVARIANT). A derivation landing on the id already held costs nothing and says
+// nothing.
+void PlotContext::setServedBonus(int iBonus) const
+{
+	if (m_plot == NULL || m_servedBonus == iBonus)
+	{
+		return;
+	}
+	const int iWasServing = m_servedBonus;
+	m_servedBonus = iBonus;
+
+	const int iPlotIndex = GC.getMap().plotNum(m_plot->getX(), m_plot->getY());
+	const int iOwner = (int)m_plot->getOwner();
+	if (iWasServing >= 0)
+	{
+		emitPlotServedBonusRemoved(iPlotIndex, iOwner, iWasServing);
+	}
+	if (iBonus >= 0)
+	{
+		emitPlotServedBonusAdded(iPlotIndex, iOwner, iBonus);
 	}
 }
 

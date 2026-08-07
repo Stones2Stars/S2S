@@ -282,8 +282,10 @@ NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both).
 `WORKABLE` = in radius **and owned/eligible-to-work**; `IS_WORKED` = a citizen works it. The engine's gates pick the
 level — the workable-plot predicates (`evp_terrain`/`evp_improvement`/`evp_route`/`evp_peak`/`evp_hill`,
 `Conditions/CvConditionEval.cpp`) require an **owned** plot (= `WORKABLE`), while `evp_feature` also accepts a
-neutral plot unless `EXP_STRICT_VICINITY` is on — and `hasVicinityBonus` requires the
-bonus **owned + valid + connected** (the obtained semantic) or supplied by an active building.
+neutral plot unless `EXP_STRICT_VICINITY` is on. **A `vicinity:"onSite"` atom asks the strongest of these: the
+resource is AVAILABLE here — an OWNED radius tile whose IMPROVEMENT trades it, or an active building supplying it
+([json.md §5a](json.md)).** ⛔ It does NOT ask the network: onSite and `connection:"trade"` are ORTHOGONAL, so a
+resource can be either without the other ([json.md §3.4](json.md)).
 
 ### 3.1 The cache-friendly two-stage evaluation
 

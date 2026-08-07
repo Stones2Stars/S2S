@@ -36,6 +36,11 @@
 //	                    HAS_FEATURE / HAS_LANDMARK / IS_OWNED / IS_WORKED -- derived from THIS plot alone.
 //	 - ADJACENCY facts: HAS_COAST and HAS_FRESHWATER -- derived from this plot AND its neighbours.
 //
+//	BESIDE THE BITSET, ONE STORED ID: the SERVED-RESOURCE verdict -- which bonus this tile makes available ON SITE
+//	(it carries the bonus AND its improvement trades it). It is an id rather than a bit because a plot holds at most
+//	one bonus, so the answer names a resource; everything else about it is the bitset's contract exactly (derived
+//	when an axis it reads moves, one write point, the crossing announced and nothing else).
+//
 //	⚖ HAS_COAST IS SYMMETRIC: LAND WITH ADJACENT WATER, **OR WATER WITH ADJACENT LAND** (owner). Off the stored
 //	bits that collapses to one statement -- A NEIGHBOUR WHOSE `IS_WATER` DIFFERS FROM MINE, i.e. the plot sits on
 //	the land/water boundary -- so the verdict reads entirely off blocks this store already holds and needs no walk
@@ -79,18 +84,22 @@ enum PlotContextAxis
 	PLOTAXIS_LANDMARK   = 1 << 5,
 	PLOTAXIS_OWNER      = 1 << 6,
 	PLOTAXIS_WORKED     = 1 << 7,
-	PLOTAXIS_CITY       = 1 << 8    // a city sat down on / left the plot (isFreshWater reads the plot city's access)
+	PLOTAXIS_CITY       = 1 << 8,   // a city sat down on / left the plot (isFreshWater reads the plot city's access)
+	PLOTAXIS_IMPROVEMENT = 1 << 9,  // the SERVED-RESOURCE verdict's second leg -- an improvement that TRADES the bonus
+	PLOTAXIS_BONUS      = 1 << 10   // ...and its first: which resource the tile carries at all
 };
 
 class PlotContext
 {
 public:
-	PlotContext() : m_plot(NULL), m_attributeBits(0) {}
+	PlotContext() : m_plot(NULL), m_attributeBits(0), m_servedBonus(-1) {}
 	void bind(const CvPlot* plot) { m_plot = plot; }   // set once by the owning CvPlot; the pointer IS the owner (never dangles)
 	// ZEROED at owner reset. The verdict bits are a DELTA store -- each is SET by the fact that names it, never
 	// re-derived wholesale -- so they are correct only from a known zero ([DEC-keyed-accumulator]). A plot object is
 	// reused across a regen/load, and a bit no later fact happens to touch would otherwise survive from the last world.
-	void clear() { m_attributeBits = 0; }
+	// ⚠ The served bonus resets to -1, NOT 0: 0 is a REAL bonus id, so zeroing it would hand a recycled plot the
+	// first resource in the registry.
+	void clear() { m_attributeBits = 0; m_servedBonus = -1; }
 
 	// --- STORED: the CASC_PRED_* verdict bitset (both blocks) ---------------------------------------------------
 	// The raw mask, for a reader that folds every set bit at once (CityContext::onPlotChanged is the one such
@@ -98,6 +107,17 @@ public:
 	// same vocabulary cannot drift).
 	unsigned int attributeBits() const { return m_attributeBits; }
 	bool hasAttribute(int predicateId) const { return (m_attributeBits & bitFor(predicateId)) != 0; }
+
+	// --- STORED: the SERVED-RESOURCE verdict ----------------------------------------------------------------------
+	// ⚖ WHICH resource this tile makes available ON SITE, or -1. A tile serves its bonus once an improvement that
+	// TRADES that bonus stands on it -- which is the whole of the json par.3.4 `onSite` MAP half, and is deliberately
+	// NOT the same question as any ownership tier: `owned` is raw presence on an owned tile, improved or not.
+	// ⛔ It is an ID and not a bit, so it does not ride the CASC_PRED_* table: a plot carries at most one bonus, so
+	// the answer is a single id and its crossing is the ordinary ADDED / REMOVED pair.
+	// ⚠ NOT gated on the tile being WORKED -- a fort cannot be worked by definition and a fort is exactly how a
+	// resource gets served (owner). The city-side OWNERSHIP half is the CITY's: it asks whether the tile is its
+	// owner's, which no per-plot verdict can answer for every asker.
+	int servedBonus() const { return m_servedBonus; }
 
 	// --- THE MAINTENANCE: reached ONLY through this store's own spine consumer -----------------------------------
 	// ⚖ THE DECLARED INTEREST SET -- the facts that maintain this store, stated at the store. A fact absent from
@@ -182,9 +202,14 @@ private:
 	// and, only on a genuine 0 <-> 1 crossing, emits SEVT_PLOT_PREDICATE_ADDED / _REMOVED -- the fact that carries
 	// the bit UP to the city ([contexts.md]: the plot sends it up, the city never reaches down).
 	void setPredicate(int predicateId, bool bHeld) const;
+	// The served-resource twin of setPredicate, and the same contract: commits the id and announces the CROSSING
+	// only. A tile MOVING from one served resource to another announces both halves (the old at REMOVED, the new at
+	// ADDED), so a counting consumer's withdrawal is exact rather than something it has to reconstruct.
+	void setServedBonus(int iBonus) const;
 
 	const CvPlot* m_plot;              // the bound game object; the derivation reads it -- never a value copy
 	mutable unsigned int m_attributeBits;   // the stored verdicts; derived state, so NEVER serialized
+	mutable int m_servedBonus;              // the resource this tile serves on site, or -1; derived, never serialized
 };
 
 void plotContextRegisterConsumer();   // register on the event spine (from spineRegisterConsumers; idempotent)

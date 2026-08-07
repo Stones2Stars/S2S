@@ -629,6 +629,20 @@ enum SpineDomainEvent
 	SEVT_AREA_CLEAN_POWER_ADDED     = 144,
 	SEVT_AREA_CLEAN_POWER_REMOVED   = 145,
 
+	// ⚖ THE PLOT SERVES A RESOURCE ON SITE -- the plot's own derived verdict that this tile makes bonus B AVAILABLE
+	// to a city that can work it: the tile CARRIES B *and* its improvement TRADES it
+	// (CvImprovementInfo::isImprovementBonusTrade). ⛔ NOT a duplicate of the PLOT_BONUS pair and it never replaces
+	// one -- that says what the tile CARRIES, this says what that MEANS, the same substrate-vs-verdict split
+	// SEVT_PLOT_PREDICATE_* draws. A consumer cannot derive one from the other, because the verdict reads TWO axes
+	// (bonus AND improvement) and either can move without the other.
+	// ⚑ It carries an ID rather than riding the CASC_PRED_* bitset because the answer is a BONUS, not a boolean: a
+	// plot holds at most one bonus, so "which resource does this tile serve" is a single id whose crossing is the
+	// ordinary ADDED / REMOVED pair. ⚠ The id sits here rather than in the plot block above only because that
+	// block's numbers are used up; it is a PLOT fact in every other respect.
+	// iType = Bonus, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_SERVED_BONUS_ADDED    = 146,
+	SEVT_PLOT_SERVED_BONUS_REMOVED  = 147,
+
 	// ===== UNIT =====
 	// A unit INSTANCE was created (CvUnit::init) / died (CvUnit::die). ⛔ KILLED's correctness is STRUCTURAL, not
 	// positional: it is emitted on the FIRST line of die(), the one function that ends a unit's life, which carries
@@ -838,6 +852,8 @@ void emitPlotCityRemoved(int iPlot, int iOwner, int iCity);
 // site, which owns the SOURCE and not the verdict.
 void emitPlotPredicateAdded(int iPlot, int iOwner, int iPredicate);
 void emitPlotPredicateRemoved(int iPlot, int iOwner, int iPredicate);
+void emitPlotServedBonusAdded(int iPlot, int iOwner, int iBonus);
+void emitPlotServedBonusRemoved(int iPlot, int iOwner, int iBonus);
 // The plot entered / left a city's potential work area. Emitted by CvPlot::setWorkableBy only.
 void emitPlotWorkableByAdded(int iPlot, int iOwner, int iCity);
 void emitPlotWorkableByRemoved(int iPlot, int iOwner, int iCity);

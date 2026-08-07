@@ -66,6 +66,7 @@ void CityContext::clear() const
 	m_vicinityOwned.clear();
 	m_vicinityForeign.clear();
 	m_vicinityWorked.clear();
+	m_onSite.clear();
 	m_areaId = -1;
 	m_areaTileCount = 0;
 	m_governmentCenterDistance = 0;
@@ -224,10 +225,14 @@ bool CityContext::hasVicinityBonusAt(int eBonus, CvCascVicinity eTier) const
 	// "is there a non-foreign one", which only the arithmetic answers.
 	case CASC_VIC_NONE:
 		return (m_vicinityAll.count(eBonus) - m_vicinityForeign.count(eBonus)) > 0;
-	// The OBTAINED tier: on an owned radius tile AND actually reaching this city through the network. The second
-	// half is the plot group's, forwarded -- never a second store here ([enabler.md] §8 RESIDENCY).
+	// ON SITE: the resource is actually AVAILABLE here -- an owned radius tile whose improvement TRADES it.
+	// ⛔ It does NOT consult the network, and that is the ruling rather than an omission: onSite and traded are two
+	// COMPLETELY SEPARATE lists, neither derivable from the other, because you can hold a resource on site and not
+	// in trade -- having traded your only copy to another civ (owner). ⚠ This is the MAP half; a caller answering a
+	// `connection:"vicinity"` atom unions it with the enabler's active-building supply, exactly as it does for
+	// every other tier (the header's VICINITY SPLIT) -- a herd building and an improved herd tile are the same act.
 	case CASC_VIC_ONSITE:
-		return m_vicinityOwned.has(eBonus) && tradedBonusCount(eBonus) > 0;
+		return m_onSite.has(eBonus);
 	default:
 		return vicinityTier(eTier).has(eBonus);
 	}
@@ -246,6 +251,7 @@ void CityContext::applyVicinityBonus(int iBonus, CityVicinityPartition ePartitio
 	case CITYVIC_OWNED:   m_vicinityOwned.add(iBonus, iSign);   break;
 	case CITYVIC_FOREIGN: m_vicinityForeign.add(iBonus, iSign); break;
 	case CITYVIC_WORKED:  m_vicinityWorked.add(iBonus, iSign);  break;
+	case CITYVIC_ONSITE:  m_onSite.add(iBonus, iSign);          break;
 	}
 }
 
@@ -505,17 +511,45 @@ namespace
 	// A radius tile's OWNERSHIP moved: only the ownership BAND changes -- `all` does not, because the tile and its
 	// bonus are still there. The fact NAMES the owner each half is about, which is what makes the withdrawal exact
 	// (the plot's own `m_eOwner` has already moved by emit time).
+	// ⚑ ON SITE moves on the SAME fact and for the same reason: it is gated on the tile being this city's owner's,
+	// so a tile changing hands enters or leaves it while the tile and its improvement stand untouched. ⚠ It rides
+	// the tile's SERVED resource, which is not the same as the resource it carries -- an unimproved tile carries
+	// one and serves none.
 	struct ApplyVicinityOwnerBand
 	{
 		int iBonus;
+		int iServedBonus;
 		int iPlotOwner;
 		int iSign;
 		void operator()(const CvCity* pCity) const
 		{
 			CityVicinityPartition eBand;
-			if (cc_ownershipBand(iPlotOwner, (int)pCity->getOwner(), eBand))
+			if (!cc_ownershipBand(iPlotOwner, (int)pCity->getOwner(), eBand))
 			{
-				pCity->getCityContext().applyVicinityBonus(iBonus, eBand, iSign);
+				return;
+			}
+			pCity->getCityContext().applyVicinityBonus(iBonus, eBand, iSign);
+			if (eBand == CITYVIC_OWNED && iServedBonus >= 0)
+			{
+				pCity->getCityContext().applyVicinityBonus(iServedBonus, CITYVIC_ONSITE, iSign);
+			}
+		}
+	};
+
+	// The tile's SERVED-RESOURCE verdict crossed (an improvement that trades it arrived or went, or the resource
+	// itself did). It reaches every city that may work the tile, and lands only where the tile is that city's
+	// owner's -- the ownership half no per-plot verdict can answer, applied where the asker's own owner is known.
+	struct ApplyOnSiteFromPlot
+	{
+		int iPlotOwner;
+		int iBonus;
+		int iSign;
+		void operator()(const CvCity* pCity) const
+		{
+			CityVicinityPartition eBand;
+			if (cc_ownershipBand(iPlotOwner, (int)pCity->getOwner(), eBand) && eBand == CITYVIC_OWNED)
+			{
+				pCity->getCityContext().applyVicinityBonus(iBonus, CITYVIC_ONSITE, iSign);
 			}
 		}
 	};
@@ -537,15 +571,29 @@ namespace
 		{
 			return;
 		}
+		const CityContext& kContext = pCity->getCityContext();
+		CityVicinityPartition eBand;
+		const bool bOwnershipBand = cc_ownershipBand((int)pPlot->getOwner(), (int)pCity->getOwner(), eBand);
+
+		// ON SITE is folded FIRST and independently of the tile's plain bonus, because the two are different
+		// questions about the same tile: an unimproved tile carries a resource and serves none, and a tile whose
+		// resource is gone can still be the one the improvement stands on. ⚡ This is also the ON-SITE SEEDING
+		// PATH -- the map streams before the cities, so at load nothing could announce a served resource to a city
+		// that did not exist, and re-establishing the work area folds each tile's CURRENT verdict through exactly
+		// the route that maintains it ([DEC-spine-reseed]: no second build mechanism beside the event stream).
+		const int iServedBonus = pPlot->getPlotContext().servedBonus();
+		if (iServedBonus >= 0 && bOwnershipBand && eBand == CITYVIC_OWNED)
+		{
+			kContext.applyVicinityBonus(iServedBonus, CITYVIC_ONSITE, iSign);
+		}
+
 		const int iBonus = cc_plotBonus(pPlot);
 		if (iBonus < 0)
 		{
 			return;
 		}
-		const CityContext& kContext = pCity->getCityContext();
 		kContext.applyVicinityBonus(iBonus, CITYVIC_ALL, iSign);
-		CityVicinityPartition eBand;
-		if (cc_ownershipBand((int)pPlot->getOwner(), (int)pCity->getOwner(), eBand))
+		if (bOwnershipBand)
 		{
 			kContext.applyVicinityBonus(iBonus, eBand, iSign);
 		}
@@ -669,6 +717,11 @@ bool CityContext::wantsEvent(int iEventId)
 	case SEVT_PLOT_OWNER_REMOVED:
 	case SEVT_PLOT_WORKED_ADDED:
 	case SEVT_PLOT_WORKED_REMOVED:
+	// THE ON-SITE STORE -- the tile's own SERVED-RESOURCE verdict crossed. ⛔ The plain BONUS pair above cannot
+	// stand in for it: that says what the tile CARRIES, this says what it MAKES AVAILABLE, and the improvement
+	// half moves without the bonus half ever firing.
+	case SEVT_PLOT_SERVED_BONUS_ADDED:
+	case SEVT_PLOT_SERVED_BONUS_REMOVED:
 	// A land/ocean flip moves the water-body size the neighbourhood's cities read as their coastal facts.
 	case SEVT_PLOT_TYPE_ADDED:
 	case SEVT_PLOT_TYPE_REMOVED:
@@ -785,12 +838,35 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 	{
 		const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
 		const int iBonus = cc_plotBonus(pPlot);
-		if (pPlot != NULL && iBonus >= 0)
+		const int iServedBonus = (pPlot != NULL) ? pPlot->getPlotContext().servedBonus() : -1;
+		// ⚠ Either half can be present alone: an unimproved tile carries a resource and serves none, and the
+		// served id is what the ON-SITE store counts. Entered whenever EITHER has something to move.
+		if (pPlot != NULL && (iBonus >= 0 || iServedBonus >= 0))
 		{
 			ApplyVicinityOwnerBand kApply;
 			kApply.iBonus = iBonus;
+			kApply.iServedBonus = iServedBonus;
 			kApply.iPlotOwner = kEvent.iC;   // the owner THIS half of the pair is about
 			kApply.iSign = (kEvent.iEventId == SEVT_PLOT_OWNER_ADDED) ? +1 : -1;
+			cc_forEachWorkableCity(pPlot, kApply);
+		}
+		break;
+	}
+
+	// The tile's SERVED-RESOURCE verdict crossed -- an improvement that trades the resource arrived or went, or the
+	// resource itself did. ⚠ The REMOVED half is emitted while the tile's OWNERSHIP still holds (the verdict moves
+	// on the bonus / improvement axes, never on the owner one), so the withdrawal resolves against exactly the
+	// cities the deposit was booked against.
+	case SEVT_PLOT_SERVED_BONUS_ADDED:
+	case SEVT_PLOT_SERVED_BONUS_REMOVED:
+	{
+		const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
+		if (pPlot != NULL && kEvent.iType >= 0)
+		{
+			ApplyOnSiteFromPlot kApply;
+			kApply.iPlotOwner = (int)pPlot->getOwner();
+			kApply.iBonus = kEvent.iType;
+			kApply.iSign = (kEvent.iEventId == SEVT_PLOT_SERVED_BONUS_ADDED) ? +1 : -1;
 			cc_forEachWorkableCity(pPlot, kApply);
 		}
 		break;

@@ -473,6 +473,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PLOT_CITY_REMOVED:                return "[SPINE] plotCityRemoved";
 	case SEVT_PLOT_PREDICATE_ADDED:             return "[SPINE] plotPredicateAdded";
 	case SEVT_PLOT_PREDICATE_REMOVED:           return "[SPINE] plotPredicateRemoved";
+	case SEVT_PLOT_SERVED_BONUS_ADDED:          return "[SPINE] plotServedBonusAdded";
+	case SEVT_PLOT_SERVED_BONUS_REMOVED:        return "[SPINE] plotServedBonusRemoved";
 	case SEVT_PLOT_WORKABLE_BY_ADDED:           return "[SPINE] plotWorkableByAdded";
 	case SEVT_PLOT_WORKABLE_BY_REMOVED:         return "[SPINE] plotWorkableByRemoved";
 	case SEVT_PLOTGROUP_BONUS_ADDED:            return "[SPINE] plotgroupBonusAdded";
@@ -1247,6 +1249,24 @@ void emitPlotPredicateRemoved(int iPlot, int iOwner, int iPredicate)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_PREDICATE_REMOVED, iPredicate, 0, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_PREDICATE, iPredicate);
+	eventSpine().emit(e);
+}
+
+// The plot's SERVED-RESOURCE verdict crossed: this tile now makes (or no longer makes) that bonus available on site
+// to a city that can work it. iType carries WHICH bonus; the event id carries the DIRECTION.
+void emitPlotServedBonusAdded(int iPlot, int iOwner, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_SERVED_BONUS_ADDED, iBonus, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_BONUS, iBonus);
+	eventSpine().emit(e);
+}
+
+void emitPlotServedBonusRemoved(int iPlot, int iOwner, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_SERVED_BONUS_REMOVED, iBonus, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_BONUS, iBonus);
 	eventSpine().emit(e);
 }
 

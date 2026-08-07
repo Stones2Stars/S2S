@@ -170,9 +170,22 @@ mutates its set in place as the fixpoint ripples.
 > `GAME_LOAD_FINISHED` fold as its load-time twin — the map streams before the players, so at load the radius
 > facts reach no city at all (the amenity fold guards its play-time fan the same way, for the same reason).
 >
-> `worked` and `onSite` are different predicates rather than ownership bands, so they stay their own — and
-> `onSite` is COMPOSED rather than stored: on an owned radius tile AND reaching this city through the network,
-> the second half forwarded from the plot group that owns it ([enabler.md §8](../specs/enabler.md) RESIDENCY).
+> `worked` and `onSite` are different predicates rather than ownership bands, so they stay their own — and each is
+> its OWN stored dictionary. **`onSite` = an OWNED radius tile whose IMPROVEMENT trades the resource**, which is
+> strictly stronger than `owned` (raw presence, improved or not) and therefore not a filter over it: two owned
+> radius tiles can carry one resource with only one improved, so only a count answers it.
+> ⛔ **IT NEVER CONSULTS THE NETWORK, and that is the ruling rather than an omission (owner): onSite and traded are
+> two COMPLETELY SEPARATE LISTS, neither derivable from the other** — you can hold a resource on site and not in
+> trade, *having traded your only copy to another civ*. A mounted unit needs horses ON SITE; a swordsman only needs
+> iron wares in the NETWORK ([json.md §3.4](../specs/json.md): the two are ORTHOGONAL, not nested).
+> ⚑ **The tile's half is a VERDICT the PLOT owns and announces**, exactly as its predicate bits are: `PlotContext`
+> holds the SERVED RESOURCE — an id, because a plot carries at most one bonus — derived from the bonus and
+> improvement axes and announced as `SEVT_PLOT_SERVED_BONUS_ADDED / _REMOVED`. ⛔ A city-side derivation is
+> impossible for the same reason the per-bit fact exists: by the time any consumer runs the plot already holds the
+> new value, so the old contribution is gone. The OWNERSHIP half stays the CITY's, applied where the asker's own
+> owner is known — no per-plot verdict can answer it for every city that may work the tile.
+> ⚠ It is NOT gated on the tile being WORKED: a fort cannot be worked by definition, and a fort is exactly how a
+> resource gets served (owner).
 
 ⚖ **`CityContext.amenities` — THE CITY'S OWN FEATURE LIST, AND THE CITY IS WHAT GETS CHECKED (owner).** A
 grantor's `amenities` block ([json.md §8](../specs/json.md)) is static info data; what a consumer actually asks
@@ -609,9 +622,12 @@ CAPSTONE — LOAD is the only full build).
   derived aggregate recomputes from source on load, [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted),
   never trusted from a save) — through the consumer, not a second build mechanism beside the event stream.
   `CityContext`'s other blocks build once at `GAME_LOAD_FINISHED`, because each reads state that is only complete when
-  the whole stream has ended (the areas deserialize after the plots; the obtained-vicinity tier reads the plot-group
-  connectivity the load-end network rebuild establishes). That single pass IS the load build — the only full build
-  there is — after which the facts alone maintain them.
+  the whole stream has ended (the areas deserialize after the plots). That single pass IS the load build — the only
+  full build there is — after which the facts alone maintain them.
+  ⚑ The VICINITY dictionaries, `onSite` included, are not among them: they seed through the ORDINARY membership
+  route, because re-establishing each city's work area announces one `SEVT_PLOT_WORKABLE_BY_ADDED` per plot and the
+  applier folds that tile's CURRENT bonus and served resource. One route, both jobs — no separate build pass to keep
+  in step ([DEC-spine-reseed](decisions.md#dec-spine-reseed): never a second build mechanism beside the event stream).
   `CityContext.plotAttrs` builds from the in-read DOMAIN events
   ([DEC-spine-reseed](decisions.md#dec-spine-reseed)): each `CvPlot::read` announces its deserialized working-city
   fact (`SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED` — the genuine read site emits), and `CityContext`'s own consumer

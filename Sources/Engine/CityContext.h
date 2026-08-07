@@ -63,7 +63,12 @@ enum CityVicinityPartition
 	CITYVIC_ALL,       // on a radius tile at all -- the total the ownership bands are carved out of
 	CITYVIC_OWNED,     // that tile is owned by this city's owner
 	CITYVIC_FOREIGN,   // that tile is owned by another player
-	CITYVIC_WORKED     // a citizen of this city works that tile
+	CITYVIC_WORKED,    // a citizen of this city works that tile
+	// ⚖ ON SITE -- the resource is actually AVAILABLE here: an owned radius tile whose improvement TRADES it.
+	// ⛔ NOT an ownership band and NOT derivable from one: `owned` is raw presence on an owned tile, improved or
+	// not, so onSite is strictly stronger ([json.md] par.3.4). Two owned radius tiles can carry the same resource
+	// with only one of them improved, which is why it is counted separately rather than filtered at the read.
+	CITYVIC_ONSITE
 };
 
 class CityContext
@@ -276,6 +281,18 @@ private:
 	mutable ContextDict m_vicinityOwned;       // ...and that tile is owned by THIS city's owner
 	mutable ContextDict m_vicinityForeign;     // ...and that tile is owned by ANOTHER player (the crossBorder opt-in only)
 	mutable ContextDict m_vicinityWorked;      // a radius tile a citizen works this turn (the centre tile included)
+	// ⚖ THE ON-SITE STORE -- the MAP half of the json par.3.4 `onSite` tier: an OWNED radius tile whose improvement
+	// TRADES the resource. ⛔ Its own dictionary, not a filter over `m_vicinityOwned`: two owned radius tiles can
+	// carry one resource with only one improved, so only a count answers it.
+	// ⛔ ONSITE AND TRADED ARE TWO COMPLETELY SEPARATE LISTS, NEITHER DERIVABLE FROM THE OTHER (owner) -- you can
+	// hold a resource on site and not in trade, having traded your only copy away. So this store answers on its
+	// own and never consults the network count; a mounted unit needs horses ON SITE, a swordsman only needs iron
+	// wares in the NETWORK ([json.md] par.3.4).
+	// ⚠ The BUILDING half (a herd, a factory -- `provides.bonuses`) is NOT here: it is the enabler's operate/provides
+	// fixpoint and the reader unions the two, exactly as it does for every other vicinity tier (the header's
+	// VICINITY SPLIT). A herd building and an improved herd tile are the same act as far as the answer goes; they
+	// simply have different owners.
+	mutable ContextDict m_onSite;
 	mutable int m_areaId;                      // the city's area ID (-1 = unassigned)
 	mutable int m_areaTileCount;               // that area's tile count -- AREA_SIZE served without dereferencing CvArea
 	// The largest ADJACENT water body, in tiles -- ONE int that answers isCoastal at EVERY threshold

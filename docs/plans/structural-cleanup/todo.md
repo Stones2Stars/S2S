@@ -213,31 +213,6 @@
 
 ## Not built yet
 
-- Maintain the city's **onSite** set from the IMPROVEMENT, and drop the trade conjunction. `CASC_VIC_ONSITE`
-  currently answers `m_vicinityOwned.has(b) && tradedBonusCount(b) > 0` — the network standing in for "is it
-  available here", because the vicinity store's interest set carries the plot BONUS facts and not the
-  IMPROVEMENT ones, so improving a resource never reaches it.
-  ⚖ **The model (owner):** a bonus is onSite when it is IMPROVED on a plot in the city's workable radius —
-  **not necessarily WORKED** (a fort cannot be worked by definition, and a fort is exactly how a resource gets
-  served) — or supplied by a building in the city. The list cares only about what is there, never how it
-  arrived. The engine predicate already exists: `CvImprovementInfo::isImprovementBonusTrade(eBonus)`.
-  ⛔ **onSite and traded are TWO COMPLETELY SEPARATE LISTS, neither derivable from the other**: you can hold a
-  resource onSite and not in trade — ⚑ *you may have traded your only copy to another civ* (owner), which is the
-  case that makes the conjunction plainly wrong. So the fix is a store of its own; the existing tiers keep their
-  raw-presence meaning ([json.md §3.4](../../specs/json.md): `owned` is raw owned-presence, improved or not).
-  ⚑ **The crossing must be computed where the OLD value still lives.** A plot has at most one bonus, so
-  "this plot serves bonus B" is a single id on `PlotContext`, which already re-derives per AXIS and announces
-  each crossing (`applyAxes`) — so it announces this one too and the city applies ±1, exactly the
-  `SEVT_PLOT_PREDICATE_*` shape. ⛔ A city-side "unfold the old, refold the new" cannot work: by the time any
-  consumer runs the plot already holds the new value ([contexts.md](../../architecture/contexts.md)).
-  ⚠ **Storage and maintenance land TOGETHER or not at all** — a store with no maintenance reads empty and every
-  onSite gate fails closed across 1,564 authored atoms.
-  ⚠ **It is an intended BEHAVIOUR change** (owner): gates that today need the resource in the network start
-  passing on improved-but-unrouted ones. Diff the stored operating sets before/after so the movement is
-  attributed rather than discovered.
-  ⚑ Needs: two new plot axes (improvement, bonus) on `PlotContext`, the served-bonus verdict + its fact pair,
-  the consumer fan over `workableByCities()`, `CityContext`'s onSite dict + its load-end seed.
-
 - Serve a city's OFFERED RESOURCES, and give the city screen a VICINITY tab that shows them (owner) — a city
   currently has no readable list of what its plot group supplies, so the axis most `requires` gates on is the one
   nothing can be checked against. ⚑ The point is TRACKING: the gate is only trustworthy if the supply behind it

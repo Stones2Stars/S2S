@@ -261,7 +261,7 @@ structure over different payloads, and the only things that vary are the key spa
 |---|---|---|
 | the plot group's bonuses | `id → count` | a member plot/city joining or leaving |
 | `CityContext.amenities` | `id → count` | a grantor starting or stopping conferring |
-| `CityContext`'s vicinity tiers (owned/neutral/foreign/worked/connected) | `id → count` | a radius plot's bonus or tier moving |
+| `CityContext`'s vicinity tiers (all/owned/foreign/worked/onSite) | `id → count` | a radius plot's bonus, ownership or served-resource verdict moving |
 | `EmpireContext.policies` | `id → count` | a civic / trait / project / wonder |
 | the enabler's membership planes | `id → (enable, remove)` | a HAVE-change |
 | `OperatingBuildings::providedCount` | `id → count` | an active flip |
