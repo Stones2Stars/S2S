@@ -144,6 +144,14 @@ public:
 	// consumption are the two numbers a city grows on, and NEITHER is on any served surface -- so a report of
 	// "cities need less food than they used to" has no way to be attributed to a term. DIAGNOSTIC: it says what
 	// a calculation produced, never what the state IS.
+	// ONE deposit landing in ONE slot -- the per-source ATTRIBUTION a package total cannot give. DIAGNOSTIC,
+	// level 3, so it costs nothing until asked for. szOnFact names the spine fact that drove the apply, which is
+	// what turns "this value is too high" into "this source applied N times, on this fact".
+	static void reportDepositApply(const char* szSource, int iChannel, CvCascScope eScope,
+		bool bPercentSide, int64_t iValue, int iPlayer, int iCity, const char* szOnFact);
+	// The bounded per-source decomposition of everything reportDepositApply accumulated: ONE line per
+	// (source, channel, scope, unit, driving fact) with its APPLY COUNT and SUMMED value. Reported at load end.
+	static void reportDepositCensus();
 	static void reportGrowthRead(int iPlayer, int iHuman, int iCity, int iPop, int iFood, int iThreshold,
 		int iSpeedPercent, int iEraPercent, int iBaseThreshold,
 		int iConsumption, int iPerPop, int iFoodDifference,

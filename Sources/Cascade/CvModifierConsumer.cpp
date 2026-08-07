@@ -234,7 +234,8 @@ namespace
 	// One city's share of a source's deposits. Its OWN eval ctx, so the entry's `per` scalers and conditions
 	// resolve against THIS city -- which is the whole reason an above-city deposit is folded per city rather
 	// than resolved once and handed out.
-	void mc_applyCityDeposits(const std::vector<CvModEntry*>& entries, int iMultiplicity, int iSourceIndex, const CvCity& city)
+	void mc_applyCityDeposits(const std::vector<CvModEntry*>& entries, int iMultiplicity, int iSourceIndex, const CvCity& city,
+		const char* szSource, const char* szOnFact)
 	{
 		CvCascadeEvalCtx evalCtx;
 		InfoValuation::fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
@@ -257,6 +258,9 @@ namespace
 			{
 				city.getCascadePackage().applyFlat(iChannel, iValue);
 			}
+			// The per-source ATTRIBUTION line (DIAGNOSTIC, level 3 -- free until asked for).
+			CascadeChannelRegistry::reportDepositApply(szSource, iChannel, CASC_SCOPE_CITY, bPercentSide,
+				iValue, (int)city.getOwner(), city.getID(), szOnFact);
 		}
 		city.getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
 	}
@@ -481,7 +485,7 @@ namespace
 	// what a source deposits -- only WHERE the owner objects are.
 	void mc_applySourceDeposits(const CvInfo* pSourceInfo, int iMultiplicity,
 		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot,
-		CvCascadePackage<CvPlot>::PlotSegment ePlotSegment)
+		CvCascadePackage<CvPlot>::PlotSegment ePlotSegment, const char* szOnFact)
 	{
 		if (pSourceInfo == NULL || iMultiplicity == 0)
 		{
@@ -547,7 +551,7 @@ namespace
 
 		if (pCity != NULL)
 		{
-			mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, *pCity);
+			mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, *pCity, pSourceInfo->getType(), szOnFact);
 			// a CITY-scope `plots` deposit reaches THIS city's worked plots and no other city's
 			std::vector<const CvModEntry*> cityPlotEntries;
 			if (!bBankPlotsFan && mc_selectPlotsTargetEntries(entries, CASC_SCOPE_CITY, cityPlotEntries))
@@ -565,7 +569,7 @@ namespace
 			{
 				if (*cityIterator != NULL)
 				{
-					mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, **cityIterator);
+					mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, **cityIterator, pSourceInfo->getType(), szOnFact);
 				}
 			}
 		}
@@ -619,6 +623,8 @@ namespace
 					{
 						pPlayer->getCascadePackage().applyFlat(iChannel, iValue);
 					}
+					CascadeChannelRegistry::reportDepositApply(pSourceInfo->getType(), iChannel, CASC_SCOPE_EMPIRE,
+						bPercentSide, iValue, (int)pPlayer->getID(), -1, szOnFact);
 				}
 				iChannel = -1;
 				bPercentSide = false;
@@ -635,6 +641,8 @@ namespace
 					{
 						team.getCascadePackage().applyFlat(iChannel, iValue);
 					}
+					CascadeChannelRegistry::reportDepositApply(pSourceInfo->getType(), iChannel, CASC_SCOPE_TEAM,
+						bPercentSide, iValue, (int)pPlayer->getID(), -1, szOnFact);
 				}
 			}
 			pPlayer->getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
@@ -704,6 +712,11 @@ namespace
 				{
 					if (bPercentSide) pCity->getCascadePackage().applyPercent(iChannel, (int)iValue);
 					else              pCity->getCascadePackage().applyFlat(iChannel, iValue);
+					// Planes B and C attribute too -- a count or an atom crossing moving a deposit is exactly the
+					// class a total can never explain, so leaving it out would make the decomposition lie by omission.
+					CascadeChannelRegistry::reportDepositApply(
+						(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_CITY,
+						bPercentSide, iValue, (int)pCity->getOwner(), pCity->getID(), "gated");
 				}
 				continue;
 			}
@@ -757,7 +770,8 @@ namespace
 	void mc_applySource(const CvInfo* pSourceInfo, int iMultiplicity, int iEventId,
 		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot)
 	{
-		mc_applySourceDeposits(pSourceInfo, iMultiplicity, pPlayer, pCity, pPlot, mc_plotSegmentFor(iEventId));
+		mc_applySourceDeposits(pSourceInfo, iMultiplicity, pPlayer, pCity, pPlot, mc_plotSegmentFor(iEventId),
+			spineEventName(iEventId));
 	}
 
 
@@ -1290,6 +1304,9 @@ namespace
 				mc_drainBankedPlotsFans();
 				mc_reportGrowthCensus();
 				CascadeChannelRegistry::reportChannelCensus();
+				// The per-SOURCE decomposition of what the reseed actually applied -- who deposited into each
+				// channel, how many times, and on which fact. This is the attribution a package total cannot give.
+				CascadeChannelRegistry::reportDepositCensus();
 				break;
 			}
 			default:

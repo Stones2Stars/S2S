@@ -536,7 +536,8 @@ namespace
 	{
 		MODEVT_CHANNEL_CENSUS = 1,  // the load-end per-scope channel-set census (KEYS ONLY WHERE NEEDED)
 		MODEVT_PLOTS_FAN,           // one `plots`-target fan applied (the plot plane's only readback)
-		MODEVT_GROWTH_READ          // one city's growth threshold + consumption, term by term
+		MODEVT_GROWTH_READ,         // one city's growth threshold + consumption, term by term
+		MODEVT_DEPOSIT_APPLY        // ONE deposit landing in ONE slot: who, which channel, which package, how much
 	};
 	enum ModifierDomainField
 	{
@@ -552,7 +553,8 @@ namespace
 		MODF_MULT,
 		MODF_PLAYER, MODF_HUMAN, MODF_CITY, MODF_POP, MODF_FOOD, MODF_THRESHOLD, MODF_SPEEDPCT,
 		MODF_ERAPCT, MODF_BASETHRESH, MODF_CONSUMPTION, MODF_PERPOP, MODF_FOODDIFF,
-		MODF_DEFBASE, MODF_DEFMULT, MODF_NORMALAI, MODF_GOLDENAGE
+		MODF_DEFBASE, MODF_DEFMULT, MODF_NORMALAI, MODF_GOLDENAGE,
+		MODF_CHANNEL, MODF_UNIT, MODF_VALUE, MODF_EVENT
 	};
 
 	const char* cr_modifierDomainPrefix(int iEventId)
@@ -562,6 +564,7 @@ namespace
 		case MODEVT_CHANNEL_CENSUS: return "[MODIFIER] channels";
 		case MODEVT_PLOTS_FAN:      return "[MODIFIER] plotsFan";
 		case MODEVT_GROWTH_READ:    return "[MODIFIER] growthRead";
+		case MODEVT_DEPOSIT_APPLY:  return "[MODIFIER] depositApply";
 		default:                    return "[MODIFIER] ?";
 		}
 	}
@@ -596,6 +599,10 @@ namespace
 		case MODF_DEFMULT:     *peType = SFT_INT; return "defMult";
 		case MODF_NORMALAI:    *peType = SFT_INT; return "normalAI";
 		case MODF_GOLDENAGE:   *peType = SFT_INT; return "goldenAge";
+		case MODF_CHANNEL:     *peType = SFT_STR; return "channel";
+		case MODF_UNIT:        *peType = SFT_STR; return "unit";
+		case MODF_VALUE:       *peType = SFT_INT; return "value";
+		case MODF_EVENT:       *peType = SFT_STR; return "onFact";
 		default:             *peType = SFT_INT; return NULL;
 		}
 	}
@@ -681,6 +688,93 @@ void CascadeChannelRegistry::reportPlotsFan(const char* szSource, CvCascScope eE
 	fan.addI(MODF_RESOLVED, iEntriesResolved);
 	fan.addI(MODF_MULT, iMultiplicity);
 	eventSpine().emit(fan);
+}
+
+// ONE deposit landing in ONE slot. This is the ATTRIBUTION the totals cannot give: a package read says a channel
+// holds N, and nothing anywhere says WHO put it there or how many times -- which is why a wrong total has only ever
+// been answerable by hypothesis. Emitted per apply, so a grep over one load answers "who contributes to empire
+// happiness, and how often" directly ([DEC-no-guessing]: at a gap, EMIT the decomposition rather than infer it).
+// ⚠ DIAGNOSTIC by kind, so it rides gStreamLogLevel and NO consumer may build state from it
+// ([event-spine.md] § THE RECEIVED LINE -- a line that says code ran is never a fact anything folds on).
+// ⚑ Level 3 (the per-candidate tier): this is per-deposit and would drown a level-1 read.
+// ⛔ THE PER-APPLY LINE IS A FIRE HAZARD AND IS NOT WHAT ANSWERS THE QUESTION. An apply happens per source per
+// deposit per owner, which on a late-game load is millions of lines -- a log that large is not an instrument, and
+// the question ("WHO contributes to this channel, and how many times") is an aggregate anyway.
+// ⇒ So this ACCUMULATES per (source, channel, scope) and the census below emits ONE line per surviving entry.
+// ⚑ That is the `[MODIFIER] channels` shape already in this file, and it keeps the output bounded by the number of
+// SOURCES that actually deposited rather than by how often they did.
+// ⚠ It is a DIAGNOSTIC accumulator for a census, NOT state: nothing reads it, nothing folds on it, and it is
+// cleared each time it is reported ([event-spine.md] § THE RECEIVED LINE -- no consumer may build state from a
+// line that says code ran).
+namespace
+{
+	struct DepositTally
+	{
+		int iApplies;
+		int64_t iTotal;
+		DepositTally() : iApplies(0), iTotal(0) {}
+	};
+	// key: source|channel|scope|unit -- interned as a string because the census is cold-path by construction.
+	std::map<std::string, DepositTally> s_depositTally;
+}
+
+void CascadeChannelRegistry::reportDepositApply(const char* szSource, int iChannel, CvCascScope eScope,
+	bool bPercentSide, int64_t iValue, int iPlayer, int iCity, const char* szOnFact)
+{
+	std::string szKey((szSource != NULL) ? szSource : "?");
+	szKey += "|";
+	szKey += channelName(iChannel);
+	szKey += "|";
+	szKey += cr_scopeName(eScope);
+	szKey += "|";
+	szKey += (bPercentSide ? "percent" : "flat");
+	szKey += "|";
+	szKey += ((szOnFact != NULL) ? szOnFact : "?");
+	DepositTally& kTally = s_depositTally[szKey];
+	kTally.iApplies += 1;
+	kTally.iTotal += iValue;
+	(void)iPlayer;
+	(void)iCity;
+}
+
+// The bounded decomposition: one line per (source, channel, scope, unit, driving fact) that actually deposited,
+// carrying HOW MANY applies and their SUMMED value. A channel whose total is impossible against the authored data
+// is then attributable to a NAMED source without reading any code -- which is the whole point ([DEC-no-guessing]:
+// at a gap, EMIT the decomposition; a bare total supports neither VERIFY nor ASK).
+void CascadeChannelRegistry::reportDepositCensus()
+{
+	cr_ensureModifierDomain();
+	for (std::map<std::string, DepositTally>::const_iterator it = s_depositTally.begin();
+		it != s_depositTally.end(); ++it)
+	{
+		const std::string& szKey = it->first;
+		std::string::size_type a = szKey.find('|');
+		std::string::size_type b = szKey.find('|', a + 1);
+		std::string::size_type c = szKey.find('|', b + 1);
+		std::string::size_type d = szKey.find('|', c + 1);
+		if (a == std::string::npos || b == std::string::npos || c == std::string::npos || d == std::string::npos)
+		{
+			continue;
+		}
+		// ⛔ The segments MUST be named locals: addStr BORROWS the char* and the event is rendered at emit, so a
+		// substr() temporary would be destroyed at the end of its own full-expression and the field would render
+		// from freed memory. (It does not crash -- it renders EMPTY, which reads as "the census found nothing".)
+		const std::string szSourceSeg  = szKey.substr(0, a);
+		const std::string szChannelSeg = szKey.substr(a + 1, b - a - 1);
+		const std::string szScopeSeg   = szKey.substr(b + 1, c - b - 1);
+		const std::string szUnitSeg    = szKey.substr(c + 1, d - c - 1);
+		const std::string szFactSeg    = szKey.substr(d + 1);
+		CvSpineEvent dep(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_DEPOSIT_APPLY, 2);
+		dep.addStr(MODF_SOURCE, szSourceSeg.c_str());
+		dep.addStr(MODF_CHANNEL, szChannelSeg.c_str());
+		dep.addStr(MODF_SCOPE, szScopeSeg.c_str());
+		dep.addStr(MODF_UNIT, szUnitSeg.c_str());
+		dep.addStr(MODF_EVENT, szFactSeg.c_str());
+		dep.addI(MODF_ENTRIES, it->second.iApplies);
+		dep.addI(MODF_VALUE, (int)it->second.iTotal);
+		eventSpine().emit(dep);
+	}
+	s_depositTally.clear();
 }
 
 void CascadeChannelRegistry::reportGrowthRead(int iPlayer, int iHuman, int iCity, int iPop, int iFood, int iThreshold,
