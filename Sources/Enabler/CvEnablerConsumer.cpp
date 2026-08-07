@@ -443,6 +443,13 @@ private:
 		case SEVT_EMPIRE_HERITAGE_REMOVED:
 			// A heritage is a HAVE axis the player holds but NOT an enabler DOMAIN (nothing offers heritages through
 			// the frontier -- they arrive by mission), so it re-gates its dependents and applies no edges.
+			// ⛔ SKIPPED INSIDE THE LOAD BRACKET, and this is not optional. Every fact here fires from
+			// CvPlayer::read / CvCity::read, where the city's other slots have NOT landed yet -- and unlike the
+			// small gate classes beside it, GATE_DYNAMIC contains the CAPPED buildings, so gating one mid-read
+			// reaches the wonder-category cap and reads GC.getCultureLevelInfo(NO_CULTURELEVEL): a fail-loud
+			// info-plane read that kills the load ([DEC-info-plane-read-only]). The load-end pass gates every city
+			// once after the stream ends, which is the par.7.1 order rule's second option and covers all of this.
+			if (spineGameLoadInProgress()) break;
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_DYNAMIC);
@@ -459,6 +466,8 @@ private:
 		case SEVT_CITY_FRESH_WATER_REMOVED:
 		{
 			// The city-scope twins of the above: one city's designation moved, so only that city re-gates.
+			// Same load-bracket skip, same reason (the capped buildings' culture-level read).
+			if (spineGameLoadInProgress()) break;
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
@@ -476,6 +485,11 @@ private:
 		// resolve and nothing that still needs gating -- the ADDED twin re-gates it under whoever now owns it.
 		case SEVT_CITY_OWNER_ADDED:
 		{
+			// ⛔ SKIPPED INSIDE THE LOAD BRACKET. This is the FIRST fact CvCity::read emits -- ownership is
+			// established before population, buildings, religion and culture level -- so a full gate pass here runs
+			// against a city that is barely deserialized, and the capped buildings' culture-level read fails loud.
+			// A conquest in PLAY is what this route is for; the loaded state is the load-end pass's job.
+			if (spineGameLoadInProgress()) break;
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
