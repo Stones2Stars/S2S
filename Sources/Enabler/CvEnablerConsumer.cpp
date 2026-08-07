@@ -559,6 +559,41 @@ private:
 			}
 			break;
 		}
+		// ---- THE VICINITY SUPPLY'S **MAP** HALF -- the re-gate the plot facts carry ----
+		// SEVT_CITY_VICINITY_BONUS_* carries the BUILDING half ALONE, by construction; the MAP half -- a resource
+		// appearing or vanishing on a radius tile, and that tile beginning or ceasing to SERVE it -- is announced by
+		// the PLOT facts ([event-spine.md], that fact's own contract). So this is where a `connection:"vicinity"`
+		// atom's map half re-gates, and without it the verdict stands stale for the session: a tri-state read is a
+		// bare fetch and nothing recomputes it ([DEC-no-self-heal]).
+		// ⛔ NOT reachable through the plot-atom index: that is keyed by (PlotAtomKind, id) over the SUBSTRATE
+		// prefixes, and a bonus atom names a BONUS -- so the improvement fact re-gates whoever named that
+		// IMPROVEMENT and never the mine that named the ORE. The candidates here come from the bonus's own
+		// EDGEF_REQUIRED_BY, which the reverse pass DOES route for the bonus prefix.
+		// ⚑ TWO facts, two questions, and neither substitutes for the other: PLOT_BONUS says the tile CARRIES the
+		// resource (the `owned` / default / `crossBorder` tiers), PLOT_SERVED_BONUS says it MAKES IT AVAILABLE (the
+		// `onSite` tier). An improvement being built moves only the second, and moves no bonus fact at all.
+		case SEVT_PLOT_BONUS_ADDED:
+		case SEVT_PLOT_BONUS_REMOVED:
+		case SEVT_PLOT_SERVED_BONUS_ADDED:
+		case SEVT_PLOT_SERVED_BONUS_REMOVED:
+		{
+			if (spineGameLoadInProgress()) break;   // the load-end pass gates every city once
+			const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
+			if (pPlot == NULL || kEvent.iType < 0) break;
+			// The CITIES come from the plot's own workableBy list, so a tile no city can work re-gates nobody.
+			const std::vector<IDInfo>& kWorkableBy = pPlot->workableByCities();
+			for (size_t iCity = 0; iCity < kWorkableBy.size(); ++iCity)
+			{
+				const CvCity* pCity = ::getCity(kWorkableBy[iCity]);
+				if (pCity == NULL) continue;
+				BuildingEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
+				UnitEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
+				// The OPERATE half of the same supply -- the provides-ripple inside is what lets a manufactured
+				// chain light tier by tier rather than stopping where the load resolved.
+				EnablerKernel::onBonusAccessChangedActive(pCity, kEvent.iType);
+			}
+			break;
+		}
 		// ---- CONQUEST: the city's whole HAVE basis is a different player's ----
 		// Every axis the gate reads moves at once (techs, civics, traits, the empire's counts and caps), and the
 		// tri-state is a bare fetch that nothing re-derives -- so a conquered city would otherwise serve the PREVIOUS
