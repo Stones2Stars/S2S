@@ -27,6 +27,22 @@
   ⛔ Not an agent call: [patterns.md](../../architecture/patterns.md)'s ask-by-generated-id ruling is written
   about the C++ consumer, where the id is a compile-time constant — Python has no such constant, which is
   precisely why the second precedent exists.
+- Rule on how an ENACTED / HELD state pseudo-building expresses the CHOICE behind it — the ordinances, the
+  culture `C_AC_*` set, the folklore requirement. This is the live ENABLE-SIDE OVER-OFFER the owner sees
+  (a Speakeasy offered without alcohol banned; a culture building offered in a city with no culture; the
+  folklore line offered outright), and it is NOT enabler machinery: the gate faithfully evaluates what the data
+  says, and the data says every city has banned alcohol and holds every culture.
+  ⚑ **The mechanism, and it is one cause for all of them:** each prerequisite is `notConstructible`, so
+  [enabler.md §3](../../specs/enabler.md) places it in EVERY city UNCONDITIONALLY and dormancy alone decides
+  anything after that — while its `requires.operate` names only a tech and a map category. So it is not merely
+  PRESENT everywhere, it is ACTIVE everywhere, and a `requires.build` naming it can never refuse.
+  ⛔ **So reading ACTIVE instead of PRESENT at the gate fixes NOTHING**, which is the tempting one-line repair and
+  the reason this entry spells the mechanism out: both answers are yes.
+  ⚖ What is missing is the CHOICE itself — an ordinance is ENACTED, a culture is HELD — and no authored condition
+  expresses it, so the ruling is what that condition should BE (and whether the engine still owes the state it
+  reads). ⚠ A data-model answer triggers the curator + regen in the same work item
+  ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
+  ⛔ Do NOT invent an ordinance-enactment mechanism to close it.
 - Decide the ENABLER's load-gating policy, because the code and its own stated contract disagree.
   `CvEnablerConsumer`'s header declares the consumer LOAD-ACTIVE *with no `spineGameLoadInProgress()`
   suppression* — and cases below it, plus much of `CvBuildingEnabler` / `CvUnitEnabler`, suppress on exactly
