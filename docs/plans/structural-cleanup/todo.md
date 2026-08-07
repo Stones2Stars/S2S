@@ -9,6 +9,19 @@
 > work done.** An item that is finished is DELETED, never ticked, and anything durable it established moves
 > into its owning spec first.
 >
+> ⛔ **NO PACING IN THIS FILE EITHER — a todo says WHAT, never WHEN (owner).** *"If things are not properly in
+> now, for whatever reason, then that is an ERROR, not something to postpone until whatever unicorn arrives
+> later."* So a line NEVER carries a `when X is wired` / `once Y lands` / `until Z exists` clause: that is
+> [DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred) wearing a schedule, and it is worse than a
+> plain deferral because it reads as a PLAN — the next agent sees a precondition rather than a defect and moves
+> on. Something not properly in the tree is an ERROR; write it as one.
+> ⚠ **A genuine DEPENDENCY is stated as a dependency, not as a date:** *"X cannot be expressed until the verb
+> exists, so the verb is the work"* names a thing to DO. *"X, when the verb lands"* names nobody's job and
+> nothing to do. ⛔ The ONE exception is an explicit owner-ruled ORDERING, and it is marked as the owner's
+> ruling rather than as a property of the item.
+> ⚑ **These lines ROT the worst**, which is why the ban is here beside the no-state one: a condition nobody
+> owns is never met, so the item ages into scenery — and the tree grows a hole that reads as scheduled.
+>
 > ⛔ **The tree is the authority, always.** Before acting on any line here, confirm it against the code
 > ([DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing)) — and if it is already done, delete the
 > line rather than updating it. Sequencing and governing rulings: [roadmap.md](roadmap.md).
@@ -81,6 +94,12 @@
 
 ## Data — curator
 
+- Re-scope the PROJECT `health.world` / `happiness.world` / `tradeRoutes.world` authorings. WORLD is CONFIG and
+  carries no package ([state-repositories.md](../../architecture/state-repositories.md)), so a deposit landing
+  there reaches nobody — a project granting something to every player authors the plural TARGET `world.empires`,
+  which lands in each PLAYER's package ([json.md §3.3](../../specs/json.md)). ⚑ Curator fix + regen in the same
+  work item ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
+
 - Mint the `garrison` kind in the culture vocabulary. The curator already emits `culture.unit.garrison.flat`
   and units author it, but no kind exists, so the deposits reach no getter.
 - Attach the ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`,
@@ -138,7 +157,15 @@
   mechanic is the vanilla airplane ranged attack and STAYS; only the name carries `dcm`, and a live mechanic
   wearing a dead plane's prefix is what makes the next sweep mis-scope it
   ([skills.md](../../specs/skills.md)).
-- Re-home `stronglyRestricted` to a `requires.build` civ-membership gate, when NPC civilizations are wired.
+- **GATE `canConstruct` / `canTrain` ON THE CIVILIZATION. Nothing does today, and it is a live over-offer:**
+  every civ is offered every OTHER civ's unique buildings and units. The restriction is AUTHORED
+  (`identity.enabledCivilizations`), PARSED and HELD (`CvBuildingInfo` / `CvUnitInfo` keep it as a
+  `CIVILIZATION_*` FK list) — and read by NOBODY: no `CIVILIZATION_` reference exists anywhere in the enabler or
+  the evaluator. So the data, the parse and the storage are all in place and only the GATE is missing.
+  ⚠ `stronglyRestricted` (the NPC build-lockdown) is the SAME axis and lands with it, as a civ-membership clause
+  rather than a policy ([json.md §9](../../specs/json.md)).
+  ⛔ This entry previously read "…when NPC civilizations are wired" and sat unread for that reason: the
+  precondition named nobody's job, so a missing gate read as a schedule.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework, and with it the two corp shapes
   no corporation authors: the HQ FREE UNIT — a `grants` payload, so it lands on the trigger plane off the
   headquarters fact ([triggers.md](../../specs/triggers.md)), never as an info getter — and corp-vs-corp
@@ -455,8 +482,10 @@
   dictionary already handles, being an int slot rather than a bit.
 - Re-fold a conditioned amenity on a BUILDING grantor when its condition moves (the empire half is covered).
   It wants the condition-dependency route the modifier consumer already derives.
-- Add `m_amenities` (and its fold leg) to `CvTraitInfo` / `CvTechInfo` WHEN data authors one — not before.
-  readJson already reports an entity authoring a block its type cannot hold.
+- Decide whether `CvTraitInfo` / `CvTechInfo` carry `m_amenities` and its fold leg. ⚑ The question is answerable
+  NOW rather than on a future authoring: readJson reports an entity authoring a block its type cannot hold, so
+  the tree already says whether any does — read it, then either wire the leg or record that the block does not
+  belong on those types.
 - The endpoint route table, beyond the stored-vs-oracle documents — it stays empty until the access surface can
   be read THROUGH ([http-endpoints.md](../../specs/http-endpoints.md)).
 - The `requires` BLOCK COMPOSER — deciding heading, ordering and which clauses compose one block, which is the
