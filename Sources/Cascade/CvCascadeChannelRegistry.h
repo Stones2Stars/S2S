@@ -128,6 +128,26 @@ public:
 	// empire 50 / team 3 authored channels). Reports what THIS registry minted, so it can only run once
 	// the load has pushed every compiled deposit: fired at GAME_LOAD_FINISHED, guarded to once per load.
 	static void reportChannelCensus();
+
+	// Emit ONE `plots`-target fan ([MODIFIER] plotsFan source=... scope=... entries=... cities=... plots=...).
+	// A plural-target deposit lands in each PLOT's own package (modifier.md §5), and NO served surface carries a
+	// plot package -- the cache documents stop at city scope -- so the fan is the one apply path whose result
+	// cannot be read back at all. That makes it unverifiable rather than merely unlogged
+	// ([validation.md]: a value not on the surface is not verifiable, and emitting it is step one of its fix).
+	// DIAGNOSTIC by kind: it says an apply RAN, never what the state IS, so nothing may build state from it
+	// ([event-spine.md] § THE RECEIVED LINE).
+	static void reportPlotsFan(const char* szSource, CvCascScope eEntryScope,
+		int iEntriesSelected, int iCitiesWalked, int iPlotsApplied,
+		int iEntriesResolved, int iMultiplicity);
+
+	// ONE city's growth arithmetic, decomposed into every term of both quantities. The threshold and the
+	// consumption are the two numbers a city grows on, and NEITHER is on any served surface -- so a report of
+	// "cities need less food than they used to" has no way to be attributed to a term. DIAGNOSTIC: it says what
+	// a calculation produced, never what the state IS.
+	static void reportGrowthRead(int iPlayer, int iHuman, int iCity, int iPop, int iFood, int iThreshold,
+		int iSpeedPercent, int iEraPercent, int iBaseThreshold,
+		int iConsumption, int iPerPop, int iFoodDifference,
+		int iDefineBase, int iDefineMult, int iNormalAI, int iGoldenAge);
 };
 
 #endif // CV_CASCADE_CHANNEL_REGISTRY_H

@@ -12,6 +12,7 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "CvFoldTargetInfo.h"   // complete type for the FOLDTARGET repo instance
 #include "InfoRepo.h"
 
 // Phantom tag types not already declared by InfoRepo.h (never dereferenced -- per-type discriminators only).
@@ -108,6 +109,7 @@ CASCADE_INFOREPO_ALIAS(CvSpecialUnitInfo,   m_paSpecialUnitInfo)   // #430: cons
 CASCADE_INFOREPO_ALIAS(CvVictoryInfo,       m_paVictoryInfo)       // #430: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_ALIAS(CvVoteInfo,          m_paVoteInfo)         // #430: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_ALIAS(CvHurryInfo,         m_paHurryInfo)        // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvFoldTargetInfo,    m_paFoldTargetInfo)   // #430: JSON-only fold sets (json.md par.3.5)
 CASCADE_INFOREPO_ALIAS(CvBonusClassInfo,    m_paBonusClassInfo)   // #430: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_ALIAS(CvWorldInfo,         m_paWorldInfo)        // #430 item 15: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_OWNED(CvSkillClsTag)        // the five generated classification categories (ClassificationRegistry)

@@ -31,6 +31,7 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `CORPORATION_` | a corporation | ✅ `corporations/` |
 | `CULTURELEVEL_` | a culture level | ✅ `culturelevels/` |
 | `FEATURE_` | a terrain feature | ✅ `features/` |
+| `FOLDTARGET_` | a generalized plot predicate's fold set — what `IS_WATER` and its kin MEAN, as the concrete substrate entities a deposit can land on ([json.md §3.5](json.md): we never fold onto a boolean) | ✅ `foldtargets/` |
 | `GAMESPEED_` | a game speed | ✅ `gamespeeds/` |
 | `HANDICAP_` | a handicap (difficulty) | ✅ `handicaps/` |
 | `HERITAGE_` | a heritage | ✅ `heritages/` |

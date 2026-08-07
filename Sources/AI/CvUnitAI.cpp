@@ -25764,9 +25764,11 @@ bool CvUnitAI::AI_choke(int iRange, bool bDefensive)
 				{
 					iValue += GET_PLAYER(pLoopPlot->getOwner()).AI_bonusVal(pLoopPlot->getBonusType(), 0);
 				}
-				iValue += pLoopPlot->getYield(YIELD_PRODUCTION) * 10;
-				iValue += pLoopPlot->getYield(YIELD_FOOD) * 10;
-				iValue += pLoopPlot->getYield(YIELD_COMMERCE) * 5;
+				int aiPlotYields100[NUM_YIELD_TYPES];
+				pLoopPlot->getYields(aiPlotYields100);   // ×100 group read (getYield is the EXE edge)
+				iValue += aiPlotYields100[YIELD_PRODUCTION] * 10;
+				iValue += aiPlotYields100[YIELD_FOOD] * 10;
+				iValue += aiPlotYields100[YIELD_COMMERCE] * 5;
 
 				if (bNoDefensiveBonus)
 				{

@@ -452,12 +452,14 @@ int CyCity::healthRate(int iExtra) const
 
 int CyCity::foodConsumption(bool bNoAngry, int iExtra) const
 {
-	return m_pCity->foodConsumption(bNoAngry, iExtra);
+	// THE READ EDGE -- the food plane is x100 native; Python sees whole food ([DEC-fixedpoint-x100]).
+	return m_pCity->foodConsumption(bNoAngry, iExtra) / 100;
 }
 
 int CyCity::foodDifference(bool bBottom) const
 {
-	return m_pCity->foodDifference(bBottom);
+	// THE READ EDGE -- the food plane is x100 native; Python sees whole food ([DEC-fixedpoint-x100]).
+	return m_pCity->foodDifference(bBottom) / 100;
 }
 
 int CyCity::growthThreshold() const
@@ -617,12 +619,14 @@ int CyCity::getNumGreatPeople() const
 
 int CyCity::getBaseGreatPeopleRate() const
 {
-	return m_pCity->getBaseGreatPeopleRate();
+	// THE READ EDGE -- ×100 becomes human here ([DEC-fixedpoint-x100]).
+	return m_pCity->getBaseGreatPeopleRate() / 100;
 }
 
 int CyCity::getGreatPeopleRate() const
 {
-	return m_pCity->getGreatPeopleRate();
+	// THE READ EDGE -- the modified rate carries the base's ×100, so it reduces here too.
+	return m_pCity->getGreatPeopleRate() / 100;
 }
 
 int CyCity::getGreatPeopleRateModifier() const

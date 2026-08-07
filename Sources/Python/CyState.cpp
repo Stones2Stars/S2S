@@ -364,8 +364,10 @@ int64_t CyState::getCityRealPopulation(int iPlayer, int iCity) const
 
 int CyState::getGreatPeopleRate(int iPlayer, int iCity) const
 {
+	// THE READ EDGE -- ×100 becomes human here ([DEC-fixedpoint-x100]). The PROGRESS beside it is the
+	// warehouse ledger and is already human, so only the RATE reduces.
 	const CvCity* pCity = cys_city(iPlayer, iCity);
-	return pCity ? pCity->getGreatPeopleRate() : 0;
+	return pCity ? pCity->getGreatPeopleRate() / 100 : 0;
 }
 
 int CyState::getGreatPeopleProgress(int iPlayer, int iCity) const

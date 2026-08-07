@@ -43,6 +43,7 @@
 #include "CvVoteInfo.h"
 #include "CvHurryInfo.h"
 #include "CvBonusClassInfo.h"
+#include "CvFoldTargetInfo.h"
 #include "CvInfos.h"               // the umbrella -- the remaining RJ_REPO_TYPES complete types with no own header
 #include "Data/CvReversePass.h"        // reversePassRun/reversePassCounts -- the ONE general reverse pass ([DEC-one-reverse-view])
 #include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates;
@@ -265,6 +266,7 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("CULTURELEVEL_",  CvCultureLevelInfo)   \
 	X("BUILD_",         CvBuildInfo)          \
 	X("WORLDSIZE_",     CvWorldInfo)          \
+	X("FOLDTARGET_",    CvFoldTargetInfo)    \
 	X("PROPERTY_",      CvPropertyInfo)
 
 // get-or-create the entity's CvInfo (the reader calls mapFrom on it); NULL for types with no repo home.

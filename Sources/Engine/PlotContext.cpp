@@ -291,6 +291,7 @@ void PlotContext::setPredicate(int predicateId, bool bHeld) const
 // eventless verdict (city presence) has no trigger to maintain a bit from (see the header) -----------------------
 bool PlotContext::hasFeature(int eFeature) const         { return m_plot != NULL && (int)m_plot->getFeatureType() == eFeature; }
 bool PlotContext::hasTerrain(int eTerrain) const         { return m_plot != NULL && (int)m_plot->getTerrainType() == eTerrain; }
+int  PlotContext::terrainId() const                      { return m_plot != NULL ? (int)m_plot->getTerrainType() : -1; }
 bool PlotContext::hasImprovement(int eImprovement) const { return m_plot != NULL && (int)m_plot->getImprovementType() == eImprovement; }
 bool PlotContext::hasRoute(int eRoute) const             { return m_plot != NULL && (int)m_plot->getRouteType() == eRoute; }
 bool PlotContext::hasBonus(int eBonus, int eTeam) const  { return m_plot != NULL && (int)m_plot->getBonusType((TeamTypes)eTeam) == eBonus; }

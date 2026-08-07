@@ -19,6 +19,7 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvGameSpeedScale.h"   // speedPercent -- the growth-threshold census term
 #include "CvModifierConsumer.h"
 #include "CvCascadePackage.h"
 #include "CvCascadeChannelRegistry.h"
@@ -260,6 +261,221 @@ namespace
 		city.getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
 	}
 
+	// A `plots`-TARGET deposit, resolved once PER PLOT so the entry's own filter (`enabled: IS_WATER`) decides
+	// which tiles take it (modifier.md §5).
+	//
+	// ⛔ eEntryScope IS THE WHOLE CORRECTNESS OF THIS FAN, and getting it wrong is not subtle: a CITY-scope entry
+	// belongs to the plots of the city HOLDING the source, an EMPIRE-scope one to every city's. Admitting both
+	// here made every Pier in the empire buff every city's tiles -- measured at ~231 food per plot, on land as
+	// well as water. The authored scope decides WHOSE plots; the entry's predicate decides WHICH.
+	//
+	// ⚖ THE TARGET IS THE PLOT'S **WORKING** CITY, never every city whose radius covers it. Radii overlap, so
+	// fanning over the radius would deposit a shared tile twice; the spec's own example is "every WORKED water
+	// plot", which is exactly this relation, and it rides a fact that already exists
+	// (SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED).
+	// ⚑ It lands in PLOTSEG_REST -- documented as "route + the OWNER'S PLOT-SCOPE FLATS", precisely this class.
+	// ⚖ THE LOAD-BRACKET BUFFER FOR `plots` DEPOSITS -- an ORDERING fact, never a staleness mechanism.
+	//
+	// ⛔ A `plots` fan CANNOT run during the save read, and this is the defect it exists to close: the empire-scope
+	// grantors announce from `CvPlayer::read`, which streams BEFORE the cities deserialize ([contexts.md]: "at load
+	// the civic facts fire from CvPlayer::read BEFORE the cities deserialize, so there is no city to fan to"). The
+	// fan iterated an EMPTY city list and every trait/civic water-plot deposit was applied to nothing and lost --
+	// silently, because applying to no owner raises nothing. Only the CITY leg worked, because a building fact
+	// comes from `CvCity::read` where its plots already exist.
+	//
+	// ⚑ So the load bracket's `plots` facts are BANKED and drained once at GAME_LOAD_FINISHED, when every city and
+	// plot stands -- the identical buffer-then-fold CityContext uses for its own membership facts, for the same
+	// reason. ⛔ It is NOT a deferred recompute: what is banked is the FACT (its source + signed multiplicity), and
+	// the drain applies exactly the deposits that fact names ([DEC-maintained-sum]). Nothing is re-derived from
+	// live state, so the oracle's recompute-from-source stays the only thing that does that.
+	struct PlotsFanFact
+	{
+		const CvInfo* pSource;
+		int iMultiplicity;
+		PlayerTypes eOwner;
+		int iCityId;        // -1 = the source is not city-bound (an empire grantor)
+	};
+	std::vector<PlotsFanFact> s_bankedPlotsFans;
+
+	// ⛔ THE SOURCE'S OWN ENTRIES ARE SELECTED **ONCE**, BEFORE ANY OWNER IS WALKED -- a consumer applies exactly
+	// the deposits the fact names and never sweeps a scope to find out whether it cares
+	// ([DEC-maintained-sum]: "emit liberally, apply precisely"). The overwhelming majority of sources author no
+	// `plots` deposit at all, and for those this must cost NOTHING: selecting inside the plot loop instead made
+	// every building fact walk every city's plots to discover it had nothing to do, which is a blanket sweep
+	// wearing an event's clothes.
+	// Returns false when this source has no such deposit at this scope, so the caller skips the fan entirely.
+	bool mc_selectPlotsTargetEntries(const std::vector<CvModEntry*>& entries, CvCascScope eEntryScope,
+		std::vector<const CvModEntry*>& selected)
+	{
+		static int s_iPlotsSeg = -2;
+		if (s_iPlotsSeg == -2)
+		{
+			s_iPlotsSeg = modSegmentLookup(std::string("plots"));
+		}
+		selected.clear();
+		if (s_iPlotsSeg < 0)
+		{
+			return false;   // no entity anywhere authored a `plots` target
+		}
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = entries[iEntry];
+			if (pEntry != NULL && pEntry->scope == (int)eEntryScope && pEntry->targetSeg == s_iPlotsSeg)
+			{
+				selected.push_back(pEntry);
+			}
+		}
+		return !selected.empty();
+	}
+
+	// Returns how many PLOTS actually took a deposit -- the fan's only readback, since no served surface carries a
+	// plot package (CascadeChannelRegistry::reportPlotsFan). A zero here with a non-empty `selected` is the
+	// signature of an entry that SELECTED but never RESOLVED, which nothing else in the engine would show.
+	int g_iFanResolved = 0;   // scratch: how many (plot × entry) pairs resolveEntry accepted, per reported fan
+	int mc_applyPlotsTargetDeposits(const std::vector<const CvModEntry*>& selected, int iMultiplicity,
+		int iSourceIndex, const CvCity& city)
+	{
+		int iPlotsApplied = 0;
+		const int iNumPlots = city.getNumCityPlots();
+		for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
+		{
+			CvPlot* pLoopPlot = city.getCityIndexPlot(iPlotIndex);
+			if (pLoopPlot == NULL || pLoopPlot->getWorkingCity() != &city)
+			{
+				continue;
+			}
+			CvCascadeEvalCtx evalCtx;
+			InfoValuation::fillEvalCtxAtPlot(*pLoopPlot, evalCtx);
+			bool bApplied = false;
+			for (size_t iEntry = 0; iEntry < selected.size(); ++iEntry)
+			{
+				const CvModEntry* pEntry = selected[iEntry];
+				int iChannel = -1;
+				bool bPercentSide = false;
+				int64_t iValue = 0;
+				if (!MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_PLOT,
+					evalCtx, pLoopPlot, 0, false, iChannel, bPercentSide, iValue))
+				{
+					continue;
+				}
+				++g_iFanResolved;
+				// the ORIGIN RULE: plot is yield-only, so a plot-landing percent has no side to land on
+				if (!bPercentSide)
+				{
+					pLoopPlot->getCascadePackage().applyPlotSegment(
+						CvCascadePackage<CvPlot>::PLOTSEG_REST, iChannel, iValue);
+					bApplied = true;
+				}
+			}
+			if (bApplied)
+			{
+				pLoopPlot->getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
+				++iPlotsApplied;
+			}
+		}
+		return iPlotsApplied;
+	}
+
+	// Drain the load bracket's banked `plots` facts, ONCE, with every city and plot standing. Each banked fact
+	// applies exactly the deposits it named -- the same two legs the play-time path runs, in the same order.
+	void mc_drainBankedPlotsFans()
+	{
+		if (s_bankedPlotsFans.empty())
+		{
+			return;
+		}
+		for (size_t iFact = 0; iFact < s_bankedPlotsFans.size(); ++iFact)
+		{
+			const PlotsFanFact& kFact = s_bankedPlotsFans[iFact];
+			if (kFact.pSource == NULL || kFact.eOwner == NO_PLAYER)
+			{
+				continue;
+			}
+			const CvModifiers* pModifiers = kFact.pSource->getModifiers();
+			if (pModifiers == NULL || pModifiers->empty())
+			{
+				continue;
+			}
+			const std::vector<CvModEntry*>& entries = pModifiers->entries();
+			const int iSourceIndex = DepositIndex::sourceIndexOf(kFact.pSource);
+			const CvPlayer& kOwner = GET_PLAYER(kFact.eOwner);
+
+			std::vector<const CvModEntry*> selected;
+			if (kFact.iCityId >= 0 && mc_selectPlotsTargetEntries(entries, CASC_SCOPE_CITY, selected))
+			{
+				const CvCity* pCity = kOwner.getCity(kFact.iCityId);
+				int iPlots = 0;
+				g_iFanResolved = 0;
+				if (pCity != NULL)
+				{
+					iPlots = mc_applyPlotsTargetDeposits(selected, kFact.iMultiplicity, iSourceIndex, *pCity);
+				}
+				CascadeChannelRegistry::reportPlotsFan(kFact.pSource->getType(), CASC_SCOPE_CITY,
+					(int)selected.size(), (pCity != NULL) ? 1 : 0, iPlots,
+					g_iFanResolved, kFact.iMultiplicity);
+			}
+			if (mc_selectPlotsTargetEntries(entries, CASC_SCOPE_EMPIRE, selected))
+			{
+				int iCities = 0;
+				int iPlots = 0;
+				g_iFanResolved = 0;
+				for (CvPlayer::city_iterator cityIterator = kOwner.beginCities();
+					cityIterator != kOwner.endCities(); ++cityIterator)
+				{
+					if (*cityIterator != NULL)
+					{
+						++iCities;
+						iPlots += mc_applyPlotsTargetDeposits(selected, kFact.iMultiplicity, iSourceIndex, **cityIterator);
+					}
+				}
+				CascadeChannelRegistry::reportPlotsFan(kFact.pSource->getType(), CASC_SCOPE_EMPIRE,
+					(int)selected.size(), iCities, iPlots,
+					g_iFanResolved, kFact.iMultiplicity);
+			}
+		}
+		s_bankedPlotsFans.clear();
+		std::vector<PlotsFanFact>().swap(s_bankedPlotsFans);   // the bank is a load-time scratch, not resident state
+	}
+
+	// ONE-SHOT growth census: every term of the two numbers a city grows on (the threshold and the consumption),
+	// for the ACTIVE player's cities. Neither quantity is on any served surface, so a report that cities need
+	// less food than they used to cannot otherwise be attributed to a term ([validation.md]: a value not on the
+	// surface is not verifiable, and emitting it is step one of its fix). DIAGNOSTIC, so it costs nothing until
+	// the stream gate asks for it, and nothing builds state from it.
+	void mc_reportGrowthCensus()
+	{
+		// ⛔ EVERY player, each line NAMING its owner. Walking getActivePlayer() alone reads whichever player the
+		// save happens to sit on -- which is not necessarily the HUMAN, and the AI handicap discount applies only
+		// to an AI (isNormalAI), so a census of the wrong player attributes a legitimate discount to a defect.
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive())
+			{
+				continue;
+			}
+			const int iSpeedPercent = CvGameSpeedScale::speedPercent();
+			const int iEraPercent = GC.getEraInfo(kPlayer.getCurrentEra()).getScalar(
+				SCALAR_GROWTH, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
+			for (CvPlayer::city_iterator cityIterator = kPlayer.beginCities();
+				cityIterator != kPlayer.endCities(); ++cityIterator)
+			{
+				const CvCity* pCity = *cityIterator;
+				if (pCity == NULL)
+				{
+					continue;
+				}
+				CascadeChannelRegistry::reportGrowthRead(
+					iPlayer, kPlayer.isHuman() ? 1 : 0,
+					pCity->getID(), pCity->getPopulation(), pCity->getFood(), pCity->growthThreshold(),
+					iSpeedPercent, iEraPercent, kPlayer.getGrowthThreshold(pCity->getPopulation()),
+					pCity->foodConsumption(), pCity->getFoodConsumedPerPopulation(), pCity->foodDifference(),
+					GC.getDefineINT("BASE_CITY_GROWTH_THRESHOLD"), GC.getDefineINT("CITY_GROWTH_MULTIPLIER"),
+					kPlayer.isNormalAI() ? 1 : 0, kPlayer.isGoldenAge() ? 1 : 0);
+			}
+		}
+	}
+
 	// Apply ONE source's compiled deposits into every package they feed. The scopes a source reaches come from
 	// its own entries (resolveEntry declines any entry not at the scope being applied), so nothing here decides
 	// what a source deposits -- only WHERE the owner objects are.
@@ -310,9 +526,37 @@ namespace
 
 		// CITY: the city the fact names, else every city of the owner -- an above-city deposit rolls DOWN, and
 		// the `cities` plural fan resolves PER CITY so each one's own `per` scalers and conditions apply.
+		// ⚑ THE `plots` FANS ARE BANKED WHILE THE SAVE IS STREAMING and drained at GAME_LOAD_FINISHED (see
+		// PlotsFanFact): during the read the cities a fan needs may not exist yet, and applying to an absent
+		// owner loses the deposit with nothing raised.
+		const bool bBankPlotsFan = spineGameLoadInProgress();
+		if (bBankPlotsFan && (pCity != NULL || pPlayer != NULL))
+		{
+			PlayerTypes eOwner = (pPlayer != NULL) ? pPlayer->getID()
+				: ((pCity != NULL) ? pCity->getOwner() : NO_PLAYER);
+			if (eOwner != NO_PLAYER)
+			{
+				PlotsFanFact kFact;
+				kFact.pSource = pSourceInfo;
+				kFact.iMultiplicity = iMultiplicity;
+				kFact.eOwner = eOwner;
+				kFact.iCityId = (pCity != NULL) ? pCity->getID() : -1;
+				s_bankedPlotsFans.push_back(kFact);
+			}
+		}
+
 		if (pCity != NULL)
 		{
 			mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, *pCity);
+			// a CITY-scope `plots` deposit reaches THIS city's worked plots and no other city's
+			std::vector<const CvModEntry*> cityPlotEntries;
+			if (!bBankPlotsFan && mc_selectPlotsTargetEntries(entries, CASC_SCOPE_CITY, cityPlotEntries))
+			{
+				g_iFanResolved = 0;
+				const int iPlots = mc_applyPlotsTargetDeposits(cityPlotEntries, iMultiplicity, iSourceIndex, *pCity);
+				CascadeChannelRegistry::reportPlotsFan(pSourceInfo->getType(), CASC_SCOPE_CITY,
+					(int)cityPlotEntries.size(), 1, iPlots, g_iFanResolved, iMultiplicity);
+			}
 		}
 		else if (pPlayer != NULL)
 		{
@@ -324,6 +568,32 @@ namespace
 					mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, **cityIterator);
 				}
 			}
+		}
+
+		// An EMPIRE-scope `plots` deposit (the Colossus's water commerce, the Seafaring traits' water food) is
+		// the one that genuinely reaches every city's plots -- so it fans off the OWNER regardless of which
+		// object the fact named, and never rides the city branch above.
+		const CvPlayer* pPlotsOwner = (pPlayer != NULL) ? pPlayer
+			: ((pCity != NULL && pCity->getOwner() != NO_PLAYER) ? &GET_PLAYER(pCity->getOwner()) : NULL);
+		std::vector<const CvModEntry*> empirePlotEntries;
+		// selected ONCE, before any city is walked -- a source with no empire-scope `plots` deposit costs nothing
+		if (!bBankPlotsFan && pPlotsOwner != NULL
+			&& mc_selectPlotsTargetEntries(entries, CASC_SCOPE_EMPIRE, empirePlotEntries))
+		{
+			int iCities = 0;
+			int iPlots = 0;
+			g_iFanResolved = 0;
+			for (CvPlayer::city_iterator cityIterator = pPlotsOwner->beginCities();
+				cityIterator != pPlotsOwner->endCities(); ++cityIterator)
+			{
+				if (*cityIterator != NULL)
+				{
+					++iCities;
+					iPlots += mc_applyPlotsTargetDeposits(empirePlotEntries, iMultiplicity, iSourceIndex, **cityIterator);
+				}
+			}
+			CascadeChannelRegistry::reportPlotsFan(pSourceInfo->getType(), CASC_SCOPE_EMPIRE,
+				(int)empirePlotEntries.size(), iCities, iPlots, g_iFanResolved, iMultiplicity);
 		}
 
 		// EMPIRE and TEAM: both read the empire ctx (team is the TECH BRIDGE and holds no context of its own --
@@ -473,8 +743,17 @@ namespace
 
 	// The source-carrying application: the source's own deposits (PLANE A, applied here) plus everything
 	// conditioned ON the source -- a deposit gated on this entity's presence. That second half is the ATOM
-	// route (plane C) and is NOT wired: the reverse index still answers it as a MASK, and a mask has nothing
-	// to apply. It stays a hole until dependencyForType returns the deposits the atom gates.
+	// route (plane C) and is NOT wired.
+	// ⛔ THE REASON IS THE WITHDRAWAL, NOT THE INDEX -- and the index reason that used to stand here is STALE.
+	// DepositIndex::gatedByType already answers with the DEPOSIT LIST an atom gates (di_scanConditionTree pushes
+	// every CASC_COND_PRESENCE type into s_gatedByType), so the arrival half is one mc_applyGated call away.
+	// What blocks it is that these facts are emitted AFTER the state moves -- CvCity::processBonus announces the
+	// crossing once the plot group's count has already changed -- while mc_applyGated resolves each entry through
+	// applies() against the LIVE ctx. So a REMOVED fact evaluates a gate that no longer holds, resolveEntry
+	// returns false, and nothing is withdrawn.
+	// ⚠ Wiring the arrival alone would therefore be WORSE than the present hole: an unwithdrawn deposit compounds
+	// on every re-acquisition, where today it is merely absent ([state-repositories.md] § THE INVARIANT -- a
+	// withdrawal is exact only if the fact is emitted while the old state still holds).
 	void mc_applySource(const CvInfo* pSourceInfo, int iMultiplicity, int iEventId,
 		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot)
 	{
@@ -1008,6 +1287,8 @@ namespace
 			// ---- the load bracket end: DRAIN the banked marks, then the channel-set census ----
 			case SEVT_GAME_LOAD_FINISHED:
 			{
+				mc_drainBankedPlotsFans();
+				mc_reportGrowthCensus();
 				CascadeChannelRegistry::reportChannelCensus();
 				break;
 			}

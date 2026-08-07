@@ -22921,9 +22921,13 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 			iThreshold = getModifiedIntValue(iThreshold, iMod);
 		}
 	}
+	// ⚖ THE GOLDEN-AGE DISCOUNT APPLIES TO THE COMPLETED THRESHOLD (owner) -- the calculation finishes first
+	// (base + the per-pop ramp, then gamespeed, era and the AI handicap), and the percent comes off that final
+	// number. It is deliberately NOT folded into the base, where it would discount only the flat term and leave
+	// the per-pop ramp untouched.
 	if (isGoldenAge())
 	{
-		iThreshold = getModifiedIntValue(iThreshold, GC.getDefineINT("GOlDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH"));
+		iThreshold = getModifiedIntValue(iThreshold, GC.getDefineINT("GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH"));
 	}
 	return std::max(1, iThreshold);
 }

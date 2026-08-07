@@ -2643,10 +2643,12 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			const FeatureTypes eFeature = pLoopPlot->getFeatureType();
 			int aiYield[NUM_YIELD_TYPES];
 
+			int aiPlotYields100[NUM_YIELD_TYPES];
+			pLoopPlot->getYields(aiPlotYields100);   // ×100 group read (getYield is the EXE edge)
 			for (int iYieldType = 0; iYieldType < NUM_YIELD_TYPES; ++iYieldType)
 			{
 				const YieldTypes eYield = (YieldTypes)iYieldType;
-				aiYield[eYield] = pLoopPlot->getYield(eYield);
+				aiYield[eYield] = aiPlotYields100[eYield];
 
 				if (iI == CITY_HOME_PLOT)
 				{
@@ -2886,11 +2888,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			if ((pLoopPlot->isWater() || pLoopPlot->area() == pArea)
 			&& plotDistance(iX, iY, pLoopPlot->getX(), pLoopPlot->getY()) <= iRange)
 			{
+				int aiRangeYields100[NUM_YIELD_TYPES];
+				pLoopPlot->getYields(aiRangeYields100);   // ×100 group read (getYield is the EXE edge)
 				const int iTempValue =
 					(
-						13 * pLoopPlot->getYield(YIELD_FOOD) +
-						11 * pLoopPlot->getYield(YIELD_PRODUCTION) +
-						 7 * pLoopPlot->getYield(YIELD_COMMERCE)
+						13 * aiRangeYields100[YIELD_FOOD] +
+						11 * aiRangeYields100[YIELD_PRODUCTION] +
+						 7 * aiRangeYields100[YIELD_COMMERCE]
 					);
 				if (iTempValue < 28)
 				{
@@ -2920,7 +2924,9 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			if (pLoopPlot != NULL && pLoopPlot->isWater())
 			{
 				iWaterCount++;
-				if (pLoopPlot->getYield(YIELD_FOOD) <= 100)
+				int aiWaterYields100[NUM_YIELD_TYPES];
+				pLoopPlot->getYields(aiWaterYields100);   // ×100 group read (getYield is the EXE edge)
+				if (aiWaterYields100[YIELD_FOOD] <= 100)
 				{
 					iWaterCount++;
 				}
@@ -3397,7 +3403,9 @@ CvCity* CvPlayerAI::AI_findTargetCity(const CvArea* pArea) const
 
 bool CvPlayerAI::AI_isCommercePlot(const CvPlot* pPlot) const
 {
-	return pPlot->getYield(YIELD_FOOD) >= GC.getFOOD_CONSUMPTION_PER_POPULATION() * 100;
+	int aiYields100[NUM_YIELD_TYPES];
+	pPlot->getYields(aiYields100);   // ×100 group read (getYield is the EXE edge)
+	return aiYields100[YIELD_FOOD] >= GC.getFOOD_CONSUMPTION_PER_POPULATION() * 100;
 }
 
 bool CvPlayerAI::AI_getVisiblePlotDanger(const CvPlot* pPlot, int iRange, bool bAnimalOnly, CvSelectionGroup* group, int acceptableOdds) const
@@ -13509,7 +13517,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	{
 		foreach_(const CvCity * pLoopCity, cities())
 		{
-			iTempValue += pLoopCity->foodDifference(false, true, true);
+			iTempValue += pLoopCity->foodDifference(false, true, true) / 100;   // weighed beside whole AI terms
 		}
 		//If not at war Food is generally more valuable then hammers
 		if (!bWarPlan)
@@ -13758,7 +13766,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			{
 				int iCityHappy = pLoopCity->netHappiness();
 				int iCurrentFoodToGrow = pLoopCity->growthThreshold();
-				int iFoodPerTurn = pLoopCity->foodDifference(false, true, true);
+				// reduced at this use: it DIVIDES the whole-unit growth threshold below
+				int iFoodPerTurn = pLoopCity->foodDifference(false, true, true) / 100;
 				int iCityValue = 0;
 
 				if (iFoodPerTurn > 0 && iCityHappy >= 0)
@@ -15976,8 +15985,9 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 			{
 			iValue += 8 * iAvgFoodShortage * iAvgFoodShortage;
 			}*/
-			int iAvgFoodShortage = std::max(0, iBaseUnhealth - iCityHealth) - pCity->foodDifference();
-			iAvgFoodShortage += std::max(0, -iCityHealth) - pCity->foodDifference();
+			// reduced at this use: weighed against whole health counters
+			int iAvgFoodShortage = std::max(0, iBaseUnhealth - iCityHealth) - pCity->foodDifference() / 100;
+			iAvgFoodShortage += std::max(0, -iCityHealth) - pCity->foodDifference() / 100;
 
 			iAvgFoodShortage /= 2;
 
@@ -17110,7 +17120,8 @@ void CvPlayerAI::AI_doCivics()
 	{
 		int iCityHappy = pLoopCity->netHappiness();
 		int iCurrentFoodToGrow = pLoopCity->growthThreshold();
-		int iFoodPerTurn = pLoopCity->foodDifference(false, true, true);
+		// reduced at this use: it DIVIDES the whole-unit growth threshold below
+		int iFoodPerTurn = pLoopCity->foodDifference(false, true, true) / 100;
 		int iCityValue = 0;
 
 		

@@ -1086,6 +1086,17 @@ int cvInternalGlobals::getNumBonusClassInfos() const
 	return (int)m_paBonusClassInfo.size();
 }
 
+int cvInternalGlobals::getNumFoldTargetInfos() const
+{
+	return (int)m_paFoldTargetInfo.size();
+}
+
+CvFoldTargetInfo& cvInternalGlobals::getFoldTargetInfo(int iIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumFoldTargetInfos(), iIndex);
+	return infoArrayAt(m_paFoldTargetInfo, iIndex, "m_paFoldTargetInfo");
+}
+
 CvBonusClassInfo& cvInternalGlobals::getBonusClassInfo(BonusClassTypes eBonusNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusClassInfos(), eBonusNum);

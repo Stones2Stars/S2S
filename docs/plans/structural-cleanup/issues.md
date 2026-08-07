@@ -1025,46 +1025,18 @@ traceback and the handler's whole body. **Consider it a suspect for the turn-tim
 correctness one.
 
 
-## ⛔ `CvCity::getBaseGreatPeopleRate` STILL REDUCES — and converting it is a SAVE decision
+## ⛔ THE MAINTENANCE RECEIVER — its participation gate is missing a side
 
-The last interior `÷100` on the yield/GPP surface. ⛔ It is NOT parked for convenience: converting it is a
-**save-semantics change and therefore an owner call**, which is the one thing that outranks the scale rule here.
+`InfoValuation::realizedAtEmpire`'s receiver Σ gates participation on `isDisorder()` alone. That is correct for
+the four COMMERCE channels, whose per-city rate is already 0 under disorder. It is **incomplete for
+MAINTENANCE**, the one non-commerce receiver: [economy.md](../../reference/economy.md) states a city emits 0
+instead of its maintenance package under **WE LOVE THE KING DAY as well as disorder**, and WLTKD is the sole
+gameplay effect that status has. So an empire currently pays maintenance for every celebrating city.
+⚑ The gate belongs at the Σ and nowhere else — WLTKD is a duration-1 status re-applied every turn, so a
+maintained membership delta would flip a member in and out every turn over a number that never moved.
 
-`getBaseGreatPeopleRate` feeds `getGreatPeopleRate()` → `changeGreatPeopleProgress()` → the **SERIALIZED**
-`m_iGreatPeopleProgress`, which is compared against `greatPeopleThresholdNonMilitary()` (human). Making the rate
-×100 changes what an existing save's stored progress MEANS — real save-break #1, the silent-wrong-load class
-([save.md §7](../../specs/save.md)), not the soft field-widening class. Lifting the threshold to match leaves
-every existing save's progress reading 100× short, so great people would effectively stop arriving.
-
-**What it needs:** an owner ruling on whether to take the break (and mark it `@SAVEBREAK`), or to leave this one
-getter reducing as the point of use for a whole-count accumulator. ⚠ One consumer already assumes human and
-would move with it either way: `CvCityAI:5860` compares against a literal `kTargetGPRate = 10`.
-
-## ⛔ THE COMMERCE SLIDER MOVES NOTHING — the empire receiver is not summing its cities
-
-**Symptom (owner, live): raising or lowering the commerce slider changes nothing at all.**
-
-`CvPlayer::getCommerces` returns `InfoValuation::realizedAtEmpire(*this, iChannel)` — the empire's OWN package
-roll-up — where [state-repositories.md](../../architecture/state-repositories.md) requires the opposite:
-
-> *"A CROSS-SCOPE receiver total is the Σ of its MEMBERS' REALIZED values — the empire's gold / research /
-> culture / espionage sums are Σ over the player's cities of each city's realized rate of that channel."*
-
-⚑ **The city half is CORRECT and is simply not consumed.** `CvCity::getCommerces` splits the city's commerce
-yield by the empire sliders through the ONE combine (`InfoValuation::commerceSplit`, fed
-`EmpireContext::commerceRates`), so each city's split does move with the slider — and the empire total is
-derived from a different quantity the slider never touches. Hence a slider move with no visible effect.
-⛔ The same doc names the shape directly: *"An upper scope's own package is NEVER added on top of that Σ: its
-deposits roll DOWN and are therefore already inside every member's realized value"* — so `realizedAtEmpire` is
-not merely incomplete here, it is the wrong source for a RECEIVER channel.
-
-**What the fix owes, so it is not done by halves:**
-
-- the Σ over the player's cities of each city's REALIZED commerce (not a deposit sum);
-- the **participation gate at the Σ** — a city under DISORDER or WLTKD contributes 0 rather than being marked
-  ([economy.md](../../reference/economy.md); the gate belongs at the sum, never on a maintained membership delta);
-- a check of which OTHER channels read `realizedAtEmpire` where they should sum members. ⚠ **CULTURE is the
-  lone dual consumer** (city and empire both sum the same packages), and MAINTENANCE is the one non-commerce
-  receiver — both need deciding explicitly rather than swept with the commerce four.
-
-⚠ Unrelated to the scale unification; found by testing after it, not caused by it.
+⚠ **UNVERIFIED, and deliberately not asserted here:** whether `cityReceiverRate` is the right MEMBER quantity for
+maintenance at all. economy.md composes a city's realized maintenance from the three component KINDS, each
+against its own modifiers, with the `amount` stack over the total and `MAINTENANCE_CORPORATION` skipped — which
+is not what a single-channel receiver read answers. Establish that before changing it; do not infer the
+component set from the enum.

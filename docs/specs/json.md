@@ -228,9 +228,36 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 > is an XML-only Type referenced from `requires.build` ([naming.md](naming.md)). Their space-map extensions are
 > defined by the space-map work.
 
+> **⛔ A GENERALIZED PLOT PREDICATE RESOLVES THROUGH A `foldTargets` INFO — WE NEVER FOLD ONTO A BOOLEAN
+> (owner).** *"We can never fold onto a boolean predicate, we need a target to fold onto."* A deposit lands on a
+> concrete substrate ENTITY (a terrain, an improvement), so a predicate that names a CATEGORY rather than an
+> entity — `IS_WATER`, `IS_LAND`, `HAS_HILLS`, `HAS_PEAK`, `IS_FLATLANDS`, and the space/planet domains — has
+> nothing to attach to and silently delivers NOTHING. ⚑ **The failure is total and silent, which is why this is a
+> hard rule:** every `IS_WATER`-conditioned plot deposit in the shipped data (Lighthouse, Pier, Seawalls,
+> Fisherman's Hut, the Seafaring achievement) resolved on ZERO plots, while the river/irrigation deposits beside
+> them — whose plots carry an improvement to fold onto — applied normally. Nothing errored and no value looked
+> wrong; the yield was simply absent.
+> ⇒ **Each generalized plot type is a PREDETERMINED INFO** under `Assets/Data/foldtargets/`, one object per file,
+> naming the concrete substrate entities it means (`IS_WATER` → the ocean / sea / coast / trench / lake terrains).
+> The evaluator resolves the predicate against that set, so the fold always has a real target.
+> ⚑ **The point is MODDER LEGIBILITY, not engine convenience (owner): *"this gives understandable options for the
+> modders going forward."*** It is §1's one promise applied to the plot plane — the data reads cold, so what
+> `IS_WATER` MEANS is readable in a file instead of being a hidden engine table. ⛔ So it is DATA, never a
+> hardcoded id list in C++: a new water terrain joins by being named there, with no engine change.
+> ⚠ **A relief predicate needs no carve-out** — `TERRAIN_HILL` and `TERRAIN_PEAK` are real authored terrains, so
+> `HAS_HILLS`/`HAS_PEAK` fold exactly like the rest and nothing special-cases them.
+> ⚑ **A file exists for a predicate the DATA authors, never speculatively** — the registry is open like its
+> siblings (§8), so `IS_LAND` / `IS_FLATLANDS` / `HAS_HILLS` get one the moment a deposit names them.
+> ⚖ **THE GRANULAR DIFFERENTIATION IS THE SECOND STEP, DELIBERATELY (owner): *"I want this to just work first,
+> then … use the capability to differentiate between similar types, the way the old xml did super granularly."***
+> The fold set is what makes that reachable — once a predicate resolves to a NAMED set, distinguishing coast from
+> ocean from deep-sea is authoring another set rather than an engine change. ⛔ Do not build the granular split
+> ahead of the plain one working; this is an owner-ruled ORDERING, so
+> [DEC-no-deferred](../architecture/decisions.md#dec-no-deferred) does not reach it.
+
 - **bare** (parameter-free string), four groups:
   - **environment / domain** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_AIR` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
-    (extensible).
+    (extensible) — each a `foldTargets` info per the ruling above.
   - **relief form** `IS_FLATLANDS`: a plot with **no relief** — neither hills nor peak.
     It is relief-only (water is also relief-free), so **flat land** composes it with the domain: `{all:["IS_LAND","IS_FLATLANDS"]}`.
     The engine's per-plot-TYPE `PLOT_LAND` accumulator maps to exactly that pair.

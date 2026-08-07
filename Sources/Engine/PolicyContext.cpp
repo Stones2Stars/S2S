@@ -11,6 +11,8 @@
 #include "Infos/CvCivicInfo.h"
 #include "Infos/CvTraitInfo.h"
 #include "Data/CvDepositRead.h"                // MMKernel::traitData -- the option-selected active trait set
+#include "Repos/InfoRepo.h"                    // InfoRepo<CvCivicInfo> -- included directly rather than relied on
+                                               // transitively: unity batching decides what a neighbour exposes
 
 namespace
 {

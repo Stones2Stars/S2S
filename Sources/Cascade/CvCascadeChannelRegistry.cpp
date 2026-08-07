@@ -534,14 +534,25 @@ namespace
 	// ---- the [MODIFIER] domain registration (event ids + field tags are DOMAIN-LOCAL) ----
 	enum ModifierDomainEvent
 	{
-		MODEVT_CHANNEL_CENSUS = 1   // the load-end per-scope channel-set census (KEYS ONLY WHERE NEEDED)
+		MODEVT_CHANNEL_CENSUS = 1,  // the load-end per-scope channel-set census (KEYS ONLY WHERE NEEDED)
+		MODEVT_PLOTS_FAN,           // one `plots`-target fan applied (the plot plane's only readback)
+		MODEVT_GROWTH_READ          // one city's growth threshold + consumption, term by term
 	};
 	enum ModifierDomainField
 	{
 		MODF_SCOPE = 0,
 		MODF_AUTHORED,
 		MODF_SLOTS,
-		MODF_RECEIVERS
+		MODF_RECEIVERS,
+		MODF_SOURCE,
+		MODF_ENTRIES,
+		MODF_CITIES,
+		MODF_PLOTS,
+		MODF_RESOLVED,
+		MODF_MULT,
+		MODF_PLAYER, MODF_HUMAN, MODF_CITY, MODF_POP, MODF_FOOD, MODF_THRESHOLD, MODF_SPEEDPCT,
+		MODF_ERAPCT, MODF_BASETHRESH, MODF_CONSUMPTION, MODF_PERPOP, MODF_FOODDIFF,
+		MODF_DEFBASE, MODF_DEFMULT, MODF_NORMALAI, MODF_GOLDENAGE
 	};
 
 	const char* cr_modifierDomainPrefix(int iEventId)
@@ -549,6 +560,8 @@ namespace
 		switch (iEventId)
 		{
 		case MODEVT_CHANNEL_CENSUS: return "[MODIFIER] channels";
+		case MODEVT_PLOTS_FAN:      return "[MODIFIER] plotsFan";
+		case MODEVT_GROWTH_READ:    return "[MODIFIER] growthRead";
 		default:                    return "[MODIFIER] ?";
 		}
 	}
@@ -561,6 +574,28 @@ namespace
 		case MODF_AUTHORED:  *peType = SFT_INT; return "authored";
 		case MODF_SLOTS:     *peType = SFT_INT; return "slots";
 		case MODF_RECEIVERS: *peType = SFT_INT; return "receivers";
+		case MODF_SOURCE:    *peType = SFT_STR; return "source";
+		case MODF_ENTRIES:   *peType = SFT_INT; return "entries";
+		case MODF_CITIES:    *peType = SFT_INT; return "cities";
+		case MODF_PLOTS:     *peType = SFT_INT; return "plots";
+		case MODF_RESOLVED:  *peType = SFT_INT; return "resolved";
+		case MODF_MULT:      *peType = SFT_INT; return "mult";
+		case MODF_PLAYER:      *peType = SFT_INT; return "player";
+		case MODF_HUMAN:       *peType = SFT_INT; return "human";
+		case MODF_CITY:        *peType = SFT_INT; return "city";
+		case MODF_POP:         *peType = SFT_INT; return "pop";
+		case MODF_FOOD:        *peType = SFT_INT; return "food";
+		case MODF_THRESHOLD:   *peType = SFT_INT; return "threshold";
+		case MODF_SPEEDPCT:    *peType = SFT_INT; return "speedPct";
+		case MODF_ERAPCT:      *peType = SFT_INT; return "eraPct";
+		case MODF_BASETHRESH:  *peType = SFT_INT; return "baseThresh";
+		case MODF_CONSUMPTION: *peType = SFT_INT; return "consumption";
+		case MODF_PERPOP:      *peType = SFT_INT; return "perPop";
+		case MODF_FOODDIFF:    *peType = SFT_INT; return "foodDiff";
+		case MODF_DEFBASE:     *peType = SFT_INT; return "defBase";
+		case MODF_DEFMULT:     *peType = SFT_INT; return "defMult";
+		case MODF_NORMALAI:    *peType = SFT_INT; return "normalAI";
+		case MODF_GOLDENAGE:   *peType = SFT_INT; return "goldenAge";
 		default:             *peType = SFT_INT; return NULL;
 		}
 	}
@@ -630,4 +665,46 @@ void CascadeChannelRegistry::reportChannelCensus()
 				cr_scopeName(iScope), iSlots, (int)CASCADE_RECEIVER_BIT_FIRST).c_str(), true, false);
 		}
 	}
+}
+
+void CascadeChannelRegistry::reportPlotsFan(const char* szSource, CvCascScope eEntryScope,
+	int iEntriesSelected, int iCitiesWalked, int iPlotsApplied,
+	int iEntriesResolved, int iMultiplicity)
+{
+	cr_ensureModifierDomain();
+	CvSpineEvent fan(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_PLOTS_FAN, 2);
+	fan.addStr(MODF_SOURCE, (szSource != NULL) ? szSource : "?");
+	fan.addStr(MODF_SCOPE, cr_scopeName(eEntryScope));
+	fan.addI(MODF_ENTRIES, iEntriesSelected);
+	fan.addI(MODF_CITIES, iCitiesWalked);
+	fan.addI(MODF_PLOTS, iPlotsApplied);
+	fan.addI(MODF_RESOLVED, iEntriesResolved);
+	fan.addI(MODF_MULT, iMultiplicity);
+	eventSpine().emit(fan);
+}
+
+void CascadeChannelRegistry::reportGrowthRead(int iPlayer, int iHuman, int iCity, int iPop, int iFood, int iThreshold,
+	int iSpeedPercent, int iEraPercent, int iBaseThreshold,
+	int iConsumption, int iPerPop, int iFoodDifference,
+	int iDefineBase, int iDefineMult, int iNormalAI, int iGoldenAge)
+{
+	cr_ensureModifierDomain();
+	CvSpineEvent growth(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_GROWTH_READ, 2);
+	growth.addI(MODF_PLAYER, iPlayer);
+	growth.addI(MODF_HUMAN, iHuman);
+	growth.addI(MODF_CITY, iCity);
+	growth.addI(MODF_POP, iPop);
+	growth.addI(MODF_FOOD, iFood);
+	growth.addI(MODF_THRESHOLD, iThreshold);
+	growth.addI(MODF_SPEEDPCT, iSpeedPercent);
+	growth.addI(MODF_ERAPCT, iEraPercent);
+	growth.addI(MODF_BASETHRESH, iBaseThreshold);
+	growth.addI(MODF_CONSUMPTION, iConsumption);
+	growth.addI(MODF_PERPOP, iPerPop);
+	growth.addI(MODF_FOODDIFF, iFoodDifference);
+	growth.addI(MODF_DEFBASE, iDefineBase);
+	growth.addI(MODF_DEFMULT, iDefineMult);
+	growth.addI(MODF_NORMALAI, iNormalAI);
+	growth.addI(MODF_GOLDENAGE, iGoldenAge);
+	eventSpine().emit(growth);
 }

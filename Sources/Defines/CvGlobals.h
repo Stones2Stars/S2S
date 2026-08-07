@@ -55,6 +55,7 @@ class CvUnitFormationInfo;
 class CvLandscapeInfo;
 class CvTerrainInfo;
 class CvBonusClassInfo;
+class CvFoldTargetInfo;
 class CvBonusInfo;
 class CvFeatureInfo;
 class CvCivilizationInfo;
@@ -379,6 +380,9 @@ public:
 
 	int getNumBonusClassInfos() const;
 	CvBonusClassInfo& getBonusClassInfo(BonusClassTypes eBonusNum) const;
+	// The generalized-plot-predicate fold sets (json.md par.3.5 -- we never fold onto a boolean).
+	int getNumFoldTargetInfos() const;
+	CvFoldTargetInfo& getFoldTargetInfo(int iIndex) const;
 
 	int getNumBonusInfos() const;
 	const std::vector<CvBonusInfo*>& getBonusInfos() const;
@@ -966,6 +970,9 @@ protected:
 	std::vector<CvRouteInfo*> m_paRouteInfo;
 	std::vector<CvFeatureInfo*> m_paFeatureInfo;
 	std::vector<CvBonusClassInfo*> m_paBonusClassInfo;
+public:
+	std::vector<CvFoldTargetInfo*> m_paFoldTargetInfo;
+private:
 	std::vector<CvBonusInfo*> m_paBonusInfo;
 	std::vector<CvImprovementInfo*> m_paImprovementInfo;
 	std::vector<CvGoodyInfo*> m_paGoodyInfo;

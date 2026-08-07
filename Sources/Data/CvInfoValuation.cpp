@@ -623,6 +623,25 @@ namespace
 		const int iKind = CascadeChannelRegistry::channelKind(iChannel);
 		return infoKindUnit(eFamily, iKind, eScope);
 	}
+
+	// WHICH commerce channel this is, or -1 for any other channel. Resolved by CHANNEL IDENTITY through the same
+	// family lookup every other read uses -- never by a slot order and never by a hand-kept id list, so a
+	// re-minted registry cannot silently re-point it.
+	int val_commerceIndexOfChannel(int iChannel)
+	{
+		if (iChannel < 0)
+		{
+			return -1;
+		}
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			if (CascadeChannelRegistry::channelLookup(infoCommerceFamily(iCommerce), (int)CHANNEL_AMOUNT, -1) == iChannel)
+			{
+				return iCommerce;
+			}
+		}
+		return -1;
+	}
 }
 
 int64_t InfoValuation::realizedChannel(int64_t flatSum, int64_t percentSum, CvCascUnit eCanonicalUnit)
@@ -775,13 +794,32 @@ int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
 		// so adding them again would count each empire-scope deposit once per city PLUS once more.
 		// ⚠ PARTICIPATION is a gate on the Σ, not a term in the combine: a city under DISORDER or celebrating
 		// WLTKD keeps its real value and simply is not contributed (economy.md).
+		//
+		// ⛔ A COMMERCE RECEIVER'S PER-CITY QUANTITY IS THE WHOLE §2a SPLIT, NEVER THE CHANNEL'S DEPOSITS ALONE
+		// (state-repositories.md § A CROSS-SCOPE receiver total). A city does not RECEIVE gold/research/culture/
+		// espionage as four independent channels -- it receives the COMMERCE yield, and the EMPIRE'S SLIDERS
+		// divide that yield across the four, each adding its own deposits and the process conversion. So the
+		// member value is the city's realized COMMERCE group read, which is the ONE implementation of that split
+		// ([DEC-single-implementation]); cityReceiverRate answers the deposits leg and is the wrong member here.
+		// ⚑ Without this the sliders moved nothing at the empire: the Σ summed a yield-shaped combine over the
+		// gold channel, which the slider is not an input to.
+		const int iCommerceIndex = val_commerceIndexOfChannel(iChannel);
 		int64_t iTotal = 0;
 		for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
 		{
 			const CvCity* pCity = *cityIterator;
 			if (pCity != NULL && !pCity->isDisorder())
 			{
-				iTotal += cityReceiverRate(*pCity, iChannel);
+				if (iCommerceIndex >= 0)
+				{
+					int aiCityCommerces[NUM_COMMERCE_TYPES];
+					pCity->getCommerces(aiCityCommerces);
+					iTotal += aiCityCommerces[iCommerceIndex];
+				}
+				else
+				{
+					iTotal += cityReceiverRate(*pCity, iChannel);
+				}
 			}
 		}
 		return (int)iTotal;

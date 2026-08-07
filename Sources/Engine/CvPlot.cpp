@@ -8030,8 +8030,12 @@ int CvPlot::getYield(YieldTypes eIndex) const
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
 	int aiYields[NUM_YIELD_TYPES];
 	getYields(aiYields);
-	// ×100 NATIVE -- a getter never reduces ([DEC-fixedpoint-x100]); the READ EDGE reduces.
-	return aiYields[eIndex];
+	// ⛔ THE EXE READ EDGE -- this symbol is `DllExport` AND its mangled name is present in the EXE image, so the
+	// closed binary resolves it and expects the value it has always had: WHOLE yield. That makes this the OUT
+	// boundary ([DEC-fixedpoint-x100]), not an ordinary getter, and the reduce belongs exactly here.
+	// ⚑ Internal ×100 consumers take the GROUP read (`getYields`) and index it -- the one-getter-per-group shape
+	// ([patterns.md]); this scalar survives only because the EXE binds it.
+	return aiYields[eIndex] / 100;
 }
 
 

@@ -1265,7 +1265,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 
 	FAssert(pCity->isInViewport());
 
-	iFoodDifference = pCity->foodDifference();
+	iFoodDifference = pCity->foodDifference() / 100;   // UI = a read edge
 
 	szString.append(pCity->getName());
 
@@ -1277,7 +1277,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	// BUG - Health - start
 	if (getBugOptionBOOL("CityBar__Health", true, "BUG_CITYBAR_HEALTH"))
 	{
-		iRate = pCity->netHealth();   // ÷100: verdicts ×100
+		iRate = pCity->netHealth() / 100;   // the UI is a read edge: the verdict is ×100 native
 		if (iRate > 0)
 		{
 			szTempBuffer.Format(L", %d %c", iRate, gDLL->getSymbolID(HEALTHY_CHAR));
@@ -1305,7 +1305,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		}
 		else
 		{
-			iRate = pCity->netHappiness();   // ÷100: verdicts ×100
+			iRate = pCity->netHappiness() / 100;   // the UI is a read edge: the verdict is ×100 native
 			if (iRate > 0)
 			{
 				szTempBuffer.Format(L", %d %c", iRate, gDLL->getSymbolID(HAPPY_CHAR));
@@ -1639,12 +1639,12 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	// BUG - Base Values - start
 	if (bBaseValues)
 	{
-		iRate = pCity->getBaseGreatPeopleRate();
+		iRate = pCity->getBaseGreatPeopleRate() / 100;   // UI = a read edge
 	}
 	else
 	{
-		// unchanged
-		iRate = pCity->getGreatPeopleRate();
+		// the modified rate inherits the base's ×100, so it reduces at the same edge
+		iRate = pCity->getGreatPeopleRate() / 100;
 	}
 	// BUG - Base Values - end
 
@@ -1731,7 +1731,10 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	}
 
 	// BUG - Great Person Turns - start
-	int iGppRate = pCity->getGreatPeopleRate();
+	// Reduced HERE, before the guard: the turns-left arithmetic divides it into the WAREHOUSE ledger
+	// (getGreatPeopleProgress + its threshold), which is human. Reducing at the read also keeps the
+	// `> 0` guard honest — a sub-1.00 rate floors to 0 and correctly skips the estimate.
+	int iGppRate = pCity->getGreatPeopleRate() / 100;
 	if (iGppRate > 0 && getBugOptionBOOL("CityBar__GreatPersonTurns", true, "BUG_CITYBAR_GREAT_PERSON_TURNS"))
 	{
 		int iGpp = pCity->getGreatPeopleProgress();
@@ -2317,7 +2320,8 @@ void CvGameTextMgr::setBuildingActualEffects(CvWStringBuffer &szBuffer, const Cv
 		bStarted = setResumableCommerceTimes100ChangeHelp(szBuffer, szStart, L": ", L"", aiCommerces, bNewLine, bStarted);
 
 		// Great People
-		int iGreatPeopleRate = pCity->getAdditionalGreatPeopleRateByBuilding(eBuilding);
+		// The delta inherits the rate's ×100 (both its operands are ×100), so it reduces at this read edge.
+		int iGreatPeopleRate = pCity->getAdditionalGreatPeopleRateByBuilding(eBuilding) / 100;
 		bStarted = setResumableValueChangeHelp(szBuffer, szStart, L": ", L"", iGreatPeopleRate, gDLL->getSymbolID(GREAT_PEOPLE_CHAR), false, bNewLine, bStarted);
 	}
 }
@@ -4207,7 +4211,7 @@ void CvGameTextMgr::setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	int iFoodConsumed = 0;
 
 	// Eaten
-	int iEatenFood = city.getFoodConsumedByPopulation();
+	int iEatenFood = city.getFoodConsumedByPopulation() / 100;   // UI = a read edge
 	if (iEatenFood != 0)
 	{
 		szBuffer.append(NEWLINE);
@@ -4818,7 +4822,8 @@ bool CvGameTextMgr::setBuildingAdditionalGreatPeopleHelp(CvWStringBuffer &szBuff
 
 		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
-			const int iChange = city.getAdditionalGreatPeopleRateByBuilding(eBuilding);
+			// ×100 delta, reduced at this read edge before it is shown.
+			const int iChange = city.getAdditionalGreatPeopleRateByBuilding(eBuilding) / 100;
 
 			if (iChange != 0)
 			{
@@ -5044,11 +5049,17 @@ void CvGameTextMgr::buildCityBillboardCityNameString( CvWStringBuffer& szBuffer,
 // BUG - Starvation Turns - start
 			else if (pCity->foodDifference() < 0 && getBugOptionBOOL("CityBar__StarvationTurns", true, "BUG_CITYBAR_STARVATION_TURNS"))
 			{
-				int iFoodDifference = pCity->foodDifference();
-				if (pCity->getFood() + iFoodDifference >= 0)
+				// ⛔ BOTH OPERANDS ARE LIFTED TO ×100 AND THE REDUCE HAPPENS ONCE, AT THE DIVIDE. Reducing the
+				// deficit FIRST truncates any shortfall smaller than one whole unit per turn to ZERO -- while the
+				// guard above tests the ×100 value, so the branch is entered and the division is by zero. A city
+				// starving at less than 1 food/turn crashed the billboard outright (integer divide-by-zero).
+				// ⚠ The food BAR is a whole-unit ledger (the warehouse edge) and foodDifference is ×100, so the
+				// lift is on the stored side ([DEC-fixedpoint-x100]: the discrete operand rises to meet the rate).
+				const int iDeficit100 = -pCity->foodDifference();   // > 0 in this branch, so never a zero divisor
+				const int iStored100 = 100 * pCity->getFood();
+				if (iStored100 >= iDeficit100)
 				{
-					int iTurns = pCity->getFood() / -iFoodDifference + 1;
-					szBuffer.append(CvWString::format(L" (%d)", iTurns));
+					szBuffer.append(CvWString::format(L" (%d)", iStored100 / iDeficit100 + 1));
 				}
 				else
 				{

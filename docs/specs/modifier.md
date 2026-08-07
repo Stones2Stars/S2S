@@ -206,7 +206,7 @@ order is load-bearing (it decides what the percent stack scales and what it does
 | **trade-route yield** (`tradeYield`) | engine-generated (the trade network) | **input** — out-of-scope: the cascade cannot re-derive the network, so the calc *folds the route yield in*, never derives it. **The ONE live-yield input** — a clean addition at the very end of the base, and the sole sanctioned exception to the pollution guardrail ([validation](validation.md), [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)). ⚠ **The route COUNT is the OPPOSITE case (owner): `getMaxTradeRoutes` — game + player + coastal + `city.extra` slot deposits — is a modifier-influenced value the cascade COMPUTES, its own `tradeRoutes` channel.** Trade YIELD is read from the engine package; the trade-route COUNT is calculated here. Do not conflate them |
 | **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** — derivable from the trait JSON, so it is COMPUTED, never read off the engine; consuming the live value would leave the trait→yield derivation unvalidated ([validation](validation.md) pollution guardrail). ⚠ NAMING: "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
 | **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
-| **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.flat`) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
+| **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.cities.flat` — the `cities` target lands it in the HOLDING city; a bare `empire.flat` on a specialist would roll down to EVERY city and cascade with city count) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
 
 ### TIER 2 — EXTRA (flat, added AFTER the percentages, NEVER multiplied)
 
@@ -314,7 +314,12 @@ route table is rebuilt it wants one field per named engine term, so a divergence
   `features.{F}`, `nonStateReligion`, the `cities.{unit: IS_MILITARY}` per-unit scaler, the ranked `cities`
   scaler — the civic's `buildings.{B}` member lands building-side per the above), **traits** (same member
   vocabulary), **features** (`health.plot.percent` — summed over radius plots, ÷100 — the fallout class),
-  **bonuses** (empire flats, presence-gated), **specialists** (city flats; the fractional values are the
+  **bonuses** (`empire.cities` flats, presence-gated — ⛔ NEVER a bare `empire` flat: that lands in the empire
+  package and rolls DOWN to every city, while the engine applies it on the per-city presence fact, so one
+  connected luxury is counted once per holding city and the product handed back to every city. The `cities`
+  target lands it in the HOLDING city's package, which is what a luxury means — the cities that HAVE it are
+  happier. The specialist precedent one entity over,
+  [legacy-value-calc-map.md §1.5](../reference/legacy-value-calc-map.md)), **specialists** (city flats; the fractional values are the
   curator's ÷100 de-scale of the legacy latent-×100 — the engine `…/100` at use), **corporations**
   (`HAS_CORPORATION`-conditioned city flats), **techs**/**projects** (empire — projects also the lone `world`
   scope)/**handicaps** (empire flats), and **military units** (`happiness.empire.cities.{unit: IS_MILITARY}`
@@ -509,11 +514,19 @@ authored shape.
 > manufactured the colliding-id problem — two genuinely different entities answering to one name — which then
 > forced every reader to disambiguate by game option and made a wrong read silently return wrong magnitudes.
 > Distinct ids remove the ambiguity by construction rather than by discipline.
-> ⚠ **The separation is deliberately NOT completed by renaming the legacy ids**: the complex-ONLY records (a trait
-> the simple system never had) keep their authored `TRAIT_` ids, because they collide with nothing and renaming
-> them is a Type removal with save consequences ([save.md §7](save.md)). So `traits/complex/` legitimately holds a
-> MIX of `TRAIT_COMPLEX_*` (the variants of a simple trait) and plain `TRAIT_*` (the complex-only ones) — read the
-> FOLDER as the set boundary, never the prefix.
+> ⚖ **A COMPLEX-ONLY RUNG OF A SPLIT LINE TAKES THE PREFIX TOO (owner).** A developing line's upper rungs exist
+> only in the complex set (the simple ladder tops out early), so they are not `CvInfoReplacements` variants — and
+> keeping their authored id left a chain reading `TRAIT_COMPLEX_SEAFARING` → `TRAIT_COMPLEX_SEAFARING1` →
+> `TRAIT_SEAFARING2`. **The LINE is the complex variant, so every rung of it is**, whether or not that particular
+> rung has a simple twin. The test is the rung's LINE, never the rung's own id.
+> ⚠ It is a Type RENAME and therefore a Type removal ([save.md §7](save.md)): trait reads are allow-missing, so a
+> player holding the old id loses that rung on load. Accepted deliberately — the cost only grows with time.
+> ⛔ **The re-key has ONE definition, on the STORE (`Store::trait_rekey`), applied where the inverted edges are
+> handed out** — because a trait id is named from several curators, above all the TECH edge that GATES a rung
+> ([enabler.md](enabler.md): without it every upper rung is permanently unreachable, and silently so). A
+> per-curator copy would drift and emit an id no record defines.
+> ⚑ A complex-only record whose line has NO simple counterpart still keeps its plain `TRAIT_` id, so
+> `traits/complex/` still holds a MIX — read the FOLDER as the set boundary, never the prefix.
 > ⚑ The one remaining shared id is **`TRAIT_BARBARIAN`**, the NPC trait base-filled into `complex/` so that set
 > stays self-complete (below) — the only simple trait with no complex variant.
 > (The enabler is unaffected either way: it reads trait *presence*; only the modifier cascade reads trait

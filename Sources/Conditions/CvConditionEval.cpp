@@ -8,6 +8,7 @@
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "Conditions/CvConditionEval.h"
 #include "CvGate.h"              // cascadeGateOk -- the entity-level enabled/disabled pair
+#include "CvFoldTargetInfo.h"    // FoldTargets -- what a generalized plot predicate MEANS (json.md §3.5)
 #include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "AI/CvTeamAI.h"           // GET_TEAM
@@ -380,10 +381,26 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_HAS_IRRIGATION:  return plotContext != NULL && plotContext->hasIrrigation();
 	case CASC_PRED_HAS_LANDMARK:    return plotContext != NULL && plotContext->hasLandmark();
 	case CASC_PRED_HAS_HILLS:       return plotContext != NULL && plotContext->hasHills();
-	case CASC_PRED_HAS_PEAK:        return plotContext != NULL && plotContext->hasPeak();
-	case CASC_PRED_IS_FLATLANDS:    return plotContext == NULL || plotContext->isFlatlands();
-	case CASC_PRED_IS_WATER:        return plotContext != NULL && plotContext->isWater();
-	case CASC_PRED_IS_LAND:         return plotContext == NULL || plotContext->isLand();
+	// ⛔ THE GENERALIZED PLOT PREDICATES RESOLVE THROUGH THEIR FOLD-TARGET SET, NOT THE PLOT-TYPE BIT
+	// (json.md §3.5 -- we never fold onto a boolean, we need a target to fold onto). The plot-TYPE axis these
+	// read before is not a carrier: its fact announces for a FRACTION of the map and NEVER for water, so
+	// IS_WATER was false on every water plot in the game and every `plots {IS_WATER}` deposit -- Lighthouse,
+	// Pier, Seawalls, Fisherman's Hut, the Seafaring achievement -- delivered NOTHING, silently. TERRAIN
+	// announces for every plot, so the fold set is what makes these answerable at all.
+	// ⚑ A predicate no foldtargets file defines keeps its own read: the registry is open (json.md §8), so this
+	// is "no set authored yet", never a missing case.
+	case CASC_PRED_HAS_PEAK:        return FoldTargets::defines(CASC_PRED_HAS_PEAK)
+	                                     ? (plotContext != NULL && FoldTargets::terrainMatches(CASC_PRED_HAS_PEAK, plotContext->terrainId()))
+	                                     : (plotContext != NULL && plotContext->hasPeak());
+	case CASC_PRED_IS_FLATLANDS:    return FoldTargets::defines(CASC_PRED_IS_FLATLANDS)
+	                                     ? (plotContext != NULL && FoldTargets::terrainMatches(CASC_PRED_IS_FLATLANDS, plotContext->terrainId()))
+	                                     : (plotContext == NULL || plotContext->isFlatlands());
+	case CASC_PRED_IS_WATER:        return FoldTargets::defines(CASC_PRED_IS_WATER)
+	                                     ? (plotContext != NULL && FoldTargets::terrainMatches(CASC_PRED_IS_WATER, plotContext->terrainId()))
+	                                     : (plotContext != NULL && plotContext->isWater());
+	case CASC_PRED_IS_LAND:         return FoldTargets::defines(CASC_PRED_IS_LAND)
+	                                     ? (plotContext != NULL && FoldTargets::terrainMatches(CASC_PRED_IS_LAND, plotContext->terrainId()))
+	                                     : (plotContext == NULL || plotContext->isLand());
 	case CASC_PRED_HAS_COAST:       return pr->min >= 0 ? (cityContext != NULL && cityContext->isCoastal(pr->min))
 	                                                     : (plotContext != NULL && plotContext->hasCoast());
 	// Fresh water is target-relative (json §3.5): on a PLOT target the tile's own access; with a CITY in

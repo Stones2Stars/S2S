@@ -103,7 +103,22 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 		&& kEntry.scope == CASC_SCOPE_EMPIRE
 		&& iCitiesSeg >= 0
 		&& kEntry.targetSeg == iCitiesSeg);
-	if (kEntry.scope != eScope && !bWorldEmpires && !bEmpireCities)
+	// json §3.3's `plots` plural target, the same fan one scope further down: a CITY- or EMPIRE-scope deposit
+	// onto EVERY plot lands in each PLOT's package, because this plot IS one of the targets (modifier.md §5).
+	// ⚑ Resolving PER PLOT is the whole point: it is what lets the entry's own filter (`enabled: IS_WATER`)
+	// decide, which no city-scope fold could do.
+	// ⛔ Without this a `plots` entry resolved NOWHERE -- declined at city scope for being targeted, and at plot
+	// scope for being authored one scope up -- so a Lighthouse's "+1 food on every water plot" was valued by the
+	// AI's what-if (val_plotsTarget) and delivered to no package at all.
+	// ⚠ THE AUTHORED SCOPE STILL DECIDES **WHOSE** PLOTS: the CALLER fans a CITY-scope entry over the plots of
+	// the city holding the source and an EMPIRE-scope one over every city's, so this only admits the entry to
+	// plot resolution -- it never widens its reach.
+	const int iPlotsSeg = mmk_modSeg("plots", s_segPlots);
+	const bool bScopePlots = (eScope == CASC_SCOPE_PLOT
+		&& (kEntry.scope == CASC_SCOPE_CITY || kEntry.scope == CASC_SCOPE_EMPIRE)
+		&& iPlotsSeg >= 0
+		&& kEntry.targetSeg == iPlotsSeg);
+	if (kEntry.scope != eScope && !bWorldEmpires && !bEmpireCities && !bScopePlots)
 	{
 		return false;
 	}

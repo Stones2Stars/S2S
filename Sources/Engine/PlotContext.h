@@ -141,6 +141,11 @@ public:
 	// header (only a fwd-decl of CvPlot is available here). ------------------------------------------------------
 	bool hasFeature(int eFeature) const;         // {HAS_FEATURE: F}
 	bool hasTerrain(int eTerrain) const;         // {HAS_TERRAIN: T}
+	// The plot's raw TERRAIN id -- forwarded, not stored (the object owns it O(1)). Read by the fold-target
+	// index: a generalized plot predicate (IS_WATER, HAS_PEAK) resolves against the terrains its foldTargets
+	// info names, because the plot-TYPE axis those predicates used to read announces for only part of the map
+	// (json.md par.3.5 -- we never fold onto a boolean).
+	int terrainId() const;
 	bool hasImprovement(int eImprovement) const; // {HAS_IMPROVEMENT: I}
 	bool hasRoute(int eRoute) const;             // the plot carries this route (the route-prereq vicinity scan)
 	bool hasBonus(int eBonus, int eTeam) const;  // {HAS_BONUS: B} (a plot bonus is revealed per team, so it cannot be one stored verdict)

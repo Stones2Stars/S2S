@@ -6,6 +6,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "CvFoldTargetInfo.h"   // complete type for the foldtargets category load
 #include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "UI/CvGameTextMgr.h"
@@ -791,6 +792,8 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	LoadGlobalClassInfo(GC.m_paIdeaClassInfo, "CIV4IdeaClassInfos", "GameInfo", L"/Civ4IdeaClassInfos/IdeaClassInfos/IdeaClassInfo", false);
 	LoadGlobalClassInfo(GC.m_paIdeaInfo, "CIV4IdeaInfos", "GameInfo", L"/Civ4IdeaInfos/IdeaInfos/IdeaInfo", false);
 	LoadGlobalClassInfoJson(GC.m_paTerrainInfo, "terrains");
+	// the generalized-plot-predicate fold sets -- AFTER terrains, whose ids their FK lists resolve to
+	LoadGlobalClassInfoJson(GC.m_paFoldTargetInfo, "foldtargets");
 	LoadGlobalClassInfo(GC.m_paYieldInfo, "CIV4YieldInfos", "Terrain", L"/Civ4YieldInfos/YieldInfos/YieldInfo", false);
 	LoadGlobalClassInfo(GC.m_paCommerceInfo, "CIV4CommerceInfo", "GameInfo", L"/Civ4CommerceInfo/CommerceInfos/CommerceInfo", false);
 	LoadGlobalClassInfoJson(GC.m_aEraInfo, "eras");   // #430: JSON-fed (was CIV4EraInfos.xml)

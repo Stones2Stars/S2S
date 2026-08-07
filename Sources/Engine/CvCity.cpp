@@ -357,8 +357,11 @@ void CvCity::getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const
 void CvCity::getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const
 {
 	growth[GROWTH_READ_FOOD_STORED]        = getFood();
-	growth[GROWTH_READ_FOOD_PER_TURN]      = foodDifference();
-	growth[GROWTH_READ_FOOD_CONSUMPTION]   = foodConsumption();
+	// A READ EDGE (this group is published to Python and read nowhere else), so the two x100 RATE slots reduce
+	// here -- which also keeps the group uniform, since every other member is already a whole quantity: the
+	// threshold and turns-left are the whole-unit food BAR's ([DEC-fixedpoint-x100]).
+	growth[GROWTH_READ_FOOD_PER_TURN]      = foodDifference() / 100;
+	growth[GROWTH_READ_FOOD_CONSUMPTION]   = foodConsumption() / 100;
 	growth[GROWTH_READ_THRESHOLD]          = growthThreshold();
 	growth[GROWTH_READ_TURNS_LEFT]         = getFoodTurnsLeft();
 	growth[GROWTH_READ_IS_FOOD_PRODUCTION] = isFoodProduction() ? 1 : 0;
@@ -1532,7 +1535,10 @@ void CvCity::doTurn()
 	bool bAllowNoProduction;
 	{ PERF_SCOPE("city.doCheckProduction", getOwner()); bAllowNoProduction = !doCheckProduction(); }
 
-	changeFood(foodDifference(), true);
+	// THE WAREHOUSE EDGE -- the x100 per-turn surplus is banked into the whole-unit food BAR, so the reduce is
+	// here and the serialized food (and its growth threshold) keep their meaning ([north-star.md] warehouse
+	// carve-out; the same edge doGreatPeople uses for the great-people ledger).
+	changeFood(foodDifference() / 100, true);
 
 	{ PERF_SCOPE("city.doCulture", getOwner()); doCulture(); }
 
@@ -2262,7 +2268,10 @@ bool CvCity::canMaintain(ProcessTypes eProcess) const
 
 int CvCity::getFoodTurnsLeft() const
 {
-	const int iFoodDifference = foodDifference();
+	// The projection divides into the whole-unit food BAR (threshold - stored), so the x100 rate reduces at this
+	// use ([DEC-fixedpoint-x100]). A sub-1.00 surplus floors to 0 and correctly reports no growth rather than
+	// dividing by it.
+	const int iFoodDifference = foodDifference() / 100;
 
 	if (iFoodDifference <= 0)
 	{
@@ -3269,7 +3278,7 @@ int CvCity::getProductionPerTurn(ProductionCalc::flags flags = ProductionCalc::Y
 	// Both rates reduce HERE, where the amount plane meets whole HAMMERS and whole food
 	// ([DEC-fixedpoint-x100] -- a reader reduces at its point of use).
 	const int iFoodProduction = (flags & ProductionCalc::FoodProduction)
-		? std::max(0, aiRealizedYields[YIELD_FOOD] / 100 - foodConsumption(true)) : 0;
+		? std::max(0, (aiRealizedYields[YIELD_FOOD] - foodConsumption(true)) / 100) : 0;
 	const int iOverflow = (flags & ProductionCalc::Overflow) ? getOverflowProduction() + getFeatureProduction() : 0;
 	const int iYield = (flags & ProductionCalc::Yield) ? aiRealizedYields[YIELD_PRODUCTION] / 100 : 0;
 
@@ -4465,23 +4474,33 @@ int CvCity::getFoodConsumedPerPopulation(const int iExtra) const
 	return 100 * GC.getFOOD_CONSUMPTION_PER_POPULATION() + (iPop100 - 100) * GC.getFOOD_CONSUMPTION_PER_POPULATION_PERCENT() / 100;
 }
 
-// ⚖ THE FOOD PLANE IS DISCRETE, and that is why the conversion boundary sits where it does. Angry citizens are
-// whole citizens (clamped against getPopulation()), health points are whole, the food BAR is whole, and the
-// growth threshold is whole -- so this whole chain speaks in whole food, and the ONE boundary is where the x100
-// yield RATE enters it (foodDifference). Nothing here is lifted x100 to meet the rate: a compensating constant
-// at a mixing site is the signature of a cluster boundary drawn in the wrong place
-// ([fixed-point-and-scales.md] § CONVERT BY ARITHMETIC CLUSTER).
+// ⚖ THE FOOD PLANE IS x100 NATIVE, END TO END ([DEC-fixedpoint-x100]: no reduce anywhere but an edge). The whole
+// chain -- the yield rate, consumption, the surplus -- speaks in x100, and there are exactly THREE edges out of
+// it: the WAREHOUSE deposit (changeFood, the food BAR is a whole-unit ledger -- north-star.md's warehouse
+// carve-out, the same edge the great-people progress uses), the WASTAGE table's whole-surplus INDEX, and the UI.
+// ⛔ The DISCRETE operands are lifted to meet the rate, never the reverse: angry citizens and health points are
+// whole COUNTS, so they convert AT THIS EDGE rather than dragging the rate down to them. The earlier shape did
+// the opposite -- it manufactured x100 on both operands inside getFoodConsumedByPopulation and undid both with a
+// single /10000 -- which is a calculation scaling its own inputs, the defect [DEC-fixedpoint-x100] names.
 int CvCity::getFoodConsumedByPopulation(const int iExtra) const
 {
-	return getPopulationPlusProgress(iExtra) * getFoodConsumedPerPopulation() / 10000;
+	// TWO x100 operands multiplied is x10000, so the rescale belongs AT THE MULTIPLY and lands x100
+	// ([fixed-point-and-scales.md] § 1: never multiply two x100 values without rescaling).
+	return getPopulationPlusProgress(iExtra) * getFoodConsumedPerPopulation() / 100;
 }
 
 int CvCity::foodConsumption(const bool bNoAngry, const int iExtra, const bool bIncludeWastage) const
 {
 	return getFoodConsumedByPopulation(iExtra)
-		- (bNoAngry ? angryPopulation(iExtra) : 0) // Doesn't belong here, should be extracted out to wherever it is needed
+		// ⚠ ANGRY CITIZENS are a WHOLE count and LIFT to the x100 food plane; the HEALTH RATE is NOT -- it comes
+		// off the wellbeing package (realizedWellbeing -> InfoValuation::netHealth), which is x100 NATIVE like
+		// every other channel ([DEC-fixedpoint-x100]). Lifting it again multiplied the health term by 10000 and
+		// inflated consumption by 100x the deficit for any unhealthy city -- silently, since the number stayed
+		// plausible. The legacy twin genuinely WAS whole (min(0, goodHealth() - badHealth())), which is what made
+		// the wrong lift look right.
+		- (bNoAngry ? 100 * angryPopulation(iExtra) : 0) // Doesn't belong here, should be extracted out to wherever it is needed
 		- healthRate(iExtra)
-		+ (bIncludeWastage ? (int)foodWastage() : 0);
+		+ (bIncludeWastage ? 100 * (int)foodWastage() : 0);
 }
 // ! Toffer - Gradual food consumption change
 
@@ -4504,7 +4523,9 @@ float CvCity::foodWastage(int surplass) const
 	{
 		if (surplass == -1)
 		{
-			surplass = foodDifference(true, false) - getFoodConsumedByPopulation() * startWasteAtConsumptionPercent / 100;
+			// AN EDGE: the memo table below is indexed by WHOLE surplus (`calculatedWaste[surplass]`, 0..200), so
+			// the x100 food plane reduces to a whole index exactly here and nowhere else in this body.
+			surplass = (foodDifference(true, false) - getFoodConsumedByPopulation() * startWasteAtConsumptionPercent / 100) / 100;
 		}
 	}
 	else surplass = -1;
@@ -4540,12 +4561,12 @@ int CvCity::foodDifference(const bool bBottom, const bool bIncludeWastage, const
 	{
 		return 0;
 	}
-	// THE ONE BOUNDARY of the food cluster: the realized yield is x100, the food plane below is whole (whole
-	// citizens, whole health points, a whole food bar), so the rate reduces exactly HERE and every consumer of
-	// the surplus stays in whole food ([DEC-fixedpoint-x100] -- a reader reduces at its point of use).
+	// x100 THROUGHOUT -- the realized yield enters as it is and the surplus stays on the same scale as the rate
+	// it came from. The reduce lives at the three edges named on foodConsumption (the warehouse deposit, the
+	// wastage index, the UI), never here.
 	int aiYields[NUM_YIELD_TYPES];
 	getYields(aiYields);
-	const int iFoodRate = aiYields[YIELD_FOOD] / 100;
+	const int iFoodRate = aiYields[YIELD_FOOD];
 
 	int iDifference;
 
@@ -5838,8 +5859,11 @@ int CvCity::getBaseGreatPeopleRate() const
 	// is here at the discrete boundary. The realized city read IS the roll-up over the chain this city sits
 	// under (team + empire + city, modifier.md §1), so the empire-scope trait deposits are ALREADY inside it —
 	// adding an empire aggregate on top would count each of them once per city plus once more.
+	// ×100 NATIVE -- a getter never reduces. The reduce belongs at the WAREHOUSE EDGE, i.e. the deposit into
+	// m_iGreatPeopleProgress ([north-star.md] the warehouse carve-out: the cascade owns the RATE, the object
+	// keeps its own ledger). That is what leaves the SERIALIZED progress human and this conversion save-neutral.
 	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_GREAT_PEOPLE_RATE, (int)CHANNEL_AMOUNT, -1);
-	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel) / 100);
+	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel));
 }
 
 
@@ -5966,7 +5990,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-	int iExtraRate = kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
+	int iExtraRate = kBuilding.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT);
 
 	// Specialists
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
@@ -5991,7 +6015,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 		if (eNewSpecialist == NO_SPECIALIST) break;
 
-		iExtraRate += GC.getSpecialistInfo(eNewSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
+		iExtraRate += GC.getSpecialistInfo(eNewSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT);
 
 	}
 
@@ -6035,7 +6059,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateBySpecialist(SpecialistTypes eSpecia
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
 
-	return iChange * (GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100);
+	return iChange * GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT);
 }
 // BUG - Specialist Additional Great People - end
 
@@ -6505,8 +6529,11 @@ int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, i
  */
 int CvCity::getAdditionalAngryPopuplation(int iGood, int iBad) const
 {
-	// The ANGER balance is the negated net (iGood/iBad are whole-citizen deltas, as is the result).
-	const int iAngerBalance = -netHappiness();
+	// The ANGER balance is the negated net. ⚠ netHappiness is ×100 NATIVE while iGood/iBad, iPop and the returned
+	// figure are all whole citizens, so the verdict reduces HERE to meet them -- the same cluster boundary this
+	// what-if family already declares at buildingWellbeing's fold ([DEC-fixedpoint-x100]). Without it a ×100
+	// balance is ranged against a whole population and the result is pinned at the clamp.
+	const int iAngerBalance = -netHappiness() / 100;
 	const int iPop = getPopulation();
 
 	return range(iAngerBalance + iBad - iGood, 0, iPop) - range(iAngerBalance, 0, iPop);
@@ -6519,8 +6546,9 @@ int CvCity::getAdditionalAngryPopuplation(int iGood, int iBad) const
  */
 int CvCity::getAdditionalSpoiledFood(int iGood, int iBad, int iHealthAdjust) const
 {
-	// Whole health points throughout (iGood/iBad/iHealthAdjust and the returned food figure).
-	const int iRate = netHealth() + iHealthAdjust;
+	// Whole health points throughout (iGood/iBad/iHealthAdjust and the returned food figure), so the ×100-native
+	// verdict reduces here to join them ([DEC-fixedpoint-x100]: the reduce lives at the point of use).
+	const int iRate = netHealth() / 100 + iHealthAdjust;
 
 	return std::min(0, iRate) - std::min(0, iRate + iGood - iBad);
 }
@@ -6530,10 +6558,11 @@ int CvCity::getAdditionalSpoiledFood(int iGood, int iBad, int iHealthAdjust) con
  */
 int CvCity::getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust) const
 {
-	// iSpoiledFood and iFoodAdjust are whole food, so the rate reduces at this use.
+	// iSpoiledFood and iFoodAdjust are whole food, so the x100 surplus reduces at this use -- as ONE reduce over
+	// the whole difference, never per operand.
 	int aiYields[NUM_YIELD_TYPES];
 	getYields(aiYields);
-	int iFood = aiYields[YIELD_FOOD] / 100 - foodConsumption() + iFoodAdjust;
+	int iFood = (aiYields[YIELD_FOOD] - foodConsumption()) / 100 + iFoodAdjust;
 
 	if (iSpoiledFood > 0)
 	{
@@ -6820,8 +6849,8 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		realizedWellbeing(0, aNoUnhappyWellbeing);
 		iBad = iStartingBad - aNoUnhappyWellbeing[WELLBEING_ANGER] / 100;
 	}
-	// Effect on Angry Population
-	const int iAngerBalance = -netHappiness();
+	// Effect on Angry Population -- the ×100 verdict reduces to the whole-citizen scale iGood/iBad/iPop use here.
+	const int iAngerBalance = -netHappiness() / 100;
 	const int iPop = getPopulation();
 	iAngryPop += range(iAngerBalance + iBad - iGood, 0, iPop) - range(iAngerBalance, 0, iPop);
 
@@ -6925,10 +6954,10 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	}
 
 	// Effect on Spoiled Food
-	const int iHealthBalance = netHealth();   // whole health points against a whole food figure
+	const int iHealthBalance = netHealth() / 100;   // whole health points against a whole food figure
 	int aiWhatIfYields[NUM_YIELD_TYPES];
 	getYields(aiWhatIfYields);
-	int iFood = aiWhatIfYields[YIELD_FOOD] / 100 - foodConsumption();
+	int iFood = (aiWhatIfYields[YIELD_FOOD] - foodConsumption()) / 100;
 	iSpoiledFood -= std::min(0, iHealthBalance + iGood - iBad) - std::min(0, iHealthBalance);
 	if (iSpoiledFood > 0)
 	{
@@ -12612,7 +12641,9 @@ void CvCity::doGreatPeople()
 	{
 		return;
 	}
-	changeGreatPeopleProgress(getGreatPeopleRate());
+	// THE WAREHOUSE EDGE -- the ×100 per-turn RATE is banked into a HUMAN ledger, so the reduce is here and the
+	// serialized progress (and its threshold) keep their meaning ([north-star.md] warehouse carve-out).
+	changeGreatPeopleProgress(getGreatPeopleRate() / 100);
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
@@ -13903,9 +13934,12 @@ void CvCity::getCityBillboardSizeIconColors(NiColorA& kDotColor, NiColorA& kText
 
 	if ((getTeam() == GC.getGame().getActiveTeam()))
 	{
-		if (foodDifference() < 0)
+		// A UI EDGE: reduced ONCE here, because the test below compares against a whole-food literal and the
+		// stored food beside it is the whole-unit bar ([DEC-fixedpoint-x100]).
+		const int iFoodDifference = foodDifference() / 100;
+		if (iFoodDifference < 0)
 		{
-			if ((foodDifference() == -1) && (getFood() >= ((75 * growthThreshold()) / 100)))
+			if ((iFoodDifference == -1) && (getFood() >= ((75 * growthThreshold()) / 100)))
 			{
 				kDotColor = kStagnant;
 				kTextColor = kBlack;
@@ -13916,12 +13950,12 @@ void CvCity::getCityBillboardSizeIconColors(NiColorA& kDotColor, NiColorA& kText
 				kTextColor = kBlack;
 			}
 		}
-		else if (foodDifference() > 0)
+		else if (iFoodDifference > 0)
 		{
 			kDotColor = kGrowing;
 			kTextColor = kBlack;
 		}
-		else if (foodDifference() == 0)
+		else if (iFoodDifference == 0)
 		{
 			kDotColor = kStagnant;
 			kTextColor = kBlack;
@@ -13995,15 +14029,18 @@ bool CvCity::getFoodBarPercentages(std::vector<float>& afPercentages) const
 		return false;
 	}
 	afPercentages.resize(NUM_INFOBAR_TYPES, 0.0f);
-	if (foodDifference() < 0)
+	// A UI EDGE: every other term here is the whole-unit food BAR (stored food, the growth threshold), so the
+	// x100 surplus reduces ONCE into this local ([DEC-fixedpoint-x100]).
+	const int iFoodDifference = foodDifference() / 100;
+	if (iFoodDifference < 0)
 	{
-		afPercentages[INFOBAR_STORED] = std::max(0, (getFood() + foodDifference())) / (float)growthThreshold();
-		afPercentages[INFOBAR_RATE_EXTRA] = std::min(-foodDifference(), getFood()) / (float)growthThreshold();
+		afPercentages[INFOBAR_STORED] = std::max(0, (getFood() + iFoodDifference)) / (float)growthThreshold();
+		afPercentages[INFOBAR_RATE_EXTRA] = std::min(-iFoodDifference, getFood()) / (float)growthThreshold();
 	}
 	else
 	{
 		afPercentages[INFOBAR_STORED] = getFood() / (float)growthThreshold();
-		afPercentages[INFOBAR_RATE] = foodDifference() / (float)growthThreshold();
+		afPercentages[INFOBAR_RATE] = iFoodDifference / (float)growthThreshold();
 	}
 	return true;
 }
@@ -14985,9 +15022,14 @@ int CvCity::getBestYieldAvailable(YieldTypes eYield) const
 		{
 			const CvPlot* pPlot = getCityIndexPlot(iJ);
 
-			if (NULL != pPlot && canWork(pPlot) && pPlot->getYield(eYield) > iBestYieldAvailable)
+			if (NULL != pPlot && canWork(pPlot))
 			{
-				iBestYieldAvailable = pPlot->getYield(eYield);
+				int aiPlotYields100[NUM_YIELD_TYPES];
+				pPlot->getYields(aiPlotYields100);   // ×100 group read (getYield is the EXE edge)
+				if (aiPlotYields100[eYield] > iBestYieldAvailable)
+				{
+					iBestYieldAvailable = aiPlotYields100[eYield];
+				}
 			}
 		}
 	}
@@ -16483,7 +16525,7 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 			const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(paeRemovedSpecailists[iI]);
 			iHappiness -= kSpecialist.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY);
 			iHealthiness -= kSpecialist.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
-			iGreatPeopleRate -= kSpecialist.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT) / 100;
+			iGreatPeopleRate -= kSpecialist.getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT);
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
 				//Team Project (1)
@@ -16497,6 +16539,7 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 	}
 	iHealthiness /= 100;
 	iHappiness /= 100;
+	iGreatPeopleRate /= 100;   // reduced ONCE here with its siblings, never inline
 	for (int plotIdx = 0; plotIdx < NUM_CITY_PLOTS; plotIdx++)
 	{
 		if (abRemovedPlots[plotIdx])
@@ -16505,9 +16548,11 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 			FAssertMsg(pLoopPlot != NULL, CvString::format("pLoopPlot was null for iIndex %d", plotIdx).c_str());
 			if (pLoopPlot != NULL)
 			{
+				int aiPlotYields100[NUM_YIELD_TYPES];
+				pLoopPlot->getYields(aiPlotYields100);   // ×100 group read (getYield is the EXE edge)
 				for (int yieldIdx = 0; yieldIdx < NUM_YIELD_TYPES; yieldIdx++)
 				{
-					aiYields[yieldIdx] -= pLoopPlot->getYield((YieldTypes)yieldIdx);
+					aiYields[yieldIdx] -= aiPlotYields100[yieldIdx];
 				}
 			}
 		}

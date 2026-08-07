@@ -74,7 +74,7 @@ class CvBonusInfo; class CvSpecialistInfo; class CvProcessInfo; class CvCivicOpt
 class CvProjectInfo; class CvHeritageInfo; class CvPromotionLineInfo;
 class CvCivilizationInfo; class CvEraInfo; class CvHandicapInfo; class CvGameSpeedInfo; class CvSpecialBuildingInfo;
 class CvPropertyInfo; class CvLeaderHeadInfo; class CvSpecialUnitInfo; class CvVictoryInfo; class CvVoteInfo;
-class CvHurryInfo; class CvBonusClassInfo; class CvWorldInfo;
+class CvHurryInfo; class CvBonusClassInfo; class CvWorldInfo; class CvFoldTargetInfo;
 
 //	A custom NONCONTINUABLE exception code (customer bit + error severity), so an unloaded read is distinguishable
 //	in Exceptions.log and in the minidump from a genuine ACCESS_VIOLATION -- the whole point being that this one
@@ -144,6 +144,7 @@ template <> struct RepoPayload<CvVictoryInfo>      { typedef CvVictoryInfo      
 template <> struct RepoPayload<CvVoteInfo>         { typedef CvVoteInfo             type; };
 template <> struct RepoPayload<CvHurryInfo>        { typedef CvHurryInfo            type; };
 template <> struct RepoPayload<CvBonusClassInfo>   { typedef CvBonusClassInfo       type; };
+template <> struct RepoPayload<CvFoldTargetInfo>   { typedef CvFoldTargetInfo       type; };
 template <> struct RepoPayload<CvWorldInfo>        { typedef CvWorldInfo            type; };
 
 template <class TTag>

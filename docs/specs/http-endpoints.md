@@ -32,7 +32,19 @@ because only then can an endpoint read what every other consumer reads
 
 **When the surface returns it is re-specced here, against that access surface** — ⛔ the roadmap's open item
 ([THE OPEN ITEM — the ACCESS surface](../plans/structural-cleanup/roadmap.md#-the-open-item--the-access-surface)).
-Nothing about its shape is decided yet, and nothing here proposes one.
+
+⚖ **WHAT IT SHOULD CARRY *IS* DECIDED, THOUGH: DECOMPOSITION CENSUSES (owner).** *"Censuses like this are the
+exact censuses we want to have in the http endpoints, because they give us real breakdowns, that are
+observable."* A route that serves ONE number answers nothing when that number is wrong; a route that serves a
+value **term by term** — the growth threshold beside its base, its gamespeed percent and its era percent; the
+consumption beside its per-pop rate — attributes a divergence to a NAMED source without a code read. That is
+the [DEC-obs-scale](../architecture/decisions.md#dec-obs-scale) Orwell bar as a route shape, and it is what the
+no-guessing rule needs in order to be followable at all: at a gap the moves are VERIFY or ASK, and a bare total
+supports neither.
+⛔ It does NOT reopen the route ban above — the test is unchanged: a census reads the cascade's OWN computed
+terms, never a legacy accumulator, so nothing is kept alive by its existence. ⚑ Until the surface returns the
+same breakdown is emitted as a DIAGNOSTIC spine fact (`[MODIFIER] growthRead`, `[MODIFIER] plotsFan`), which is
+where a value not on a surface belongs meanwhile — and those emits are what the routes serve when they land.
 
 ---
 

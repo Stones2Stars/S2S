@@ -502,6 +502,7 @@ CvWString entryDetailLine(const CvModEntry& entry)
 	}
 
 	// the deposit's target: a named-entity key renders its resolved name; a plural object-target its token
+	bool bPluralTarget = false;
 	if (entry.targetFk >= 0)
 	{
 		const char* szTypeSegment = etx_targetTypeSegment(entry);
@@ -510,14 +511,23 @@ CvWString entryDetailLine(const CvModEntry& entry)
 	}
 	else if (entry.targetSeg >= 0)
 	{
+		bPluralTarget = true;
 		szLine += CvWString(L" on ") + CvWString(modSegmentSpell(entry.targetSeg));
 	}
 
-	// the scope, where non-obvious (city is the default containing scope)
-	const wchar_t* szScopePhrase = etx_scopePhrase(entry.scope);
-	if (szScopePhrase[0] != L'\0')
+	// The scope, where non-obvious (city is the default containing scope).
+	// ⛔ A PLURAL TARGET ALREADY STATES THE REACH, so the bare scope word is NOT appended beside it (json.md
+	// §3.3: the scope is the REACH and the plural target is "all objects of that kind IN that scope" -- the two
+	// are one statement, never two). Printing both turns a per-object deposit into a claim about the whole
+	// scope: a specialist's `{y}.empire.cities.flat` read "on cities, empire-wide", which describes an
+	// empire-wide lump when the deposit actually lands in the ONE city holding that specialist.
+	if (!bPluralTarget)
 	{
-		szLine += CvWString(L", ") + szScopePhrase;
+		const wchar_t* szScopePhrase = etx_scopePhrase(entry.scope);
+		if (szScopePhrase[0] != L'\0')
+		{
+			szLine += CvWString(L", ") + szScopePhrase;
+		}
 	}
 
 	if (entry.hasPer)

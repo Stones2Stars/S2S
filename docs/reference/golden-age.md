@@ -58,7 +58,13 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
 
 ### 2. Growth — faster
 
-City food-for-growth threshold is reduced by `GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH%` (`CvPlayer.cpp:24462`).
+City food-for-growth threshold is reduced by `GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH` (a negative percent),
+applied in `CvPlayer::getGrowthThreshold` to the **COMPLETED threshold** — after the per-pop ramp, gamespeed,
+era and the AI handicap have all landed.
+⚖ **The calculation finishes FIRST, then the percent comes off the final number (owner).** ⛔ It is deliberately
+not folded into the base, which would discount only the flat term and leave the per-pop ramp at full price.
+⚑ Being a percent it rides every scaling the threshold already carries, so its help stays proportionate across
+gamespeeds and eras rather than being a constant whose weight swings with them.
 
 ### 3. Great people — faster
 

@@ -76,8 +76,10 @@
 		<iDefineIntVal>50</iDefineIntVal>
 	</Define>
 	<Define>
-		<!-- Afforess: How much Golden Ages lower the food requirement for city growth -->
-		<DefineName>GOlDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH</DefineName>
+		<!-- How much a Golden Age lowers the food a city needs to grow, as a PERCENT applied to the COMPLETED
+		     threshold - after the per-pop ramp, gamespeed, era and the AI handicap have all landed. Negative
+		     lowers the requirement. -->
+		<DefineName>GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH</DefineName>
 		<iDefineIntVal>-25</iDefineIntVal>
 	</Define>
 	<Define>
