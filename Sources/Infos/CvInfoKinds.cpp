@@ -177,6 +177,15 @@ namespace
 	// The ruling-1 channel families share the ChannelKind pair.
 	const InfoMemberRow MEMBERS_CHANNEL[] = { { "goldenAge", CHANNEL_GOLDEN_AGE }, { 0, 0 } };
 
+	// CULTURE alone adds `garrison` -- a unit's garrison culture (`culture.unit.garrison`, authored by units and
+	// emitted by the curator). It sat unkinded, so every one of those deposits parsed, reported and produced
+	// nothing. Kept OFF the shared MEMBERS_CHANNEL table for the MEMBERS_COMMERCE reason: only culture carries it,
+	// and a shared row would silently admit `gold.garrison` and its kin.
+	const InfoMemberRow MEMBERS_CULTURE[] = {
+		{ "goldenAge", CHANNEL_GOLDEN_AGE },
+		{ "garrison",  CHANNEL_GARRISON },
+		{ 0, 0 } };
+
 	// COMMERCE alone adds the ruling-15 corporation source-component kind (legacy corporationRevenue --
 	// authored `commerce.empire.corporation`, tech_stock_brokering); the other channel families never carry it.
 	const InfoMemberRow MEMBERS_COMMERCE[] = {
@@ -432,7 +441,7 @@ namespace
 		MEMBERS_COMMERCE,           // commerce (ChannelKind pair + the ruling-15 corporation kind)
 		0,                          // conscript
 		MEMBERS_COSTS,              // costs
-		MEMBERS_CHANNEL,            // culture
+		MEMBERS_CULTURE,            // culture (the shared channel pair + the culture-only `garrison` kind)
 		0,                          // cultureDistance
 		MEMBERS_DEFENSE,            // defense
 		MEMBERS_DIPLOMACY,          // diplomacy
