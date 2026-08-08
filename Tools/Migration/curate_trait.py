@@ -974,7 +974,14 @@ def main():
                 # simple record under GAMEOPTION_LEADER_COMPLEX_TRAITS -- ② can make that read fail-loud with nothing
                 # to fall back to. Distinct from the whole-swap above: there is no replacement to swap to, so the base
                 # IS the complex version (e.g. TRAIT_BARBARIAN, the NPC-civ trait -- the only such case today).
-                _write("complex", typ, obj)
+                # ⛔ IT IS EMITTED UNDER ITS OWN `TRAIT_COMPLEX_` ID, not shared with the simple record (owner):
+                # the two sets are COMPLETELY SELF-SUFFICIENT, in every way. A shared id is the ONE thread that
+                # still tied them together, and the reason it cannot stay is empirical -- "it is impossible for
+                # agents to actually not conflate the 2". Distinct ids make the conflation unsayable rather than
+                # forbidden, which is the enforcement model this project keeps choosing.
+                cx = OrderedDict(obj)
+                cx["type"] = "TRAIT_COMPLEX_" + typ[len("TRAIT_"):]
+                _write("complex", cx["type"], cx)
                 nwritten += 1
         print("\nwrote %d TraitInfo JSON files under Assets/Data/traits/{simple,complex}/" % nwritten)
 

@@ -623,11 +623,17 @@ authored shape.
 > as complex, it's complex, no matter what."* The prefix STATES THE SET — it is not a marker for "is a variant of
 > a simple trait" — so a complex-ONLY line with no simple counterpart is `TRAIT_COMPLEX_` like every other record
 > in the folder.
-> ⚖ **The BASE-FILL is not an exception, and the owner's own test is why: it was not BUILT as complex.** A
-> simple trait with no complex variant is copied into `complex/` whole so that set stays self-complete (below)
-> — it is the SIMPLE record, present in both folders under its one id, not a complex record wearing a plain
-> name. `TRAIT_BARBARIAN` is the only one and it stays as it is (owner). ⇒ Read the rule as: every record the
-> complex set DEFINES carries the prefix; a base-filled copy defines nothing.
+> ⛔ **THE TWO SETS ARE COMPLETELY SELF-SUFFICIENT, IN EVERY WAY (owner) — they share NO id.** A simple trait
+> with no complex variant is still copied into `complex/`, but under its OWN `TRAIT_COMPLEX_` id: the copy is
+> identical in content and distinct in identity. `TRAIT_BARBARIAN` was the last shared id and is one no longer.
+> ⚑ **The reason is empirical, not aesthetic: *"it is impossible for agents to actually not conflate the 2."***
+> A shared id is the one thread that keeps the sets tied together, and every reader who meets it has to
+> reconstruct which set is meant. Distinct ids make the conflation UNSAYABLE rather than forbidden.
+> ⚑ **AND THIS IS WHY THE SPLIT WORKS AT ALL (owner): a trait is purely a collection of BUFFS — it unlocks no
+> promotion, building or unit.** Nothing's availability hangs off a particular trait id, so duplicating the id
+> space across two sets breaks no edge. ⚠ The dependency runs the other way and is real: a TECH names trait ids
+> to gate a developing rung, so those edges must name the ACTIVE set's ids — which is why a re-key regenerates
+> techs, not just traits.
 > **⚖ A SAVE IS RESOLVED INTO THE ACTIVE SET AT LOAD (owner): *"for savegames, if you see it is a complex trait
 > game, you make sure the trait is the complex version."*** A stored plain `TRAIT_X` in a game running
 > `GAMEOPTION_LEADER_COMPLEX_TRAITS` takes the prefix — EVERY held id, with BARBARIAN the one exception (the
