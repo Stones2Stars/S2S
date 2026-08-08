@@ -5,21 +5,21 @@
 //
 //	OperatingBuildings -- the per-city CASCADE-COMPUTED operating buildings: the ACTIVE (non-dormant) building
 //	set + the in-vicinity provided bonuses (json.md §5a), at the operate/provides LEAST fixpoint
-//	(EnablerKernel::recomputeOperatingBuildingsInto).
+//	(the operate/provides fixpoint, run per arriving fact by EnablerKernel's targeted propagation).
 //
 //	⛔ THIS IS NOT AN INPUT/OUTPUT CACHE AND CARRIES NO DIRTY PROTOCOL (state-repositories.md: "the ENABLER's
-//	sets are themselves derived state, but maintained by TARGETED PROPAGATION"). It is computed ONCE
-//	(EnablerKernel::seedOperatingBuildings -- city creation and the load seed) and thereafter each HAVE-change
+//	sets are themselves derived state, but maintained by TARGETED PROPAGATION"). It is BUILT BY THE FACTS --
+//	each building resolves its own dormancy as it arrives -- and thereafter each HAVE-change
 //	ripples through the AFFECTED SUBSET ONLY, updating this dataset IN PLACE via the operate reverse-index (the
 //	on*Active hooks; enabler.md §7). It is never blanket-invalidated-and-recomputed -- running the fixpoint as a
 //	dirty/recompute cache is "burning down the library of Alexandria" (DESPAIR_INDEX #2) -- and never a parallel
 //	shadow-delta. Reads are BARE FETCHES: a propagation that fails to fire leaves the set visibly wrong, which is
-//	how the missing hook is found ([DEC-no-self-heal]). It is found by an EXTERNAL reader diffing the served
-//	set (built once by the load seed, which
-//	fills a caller-owned buffer) -- the DLL neither compares nor reports.
+//	how the missing hook is found ([DEC-no-self-heal]). An EXTERNAL reader finds it by reading the LOGS against
+//	the JSON info and what STATE expects ([superseded-ideas #33]) -- the DLL neither compares nor reports.
 //
 //	STATE HOME: a mutable CvCity member (`m_operatingBuildings`). Never serialized -- empty from birth, so a
-//	loaded game is populated by the seed rather than from the save. Query surface:
+//	loaded game is populated by the in-read facts rather than from the save, exactly as a played one is. â There
+//	is no load seed and no recompute: the CASCADE AND THE ENABLER BUILD ON THE SAME SEEDS (owner). Query surface:
 //	EnablerKernel::operatingBuildings / wireOperatingBuildings.
 //
 

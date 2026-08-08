@@ -604,15 +604,16 @@ static std::vector<int> s_operateObsoletableBuildings;                      // b
 static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& seeds)
 {
 	if (pCity == NULL || seeds.empty()) return;
-	// ⚖ SET UP -> POPULATE -> ANNOUNCE (owner). The WORK runs during the load read and must: each building
-	// deserializing does its own dormancy check, which is what lights a manufactured chain tier by tier (a
-	// building that never checks itself never provides, so the next tier never lights). ⛔ What must NOT run
-	// mid-read is the ANNOUNCE -- seedOperatingBuildings announces the settled set once at GAME_LOAD_FINISHED,
-	// so an in-read emit would announce an activation a second time and a consumer APPLIES the moved source's
-	// deposits on that fact.
-	// ⚠ The set is idempotent and the deposits are NOT, so the enabler's own stored-vs-oracle tripwire is blind
-	// to a double announce -- it is the modifier packages that carry the damage.
-	const bool bAnnounce = !spineGameLoadInProgress();
+	// ⛔ THE CROSSING IS ANNOUNCED WHENEVER IT HAPPENS, LOAD INCLUDED (owner). The work already runs during
+	// the load read -- each building deserializing does its own dormancy check, and EVERY have axis re-checks
+	// the consumers of what it supplies (bonus / vicinity bonus / religion / corp / pop / power / building), so
+	// the verdict is SETTLED as the stream runs. Announcing it where it happens is what lets the CASCADE AND
+	// THE ENABLER BUILD ON THE SAME SEEDS (owner), instead of one being event-built and the other rebuilt after.
+	// ⚑ The in-read emit used to be suppressed because a load-end recompute re-announced the whole set, which
+	// would have double-applied every deposit. That recompute is GONE: the suppression existed only to
+	// compensate for it, and the two cancelled out to 55 seconds of propagation being discarded and replayed.
+	// ⛔ A guard must never suppress an EMIT ([event-spine.md] § THE RECEIVED LINE) -- silencing a fact hides
+	// it from every consumer, not only the one that would have mishandled it.
 	OperatingBuildings& f = pCity->m_operatingBuildings;   // AUTHORITATIVE
 	const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ecOp;
@@ -678,11 +679,7 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 		// exactly as they see a construction, which is what makes a dormant building stop contributing.
 		// ⛔ It is NOT a duplicate of the building-PRESENCE facts: presence cannot tell dormant from operating
 		// (event-spine.md), and this fires only on a genuine active<->dormant change (`now == was` returned above).
-		if (!bAnnounce)
-		{
-			// inside the load bracket: the set still MOVES (above), the seed announces it once at the end
-		}
-		else if (now)
+		if (now)
 		{
 			emitCityBuildingActivated(pCity->getID(), pCity->getOwner(), b);
 		}
@@ -1027,63 +1024,16 @@ void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)
 	ek_recheckActiveSet(pCity, seeds);
 }
 
-// The WHOLE per-city operating set built FROM SOURCE: the fixpoint's three sets plus the provider ref-count
-// the ripple bookkeeps. Private to the LOAD SEED below, which is its ONE caller.
-// â It took a CALLER-OWNED buffer so the endpoint oracle could point it at scratch. That oracle is dead
-// ([superseded-ideas #33]) and the indirection died with it -- a `recompute...Into(buffer)` signature reads
-// like a live recompute path with several callers, which is exactly the wrong thing for the one full build
-// the load is allowed ([DEC-no-self-heal]: there is no other recompute, and none may be added).
-static void ek_buildOperatingSetInto(const CvCity* pCity, OperatingBuildings& kOut)
-{
-	kOut.active.clear();
-	kOut.obsolete.clear();
-	kOut.provided.clear();
-	kOut.providedCount.clear();
-	if (pCity == NULL) return;
-	EnablerKernel::recomputeOperatingBuildingsInto(pCity, kOut.active, kOut.provided, kOut.obsolete);
-	for (std::set<int>::const_iterator it = kOut.active.begin(); it != kOut.active.end(); ++it)
-	{
-		const std::vector<int>* pProvidedBonuses = ek_provides(*it);
-		if (pProvidedBonuses == NULL)
-		{
-			continue;
-		}
-		for (size_t iBonusIndex = 0; iBonusIndex < pProvidedBonuses->size(); ++iBonusIndex)
-		{
-			kOut.providedCount[(*pProvidedBonuses)[iBonusIndex]]++;
-		}
-	}
-}
-
-// The LOAD seed: the ONE full recompute into the city's own storage. It runs
-// once per load/reset/city-creation; the on*Active hooks maintain the set in place thereafter (targeted
-// propagation, never a blanket recompute -- enabler.md §3.2), so the full recompute never runs per-event again.
-void EnablerKernel::seedOperatingBuildings(const CvCity* pCity)
-{
-	if (pCity == NULL) return;
-	ek_buildOperatingSetInto(pCity, pCity->m_operatingBuildings);
-	// ANNOUNCE the computed verdict: every building this seed just resolved as OPERATING becomes processed-in.
-	// Without it the operating axis is silent on a load -- processBuilding is a play-time path, so a consumer
-	// keyed on the operating fact (the city's amenity fold) could never build. ⛔ This is NOT the banned
-	// state-walking pseudo-emit (superseded-ideas #13): that fabricates PRESENCE facts by walking already-populated
-	// objects, whereas the operate verdict is DERIVED and is being computed right here -- the fact is announced by
-	// the derivation that produces it, which is the ordinary emit contract.
-	const std::set<int>& kActive = pCity->m_operatingBuildings.active;
-	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
-	{
-		emitCityBuildingActivated(pCity->getID(), pCity->getOwner(), *it);
-	}
-}
-
 const OperatingBuildings& EnablerKernel::operatingBuildings(const CvCity* pCity)
 {
 	// A BARE FETCH of the AUTHORITATIVE per-city set, unconditionally. There is no recompute on this path and
-	// there must not be one: the set is built ONCE by seedOperatingBuildings (city creation / the load seed) and
+	// there must not be one: the set is BUILT BY THE FACTS -- each building's own dormancy check as it arrives,
+	// plus every have axis re-checking the consumers of what it supplies -- and
 	// kept current in place by the targeted on*Active hooks above (state-repositories.md: the enabler's sets are
 	// maintained by targeted PROPAGATION, never blanket-invalidated-and-recomputed -- blanket-recomputing the
 	// fixpoint per event is DESPAIR_INDEX #2). A propagation that fails to fire therefore leaves the set visibly
 	// wrong, which is how the missing hook gets found ([DEC-no-self-heal]); an external reader finds it by
-	// diffing this served set against the endpoint oracle's fresh recompute.
+	// reading the LOGS against the JSON info and what STATE expects ([superseded-ideas #33]).
 	return pCity->m_operatingBuildings;
 }
 

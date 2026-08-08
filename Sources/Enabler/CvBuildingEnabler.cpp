@@ -470,26 +470,17 @@ void BuildingEnabler::gateAllCities()
 
 void BuildingEnabler::onLoadFinished()
 {
-	// ⛔ SEED THE OPERATING SET FIRST -- the gate pass below and every deposit read downstream ask which
-	// buildings are OPERATING, and the set is empty from birth (CvOperatingBuildings.h: never serialized). This
-	// is the load seed enabler.md par.3.2 names ("the full recompute recomputeOperatingBuildingsInto is the load
-	// seed and the validation oracle"), NOT the tombstoned warm-up walk: that fabricates PRESENCE facts by
-	// walking populated objects, whereas the operate verdict is DERIVED and is computed here.
-	// ⚑ It must precede gateAllCities: a gate evaluated against an empty operating set reads every building as
-	// dormant, so `requires.operate` clauses that consume an active building's provides would all fail.
-	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-	{
-		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		if (!kPlayer.isAlive())
-		{
-			continue;
-		}
-		int iLoop = 0;
-		for (const CvCity* pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
-		{
-			EnablerKernel::seedOperatingBuildings(pLoopCity);
-		}
-	}
+	// â THE OPERATING SET IS ALREADY BUILT BY THE TIME THIS RUNS, AND NOTHING SEEDS IT HERE.
+	// It is filled by the in-read facts: each building announces its presence as it deserializes and resolves
+	// its own dormancy, and every have axis (bonus / vicinity bonus / religion / corp / pop / power) re-checks
+	// the consumers of what it supplies, so a manufactured chain lights tier by tier as the stream runs.
+	// â A full recompute stood here and was deleted. It rebuilt a set the facts had already converged and
+	// announced the whole thing at once -- which is why the in-read emit had to be suppressed to stop the
+	// deposits double-applying, and why the CASCADE saw no operating verdict until after the load bracket while
+	// the ENABLER had been event-built all along. The two must build on the SAME SEEDS (owner).
+	// â Do not reintroduce one: the objects and their contexts exist before the facts flow (the game could not
+	// load otherwise), so there is nothing for a rebuild to discover that the stream did not already carry
+	// ([DEC-spine-reseed], [DEC-no-self-heal]).
 	// the par.7.1 order rule's "gate once after the stream ends" option: every city's full gate pass, exactly
 	// once, against the fully-loaded state (fires from GAME_LOAD_FINISHED at the end of onFinalInitialized).
 	gateAllCities();

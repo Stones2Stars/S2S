@@ -247,8 +247,8 @@ which a checked-once `build` clause could never do.
 ⚠ **Cost, for the population a placing system genuinely does put in every city (the bands):** it allocates nothing
 new — the per-city building arrays are already dimensioned by `NUM_BUILDING_TYPES`
 ([memory-footprint.md §2](../reference/memory-footprint.md)) — and it is not a per-turn cost, because the operate
-fixpoint is targeted-propagation maintained (§3.2) and re-walks only what an event touched. The load seed pays it
-once. ⛔ That is a cost argument for the BAND population, and it was never a licence to widen the population it
+fixpoint is targeted-propagation maintained (§3.2) and re-walks only what an event touched — each building
+resolving its own dormancy as it arrives, once. ⛔ That is a cost argument for the BAND population, and it was never a licence to widen the population it
 is paid for.
 Where the bands form a succession chain (the **Education ladder**) a higher band dorms the lower via
 `requires.operate.dormant` (only-highest-active, no stacking) — the **same uniform `ReplacementBuildings → dormant`
@@ -349,12 +349,28 @@ operating building contributes its modifiers, a dormant one contributes nothing.
 counterpart of the frontier (§2 — the frontier is "what can I build"; this is "of what I've built, what is
 operating right now").
 
-It is **maintained by targeted propagation, never a blanket recompute**: computed once at load, then each
-HAVE-change ripples only the affected buildings into the authoritative set in place (via an operate reverse-index)
+It is **maintained by targeted propagation, never a blanket recompute**: each HAVE-change ripples only the
+affected buildings into the authoritative set in place (via an operate reverse-index)
 — see [state-repositories](../architecture/state-repositories.md). In code it is
 `CvCity::m_operatingBuildings` (type **`OperatingBuildings`** — its `active` + `provided` + `obsolete` sets), read via
-`EnablerKernel::operatingBuildings` / `wireOperatingBuildings`; the full recompute
-`recomputeOperatingBuildingsInto` is the load seed and the validation oracle.
+`EnablerKernel::operatingBuildings` / `wireOperatingBuildings`.
+
+> **⛔ THERE IS NO LOAD SEED — THE SET IS BUILT BY THE FACTS, LIKE EVERYTHING ELSE (owner).** A full per-city
+> recompute ran at `GAME_LOAD_FINISHED` and is DELETED. The game objects and their contexts exist before the
+> facts flow — the save could not load otherwise — so a building announces its presence as it deserializes,
+> resolves its own dormancy there, and every HAVE axis (bonus / vicinity bonus / religion / corporation /
+> population / power / building) re-checks the consumers of what it supplies. A manufactured chain therefore
+> lights tier by tier AS THE STREAM RUNS; there is nothing left for a rebuild to discover.
+> ⚑ **What the recompute actually cost, measured:** it forced the in-read ANNOUNCE to be suppressed (otherwise
+> the load-end re-announce double-applied every deposit), so the ENABLER was event-built while the CASCADE saw
+> no operating verdict at all until after the bracket — 102k activations and every deposit landing in one burst,
+> off a set the facts had already converged 55 seconds earlier. **The cascade and the enabler must build on the
+> SAME SEEDS (owner)**, and two compensating hacks were what stopped them.
+> ⛔ Do not reintroduce either half. A guard must never suppress an emit
+> ([event-spine.md](event-spine.md) § THE RECEIVED LINE), and a recompute beside an event-built set is banned
+> outright ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed): it "may never survive beside the
+> setters"). ⚠ Order is not what makes this safe — a package is additive, so arrival sequence is irrelevant
+> (owner); what matters is each fact arriving EXACTLY ONCE, which is precisely what a second builder breaks.
 
 > **⛔ THERE IS NO PER-TURN RE-CHECK OF ANY KIND, AND A "BOUNDED" ONE IS NOT AN EXCEPTION (owner).** A sweep that
 > re-gates a set once a turn — however small the set — **jumps over the core system**: the fact is what moves a

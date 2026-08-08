@@ -251,7 +251,6 @@ public:
 	static const std::vector<int>& propertyBandBuildings();                   // the PROPERTY-BAND population -- what the property system places in every city (CvCity::placeSystemBuildings)
 	static const std::map<int, std::set<int> >& propertyBandThresholds();      // PROPERTY_ id -> the sorted union of its operate-band boundaries; the enabler's own consumer reads it to tell a value MOVE from a band CROSSING
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
-	static void seedOperatingBuildings(const CvCity* pCity);                          // the LOAD seed: full recompute + the provider ref-count
 
 	// The STANDING per-city operating buildings (CvCity::m_operatingBuildings, CvOperatingBuildings.h) -- a BARE
 	// FETCH, unconditionally. Nothing is recomputed on this path: the set is seeded once and kept current in
