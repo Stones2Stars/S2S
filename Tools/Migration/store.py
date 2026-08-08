@@ -256,6 +256,22 @@ def is_dropped_type(typ):
     return typ in DROPPED_TYPES or typ.startswith(DROPPED_TYPE_PREFIXES)
 
 
+def complex_variant_id(baseType):
+    """The COMPLEX-set id of a trait, derived from the SIMPLE id -- the ONE definition, used by both callers.
+
+    The prefix STATES THE SET ([naming.md]: `TRAIT_` is a simple trait, `TRAIT_COMPLEX_` a complex one), and the
+    STEM is the base trait's own name (owner: "use the simple names as base, because that is the base of the
+    names"). Two callers must agree on it or the sets drift: the replacement variant keyed at `_load`, and the
+    re-key of a complex-ONLY record in `trait_rekey`.
+
+    ⚑ Deriving it -- rather than reading an authored id -- is what makes `complex/` a SUPERSET of `simple/` BY ID,
+    so a stored trait resolves into the active set by inserting `COMPLEX_` and nothing else.
+    """
+    if not baseType.startswith("TRAIT_") or baseType.startswith("TRAIT_COMPLEX_"):
+        return baseType
+    return "TRAIT_COMPLEX_" + baseType[len("TRAIT_"):]
+
+
 def _refs(rec, path):
     """Collect referenced Type-strings at fieldPath ('PrereqTech' or nested 'TechTypes/PrereqTech')."""
     nodes = [rec]
@@ -342,15 +358,29 @@ class Store:
                 rid_node = rec.find("ReplacementID")
                 rid = engine.text(rid_node) if rid_node is not None else ""
                 if rid and rid != "NONE":
-                    repl[typ] = {"replacement": rid, "condition": rec.find("ReplacementCondition")}
+                    # ⛔ THE VARIANT'S ID IS DERIVED FROM THE BASE IT REPLACES, NEVER FROM THE AUTHORED
+                    # <ReplacementID> (owner: use the simple names as base -- "that is the base of the names").
+                    # The authored id is whatever stem the modder felt like (TRAIT_NOMAD names TRAIT_COMPLEX_NOMADIC,
+                    # TRAIT_FANATICAL names TRAIT_COMPLEX_ZEALOUS), and it is NOT EVEN UNIQUE: TRAIT_EXCESSIVE and
+                    # TRAIT_EXCESSIVE1 both name TRAIT_COMPLEX_EXCESSIVE, so keying on it sent two different rungs
+                    # to one key and the `_merge` below folded the rung-1 payload into the base's -- the complex
+                    # set simply lost a rung, with nothing reporting it.
+                    # ⚑ None of that was visible while the engine hot-swapped these in memory: the id was only ever
+                    # FOLLOWED, never read, so a duplicate name cost nothing. It costs a whole record the moment the
+                    # two sets are separated BY ID.
+                    # ⚑ Deriving from the base makes the id unique by construction (base Types are unique) and makes
+                    # `complex/` a true SUPERSET of `simple/` BY ID -- which is what lets a save resolve into the
+                    # active set by pure prefix insertion, with no table and no does-it-exist test
+                    # ([modifier.md] par.4; `sm_resolveStoredType`).
+                    key = complex_variant_id(typ)
+                    repl[typ] = {"replacement": key, "condition": rec.find("ReplacementCondition")}
                     for t in ("ReplacementID", "ReplacementCondition"):
                         e = rec.find(t)
                         if e is not None:
                             rec.remove(e)
                     tn = rec.find("Type")
                     if tn is not None:
-                        tn.text = rid
-                    key = rid
+                        tn.text = key
                 else:
                     key = typ
                 if key in table:
@@ -445,7 +475,7 @@ class Store:
                 continue
             if typ.startswith("TRAIT_COMPLEX_") or not typ.startswith("TRAIT_"):
                 continue
-            out[typ] = "TRAIT_COMPLEX_" + typ[len("TRAIT_"):]
+            out[typ] = complex_variant_id(typ)
         self._trait_rekey_cache = out
         return out
 

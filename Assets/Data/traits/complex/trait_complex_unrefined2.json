@@ -3,6 +3,9 @@
  "enables": {
   "traitsAnd": [
    "TRAIT_COMPLEX_UNREFINED3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_UNREFINED3"
   ]
  },
  "excludes": [

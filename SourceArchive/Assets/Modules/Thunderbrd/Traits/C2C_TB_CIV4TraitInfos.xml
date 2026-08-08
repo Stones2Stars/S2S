@@ -42406,7 +42406,7 @@
 			<Strategy>TXT_KEY_TRAIT_UNREFINED_STRATEGY</Strategy>
 			<Civilopedia>TXT_KEY_TRAIT_UNREFINED2_PEDIA</Civilopedia>
 			<Button>art/Buttons/Traits/TraitUnrefined2.dds</Button>
-			<PromotionLine>PROMOTIONLINE_CREATIVE</PromotionLine>
+			<PromotionLine>PROMOTIONLINE_UNREFINED</PromotionLine>
 			<iLinePriority>-2</iLinePriority>
 			<OnGameOptions>
 				<OnGameOption>GAMEOPTION_LEADER_COMPLEX_TRAITS</OnGameOption>

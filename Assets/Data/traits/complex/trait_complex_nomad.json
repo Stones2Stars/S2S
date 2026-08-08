@@ -1,5 +1,5 @@
 {
- "type": "TRAIT_COMPLEX_NOMADIC",
+ "type": "TRAIT_COMPLEX_NOMAD",
  "food": {
   "empire": {
    "improvements": {
@@ -1343,7 +1343,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_COMPLEX_NOMADIC1"
+   "TRAIT_COMPLEX_NOMAD1"
   ]
  }
 }

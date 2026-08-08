@@ -1,21 +1,18 @@
 {
- "type": "TRAIT_COMPLEX_EXCESSIVE",
+ "type": "TRAIT_COMPLEX_EXCESSIVE1",
  "excludes": [
-  "TRAIT_COMPLEX_EFFICIENT"
+  "TRAIT_COMPLEX_EFFICIENT1"
  ],
  "buildRate": {
   "empire": {
    "worldWonder": {
-    "percent": 20
+    "percent": 10
    },
    "teamWonder": {
-    "percent": 25
+    "percent": 10
    },
    "nationalWonder": {
-    "percent": 25
-   },
-   "military": {
-    "percent": 20
+    "percent": 10
    }
   }
  },
@@ -43,40 +40,19 @@
     "IMPROVEMENT_WATERMILL": {
      "flat": -1
     },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": -1
+    },
     "IMPROVEMENT_TOWN": {
-     "flat": -1
-    },
-    "IMPROVEMENT_SUBURBS": {
-     "flat": -1
-    },
-    "IMPROVEMENT_MODERN_WINDMILL": {
      "flat": -1
     },
     "IMPROVEMENT_HYDRO_DAM": {
      "flat": -1
     },
-    "IMPROVEMENT_ARCHEOLOGICAL_SITE": {
+    "IMPROVEMENT_MODERN_WINDMILL": {
      "flat": -1
     },
-    "IMPROVEMENT_FOSSIL_DIG_SITE": {
-     "flat": -1
-    },
-    "IMPROVEMENT_SEA_MILL": {
-     "flat": -1
-    },
-    "IMPROVEMENT_TIDAL_HARNESS": {
-     "flat": -1
-    },
-    "IMPROVEMENT_SOLAR_PANELS": {
-     "flat": -1
-    },
-    "IMPROVEMENT_RADIO_TOWER": {
-     "flat": -1
-    },
-    "IMPROVEMENT_SUBMERGED_TOWN": {
-     "flat": -1
-    },
-    "IMPROVEMENT_VERTICAL_FARM": {
+    "IMPROVEMENT_SUBURBS": {
      "flat": -1
     }
    },
@@ -101,7 +77,7 @@
      "flat": -1
     }
    },
-   "percent": -10
+   "percent": -5
   }
  },
  "lessYieldThreshold": {
@@ -141,55 +117,25 @@
   "empire": {
    "builds": {
     "BUILD_COTTAGE": {
-     "percent": -50
+     "percent": -25
     },
     "BUILD_HAMLET": {
-     "percent": -50
+     "percent": -25
     },
     "BUILD_VILLAGE": {
-     "percent": -50
+     "percent": -25
     },
     "BUILD_SILK_FARM": {
-     "percent": -50
+     "percent": -25
     },
     "BUILD_GEOGLYPH": {
-     "percent": -50
+     "percent": -25
     },
     "BUILD_WINDMILL": {
-     "percent": -50
+     "percent": -25
     },
     "BUILD_WATERMILL": {
-     "percent": -50
-    },
-    "BUILD_TOWN": {
-     "percent": -50
-    },
-    "BUILD_SUBURBS": {
-     "percent": -50
-    },
-    "BUILD_MODERN_WINDMILL": {
-     "percent": -50
-    },
-    "BUILD_HYDRO_DAM": {
-     "percent": -50
-    },
-    "BUILD_ARCHEOLOGICAL_SITE": {
-     "percent": -50
-    },
-    "BUILD_FOSSIL_DIG_SITE": {
-     "percent": -50
-    },
-    "BUILD_SEA_MILL": {
-     "percent": -50
-    },
-    "BUILD_TIDAL_HARNESS": {
-     "percent": -50
-    },
-    "BUILD_SOLAR_PANELS": {
-     "percent": -50
-    },
-    "BUILD_SUBMERGED_TOWN": {
-     "percent": -50
+     "percent": -25
     }
    }
   }
@@ -211,12 +157,6 @@
     },
     "IMPROVEMENT_WATERMILL": {
      "percent": -100
-    },
-    "IMPROVEMENT_TOWN": {
-     "percent": -100
-    },
-    "IMPROVEMENT_SUBURBS": {
-     "percent": -100
     }
    }
   }
@@ -227,28 +167,28 @@
  "ai": {
   "flavours": [
    {
-    "FLAVOR_MILITARY": -2
+    "FLAVOR_MILITARY": -1
    },
    {
     "FLAVOR_RELIGION": 0
    },
    {
-    "FLAVOR_PRODUCTION": -4
+    "FLAVOR_PRODUCTION": -1
    },
    {
-    "FLAVOR_GOLD": 4
+    "FLAVOR_GOLD": 2
    },
    {
-    "FLAVOR_SCIENCE": 5
+    "FLAVOR_SCIENCE": 3
    },
    {
-    "FLAVOR_CULTURE": 5
+    "FLAVOR_CULTURE": 4
    },
    {
     "FLAVOR_GROWTH": 1
    },
    {
-    "FLAVOR_ESPIONAGE": 6
+    "FLAVOR_ESPIONAGE": 4
    }
   ]
  },
@@ -258,14 +198,14 @@
   }
  },
  "identity": {
-  "description": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE",
-  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_PEDIA",
+  "description": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_STRATEGY",
   "negativeTrait": true
  },
  "enables": {
   "traits": [
-   "TRAIT_COMPLEX_EXCESSIVE1"
+   "TRAIT_COMPLEX_EXCESSIVE2"
   ]
  }
 }

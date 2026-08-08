@@ -619,6 +619,28 @@ authored shape.
 > handed out** — because a trait id is named from several curators, above all the TECH edge that GATES a rung
 > ([enabler.md](enabler.md): without it every upper rung is permanently unreachable, and silently so). A
 > per-curator copy would drift and emit an id no record defines.
+> ⛔ **A COMPLEX ID IS DERIVED FROM THE SIMPLE ONE, NEVER READ FROM THE AUTHORED `<ReplacementID>` (owner: "use
+> the simple names as base, because that is the base of the names").** `Store.complex_variant_id` is that one
+> derivation — the base's own stem under the `TRAIT_COMPLEX_` prefix — and both callers go through it: the
+> replacement variant keyed at load, and the re-key of a complex-ONLY record.
+> ⚑ **This is what MAKES the superset property true, rather than merely asserting it.** The authored id is
+> whatever stem the source felt like (`TRAIT_NOMAD` names `TRAIT_COMPLEX_NOMADIC`; `TRAIT_FANATICAL` names
+> `TRAIT_COMPLEX_ZEALOUS`), and it is **not even unique** — `TRAIT_EXCESSIVE` and `TRAIT_EXCESSIVE1` name the
+> SAME replacement, so keying on it sent two different rungs to one key and the store's record merge folded the
+> rung-1 payload into the base's. A whole rung left the complex set and nothing reported it.
+> ⚠ **None of that was visible while the engine hot-swapped these in memory** — the id was only ever FOLLOWED,
+> never read, so a duplicate name cost nothing. It costs a record the moment the sets are separated BY ID, which
+> is why this surfaced only here.
+>
+> ⛔ **A LINE MEMBER'S `PromotionLine` / `bNegativeTrait` IS SOURCE DATA THAT CAN BE WRONG, AND BOTH FAIL
+> SILENTLY.** A rung tagged onto a NEIGHBOURING line leaves its own ladder with a hole — the members are ordered
+> within the tagged line, so the rung above it becomes permanently unreachable while the stray rung forks a line
+> it does not belong to. The fix is to RESTORE THE TAG, never to delete the rung or to teach the classifier
+> around it (the `TRAIT_TIMID1` precedent, below). ⚑ Both are found the same mechanical way: compare a record
+> against its LINE SIBLINGS — a member whose line disagrees with its stem's majority, or whose negativity
+> disagrees with its line's BASE. ⚠ Compare against the BASE, not against the arm: on a negative line whose
+> deeper rungs lost the flag, the untagged rungs outnumber the tagged ones and an arm-local majority endorses
+> the defect.
 > **⛔ EVERY RECORD IN THE COMPLEX SET CARRIES `TRAIT_COMPLEX_`, WITH NO EXCEPTIONS (owner).** *"If it was built
 > as complex, it's complex, no matter what."* The prefix STATES THE SET — it is not a marker for "is a variant of
 > a simple trait" — so a complex-ONLY line with no simple counterpart is `TRAIT_COMPLEX_` like every other record

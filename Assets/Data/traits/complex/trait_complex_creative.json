@@ -1000,8 +1000,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_COMPLEX_CREATIVE1",
-   "TRAIT_COMPLEX_UNREFINED2"
+   "TRAIT_COMPLEX_CREATIVE1"
   ]
  }
 }
