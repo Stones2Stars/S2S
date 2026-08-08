@@ -1058,12 +1058,22 @@ stalled ~15s across the empire, over a decision whose inputs had not moved. Same
 first question is not "why is one assignment slow" but **how many assignments does one toggle run, and how much
 does each re-derive that nothing invalidated.**
 
-**PROVEN -- WHAT THE TIME IS SPENT ON (owner): it RECALCULATES VALUE before reassigning.** So the 200ms is a
-per-city re-valuation, not the placement step. That puts it squarely in the class
-[contexts.md](../../architecture/contexts.md) exists to delete: *"once contexts are PURELY event-updated, an
-enormous class of per-read CALCULATION becomes obsolete -- not 'gets faster', ceases to exist."* A value that a
-maintained store already holds should not be re-derived because the player flipped a toggle -- nothing about the
-city's yields moved when automation changed hands.
+**PROVEN -- WHAT THE TIME IS SPENT ON (owner): it RECALCULATES THE CURRENT AI VALUE before reassigning.** So the
+200ms is a per-city re-valuation, not the placement step.
+
+⛔ **AND THAT RECALCULATION IS NOT THE DEFECT -- there is no way to make the AI value derivable state YET
+(owner).** An AI score is a heuristic the asking side owns, not a cascade quantity: `expected*` is specified as
+a per-DECISION read and an AI that wants repeated access caches its OWN scores, the sanctioned AI-heuristic
+residual ([patterns.md](../../architecture/patterns.md); [superseded-ideas #1](../../architecture/superseded-ideas.md)).
+So "make it a maintained store" is NOT the fix available here, and an agent opening this issue by trying to
+event-maintain the AI value is chasing something the model does not yet support.
+
+⇒ **What is therefore actually in question is narrower, and it is two things:**
+- **Does the valuation's own INPUT surface do per-read work it should not?** The scoring is legitimately
+  recomputed; what must still be O(1) is everything it READS
+  ([contexts.md](../../architecture/contexts.md): *"a predicate that walks plots/units per call is the
+  efficiency defect to reject in review"*). A re-valuation is only as expensive as its reads.
+- **How many times does one toggle run it, and does toggling OFF need it at all?**
 
 ⚠ **NOT YET KNOWN:** whether the 200ms is one expensive pass per city or many cheap ones; and whether toggling
 automation OFF should re-assign at all -- turning it off hands control back to the player and need not re-decide
