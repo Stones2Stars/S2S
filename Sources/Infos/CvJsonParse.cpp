@@ -8,6 +8,7 @@
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, GC
 #include "CvJsonParse.h"
+#include "CvInfo.h"                 // CvInfo::classificationBlocks -- the ONE §8/§9 block table the dispatch uses
 #include "Defines/CvGlobals.h"      // GC.getInfoTypeForString -- the kept type registry (FK resolution)
 
 // The single human -> ×100 fixed-point conversion (round half away from zero). 7 -> 700, 1.5 -> 150, -10 -> -1000.
@@ -192,19 +193,21 @@ bool jsonIsScopeToken(const std::string& s)
 // ===================== top-level key classification (json.md §1) -- the ONE vocabulary home =====================
 // The enables-family source + target-side edges (§4.1/§4.2). `provides` (§5a) is a sibling edge dispatched separately.
 static const char* CJK_EDGES[] = { "enables", "obsoletes", "replaces", "disables", "obsoletedBy", 0 };
-// Intrinsic (§7) + auxiliary/bespoke (§9) + the §8 classification blocks -- everything the base's DISPATCH does not
-// route to a section unit (a subclass / another system owns it). `policies`/`capabilities`/`skills`/`tags`/`state`/
-// `attributes` sit here because their FLAT-BOOL halves are dispatched to the subclass's CvClassificationBlock units by the
-// subclass itself (keyed skill extras stay typed subclass members); the bespoke `shrine`/`headquarters` FK sections
-// likewise.
+// Intrinsic (§7) + auxiliary/bespoke (§9) -- everything the base's DISPATCH does not route to a section unit
+// (a subclass / another system owns it), such as the bespoke `shrine`/`headquarters` FK sections.
+// ⛔ The §8/§9 CLASSIFICATION BLOCKS are NOT here: the base dispatches those itself, and their keys live in
+// CvInfo's ONE table (CvInfo.h) which jsonClassifyKey consults below. They were duplicated into this list, and
+// the duplicate drifted -- `amenities` was never added, so every one of its 1,469 authoring entities produced a
+// false [READJSON] ERROR unknown-key line. `state` and `canTradeOn` DO stay here: neither has a block accessor
+// (nothing authors `state`; `canTradeOn` is a typed subclass FK list, not a flat-bool block).
 static const char* CJK_INTRINSIC_KEYS[] = {
 	"type", "text", "description", "help", "civilopedia", "message", "quote", "strategy", "adjective", "shortDescription",
 	"cost", "ui", "world", "sound", "identity", "ai",
-	"policies", "excludes", "produces", "condition", "effect",
-	"outcomes", "mapGeneration", "replacedBy", "capabilities", "skills", "tags", "state", "attributes", "characteristics", "builds",
+	"excludes", "produces", "condition", "effect",
+	"outcomes", "mapGeneration", "replacedBy", "state", "builds",
 	"promotionLine", "buildUp", "shrine", "headquarters", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "unitCapability",
-	"canTrade", "canTradeOn", "canWorkOn",   // tech bespoke blocks (owner 2026-07-02, json.md §2 / capabilities.md)
+	"canTradeOn",   // tech bespoke block -- a typed TERRAIN FK list (capabilities.md), never a classification block
 	"spread",   // UNIT spread strength block: spread.religion/spread.corporation keyed maps (owner 2026-07-11 -- clearer than burying under timed `grants`)
 	"groupSpawn",   // UNIT group-spawn config: struct rows {unitCombat, chance, title} (owner 2026-07-11 -- config, not a grant)
 	"sizeMatters",      // the Size-Matters own-block (json.md §9 -- game-option system data, never a family)
@@ -262,6 +265,12 @@ JsonKeyClass jsonClassifyKey(const std::string& key, bool valueIsObject)
 	if (key == "whenObsolete")             return CJK_WHEN_OBSOLETE;   // §4.2 the obsolete-state modifier tree
 	if (key == "enabled" || key == "disabled") return CJK_GATE;        // entity-level applicability (§3.9 at entity level)
 	if (jsonInList(CJK_RETIRED_KEYS, key)) return CJK_RETIRED;
+	// The §8/§9 classification blocks, read from the SAME table CvInfo::mapSections dispatches from -- so the
+	// classifier and the dispatch cannot disagree about which keys are blocks. Tested BEFORE the scalar/flag
+	// fallthrough because a block's authored shape varies (a unit's `skills`/`tags` are ARRAYS, a building's
+	// `attributes` an object) and the class is decided by the KEY, never by the value's shape.
+	for (const CvInfo::ClassBlockRow* pRow = CvInfo::classificationBlocks(); pRow->key != NULL; ++pRow)
+		if (key == pRow->key) return CJK_CLASSBLOCK;
 	if (jsonInList(CJK_INTRINSIC_KEYS, key)) return CJK_INTRINSIC;
 	if (!valueIsObject)                    return CJK_FLAG;            // non-reserved scalar = flag/text (§8 open registries)
 	if (key.compare(0, 9, "PROPERTY_") == 0) return CJK_FAMILY;        // the open per-property family plane
@@ -281,6 +290,7 @@ const char* jsonKeyClassName(JsonKeyClass c)
 	case CJK_REQUIRES:  return "requires";
 	case CJK_WHEN_OBSOLETE: return "whenObsolete";
 	case CJK_GATE:      return "gate";
+	case CJK_CLASSBLOCK: return "classblock";
 	case CJK_INTRINSIC: return "intrinsic";
 	case CJK_FAMILY:    return "family";
 	case CJK_FLAG:      return "flag";

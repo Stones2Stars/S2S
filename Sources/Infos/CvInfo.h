@@ -182,7 +182,7 @@ public:
 	{ const CvGrants* g = consideredGrants(); return g ? g->scopedPulse(iChannelKey, iScopeKey) : 0; }
 	bool grantFlag(int iFlagKey) const       { const CvGrants* g = consideredGrants(); return g ? g->flag(iFlagKey) : false; }
 
-	// The FREE-PROMOTION payload, read off the `triggers` onTurnEnd promote entries -- for consumers that DISPLAY
+	// The FREE-PROMOTION payload, read off the `triggers` promote entries -- for consumers that DISPLAY
 	// or SCORE it. (The applier walks the entries itself, because it must evaluate each entry's condition against
 	// the unit being promoted; this read cannot, and does not pretend to.)
 	// Split by whether the entry carries a CONDITION: an unconditional promotion always lands, a conditional one
@@ -270,6 +270,22 @@ public:
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 		const CvCascadeHypothetical* pHypothetical = NULL) const;
 
+	// --- the §8/§9 CLASSIFICATION BLOCKS: ONE table, because FOUR places used to enumerate them by hand ---
+	// The authored key, the accessor that holds it, and its id domain -- so the key CLASSIFICATION
+	// (jsonClassifyKey), the section DISPATCH (mapSections), the idempotency CLEAR (clearSections) and the id
+	// RESOLVE (resolveClassificationIds) all read the same nine rows and cannot disagree.
+	// ⚑ They DID disagree: `amenities` was absent from the classifier's list, so 1,469 authoring entities
+	// produced a standing [READJSON] ERROR unknown-key line -- a false positive sitting on the one instrument
+	// that reports a genuinely dropped section.
+	// ⛔ The reason this is a table and not four careful lists: each omission fails DIFFERENTLY and SILENTLY --
+	// missing from the dispatch drops the data, from the classifier cries wolf, from the clear DOUBLE-ACCUMULATES
+	// on the full-registry re-map (mapFrom is idempotent BY CONTRACT), and from the resolve leaves every
+	// has*/provides* getter answering FALSE forever. Three of the four leave a plausible-looking game.
+	// ⇒ A new block is ONE ROW. A row with no accessor cannot compile; an accessor with no row is unreachable.
+	typedef CvClassificationBlock* (CvInfo::*ClassBlockAccessor)();
+	struct ClassBlockRow { const char* key; ClassBlockAccessor accessor; ClsDomain domain; };
+	static const ClassBlockRow* classificationBlocks() { return s_classBlocks; }   // NULL-key terminated
+
 protected:
 	// --- the load-time WRITE targets (mapFrom-only; the composition declaration). A derived info composes a unit
 	// by holding it BY VALUE and overriding the mut* + get* pair (one line each). Default NULL = the dispatch
@@ -298,6 +314,10 @@ protected:
 private:
 	CvInfo(const CvInfo&);            // noncopyable (the composed units own conditions)
 	CvInfo& operator=(const CvInfo&);
+
+	// Defined in CvInfo.cpp. A STATIC MEMBER rather than a file-static array because the mut* accessors it
+	// names are protected -- a namespace-scope initializer could not take their addresses.
+	static const ClassBlockRow s_classBlocks[];
 };
 
 #endif // CV_JSON_INFO_H

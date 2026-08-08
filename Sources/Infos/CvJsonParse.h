@@ -129,14 +129,15 @@ bool jsonIsScopeToken(const std::string& s);
 // CENSUS. The family vocabulary is CLOSED: a non-reserved OBJECT key classifies CJK_FAMILY only when it is in
 // the known-family table (or the open PROPERTY_* plane); otherwise it is CJK_UNKNOWN -- a LOUD load error the
 // reader prints unconditionally, never a silently-minted family. A non-reserved SCALAR key stays CJK_FLAG (the
-// §8 classification registries are open by design). (The intrinsic/auxiliary/classification blocks are
-// CJK_INTRINSIC: the base skips them; the owning subclass / another system parses them.) CJK_GATE is the
+// §8 classification registries are open by design). CJK_INTRINSIC is the intrinsic/auxiliary set the base
+// SKIPS (the owning subclass / another system parses it); CJK_CLASSBLOCK is the §8/§9 classification set the
+// base DISPATCHES itself, and its keys come from CvInfo's ONE table so the two halves cannot drift. CJK_GATE is the
 // entity-level `enabled`/`disabled` applicability pair (json §3.9 at entity level). CJK_TRIGGERS is the §5
 // trigger->chance->action section (array-valued; dispatched to the composing type's CvTriggers unit).
 // CJK_RETIRED is the tombstone class for purged vocabulary ("loadPrune") -- dispatched to the unconsumed census,
 // NEVER parsed (superseded-ideas.md).
 enum JsonKeyClass { CJK_EDGE, CJK_PROVIDES, CJK_ALLOWED, CJK_GRANTS, CJK_TRIGGERS, CJK_REQUIRES, CJK_WHEN_OBSOLETE,
-                    CJK_GATE, CJK_INTRINSIC, CJK_FAMILY, CJK_FLAG, CJK_RETIRED, CJK_UNKNOWN };
+                    CJK_GATE, CJK_CLASSBLOCK, CJK_INTRINSIC, CJK_FAMILY, CJK_FLAG, CJK_RETIRED, CJK_UNKNOWN };
 JsonKeyClass jsonClassifyKey(const std::string& key, bool valueIsObject);
 const char* jsonKeyClassName(JsonKeyClass c);   // the census label ("edge"/"family"/"flag"/…)
 

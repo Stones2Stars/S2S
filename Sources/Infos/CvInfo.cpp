@@ -7,7 +7,7 @@
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, CvString/CvWString
-#include "CvTriggers.h"   // CvTriggerEntry -- the onTurnEnd promote payload the free-promotion read walks
+#include "CvTriggers.h"   // CvTriggerEntry -- the promote payload the free-promotion read walks
 #include "CvInfo.h"
 #include "CvJsonParse.h"            // jsonClassifyKey / jsonNoteUnconsumed + the shared walkers (jsonChildObj/jsonIdStr)
 #include "Data/CvInfoValuation.h"   // InfoValuation -- the ONE per-group what-if calc unit the expected* delegate to
@@ -121,31 +121,42 @@ void CvInfo::clearSections()
 	if (CvGate* u = mutGate())              u->clearParsed();
 	if (CvModifiers* u = mutModifiers())    u->clearParsed();
 	if (CvModifiers* u = mutWhenObsolete()) u->clearParsed();
-	if (CvClassificationBlock* u = mutSkills())       u->clearParsed();
-	if (CvClassificationBlock* u = mutTags())         u->clearParsed();
-	if (CvClassificationBlock* u = mutAttributes())   u->clearParsed();
-	if (CvClassificationBlock* u = mutAmenities())    u->clearParsed();
-	if (CvClassificationBlock* u = mutCharacteristics()) u->clearParsed();
-	if (CvClassificationBlock* u = mutCapabilities()) u->clearParsed();
-	if (CvClassificationBlock* u = mutPolicies())     u->clearParsed();
-	if (CvClassificationBlock* u = mutCanTrade())     u->clearParsed();
-	if (CvClassificationBlock* u = mutCanWorkOn())    u->clearParsed();
+	// The §8/§9 blocks come off the ONE table (CvInfo.h) -- a block missing from this clear would survive the
+	// full-registry re-map and DOUBLE-ACCUMULATE, since mapFrom is idempotent by contract.
+	for (const ClassBlockRow* pRow = s_classBlocks; pRow->key != NULL; ++pRow)
+	{
+		if (CvClassificationBlock* u = (this->*(pRow->accessor))()) u->clearParsed();
+	}
 }
 
 // §8/§9 classification id-plane resolve -- each carried block fills its by-id bitsets from the generated
 // ClassificationRegistry. LOAD-ONLY (called by ClassificationRegistry::buildAndResolve after minting).
 void CvInfo::resolveClassificationIds()
 {
-	if (CvClassificationBlock* u = mutSkills())       u->resolveIds(CLSD_SKILL);
-	if (CvClassificationBlock* u = mutTags())         u->resolveIds(CLSD_TAG);
-	if (CvClassificationBlock* u = mutAttributes())   u->resolveIds(CLSD_ATTRIBUTE);
-	if (CvClassificationBlock* u = mutAmenities())    u->resolveIds(CLSD_AMENITY);
-	if (CvClassificationBlock* u = mutCharacteristics()) u->resolveIds(CLSD_CHARACTERISTIC);
-	if (CvClassificationBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
-	if (CvClassificationBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
-	if (CvClassificationBlock* u = mutCanTrade())     u->resolveIds(CLSD_CANTRADE);
-	if (CvClassificationBlock* u = mutCanWorkOn())    u->resolveIds(CLSD_CANWORKON);
+	// Same ONE table: the row carries the block's id DOMAIN, so a block cannot be resolved against the wrong one
+	// and cannot be silently skipped -- an unresolved block answers FALSE from every has*/provides* getter.
+	for (const ClassBlockRow* pRow = s_classBlocks; pRow->key != NULL; ++pRow)
+	{
+		if (CvClassificationBlock* u = (this->*(pRow->accessor))()) u->resolveIds(pRow->domain);
+	}
 }
+
+// The §8/§9 classification blocks -- the ONE table (CvInfo.h): the authored key beside the accessor that holds
+// it. mapSections DISPATCHES from it and jsonClassifyKey CLASSIFIES from it, so the two cannot disagree about
+// which keys are blocks. A type that composes no unit for a block still reports it unconsumed, exactly as before.
+const CvInfo::ClassBlockRow CvInfo::s_classBlocks[] =
+{
+	{ "skills",          &CvInfo::mutSkills,          CLSD_SKILL },
+	{ "tags",            &CvInfo::mutTags,            CLSD_TAG },
+	{ "attributes",      &CvInfo::mutAttributes,      CLSD_ATTRIBUTE },
+	{ "amenities",       &CvInfo::mutAmenities,       CLSD_AMENITY },
+	{ "characteristics", &CvInfo::mutCharacteristics, CLSD_CHARACTERISTIC },
+	{ "capabilities",    &CvInfo::mutCapabilities,    CLSD_CAPABILITY },
+	{ "policies",        &CvInfo::mutPolicies,        CLSD_POLICY },
+	{ "canTrade",        &CvInfo::mutCanTrade,        CLSD_CANTRADE },
+	{ "canWorkOn",       &CvInfo::mutCanWorkOn,       CLSD_CANWORKON },
+	{ NULL, NULL, NUM_CLS_DOMAINS }
+};
 
 void CvInfo::mapSections(const picojson::value& entity)
 {
@@ -183,15 +194,16 @@ void CvInfo::mapSections(const picojson::value& entity)
 		// accounts every top-level key to exactly one consumer, so a block with nowhere to land is a loud
 		// load-time report like any other unconsumed key (the fail-loud coverage rule, patterns.md § The ONE
 		// reader). Silence here is what let a civic's authored `amenities` load, resolve and reach nothing.
-		if (k == "skills")            { if (CvClassificationBlock* u = mutSkills())          u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "tags")              { if (CvClassificationBlock* u = mutTags())            u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "attributes")        { if (CvClassificationBlock* u = mutAttributes())      u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "amenities")         { if (CvClassificationBlock* u = mutAmenities())       u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "characteristics")   { if (CvClassificationBlock* u = mutCharacteristics()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "capabilities")      { if (CvClassificationBlock* u = mutCapabilities())    u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "policies")          { if (CvClassificationBlock* u = mutPolicies())        u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "canTrade")          { if (CvClassificationBlock* u = mutCanTrade())        u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
-		if (k == "canWorkOn")         { if (CvClassificationBlock* u = mutCanWorkOn())       u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k); continue; }
+		bool bClassificationBlock = false;
+		for (const ClassBlockRow* pRow = s_classBlocks; pRow->key != NULL; ++pRow)
+		{
+			if (k != pRow->key) continue;
+			if (CvClassificationBlock* u = (this->*(pRow->accessor))()) u->parse(v);
+			else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			bClassificationBlock = true;
+			break;
+		}
+		if (bClassificationBlock) continue;
 
 		switch (jsonClassifyKey(k, v.is<picojson::object>()))
 		{
@@ -262,7 +274,7 @@ void CvInfo::triggerPromotions(std::vector<int>& outAlways, std::vector<int>& ou
 	for (size_t i = 0; i < entries.size(); ++i)
 	{
 		const CvTriggerEntry* pEntry = entries[i];
-		if (pEntry->happening != "onTurnEnd" || pEntry->promotePromotions.empty()) continue;
+		if (pEntry->happening != TRIGGER_UNIT_ENTERED_CITY || pEntry->promotePromotions.empty()) continue;
 		std::vector<int>& out = (pEntry->condition != NULL) ? outConditional : outAlways;
 		for (size_t k = 0; k < pEntry->promotePromotions.size(); ++k)
 		{
@@ -291,7 +303,7 @@ bool CvInfo::hasTriggerPromotions() const
 	const std::vector<CvTriggerEntry*>& entries = pTriggers->entries();
 	for (size_t i = 0; i < entries.size(); ++i)
 	{
-		if (entries[i]->happening == "onTurnEnd" && !entries[i]->promotePromotions.empty()) return true;
+		if (entries[i]->happening == TRIGGER_UNIT_ENTERED_CITY && !entries[i]->promotePromotions.empty()) return true;
 	}
 	return false;
 }
