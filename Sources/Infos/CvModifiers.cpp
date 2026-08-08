@@ -712,7 +712,16 @@ void CvModifiers::applyPureTraitGate(bool bNegativeTrait)
 		{
 			continue;   // a zero carries no alignment to oppose
 		}
-		const bool bOffAlignment = bNegativeTrait ? (pEntry->value > 0) : (pEntry->value < 0);
+		// ⛔ ALIGNMENT IS NOT THE SIGN -- ask the FAMILY which way its numbers point
+		// ([DEC-single-implementation]: the one polarity table, `infoKindAlignmentInverted`). On an INVERTED
+		// (family, kind) a positive value is the DOWNSIDE, so the test flips with it.
+		// ⚑ Getting this wrong is silent in both directions and was: `lessYieldThreshold: +5` on a POSITIVE
+		// trait survived the gate as though it were a gain, while `maintenance.distance: -10%` -- a genuine
+		// upside -- was dropped as though it were a penalty. Every inverted family was gated backwards, and
+		// the resulting numbers stay entirely plausible.
+		const bool bInverted = infoKindAlignmentInverted(pEntry->family, pEntry->kind);
+		const bool bValueIsUpside = bInverted ? (pEntry->value < 0) : (pEntry->value > 0);
+		const bool bOffAlignment = bNegativeTrait ? bValueIsUpside : !bValueIsUpside;
 		if (!bOffAlignment)
 		{
 			continue;

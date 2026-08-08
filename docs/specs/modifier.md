@@ -771,7 +771,19 @@ authored shape.
 > - **CLEAN gates → cascade, at eval (its ordinary condition-eval, NOT hack emulation).**
 >   - **`PURE_TRAITS` gate (implemented)** — when `GAMEOPTION_LEADER_PURE_TRAITS` is live, drop each trait value whose
 >     alignment opposes the trait's: a `negativeTrait`'s **upside** values drop and a positive trait's **downside**
->     values drop (engine `CvTraitInfo` getters keyed on `isNegativeTrait()` + sign). Concretely for thresholds: an
+>     values drop.
+>     > **⛔ ALIGNMENT IS FAMILY METADATA, NOT THE SIGN — `infoKindAlignmentInverted(family, kind)` is the one
+>     > table.** On an **INVERTED** (family, kind) a POSITIVE value is the DOWNSIDE, because the number counts a
+>     > cost, a penalty, a timer or a worse-when-higher threshold. Grounded row-for-row in the legacy per-getter
+>     > filters (`CvTraitInfo`): 48 members guard `isNegativeTrait() && x > 0` and **19** guard
+>     > `isNegativeTrait() && x < 0`. Inverted today: `maintenance` · `costs` · `hurry` · `lessYieldThreshold`
+>     > (whole families); `upkeep` **except** its free-amount kinds (§2: a positive `freeMilitary`/`freeCivilian`
+>     > GRANTS, so it stays normal); `experience.levelModifier` only; and `revolution`'s unrest kinds — whose
+>     > `*Good` twins stay normal, which is why polarity cannot be declared family-wide.
+>     > ⚑ **A sign-only gate is wrong in BOTH directions and silently so:** it keeps `lessYieldThreshold: +5` on a
+>     > positive trait as though a gain, and drops `maintenance.distance: −10%` — a genuine upside — as though a
+>     > penalty. Neither shows as an anomaly; the totals stay plausible.
+>     Concretely for thresholds: an
 >     `extraYieldThreshold` is an UPSIDE → dropped from a negative trait; a `lessYieldThreshold` is a DOWNSIDE →
 >     dropped from a positive trait (engine `getLessYieldThreshold` 2132-2147 sets it to −1). The cascade reads the
 >     `negativeTrait` flag (`NegativeTraits*` in the repo) + the live option. This is how "parity comes to us": a

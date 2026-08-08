@@ -639,6 +639,19 @@ CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind);
 // semantics, positive grants / negative shrinks, summed then floored -- free >= 0; the engine's SECOND floor,
 // net = max(0, upkeep - free) per class, stays in the engine formula at the combine site, CvPlayer.cpp:10295/:10315).
 bool infoCombineFloorAtZero(ModifierFamily eFamily, int iKind);
+// ⛔ ALIGNMENT POLARITY -- does a POSITIVE value on this (family, kind) HELP its owner, or hurt it?
+// FAMILY metadata like the floor above, and for the same reason: the answer belongs to the kind, never to a
+// value. True = INVERTED, i.e. a positive number is a DOWNSIDE (a cost, a penalty, a timer, a threshold at
+// which you get LESS).
+// ⚑ It exists because the PURE_TRAITS gate drops "the values whose alignment opposes the trait's", and
+// alignment is NOT the sign: `maintenance.distance: -10%` is an UPSIDE and `lessYieldThreshold: +5` is a
+// DOWNSIDE. A gate testing the sign alone keeps every inverted-family downside on a positive trait and drops
+// its upsides -- backwards on exactly the families where being wrong is invisible, because the number stays
+// plausible either way.
+// ⚑ Grounded row-for-row in the legacy per-getter filters (`CvTraitInfo`, main): 48 members guard
+// `isNegativeTrait() && x > 0` (NORMAL) and 19 guard `isNegativeTrait() && x < 0` (INVERTED). Every member a
+// trait actually authors is covered below; a family absent from this table is NORMAL.
+bool infoKindAlignmentInverted(ModifierFamily eFamily, int iKind);
 // Is this address segment a deposit-target token (a §3.3 plural target, a keyed-target container, or a
 // targeting-config block)? Target tokens carry data ids below them, never kind vocabulary.
 bool infoIsTargetToken(const std::string& szSegment);

@@ -914,6 +914,48 @@ bool infoCombineFloorAtZero(ModifierFamily eFamily, int iKind)
 	return false;
 }
 
+bool infoKindAlignmentInverted(ModifierFamily eFamily, int iKind)
+{
+	switch (eFamily)
+	{
+	// WHOLE-FAMILY inversions -- every kind is a cost, a penalty or a worse-when-higher threshold.
+	case MODFAM_MAINTENANCE:            // numCities / corporation / distance: more maintenance is worse
+	case MODFAM_COSTS:                  // upgrade / hurry: a price
+	case MODFAM_HURRY:                  // anger: the unhappiness a rush buys
+	case MODFAM_HURRY_ANGER:
+	case MODFAM_LESS_YIELD_THRESHOLD:   // the threshold at which you get LESS -- a downside at ANY sign, which
+	                                    // is the case that exposed the whole bug (a positive 5 reading as a gain)
+		return true;
+
+	case MODFAM_UPKEEP:
+		// ⛔ The FREE-amount kinds are the exception and keep NORMAL polarity: a POSITIVE entry GRANTS free
+		// upkeep (modifier.md §2's free-amount sign convention), so it is an upside like any other. Every
+		// other upkeep kind is a bill.
+		return iKind != (int)UPKEEP_FREE_MILITARY && iKind != (int)UPKEEP_FREE_CIVILIAN;
+
+	case MODFAM_EXPERIENCE:
+		// Only the LEVEL modifier inverts -- it raises the XP a level COSTS. `amount`, `inBorder` and the
+		// keyed per-unitCombat/domain grants are ordinary upsides.
+		return iKind == (int)EXPERIENCE_LEVEL_MODIFIER;
+
+	case MODFAM_REVOLUTION:
+		// The revolution INDEX is unrest: higher is worse. The two `*Good` kinds move it the other way and so
+		// stay NORMAL -- the family genuinely carries both alignments, which is why polarity cannot be
+		// family-wide here.
+		return iKind == (int)REVOLUTION_LOCAL
+		    || iKind == (int)REVOLUTION_NATIONAL
+		    || iKind == (int)REVOLUTION_DISTANCE_MODIFIER
+		    || iKind == (int)REVOLUTION_HOLY_CITY_BAD
+		    || iKind == (int)REVOLUTION_BAD_RELIGION
+		    || iKind == (int)REVOLUTION_NATIONALITY;
+
+	default:
+		// Everything else is NORMAL, including MODFAM_EXTRA_YIELD_THRESHOLD -- its twin is an UPSIDE (legacy
+		// drops it from a NEGATIVE trait), which is the asymmetry that makes the pair worth stating together.
+		return false;
+	}
+}
+
 bool infoIsTargetToken(const std::string& szSegment)
 {
 	for (int i = 0; INFO_TARGET_TOKENS[i] != 0; ++i)
