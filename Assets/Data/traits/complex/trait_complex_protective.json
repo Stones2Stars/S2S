@@ -364,6 +364,7 @@
  },
  "happiness": {
   "empire": {
+   "flat": 2,
    "buildings": {
     "BUILDING_CAVE_SHELTER": {
      "flat": 1
@@ -550,6 +551,15 @@
    }
   }
  },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_FORT": {
+     "percent": 50
+    }
+   }
+  }
+ },
  "goldenAge": {
   "empire": {
    "percent": -25
@@ -559,6 +569,13 @@
   "empire": {
    "warWeariness": {
     "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
    }
   }
  },
@@ -575,6 +592,18 @@
  "espionageDefense": {
   "empire": {
    "percent": 20
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
   }
  },
  "triggers": [
@@ -629,7 +658,8 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_PROTECTIVE_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_PROTECTIVE_SHORT"
  },
  "enables": {
   "traits": [

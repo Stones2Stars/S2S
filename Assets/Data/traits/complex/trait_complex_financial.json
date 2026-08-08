@@ -458,6 +458,7 @@
  },
  "commerce": {
   "empire": {
+   "percent": 5,
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": 1
@@ -520,8 +521,20 @@
    }
   }
  },
+ "extraYieldThreshold": {
+  "empire": {
+   "commerce": {
+    "flat": 4
+   }
+  }
+ },
  "happiness": {
   "empire": {
+   "cities": {
+    "flat": -2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   },
    "flat": 1
   }
  },
@@ -545,6 +558,11 @@
    "flat": -1
   }
  },
+ "conscript": {
+  "empire": {
+   "flat": -10
+  }
+ },
  "maintenance": {
   "empire": {
    "corporation": {
@@ -559,8 +577,34 @@
    }
   }
  },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": 10
+    }
+   }
+  }
+ },
  "workRate": {
   "empire": {
+   "builds": {
+    "BUILD_COTTAGE": {
+     "percent": 30
+    },
+    "BUILD_HAMLET": {
+     "percent": 30
+    },
+    "BUILD_VILLAGE": {
+     "percent": 30
+    },
+    "BUILD_TOWN": {
+     "percent": 30
+    },
+    "BUILD_SUBURBS": {
+     "percent": 30
+    }
+   },
    "percent": -25
   }
  },
@@ -647,6 +691,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_FINANCIAL_SHORT",
   "impurePropertyManipulators": true
  },
  "enables": {

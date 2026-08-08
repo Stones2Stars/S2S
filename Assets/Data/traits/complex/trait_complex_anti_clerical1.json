@@ -82,6 +82,71 @@
  },
  "happiness": {
   "empire": {
+   "buildings": {
+    "BUILDING_JEWISH_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_CHRISTIAN_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_ISLAMIC_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_HINDU_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_BUDDHIST_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_CONFUCIAN_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_TAOIST_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_HELLENIC_GYMNASIA": {
+     "flat": -1
+    },
+    "BUILDING_ZOROASTRIAN_SHRINE": {
+     "flat": -1
+    },
+    "BUILDING_TEMPLE_OF_CHONS": {
+     "flat": -1
+    },
+    "BUILDING_CALMACEC": {
+     "flat": -1
+    },
+    "BUILDING_NATURE_CIRCLE_OF_POWER": {
+     "flat": -1
+    },
+    "BUILDING_JAIN_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_TEMPLE_OF_AN": {
+     "flat": -1
+    },
+    "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE": {
+     "flat": -1
+    },
+    "BUILDING_SCIENTOLOGY_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_INVOCATION_HUT": {
+     "flat": -1
+    },
+    "BUILDING_SHINTO_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_BAHAI_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_ASATRU_MONASTERY": {
+     "flat": -1
+    },
+    "BUILDING_ANDEAN_MONASTERY": {
+     "flat": -1
+    }
+   },
    "nonStateReligion": {
     "flat": -1
    }
@@ -106,6 +171,20 @@
      }
     }
    ]
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 22
+   }
   }
  },
  "durations": {
@@ -166,6 +245,23 @@
    }
   }
  },
+ "espionageDefense": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 6,
+     "scope": "city"
+    }
+   }
+  }
+ },
  "policies": {
   "allowInquisitions": true,
   "bansNonStateReligions": true
@@ -207,6 +303,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ANTI_CLERICAL_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_ANTI_CLERICAL_SHORT",
   "negativeTrait": true
  },
  "enables": {

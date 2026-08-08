@@ -9,15 +9,37 @@
    "percent": -5
   }
  },
+ "buildRate": {
+  "empire": {
+   "military": {
+    "percent": 20
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "flat": -1,
    "percent": -5
   }
  },
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
  "happiness": {
   "empire": {
    "flat": -2
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
   }
  },
  "experience": {
@@ -30,6 +52,13 @@
  "conscript": {
   "empire": {
    "flat": -2
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
   }
  },
  "hurry": {
@@ -61,6 +90,13 @@
    },
    "enemyWarWeariness": {
     "percent": 20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": 5
    }
   }
  },
@@ -118,6 +154,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_TEMPERAMENTAL_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_TEMPERAMENTAL_SHORT",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  },

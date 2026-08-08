@@ -20,6 +20,68 @@
  },
  "buildRate": {
   "empire": {
+   "buildings": {
+    "BUILDING_FACTORY": {
+     "percent": 20
+    },
+    "BUILDING_ASSEMBLY_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_COURTHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_LAW_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_LAW_FIRM": {
+     "percent": 20
+    },
+    "BUILDING_STRATEGIC_GRAIN_RESERVE": {
+     "percent": 20
+    },
+    "BUILDING_TOWN_HALL": {
+     "percent": 20
+    },
+    "BUILDING_VILLAGE_HALL": {
+     "percent": 20
+    },
+    "BUILDING_CITY_COUNCIL": {
+     "percent": 20
+    },
+    "BUILDING_METROPOLITAN_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_CAPITAL_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_PARTS_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_AI_LEGAL_SYSTEM": {
+     "percent": 20
+    },
+    "BUILDING_MOLECULAR_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_ATOMIC_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_QUANTUM_ASSEMBLER": {
+     "percent": 20
+    },
+    "BUILDING_MATERIALIZER": {
+     "percent": 20
+    },
+    "BUILDING_3D_PRINTING_MILL": {
+     "percent": 20
+    },
+    "BUILDING_NANOBOTIC_PRINTING_MILL": {
+     "percent": 20
+    }
+   },
    "teamWonder": {
     "percent": 25
    },
@@ -28,8 +90,24 @@
    }
   }
  },
+ "gold": {
+  "empire": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
  "culture": {
   "empire": {
+   "percent": [
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_CELEBRITY": {
      "flat": -1
@@ -145,7 +223,8 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_ORGANIZED_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_ORGANIZED_SHORT"
  },
  "enables": {
   "traits": [

@@ -351,6 +351,11 @@
  },
  "happiness": {
   "empire": {
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   },
    "flat": [
     1,
     {
@@ -582,7 +587,8 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_CREATIVE1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CREATIVE1_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"
  },
  "enables": {
   "traits": [

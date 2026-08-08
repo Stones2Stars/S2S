@@ -17,6 +17,88 @@
  },
  "buildRate": {
   "empire": {
+   "buildings": {
+    "BUILDING_HAMMAM": {
+     "percent": 20
+    },
+    "BUILDING_BARAY": {
+     "percent": 20
+    },
+    "BUILDING_HARBOR": {
+     "percent": 20
+    },
+    "BUILDING_PORT": {
+     "percent": 20
+    },
+    "BUILDING_ARCOLOGY": {
+     "percent": 20
+    },
+    "BUILDING_AQUEDUCT": {
+     "percent": 20
+    },
+    "BUILDING_COMMERCIAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_INTERNATIONAL_PORT": {
+     "percent": 20
+    },
+    "BUILDING_HOUSING_COLONY_ARCOLOGY": {
+     "percent": 20
+    },
+    "BUILDING_LAUNCH_ARCOLOGY": {
+     "percent": 20
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_MODERN_WATERWORKS": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "UNIT_CLONES": {
+     "percent": 50
+    },
+    "UNIT_IMMIGRANT": {
+     "percent": 50
+    },
+    "UNIT_GATHERER": {
+     "percent": 25
+    },
+    "UNIT_NEANDERTHAL_GATHERER": {
+     "percent": 25
+    },
+    "UNIT_WORKER": {
+     "percent": 25
+    },
+    "UNIT_WORKBUFFALO": {
+     "percent": 25
+    },
+    "UNIT_WORKMULE": {
+     "percent": 25
+    },
+    "UNIT_WORKELEPHANT": {
+     "percent": 25
+    },
+    "UNIT_WORKER_INDUSTRIAL": {
+     "percent": 25
+    },
+    "UNIT_WORKER_MODERN": {
+     "percent": 25
+    },
+    "UNIT_WORKER_ANDROID": {
+     "percent": 25
+    },
+    "UNIT_CONSTRUCT_SHIP": {
+     "percent": 25
+    },
+    "UNIT_PARK_RANGER": {
+     "percent": 25
+    },
+    "UNIT_ECOLOGIST": {
+     "percent": 25
+    }
+   },
    "worldWonder": {
     "percent": -20
    },
@@ -53,6 +135,25 @@
    }
   }
  },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -20
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": -25
+   }
+  }
+ },
  "maintenance": {
   "empire": {
    "distance": {
@@ -82,6 +183,9 @@
  },
  "revolution": {
   "empire": {
+   "local": {
+    "flat": 1
+   },
    "distanceModifier": {
     "percent": -10
    }
@@ -130,7 +234,8 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_EXPANSIVE_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_EXPANSIVE_SHORT"
  },
  "enables": {
   "traits": [

@@ -29,6 +29,9 @@
  },
  "buildRate": {
   "empire": {
+   "nationalWonder": {
+    "percent": 20
+   },
    "worldWonder": {
     "percent": 10
    },
@@ -57,6 +60,7 @@
  },
  "espionage": {
   "empire": {
+   "percent": 15,
    "specialists": {
     "SPECIALIST_PRIEST": {
      "flat": 1
@@ -69,6 +73,11 @@
  },
  "happiness": {
   "empire": {
+   "buildings": {
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "flat": 1
+    }
+   },
    "flat": -1,
    "cities": {
     "flat": -1,
@@ -213,6 +222,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_CRUEL1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CRUEL1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_CRUEL_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_CRUEL_SHORT",
   "negativeTrait": true
  },
  "enables": {

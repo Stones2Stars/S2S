@@ -168,6 +168,7 @@
  },
  "happiness": {
   "empire": {
+   "flat": -1,
    "nonStateReligion": {
     "flat": -1
    }
@@ -184,6 +185,15 @@
    "units": {
     "UNIT_SCIENTIST": {
      "flat": 2
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SOLAR_PANELS": {
+     "percent": 50
     }
    }
   }
@@ -236,6 +246,9 @@
    }
   }
  },
+ "policies": {
+  "upgradeAnywhere": true
+ },
  "ai": {
   "flavours": [
    {
@@ -273,6 +286,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_SCIENTIFIC_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_SCIENTIFIC_SHORT",
   "impurePropertyManipulators": true
  },
  "enables": {

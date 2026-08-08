@@ -47,6 +47,11 @@
  },
  "buildRate": {
   "empire": {
+   "buildings": {
+    "BUILDING_FREE_PORT": {
+     "percent": 20
+    }
+   },
    "worldWonder": {
     "percent": 20
    },
@@ -178,6 +183,9 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
+    "commerce": {
+     "percent": 10
+    },
     "percent": [
      {
       "value": 30,
@@ -204,6 +212,22 @@
    }
   }
  },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_LOYALTY",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "ai": {
   "flavours": [
    {
@@ -241,6 +265,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_FOREIGN_SHORT",
   "negativeTrait": true
  },
  "enables": {

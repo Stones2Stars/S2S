@@ -116,6 +116,18 @@
    "flat": -1
   }
  },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 20
+   }
+  }
+ },
  "conscript": {
   "empire": {
    "flat": 2
@@ -224,6 +236,30 @@
  "policies": {
   "extraGoody": true
  },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CITY_RAIDER1",
+       "enabled": "IS_MELEE"
+      },
+      {
+       "promotion": "PROMOTION_IMPROVISE1",
+       "enabled": "IS_SPY"
+      },
+      {
+       "promotion": "PROMOTION_IMPROVISE2",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "ai": {
   "flavours": [
    {
@@ -261,6 +297,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_EXCESSIVE_SHORT",
   "negativeTrait": true
  },
  "enables": {

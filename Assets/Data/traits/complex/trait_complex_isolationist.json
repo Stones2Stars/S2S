@@ -17,6 +17,7 @@
  },
  "production": {
   "empire": {
+   "percent": 15,
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": -1
@@ -52,6 +53,11 @@
      "flat": -1
     }
    }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -15
   }
  },
  "greatGeneralRate": {
@@ -130,6 +136,13 @@
    }
   }
  },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 1
+   }
+  }
+ },
  "defense": {
   "empire": {
    "amount": {
@@ -191,6 +204,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_ISOLATIONIST_SHORT",
   "negativeTrait": true
  },
  "enables": {

@@ -94,6 +94,54 @@
    "percent": 5
   }
  },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": 20
+   },
+   "teamWonder": {
+    "percent": 20
+   },
+   "nationalWonder": {
+    "percent": 20
+   },
+   "buildings": {
+    "BUILDING_TOWNCLOCK": {
+     "percent": 20
+    },
+    "BUILDING_GUILD_HALL": {
+     "percent": 20
+    },
+    "BUILDING_GLASSBLOWERS_WORKSHOP": {
+     "percent": 20
+    },
+    "BUILDING_STONEWORKER": {
+     "percent": 20
+    },
+    "BUILDING_FORGE": {
+     "percent": 20
+    },
+    "BUILDING_WORKHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_FACTORY_GLASSWARE": {
+     "percent": 20
+    },
+    "BUILDING_FOUNDRY": {
+     "percent": 20
+    },
+    "BUILDING_METALS_MEGACOMPLEX": {
+     "percent": 20
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "researchRate": {
   "empire": {
    "techs": {
@@ -262,6 +310,15 @@
    }
   }
  },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "production": {
+     "percent": 30
+    }
+   }
+  }
+ },
  "workRate": {
   "empire": {
    "builds": {
@@ -408,6 +465,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INDUSTRIOUS_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_INDUSTRIOUS_SHORT",
   "impurePropertyManipulators": true
  },
  "enables": {

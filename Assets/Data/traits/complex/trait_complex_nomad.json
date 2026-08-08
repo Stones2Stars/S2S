@@ -1027,6 +1027,29 @@
  },
  "happiness": {
   "empire": {
+   "buildings": {
+    "BUILDING_BASKETMAKER": {
+     "flat": 1
+    },
+    "BUILDING_FURRIER": {
+     "flat": 1
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "flat": 1
+    },
+    "BUILDING_BASKET_MAKERS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_FACTORY_BASKETS": {
+     "flat": 1
+    },
+    "BUILDING_INDUSTRIAL_FARMS": {
+     "flat": 1
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "flat": 1
+    }
+   },
    "flat": [
     -1,
     {
@@ -1166,6 +1189,13 @@
    }
   }
  },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -10
+   }
+  }
+ },
  "experience": {
   "empire": {
    "unitCombats": {
@@ -1278,6 +1308,21 @@
    }
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
  "triggers": [
   {
    "trigger": "onUnitEnteredCity",
@@ -1339,7 +1384,9 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_NOMADIC",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_NOMAD_SHORT",
+  "impurePropertyManipulators": true
  },
  "enables": {
   "traits": [

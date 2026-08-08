@@ -80,6 +80,13 @@
    "flat": 1
   }
  },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 30
+   }
+  }
+ },
  "upkeep": {
   "empire": {
    "civic": {
@@ -160,6 +167,22 @@
    }
   }
  },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_INSTIGATOR1",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "ai": {
   "flavours": [
    {
@@ -197,6 +220,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_REVOLUTIONARY_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_REVOLUTIONARY_SHORT",
   "impurePropertyManipulators": true
  },
  "enables": {

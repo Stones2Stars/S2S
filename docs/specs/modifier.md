@@ -693,7 +693,7 @@ authored shape.
 > `yield.empire.specialists.{SPECIALIST_X}.flat` (and `commerce.…`) — authored in **each set's folder** (simple = the
 > base value; complex = the **replacement's** value — a **whole-Info swap, NO base-fill**, per the legacy
 > replacement semantics: a field the replacement
-> omits is **0/absent** in the complex, never inherited from base). The cascade reads it from the **active** trait
+> omits is **inherited from the base**, §4-bis). The cascade reads it from the **active** trait
 > set and applies it × the city's count of that specialist. *(Building/civic specialist boosts have no
 > simple/complex split, so they keep the ordinary own-output inversion onto the specialist.)*
 >
@@ -711,10 +711,32 @@ authored shape.
 >     `traits/simple/` + `traits/complex/`. **`complex/` is SELF-COMPLETE = a SUPERSET of `simple/` (owner ruling
 >     2026-07-21):** every trait is present, so the option-gated active-set read (`getTraitInfo`/`MMKernel::traitData`)
 >     NEVER falls back to a simple record under `COMPLEX_TRAITS` — the read can be made fail-loud with nothing to fall
->     back to. Each id's complex def is its `Has(COMPLEX_TRAITS)`-gated **replacement** where one exists (WHOLE-SWAP, no
->     base-fill — a field the replacement omits is absent, mirroring the legacy replacement semantics); a simple trait
+>     back to. Each id's complex def is its base **plus** its `Has(COMPLEX_TRAITS)`-gated **replacement** overlaid on
+>     top (§4-bis: a field the replacement omits is INHERITED from the base); a simple trait
 >     with **no** replacement is base-filled into `complex/` whole (its base IS the complex version — e.g.
->     `TRAIT_BARBARIAN`, the NPC-civ trait). **Folder classification** keys on the `OnGameOptions: COMPLEX` gate /
+>     `TRAIT_BARBARIAN`, the NPC-civ trait).
+>
+>     > **⛔ §4-bis — A REPLACEMENT IS AN OVERLAY ON ITS BASE, AND THE LEGACY ENGINE'S FAILURE TO MERGE IS A BUG WE
+>     > DO NOT REPRODUCE (owner).** The variant is built BASE + the replacement's own tags on top, exactly as an
+>     > ordinary module override is.
+>     > ⚑ **The engine disagrees, and the two cases sit feet apart in one function**
+>     > (`CvXMLLoadUtilitySet::SetGlobalClassInfo`): a plain module override runs
+>     > `pClassInfo->copyNonDefaults(aInfos[uiExistPosition])` and inherits the base, while a record carrying a
+>     > `<ReplacementID>` reaches `addReplacement` with a FRESH `new T()` read from its own XML alone. The
+>     > `copyNonDefaults` in the replacement path stacks a SECOND replacement of the same id onto an earlier one —
+>     > module-on-module, never replacement-on-base — so **rung 1 inherits nothing while every rung above it
+>     > inherits**. That asymmetry is the tell, and `CvInfoReplacement::updateInfo`, the merge that would have
+>     > closed it, sits commented out.
+>     > ⚑ **THE DATA SETTLES IT AGAINST THE ENGINE, which is why this is a fix and not a divergence of taste:**
+>     > **304 of 305** complex trait records carry NO `ShortDescription`, while **0 of 65** simple ones lack it —
+>     > and the single exception is the base-FILLED `TRAIT_COMPLEX_BARBARIAN`. A mandatory field missing from 100%
+>     > of the whole-swapped records and 0% of the base-filled ones cannot be an authoring choice; nobody writes a
+>     > 54k-character redefinition and omits its name. The replacements were authored expecting the base underneath
+>     > and the engine never supplied it.
+>     > ⚠ **A field the replacement DOES author still wins, including when it zeroes one** — that is the overlay
+>     > working, not a loss, and it is why a handful of families legitimately disappear from a variant.
+>     > ⛔ The merge has ONE home, the STORE (`Store._load`'s replacement post-pass), because the base must be fully
+>     > loaded before the overlay lands and file order is not guaranteed. **Folder classification** keys on the `OnGameOptions: COMPLEX` gate /
 >     replacement-variant; a developing-line (`PromotionLine`) member that UNIQUELY lacks the gate its siblings carry is
 >     a SOURCE-data bug to fix (restore the tag), not a classifier change (the `TRAIT_TIMID1` case). The active set is
 >     chosen by the live option (callout above).

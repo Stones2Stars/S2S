@@ -17,6 +17,89 @@
  },
  "buildRate": {
   "empire": {
+   "buildings": {
+    "BUILDING_BARRACKS": {
+     "percent": 20
+    },
+    "BUILDING_GARRISON": {
+     "percent": 20
+    },
+    "BUILDING_BIOENHANCEMENT_CENTER": {
+     "percent": 20
+    },
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP": {
+     "percent": 20
+    },
+    "BUILDING_CANNON_FORGE": {
+     "percent": 20
+    },
+    "BUILDING_FLETCHERS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_GLADIATORIAL_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_AEROSPACE_COMPLEX": {
+     "percent": 20
+    },
+    "BUILDING_WARRIORS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_MERCENARY_CAMP": {
+     "percent": 20
+    },
+    "BUILDING_MERCENARY_STABLES": {
+     "percent": 20
+    },
+    "BUILDING_SALOON": {
+     "percent": 20
+    },
+    "BUILDING_PIRATES_COVE": {
+     "percent": 20
+    },
+    "BUILDING_MOB_STOREFRONT": {
+     "percent": 20
+    },
+    "BUILDING_REBEL_CAMP": {
+     "percent": 20
+    },
+    "BUILDING_TERRORISTS_COMPOUND": {
+     "percent": 20
+    },
+    "BUILDING_CRUCIFIXION_CROSSES": {
+     "percent": 20
+    },
+    "BUILDING_STOCKS": {
+     "percent": 20
+    },
+    "BUILDING_GALLOWS": {
+     "percent": 20
+    },
+    "BUILDING_GUILLOTINE": {
+     "percent": 20
+    },
+    "BUILDING_ELECTRIC_CHAIR": {
+     "percent": 20
+    },
+    "BUILDING_LETHAL_INJECTION": {
+     "percent": 20
+    },
+    "BUILDING_PUBLIC_STONING": {
+     "percent": 20
+    },
+    "BUILDING_MILITARY_BASE": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 20
+    },
+    "BUILDING_JAIL": {
+     "percent": 20
+    }
+   },
+   "military": {
+    "percent": 10
+   },
    "unitCombats": {
     "UNITCOMBAT_COMBATANT": {
      "percent": 20
@@ -114,6 +197,18 @@
    }
   }
  },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 5,
+    "enabled": {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 301
+    }
+   }
+  }
+ },
  "triggers": [
   {
    "trigger": "onUnitEnteredCity",
@@ -171,7 +266,8 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_AGGRESSIVE_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_AGGRESSIVE_SHORT"
  },
  "enables": {
   "traits": [

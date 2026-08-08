@@ -5,6 +5,7 @@
  ],
  "production": {
   "empire": {
+   "percent": -5,
    "specialists": {
     "SPECIALIST_ENGINEER": {
      "flat": -1
@@ -59,13 +60,26 @@
    "percent": -5
   }
  },
+ "extraYieldThreshold": {
+  "empire": {
+   "food": {
+    "flat": 8
+   }
+  }
+ },
  "happiness": {
   "empire": {
+   "flat": 1,
    "cities": {
     "flat": 1,
     "max": "TARGET_NUM_CITIES",
     "orderedByDescending": "CITY_SIZE"
    }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
   }
  },
  "growth": {
@@ -95,10 +109,39 @@
    }
   }
  },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 60
+    },
+    "commerce": {
+     "percent": -30
+    }
+   }
+  }
+ },
  "durations": {
   "empire": {
    "civicAnarchy": {
     "percent": -5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": 1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -10
    }
   }
  },
@@ -163,6 +206,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_POPULIST1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_POPULIST1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_POPULIST_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_POPULIST_SHORT",
   "negativeTrait": true,
   "impurePropertyManipulators": true
  },

@@ -9,6 +9,18 @@
    "percent": 5
   }
  },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_RECRUITMENT_CENTER": {
+     "percent": 20
+    }
+   },
+   "military": {
+    "percent": -15
+   }
+  }
+ },
  "commerce": {
   "empire": {
    "flat": 1,
@@ -37,6 +49,50 @@
  },
  "happiness": {
   "empire": {
+   "buildings": {
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_STATUE_OF_CHAMPION": {
+     "flat": 1
+    },
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "flat": 1
+    },
+    "BUILDING_ROYAL_MONUMENT": {
+     "flat": 1
+    },
+    "BUILDING_PRESIDENTIAL_MONUMENT": {
+     "flat": 1
+    },
+    "BUILDING_RADIOPLEX": {
+     "flat": 1
+    },
+    "BUILDING_NETWORK_NODE": {
+     "flat": 1
+    },
+    "BUILDING_TOTEM_POLE": {
+     "flat": 1
+    },
+    "BUILDING_MONUMENT": {
+     "flat": 1
+    },
+    "BUILDING_OBELISK": {
+     "flat": 1
+    },
+    "BUILDING_STELE": {
+     "flat": 1
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "flat": 1
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 1
+    }
+   },
    "flat": 1,
    "cities": {
     "flat": [
@@ -72,6 +128,13 @@
    },
    "attitude": {
     "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -5
    }
   }
  },
@@ -116,7 +179,8 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC1_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_CHARISMATIC_SHORT"
  },
  "enables": {
   "traits": [

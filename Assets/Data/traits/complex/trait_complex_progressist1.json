@@ -11,6 +11,32 @@
  },
  "buildRate": {
   "empire": {
+   "units": {
+    "UNIT_CYBORG": {
+     "percent": 25
+    },
+    "UNIT_ACV": {
+     "percent": 25
+    },
+    "UNIT_ACVSAM": {
+     "percent": 25
+    },
+    "UNIT_WALKER_MECH": {
+     "percent": 25
+    },
+    "UNIT_FUTURE_APC": {
+     "percent": 25
+    },
+    "UNIT_TESLA_INFANTRY": {
+     "percent": 25
+    },
+    "UNIT_SPACE_SAM_INFANTRY": {
+     "percent": 25
+    },
+    "UNIT_SPECIAL_INFANTRY": {
+     "percent": 25
+    }
+   },
    "nationalWonder": {
     "percent": -25
    }
@@ -24,6 +50,11 @@
  },
  "research": {
   "empire": {
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": 1
+    }
+   },
    "flat": 1,
    "percent": 5
   }
@@ -32,6 +63,13 @@
   "empire": {
    "flat": 1,
    "percent": 5
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": 20
+   }
   }
  },
  "upkeep": {
@@ -46,11 +84,36 @@
  },
  "workRate": {
   "empire": {
+   "builds": {
+    "BUILD_HYBRID_FOREST": {
+     "percent": 50
+    },
+    "BUILD_GROUNDWATER_WELL": {
+     "percent": 50
+    },
+    "BUILD_MODERN_MINE": {
+     "percent": 50
+    },
+    "BUILD_LUMBERMILL": {
+     "percent": 50
+    },
+    "BUILD_PEAT_CUTTER": {
+     "percent": 50
+    }
+   },
    "percent": -10
   }
  },
  "improvementUpgradeRate": {
   "empire": {
+   "improvements": {
+    "IMPROVEMENT_HAMLET": {
+     "percent": 80
+    },
+    "IMPROVEMENT_LUMBERJACK": {
+     "percent": 60
+    }
+   },
    "percent": -25
   }
  },
@@ -68,9 +131,57 @@
    }
   }
  },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -30
+   }
+  }
+ },
  "policies": {
   "upgradeAnywhere": true
  },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_COMBAT_AI1",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_MECHANIZED",
+         "IS_NAVAL",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_DEFENSIVE_PROTOCOLS1",
+       "enabled": "IS_SYNTHETIC"
+      },
+      {
+       "promotion": "PROMOTION_REINFORCED_STRUCTURE",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_MECHANIZED",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_IMPROVED_RADAR",
+       "enabled": "IS_STEALTH"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "ai": {
   "flavours": [
    {
@@ -108,6 +219,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_PROGRESSIST_SHORT",
   "minAnarchy": 1
  },
  "enables": {

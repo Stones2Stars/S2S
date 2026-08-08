@@ -11,8 +11,14 @@
  },
  "production": {
   "empire": {
-   "flat": -1,
-   "percent": -5
+   "percent": [
+    -5,
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "flat": -1
   }
  },
  "buildRate": {
@@ -29,6 +35,16 @@
    "military": {
     "percent": 10
    }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
   }
  },
  "gold": {
@@ -51,6 +67,13 @@
  "greatGeneralRate": {
   "empire": {
    "percent": 5
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   }
   }
  },
  "upkeep": {
@@ -78,6 +101,13 @@
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
    }
   }
  },
@@ -135,6 +165,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC1",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_MEGALOMANIAC_SHORT",
   "negativeTrait": true
  },
  "enables": {

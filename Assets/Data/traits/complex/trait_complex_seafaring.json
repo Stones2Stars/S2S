@@ -92,6 +92,85 @@
  },
  "buildRate": {
   "empire": {
+   "buildings": {
+    "BUILDING_NAVAL_ACADEMY": {
+     "percent": 20
+    },
+    "BUILDING_DRYDOCK": {
+     "percent": 20
+    },
+    "BUILDING_NAVAL_YARD": {
+     "percent": 20
+    },
+    "BUILDING_BOATYARD": {
+     "percent": 20
+    },
+    "BUILDING_MARINA": {
+     "percent": 20
+    },
+    "BUILDING_SAIL_WEAVER": {
+     "percent": 20
+    },
+    "BUILDING_SHIPWRIGHT": {
+     "percent": 20
+    },
+    "BUILDING_FISHERMANS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_FISH_TRAPS": {
+     "percent": 20
+    },
+    "BUILDING_SHIPYARD": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_PORT": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_AUTHORITY": {
+     "percent": 20
+    },
+    "BUILDING_STEAMBOAT_PORT": {
+     "percent": 20
+    },
+    "BUILDING_LIGHTHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_FACTORY_SAILS": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_AQUAFARM": {
+     "percent": 20
+    },
+    "BUILDING_FERRY_TERMINAL": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "UNIT_WORKBOAT": {
+     "percent": 25
+    },
+    "UNIT_NEANDERTHAL_WORKBOAT": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_CLASSIC": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_MIDDLE": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_MODERN": {
+     "percent": 25
+    }
+   },
    "domains": {
     "DOMAIN_SEA": {
      "percent": 10
@@ -372,6 +451,9 @@
  },
  "maintenance": {
   "empire": {
+   "distance": {
+    "percent": -20
+   },
    "numCities": {
     "percent": 20
    }
@@ -437,6 +519,13 @@
     "IMPROVEMENT_BEACON_REEF": {
      "percent": 100
     }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
    }
   }
  },
@@ -521,7 +610,8 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_COMPLEX_SEAFARING",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"
  },
  "enables": {
   "traits": [

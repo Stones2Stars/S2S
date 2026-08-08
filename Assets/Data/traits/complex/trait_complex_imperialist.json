@@ -5,6 +5,20 @@
  ],
  "buildRate": {
   "empire": {
+   "units": {
+    "UNIT_TRIBE": {
+     "percent": 50
+    },
+    "UNIT_SETTLER": {
+     "percent": 50
+    },
+    "UNIT_COLONIST": {
+     "percent": 50
+    },
+    "UNIT_PIONEER": {
+     "percent": 50
+    }
+   },
    "buildings": {
     "BUILDING_CARPENTER": {
      "percent": 25
@@ -216,11 +230,14 @@
   "empire": {
    "cities": {
     "flat": [
+     6,
      {
       "value": 1,
       "unit": "IS_MILITARY"
      }
-    ]
+    ],
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
    }
   }
  },
@@ -229,8 +246,16 @@
    "percent": -10
   }
  },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 100
+  }
+ },
  "experience": {
   "empire": {
+   "inBorder": {
+    "percent": 20
+   },
    "unitCombats": {
     "UNITCOMBAT_SIEGE": {
      "flat": 2
@@ -270,6 +295,23 @@
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 5
    }
   }
  },
@@ -358,6 +400,7 @@
   "description": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST",
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_IMPERIALIST_SHORT",
   "impurePropertyManipulators": true
  },
  "enables": {

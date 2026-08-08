@@ -126,6 +126,13 @@
  },
  "research": {
   "empire": {
+   "percent": [
+    -10,
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
    "specialists": {
     "SPECIALIST_PRIEST": {
      "flat": -1
@@ -140,7 +147,17 @@
   "empire": {
    "nonStateReligion": {
     "flat": -1
-   }
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
   }
  },
  "greatGeneralRate": {
@@ -179,6 +196,9 @@
  },
  "stateReligion": {
   "empire": {
+   "freeExperience": {
+    "flat": 3
+   },
    "greatPeopleRate": {
     "percent": 10
    },
@@ -267,6 +287,7 @@
   "description": "TXT_KEY_TRAIT_ZEALOUS1",
   "civilopedia": "TXT_KEY_TRAIT_ZEALOUS1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_ZEALOUS_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_FANATICAL_SHORT",
   "negativeTrait": true,
   "impurePromotions": true
  },

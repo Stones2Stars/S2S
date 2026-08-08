@@ -12,6 +12,7 @@ See docs/specs/enabler.md (the top-down enabler topology this reverse-index real
   python3 store.py --enables TECH_LANGUAGE   # show what a type enables
 """
 import argparse
+import copy
 import glob
 import os
 import xml.etree.ElementTree as ET
@@ -390,6 +391,32 @@ class Store:
                     if is_module:
                         modadd.add(key)
                 prov.setdefault(key, []).append(rel)
+
+        # ⛔ A REPLACEMENT IS AN OVERLAY ON ITS BASE, NOT A STANDALONE RECORD (owner) -- so the variant is built
+        # as BASE + the replacement's own tags on top, exactly as an ordinary module override is.
+        # ⚑ THE LEGACY ENGINE DOES NOT DO THIS, AND THAT IS THE BUG BEING FIXED, NOT A DIVERGENCE TO AVOID.
+        # `CvXMLLoadUtilitySet::SetGlobalClassInfo` handles both cases feet apart: a plain module override runs
+        # `pClassInfo->copyNonDefaults(aInfos[uiExistPosition])` and so inherits the base, while a record carrying
+        # a <ReplacementID> reaches `addReplacement` with a FRESH `new T()` read from its own XML alone. The merge
+        # in the replacement path (`copyNonDefaults(pExisting->getInfo())`) stacks a SECOND replacement of the same
+        # id onto an earlier one -- module-on-module, never replacement-on-base -- so rung 1 inherits nothing while
+        # every rung above it inherits. `CvInfoReplacements::updateReplacements` then swaps the object in whole.
+        # ⚑ THE DATA PROVES THE AUTHORING INTENT AGAINST THE ENGINE: 304 of 305 complex trait records carry NO
+        # ShortDescription, while 0 of 65 simple ones lack it -- and the single exception is the base-FILLED
+        # TRAIT_COMPLEX_BARBARIAN. A mandatory field missing from 100% of the whole-swapped records and 0% of the
+        # base-filled ones is not a design choice; nobody authors a 54k-character redefinition and omits its name.
+        # The replacements were written expecting the base underneath, and the engine never supplied it.
+        for baseType, info in repl.items():
+            key = info["replacement"]
+            if baseType not in table or key not in table:
+                continue
+            merged = copy.deepcopy(table[baseType])
+            _merge(merged, table[key])          # the replacement's tags win; the base's survive where it is silent
+            typeNode = merged.find("Type")
+            if typeNode is not None:
+                typeNode.text = key             # _merge skips Type, so restore the VARIANT's identity
+            table[key] = merged
+
         self.tables[ent] = table
         self.provenance[ent] = prov
         self.module_added[ent] = modadd
