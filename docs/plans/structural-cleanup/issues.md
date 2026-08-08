@@ -1042,21 +1042,27 @@ is not what a single-channel receiver read answers. Establish that before changi
 component set from the enum.
 
 
-## AUTOMATED POPULATION PLACEMENT IS NOT VERY EFFICIENT
+## AUTOMATED POPULATION PLACEMENT IS SLOW -- ~200ms PER CITY
 
-**OBSERVED (owner, in play):** the automated placement of population *"is really not very efficient."*
+**OBSERVED (owner, in play):** toggling automated population placement ON and OFF across **26 cities takes
+5-6 seconds** -- on the order of **200ms per city per toggle**. That is the cost of a re-assignment, not of a
+decision anyone is waiting on.
 
-⚠ **NOT YET KNOWN — and the two readings want different investigations, so do not collapse them:**
-- **PLACEMENT QUALITY** — the assignment picks worse tiles/specialists than a player would, i.e. the SCORING is
-  wrong. That is a `CvCityAI` valuation question.
-- **COST** — the assignment is slow, i.e. it runs too often or walks too much. That is the
-  [contexts.md](../../architecture/contexts.md) per-read-scan class, and there is a known aggravator already
-  recorded: a slider move used to flag every city for re-assignment and stall ~15s over a decision whose inputs
-  had not moved ([modifier.md §2a](../../specs/modifier.md)) — so the re-assignment TRIGGER surface is a
-  standing suspect independent of the scorer.
+**PROVEN: it is a COST problem, not a placement-QUALITY one.** The owner's measurement is wall clock on a
+toggle, so whatever the scorer picks is not the complaint -- do NOT open this by auditing `CvCityAI`'s tile
+valuation.
 
-⛔ Establish WHICH before touching either; the fix for one is not the fix for the other, and the word
-"efficient" reads naturally as both.
+⚑ **The standing suspect is the same one already measured on the slider path**
+([modifier.md §2a](../../specs/modifier.md)): a setter flagged every city for re-assignment and ONE slider tick
+stalled ~15s across the empire, over a decision whose inputs had not moved. Same shape, smaller n -- so the
+first question is not "why is one assignment slow" but **how many assignments does one toggle run, and how much
+does each re-derive that nothing invalidated.**
 
-⚑ Behaviour as it stands today is described in [citizen-assignment.md](../../reference/citizen-assignment.md) —
-read that first rather than re-deriving the loop from `CvCityAI`.
+⚠ **NOT YET KNOWN:** whether the 200ms is one expensive pass per city or many cheap ones; and whether toggling
+automation OFF should re-assign at all -- turning it off hands control back to the player and need not re-decide
+anything. Establish the CALL COUNT before optimising any single pass.
+
+⚑ Behaviour as it stands today is described in [citizen-assignment.md](../../reference/citizen-assignment.md);
+the per-read-scan class this most likely belongs to is [contexts.md](../../architecture/contexts.md)
+(*"every evaluator predicate is an O(1) CONTEXT fetch -- a predicate that walks plots/units per call is the
+efficiency defect to reject in review"*).
