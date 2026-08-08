@@ -231,6 +231,25 @@ order is load-bearing (it decides what the percent stack scales and what it does
 | **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
 | **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.cities.flat` — the `cities` target lands it in the HOLDING city; a bare `empire.flat` on a specialist would roll down to EVERY city and cascade with city count) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
 
+> **⚖ HOW `tradeYield` STAYS CURRENT — the ONE value the cascade FEEDS but does not HOLD, so it is REBUILT, not
+> delta'd.** It is the engine's network OUTPUT (`CvCity::m_aiTradeYield`, ×100 like any amount), not a package
+> slot, so the maintained sum does not reach it and no compiled deposit index can name what moves it. Its
+> rebuild has four moments and they are the whole set: ONCE at the end of load (against the final cascade);
+> TARGETED at the owner whenever a fact moves a `tradeRoutes` channel; on every plot-group / network change
+> (which is what covers a city being FOUNDED or ACQUIRED — both reach `updatePlotGroups`); and once per player
+> in `doTurn`.
+> ⛔ **The per-turn rebuild is NOT the banned blanket** ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)):
+> that rule bans papering over a MISSED invalidation, and this one exists because a genuine INPUT advances every
+> turn — `getPeaceTradeModifier` scales with the at-peace counter, so a foreign route's profit legitimately
+> differs turn to turn until it saturates. There is no fact to route it to; the turn IS the fact.
+> ⚠ **City POPULATION deliberately gets NO route, and that is a cadence ruling rather than an omission.** It
+> feeds the profit on both sides (`getBaseTradeProfit` reads the PARTNER's population, `getPopulationTradeModifier`
+> the city's own), so a route would have to rebuild the owner AND every player trading with it — and it would
+> fire once per city GROWTH, i.e. once per city per turn, each firing a full network walk. The mid-turn snapshot
+> rule already answers it ([state-repositories.md](../architecture/state-repositories.md): *"getting a yield event
+> in the middle of a turn is not retroactive; start of next turn is what is expected"*), and the next `doTurn`
+> is that start.
+
 ### TIER 2 — EXTRA (flat, added AFTER the percentages, NEVER multiplied)
 
 | EXTRA source | origin |

@@ -321,14 +321,6 @@
   ⚑ **`<channel>.tradeRoute` is its own question:** a per-trade-route yield is a `per` SCALER on the channel, not
   a member of it — so it lands as the channel's ordinary deposit scaled by the route count, and needs the route
   count wired as a count-key first.
-- **Give the stored trade YIELD an in-play maintenance trigger.** `CvCity::m_aiTradeYield` is the engine's
-  trade-network OUTPUT folded into TIER-1 BASE, and no fact keeps it current — it moves only when something
-  calls `updateTradeRoutes()`. The LOAD build exists (`CvGame::onFinalInitialized`) and the modifier consumer
-  re-runs it for the owner a `tradeRoutes` deposit just moved, but a change that shifts a route's PROFIT
-  without touching a `tradeRoutes` channel (a population change, a new connection, a peace deal) leaves the
-  stored yield on its old value until something else rebuilds it.
-  ⚠ It is the one value the cascade FEEDS but does not HOLD, so it cannot ride the maintained sum — the trigger
-  set has to be named per input rather than derived from the deposit index.
 
 - **Settle what the stored-vs-oracle pair is FOR, because it cannot be what the spec currently claims (owner):
   *"oracle will never work like you want it, because it would require a republish of every event to rebuild."***

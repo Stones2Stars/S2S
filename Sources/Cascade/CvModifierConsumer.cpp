@@ -64,12 +64,12 @@ namespace
 	// ⛔ THE TRADE-ROUTE YIELD IS THE ONE VALUE THE CASCADE FEEDS BUT DOES NOT HOLD. The engine owns the network
 	// calculation, so the cascade supplies its INPUTS -- the route count and the profit / per-channel modifiers --
 	// and `CvCity::m_aiTradeYield` is the engine's OUTPUT, folded into TIER-1 BASE at the combine
-	// ([modifier.md] §2a). It is not a package slot, so the maintained sum does not reach it and no fact keeps it
-	// current: it only moves when something calls `CvPlayer::updateTradeRoutes()`.
-	// ⚑ That is why it is rebuilt rather than delta'd, and why the rebuild has exactly two moments: ONCE at the
-	// end of load (CvGame::onFinalInitialized, against the final cascade), and thereafter TARGETED at whichever
-	// owner a fact just moved a tradeRoutes channel for. ⛔ Not a per-turn sweep and not a blanket over every
-	// player -- the fact names the owner, so the recompute follows the fact ([DEC-no-self-heal]).
+	// ([modifier.md] §2a). It is not a package slot, so the maintained sum does not reach it and no compiled
+	// deposit index can name what moves it -- it is REBUILT rather than delta'd.
+	// ⚑ THIS IS ONE OF ITS FOUR REBUILD MOMENTS, not the only one ([modifier.md] §2a carries the whole set): the
+	// load-end pass, the plot-group / network changes, the per-player `doTurn`, and THIS -- targeted at whichever
+	// owner a fact just moved a tradeRoutes channel for. What this route buys is MID-TURN precision for the
+	// cascade-driven half; the fact names the owner, so the recompute follows the fact and never sweeps.
 	// ⚠ It is DEFERRED to the end of the event rather than fired per deposit: one civic swap moves several
 	// channels, and rebuilding a player's whole route network once per channel would pay the network walk many
 	// times over for one happening.

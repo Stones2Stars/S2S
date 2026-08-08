@@ -658,9 +658,9 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// through CvPlayer::getTradeRouteKinds, and those packages are only final once the FINISHED consumers above
 	// have drained. Running it earlier would rebuild against a half-built cascade -- the same ordering the plots
 	// fan and the plotAttrs fold answer to.
-	// ⚠ This is the LOAD build, not a maintenance path. What is still owed is the in-play trigger: a cascade
-	// deposit moving a tradeRoutes channel does not re-run this, so a mid-game civic swap leaves the stored yield
-	// on its old value until something else calls updateTradeRoutes() ([todo.md]).
+	// ⚠ This is the LOAD build, and it is one of four rebuild moments rather than the maintenance path itself --
+	// the in-play ones are the targeted per-owner route in CvModifierConsumer, every plot-group / network change,
+	// and the per-player `doTurn` ([modifier.md] §2a carries the set and why each exists).
 	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
 	{
 		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
