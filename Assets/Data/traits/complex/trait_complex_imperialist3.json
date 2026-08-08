@@ -104,9 +104,6 @@
   "empire": {
    "freeMilitary": {
     "perPopulation": 15
-   },
-   "upgradePrice": {
-    "percent": 20
    }
   }
  },
@@ -114,6 +111,13 @@
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 20
    }
   }
  },
@@ -139,13 +143,22 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_IMPERIALIST3": [
-    "UNITCOMBAT_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_IMPERIALIST3",
+       "enabled": "IS_COMBATANT"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

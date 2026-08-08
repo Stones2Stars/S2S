@@ -50,9 +50,6 @@
   "empire": {
    "civic": {
     "percent": 30
-   },
-   "upgradePrice": {
-    "percent": -30
    }
   }
  },
@@ -89,29 +86,57 @@
    }
   }
  },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -30
+   }
+  }
+ },
  "policies": {
   "upgradeAnywhere": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COMBAT_AI1": [
-    "UNITCOMBAT_ASSAULT_MECH",
-    "UNITCOMBAT_DREADNOUGHT",
-    "UNITCOMBAT_NANITE",
-    "UNITCOMBAT_ROBOT"
-   ],
-   "PROMOTION_DEFENSIVE_PROTOCOLS1": [
-    "UNITCOMBAT_ROBOT"
-   ],
-   "PROMOTION_REINFORCED_STRUCTURE": [
-    "UNITCOMBAT_ASSAULT_MECH",
-    "UNITCOMBAT_ROBOT"
-   ],
-   "PROMOTION_IMPROVED_RADAR": [
-    "UNITCOMBAT_STEALTH"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_COMBAT_AI1",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_MECHANIZED",
+         "IS_NAVAL",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_DEFENSIVE_PROTOCOLS1",
+       "enabled": "IS_SYNTHETIC"
+      },
+      {
+       "promotion": "PROMOTION_REINFORCED_STRUCTURE",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_MECHANIZED",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_IMPROVED_RADAR",
+       "enabled": "IS_STEALTH"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

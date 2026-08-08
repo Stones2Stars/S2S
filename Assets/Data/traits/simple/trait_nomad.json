@@ -190,39 +190,58 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_FLANKING1": [
-    "UNITCOMBAT_ANIMAL",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_RECON",
-    "UNITCOMBAT_TRACKED",
-    "UNITCOMBAT_WHEELED"
-   ],
-   "PROMOTION_PACK_HUNTER1": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_HUNTING_DOG1": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_HUNTING_DOG2": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_RACING_DOG1": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_RACING_DOG2": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_WOODSMAN1": [
-    "UNITCOMBAT_HUNTER",
-    "UNITCOMBAT_RECON"
-   ],
-   "PROMOTION_PACK_HUNTER2": [
-    "UNITCOMBAT_CANINE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_FLANKING1",
+       "enabled": {
+        "any": [
+         "IS_ANIMAL",
+         "IS_ARMORED",
+         "IS_MECHANIZED",
+         "IS_MOUNTED",
+         "IS_RECON"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_PACK_HUNTER1",
+       "enabled": "IS_CANINE"
+      },
+      {
+       "promotion": "PROMOTION_HUNTING_DOG1",
+       "enabled": "IS_CANINE"
+      },
+      {
+       "promotion": "PROMOTION_HUNTING_DOG2",
+       "enabled": "IS_CANINE"
+      },
+      {
+       "promotion": "PROMOTION_RACING_DOG1",
+       "enabled": "IS_CANINE"
+      },
+      {
+       "promotion": "PROMOTION_RACING_DOG2",
+       "enabled": "IS_CANINE"
+      },
+      {
+       "promotion": "PROMOTION_WOODSMAN1",
+       "enabled": "IS_RECON"
+      },
+      {
+       "promotion": "PROMOTION_PACK_HUNTER2",
+       "enabled": "IS_CANINE"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

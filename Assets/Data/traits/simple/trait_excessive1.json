@@ -22,19 +22,30 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_CITY_RAIDER1": [
-    "UNITCOMBAT_MELEE"
-   ],
-   "PROMOTION_IMPROVISE1": [
-    "UNITCOMBAT_SPY"
-   ],
-   "PROMOTION_IMPROVISE2": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CITY_RAIDER1",
+       "enabled": "IS_MELEE"
+      },
+      {
+       "promotion": "PROMOTION_IMPROVISE1",
+       "enabled": "IS_SPY"
+      },
+      {
+       "promotion": "PROMOTION_IMPROVISE2",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

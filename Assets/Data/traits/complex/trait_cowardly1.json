@@ -64,9 +64,6 @@
    },
    "unitCivilian": {
     "percent": 10
-   },
-   "upgradePrice": {
-    "percent": -10
    }
   }
  },
@@ -172,6 +169,13 @@
    }
   }
  },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -10
+   }
+  }
+ },
  "capture": {
   "empire": {
    "resistance": {
@@ -179,14 +183,27 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COWARDLY1": [
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_COWARDLY1",
+       "enabled": {
+        "any": [
+         "IS_COMBATANT",
+         "IS_NAVAL"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

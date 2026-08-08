@@ -336,15 +336,27 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_UNSANITARY1": [
-    "UNITCOMBAT_ANIMAL",
-    "UNITCOMBAT_CRIMINAL",
-    "UNITCOMBAT_RUFFIAN"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_UNSANITARY1",
+       "enabled": {
+        "any": [
+         "IS_ANIMAL",
+         "IS_OUTLAW"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

@@ -46,13 +46,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "upgradePrice": {
-    "percent": 20
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "flat": 1,
@@ -106,6 +99,9 @@
   "empire": {
    "hurry": {
     "percent": 25
+   },
+   "upgrade": {
+    "percent": 20
    }
   }
  },

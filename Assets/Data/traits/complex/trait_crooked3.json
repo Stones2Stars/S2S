@@ -210,13 +210,22 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_CROOKED3": [
-    "UNITCOMBAT_CRIMINAL"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CROOKED3",
+       "enabled": "IS_OUTLAW"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

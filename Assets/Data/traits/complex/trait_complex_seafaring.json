@@ -450,33 +450,38 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AMPHIBIOUS": [
-    "UNITCOMBAT_ASSAULT_MECH",
-    "UNITCOMBAT_CLONES",
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HELICOPTER",
-    "UNITCOMBAT_HITECH",
-    "UNITCOMBAT_MELEE",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_THROWING"
-   ],
-   "PROMOTION_SEAFARING": [
-    "UNITCOMBAT_DIESEL_SHIPS",
-    "UNITCOMBAT_DROID_SHIPS",
-    "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
-    "UNITCOMBAT_JET_SHIPS",
-    "UNITCOMBAT_LEVITATION_SHIPS",
-    "UNITCOMBAT_NUCLEAR_SHIPS",
-    "UNITCOMBAT_SHOCKWAVE_SHIPS",
-    "UNITCOMBAT_STEAM_SHIPS",
-    "UNITCOMBAT_TROID_SHIPS",
-    "UNITCOMBAT_WOODEN_SHIPS"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AMPHIBIOUS",
+       "enabled": {
+        "any": [
+         "IS_AIR",
+         "IS_ARMORED",
+         "IS_GUNPOWDER",
+         "IS_MECHANIZED",
+         "IS_MELEE",
+         "IS_MOUNTED",
+         "IS_RECON",
+         "IS_SYNTHETIC",
+         "IS_THROWING"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_SEAFARING",
+       "enabled": "IS_NAVAL"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

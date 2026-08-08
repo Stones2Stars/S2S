@@ -79,6 +79,7 @@ from collections import OrderedDict
 import engine
 import curate_common as cc
 from curate_common import de_i
+from curate_common import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a free-promotion condition keys on it)
 from store import Store, REPO
 
 # The per-specialist count-scaler. The deposit's scope is EMPIRE (the source's reach) while the count it names
@@ -116,7 +117,11 @@ SCALAR = {
     "iFreeUnitUpkeepMilitaryPopPercent":("upkeep", "empire", "freeMilitary", "perPopulation"),
     "iCivilianUnitUpkeepMod":          ("upkeep", "empire", "unitCivilian", "percent"),
     "iMilitaryUnitUpkeepMod":          ("upkeep", "empire", "unitMilitary", "percent"),
-    "iUnitUpgradePriceModifier":       ("upkeep", "empire", "upgradePrice", "percent"),
+    # The unit UPGRADE PRICE is a COST, not upkeep -- json.md §6's cost cluster puts "what CHANGES a cost" in the
+    # ONE `costs` family, and `upgrade` is already a live kind there (COSTS_UPGRADE, authored by 17 entities).
+    # `upkeep.upgradePrice` matched no kind row at all, so all 58 trait authorings parsed, reported
+    # `[READJSON] unkinded-member upkeep.upgradePrice` and produced NOTHING. Same fix as ruling 18 below.
+    "iUnitUpgradePriceModifier":       ("costs", "empire", "upgrade", "percent"),
     # work / improvement / conscript / hurry / trade
     "iWorkerSpeedModifier":            ("workRate", "empire", "", "percent"),
     "iImprovementUpgradeRateModifier": ("improvementUpgradeRate", "empire", "", "percent"),
@@ -260,7 +265,9 @@ KEYED = {
     # A civic option whose upkeep this trait WAIVES. Emitted as the magnitude that says so (-100%), never a
     # bare `enabler` bool: the modifier plane carries magnitudes, and a boolean keyed by a target is neither a
     # kind nor a `policy` (json.md §9: a policy is a PURE STATE, never parameterized by a target).
-    "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civicOptions",   "percent", None),
+    # ⚠ The option is a CONDITION, so this row is intercepted below and emitted as a conditioned deposit on the
+    # `civic` kind rather than keyed by the option -- the member here names the KIND, not a target container.
+    "CivicOptionNoUpkeepTypes":           ("upkeep",         "empire", "civic",          "percent", None),
     "TechResearchModifiers":              ("researchRate",   "empire", "techs",          "percent", None),  # research-RATE "+% to research tech X" — researchRate is the research analogue of buildRate (owner 2026-06-28), TARGET-KEYED by tech (researchRate.empire.techs.{TECH}.percent) exactly as buildRate.empire.buildings.{X}; DISTINCT from commerce `research` (cascade never reads researchRate). Retires the `byTech` member invention.
     # Specialist yield/commerce boosts STAY on the trait, keyed by the specialist (governing-deliverer), NOT inverted
     # onto the shared specialist -- the simple/complex sets carry DIFFERENT per-set values, so inverting onto the ONE
@@ -312,6 +319,12 @@ FAMILY_ORDER = ["food", "production", "buildRate", "researchRate", "commerce", "
                 "combat", "unitProduction", "maintenance", "upkeep", "tradeRoutes", "hurry", "workRate",
                 "improvementUpgradeRate", "goldenAge", "unitCapability", "durations",
                 "diplomacy", "stateReligion", "revolution"]
+
+
+# Free-promotion entries whose unit filter is INEXPRESSIBLE -- a referenced unit-combat class carries no tag, so
+# the entry is skipped rather than emitted unfiltered (which would arm every unit in the city). A drop ANNOUNCES
+# (curators/README): data that vanishes silently is invisible on both axes at once.
+FREE_PROMO_UNFILTERED = []
 
 
 def _num(t):
@@ -411,8 +424,21 @@ def _type_list(node):
 
 def _free_promotions(node):
     """<FreePromotionUnitCombatType><PromotionType>P</><UnitCombatTypes><UnitCombatType>UC</>...></> ->
-    {PROMOTION: [UNITCOMBAT, ...]} (a free promotion granted to those unit-combat classes)."""
-    out = OrderedDict()
+    the `promote` entry list a `triggers` end-turn-presence action takes.
+
+    Free promotions EVOLVED from repeatable grants into TRIGGERS (owner; json.md §5: the `repeatable` wrapper and
+    its `interval` dissolve into the trigger, and a free promotion is a `triggers` entry whose action promotes the
+    units PRESENT at end-turn). The trait leg rides the SAME shape curate_building emits for FreePromoTypes -- one
+    mechanism, not a trait variant.
+
+    The unit-combat list is the trait declaring WHICH UNITS it arms, so it maps through TAG_BY_UNITCOMBAT onto the
+    unit's TAG and rides the entry's own `enabled` predicate (engine.md: a promotion grant keys off the TAG, never
+    a UNITCOMBAT id). ⛔ That is NOT the banned trait-side promotion x unitcombat MAP -- the map was the legacy
+    mechanism; this is the ordinary conditioned-entry shape every other grantor uses.
+    ⚠ Dropping the filter would arm EVERY unit in the city, so an entry whose classes carry no tag is SKIPPED and
+    reported by the caller rather than emitted unfiltered.
+    """
+    out, unfiltered = [], []
     for entry in list(node):
         promo, ucs = None, []
         for c in entry:
@@ -420,9 +446,30 @@ def _free_promotions(node):
                 promo = engine.text(c)
             elif c.tag == "UnitCombatTypes":
                 ucs = [engine.text(u) for u in c if engine.text(u)]
-        if promo and ucs:
-            out[promo] = sorted(ucs)
-    return out
+        if not promo or not ucs:
+            continue
+        tags, missing = [], []
+        for uc in sorted(ucs):
+            hit = TAG_BY_UNITCOMBAT.get(uc)
+            if not hit:
+                missing.append(uc)
+                continue
+            for t in hit:
+                if t not in tags:
+                    tags.append(t)
+        if missing:
+            unfiltered.append((promo, missing))
+            continue
+        if len(tags) == 1:
+            item = OrderedDict([("promotion", promo), ("enabled", "IS_" + tags[0].upper())])
+        else:
+            item = OrderedDict([("promotion", promo),
+                                ("enabled", OrderedDict([("any", ["IS_" + t.upper() for t in sorted(tags)])]))])
+        # DEDUPE: several unitcombat VARIANTS collapse onto one tag predicate (the curate_building precedent),
+        # so identical entries would only make the apply do the same work twice.
+        if item not in out:
+            out.append(item)
+    return out, unfiltered
 
 
 def _properties(node, props):
@@ -608,10 +655,17 @@ def curate(typ, rec, store):
                     if unit == "enabler" and not val:
                         continue
                     # A membership-list tag carries no magnitude of its own -- the LIST is the assertion ("this
-                    # target is waived"). Emit the magnitude that states it, so the entry is an ordinary modifier
-                    # deposit rather than a bool the modifier plane cannot read.
+                    # category is waived"), so the emitted magnitude is the -100% that states it.
+                    # ⛔ And the OPTION is a CONDITION, never a keyed target: `upkeep.civicOptions` matched no kind
+                    # row at all, so the authoring parsed, reported `[READJSON] unkinded-member` and produced
+                    # NOTHING -- while `upkeep.civic` is the live kind 150 entities already author. The category
+                    # rides the entry's own `enabled` predicate ([DEC-conditions-are-predicates]: a member that
+                    # answers WHICH is the rollerskate). The predicate carries the FULL `CIVICOPTION_` id so it can
+                    # never be confused with a `RELIGION_` type.
                     if tag == "CivicOptionNoUpkeepTypes":
-                        out_val = -100
+                        _put_cond(fam, family, scope, unit, -100,
+                                  OrderedDict([("CIVIC_CATEGORY", target)]), member=tt)
+                        continue
                     (fam.setdefault(family, {}).setdefault(scope, {}).setdefault(tt, {})
                      .setdefault(target, {}))[unit] = out_val
         elif tag in POLICIES:
@@ -660,9 +714,19 @@ def curate(typ, rec, store):
             if t and t != "NONE":
                 grants["goldenAgeOnBirthOfGreatPerson"] = t
         elif tag == "FreePromotionUnitCombatTypes":
-            fp = _free_promotions(c)
+            # A free promotion is a TRIGGER, not a grant (json.md §5) -- `grants.freePromotions` matched no
+            # consumer, so all 130 authoring traits reported `unconsumed-section` and armed nobody. Same
+            # end-turn-presence entry the BUILDING leg emits; one mechanism.
+            fp, fp_unfiltered = _free_promotions(c)
             if fp:
-                grants["freePromotions"] = fp
+                triggers.append(OrderedDict([
+                    # The UNIT ENTERING is the happening, and the applier is targeted propagation off it (see
+                    # curate_building's note) -- there is no per-turn sweep on this plane.
+                    ("trigger", "onUnitEnteredCity"),
+                    ("action", OrderedDict([("promote", OrderedDict([("promotions", fp), ("units", "present")]))])),
+                ]))
+            for promo, missing in fp_unfiltered:
+                FREE_PROMO_UNFILTERED.append((typ, promo, missing))
         elif tag == "BonusHappinessChanges":              # per-bonus conditional happiness, authored on the trait
             bonus_happy = _keyed_entries(c, None)          # {BONUS_X: +N happy while that bonus is present}
         elif tag == "PropertyManipulators":
@@ -795,6 +859,14 @@ def main():
         print("  !! leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))
     else:
         print("  (every XML tag classified — no leftovers)")
+    if FREE_PROMO_UNFILTERED:
+        # ANNOUNCE the skips: each is a free promotion whose unit filter cannot be expressed because a referenced
+        # unit-combat class carries no tag. Emitting it unfiltered would arm EVERY unit in the city, so it is
+        # dropped -- loudly. Closing one is a TAG_BY_UNITCOMBAT entry, not a curator change.
+        missing_classes = sorted({uc for _, _, ms in FREE_PROMO_UNFILTERED for uc in ms})
+        print("  ⚠ free promotions SKIPPED (untagged unit-combat class, filter inexpressible): %d entr(y/ies)"
+              % len(FREE_PROMO_UNFILTERED))
+        print("     untagged classes: %s" % ", ".join(missing_classes))
     if args.sample is not None:
         for nm in (args.sample or list(results)[:1]):
             print("\n=== %s ===" % nm)

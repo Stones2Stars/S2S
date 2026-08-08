@@ -125,7 +125,7 @@
  },
  "triggers": [
   {
-   "trigger": "onTurnEnd",
+   "trigger": "onUnitEnteredCity",
    "action": {
     "promote": {
      "promotions": [

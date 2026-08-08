@@ -219,13 +219,22 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DECEIVER2": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_DECEIVER2",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

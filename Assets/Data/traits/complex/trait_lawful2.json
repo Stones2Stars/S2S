@@ -308,13 +308,22 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_LAWFUL2": [
-    "UNITCOMBAT_LAW_ENFORCEMENT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_LAWFUL2",
+       "enabled": "IS_POLICE"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

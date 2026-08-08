@@ -245,13 +245,22 @@
    "percent": -20
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_NEGLIGENT2": [
-    "UNITCOMBAT_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_NEGLIGENT2",
+       "enabled": "IS_COMBATANT"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

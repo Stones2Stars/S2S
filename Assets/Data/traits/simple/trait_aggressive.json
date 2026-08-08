@@ -121,23 +121,42 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COMBAT1": [
-    "UNITCOMBAT_ASSAULT_MECH",
-    "UNITCOMBAT_CLONES",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HITECH",
-    "UNITCOMBAT_MELEE"
-   ],
-   "PROMOTION_AGGRESSIVE": [
-    "UNITCOMBAT_ASSAULT_MECH",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HITECH",
-    "UNITCOMBAT_MELEE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_COMBAT1",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_GUNPOWDER",
+         "IS_MECHANIZED",
+         "IS_MELEE",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_AGGRESSIVE",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_GUNPOWDER",
+         "IS_MECHANIZED",
+         "IS_MELEE",
+         "IS_SYNTHETIC"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

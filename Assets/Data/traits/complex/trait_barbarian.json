@@ -20,13 +20,22 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AGGRESSIVE": [
-    "UNITCOMBAT_MELEE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AGGRESSIVE",
+       "enabled": "IS_MELEE"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitBarbarian.dds"

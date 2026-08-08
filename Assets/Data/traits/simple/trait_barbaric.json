@@ -51,14 +51,27 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COMBAT1": [
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_MELEE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_COMBAT1",
+       "enabled": {
+        "any": [
+         "IS_GUNPOWDER",
+         "IS_MELEE"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

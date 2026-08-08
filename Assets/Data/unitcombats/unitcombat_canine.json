@@ -164,6 +164,9 @@
  "skills": {
   "cannotMergeSplit": true
  },
+ "tags": [
+  "canine"
+ ],
  "hideAndSeek": {
   "detection": {
    "value": 100,

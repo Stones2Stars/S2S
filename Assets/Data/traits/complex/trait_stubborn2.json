@@ -181,9 +181,6 @@
   "empire": {
    "freeCivilian": {
     "perPopulation": 15
-   },
-   "upgradePrice": {
-    "percent": 15
    }
   }
  },
@@ -236,6 +233,9 @@
   "empire": {
    "hurry": {
     "percent": 30
+   },
+   "upgrade": {
+    "percent": 15
    }
   }
  },

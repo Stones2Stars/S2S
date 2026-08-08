@@ -95,9 +95,6 @@
    },
    "unitMilitary": {
     "percent": 10
-   },
-   "upgradePrice": {
-    "percent": -15
    }
   }
  },
@@ -108,6 +105,13 @@
    },
    "enemyWarWeariness": {
     "percent": -20
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -15
    }
   }
  },
@@ -133,13 +137,22 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_MEEK3": [
-    "UNITCOMBAT_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_MEEK3",
+       "enabled": "IS_COMBATANT"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

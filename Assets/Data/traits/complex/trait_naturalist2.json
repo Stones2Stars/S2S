@@ -187,14 +187,27 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_NATURALIST2": [
-    "UNITCOMBAT_SPECIES_HUMAN",
-    "UNITCOMBAT_SPECIES_NEANDERTHAL"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_NATURALIST2",
+       "enabled": {
+        "any": [
+         "IS_HUMAN",
+         "IS_NEANDERTHAL"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

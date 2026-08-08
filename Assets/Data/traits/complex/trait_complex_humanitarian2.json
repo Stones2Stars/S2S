@@ -176,14 +176,27 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_HUMANITARIAN2": [
-    "UNITCOMBAT_HEALTH_CARE",
-    "UNITCOMBAT_RECON"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_HUMANITARIAN2",
+       "enabled": {
+        "any": [
+         "IS_MEDIC",
+         "IS_RECON"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

@@ -159,18 +159,31 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_CRUEL2": [
-    "UNITCOMBAT_CRIMINAL",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_MELEE",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_STRIKE_TEAM",
-    "UNITCOMBAT_THROWING"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CRUEL2",
+       "enabled": {
+        "any": [
+         "IS_GUNPOWDER",
+         "IS_MELEE",
+         "IS_MOUNTED",
+         "IS_OUTLAW",
+         "IS_RECON",
+         "IS_THROWING"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

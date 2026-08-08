@@ -12,7 +12,7 @@ OWNER RULINGS folded in (handover #6):
 - §6.1 DELIVERYGUY: the 22 "inversions" KEEP-ON-BUILDING keyed by target (NOT inverted). Tech/Bonus/Building gated via
   `enabled`; Improvement/Terrain/Plot yields target-keyed (food.city.improvements.{IMP}.flat). Tech ones PROVISIONAL (Phase F).
 - top-level `triggers[]` (json.md §5, ruling 8): PropertySpawn (onTurn, chance via `per`) + iNumUnitFullHeal/
-  HealUnitCombat (onTurn heal actions) + FreePromoTypes (onTurnEnd promote-present).
+  HealUnitCombat (onTurn heal actions) + FreePromoTypes (onUnitEnteredCity promote-present).
 - shrine (GlobalReligionCommerce, a RELIGION FK) -> the TOP-LEVEL `shrine` bespoke section (values live on the religion);
   headquarters (GlobalCorporationCommerce, a CORPORATION FK) -> the TOP-LEVEL `headquarters` bespoke section (json §9,
   owner 2026-07-01, un-nested from identity).
@@ -837,7 +837,13 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
         # payload): promotions = the entry list (a bare promotion string, or {promotion, enabled:<unit predicate>}
         # -- the §3.9 entry form), units:"present" = every unit present in the city at end-turn.
         triggers.append(OrderedDict([
-            ("trigger", "onTurnEnd"),
+            # The happening is the UNIT ENTERING, and there is no per-turn sweep on this plane: the applier is
+            # targeted propagation off SEVT_UNIT_ENTERED_CITY, with the source going ACTIVE completing the same
+            # relation for units already present (the two-leg fold shape). `units:"present"` states the RELATION
+            # (active source x unit present); the happening states when it is re-checked.
+            # ⚠ The per-turn trigger `onTurn` is a DIFFERENT thing and stays -- a recurring roll is a genuine
+            # happening (the property-scaled criminal spawn, json.md §5).
+            ("trigger", "onUnitEnteredCity"),
             ("action", OrderedDict([("promote", OrderedDict([("promotions", promos), ("units", "present")]))])),
         ]))
     # SpecialistCounts (capacity/slots) -> allowedSpecialists COUNT family, keyed by specialist type (the cap on

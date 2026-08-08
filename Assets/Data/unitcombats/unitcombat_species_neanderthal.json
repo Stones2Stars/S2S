@@ -3,6 +3,9 @@
  "skills": {
   "stealthDefense": true
  },
+ "tags": [
+  "neanderthal"
+ ],
  "hideAndSeek": {
   "detection": {
    "value": 500,

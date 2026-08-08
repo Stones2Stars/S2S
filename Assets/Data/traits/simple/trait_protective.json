@@ -178,20 +178,33 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_CITY_GARRISON1": [
-    "UNITCOMBAT_ARCHER",
-    "UNITCOMBAT_CLONES",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HITECH",
-    "UNITCOMBAT_MELEE"
-   ],
-   "PROMOTION_TRENCH1": [
-    "UNITCOMBAT_GUN"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CITY_GARRISON1",
+       "enabled": {
+        "any": [
+         "IS_ARCHERY",
+         "IS_GUNPOWDER",
+         "IS_MELEE",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_TRENCH1",
+       "enabled": "IS_GUNPOWDER"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

@@ -425,16 +425,28 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AERIAL_WEAPONRY": [
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HITECH",
-    "UNITCOMBAT_ROCKET_LAUNCHER",
-    "UNITCOMBAT_SIEGE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AERIAL_WEAPONRY",
+       "enabled": {
+        "any": [
+         "IS_GUNPOWDER",
+         "IS_SIEGE",
+         "IS_SYNTHETIC"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

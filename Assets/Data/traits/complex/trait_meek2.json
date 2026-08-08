@@ -142,9 +142,6 @@
    },
    "unitCivilian": {
     "percent": 10
-   },
-   "upgradePrice": {
-    "percent": -10
    }
   }
  },
@@ -155,6 +152,13 @@
    },
    "enemyWarWeariness": {
     "percent": -20
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -10
    }
   }
  },
@@ -180,13 +184,22 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_MEEK2": [
-    "UNITCOMBAT_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_MEEK2",
+       "enabled": "IS_COMBATANT"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

@@ -524,6 +524,14 @@ TAG_BY_UNITCOMBAT = {
     "UNITCOMBAT_THROWING": ["throwing"],          # thrown-weapon skirmisher -- ranged, but not archery
     "UNITCOMBAT_COMMANDER": ["commander"], "UNITCOMBAT_PRODIGY": ["prodigy"],
     "UNITCOMBAT_NOMAD": ["nomad"], "UNITCOMBAT_IDEA": ["idea"], "UNITCOMBAT_DOOM": ["doom"],
+    # The classes a TRAIT's free promotions filter on. Same ruling as the block above -- a free promotion being
+    # granted is an existing mechanic, and the trait leg states WHICH units it arms as an ordinary tag predicate
+    # (engine.md: a promotion grant keys off the TAG, never a UNITCOMBAT id). Without these the filter is
+    # inexpressible, and an unfiltered entry arms EVERY unit in the city.
+    "UNITCOMBAT_COMBATANT": ["combatant"],        # the generic "can fight" class -- the broadest filter traits use
+    "UNITCOMBAT_CANINE": ["canine"],              # discriminating, like wild/tamed: `animal` would sweep in the rest
+    "UNITCOMBAT_STEALTH": ["stealth"],            # the stealth CLASS; distinct id space from the hide-and-seek SKILL
+    "UNITCOMBAT_SPECIES_HUMAN": ["human"], "UNITCOMBAT_SPECIES_NEANDERTHAL": ["neanderthal"],
 }
 
 

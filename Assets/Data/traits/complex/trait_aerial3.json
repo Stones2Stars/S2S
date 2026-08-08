@@ -363,24 +363,28 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AERIAL_SUPERIORITY": [
-    "UNITCOMBAT_ANTIMATTER_SPACESHIP",
-    "UNITCOMBAT_BOMBERS",
-    "UNITCOMBAT_EARLY_BOMBERS",
-    "UNITCOMBAT_EARLY_FIGHTERS",
-    "UNITCOMBAT_EARLY_SPACESHIP",
-    "UNITCOMBAT_JET_FIGHTERS",
-    "UNITCOMBAT_NUCLEAR_SPACESHIP",
-    "UNITCOMBAT_ORBITAL_AIRCRAFT",
-    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
-    "UNITCOMBAT_STEALTH",
-    "UNITCOMBAT_SUPERSONIC_PLANES",
-    "UNITCOMBAT_WORMHOLE_SPACESHIP"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AERIAL_SUPERIORITY",
+       "enabled": {
+        "any": [
+         "IS_AIR",
+         "IS_SPACE",
+         "IS_STEALTH"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

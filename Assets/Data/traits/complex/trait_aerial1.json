@@ -359,17 +359,29 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AERIAL_STRATEGIES": [
-    "UNITCOMBAT_ARCHER",
-    "UNITCOMBAT_BALLOON",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HELICOPTER",
-    "UNITCOMBAT_THROWING"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AERIAL_STRATEGIES",
+       "enabled": {
+        "any": [
+         "IS_AIR",
+         "IS_ARCHERY",
+         "IS_GUNPOWDER",
+         "IS_THROWING"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

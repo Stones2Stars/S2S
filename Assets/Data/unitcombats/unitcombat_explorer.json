@@ -51,10 +51,5 @@
   "ggPointsForUnits": [
    "UNIT_GREAT_HUNTER"
   ]
- },
- "vision": {
-  "unit": {
-   "flat": 100
-  }
  }
 }

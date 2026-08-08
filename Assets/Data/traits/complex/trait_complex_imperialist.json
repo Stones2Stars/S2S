@@ -263,9 +263,6 @@
   "empire": {
    "freeMilitary": {
     "perPopulation": 15
-   },
-   "upgradePrice": {
-    "percent": 20
    }
   }
  },
@@ -273,6 +270,13 @@
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 20
    }
   }
  },
@@ -301,13 +305,22 @@
  "policies": {
   "draftsOnCityCapture": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_IMPERIALIST": [
-    "UNITCOMBAT_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_IMPERIALIST",
+       "enabled": "IS_COMBATANT"
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

@@ -224,13 +224,6 @@
    ]
   }
  },
- "upkeep": {
-  "empire": {
-   "upgradePrice": {
-    "percent": 10
-   }
-  }
- },
  "goldenAge": {
   "empire": {
    "percent": -25
@@ -239,6 +232,13 @@
  "espionageDefense": {
   "empire": {
    "percent": 5
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 10
+   }
   }
  },
  "grants": {

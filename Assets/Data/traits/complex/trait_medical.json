@@ -579,13 +579,24 @@
   }
  },
  "grants": {
-  "freePromotions": {
-   "PROMOTION_MEDICAL": [
-    "UNITCOMBAT_HEALTH_CARE"
-   ]
-  },
   "goldenAgeOnBirthOfGreatPerson": "UNIT_DOCTOR"
  },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_MEDICAL",
+       "enabled": "IS_MEDIC"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "ai": {
   "flavours": [
    {

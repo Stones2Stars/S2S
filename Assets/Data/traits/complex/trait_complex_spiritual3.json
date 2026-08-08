@@ -123,10 +123,15 @@
  },
  "upkeep": {
   "empire": {
-   "civicOptions": {
-    "CIVICOPTION_RELIGION": {
-     "percent": -100
-    }
+   "civic": {
+    "percent": [
+     {
+      "value": -100,
+      "enabled": {
+       "CIVIC_CATEGORY": "CIVICOPTION_RELIGION"
+      }
+     }
+    ]
    }
   }
  },

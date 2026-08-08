@@ -207,16 +207,29 @@
   "allowInquisitions": true,
   "bansNonStateReligions": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DEVOTION1": [
-    "UNITCOMBAT_CIVILIAN",
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_DEVOTION1",
+       "enabled": {
+        "any": [
+         "IS_CIVILIAN",
+         "IS_COMBATANT",
+         "IS_NAVAL",
+         "IS_RECON"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
   }
- },
+ ],
  "ai": {
   "flavours": [
    {

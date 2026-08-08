@@ -12,6 +12,9 @@
    "percent": 1
   }
  },
+ "tags": [
+  "combatant"
+ ],
  "hideAndSeek": {
   "detection": {
    "value": 100,

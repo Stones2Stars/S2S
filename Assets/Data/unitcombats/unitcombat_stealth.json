@@ -1,5 +1,8 @@
 {
  "type": "UNITCOMBAT_STEALTH",
+ "tags": [
+  "stealth"
+ ],
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/stealths.dds"
