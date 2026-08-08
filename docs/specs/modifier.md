@@ -628,6 +628,18 @@ authored shape.
 > — it is the SIMPLE record, present in both folders under its one id, not a complex record wearing a plain
 > name. `TRAIT_BARBARIAN` is the only one and it stays as it is (owner). ⇒ Read the rule as: every record the
 > complex set DEFINES carries the prefix; a base-filled copy defines nothing.
+> **⚖ A SAVE IS RESOLVED INTO THE ACTIVE SET AT LOAD (owner): *"for savegames, if you see it is a complex trait
+> game, you make sure the trait is the complex version."*** A stored plain `TRAIT_X` in a game running
+> `GAMEOPTION_LEADER_COMPLEX_TRAITS` resolves to `TRAIT_COMPLEX_X` where that record exists. This is NOT the
+> `savemigration.txt` rename plane: a rename translates one id whose record moved, while this picks WHICH SET an
+> id belongs to and so depends on a live game option — it belongs at the ONE stored-Type resolution point
+> (`sm_resolveStoredType`), beside the rename lookup rather than inside it.
+> ⚑ **It is what makes the prefix rule TRUE OF A RUNNING GAME rather than only of the data.** Re-keying the
+> records alone leaves a loaded save holding simple rank-1 rungs beside complex rank-2/3 ones — the mix the rule
+> exists to make impossible, arriving through the save rather than through the data.
+> ⚠ **Leaderheads author NO traits (owner)** — they were dropped for the community to fill post-launch — so the
+> save is the only place a held id comes from, which is precisely why resolving it there is sufficient.
+>
 > ⚑ **The reason is that the alternative makes a WRONG SET UNDETECTABLE (owner): *"otherwise it will be
 > impossible to truly distinguish between the simple and complex set."*** If a plain `TRAIT_` id were legal
 > inside the complex set, a held `TRAIT_EFFICIENT1` would be indistinguishable from a simple-set leak — no
