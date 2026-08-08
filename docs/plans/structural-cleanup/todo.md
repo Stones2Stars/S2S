@@ -277,6 +277,18 @@
 
 ## Not built yet
 
+- **Retire the `CARGO_NAVAL` / `CARGO_MISSILE` kinds onto the tag-predicate shape.** They are read in
+  `CvUnit::cargoSpace` as "+N hold when the CARRIER is `DOMAIN_SEA`" and "+N hold when its special cargo is
+  `SPECIALUNIT_MISSILE`" — a filter on WHO CARRIES, not on what is carried. ⛔ [modifier.md §6](../../specs/modifier.md)
+  rules that the "what" is ALWAYS a tag predicate and never a kind, and §5 already gives the shape for "every
+  object of a kind in scope", so this authors as a plural `units` target with a predicate
+  (`cargo.space.empire.units {IS_SEA}`) and both kinds go.
+  ⚠ **The NAME is actively misleading and should not survive the retire**: `navalCargo` describes neither naval
+  cargo nor a naval-unit hold — it is an empire-wide hold bonus scoped by the carrier's domain. A reader who
+  trusts the name models the wrong axis.
+  ⚑ The deposits currently REACH this reader (they were dropped as `combat.navalCargo` until the address was
+  fixed), so this is a shape correction, not a restoration.
+
 - **Share `InfoValuation::plotScaledYield` with the what-if plot read.** The package resolve calls it, but
   `plotBaseYields` — the isolated plot-as-base calc every what-if goes through — does not take the two operands
   yet, so a what-if answers the pre-scaling number while the live plot answers the scaled one
