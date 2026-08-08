@@ -155,6 +155,7 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_TIMID2",
   "civilopedia": "TXT_KEY_TRAIT_TIMID2_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_TIMID_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_TIMID_STRATEGY",
+  "negativeTrait": true
  }
 }

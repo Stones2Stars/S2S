@@ -1,13 +1,5 @@
 {
- "type": "TRAIT_COMPLEX_INNOVATIVE2",
- "enables": {
-  "traitsAnd": [
-   "TRAIT_COMPLEX_INNOVATIVE3"
-  ],
-  "traits": [
-   "TRAIT_COMPLEX_INNOVATIVE3"
-  ]
- },
+ "type": "TRAIT_COMPLEX_PROGRESSIST3",
  "excludes": [
   "TRAIT_COMPLEX_COVETOUS1"
  ],
@@ -54,13 +46,13 @@
     "percent": 10
    },
    "freeMilitary": {
-    "flat": -7
+    "flat": -8
    }
   }
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1,
+   "flat": 2,
    "modifier": {
     "percent": [
      {
@@ -73,7 +65,7 @@
  },
  "workRate": {
   "empire": {
-   "percent": -15
+   "percent": -25
   }
  },
  "improvementUpgradeRate": {
@@ -107,7 +99,7 @@
     "FLAVOR_PRODUCTION": 6
    },
    {
-    "FLAVOR_GOLD": 4
+    "FLAVOR_GOLD": 7
    },
    {
     "FLAVOR_SCIENCE": 3
@@ -116,7 +108,7 @@
     "FLAVOR_CULTURE": 5
    },
    {
-    "FLAVOR_GROWTH": -3
+    "FLAVOR_GROWTH": -4
    },
    {
     "FLAVOR_ESPIONAGE": 1
@@ -125,13 +117,13 @@
  },
  "ui": {
   "art": {
-   "icon": "art/Buttons/Traits/TraitInnovative2.dds"
+   "icon": "art/Buttons/Traits/TraitInnovative3.dds"
   }
  },
  "identity": {
-  "description": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE2",
-  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE2_PEDIA",
+  "description": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY",
-  "minAnarchy": 2
+  "minAnarchy": 3
  }
 }

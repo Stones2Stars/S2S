@@ -273,6 +273,7 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_UNREFINED3",
   "civilopedia": "TXT_KEY_TRAIT_UNREFINED3_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_UNREFINED_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_UNREFINED_STRATEGY",
+  "negativeTrait": true
  }
 }

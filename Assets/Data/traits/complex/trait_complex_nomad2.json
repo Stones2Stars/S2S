@@ -1,11 +1,11 @@
 {
- "type": "TRAIT_COMPLEX_NOMADIC2",
+ "type": "TRAIT_COMPLEX_NOMAD2",
  "enables": {
   "traitsAnd": [
-   "TRAIT_COMPLEX_NOMADIC3"
+   "TRAIT_COMPLEX_NOMAD3"
   ],
   "traits": [
-   "TRAIT_COMPLEX_NOMADIC3"
+   "TRAIT_COMPLEX_NOMAD3"
   ]
  },
  "food": {

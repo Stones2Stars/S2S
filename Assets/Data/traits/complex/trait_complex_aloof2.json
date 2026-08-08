@@ -395,6 +395,7 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_ALOOF2",
   "civilopedia": "TXT_KEY_TRAIT_ALOOF2_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_ALOOF_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_ALOOF_STRATEGY",
+  "negativeTrait": true
  }
 }

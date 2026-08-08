@@ -147,6 +147,7 @@
  "identity": {
   "description": "TXT_KEY_TRAIT_TIMID3",
   "civilopedia": "TXT_KEY_TRAIT_TIMID3_PEDIA",
-  "strategy": "TXT_KEY_TRAIT_TIMID_STRATEGY"
+  "strategy": "TXT_KEY_TRAIT_TIMID_STRATEGY",
+  "negativeTrait": true
  }
 }

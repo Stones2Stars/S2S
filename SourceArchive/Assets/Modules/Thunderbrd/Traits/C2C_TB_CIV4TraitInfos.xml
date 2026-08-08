@@ -3601,7 +3601,7 @@
 					<TraitType>TRAIT_AGGRESSIVE1</TraitType>
 				</DisallowedTraitType>
 			</DisallowedTraitTypes>
-			<bNegativeTrait>0</bNegativeTrait>
+			<bNegativeTrait>1</bNegativeTrait>
 			<bImpurePromotions>0</bImpurePromotions>
 			<Flavors>
 				<Flavor>
@@ -3698,7 +3698,7 @@
 					<TraitType>TRAIT_AGGRESSIVE1</TraitType>
 				</DisallowedTraitType>
 			</DisallowedTraitTypes>
-			<bNegativeTrait>0</bNegativeTrait>
+			<bNegativeTrait>1</bNegativeTrait>
 			<bImpurePromotions>0</bImpurePromotions>
 			<Flavors>
 				<Flavor>
@@ -14850,7 +14850,7 @@
 			</ReplacementCondition>
 		</TraitInfo>
 		<TraitInfo>
-			<Type>TRAIT_NOMADIC2</Type>
+			<Type>TRAIT_NOMAD2</Type>
 			<Description>TXT_KEY_TRAIT_COMPLEX_NOMADIC2</Description>
 			<Strategy>TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY</Strategy>
 			<Civilopedia>TXT_KEY_TRAIT_COMPLEX_NOMADIC2_PEDIA</Civilopedia>
@@ -15896,7 +15896,7 @@
 			<iGreatPeopleRateChange>4</iGreatPeopleRateChange>
 		</TraitInfo>
 		<TraitInfo>
-			<Type>TRAIT_NOMADIC3</Type>
+			<Type>TRAIT_NOMAD3</Type>
 			<Description>TXT_KEY_TRAIT_COMPLEX_NOMADIC3</Description>
 			<Strategy>TXT_KEY_TRAIT_COMPLEX_NOMADIC_STRATEGY</Strategy>
 			<Civilopedia>TXT_KEY_TRAIT_COMPLEX_NOMADIC3_PEDIA</Civilopedia>
@@ -15907,7 +15907,7 @@
 				<OnGameOption>GAMEOPTION_LEADER_COMPLEX_TRAITS</OnGameOption>
 			</OnGameOptions>
 			<PrereqTech>TECH_INFORMATION_LIFESTYLE</PrereqTech>
-			<TraitPrereq>TRAIT_NOMADIC2</TraitPrereq>
+			<TraitPrereq>TRAIT_NOMAD2</TraitPrereq>
 			<Flavors>
 				<Flavor>
 					<FlavorType>FLAVOR_MILITARY</FlavorType>
@@ -22779,7 +22779,7 @@
 			</ReplacementCondition>
 		</TraitInfo>
 		<TraitInfo>
-			<Type>TRAIT_ZEALOUS2</Type>
+			<Type>TRAIT_FANATICAL2</Type>
 			<Description>TXT_KEY_TRAIT_ZEALOUS2</Description>
 			<Strategy>TXT_KEY_TRAIT_ZEALOUS_STRATEGY</Strategy>
 			<Civilopedia>TXT_KEY_TRAIT_ZEALOUS2_PEDIA</Civilopedia>
@@ -23031,7 +23031,7 @@
 			</BonusHappinessChanges>
 		</TraitInfo>
 		<TraitInfo>
-			<Type>TRAIT_ZEALOUS3</Type>
+			<Type>TRAIT_FANATICAL3</Type>
 			<Description>TXT_KEY_TRAIT_ZEALOUS3</Description>
 			<Strategy>TXT_KEY_TRAIT_ZEALOUS_STRATEGY</Strategy>
 			<Civilopedia>TXT_KEY_TRAIT_ZEALOUS3_PEDIA</Civilopedia>
@@ -23042,7 +23042,7 @@
 				<OnGameOption>GAMEOPTION_LEADER_COMPLEX_TRAITS</OnGameOption>
 			</OnGameOptions>
 			<PrereqTech>TECH_INFORMATION_LIFESTYLE</PrereqTech>
-			<TraitPrereq>TRAIT_ZEALOUS2</TraitPrereq>
+			<TraitPrereq>TRAIT_FANATICAL2</TraitPrereq>
 			<DisallowedTraitTypes>
 				<DisallowedTraitType>
 					<TraitType>TRAIT_SPIRITUAL1</TraitType>
@@ -26002,7 +26002,7 @@
 					<TraitType>TRAIT_PREEMINENT1</TraitType>
 				</DisallowedTraitType>
 			</DisallowedTraitTypes>
-			<bNegativeTrait>0</bNegativeTrait>
+			<bNegativeTrait>1</bNegativeTrait>
 			<bImpurePromotions>0</bImpurePromotions>
 			<bImpurePropertyManipulators>0</bImpurePropertyManipulators>
 			<Flavors>
@@ -26335,7 +26335,7 @@
 					<TraitType>TRAIT_PREEMINENT1</TraitType>
 				</DisallowedTraitType>
 			</DisallowedTraitTypes>
-			<bNegativeTrait>0</bNegativeTrait>
+			<bNegativeTrait>1</bNegativeTrait>
 			<bImpurePromotions>0</bImpurePromotions>
 			<bImpurePropertyManipulators>0</bImpurePropertyManipulators>
 			<Flavors>
@@ -42835,7 +42835,7 @@
 					<TraitType>TRAIT_CREATIVE1</TraitType>
 				</DisallowedTraitType>
 			</DisallowedTraitTypes>
-			<bNegativeTrait>0</bNegativeTrait>
+			<bNegativeTrait>1</bNegativeTrait>
 			<bImpurePromotions>0</bImpurePromotions>
 			<bImpurePropertyManipulators>0</bImpurePropertyManipulators>
 			<Flavors>
@@ -55430,7 +55430,7 @@
 			</ReplacementCondition>
 		</TraitInfo>
 		<TraitInfo>
-			<Type>TRAIT_INNOVATIVE2</Type>
+			<Type>TRAIT_PROGRESSIST2</Type>
 			<Description>TXT_KEY_TRAIT_COMPLEX_INNOVATIVE2</Description>
 			<Strategy>TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY</Strategy>
 			<Civilopedia>TXT_KEY_TRAIT_COMPLEX_INNOVATIVE2_PEDIA</Civilopedia>
@@ -55521,7 +55521,7 @@
 			<iCityStartCulture>5</iCityStartCulture>
 		</TraitInfo>
 		<TraitInfo>
-			<Type>TRAIT_INNOVATIVE3</Type>
+			<Type>TRAIT_PROGRESSIST3</Type>
 			<Description>TXT_KEY_TRAIT_COMPLEX_INNOVATIVE3</Description>
 			<Strategy>TXT_KEY_TRAIT_COMPLEX_INNOVATIVE_STRATEGY</Strategy>
 			<Civilopedia>TXT_KEY_TRAIT_COMPLEX_INNOVATIVE3_PEDIA</Civilopedia>
@@ -55532,7 +55532,7 @@
 				<OnGameOption>GAMEOPTION_LEADER_COMPLEX_TRAITS</OnGameOption>
 			</OnGameOptions>
 			<PrereqTech>TECH_INFORMATION_LIFESTYLE</PrereqTech>
-			<TraitPrereq>TRAIT_INNOVATIVE2</TraitPrereq>
+			<TraitPrereq>TRAIT_PROGRESSIST2</TraitPrereq>
 			<DisallowedTraitTypes>
 				<DisallowedTraitType>
 					<TraitType>TRAIT_COVETOUS1</TraitType>
