@@ -3078,7 +3078,7 @@
 			<PrereqTech>TECH_ARMORED_CAVALRY</PrereqTech>
 			<BonusType>BONUS_SYRIAN</BonusType>
 			<PrereqBonuses>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 			</PrereqBonuses>
 			<TrainCondition>
 				<And>
@@ -11958,7 +11958,7 @@
 			<PrereqTech>TECH_ARMORED_CAVALRY</PrereqTech>
 			<BonusType>BONUS_BURMESE</BonusType>
 			<PrereqBonuses>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 			</PrereqBonuses>
 			<TrainCondition>
 				<And>
@@ -12069,7 +12069,7 @@
 			<PrereqTech>TECH_ARMORED_CAVALRY</PrereqTech>
 			<BonusType>BONUS_CHAM</BonusType>
 			<PrereqBonuses>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 			</PrereqBonuses>
 			<TrainCondition>
 				<And>
@@ -12179,7 +12179,7 @@
 			<PrereqTech>TECH_ARMORED_CAVALRY</PrereqTech>
 			<BonusType>BONUS_SIAMESE</BonusType>
 			<PrereqBonuses>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 			</PrereqBonuses>
 			<TrainCondition>
 				<And>
@@ -21278,7 +21278,7 @@
 				<And>
 					<Has>
 						<GOMType>GOM_BONUS</GOMType>
-						<ID>BONUS_ELEPHANTS</ID>
+						<ID>BONUS_ELEPHANT</ID>
 					</Has>
 					<Has>
 						<GOMType>GOM_BONUS</GOMType>
@@ -30840,7 +30840,7 @@
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
-                    <BonusType>BONUS_PARROTS</BonusType>
+                    <BonusType>BONUS_PARROT</BonusType>
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
@@ -31845,7 +31845,7 @@
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
-                    <BonusType>BONUS_PARROTS</BonusType>
+                    <BonusType>BONUS_PARROT</BonusType>
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
@@ -33983,7 +33983,7 @@
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
-                    <BonusType>BONUS_PARROTS</BonusType>
+                    <BonusType>BONUS_PARROT</BonusType>
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>

@@ -71,7 +71,7 @@
     {
      "value": -1,
      "enabled": {
-      "type": "BONUS_BEAVERS",
+      "type": "BONUS_BEAVER",
       "scope": "empire",
       "min": 1
      }

@@ -13508,7 +13508,7 @@
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -13516,11 +13516,11 @@
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -14806,7 +14806,7 @@
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -14814,11 +14814,11 @@
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -18059,7 +18059,7 @@
 			</PropertyManipulators>
 			<BonusHappinessChanges>
 				<BonusHappinessChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -18485,7 +18485,7 @@
 			</PropertyManipulators>
 			<BonusHappinessChanges>
 				<BonusHappinessChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -78074,7 +78074,7 @@
 					<iHappinessChange>-1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHappinessChange>-1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -78368,7 +78368,7 @@
 					<iHappinessChange>-1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHappinessChange>-1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>

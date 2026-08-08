@@ -494,7 +494,7 @@ def canTriggerBrothersInNeed(argsList):
   listResources.append(GC.getInfoTypeForString("BONUS_STONE"))
   listResources.append(GC.getInfoTypeForString("BONUS_IRON_ORE"))
   listResources.append(GC.getInfoTypeForString("BONUS_HORSE"))
-  listResources.append(GC.getInfoTypeForString("BONUS_ELEPHANTS"))
+  listResources.append(GC.getInfoTypeForString("BONUS_ELEPHANT"))
   listResources.append(GC.getInfoTypeForString("BONUS_OIL"))
   listResources.append(GC.getInfoTypeForString("BONUS_URANIUM"))
 
@@ -2409,7 +2409,7 @@ def canTriggerGreed(argsList):
 	if not CyPlayer.getNumAvailableBonuses(iSulphur):
 		bonuses.append(iSulphur)
 
-	iElephant = GC.getInfoTypeForString("BONUS_ELEPHANTS")
+	iElephant = GC.getInfoTypeForString("BONUS_ELEPHANT")
 	if not CyPlayer.getNumAvailableBonuses(iElephant):
 		bonuses.append(iElephant)
 

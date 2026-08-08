@@ -47,5 +47,10 @@
   "description": "TXT_KEY_UNITCOMBAT_RECON",
   "forMilitary": true,
   "forNavalMilitary": true
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
  }
 }

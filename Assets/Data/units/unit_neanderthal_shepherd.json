@@ -24,7 +24,7 @@
        "connection": "trade|vicinity"
       },
       {
-       "type": "BONUS_GUINEA_PIGS",
+       "type": "BONUS_GUINEA_PIG",
        "scope": "city",
        "connection": "trade|vicinity"
       },
@@ -34,7 +34,7 @@
        "connection": "trade|vicinity"
       },
       {
-       "type": "BONUS_ELEPHANTS",
+       "type": "BONUS_ELEPHANT",
        "scope": "city",
        "connection": "trade|vicinity"
       },
@@ -49,7 +49,7 @@
        "connection": "trade|vicinity"
       },
       {
-       "type": "BONUS_BEAVERS",
+       "type": "BONUS_BEAVER",
        "scope": "city",
        "connection": "trade|vicinity"
       },

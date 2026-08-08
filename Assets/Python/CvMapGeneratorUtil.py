@@ -1586,8 +1586,8 @@ def placeC2CBonuses():
 	iDeer = GC.getInfoTypeForString("BONUS_DEER")
 	iBison = GC.getInfoTypeForString("BONUS_BISON")
 	iRabbit = GC.getInfoTypeForString("BONUS_RABBIT")
-	iGuineaPig = GC.getInfoTypeForString("BONUS_GUINEA_PIGS")
-	iElephant = GC.getInfoTypeForString("BONUS_ELEPHANTS")
+	iGuineaPig = GC.getInfoTypeForString("BONUS_GUINEA_PIG")
+	iElephant = GC.getInfoTypeForString("BONUS_ELEPHANT")
 	aNotInNewWorld = [
 		GC.getInfoTypeForString("BONUS_HORSE"),
 		GC.getInfoTypeForString("BONUS_DONKEY"),

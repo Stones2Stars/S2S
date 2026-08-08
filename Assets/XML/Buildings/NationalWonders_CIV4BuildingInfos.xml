@@ -409,11 +409,11 @@
 			</CommerceChangeDoubleTimes>
 			<BonusHappinessChanges>
 				<BonusHappinessChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -1886,7 +1886,7 @@
 			<Civilopedia>TXT_KEY_BUILDING_CENTRAL_BREEDER_ELEPHANT_PEDIA</Civilopedia>
 			<PrereqTech>TECH_ELEPHANT_DOMESTICATION</PrereqTech>
 			<PrereqBonuses>
-				<Bonus>BONUS_ELEPHANTS</Bonus>
+				<Bonus>BONUS_ELEPHANT</Bonus>
 			</PrereqBonuses>
 			<ObsoleteTech>TECH_VERTICAL_FLIGHT</ObsoleteTech>
 			<iCost>432</iCost>
@@ -4332,7 +4332,7 @@
 			<PrereqTech>TECH_TOURNAMENTS</PrereqTech>
 			<PrereqBonuses>
 				<Bonus>BONUS_HORSE</Bonus>
-				<Bonus>BONUS_ELEPHANTS</Bonus>
+				<Bonus>BONUS_ELEPHANT</Bonus>
 				<Bonus>BONUS_CAMEL</Bonus>
 			</PrereqBonuses>
 			<GreatPeopleUnitType>UNIT_ARTIST</GreatPeopleUnitType>

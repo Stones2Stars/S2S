@@ -28,7 +28,7 @@
      },
      "per": {
       "anyOf": [
-       "BONUS_ELEPHANTS",
+       "BONUS_ELEPHANT",
        "BONUS_WHALE",
        "BONUS_CLAM",
        "BONUS_HORSE",
@@ -50,7 +50,7 @@
      },
      "per": {
       "anyOf": [
-       "BONUS_ELEPHANTS",
+       "BONUS_ELEPHANT",
        "BONUS_WHALE",
        "BONUS_CLAM",
        "BONUS_HORSE",
@@ -85,7 +85,7 @@
       },
       "per": {
        "anyOf": [
-        "BONUS_ELEPHANTS",
+        "BONUS_ELEPHANT",
         "BONUS_WHALE",
         "BONUS_CLAM",
         "BONUS_HORSE",

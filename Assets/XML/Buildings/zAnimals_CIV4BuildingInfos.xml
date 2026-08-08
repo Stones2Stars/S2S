@@ -1277,7 +1277,7 @@
 			</YieldChanges>
 			<ExtraFreeBonuses>
 				<ExtraFreeBonus>
-					<FreeBonus>BONUS_ELEPHANTS</FreeBonus>
+					<FreeBonus>BONUS_ELEPHANT</FreeBonus>
 					<iNumFreeBonuses>1</iNumFreeBonuses>
 				</ExtraFreeBonus>
 			</ExtraFreeBonuses>
@@ -1494,7 +1494,7 @@
 			</CommerceChanges>
 			<ExtraFreeBonuses>
 				<ExtraFreeBonus>
-					<FreeBonus>BONUS_BEAVERS</FreeBonus>
+					<FreeBonus>BONUS_BEAVER</FreeBonus>
 					<iNumFreeBonuses>1</iNumFreeBonuses>
 				</ExtraFreeBonus>
 			</ExtraFreeBonuses>
@@ -1933,7 +1933,7 @@
 					<iHealthChange>1</iHealthChange>
 				</BonusHealthChange>
 				<BonusHealthChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHealthChange>1</iHealthChange>
 				</BonusHealthChange>
 				<BonusHealthChange>
@@ -1971,7 +1971,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 					</YieldChanges>
@@ -2007,7 +2007,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 					</YieldChanges>
@@ -2078,7 +2078,7 @@
 					<iHealthChange>1</iHealthChange>
 				</BonusHealthChange>
 				<BonusHealthChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHealthChange>1</iHealthChange>
 				</BonusHealthChange>
 				<BonusHealthChange>
@@ -2116,7 +2116,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 					</YieldChanges>
@@ -2152,7 +2152,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 					</YieldChanges>

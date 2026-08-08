@@ -1,5 +1,5 @@
 {
- "type": "BONUS_PARROTS",
+ "type": "BONUS_PARROT",
  "enables": {
   "buildings": [
    "BUILDING_ASSASSIN_BUG_GATHERER",

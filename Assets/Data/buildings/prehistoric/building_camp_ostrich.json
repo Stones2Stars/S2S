@@ -39,7 +39,7 @@
      "vicinity": "owned"
     },
     {
-     "type": "BONUS_ELEPHANTS",
+     "type": "BONUS_ELEPHANT",
      "scope": "city",
      "connection": "vicinity",
      "vicinity": "onSite"

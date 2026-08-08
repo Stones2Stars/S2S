@@ -4911,7 +4911,7 @@
 			<PrereqTech>TECH_POULTRY_DOMESTICATION</PrereqTech>
 			<PrereqBonuses>
 				<Bonus>BONUS_POULTRY</Bonus>
-				<Bonus>BONUS_PARROTS</Bonus>
+				<Bonus>BONUS_PARROT</Bonus>
 			</PrereqBonuses>
 			<ObsoleteTech>TECH_SMART_DRUGS</ObsoleteTech>
 			<iHealth>-3</iHealth>
@@ -5978,7 +5978,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>2</iYield>
@@ -6150,7 +6150,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<YieldChanges>
 						<iYield>2</iYield>
 						<iYield>0</iYield>
@@ -6166,7 +6166,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>

@@ -2063,7 +2063,7 @@
 				<Outcome>
 					<OutcomeType>OUTCOME_BONUS_SPAWNED</OutcomeType>
 					<iChance>2</iChance>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<Yields>
 						<iYield>
 							<Plus>
@@ -6932,7 +6932,7 @@
 							</Plus>
 						</iYield>
 					</Yields>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 				</Outcome>
 				<Outcome>
 					<OutcomeType>OUTCOME_SUBDUE</OutcomeType>
@@ -7061,7 +7061,7 @@
 				<Outcome>
 					<OutcomeType>OUTCOME_BONUS_SPAWNED</OutcomeType>
 					<iChance>2</iChance>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<Yields>
 						<iYield>
 							<Plus>
@@ -15988,7 +15988,7 @@
 				<Outcome>
 					<OutcomeType>OUTCOME_BONUS_SPAWNED</OutcomeType>
 					<iChance>2</iChance>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<Yields>
 						<iYield>1</iYield>
 						<iYield>1</iYield>

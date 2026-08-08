@@ -3,7 +3,7 @@
  "enables": {
   "bonuses": [
    "BONUS_OSTRICH_FEATHERS",
-   "BONUS_PARROTS",
+   "BONUS_PARROT",
    "BONUS_POULTRY"
   ],
   "buildings": [

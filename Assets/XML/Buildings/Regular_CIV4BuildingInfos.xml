@@ -3715,7 +3715,7 @@
 			</TechHappinessChanges>
 			<VicinityBonusYieldChanges>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 						<iYield>0</iYield>
@@ -4503,7 +4503,7 @@
 					</CommercePercents>
 				</BonusCommercePercentChange>
 				<BonusCommercePercentChange>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<CommercePercents>
 						<iCommercePercent>0</iCommercePercent>
 						<iCommercePercent>100</iCommercePercent>
@@ -4647,7 +4647,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -4831,7 +4831,7 @@
 			</YieldChanges>
 			<VicinityBonusYieldChanges>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 						<iYield>0</iYield>
@@ -8821,7 +8821,7 @@
 			</ReplacementBuildings>
 			<VicinityBonus>BONUS_SILK</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+				<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<iCost>160</iCost>
 			<iCostSizeModifier>0</iCostSizeModifier>
@@ -13381,7 +13381,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_TRAPPING</PrereqTech>
 			<bRiver>1</bRiver>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_PRIME_TIMBER</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -14932,7 +14932,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_COCONUT</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -14973,7 +14973,7 @@
 			<Bonus>BONUS_WOODWIND_INSTRUMENTS</Bonus>
 			<PrereqBonuses>
 				<Bonus>BONUS_POULTRY</Bonus>
-				<Bonus>BONUS_PARROTS</Bonus>
+				<Bonus>BONUS_PARROT</Bonus>
 			</PrereqBonuses>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_HUNTERS_CAMP</BuildingType>
@@ -17039,7 +17039,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ECOLOGY</PrereqTech>
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_PRIME_TIMBER</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -17302,7 +17302,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ECOLOGY</PrereqTech>
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_RABBIT</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -17407,7 +17407,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ECOLOGY</PrereqTech>
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
-			<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+			<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_ZOO</BuildingType>
 			</PrereqInCityBuildings>
@@ -17561,7 +17561,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ECOLOGY</PrereqTech>
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_ZOO</BuildingType>
 			</PrereqInCityBuildings>
@@ -17612,7 +17612,7 @@
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
 			<VicinityBonus>BONUS_DEER</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_ZOO</BuildingType>
@@ -17662,7 +17662,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ECOLOGY</PrereqTech>
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
-			<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+			<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_BISON</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -17813,7 +17813,7 @@
 			<PrereqTech>TECH_ECOLOGY</PrereqTech>
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
 			<bRiver>1</bRiver>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_SHEEP</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -18082,7 +18082,7 @@
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
 			<VicinityBonus>BONUS_POULTRY</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_ZOO</BuildingType>
@@ -18183,7 +18183,7 @@
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
 			<VicinityBonus>BONUS_CORN</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+				<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_ZOO</BuildingType>
@@ -18287,7 +18287,7 @@
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
 			<VicinityBonus>BONUS_PIG</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_ZOO</BuildingType>
@@ -18389,7 +18389,7 @@
 			<PrereqTech>TECH_ECOLOGY</PrereqTech>
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
 			<bWater>1</bWater>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_SEA_LION_AND_SEAL</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -18494,7 +18494,7 @@
 			<ObsoleteTech>TECH_SENTIENT_EARTH</ObsoleteTech>
 			<VicinityBonus>BONUS_HORSE</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_ZOO</BuildingType>
@@ -20176,7 +20176,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 					</YieldChanges>
@@ -20212,7 +20212,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<YieldChanges>
 						<iYield>1</iYield>
 					</YieldChanges>
@@ -21278,7 +21278,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_WHEAT</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -22376,7 +22376,7 @@
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_CARIBOU</ObsoletesToBuilding>
 			<VicinityBonus>BONUS_DEER</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+				<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<PrereqOrTerrain>
 				<PrereqTerrain>TERRAIN_TAIGA</PrereqTerrain>
@@ -25695,7 +25695,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_TRAPPING</PrereqTech>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_RABBIT</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -30656,7 +30656,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_PISTACHIO</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -31389,7 +31389,7 @@
 					</CommercePercents>
 				</BonusCommercePercentChange>
 				<BonusCommercePercentChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<CommercePercents>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
@@ -31653,7 +31653,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -31801,7 +31801,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -32051,7 +32051,7 @@
 					</CommercePercents>
 				</BonusCommercePercentChange>
 				<BonusCommercePercentChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<CommercePercents>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
@@ -32385,7 +32385,7 @@
 			<iCostComplexityModifier>1</iCostComplexityModifier>
 			<BonusCommercePercentChanges>
 				<BonusCommercePercentChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<CommercePercents>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
@@ -32397,7 +32397,7 @@
 					</CommercePercents>
 				</BonusCommercePercentChange>
 				<BonusCommercePercentChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<CommercePercents>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
@@ -40461,7 +40461,7 @@
 			</ReplacementBuildings>
 			<VicinityBonus>BONUS_SILK</VicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<iCost>160</iCost>
 			<iCostSizeModifier>0</iCostSizeModifier>
@@ -41412,7 +41412,7 @@
 			<ConstructSound>AS2D_BUILD_SIBERIAN</ConstructSound>
 			<BonusHappinessChanges>
 				<BonusHappinessChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 			</BonusHappinessChanges>
@@ -42463,7 +42463,7 @@
 			<PrereqTech>TECH_TRACKING</PrereqTech>
 			<ObsoleteTech>TECH_PLANETARY_ECONOMICS</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_ELEPHANT</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+			<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			<PrereqOrBuildings>
 				<BuildingType>BUILDING_HUNTERS_CAMP</BuildingType>
 				<BuildingType>BUILDING_ANCIENT_CUSTOMS</BuildingType>
@@ -42513,7 +42513,7 @@
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<iCost>216</iCost>
 			<iCostSizeModifier>2</iCostSizeModifier>
@@ -42565,7 +42565,7 @@
 				<PrereqTech>TECH_ELEPHANT_DOMESTICATION</PrereqTech>
 			</TechTypes>
 			<ObsoleteTech>TECH_PALEONTOLOGY</ObsoleteTech>
-			<Bonus>BONUS_ELEPHANTS</Bonus>
+			<Bonus>BONUS_ELEPHANT</Bonus>
 			<PrereqReligion>RELIGION_HINDUISM</PrereqReligion>
 			<iCost>200</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
@@ -42596,7 +42596,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_MILITARY_TRAINING</PrereqTech>
 			<PrereqBonuses>
-				<Bonus>BONUS_ELEPHANTS</Bonus>
+				<Bonus>BONUS_ELEPHANT</Bonus>
 			</PrereqBonuses>
 			<PrereqOrBuildings>
 				<BuildingType>BUILDING_FARM_ANIMAL_ELEPHANT</BuildingType>
@@ -49858,7 +49858,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_TRAPPING</PrereqTech>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<ObsoleteTech>TECH_PLANETARY_ECONOMICS</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_FOX</ObsoletesToBuilding>
 			<iCost>35</iCost>
@@ -50590,7 +50590,7 @@
 			</YieldChanges>
 			<VicinityBonusYieldChanges>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -51699,14 +51699,14 @@
 				<VicinityBonus>BONUS_LLAMA</VicinityBonus>
 				<VicinityBonus>BONUS_PIG</VicinityBonus>
 				<VicinityBonus>BONUS_SHEEP</VicinityBonus>
-				<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+				<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 				<VicinityBonus>BONUS_BISON</VicinityBonus>
 				<VicinityBonus>BONUS_DEER</VicinityBonus>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
-				<VicinityBonus>BONUS_GUINEA_PIGS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
+				<VicinityBonus>BONUS_GUINEA_PIG</VicinityBonus>
 				<VicinityBonus>BONUS_KANGAROO</VicinityBonus>
 				<VicinityBonus>BONUS_MAMMOTH</VicinityBonus>
-				<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+				<VicinityBonus>BONUS_PARROT</VicinityBonus>
 				<VicinityBonus>BONUS_POULTRY</VicinityBonus>
 				<VicinityBonus>BONUS_RABBIT</VicinityBonus>
 				<VicinityBonus>BONUS_WALRUS</VicinityBonus>
@@ -53345,7 +53345,7 @@
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
 			<ObsoletesToBuilding>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_GUINEA_PIGS</VicinityBonus>
+			<VicinityBonus>BONUS_GUINEA_PIG</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_BARLEY</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -53818,7 +53818,7 @@
 			<PrereqTech>TECH_TRACKING</PrereqTech>
 			<ObsoleteTech>TECH_PLANETARY_ECONOMICS</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_GIRAFFE</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+			<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_DEER</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -56653,7 +56653,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_GUINEA_PIGS</VicinityBonus>
+			<VicinityBonus>BONUS_GUINEA_PIG</VicinityBonus>
 			<iCost>98</iCost>
 			<iCostSizeModifier>1</iCostSizeModifier>
 			<iCostCountModifier>1</iCostCountModifier>
@@ -56830,7 +56830,7 @@
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
 			<ObsoletesToBuilding>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_GUINEA_PIGS</VicinityBonus>
+			<VicinityBonus>BONUS_GUINEA_PIG</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_CORN</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -59967,7 +59967,7 @@
 			<ObsoleteTech>TECH_PLANETARY_ECONOMICS</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_HIPPO</ObsoletesToBuilding>
 			<bRiver>1</bRiver>
-			<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+			<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_BISON</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -61190,7 +61190,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_FLAX</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -63610,7 +63610,7 @@
 					<iNumFreeBonuses>1</iNumFreeBonuses>
 				</ExtraFreeBonus>
 				<ExtraFreeBonus>
-					<FreeBonus>BONUS_ELEPHANTS</FreeBonus>
+					<FreeBonus>BONUS_ELEPHANT</FreeBonus>
 					<iNumFreeBonuses>1</iNumFreeBonuses>
 				</ExtraFreeBonus>
 				<ExtraFreeBonus>
@@ -67415,7 +67415,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_BANANA</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -67481,7 +67481,7 @@
 			</CommerceModifiers>
 			<BonusHappinessChanges>
 				<BonusHappinessChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 			</BonusHappinessChanges>
@@ -72021,7 +72021,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_KANGAROO</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -72103,7 +72103,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_COFFEE</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -79499,7 +79499,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_TRAPPING</PrereqTech>
 			<bRiver>1</bRiver>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_SHEEP</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -81798,7 +81798,7 @@
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
 			<ObsoletesToBuilding>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_GUINEA_PIGS</VicinityBonus>
+			<VicinityBonus>BONUS_GUINEA_PIG</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_WHEAT</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -90326,7 +90326,7 @@
 			<PrereqTech>TECH_ZOOLOGY</PrereqTech>
 			<PrereqBonuses>
 				<Bonus>BONUS_POULTRY</Bonus>
-				<Bonus>BONUS_PARROTS</Bonus>
+				<Bonus>BONUS_PARROT</Bonus>
 			</PrereqBonuses>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_BIOLOGY_LAB</BuildingType>
@@ -90578,7 +90578,7 @@
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_OSTRICH</ObsoletesToBuilding>
 			<RawVicinityBonus>BONUS_POULTRY</RawVicinityBonus>
 			<PrereqVicinityBonuses>
-				<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+				<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			</PrereqVicinityBonuses>
 			<PrereqOrBuildings>
 				<BuildingType>BUILDING_HUNTERS_CAMP</BuildingType>
@@ -90656,7 +90656,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_TRAPPING</PrereqTech>
 			<bWater>1</bWater>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_SEA_LION_AND_SEAL</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -91864,7 +91864,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_BARLEY</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -92073,7 +92073,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<iCost>125</iCost>
 			<iCostSizeModifier>0</iCostSizeModifier>
 			<iCostCountModifier>1</iCostCountModifier>
@@ -92125,7 +92125,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<iCost>125</iCost>
 			<iCostSizeModifier>0</iCostSizeModifier>
 			<iCostCountModifier>1</iCostCountModifier>
@@ -92707,7 +92707,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_SPICES</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -93843,7 +93843,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -93851,7 +93851,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -99730,7 +99730,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_COCOA</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -99956,7 +99956,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_TRAPPING</PrereqTech>
-			<VicinityBonus>BONUS_BEAVERS</VicinityBonus>
+			<VicinityBonus>BONUS_BEAVER</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_CORN</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -100635,7 +100635,7 @@
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
 			<ObsoletesToBuilding>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_GUINEA_PIGS</VicinityBonus>
+			<VicinityBonus>BONUS_GUINEA_PIG</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_RICE</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -102346,7 +102346,7 @@
 					</CommercePercents>
 				</BonusCommercePercentChange>
 				<BonusCommercePercentChange>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<CommercePercents>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
@@ -102358,7 +102358,7 @@
 					</CommercePercents>
 				</BonusCommercePercentChange>
 				<BonusCommercePercentChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<CommercePercents>
 						<iCommercePercent>100</iCommercePercent>
 					</CommercePercents>
@@ -102445,7 +102445,7 @@
 			<PrereqTech>TECH_TRACKING</PrereqTech>
 			<ObsoleteTech>TECH_PLANETARY_ECONOMICS</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_RHINO</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+			<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_PIG</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -102695,7 +102695,7 @@
 				<Bonus>BONUS_HORSE</Bonus>
 				<Bonus>BONUS_CAMEL</Bonus>
 				<Bonus>BONUS_LLAMA</Bonus>
-				<Bonus>BONUS_ELEPHANTS</Bonus>
+				<Bonus>BONUS_ELEPHANT</Bonus>
 				<Bonus>BONUS_BISON</Bonus>
 				<Bonus>BONUS_DEER</Bonus>
 			</PrereqBonuses>
@@ -104737,7 +104737,7 @@
 			</CommerceModifiers>
 			<BonusHappinessChanges>
 				<BonusHappinessChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 			</BonusHappinessChanges>
@@ -118540,7 +118540,7 @@
 					<iNumFreeBonuses>1</iNumFreeBonuses>
 				</ExtraFreeBonus>
 				<ExtraFreeBonus>
-					<FreeBonus>BONUS_ELEPHANTS</FreeBonus>
+					<FreeBonus>BONUS_ELEPHANT</FreeBonus>
 					<iNumFreeBonuses>1</iNumFreeBonuses>
 				</ExtraFreeBonus>
 				<ExtraFreeBonus>
@@ -120441,7 +120441,7 @@
 			</CommerceChanges>
 			<VicinityBonusYieldChanges>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -120457,7 +120457,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -120489,7 +120489,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -120569,7 +120569,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -123225,7 +123225,7 @@
 				<BuildingType>BUILDING_INDUSTRIAL_FARMS</BuildingType>
 				<BuildingType>BUILDING_MEAT_INDUSTRY_CONGLOMERATE</BuildingType>
 			</ReplacementBuildings>
-			<VicinityBonus>BONUS_PARROTS</VicinityBonus>
+			<VicinityBonus>BONUS_PARROT</VicinityBonus>
 			<PrereqVicinityBonuses>
 				<VicinityBonus>BONUS_MANGO</VicinityBonus>
 			</PrereqVicinityBonuses>
@@ -123309,7 +123309,7 @@
 					<iHappinessChange>2</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -123317,7 +123317,7 @@
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<iHappinessChange>1</iHappinessChange>
 				</BonusHappinessChange>
 				<BonusHappinessChange>
@@ -123396,7 +123396,7 @@
 			<PrereqTech>TECH_TOURNAMENTS</PrereqTech>
 			<PrereqBonuses>
 				<Bonus>BONUS_HORSE</Bonus>
-				<Bonus>BONUS_ELEPHANTS</Bonus>
+				<Bonus>BONUS_ELEPHANT</Bonus>
 				<Bonus>BONUS_CAMEL</Bonus>
 			</PrereqBonuses>
 			<ObsoleteTech>TECH_COUNTERCULTURE</ObsoleteTech>
@@ -127979,7 +127979,7 @@
 			<bPrereqPower>1</bPrereqPower>
 			<Bonus>BONUS_ENZYMES</Bonus>
 			<PrereqBonuses>
-				<Bonus>BONUS_GUINEA_PIGS</Bonus>
+				<Bonus>BONUS_GUINEA_PIG</Bonus>
 				<Bonus>BONUS_SHEEP</Bonus>
 			</PrereqBonuses>
 			<ConstructCondition>
@@ -132013,7 +132013,7 @@
 			<PrereqTech>TECH_TRACKING</PrereqTech>
 			<ObsoleteTech>TECH_PLANETARY_ECONOMICS</ObsoleteTech>
 			<ObsoletesToBuilding>BUILDING_BREEDING_PROGRAM_ZEBRA</ObsoletesToBuilding>
-			<VicinityBonus>BONUS_ELEPHANTS</VicinityBonus>
+			<VicinityBonus>BONUS_ELEPHANT</VicinityBonus>
 			<PrereqRawVicinityBonuses>
 				<VicinityBonus>BONUS_HORSE</VicinityBonus>
 			</PrereqRawVicinityBonuses>
@@ -132189,7 +132189,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -132197,7 +132197,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>
@@ -132253,7 +132253,7 @@
 					</YieldChanges>
 				</BonusYieldChange>
 				<BonusYieldChange>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<YieldChanges>
 						<iYield>0</iYield>
 						<iYield>0</iYield>

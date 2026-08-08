@@ -26,7 +26,7 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_PARROTS",
+     "type": "BONUS_PARROT",
      "scope": "city",
      "connection": "vicinity",
      "vicinity": "onSite"

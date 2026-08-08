@@ -1441,3 +1441,12 @@ TYPE::TRAIT_TEMPERAMENTAL3 -> TYPE::TRAIT_COMPLEX_TEMPERAMENTAL3
 TYPE::TRAIT_UNREFINED2 -> TYPE::TRAIT_COMPLEX_UNREFINED2
 TYPE::TRAIT_ZEALOUS -> TYPE::TRAIT_COMPLEX_ZEALOUS
 TYPE::TRAIT_ZEALOUS1 -> TYPE::TRAIT_COMPLEX_ZEALOUS1
+| The four ANIMAL-resource bonuses whose ids were plural against a family that is otherwise singular
+| (CAMEL / COW / HORSE / PIG / WHALE / CRAB, plus the invariant BISON / DEER / FISH / SHEEP). The plot's
+| bonus is a serialized class enum, and bonuses are the SOFT removal class (save.md par.7: NO_BONUS is a
+| normal state) -- so without these the old id resolves to -1 and every plot holding one SILENTLY loses its
+| resource, which is the exact failure the TYPE:: namespace exists to prevent.
+TYPE::BONUS_ELEPHANTS -> TYPE::BONUS_ELEPHANT
+TYPE::BONUS_BEAVERS -> TYPE::BONUS_BEAVER
+TYPE::BONUS_PARROTS -> TYPE::BONUS_PARROT
+TYPE::BONUS_GUINEA_PIGS -> TYPE::BONUS_GUINEA_PIG

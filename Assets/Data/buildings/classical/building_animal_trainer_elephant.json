@@ -47,7 +47,7 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_ELEPHANTS",
+     "type": "BONUS_ELEPHANT",
      "scope": "city",
      "connection": "trade|vicinity"
     }

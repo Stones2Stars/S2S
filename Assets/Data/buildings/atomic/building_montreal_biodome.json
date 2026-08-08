@@ -47,7 +47,7 @@
     {
      "value": 1,
      "enabled": {
-      "type": "BONUS_ELEPHANTS",
+      "type": "BONUS_ELEPHANT",
       "scope": "city",
       "min": 1
      }
@@ -55,7 +55,7 @@
     {
      "value": 1,
      "enabled": {
-      "type": "BONUS_BEAVERS",
+      "type": "BONUS_BEAVER",
       "scope": "city",
       "min": 1
      }

@@ -34,7 +34,7 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_BEAVERS"
+   "BONUS_BEAVER"
   ]
  },
  "commerce": {

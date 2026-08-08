@@ -12,7 +12,7 @@
     "BUILDING_CANNON_FORGE",
     "TECH_CAVALRY_TACTICS",
     {
-     "type": "BONUS_ELEPHANTS",
+     "type": "BONUS_ELEPHANT",
      "scope": "city",
      "connection": "trade|vicinity"
     },

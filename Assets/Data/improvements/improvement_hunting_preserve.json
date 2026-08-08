@@ -10,16 +10,16 @@
     {
      "bonus": [
       "BONUS_DEER",
-      "BONUS_BEAVERS",
-      "BONUS_GUINEA_PIGS",
-      "BONUS_ELEPHANTS",
+      "BONUS_BEAVER",
+      "BONUS_GUINEA_PIG",
+      "BONUS_ELEPHANT",
       "BONUS_KANGAROO",
       "BONUS_BISON",
       "BONUS_SEA_LION_AND_SEAL",
       "BONUS_WALRUS",
       "BONUS_MAMMOTH",
       "BONUS_RABBIT",
-      "BONUS_PARROTS"
+      "BONUS_PARROT"
      ]
     }
    ]
@@ -38,19 +38,19 @@
     {
      "value": 1,
      "enabled": {
-      "HAS_BONUS": "BONUS_BEAVERS"
+      "HAS_BONUS": "BONUS_BEAVER"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "HAS_BONUS": "BONUS_GUINEA_PIGS"
+      "HAS_BONUS": "BONUS_GUINEA_PIG"
      }
     },
     {
      "value": 1,
      "enabled": {
-      "HAS_BONUS": "BONUS_ELEPHANTS"
+      "HAS_BONUS": "BONUS_ELEPHANT"
      }
     },
     {
@@ -104,7 +104,7 @@
     {
      "value": 3,
      "enabled": {
-      "HAS_BONUS": "BONUS_ELEPHANTS"
+      "HAS_BONUS": "BONUS_ELEPHANT"
      }
     },
     {
@@ -154,19 +154,19 @@
     {
      "value": 5,
      "enabled": {
-      "HAS_BONUS": "BONUS_BEAVERS"
+      "HAS_BONUS": "BONUS_BEAVER"
      }
     },
     {
      "value": 5,
      "enabled": {
-      "HAS_BONUS": "BONUS_GUINEA_PIGS"
+      "HAS_BONUS": "BONUS_GUINEA_PIG"
      }
     },
     {
      "value": 2,
      "enabled": {
-      "HAS_BONUS": "BONUS_ELEPHANTS"
+      "HAS_BONUS": "BONUS_ELEPHANT"
      }
     },
     {
@@ -202,7 +202,7 @@
     {
      "value": 5,
      "enabled": {
-      "HAS_BONUS": "BONUS_PARROTS"
+      "HAS_BONUS": "BONUS_PARROT"
      }
     }
    ]
@@ -234,13 +234,13 @@
    "BONUS_DEER": {
     "trade": true
    },
-   "BONUS_BEAVERS": {
+   "BONUS_BEAVER": {
     "trade": true
    },
-   "BONUS_GUINEA_PIGS": {
+   "BONUS_GUINEA_PIG": {
     "trade": true
    },
-   "BONUS_ELEPHANTS": {
+   "BONUS_ELEPHANT": {
     "trade": true
    },
    "BONUS_KANGAROO": {
@@ -261,7 +261,7 @@
    "BONUS_RABBIT": {
     "trade": true
    },
-   "BONUS_PARROTS": {
+   "BONUS_PARROT": {
     "trade": true
    }
   }

@@ -67,7 +67,7 @@
      "outcome": "OUTCOME_BONUS_SPAWNED"
     },
     "chance": 2,
-    "places": "BONUS_BEAVERS",
+    "places": "BONUS_BEAVER",
     "food": {
      "base": 2,
      "random": 2

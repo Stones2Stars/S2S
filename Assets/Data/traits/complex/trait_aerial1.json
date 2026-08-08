@@ -270,7 +270,7 @@
     {
      "value": 1,
      "enabled": {
-      "type": "BONUS_PARROTS",
+      "type": "BONUS_PARROT",
       "scope": "empire",
       "min": 1
      }

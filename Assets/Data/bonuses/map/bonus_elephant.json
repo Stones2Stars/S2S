@@ -1,5 +1,5 @@
 {
- "type": "BONUS_ELEPHANTS",
+ "type": "BONUS_ELEPHANT",
  "enables": {
   "buildings": [
    "BUILDING_ANIMAL_TRAINER_ELEPHANT",

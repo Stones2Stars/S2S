@@ -1080,7 +1080,7 @@
     {
      "value": 1,
      "enabled": {
-      "type": "BONUS_BEAVERS",
+      "type": "BONUS_BEAVER",
       "scope": "empire",
       "min": 1
      }
@@ -1096,7 +1096,7 @@
     {
      "value": 1,
      "enabled": {
-      "type": "BONUS_ELEPHANTS",
+      "type": "BONUS_ELEPHANT",
       "scope": "empire",
       "min": 1
      }
@@ -1104,7 +1104,7 @@
     {
      "value": 1,
      "enabled": {
-      "type": "BONUS_GUINEA_PIGS",
+      "type": "BONUS_GUINEA_PIG",
       "scope": "empire",
       "min": 1
      }

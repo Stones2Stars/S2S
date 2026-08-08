@@ -70,7 +70,7 @@
        "vicinity": "owned"
       },
       {
-       "type": "BONUS_BEAVERS",
+       "type": "BONUS_BEAVER",
        "scope": "city",
        "connection": "vicinity",
        "vicinity": "owned"
@@ -88,13 +88,13 @@
        "vicinity": "owned"
       },
       {
-       "type": "BONUS_ELEPHANTS",
+       "type": "BONUS_ELEPHANT",
        "scope": "city",
        "connection": "vicinity",
        "vicinity": "owned"
       },
       {
-       "type": "BONUS_GUINEA_PIGS",
+       "type": "BONUS_GUINEA_PIG",
        "scope": "city",
        "connection": "vicinity",
        "vicinity": "owned"
@@ -112,7 +112,7 @@
        "vicinity": "owned"
       },
       {
-       "type": "BONUS_PARROTS",
+       "type": "BONUS_PARROT",
        "scope": "city",
        "connection": "vicinity",
        "vicinity": "owned"

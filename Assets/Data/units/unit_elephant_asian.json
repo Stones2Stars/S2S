@@ -67,7 +67,7 @@
      "outcome": "OUTCOME_BONUS_SPAWNED"
     },
     "chance": 2,
-    "places": "BONUS_ELEPHANTS",
+    "places": "BONUS_ELEPHANT",
     "food": {
      "base": 500,
      "random": 1000

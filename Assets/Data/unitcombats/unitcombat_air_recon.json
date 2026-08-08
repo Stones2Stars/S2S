@@ -28,5 +28,10 @@
  "identity": {
   "description": "TXT_KEY_UNITCOMBAT_AIR_RECON",
   "forMilitary": true
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
  }
 }

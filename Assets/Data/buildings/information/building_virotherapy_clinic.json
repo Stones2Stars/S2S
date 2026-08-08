@@ -34,7 +34,7 @@
     {
      "any": [
       {
-       "type": "BONUS_GUINEA_PIGS",
+       "type": "BONUS_GUINEA_PIG",
        "scope": "city",
        "connection": "trade|vicinity"
       },

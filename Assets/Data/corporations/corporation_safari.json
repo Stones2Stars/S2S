@@ -28,10 +28,10 @@
      },
      "per": {
       "anyOf": [
-       "BONUS_ELEPHANTS",
+       "BONUS_ELEPHANT",
        "BONUS_WHALE",
        "BONUS_DEER",
-       "BONUS_BEAVERS"
+       "BONUS_BEAVER"
       ],
       "scope": "city"
      }
@@ -49,10 +49,10 @@
      },
      "per": {
       "anyOf": [
-       "BONUS_ELEPHANTS",
+       "BONUS_ELEPHANT",
        "BONUS_WHALE",
        "BONUS_DEER",
-       "BONUS_BEAVERS"
+       "BONUS_BEAVER"
       ],
       "scope": "city"
      }
@@ -95,10 +95,10 @@
       },
       "per": {
        "anyOf": [
-        "BONUS_ELEPHANTS",
+        "BONUS_ELEPHANT",
         "BONUS_WHALE",
         "BONUS_DEER",
-        "BONUS_BEAVERS"
+        "BONUS_BEAVER"
        ],
        "scope": "city"
       }

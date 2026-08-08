@@ -2,7 +2,7 @@
  "type": "TECH_TRAPPING",
  "enables": {
   "bonuses": [
-   "BONUS_BEAVERS",
+   "BONUS_BEAVER",
    "BONUS_PELTS"
   ],
   "buildings": [

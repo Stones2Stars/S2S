@@ -2188,7 +2188,7 @@
 			</TerrainBooleans>
 		</BonusInfo>
 		<BonusInfo>
-			<Type>BONUS_BEAVERS</Type>
+			<Type>BONUS_BEAVER</Type>
 			<Description>TXT_KEY_BONUS_BEAVERS</Description>
 			<Civilopedia>TXT_KEY_BONUS_BEAVERS_PEDIA</Civilopedia>
 			<BonusClassType>BONUSCLASS_PRODUCTION</BonusClassType>
@@ -2316,7 +2316,7 @@
 			</FeatureTerrainBooleans>
 		</BonusInfo>
 		<BonusInfo>
-			<Type>BONUS_ELEPHANTS</Type>
+			<Type>BONUS_ELEPHANT</Type>
 			<Description>TXT_KEY_BONUS_ELEPHANTS</Description>
 			<Civilopedia>TXT_KEY_BONUS_ELEPHANTS_PEDIA</Civilopedia>
 			<BonusClassType>BONUSCLASS_STRATEGIC</BonusClassType>
@@ -2363,7 +2363,7 @@
 			</FeatureTerrainBooleans>
 		</BonusInfo>
 		<BonusInfo>
-			<Type>BONUS_GUINEA_PIGS</Type>
+			<Type>BONUS_GUINEA_PIG</Type>
 			<Description>TXT_KEY_BONUS_GUINEA_PIGS</Description>
 			<Civilopedia>TXT_KEY_BONUS_GUINEA_PIGS_PEDIA</Civilopedia>
 			<BonusClassType>BONUSCLASS_LIVESTOCK</BonusClassType>
@@ -2481,7 +2481,7 @@
 			</TerrainBooleans>
 		</BonusInfo>
 		<BonusInfo>
-			<Type>BONUS_PARROTS</Type>
+			<Type>BONUS_PARROT</Type>
 			<Description>TXT_KEY_BONUS_PARROTS</Description>
 			<Civilopedia>TXT_KEY_BONUS_PARROTS_PEDIA</Civilopedia>
 			<BonusClassType>BONUSCLASS_LUXURY</BonusClassType>

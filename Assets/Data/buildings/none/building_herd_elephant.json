@@ -31,7 +31,7 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_ELEPHANTS"
+   "BONUS_ELEPHANT"
   ]
  },
  "food": {

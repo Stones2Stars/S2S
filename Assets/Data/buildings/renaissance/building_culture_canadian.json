@@ -40,7 +40,7 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_BEAVERS",
+     "type": "BONUS_BEAVER",
      "scope": "city",
      "connection": "vicinity",
      "vicinity": "owned"

@@ -30,7 +30,7 @@
       "anyOf": [
        "BONUS_SILK",
        "BONUS_DYE",
-       "BONUS_BEAVERS",
+       "BONUS_BEAVER",
        "BONUS_COW",
        "BONUS_COTTON"
       ],
@@ -53,7 +53,7 @@
        "anyOf": [
         "BONUS_SILK",
         "BONUS_DYE",
-        "BONUS_BEAVERS",
+        "BONUS_BEAVER",
         "BONUS_COW",
         "BONUS_COTTON"
        ],

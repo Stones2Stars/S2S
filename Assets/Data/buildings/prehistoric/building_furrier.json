@@ -49,7 +49,7 @@
     {
      "value": 2,
      "enabled": {
-      "type": "BONUS_BEAVERS",
+      "type": "BONUS_BEAVER",
       "scope": "city",
       "min": 1
      }

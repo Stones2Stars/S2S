@@ -1,5 +1,5 @@
 {
- "type": "BONUS_BEAVERS",
+ "type": "BONUS_BEAVER",
  "enables": {
   "buildings": [
    "BUILDING_BREEDING_PROGRAM_BEAVER",

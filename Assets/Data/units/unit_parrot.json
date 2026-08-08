@@ -47,7 +47,7 @@
      "outcome": "OUTCOME_BONUS_SPAWNED"
     },
     "chance": 2,
-    "places": "BONUS_PARROTS",
+    "places": "BONUS_PARROT",
     "food": 1,
     "production": 1,
     "commerce": {
