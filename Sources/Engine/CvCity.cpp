@@ -8528,7 +8528,16 @@ void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& i
 					const int iTradeProfit = calculateTradeProfit(pTradeCity);
 #endif
 					// BUG - Fractional Trade Routes - end
-					iTradeYield = calculateTradeYield(YIELD_COMMERCE, iTradeProfit);
+					// ⛔ THE CHANNEL IS THE ONE ASKED FOR, NOT COMMERCE. This read `YIELD_COMMERCE` outright and
+					// ignored `eIndex`, so the function promised a per-yield total and answered commerce for every
+					// channel -- ask it for FOOD and it returned the commerce number.
+					// ⚑ It survived because both C++ callers happen to pass YIELD_COMMERCE, so the wrong answer was
+					// never the wrong VALUE there; any other caller (a per-yield route list) silently got commerce
+					// beside a food tooltip that had been computed properly, and the two could not reconcile.
+					// ⚠ The per-channel modifier is exactly what makes this visible now: food and production carry
+					// their own route-yield percentages ([modifier.md] §2a), so the channels genuinely differ where
+					// legacy had commerce-only routes and the substitution was invisible.
+					iTradeYield = calculateTradeYield(eIndex, iTradeProfit);
 				}
 
 				if (pTradeCity->getOwner() == ePlayer)
