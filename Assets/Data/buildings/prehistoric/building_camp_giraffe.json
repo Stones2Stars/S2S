@@ -33,16 +33,20 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_ELEPHANT",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    },
-    {
-     "type": "BONUS_DEER",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "any": [
+      {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      },
+      {
+       "type": "BONUS_DEER",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      }
+     ]
     }
    ],
    "dormant": [

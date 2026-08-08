@@ -21,16 +21,20 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_GUINEA_PIG",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    },
-    {
-     "type": "BONUS_WHEAT",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "any": [
+      {
+       "type": "BONUS_GUINEA_PIG",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      },
+      {
+       "type": "BONUS_WHEAT",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      }
+     ]
     }
    ],
    "dormant": [

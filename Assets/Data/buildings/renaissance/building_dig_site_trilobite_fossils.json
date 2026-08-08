@@ -26,16 +26,20 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_CRAB",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    },
-    {
-     "type": "BONUS_FOSSIL_BEDS",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "any": [
+      {
+       "type": "BONUS_CRAB",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      },
+      {
+       "type": "BONUS_FOSSIL_BEDS",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      }
+     ]
     }
    ],
    "dormant": [

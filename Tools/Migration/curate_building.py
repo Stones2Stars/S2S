@@ -1050,13 +1050,28 @@ def requires_building(rec, store):
     #   VicinityBonus    -> hasVicinityBonus    (owned+valid+connected)  -> vicinity:"onSite"  (the resource is available AT this city)
     #   RawVicinityBonus -> hasRawVicinityBonus (centre OR owned radius tile, no connection) -> vicinity:"owned"
     # (e.g. MINE_GOLD VicinityBonus needs the connected gate; NET_SHRIMP/MUREX RawVicinityBonus need only owned presence.)
-    for tag, disc in (("VicinityBonus", "onSite"), ("RawVicinityBonus", "owned")):
-        v = _txt(rec, tag)
-        if v:
-            bonus_all.append(_atom(v, "city", connection="vicinity", vicinity=disc))
-    for tag, disc in (("PrereqVicinityBonuses", "onSite"), ("PrereqRawVicinityBonuses", "owned")):
-        lst = _typelist(rec, tag)
-        if lst:
+    # ⚖ THE SINGULAR TAG AND ITS LIST ARE **ONE OR SET**, NOT AN AND PLUS AN OR (owner): a tungsten mine is
+    # expected to need tin ore OR iron ore on site, never both. Legacy read them as `singular AND (any of list)`,
+    # which on the onSite discriminator -- two DISTINCT resources physically on the city's own tiles -- means the
+    # building is virtually never active. 235 records carry both tags across 58 name-families (farms, mines,
+    # orchards, groves, breeding programs, digs, plantations, camps, ...), all one mechanic: produce a resource
+    # from source resources present here. So the fold is uniform and needs no family list.
+    # ⚠ An INTENTIONAL divergence from legacy, stated rather than preserved ([validation.md]: the spec leads, and
+    # "this is how it works today" carries no weight without a live named reason). The legacy SHAPE carries no
+    # design intent to honour either -- the split is an artifact of a legacy tooltip that handled multiple
+    # requirements badly (owner), long since gone.
+    # ⛔ A list WITHOUT a singular is untouched and stays a pure OR -- that idiom was always used correctly (the
+    # pest buildings: grains OR cheese OR vegetables), and folding anything into it would change nothing.
+    for singularTag, listTag, disc in (("VicinityBonus", "PrereqVicinityBonuses", "onSite"),
+                                       ("RawVicinityBonus", "PrereqRawVicinityBonuses", "owned")):
+        singular = _txt(rec, singularTag)
+        lst = _typelist(rec, listTag)
+        if singular and lst:
+            bonus_any.append([_atom(x, "city", connection="vicinity", vicinity=disc)
+                              for x in ([singular] + [y for y in lst if y != singular])])
+        elif singular:
+            bonus_all.append(_atom(singular, "city", connection="vicinity", vicinity=disc))
+        elif lst:
             bonus_any.append([_atom(x, "city", connection="vicinity", vicinity=disc) for x in lst])
     # --- plot-state predicates (bare). bWater = the city is COASTAL, not the plot being water: legacy
     # isValidBuildingLocation (CvCity.cpp:18500-18506) gates bWater on isCoastal() (a city sits on LAND, so

@@ -31,16 +31,20 @@
      "connection": "trade|vicinity"
     },
     {
-     "type": "BONUS_FISH",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    },
-    {
-     "type": "BONUS_SHRIMP",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "any": [
+      {
+       "type": "BONUS_FISH",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      },
+      {
+       "type": "BONUS_SHRIMP",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      }
+     ]
     }
    ],
    "dormant": [

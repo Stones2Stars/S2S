@@ -49,16 +49,20 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_BISON",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    },
-    {
-     "type": "BONUS_SHEEP",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "any": [
+      {
+       "type": "BONUS_BISON",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      },
+      {
+       "type": "BONUS_SHEEP",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "onSite"
+      }
+     ]
     }
    ],
    "dormant": [

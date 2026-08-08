@@ -32,16 +32,20 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_POULTRY",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "owned"
-    },
-    {
-     "type": "BONUS_LLAMA",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "owned"
+     "any": [
+      {
+       "type": "BONUS_POULTRY",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_LLAMA",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "owned"
+      }
+     ]
     }
    ],
    "dormant": [

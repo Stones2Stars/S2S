@@ -33,16 +33,20 @@
   "operate": {
    "all": [
     {
-     "type": "BONUS_LOBSTER",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "owned"
-    },
-    {
-     "type": "BONUS_SHRIMP",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "owned"
+     "any": [
+      {
+       "type": "BONUS_LOBSTER",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_SHRIMP",
+       "scope": "city",
+       "connection": "vicinity",
+       "vicinity": "owned"
+      }
+     ]
     }
    ],
    "dormant": [
