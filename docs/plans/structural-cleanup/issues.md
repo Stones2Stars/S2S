@@ -1040,3 +1040,23 @@ maintenance at all. economy.md composes a city's realized maintenance from the t
 against its own modifiers, with the `amount` stack over the total and `MAINTENANCE_CORPORATION` skipped — which
 is not what a single-channel receiver read answers. Establish that before changing it; do not infer the
 component set from the enum.
+
+
+## AUTOMATED POPULATION PLACEMENT IS NOT VERY EFFICIENT
+
+**OBSERVED (owner, in play):** the automated placement of population *"is really not very efficient."*
+
+⚠ **NOT YET KNOWN — and the two readings want different investigations, so do not collapse them:**
+- **PLACEMENT QUALITY** — the assignment picks worse tiles/specialists than a player would, i.e. the SCORING is
+  wrong. That is a `CvCityAI` valuation question.
+- **COST** — the assignment is slow, i.e. it runs too often or walks too much. That is the
+  [contexts.md](../../architecture/contexts.md) per-read-scan class, and there is a known aggravator already
+  recorded: a slider move used to flag every city for re-assignment and stall ~15s over a decision whose inputs
+  had not moved ([modifier.md §2a](../../specs/modifier.md)) — so the re-assignment TRIGGER surface is a
+  standing suspect independent of the scorer.
+
+⛔ Establish WHICH before touching either; the fix for one is not the fix for the other, and the word
+"efficient" reads naturally as both.
+
+⚑ Behaviour as it stands today is described in [citizen-assignment.md](../../reference/citizen-assignment.md) —
+read that first rather than re-deriving the loop from `CvCityAI`.
