@@ -689,7 +689,8 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 > corp `bonusProduced` → **`provides.bonuses`** (continuous supply, §5a); building `holyCity` → **`requires.build`**
 > (a read-only "only in RELIGION_X's holy city" gate — `canConstruct`, `CvCity.cpp:2728`; the holy city is set by
 > religion FOUNDING, never a building); building `traits` → **`enables.traits`** (held-trait, §8).
-> **`freePromotions`** (building-list + trait-dict) is a **`triggers`** entry (end-turn presence → promote). And a
+> **`freePromotions`** (building-list + trait-dict) is a **`triggers`** entry (`onUnitEnteredCity` → promote the
+> units present; the callout below). And a
 > **mission carries its `grants`** as its outcome (§8), so `grants` is both an entity-level handout and a
 > mission's outcome payload.
 

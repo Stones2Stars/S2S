@@ -246,8 +246,9 @@ mistake. The unit-info and TRAIT legs migrate; the event-registry leg does not.
 > **⚖ FREE PROMOTIONS LIVE ON THE TRIGGER/GRANT PLANE — EVERY LEG, INCLUDING THE TRAIT'S (owner).** The
 > alive-with-source lifetime does NOT re-home this one to the modifier plane: a free promotion is a PAYLOAD handed
 > to units, not a magnitude deposited into a channel, and there is no `freePromotions` modifier family for it to
-> land in. It is the [json.md §5](../specs/json.md) `triggers` shape the BUILDING leg already uses — promotions to
-> the units present at END-TURN, one mechanism.
+> land in. It is the [json.md §5](../specs/json.md) `triggers` shape the BUILDING leg already uses — the units
+> present promoted off `onUnitEnteredCity`, with the source going ACTIVE completing the same relation, one
+> mechanism.
 > ⛔ So the removing-the-source-removes-it test ([json.md §5](../specs/json.md)) does not decide the PLANE here;
 > it decides `grants`-vs-`freeSpecialists` for a SPECIALIST, and reading it as a general plane test is what put
 > this row on the modifier plane.
