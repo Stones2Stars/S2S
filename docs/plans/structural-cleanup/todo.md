@@ -266,6 +266,52 @@
 
 ## Not built yet
 
+- **⛔ THE SPECIALIST YIELD HAS TWO MAINTENANCE SURFACES FEEDING ONE RATE, AND THEY DISAGREE — resolve which
+  one is the model before touching either.** The modifier consumer applies a specialist's deposits into the
+  CITY PACKAGE on the specialist fact (source = the specialist, scope = city, multiplicity = the count), which
+  the roll-up then reads as the city's own flats — TIER-2, OUTSIDE the percent stack. `InfoValuation::specialistTerm`
+  independently sums the same specialist's `city.flat` intrinsic — TIER-1, INSIDE it. Live, the two report
+  wildly different magnitudes for the same channel, so this is not a tidy duplicate: they are computing
+  different things under one name.
+  ⚑ [modifier.md §2a](../../specs/modifier.md) is unambiguous that specialists are a TIER-1 BASE term and that
+  TIER-2 EXTRA is BUILDINGS only, so the package application is the surface that looks wrong — but confirm
+  against the apply path rather than deleting on the strength of the spec alone, because the apply is what the
+  authored entries actually reach.
+  ⚠ Whichever survives owes the rest of §2a's row, none of which `specialistTerm` carries: the intrinsic's own
+  PERCENT layer, the per-type `empire.cities.flat`, the `perAll` bucket, and the TRAIT's specialist-keyed
+  governing-deliverer deposits. And its MULTIPLIER counts `getSpecialistCount` alone where the spec and the
+  engine both say `getSpecialistCount + getFreeSpecialistCount` — so the whole output of the `freeSpecialists`
+  family rides on whichever path is kept.
+  ⛔ Do NOT settle this by whether the resulting number moves toward a remembered figure
+  ([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)); settle it by
+  which surface the spec names and which entries each one actually reaches.
+
+- **Decompose the `specialists` term in the `rateRead` census.** It is a Σ over five sub-terms × per-type counts
+  reported as ONE int, which is why the gap above stayed invisible while `plotBase` — which carries its three
+  segments beside it — did not. One number explains nothing
+  ([http-endpoints.md](../../specs/http-endpoints.md): a term that is itself a Σ decomposes again).
+
+- **Name the readJson coverage residue.** The load census reports its unconsumed-section and unresolved-FK
+  COUNTS unconditionally but the per-item detail rides `SD_READJSON` events that are gated off at ordinary log
+  levels, so the counts cannot be turned into a worklist without re-running at a raised level. Either lower the
+  level of the per-item events or print the names beside the counts — a census whose items cannot be read is a
+  number, not an instrument.
+
+- **The coverage census re-derives key classification and has drifted from the parse path.** It calls
+  `jsonClassifyKey` directly, which never learned about the reserved classification-block chain `CvInfo::mapFrom`
+  runs first, so a `§8` block reports as an unknown key on every load. It is a FALSE POSITIVE sitting on the one
+  line that would report a genuinely dropped section ([validation.md](../../specs/validation.md): an instrument
+  that cannot report a fault is the thing that makes every data check meaningless — and one that reports a fault
+  that is not there trains the reader to stop looking).
+
+- **Give citizen plot ASSIGNMENT the trade-route treatment — it is a poll, not a trigger.** The work is driven by
+  hand-wired `AI_setAssignWorkDirty` setters across the engine, drained by a FRAME-LOOP sweep over every city of
+  every player, plus an unconditional per-turn blanket in `CvPlayer::doTurn` that consults no flag at all. That
+  is [DEC-flag-is-fossil](../../architecture/decisions.md#dec-flag-is-fossil) at scale: every setter is a claim
+  that we cannot know what changed, answered by re-sweeping everything.
+  ⚑ Staleness is NOT its failure mode (polled every frame, rebuilt every turn) — the cost is turn time and the
+  structure. The target is the trade-route shape: the fact that moved a city's plot basis re-assigns THAT city.
+
 - **Retire the `CARGO_NAVAL` / `CARGO_MISSILE` kinds onto the tag-predicate shape.** They are read in
   `CvUnit::cargoSpace` as "+N hold when the CARRIER is `DOMAIN_SEA`" and "+N hold when its special cargo is
   `SPECIALUNIT_MISSILE`" — a filter on WHO CARRIES, not on what is carried. ⛔ [modifier.md §6](../../specs/modifier.md)
