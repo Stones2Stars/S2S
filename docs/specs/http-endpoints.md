@@ -101,39 +101,28 @@ one thing it must never do.
 
 ---
 
-## What answers today — the stored-vs-oracle cache documents
+## ⛔ THE STORED-vs-ORACLE ROUTES ARE DEAD — DO NOT RUN THEM, DO NOT REBUILD THEM
 
-Six routes, three planes, two routes each:
+The six routes (cascade packages / enabler operating set / team capabilities, served `stored` and `oracle`) were
+the missed-emit tripwire: the same values twice, event-built and recomputed-from-source, diffed outside the DLL.
 
-| plane | stored (what the events built) | oracle (recomputed from source) | selector |
-|---|---|---|---|
-| cascade packages | `/computed/cascade/packages/stored` | `/computed/cascade/packages/oracle` | `?player=N[&city=M]` |
-| enabler operating set | `/computed/enabler/operating/stored` | `/computed/enabler/operating/oracle` | `?player=N[&city=M]` |
-| team capabilities | `/computed/capabilities/stored` | `/computed/capabilities/oracle` | `?player=N` (its team) |
+**⛔ The oracle side CANNOT WORK the way things are set up (owner).** Reproducing event-built state means
+replaying the FULL EVENT CHAIN, and an endpoint cannot build that chain — so the oracle does not answer a second
+derivation of the same quantity. It answers a number that was never comparable.
+⚑ **The tell, before the numbers fool you:** an oracle fetch is supposed to be a full recompute and orders of
+magnitude slower than its stored twin. A whole-empire fetch returns in **half a second**. It is not slow because
+it is not recomputing — and the diff then reports ~1500 divergent city slots with the oracle 17-29x high, which
+reads as a catastrophic cascade failure and is entirely the instrument
+([superseded-ideas #33](../architecture/superseded-ideas.md)).
+⛔ **This is the single most-revived dead idea in the project** — *"agent after agent refuse to let it go"* — so
+the ban is on RUNNING it as evidence, not merely on rebuilding it. A number from a broken instrument is worse
+than no number: it is specific, plausible and wrong.
 
-They are the **missed-emit tripwire** ([state-repositories.md](../architecture/state-repositories.md)): the cascade
-and the enabler keep derived state current from EVENTS alone, so a mutation that fails to emit leaves a value
-visibly wrong forever. Each plane serves the same shape twice — what the events built, and the same values
-recomputed FROM SOURCE into a buffer the endpoint owns — and **an external consumer fetches both and diffs them**.
-The engine never compares, never logs and never repairs; the oracle is not given the stored state, so serving it
-cannot write to it.
-
-**Why these are not the banned shape:** they read the cascade's and the enabler's OWN uniform surfaces — never a
-legacy accumulator — so no legacy member is kept alive by their existence. That is the test any future route must
-also pass.
-
-- ⚠ An **oracle** fetch recomputes real values through the real fold, but it ANNOUNCES nothing: no
-  `[CASCADE] rebuilt` line, because nothing was rebuilt.
-- ⚠ **The oracle side is a FULL recompute and is SLOW BY DESIGN** — every input, including every cross-scope one,
-  comes from source, so nothing served on it is inherited from stored state. That independence is the point and is
-  **never traded for speed** ([state-repositories.md](../architecture/state-repositories.md)). Expect a
-  whole-empire oracle fetch to take orders of magnitude longer than its `stored` twin — correct behaviour, not a
-  regression.
-  ⚠ **Operational consequence:** that can exceed the mailbox's 18 s budget and come back `503 … retry`, so ask a
-  whole-empire `packages/oracle` **one city at a time** (`&city=M`) — the same rows, in fetches that fit. Raising
-  the mailbox wait is a server change, not an oracle change: **the oracle is never trimmed to fit the timeout.**
-
----
+**⚖ WHAT TO DO INSTEAD (owner) — the THREE legs, and two of them is not a check:** read the **LOGS** (what
+actually landed: source, channel, scope, unit, driving fact, apply COUNT), check them against the **JSON INFO**
+(what that source is authored to deposit), and against **WHAT STATE EXPECTS** (who holds the source, which gates
+hold, what the counts are). A deposit is conditioned and scaled, so the authored number alone predicts nothing —
+correctness is all three agreeing, attributed to a named source with numbers.
 
 ## See also
 - [logging.md](logging.md) — the SSE `[TAG]` stream and the read rules.

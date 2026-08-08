@@ -25,11 +25,15 @@
 > solved STRUCTURALLY, by the surface not existing ([superseded-ideas](../architecture/superseded-ideas.md) #17) —
 > not by a standing rule to remember. **Never re-add a comparison getter or a `/computed` twin field.**
 >
-> ⚠ **That bans the SAME-DERIVATION twin, NOT verification.** A check whose two sides are genuinely different
-> derivations — **event-built state** against a **fresh recompute-from-source**, served on two endpoints and
-> diffed OUTSIDE the DLL — is the missed-emit tripwire and is the sanctioned shape
-> ([state-repositories.md](../architecture/state-repositories.md)). The live signals are that check, served-value
-> SANITY, and the COMPILER CENSUS (a deleted member's consumers are compile errors).
+> ⚠ **That bans the SAME-DERIVATION twin, NOT verification.** ⛔ But the shape once sanctioned in its place —
+> event-built state against a fresh recompute-from-source, served on two endpoints and diffed outside the DLL —
+> is ALSO dead: an endpoint cannot replay the event chain, so its recompute side is not a second derivation of
+> the same quantity, and diffing it produces confident nonsense at scale
+> ([superseded-ideas #33](../architecture/superseded-ideas.md)).
+> **The live signal is the THREE-LEG check: the LOGS (what landed), the JSON INFO (what the source is authored to
+> deposit) and WHAT STATE EXPECTS (who holds it, which gates hold, what the counts are) — all three agreeing,
+> attributed to a named source with numbers.** Two legs is not a check. Beside it: served-value SANITY, and the
+> COMPILER CENSUS (a deleted member's consumers are compile errors).
 
 **Done = observable in the running game.** A work item is complete only when its effect is observable in the RUNNING
 GAME via an endpoint poll — never because "the code path exists" or "the data loads." "Straight up missing" means it
@@ -59,10 +63,12 @@ Live verification reads the HTTP surface ([http-endpoints.md](http-endpoints.md)
 
 ⚠ **The route surface is not built.** The route table was purged and is defined with the access surface (⛔ the
 [roadmap's OPEN ITEM](../plans/structural-cleanup/roadmap.md#-the-open-item--the-access-surface)), so what a
-manifestation poll can read today is the six **stored-vs-oracle cache documents** — the cascade packages, the
-enabler operating set, and the team capabilities, each served twice and diffed OUTSIDE the DLL. Everything else a
-check wants must be EMITTED first; emitting it is step one of that item's fix, and a value not on the surface is
-not verifiable — never eyeballed off the screen as a substitute.
+manifestation poll can read today is the SPINE-WRITTEN LOGS. ⛔ The six stored-vs-oracle cache documents are
+DEAD and must not be run as evidence — the oracle cannot rebuild the event chain an endpoint has no way to
+replay, so it answers a number that was never comparable ([http-endpoints.md](http-endpoints.md),
+[superseded-ideas #33](../architecture/superseded-ideas.md)). Everything else a check wants must be EMITTED
+first; emitting it is step one of that item's fix, and a value not on the surface is not verifiable — never
+eyeballed off the screen as a substitute.
 
 ⛔ **Verification pressure is NOT a licence to restore a route.** An endpoint is a LIVE CONSUMER: a legacy member
 whose only remaining reader is a route survives the delete-driven cut invisibly, because the compiler census
@@ -139,8 +145,8 @@ vigilance** — none of them errors, and each leaves a gate that can only answer
   limit off);
 - a constraint that is authored, parsed and held but read by NOBODY;
 - a gate stage a domain never runs, leaving its members LISTED ([enabler.md §8](enabler.md)).
-⚠ **None of these is visible to the compiler**, and a stored-vs-oracle diff cannot see them either — both sides
-share the evaluator, so a gate that always says yes says yes on both.
+⚠ **None of these is visible to the compiler**, and no diff of two engine-side reads can see them either — both
+sides share the evaluator, so a gate that always says yes says yes on both.
 
 ## The pollution guardrail — engine-computed data never rides in
 
@@ -223,7 +229,7 @@ anyone meant it as one.
 
 ## See also
 
-- [http-endpoints.md](http-endpoints.md) — the HTTP transport, its standing invariants, and the stored-vs-oracle
-  cache documents; the observation surface.
+- [http-endpoints.md](http-endpoints.md) — the HTTP transport, its standing invariants, and why the
+  stored-vs-oracle routes are dead; the observation surface.
 - [observability.md](../reference/observability.md) — the operational log/endpoint surface the polls read.
 - [enabler.md](enabler.md) · [modifier.md](modifier.md) · [tally.md](tally.md) — the machines this verifies.

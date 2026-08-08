@@ -349,3 +349,36 @@
     ⚠ **NOT the same thing as the `onTurn` trigger, which is LIVE and needed (owner)** — a genuine recurring
     roll (the property-scaled criminal spawn, [json.md §5](../specs/json.md)). Retiring one fossilised token is
     not a trim of the cadence vocabulary, and reading it that way would take a working mechanic with it.
+33. **The stored-vs-oracle ENDPOINT TRIPWIRE — all six routes** *(dead as a doorknob, and the hardest one to keep
+    dead: **agent after agent refuses to let it go**, this session included)* — two routes per plane (cascade
+    packages, enabler operating set, team capabilities), one serving what the events built and one claiming to
+    recompute the same values FROM SOURCE, diffed by an external consumer as the missed-emit tripwire.
+    **Killed because the oracle side CANNOT WORK the way things are set up (owner): reproducing event-built
+    state means replaying the full event chain, and an endpoint cannot build that chain.** So the oracle does
+    not answer a second derivation of the same quantity — it answers a number that was never comparable, and
+    diffing it produces confident nonsense at scale.
+    ⚑ **The TELL, if a future agent runs it anyway before reading this:** the docs promised the oracle would be
+    *"SLOW BY DESIGN … orders of magnitude longer than its `stored` twin"*, and a whole-empire fetch returns in
+    **half a second** — the same as stored. It is not slow because it is not recomputing. A measured run then
+    reported ~1500 divergent city slots with the oracle 17-29x higher, which reads as a catastrophic cascade bug
+    and is an artefact of the instrument.
+    ⛔ **Why it kept coming back, and the thing to actually fix:** the other tombstones and specs POINTED AT IT as
+    the live replacement for what they killed (the `*Legacy` twins, the mark-and-recompute cache), so an agent
+    following any of those trails arrives here and finds a working-looking endpoint. A dead idea that other docs
+    nominate as the answer is not dead.
+    **⚖ WHAT REPLACES IT (owner): READ THE LOGS, CHECK THE DATA AGAINST THE JSON INFOS, AND AGAINST WHAT STATE
+    EXPECTS.** THREE legs, and the third is not optional — a deposit is conditioned and scaled, so the authored
+    number alone predicts nothing:
+    - the **LOGS** say what actually happened — every deposit with its source, channel, scope, unit, driving
+      fact and apply COUNT;
+    - the **JSON INFO** says what that source is authored to deposit;
+    - the **STATE** says how many times, and whether at all — who holds the source, which gates hold, what the
+      counts are.
+    Correctness is all three agreeing, attributed to a named source with numbers — the
+    [no-guessing rule](../../AGENTS.md)'s own prescription, and the only check that does not need an event chain
+    rebuilt to be meaningful.
+    ⚠ **Two legs is not a check.** Log-vs-JSON alone cannot tell a correct multi-owner apply from an
+    over-application, and JSON-vs-state alone never observes what landed.
+    ⚑ Worked, same session: a trait's `maintenance` deposit read `-70` against an authored `-10%` — which looks
+    like a 7x over-application until the third leg answers it, the spine showing exactly 7 owners holding that
+    trait and the log's own apply count saying 7. Fully attributed, no oracle.
