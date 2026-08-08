@@ -9,7 +9,7 @@
   ]
  },
  "excludes": [
-  "TRAIT_LAZY1"
+  "TRAIT_COMPLEX_LAZY1"
  ],
  "production": {
   "empire": {

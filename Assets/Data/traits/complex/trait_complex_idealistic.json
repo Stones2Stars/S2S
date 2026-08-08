@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_IDEALISTIC",
  "excludes": [
-  "TRAIT_PRAGMATIC"
+  "TRAIT_COMPLEX_PRAGMATIC"
  ],
  "food": {
   "empire": {

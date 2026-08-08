@@ -45,41 +45,41 @@
     },
     {
      "value": 5,
-     "enabled": "TRAIT_INNOVATIVE2"
+     "enabled": "TRAIT_COMPLEX_INNOVATIVE2"
     },
     {
      "value": 10,
-     "enabled": "TRAIT_INNOVATIVE3"
+     "enabled": "TRAIT_COMPLEX_INNOVATIVE3"
     },
     {
      "value": 10,
-     "enabled": "TRAIT_PROLIFIC"
+     "enabled": "TRAIT_COMPLEX_PROLIFIC"
     },
     {
      "value": 5,
-     "enabled": "TRAIT_PROLIFIC1"
+     "enabled": "TRAIT_COMPLEX_PROLIFIC1"
     },
     {
      "value": 5,
-     "enabled": "TRAIT_PROLIFIC2"
+     "enabled": "TRAIT_COMPLEX_PROLIFIC2"
     }
    ],
    "population": [
     {
      "value": 1,
-     "enabled": "TRAIT_PROLIFIC"
+     "enabled": "TRAIT_COMPLEX_PROLIFIC"
     },
     {
      "value": 1,
-     "enabled": "TRAIT_PROLIFIC1"
+     "enabled": "TRAIT_COMPLEX_PROLIFIC1"
     },
     {
      "value": 1,
-     "enabled": "TRAIT_PROLIFIC2"
+     "enabled": "TRAIT_COMPLEX_PROLIFIC2"
     },
     {
      "value": 1,
-     "enabled": "TRAIT_PROLIFIC3"
+     "enabled": "TRAIT_COMPLEX_PROLIFIC3"
     }
    ]
   }

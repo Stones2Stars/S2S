@@ -1,0 +1,297 @@
+{
+ "type": "TRAIT_COMPLEX_ALOOF3",
+ "excludes": [
+  "TRAIT_COMPLEX_PREEMINENT1"
+ ],
+ "food": {
+  "empire": {
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "nationalWonder": {
+    "percent": -25
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    {
+     "value": -15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MONUMENT": {
+     "flat": -1
+    },
+    "BUILDING_OBELISK": {
+     "flat": -1
+    },
+    "BUILDING_ELDER_COUNCIL": {
+     "flat": -1
+    },
+    "BUILDING_STELE": {
+     "flat": -1
+    },
+    "BUILDING_VILLAGE_HALL": {
+     "flat": -1
+    },
+    "BUILDING_CHIEFS_HUT": {
+     "flat": -1
+    },
+    "BUILDING_TOWN_HALL": {
+     "flat": -1
+    },
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "flat": -1
+    },
+    "BUILDING_ROYAL_MONUMENT": {
+     "flat": -1
+    },
+    "BUILDING_CITY_COUNCIL": {
+     "flat": -1
+    },
+    "BUILDING_FORUM": {
+     "flat": -1
+    },
+    "BUILDING_OFFICIUM": {
+     "flat": -1
+    },
+    "BUILDING_POLIS_COUNCIL": {
+     "flat": -1
+    },
+    "BUILDING_THRONE_ROOM": {
+     "flat": -1
+    },
+    "BUILDING_CHANCELLORS_OFFICE": {
+     "flat": -1
+    },
+    "BUILDING_KINGS_COUNCIL": {
+     "flat": -1
+    },
+    "BUILDING_STEWARDS_OFFICE": {
+     "flat": -1
+    },
+    "BUILDING_METROPOLITAN_ADMINISTRATION": {
+     "flat": -1
+    },
+    "BUILDING_PRESIDENTIAL_MONUMENT": {
+     "flat": -1
+    },
+    "BUILDING_PROPAGANDA_OFFICE": {
+     "flat": -1
+    },
+    "BUILDING_DREAM_PROPAGANDA": {
+     "flat": -1
+    },
+    "BUILDING_MIND_CONTROL_CENTER": {
+     "flat": -1
+    },
+    "BUILDING_TOTEM_POLE": {
+     "flat": -1
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "flat": -1
+    },
+    "BUILDING_CAPITAL_ADMINISTRATION": {
+     "flat": -1
+    },
+    "BUILDING_MODERN_OFFICES": {
+     "flat": -1
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "flat": -1
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": -1
+    },
+    "BUILDING_LYCEUM": {
+     "flat": -1
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "flat": -1
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "flat": -1
+    }
+   },
+   "cities": {
+    "flat": -2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": -10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": -15
+   },
+   "percent": [
+    {
+     "value": -20,
+     "enabled": "IS_CAPITAL"
+    },
+    {
+     "value": -15,
+     "enabled": {
+      "all": [
+       "IS_HOLY_CITY",
+       "!IS_STATE_RELIGION_HOLY_CITY"
+      ]
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -40
+   },
+   "numCities": {
+    "percent": -40
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "modifier": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "holyCityXP": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": -10
+   },
+   "holyCityGood": {
+    "flat": -5
+   },
+   "holyCityBad": {
+    "flat": 5
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": -4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAloof3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_ALOOF3",
+  "civilopedia": "TXT_KEY_TRAIT_ALOOF3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_ALOOF_STRATEGY"
+ }
+}

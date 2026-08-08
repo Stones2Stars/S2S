@@ -9,7 +9,7 @@
   ]
  },
  "excludes": [
-  "TRAIT_IMPULSIVE1"
+  "TRAIT_COMPLEX_IMPULSIVE1"
  ],
  "production": {
   "empire": {

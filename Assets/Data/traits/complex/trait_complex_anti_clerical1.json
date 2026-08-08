@@ -2,7 +2,7 @@
  "type": "TRAIT_COMPLEX_ANTI_CLERICAL1",
  "excludes": [
   "TRAIT_FANATICAL",
-  "TRAIT_PIOUS1",
+  "TRAIT_COMPLEX_PIOUS1",
   "TRAIT_SPIRITUAL1"
  ],
  "production": {

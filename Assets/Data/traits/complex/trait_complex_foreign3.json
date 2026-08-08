@@ -1,0 +1,173 @@
+{
+ "type": "TRAIT_COMPLEX_FOREIGN3",
+ "excludes": [
+  "TRAIT_POLITICIAN1"
+ ],
+ "food": {
+  "empire": {
+   "percent": [
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": 20
+   },
+   "teamWonder": {
+    "percent": 25
+   },
+   "nationalWonder": {
+    "percent": -15
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": [
+    -5,
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": [
+    -5,
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "empire": {
+   "percent": [
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": [
+     {
+      "value": 30,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 50
+   },
+   "religiousAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitForeigner3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_FOREIGN3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FOREIGN3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_FOREIGN_STRATEGY",
+  "negativeTrait": true
+ }
+}

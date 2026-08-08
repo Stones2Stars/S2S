@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_MEGALOMANIAC1",
  "excludes": [
-  "TRAIT_HUMBLE1"
+  "TRAIT_COMPLEX_HUMBLE1"
  ],
  "food": {
   "empire": {

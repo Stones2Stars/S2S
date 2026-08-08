@@ -9,7 +9,7 @@
   ]
  },
  "excludes": [
-  "TRAIT_CIVILIZED1"
+  "TRAIT_COMPLEX_CIVILIZED1"
  ],
  "food": {
   "empire": {

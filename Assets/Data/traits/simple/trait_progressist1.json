@@ -2,7 +2,7 @@
  "type": "TRAIT_PROGRESSIST1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_INNOVATIVE2"
+   "TRAIT_COMPLEX_INNOVATIVE2"
   ]
  },
  "buildRate": {

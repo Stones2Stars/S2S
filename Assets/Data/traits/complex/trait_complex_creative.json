@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_CREATIVE",
  "excludes": [
-  "TRAIT_UNREFINED"
+  "TRAIT_COMPLEX_UNREFINED"
  ],
  "production": {
   "empire": {

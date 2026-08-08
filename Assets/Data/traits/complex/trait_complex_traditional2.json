@@ -1,0 +1,339 @@
+{
+ "type": "TRAIT_COMPLEX_TRADITIONAL2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_TRADITIONAL3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_TRADITIONAL3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_SCIENTIFIC1"
+ ],
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_OBSERVATORY": {
+     "percent": -25
+    },
+    "BUILDING_LEARNING_CENTER": {
+     "percent": -25
+    },
+    "BUILDING_MUSEUM": {
+     "percent": -25
+    },
+    "BUILDING_MICROBIOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_CHEMISTRY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_BIOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_GEOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_PHYSICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_ARCHAEOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_HERPETOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_ORNITHOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_ENTOMOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_PALEONTOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_MARINE_BIOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_AQUARIUM": {
+     "percent": -25
+    },
+    "BUILDING_VACCINE_LAB": {
+     "percent": -25
+    },
+    "BUILDING_METEOROLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_PSYCHOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_CITY_COLLEGE": {
+     "percent": -25
+    },
+    "BUILDING_PLANETARIUM": {
+     "percent": -25
+    },
+    "BUILDING_ANIMAL_TESTING_LAB": {
+     "percent": -25
+    },
+    "BUILDING_LABORATORY": {
+     "percent": -25
+    },
+    "BUILDING_DEEP_SEA_LAB": {
+     "percent": -25
+    },
+    "BUILDING_PROTEIN_LAB": {
+     "percent": -25
+    },
+    "BUILDING_NUCLEIC_ACID_LAB": {
+     "percent": -25
+    },
+    "BUILDING_JET_PROPULSION_LABORATORY": {
+     "percent": -25
+    },
+    "BUILDING_MOLECULAR_BIOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_ACCELERATOR": {
+     "percent": -25
+    },
+    "BUILDING_COMPUTER_NETWORK": {
+     "percent": -25
+    },
+    "BUILDING_VOLCANOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_CLIMATOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_ROBOTICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": -25
+    },
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "percent": -25
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "percent": -25
+    }
+   },
+   "military": {
+    "percent": 10
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_ASTRONOMY": {
+     "percent": -20
+    },
+    "TECH_CRITICAL_THOUGHT": {
+     "percent": -20
+    },
+    "TECH_SCIENTIFIC_METHOD": {
+     "percent": -20
+    },
+    "TECH_MICROBIOLOGY": {
+     "percent": -20
+    },
+    "TECH_CHEMISTRY": {
+     "percent": -20
+    },
+    "TECH_BIOLOGY": {
+     "percent": -20
+    },
+    "TECH_GEOLOGY": {
+     "percent": -20
+    },
+    "TECH_PHYSICS": {
+     "percent": -20
+    },
+    "TECH_ARCHEOLOGY": {
+     "percent": -20
+    },
+    "TECH_ZOOLOGY": {
+     "percent": -20
+    },
+    "TECH_PALEONTOLOGY": {
+     "percent": -20
+    },
+    "TECH_MARINE_BIOLOGY": {
+     "percent": -20
+    },
+    "TECH_METEOROLOGY": {
+     "percent": -20
+    },
+    "TECH_PSYCHOLOGY": {
+     "percent": -20
+    },
+    "TECH_COMPULSORY_EDUCATION": {
+     "percent": -20
+    },
+    "TECH_QUANTUM_PHYSICS": {
+     "percent": -20
+    },
+    "TECH_COSMOLOGY": {
+     "percent": -20
+    },
+    "TECH_MODERN_PHYSICS": {
+     "percent": -20
+    },
+    "TECH_COMPUTER_SCIENCE": {
+     "percent": -20
+    },
+    "TECH_RADIO_ASTRONOMY": {
+     "percent": -20
+    },
+    "TECH_DEEP_SEA_EXPLORATION": {
+     "percent": -20
+    },
+    "TECH_MOLECULAR_BIOLOGY": {
+     "percent": -20
+    },
+    "TECH_ECOLOGY": {
+     "percent": -20
+    },
+    "TECH_LASER": {
+     "percent": -20
+    },
+    "TECH_COMPUTER_NETWORKS": {
+     "percent": -20
+    },
+    "TECH_VOLCANOLOGY": {
+     "percent": -20
+    },
+    "TECH_ASTROGEOLOGY": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -4,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -2
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_FOSSIL_DIG_SITE": {
+     "percent": -25
+    },
+    "BUILD_ARCHEOLOGICAL_SITE": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 20
+   },
+   "religiousAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 14
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTraditional2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_TRADITIONAL2",
+  "civilopedia": "TXT_KEY_TRAIT_TRADITIONAL2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_TRADITIONAL_STRATEGY",
+  "negativeTrait": true
+ }
+}

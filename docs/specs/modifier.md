@@ -619,8 +619,18 @@ authored shape.
 > handed out** — because a trait id is named from several curators, above all the TECH edge that GATES a rung
 > ([enabler.md](enabler.md): without it every upper rung is permanently unreachable, and silently so). A
 > per-curator copy would drift and emit an id no record defines.
-> ⚑ A complex-only record whose line has NO simple counterpart still keeps its plain `TRAIT_` id, so
-> `traits/complex/` still holds a MIX — read the FOLDER as the set boundary, never the prefix.
+> **⛔ EVERY RECORD IN THE COMPLEX SET CARRIES `TRAIT_COMPLEX_`, WITH NO EXCEPTIONS (owner).** *"If it was built
+> as complex, it's complex, no matter what."* The prefix STATES THE SET — it is not a marker for "is a variant of
+> a simple trait" — so a complex-ONLY line with no simple counterpart is `TRAIT_COMPLEX_` like every other record
+> in the folder. Folder and prefix agree by construction.
+> ⚑ **The reason is that the alternative makes a WRONG SET UNDETECTABLE (owner): *"otherwise it will be
+> impossible to truly distinguish between the simple and complex set."*** If a plain `TRAIT_` id were legal
+> inside the complex set, a held `TRAIT_EFFICIENT1` would be indistinguishable from a simple-set leak — no
+> consumer, log line or check could tell the two apart. With the prefix stating the set, any plain `TRAIT_` id in
+> a complex game is unambiguously wrong, and that is the property the ids exist to have.
+> ⚠ A record that does not obey this is a CURATOR defect, and fixing it rides the curator + regen in the same
+> work item ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)); the id change is
+> a TYPE RENAME the save layer translates via `Assets/savemigration.txt` (the rename rule below), never a removal.
 > ⚑ The one remaining shared id is **`TRAIT_BARBARIAN`**, the NPC trait base-filled into `complex/` so that set
 > stays self-complete (below) — the only simple trait with no complex variant.
 > (The enabler is unaffected either way: it reads trait *presence*; only the modifier cascade reads trait

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_PROTECTIVE",
  "excludes": [
-  "TRAIT_NEGLIGENT"
+  "TRAIT_COMPLEX_NEGLIGENT"
  ],
  "food": {
   "empire": {

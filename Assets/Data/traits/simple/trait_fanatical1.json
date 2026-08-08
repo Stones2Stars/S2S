@@ -2,7 +2,7 @@
  "type": "TRAIT_FANATICAL1",
  "enables": {
   "traitsAnd": [
-   "TRAIT_ZEALOUS2"
+   "TRAIT_COMPLEX_ZEALOUS2"
   ]
  },
  "research": {

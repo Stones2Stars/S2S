@@ -407,12 +407,15 @@ class Store:
         return self.tables.get(ent, {}).get(typ)
 
     def trait_rekey(self):
-        """{oldTraitId: newTraitId} -- the COMPLEX-ONLY RUNG re-key, defined ONCE here.
+        """{oldTraitId: newTraitId} -- the COMPLEX-SET re-key, defined ONCE here.
 
-        A developing line's upper rungs exist only in the complex set (the simple ladder tops out early), so they
-        are not `CvInfoReplacements` variants and kept their authored `TRAIT_` id -- leaving a chain that read
-        TRAIT_COMPLEX_SEAFARING -> TRAIT_COMPLEX_SEAFARING1 -> TRAIT_SEAFARING2. The LINE is the complex variant,
-        so every rung of it is (owner).
+        EVERY record in the complex set carries `TRAIT_COMPLEX_`, with no exceptions (owner): the prefix STATES
+        THE SET, so folder and prefix agree by construction. A record whose line has no simple counterpart is
+        re-keyed exactly like one that has -- "if it was built as complex, it's complex, no matter what".
+
+        The reason is that the alternative makes a wrong set UNDETECTABLE: if a plain `TRAIT_` id were legal
+        inside the complex set, a held `TRAIT_EFFICIENT1` would be indistinguishable from a simple-set leak, and
+        no consumer, log line or check could tell the two apart.
 
         It lives on the STORE because a trait id is named from several curators -- above all the TECH edge that
         GATES a rung, without which every upper rung is permanently unreachable and silently so. One definition,
@@ -436,21 +439,13 @@ class Store:
                             return True
             return False
 
-        lineOf = {}
-        for typ, rec in table.items():
-            line = engine.text(rec.find("PromotionLine"))
-            if line:
-                lineOf[typ] = line
-        simpleLines = set(lineOf[t] for t, rec in table.items()
-                          if t in lineOf and not _is_complex(t, rec))
         out = {}
         for typ, rec in table.items():
             if typ in rid_to_base or not _is_complex(typ, rec):
                 continue
             if typ.startswith("TRAIT_COMPLEX_") or not typ.startswith("TRAIT_"):
                 continue
-            if lineOf.get(typ) in simpleLines:
-                out[typ] = "TRAIT_COMPLEX_" + typ[len("TRAIT_"):]
+            out[typ] = "TRAIT_COMPLEX_" + typ[len("TRAIT_"):]
         self._trait_rekey_cache = out
         return out
 

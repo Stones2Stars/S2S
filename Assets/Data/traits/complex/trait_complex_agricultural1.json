@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_AGRICULTURAL1",
  "excludes": [
-  "TRAIT_GLUTTONOUS1"
+  "TRAIT_COMPLEX_GLUTTONOUS1"
  ],
  "food": {
   "empire": {

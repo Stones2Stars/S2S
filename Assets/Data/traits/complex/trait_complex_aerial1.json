@@ -1,0 +1,424 @@
+{
+ "type": "TRAIT_COMPLEX_AERIAL1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_AERIAL2"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_AERIAL2"
+  ]
+ },
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SMOKE_SIGNALS": {
+     "percent": 25
+    },
+    "BUILDING_BIRD_CALLER": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_BIRDS_OF_PARADISE": {
+     "percent": 25
+    },
+    "BUILDING_CHICKEN_COOP": {
+     "percent": 25
+    },
+    "BUILDING_COCK_FIGHTING_RING": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_COCKATOO": {
+     "percent": 25
+    },
+    "BUILDING_CORMORANT_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_GOOSE": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_HUMMINGBIRD": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_JUNGLEFOWL": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_LYREBIRD": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_MACAW": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_PARAKEET": {
+     "percent": 25
+    },
+    "BUILDING_PARROT_AVIARY": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_PARROT": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_PEACOCK": {
+     "percent": 25
+    },
+    "BUILDING_CATCHER_TOUCAN": {
+     "percent": 25
+    },
+    "BUILDING_FARM_ANIMAL_TURKEY": {
+     "percent": 25
+    },
+    "BUILDING_FALCONER": {
+     "percent": 25
+    },
+    "BUILDING_FLETCHERS_HUT": {
+     "percent": 25
+    },
+    "BUILDING_APIARY": {
+     "percent": 25
+    },
+    "BUILDING_BEE_BOMBS": {
+     "percent": 25
+    },
+    "BUILDING_STARGAZERS_HUT": {
+     "percent": 25
+    },
+    "BUILDING_BUTTERFLY_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_CICADA_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_LADYBUG_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_BUTTERFLY_SANCTUARY": {
+     "percent": 25
+    },
+    "BUILDING_CICADA_SANCTUARY": {
+     "percent": 25
+    },
+    "BUILDING_LADYBUG_SANCTUARY": {
+     "percent": 25
+    },
+    "BUILDING_HOMING_PIGEON_COOP": {
+     "percent": 25
+    },
+    "BUILDING_CLOUD_OBSERVERS_HUT": {
+     "percent": 25
+    },
+    "BUILDING_ASTROLOGY_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_FALCONRY_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_ARCHERY_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_BALISTRARIA": {
+     "percent": 25
+    },
+    "BUILDING_WINDMILL": {
+     "percent": 25
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 25
+    },
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_ARBORETUM": {
+     "percent": 25
+    },
+    "BUILDING_AGROFOREST": {
+     "percent": 25
+    },
+    "BUILDING_WEATHER_VANES": {
+     "percent": 25
+    },
+    "BUILDING_METEOROLOGY_LAB": {
+     "percent": 25
+    },
+    "BUILDING_SHOOTING_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_FIRING_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_AUTOMATED_FIRING_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_ORBITAL_TARGETS": {
+     "percent": 25
+    },
+    "BUILDING_MODERN_MILL": {
+     "percent": 25
+    },
+    "BUILDING_INDUSTRIAL_FARMS": {
+     "percent": 25
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 25
+    },
+    "BUILDING_SEAL_MAKER": {
+     "percent": 25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    },
+    "BUILDING_OBSERVATORY": {
+     "percent": 25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 25
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_THROWING": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_DRYING": {
+     "percent": 20
+    },
+    "TECH_ATLATL_MAKING": {
+     "percent": 20
+    },
+    "TECH_POULTRY_DOMESTICATION": {
+     "percent": 20
+    },
+    "TECH_FALCONRY": {
+     "percent": 20
+    },
+    "TECH_ARCHERY": {
+     "percent": 20
+    },
+    "TECH_SAILING": {
+     "percent": 20
+    },
+    "TECH_APICULTURE": {
+     "percent": 20
+    },
+    "TECH_STARGAZING": {
+     "percent": 20
+    },
+    "TECH_CLOUD_PATTERNS": {
+     "percent": 20
+    },
+    "TECH_ATHLETICS": {
+     "percent": 20
+    },
+    "TECH_MOUNTED_ARCHERY": {
+     "percent": 20
+    },
+    "TECH_COMBAT_SPORTS": {
+     "percent": 20
+    },
+    "TECH_ASTROLOGY": {
+     "percent": 20
+    },
+    "TECH_ANCIENT_BALLISTICS": {
+     "percent": 20
+    },
+    "TECH_WEATHER_LORE": {
+     "percent": 20
+    },
+    "TECH_WINDMILLS": {
+     "percent": 20
+    },
+    "TECH_YEOMANRY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PARROT",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_THROWING": {
+     "flat": 2
+    },
+    "UNITCOMBAT_ARCHER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -20
+   },
+   "numCities": {
+    "percent": 15
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "max": {
+    "flat": 1
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "defense": {
+  "empire": {
+   "bombardDefense": {
+    "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -20
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AERIAL_STRATEGIES",
+       "enabled": {
+        "any": [
+         "IS_AIR",
+         "IS_ARCHERY",
+         "IS_GUNPOWDER",
+         "IS_THROWING"
+        ]
+       }
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitAerial.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_AERIAL1",
+  "civilopedia": "TXT_KEY_TRAIT_AERIAL1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_AERIAL_STRATEGY",
+  "impurePropertyManipulators": true
+ }
+}

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_BARBARIC",
  "excludes": [
-  "TRAIT_CIVILIZED"
+  "TRAIT_COMPLEX_CIVILIZED"
  ],
  "food": {
   "empire": {

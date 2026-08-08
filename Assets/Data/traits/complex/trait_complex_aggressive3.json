@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_AGGRESSIVE3",
  "excludes": [
-  "TRAIT_TIMID1"
+  "TRAIT_COMPLEX_TIMID1"
  ],
  "buildRate": {
   "empire": {

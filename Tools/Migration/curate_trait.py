@@ -883,22 +883,21 @@ def main():
             if line:
                 lineOf[typ] = line
             rankOf[typ] = int(rank) if rank not in (None, "") else 0
-        # ⚖ A COMPLEX-ONLY RUNG TAKES THE `TRAIT_COMPLEX_` PREFIX WHEN ITS **LINE** HAS A SIMPLE COUNTERPART
-        # (owner). The replacement variants already carry it, but a rung the simple set never had (the simple
-        # ladder tops out early) fell through keeping its authored `TRAIT_` id -- which left a chain reading
-        # TRAIT_COMPLEX_SEAFARING -> TRAIT_COMPLEX_SEAFARING1 -> TRAIT_SEAFARING2. The LINE is the complex
-        # variant, so every rung of it is, whether or not that particular rung has a simple twin.
-        # ⚠ This is a Type RENAME and therefore a Type removal ([save.md] par.7): trait reads are allow-missing,
-        # so a player holding the old id loses that rung on load. Accepted (owner) -- the cost only grows.
-        simpleLines = set(lineOf[t] for t in results if folders.get(t) == "simple" and t in lineOf)
+        # ⛔ EVERY RECORD IN THE COMPLEX SET CARRIES `TRAIT_COMPLEX_`, WITH NO EXCEPTIONS (owner): the prefix
+        # STATES THE SET, so folder and prefix agree by construction. A rung whose LINE has no simple counterpart
+        # is re-keyed exactly like one that has -- "if it was built as complex, it's complex, no matter what".
+        # ⚑ The reason is that the alternative makes a wrong set UNDETECTABLE: with a plain `TRAIT_` id legal
+        # inside the complex set, a held TRAIT_EFFICIENT1 is indistinguishable from a simple-set leak, and no
+        # consumer, log line or check can tell the two apart ([modifier.md] par.4).
+        # ⚠ This is a Type RENAME, which the save layer TRANSLATES: the old id maps to the new one in
+        # `Assets/savemigration.txt` ([modifier.md] par.4), so a player keeps the rung it is holding.
         rename = {}
         for typ in results:
             if typ in rid_to_base or folders.get(typ) != "complex":
                 continue          # a replacement variant already carries the prefix; simple/ keeps its id
             if typ.startswith("TRAIT_COMPLEX_") or not typ.startswith("TRAIT_"):
                 continue
-            if lineOf.get(typ) in simpleLines:
-                rename[typ] = "TRAIT_COMPLEX_" + typ[len("TRAIT_"):]
+            rename[typ] = "TRAIT_COMPLEX_" + typ[len("TRAIT_"):]
         if rename:
             # re-key the maps IN PLACE OF ORDER (the manifest order is positional -- curate_order.py)
             results = OrderedDict((rename.get(k, k), v) for k, v in results.items())
@@ -919,7 +918,7 @@ def main():
                 return rename.get(node, node) if isinstance(node, str) else node
             for k in list(results):
                 results[k] = _rekey(results[k])
-            print("  re-keyed %d complex-only rung(s) onto TRAIT_COMPLEX_: %s"
+            print("  re-keyed %d complex-set record(s) onto TRAIT_COMPLEX_: %s"
                   % (len(rename), ", ".join(sorted(rename))))
 
         emitted = {"simple": set(), "complex": set()}

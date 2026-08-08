@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_AGGRESSIVE",
  "excludes": [
-  "TRAIT_TIMID"
+  "TRAIT_COMPLEX_TIMID"
  ],
  "production": {
   "empire": {

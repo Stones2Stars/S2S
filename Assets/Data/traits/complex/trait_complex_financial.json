@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_FINANCIAL",
  "excludes": [
-  "TRAIT_GREEDY"
+  "TRAIT_COMPLEX_GREEDY"
  ],
  "buildRate": {
   "empire": {

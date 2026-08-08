@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_REVOLUTIONARY3",
  "excludes": [
-  "TRAIT_USURPER1"
+  "TRAIT_COMPLEX_USURPER1"
  ],
  "food": {
   "empire": {

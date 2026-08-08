@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_IMPERIALIST1",
  "excludes": [
-  "TRAIT_MEEK1"
+  "TRAIT_COMPLEX_MEEK1"
  ],
  "buildRate": {
   "empire": {

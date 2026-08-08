@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_ISOLATIONIST",
  "excludes": [
-  "TRAIT_NEGOTIATOR"
+  "TRAIT_COMPLEX_NEGOTIATOR"
  ],
  "food": {
   "empire": {

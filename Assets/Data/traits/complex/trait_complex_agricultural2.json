@@ -9,7 +9,7 @@
   ]
  },
  "excludes": [
-  "TRAIT_GLUTTONOUS1"
+  "TRAIT_COMPLEX_GLUTTONOUS1"
  ],
  "food": {
   "empire": {

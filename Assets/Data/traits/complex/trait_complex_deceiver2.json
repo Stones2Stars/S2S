@@ -9,7 +9,7 @@
   ]
  },
  "excludes": [
-  "TRAIT_NAIVE1"
+  "TRAIT_COMPLEX_NAIVE1"
  ],
  "buildRate": {
   "empire": {

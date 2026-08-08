@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_PROGRESSIST",
  "excludes": [
-  "TRAIT_COVETOUS"
+  "TRAIT_COMPLEX_COVETOUS"
  ],
  "production": {
   "empire": {

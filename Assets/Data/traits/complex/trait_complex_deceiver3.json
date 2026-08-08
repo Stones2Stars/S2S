@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_DECEIVER3",
  "excludes": [
-  "TRAIT_NAIVE1"
+  "TRAIT_COMPLEX_NAIVE1"
  ],
  "buildRate": {
   "empire": {

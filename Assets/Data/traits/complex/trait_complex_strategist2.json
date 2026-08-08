@@ -1,0 +1,233 @@
+{
+ "type": "TRAIT_COMPLEX_STRATEGIST2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_STRATEGIST3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_STRATEGIST3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_COMPLEX_CARELESS1"
+ ],
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SHOOTING_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_GARRISON": {
+     "percent": 25
+    },
+    "BUILDING_NAVAL_ACADEMY": {
+     "percent": 25
+    },
+    "BUILDING_FIRING_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_RECRUITMENT_CENTER": {
+     "percent": 25
+    },
+    "BUILDING_AUTOMATED_FIRING_RANGE": {
+     "percent": 25
+    },
+    "BUILDING_MILITARY_AIRBASE": {
+     "percent": 25
+    },
+    "BUILDING_ULTIMATE_SOLDIERS_TRAINER": {
+     "percent": 25
+    },
+    "BUILDING_BIVOUAC_GROUNDS": {
+     "percent": 25
+    },
+    "BUILDING_MILITARY_BASE": {
+     "percent": 25
+    },
+    "BUILDING_HELICOPTER_TRAINING_CENTER": {
+     "percent": 25
+    },
+    "BUILDING_BIOLOGICAL_WARFARE_LAB": {
+     "percent": 25
+    },
+    "BUILDING_BATTLEBOT_ARENA": {
+     "percent": 25
+    },
+    "BUILDING_MILITARY_SATELLITES": {
+     "percent": 25
+    },
+    "BUILDING_TEST_PILOT_INSTITUTE": {
+     "percent": 25
+    },
+    "BUILDING_ORBITAL_TARGETS": {
+     "percent": 25
+    },
+    "BUILDING_AEROSPACE_COMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_BATTLEMECH_ARENA": {
+     "percent": 25
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 25
+    }
+   },
+   "military": {
+    "percent": -25
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_GUNPOWDER": {
+     "percent": 20
+    },
+    "TECH_MATCHLOCK": {
+     "percent": 20
+    },
+    "TECH_LEADERSHIP": {
+     "percent": 20
+    },
+    "TECH_NAVAL_TACTICS": {
+     "percent": 20
+    },
+    "TECH_MILITARY_TRADITION": {
+     "percent": 20
+    },
+    "TECH_MECHANIZED_WARFARE": {
+     "percent": 20
+    },
+    "TECH_AVIATION": {
+     "percent": 20
+    },
+    "TECH_LOGISTICS": {
+     "percent": 20
+    },
+    "TECH_VERTICAL_FLIGHT": {
+     "percent": 20
+    },
+    "TECH_BIOLOGICAL_WARFARE": {
+     "percent": 20
+    },
+    "TECH_ROBOTICS": {
+     "percent": 20
+    },
+    "TECH_SATELLITES": {
+     "percent": 20
+    },
+    "TECH_COMPOSITES": {
+     "percent": 20
+    },
+    "TECH_SUPERSONIC_FLIGHT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10,
+   "units": {
+    "UNIT_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 20,
+   "domestic": {
+    "percent": 20
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": -5
+   },
+   "flat": 2,
+   "inBorder": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 10
+   }
+  }
+ },
+ "grants": {
+  "goldenAgeOnBirthOfGreatPerson": "UNIT_GREAT_ADMIRAL"
+ },
+ "triggers": [
+  {
+   "trigger": "onEraChanged",
+   "action": {
+    "grant": {
+     "specialists": [
+      "SPECIALIST_GREAT_ADMIRAL"
+     ]
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 18
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -2
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": -1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitStrategist2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_STRATEGIST2",
+  "civilopedia": "TXT_KEY_TRAIT_STRATEGIST2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_STRATEGIST_STRATEGY"
+ }
+}

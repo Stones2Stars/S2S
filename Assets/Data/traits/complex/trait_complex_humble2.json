@@ -1,0 +1,152 @@
+{
+ "type": "TRAIT_COMPLEX_HUMBLE2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_HUMBLE3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_HUMBLE3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_MEGALOMANIAC1"
+ ],
+ "food": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": -10
+   },
+   "teamWonder": {
+    "percent": 15
+   },
+   "nationalWonder": {
+    "percent": 15
+   },
+   "military": {
+    "percent": -10
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 1
+   }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumble2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_HUMBLE2",
+  "civilopedia": "TXT_KEY_TRAIT_HUMBLE2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_HUMBLE_STRATEGY"
+ }
+}

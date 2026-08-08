@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_SCIENTIFIC",
  "excludes": [
-  "TRAIT_TRADITIONAL"
+  "TRAIT_COMPLEX_TRADITIONAL"
  ],
  "buildRate": {
   "empire": {

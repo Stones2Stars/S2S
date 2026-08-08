@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_INDUSTRIOUS",
  "excludes": [
-  "TRAIT_LAZY"
+  "TRAIT_COMPLEX_LAZY"
  ],
  "production": {
   "empire": {

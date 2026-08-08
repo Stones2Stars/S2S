@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_ORGANIZED",
  "excludes": [
-  "TRAIT_IMPULSIVE"
+  "TRAIT_COMPLEX_IMPULSIVE"
  ],
  "production": {
   "empire": {

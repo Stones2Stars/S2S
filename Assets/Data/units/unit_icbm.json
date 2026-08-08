@@ -70,7 +70,7 @@
   "civilopedia": "TXT_KEY_UNIT_ICBM_PEDIA",
   "worth": 5,
   "militaryWorth": 1000,
-  "domain": "DOMAIN_AIR",
+  "domain": "DOMAIN_IMMOBILE",
   "defaultUnitAI": "UNITAI_ICBM",
   "formationType": "FORMATION_TYPE_MACHINE",
   "advisor": "ADVISOR_MILITARY",

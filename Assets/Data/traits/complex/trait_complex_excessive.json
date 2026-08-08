@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_EXCESSIVE",
  "excludes": [
-  "TRAIT_EFFICIENT1"
+  "TRAIT_COMPLEX_EFFICIENT1"
  ],
  "buildRate": {
   "empire": {

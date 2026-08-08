@@ -1,0 +1,393 @@
+{
+ "type": "TRAIT_COMPLEX_MEDICAL1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_MEDICAL2",
+   "TRAIT_COMPLEX_MEDICAL3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_MEDICAL2"
+  ]
+ },
+ "excludes": [
+  "TRAIT_COMPLEX_UNSANITARY1"
+ ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ALPHA_FEMALE": {
+     "percent": 25
+    },
+    "BUILDING_CHILDCARE_HUT": {
+     "percent": 25
+    },
+    "BUILDING_LICHEN_GATHERER": {
+     "percent": 25
+    },
+    "BUILDING_WET_NURSE": {
+     "percent": 25
+    },
+    "BUILDING_BATHING_RITUAL": {
+     "percent": 25
+    },
+    "BUILDING_EXCREMENT_HOLES": {
+     "percent": 25
+    },
+    "BUILDING_HEALERS_HUT": {
+     "percent": 25
+    },
+    "BUILDING_HEALING_CLAY": {
+     "percent": 25
+    },
+    "BUILDING_BONEMARROWER": {
+     "percent": 25
+    },
+    "BUILDING_LAUNDRY_HUT": {
+     "percent": 25
+    },
+    "BUILDING_SWEAT_LODGE": {
+     "percent": 25
+    },
+    "BUILDING_OUTHOUSE": {
+     "percent": 25
+    },
+    "BUILDING_BURIAL_GROUND": {
+     "percent": 25
+    },
+    "BUILDING_FUNERAL_PYRE": {
+     "percent": 25
+    },
+    "BUILDING_ANCIENT_EMBALMER": {
+     "percent": 25
+    },
+    "BUILDING_ICEHOUSE": {
+     "percent": 25
+    },
+    "BUILDING_MAUSOLEUM": {
+     "percent": 25
+    },
+    "BUILDING_ACUPUNCTURISTS_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_SOAP_MAKER": {
+     "percent": 25
+    },
+    "BUILDING_ANCIENT_VETERINARIAN": {
+     "percent": 25
+    },
+    "BUILDING_GRAVEYARD": {
+     "percent": 25
+    },
+    "BUILDING_APOTHECARY_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_PLAGUE_HOSPITAL": {
+     "percent": 25
+    },
+    "BUILDING_AQUEDUCT": {
+     "percent": 25
+    },
+    "BUILDING_BATH_HOUSE": {
+     "percent": 25
+    },
+    "BUILDING_GARDEROBE": {
+     "percent": 25
+    },
+    "BUILDING_SEWER_SYSTEM": {
+     "percent": 25
+    },
+    "BUILDING_ALMSHOUSE": {
+     "percent": 25
+    },
+    "BUILDING_HERBALIST": {
+     "percent": 25
+    },
+    "BUILDING_OPTOMETRIST": {
+     "percent": 25
+    },
+    "BUILDING_DOCTORS_OFFICE": {
+     "percent": 25
+    },
+    "BUILDING_MORTUARY": {
+     "percent": 25
+    },
+    "BUILDING_DAY_CARE_CENTER": {
+     "percent": 25
+    },
+    "BUILDING_PUBLIC_RESTROOMS": {
+     "percent": 25
+    },
+    "BUILDING_SANITATION_CHAMBER": {
+     "percent": 25
+    },
+    "BUILDING_SURGEONS_OFFICE": {
+     "percent": 25
+    },
+    "BUILDING_MEDICAL_CLINIC": {
+     "percent": 25
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "percent": 25
+    },
+    "BUILDING_MODERN_EMBALMER": {
+     "percent": 25
+    },
+    "BUILDING_MODERN_WAREHOUSE": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_SOAP": {
+     "percent": 25
+    },
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_VETERINARIAN": {
+     "percent": 25
+    },
+    "BUILDING_PHARMACY": {
+     "percent": 25
+    },
+    "BUILDING_RETIREMENT_HOME": {
+     "percent": 25
+    },
+    "BUILDING_MODERN_WATERWORKS": {
+     "percent": 25
+    },
+    "BUILDING_ALTERNATIVE_MEDICINE": {
+     "percent": 25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 25
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "percent": 25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 25
+    }
+   },
+   "unitCombats": {
+    "UNITCOMBAT_HEALTH_CARE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_HERBALISM": {
+     "percent": 20
+    },
+    "TECH_RITUALISM": {
+     "percent": 20
+    },
+    "TECH_NATUROPATHY": {
+     "percent": 20
+    },
+    "TECH_BONE_WORKING": {
+     "percent": 20
+    },
+    "TECH_SEWING": {
+     "percent": 20
+    },
+    "TECH_ANIMISM": {
+     "percent": 20
+    },
+    "TECH_CEREMONIAL_BURIAL": {
+     "percent": 20
+    },
+    "TECH_MUMMIFICATION": {
+     "percent": 20
+    },
+    "TECH_FOLK_MEDICINE": {
+     "percent": 20
+    },
+    "TECH_SOAP_MAKING": {
+     "percent": 20
+    },
+    "TECH_VETERINARY_MEDICINE": {
+     "percent": 20
+    },
+    "TECH_ANCIENT_MEDICINE": {
+     "percent": 20
+    },
+    "TECH_CANAL_SYSTEMS": {
+     "percent": 20
+    },
+    "TECH_SANITATION": {
+     "percent": 20
+    },
+    "TECH_CIVIL_SERVICE": {
+     "percent": 20
+    },
+    "TECH_ALCHEMY": {
+     "percent": 20
+    },
+    "TECH_OPTICS": {
+     "percent": 20
+    },
+    "TECH_PLAGUE_MEDICINE": {
+     "percent": 20
+    },
+    "TECH_ANATOMY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_PRIEST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_PROPHET": {
+     "flat": 1
+    },
+    "SPECIALIST_DOCTOR": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_DOCTOR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_HEALTH_CARE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 75
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "grants": {
+  "goldenAgeOnBirthOfGreatPerson": "UNIT_DOCTOR"
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_MEDICAL1",
+       "enabled": "IS_MEDIC"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -2
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 13
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMedical.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_MEDICAL1",
+  "civilopedia": "TXT_KEY_TRAIT_MEDICAL1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_MEDICAL_STRATEGY"
+ }
+}

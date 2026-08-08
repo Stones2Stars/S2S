@@ -2,7 +2,7 @@
  "type": "TRAIT_COMPLEX_ZEALOUS1",
  "excludes": [
   "TRAIT_ANTI_CLERICAL1",
-  "TRAIT_PIOUS1",
+  "TRAIT_COMPLEX_PIOUS1",
   "TRAIT_SPIRITUAL1"
  ],
  "food": {
@@ -272,7 +272,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_ZEALOUS2"
+   "TRAIT_COMPLEX_ZEALOUS2"
   ]
  }
 }

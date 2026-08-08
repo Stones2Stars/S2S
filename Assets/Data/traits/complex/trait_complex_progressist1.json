@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_PROGRESSIST1",
  "excludes": [
-  "TRAIT_COVETOUS1"
+  "TRAIT_COMPLEX_COVETOUS1"
  ],
  "production": {
   "empire": {
@@ -112,7 +112,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_INNOVATIVE2"
+   "TRAIT_COMPLEX_INNOVATIVE2"
   ]
  }
 }

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COMPLEX_EXPANSIVE",
  "excludes": [
-  "TRAIT_MINIMALIST"
+  "TRAIT_COMPLEX_MINIMALIST"
  ],
  "food": {
   "empire": {

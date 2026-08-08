@@ -2,7 +2,7 @@
  "type": "TRAIT_COMPLEX_UNREFINED2",
  "enables": {
   "traitsAnd": [
-   "TRAIT_UNREFINED3"
+   "TRAIT_COMPLEX_UNREFINED3"
   ]
  },
  "excludes": [

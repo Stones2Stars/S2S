@@ -9,7 +9,7 @@
   ]
  },
  "excludes": [
-  "TRAIT_NEGOTIATOR1"
+  "TRAIT_COMPLEX_NEGOTIATOR1"
  ],
  "food": {
   "empire": {

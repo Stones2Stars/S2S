@@ -207,7 +207,7 @@
  },
  "enables": {
   "traits": [
-   "TRAIT_FOREIGN2"
+   "TRAIT_COMPLEX_FOREIGN2"
   ]
  }
 }

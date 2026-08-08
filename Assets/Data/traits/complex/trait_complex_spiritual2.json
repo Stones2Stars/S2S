@@ -11,7 +11,7 @@
  "excludes": [
   "TRAIT_ANTI_CLERICAL1",
   "TRAIT_FANATICAL1",
-  "TRAIT_PIOUS1"
+  "TRAIT_COMPLEX_PIOUS1"
  ],
  "buildRate": {
   "empire": {
