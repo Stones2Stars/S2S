@@ -5,9 +5,6 @@
  ],
  "food": {
   "empire": {
-   "tradeRoute": {
-    "percent": -20
-   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": -1
@@ -20,9 +17,6 @@
  },
  "production": {
   "empire": {
-   "tradeRoute": {
-    "percent": -20
-   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": -1
@@ -50,9 +44,6 @@
  },
  "commerce": {
   "empire": {
-   "tradeRoute": {
-    "percent": -20
-   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": -1
@@ -109,12 +100,26 @@
  },
  "tradeRoutes": {
   "empire": {
+   "modifier": {
+    "food": {
+     "percent": -20
+    },
+    "production": {
+     "percent": -20
+    },
+    "commerce": {
+     "percent": -20
+    },
+    "percent": [
+     {
+      "value": -20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   },
    "flat": -1,
    "max": {
     "flat": -2
-   },
-   "foreign": {
-    "percent": -20
    }
   }
  },

@@ -5,23 +5,9 @@
    "TRAIT_COMPLEX_POPULIST2"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 60
-   }
-  }
- },
  "production": {
   "empire": {
    "percent": -5
-  }
- },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -30
-   }
   }
  },
  "extraYieldThreshold": {
@@ -39,6 +25,18 @@
  "health": {
   "empire": {
    "flat": -1
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 60
+    },
+    "commerce": {
+     "percent": -30
+    }
+   }
   }
  },
  "revolution": {

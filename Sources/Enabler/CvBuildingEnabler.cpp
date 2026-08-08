@@ -90,6 +90,32 @@ static void bd_applyAxis(EnablerDomain& d, int eAxis, int iId, int iDelta)
 	if (iId >= 0) EnablerKernel::applyEdges(d, bd_sourceInfo(eAxis, iId), EDGEB_BUILDINGS, iDelta);
 }
 
+// `identity.enabledCivilizations` is a WHITELIST -- empty means every civilization, non-empty means ONLY those.
+// It is STATIC for the city's life (a conquered city is constructed anew for its acquirer, so the domain is
+// rebuilt with the new owner's civ), which is why it belongs on the static-exclusion plane and not on a fact
+// (enabler.md par.8: a civilization bar is one of the two membership bars that ARE the enabler's).
+static bool bd_barredByCivilization(const CvBuildingInfo* jb, const CvPlayer& kPlayer)
+{
+	if (jb == NULL)
+	{
+		return false;
+	}
+	const std::vector<int>& aiCivs = jb->getEnabledCivilizations();
+	if (aiCivs.empty())
+	{
+		return false;
+	}
+	const int iCivilization = (int)kPlayer.getCivilizationType();
+	for (std::vector<int>::const_iterator it = aiCivs.begin(); it != aiCivs.end(); ++it)
+	{
+		if (*it == iCivilization)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 // THE ORACLE CORE (never a lifecycle path): the pure full build from current state -- replay the +1 appliers
 // over the object-owned has-lists into the TARGET struct. verifyCity fresh-seeds a local oracle domain and
 // diffs it against the event-maintained vector; that diff is the missed-emit tripwire (the enabler consumes
@@ -103,7 +129,7 @@ static void bd_seedInto(CityEnabler& en, const CvCity& kCity)
 	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 	{
 		const CvBuildingInfo* jb = (const CvBuildingInfo*)InfoRepo<CvBuildingInfo>::get().get(b);
-		if (jb != NULL && jb->isNotConstructible()) d.setStaticExcluded(b, true);
+		if (jb != NULL && (jb->isNotConstructible() || bd_barredByCivilization(jb, kPlayer))) d.setStaticExcluded(b, true);
 		if (kCity.hasBuilding((BuildingTypes)b))
 		{
 			d.setHeld(b, true);
@@ -142,7 +168,7 @@ void BuildingEnabler::onCityCreated(const CvCity& kCity)
 	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 	{
 		const CvBuildingInfo* jb = (const CvBuildingInfo*)InfoRepo<CvBuildingInfo>::get().get(b);
-		if (jb != NULL && jb->isNotConstructible()) d.setStaticExcluded(b, true);
+		if (jb != NULL && (jb->isNotConstructible() || bd_barredByCivilization(jb, kPlayer))) d.setStaticExcluded(b, true);
 	}
 	// the TECH_GAME_START root IS a held engine tech (the load backfill guarantees it) -- covered by this loop
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)
@@ -215,10 +241,13 @@ static const std::vector<int>& bd_cappedBuildings()
 
 static bool bd_categoryCapOk(int iB, const CvCity& kCity)
 {
-	// ONE CITY CHALLENGE: no wonder limits at all (owner). It is an ordinary game option like any other, so it
-	// gates HERE, at the consuming system, and the info keeps serving ungated data (json.md §9). There is
-	// deliberately NO curated OCC cap variant to read -- the option does not RESCALE the limit, it removes it.
-	if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
+	// Two game options REMOVE the per-city category limit outright, and both gate HERE, at the consuming system,
+	// while the info keeps serving ungated data (json.md §9). Neither RESCALES the limit, so there is
+	// deliberately no curated cap variant to read for either.
+	//   NO_WONDER_LIMIT      -- the player asked for no limit; it is the whole point of the option.
+	//   CHALLENGE_ONE_CITY   -- no wonder limits at all (owner).
+	if (GC.getGame().isOption(GAMEOPTION_NO_WONDER_LIMIT)
+	||  GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
 	{
 		return true;
 	}

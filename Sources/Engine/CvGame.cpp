@@ -649,6 +649,27 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// (the flag clears after the emit). No-op on a new game: no GAME_LOAD_STARTED fired, so the endpoint returns.
 	emitGameLoadFinished();
 
+	// ⚖ REBUILD THE TRADE-ROUTE YIELD FROM SOURCE -- the eager load build for a value that is no longer trusted
+	// from the save. `CvCity::m_aiTradeYield` is DERIVED (route profit x the per-channel route modifier) and used
+	// to deserialize straight back, so a loaded city served a trade yield no live input could reproduce: a save
+	// carried food off its routes while the live per-channel modifier resolved to ZERO, and nothing in the engine
+	// would ever have corrected it ([DEC-derived-never-trusted]: no cache is ever serialized).
+	// ⛔ It runs AFTER the bracket closes, deliberately: the route profit reads the cascade's tradeRoutes channels
+	// through CvPlayer::getTradeRouteKinds, and those packages are only final once the FINISHED consumers above
+	// have drained. Running it earlier would rebuild against a half-built cascade -- the same ordering the plots
+	// fan and the plotAttrs fold answer to.
+	// ⚠ This is the LOAD build, not a maintenance path. What is still owed is the in-play trigger: a cascade
+	// deposit moving a tradeRoutes channel does not re-run this, so a mid-game civic swap leaves the stored yield
+	// on its old value until something else calls updateTradeRoutes() ([todo.md]).
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (kPlayer.isAlive())
+		{
+			kPlayer.updateTradeRoutes();
+		}
+	}
+
 	OutputDebugString("onFinalInitialized: End\n");
 }
 

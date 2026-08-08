@@ -73,8 +73,12 @@
   "empire": {
    "anger": {
     "percent": 25
-   },
-   "cost": {
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
     "percent": 10
    }
   }

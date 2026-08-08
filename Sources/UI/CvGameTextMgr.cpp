@@ -24,6 +24,8 @@
 #include "CvBuildingInfo.h"
 #include "Infos/CvModifiers.h"        // entries() -- the compiled §3.9 deposits a composer renders
 #include "UI/CvEntryText.h"           // entryDetailLine -- the ONE per-entry renderer
+#include "Enabler/CvEnablerKernel.h"  // operatingBuildings -- the enabler's OWN active/obsolete verdict
+#include "Enabler/CvOperatingBuildings.h"
 #include "CvBonusInfo.h"
 #include "Engine/CvCity.h"
 #include "AI/CvCityAI.h"
@@ -1195,8 +1197,74 @@ void createTestFontString(CvWStringBuffer& szString)
 		szString.append(CvWString::format(L"%c%d", gDLL->getSymbolID(iI), gDLL->getSymbolID(iI)));
 }
 
+// Defined with the yield-help block below; both tooltips render the same ×100 fixed point and must render it
+// identically, so there is one formatter rather than two that could drift apart.
+static CvWString gt_scaled100(int64_t iValue);
+
 void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 {
+	if (pPlot == NULL)
+	{
+		return;
+	}
+	// ---- WHAT THE TILE IS: the four substrate facts a plot-scope deposit can key on ----
+	// Spelled out even when empty, because "this plot has no bonus" is the answer to a question a player is
+	// actually asking when a yield looks wrong -- an omitted line reads as "not checked", not as "none".
+	// Guarded: an unrevealed / unset substrate reads NO_TERRAIN (-1), and an id-indexed info lookup on -1 is an
+	// out-of-bounds read, not an empty string.
+	if (pPlot->getTerrainType() != NO_TERRAIN)
+	{
+		szString.append(CvWString(GC.getTerrainInfo(pPlot->getTerrainType()).getDescription()));
+	}
+	if (pPlot->getFeatureType() != NO_FEATURE)
+	{
+		szString.append(NEWLINE);
+		szString.append(CvWString(GC.getFeatureInfo(pPlot->getFeatureType()).getDescription()));
+	}
+	if (pPlot->getBonusType() != NO_BONUS)
+	{
+		szString.append(NEWLINE);
+		szString.append(CvWString(GC.getBonusInfo(pPlot->getBonusType()).getDescription()));
+	}
+	if (pPlot->getImprovementType() != NO_IMPROVEMENT)
+	{
+		szString.append(NEWLINE);
+		szString.append(CvWString(GC.getImprovementInfo(pPlot->getImprovementType()).getDescription()));
+	}
+	if (pPlot->getRouteType() != NO_ROUTE)
+	{
+		szString.append(NEWLINE);
+		szString.append(CvWString(GC.getRouteInfo(pPlot->getRouteType()).getDescription()));
+	}
+
+	// ---- WHAT THE TILE YIELDS, decomposed into the package's three stored segments ----
+	// ⛔ Read from the plot's OWN package, never recomputed here: this is the very number the city's Σ walks
+	// ([DEC-single-implementation]), so a tile that reads wrong here is wrong in the city total too, and the
+	// two can be reconciled by eye. A recomputed tooltip could agree with the data while the cache disagreed.
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(
+			infoYieldFamily((YieldTypes)iYield), (int)CHANNEL_AMOUNT, -1);
+		if (iChannel < 0)
+		{
+			continue;
+		}
+		const int64_t iTotal = pPlot->getCascadePackage().readFlat(iChannel);
+		const int64_t iNature = pPlot->getCascadePackage().readSubstrateFlat(iChannel);
+		const int64_t iImprovement = pPlot->getCascadePackage().readImprovementFlat(iChannel);
+		const int64_t iRest = pPlot->getCascadePackage().readRestFlat(iChannel);
+		if (iTotal == 0 && iNature == 0 && iImprovement == 0 && iRest == 0)
+		{
+			continue;   // a channel this tile has never carried says nothing worth a line
+		}
+		szString.append(NEWLINE);
+		szString.append(gDLL->getText("TXT_KEY_PLOTHELP_YIELD",
+			GC.getYieldInfo((YieldTypes)iYield).getTextKeyWide(),
+			gt_scaled100(iTotal).GetCString(),
+			gt_scaled100(iNature).GetCString(),
+			gt_scaled100(iImprovement).GetCString(),
+			gt_scaled100(iRest).GetCString()));
+	}
 }
 
 
@@ -2330,6 +2398,45 @@ void CvGameTextMgr::setBuildingActualEffects(CvWStringBuffer &szBuffer, const Cv
 /*
  * Calls new function below without displaying actual effects.
  */
+// The OPERATING STATE of a building that is PRESENT in a bound city: ACTIVE / DORMANT / OBSOLETE. Without it a
+// dormant building is indistinguishable on screen from a working one -- it sits in the city's list, renders its
+// full effect blocks, and deposits nothing, so the city's real output cannot be reconciled with what the screen
+// says it has.
+//
+// ⛔ THE VERDICT IS THE ENABLER'S AND IS READ FROM ITS OWN SET, never re-derived and never taken from the
+// engine's own active-building flag -- a building's ACTIVE/DORMANT state is a pure function of requires.operate
+// and is exactly the CAMOUFLAGED ride-in [DEC-calc-zero-ride-in] names ([enabler.md §3.2]: the operating set is
+// the enabler's output; patterns.md rule 6: one source of "active"). This is a BARE FETCH of the standing set,
+// so a missed propagation shows here as a visibly wrong state rather than being recomputed away
+// ([DEC-no-self-heal]) -- which is the point of surfacing it at all.
+//
+// ⚑ ALL THREE STATES PRINT, including ACTIVE. A line that appears only when something is wrong is
+// indistinguishable from a line that failed to render, so the absence of a dormancy warning would carry no
+// information; printing the verdict unconditionally makes "this building is working" an observation rather than
+// an assumption.
+void CvGameTextMgr::appendBuildingOperatingState(CvWStringBuffer& szBuffer, const BuildingTypes eBuilding, const CvCity* pCity)
+{
+	if (pCity == NULL || !pCity->hasBuilding(eBuilding))
+	{
+		return;
+	}
+	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(pCity);
+	// OBSOLETE is tested FIRST: it is the THIRD outcome of the same pass that computes `active` and is excluded
+	// from it, so an obsolete building would otherwise fall through and report as merely dormant -- two different
+	// fates (its `whenObsolete` tree takes over from its normal families, json.md §4.2) reading as one.
+	const char* szStateKey = "TXT_KEY_BUILDINGHELP_STATE_DORMANT";
+	if (kOperating.obsolete.find((int)eBuilding) != kOperating.obsolete.end())
+	{
+		szStateKey = "TXT_KEY_BUILDINGHELP_STATE_OBSOLETE";
+	}
+	else if (kOperating.active.find((int)eBuilding) != kOperating.active.end())
+	{
+		szStateKey = "TXT_KEY_BUILDINGHELP_STATE_ACTIVE";
+	}
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText(szStateKey));
+}
+
 void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTypes eBuilding, const bool bActual, CvCity* pCity, const bool bCivilopediaText, const bool bStrategyText, const bool bTechChooserText)
 {
 	if ((int)eBuilding < 0)
@@ -2341,6 +2448,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 	{
 		szBuffer.append(kInfo.getDescription());
 	}
+	appendBuildingOperatingState(szBuffer, eBuilding, pCity);
 	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 void CvGameTextMgr::setHeritageHelp(CvWStringBuffer &szBuffer, const HeritageTypes eType, CvCity* pCity, const bool bCivilopediaText, const bool bStrategyText, const bool bTechChooserText)
@@ -4712,8 +4820,190 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 {
 }
 
+// A ×100 fixed-point quantity, rendered whole.fraction ([DEC-fixedpoint-x100] -- the UI is a READ EDGE, so the
+// reduction happens here and the value travels scaled right up to it). Written out rather than truncated because
+// the whole point of this tooltip is to be reconcilable: a term shown as "3" when it is 3.47 does not add up on
+// screen, and a reader who cannot add the column up cannot trust any line in it.
+static CvWString gt_scaled100(int64_t iValue)
+{
+	CvWString szOut;
+	const int64_t iWhole = iValue / 100;
+	int64_t iFraction = iValue % 100;
+	if (iFraction < 0)
+	{
+		iFraction = -iFraction;
+	}
+	szOut.Format(L"%I64d.%02I64d", iWhole, iFraction);
+	return szOut;
+}
+
+// One condition tree, spelled back as the ATOMS it asks about ("BONUS_DEER", "HAS_POWER"). This is what turns
+// "some food is missing" into "this building wants BONUS_DEER and this city has none" -- the refused half of the
+// §2a combine is otherwise invisible on every surface the player has ([DEC-obs-scale]).
+static void gt_describeCondition(const CvCondition& kCondition, CvWString& szOut, int iDepth)
+{
+	if (iDepth > 3)
+	{
+		return;   // a deep tree renders its head, not its whole shape -- this is a tooltip, not a dump
+	}
+	if (!kCondition.type.empty())
+	{
+		if (!szOut.empty())
+		{
+			szOut += L", ";
+		}
+		szOut += CvWString(kCondition.type.c_str());
+	}
+	size_t iChild = 0;
+	for (iChild = 0; iChild < kCondition.all.size(); ++iChild)
+	{
+		if (kCondition.all[iChild] != NULL)
+		{
+			gt_describeCondition(*kCondition.all[iChild], szOut, iDepth + 1);
+		}
+	}
+	for (iChild = 0; iChild < kCondition.anyOf.size(); ++iChild)
+	{
+		if (kCondition.anyOf[iChild] != NULL)
+		{
+			gt_describeCondition(*kCondition.anyOf[iChild], szOut, iDepth + 1);
+		}
+	}
+}
+
 void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType)
 {
+	const int iChannel = CascadeChannelRegistry::channelLookup(
+		infoYieldFamily(eYieldType), (int)CHANNEL_AMOUNT, -1);
+	if (iChannel < 0)
+	{
+		return;   // a yield no data authors anywhere has no terms to decompose
+	}
+	// ⛔ THE TERMS COME OUT OF THE REAL COMBINE, never a re-derivation beside it
+	// ([DEC-single-implementation]): a tooltip that recomputed its own decomposition could disagree with the
+	// number it claims to explain, which is the one thing it must never do.
+	InfoValuation::CityRateTerms kTerms;
+	InfoValuation::cityReceiverRate(city, iChannel, &kTerms);
+
+	// ---- TIER 1: the BASE the percent stack multiplies (modifier.md §2a) ----
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_BASE"));
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PLOTS",
+		gt_scaled100(kTerms.plotBase).GetCString(), kTerms.workedPlots));
+	// the plot Σ's own three segments -- a short plot total says the plots are short and never WHICH leg is
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PLOTSEGMENTS",
+		gt_scaled100(kTerms.plotNature).GetCString(),
+		gt_scaled100(kTerms.plotImprovement).GetCString(),
+		gt_scaled100(kTerms.plotRest).GetCString()));
+
+	if (kTerms.tradeYield != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TRADE", gt_scaled100(kTerms.tradeYield).GetCString()));
+	}
+	if (kTerms.goldenAge != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_GOLDENAGE", gt_scaled100(kTerms.goldenAge).GetCString()));
+	}
+	if (kTerms.upperFlat != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_UPPERFLAT", gt_scaled100(kTerms.upperFlat).GetCString()));
+	}
+	// shown even at zero: a zero that OUGHT to be non-zero is a finding, and a hidden line cannot be one
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_SPECIALISTS", gt_scaled100(kTerms.specialists).GetCString()));
+
+	// ---- the PERCENT stack, BY SCOPE ----
+	// ⚠ Split per scope deliberately: merging them into one "+131%" is exactly what hides which level a missing
+	// modifier belongs to, and the city/empire halves move for completely different reasons.
+	const CvPlayer& kOwner = GET_PLAYER(city.getOwner());
+	const int iCityPercent = city.getCascadePackage().readPercent(iChannel);
+	const int iEmpirePercent = kOwner.getCascadePackage().readPercent(iChannel);
+	const int iTeamPercent = GET_TEAM(kOwner.getTeam()).getCascadePackage().readPercent(iChannel);
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PERCENT",
+		kTerms.percentSum, iCityPercent, iEmpirePercent, iTeamPercent));
+
+	// ---- TIER 2: the city's own flats, added AFTER the stack ----
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_CITYFLAT", gt_scaled100(kTerms.cityFlat).GetCString()));
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TOTAL", gt_scaled100(kTerms.rate).GetCString()));
+
+	// ---- THE BONUS STORES, LIVE ----
+	// ⛔ Read HERE rather than trusted from a load-time census, and the distinction is the whole point: the
+	// load-end census reports what the stores held when the load finished, and a plot group REGROUPED afterwards
+	// is a different object whose held-resource map starts empty (it is derived, never serialized). So a store
+	// that is full at load and empty in play produces two contradictory "measurements" that are both honest --
+	// and only the live read answers the question a player is actually asking.
+	// ⚑ Both lists are stated side by side because they are ORTHOGONAL and neither implies the other (owner): a
+	// resource can be held ON SITE and not in the NETWORK, having traded the only copy away. A bare
+	// `{type, scope:"city", min:1}` deposit gate asks the TRADED list alone.
+	{
+		int iTradedHeld = 0;
+		int iOnSiteHeld = 0;
+		for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
+		{
+			if (city.getNumBonuses((BonusTypes)iBonus) > 0)
+			{
+				++iTradedHeld;
+			}
+			if (city.getCityContext().hasVicinityBonusAt(iBonus, CASC_VIC_ONSITE))
+			{
+				++iOnSiteHeld;
+			}
+		}
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_BONUSSTORES", iTradedHeld, iOnSiteHeld));
+	}
+
+	// ---- THE REFUSED HALF -- the deposits that COULD have applied and did not ----
+	// ⛔ This is the section the tooltip exists for. Every other line reports a number that IS there; a value that
+	// is wrong because a condition answered NO leaves no trace in any of them, so the shortfall is unattributable
+	// from the totals alone ([DEC-no-guessing]: at a gap the moves are VERIFY or ASK, and a bare total supports
+	// neither). Listing the source and the ATOM it wanted turns it into a question with an answer.
+	std::vector<InfoValuation::RefusedDeposit> kRefused;
+	InfoValuation::cityRefusedDeposits(city, iChannel, kRefused);
+	// ⛔ THE WALK RETURNS BOTH HALVES NOW -- applied AND refused -- so this section must FILTER, and an entry's
+	// condition may be NULL (an unconditioned deposit always applies and names no atom). Dereferencing it
+	// unconditionally crashed the game on hover: the list gained applied entries when the census learned to
+	// reconcile, and this reader was not updated with it.
+	bool bAnyRefused = false;
+	for (size_t iScan = 0; iScan < kRefused.size(); ++iScan)
+	{
+		if (!kRefused[iScan].bApplied) { bAnyRefused = true; break; }
+	}
+	if (bAnyRefused)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_NOTAPPLYING"));
+		for (size_t iRefused = 0; iRefused < kRefused.size(); ++iRefused)
+		{
+			const InfoValuation::RefusedDeposit& kEntry = kRefused[iRefused];
+			if (kEntry.bApplied)
+			{
+				continue;
+			}
+			CvWString szCondition;
+			if (kEntry.pCondition != NULL)
+			{
+				gt_describeCondition(*kEntry.pCondition, szCondition, 0);
+			}
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText(
+				kEntry.bPercentSide ? "TXT_KEY_YIELDHELP_REFUSED_PERCENT" : "TXT_KEY_YIELDHELP_REFUSED_FLAT",
+				kEntry.szSource,
+				kEntry.bPercentSide ? (int)kEntry.iValue : 0,
+				gt_scaled100(kEntry.iValue).GetCString(),
+				szCondition.GetCString()));
+		}
+	}
 }
 
 
@@ -6366,6 +6656,12 @@ void CvGameTextMgr::getGlobeLayerName(GlobeLayerTypes eType, int iOption, CvWStr
 
 void CvGameTextMgr::getPlotHelp(CvPlot* mousePlot, CvCity* city, CvPlot* flagPlot, bool bAlt, CvWStringBuffer& strHelp)
 {
+	// The map-hover entry point. It routes to setPlotHelp rather than carrying its own copy of the tile
+	// description: the two were separate bodies historically and that is precisely how they came to disagree.
+	if (mousePlot != NULL && mousePlot->isRevealed(GC.getGame().getActiveTeam(), true))
+	{
+		setPlotHelp(strHelp, mousePlot);
+	}
 }
 
 void CvGameTextMgr::getRebasePlotHelp(const CvPlot* pPlot, CvWString& strHelp) const

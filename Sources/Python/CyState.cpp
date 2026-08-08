@@ -734,7 +734,12 @@ int CyState::getNumBonuses(int iPlayer, int iCity, int iBonus) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	if (pCity == NULL || iBonus < 0 || iBonus >= GC.getNumBonusInfos()) return 0;
-	return pCity->getNumBonuses((BonusTypes)iBonus);
+	// ⛔ THE MAINTAINED STORE, not CvCity::getNumBonuses. The relay this replaced walked the plot group and
+	// applied the engine's own tech-trade / minted / corporation adjustments -- an ENGINE answer no fact
+	// maintains, and it is what left the city screen's resource lists EMPTY while the cascade held 96 traded
+	// resources for the same city. A reader that answers from a different source than the deposits do is not a
+	// second opinion, it is a second truth ([DEC-single-implementation], [DEC-no-legacy-masking]).
+	return pCity->getCityContext().tradedBonusCount(iBonus);
 }
 
 bool CyState::hasCorporation(int iPlayer, int iCity, int iCorporation) const

@@ -65,9 +65,6 @@
   "empire": {
    "espionageDefense": {
     "percent": 5
-   },
-   "captureResistance": {
-    "percent": -10
    }
   }
  },
@@ -89,6 +86,13 @@
   "empire": {
    "attitude": {
     "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -10
    }
   }
  },

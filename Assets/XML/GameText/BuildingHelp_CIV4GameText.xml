@@ -1426,6 +1426,83 @@
 		<French>[ICON_BULLET]%F1 modification de la propagation : %D2</French>
 		<Russian>[ICON_BULLET]%F1 изменение распространения: %D2</Russian>
 	</TEXT>
+	<!-- The §2a YIELD RATE decomposition (setYieldHelp). Every term of the combine gets its own line, because a
+	     single total cannot be reconciled against anything: the whole reason this tooltip exists is so a player
+	     can see WHICH term is wrong, not merely that the number is. -->
+	<!-- The PLOT tooltip's per-yield line, decomposed into the plot package's three stored segments. Same split
+	     the city's plot Σ walks, so a tile that reads wrong here is wrong in the city total too. -->
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_YIELD</Tag>
+		<English>%s1: %s2 (nature %s3 [ICON_BULLET] improvement %s4 [ICON_BULLET] route/other %s5)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_BASE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Base (multiplied by the percent stack):[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_PLOTS</Tag>
+		<English>[ICON_BULLET]Worked plots: %s1 (from %d2 plots)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_PLOTSEGMENTS</Tag>
+		<English>    nature %s1 [ICON_BULLET] improvements %s2 [ICON_BULLET] routes/other %s3</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_TRADE</Tag>
+		<English>[ICON_BULLET]Trade routes: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_GOLDENAGE</Tag>
+		<English>[ICON_BULLET]Golden age: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_UPPERFLAT</Tag>
+		<English>[ICON_BULLET]Empire and team: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_SPECIALISTS</Tag>
+		<English>[ICON_BULLET]Specialists: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_PERCENT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: +%d1%[COLOR_REVERT] (city +%d2% [ICON_BULLET] empire +%d3% [ICON_BULLET] team +%d4%)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_CITYFLAT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Buildings in this city: %s1[COLOR_REVERT] (added after the percent stack)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_TOTAL</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Total: %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_BONUSSTORES</Tag>
+		<English>[ICON_BULLET]Resources held: %d1 traded [ICON_BULLET] %d2 on site</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_NOTAPPLYING</Tag>
+		<English>[COLOR_WARNING_TEXT]Not applying (conditions unmet):[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_REFUSED_FLAT</Tag>
+		<English>[ICON_BULLET]%s1: %s3 [COLOR_WARNING_TEXT]needs %s4[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_REFUSED_PERCENT</Tag>
+		<English>[ICON_BULLET]%s1: +%d2% [COLOR_WARNING_TEXT]needs %s4[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_STATE_ACTIVE</Tag>
+		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]Active[COLOR_REVERT] - its effects apply</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_STATE_DORMANT</Tag>
+		<English>[ICON_BULLET][COLOR_WARNING_TEXT]Dormant[COLOR_REVERT] - a requirement to operate is not met, so none of its effects apply</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_STATE_OBSOLETE</Tag>
+		<English>[ICON_BULLET][COLOR_WARNING_TEXT]Obsolete[COLOR_REVERT] - superseded by a technology; only its obsolete effects apply</English>
+	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_STATE_REL_BUILDINGS</Tag>
 		<English>[SPACE]from All State [ICON_RELIGION] Buildings</English>

@@ -44,9 +44,7 @@
      "enabled": {
       "type": "BONUS_GOLD_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -54,9 +52,7 @@
      "enabled": {
       "type": "BONUS_SILVER_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -64,9 +60,7 @@
      "enabled": {
       "type": "BONUS_COPPER_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -74,9 +68,7 @@
      "enabled": {
       "type": "BONUS_PLATINUM_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -84,9 +76,7 @@
      "enabled": {
       "type": "BONUS_ELECTRUM_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -94,9 +84,7 @@
      "enabled": {
       "type": "BONUS_BRONZE_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -104,9 +92,7 @@
      "enabled": {
       "type": "BONUS_TIN_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -114,9 +100,7 @@
      "enabled": {
       "type": "BONUS_BRASS_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -124,9 +108,7 @@
      "enabled": {
       "type": "BONUS_JADE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -134,9 +116,7 @@
      "enabled": {
       "type": "BONUS_STONE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -144,9 +124,7 @@
      "enabled": {
       "type": "BONUS_MARBLE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -154,9 +132,7 @@
      "enabled": {
       "type": "BONUS_OBSIDIAN",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

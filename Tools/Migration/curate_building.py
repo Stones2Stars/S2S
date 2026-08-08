@@ -463,8 +463,16 @@ def _enabled(ref_kind, ref, scope):
     if ref_kind == "bonus":
         return _atom(ref, "city", min=1)
     if ref_kind == "vicinityBonus":
-        # VicinityBonusYieldChanges keys off hasVicinityBonus (obtained) -> the "onSite" discriminator (json.md S3.4).
-        return _atom(ref, "city", connection="vicinity", min=1, vicinity="onSite")
+        # NO MODIFIER GATES ON onSite (owner): a deposit conditioned on a resource asks whether the CITY HAS IT,
+        # which is the traded question -- the bare {type, scope:"city", min:1} atom. VicinityBonusYieldChanges was
+        # mapped to vicinity:"onSite" on the strength of its XML name; the legacy read it keys off
+        # (hasVicinityBonus) is "OBTAINED in vicinity", i.e. connected, so the name was the only thing pointing at
+        # local presence. The effect was silent and total: London holds 96 resources in trade and 14 on site, so
+        # every one of these deposits refused on a resource the city demonstrably has -- Cannery's apple, crab,
+        # lemons and olives among them.
+        # onSite remains a real discriminator for `requires` GATES (a building that needs the resource physically
+        # present), which is why only this modifier path changes.
+        return _atom(ref, "city", min=1)
     if ref_kind == "building":
         return _atom(ref, "empire" if scope == "empire" else "city")
     if ref_kind == "power":

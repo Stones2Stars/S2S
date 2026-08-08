@@ -167,13 +167,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "freeSpecialists": {
   "empire": {
    "any": -1
@@ -194,10 +187,12 @@
    }
   }
  },
- "hurry": {
+ "tradeRoutes": {
   "empire": {
-   "cost": {
-    "percent": 30
+   "modifier": {
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  },
@@ -234,6 +229,13 @@
   "empire": {
    "amount": {
     "percent": 5
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 30
    }
   }
  },

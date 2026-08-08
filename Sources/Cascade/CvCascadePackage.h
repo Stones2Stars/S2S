@@ -38,7 +38,29 @@
 #include "CvCascadeChannelRegistry.h"
 #include "Engine/ContextDict.h"   // the applied-source record: an ordinary keyed accumulator
 #include "CvCascadeSlotValues.h"
+#include "Data/CvInfoValuation.h"   // InfoValuation::plotScaledYield -- the plot scaling calc lives on the calc surface
 #include <vector>
+
+// ⚖ THE PLOT'S OWN YIELD SCALING -- "+amount per whole interval of what this plot already makes" (owner).
+// A plot whose terrain + feature + improvement + route totals 12, on a 1-per-5 scaling, gains 2 and outputs 14.
+//
+// ⛔ IT IS A RATE, NOT THE LEGACY ONE-SHOT THRESHOLD. The old engine paid a single step once a plot passed a
+// threshold (`CvPlayer::updateExtraYieldThreshold`); reading the authored number that way pays out once where the
+// model pays per interval -- plausible, and quietly short on exactly the best tiles.
+//
+// ⛔ THE TWO OPERANDS ARE STORED ON THE PLOT, NOT REACHED FOR (owner). The interval and the amount are FED IN as
+// two separate numbers and maintained here like any other plot state, so the resolve is entirely PLOT-LOCAL: it
+// reads this plot's own segments and this plot's own two operands, and touches no player, no trait and no other
+// scope. ⚑ That is what keeps it out of the cross-scope event-triggered-recalc shape -- the operand arrives by an
+// ordinary fan when the owner's scaling moves, exactly as a deposit does.
+//
+// ⛔ AND THE SCALING ONLY EVER AFFECTS ITS OWN CHANNEL (owner, HARD RULE): the interval is measured against THAT
+// channel's own plot total and the grant lands on THAT channel. There is no "1 hammer per 5 commerce" and none
+// may be authored -- which is precisely why one pair of numbers per channel suffices, and why no ordering between
+// channels can arise.
+//
+// ⚠ The arithmetic itself is not here: it lives once on the calc surface (InfoValuation::plotScaledYield), which
+// the what-if plot reads share ([DEC-single-implementation]). This plane only stores and feeds.
 
 template <class TOwner>
 struct CvCascadePackage
@@ -50,6 +72,15 @@ struct CvCascadePackage
 	// sources, across scopes, at ×100 -- so it carries 64 bits; a PERCENT is a small whole number by ruling
 	// (no decimals, hence no ×100), so it has nothing to accumulate into and stays 32. Widening only the
 	// amount side is what lets the combine keep its shape while the overflow ceiling disappears.
+	struct BookedDeposit
+	{
+		int iChannel;
+		bool bPercent;
+		int64_t iValue;
+		BookedDeposit() : iChannel(-1), bPercent(false), iValue(0) {}
+	};
+
+	mutable std::map<const void*, BookedDeposit> bookedGated;   // the gated-deposit book (see above)
 	mutable std::vector<int64_t> flat;   // dictionary 1: the channel-indexed x100 flat sums (local slots)
 	mutable std::vector<int> percent;    // dictionary 2: the channel-indexed percent sums (local slots)
 	// ⚖ WHAT THIS PACKAGE HAS ACTUALLY DEPOSITED -- keyed by the DepositIndex's dense source index, ±1 as a
@@ -80,6 +111,16 @@ struct CvCascadePackage
 	// every READ a bare fetch. Sized at PLOT scope only; only the yield channels ever carry one.
 	mutable std::vector<int64_t> improvementFlat;   // the improvement's own untargeted plot-scope output
 	mutable std::vector<int64_t> restFlat;          // route + the owner's plot-scope flats (both unfloored)
+	// The plot-local YIELD-SCALING operands (PLOT scope only), one pair per channel -- see the callout above the
+	// template. ⚖ IT IS A RATE, NOT A ONE-SHOT THRESHOLD (owner): `interval` is "per how much", `amount` is what
+	// each whole interval grants, so a plot whose own total is 12 on a 1-per-5 scaling gains 2 and ends at 14.
+	// ⛔ The legacy engine's single step at a threshold (`>= N` once, `CvPlayer::updateExtraYieldThreshold`) is
+	// NOT this mechanic, and reading the authored number as that threshold silently pays out once where the
+	// model pays out per interval.
+	// ⚠ Both are FED IN and maintained; neither is derived at resolve time, which is what keeps the resolve
+	// plot-local. The interval is a resolved SELECTION rather than a summed deposit ([modifier.md] §2a).
+	mutable std::vector<int64_t> yieldScaleInterval;
+	mutable std::vector<int64_t> yieldScaleAmount;
 
 	CvCascadePackage() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
@@ -96,6 +137,25 @@ struct CvCascadePackage
 		scope = ePackageScope;
 		identityFirst = iIdentityFirst;
 		identitySecond = iIdentitySecond;
+		// ⛔ ZEROED AT OWNER RESET -- a delta store is correct ONLY from a known zero
+		// ([DEC-keyed-accumulator]; [state-repositories.md] § THE SEMIBOOLEAN STATE). Every bind() site is an
+		// owner's reset/init (CvCity / CvPlot / CvPlayer / CvTeam), and `CvCity` and `CvPlot` are RECYCLED out of
+		// an FFreeListTrashArray -- so without this a reused slot inherits the previous occupant's sums, its
+		// applied-source record and its book, and NO later ±1 can ever correct them.
+		// ⚠ The applied-source record is what makes the omission compound rather than merely mis-state: a
+		// recycled city answered `hasAppliedSource` TRUE for the dead city's sources, so every plane that tests
+		// liveness before moving a slot -- and the owner-source fold that skips what is already applied --
+		// silently declined to deliver the new occupant's deposits at all.
+		// ⚑ This is what the neighbouring `m_cityContext.clear()` / `m_amenity.clear()` / `m_enabler.reset()`
+		// calls do for the other delta stores at the same choke point; the package was the one that never got it,
+		// while its own member comments asserted it did.
+		flat.clear();
+		percent.clear();
+		substrateFlat.clear();
+		improvementFlat.clear();
+		restFlat.clear();
+		appliedSources.clear();
+		bookedGated.clear();
 	}
 
 	// ---- THE READ PATH: BARE FETCHES, UNCONDITIONALLY. The rebuild already happened AT THE MARK, so a read
@@ -140,6 +200,33 @@ struct CvCascadePackage
 		}
 		const int64_t iNature = iSlot < (int)substrateFlat.size() ? substrateFlat[iSlot] : 0;
 		return iNature > 0 ? iNature : 0;
+	}
+
+	// The IMPROVEMENT and REST segments, RAW -- the census decomposition of readFlat. readFlat collapses the
+	// three segments into one number, so it can say a plot's yield is short and never WHICH leg is short: a
+	// dead improvement leg and a dead nature leg are indistinguishable in the total. These are the only reads
+	// that can tell them apart, and they exist for that census alone ([DEC-obs-scale]).
+	// ⚠ RAW ON PURPOSE -- unfloored, so the three sum to the pre-floor base and a NEGATIVE improvement (an
+	// improvement that consumes its nature yield) stays visible instead of being clamped into agreement.
+	// Never a consumer read: the value a consumer wants is readFlat, which is the floored §2a combine.
+	int64_t readImprovementFlat(int iChannel) const
+	{
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0)
+		{
+			return 0;
+		}
+		return iSlot < (int)improvementFlat.size() ? improvementFlat[iSlot] : 0;
+	}
+
+	int64_t readRestFlat(int iChannel) const
+	{
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0)
+		{
+			return 0;
+		}
+		return iSlot < (int)restFlat.size() ? restFlat[iSlot] : 0;
 	}
 
 	// ⛔ A RECEIVER TOTAL IS NOT STORED HERE, AND IT IS NOT A DEPOSIT-FED DELTA (owner: "the receiver re-sums its
@@ -257,12 +344,33 @@ struct CvCascadePackage
 			return;
 		}
 		segment[iSlot] += iDelta;
-		resolvePlotFlat(iSlot);
+		resolvePlotFlat(iSlot, iChannel);
+	}
+
+	// ⚖ RE-RESOLVE ONE CHANNEL'S PLOT SLOT WITHOUT MOVING A SEGMENT -- for when an operand of the RESOLVE moved
+	// rather than a deposit. The segments are untouched; only the non-linear step over them is recomputed.
+	// ⛔ The threshold is the case that needs it: it reads the plot OWNER's threshold channels, so it moves when a
+	// TRAIT is gained or lost, and that fact names no plot. Without this route every plot would keep the step it
+	// resolved under the old trait set, permanently ([DEC-no-self-heal]).
+	// ⚠ It is NOT a rebuild: nothing is re-derived from sources, and a plot whose step did not change writes the
+	// same number back.
+	void refreshPlotResolve(int iChannel) const
+	{
+		if (scope != CASC_SCOPE_PLOT)
+		{
+			return;
+		}
+		ensureSized();
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot >= 0)
+		{
+			resolvePlotFlat(iSlot, iChannel);
+		}
 	}
 
 	// The §2a plot-as-base combine over the three segments (modifier.md §2a basePlotYield). The SEGMENTS hold
 	// raw sums -- that is what makes them delta-able -- so every floor is applied here.
-	void resolvePlotFlat(int iSlot) const
+	void resolvePlotFlat(int iSlot, int iChannel) const
 	{
 		if (iSlot < 0 || iSlot >= (int)flat.size())
 		{
@@ -283,6 +391,20 @@ struct CvCascadePackage
 		{
 			iTotal = 0;
 		}
+		// JUST BEFORE OUTBOUND (owner): the plot-local yield SCALING, applied to the total those floors just
+		// produced and folded into the slot every consumer reads -- so the city base, the AI plot valuation and
+		// the tooltips all see one number ([DEC-single-implementation]).
+		// ⚖ A RATE: whole intervals of the plot's OWN total, each granting `amount` of the SAME channel. 12 on a
+		// 1-per-5 scaling gains 2 and outputs 14.
+		// ⚠ The division is over the PRE-BONUS total, so the grant cannot feed itself; and both operands live on
+		// the ×100 plane, which the ratio cancels -- only `amount` carries the scale.
+		// ⛔ The arithmetic itself is NOT written here: it lives once on the calc surface
+		// (InfoValuation::plotScaledYield), which the what-if plot reads share. This end only FEEDS it the two
+		// stored numbers ([DEC-single-implementation]).
+		if (scope == CASC_SCOPE_PLOT && iSlot < (int)yieldScaleInterval.size())
+		{
+			iTotal = InfoValuation::plotScaledYield(iTotal, yieldScaleInterval[iSlot], yieldScaleAmount[iSlot]);
+		}
 		flat[iSlot] = iTotal;
 	}
 
@@ -290,6 +412,57 @@ struct CvCascadePackage
 	// its fact arrives, so a read tests nothing and a cross-scope input needs no ordering guarantee: addition
 	// commutes, and the reseed's facts apply in whatever order they stream ([DEC-maintained-sum],
 	// [DEC-spine-reseed]). The load bracket therefore has nothing to drain.
+
+	// ---- THE GATED-DEPOSIT BOOK ----
+	// ⛔ WHICH CONDITIONED DEPOSITS ARE CURRENTLY BOOKED INTO THIS PACKAGE. Without it the two planes that can
+	// apply the same deposit cannot agree: plane A books it when its SOURCE arrives (evaluating the gate against
+	// live state), and plane C books it when the ATOM crosses -- so a source arriving while the atom already
+	// holds is booked once by A and again by C, and the package quietly holds twice what its data authorizes.
+	// ⚑ MEASURED: London's food percent read 155 against 82 authorized, and production 841 against 576, while
+	// COMMERCE -- whose percents are barely atom-gated, so plane C never touched them -- reconciled exactly.
+	// ⚖ The flag makes the two planes IDEMPOTENT rather than additive: a deposit is booked iff its gate holds,
+	// whichever plane notices first, and the second one finds it already booked and does nothing. That also
+	// retires the as-if-held pin for this purpose -- a withdrawal no longer has to reconstruct an old verdict,
+	// because the BOOK remembers what was actually applied ([state-repositories.md] § THE INVARIANT).
+	// ⚠ Keyed on the compiled ENTRY pointer, which is stable for the process (write-once infos) and is what the
+	// deposit index hands out. Derived state: never serialized, rebuilt from the same facts as the slots.
+	// ⚖ THE BOOK STORES THE VALUE, NOT A FLAG -- and that is what makes ONE mechanism serve BOTH planes.
+	// A flag answers "is this deposit in the slot"; the VALUE answers "how much of it is", which is the question
+	// plane B (the COUNT route) asks. A deposit scaled by a count moves when the count moves without its gate
+	// changing at all, so a boolean book cannot express it and the count route had to be a separate mechanism --
+	// which is why it was never wired. With the value booked, EVERY re-book is the same operation: resolve what
+	// the data says now, subtract what is recorded, apply the difference. Conditions, counts and scale changes
+	// all fall out of it, and it is idempotent, so no plane can stack on another ([DEC-maintained-sum]).
+	bool isGatedBooked(const void* pEntry) const
+	{ return pEntry != NULL && bookedGated.find(pEntry) != bookedGated.end(); }
+
+	// What this package currently holds for one deposit. An absent entry IS zero, so a never-booked deposit and a
+	// withdrawn one are the same state -- which is what keeps the difference arithmetic honest.
+	BookedDeposit bookedDeposit(const void* pEntry) const
+	{
+		if (pEntry != NULL)
+		{
+			const typename std::map<const void*, BookedDeposit>::const_iterator it = bookedGated.find(pEntry);
+			if (it != bookedGated.end()) { return it->second; }
+		}
+		return BookedDeposit();
+	}
+
+	void setBookedDeposit(const void* pEntry, int iChannel, bool bPercent, int64_t iValue) const
+	{
+		if (pEntry == NULL) { return; }
+		if (iValue == 0) { bookedGated.erase(pEntry); return; }
+		BookedDeposit& kBooked = bookedGated[pEntry];
+		kBooked.iChannel = iChannel;
+		kBooked.bPercent = bPercent;
+		kBooked.iValue = iValue;
+	}
+
+	void setGatedBooked(const void* pEntry, bool bBooked) const
+	{
+		if (pEntry == NULL || bBooked) { return; }   // clearing only; a booking carries its value
+		bookedGated.erase(pEntry);
+	}
 
 	// ---- storage sizing ----
 
@@ -322,8 +495,43 @@ struct CvCascadePackage
 			{
 				restFlat.resize(iChannels, 0);
 			}
+			if (yieldScaleInterval.size() < iChannels)
+			{
+				yieldScaleInterval.resize(iChannels, 0);
+			}
+			if (yieldScaleAmount.size() < iChannels)
+			{
+				yieldScaleAmount.resize(iChannels, 0);
+			}
 		}
 	}
+
+	// ⚖ FEED THE PLOT ITS TWO SCALING OPERANDS -- the fan's write point, and the only way they ever move.
+	// Returns true when either number actually CHANGED, so a caller re-resolves nothing it need not.
+	// ⛔ It SETS rather than accumulates: the interval is a resolved selection, not a sum of deposits, so
+	// accumulating it would produce a "per N" no source ever authored.
+	bool setYieldScaling(int iChannel, int64_t iInterval, int64_t iAmount) const
+	{
+		if (scope != CASC_SCOPE_PLOT)
+		{
+			return false;
+		}
+		ensureSized();
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0 || iSlot >= (int)yieldScaleInterval.size())
+		{
+			return false;
+		}
+		if (yieldScaleInterval[iSlot] == iInterval && yieldScaleAmount[iSlot] == iAmount)
+		{
+			return false;
+		}
+		yieldScaleInterval[iSlot] = iInterval;
+		yieldScaleAmount[iSlot] = iAmount;
+		resolvePlotFlat(iSlot, iChannel);
+		return true;
+	}
+
 	// Slot write access for the gather (refs into the mutable storage; game-thread only).
 	int64_t& slotFlat(int iSlotIndex) const { return flat[iSlotIndex]; }
 	int& slotPercent(int iSlotIndex) const { return percent[iSlotIndex]; }

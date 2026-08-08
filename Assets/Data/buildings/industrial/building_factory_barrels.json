@@ -66,9 +66,7 @@
      "enabled": {
       "type": "BONUS_PRIME_TIMBER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

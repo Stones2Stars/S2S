@@ -57,13 +57,6 @@
    "flat": -4
   }
  },
- "combat": {
-  "empire": {
-   "captureResistance": {
-    "percent": 20
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "freeCivilian": {
@@ -175,6 +168,13 @@
  "diplomacy": {
   "empire": {
    "warWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
     "percent": 20
    }
   }

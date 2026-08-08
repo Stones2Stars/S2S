@@ -32,9 +32,7 @@
      "enabled": {
       "type": "BONUS_COAL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -42,9 +40,7 @@
      "enabled": {
       "type": "BONUS_BAUXITE_ORE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

@@ -11,11 +11,13 @@
 //	⛔ A MISSED EMIT therefore leaves a loud compounding error that nothing re-derives. That is the design, not a
 //	weakness of it ([DEC-no-self-heal]): it is how the missing fact gets found.
 //
-//	⚠ WHAT IS NOT WIRED HERE, and is a HOLE rather than a decision: the COUNT route (plane B) and the ATOM route
-//	(plane C). Both are reverse indices off the same compiled deposits, and both still answer as MASKS -- a mask
-//	names channels, and a channel has nothing to apply. They land when DepositIndex returns the DEPOSITS an atom
-//	gates and a count scales; until then a deposit conditioned on a predicate, or scaled by a count, is not
-//	maintained when that predicate or count moves.
+//	⚠ WHAT IS NOT WIRED HERE, and is a HOLE rather than a decision: the COUNT route (plane B), and the ATOM route
+//	(plane C) for every axis EXCEPT the two that are wired -- plot predicates (mc_applyPlotPredicate) and BONUS
+//	atoms (mc_applyBonusAtom). Plane B still answers as a MASK, and a mask names channels while a channel has
+//	nothing to apply; it lands when DepositIndex returns the DEPOSITS a count scales. Until then a deposit scaled
+//	by a count -- or conditioned on an unrouted atom -- is not maintained when that count or atom moves.
+//	⚑ The bonus axis is the worked example of what wiring one costs: the index was never the obstacle, the
+//	PAST-TENSE withdrawal was, and the AS-IF-HELD hypothetical is what makes withdraw-then-apply exact.
 //
 
 #include "CvGameCoreDLL.h"
@@ -26,6 +28,7 @@
 #include "Data/CvDepositIndex.h"        // routeFor + the dependency routes -- the ONE mark derivation
 #include "Data/CvDepositRead.h"         // MMKernel::resolveEntry -- the ONE per-entry resolve, shared with the oracle
 #include "Data/CvInfoValuation.h"       // the eval-ctx fill seam (the contexts ARE the eval state)
+#include "Enabler/CvEnablerKernel.h"    // wireOperatingBuildings -- the THIRD leg of the eval state
 #include "Spine/CvEventSpine.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvMap.h"
@@ -56,37 +59,205 @@ namespace
 {
 	// ---- the ONE mark application: a derived route x the owner objects the event names ----
 
-	// One plot-substrate id -> its TYPE string, for the dependency route keyed by that type. ONE lookup shared by
-	// the arriving and the departing id, so the two directions cannot drift apart.
-	const char* mc_substrateTypeName(int iEventId, int iId)
+	// ⚖ THE TRADE-ROUTE RECOMPUTE TRIGGER -- TARGETED, at the owner an event actually hit (owner ruling).
+	//
+	// ⛔ THE TRADE-ROUTE YIELD IS THE ONE VALUE THE CASCADE FEEDS BUT DOES NOT HOLD. The engine owns the network
+	// calculation, so the cascade supplies its INPUTS -- the route count and the profit / per-channel modifiers --
+	// and `CvCity::m_aiTradeYield` is the engine's OUTPUT, folded into TIER-1 BASE at the combine
+	// ([modifier.md] §2a). It is not a package slot, so the maintained sum does not reach it and no fact keeps it
+	// current: it only moves when something calls `CvPlayer::updateTradeRoutes()`.
+	// ⚑ That is why it is rebuilt rather than delta'd, and why the rebuild has exactly two moments: ONCE at the
+	// end of load (CvGame::onFinalInitialized, against the final cascade), and thereafter TARGETED at whichever
+	// owner a fact just moved a tradeRoutes channel for. ⛔ Not a per-turn sweep and not a blanket over every
+	// player -- the fact names the owner, so the recompute follows the fact ([DEC-no-self-heal]).
+	// ⚠ It is DEFERRED to the end of the event rather than fired per deposit: one civic swap moves several
+	// channels, and rebuilding a player's whole route network once per channel would pay the network walk many
+	// times over for one happening.
+	std::set<int> s_tradeRoutePendingOwners;
+
+	bool mc_isTradeRouteChannel(int iChannel)
 	{
-		if (iId < 0)
+		static std::set<int> s_channels;
+		static bool s_built = false;
+		if (!s_built)
 		{
-			return NULL;
+			for (int iKind = 0; iKind < (int)NUM_TRADE_ROUTE_KINDS; ++iKind)
+			{
+				const int iCh = CascadeChannelRegistry::channelLookup(MODFAM_TRADE_ROUTES, iKind, -1);
+				if (iCh >= 0)
+				{
+					s_channels.insert(iCh);
+				}
+			}
+			s_built = true;
 		}
-		switch (iEventId)
+		return iChannel >= 0 && s_channels.find(iChannel) != s_channels.end();
+	}
+
+	// ⚖ THE PLOT YIELD-THRESHOLD IS AN OPERAND OF THE *RESOLVE*, NOT A DEPOSIT -- so when it moves, the plots it
+	// governs must re-resolve. A trait gained or lost changes what
+	// `CvPlayer::getExtraYieldThresholds` answers, and that fact names no plot at all: the consequence is
+	// non-local, which is precisely the sanctioned event-triggered recalc ([contexts.md] -- a genuine DOMAIN
+	// fact, a consequence the fact cannot name, and no finer route to derive).
+	// ⛔ Not a rebuild: the plot's SEGMENTS are untouched and nothing is re-derived from a source; only the
+	// non-linear step over the already-stored sums is recomputed.
+	std::set<int> s_thresholdPendingOwners;
+
+	bool mc_isPlotThresholdChannel(int iChannel)
+	{
+		static std::set<int> s_channels;
+		static bool s_built = false;
+		if (!s_built)
 		{
-		case SEVT_PLOT_IMPROVEMENT_ADDED:
-		case SEVT_PLOT_IMPROVEMENT_REMOVED:
-			return (iId < GC.getNumImprovementInfos()) ? GC.getImprovementInfo((ImprovementTypes)iId).getType() : NULL;
-		case SEVT_PLOT_TERRAIN_ADDED:
-		case SEVT_PLOT_TERRAIN_REMOVED:
-			return (iId < GC.getNumTerrainInfos()) ? GC.getTerrainInfo((TerrainTypes)iId).getType() : NULL;
-		case SEVT_PLOT_FEATURE_ADDED:
-		case SEVT_PLOT_FEATURE_REMOVED:
-			return (iId < GC.getNumFeatureInfos()) ? GC.getFeatureInfo((FeatureTypes)iId).getType() : NULL;
-		case SEVT_PLOT_ROUTE_ADDED:
-		case SEVT_PLOT_ROUTE_REMOVED:
-			return (iId < GC.getNumRouteInfos()) ? GC.getRouteInfo((RouteTypes)iId).getType() : NULL;
-		case SEVT_PLOT_BONUS_ADDED:
-		case SEVT_PLOT_BONUS_REMOVED:
-			return (iId < GC.getNumBonusInfos()) ? GC.getBonusInfo((BonusTypes)iId).getType() : NULL;
-		default:
-			return NULL;
+			bool bAnswered = false;
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				const int iExtra = CascadeChannelRegistry::channelLookup(MODFAM_EXTRA_YIELD_THRESHOLD, iYield, -1);
+				const int iLess = CascadeChannelRegistry::channelLookup(MODFAM_LESS_YIELD_THRESHOLD, iYield, -1);
+				if (iExtra >= 0) { s_channels.insert(iExtra); bAnswered = true; }
+				if (iLess >= 0) { s_channels.insert(iLess); bAnswered = true; }
+			}
+			s_built = bAnswered;
+		}
+		return iChannel >= 0 && s_channels.find(iChannel) != s_channels.end();
+	}
+
+	// ⛔ THE LOAD BUILD FOR THE THRESHOLD, AND ITS ABSENCE MADE THE WHOLE FOLD INERT. A plot resolves when its
+	// substrate streams, and the MAP streams BEFORE the players -- so at that instant the plot's owner holds no
+	// traits, the threshold reads 0, and the step is correctly not applied. Nothing then re-resolves the plot
+	// once the traits arrive, so every plot keeps the answer it computed against an empty player.
+	// ⚑ MEASURED before this: player 0 carried a production threshold of 700 with TEN worked plots above it in
+	// one city, and the plot base gained exactly nothing.
+	// ⚠ The play-time route is deliberately guarded to the non-load path (a per-fact mark during the reseed would
+	// re-resolve the same plots once per streaming trait); this pass is its load-time twin, run once at the end
+	// against final state -- the same shape the trade-route rebuild takes.
+	void mc_markAllThresholdOwners()
+	{
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
+			{
+				s_thresholdPendingOwners.insert(iPlayer);
+			}
 		}
 	}
 
-	// The plot-resident SOURCE a substrate fact names. The same switch as mc_substrateTypeName one level up,
+	void mc_flushThresholdResolves()
+	{
+		if (s_thresholdPendingOwners.empty())
+		{
+			return;
+		}
+		// the base-yield channels are the only ones a threshold governs
+		std::vector<int> yieldChannels;
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			const int iCh = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+			if (iCh >= 0) { yieldChannels.push_back(iCh); }
+		}
+		for (std::set<int>::const_iterator it = s_thresholdPendingOwners.begin();
+			it != s_thresholdPendingOwners.end(); ++it)
+		{
+			if (*it < 0 || *it >= MAX_PLAYERS) { continue; }
+			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)*it);
+			// The owner's two numbers, resolved ONCE per owner rather than per plot.
+			// ⚠ The INTERVAL is the smallest positive one the owner holds, NOT a sum -- two sources at 7 and 5
+			// mean "per 5", never "per 12" ([modifier.md] §2a). CvPlayer::updateExtraYieldThreshold already makes
+			// that selection and reduces the ×100 authoring to whole units, so it is the correct feed and the
+			// summed cascade roll-up is not.
+			std::vector<int> aiInterval;
+			for (size_t iCh = 0; iCh < yieldChannels.size(); ++iCh)
+			{
+				aiInterval.push_back(kOwner.getExtraYieldThreshold((YieldTypes)iCh));
+			}
+			// The AMOUNT each whole interval grants. It is a SEPARATE number by ruling and is meant to be movable
+			// data; until an authoring surface carries it, the engine define supplies it (×100 for the plot plane).
+			const int64_t iAmount = (int64_t)GC.getEXTRA_YIELD() * 100;
+			// every plot the owner's cities can work -- the reach the scaling actually has on the yield plane
+			std::set<const CvPlot*> kSeen;
+			for (CvPlayer::city_iterator cityIterator = kOwner.beginCities();
+				cityIterator != kOwner.endCities(); ++cityIterator)
+			{
+				const CvCity* pCity = *cityIterator;
+				if (pCity == NULL) { continue; }
+				const int iNumPlots = pCity->getNumCityPlots();
+				for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
+				{
+					const CvPlot* pPlot = pCity->getCityIndexPlot(iPlotIndex);
+					if (pPlot == NULL || kSeen.find(pPlot) != kSeen.end()) { continue; }
+					kSeen.insert(pPlot);
+					for (size_t iCh = 0; iCh < yieldChannels.size(); ++iCh)
+					{
+						// FEED the plot its two numbers; the package resolves itself off them. The plot never
+						// reaches back for the owner -- that is the whole point of storing them here.
+						pPlot->getCascadePackage().setYieldScaling(yieldChannels[iCh],
+							(int64_t)aiInterval[iCh] * 100, (int64_t)iAmount);
+					}
+				}
+			}
+		}
+		s_thresholdPendingOwners.clear();
+	}
+
+	void mc_noteChannelApplied(int iChannel, int iOwner)
+	{
+		if (iOwner >= 0 && mc_isPlotThresholdChannel(iChannel) && !spineGameLoadInProgress())
+		{
+			s_thresholdPendingOwners.insert(iOwner);
+		}
+		// Inside the load bracket the load-end pass rebuilds every player once, so noting here would only make
+		// that pass run twice.
+		if (iOwner >= 0 && mc_isTradeRouteChannel(iChannel) && !spineGameLoadInProgress())
+		{
+			s_tradeRoutePendingOwners.insert(iOwner);
+		}
+	}
+
+	void mc_flushTradeRouteUpdates()
+	{
+		for (std::set<int>::const_iterator it = s_tradeRoutePendingOwners.begin();
+			it != s_tradeRoutePendingOwners.end(); ++it)
+		{
+			if (*it >= 0 && *it < MAX_PLAYERS)
+			{
+				GET_PLAYER((PlayerTypes)*it).updateTradeRoutes();
+			}
+		}
+		s_tradeRoutePendingOwners.clear();
+	}
+
+	// ⚖ THE CARRIER SLOT'S RESOLVE -- a source info back to its BUILDING id, for the one predicate class that
+	// asks about the DEPOSITING entity rather than the target.
+	// ⛔ AN ENTRY CANNOT NAME ITSELF ([contexts.md] § THE SOURCE SLOTS): neither a compiled entry nor an info
+	// knows its own engine id, so a condition like `existedFor` -- how long has THIS building stood -- has no way
+	// to ask unless the walk that knows the id puts it in the ctx. `ctx.sourceBuilding` defaults to -1 and the
+	// predicate answers FALSE there, deliberately, because resolving it against whichever building the walk
+	// reached last would be worse than declining.
+	// ⚑ Built ONCE, lazily, from the building registry -- a pointer compare per lookup rather than a type-string
+	// hash, and nothing to keep in step: infos do not reload mid-session.
+	int mc_buildingIdOf(const CvInfo* pSource)
+	{
+		static std::map<const CvInfo*, int> s_buildingIds;
+		static bool s_built = false;
+		if (pSource == NULL)
+		{
+			return -1;
+		}
+		if (!s_built)
+		{
+			for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
+			{
+				s_buildingIds[(const CvInfo*)&GC.getBuildingInfo((BuildingTypes)iBuilding)] = iBuilding;
+			}
+			s_built = true;
+		}
+		const std::map<const CvInfo*, int>::const_iterator it = s_buildingIds.find(pSource);
+		return (it == s_buildingIds.end()) ? -1 : it->second;
+	}
+
+	// The plot-resident SOURCE a substrate fact names. (Its type-NAME twin is deleted: it existed only to key a
+	// substrate type-atom route, and no authored condition anywhere names an improvement / terrain / feature /
+	// route -- see the census at the substrate case in onEvent.)
 	// returning the INFO rather than its name, because plane A applies the source's own compiled deposits and
 	// needs the object. ONE id per fact (iType): _ADDED names what arrived, _REMOVED what left.
 	const CvInfo* mc_substrateInfo(int iEventId, int iId)
@@ -235,10 +406,30 @@ namespace
 	// resolve against THIS city -- which is the whole reason an above-city deposit is folded per city rather
 	// than resolved once and handed out.
 	void mc_applyCityDeposits(const std::vector<CvModEntry*>& entries, int iMultiplicity, int iSourceIndex, const CvCity& city,
-		const char* szSource, const char* szOnFact)
+		const char* szSource, const char* szOnFact, int iSourceBuilding)
 	{
 		CvCascadeEvalCtx evalCtx;
-		InfoValuation::fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
+		// ⛔ THE CTX MUST CARRY THE PLOT GROUP **AND** THE ENABLER'S OPERATING SET, or the conditioned half of
+		// every deposit silently evaluates to FALSE and never applies. An under-filled ctx does not error and
+		// does not warn: a `connection:"trade"` atom with no plot group, and a BUILDING_/vicinity-provides atom
+		// with no active set, both simply answer NO ([triggers.md]: "the operating-set legs sit EMPTY and any
+		// condition asking an active-building or vicinity-provides question evaluates against nothing and
+		// quietly answers false").
+		// ⚑ It is the APPLY path, so the loss is permanent rather than momentary — the deposit is never added to
+		// the package at all, and nothing re-derives it ([DEC-no-self-heal]). The gather (the oracle) wires both,
+		// which is exactly why the two sides disagreed.
+		// ⚠ This wiring is an ALIGNMENT with the gather, not a measured fix for any particular channel: the
+		// gather wires both legs and this path did not, so the two sides could disagree by construction.
+		// Adding it moved no observed rate -- do NOT read it as the cause of a channel's divergence.
+		InfoValuation::fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(),
+			city.plotGroup(city.getOwner()), evalCtx);
+		EnablerKernel::wireOperatingBuildings(&city, evalCtx);
+		// THE CARRIER SLOT. A source-relative predicate (`existedFor` -- how long has THIS building stood) can only
+		// be answered by the walk that knows the depositing entity's id, and it answers FALSE when nothing set it
+		// ([contexts.md] § THE SOURCE SLOTS). It was set on the GATHER's per-building fold and nowhere on the apply
+		// path, so every age-gated deposit resolved false on the stored plane while the oracle resolved it properly
+		// -- the two sides disagreeing by construction on the whole class.
+		evalCtx.sourceBuilding = iSourceBuilding;
 		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
 		{
 			const CvModEntry* pEntry = entries[iEntry];
@@ -258,6 +449,19 @@ namespace
 			{
 				city.getCascadePackage().applyFlat(iChannel, iValue);
 			}
+			// THE BOOK: a conditioned entry that plane A just applied is now booked, so the ATOM route finds it
+			// already there and does not stack a second copy on top ([DEC-maintained-sum] -- the two planes move
+			// one slot and must agree about what is in it). A withdrawal (negative multiplicity) clears it.
+			if (pEntry->enabled != NULL || pEntry->disabled != NULL)
+			{
+				// Plane A books the AMOUNT it just applied, so a later re-book differences against the real
+				// contribution rather than against a yes/no.
+				const CvCascadePackage<CvCity>::BookedDeposit kPrev =
+					city.getCascadePackage().bookedDeposit(pEntry);
+				city.getCascadePackage().setBookedDeposit(pEntry, iChannel, bPercentSide,
+					(iMultiplicity > 0) ? (kPrev.iValue + iValue) : 0);
+			}
+			mc_noteChannelApplied(iChannel, (int)city.getOwner());
 			// The per-source ATTRIBUTION line (DIAGNOSTIC, level 3 -- free until asked for).
 			CascadeChannelRegistry::reportDepositApply(szSource, iChannel, CASC_SCOPE_CITY, bPercentSide,
 				iValue, (int)city.getOwner(), city.getID(), szOnFact);
@@ -368,6 +572,8 @@ namespace
 				{
 					pLoopPlot->getCascadePackage().applyPlotSegment(
 						CvCascadePackage<CvPlot>::PLOTSEG_REST, iChannel, iValue);
+					CascadeChannelRegistry::reportDepositApply("<plotsFan>", iChannel, CASC_SCOPE_PLOT,
+						false, iValue, (int)city.getOwner(), city.getID(), "plotsFan");
 					bApplied = true;
 				}
 			}
@@ -476,6 +682,29 @@ namespace
 					pCity->foodConsumption(), pCity->getFoodConsumedPerPopulation(), pCity->foodDifference(),
 					GC.getDefineINT("BASE_CITY_GROWTH_THRESHOLD"), GC.getDefineINT("CITY_GROWTH_MULTIPLIER"),
 					kPlayer.isNormalAI() ? 1 : 0, kPlayer.isGoldenAge() ? 1 : 0);
+				// ⚑ The RATE beside the threshold, decomposed. The two numbers a city grows on are what it NEEDS
+				// and what it MAKES; the census carried only the first, so a food deficit could be attributed to
+				// the threshold and never to a term of the rate.
+				// ⛔ The terms come OUT of the real combine rather than being re-derived here
+				// ([DEC-single-implementation]) -- a census that recomputed its own decomposition could disagree
+				// with the value it claims to explain, which is the one thing it must never do.
+				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+				{
+					const int iChannel = CascadeChannelRegistry::channelLookup(
+						infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+					if (iChannel < 0)
+					{
+						continue;
+					}
+					InfoValuation::CityRateTerms kTerms;
+					InfoValuation::cityReceiverRate(*pCity, iChannel, &kTerms);
+					CascadeChannelRegistry::reportRateRead(
+						iPlayer, kPlayer.isHuman() ? 1 : 0, pCity->getID(), iChannel,
+						(int)kTerms.plotBase, (int)kTerms.plotNature, (int)kTerms.plotImprovement,
+						(int)kTerms.plotRest, (int)kTerms.tradeYield, (int)kTerms.goldenAge,
+						(int)kTerms.upperFlat, (int)kTerms.specialists, (int)kTerms.cityFlat,
+						kTerms.percentSum, kTerms.workedPlots, (int)kTerms.rate);
+				}
 			}
 		}
 	}
@@ -523,6 +752,27 @@ namespace
 				if (!bPercentSide)
 				{
 					pPlot->getCascadePackage().applyPlotSegment(ePlotSegment, iChannel, iValue);
+					// THE BOOK, on the plot plane -- the same record mc_applyCityDeposits keeps, and it has to be
+					// kept HERE or the book is not a faithful account of the slot. mc_bookGatedPlot moves only the
+					// DIFFERENCE between what is booked and what the gate now owes, so an entry plane A applied
+					// while leaving the book at zero would be re-applied in full by the next crossing (a double) and
+					// never withdrawn when its gate later turns off (a miss). Booking every conditioned entry the
+					// moment it is applied is what makes that difference exact ([DEC-maintained-sum]).
+					if (pEntry->enabled != NULL || pEntry->disabled != NULL)
+					{
+						const CvCascadePackage<CvPlot>::BookedDeposit kPrev =
+							pPlot->getCascadePackage().bookedDeposit(pEntry);
+						pPlot->getCascadePackage().setBookedDeposit(pEntry, iChannel, false,
+							(iMultiplicity > 0) ? (kPrev.iValue + iValue) : 0);
+					}
+					// ⛔ THE PLOT PLANE'S ONLY ATTRIBUTION, and its absence is what made a whole class of question
+					// unanswerable rather than merely unlogged: no served surface carries a plot package, so a
+					// plot-scope deposit left no trace anywhere. "Does a resource fold its yield when its fact
+					// fires?" is the shape of it -- an EVENT-DRIVEN fold that cannot be observed is one nobody can
+					// tell apart from a fold that never happens ([DEC-obs-scale]).
+					CascadeChannelRegistry::reportDepositApply(
+						(pSourceInfo != NULL) ? pSourceInfo->getType() : "?", iChannel, CASC_SCOPE_PLOT,
+						false, iValue, (int)pPlot->getOwner(), -1, szOnFact);
 				}
 			}
 			pPlot->getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
@@ -551,7 +801,8 @@ namespace
 
 		if (pCity != NULL)
 		{
-			mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, *pCity, pSourceInfo->getType(), szOnFact);
+			mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, *pCity, pSourceInfo->getType(), szOnFact,
+				mc_buildingIdOf(pSourceInfo));
 			// a CITY-scope `plots` deposit reaches THIS city's worked plots and no other city's
 			std::vector<const CvModEntry*> cityPlotEntries;
 			if (!bBankPlotsFan && mc_selectPlotsTargetEntries(entries, CASC_SCOPE_CITY, cityPlotEntries))
@@ -569,7 +820,8 @@ namespace
 			{
 				if (*cityIterator != NULL)
 				{
-					mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, **cityIterator, pSourceInfo->getType(), szOnFact);
+					mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, **cityIterator, pSourceInfo->getType(), szOnFact,
+						mc_buildingIdOf(pSourceInfo));
 				}
 			}
 		}
@@ -623,6 +875,17 @@ namespace
 					{
 						pPlayer->getCascadePackage().applyFlat(iChannel, iValue);
 					}
+					// THE BOOK, on the empire plane -- for the same reason as the city and plot planes above. It is
+					// what the ERA route reads: an era atom is a THRESHOLD, not a presence crossing, so its deposits
+					// cannot be applied by a ±1 on a pinned verdict and are re-booked against the new era instead.
+					if (pEntry->enabled != NULL || pEntry->disabled != NULL)
+					{
+						const CvCascadePackage<CvPlayer>::BookedDeposit kPrev =
+							pPlayer->getCascadePackage().bookedDeposit(pEntry);
+						pPlayer->getCascadePackage().setBookedDeposit(pEntry, iChannel, bPercentSide,
+							(iMultiplicity > 0) ? (kPrev.iValue + iValue) : 0);
+					}
+					mc_noteChannelApplied(iChannel, (int)pPlayer->getID());
 					CascadeChannelRegistry::reportDepositApply(pSourceInfo->getType(), iChannel, CASC_SCOPE_EMPIRE,
 						bPercentSide, iValue, (int)pPlayer->getID(), -1, szOnFact);
 				}
@@ -650,6 +913,91 @@ namespace
 		}
 	}
 
+	// ⚖ THE SECOND LEG OF THE EMPIRE→CITIES FAN -- what a city folds when it STARTS EXISTING.
+	//
+	// ⛔ THE FAN ALONE CANNOT BE THE WHOLE MECHANISM, and the reason is an ordering fact rather than a judgement
+	// ([contexts.md] § THE FOLD HAS TWO LEGS -- the amenity fold hit exactly this and answered it exactly this
+	// way). An empire-level grantor fans its CITY-scope deposits over the cities that stand AT THAT MOMENT:
+	//   - at LOAD the order is not uniform. Measured in CvPlayer::read: techs (l.191), projects (l.201) and civics
+	//     (l.445) emit BEFORE the cities stream (l.524), so their fan iterates an EMPTY list and every city-scope
+	//     deposit they carry is applied to nothing; traits (l.1022) and heritages (l.1349) emit AFTER, so theirs
+	//     land. One mechanism, two outcomes, decided by where a member sits in a read.
+	//   - at PLAY a city FOUNDED later never receives anything from what its owner already holds, permanently.
+	//
+	// ⚑ IT IS IDEMPOTENT BY CONSTRUCTION, WHICH IS WHY IT NEEDS NO LOAD GUARD AND NO BANK. The package already
+	// records which sources have deposited into it (noteSourceApplied -- plane B and C's own liveness key), so a
+	// source the fan already delivered is SKIPPED here by the same test those planes use. The alternative shape --
+	// suppressing the fan during load and folding everything at the end -- would work too, but it makes
+	// correctness depend on a guard staying in step with an emit order nobody controls; this depends on the
+	// package's own record of what it holds, which cannot disagree with what was applied.
+	// ⛔ Not a recompute and not a sweep: the worklist is the owner's HELD sources, and each one goes through the
+	// ONE per-entry resolve ([DEC-single-implementation]). A source nobody holds is never reached.
+	void mc_foldOwnerSourcesIntoCity(const CvPlayer& kOwner, const CvCity& kCity, const char* szOnFact)
+	{
+		std::vector<const CvInfo*> heldSources;
+		const CvTeam& kTeam = GET_TEAM(kOwner.getTeam());
+		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
+		{
+			if (kTeam.isHasTech((TechTypes)iTech))
+			{
+				heldSources.push_back(&GC.getTechInfo((TechTypes)iTech));
+			}
+		}
+		for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
+		{
+			if (kTeam.getProjectCount((ProjectTypes)iProject) > 0)
+			{
+				heldSources.push_back(&GC.getProjectInfo((ProjectTypes)iProject));
+			}
+		}
+		for (int iCivicOption = 0; iCivicOption < GC.getNumCivicOptionInfos(); ++iCivicOption)
+		{
+			const CivicTypes eCivic = kOwner.getCivics((CivicOptionTypes)iCivicOption);
+			if (eCivic != NO_CIVIC)
+			{
+				heldSources.push_back(&GC.getCivicInfo(eCivic));
+			}
+		}
+		for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+		{
+			// the ACTIVE set's record -- a complex trait carries different values from its simple twin
+			// ([modifier.md] §4), so the fold must read the same record the fan did.
+			if (kOwner.hasTrait((TraitTypes)iTrait))
+			{
+				const CvTraitInfo* pTrait = MMKernel::traitData(iTrait);
+				if (pTrait != NULL)
+				{
+					heldSources.push_back(pTrait);
+				}
+			}
+		}
+		const std::vector<HeritageTypes> heritages = kOwner.getHeritage();
+		for (size_t iHeritage = 0; iHeritage < heritages.size(); ++iHeritage)
+		{
+			if (heritages[iHeritage] >= 0 && heritages[iHeritage] < GC.getNumHeritageInfos())
+			{
+				heldSources.push_back(&GC.getHeritageInfo(heritages[iHeritage]));
+			}
+		}
+
+		for (size_t iSource = 0; iSource < heldSources.size(); ++iSource)
+		{
+			const CvInfo* pSourceInfo = heldSources[iSource];
+			const CvModifiers* pModifiers = (pSourceInfo != NULL) ? pSourceInfo->getModifiers() : NULL;
+			if (pModifiers == NULL || pModifiers->empty())
+			{
+				continue;
+			}
+			const int iSourceIndex = DepositIndex::sourceIndexOf(pSourceInfo);
+			if (kCity.getCascadePackage().hasAppliedSource(iSourceIndex))
+			{
+				continue;   // the fan already delivered this one -- folding it again is the double
+			}
+			mc_applyCityDeposits(pModifiers->entries(), 1, iSourceIndex, kCity,
+				pSourceInfo->getType(), szOnFact, mc_buildingIdOf(pSourceInfo));
+		}
+	}
+
 	// ---- PLANES B and C: the COUNT route and the ATOM route ----
 	//
 	// Both move deposits ALREADY IN a slot, which is what makes them one function: plane B scales a deposit by
@@ -664,8 +1012,66 @@ namespace
 	// ⚠ Plane C's SIGN is the crossing direction the fact carries, and its withdrawal is exact only if that fact
 	// is emitted while the old state still holds (§ THE INVARIANT) -- the same emit-ordering contract plane A
 	// answers to, and the one thing this function cannot enforce for itself.
+	// pHypothetical PINS an atom's verdict for this pass (CvConditionEval.h's AS-IF-HELD overlay), and it is what
+	// makes an atom crossing EXACT rather than approximate. A DOMAIN fact is PAST TENSE -- it announces the
+	// crossing once the state has already moved -- so a withdrawal evaluated against the LIVE ctx asks a gate that
+	// no longer holds, resolves false, and withdraws nothing ([state-repositories.md] § THE INVARIANT: a
+	// withdrawal is exact only if it resolves against the state the deposit was booked under). Pinning the atom
+	// back to its OLD verdict restores exactly that state for the length of one pass, without writing a context
+	// (the overlay is read-only by construction -- a hypothetical that mutated a store would leave every other
+	// reader evaluating a game that never happened, with no self-heal to put it back).
+	// ⛔ THE LOAD-BRACKET BANK FOR ATOM-ROUTED DEPOSITS -- an ORDERING fact, never a staleness mechanism.
+	// MEASURED: 749,264 of the bonus route's deposits are dropped during the load because the gated deposit's
+	// SOURCE is not in that city's package yet -- the atom crossing arrives while the buildings it would modify
+	// are still activating. The drop is silent and permanent ([DEC-no-self-heal]).
+	// ⚖ WHAT IS BANKED IS THE **SKIPPED DEPOSIT**, NOT THE CROSSING, and that is what makes the drain exact.
+	// A replayed CROSSING would have to withdraw before it applies, and the withdrawal can only be exact if it
+	// resolves against the verdict the deposit was BOOKED under -- which at load is whatever held when its
+	// source activated, and is not knowable afterwards. Pinning the wrong one either over-withdraws or
+	// double-applies. A skipped deposit has no such ambiguity: it was never booked, so the drain owes it exactly
+	// one arrival and nothing else ([state-repositories.md] § THE INVARIANT).
+	// ⚑ Deduped on (deposit, owner, city): one deposit skipped 30 times is still one missing application.
+	struct BankedAtomDeposit
+	{
+		const DepositIndex::GatedDeposit* pGated;
+		int iOwner;
+		int iCityId;
+		bool operator<(const BankedAtomDeposit& kOther) const
+		{
+			if (pGated != kOther.pGated) return pGated < kOther.pGated;
+			if (iOwner != kOther.iOwner) return iOwner < kOther.iOwner;
+			return iCityId < kOther.iCityId;
+		}
+	};
+	std::set<BankedAtomDeposit> s_bankedAtomDeposits;
+
+	// ⛔ THE FAN'S OWN BANK, and it needs one because the deposit-level bank CANNOT catch this case. An
+	// EMPIRE-level crossing (a tech, a civic) is announced from CvPlayer::read, which streams BEFORE the cities
+	// deserialize -- so the city fan iterates an EMPTY list, mc_applyGated's city branch never runs, and there is
+	// no per-deposit skip to record. MEASURED: 68,782 tech/civic deposits found and ZERO applied, with a
+	// noSource count of zero -- the tell that the loop never executed rather than that it declined.
+	// ⚑ Only the HELD side is worth banking: nothing reached a city, so nothing was booked, and a crossing that
+	// ends the load un-held owes no withdrawal. The drain therefore replays an ARRIVAL and never a swap, which is
+	// the same reason the deposit bank does ([state-repositories.md] § THE INVARIANT).
+	// ⚑ Keyed on (atom, owner) so a civic swapped several times during one load drains once, at its FINAL verdict.
+	std::map<std::pair<std::string, int>, bool> s_bankedAtomFans;
+
+	// The per-pass OUTCOME tally. ⛔ It exists because "the route fired" and "the route MOVED something" are
+	// different claims, and only the second one matters: a pass that finds 389 deposits and applies none looks
+	// exactly like a pass that finds none, from the outside. Counting the three ways a deposit is dropped is what
+	// separates an empty index from an unapplied source from a refused condition ([DEC-no-guessing]).
+	struct McGatedTally
+	{
+		int iFound;
+		int iNoSource;    // the source is not in this package -- it never applied here, so there is nothing to move
+		int iRefused;     // resolveEntry declined: the condition, the scope or the audience said no
+		int iApplied;
+		McGatedTally() : iFound(0), iNoSource(0), iRefused(0), iApplied(0) {}
+	};
+
 	void mc_applyGated(const std::vector<DepositIndex::GatedDeposit>* pGated, int iDelta,
-		MMKernel::PerScaling ePerScaling, const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot)
+		MMKernel::PerScaling ePerScaling, const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot,
+		const CvCascadeHypothetical* pHypothetical = NULL, McGatedTally* pTally = NULL)
 	{
 		if (pGated == NULL || iDelta == 0)
 		{
@@ -678,6 +1084,7 @@ namespace
 			{
 				continue;
 			}
+			if (pTally != NULL) { pTally->iFound++; }
 			const CvCascScope eScope = (CvCascScope)kGated.deposit->scopeIdx;
 			int iChannel = -1;
 			bool bPercentSide = false;
@@ -690,6 +1097,7 @@ namespace
 				}
 				CvCascadeEvalCtx evalCtx;
 				InfoValuation::fillEvalCtxAtPlot(*pPlot, evalCtx);
+				evalCtx.hypothetical = pHypothetical;
 				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, pPlot, 0, false,
 					iChannel, bPercentSide, iValue, ePerScaling) && !bPercentSide)
 				{
@@ -702,11 +1110,30 @@ namespace
 			{
 				if (pCity == NULL || !pCity->getCascadePackage().hasAppliedSource(kGated.sourceIndex))
 				{
+					if (pCity != NULL)
+					{
+						if (pTally != NULL) { pTally->iNoSource++; }
+						// Inside the load bracket the source has simply not streamed yet, so this is an ORDERING
+						// miss and the deposit is owed an application once everything stands. Outside it, the
+						// source genuinely is not here and there is nothing to move.
+						if (iDelta > 0 && spineGameLoadInProgress())
+						{
+							BankedAtomDeposit kBanked;
+							kBanked.pGated = &kGated;
+							kBanked.iOwner = (int)pCity->getOwner();
+							kBanked.iCityId = pCity->getID();
+							s_bankedAtomDeposits.insert(kBanked);
+						}
+					}
 					continue;
 				}
 				CvCascadeEvalCtx evalCtx;
+				// Same full fill as the source apply above — the plane-B/C routes evaluate the SAME conditions,
+				// so an under-filled ctx here would withdraw against a verdict the apply never used.
 				InfoValuation::fillEvalCtx(pCity->getCityContext(),
-					GET_PLAYER(pCity->getOwner()).getEmpireContext(), NULL, evalCtx);
+					GET_PLAYER(pCity->getOwner()).getEmpireContext(), pCity->plotGroup(pCity->getOwner()), evalCtx);
+				EnablerKernel::wireOperatingBuildings(pCity, evalCtx);
+				evalCtx.hypothetical = pHypothetical;
 				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, 0, false,
 					iChannel, bPercentSide, iValue, ePerScaling))
 				{
@@ -717,7 +1144,9 @@ namespace
 					CascadeChannelRegistry::reportDepositApply(
 						(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_CITY,
 						bPercentSide, iValue, (int)pCity->getOwner(), pCity->getID(), "gated");
+					if (pTally != NULL) { pTally->iApplied++; }
 				}
+				else if (pTally != NULL) { pTally->iRefused++; }
 				continue;
 			}
 			if (pPlayer == NULL)
@@ -726,6 +1155,7 @@ namespace
 			}
 			CvCascadeEvalCtx evalCtx;
 			pPlayer->getEmpireContext().fillEvalCtx(evalCtx);
+			evalCtx.hypothetical = pHypothetical;
 			if (eScope == CASC_SCOPE_TEAM)
 			{
 				const CvTeam& team = GET_TEAM(pPlayer->getTeam());
@@ -755,18 +1185,18 @@ namespace
 	}
 
 	// The source-carrying application: the source's own deposits (PLANE A, applied here) plus everything
-	// conditioned ON the source -- a deposit gated on this entity's presence. That second half is the ATOM
-	// route (plane C) and is NOT wired.
-	// ⛔ THE REASON IS THE WITHDRAWAL, NOT THE INDEX -- and the index reason that used to stand here is STALE.
-	// DepositIndex::gatedByType already answers with the DEPOSIT LIST an atom gates (di_scanConditionTree pushes
-	// every CASC_COND_PRESENCE type into s_gatedByType), so the arrival half is one mc_applyGated call away.
-	// What blocks it is that these facts are emitted AFTER the state moves -- CvCity::processBonus announces the
-	// crossing once the plot group's count has already changed -- while mc_applyGated resolves each entry through
-	// applies() against the LIVE ctx. So a REMOVED fact evaluates a gate that no longer holds, resolveEntry
-	// returns false, and nothing is withdrawn.
-	// ⚠ Wiring the arrival alone would therefore be WORSE than the present hole: an unwithdrawn deposit compounds
-	// on every re-acquisition, where today it is merely absent ([state-repositories.md] § THE INVARIANT -- a
-	// withdrawal is exact only if the fact is emitted while the old state still holds).
+	// conditioned ON the source -- a deposit gated on this entity's presence, which is the ATOM route (plane C)
+	// and lives in mc_applyBonusAtom for the BONUS axis.
+	// ⛔ WHAT MADE THAT ROUTE HARD WAS THE WITHDRAWAL, NEVER THE INDEX: DepositIndex::gatedByType has always
+	// answered with the deposit list an atom gates (di_scanConditionTree interns every CASC_COND_PRESENCE type),
+	// so the ARRIVAL half was only ever one mc_applyGated call away. The block was that a DOMAIN fact is PAST
+	// TENSE -- CvCity::processBonus announces the crossing once the count has already moved -- so a withdrawal
+	// resolved against the LIVE ctx asks a gate that no longer holds and withdraws nothing, and an arrival wired
+	// ALONE would compound on every re-acquisition instead of merely being absent.
+	// ⚑ The AS-IF-HELD hypothetical is what dissolves it: pinning the atom back to its OLD verdict restores the
+	// state the deposit was booked under for exactly one pass, so withdraw-then-apply is exact
+	// ([state-repositories.md] § THE INVARIANT). ⛔ The OTHER axes are still unrouted -- plane B (the COUNT route)
+	// and plane C for the non-bonus atoms -- and remain a HOLE rather than a decision.
 	void mc_applySource(const CvInfo* pSourceInfo, int iMultiplicity, int iEventId,
 		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot)
 	{
@@ -796,6 +1226,659 @@ namespace
 		const CvPlayer* pPlayer = (pPlotCity != NULL) ? &GET_PLAYER(pPlotCity->getOwner()) : NULL;
 		mc_applyGated(DepositIndex::gatedByPredicate(ePredicate), iCrossing,
 			MMKernel::PER_SCALE_APPLIED, pPlayer, pPlotCity, pPlot);
+	}
+
+	// ⚖ THE RE-BOOK -- one operation, and it is what makes planes B and C the SAME mechanism.
+	// `owed` is what the deposit resolves to against live state; `booked` is what this package already holds for
+	// it. Only the DIFFERENCE moves. A gate turning off resolves to 0 and is withdrawn; a COUNT moving resolves
+	// to a new magnitude with the gate unchanged and the difference is applied -- which is precisely plane B, and
+	// it needed no separate route, only a book that remembers an amount instead of a yes/no.
+	// ⛔ A channel or side change is handled as a full withdraw-then-apply rather than a signed delta: the two
+	// amounts live in different slots, so differencing them would move neither correctly.
+	void mc_rebookCity(const CvCity& kCity, const DepositIndex::GatedDeposit& kGated,
+		int iOwedChannel, bool bOwedPercent, int64_t iOwedValue, McGatedTally* pTally)
+	{
+		const CvCascadePackage<CvCity>::BookedDeposit kBooked =
+			kCity.getCascadePackage().bookedDeposit(kGated.deposit->entry);
+		if (kBooked.iChannel == iOwedChannel && kBooked.bPercent == bOwedPercent && kBooked.iValue == iOwedValue)
+		{
+			if (pTally != NULL && iOwedValue == 0) { pTally->iRefused++; }
+			return;   // already exactly what the data calls for
+		}
+		if (kBooked.iValue != 0 && (kBooked.iChannel != iOwedChannel || kBooked.bPercent != bOwedPercent))
+		{
+			if (kBooked.bPercent) kCity.getCascadePackage().applyPercent(kBooked.iChannel, (int)-kBooked.iValue);
+			else                  kCity.getCascadePackage().applyFlat(kBooked.iChannel, -kBooked.iValue);
+			if (iOwedValue != 0)
+			{
+				if (bOwedPercent) kCity.getCascadePackage().applyPercent(iOwedChannel, (int)iOwedValue);
+				else              kCity.getCascadePackage().applyFlat(iOwedChannel, iOwedValue);
+			}
+		}
+		else
+		{
+			const int64_t iDelta = iOwedValue - kBooked.iValue;
+			if (iDelta != 0)
+			{
+				const int iSlot = (iOwedChannel >= 0) ? iOwedChannel : kBooked.iChannel;
+				if (iSlot >= 0)
+				{
+					if (bOwedPercent || kBooked.bPercent) kCity.getCascadePackage().applyPercent(iSlot, (int)iDelta);
+					else                                  kCity.getCascadePackage().applyFlat(iSlot, iDelta);
+				}
+			}
+		}
+		kCity.getCascadePackage().setBookedDeposit(kGated.deposit->entry, iOwedChannel, bOwedPercent, iOwedValue);
+		mc_noteChannelApplied(iOwedChannel, (int)kCity.getOwner());
+		if (pTally != NULL) { pTally->iApplied++; }
+		if (iOwedValue != 0)
+		{
+			CascadeChannelRegistry::reportDepositApply(
+				(kGated.source != NULL) ? kGated.source->getType() : "?", iOwedChannel, CASC_SCOPE_CITY,
+				bOwedPercent, iOwedValue, (int)kCity.getOwner(), kCity.getID(), "gated");
+		}
+	}
+
+	// ⚖ THE IDEMPOTENT BOOKING -- plane C's whole apply, and it is a DIFF rather than a pair of additions.
+	// For each deposit an atom gates: what SHOULD be booked is what the gate says against LIVE state; what IS
+	// booked is the package's own record. Only the difference moves.
+	//   want && !booked  -> apply  (+), book it
+	//   !want && booked  -> apply  (-), unbook it
+	//   otherwise        -> nothing
+	// ⛔ THIS IS WHY IT CANNOT DOUBLE-APPLY, and the additive form did. Plane A books a deposit when its SOURCE
+	// arrives, evaluating the same gate against the same live state; a crossing arriving afterwards found the
+	// gate true and simply applied it AGAIN, because nothing recorded that it was already in the slot. Measured
+	// before this: London's food percent held 155 against 82 authorized, production 841 against 576, while
+	// commerce -- barely atom-gated, so this route never touched it -- reconciled exactly.
+	// ⚑ It also needs NO as-if-held pin. The pin existed to reconstruct the verdict a deposit was booked under,
+	// because a PAST-TENSE fact has already moved the state; the BOOK remembers it directly, which is both exact
+	// and cheaper ([state-repositories.md] § THE INVARIANT).
+	// ⛔ Still not a recompute: the worklist is exactly the deposits the arriving FACT names, never a sweep of the
+	// package or a re-derivation of state ([DEC-no-self-heal]).
+	void mc_bookGated(const std::vector<DepositIndex::GatedDeposit>* pGated, const CvCity& kCity,
+		McGatedTally* pTally)
+	{
+		if (pGated == NULL)
+		{
+			return;
+		}
+		// ⚑ The ctx is filled LAZILY, on the first entry that actually has a source in this package. Filling it is
+		// the expensive part (the whole eval fill plus the enabler's operating set), and the turn-cadence route
+		// asks this of EVERY city of EVERY player -- where the overwhelming majority hold none of the atom's
+		// sources and bail on an O(1) dictionary test ([DEC-turn-time-is-king]).
+		CvCascadeEvalCtx evalCtx;
+		bool bCtxFilled = false;
+		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+		{
+			const DepositIndex::GatedDeposit& kGated = (*pGated)[iGated];
+			if (kGated.deposit == NULL || kGated.deposit->entry == NULL)
+			{
+				continue;
+			}
+			if (pTally != NULL) { pTally->iFound++; }
+			if (!kCity.getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+			{
+				if (pTally != NULL) { pTally->iNoSource++; }
+				if (spineGameLoadInProgress())
+				{
+					BankedAtomDeposit kBanked;
+					kBanked.pGated = &kGated;
+					kBanked.iOwner = (int)kCity.getOwner();
+					kBanked.iCityId = kCity.getID();
+					s_bankedAtomDeposits.insert(kBanked);
+				}
+				continue;
+			}
+			if (!bCtxFilled)
+			{
+				InfoValuation::fillEvalCtx(kCity.getCityContext(), GET_PLAYER(kCity.getOwner()).getEmpireContext(),
+					kCity.plotGroup(kCity.getOwner()), evalCtx);
+				EnablerKernel::wireOperatingBuildings(&kCity, evalCtx);
+				bCtxFilled = true;
+			}
+			// THE CARRIER, per entry: a source-relative predicate resolves against the entity that DEPOSITED, so
+			// the walk that knows the id sets it here and it is -1 for every non-building source.
+			evalCtx.sourceBuilding = mc_buildingIdOf(kGated.source);
+			// WHAT THE DATA SAYS NOW. A decline resolves to nothing owed -- which is the same state as never
+			// having been booked, so the difference below withdraws it without a second code path.
+			int iChannel = -1;
+			bool bPercentSide = false;
+			int64_t iValue = 0;
+			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_CITY, evalCtx, NULL, 0,
+				false, iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
+			{
+				iChannel = -1;
+				iValue = 0;
+			}
+			mc_rebookCity(kCity, kGated, iChannel, bPercentSide, iValue, pTally);
+		}
+	}
+
+	// Which plot SEGMENT a source's plot-scope output belongs to. The segment is a property of the SOURCE (the
+	// same rule mc_plotSegmentFor encodes for facts), so it is resolved ONCE per gated deposit rather than per
+	// plot -- an atom crossing can touch every worked tile of every city.
+	CvCascadePackage<CvPlot>::PlotSegment mc_segmentForSource(const CvInfo* pSource)
+	{
+		const char* szType = (pSource != NULL) ? pSource->getType() : NULL;
+		if (szType != NULL)
+		{
+			if (strncmp(szType, "IMPROVEMENT_", 12) == 0)
+			{
+				return CvCascadePackage<CvPlot>::PLOTSEG_IMPROVEMENT;
+			}
+			if (strncmp(szType, "TERRAIN_", 8) == 0 || strncmp(szType, "FEATURE_", 8) == 0
+				|| strncmp(szType, "BONUS_", 6) == 0)
+			{
+				return CvCascadePackage<CvPlot>::PLOTSEG_NATURE;
+			}
+		}
+		return CvCascadePackage<CvPlot>::PLOTSEG_REST;   // route + the owner's plot-scope flats
+	}
+
+	// ⛔ PLANE C ON THE PLOT PLANE -- the half that did not exist. mc_applyGated's plot branch needs a PLOT, and
+	// every atom route passed NULL, so NO plot-scope deposit was ever re-booked by ANY crossing: a tech acquired
+	// after a farm is built never upgraded that farm's yield, and nothing would ever have corrected it
+	// ([DEC-no-self-heal]). At LOAD it hid, because the improvement facts stream while every tech is already
+	// held, so the conditions resolved true on the way in -- which is exactly why it survived: it is invisible on
+	// the one path anybody measures.
+	// ⚑ Same IDEMPOTENT booking as the city plane: want-vs-booked, so it can never stack on the apply that the
+	// plot's own substrate fact already made.
+	void mc_bookGatedPlot(const std::vector<DepositIndex::GatedDeposit>* pGated,
+		const std::vector<CvCascadePackage<CvPlot>::PlotSegment>& kSegments, const CvPlot& kPlot,
+		McGatedTally* pTally)
+	{
+		CvCascadeEvalCtx evalCtx;
+		InfoValuation::fillEvalCtxAtPlot(kPlot, evalCtx);
+		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+		{
+			const DepositIndex::GatedDeposit& kGated = (*pGated)[iGated];
+			if (kGated.deposit == NULL || kGated.deposit->entry == NULL
+				|| !kPlot.getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+			{
+				continue;   // this source never deposited on this tile -- there is nothing of its to move
+			}
+			if (pTally != NULL) { pTally->iFound++; }
+			int iChannel = -1;
+			bool bPercentSide = false;
+			int64_t iValue = 0;
+			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_PLOT, evalCtx, &kPlot,
+				0, false, iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
+			{
+				iChannel = -1;
+				iValue = 0;
+			}
+			// the ORIGIN RULE: plot is yield-only, so a plot-scope percent has no side to land on
+			if (bPercentSide)
+			{
+				iChannel = -1;
+				iValue = 0;
+			}
+			// Same value DIFFERENCE as the city plane -- a gate turning off resolves to 0 and is withdrawn; a
+			// count moving resolves to a new magnitude and only the difference lands.
+			const CvCascadePackage<CvPlot>::BookedDeposit kBooked =
+				kPlot.getCascadePackage().bookedDeposit(kGated.deposit->entry);
+			if (kBooked.iChannel == iChannel && kBooked.iValue == iValue)
+			{
+				if (pTally != NULL && iValue == 0) { pTally->iRefused++; }
+				continue;
+			}
+			if (kBooked.iValue != 0 && kBooked.iChannel != iChannel)
+			{
+				kPlot.getCascadePackage().applyPlotSegment(kSegments[iGated], kBooked.iChannel, -kBooked.iValue);
+				if (iValue != 0)
+				{
+					kPlot.getCascadePackage().applyPlotSegment(kSegments[iGated], iChannel, iValue);
+				}
+			}
+			else
+			{
+				const int64_t iDelta = iValue - kBooked.iValue;
+				const int iSlot = (iChannel >= 0) ? iChannel : kBooked.iChannel;
+				if (iDelta != 0 && iSlot >= 0)
+				{
+					kPlot.getCascadePackage().applyPlotSegment(kSegments[iGated], iSlot, iDelta);
+				}
+			}
+			kPlot.getCascadePackage().setBookedDeposit(kGated.deposit->entry, iChannel, false, iValue);
+			if (pTally != NULL) { pTally->iApplied++; }
+		}
+	}
+
+	// ⚖ THE RE-BOOK AT EMPIRE SCOPE -- the same value DIFFERENCE as the city and plot planes, for the gates that
+	// are THRESHOLDS rather than presence crossings.
+	// ⛔ A THRESHOLD CANNOT RIDE THE ±1 CROSSING ROUTE, and that is why this exists rather than reusing
+	// mc_applyGated. `{type: "ERA", max: 1}` is not "held" or "not held": when the era advances, some deposits
+	// turn OFF and others turn ON, and there is no atom verdict to pin an as-if-held hypothetical to. Resolving
+	// each entry against the NEW state and moving only its difference from what is booked handles both directions
+	// in one pass, and is idempotent if the same fact is seen twice.
+	void mc_bookGatedEmpire(const std::vector<DepositIndex::GatedDeposit>* pGated, const CvPlayer& kPlayer,
+		McGatedTally* pTally)
+	{
+		if (pGated == NULL)
+		{
+			return;
+		}
+		CvCascadeEvalCtx evalCtx;
+		kPlayer.getEmpireContext().fillEvalCtx(evalCtx);
+		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+		{
+			const DepositIndex::GatedDeposit& kGated = (*pGated)[iGated];
+			if (kGated.deposit == NULL || kGated.deposit->entry == NULL
+				|| (CvCascScope)kGated.deposit->scopeIdx != CASC_SCOPE_EMPIRE)
+			{
+				continue;
+			}
+			if (pTally != NULL) { pTally->iFound++; }
+			if (!kPlayer.getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+			{
+				if (pTally != NULL) { pTally->iNoSource++; }
+				continue;   // this source never deposited here -- there is nothing of its to move
+			}
+			int iChannel = -1;
+			bool bPercentSide = false;
+			int64_t iValue = 0;
+			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_EMPIRE, evalCtx, NULL, 0, false,
+				iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
+			{
+				iChannel = -1;
+				iValue = 0;
+			}
+			const CvCascadePackage<CvPlayer>::BookedDeposit kBooked =
+				kPlayer.getCascadePackage().bookedDeposit(kGated.deposit->entry);
+			if (kBooked.iChannel == iChannel && kBooked.bPercent == bPercentSide && kBooked.iValue == iValue)
+			{
+				if (pTally != NULL) { pTally->iRefused++; }
+				continue;   // already exactly what the data calls for
+			}
+			if (kBooked.iValue != 0 && (kBooked.iChannel != iChannel || kBooked.bPercent != bPercentSide))
+			{
+				if (kBooked.bPercent) kPlayer.getCascadePackage().applyPercent(kBooked.iChannel, (int)-kBooked.iValue);
+				else                  kPlayer.getCascadePackage().applyFlat(kBooked.iChannel, -kBooked.iValue);
+				if (iValue != 0)
+				{
+					if (bPercentSide) kPlayer.getCascadePackage().applyPercent(iChannel, (int)iValue);
+					else              kPlayer.getCascadePackage().applyFlat(iChannel, iValue);
+				}
+			}
+			else
+			{
+				const int64_t iDelta = iValue - kBooked.iValue;
+				const int iSlot = (iChannel >= 0) ? iChannel : kBooked.iChannel;
+				if (iDelta != 0 && iSlot >= 0)
+				{
+					if (bPercentSide || kBooked.bPercent) kPlayer.getCascadePackage().applyPercent(iSlot, (int)iDelta);
+					else                                  kPlayer.getCascadePackage().applyFlat(iSlot, iDelta);
+				}
+			}
+			kPlayer.getCascadePackage().setBookedDeposit(kGated.deposit->entry, iChannel, bPercentSide, iValue);
+			mc_noteChannelApplied(iChannel, (int)kPlayer.getID());
+			if (pTally != NULL) { pTally->iApplied++; }
+			if (iValue != 0)
+			{
+				CascadeChannelRegistry::reportDepositApply(
+					(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_EMPIRE,
+					bPercentSide, iValue, (int)kPlayer.getID(), -1, "gated");
+			}
+		}
+	}
+
+	// Does this atom gate anything that lands on the PLOT plane at all? The plot pass is the expensive half (an
+	// eval ctx per plot per atom, over every tile the owner's cities can work), and the overwhelming majority of
+	// atoms gate nothing there -- so asking the compiled list first turns a whole-map walk into a no-op for them.
+	// ⚑ It is a pure filter over the SAME list the pass would walk, never a second index: an atom that answers
+	// yes is walked exactly as before, and one that answers no had nothing on that plane to move.
+	bool mc_gatesAnyPlotDeposit(const std::vector<DepositIndex::GatedDeposit>* pGated)
+	{
+		if (pGated == NULL)
+		{
+			return false;
+		}
+		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+		{
+			const DepositIndex::GatedDeposit& kGated = (*pGated)[iGated];
+			if (kGated.deposit != NULL && (CvCascScope)kGated.deposit->scopeIdx == CASC_SCOPE_PLOT)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Every plot an owner's cities can work, deduped -- the reach of an empire-level atom on the plot plane.
+	void mc_bookGatedOwnerPlots(const std::vector<DepositIndex::GatedDeposit>* pGated, const CvPlayer& kOwner,
+		McGatedTally* pTally)
+	{
+		if (pGated == NULL || pGated->empty() || !mc_gatesAnyPlotDeposit(pGated))
+		{
+			return;
+		}
+		std::vector<CvCascadePackage<CvPlot>::PlotSegment> kSegments;
+		kSegments.reserve(pGated->size());
+		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+		{
+			kSegments.push_back(mc_segmentForSource((*pGated)[iGated].source));
+		}
+		std::set<const CvPlot*> kSeen;
+		for (CvPlayer::city_iterator cityIterator = kOwner.beginCities();
+			cityIterator != kOwner.endCities(); ++cityIterator)
+		{
+			const CvCity* pCity = *cityIterator;
+			if (pCity == NULL)
+			{
+				continue;
+			}
+			const int iNumPlots = pCity->getNumCityPlots();
+			for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
+			{
+				const CvPlot* pPlot = pCity->getCityIndexPlot(iPlotIndex);
+				if (pPlot == NULL || kSeen.find(pPlot) != kSeen.end())
+				{
+					continue;
+				}
+				kSeen.insert(pPlot);
+				mc_bookGatedPlot(pGated, kSegments, *pPlot, pTally);
+			}
+		}
+	}
+
+	// PLANE C for a BONUS atom: this city's holding of one resource crossed, so every deposit that atom GATES is
+	// re-booked -- withdrawn under the verdict it was booked at, re-applied under the verdict now in force.
+	//
+	// ⛔ TWO PASSES, AND THE PAIR IS WHAT MAKES IT EXACT -- a single "apply the arrival" pass would be WORSE than
+	// no route at all, because the deposit would then compound on every re-acquisition where today it is merely
+	// absent. Pass 1 pins the atom to its OLD verdict and withdraws what WAS applying; pass 2 pins the NEW verdict
+	// and applies what SHOULD be. Nothing is re-derived and nothing is swept: each pass is the ordinary resolve
+	// against a pinned atom, so this is a DELTA route like plane A and plane B -- never a re-evaluation of state
+	// ([DEC-no-self-heal] stands: no reader repairs itself, a FACT moves the sum).
+	// ⚑ The pair is also what makes `enabled` and `disabled` gates uniform without a special case: a
+	// `disabled: BONUS_X` deposit was applying while the bonus was ABSENT, so pass 1 withdraws it on arrival and
+	// pass 2 re-applies it on loss -- the same two lines, read in the other direction.
+	// ⚖ Both halves are announced even when one is empty, exactly as the served-resource write point announces
+	// both halves of a tile changing which resource it serves ([state-repositories.md] § THE INVARIANT).
+	// THE ONE TYPE-ATOM ROUTE. szType is the atom's own spelling, which is how di_scanConditionTree interned
+	// every PRESENCE node -- so this reaches the SAME deposit list the gate compiled into, never a second index.
+	// eBucket/iId name the axis the hypothetical pins; a kind whose ev_present branch is not pin-aware CANNOT be
+	// routed here, because its withdrawal would silently resolve false (see ev_present's note).
+	void mc_applyTypeAtom(const char* szType, EnEdgeBucket eBucket, int iId, bool bHeldNow,
+		const CvPlayer* pPlayer, const CvCity* pCity)
+	{
+		if (szType == NULL || iId < 0)
+		{
+			return;
+		}
+		const std::vector<DepositIndex::GatedDeposit>* pGated = DepositIndex::gatedByType(std::string(szType));
+		if (pGated == NULL)
+		{
+			return;   // nothing anywhere is conditioned on this entity
+		}
+		CvCascadeHypothetical kWasHeld;
+		CvCascadeHypothetical kIsHeld;
+		// OLD verdict = the opposite of what now holds; NEW verdict = what now holds.
+		(bHeldNow ? kWasHeld.absent : kWasHeld.present)[eBucket].insert(iId);
+		(bHeldNow ? kIsHeld.present : kIsHeld.absent)[eBucket].insert(iId);
+		McGatedTally kTally;
+		if (pCity != NULL)
+		{
+			mc_bookGated(pGated, *pCity, &kTally);
+			// ...and the PLOT plane of the same crossing: a city-bound atom reaches the tiles that city works.
+			{
+				std::vector<CvCascadePackage<CvPlot>::PlotSegment> kSegments;
+				kSegments.reserve(pGated->size());
+				for (size_t iSeg = 0; iSeg < pGated->size(); ++iSeg)
+				{
+					kSegments.push_back(mc_segmentForSource((*pGated)[iSeg].source));
+				}
+				const int iNumPlots = pCity->getNumCityPlots();
+				for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
+				{
+					const CvPlot* pAtomPlot = pCity->getCityIndexPlot(iPlotIndex);
+					if (pAtomPlot != NULL)
+					{
+						mc_bookGatedPlot(pGated, kSegments, *pAtomPlot, &kTally);
+					}
+				}
+			}
+			CascadeChannelRegistry::reportAtomRoute(szType, (int)pGated->size(), kTally.iFound,
+				kTally.iNoSource, kTally.iRefused, kTally.iApplied,
+				(int)pCity->getOwner(), pCity->getID());
+			return;
+		}
+		if (pPlayer == NULL)
+		{
+			return;
+		}
+		// ⛔ AN EMPIRE-LEVEL CROSSING GATES CITY-SCOPE DEPOSITS IN EVERY CITY, so it must fan -- a tech naming no
+		// city would otherwise skip mc_applyGated's city branch entirely and move nothing where the deposits
+		// actually live. ⚠ The fan is SPLIT, and the split is what keeps it exact: the owner pass carries NO city
+		// (so mc_applyGated declines every city-scope deposit) and each city pass carries NO player (so it
+		// declines every empire/team-scope one). Passing both together would apply each empire-scope deposit once
+		// PER CITY -- a compounding over-apply that nothing later withdraws.
+		// The OWNER pass runs regardless: the player exists even mid-read, so empire/team-scope deposits land now.
+		mc_applyGated(pGated, -1, MMKernel::PER_SCALE_APPLIED, pPlayer, NULL, NULL, &kWasHeld, &kTally);
+		mc_applyGated(pGated, +1, MMKernel::PER_SCALE_APPLIED, pPlayer, NULL, NULL, &kIsHeld, &kTally);
+		if (spineGameLoadInProgress())
+		{
+			// The CITY half is banked whole -- the cities it would walk may not exist yet, and a fan over an
+			// empty list is indistinguishable from a fan with nothing to do.
+			s_bankedAtomFans[std::make_pair(std::string(szType), (int)pPlayer->getID())] = bHeldNow;
+			CascadeChannelRegistry::reportAtomRoute(szType, (int)pGated->size(), kTally.iFound,
+				kTally.iNoSource, kTally.iRefused, kTally.iApplied, (int)pPlayer->getID(), -1);
+			return;
+		}
+		for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities();
+			cityIterator != pPlayer->endCities(); ++cityIterator)
+		{
+			if (*cityIterator != NULL)
+			{
+				mc_bookGated(pGated, **cityIterator, &kTally);
+			}
+		}
+		mc_bookGatedOwnerPlots(pGated, *pPlayer, &kTally);
+		CascadeChannelRegistry::reportAtomRoute(szType, (int)pGated->size(), kTally.iFound,
+			kTally.iNoSource, kTally.iRefused, kTally.iApplied, (int)pPlayer->getID(), -1);
+	}
+
+	void mc_applyBonusAtom(int iBonus, bool bHeldNow, const CvPlayer* pPlayer, const CvCity* pCity)
+	{
+		if (iBonus < 0 || iBonus >= GC.getNumBonusInfos())
+		{
+			return;
+		}
+		mc_applyTypeAtom(GC.getBonusInfo((BonusTypes)iBonus).getType(), EDGEB_BONUSES, iBonus,
+			bHeldNow, pPlayer, pCity);
+	}
+
+	// THE DRAIN. Every deposit an atom crossing had to skip for want of its source is applied ONCE now, against
+	// the fully-read game -- the sources are all in their packages and every store is final.
+	// ⛔ It is NOT a recompute and NOT a sweep: the worklist is the exact set of deposits the banked FACTS named
+	// and could not reach, and each one goes through the ONE per-entry resolve like every other apply
+	// ([DEC-single-implementation]). Nothing is re-derived from live state, so [DEC-no-self-heal] stands -- a
+	// deposit nobody's fact named is still never applied here.
+	// ⚑ NO HYPOTHETICAL: the pin exists to reconstruct a verdict that has already moved on, and at the drain the
+	// live verdict IS the one in force. A deposit whose atom ended the load un-held simply resolves false and is
+	// correctly not applied.
+	// ONE banked deposit applied at the drain: the source is present, the state is final, so the live verdict is
+	// the one in force and no pin is needed. Shared by both drains so the two can never disagree about what
+	// "apply an owed arrival" means ([DEC-single-implementation]).
+	// A drain's outcome, PER CHANNEL. ⛔ A bulk refusal count is unfalsifiable: 566,224 refusals are exactly what
+	// a correct drain looks like AND exactly what a broken condition looks like. Split by channel it stops being
+	// either -- a channel refusing far out of proportion to its siblings is a finding, and one refusing in
+	// proportion is evidence the refusals are real ([DEC-no-guessing]).
+	struct McDrainByChannel
+	{
+		std::map<int, int> refused;
+		std::map<int, int> applied;
+	};
+
+	void mc_reportDrainByChannel(const char* szWhich, const McDrainByChannel& kTally)
+	{
+		std::map<int, int> keys;
+		std::map<int, int>::const_iterator it;
+		for (it = kTally.refused.begin(); it != kTally.refused.end(); ++it) { keys[it->first] = 1; }
+		for (it = kTally.applied.begin(); it != kTally.applied.end(); ++it) { keys[it->first] = 1; }
+		for (it = keys.begin(); it != keys.end(); ++it)
+		{
+			const int iChannel = it->first;
+			const std::map<int, int>::const_iterator itRef = kTally.refused.find(iChannel);
+			const std::map<int, int>::const_iterator itApp = kTally.applied.find(iChannel);
+			const int iRefused = (itRef == kTally.refused.end()) ? 0 : itRef->second;
+			const int iApplied = (itApp == kTally.applied.end()) ? 0 : itApp->second;
+			std::string szLabel(szWhich);
+			szLabel += ":";
+			szLabel += CascadeChannelRegistry::channelName(iChannel);
+			CascadeChannelRegistry::reportAtomRoute(szLabel.c_str(), iRefused + iApplied, iRefused + iApplied,
+				0, iRefused, iApplied, -1, -1);
+		}
+	}
+
+	int mc_channelOfEntry(const CvModEntry& kEntry)
+	{
+		return CascadeChannelRegistry::channelLookup(kEntry.family, kEntry.kind, kEntry.propertyFk);
+	}
+
+	bool mc_drainApplyOne(const DepositIndex::GatedDeposit& kGated, const CvPlayer& kOwner, const CvCity& kCity,
+		McDrainByChannel* pByChannel)
+	{
+		if (kGated.deposit == NULL || kGated.deposit->entry == NULL
+			|| !kCity.getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+		{
+			return false;
+		}
+		// The drain owes an arrival ONLY for a deposit that is not already booked -- otherwise it stacks on top of
+		// whatever plane A or an earlier crossing already put in the slot, which is the same double-apply the book
+		// exists to stop.
+		if (kCity.getCascadePackage().isGatedBooked(kGated.deposit->entry))
+		{
+			return false;
+		}
+		CvCascadeEvalCtx evalCtx;
+		InfoValuation::fillEvalCtx(kCity.getCityContext(), kOwner.getEmpireContext(),
+			kCity.plotGroup(kCity.getOwner()), evalCtx);
+		EnablerKernel::wireOperatingBuildings(&kCity, evalCtx);
+		int iChannel = -1;
+		bool bPercentSide = false;
+		int64_t iValue = 0;
+		if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_CITY, evalCtx, NULL, 0, false,
+			iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
+		{
+			if (pByChannel != NULL)
+			{
+				// resolveEntry leaves the out-params untouched when it declines, so the channel comes from the
+				// ENTRY's own address -- the refusal still has to be attributable to a channel.
+				const int iEntryChannel = mc_channelOfEntry(*kGated.deposit->entry);
+				if (iEntryChannel >= 0) { pByChannel->refused[iEntryChannel]++; }
+			}
+			return false;
+		}
+		if (pByChannel != NULL) { pByChannel->applied[iChannel]++; }
+		if (bPercentSide) kCity.getCascadePackage().applyPercent(iChannel, (int)iValue);
+		else              kCity.getCascadePackage().applyFlat(iChannel, iValue);
+		kCity.getCascadePackage().setBookedDeposit(kGated.deposit->entry, iChannel, bPercentSide, iValue);
+		CascadeChannelRegistry::reportDepositApply(
+			(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_CITY,
+			bPercentSide, iValue, (int)kCity.getOwner(), kCity.getID(), "atomDrain");
+		return true;
+	}
+
+	// The FAN drain: every empire-level crossing whose city half could not run, replayed over the cities that
+	// now exist. Arrival only -- nothing was booked, so nothing is withdrawn.
+	void mc_drainBankedAtomFans()
+	{
+		int iApplied = 0;
+		int iConsidered = 0;
+		McDrainByChannel kByChannel;
+		for (std::map<std::pair<std::string, int>, bool>::const_iterator it = s_bankedAtomFans.begin();
+			it != s_bankedAtomFans.end(); ++it)
+		{
+			if (!it->second)
+			{
+				continue;   // ended the load un-held: it owes no arrival
+			}
+			const int iOwner = it->first.second;
+			if (iOwner < 0 || iOwner >= MAX_PLAYERS)
+			{
+				continue;
+			}
+			const std::vector<DepositIndex::GatedDeposit>* pGated = DepositIndex::gatedByType(it->first.first);
+			if (pGated == NULL)
+			{
+				continue;
+			}
+			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)iOwner);
+			for (CvPlayer::city_iterator cityIterator = kOwner.beginCities();
+				cityIterator != kOwner.endCities(); ++cityIterator)
+			{
+				if (*cityIterator == NULL)
+				{
+					continue;
+				}
+				for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
+				{
+					++iConsidered;
+					if (mc_drainApplyOne((*pGated)[iGated], kOwner, **cityIterator, &kByChannel))
+					{
+						++iApplied;
+					}
+				}
+			}
+			// ⛔ THE PLOT HALF OF THE SAME CROSSING, AND ITS ABSENCE WAS THE LARGEST HOLE ON THE YIELD PLANE.
+			// mc_applyTypeAtom's empire branch returns at the load guard ABOVE its mc_bookGatedOwnerPlots call, so
+			// during a save read an empire-level atom reached the plot plane through nothing at all -- while the
+			// CITY-bound atoms (a bonus obtained) did, because their branch carries no such guard. The asymmetry is
+			// what made it look wired.
+			// ⚑ WHY IT COSTS SO MUCH: 1,074 of the 1,373 plot-scope deposit entries in Assets/Data are CONDITIONED,
+			// and 305 of those name a TECH. A tech-gated improvement yield is a TIER-1 BASE term (modifier.md §2a --
+			// the plot package IS the base the whole percent stack multiplies), so every one of them missing
+			// understates the city rate BEFORE any modifier is applied.
+			// ⚑ NO PIN, for the same reason the city drain needs none: the atom ended the load HELD (the un-held
+			// ones are skipped above), so the live verdict IS the one in force and mc_bookGatedPlot's own value
+			// difference makes the apply idempotent against whatever plane A already booked.
+			// ⚠ It carries its OWN tally and reports separately. Folding it into the city drain's counters would
+			// bury it: the city half refuses essentially everything (plane A booked it already), so a plot pass
+			// that applied thousands and a plot pass that applied nothing would produce the same summary line.
+			McGatedTally kPlotTally;
+			mc_bookGatedOwnerPlots(pGated, kOwner, &kPlotTally);
+			if (kPlotTally.iFound > 0)
+			{
+				CascadeChannelRegistry::reportAtomRoute("<atomFanDrainPlots>", kPlotTally.iFound,
+					kPlotTally.iFound, kPlotTally.iNoSource, kPlotTally.iRefused, kPlotTally.iApplied,
+					iOwner, -1);
+			}
+		}
+		CascadeChannelRegistry::reportAtomRoute("<atomFanDrain>", iConsidered, iConsidered, 0,
+			iConsidered - iApplied, iApplied, -1, -1);
+		mc_reportDrainByChannel("fanDrain", kByChannel);
+		s_bankedAtomFans.clear();
+	}
+
+	void mc_drainBankedAtomDeposits()
+	{
+		int iApplied = 0;
+		McDrainByChannel kByChannel;
+		for (std::set<BankedAtomDeposit>::const_iterator it = s_bankedAtomDeposits.begin();
+			it != s_bankedAtomDeposits.end(); ++it)
+		{
+			const DepositIndex::GatedDeposit* pGated = it->pGated;
+			if (pGated == NULL || pGated->deposit == NULL || pGated->deposit->entry == NULL
+				|| it->iOwner < 0 || it->iOwner >= MAX_PLAYERS)
+			{
+				continue;
+			}
+			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)it->iOwner);
+			const CvCity* pCity = kOwner.getCity(it->iCityId);
+			if (pCity == NULL || !pCity->getCascadePackage().hasAppliedSource(pGated->sourceIndex))
+			{
+				continue;   // the city went, or its source never arrived at all -- neither is this drain's to fix
+			}
+			if (mc_drainApplyOne(*pGated, kOwner, *pCity, &kByChannel))
+			{
+				++iApplied;
+			}
+		}
+		CascadeChannelRegistry::reportAtomRoute("<atomDrain>", (int)s_bankedAtomDeposits.size(),
+			(int)s_bankedAtomDeposits.size(), 0, (int)s_bankedAtomDeposits.size() - iApplied, iApplied, -1, -1);
+		mc_reportDrainByChannel("depDrain", kByChannel);
+		s_bankedAtomDeposits.clear();
 	}
 
 	const CvPlayer* mc_player(int iPlayer)
@@ -882,9 +1965,11 @@ namespace
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
 				{
-					// ⛔ HOLE (plane C, the ATOM route): everything CONDITIONED on holding this source needs
-					// re-resolving here, and cannot be until the reverse index answers with the DEPOSITS the
-					// atom gates rather than a channel MASK. Deliberately left failing rather than papered over.
+					// PLANE C: everything conditioned on HOLDING this building. The building's own deposits ride
+					// the operate crossing above; this is the other half -- what everything ELSE deposits because
+					// this city has it.
+					mc_applyTypeAtom(GC.getBuildingInfo((BuildingTypes)kEvent.iType).getType(), EDGEB_BUILDINGS,
+						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, pCity);
 				}
 				break;
 			}
@@ -899,6 +1984,11 @@ namespace
 				}
 				mc_applyGated(DepositIndex::gatedByReligionCounts(), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, pCity, NULL);
+				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumReligionInfos())
+				{
+					mc_applyTypeAtom(GC.getReligionInfo((ReligionTypes)kEvent.iType).getType(), EDGEB_RELIGIONS,
+						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, pCity);
+				}
 				break;
 			}
 			case SEVT_CITY_CORPORATION_ADDED:
@@ -909,6 +1999,8 @@ namespace
 				{
 					mc_applySource(&GC.getCorporationInfo((CorporationTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
 						pPlayer, pCity, NULL);
+					mc_applyTypeAtom(GC.getCorporationInfo((CorporationTypes)kEvent.iType).getType(),
+						EDGEB_CORPORATIONS, kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, pCity);
 				}
 				break;
 			}
@@ -931,8 +2023,24 @@ namespace
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
 				{
+					// PLANE A: what the RESOURCE itself deposits at this city.
 					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
 						pPlayer, pCity, NULL);
+					// PLANE C: what everything ELSE deposits BECAUSE this city holds the resource -- the building
+					// yields gated on it. ⛔ Without this the two are silently different questions with one answer:
+					// the resource's own deposits move and every deposit CONDITIONED on it keeps whatever verdict it
+					// was booked at, forever ([DEC-no-self-heal] -- nothing re-derives a maintained sum).
+					// ⚑ It falls hardest on FOOD, whose building deposits are gated overwhelmingly on BONUS_* atoms
+					// where production's are gated on TECH_* -- techs sit on the team and are already correct when
+					// the cities deserialize, so food alone read short while every other channel looked right.
+					// ⚑ THIS IS ALSO WHAT MAKES LOAD ORDER IRRELEVANT. The onSite store fills at the membership
+					// drain and the network list assembles from its own facts, both AFTER the buildings activate --
+					// so at the instant a deposit first resolved, the lists it asks were empty or half-built. Every
+					// one of those fills is itself a crossing, and a crossing now re-books the deposits it gates.
+					if (pCity != NULL)
+					{
+						mc_applyBonusAtom(kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, pCity);
+					}
 				}
 				break;
 			}
@@ -1018,12 +2126,37 @@ namespace
 					// old-value decode this used to carry -- a departing id in iA beside the arriving one, with a
 					// carve-out for the one fact that put a delta in iB instead -- is gone with the *_CHANGED shape
 					// it existed for, and with it the bonus special case that shape needed.
-					const char* szSubstrate = mc_substrateTypeName(kEvent.iEventId, kEvent.iType);
-					if (szSubstrate != NULL)
+					// ⚖ THERE IS NO SUBSTRATE TYPE-ATOM ROUTE, AND THAT IS A MEASUREMENT RATHER THAN A GAP.
+					// This carried a "⛔ HOLE" for the deposits CONDITIONED on holding a substrate source. Counted
+					// across the whole of Assets/Data, the type-prefixes naming an atom in any `enabled`/`disabled`
+					// condition are: TECH 3205 · BONUS 3191 · RELIGION 183 · BUILDING 68 · CORPORATION 46 · CIVIC 22
+					// (plus the HAS_/IS_ predicates, which route by predicate id). **IMPROVEMENT / TERRAIN / FEATURE /
+					// ROUTE appear ZERO times.** Nothing anywhere is gated on holding one, so there is no deposit for
+					// such a route to move ([triggers.md]: a verb with zero authorings is an EXAMPLE in the spec, not
+					// live data -- do not build machinery for it). Should data ever author one, mc_applyTypeAtom is
+					// the route and its bucket must first be made pin-aware in ev_present.
+					//
+					// ⚑ WHAT THE BONUS AXIS DOES NEED is the OTHER direction, and it is wired just below: 737 of the
+					// plot-scope conditions read {HAS_BONUS: X} -- an improvement's own yield gated on the tile's
+					// resource (the deliveryguy shape). At LOAD the ordering already works (CvPlot::read emits the
+					// bonus BEFORE the improvement, so the improvement's plane-A apply sees it), but a resource
+					// DISCOVERED on an already-improved tile moves the predicate with nothing to re-resolve it.
+					if (kEvent.iEventId == SEVT_PLOT_BONUS_ADDED || kEvent.iEventId == SEVT_PLOT_BONUS_REMOVED)
 					{
-					// ⛔ HOLE (plane C, the ATOM route): everything CONDITIONED on holding this source needs
-					// re-resolving here, and cannot be until the reverse index answers with the DEPOSITS the
-					// atom gates rather than a channel MASK. Deliberately left failing rather than papered over.
+						const std::vector<DepositIndex::GatedDeposit>* pBonusGated =
+							DepositIndex::gatedByPredicate(CASC_PRED_HAS_BONUS);
+						if (pBonusGated != NULL && !pBonusGated->empty())
+						{
+							std::vector<CvCascadePackage<CvPlot>::PlotSegment> kSegments;
+							kSegments.reserve(pBonusGated->size());
+							for (size_t iSeg = 0; iSeg < pBonusGated->size(); ++iSeg)
+							{
+								kSegments.push_back(mc_segmentForSource((*pBonusGated)[iSeg].source));
+							}
+							// The value DIFFERENCE makes this idempotent against whatever plane A already booked, so
+							// running it on the load path as well costs a resolve and changes nothing.
+							mc_bookGatedPlot(pBonusGated, kSegments, *pPlot, NULL);
+						}
 					}
 				}
 				break;
@@ -1074,6 +2207,8 @@ namespace
 				{
 					mc_applySource(&GC.getTechInfo((TechTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
 						pPlayer, NULL, NULL);
+					mc_applyTypeAtom(GC.getTechInfo((TechTypes)kEvent.iType).getType(), EDGEB_TECHS,
+						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, NULL);
 				}
 				break;
 			}
@@ -1085,6 +2220,11 @@ namespace
 					const CvTraitInfo* pTrait = MMKernel::traitData(kEvent.iType);   // the ACTIVE set's record
 					mc_applySource(pTrait, mc_sourceDirection(kEvent), kEvent.iEventId,
 						pPlayer, NULL, NULL);
+					if (pTrait != NULL)
+					{
+						mc_applyTypeAtom(pTrait->getType(), EDGEB_TRAITS, kEvent.iType,
+							mc_sourceDirection(kEvent) > 0, pPlayer, NULL);
+					}
 				}
 				break;
 			}
@@ -1099,11 +2239,18 @@ namespace
 				{
 					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iType), 1, kEvent.iEventId,
 						pPlayer, NULL, NULL);
+					// PLANE C, the ARRIVING side: it is now HELD.
+					mc_applyTypeAtom(GC.getCivicInfo((CivicTypes)kEvent.iType).getType(), EDGEB_CIVICS,
+						kEvent.iType, true, pPlayer, NULL);
 				}
 				if (kEvent.iB >= 0 && kEvent.iB < GC.getNumCivicInfos())
 				{
 					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iB), -1, kEvent.iEventId,
 						pPlayer, NULL, NULL);
+					// ...and the DISPLACED side: it is now NOT held. Same reason the source halves take opposite
+					// signs -- one fact carries both ends, so the verdict is written per end, never asked of the fact.
+					mc_applyTypeAtom(GC.getCivicInfo((CivicTypes)kEvent.iB).getType(), EDGEB_CIVICS,
+						kEvent.iB, false, pPlayer, NULL);
 				}
 				break;
 			}
@@ -1114,6 +2261,8 @@ namespace
 				{
 					mc_applySource(&GC.getProjectInfo((ProjectTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
 						pPlayer, NULL, NULL);
+					mc_applyTypeAtom(GC.getProjectInfo((ProjectTypes)kEvent.iType).getType(), EDGEB_PROJECTS,
+						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, NULL);
 				}
 				break;
 			}
@@ -1124,6 +2273,8 @@ namespace
 				{
 					mc_applySource(&GC.getHeritageInfo((HeritageTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
 						pPlayer, NULL, NULL);
+					mc_applyTypeAtom(GC.getHeritageInfo((HeritageTypes)kEvent.iType).getType(), EDGEB_HERITAGES,
+						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, NULL);
 				}
 				break;
 			}
@@ -1197,6 +2348,30 @@ namespace
 			case SEVT_EMPIRE_ERA_ADDED:
 			case SEVT_EMPIRE_ERA_REMOVED:
 			{
+				// ⛔ THE ERA ROUTE WAS ASKING THE WRONG INDEX AND MOVED NOTHING AT ALL.
+				// It read gatedByToken("ERA"), but s_gatedByToken is populated from ONE place -- a deposit's `per`
+				// SCALER (di_scanRecordDependencies) -- and no authored deposit anywhere scales `per: {type: ERA}`.
+				// An era CONDITION is `{type: "ERA", min/max: N}`, whose node type interns into s_gatedBy**Type**.
+				// So the list this asked for was empty on every era advance, and the 1130 era-gated deposits in
+				// Assets/Data (all empire-scope: research 565, culture 565) kept whatever verdict they were booked
+				// at when their source arrived -- for the rest of the game.
+				// ⚑ It reads as wired, which is why it survived: a token and a type are the same string here, and an
+				// empty list is indistinguishable from a list with nothing to do ([DEC-no-guessing] -- the tally is
+				// what tells them apart).
+				// ⚑ Re-BOOKED, not crossed: a threshold has no held/not-held verdict to pin (see mc_bookGatedEmpire).
+				McGatedTally kEraTally;
+				const std::vector<DepositIndex::GatedDeposit>* pEraGated = DepositIndex::gatedByType("ERA");
+				if (pPlayer != NULL && pEraGated != NULL)
+				{
+					mc_bookGatedEmpire(pEraGated, *pPlayer, &kEraTally);
+					// ⚠ The LIST SIZE is the real one, not 0: reportAtomRoute returns early on `iListSize <= 0`
+					// ("nothing is conditioned on this atom -- silence is the honest report"), so passing a
+					// placeholder makes the route report NOTHING and look exactly like a route that does not exist.
+					CascadeChannelRegistry::reportAtomRoute("ERA", (int)pEraGated->size(), kEraTally.iFound,
+						kEraTally.iNoSource, kEraTally.iRefused, kEraTally.iApplied, (int)pPlayer->getID(), -1);
+				}
+				// The `per: {type: ERA}` scaler route stays beside it -- nothing authors one today, so it is the
+				// empty half rather than the wrong one, and it costs a null lookup.
 				mc_applyGated(DepositIndex::gatedByToken("ERA"), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_SUPPRESSED,
 					pPlayer, NULL, NULL);
 				break;
@@ -1219,48 +2394,42 @@ namespace
 					pPlayer, NULL, NULL);
 				break;
 			}
-			case SEVT_CITY_FOUNDED:   // the ruled exception: a new city reads correct values the turn it exists
+			// ⚖ NOTHING FOR THE MODIFIER, AND THAT IS A DEDUPLICATION RATHER THAN A HOLE.
+			// CvPlayer::found emits SEVT_CITY_OWNER_ADDED *before* this fact ("OWNERSHIP first, then the founding"),
+			// and CvCity::readBody does the same on a load -- so the owner-source fold and the CITY-count delta both
+			// already ran there, on the ONE fact that covers founding, conquest and the reseed alike. Doing either
+			// again here would be the duplicate the spine bans ([event-spine.md]: one happening, one application).
+			case SEVT_CITY_FOUNDED:
+				break;
+			// ---- ownership moves: the pair names ONE owner each, so each end is its own work ----
+			// ⛔ THE PAIR IS NOT ONE FACT WITH TWO OWNERS, and reading it as one is what left this dead. Both
+			// emitters pass only (city, owner) -- emitCityOwnerAdded / _REMOVED set iA = 0 and iB = 0 -- so the old
+			// handler's mc_player(kEvent.iA) resolved to PLAYER 0 on every transfer, and its CITY-count route ran
+			// with a delta of iB == 0, i.e. never ran at all. The direction is in the fact's IDENTITY
+			// ([event-spine.md] § A FACT NAMES THE HAPPENING); reading an owner out of the payload was the
+			// discriminator that rule bans, and here it was not even populated.
+			case SEVT_CITY_OWNER_ADDED:
 			{
+				// The city now belongs to this player, so it folds what that player already holds -- the SAME second
+				// leg a founded city takes, for the same reason (the owner's sources arrived before this city was
+				// this owner's). ⚑ A conquered city is a NEW CvCity object with a freshly-zeroed package, so there
+				// is nothing of the previous owner's left in it to withdraw -- the fold builds it from empty.
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
-				if (pCity != NULL)
+				if (pCity != NULL && pPlayer != NULL)
 				{
-					// whole-scope blanket KEPT: a scope-object LIFECYCLE event is not deposit-addressed --
-					// no single source's route exists; every channel authored at city scope may be fed by the
-					// new city's owner sources, so the whole package + sums build (the state-repositories.md
-					// founded-city eager-build ruling).
-				// â HOLE (city lifecycle / ownership): the blanket that stood here is gone -- a blanket recompute does not exist
-				// under the maintained sum and is never to be built. What this needs instead is a WITHDRAW AND
-				// REAPPLY over every source this city holds and every above-city
-				// source of its owner, which is the same plane-A
-				// walk run twice with opposite signs. Deliberately left unmaintained rather than swept.
-					mc_applyGated(DepositIndex::gatedByToken("CITY"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
-					pPlayer, NULL, NULL);
+					mc_foldOwnerSourcesIntoCity(*pPlayer, *pCity, szSource);
 				}
+				// Plane B: this empire's CITY count gained one.
+				mc_applyGated(DepositIndex::gatedByToken("CITY"), +1, MMKernel::PER_SCALE_SUPPRESSED,
+					pPlayer, NULL, NULL);
 				break;
 			}
-			// ---- ownership moves: the entity's packages change scope owner; both empires' aggregates move ----
-			case SEVT_CITY_OWNER_ADDED:
 			case SEVT_CITY_OWNER_REMOVED:
 			{
-				// whole-scope blankets KEPT: an ownership move is a scope-object COMPOSITION event, not
-				// deposit-addressed -- the transferred city's evaluated source set (owner civics/traits/
-				// techs/counts) swaps wholesale, so no union of per-source routes can address the departed
-				// owner's folded deposits; the city package + sums and both empires' aggregates re-derive.
-				const CvPlayer* pOldOwner = mc_player(kEvent.iA);
-				const CvPlayer* pNewOwner = mc_player(kEvent.iC);
-				const CvCity* pCity = mc_city(pNewOwner, kEvent.iSrcLoc);
-				if (pCity != NULL)
-				{
-				// â HOLE (city lifecycle / ownership): the blanket that stood here is gone -- a blanket recompute does not exist
-				// under the maintained sum and is never to be built. What this needs instead is a WITHDRAW AND
-				// REAPPLY over every source this city holds and every above-city
-				// source of its owner, which is the same plane-A
-				// walk run twice with opposite signs. Deliberately left unmaintained rather than swept.
-				}
-				mc_applyGated(DepositIndex::gatedByToken("CITY"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
-					pOldOwner, NULL, NULL);
-				mc_applyGated(DepositIndex::gatedByToken("CITY"), kEvent.iB, MMKernel::PER_SCALE_SUPPRESSED,
-					pNewOwner, NULL, NULL);
+				// Plane B only: this empire's CITY count lost one. The city object itself is leaving this owner, and
+				// its package goes with it -- there is no slot of this player's to withdraw from here.
+				mc_applyGated(DepositIndex::gatedByToken("CITY"), -1, MMKernel::PER_SCALE_SUPPRESSED,
+					pPlayer, NULL, NULL);
 				break;
 			}
 			case SEVT_PLOT_OWNER_ADDED:
@@ -1287,6 +2456,45 @@ namespace
 				}
 				break;
 			}
+			// ⚖ THE TURN IS A FACT LIKE ANY OTHER, AND IT CARRIES WHAT THE AGE GATE NEEDS (owner).
+			// `existedFor` is the one condition class whose dependency is ELAPSED TIME: no source moves, no count
+			// moves, no atom crosses -- the deposit simply becomes due. Nothing else in the engine can announce
+			// that, so the turn boundary is its fact, and the turn number is the whole of the input.
+			// ⚑ It satisfies the SANCTIONED event-triggered recalc test ([contexts.md]): a genuine DOMAIN fact
+			// triggers it, the consequence is NON-LOCAL (the fact cannot name which builds crossed their year),
+			// and no finer route exists to derive because the quantity is a function of time rather than of any
+			// announced state. ⛔ It is NOT the banned per-turn blanket: the worklist is exactly the deposits the
+			// `existedFor` reverse index names, never a sweep of the package.
+			// ⚠ The PLAYER-scoped boundary is the grain (the game-scope pair carries iC == -1 and is skipped): a
+			// player's own turn is where its cities' work already happens ([triggers.md]).
+			// ⚑ Re-BOOKED rather than crossed, for the same reason ERA is: an age gate has no held/not-held
+			// verdict to pin, and the value difference makes a turn that changes nothing cost nothing.
+			case SEVT_TURN_STARTED:
+			{
+				const std::vector<DepositIndex::GatedDeposit>* pAgeGated =
+					DepositIndex::gatedByPredicate(CASC_PRED_EXISTED_FOR);
+				if (kEvent.iC >= 0 && pPlayer != NULL && pAgeGated != NULL && !pAgeGated->empty())
+				{
+					McGatedTally kAgeTally;
+					for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities();
+						cityIterator != pPlayer->endCities(); ++cityIterator)
+					{
+						if (*cityIterator != NULL)
+						{
+							mc_bookGated(pAgeGated, **cityIterator, &kAgeTally);
+						}
+					}
+					// Reported only when it MOVED something: a turn line per player per turn would drown the
+					// domain, while a turn on which an age gate actually came due is worth seeing.
+					if (kAgeTally.iApplied > 0)
+					{
+						CascadeChannelRegistry::reportAtomRoute("existedFor", (int)pAgeGated->size(),
+							kAgeTally.iFound, kAgeTally.iNoSource, kAgeTally.iRefused, kAgeTally.iApplied,
+							(int)pPlayer->getID(), -1);
+					}
+				}
+				break;
+			}
 			// ---- the turn boundary (game scope only): the channel-set census's new-game fallback, for the run
 			// ---- that never passes through a load. NOT a self-heal site -- nothing is marked here
 			// ---- ([DEC-no-self-heal]). ----
@@ -1302,6 +2510,12 @@ namespace
 			case SEVT_GAME_LOAD_FINISHED:
 			{
 				mc_drainBankedPlotsFans();
+				// The plot yield-THRESHOLD load build: every plot resolved while the map streamed, which is before
+				// its owner held a single trait, so the step was computed against an empty player. Re-resolve now,
+				// against final state, for every alive owner.
+				mc_markAllThresholdOwners();
+				mc_drainBankedAtomDeposits();
+				mc_drainBankedAtomFans();
 				mc_reportGrowthCensus();
 				CascadeChannelRegistry::reportChannelCensus();
 				// The per-SOURCE decomposition of what the reseed actually applied -- who deposited into each
@@ -1312,6 +2526,13 @@ namespace
 			default:
 				break;   // events with no deposit reach (name changes, counts, unit lifecycle, load bracket)
 			}
+
+			// ONE targeted rebuild per FACT, for the owners this event actually moved a tradeRoutes channel for.
+			// The engine owns the route network, so its output has to be re-derived rather than delta'd -- but only
+			// where the fact reached, never as a sweep (owner: "it needs to run targeted, for where an event has hit").
+			mc_flushTradeRouteUpdates();
+			// ...and the plots whose RESOLVE operand moved (a trait changing an owner's yield threshold).
+			mc_flushThresholdResolves();
 		}
 
 	private:

@@ -79,9 +79,7 @@
      "enabled": {
       "type": "BONUS_NATRON",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

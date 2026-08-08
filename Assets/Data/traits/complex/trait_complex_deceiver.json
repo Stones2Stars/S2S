@@ -432,9 +432,6 @@
   "empire": {
    "espionageDefense": {
     "percent": 20
-   },
-   "captureResistance": {
-    "percent": -20
    }
   }
  },
@@ -451,6 +448,13 @@
     "flat": -1
    },
    "enemyWarWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
     "percent": -20
    }
   }

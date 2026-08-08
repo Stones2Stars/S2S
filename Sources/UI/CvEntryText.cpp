@@ -18,7 +18,7 @@
 #include "CvYieldInfo.h"
 #include "CvCommerceInfo.h"
 #include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
-#include "Data/CvDepositRead.h"     // MMKernel::unitIsPercentSide -- the ONE "is this a percent" test
+#include "Data/CvDepositRead.h"     // MMKernel::unitIsUnscaled -- the ONE "is this stored unscaled" test
 #include "Defines/CvGlobals.h"
 
 namespace
@@ -209,13 +209,14 @@ namespace
 	{
 		const int iAbsValue = (entry.value < 0) ? -entry.value : entry.value;
 		const wchar_t* szSign = (entry.value < 0) ? L"-" : L"+";
-		//	⛔ THE REDUCE IS PER UNIT, NEVER BLANKET ([fixed-point-and-scales] §4d). A percent is stored PLAIN --
-		//	`mod_valueForUnit` scales every unit EXCEPT the percent side, because a percent carries no decimals --
-		//	so reducing one here renders a +3% civic as "+0.03%", and a 1% entry as "+0%". Flats and multipliers
-		//	genuinely are x100 and still reduce.
-		//	⚑ The test is the ONE predicate the parse, the deposit index and the gather already share
-		//	([DEC-single-implementation]); a second copy of "is this a percent" is what would drift.
-		const CvWString szNumber = MMKernel::unitIsPercentSide(entry.unit)
+		//	⛔ THE REDUCE IS PER UNIT, NEVER BLANKET ([fixed-point-and-scales] §4d). `mod_valueForUnit` scales
+		//	every unit EXCEPT the ones stored PLAIN -- the percent side (a percent carries no decimals) and a
+		//	COUNT of things (a headcount has none either) -- so reducing one here renders a +3% civic as
+		//	"+0.03%" and a free-specialist count of 1 as "+0.01". Flats and multipliers genuinely are x100.
+		//	⚑ The question a reader must ask is "is this stored unscaled", NOT "is this a percent": the second
+		//	answers NO for a count and reduces it anyway. One shared predicate, never a second copy
+		//	([DEC-single-implementation]).
+		const CvWString szNumber = MMKernel::unitIsUnscaled(entry.unit)
 			? CvWString::format(L"%d", iAbsValue)
 			: etx_number100(iAbsValue);
 		switch (entry.unit)

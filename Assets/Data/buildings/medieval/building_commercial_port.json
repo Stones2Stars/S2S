@@ -79,9 +79,7 @@
      "enabled": {
       "type": "BONUS_FUR",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -89,9 +87,7 @@
      "enabled": {
       "type": "BONUS_SILK",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -99,9 +95,7 @@
      "enabled": {
       "type": "BONUS_ALCOHOL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -109,9 +103,7 @@
      "enabled": {
       "type": "BONUS_IVORY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -119,9 +111,7 @@
      "enabled": {
       "type": "BONUS_WHALE_OIL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -129,9 +119,7 @@
      "enabled": {
       "type": "BONUS_DRUGS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ],

@@ -69,6 +69,15 @@ bool MMKernel::unitIsPercentSide(CvCascUnit eUnit)
 	return eUnit == CASC_UNIT_PERCENT || eUnit == CASC_UNIT_RAW_PERCENT;
 }
 
+// Is this unit stored UNSCALED? A percent carries no decimals, and neither does a COUNT of things -- a
+// headcount is not modified, not combined, and half of one does not exist, so the parse deliberately leaves it
+// alone (CvModifiers mod_valueForUnit). ⛔ This is the question a READER must ask before reducing; "is this a
+// percent" is a DIFFERENT question and answers NO for a count, which reduces a count of 1 to "0.01".
+bool MMKernel::unitIsUnscaled(CvCascUnit eUnit)
+{
+	return unitIsPercentSide(eUnit) || eUnit == CASC_UNIT_COUNT;
+}
+
 bool MMKernel::isRateFamily(ModifierFamily eFamily)
 {
 	return infoFamilyYield(eFamily) >= 0 || infoFamilyCommerce(eFamily) >= 0;

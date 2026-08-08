@@ -176,6 +176,29 @@ more (a slice rebuild that was since removed), leaving a truncation that repairs
 ([modifier.md §2b](../specs/modifier.md)): they carry decades of save history no live source can reproduce, so a
 stored-vs-recompute diff is **DRIFT (history pollution), never state to preserve** — the recompute is the correct side.
 
+**⚑ HOW TO FIND THEM — a MECHANICAL detector, not a reading exercise.** The three-part test above says what an
+accumulator IS; this says how to enumerate the ones that have already gone dead, and it needs no judgement:
+
+> **a mutator with NO remaining call site + a member that is still SERIALIZED + a getter that is still READ
+> = a consumer being served a FROZEN SAVE VALUE.**
+
+Each leg is a grep. The mutator has no caller because the cascade replaced whatever used to call it (a
+`processBuilding` / `processTech` feeder that now deposits instead); the member still deserializes, so the value is
+whatever history the save carries; and the getter still has consumers, so that history is what they read. On a NEW
+game the same member is simply frozen at zero — the two failure modes look completely different and are one defect.
+
+⚠ **It is invisible from every direction that normally catches things.** It compiles (the getter exists), it runs
+(the value is plausible), the compiler census says nothing (no symbol was deleted), and a stored-vs-oracle diff
+cannot see it (the value is not in a package at all). ⛔ So it is not found by reading code around a bug — it is
+found by running the detector over the whole class.
+
+⚑ **THE DATA SIDE OF THE SAME DEFECT IS THE `unkinded-member` CENSUS**, and the two should be read together: a
+family member the parser cannot kind is an authored deposit dropped at load, and the dead accumulator beside it is
+the legacy carrier that used to hold that very value. Where they pair, the quantity is missing END TO END — the
+data lands nowhere, the carrier is fed by nothing, and the consumers read save history. *(The worked pair: the
+authored `hurry.cost` deposits are dropped as unkinded, `CvPlayer::m_iHurryCostModifier` has no writer left, and its
+consumers read it regardless.)*
+
 **The uniform mechanism:**
 
 1. Add the cluster's **fresh-gather accessor** returning its term from the cascade, ×100 internally.

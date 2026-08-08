@@ -87,9 +87,7 @@
      "enabled": {
       "type": "BONUS_WOOD",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -97,9 +95,7 @@
      "enabled": {
       "type": "BONUS_PRIME_TIMBER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -107,9 +103,7 @@
      "enabled": {
       "type": "BONUS_BAMBOO",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

@@ -21,7 +21,15 @@
 #include "AI/CvTeamAI.h"      // GET_TEAM
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
+#include "CvYieldInfo.h"                    // the served yield key
+#include "Data/CvInfoValuation.h"           // CityRateTerms + the refused-deposit walk -- the tooltip's own document
+#include "Infos/CvCondition.h"              // the refusing atom's spelling
+#include "Engine/CityContext.h"             // the live bonus stores
+#include "Cascade/CvCascadePackage.h"       // the per-scope percent split
 #include "CvTerrainInfo.h"
+#include "CvRouteInfo.h"
+#include "CvImprovementInfo.h"
+#include "CvFeatureInfo.h"
 #include <set>
 #include <vector>
 
@@ -425,5 +433,193 @@ CvString OracleEndpoints::teamCapabilities(int iPlayer, OracleSide eSide)
 	{
 		kRoot["capabilityUnion"] = oe_renderCapabilities((int)ePlayer, kPlayer.capabilities());
 	}
+	return oe_serialize(kRoot);
+}
+
+// ---- THE CITY YIELD CENSUS -- the tooltip's own document, served ------------------------------------------------
+
+CvString OracleEndpoints::cityYield(int iPlayer, int iCity)
+{
+	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
+	if (ePlayer == NO_PLAYER)
+	{
+		return oe_error("no player");
+	}
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	picojson::value::array kCities;
+	for (CvPlayer::city_iterator cityIterator = kPlayer.beginCities();
+		cityIterator != kPlayer.endCities(); ++cityIterator)
+	{
+		const CvCity* pLoopCity = *cityIterator;
+		if (pLoopCity == NULL || (iCity >= 0 && pLoopCity->getID() != iCity))
+		{
+			continue;
+		}
+		picojson::value::object kCity;
+		kCity["city"] = picojson::value((double)pLoopCity->getID());
+		kCity["name"] = picojson::value(std::string(CvString(pLoopCity->getName()).c_str()));
+		kCity["population"] = picojson::value((double)pLoopCity->getPopulation());
+
+		// THE TWO BONUS LISTS, LIVE. Read here rather than trusted from the load-end census, because that is
+		// exactly the difference that has been invisible: full at load, empty in play, and only the second one
+		// is what a deposit gate actually asks.
+		std::vector<int> kTraded;
+		std::vector<int> kOnSite;
+		pLoopCity->getCityContext().collectBonusStores(kTraded, kOnSite);
+		picojson::value::array kTradedNames;
+		picojson::value::array kOnSiteNames;
+		size_t iIndex = 0;
+		for (iIndex = 0; iIndex < kTraded.size(); ++iIndex)
+		{
+			kTradedNames.push_back(picojson::value(std::string(GC.getBonusInfo((BonusTypes)kTraded[iIndex]).getType())));
+		}
+		for (iIndex = 0; iIndex < kOnSite.size(); ++iIndex)
+		{
+			kOnSiteNames.push_back(picojson::value(std::string(GC.getBonusInfo((BonusTypes)kOnSite[iIndex]).getType())));
+		}
+		kCity["tradedCount"] = picojson::value((double)kTraded.size());
+		kCity["onSiteCount"] = picojson::value((double)kOnSite.size());
+		kCity["traded"] = picojson::value(kTradedNames);
+		kCity["onSite"] = picojson::value(kOnSiteNames);
+
+		// EVERY TERM OF THE COMBINE, per yield -- out of the real combine, never re-derived beside it
+		// ([DEC-single-implementation]).
+		picojson::value::object kYields;
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			const int iChannel = CascadeChannelRegistry::channelLookup(
+				infoYieldFamily((YieldTypes)iYield), (int)CHANNEL_AMOUNT, -1);
+			if (iChannel < 0)
+			{
+				continue;
+			}
+			InfoValuation::CityRateTerms kTerms;
+			InfoValuation::cityReceiverRate(*pLoopCity, iChannel, &kTerms);
+			picojson::value::object kTermsOut;
+			kTermsOut["plotBase"] = picojson::value((double)kTerms.plotBase);
+			kTermsOut["plotNature"] = picojson::value((double)kTerms.plotNature);
+			kTermsOut["plotImprovement"] = picojson::value((double)kTerms.plotImprovement);
+			kTermsOut["plotRest"] = picojson::value((double)kTerms.plotRest);
+			kTermsOut["workedPlots"] = picojson::value((double)kTerms.workedPlots);
+			kTermsOut["tradeYield"] = picojson::value((double)kTerms.tradeYield);
+			kTermsOut["goldenAge"] = picojson::value((double)kTerms.goldenAge);
+			kTermsOut["upperFlat"] = picojson::value((double)kTerms.upperFlat);
+			kTermsOut["specialists"] = picojson::value((double)kTerms.specialists);
+			kTermsOut["cityFlat"] = picojson::value((double)kTerms.cityFlat);
+			kTermsOut["percentSum"] = picojson::value((double)kTerms.percentSum);
+			kTermsOut["rate"] = picojson::value((double)kTerms.rate);
+
+			// THE PERCENT STACK, SPLIT BY SCOPE. percentSum alone cannot say which LEVEL a modifier came from,
+			// and the three move for completely different reasons -- so a stack that looks too big is
+			// unattributable without this.
+			kTermsOut["percentCity"] = picojson::value((double)pLoopCity->getCascadePackage().readPercent(iChannel));
+			kTermsOut["percentEmpire"] = picojson::value((double)kPlayer.getCascadePackage().readPercent(iChannel));
+			kTermsOut["percentTeam"] = picojson::value(
+				(double)GET_TEAM(kPlayer.getTeam()).getCascadePackage().readPercent(iChannel));
+
+			// EVERY city-scope entry the city's ACTIVE buildings author for this channel -- APPLIED and REFUSED.
+			// ⛔ Both halves, because one alone answers nothing: a refusal list shows what is missing and hides
+			// what is WRONG, and a percent that should not be applying is exactly as invisible in a total as one
+			// that should be and is not. The applied Σ below is what the city-scope slot should hold, so this is
+			// RECONCILABLE against the number it explains rather than merely narrating beside it.
+			std::vector<InfoValuation::RefusedDeposit> kAudit;
+			InfoValuation::cityRefusedDeposits(*pLoopCity, iChannel, kAudit);
+			int64_t iAppliedFlat = 0;
+			int64_t iAppliedPercent = 0;
+			int iRefusedCount = 0;
+			picojson::value::array kAppliedOut;
+			picojson::value::array kAppliedPercentOut;
+			picojson::value::array kRefusedOut;
+			for (size_t iEntry = 0; iEntry < kAudit.size(); ++iEntry)
+			{
+				const InfoValuation::RefusedDeposit& kOneEntry = kAudit[iEntry];
+				picojson::value::object kOne;
+				kOne["source"] = picojson::value(std::string(kOneEntry.szSource != NULL ? kOneEntry.szSource : "?"));
+				kOne["value"] = picojson::value((double)kOneEntry.iValue);
+				kOne["percent"] = picojson::value(kOneEntry.bPercentSide);
+				kOne["needs"] = picojson::value(std::string(
+					(kOneEntry.pCondition != NULL && !kOneEntry.pCondition->type.empty())
+						? kOneEntry.pCondition->type.c_str() : (kOneEntry.pCondition != NULL ? "<predicate>" : "")));
+				if (kOneEntry.bApplied)
+				{
+					if (kOneEntry.bPercentSide) iAppliedPercent += kOneEntry.iValue;
+					else                        iAppliedFlat += kOneEntry.iValue;
+					// capped PER SIDE: one shared cap let the flats crowd the percents out entirely, so the
+					// listing showed none of the half that multiplies
+					if (kOneEntry.bPercentSide ? (kAppliedPercentOut.size() < 40) : (kAppliedOut.size() < 40))
+					{
+						if (kOneEntry.bPercentSide) kAppliedPercentOut.push_back(picojson::value(kOne));
+						else                        kAppliedOut.push_back(picojson::value(kOne));
+					}
+				}
+				else
+				{
+					++iRefusedCount;
+					if (kRefusedOut.size() < 60) kRefusedOut.push_back(picojson::value(kOne));
+				}
+			}
+			kTermsOut["auditCount"] = picojson::value((double)kAudit.size());
+			kTermsOut["appliedFlatSum"] = picojson::value((double)iAppliedFlat);
+			kTermsOut["appliedPercentSum"] = picojson::value((double)iAppliedPercent);
+			kTermsOut["refusedCount"] = picojson::value((double)iRefusedCount);
+			kTermsOut["applied"] = picojson::value(kAppliedOut);
+			kTermsOut["appliedPercent"] = picojson::value(kAppliedPercentOut);
+			kTermsOut["refused"] = picojson::value(kRefusedOut);
+			kYields[std::string(GC.getYieldInfo((YieldTypes)iYield).getType())] = picojson::value(kTermsOut);
+		}
+		kCity["yields"] = picojson::value(kYields);
+
+		// ⛔ THE WORKED-PLOT CENSUS -- each tile with WHAT IS ON IT beside WHAT IT YIELDS. Raw x/y could not
+		// answer the only question that matters here ("is 5.9 food a correct number for THIS tile?"), because a
+		// yield is only checkable against its substrate. The plot plane has no served surface of its own, so this
+		// is the one place a tile's stored package can be read at all.
+		picojson::value::array kPlotsOut;
+		const int iNumCityPlots = pLoopCity->getNumCityPlots();
+		for (int iPlotIndex = 0; iPlotIndex < iNumCityPlots; ++iPlotIndex)
+		{
+			const CvPlot* pPlot = pLoopCity->getCityIndexPlot(iPlotIndex);
+			if (pPlot == NULL)
+			{
+				continue;
+			}
+			picojson::value::object kPlotOut;
+			kPlotOut["x"] = picojson::value((double)pPlot->getX());
+			kPlotOut["y"] = picojson::value((double)pPlot->getY());
+			kPlotOut["worked"] = picojson::value(pLoopCity->isWorkingPlot(iPlotIndex));
+			kPlotOut["terrain"] = picojson::value(std::string(pPlot->getTerrainType() != NO_TERRAIN
+				? GC.getTerrainInfo(pPlot->getTerrainType()).getType() : ""));
+			kPlotOut["feature"] = picojson::value(std::string(pPlot->getFeatureType() != NO_FEATURE
+				? GC.getFeatureInfo(pPlot->getFeatureType()).getType() : ""));
+			kPlotOut["bonus"] = picojson::value(std::string(pPlot->getBonusType(NO_TEAM) != NO_BONUS
+				? GC.getBonusInfo(pPlot->getBonusType(NO_TEAM)).getType() : ""));
+			kPlotOut["improvement"] = picojson::value(std::string(pPlot->getImprovementType() != NO_IMPROVEMENT
+				? GC.getImprovementInfo(pPlot->getImprovementType()).getType() : ""));
+			kPlotOut["route"] = picojson::value(std::string(pPlot->getRouteType() != NO_ROUTE
+				? GC.getRouteInfo(pPlot->getRouteType()).getType() : ""));
+			picojson::value::object kPlotYields;
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				const int iPlotChannel = CascadeChannelRegistry::channelLookup(
+					infoYieldFamily((YieldTypes)iYield), (int)CHANNEL_AMOUNT, -1);
+				if (iPlotChannel < 0)
+				{
+					continue;
+				}
+				picojson::value::object kOneYield;
+				kOneYield["total"] = picojson::value((double)pPlot->getCascadePackage().readFlat(iPlotChannel));
+				kOneYield["nature"] = picojson::value((double)pPlot->getCascadePackage().readSubstrateFlat(iPlotChannel));
+				kOneYield["improvement"] = picojson::value((double)pPlot->getCascadePackage().readImprovementFlat(iPlotChannel));
+				kOneYield["rest"] = picojson::value((double)pPlot->getCascadePackage().readRestFlat(iPlotChannel));
+				kPlotYields[std::string(GC.getYieldInfo((YieldTypes)iYield).getType())] = picojson::value(kOneYield);
+			}
+			kPlotOut["yields"] = picojson::value(kPlotYields);
+			kPlotsOut.push_back(picojson::value(kPlotOut));
+		}
+		kCity["plots"] = picojson::value(kPlotsOut);
+		kCities.push_back(picojson::value(kCity));
+	}
+	picojson::value::object kRoot;
+	kRoot["player"] = picojson::value((double)ePlayer);
+	kRoot["cities"] = picojson::value(kCities);
 	return oe_serialize(kRoot);
 }

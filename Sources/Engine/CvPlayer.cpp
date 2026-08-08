@@ -5,6 +5,8 @@
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
+#include "CvYieldInfo.h"                        // the base trade modifier identity
+#include "Cascade/CvCascadeChannelRegistry.h"   // the trade-route modifier channel
 #include "Infos/CvClassificationIds.h"   // the generated CLS_* ids the ability reads key on
 #include "CvTraitSelection.h"
 #include "Engine/CvGameSpeedScale.h"
@@ -181,7 +183,6 @@ m_cachedBonusCount(NULL)
 	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
-	m_aiTradeYieldModifier = new int[NUM_YIELD_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromEvents = new int[NUM_COMMERCE_TYPES];
 	m_aiGoldPerTurnByPlayer = new int[MAX_PLAYERS];
@@ -291,7 +292,6 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiSeaPlotYield);
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiExtraYieldThreshold);
-	SAFE_DELETE_ARRAY(m_aiTradeYieldModifier);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromEvents);
 	SAFE_DELETE_ARRAY(m_aiGoldPerTurnByPlayer);
@@ -360,12 +360,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	{
 		setAlive(true);
 	}
-	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
 
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		changeTradeYieldModifier(((YieldTypes)iI), GC.getYieldInfo((YieldTypes)iI).getTradeModifier());
-	}
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		setCommercePercent(((CommerceTypes)iI), GC.getCommerceInfo((CommerceTypes)iI).getInitialPercent());
@@ -1133,7 +1128,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
-	m_iTradeRoutes = 0;
 	m_iRevolutionTimer = 0;
 	m_iConversionTimer = 0;
 	m_iStateReligionCount = 0;
@@ -1276,7 +1270,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiSeaPlotYield[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiExtraYieldThreshold[iI] = 0;
-		m_aiTradeYieldModifier[iI] = 0;
 		m_aiLandmarkYield[iI] = 0;
 
 		//TB Traits begin
@@ -6900,7 +6893,9 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	// The EMPIRE-scope route COUNT -- the memberless flat deposit (ruling 11: kind 0 IS the count). The slot is
 	// a FLAT amount and therefore ×100, so the reader reduces at its point of use ([DEC-fixedpoint-x100]): a
 	// route count is a whole game quantity.
-	changeTradeRoutes(kBuilding.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_EMPIRE) / 100 * iChange);
+	// The cascade owns the AMOUNT now; what this site still owes is the changer's RIDER --
+	// the stored per-city trade YIELD must rebuild when a route input moves ([save.md] par.6).
+	updateTradeRoutes();
 
 	changeForceAllTradeRoutes(kBuilding.providesAmenity(CLS_AMENITY_FORCE_ALL_TRADE_ROUTES) * iChange);
 
@@ -10187,20 +10182,20 @@ void CvPlayer::changeNoForeignCorporationsCount(int iChange, bool bLimited)
 }
 
 
+// The empire's TRADE ROUTE COUNT. ⛔ It replaced a serialized accumulator that NOTHING fed from traits or civics
+// -- the two `changeTradeRoutes` feeders sat in processBuilding and processTech, so the 53 trait and 20 civic
+// empire-scope route grants in Assets/Data reached it through no path at all, while the cascade held every one of
+// them on the tradeRoutes AMOUNT slot with no reader ([DEC-accumulator-cut-uniform]).
+// ⚑ INITIAL_TRADE_ROUTES stays a DEFINE read here: it is the player's starting allowance, produced by no deposit
+// and therefore not derivable -- the same standing GC.getMAX_TRADE_ROUTES() has in getMaxTradeRoutes().
 int CvPlayer::getTradeRoutes() const
 {
-	return m_iTradeRoutes;
+	int aiTradeRoutes[NUM_TRADE_ROUTE_KINDS];
+	getTradeRouteKinds(aiTradeRoutes);
+	return GC.getINITIAL_TRADE_ROUTES() + aiTradeRoutes[TRADE_ROUTE_AMOUNT] / 100;
 }
 
 
-void CvPlayer::changeTradeRoutes(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iTradeRoutes += iChange;
-		updateTradeRoutes();
-	}
-}
 
 
 int CvPlayer::getRevolutionTimer() const
@@ -11861,23 +11856,25 @@ void CvPlayer::updateLessYieldThreshold(YieldTypes eIndex)
 }
 
 
+// The PER-CHANNEL route-yield modifier: what scales the yield a trade route DELIVERS on this channel
+// (CvCity::calculateTradeYield). Ruling 27 -- the three channel kinds sit CONTIGUOUS in YieldTypes order, so the
+// parameterized read is TRADE_ROUTE_MODIFIER_FOOD + eYield.
+// ⛔ IT REPLACES A SERIALIZED ACCUMULATOR WHOSE ONLY LIVE WRITER WAS THE YIELD-INFO SEED, and that is what made
+// the old value indefensible rather than merely legacy: `m_aiTradeYieldModifier` was fed once at player init from
+// CvYieldInfo::getTradeModifier() (commerce 100, food 0, production 0) and by NOTHING else, yet it was
+// WRAPPER_READ_ARRAY'd back off the save -- so a loaded game carried per-channel modifiers no live source could
+// reproduce (London ate 126 food off its routes against a live food modifier of ZERO). That is the
+// STORED-ACCUMULATOR DRIFT class ([modifier.md] §2b): the recompute is the correct side
+// ([DEC-accumulator-cut-uniform]).
+// ⚑ The yield info supplies the IDENTITY and the cascade rides ON TOP -- the deposits are deltas against the
+// engine's own base, not a replacement for it.
 int CvPlayer::getTradeYieldModifier(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiTradeYieldModifier[eIndex];
-}
-
-
-void CvPlayer::changeTradeYieldModifier(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiTradeYieldModifier[eIndex] += iChange;
-
-		updateTradeRoutes();
-	}
+	int aiTradeRoutes[NUM_TRADE_ROUTE_KINDS];
+	getTradeRouteKinds(aiTradeRoutes);
+	return GC.getYieldInfo(eIndex).getTradeModifier()
+		+ aiTradeRoutes[(int)TRADE_ROUTE_MODIFIER_FOOD + (int)eIndex];
 }
 
 
@@ -16899,7 +16896,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCorporationsCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignCorporationsCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iTradeRoutes);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevolutionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConversionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionCount);
@@ -17038,7 +17034,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		// The sliders deserialize WHOLESALE, so each is taken off the array, zeroed, and landed through the
 		// internal setter -- never the public one, which would rebalance the others and fight the stream.
 		// ⚠ A channel loaded at 0 announces NOTHING, and that is correct now: the fact carries a DELTA as a
@@ -18326,7 +18321,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCorporationsCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignCorporationsCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTradeRoutes);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevolutionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConversionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionCount);
@@ -18380,7 +18374,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
@@ -22921,14 +22914,12 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 			iThreshold = getModifiedIntValue(iThreshold, iMod);
 		}
 	}
-	// ⚖ THE GOLDEN-AGE DISCOUNT APPLIES TO THE COMPLETED THRESHOLD (owner) -- the calculation finishes first
-	// (base + the per-pop ramp, then gamespeed, era and the AI handicap), and the percent comes off that final
-	// number. It is deliberately NOT folded into the base, where it would discount only the flat term and leave
-	// the per-pop ramp untouched.
-	if (isGoldenAge())
-	{
-		iThreshold = getModifiedIntValue(iThreshold, GC.getDefineINT("GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH"));
-	}
+	// ⛔ A GOLDEN AGE DOES NOT DISCOUNT THE GROWTH THRESHOLD, AND MUST NOT BE MADE TO (owner). The discount is a
+	// mechanic that never once ran: the legacy engine looked its define up misspelled, so the lookup answered 0
+	// and composed as the identity -- silently, for the whole life of the mod. The game's balance was therefore
+	// built on a threshold that a golden age never moved, and making the mechanic work now is a BALANCE CHANGE
+	// wearing a bug fix's clothes, not a repair. The define is deleted with it
+	// ([superseded-ideas](docs/architecture/superseded-ideas.md)).
 	return std::max(1, iThreshold);
 }
 
@@ -27498,7 +27489,9 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	//	whole-number totals ([DEC-fixedpoint-x100]).
 	changeFeatureProductionModifier(
 		tech.getScalar(SCALAR_FEATURE_PRODUCTION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * iChange);
-	changeTradeRoutes(tech.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100 * iChange);
+	// The cascade owns the AMOUNT now; what this site still owes is the changer's RIDER --
+	// the stored per-city trade YIELD must rebuild when a route input moves ([save.md] par.6).
+	updateTradeRoutes();
 	changeExtraHealth(tech.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) / 100 * iChange);
 	changeExtraHappiness(tech.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) / 100 * iChange);
 	//	The two demographics a tech feeds: `worth` is the empire's ASSETS total, and the domain-specific

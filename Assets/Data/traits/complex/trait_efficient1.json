@@ -13,9 +13,6 @@
  ],
  "commerce": {
   "empire": {
-   "tradeRoute": {
-    "percent": 10
-   },
    "improvements": {
     "IMPROVEMENT_COTTAGE": {
      "flat": 1
@@ -90,6 +87,15 @@
    "units": {
     "UNIT_GREAT_STATESMAN": {
      "flat": 2
+    }
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": 10
     }
    }
   }

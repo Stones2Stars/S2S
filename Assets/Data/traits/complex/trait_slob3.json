@@ -55,17 +55,17 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": -25
-   }
-  }
- },
  "diplomacy": {
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -25
    }
   }
  },

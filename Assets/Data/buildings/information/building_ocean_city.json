@@ -52,9 +52,7 @@
      "enabled": {
       "type": "BONUS_METALLIC_HYDROGEN",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]
@@ -69,9 +67,7 @@
      "enabled": {
       "type": "BONUS_HUMAN_MOD_GILLS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

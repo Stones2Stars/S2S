@@ -63,9 +63,7 @@
      "enabled": {
       "type": "BONUS_STONE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -73,9 +71,7 @@
      "enabled": {
       "type": "BONUS_OBSIDIAN",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -83,9 +79,7 @@
      "enabled": {
       "type": "BONUS_FLINT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -93,9 +87,7 @@
      "enabled": {
       "type": "BONUS_MARBLE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

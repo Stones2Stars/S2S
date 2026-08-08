@@ -32,9 +32,7 @@
      "enabled": {
       "type": "BONUS_MICROGENERATORS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

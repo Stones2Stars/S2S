@@ -3,13 +3,6 @@
  "excludes": [
   "TRAIT_DYNAMIC1"
  ],
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -123,10 +116,12 @@
    }
   }
  },
- "hurry": {
+ "tradeRoutes": {
   "empire": {
-   "cost": {
-    "percent": 40
+   "modifier": {
+    "production": {
+     "percent": 10
+    }
    }
   }
  },
@@ -163,6 +158,13 @@
   "empire": {
    "amount": {
     "percent": 10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 40
    }
   }
  },

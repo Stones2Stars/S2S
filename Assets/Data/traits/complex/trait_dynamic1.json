@@ -11,13 +11,6 @@
  "excludes": [
   "TRAIT_STUBBORN1"
  ],
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -227,13 +220,19 @@
    }
   }
  },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": -10
+    }
+   }
+  }
+ },
  "hurry": {
   "empire": {
    "anger": {
     "percent": -25
-   },
-   "cost": {
-    "percent": -30
    }
   }
  },
@@ -256,6 +255,13 @@
   "empire": {
    "civicAnarchy": {
     "percent": -15
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -30
    }
   }
  },

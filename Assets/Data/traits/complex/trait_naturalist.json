@@ -137,13 +137,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": 15
-   }
-  }
- },
  "workRate": {
   "empire": {
    "builds": {
@@ -229,6 +222,13 @@
     "IMPROVEMENT_TREEFARM": {
      "percent": 100
     }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 15
    }
   }
  },

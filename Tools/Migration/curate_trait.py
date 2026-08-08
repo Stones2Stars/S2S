@@ -122,11 +122,17 @@ SCALAR = {
     "iImprovementUpgradeRateModifier": ("improvementUpgradeRate", "empire", "", "percent"),
     "iMaxConscript":                   ("conscript", "empire", "", "flat"),
     "iHurryAngerModifier":             ("hurry", "empire", "anger", "percent"),
-    "iHurryCostModifier":              ("hurry", "empire", "cost", "percent"),
+    # ruling 18: hurry.cost -> costs.hurry. The ENGINE reads this leg as costs[COSTS_HURRY]
+    # (CvCity::getHurryCostModifier -> CvPlayer::getCostKinds), and `hurry.cost` matches no kind row at all, so
+    # the deposit was dropped at load as `unkinded-member hurry.cost`. curate_civic has always had it right.
+    "iHurryCostModifier":              ("costs", "empire", "hurry",  "percent"),
     "iTradeRoutes":                    ("tradeRoutes", "empire", "", "flat"),
-    "iCoastalTradeRoutes":             ("tradeRoutes", "empire", "coastal", "flat"),
     "iMaxTradeRoutesChange":           ("tradeRoutes", "empire", "max", "flat"),
-    "iForeignTradeRouteModifier":      ("tradeRoutes", "empire", "foreign", "percent"),
+    # iCoastalTradeRoutes / iForeignTradeRouteModifier are NOT rows here: the route-KIND variants are CONDITIONS,
+    # never members (rulings 11/17, json.md §2). They emitted `coastal` / `foreign` members no kind table carries,
+    # so every one was dropped at load as `[READJSON] unkinded-member tradeRoutes.coastal|foreign` -- silently,
+    # which is how the whole seafaring line came to grant no trade routes at all. Handled in the apply loop below,
+    # matching curate_civic / curate_building, which have carried the correct shape all along.
     "iGoldenAgeDurationModifier":      ("goldenAge", "empire", "", "percent"),
     "iGlobalAirUnitCapacity":          ("unitCapability", "empire", "airUnitCapacity", "flat"),
     # experience
@@ -142,8 +148,10 @@ SCALAR = {
     # combat.empire.bombardDefense had NO reader (the getBuildingBombardDefense national leg was dropped).
     "iBombardDefense":                 ("defense", "empire", "bombardDefense", "percent"),
     "iEspionageDefense":               ("combat", "empire", "espionageDefense", "percent"),
-    "iNationalCaptureProbabilityModifier": ("combat", "empire", "captureProbability", "percent"),
-    "iNationalCaptureResistanceModifier":  ("combat", "empire", "captureResistance", "percent"),
+    # the CAPTURE family owns these, not combat: the engine reads capture[CAPTURE_PROBABILITY] /
+    # [CAPTURE_RESISTANCE] via CvPlayer::getCaptureKinds. Under `combat` they matched no kind and were dropped.
+    "iNationalCaptureProbabilityModifier": ("capture", "empire", "probability", "percent"),
+    "iNationalCaptureResistanceModifier": ("capture", "empire", "resistance", "percent"),
     "iMissileRange":                   ("combat", "empire", "missileRange", "flat"),
     "iFlightOperationRange":           ("combat", "empire", "flightRange", "flat"),
     "iNavalCargoSpace":                ("combat", "empire", "navalCargo", "flat"),
@@ -183,7 +191,9 @@ STATE_RELIGION = {
 SPLIT_ARRAY = {
     "YieldChanges":             ("empire", "",          "flat",         YIELDS),
     "YieldModifiers":           ("empire", "",          "percent",      YIELDS),
-    "TradeYieldModifiers":      ("empire", "tradeRoute","percent",      YIELDS),
+    # TradeYieldModifiers is NOT a SPLIT_ARRAY row: that table makes the YIELD the FAMILY, which addressed a
+    # per-channel ROUTE modifier as a member of food/commerce/production. Ruling 27 puts it under tradeRoutes
+    # (tradeRoutes.<scope>.modifier.<channel>.<unit>) -- handled in the apply loop, as curate_civic already does.
     # SeaPlotYieldChanges -> a PLOTS-TARGET fold (owner 2026-06-22): empire.plots.flat {IS_WATER}; handled in the apply loop.
     "GoldenAgeYieldChanges":    ("empire", "goldenAge", "flat",         YIELDS),
     "CommerceChanges":          ("empire", "",          "flat",         COMMERCES),
@@ -336,12 +346,14 @@ def _put_per(fam, family, scope, unit, value, per, target=None):
         node[unit] = [cur, entry]
 
 
-def _put_cond(fam, family, scope, unit, value, enabled):
+def _put_cond(fam, family, scope, unit, value, enabled, member=None):
     """Append a CONDITIONED deposit {value, enabled:<predicate>} to a scope-wide leaf, merging with any unconditioned
     scalar already there into a list (json §3.9) — the same shape as the SeaPlotYieldChanges IS_WATER fold below. The
     doc-covered shape for a state-gated modifier ([DEC-conditions-are-predicates]): a capital-only modifier is
     empire.percent + enabled:"IS_CAPITAL", NOT a bespoke empire.capital member."""
     node = fam.setdefault(family, {}).setdefault(scope, {})
+    if member:
+        node = node.setdefault(member, {})
     entry = OrderedDict([("value", value), ("enabled", enabled)])
     cur = node.get(unit)
     if cur is None:
@@ -522,6 +534,26 @@ def curate(typ, rec, store):
             scope, unit, keys, pred = SPLIT_ARRAY_COND[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); predicate-gated deposit
                 _put_cond(fam, ident, scope, unit, v, pred)
+        elif tag == "iCoastalTradeRoutes":
+            # +N routes, but only in a COASTAL city -- a CITY verdict, so the predicate is HAS_COAST (the shape
+            # curate_building.py already uses for this same tag).
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                _put_cond(fam, "tradeRoutes", "empire", "flat", v, "HAS_COAST")
+        elif tag == "iForeignTradeRouteModifier":
+            # A ROUTE verdict, not a city one: IS_FOREIGN is evaluated against the route's PARTNER city inside the
+            # profit stage (CvCity::totalTradeModifier). It rides the channel-AGNOSTIC `modifier`, which scales the
+            # route profit before the per-channel split.
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                _put_cond(fam, "tradeRoutes", "empire", "percent", v, "IS_FOREIGN", "modifier")
+        elif tag == "TradeYieldModifiers":
+            # Ruling 27: the per-CHANNEL route-yield %, carried by tradeRoutes under the channel axis. It scales
+            # what a route DELIVERS (CvCity::calculateTradeYield), which is a property of the route -- not a
+            # member of the food family, which is where the SPLIT_ARRAY row used to put it.
+            for ident, v in engine.named_array(c, YIELDS).items():
+                (fam.setdefault("tradeRoutes", {}).setdefault("empire", {}).setdefault("modifier", {})
+                 .setdefault(ident, {}))["percent"] = v
         elif tag == "SeaPlotYieldChanges":
             # PLOTS-TARGET fold (owner 2026-06-22): the empire sea-plot yield -> the explicit `plots` target {IS_WATER}
             # (data-model §4.1/§6). Deposits onto every water plot worked in the empire; retires getSeaPlotYield + seaPlot.

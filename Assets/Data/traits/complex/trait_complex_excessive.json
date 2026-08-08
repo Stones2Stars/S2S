@@ -18,9 +18,6 @@
  },
  "commerce": {
   "empire": {
-   "tradeRoute": {
-    "percent": -10
-   },
    "improvements": {
     "IMPROVEMENT_COTTAGE": {
      "flat": -1
@@ -104,6 +101,15 @@
   "empire": {
    "numCities": {
     "percent": -20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": -10
+    }
    }
   }
  },

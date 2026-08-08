@@ -66,9 +66,7 @@
      "enabled": {
       "type": "BONUS_STEEL_INGOTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -76,9 +74,7 @@
      "enabled": {
       "type": "BONUS_ALUMINUM_INGOTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -86,9 +82,7 @@
      "enabled": {
       "type": "BONUS_TITANIUM_INGOTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -96,9 +90,7 @@
      "enabled": {
       "type": "BONUS_FIBERGLASS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -106,9 +98,7 @@
      "enabled": {
       "type": "BONUS_NANOTUBES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -116,9 +106,7 @@
      "enabled": {
       "type": "BONUS_GRAPHENE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -126,9 +114,7 @@
      "enabled": {
       "type": "BONUS_BIOPOLYMERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -136,9 +122,7 @@
      "enabled": {
       "type": "BONUS_CHEMICALS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

@@ -5334,7 +5334,15 @@ void CvDLLWidgetData::parseBuildingHelp(CvWidgetDataStruct &widgetDataStruct, Cv
 {
 	if (widgetDataStruct.m_iData2 != 0)
 	{
-		GAMETEXT.setBuildingHelp(szBuffer, ((BuildingTypes)(widgetDataStruct.m_iData1)), false, false, widgetDataStruct.m_bOption, gDLL->getInterfaceIFace()->getHeadSelectedCity());
+		// ⚠ The arguments were POSITIONALLY WRONG: `false` landed in the `CvCity*` slot (a literal 0 is a valid
+		// null-pointer constant, so it compiled), the option flag landed in `bCivilopediaText`, and the city
+		// pointer itself was converted to `bool` for `bStrategyText`. The composer therefore ran with NO city
+		// bound on the one path that always has one -- the city screen's own building list -- which is why no
+		// city-contextual line could ever appear there.
+		GAMETEXT.setBuildingHelp(
+			szBuffer, (BuildingTypes)widgetDataStruct.m_iData1, true,
+			gDLL->getInterfaceIFace()->getHeadSelectedCity(), false, widgetDataStruct.m_bOption
+		);
 	}
 }
 

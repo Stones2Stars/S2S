@@ -156,6 +156,29 @@ public:
 		int iSpeedPercent, int iEraPercent, int iBaseThreshold,
 		int iConsumption, int iPerPop, int iFoodDifference,
 		int iDefineBase, int iDefineMult, int iNormalAI, int iGoldenAge);
+	// ONE city's §2a yield RATE, decomposed into every term the combine actually used. The rate is SIX
+	// independent quantities collapsed into one int, so a report that a city produces too little is unanswerable
+	// against the total -- this is what turns it into "the plot base is short" or "the stack is missing".
+	// DIAGNOSTIC: it says what a calculation produced, never what the state IS.
+	// ⚑ plotBase carries its THREE SEGMENTS beside it (nature / improvement / rest, raw and unfloored). A short
+	// plot Σ is the one term the total cannot attribute on its own -- a dead improvement leg and a dead nature
+	// leg are the same number in it -- and the segments are read from the SAME walk, never re-derived.
+	// ONE city's BONUS STORES, by size. The vicinity/onSite dictionaries and the network's own holdings decide
+	// every bonus-gated deposit in the game and appear on NO served surface, so an empty store and a working
+	// store that everything legitimately refuses look identical from the outside -- a short yield either way.
+	// This is the line that tells them apart. DIAGNOSTIC: what the stores HOLD, never what they should hold.
+	// ONE atom crossing's OUTCOME. listSize/found say the index answered; noSource/refused/applied say what
+	// happened to each deposit. ⛔ A route that fires and moves nothing is indistinguishable from one that never
+	// fired, and that ambiguity is what makes a coverage claim unfalsifiable -- this is the line that makes
+	// "does the cascade cover this atom" a number instead of an assertion.
+	static void reportAtomRoute(const char* szAtom, int iListSize, int iFound, int iNoSource,
+		int iRefused, int iApplied, int iPlayer, int iCity);
+	static void reportBonusStores(int iPlayer, int iCity, int iOnSite, int iVicinityAll, int iVicinityOwned,
+		int iVicinityWorked, int iTraded, int iNetworkList);
+	static void reportRateRead(int iPlayer, int iHuman, int iCity, int iChannelId,
+		int iPlotBase, int iPlotNature, int iPlotImprovement, int iPlotRest,
+		int iTradeYield, int iGoldenAgeYield, int iUpperFlat, int iSpecialists,
+		int iCityFlatExtra, int iPercentSum, int iWorkedPlots, int iRate);
 };
 
 #endif // CV_CASCADE_CHANNEL_REGISTRY_H

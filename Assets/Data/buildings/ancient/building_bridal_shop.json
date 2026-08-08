@@ -48,9 +48,7 @@
      "enabled": {
       "type": "BONUS_HATS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -58,9 +56,7 @@
      "enabled": {
       "type": "BONUS_SHOES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -68,9 +64,7 @@
      "enabled": {
       "type": "BONUS_JEWELRY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -78,9 +72,7 @@
      "enabled": {
       "type": "BONUS_FLOWERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

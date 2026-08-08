@@ -52,9 +52,7 @@
      "enabled": {
       "type": "BONUS_NANOTUBES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -62,9 +60,7 @@
      "enabled": {
       "type": "BONUS_TITANIUM_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -72,9 +68,7 @@
      "enabled": {
       "type": "BONUS_ALUMINUM_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -82,9 +76,7 @@
      "enabled": {
       "type": "BONUS_COMPUTERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

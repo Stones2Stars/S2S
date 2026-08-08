@@ -510,13 +510,6 @@
    "flat": -1
   }
  },
- "combat": {
-  "empire": {
-   "captureResistance": {
-    "percent": -10
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "civic": {
@@ -543,6 +536,13 @@
   "empire": {
    "bombardDefense": {
     "percent": -5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -10
    }
   }
  },

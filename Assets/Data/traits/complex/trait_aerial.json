@@ -765,9 +765,6 @@
    },
    "missileCargo": {
     "flat": 2
-   },
-   "captureResistance": {
-    "percent": -30
    }
   }
  },
@@ -836,6 +833,13 @@
   "empire": {
    "bombardDefense": {
     "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -30
    }
   }
  },

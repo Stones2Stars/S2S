@@ -157,27 +157,37 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 	const CityContext* cityContext = ctx.cityContext;
 	const EmpireContext* empireContext = ctx.empireContext;
 	// team-held facts read through the player's EmpireContext (team is deliberately not a context, contexts.md)
-	if (en_starts(t, "TECH_"))     return empireContext != NULL && empireContext->teamHasTech(id);
-	// CIVIC_ and BONUS_ route their live answer through the AS-IF-HELD hypothetical (CvConditionEval.h), because
-	// those are the two axes a what-if actually asks about: "if I adopted this civic" and "if I had this bonus".
-	// ⚑ The wrapper is the EXTENSION POINT -- a new kind joins by wrapping its own branch, which is why the
-	// hypothetical is keyed by bucket rather than by a second prefix router beside this one. A kind nobody asks a
-	// what-if about is deliberately NOT wrapped: an unused injection path is one nothing exercises.
+	// ⚖ EVERY HELD-KIND ROUTES ITS LIVE ANSWER THROUGH THE AS-IF-HELD HYPOTHETICAL, and this is no longer just
+	// the what-if's business. The ATOM ROUTE (plane C, mc_applyTypeAtom) withdraws a deposit by resolving it
+	// against the verdict it was BOOKED at, and a DOMAIN fact is PAST TENSE -- it announces the crossing once the
+	// state has already moved. So the pin is what makes the withdrawal exact, and a kind whose branch is NOT
+	// wrapped cannot be routed at all: its removal would resolve false and withdraw nothing, leaving a deposit
+	// that compounds on every re-acquisition ([state-repositories.md] § THE INVARIANT).
+	// ⛔ The old rule here -- "a kind nobody asks a what-if about is deliberately NOT wrapped" -- is retired: the
+	// injection path is now exercised by every crossing, not only by a hypothetical question.
+	if (en_starts(t, "TECH_"))     return ev_hypothetical(ctx, EDGEB_TECHS, id,
+		empireContext != NULL && empireContext->teamHasTech(id));
 	if (en_starts(t, "CIVIC_"))    return ev_hypothetical(ctx, EDGEB_CIVICS, id,
 		empireContext != NULL && empireContext->hasCivic(id));
-	if (en_starts(t, "TRAIT_"))    return empireContext != NULL && empireContext->hasTrait(id);
-	if (en_starts(t, "RELIGION_")) return cityContext != NULL && id >= 0 && cityContext->hasReligion(id);
-	if (en_starts(t, "HERITAGE_")) return empireContext != NULL && empireContext->hasHeritage(id);
-	if (en_starts(t, "PROJECT_"))  return empireContext != NULL && empireContext->teamProjectCount(id) > 0;
+	if (en_starts(t, "TRAIT_"))    return ev_hypothetical(ctx, EDGEB_TRAITS, id,
+		empireContext != NULL && empireContext->hasTrait(id));
+	if (en_starts(t, "RELIGION_")) return ev_hypothetical(ctx, EDGEB_RELIGIONS, id,
+		cityContext != NULL && id >= 0 && cityContext->hasReligion(id));
+	if (en_starts(t, "HERITAGE_")) return ev_hypothetical(ctx, EDGEB_HERITAGES, id,
+		empireContext != NULL && empireContext->hasHeritage(id));
+	if (en_starts(t, "PROJECT_"))  return ev_hypothetical(ctx, EDGEB_PROJECTS, id,
+		empireContext != NULL && empireContext->teamProjectCount(id) > 0);
 	// the promotion-chain requires.build atoms (unit context -- the enPromotionValid level-up gate): held check.
 	// Units are the deliberate FUTURE context scope (contexts.md), so this stays a raw unit read until it exists.
-	if (en_starts(t, "PROMOTION_")) return ctx.unit != NULL && id >= 0 && ctx.unit->isHasPromotion((PromotionTypes)id);
+	if (en_starts(t, "PROMOTION_")) return ev_hypothetical(ctx, EDGEB_PROMOTIONS, id,
+		ctx.unit != NULL && id >= 0 && ctx.unit->isHasPromotion((PromotionTypes)id));
 	// the enabler GATE reads raw PRESENCE (ctx.buildingAtomsPresence -- the §7 has-list / engine PrereqInCity
 	// mirror, exclusions included); deposits + the operate fixpoint read the cascade-computed ACTIVE set
-	if (en_starts(t, "BUILDING_")) return ctx.buildingAtomsPresence
+	if (en_starts(t, "BUILDING_")) return ev_hypothetical(ctx, EDGEB_BUILDINGS, id, ctx.buildingAtomsPresence
 		? (cityContext != NULL && cityContext->hasBuilding(id))
-		: ev_hasActiveBuilding(ctx, id);
-	if (en_starts(t, "CORPORATION_")) return cityContext != NULL && id >= 0 && cityContext->hasCorporation(id);
+		: ev_hasActiveBuilding(ctx, id));
+	if (en_starts(t, "CORPORATION_")) return ev_hypothetical(ctx, EDGEB_CORPORATIONS, id,
+		cityContext != NULL && id >= 0 && cityContext->hasCorporation(id));
 	// game/world-scope facts have no context by design (the scope set is plot/city/player, contexts.md)
 	if (en_starts(t, "VICTORY_"))  return id >= 0 && GC.getGame().isVictoryValid((VictoryTypes)id);
 	if (en_starts(t, "GAMEOPTION_")) return id >= 0 && GC.getGame().isOption((GameOptionTypes)id);
@@ -384,6 +394,12 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 			if (a->connection != CASC_CONN_NONE) return ev_bonusPresent(ctx, a->id, a->connection, a->vicinity);
 			if (f.bonusFromPlot && ctx.plotContext != NULL) return ctx.plotContext->hasBonus(a->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
 			if (a->scope == CASC_SCOPE_PLOT) return ctx.plotContext != NULL && ctx.plotContext->hasBonus(a->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
+			// ⛔ AN UNQUALIFIED CITY-SCOPE BONUS ATOM IS **TRADED, ONLY** (owner): `{type, scope:"city", min:1}`
+			// reads the plot group and nothing else. The trade list and the onSite list are populated by the
+			// SAME acquisition events, which is exactly what makes them look interchangeable -- and they are
+			// ⛔ **NEVER TO BE LOOKED AT TOGETHER, AT ANY TIME**. A union here would silently satisfy a network
+			// question with a locally-produced resource, which is the conflation the onSite/connected split was
+			// made to end. onSite is asked EXPLICITLY, via connection:"vicinity" + vicinity:"onSite".
 			return ev_tradedBonus(ctx, a->id);
 		}
 		const int n = ev_countOf(ctx, a);

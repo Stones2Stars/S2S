@@ -1,22 +1,8 @@
 {
  "type": "TRAIT_POPULIST",
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 60
-   }
-  }
- },
  "production": {
   "empire": {
    "percent": -5
-  }
- },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -30
-   }
   }
  },
  "extraYieldThreshold": {
@@ -40,6 +26,18 @@
   "empire": {
    "civic": {
     "percent": 25
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 60
+    },
+    "commerce": {
+     "percent": -30
+    }
    }
   }
  },

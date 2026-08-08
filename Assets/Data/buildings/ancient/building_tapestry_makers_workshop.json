@@ -96,9 +96,7 @@
      "enabled": {
       "type": "BONUS_HEMP_FIBERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -106,9 +104,7 @@
      "enabled": {
       "type": "BONUS_WOOL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -116,9 +112,7 @@
      "enabled": {
       "type": "BONUS_FLAX_FIBERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -126,9 +120,7 @@
      "enabled": {
       "type": "BONUS_SILK_FIBERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -136,9 +128,7 @@
      "enabled": {
       "type": "BONUS_COTTON_FIBERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -146,9 +136,7 @@
      "enabled": {
       "type": "BONUS_SILVER_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -156,9 +144,7 @@
      "enabled": {
       "type": "BONUS_GOLD_WARES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

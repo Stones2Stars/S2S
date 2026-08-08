@@ -31,9 +31,7 @@
      "enabled": {
       "type": "BONUS_HORSE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -41,9 +39,7 @@
      "enabled": {
       "type": "BONUS_DONKEY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -51,9 +47,7 @@
      "enabled": {
       "type": "BONUS_CAMEL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -61,9 +55,7 @@
      "enabled": {
       "type": "BONUS_LLAMA",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -71,9 +63,7 @@
      "enabled": {
       "type": "BONUS_ELEPHANTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -81,9 +71,7 @@
      "enabled": {
       "type": "BONUS_MAMMOTH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -91,9 +79,7 @@
      "enabled": {
       "type": "BONUS_COW",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -101,9 +87,7 @@
      "enabled": {
       "type": "BONUS_BISON",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -111,9 +95,7 @@
      "enabled": {
       "type": "BONUS_PIG",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -121,9 +103,7 @@
      "enabled": {
       "type": "BONUS_DOG",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -131,9 +111,7 @@
      "enabled": {
       "type": "BONUS_DEER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

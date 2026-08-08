@@ -42,9 +42,7 @@
      "enabled": {
       "type": "BONUS_BEAVERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -52,9 +50,7 @@
      "enabled": {
       "type": "BONUS_DEER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -62,9 +58,7 @@
      "enabled": {
       "type": "BONUS_RABBIT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -72,9 +66,7 @@
      "enabled": {
       "type": "BONUS_POULTRY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]
@@ -94,9 +86,7 @@
      "enabled": {
       "type": "BONUS_BEAVERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -104,9 +94,7 @@
      "enabled": {
       "type": "BONUS_DEER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

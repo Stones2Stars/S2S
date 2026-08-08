@@ -103,6 +103,31 @@ banned shortcut — 99% of the time the value DOES reconcile once the missing so
 > change numbers, and this exception must never be cited to skip the mapping work. (The one sanctioned instance + its
 > evidence: [legacy-value-calc-map §1.5](../reference/legacy-value-calc-map.md).)
 
+## ⛔ A GATE THAT IS NOT HONOURED MAKES EVERY DATA CHECK MEANINGLESS (owner)
+
+> *"We cannot find curation errors when we literally do not honour the specced gates."*
+
+**Gate ENFORCEMENT is a PRECONDITION of validating the data, never a parallel workstream.** A gate the engine does
+not consult answers YES to everything, so every entity behind it looks correct and every check run against it
+passes — the data is being measured with an instrument that cannot report a fault. ⇒ Fix the enforcement FIRST;
+only then does a data divergence mean anything.
+
+⚑ **The DATA is curated to be correct (owner) — it was inadvertently tested against the previous branch's
+rollerskating behaviour**, so a surviving wrong verdict is the ENGINE failing to honour what the data says, not
+the data needing another pass. ⛔ So the reflex to "fix" a wrong offer by re-authoring the entity is backwards
+here, and it is the move that would bake the engine's gap into the data permanently.
+
+⛔ **The failure is SILENTLY PERMISSIVE in every one of its forms, which is why it needs a census rather than
+vigilance** — none of them errors, and each leaves a gate that can only answer yes:
+- a predicate the parser produces and the evaluator has no case for (an unknown predicate is IGNORED, never
+  false — [json.md §3.5](json.md), so it passes);
+- a re-derived verdict that drops the CARVE-OUTS its engine original carried (a game option that switches a
+  limit off);
+- a constraint that is authored, parsed and held but read by NOBODY;
+- a gate stage a domain never runs, leaving its members LISTED ([enabler.md §8](enabler.md)).
+⚠ **None of these is visible to the compiler**, and a stored-vs-oracle diff cannot see them either — both sides
+share the evaluator, so a gate that always says yes says yes on both.
+
 ## The pollution guardrail — engine-computed data never rides in
 
 **The cascade computes ALL its active state itself and never reads a legacy COMPUTED output as an input**
@@ -146,6 +171,35 @@ Divergence counts, sweep checklists, per-run numbers — none of it belongs in t
 contexts: an agent fixates on a number and misdiagnoses (a ~1100-building enable diff was repeatedly misattributed to a
 band-model change it had nothing to do with). The spec says what the model **is**; the curator code + the live
 endpoints prove it; the result is ephemeral and stays ephemeral.
+
+## ⛔ A REFERENCE NUMBER IS A SMELL TEST, NEVER A TARGET (owner)
+
+> *"I already regret talking about baselines, because every time you use it as a target, and mangle implementation
+> to reach the target, instead of ensuring implementation is correct."*
+
+When the owner says what a value **used to be** — "hammers were about 5000", "the tech took 2.5 turns" — that is a
+SMELL TEST offered to say *something is wrong, go look*. It is not an acceptance criterion, and nothing is finished
+because a number arrived near it.
+
+**⇒ The question is only ever: is this read CORRECT?** A deposit is read or it is not; a slot is maintained or it is
+not. Where the number lands once the reads are right is an OUTPUT, and an output that overshoots the remembered
+figure is not evidence of a bug any more than one that undershoots is evidence of progress.
+
+⛔ **The failure this bans is subtle and does not look like cheating.** It shows up as: reporting every result as a
+percentage of the baseline; hesitating over a correct fix *because* it would move a number past the figure; picking
+which defect to chase by which one closes the gap; and stopping once the gap is closed with real defects still
+standing. Each reads as diligence, and each is the implementation being bent toward a number.
+⚑ **The worked case, and note what the target did to the DIAGNOSIS as well as to the fix:** every result in a
+session was reported as a percentage of a remembered baseline, and a candidate fix was then hesitated over because
+applying it would push a channel above that figure. Worse, the hesitation came *before* the read was even checked —
+and the read turned out to be correct already, so the "gap" being protected was imaginary. **A target does not just
+bend the fix; it decides which questions get asked, and in what order.** Check whether the read is right first;
+the number is downstream of that and has no vote.
+
+⚠ It is the sibling of [DEC-represent-dont-fit](../architecture/decisions.md#dec-represent-dont-fit): that one bans
+bending the MECHANIC set to fit the data, this one bans bending the IMPLEMENTATION to fit a remembered value. And it
+is why run results stay out of the docs (above) — a number in front of an agent becomes a target whether or not
+anyone meant it as one.
 
 ## The three observation levels
 

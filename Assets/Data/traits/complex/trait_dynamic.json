@@ -3,20 +3,6 @@
  "excludes": [
   "TRAIT_STUBBORN"
  ],
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -10
-   }
-  }
- },
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -377,13 +363,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -10
-   }
-  }
- },
  "freeSpecialists": {
   "empire": {
    "any": 1
@@ -404,13 +383,25 @@
    }
   }
  },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": -10
+    },
+    "production": {
+     "percent": -10
+    },
+    "commerce": {
+     "percent": -10
+    }
+   }
+  }
+ },
  "hurry": {
   "empire": {
    "anger": {
     "percent": -25
-   },
-   "cost": {
-    "percent": -50
    }
   }
  },
@@ -447,6 +438,13 @@
   "empire": {
    "amount": {
     "percent": -10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -50
    }
   }
  },

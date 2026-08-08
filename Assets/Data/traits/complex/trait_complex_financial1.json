@@ -356,13 +356,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": -25
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": -15
@@ -387,6 +380,13 @@
    },
    "bombardDefense": {
     "percent": -5
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -25
    }
   }
  },

@@ -108,9 +108,6 @@
   "empire": {
    "espionageDefense": {
     "percent": 10
-   },
-   "captureResistance": {
-    "percent": 20
    }
   }
  },
@@ -123,8 +120,13 @@
  },
  "tradeRoutes": {
   "empire": {
-   "foreign": {
-    "percent": -20
+   "modifier": {
+    "percent": [
+     {
+      "value": -20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },
@@ -162,6 +164,13 @@
    },
    "distanceModifier": {
     "percent": -15
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": 20
    }
   }
  },

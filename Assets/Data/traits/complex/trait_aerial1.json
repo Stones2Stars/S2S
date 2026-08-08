@@ -298,13 +298,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "captureResistance": {
-    "percent": -20
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -344,6 +337,13 @@
   "empire": {
    "bombardDefense": {
     "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -20
    }
   }
  },

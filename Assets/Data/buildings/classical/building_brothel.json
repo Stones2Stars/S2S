@@ -47,9 +47,7 @@
      "enabled": {
       "type": "BONUS_OSTRICH_FEATHERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

@@ -53,9 +53,7 @@
      "enabled": {
       "type": "BONUS_LEAD_INGOTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -63,9 +61,7 @@
      "enabled": {
       "type": "BONUS_TIN_INGOTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -73,9 +69,7 @@
      "enabled": {
       "type": "BONUS_POTASH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

@@ -9,13 +9,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "research": {
   "empire": {
    "percent": -10
@@ -35,8 +28,16 @@
  },
  "tradeRoutes": {
   "empire": {
-   "foreign": {
-    "percent": 30
+   "modifier": {
+    "commerce": {
+     "percent": 10
+    },
+    "percent": [
+     {
+      "value": 30,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },

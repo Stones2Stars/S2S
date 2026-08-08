@@ -26,6 +26,8 @@
 #include "AI/CvPlayerAI.h"      // GET_PLAYER (the owner forward: state religion / policies)
 #include "EmpireContext.h"      // the owner's empire aggregate (policies)
 #include "CvCondition.h"    // CASC_PRED_* -- the shared HAS_/IS_ plot predicate ids plotAttrs keys on
+#include "CvPlotGroup.h"    // the network's own held-resource list -- the census's other half
+#include "Cascade/CvCascadeChannelRegistry.h"   // reportBonusStores -- the bonus-store census
 #include "Defines/CvGlobals.h"            // GC -- the bonus / religion domain sizes the derivations walk
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- fillEvalCtx
 #include "Infos/CvClassificationIds.h"    // CLS_AMENITY_* -- the generated amenity ids
@@ -67,6 +69,7 @@ void CityContext::clear() const
 	m_vicinityForeign.clear();
 	m_vicinityWorked.clear();
 	m_onSite.clear();
+	m_traded.clear();
 	m_areaId = -1;
 	m_areaTileCount = 0;
 	m_governmentCenterDistance = 0;
@@ -265,12 +268,50 @@ void CityContext::applyVicinityBonus(int iBonus, CityVicinityPartition ePartitio
 // every fact that could move one, so what is forwarded is the city's own gated read.
 int  CityContext::tradedBonusCount(int eBonus) const
 {
-	if (eBonus < 0 || m_city == NULL)
+	if (eBonus < 0)
 	{
 		return 0;
 	}
-	return m_city->getNumBonuses((BonusTypes)eBonus);
+	// ⛔ THE STORE, not CvCity::getNumBonuses. The relay it replaced walked the plot group and applied the
+	// engine's tech-trade gate, minted-percent suppression and corporation add-on -- an ENGINE answer that no
+	// fact maintains, so a missing emit was invisible and nothing could be diffed against it. This reads what
+	// the city's own acquisition facts built ([DEC-maintained-sum]).
+	return m_traded.count(eBonus);
 }
+void CityContext::collectBonusStores(std::vector<int>& tradedOut, std::vector<int>& onSiteOut) const
+{
+	tradedOut.clear();
+	onSiteOut.clear();
+	std::map<int, int>::const_iterator it;
+	for (it = m_traded.m.begin(); it != m_traded.m.end(); ++it)
+	{
+		if (it->second > 0) { tradedOut.push_back(it->first); }
+	}
+	for (it = m_onSite.m.begin(); it != m_onSite.m.end(); ++it)
+	{
+		if (it->second > 0) { onSiteOut.push_back(it->first); }
+	}
+}
+
+void CityContext::reportBonusStoreCensus() const
+{
+	if (m_city == NULL)
+	{
+		return;
+	}
+	// TRADED is now a STORE, so it is sized like every other dictionary here. It used to be counted per resource
+	// through the legacy relay -- which is exactly why the census once reported 89 held while the cascade itself
+	// knew nothing.
+	const int iTraded = (int)m_traded.m.size();
+	// ...and the NETWORK LIST beside it, so a city reading zero traded can be told apart from a plot group that
+	// holds nothing to begin with. Two different failures, one observable without this pair.
+	const CvPlotGroup* pPlotGroup = m_city->plotGroup(m_city->getOwner());
+	const int iNetworkList = (pPlotGroup != NULL) ? (int)pPlotGroup->getBonuses().size() : -1;
+	CascadeChannelRegistry::reportBonusStores((int)m_city->getOwner(), m_city->getID(),
+		(int)m_onSite.m.size(), (int)m_vicinityAll.m.size(), (int)m_vicinityOwned.m.size(),
+		(int)m_vicinityWorked.m.size(), iTraded, iNetworkList);
+}
+
 int  CityContext::areaId() const                     { return m_areaId; }
 int  CityContext::areaSize() const                   { return m_areaTileCount; }
 int  CityContext::governmentCenterDistance() const   { return m_governmentCenterDistance; }
@@ -709,6 +750,14 @@ bool CityContext::wantsEvent(int iEventId)
 	// MEMBERSHIP: a plot entered or left this city's workable set -- fold its whole current block.
 	case SEVT_PLOT_WORKING_CITY_ADDED:
 	case SEVT_PLOT_WORKING_CITY_REMOVED:
+	// THE TRADED STORE -- this city's own network-supply crossing. CvCity::processBonus fires it only on a
+	// genuine 0 <-> non-zero flip, so the fact IS the presence change and never a magnitude.
+	case SEVT_CITY_BONUS_ADDED:
+	case SEVT_CITY_BONUS_REMOVED:
+	// ...and the SUPPLIED half: a resource an active building in this city PRODUCES (json §5a `provides.bonuses`
+	// -- an industrial farm supplying every livestock), or a free bonus the city carries.
+	case SEVT_CITY_VICINITY_BONUS_ADDED:
+	case SEVT_CITY_VICINITY_BONUS_REMOVED:
 	// THE VICINITY STORE -- the MAP half of the json §5a supply, fed ±1 per fact and never by a radius walk.
 	// (The BUILDING half stays the enabler's operate/provides fixpoint; the reader unions the two.)
 	case SEVT_PLOT_BONUS_ADDED:
@@ -849,6 +898,44 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			kApply.iPlotOwner = kEvent.iC;   // the owner THIS half of the pair is about
 			kApply.iSign = (kEvent.iEventId == SEVT_PLOT_OWNER_ADDED) ? +1 : -1;
 			cc_forEachWorkableCity(pPlot, kApply);
+		}
+		break;
+	}
+
+	// A resource this city PRODUCES arrived or went -- an active building's `provides.bonuses`, or a free bonus.
+	// ⛔ IT LANDS IN BOTH LISTS, and that is the whole correction: producing a resource is an ACQUISITION, so the
+	// city HAS it on site AND it goes onto the tradeable network -- exactly as an improved tile's resource does
+	// (owner: fish "is local to london because it is actually improved there, and then it also goes on the
+	// tradeable network"). The enabler already knew -- its `provided` set carried 173 resources for London --
+	// but that set is the ENABLER's derived output and no cascade store consumed this fact at all, so a deposit
+	// asking whether the city holds pig, sheep or cow was answered NO while an industrial farm supplied all
+	// three. The count rides the fact (iB), so a second supplier is a second unit and losing one supplier does
+	// not drop the resource.
+	case SEVT_CITY_VICINITY_BONUS_ADDED:
+	case SEVT_CITY_VICINITY_BONUS_REMOVED:
+	{
+		CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
+		if (pCity != NULL && kEvent.iType >= 0)
+		{
+			const int iCount = (kEvent.iB != 0) ? kEvent.iB : 1;
+			const int iSign = (kEvent.iEventId == SEVT_CITY_VICINITY_BONUS_ADDED) ? +1 : -1;
+			pCity->getCityContext().applyVicinityBonus(kEvent.iType, CITYVIC_ONSITE, iSign * iCount);
+			pCity->getCityContext().m_traded.add(kEvent.iType, iSign * iCount);
+		}
+		break;
+	}
+
+	// THIS CITY obtained or lost a resource over the network. ⚑ It is the city's OWN fact, so it needs no plot,
+	// no radius walk and no fan: one delta into one dictionary, which is what makes the traded answer a
+	// maintained sum rather than a relay.
+	case SEVT_CITY_BONUS_ADDED:
+	case SEVT_CITY_BONUS_REMOVED:
+	{
+		CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
+		if (pCity != NULL && kEvent.iType >= 0)
+		{
+			pCity->getCityContext().m_traded.add(kEvent.iType,
+				(kEvent.iEventId == SEVT_CITY_BONUS_ADDED) ? +1 : -1);
 		}
 		break;
 	}
@@ -1001,6 +1088,12 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 				// not exist. Establishing the work area now fires those facts, and the vicinity store fills
 				// through the ordinary route -- not a second build mechanism beside the event stream.
 				pCity->changeWorkableArea(0, pCity->getNumCityPlots());
+			}
+			// The stores are now as full as this load will make them, so this is the ONE moment their contents
+			// are worth stating. Emitted AFTER the work areas are established, because that is what fills them.
+			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				pCity->getCityContext().reportBonusStoreCensus();
 			}
 		}
 		break;

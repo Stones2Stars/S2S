@@ -48,9 +48,7 @@
      "enabled": {
       "type": "BONUS_JEWELRY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -58,9 +56,7 @@
      "enabled": {
       "type": "BONUS_OLIVE_OIL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -68,9 +64,7 @@
      "enabled": {
       "type": "BONUS_PERFUME",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -78,9 +72,7 @@
      "enabled": {
       "type": "BONUS_CLOTHING",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -88,9 +80,7 @@
      "enabled": {
       "type": "BONUS_INCENSE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -98,9 +88,7 @@
      "enabled": {
       "type": "BONUS_SPONGES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -108,9 +96,7 @@
      "enabled": {
       "type": "BONUS_CARPETS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

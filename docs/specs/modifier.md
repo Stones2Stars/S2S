@@ -141,6 +141,29 @@ combines them at read.
 float math desyncs. The single human→×100 conversion happened once in `readJson` ([json](json.md) §3.6); the
 slot does pure integer math and never sees the human boundary.
 
+> **⛔ PLOT SCALING CAN ONLY AFFECT ITSELF — A HARD RULE (owner).** *"I do not think there is any scenario where a
+> plot gives 1 hammer per 5 commerce, and as such we codify that as a hard rule, that the plot scaling can only
+> effect itself."* A per-plot scaling of a channel reads that channel's own value on that plot and grants THAT
+> CHANNEL. There is no cross-channel plot scaling, and none may be authored: a threshold on commerce cannot pay
+> out in production.
+> ⚑ **It is a structural simplification, not a restriction to police.** With the input and the output on one
+> channel, the whole mechanic is plot-local — it needs no cross-scope reach at resolve time, no ordering between
+> channels, and no fan-out when one channel moves another. That is what lets it live in the package.
+>
+> **⚖ THE MECHANIC IS TWO SEPARATE NUMBERS, BOTH FED IN (owner): a THRESHOLD and an AMOUNT.** *"You maintain the
+> per-yield threshold, and the amount you get on the per-yield — treat them as 2 separate numbers that get fed
+> in."* The interval is "per how much" of the plot's own value; the amount is what each whole interval grants.
+> ⚖ **The AMOUNT comes from the `EXTRA_YIELD` global define, and that is fine (owner):** *"we can live with the
+> EXTRA_YIELD define for now — we don't need to change that at this point."* ⛔ So a define read here is NOT a
+> gap to close and NOT a missing authoring surface; do not "fix" it into curated data. What the ruling requires is
+> that it stays a SEPARATE number the plane carries per channel — which it is — so that authoring it later is a
+> data change and never a reshape.
+> ⚠ **The THRESHOLD does not combine additively, and this is the trap:** the engine selects **the SMALLEST
+> POSITIVE threshold held** (`CvPlayer::updateExtraYieldThreshold`), so two sources at 7 and 5 yield 5, never 12.
+> A plain flat channel SUMS, so reading one through the ordinary roll-up is wrong by construction — it needs the
+> non-additive family metadata this section already defines for `defense`'s floor kind. The AMOUNT is an ordinary
+> additive number; only the threshold is a min.
+>
 > **A plot's yield is ONE base package, resolved in isolation BEFORE the city modifiers.**
 > All output from a single plot is computed in **complete isolation** as one base-yield package — `CvPlot::calculateYield`
 > per plot ([calc-map](../reference/legacy-value-calc-map.md) §10.1: `calculateNatureYield`(`getBaseYield`=
@@ -203,7 +226,7 @@ order is load-bearing (it decides what the percent stack scales and what it does
 | BASE source | origin | base vs computed |
 |---|---|---|
 | **worked-plot yields** (`basePlotYield`) | Σ over the city's worked plots of each plot's ONE isolated base package (§2 plot-as-base): `max(0, terrain+feature+bonus)` nature + improvement (floored at −nature) + route + keyed building/civic/trait `plot`-flats + `plots`-target + city-centre constant + threshold/golden-age per-plot | **computed** from the curated plot substrate + engine plot state |
-| **trade-route yield** (`tradeYield`) | engine-generated (the trade network) | **input** — out-of-scope: the cascade cannot re-derive the network, so the calc *folds the route yield in*, never derives it. **The ONE live-yield input** — a clean addition at the very end of the base, and the sole sanctioned exception to the pollution guardrail ([validation](validation.md), [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)). ⚠ **The route COUNT is the OPPOSITE case (owner): `getMaxTradeRoutes` — game + player + coastal + `city.extra` slot deposits — is a modifier-influenced value the cascade COMPUTES, its own `tradeRoutes` channel.** Trade YIELD is read from the engine package; the trade-route COUNT is calculated here. Do not conflate them |
+| **trade-route yield** (`tradeYield`) | engine-generated (the trade network) — ⚖ **already carrying its OWN percent layer, see below** | **input** — out-of-scope: the cascade cannot re-derive the network, so the calc *folds the route yield in*, never derives it. **The ONE live-yield input** — a clean addition at the very end of the base, and the sole sanctioned exception to the pollution guardrail ([validation](validation.md), [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)). ⚠ **The route COUNT is the OPPOSITE case (owner): `getMaxTradeRoutes` — game + player + coastal + `city.extra` slot deposits — is a modifier-influenced value the cascade COMPUTES, its own `tradeRoutes` channel.** Trade YIELD is read from the engine package; the trade-route COUNT is calculated here. Do not conflate them |
 | **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** — derivable from the trait JSON, so it is COMPUTED, never read off the engine; consuming the live value would leave the trait→yield derivation unvalidated ([validation](validation.md) pollution guardrail). ⚠ NAMING: "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
 | **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
 | **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.cities.flat` — the `cities` target lands it in the HOLDING city; a bare `empire.flat` on a specialist would roll down to EVERY city and cascade with city count) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
@@ -465,6 +488,27 @@ instant — the source goes quiet without being removed.
 count-key → the deposits it scales), so the cost is the deposits that atom or count actually touches — never a
 walk of the scope's deposits asking each whether it cares, and never a sweep of the entity database.
 
+> **⛔ THE TWO INDICES ARE KEYED THE SAME WAY AND ARE NOT INTERCHANGEABLE — asking the wrong one answers EMPTY,
+> which is indistinguishable from "nothing is conditioned on this".** A condition atom's `type` interns into the
+> **ATOM** index (`gatedByType`); a `per` scaler's token interns into the **COUNT** index (`gatedByToken`). Both
+> are keyed by a plain string, so `"ERA"` is a legal key in either — and a route that reaches for the wrong one
+> compiles, runs, reports nothing, and moves nothing.
+> ⚑ **The tell is that a bare TOKEN can appear on both sides.** Most atoms are `INFOTYPE_NAME` ids and most
+> count-keys are tokens, so the two key spaces look disjoint until a family uses a token as a THRESHOLD:
+> `{type: "ERA", max: 1}` is a condition (atom index), while `per: {type: "ERA"}` would be a scaler (count index).
+> ⇒ **When wiring a route, decide which QUESTION the deposits ask — "is this gate true?" or "how many?" — and
+> take the matching index. Where a family is authored both ways, route BOTH.**
+> ⚠ An empty list is silent by design (the route census reports nothing when the list size is zero), so a
+> mis-keyed route leaves no trace at all. **Report the real list size, never a placeholder** — that count is the
+> only thing that distinguishes a route with nothing to do from a route asking the wrong question.
+>
+> **⛔ AND A THRESHOLD IS NOT A PRESENCE CROSSING, so it cannot ride the ±1 atom route.** An `ERA`/`POPULATION`
+> threshold has no held/not-held verdict for the as-if-held hypothetical to pin: when the counter moves, some
+> deposits turn OFF and others turn ON in the same step. Such a gate is **RE-RESOLVED against the new state and
+> moved by the DIFFERENCE** from what the slot already holds — which handles both directions in one pass and is
+> idempotent if the fact is seen twice. The `±value` crossing form is only ever correct for a genuine presence
+> atom.
+
 - **`enabled` then `disabled`** — `enabled` is read first, `disabled` second; a `disabled` that holds overrides
   ([json](json.md) §3.9).
 - **`per`** scales the deposit by a count — local at `city`/`plot`, via the [tally](tally.md) at cross-city scopes.
@@ -474,6 +518,30 @@ walk of the scope's deposits asking each whether it cares, and never a sweep of 
   but a SECOND deposit on the same slot with `enabled:{existedFor:{min:N}}` (no post-sum multiply). ⚠ The unit is GAME
   YEARS, not turns — the age is measured against the stored build YEAR, and that is what the tooltip has
   always promised ([json.md §3.5](json.md)).
+
+  > **⚖ THE TURN BOUNDARY IS THE AGE GATE'S FACT, AND IT CARRIES EVERYTHING THE GATE NEEDS (owner).** *"Start
+  > turn should be an event, like anything else, that has turn number, which should give cascade what it needs
+  > to figure it out."*
+  > ⚑ **This is the one condition class whose dependency is ELAPSED TIME.** No source moves, no count moves and
+  > no atom crosses when a build becomes due — so there is nothing else in the engine that could announce it,
+  > and the age gate is the only member of the family that needs a cadence fact at all. The turn number is the
+  > whole of the input; the deposit's own stored build year supplies the rest.
+  > ⇒ **It rides the PLAYER-scoped turn-started fact**, whose cities are the ones whose builds can come due, and
+  > it is a RE-BOOK by value difference rather than a `±1` crossing (an age gate has no held/not-held verdict to
+  > pin, exactly as a threshold has none).
+  > ⛔ **It is NOT the banned per-turn blanket** ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)):
+  > the worklist is exactly the deposits the `existedFor` reverse index names, and a turn on which nothing came
+  > due moves nothing. It satisfies the sanctioned event-triggered recalc test
+  > ([contexts.md](../architecture/contexts.md)) — a genuine DOMAIN fact, a NON-LOCAL consequence the fact cannot
+  > name, and no finer route to derive.
+  >
+  > **⛔ THE APPLY PATH MUST SET THE CARRIER SLOT, OR THE GATE ANSWERS FALSE EVERYWHERE.** `existedFor` asks about
+  > the DEPOSITING entity, so it reads `sourceBuilding` off the eval ctx and answers FALSE when nothing set it
+  > ([contexts.md](../architecture/contexts.md) § THE SOURCE SLOTS — deliberately, since resolving it against
+  > whichever entity a walk reached last is worse than declining). Every walk that resolves a building's entries
+  > therefore sets it: the plane-A city apply, the re-book routes, and the gather alike. ⚠ Setting it in the
+  > GATHER alone puts the oracle and the stored plane on different answers for this whole class — the two sides
+  > then disagree by construction, which is a divergence no missed emit explains.
 
 ---
 
@@ -519,8 +587,15 @@ authored shape.
 > keeping their authored id left a chain reading `TRAIT_COMPLEX_SEAFARING` → `TRAIT_COMPLEX_SEAFARING1` →
 > `TRAIT_SEAFARING2`. **The LINE is the complex variant, so every rung of it is**, whether or not that particular
 > rung has a simple twin. The test is the rung's LINE, never the rung's own id.
-> ⚠ It is a Type RENAME and therefore a Type removal ([save.md §7](save.md)): trait reads are allow-missing, so a
-> player holding the old id loses that rung on load. Accepted deliberately — the cost only grows with time.
+> **⚖ IT IS A TYPE RENAME, AND THE SAVELOAD MECHANISM TRANSLATES IT (owner).** A renamed Type is NOT a removed
+> one: the record still exists under a new id, so resolving the old name to `-1` and letting the allow-missing
+> class read drop the slot throws away a rung the player still holds. ⛔ The earlier ruling here — that the loss
+> was "accepted deliberately" — is SUPERSEDED: the old id is mapped to the new one in `Assets/savemigration.txt`
+> (a bare `INFOTYPE_NAME` key, which cannot collide with a `Class::field` rename) and applied at the ONE
+> stored-Type resolution point the class reads share.
+> ⚠ The distinction generalizes beyond traits, and [save.md §7](save.md)'s three removal classes do not cover it:
+> that decision procedure asks what to do when a Type is GONE. Ask first whether it is gone or merely RENAMED —
+> only the first is a removal.
 > ⛔ **The re-key has ONE definition, on the STORE (`Store::trait_rekey`), applied where the inverted edges are
 > handed out** — because a trait id is named from several curators, above all the TECH edge that GATES a rung
 > ([enabler.md](enabler.md): without it every upper rung is permanently unreachable, and silently so). A
@@ -616,6 +691,27 @@ filing an item discount under `production.city`.)
 ## 5. Targets — scope-wide, object-plural, or keyed
 
 A deposit lands in one of three ways ([json](json.md) §6.1):
+
+> **⚖ AN EMPIRE→CITIES DEPOSIT HAS TWO LEGS, FOR THE SAME REASON THE AMENITY FOLD DOES**
+> ([contexts.md](../architecture/contexts.md) § THE FOLD HAS TWO LEGS). A source above city scope delivers its
+> CITY-scope deposits by fanning over the owner's cities — which reaches exactly the cities standing **at that
+> moment**, and that is not all of them:
+> - **at LOAD the emit order is not uniform**, and nothing makes it so: some empire-level facts are announced
+>   before the cities deserialize and some after, so one grantor's fan lands and the next one's iterates an empty
+>   list. A fan alone therefore delivers a subset decided by where a member happens to sit in a read.
+> - **at PLAY a city that starts existing later** — founded, or acquired — receives nothing from what its owner
+>   already holds, permanently.
+>
+> ⇒ **The second leg is the CITY's: when a city starts existing it folds the city-scope deposits of every source
+> its owner already holds.** The trigger is the city's own OWNERSHIP fact, which is the one announcement common
+> to founding, conquest and the save read alike — so there is no separate load pass and no city-founded special
+> case beside it.
+> ⛔ **It must be IDEMPOTENT rather than guarded.** The package already records which sources have deposited into
+> it (the same liveness key planes B and C test), so the fold SKIPS what the fan already delivered. Suppressing
+> the fan during load instead would work only while a hand-written guard stays in step with an emit order nobody
+> controls; the package's own record cannot disagree with what was applied.
+> ⚠ This is not a rebuild and not a recompute — the worklist is the owner's HELD sources, each resolved through
+> the one per-entry evaluator ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
 
 - **scope-wide** — no target: the scope object itself (the city is the common case).
 - **plural object-target** (`plots` / `units` / …, predicate-filtered) — realized by evaluating the predicate

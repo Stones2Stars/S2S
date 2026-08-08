@@ -43,8 +43,24 @@ no-guessing rule needs in order to be followable at all: at a gap the moves are 
 supports neither.
 ⛔ It does NOT reopen the route ban above — the test is unchanged: a census reads the cascade's OWN computed
 terms, never a legacy accumulator, so nothing is kept alive by its existence. ⚑ Until the surface returns the
-same breakdown is emitted as a DIAGNOSTIC spine fact (`[MODIFIER] growthRead`, `[MODIFIER] plotsFan`), which is
-where a value not on a surface belongs meanwhile — and those emits are what the routes serve when they land.
+same breakdown is emitted as a DIAGNOSTIC spine fact (`[MODIFIER] growthRead`, `[MODIFIER] rateRead`,
+`[MODIFIER] plotsFan`), which is where a value not on a surface belongs meanwhile — and those emits are what the
+routes serve when they land.
+⚑ **`rateRead` is the worked example of what a census buys.** A city's §2a yield RATE is SIX independent
+quantities collapsed into one int (`plotBase` · `trade` · `goldenAgeYield` · `upperFlat` · `specialists` ·
+`cityFlatExtra`, plus `percentSum` and the `workedPlots` the plot Σ walked), so "this city produces too little"
+is unanswerable against the total and immediately answerable against the terms.
+⚑ **And a term that is itself a Σ decomposes again — `plotBase` carries its THREE SEGMENTS beside it**
+(`plotNature` · `plotImprovement` · `plotRest`, the plot package's own storage split). One level of
+decomposition only moves the question: a short `plotBase` says the plots are short and not WHICH leg is short,
+and a dead improvement leg is the same number in the total as a dead nature leg. ⚠ The segments are reported
+RAW — pre-floor — so they need not add to `plotBase` exactly (`readFlat` floors nature at 0, improvement at
+−nature, the total at 0); **a gap between Σsegments and `plotBase` is itself the signal that a floor is biting**,
+which a floored report would have hidden. They come out of the SAME walk the total does
+([DEC-single-implementation]). ⛔ Its terms come OUT of the real
+combine rather than being re-derived beside it ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)):
+a census that recomputed its own decomposition could disagree with the number it claims to explain, which is the
+one thing it must never do.
 
 ---
 

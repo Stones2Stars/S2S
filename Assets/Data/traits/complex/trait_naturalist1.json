@@ -130,13 +130,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": 10
-   }
-  }
- },
  "workRate": {
   "empire": {
    "builds": {
@@ -214,6 +207,13 @@
     }
    },
    "percent": 10
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 10
+   }
   }
  },
  "PROPERTY_AIR_POLLUTION": {

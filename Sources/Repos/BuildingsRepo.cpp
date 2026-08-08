@@ -31,7 +31,6 @@ void BuildingsRepo::rebuild()
 	m_byReligion.resize(iNumReligions);
 	m_worldWonders.clear();
 	m_withFreeStartEra.clear();
-	m_systemPlaced.clear();
 
 	for (int iI = 0; iI < iNumBuildings; ++iI)
 	{
@@ -49,10 +48,6 @@ void BuildingsRepo::rebuild()
 		if (kBuilding.getFreeStartEra() != NO_ERA)
 		{
 			m_withFreeStartEra.push_back((BuildingTypes)iI);
-		}
-		if (kBuilding.isNotConstructible())
-		{
-			m_systemPlaced.push_back((BuildingTypes)iI);
 		}
 	}
 	// Iteration over [0, iNumBuildings) guarantees each bucket is ascending,
@@ -78,7 +73,3 @@ const std::vector<BuildingTypes>& BuildingsRepo::withFreeStartEra() const
 	return m_withFreeStartEra;
 }
 
-const std::vector<BuildingTypes>& BuildingsRepo::systemPlacedBuildings() const
-{
-	return m_systemPlaced;
-}

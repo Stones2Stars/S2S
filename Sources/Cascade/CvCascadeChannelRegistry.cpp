@@ -537,7 +537,10 @@ namespace
 		MODEVT_CHANNEL_CENSUS = 1,  // the load-end per-scope channel-set census (KEYS ONLY WHERE NEEDED)
 		MODEVT_PLOTS_FAN,           // one `plots`-target fan applied (the plot plane's only readback)
 		MODEVT_GROWTH_READ,         // one city's growth threshold + consumption, term by term
-		MODEVT_DEPOSIT_APPLY        // ONE deposit landing in ONE slot: who, which channel, which package, how much
+		MODEVT_DEPOSIT_APPLY,       // ONE deposit landing in ONE slot: who, which channel, which package, how much
+		MODEVT_RATE_READ,           // one city's §2a yield RATE, term by term (the six quantities behind one int)
+		MODEVT_BONUS_STORES,        // one city's bonus stores, by size -- empty store vs refusing route
+		MODEVT_ATOM_ROUTE           // ONE atom crossing's outcome: found / noSource / refused / applied
 	};
 	enum ModifierDomainField
 	{
@@ -554,7 +557,12 @@ namespace
 		MODF_PLAYER, MODF_HUMAN, MODF_CITY, MODF_POP, MODF_FOOD, MODF_THRESHOLD, MODF_SPEEDPCT,
 		MODF_ERAPCT, MODF_BASETHRESH, MODF_CONSUMPTION, MODF_PERPOP, MODF_FOODDIFF,
 		MODF_DEFBASE, MODF_DEFMULT, MODF_NORMALAI, MODF_GOLDENAGE,
-		MODF_CHANNEL, MODF_UNIT, MODF_VALUE, MODF_EVENT
+		MODF_CHANNEL, MODF_UNIT, MODF_VALUE, MODF_EVENT,
+		MODF_PLOTBASE, MODF_TRADEYIELD, MODF_GOLDENYIELD, MODF_UPPERFLAT, MODF_SPECIALISTS,
+		MODF_CITYFLAT, MODF_PERCENTSUM, MODF_WORKEDPLOTS, MODF_RATE,
+		MODF_PLOTNATURE, MODF_PLOTIMPROVEMENT, MODF_PLOTREST,
+		MODF_ONSITE, MODF_VICALL, MODF_VICOWNED, MODF_VICWORKED, MODF_TRADED, MODF_NETLIST,
+		MODF_ATOM, MODF_LISTSIZE, MODF_FOUND, MODF_NOSOURCE, MODF_REFUSED, MODF_APPLIED
 	};
 
 	const char* cr_modifierDomainPrefix(int iEventId)
@@ -565,6 +573,9 @@ namespace
 		case MODEVT_PLOTS_FAN:      return "[MODIFIER] plotsFan";
 		case MODEVT_GROWTH_READ:    return "[MODIFIER] growthRead";
 		case MODEVT_DEPOSIT_APPLY:  return "[MODIFIER] depositApply";
+		case MODEVT_RATE_READ:      return "[MODIFIER] rateRead";
+		case MODEVT_BONUS_STORES:   return "[MODIFIER] bonusStores";
+		case MODEVT_ATOM_ROUTE:     return "[MODIFIER] atomRoute";
 		default:                    return "[MODIFIER] ?";
 		}
 	}
@@ -599,6 +610,30 @@ namespace
 		case MODF_DEFMULT:     *peType = SFT_INT; return "defMult";
 		case MODF_NORMALAI:    *peType = SFT_INT; return "normalAI";
 		case MODF_GOLDENAGE:   *peType = SFT_INT; return "goldenAge";
+		case MODF_PLOTBASE:    *peType = SFT_INT; return "plotBase";
+		case MODF_PLOTNATURE:      *peType = SFT_INT; return "plotNature";
+		case MODF_PLOTIMPROVEMENT: *peType = SFT_INT; return "plotImprovement";
+		case MODF_PLOTREST:        *peType = SFT_INT; return "plotRest";
+		case MODF_ONSITE:          *peType = SFT_INT; return "onSite";
+		case MODF_VICALL:          *peType = SFT_INT; return "vicinityAll";
+		case MODF_VICOWNED:        *peType = SFT_INT; return "vicinityOwned";
+		case MODF_VICWORKED:       *peType = SFT_INT; return "vicinityWorked";
+		case MODF_TRADED:          *peType = SFT_INT; return "traded";
+		case MODF_NETLIST:         *peType = SFT_INT; return "networkList";
+		case MODF_ATOM:            *peType = SFT_STR; return "atom";
+		case MODF_LISTSIZE:        *peType = SFT_INT; return "listSize";
+		case MODF_FOUND:           *peType = SFT_INT; return "found";
+		case MODF_NOSOURCE:        *peType = SFT_INT; return "noSource";
+		case MODF_REFUSED:         *peType = SFT_INT; return "refused";
+		case MODF_APPLIED:         *peType = SFT_INT; return "applied";
+		case MODF_TRADEYIELD:  *peType = SFT_INT; return "trade";
+		case MODF_GOLDENYIELD: *peType = SFT_INT; return "goldenAgeYield";
+		case MODF_UPPERFLAT:   *peType = SFT_INT; return "upperFlat";
+		case MODF_SPECIALISTS: *peType = SFT_INT; return "specialists";
+		case MODF_CITYFLAT:    *peType = SFT_INT; return "cityFlatExtra";
+		case MODF_PERCENTSUM:  *peType = SFT_INT; return "percentSum";
+		case MODF_WORKEDPLOTS: *peType = SFT_INT; return "workedPlots";
+		case MODF_RATE:        *peType = SFT_INT; return "rate";
 		case MODF_CHANNEL:     *peType = SFT_STR; return "channel";
 		case MODF_UNIT:        *peType = SFT_STR; return "unit";
 		case MODF_VALUE:       *peType = SFT_INT; return "value";
@@ -801,4 +836,69 @@ void CascadeChannelRegistry::reportGrowthRead(int iPlayer, int iHuman, int iCity
 	growth.addI(MODF_NORMALAI, iNormalAI);
 	growth.addI(MODF_GOLDENAGE, iGoldenAge);
 	eventSpine().emit(growth);
+}
+
+void CascadeChannelRegistry::reportAtomRoute(const char* szAtom, int iListSize, int iFound,
+	int iNoSource, int iRefused, int iApplied, int iPlayer, int iCity)
+{
+	if (iListSize <= 0)
+	{
+		return;   // nothing anywhere is conditioned on this atom -- silence is the honest report
+	}
+	cr_ensureModifierDomain();
+	CvSpineEvent route(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_ATOM_ROUTE, 3);
+	route.addStr(MODF_ATOM, (szAtom != NULL) ? szAtom : "?");
+	route.addI(MODF_LISTSIZE, iListSize);
+	route.addI(MODF_FOUND, iFound);
+	route.addI(MODF_NOSOURCE, iNoSource);
+	route.addI(MODF_REFUSED, iRefused);
+	route.addI(MODF_APPLIED, iApplied);
+	route.addI(MODF_PLAYER, iPlayer);
+	route.addI(MODF_CITY, iCity);
+	eventSpine().emit(route);
+}
+
+void CascadeChannelRegistry::reportBonusStores(int iPlayer, int iCity, int iOnSite, int iVicinityAll,
+	int iVicinityOwned, int iVicinityWorked, int iTraded, int iNetworkList)
+{
+	cr_ensureModifierDomain();
+	CvSpineEvent stores(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_BONUS_STORES, 1);
+	stores.addI(MODF_PLAYER, iPlayer);
+	stores.addI(MODF_CITY, iCity);
+	stores.addI(MODF_ONSITE, iOnSite);
+	stores.addI(MODF_VICALL, iVicinityAll);
+	stores.addI(MODF_VICOWNED, iVicinityOwned);
+	stores.addI(MODF_VICWORKED, iVicinityWorked);
+	stores.addI(MODF_TRADED, iTraded);
+	stores.addI(MODF_NETLIST, iNetworkList);
+	eventSpine().emit(stores);
+}
+
+void CascadeChannelRegistry::reportRateRead(int iPlayer, int iHuman, int iCity, int iChannelId,
+	int iPlotBase, int iPlotNature, int iPlotImprovement, int iPlotRest,
+	int iTradeYield, int iGoldenAgeYield, int iUpperFlat, int iSpecialists,
+	int iCityFlatExtra, int iPercentSum, int iWorkedPlots, int iRate)
+{
+	cr_ensureModifierDomain();
+	CvSpineEvent rate(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_RATE_READ, 2);
+	rate.addI(MODF_PLAYER, iPlayer);
+	rate.addI(MODF_HUMAN, iHuman);
+	rate.addI(MODF_CITY, iCity);
+	// The channel id is carried RAW, exactly as the deposit census carries it -- a data-minted id is the cache's
+	// internal key and is never resolved to a name at emit ([event-spine.md]: a payload carries typed fields and
+	// never a pre-resolved string; the resolution is the RENDERER's, deferred behind the gate).
+	rate.addI(MODF_VALUE, iChannelId);
+	rate.addI(MODF_PLOTBASE, iPlotBase);
+	rate.addI(MODF_PLOTNATURE, iPlotNature);
+	rate.addI(MODF_PLOTIMPROVEMENT, iPlotImprovement);
+	rate.addI(MODF_PLOTREST, iPlotRest);
+	rate.addI(MODF_TRADEYIELD, iTradeYield);
+	rate.addI(MODF_GOLDENYIELD, iGoldenAgeYield);
+	rate.addI(MODF_UPPERFLAT, iUpperFlat);
+	rate.addI(MODF_SPECIALISTS, iSpecialists);
+	rate.addI(MODF_CITYFLAT, iCityFlatExtra);
+	rate.addI(MODF_PERCENTSUM, iPercentSum);
+	rate.addI(MODF_WORKEDPLOTS, iWorkedPlots);
+	rate.addI(MODF_RATE, iRate);
+	eventSpine().emit(rate);
 }

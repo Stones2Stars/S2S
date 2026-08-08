@@ -4,6 +4,7 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvPlotGroup.h"   // the supplied resource goes on the NETWORK, like any other
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "Enabler/CvEnablerKernel.h"
 #include "Enabler/CvEnabler.h"            // EnablerDomain -- the standardized domain the applyEdges deltas write
@@ -420,10 +421,10 @@ namespace {
 // The per-building outcomes of the operate pass for a PRESENT building (enabler.md §3.2).
 enum EkBuildingVerdict
 {
-	EK_ACTIVE,           // operating: not obsolete ∧ operate holds ∧ no dormant-trigger successor present
+	EK_ACTIVE,           // operating: not obsolete ∧ operate holds ∧ no dormant-trigger successor ACTIVE
 	EK_OBSOLETE,         // obsoletedBy tech held -- the THIRD outcome: neither active nor dormant, provides nothing (json §4.2)
 	EK_DORMANT_OPERATE,  // requires.operate fails under the current vicinity supply
-	EK_DORMANT_TRIGGER   // a dormant-trigger successor building is present
+	EK_DORMANT_TRIGGER   // a dormant-trigger successor building is ACTIVE
 };
 
 // b's `provides.bonuses` (json §5a), or NULL.
@@ -440,7 +441,27 @@ static const std::vector<int>* ek_provides(int b)
 // (ek_recheckActiveSet), so the two can never diverge in per-building logic. ORDER (enabler.md §3.2: obsolete is
 // the third outcome, checked before operate): obsolescence is INDEPENDENT of operate/dormancy -- a present
 // building whose obsoletedBy tech is held is obsolete regardless of operate, so it is checked FIRST.
-static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCascadeEvalCtx& ecOp, const CvCascadeEvalFlags& flags)
+//
+// ⛔ THE DORMANT TRIGGER TESTS THE SUCCESSOR'S **ACTIVE** STATE, NEVER ITS MERE PRESENCE -- and under the band
+// model that is the only reading that means anything. A band is PLACED ONCE and never removed (enabler.md §3:
+// the placement is unconditional and `requires.operate` decides everything after it), so EVERY rung of every
+// ladder is present in every city from the first turn. A presence test therefore reads TRUE forever: each rung
+// sees the rung above it standing there and dorms, the top rung dorms on its own operate clause, and the
+// documented "only-highest-active" ladder collapses to NOTHING-active -- silently, in every city, for every
+// property.
+// ⚑ The spec's own worked example settles it rather than my judgement: "blackened skies don't nuke the
+// observatory from orbit -- it goes DORMANT and wakes when the skies CLEAR" (enabler.md §2). BLACKENED_SKIES is
+// itself a band, so it is permanently present; only its ACTIVE state ever clears, and only an active test can
+// let the observatory wake.
+// ⚠ Why the legacy semantic was presence and was still right THEN: legacy added and removed band buildings every
+// turn, so present and active were the SAME FACT. The band model is exactly what separates them, so the test has
+// to follow the half that still carries the meaning.
+// ⚠ `activeNow` is the CURRENT active estimate -- the prior fixpoint iteration's set at the seed, the standing
+// set during the targeted ripple. Successors point strictly UP a ladder, so the recursion is well-founded and
+// settles from the top down; a CYCLE in the authored dormant triggers is ill-defined data and is caught by the
+// caller's runaway guard rather than papered over.
+static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCascadeEvalCtx& ecOp, const CvCascadeEvalFlags& flags,
+	const std::set<int>& activeNow)
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 	if (j == NULL) return EK_ACTIVE;
@@ -452,7 +473,7 @@ static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCasca
 	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) return EK_DORMANT_OPERATE;
 	const std::vector<int>& dorm = j->dormantTriggers();
 	for (size_t i = 0; i < dorm.size(); ++i)
-		if (pCity->getCityContext().hasBuilding(dorm[i])) return EK_DORMANT_TRIGGER;   // the §7 has-list, through the context
+		if (activeNow.find(dorm[i]) != activeNow.end()) return EK_DORMANT_TRIGGER;
 	return EK_ACTIVE;
 }
 
@@ -504,13 +525,23 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 	// loop converges in at most one iteration per providing building; the bound only has to exceed the longest
 	// possible chain. It mirrors the targeted ripple's own guard in this file, ASSERT included -- a truncated
 	// fixpoint leaves the operating set WRONG and is a defect to fix at its cause, never a state to accept.
+	// ⚠ THE FIXPOINT NOW HAS TWO COUPLED UNKNOWNS, NOT ONE -- the supply AND the active set. A dormant trigger
+	// tests the successor's ACTIVE state (ek_classifyBuilding), so a ladder settles from the top down over
+	// successive iterations WITHOUT the supply moving at all: iteration 1 activates every rung whose operate
+	// holds (nothing is active yet, so nothing dorms anything), iteration 2 dorms the rungs beneath an active
+	// one, and so on. ⛔ Terminating on the SUPPLY alone would therefore stop after the first pass and freeze
+	// the ladder with every rung active -- the mirror image of the all-dormant bug, and just as silent. Both
+	// sets must be stable.
 	const int iFixpointGuard = GC.getNumBuildingInfos() + 8;
 	int iIterations = 0;
 	std::set<int> prov;
+	std::set<int> activePrev;
 	ecOp.vicinityProvidedBonuses = &prov;
 	for (; iIterations < iFixpointGuard; ++iIterations)
 	{
+		activePrev.swap(activeOut);
 		activeOut.clear();
+		obsoleteOut.clear();   // fully redefined per iteration, like the other two -- never accumulated across passes
 		std::set<int> provNext;
 		for (size_t iB = 0; iB < aHas.size(); ++iB)
 		{
@@ -521,16 +552,16 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 			// neither active nor dormant regardless of operate; excluded from active, provides nothing). The #430
 			// obsoletion flip landed: an obsolete building STAYS present, and its whenObsolete tree deposits off
 			// this set (json §4.2, modifier-side).
-			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags);
+			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags, activePrev);
 			if (v == EK_OBSOLETE) { obsoleteOut.insert(b); continue; }   // -> the parallel obsolete set (json §4.2)
-			if (v != EK_ACTIVE) continue;                                // dormant (operate fails / trigger present)
+			if (v != EK_ACTIVE) continue;                                // dormant (operate fails / successor active)
 			activeOut.insert(b);   // active (under the CURRENT supply estimate)
 			// This ACTIVE building's `provides.bonuses` supply those bonuses IN-VICINITY (json §5a).
 			const std::vector<int>* pv = ek_provides(b);
 			if (pv != NULL)
 				for (size_t i = 0; i < pv->size(); ++i) provNext.insert((*pv)[i]);
 		}
-		if (provNext == prov) break;   // supply stable -> the active set is the fixpoint
+		if (provNext == prov && activeOut == activePrev) break;   // BOTH stable -> this is the fixpoint
 		prov.swap(provNext);
 	}
 	FAssertMsg(iIterations < iFixpointGuard, "the operate/provides fixpoint hit its runaway guard -- the operating set is left incomplete");
@@ -546,6 +577,7 @@ namespace {
 
 static bool s_operateIndexBuilt = false;
 static std::vector<int> s_operateNeedsPopulation, s_operateNeedsPower, s_operateNeedsReligion, s_operateNeedsCorporation, s_operateNeedsGoldenAge, s_operateNeedsStateReligion, s_operateNeedsCivic, s_operateNeedsTech;
+static std::vector<int> s_propertyBandBuildings;                          // buildings whose requires.operate carries a PROPERTY band -- the population the PROPERTY SYSTEM places in every city
 static std::map<int, std::vector<int> > s_operatePropertyBandConsumers;   // F5: PROPERTY_ id -> buildings whose requires.operate has a band on it
 static std::map<int, std::set<int> > s_operatePropertyBandThresholds;         // F5: PROPERTY_ id -> the sorted union of its band thresholds (the watermark's window boundaries)
 static std::vector<int> s_operateNeedsAnyBonus;                         // {buildings whose operate references ANY bonus} -- the whole-set re-check (plot-group membership change)
@@ -604,6 +636,12 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 			break;
 		}
 		const int b = work.back(); work.pop_back();
+		// ⚠ RELEASE the queued mark on POP, so b can be re-queued if something it depends on moves LATER in this
+		// same convergence. `pending` is a de-duplicator for what is currently QUEUED, never a
+		// processed-once ledger: with an ACTIVE-dependent dormant trigger a rung genuinely must be re-classified
+		// after its successor settles, and a mark that outlives the pop would freeze it on the verdict it happened
+		// to get first. The `cap` above is what bounds the work.
+		pending.erase(b);
 		// The ONE shared verdict (ek_classifyBuilding) drives BOTH memberships. Obsolete-set maintenance (json
 		// §4.2): present ∧ obsoleted-by-held-tech keeps the building in the parallel obsolete set (the whenObsolete
 		// tree). An obsolete building classifies neither active nor dormant (checked FIRST, enabler.md §3.2), so an
@@ -613,7 +651,8 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 		bool nowObs = false, now = false;
 		if (pCity->getCityContext().hasBuilding(b))   // present at all -- the §7 has-list, through the context
 		{
-			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags);
+			// The standing set IS the current active estimate here (the ripple mutates it in place as it converges).
+			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags, f.active);
 			nowObs = (v == EK_OBSOLETE);
 			now = (v == EK_ACTIVE);
 		}
@@ -650,6 +689,24 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 		else
 		{
 			emitCityBuildingDormanted(pCity->getID(), pCity->getOwner(), b);
+		}
+		// ⛔ AN ACTIVE FLIP MUST RE-CHECK WHOEVER DORMS ON b -- a route that did NOT need to exist while the
+		// trigger tested PRESENCE. Presence only moved when a building was built or destroyed, and the seed path
+		// already queued the dependents on that fact; an ACTIVE state moves for a third reason entirely (b's own
+		// operate crossing a property band), and nothing else in this loop would revisit the rungs beneath it.
+		// Without this the ladder settles once and then never re-settles: education rises past a threshold, the
+		// higher rung activates, and the lower one stays active beside it forever -- both depositing, which is
+		// exactly the stacking "only-highest-active" exists to prevent ([enabler.md §3]).
+		{
+			const std::map<int, std::vector<int> >::const_iterator kDormed = s_operateDormantTriggeredBy.find(b);
+			if (kDormed != s_operateDormantTriggeredBy.end())
+			{
+				for (size_t i = 0; i < kDormed->second.size(); ++i)
+				{
+					const int bPredecessor = kDormed->second[i];
+					if (pending.insert(bPredecessor).second) work.push_back(bPredecessor);
+				}
+			}
 		}
 		const std::vector<int>* prov = ek_provides(b);
 		if (now)
@@ -694,16 +751,25 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 	// vicinity-conditioned packages, the enabler's own vicinity re-gate, the contexts) now see a coherent
 	// `provided` set. A re-entrant flip lands as its own converged batch, so the chain terminates for the same
 	// reason the fixpoint does: a no-op write crosses nothing and announces nothing.
+	// ⛔ A RESOURCE IS A RESOURCE, WHEREVER IT CAME FROM (owner) -- so a supplied one goes onto the PLOT GROUP,
+	// the same list a tile's resource enters, and every reader below relays from there ([enabler.md] RESIDENCY).
+	// There is deliberately no provenance-specific member in between: the building puts the resource in its
+	// city's vicinity and the resource is then on the network, indistinguishable from any other.
+	CvPlotGroup* pSupplyGroup = pCity->plotGroup(pCity->getOwner());
 	for (size_t i = 0; i < supplyCrossings.size(); ++i)
 	{
+		if (pSupplyGroup != NULL)
+		{
+			pSupplyGroup->changeNumBonuses((BonusTypes)supplyCrossings[i].first, supplyCrossings[i].second);
+		}
 		if (supplyCrossings[i].second > 0)
-	{
-		emitCityVicinityBonusAdded(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, supplyCrossings[i].second);
-	}
-	else
-	{
-		emitCityVicinityBonusRemoved(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, -supplyCrossings[i].second);
-	}
+		{
+			emitCityVicinityBonusAdded(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, supplyCrossings[i].second);
+		}
+		else
+		{
+			emitCityVicinityBonusRemoved(pCity->getID(), pCity->getOwner(), supplyCrossings[i].first, -supplyCrossings[i].second);
+		}
 	}
 }
 
@@ -860,6 +926,7 @@ void EnablerKernel::buildActiveIndex()
 		if (!d.bonuses.empty()) s_operateNeedsAnyBonus.push_back(b);   // #430 G3: the whole-set bucket (a plot-group membership shift may move any of them)
 		for (std::set<int>::const_iterator it = d.bonuses.begin(); it != d.bonuses.end(); ++it) s_operateBonusConsumers[*it].push_back(b);
 		for (std::set<int>::const_iterator it = d.buildings.begin(); it != d.buildings.end(); ++it) s_operateBuildingDependents[*it].push_back(b);
+		if (!d.propertyBands.empty()) s_propertyBandBuildings.push_back(b);   // the PROPERTY-BAND population (see the accessor)
 		for (std::map<int, std::pair<int, int> >::const_iterator it = d.propertyBands.begin(); it != d.propertyBands.end(); ++it)
 		{
 			s_operatePropertyBandConsumers[it->first].push_back(b);                       // F5: the property-band operate reverse-index
@@ -931,6 +998,14 @@ void EnablerKernel::onPropertyBandHitActive(const CvCity* pCity, int eProperty)
 	if (pCity == NULL || eProperty < 0) return;
 	std::map<int, std::vector<int> >::const_iterator it = s_operatePropertyBandConsumers.find(eProperty);
 	if (it != s_operatePropertyBandConsumers.end()) ek_recheckActiveSet(pCity, it->second);
+}
+
+// The PROPERTY-BAND population: the queue-excluded buildings the property system genuinely puts in EVERY city,
+// identified by what the DATA says -- a `requires.operate` PROPERTY band -- never by `notConstructible`, which
+// bars the production queue and says nothing about placement (enabler.md par.3, owner).
+const std::vector<int>& EnablerKernel::propertyBandBuildings()
+{
+	return s_propertyBandBuildings;
 }
 
 const std::map<int, std::set<int> >& EnablerKernel::propertyBandThresholds()

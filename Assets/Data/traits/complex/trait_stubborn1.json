@@ -11,13 +11,6 @@
  "excludes": [
   "TRAIT_DYNAMIC1"
  ],
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -227,10 +220,12 @@
    }
   }
  },
- "hurry": {
+ "tradeRoutes": {
   "empire": {
-   "cost": {
-    "percent": 30
+   "modifier": {
+    "food": {
+     "percent": 10
+    }
    }
   }
  },
@@ -253,6 +248,13 @@
   "empire": {
    "civicAnarchy": {
     "percent": 20
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 30
    }
   }
  },

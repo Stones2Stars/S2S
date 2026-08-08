@@ -55,16 +55,6 @@
    "flat": 2
   }
  },
- "combat": {
-  "empire": {
-   "captureProbability": {
-    "percent": 5
-   },
-   "captureResistance": {
-    "percent": 10
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "freeMilitary": {
@@ -95,6 +85,16 @@
   "empire": {
    "amount": {
     "percent": -5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 5
+   },
+   "resistance": {
+    "percent": 10
    }
   }
  },

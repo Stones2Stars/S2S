@@ -5,23 +5,9 @@
    "TRAIT_COMPLEX_ISOLATIONIST2"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -30
-   }
-  }
- },
  "production": {
   "empire": {
    "percent": 15
-  }
- },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -20
-   }
   }
  },
  "espionage": {
@@ -38,6 +24,14 @@
  },
  "tradeRoutes": {
   "empire": {
+   "modifier": {
+    "food": {
+     "percent": -30
+    },
+    "commerce": {
+     "percent": -20
+    }
+   },
    "flat": -1
   }
  },

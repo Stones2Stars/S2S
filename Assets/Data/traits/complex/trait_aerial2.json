@@ -335,9 +335,6 @@
   "empire": {
    "flightRange": {
     "flat": 1
-   },
-   "captureResistance": {
-    "percent": -20
    }
   }
  },
@@ -406,6 +403,13 @@
   "empire": {
    "bombardDefense": {
     "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -20
    }
   }
  },

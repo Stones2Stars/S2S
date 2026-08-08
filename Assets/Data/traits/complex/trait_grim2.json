@@ -80,16 +80,6 @@
    "flat": -2
   }
  },
- "combat": {
-  "empire": {
-   "captureProbability": {
-    "percent": -5
-   },
-   "captureResistance": {
-    "percent": -20
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -123,6 +113,16 @@
   "empire": {
    "amount": {
     "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -5
+   },
+   "resistance": {
+    "percent": -20
    }
   }
  },

@@ -64,17 +64,19 @@
  "tradeRoutes": {
   "empire": {
    "flat": 1,
-   "foreign": {
-    "percent": 10
+   "modifier": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },
  "hurry": {
   "empire": {
    "anger": {
-    "percent": 20
-   },
-   "cost": {
     "percent": 20
    }
   }
@@ -105,6 +107,13 @@
   "empire": {
    "warWeariness": {
     "percent": -10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 20
    }
   }
  },

@@ -648,13 +648,6 @@
    "flat": 2
   }
  },
- "combat": {
-  "empire": {
-   "captureProbability": {
-    "percent": 10
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "civic": {
@@ -680,6 +673,13 @@
  "defense": {
   "empire": {
    "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
     "percent": 10
    }
   }

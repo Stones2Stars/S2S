@@ -300,6 +300,18 @@ public:
 		const CvCascadeEvalCtx& evalCtx, int (&plotYields)[NUM_YIELD_TYPES],
 		int (*pNatureYields)[NUM_YIELD_TYPES] = NULL);
 
+	// ⚖ THE PLOT'S OWN YIELD SCALING -- "+`amount` per whole `interval` of what this plot already makes".
+	// A plot totalling 12 on a 1-per-5 scaling gains 2 and comes out at 14.
+	// ⛔ IT IS A RATE, NOT A ONE-SHOT THRESHOLD. The legacy engine paid a single step once the plot passed a
+	// threshold (`CvPlayer::updateExtraYieldThreshold`); reading the authored number that way pays out once where
+	// the model pays per interval, which is plausible and quietly short on every high-yield tile.
+	// ⛔ SAME CHANNEL ONLY (owner, hard rule): the interval is measured against the channel's own plot total and
+	// the grant lands on that same channel -- there is no "1 hammer per 5 commerce", by construction.
+	// ⚠ The caller passes the PRE-BONUS total, so the grant can never feed itself; the ×100 plane cancels in the
+	// ratio, so only `amount` carries the scale. The package resolve and every what-if plot read call THIS one
+	// function ([DEC-single-implementation]) -- the arithmetic exists once, here on the calc surface.
+	static int64_t plotScaledYield(int64_t iBaseTotal, int64_t iInterval, int64_t iAmount);
+
 	// THE CITY RATE COMBINE (modifier.md §2a -- the sharp two-tier shape, the order load-bearing):
 	//   rate100 = (BASE + specialists) x max(0, 100 + percentSum)/100 + 100 x (EXTRA100 / 100)
 	// BASE = the worked-plot Σ + the upper-scope flats rolled down at the combine; the specialist term carries
@@ -391,7 +403,63 @@ public:
 	// non-linear in the deposits it reads -- moving one member's Σflat by Δ moves this by Δ scaled by that
 	// member's OWN percent stack. There is no ±value a deposit could apply, which is why the receiver plane
 	// carries no delta verb at all.
-	static int64_t cityReceiverRate(const CvCity& city, int iChannel);
+	// ⚖ THE §2a RATE, TERM BY TERM -- the DECOMPOSITION census the observability bar asks a route to carry
+	// ([http-endpoints.md]: a route serving ONE number answers nothing when that number is wrong; one serving a
+	// value term by term attributes a divergence to a NAMED source). A city's food rate is six independent
+	// quantities collapsed into one int, so "production is too low" is unanswerable against the total alone.
+	// ⛔ It is NOT a second combine ([DEC-single-implementation]) -- cityReceiverRate IS this function with the
+	// terms discarded, so the census can never describe arithmetic the rate does not actually do.
+	struct CityRateTerms
+	{
+		int64_t plotBase;      // Σ over the city's WORKED plots of their own package flats
+		// plotBase's three SEGMENTS, summed over the same walk (CvCascadePackage: nature / improvement / rest).
+		// The total alone cannot say WHICH leg a short plot yield is short on -- a dead improvement leg and a
+		// dead nature leg look identical in it -- so the census carries all three or it attributes nothing.
+		// ⚠ RAW: these are the pre-floor segment sums, so they need not add up to plotBase exactly (readFlat
+		// floors nature at 0, improvement at -nature, and the total at 0). A gap between Σsegments and plotBase
+		// is itself the signal that a floor is biting.
+		int64_t plotNature;
+		int64_t plotImprovement;
+		int64_t plotRest;
+		int64_t tradeYield;    // the ONE sanctioned live-yield input, lifted to ×100
+		int64_t goldenAge;     // the empire goldenAge member-mirror, while the golden age holds
+		int64_t upperFlat;     // team + empire flats -- TIER 1, so the percent stack multiplies them
+		int64_t specialists;   // the assigned specialists' own output
+		int64_t cityFlat;      // the city's own flats -- TIER 2 EXTRA, added AFTER the stack
+		int     percentSum;    // Σ percent across the chain (the stack is 100 + this)
+		int     workedPlots;   // how many plots the Σ above actually walked
+		int64_t rate;          // what the combine produced
+	};
+	static int64_t cityReceiverRate(const CvCity& city, int iChannel, CityRateTerms* pTermsOut = NULL);
+
+	// ONE deposit that COULD have landed at this city and did NOT, because its §3.9 condition answered no.
+	// ⛔ THIS IS THE ONLY WINDOW ONTO THE REFUSED HALF OF THE COMBINE. Every package read, every receiver total
+	// and every term of CityRateTerms reports what IS there; a value that is short because a condition answered
+	// NO leaves no trace in any of them, so the shortfall cannot be attributed from the totals at all
+	// ([DEC-no-guessing]: at a gap the moves are VERIFY or ASK, and a bare total supports neither).
+	// ⚠ It is a DIAGNOSTIC re-walk, not a maintained sum: nothing folds on it and nothing caches it. That is
+	// exactly why it may walk the authored entries, which the apply path must never do.
+	struct RefusedDeposit
+	{
+		const char* szSource;            // the source's type string -- BORROWED from the info, which outlives the read
+		int64_t iValue;                  // what it deposits (×100 flat side; unscaled percent side)
+		bool bPercentSide;
+		const CvCondition* pCondition;   // the gate -- BORROWED; NULL = unconditioned
+		bool bApplied;                   // did it land? false = the gate refused it
+	};
+	// EVERY city-scope entry of iChannel that an ACTIVE building authors -- conditioned or not, applied or
+	// refused. Sorted by |value| descending.
+	// ⚖ BOTH SIDES OR IT ANSWERS NOTHING. A refusal list alone shows what is missing and hides what is wrong: a
+	// percent that should not be applying is exactly as invisible in a total as one that should be and is not.
+	// Listing the APPLIED entries makes the total checkable -- their Σ is what the package's own city-scope slot
+	// should hold, so the census can be reconciled against the number it explains rather than merely narrating
+	// beside it.
+	// ⚠ CITY SCOPE ONLY, deliberately and statedly: the empire and team legs of the percent stack are NOT walked
+	// here (their sources are the player's civics/traits/techs, not this city's buildings), so a per-source
+	// attribution of those is still missing. The scope SPLIT is served beside this so the unattributed remainder
+	// is at least bounded and named.
+	static void cityRefusedDeposits(const CvCity& city, int iChannel,
+		std::vector<RefusedDeposit>& refusedOut);
 
 	static int realizedAtCity(const CvCity& city, int iChannel);
 	// The CITY chain's two LEGS, before the combine -- the ONE description of what a city sits under (team +
@@ -401,6 +469,10 @@ public:
 	// ⛔ The flat leg is NOT a realized answer: a channel the city CONSUMES answers its maintained receiver sum,
 	// which is realizedAtCity's preference and is deliberately absent here. iChannel < 0 answers both legs 0.
 	static void rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum);
+	// The TIERED form (modifier.md §2a): upper-scope flats are BASE (the stack multiplies them), the city's own
+	// are the post-stack EXTRA. A caller computing a RATE wants this one; the flat form answers a plain roll-up.
+	static void rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& upperFlatSum,
+		int64_t& cityFlatSum, int64_t& percentSum);
 	static int realizedAtEmpire(const CvPlayer& player, int iChannel);
 	static int realizedAtTeam(const CvTeam& team, int iChannel);
 

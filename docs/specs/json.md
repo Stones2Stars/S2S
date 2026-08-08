@@ -45,12 +45,57 @@ of them.
 | **Availability** | `enables` · `obsoletes` · `replaces` · `disables` · `requires` · `allowed` | what this unlocks/removes; what it needs to be built & to keep running; the cap on how many may exist |
 | **Provisions** | `grants` · `triggers` · `provides` | `grants` = pure payload on the source's considered action; `triggers` = trigger → chance → action (happening-fired / rolled / state-conditioned effects); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
+| **Trade routes** | `tradeRoutes` | **its own BASE SECTION** — the route COUNTS and the modifiers TO routes, together (owner). See below |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `status` (UNIT, a per-turn counter -- applied, ticks down, over) · `attributes` (BUILDING, what the building itself is/does) · `amenities` (CITY-held, grantor-provided) · `characteristics` (PLOT SUBSTRATE, held plot-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
 | **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
 | **Auxiliary / bespoke** | `policies` · `excludes` · `produces` · `condition` · `effect` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
+
+> **⚖ `tradeRoutes` IS ITS OWN BASE SECTION — the COUNTS and the MODIFIERS TO ROUTES live together in it (owner).**
+> *"Trade route counts, and the modifier to trade routes, should be in the base, because trade routes
+> fundamentally is its own section."* Everything about routes is addressed under this one key: how many routes an
+> entity grants, what caps them, and every percentage that scales what a route delivers.
+>
+> ⛔ **So a per-yield trade modifier is NOT a member of the yield family.** A trait that reduces the food a route
+> brings authors under `tradeRoutes`, never as `food.<scope>.tradeRoute` — the yield families carry what an
+> entity DEPOSITS, and "what a route is worth" is a property of the route, not of food.
+> ⚑ **The cost of getting this wrong is silent and total:** an address whose member has no row in its family's
+> kind table is parsed, reported once as `[READJSON] unkinded-member <family>.<member>`, and then produces
+> NOTHING. The trade-route surface is where this bit hardest — the per-yield modifiers, and the `coastal` /
+> `foreign` variants, all land on member names no table carries.
+>
+> ⚖ **Two axes live in here and they are different questions, so neither is the other's member:**
+> - the **COUNT** axis — how many routes (a flat amount), and the CAP on them;
+> - the **MODIFIER** axis — the channel-agnostic route-PROFIT percentage, scoped by what KIND of route it is
+>   (normal / coastal / foreign), plus the per-CHANNEL percentage that scales the yield a route delivers.
+>
+> ⛔ **Route KIND is a CONDITION, never a kind of its own** — `coastal` / `foreign` / `sharedCivic` describe WHICH
+> routes a modifier applies to, so they are predicates on the entry ([§3.5](#35-predicates--a-systems-runtime-state-query):
+> `IS_FOREIGN` and `SHARES_CIVIC` are evaluated against the ROUTE's partner city, inside the profit stage).
+> ⚠ They are not all the same predicate SHAPE: `coastal` is a verdict about the CITY, while `foreign` /
+> `sharedCivic` are about the ROUTE — so where each is asked differs, and an author must not assume one form.
+>
+> **⛔ WHY IT MUST BE ITS OWN SECTION, AND THIS IS THE PART THAT KEEPS GETTING LOST (owner): TRADE ROUTES ARE AN
+> ISOLATED SYSTEM WE DO NOT FULLY CONTROL, SO WE FEED IT WHAT WE HAVE *BEFORE* IT REACHES BASE.** The engine owns
+> the network calculation — which cities pair, what a route is worth — and the cascade cannot re-derive it. What
+> the cascade owns is the INPUTS to that stage, and they have to be assembled and handed over as one coherent
+> package before the engine runs, because afterwards there is nothing left to attach them to.
+> ⇒ **That is what makes it a SECTION rather than a family.** A modifier family deposits into a scope's package
+> and is read at the combine; this one has to be COMPLETE at a specific upstream moment, so it is addressed and
+> collected as one thing.
+> ⚑ **It is also why a route takes percentages TWICE, which otherwise reads as double-counting (owner):** once
+> here, on the route itself (the profit and per-channel modifiers, applied inside the engine stage), and again
+> when the resulting yield lands in the city's TIER-1 BASE and takes the ordinary percent stack
+> ([modifier.md §2a](modifier.md)). Two distinct stacks, exactly as a SPECIALIST's intrinsic takes its own
+> percent layer before joining BASE.
+> ⚠ So a trade-route modifier authored anywhere else does not merely land in the wrong slot — it arrives too
+> late to be fed to the system that consumes it.
+>
+> ⚑ **The COUNT is cascade-computed; the trade YIELD is the engine's OUTPUT folded back in**
+> ([modifier.md §2a](modifier.md)) — the cascade owns how many routes there are and what scales them, and folds
+> in the yield the network calculation produces.
 
 ---
 
@@ -195,6 +240,22 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
     > ⚠ The retired spelling was `"connected"`, which took the trade side's word for a local question and is
     > what made the two read as one thing. `owned` (raw presence on an owned tile, improved or not) stays its
     > own tier and is strictly weaker than `onSite`.
+    >
+    > **⛔⛔ `onSite` IS AN ENABLER-SIDE CONCEPT ONLY. NO MODIFIER GATES ON IT — NOT ONE (owner).** A DEPOSIT
+    > conditioned on a resource asks whether the CITY HAS IT, which is the TRADED question and is spelled as the
+    > bare `{type, scope:"city", min:1}` atom. `onSite` belongs to `requires` GATES and is *"almost purely a
+    > concept that creating mounted units have to deal with, very little else"* — horses must be physically here;
+    > the mine building is the other explicit case. Both are enabler-side.
+    > ⚠ **This has been stated repeatedly and re-derived wrongly anyway**, because the tier list above reads as a
+    > menu any atom may pick from. It is not: a modifier picks the bare atom, full stop. The measured cost of
+    > getting it wrong is silent and total — the curator mapped legacy `VicinityBonusYieldChanges` to
+    > `vicinity:"onSite"` on the strength of its XML name (its engine read, `hasVicinityBonus`, actually means
+    > *obtained* in vicinity, i.e. connected), and every one of those deposits then refused against a resource the
+    > city demonstrably held: London carried 96 resources in trade and 14 on site, so Cannery's apple, crab,
+    > lemons and olives were each refused while the city was trading all four.
+    > ⚑ The refusal is invisible in every total — a deposit that never applies leaves no trace — which is why this
+    > survives review and why the yield tooltip and `/computed/city/yield` now list the refused deposits WITH the
+    > atom that refused them.
 
   ```jsonc
   { "type": "BONUS_SHRIMP",   "scope": "city", "connection": "vicinity", "vicinity": "owned" }      // raw presence on an owned tile

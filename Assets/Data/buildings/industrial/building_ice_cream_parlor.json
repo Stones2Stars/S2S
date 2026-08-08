@@ -62,9 +62,7 @@
      "enabled": {
       "type": "BONUS_APPLE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -72,9 +70,7 @@
      "enabled": {
       "type": "BONUS_BANANA",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -82,9 +78,7 @@
      "enabled": {
       "type": "BONUS_LEMONS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -92,9 +86,7 @@
      "enabled": {
       "type": "BONUS_MELONS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -102,9 +94,7 @@
      "enabled": {
       "type": "BONUS_GRAPES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -112,9 +102,7 @@
      "enabled": {
       "type": "BONUS_COFFEE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -122,9 +110,7 @@
      "enabled": {
       "type": "BONUS_NUTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -132,9 +118,7 @@
      "enabled": {
       "type": "BONUS_HONEY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -142,9 +126,7 @@
      "enabled": {
       "type": "BONUS_CHOCOLATE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -152,9 +134,7 @@
      "enabled": {
       "type": "BONUS_VANILLA",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

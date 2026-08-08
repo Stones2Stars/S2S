@@ -72,16 +72,6 @@
    "flat": -6
   }
  },
- "combat": {
-  "empire": {
-   "captureProbability": {
-    "percent": -20
-   },
-   "captureResistance": {
-    "percent": -10
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -118,6 +108,16 @@
    },
    "enemyWarWeariness": {
     "percent": -20
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -20
+   },
+   "resistance": {
+    "percent": -10
    }
   }
  },

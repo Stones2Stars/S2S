@@ -60,9 +60,7 @@
      "enabled": {
       "type": "BONUS_DYE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -70,9 +68,7 @@
      "enabled": {
       "type": "BONUS_RUBBER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

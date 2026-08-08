@@ -81,9 +81,7 @@
      "enabled": {
       "type": "BONUS_IVORY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -91,9 +89,7 @@
      "enabled": {
       "type": "BONUS_PEARLS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -101,9 +97,7 @@
      "enabled": {
       "type": "BONUS_GEMSTONE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -111,9 +105,7 @@
      "enabled": {
       "type": "BONUS_CLAM",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -121,9 +113,7 @@
      "enabled": {
       "type": "BONUS_AMBER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -131,9 +121,7 @@
      "enabled": {
       "type": "BONUS_JADE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

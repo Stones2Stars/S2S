@@ -46,9 +46,7 @@
      "enabled": {
       "type": "BONUS_FRUIT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -56,9 +54,7 @@
      "enabled": {
       "type": "BONUS_VEGETABLES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -66,9 +62,7 @@
      "enabled": {
       "type": "BONUS_NUTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -76,9 +70,7 @@
      "enabled": {
       "type": "BONUS_BERRIES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -86,9 +78,7 @@
      "enabled": {
       "type": "BONUS_FLOWERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

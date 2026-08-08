@@ -575,6 +575,23 @@ void InfoValuation::plotBaseYields(const CvModifiers* terrainModifiers, const Cv
 	}
 }
 
+int64_t InfoValuation::plotScaledYield(int64_t iBaseTotal, int64_t iInterval, int64_t iAmount)
+{
+	// A non-positive interval means no scaling is fed in for this channel -- the overwhelmingly common case, so
+	// it is the first test rather than a guard tacked on the end.
+	if (iInterval <= 0 || iBaseTotal <= 0 || iAmount == 0)
+	{
+		return iBaseTotal;
+	}
+	const int64_t iSteps = iBaseTotal / iInterval;   // WHOLE intervals only -- integer division is the mechanic
+	if (iSteps <= 0)
+	{
+		return iBaseTotal;
+	}
+	const int64_t iScaled = iBaseTotal + iSteps * iAmount;
+	return (iScaled < 0) ? 0 : iScaled;
+}
+
 int64_t InfoValuation::cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra)
 {
 	// modifier.md §2a: ONE additive percent stack applied once, floored at zero; the EXTRA tier truncates to
@@ -679,6 +696,35 @@ int InfoValuation::realizedAtPlot(const CvPlot& plot, int iChannel)
 	return (int)realizedChannel(iFlatSum, iPercentSum, val_channelCanonicalUnit(iChannel, CASC_SCOPE_PLOT));
 }
 
+// The TIERED form (modifier.md §2a): the UPPER legs are TIER 1 BASE -- an empire/team flat is a free-city
+// yield or its kin, which the percent stack MULTIPLIES -- while the CITY's own flat is the TIER 2 EXTRA that
+// is added after it. Only building flats belong in that second tier, and they are exactly what a city-scope
+// flat is. ⛔ Summing the three into one number and passing it as `extra` silently strips the multiplier from
+// every upper-scope flat.
+void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& upperFlatSum,
+	int64_t& cityFlatSum, int64_t& percentSum)
+{
+	upperFlatSum = 0;
+	cityFlatSum = 0;
+	percentSum = 0;
+	if (iChannel < 0)
+	{
+		return;
+	}
+	const PlayerTypes eOwner = city.getOwner();
+	if (eOwner != NO_PLAYER)
+	{
+		const CvPlayer& owner = GET_PLAYER(eOwner);
+		const CvTeam& team = GET_TEAM(owner.getTeam());
+		upperFlatSum += team.getCascadePackage().readFlat(iChannel);
+		percentSum += team.getCascadePackage().readPercent(iChannel);
+		upperFlatSum += owner.getCascadePackage().readFlat(iChannel);
+		percentSum += owner.getCascadePackage().readPercent(iChannel);
+	}
+	cityFlatSum += city.getCascadePackage().readFlat(iChannel);
+	percentSum += city.getCascadePackage().readPercent(iChannel);
+}
+
 void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum)
 {
 	flatSum = 0;
@@ -728,15 +774,35 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 }
 
 // THE CITY RECEIVER (see the header): the §2a rate, re-summed from the members it is made of.
-int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel)
+int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRateTerms* pTermsOut)
 {
+	if (pTermsOut != NULL)
+	{
+		// Fully defined before any early return, so a caller never reads a half-filled census.
+		pTermsOut->plotBase = 0;
+		pTermsOut->plotNature = 0;
+		pTermsOut->plotImprovement = 0;
+		pTermsOut->plotRest = 0;
+		pTermsOut->tradeYield = 0;
+		pTermsOut->goldenAge = 0;
+		pTermsOut->upperFlat = 0;
+		pTermsOut->specialists = 0;
+		pTermsOut->cityFlat = 0;
+		pTermsOut->percentSum = 0;
+		pTermsOut->workedPlots = 0;
+		pTermsOut->rate = 0;
+	}
 	if (iChannel < 0)
 	{
 		return 0;
 	}
 	// BASE -- the Σ over this city's WORKED PLOTS of their own package flats. This is the member re-sum a
 	// receiver IS; nothing maintains it as a total, because a total of combines cannot be delta'd.
-	int64_t iBase = 0;
+	int64_t iPlotBase = 0;
+	int64_t iPlotNature = 0;
+	int64_t iPlotImprovement = 0;
+	int64_t iPlotRest = 0;
+	int iWorkedPlots = 0;
 	const int iNumPlots = city.getNumCityPlots();
 	for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
 	{
@@ -747,15 +813,229 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel)
 		const CvPlot* pWorkedPlot = city.getCityIndexPlot(iPlotIndex);
 		if (pWorkedPlot != NULL)
 		{
-			iBase += pWorkedPlot->getCascadePackage().readFlat(iChannel);
+			iPlotBase += pWorkedPlot->getCascadePackage().readFlat(iChannel);
+			// the SAME walk, decomposed -- the census reads the segments the total is made of rather than
+			// re-deriving them beside it ([DEC-single-implementation])
+			if (pTermsOut != NULL)
+			{
+				iPlotNature += pWorkedPlot->getCascadePackage().readSubstrateFlat(iChannel);
+				iPlotImprovement += pWorkedPlot->getCascadePackage().readImprovementFlat(iChannel);
+				iPlotRest += pWorkedPlot->getCascadePackage().readRestFlat(iChannel);
+			}
+			++iWorkedPlots;
+		}
+	}
+	int64_t iBase = iPlotBase;
+	int64_t iTradeYield = 0;
+	int64_t iGoldenAgeYield = 0;
+	// ⚖ THE TRADE-ROUTE YIELD IS TIER 1 BASE, NOT AN EXTRA (modifier.md §2a): it is the ONE sanctioned live-yield
+	// INPUT -- the cascade cannot re-derive the trade NETWORK, so the engine owns that calculation
+	// (north-star.md KEEP) and its value is FOLDED IN here, where the percent stack still multiplies it.
+	// ⛔ It is NOT commerce-only: the yield a route delivers per channel is the route PROFIT scaled by the
+	// PLAYER's own per-yield trade modifier (CvCity::calculateTradeYield -> CvPlayer::getTradeYieldModifier), so
+	// a player carrying a food trade modifier genuinely eats off its routes. There is no per-yield modifier on
+	// CvYieldInfo to consult, and assuming one reads food's contribution as zero.
+	// ⚑ AN EDGE CONVERTS: the city stores this one already reduced (setTradeYield divides by 100), so it lifts
+	// to the ×100 plane HERE rather than dragging the rate down to it ([DEC-fixedpoint-x100]).
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		if (CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1) == iChannel)
+		{
+			iTradeYield = (int64_t)city.getTradeYield((YieldTypes)iYield) * 100;
+			iBase += iTradeYield;
+			break;
+		}
+	}
+	// ⚖ THE GOLDEN-AGE YIELD IS TIER 1 BASE TOO (modifier.md §2a / §3, golden-age.md): the player-wide
+	// golden-age yield is the PERMANENT engine member-mirror `{ch}.empire.goldenAge.flat`, so it carries its own
+	// MEMBER and therefore its own channel -- a plain package read at the empire, never a re-walk of the traits
+	// that fed it. It applies only while the golden age holds, which is the whole of what the mirror means.
+	const PlayerTypes eBaseOwner = city.getOwner();
+	if (eBaseOwner != NO_PLAYER && GET_PLAYER(eBaseOwner).isGoldenAge())
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			if (CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1) != iChannel)
+			{
+				continue;
+			}
+			const int iGoldenChannel = CascadeChannelRegistry::channelLookup(
+				infoYieldFamily(iYield), (int)CHANNEL_GOLDEN_AGE, -1);
+			if (iGoldenChannel >= 0)
+			{
+				iGoldenAgeYield = GET_PLAYER(eBaseOwner).getCascadePackage().readFlat(iGoldenChannel);
+				iBase += iGoldenAgeYield;
+			}
+			break;
 		}
 	}
 	CvCascadeEvalCtx evalCtx;
 	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
-	int64_t iFlatSum = 0;
+	int64_t iUpperFlatSum = 0;
+	int64_t iCityFlatSum = 0;
 	int64_t iPercentSum = 0;
-	rolledLegsAtCity(city, iChannel, iFlatSum, iPercentSum);
-	return cityRate(iBase, specialistTerm(city, iChannel, evalCtx), (int)iPercentSum, iFlatSum);
+	rolledLegsAtCity(city, iChannel, iUpperFlatSum, iCityFlatSum, iPercentSum);
+	// the upper legs join the BASE the stack multiplies; only the city's own flats are the post-stack EXTRA
+	const int64_t iSpecialists = specialistTerm(city, iChannel, evalCtx);
+	const int64_t iRate = cityRate(iBase + iUpperFlatSum, iSpecialists, (int)iPercentSum, iCityFlatSum);
+	if (pTermsOut != NULL)
+	{
+		pTermsOut->plotBase = iPlotBase;
+		pTermsOut->plotNature = iPlotNature;
+		pTermsOut->plotImprovement = iPlotImprovement;
+		pTermsOut->plotRest = iPlotRest;
+		pTermsOut->tradeYield = iTradeYield;
+		pTermsOut->goldenAge = iGoldenAgeYield;
+		pTermsOut->upperFlat = iUpperFlatSum;
+		pTermsOut->specialists = iSpecialists;
+		pTermsOut->cityFlat = iCityFlatSum;
+		pTermsOut->percentSum = (int)iPercentSum;
+		pTermsOut->workedPlots = iWorkedPlots;
+		pTermsOut->rate = iRate;
+	}
+	return iRate;
+}
+
+namespace
+{
+	// |value| descending -- the biggest refusal is the one worth reading first.
+	bool val_refusedBigger(const InfoValuation::RefusedDeposit& kLeft, const InfoValuation::RefusedDeposit& kRight)
+	{
+		const int64_t iLeft = kLeft.iValue < 0 ? -kLeft.iValue : kLeft.iValue;
+		const int64_t iRight = kRight.iValue < 0 ? -kRight.iValue : kRight.iValue;
+		return iLeft > iRight;
+	}
+}
+
+void InfoValuation::cityRefusedDeposits(const CvCity& city, int iChannel,
+	std::vector<RefusedDeposit>& refusedOut)
+{
+	refusedOut.clear();
+	if (iChannel < 0)
+	{
+		return;
+	}
+	const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
+	const int iKind = CascadeChannelRegistry::channelKind(iChannel);
+	// the SAME ctx the apply path builds, so a refusal reported here is the refusal that actually happened --
+	// a tooltip evaluating against a differently-filled ctx would invent refusals nobody experienced
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(),
+		city.plotGroup(city.getOwner()), evalCtx);
+	EnablerKernel::wireOperatingBuildings(&city, evalCtx);
+
+	// ⛔ BUILDINGS ARE ONLY HALF OF IT. The cascade ROLLS DOWN: an empire-level source -- a civic, a trait, a
+	// tech, a heritage, a project -- lands its CITY-scope entries in every city of the owner
+	// (mc_applySourceDeposits' city branch walks the owner's cities for exactly this). An audit that walked only
+	// the city's own buildings therefore explained 82 of a 155-point food percent stack and left 73 unattributed,
+	// which reads identically to an over-apply. What rolls down is part of the answer, not context for it.
+	std::vector<const CvInfo*> kSources;
+	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(&city);
+	for (std::set<int>::const_iterator itActive = kOperating.active.begin(); itActive != kOperating.active.end(); ++itActive)
+	{
+		kSources.push_back(&GC.getBuildingInfo((BuildingTypes)(*itActive)));
+	}
+	const CvPlayer& kOwner = GET_PLAYER(city.getOwner());
+	const EmpireContext& kEmpire = kOwner.getEmpireContext();
+	int iId = 0;
+	for (iId = 0; iId < GC.getNumCivicInfos(); ++iId)
+	{
+		if (kEmpire.hasCivic(iId)) { kSources.push_back(&GC.getCivicInfo((CivicTypes)iId)); }
+	}
+	for (iId = 0; iId < GC.getNumTraitInfos(); ++iId)
+	{
+		if (kEmpire.hasTrait(iId))
+		{
+			const CvTraitInfo* pTrait = MMKernel::traitData(iId);
+			if (pTrait != NULL) { kSources.push_back((const CvInfo*)pTrait); }
+		}
+	}
+	for (iId = 0; iId < GC.getNumTechInfos(); ++iId)
+	{
+		if (kEmpire.teamHasTech(iId)) { kSources.push_back(&GC.getTechInfo((TechTypes)iId)); }
+	}
+	for (iId = 0; iId < GC.getNumHeritageInfos(); ++iId)
+	{
+		if (kEmpire.hasHeritage(iId)) { kSources.push_back(&GC.getHeritageInfo((HeritageTypes)iId)); }
+	}
+	for (iId = 0; iId < GC.getNumProjectInfos(); ++iId)
+	{
+		if (kEmpire.teamProjectCount(iId) > 0) { kSources.push_back(&GC.getProjectInfo((ProjectTypes)iId)); }
+	}
+	// ⛔ THE CITY'S OWN NON-BUILDING SOURCES, and they are not a footnote: a city holding 258 resources has 258
+	// sources depositing into its packages, and every one was missing from this walk. A census that omits a whole
+	// source CLASS reports a shortfall that looks exactly like an over-apply -- the same total, the wrong story.
+	const CityContext& kCityContext = city.getCityContext();
+	std::vector<int> kTradedHeld;
+	std::vector<int> kOnSiteHeld;
+	kCityContext.collectBonusStores(kTradedHeld, kOnSiteHeld);
+	std::set<int> kHeldBonuses(kTradedHeld.begin(), kTradedHeld.end());
+	kHeldBonuses.insert(kOnSiteHeld.begin(), kOnSiteHeld.end());
+	for (std::set<int>::const_iterator itBonus = kHeldBonuses.begin(); itBonus != kHeldBonuses.end(); ++itBonus)
+	{
+		if (*itBonus >= 0 && *itBonus < GC.getNumBonusInfos())
+		{
+			kSources.push_back(&GC.getBonusInfo((BonusTypes)(*itBonus)));
+		}
+	}
+	for (iId = 0; iId < GC.getNumReligionInfos(); ++iId)
+	{
+		if (kCityContext.hasReligion(iId)) { kSources.push_back(&GC.getReligionInfo((ReligionTypes)iId)); }
+	}
+	for (iId = 0; iId < GC.getNumCorporationInfos(); ++iId)
+	{
+		if (kCityContext.hasCorporation(iId)) { kSources.push_back(&GC.getCorporationInfo((CorporationTypes)iId)); }
+	}
+
+	for (size_t iSource = 0; iSource < kSources.size(); ++iSource)
+	{
+		const CvInfo* pSourceInfo = kSources[iSource];
+		const CvModifiers* pModifiers = (pSourceInfo != NULL) ? pSourceInfo->getModifiers() : NULL;
+		if (pModifiers == NULL || pModifiers->empty())
+		{
+			continue;
+		}
+		const std::vector<CvModEntry*>& entries = pModifiers->entries();
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = entries[iEntry];
+			// ⛔ THE SCOPE TEST IS resolveEntry's, NEVER A HAND-ROLLED `entry->scope == CITY`. A civic's per-city
+			// buff is authored at EMPIRE scope with a `cities` TARGET (json §3.3) and only RESOLVES at city scope,
+			// so a raw scope comparison drops every rolled-down source -- which is precisely what the cascade is
+			// for. Measured: the hand-rolled test admitted 190 entries and explained 82 of a 155-point stack; the
+			// rolled-down half was invisible to it ([DEC-single-implementation]).
+			if (pEntry == NULL || pEntry->family != eFamily || pEntry->kind != iKind)
+			{
+				continue;
+			}
+			// THE ONE RESOLVE decides whether this entry lands here and as what -- scope, target fan, audience,
+			// unit side and the §3.9 gate, all of it. A census that re-implemented any of that could disagree
+			// with the apply it claims to explain ([DEC-single-implementation]).
+			int iEntryChannel = -1;
+			bool bEntryPercent = false;
+			int64_t iEntryValue = 0;
+			const bool bResolved = MMKernel::resolveEntry(*pEntry, 1, CASC_SCOPE_CITY, evalCtx, NULL, 0, false,
+				iEntryChannel, bEntryPercent, iEntryValue);
+			const bool bConditioned = (pEntry->enabled != NULL || pEntry->disabled != NULL);
+			if (!bResolved)
+			{
+				// It declined. Only a §3.9 gate makes that a REFUSAL worth reporting -- every other decline
+				// (wrong scope, wrong audience, no target here) means the entry was never this city's to take.
+				if (!bConditioned || MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
+				{
+					continue;
+				}
+			}
+			RefusedDeposit kAudit;
+			kAudit.szSource = pSourceInfo->getType();
+			kAudit.iValue = bResolved ? iEntryValue : pEntry->value;
+			kAudit.bPercentSide = bResolved ? bEntryPercent : MMKernel::unitIsPercentSide(pEntry->unit);
+			kAudit.pCondition = (pEntry->enabled != NULL) ? pEntry->enabled : pEntry->disabled;
+			kAudit.bApplied = bResolved;
+			refusedOut.push_back(kAudit);
+		}
+	}
+	std::sort(refusedOut.begin(), refusedOut.end(), val_refusedBigger);
 }
 
 int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)

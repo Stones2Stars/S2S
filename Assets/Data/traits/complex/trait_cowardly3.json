@@ -49,16 +49,6 @@
    "flat": -8
   }
  },
- "combat": {
-  "empire": {
-   "captureProbability": {
-    "percent": 20
-   },
-   "captureResistance": {
-    "percent": -40
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "freeCivilian": {
@@ -171,6 +161,16 @@
   "empire": {
    "warWeariness": {
     "percent": 40
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 20
+   },
+   "resistance": {
+    "percent": -40
    }
   }
  },

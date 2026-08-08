@@ -674,7 +674,6 @@ public:
 
 
 	int getTradeRoutes() const;
-	void changeTradeRoutes(int iChange);
 
 	int getRevolutionTimer() const;
 	void setRevolutionTimer(int iNewValue);
@@ -966,7 +965,6 @@ public:
 	void updateLessYieldThreshold(YieldTypes eIndex);
 
 	int getTradeYieldModifier(YieldTypes eIndex) const;
-	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
 
 
 	int getCommercePercent(CommerceTypes eIndex) const;
@@ -1784,7 +1782,6 @@ protected:
 	int m_iNoForeignTradeCount;
 	int m_iNoCorporationsCount;
 	int m_iNoForeignCorporationsCount;
-	int m_iTradeRoutes;
 	int m_iRevolutionTimer;
 	int m_iConversionTimer;
 	int m_iStateReligionCount;
@@ -1869,7 +1866,6 @@ protected:
 	int* m_aiSeaPlotYield;
 	int* m_aiYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
-	int* m_aiTradeYieldModifier;
 	int* m_aiCommercePercent;
 	int* m_aiCommerceRateModifierfromEvents;
 	int* m_aiGoldPerTurnByPlayer;

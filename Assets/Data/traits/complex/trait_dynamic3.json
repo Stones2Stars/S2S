@@ -3,13 +3,6 @@
  "excludes": [
   "TRAIT_STUBBORN1"
  ],
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -123,13 +116,19 @@
    }
   }
  },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "production": {
+     "percent": -10
+    }
+   }
+  }
+ },
  "hurry": {
   "empire": {
    "anger": {
     "percent": -25
-   },
-   "cost": {
-    "percent": -40
    }
   }
  },
@@ -166,6 +165,13 @@
   "empire": {
    "amount": {
     "percent": -10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -40
    }
   }
  },

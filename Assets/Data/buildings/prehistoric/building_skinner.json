@@ -58,9 +58,7 @@
      "enabled": {
       "type": "BONUS_DEER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -68,9 +66,7 @@
      "enabled": {
       "type": "BONUS_BISON",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -78,9 +74,7 @@
      "enabled": {
       "type": "BONUS_MAMMOTH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

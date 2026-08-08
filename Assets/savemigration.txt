@@ -1350,3 +1350,94 @@ The two per-turn VICINITY SNAPSHOT arrays. Derived state that was serialized, wh
 | event-maintained store (contexts.md) -- a stored fact, not a per-turn recompute.
 CvCity::m_pabHadVicinityBonus
 CvCity::m_pabHadRawVicinityBonus
+
+| CvPlayer::m_aiTradeYieldModifier -- the PER-CHANNEL trade-route yield modifier. Its only live writer was the
+| player-init seed from CvYieldInfo::getTradeModifier() (commerce 100, food 0, production 0); every civic/trait
+| authoring lands in the cascade's tradeRoutes.<scope>.modifier.<channel> slot (json.md par.2, ruling 27), which
+| CvPlayer::getTradeYieldModifier now reads on top of that yield-info identity. The stored array therefore carried
+| values no live source could reproduce -- the STORED-ACCUMULATOR DRIFT class, where the recompute is the correct
+| side ([DEC-accumulator-cut-uniform]).
+CvPlayer::m_aiTradeYieldModifier
+
+| CvPlayer::m_iTradeRoutes -- the empire's extra TRADE ROUTE count. It was fed by two changeTradeRoutes calls
+| (processBuilding at empire scope, processTech at CITY scope) and by NOTHING from traits or civics, which author
+| the large majority of the empire-scope route grants. CvPlayer::getTradeRoutes now reads the cascade's
+| tradeRoutes AMOUNT slot on top of the INITIAL_TRADE_ROUTES define ([DEC-accumulator-cut-uniform]).
+CvPlayer::m_iTradeRoutes
+
+| CvCity::m_aiTradeYield -- the per-city TRADE ROUTE YIELD. It is DERIVED (route profit x the per-channel route
+| modifier, CvCity::calculateTradeYield) and was being read straight back off the save, so a loaded city served a
+| trade yield no live input could reproduce -- London ate 60 food per turn off its routes against a live food
+| route modifier of ZERO. Derived state is never serialized ([DEC-derived-never-trusted]); it is rebuilt at load
+| by the per-player updateTradeRoutes() pass in CvGame::onFinalInitialized.
+CvCity::m_aiTradeYield
+
+| ---- TYPE RENAMES: a renamed Type is NOT a removed one ----
+| The complex-trait re-key (modifier.md par.4) moved every complex-only rung of a developing line onto its own
+| TRAIT_COMPLEX_ identity. A save written before it holds the OLD id, and class reads are allow-missing
+| (save.md par.7) -- which is right for a DELETED Type and wrong here, because the record still exists under a
+| new name. Without these the player silently loses the rung. Translated at the ONE stored-Type resolution
+| point (sm_resolveStoredType). The key is namespaced `TYPE::<INFOTYPE_NAME>` -- the entry reader takes the
+| first ::-bearing token (that is what stops a wrapped prose line registering as an entry), so a bare id
+| would parse to nothing; the TYPE:: namespace satisfies that guard AND cannot collide with Class::field.
+TYPE::TRAIT_AGGRESSIVE2 -> TYPE::TRAIT_COMPLEX_AGGRESSIVE2
+TYPE::TRAIT_AGGRESSIVE3 -> TYPE::TRAIT_COMPLEX_AGGRESSIVE3
+TYPE::TRAIT_AGRICULTURAL2 -> TYPE::TRAIT_COMPLEX_AGRICULTURAL2
+TYPE::TRAIT_AGRICULTURAL3 -> TYPE::TRAIT_COMPLEX_AGRICULTURAL3
+TYPE::TRAIT_ANTI_CLERICAL2 -> TYPE::TRAIT_COMPLEX_ANTI_CLERICAL2
+TYPE::TRAIT_ANTI_CLERICAL3 -> TYPE::TRAIT_COMPLEX_ANTI_CLERICAL3
+TYPE::TRAIT_BARBARIC2 -> TYPE::TRAIT_COMPLEX_BARBARIC2
+TYPE::TRAIT_BARBARIC3 -> TYPE::TRAIT_COMPLEX_BARBARIC3
+TYPE::TRAIT_CHARISMATIC2 -> TYPE::TRAIT_COMPLEX_CHARISMATIC2
+TYPE::TRAIT_CHARISMATIC3 -> TYPE::TRAIT_COMPLEX_CHARISMATIC3
+TYPE::TRAIT_CREATIVE2 -> TYPE::TRAIT_COMPLEX_CREATIVE2
+TYPE::TRAIT_CREATIVE3 -> TYPE::TRAIT_COMPLEX_CREATIVE3
+TYPE::TRAIT_CRUEL2 -> TYPE::TRAIT_COMPLEX_CRUEL2
+TYPE::TRAIT_CRUEL3 -> TYPE::TRAIT_COMPLEX_CRUEL3
+TYPE::TRAIT_DECEIVER2 -> TYPE::TRAIT_COMPLEX_DECEIVER2
+TYPE::TRAIT_DECEIVER3 -> TYPE::TRAIT_COMPLEX_DECEIVER3
+TYPE::TRAIT_EXCESSIVE2 -> TYPE::TRAIT_COMPLEX_EXCESSIVE2
+TYPE::TRAIT_EXCESSIVE3 -> TYPE::TRAIT_COMPLEX_EXCESSIVE3
+TYPE::TRAIT_EXPANSIVE2 -> TYPE::TRAIT_COMPLEX_EXPANSIVE2
+TYPE::TRAIT_EXPANSIVE3 -> TYPE::TRAIT_COMPLEX_EXPANSIVE3
+TYPE::TRAIT_FINANCIAL2 -> TYPE::TRAIT_COMPLEX_FINANCIAL2
+TYPE::TRAIT_FINANCIAL3 -> TYPE::TRAIT_COMPLEX_FINANCIAL3
+TYPE::TRAIT_HUMANITARIAN2 -> TYPE::TRAIT_COMPLEX_HUMANITARIAN2
+TYPE::TRAIT_HUMANITARIAN3 -> TYPE::TRAIT_COMPLEX_HUMANITARIAN3
+TYPE::TRAIT_HUNTER_GATHERER2 -> TYPE::TRAIT_COMPLEX_HUNTER_GATHERER2
+TYPE::TRAIT_HUNTER_GATHERER3 -> TYPE::TRAIT_COMPLEX_HUNTER_GATHERER3
+TYPE::TRAIT_IDEALISTIC2 -> TYPE::TRAIT_COMPLEX_IDEALISTIC2
+TYPE::TRAIT_IDEALISTIC3 -> TYPE::TRAIT_COMPLEX_IDEALISTIC3
+TYPE::TRAIT_IMPERIALIST2 -> TYPE::TRAIT_COMPLEX_IMPERIALIST2
+TYPE::TRAIT_IMPERIALIST3 -> TYPE::TRAIT_COMPLEX_IMPERIALIST3
+TYPE::TRAIT_INDUSTRIOUS2 -> TYPE::TRAIT_COMPLEX_INDUSTRIOUS2
+TYPE::TRAIT_INDUSTRIOUS3 -> TYPE::TRAIT_COMPLEX_INDUSTRIOUS3
+TYPE::TRAIT_ISOLATIONIST2 -> TYPE::TRAIT_COMPLEX_ISOLATIONIST2
+TYPE::TRAIT_ISOLATIONIST3 -> TYPE::TRAIT_COMPLEX_ISOLATIONIST3
+TYPE::TRAIT_MEGALOMANIAC2 -> TYPE::TRAIT_COMPLEX_MEGALOMANIAC2
+TYPE::TRAIT_MEGALOMANIAC3 -> TYPE::TRAIT_COMPLEX_MEGALOMANIAC3
+TYPE::TRAIT_NOMADIC -> TYPE::TRAIT_COMPLEX_NOMADIC
+TYPE::TRAIT_NOMADIC1 -> TYPE::TRAIT_COMPLEX_NOMADIC1
+TYPE::TRAIT_ORGANIZED2 -> TYPE::TRAIT_COMPLEX_ORGANIZED2
+TYPE::TRAIT_ORGANIZED3 -> TYPE::TRAIT_COMPLEX_ORGANIZED3
+TYPE::TRAIT_PHILOSOPHICAL2 -> TYPE::TRAIT_COMPLEX_PHILOSOPHICAL2
+TYPE::TRAIT_PHILOSOPHICAL3 -> TYPE::TRAIT_COMPLEX_PHILOSOPHICAL3
+TYPE::TRAIT_POLITICIAN2 -> TYPE::TRAIT_COMPLEX_POLITICIAN2
+TYPE::TRAIT_POLITICIAN3 -> TYPE::TRAIT_COMPLEX_POLITICIAN3
+TYPE::TRAIT_POPULIST2 -> TYPE::TRAIT_COMPLEX_POPULIST2
+TYPE::TRAIT_POPULIST3 -> TYPE::TRAIT_COMPLEX_POPULIST3
+TYPE::TRAIT_PROTECTIVE2 -> TYPE::TRAIT_COMPLEX_PROTECTIVE2
+TYPE::TRAIT_PROTECTIVE3 -> TYPE::TRAIT_COMPLEX_PROTECTIVE3
+TYPE::TRAIT_REVOLUTIONARY2 -> TYPE::TRAIT_COMPLEX_REVOLUTIONARY2
+TYPE::TRAIT_REVOLUTIONARY3 -> TYPE::TRAIT_COMPLEX_REVOLUTIONARY3
+TYPE::TRAIT_SCIENTIFIC2 -> TYPE::TRAIT_COMPLEX_SCIENTIFIC2
+TYPE::TRAIT_SCIENTIFIC3 -> TYPE::TRAIT_COMPLEX_SCIENTIFIC3
+TYPE::TRAIT_SEAFARING2 -> TYPE::TRAIT_COMPLEX_SEAFARING2
+TYPE::TRAIT_SEAFARING3 -> TYPE::TRAIT_COMPLEX_SEAFARING3
+TYPE::TRAIT_SPIRITUAL2 -> TYPE::TRAIT_COMPLEX_SPIRITUAL2
+TYPE::TRAIT_SPIRITUAL3 -> TYPE::TRAIT_COMPLEX_SPIRITUAL3
+TYPE::TRAIT_TEMPERAMENTAL2 -> TYPE::TRAIT_COMPLEX_TEMPERAMENTAL2
+TYPE::TRAIT_TEMPERAMENTAL3 -> TYPE::TRAIT_COMPLEX_TEMPERAMENTAL3
+TYPE::TRAIT_UNREFINED2 -> TYPE::TRAIT_COMPLEX_UNREFINED2
+TYPE::TRAIT_ZEALOUS -> TYPE::TRAIT_COMPLEX_ZEALOUS
+TYPE::TRAIT_ZEALOUS1 -> TYPE::TRAIT_COMPLEX_ZEALOUS1

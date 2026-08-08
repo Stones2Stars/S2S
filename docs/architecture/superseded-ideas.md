@@ -314,3 +314,22 @@
     misreading this entry exists to prevent.
     ⚠ Also NOT this: `CvDerivedCache`'s use for a genuine leaf recompute elsewhere, and the ENDPOINT ORACLE's
     full recompute-from-source, which is deliberately independent and stays.
+31. **THE GOLDEN-AGE FOOD-FOR-GROWTH DISCOUNT** (`GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH`, applied in
+    `CvPlayer::getGrowthThreshold` to the completed threshold) *(dead — owner: "if growth reduction for golden
+    age has never worked, we won't introduce it now, game has been balanced around not having it")*.
+    ⚑ **It never ran, and that is the whole argument.** The legacy engine looked the define up as
+    **`GOlDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH`** — a lowercase `l` in the first word — and no such key exists,
+    so `getDefineINT` answered 0, `getModifiedIntValue(v, 0)` returned `v`, and the mechanic was inert for the
+    entire life of the mod while reading as implemented at the call site. Every balance decision the mod has ever
+    made was made against a threshold a golden age does not move.
+    ⛔ **So correcting the spelling is a BALANCE CHANGE, not a bug fix** — at the authored `-25` it cut every
+    city's food requirement by 20% for the duration of a golden age, and on the standing save 16 of 26 cities
+    loaded already at or above their new threshold, having banked that food against the real one. The branch, the
+    define and its XML entry are all removed. **Never re-add a golden-age term to `getGrowthThreshold`.**
+    ⚑ **The general lesson it is kept for, because it is not about golden ages:** a `getDefineINT` miss is SILENT
+    and composes as the identity, so a mistyped define never warns, never crashes, and leaves a plausible number
+    at every observation point. ⚠ So when one is found dead the question is never *"fix the spelling"* — it is
+    **what has been balanced around its silence**, and the answer is often that the silent version is the real one.
+    ⚠ NOT the same thing as the golden age's YIELD effects (the per-plot threshold bonus, the player golden-age
+    yield, the golden-age commerce), which are live, authored and STAY
+    ([golden-age.md](../reference/golden-age.md)).

@@ -75,6 +75,8 @@ public:
 	// product and never slots. Exposed beside resolveEntry because a sink that routes by side reads them too.
 	static bool unitIsFlatSide(CvCascUnit eUnit);
 	static bool unitIsPercentSide(CvCascUnit eUnit);
+	// Is the stored value UNSCALED (percent side, or a COUNT)? The test a READER asks before its ÷100.
+	static bool unitIsUnscaled(CvCascUnit eUnit);
 	// Is this family a rate (yield/commerce) channel family? The §2a specialist carve-out keys on it.
 	static bool isRateFamily(ModifierFamily eFamily);
 

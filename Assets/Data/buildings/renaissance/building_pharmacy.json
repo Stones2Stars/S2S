@@ -84,9 +84,7 @@
      "enabled": {
       "type": "BONUS_OPIUM",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -94,9 +92,7 @@
      "enabled": {
       "type": "BONUS_HEMP",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -104,9 +100,7 @@
      "enabled": {
       "type": "BONUS_PEYOTE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -114,9 +108,7 @@
      "enabled": {
       "type": "BONUS_COCOA",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

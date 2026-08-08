@@ -3,20 +3,6 @@
  "excludes": [
   "TRAIT_DYNAMIC"
  ],
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -377,13 +363,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "freeSpecialists": {
   "empire": {
    "any": -1
@@ -404,10 +383,18 @@
    }
   }
  },
- "hurry": {
+ "tradeRoutes": {
   "empire": {
-   "cost": {
-    "percent": 50
+   "modifier": {
+    "food": {
+     "percent": 10
+    },
+    "production": {
+     "percent": 10
+    },
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  },
@@ -444,6 +431,13 @@
   "empire": {
    "amount": {
     "percent": 10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 50
    }
   }
  },

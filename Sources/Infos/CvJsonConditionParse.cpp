@@ -275,8 +275,15 @@ static CvCondition* cp_parseObject(const picojson::object& o)
 		if (k == "scope" || k == "per" || k == "value" || k == "ai" || k == "connection" || k == "vicinity"
 		 || k == "each" || k == "min" || k == "max") continue;   // entry modifiers, not a predicate key
 		const std::string pv = it->second.is<std::string>() ? it->second.get<std::string>() : std::string();
-		if (k == "HAS_BONUS")
-			return cp_presence(pv, CASC_SCOPE_CITY, 1, -1, cp_parseConnection(po_str(o, "connection")), cp_parseVicinity(po_str(o, "vicinity")));
+		// ⛔ `{HAS_BONUS: X}` IS THE PLOT'S OWN BONUS, NEVER THE CITY VARIANT (owner). An improvement asks about
+		// the tile it sits on -- a pasture's `{HAS_BONUS: BONUS_POULTRY}` means THIS plot carries poultry, not
+		// "my city can reach poultry somewhere". Parsing it as a city-scope PRESENCE ATOM made every such entry
+		// resolve against the city's trade/vicinity supply, so identical tiles in different cities disagreed and
+		// a tile's own resource was ignored outright.
+		// ⚑ The CITY question has its own spelling and is unaffected: a bare `BONUS_X` atom (optionally with
+		// `connection`/`vicinity`) is the presence test ([json.md §3.4](../../docs/specs/json.md)), which is what
+		// a building's requires uses. The two are different questions and now have different shapes.
+		if (k == "HAS_BONUS") return cp_predicate(CASC_PRED_HAS_BONUS, pv, -1, -1);
 		if (k == "HAS_TERRAIN")     return cp_predicate(CASC_PRED_HAS_TERRAIN, pv, -1, -1);
 		if (k == "HAS_FEATURE")     return cp_predicate(CASC_PRED_HAS_FEATURE, pv, -1, -1);
 		if (k == "HAS_IMPROVEMENT") return cp_predicate(CASC_PRED_HAS_IMPROVEMENT, pv, -1, -1);

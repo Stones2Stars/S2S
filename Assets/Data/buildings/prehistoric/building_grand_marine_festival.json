@@ -139,9 +139,7 @@
      "enabled": {
       "type": "BONUS_PEARLS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -149,9 +147,7 @@
      "enabled": {
       "type": "BONUS_FISH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -159,9 +155,7 @@
      "enabled": {
       "type": "BONUS_SHRIMP",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -169,9 +163,7 @@
      "enabled": {
       "type": "BONUS_LOBSTER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -179,9 +171,7 @@
      "enabled": {
       "type": "BONUS_WHALE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -189,9 +179,7 @@
      "enabled": {
       "type": "BONUS_CLAM",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -199,9 +187,7 @@
      "enabled": {
       "type": "BONUS_CRAB",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

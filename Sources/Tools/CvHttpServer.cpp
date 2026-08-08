@@ -286,6 +286,10 @@ namespace
 			{
 				return OracleEndpoints::enablerOperating(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_ORACLE);
 			}
+			if (strcmp(szAction, "cityYield") == 0)
+			{
+				return OracleEndpoints::cityYield(iPlayer, iCity);
+			}
 			if (strcmp(szAction, "capabilitiesStored") == 0)
 			{
 				return OracleEndpoints::teamCapabilities(iPlayer, OracleEndpoints::ORACLE_SIDE_STORED);
@@ -402,6 +406,7 @@ namespace
 			{ "/computed/cascade/packages/oracle",  "cascadePackagesOracle",  "the same packages recomputed from source into scratch -- diff against .../stored" },
 			{ "/computed/enabler/operating/stored", "enablerOperatingStored", "the per-city operating set the targeted propagation maintains: active/obsolete/provided + provider counts. ?player=N[&city=M]" },
 			{ "/computed/enabler/operating/oracle", "enablerOperatingOracle", "the same set recomputed from source into scratch -- diff against .../stored" },
+			{ "/computed/city/yield",               "cityYield",              "the yield TOOLTIP's own census, served: every term of the §2a combine per yield, the refused deposits with the atom that refused them, and the city's traded/onSite bonus lists read LIVE. ?player=N[&city=M]" },
 			{ "/computed/capabilities/stored",      "capabilitiesStored",     "the empire ability union as the grantor facts built it: capabilities/canTrade/canWorkOn/canTradeOn. ?player=N" },
 			{ "/computed/capabilities/oracle",      "capabilitiesOracle",     "the same union recomputed from source into scratch -- diff against .../stored" }
 		};

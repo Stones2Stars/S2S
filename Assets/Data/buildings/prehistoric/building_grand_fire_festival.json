@@ -117,9 +117,7 @@
      "enabled": {
       "type": "BONUS_PEAT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -127,9 +125,7 @@
      "enabled": {
       "type": "BONUS_TAR",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -137,9 +133,7 @@
      "enabled": {
       "type": "BONUS_SULPHUR",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -147,9 +141,7 @@
      "enabled": {
       "type": "BONUS_OBSIDIAN",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -157,9 +149,7 @@
      "enabled": {
       "type": "BONUS_DIAMOND",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -167,9 +157,7 @@
      "enabled": {
       "type": "BONUS_SILVER_ORE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -177,9 +165,7 @@
      "enabled": {
       "type": "BONUS_GOLD_ORE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

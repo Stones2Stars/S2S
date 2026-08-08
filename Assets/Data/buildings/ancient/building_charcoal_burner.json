@@ -54,9 +54,7 @@
      "enabled": {
       "type": "BONUS_PIG",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -64,9 +62,7 @@
      "enabled": {
       "type": "BONUS_POULTRY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -74,9 +70,7 @@
      "enabled": {
       "type": "BONUS_COW",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -84,9 +78,7 @@
      "enabled": {
       "type": "BONUS_SHEEP",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

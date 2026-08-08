@@ -88,6 +88,7 @@ public:
 	void setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false, CvCity* pCity = NULL, bool bConscript = false, bool bTBUnitView1 = false, bool bTBUnitView2 = false, bool bTBUnitView3 = false);
 	void setUnitExperienceHelp(CvWStringBuffer &szBuffer, CvWString szStart, UnitTypes eUnit, CvCity* pCity, bool bConscript = false);
 	void setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false, bool bStrategyText = false, bool bTechChooserText = false, CvCity* pCity = NULL);
+	void appendBuildingOperatingState(CvWStringBuffer& szBuffer, const BuildingTypes eBuilding, const CvCity* pCity);
 	void setBuildingHelp(
 		CvWStringBuffer &szBuffer, const BuildingTypes eBuilding, const bool bActual, CvCity* pCity = NULL,
 		const bool bCivilopediaText = false, const bool bStrategyText = false, const bool bTechChooserText = false

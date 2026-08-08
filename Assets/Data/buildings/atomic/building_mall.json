@@ -51,9 +51,7 @@
      "enabled": {
       "type": "BONUS_TIRES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -61,9 +59,7 @@
      "enabled": {
       "type": "BONUS_BICYCLES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -71,9 +67,7 @@
      "enabled": {
       "type": "BONUS_PERFUME",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -81,9 +75,7 @@
      "enabled": {
       "type": "BONUS_CLOTHING",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -91,9 +83,7 @@
      "enabled": {
       "type": "BONUS_SHOES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -101,9 +91,7 @@
      "enabled": {
       "type": "BONUS_TOYS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -111,9 +99,7 @@
      "enabled": {
       "type": "BONUS_BOOKS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -121,9 +107,7 @@
      "enabled": {
       "type": "BONUS_GLASSWARE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -131,9 +115,7 @@
      "enabled": {
       "type": "BONUS_POTTERY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -141,9 +123,7 @@
      "enabled": {
       "type": "BONUS_SCULPTURES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -151,9 +131,7 @@
      "enabled": {
       "type": "BONUS_BASKETS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -161,9 +139,7 @@
      "enabled": {
       "type": "BONUS_LACQUERWARE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -171,9 +147,7 @@
      "enabled": {
       "type": "BONUS_SPONGES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -181,9 +155,7 @@
      "enabled": {
       "type": "BONUS_REFRIGERATORS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -191,9 +163,7 @@
      "enabled": {
       "type": "BONUS_MICROWAVE_OVENS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -201,9 +171,7 @@
      "enabled": {
       "type": "BONUS_TELEVISIONS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -211,9 +179,7 @@
      "enabled": {
       "type": "BONUS_CARPETS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -221,9 +187,7 @@
      "enabled": {
       "type": "BONUS_CANDLES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -231,9 +195,7 @@
      "enabled": {
       "type": "BONUS_POWER_TOOLS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -241,9 +203,7 @@
      "enabled": {
       "type": "BONUS_DISHWASHERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -251,9 +211,7 @@
      "enabled": {
       "type": "BONUS_VACUUM_CLEANERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -261,9 +219,7 @@
      "enabled": {
       "type": "BONUS_WASHER_DRYER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -271,9 +227,7 @@
      "enabled": {
       "type": "BONUS_BLENDER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -281,9 +235,7 @@
      "enabled": {
       "type": "BONUS_CALCULATORS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -291,9 +243,7 @@
      "enabled": {
       "type": "BONUS_RADIOS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -301,9 +251,7 @@
      "enabled": {
       "type": "BONUS_TYPEWRITERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -311,9 +259,7 @@
      "enabled": {
       "type": "BONUS_PENCILS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -321,9 +267,7 @@
      "enabled": {
       "type": "BONUS_PHONOGRAPHS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -331,9 +275,7 @@
      "enabled": {
       "type": "BONUS_THEREMIN",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -341,9 +283,7 @@
      "enabled": {
       "type": "BONUS_BEADS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -351,9 +291,7 @@
      "enabled": {
       "type": "BONUS_FLOWERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -361,9 +299,7 @@
      "enabled": {
       "type": "BONUS_HATS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -371,9 +307,7 @@
      "enabled": {
       "type": "BONUS_INCENSE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -381,9 +315,7 @@
      "enabled": {
       "type": "BONUS_JEWELRY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -391,9 +323,7 @@
      "enabled": {
       "type": "BONUS_MASKS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -401,9 +331,7 @@
      "enabled": {
       "type": "BONUS_OLIVE_OIL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -411,9 +339,7 @@
      "enabled": {
       "type": "BONUS_OSTRICH_FEATHERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

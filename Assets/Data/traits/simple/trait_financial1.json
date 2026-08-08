@@ -28,9 +28,6 @@
  },
  "commerce": {
   "empire": {
-   "tradeRoute": {
-    "percent": 10
-   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": 1
@@ -64,6 +61,15 @@
   "empire": {
    "corporation": {
     "percent": -30
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  },

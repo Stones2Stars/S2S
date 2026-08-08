@@ -7,9 +7,6 @@
  },
  "production": {
   "empire": {
-   "tradeRoute": {
-    "percent": 30
-   },
    "improvements": {
     "IMPROVEMENT_EARLY_QUARRY": {
      "flat": 2
@@ -93,6 +90,15 @@
  "health": {
   "empire": {
    "flat": -1
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "production": {
+     "percent": 30
+    }
+   }
   }
  },
  "workRate": {

@@ -44,9 +44,7 @@
      "enabled": {
       "type": "BONUS_FISH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -54,9 +52,7 @@
      "enabled": {
       "type": "BONUS_RABBIT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -64,9 +60,7 @@
      "enabled": {
       "type": "BONUS_DOG",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -74,9 +68,7 @@
      "enabled": {
       "type": "BONUS_CAT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -84,9 +76,7 @@
      "enabled": {
       "type": "BONUS_GUINEA_PIGS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -94,9 +84,7 @@
      "enabled": {
       "type": "BONUS_PARROTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -104,9 +92,7 @@
      "enabled": {
       "type": "BONUS_LIZARDS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

@@ -43,6 +43,29 @@ static const CvInfo* ud_techInfo(int iTech)
 static void ud_gateSet(const CvCity& kCity, const std::set<int>& ids);
 static void ud_touched(const CvInfo* j, std::set<int>& touched);
 
+// `identity.enabledCivilizations` is a WHITELIST -- empty means every civilization, non-empty means ONLY those.
+static bool ud_barredByCivilization(const CvUnitInfo* ju, const CvPlayer& kPlayer)
+{
+	if (ju == NULL)
+	{
+		return false;
+	}
+	const std::vector<int>& aiCivs = ju->getEnabledCivilizations();
+	if (aiCivs.empty())
+	{
+		return false;
+	}
+	const int iCivilization = (int)kPlayer.getCivilizationType();
+	for (std::vector<int>::const_iterator it = aiCivs.begin(); it != aiCivs.end(); ++it)
+	{
+		if (*it == iCivilization)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 // The CITY-CREATED applier (founding init + the load read's start, BEFORE the city's own in-read emits): init
 // the domain (size + the spawnOnly static exclusions) and fold ONLY the cross-scope HAVE that predates the
 // city -- team techs + player civics. The city's OWN facts (buildings/religions/bonuses) arrive as DOMAIN
@@ -57,7 +80,10 @@ void UnitEnabler::onCityCreated(const CvCity& kCity)
 	for (int u = 0; u < GC.getNumUnitInfos(); ++u)
 	{
 		const CvUnitInfo* ju = (const CvUnitInfo*)InfoRepo<CvUnitInfo>::get().get(u);
-		if (ju != NULL && ju->isSpawnOnly()) d.setStaticExcluded(u, true);   // never trainable (placed by systems)
+		// never trainable (placed by systems), or barred to this civilization -- `identity.enabledCivilizations`
+		// is a WHITELIST (empty = every civ, non-empty = ONLY those), static for the city's life, so it sits on
+		// the static-exclusion plane like the other membership bar (enabler.md par.8).
+		if (ju != NULL && (ju->isSpawnOnly() || ud_barredByCivilization(ju, kPlayer))) d.setStaticExcluded(u, true);
 	}
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)   // the root IS a held tech (the load backfill guarantees it)
 		if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::applyEdges(d, ud_techInfo(t), EDGEB_UNITS, +1);

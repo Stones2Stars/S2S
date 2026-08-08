@@ -157,15 +157,6 @@
   mechanic is the vanilla airplane ranged attack and STAYS; only the name carries `dcm`, and a live mechanic
   wearing a dead plane's prefix is what makes the next sweep mis-scope it
   ([skills.md](../../specs/skills.md)).
-- **GATE `canConstruct` / `canTrain` ON THE CIVILIZATION. Nothing does today, and it is a live over-offer:**
-  every civ is offered every OTHER civ's unique buildings and units. The restriction is AUTHORED
-  (`identity.enabledCivilizations`), PARSED and HELD (`CvBuildingInfo` / `CvUnitInfo` keep it as a
-  `CIVILIZATION_*` FK list) — and read by NOBODY: no `CIVILIZATION_` reference exists anywhere in the enabler or
-  the evaluator. So the data, the parse and the storage are all in place and only the GATE is missing.
-  ⚠ `stronglyRestricted` (the NPC build-lockdown) is the SAME axis and lands with it, as a civ-membership clause
-  rather than a policy ([json.md §9](../../specs/json.md)).
-  ⛔ This entry previously read "…when NPC civilizations are wired" and sat unread for that reason: the
-  precondition named nobody's job, so a missing gate read as a schedule.
 - Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework, and with it the two corp shapes
   no corporation authors: the HQ FREE UNIT — a `grants` payload, so it lands on the trigger plane off the
   headquarters fact ([triggers.md](../../specs/triggers.md)), never as an info getter — and corp-vs-corp
@@ -189,26 +180,16 @@
 
 ## Legacy still breathing — delete it
 
-- Cut the BLANKET SYSTEM-PLACEMENT PASS — `notConstructible` means an entity never goes through the
-  `canConstruct` gate and NOTHING MORE ([enabler.md §3](../../specs/enabler.md)); it does not mean "place it in
-  every city". `BuildingsRepo::systemPlacedBuildings` + `CvCity::placeSystemBuildings` implement the retired
-  reading, so every queue-excluded entity is handed to every city — including ones whose own `allowed` says a
-  single copy may exist, which `allowed` cannot refuse because it gates a BUILD and these are never build
-  candidates.
-  ⛔ **It corrupts MAGNITUDES, not just offers:** an entity active in N cities deposits N times, so a scope-wide
-  deposit it carries is multiplied by the city count — plausibly and silently
-  ([modifier.md §5](../../specs/modifier.md)).
-  ⚑ Each placing system already knows its own answer and keeps it: the property solver places its BANDS in every
-  city (that population is correct and stays), `CvGame::setHeadquarters` places a corporate HQ in the one city
-  holding it, the achievement system awards one per player. The pass to delete is the blanket one, never the
-  per-system placement.
-  ⚖ **A CAPPED ENTITY IS PLACED ONCE, AS IT ALWAYS HAS BEEN (owner)** — so the repair is the PLACEMENT, and the
-  authored deposit scope is left alone. ⛔ Do NOT "fix" the multiplication by re-scoping an `empire`-scope
-  deposit down to `city`: the curator mapping is faithful (`GlobalSeaPlotYieldChanges` → `empire.plots` beside
-  `SeaPlotYieldChanges` → `city.plots`), a single copy makes it correct, and re-scoping would change what the
-  effect MEANS while leaving every other reader of presence and count still seeing N copies.
-  ⚠ The load-time half rides with it — the once-over-existing-cities seed for saves predating the class places
-  the same entities the same wrong way.
+- BUILD THE MISSING PLACERS for the queue-excluded, self-capped entities. `notConstructible` bars the production
+  queue and says nothing about placement ([enabler.md §3](../../specs/enabler.md)), so a capped entity is placed
+  by the system that OWNS it — and for most of them no such system exists in C++ or Python. A corporate HQ has
+  one (`CvGame::setHeadquarters`); the achievements, relics, traditions, national beliefs and the `C_AD_*`
+  culture set have none, so they are placed NOWHERE and their effects reach nobody.
+  ⚑ The relic/`constructs` half is the outcome verb already tracked below — the achievements and the culture set
+  need their own award path, which is the same question as how an ENACTED / HELD state expresses its choice
+  (above).
+  ⛔ Do NOT answer it by putting them back in the blanket pass: that is the retired reading, and it multiplies
+  every scope-wide deposit they carry by the city count ([modifier.md §5](../../specs/modifier.md)).
 
 > The standing rule (purge violently; blast radius is the signal; the worst offenders are the ones OFF the core
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
@@ -295,6 +276,93 @@
   wholesale as each domain migrates onto the spine — never tidied in place.
 
 ## Not built yet
+
+- **Share `InfoValuation::plotScaledYield` with the what-if plot read.** The package resolve calls it, but
+  `plotBaseYields` — the isolated plot-as-base calc every what-if goes through — does not take the two operands
+  yet, so a what-if answers the pre-scaling number while the live plot answers the scaled one
+  ([DEC-single-implementation]: the arithmetic is shared, the operands must be too).
+- **Re-point `CvPlayer::getExtraYieldThresholds` / `getLessYieldThresholds`, or delete them.** They read the
+  channel through `realizedAtEmpire`, which SUMS — but the interval is the smallest positive one held, so the
+  summed answer is wrong by construction. Their only callers are the Python bindings; the live feed uses
+  `updateExtraYieldThreshold`'s min selection instead.
+
+- **Make `tradeRoutes` the base section the spec now declares it to be** ([json.md §2](../../specs/json.md)) and
+  move every trade-route authoring into it. The curator currently splits them across three places: the count/cap
+  rows emit under `tradeRoutes` with member spellings no kind table carries (`coastal`, `foreign`), and
+  `TradeYieldModifiers` emits under the YIELD families as `<channel>.<scope>.tradeRoute` — so a per-yield route
+  modifier is addressed as a member of food. All of it lands as `unkinded-member` and produces nothing.
+  ⚠ The route-KIND variants become CONDITIONS in the same pass (Ruling 11 / json.md §2), and `coastal` is a CITY
+  predicate while `foreign`/`sharedCivic` are ROUTE predicates — settle where each is evaluated before authoring.
+  ⛔ Recurate and regenerate in the same change ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
+- **Cut the DEAD ACCUMULATORS — legacy members with no writer left, still serialized, still read.** Run the
+  mechanical detector in [state-repositories.md](../../architecture/state-repositories.md) § THE LEGACY-ACCUMULATOR
+  CUT (a mutator with no call site + a serialized member + a live getter) over `CvCity` and `CvPlayer`; every hit is
+  a consumer being served save history where the cascade holds the truth, and the cut is the uniform one already
+  specified there. ⚑ **Work it TOGETHER with the unkinded-member list below** — they are the data side and the
+  carrier side of one defect, and where a pair matches, the quantity is missing end to end.
+  ⚠ Each hit still needs its disposition decided: a value the cascade genuinely owns is re-pointed, while genuine
+  one-shot event state (an `applyEvent` writer) correctly stays serialized ([save.md §3](../../specs/save.md)).
+- **Land the UNKINDED MEMBERS — authored deposits the parser drops, and it says so on every load.** `readJson`
+  reports each as `[READJSON] unkinded-member <family>.<member>`; the member simply has no row in its family's
+  kind table, so the deposit is parsed, reported and then produces nothing. ⛔ **Read that census before
+  anything else on this** — it is the authoritative list and it costs one grep of the load log.
+  Each one resolves to exactly one of three dispositions, and they are NOT interchangeable:
+  - **a genuine KIND** that needs its row minted (the combat defensive/capture members, `upkeep.upgradePrice`,
+    `hurry.cost`, `gold.headquarters`, `culture.garrison`, `happiness.nonStateReligion`);
+  - **a VARIANT that must become a CONDITION, never a kind** — `tradeRoutes.foreign` / `.coastal` are Ruling 11
+    verbatim (*"the variant members are CONDITIONS, re-authored as predicates on the curator batch — never
+    kinds"*), so this is the ruling not being implemented rather than a new decision. ⚠ The two are not the same
+    predicate shape: `coastal` is a CITY verdict, while `foreign`/`sharedCivic` are per-ROUTE and are evaluated
+    against the partner city inside `totalTradeModifier` — settle where each is asked before authoring either;
+  - **deliberately unkinded pending a re-home** — the trigger-plane set (`combat.subdueAnimal`,
+    `combat.nukeInterception`, …) is held that way ON PURPOSE ([triggers.md](../../specs/triggers.md)); minting a
+    kind for one is the banned move.
+  ⚑ **`<channel>.tradeRoute` is its own question:** a per-trade-route yield is a `per` SCALER on the channel, not
+  a member of it — so it lands as the channel's ordinary deposit scaled by the route count, and needs the route
+  count wired as a count-key first.
+- **Re-point `CvPlayer::getTradeRoutes()` onto the cascade and cut `m_iTradeRoutes`.** It is a legacy serialized
+  accumulator fed by two `changeTradeRoutes` calls in `processBuilding` / `processTech`, and NOTHING feeds it
+  from traits or civics — which author the large majority of the empire-scope route grants. The empire package
+  already carries the value on the `tradeRoutes` AMOUNT slot and no reader consumes it
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
+  ⚠ Two riders the cut must preserve ([save.md §6](../../specs/save.md)): `GC.getINITIAL_TRADE_ROUTES()`, applied
+  once at player init and not derivable from any deposit; and the `updateTradeRoutes()` call inside the changer —
+  without it the stored per-city trade YIELD never rebuilds when a route modifier moves, which is a second live
+  defect (the trade-route surface computes live while the tooltip reads the stored value, so the two disagree).
+  ⚠ `processTech` additionally reads `CASC_SCOPE_CITY` where `processBuilding` reads `CASC_SCOPE_EMPIRE` — a
+  scope mismatch to resolve in the same pass.
+
+- **Settle what the stored-vs-oracle pair is FOR, because it cannot be what the spec currently claims (owner):
+  *"oracle will never work like you want it, because it would require a republish of every event to rebuild."***
+  A package slot is the sum of what the FACTS applied — which plots were worked, which buildings operated, what
+  membership held at each moment. A gather that walks sources and sums their deposits is not a second derivation
+  of that number, it is a different question, so the two cannot be expected to agree and a diff between them
+  cannot name a missed emit. ⚠ [state-repositories.md](../../architecture/state-repositories.md) § THE RECOMPUTE
+  IS AN ENDPOINT ORACLE states the opposite (an independent full recompute as the acceptance mechanism) and needs
+  correcting to whatever the pair IS good for — the acceptance bar for the rebuild depends on the answer.
+  ⛔ Do NOT "fix the gather" to make the two agree, and do not bend the stored side to it: agreement bought by
+  replaying events is not independence, it is the same derivation twice (the false-confirmation trap
+  [validation.md](../../specs/validation.md) names).
+- **Attribute the empire package's wellbeing flats.** They stand far above anything the data authors, which is
+  the compounding-phantom signature a missed WITHDRAWAL leaves ([state-repositories.md](../../architecture/state-repositories.md):
+  a phantom nothing later clears). This one needs no oracle — the authored total is the reference.
+
+- **Route the remaining `per` COUNT scalers.** Deposits scale on the commerce-slider rates
+  (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), on the wonder counts
+  (`WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`) and on per-improvement counts, and none of those counts moves
+  the deposits it scales. The facts already exist (`SEVT_EMPIRE_COMMERCE_PERCENT_*`,
+  `SEVT_EMPIRE_BUILDING_COUNT_*`, the plot improvement pair); what is missing is the consumer route
+  ([DEC-close-event-gaps-now](../../architecture/decisions.md#dec-close-event-gaps-now) — the third gap form).
+- **Route `SEVT_PROPERTY_ADDED / _REMOVED` and `SEVT_CITY_PROPERTY_BAND_ADDED / _REMOVED` into the modifier.**
+  They fire from the `CvProperties` choke points and the band registry into a consumer set that carries no case
+  for either, so a threshold-conditioned deposit on a property never moves
+  ([event-spine.md](../../specs/event-spine.md) § THE RECEIVED LINE names this as the worked instance).
+- **Delete the atom-fan BANK on the city plane.** The load-bracket bank replays an empire-level crossing's city
+  half at `GAME_LOAD_FINISHED`, but plane A already applies a conditioned deposit when its SOURCE arrives and
+  books it — so the drain finds every entry already booked and applies none. It is a second maintenance surface
+  for work another plane does ([roadmap.md](roadmap.md): a wrong wiring is removed on sight). ⚠ Its PLOT half is
+  NOT redundant and must survive the cut — that is the only route reaching plot-scope deposits gated by an
+  empire-level atom.
 
 - Serve a city's OFFERED RESOURCES, and give the city screen a VICINITY tab that shows them (owner) — a city
   currently has no readable list of what its plot group supplies, so the axis most `requires` gates on is the one

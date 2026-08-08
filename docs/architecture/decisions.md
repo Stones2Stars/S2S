@@ -185,6 +185,13 @@ their build; verify the current branch immediately before every commit. **Home:*
 A dry-calc divergence means the cascade is MISSING a mechanic — trace it to its named engine source and represent it;
 never skip/drop/invent a mechanic to fit the data. **Home:** [validation.md](../specs/validation.md).
 
+### DEC-baseline-is-a-smell-test
+
+A remembered figure ("hammers were ~5000") is a SMELL TEST that says go look, never an acceptance target; the only
+question is whether a read is correct, and where the number lands is an output. Bending the implementation toward
+one -- or hesitating over a correct fix because it would overshoot -- is the banned move. **Home:**
+[validation.md](../specs/validation.md).
+
 ### DEC-per-mechanic-parity
 
 Parity is verified mechanic-by-mechanic against the engine's per-mechanic value, never by comparing or averaging

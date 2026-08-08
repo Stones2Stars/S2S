@@ -56,15 +56,27 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
 
 > PURE_TRAITS option filters the trait-fed golden-age yield/commerce (a positive bonus on a negative trait drops).
 
-### 2. Growth — faster
+### 2. Growth — UNAFFECTED
 
-City food-for-growth threshold is reduced by `GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH` (a negative percent),
-applied in `CvPlayer::getGrowthThreshold` to the **COMPLETED threshold** — after the per-pop ramp, gamespeed,
-era and the AI handicap have all landed.
-⚖ **The calculation finishes FIRST, then the percent comes off the final number (owner).** ⛔ It is deliberately
-not folded into the base, which would discount only the flat term and leave the per-pop ramp at full price.
-⚑ Being a percent it rides every scaling the threshold already carries, so its help stays proportionate across
-gamespeeds and eras rather than being a constant whose weight swings with them.
+⛔ **A golden age does NOT lower the food a city needs to grow (owner).** `CvPlayer::getGrowthThreshold` finishes
+at the AI-handicap step and returns; there is no golden-age term, and one must not be added.
+
+> **⚖ THE MECHANIC IS DEAD BECAUSE IT NEVER LIVED, AND THAT IS WHAT DECIDES IT (owner):** *"if growth reduction
+> for golden age has never worked, we won't introduce it now — the game has been balanced around not having
+> it."* The legacy engine looked its define up as **`GOlDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH`** — a lowercase
+> `l` in the first word — which is defined nowhere, so `getDefineINT` answered 0 and `getModifiedIntValue(v, 0)`
+> returned `v` untouched. The discount was therefore inert in every game ever played, while reading as
+> implemented at the call site. **Every balance judgement the mod has ever made was made against a threshold a
+> golden age does not move.**
+> ⛔ **So spelling it correctly is a BALANCE CHANGE, not a bug fix** — and a large one: at the authored `-25` it
+> cut every city's requirement by 20% for the whole golden age. Measured before it was cut: 16 of 26 cities on
+> the standing save loaded at or above their new threshold, having banked that food against the real one.
+> The define is deleted along with the branch, so there is nothing left to re-wire.
+> ⚑ **The general lesson, which is why this is written down rather than just reverted:** a `getDefineINT` miss is
+> SILENT and composes harmlessly (0 through `getModifiedIntValue` is the identity), so a mistyped define is
+> invisible at every observation point — it does not warn, does not crash, and leaves a plausible number. A define
+> lookup is a string with no compiler behind it. ⚠ And when one is found dead, the question is never "fix the
+> spelling" — it is **what has been balanced around its silence**.
 
 ### 3. Great people — faster
 
@@ -97,7 +109,7 @@ which nothing currently emits. **Emitting it is step one of verifying this.**
 | `CvBuildingInfo` | `isGoldenAge` (trigger on completion), `getGoldenAgeModifier` (duration) |
 | `CvUnitInfo` | `isGoldenAge` (consumable trigger unit) |
 | `CvEventInfo` | `isGoldenAge` (event trigger) |
-| Defines | `BASE_GOLDEN_AGE_UNITS`, `GOLDEN_AGE_UNITS_MULTIPLIER`, `GOLDEN_AGE_LENGTH`, `GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH`, `GOLDEN_AGE_GREAT_PEOPLE_MODIFIER` |
+| Defines | `BASE_GOLDEN_AGE_UNITS`, `GOLDEN_AGE_UNITS_MULTIPLIER`, `GOLDEN_AGE_LENGTH`, `GOLDEN_AGE_GREAT_PEOPLE_MODIFIER` |
 
 ---
 
@@ -105,8 +117,9 @@ which nothing currently emits. **Emitting it is step one of verifying this.**
 
 Golden age touches the yield path in **three** places, all inside `base` (so all `× modifier`): the
 **per-plot** threshold bonus (in `basePlotYield`), the **player** golden-age yield, and the **golden-age
-commerce** — plus faster growth, faster great people, and zero-anarchy civic swaps elsewhere. The one reproduction
+commerce** — plus faster great people and zero-anarchy civic swaps elsewhere. The one reproduction
 gotcha is the per-plot bonus's **pre-improvement/pre-route** threshold test (`CvPlot.cpp:8403`).
+⛔ It does **not** touch city GROWTH: the food-for-growth discount is a dead mechanic that never once ran (§2).
 
 > **Cascade representation — PERMANENT engine member-mirror, effect-only.**
 > [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires condition-as-member

@@ -83,13 +83,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": -25
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": -25
@@ -104,6 +97,13 @@
   "empire": {
    "civicAnarchy": {
     "percent": -30
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -25
    }
   }
  },

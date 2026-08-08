@@ -29,9 +29,6 @@
  },
  "commerce": {
   "empire": {
-   "tradeRoute": {
-    "percent": -10
-   },
    "improvements": {
     "IMPROVEMENT_TOWN": {
      "flat": -1
@@ -114,6 +111,11 @@
  },
  "tradeRoutes": {
   "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": -10
+    }
+   },
    "max": {
     "flat": -1
    }

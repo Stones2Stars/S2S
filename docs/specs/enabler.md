@@ -253,7 +253,29 @@ is paid for.
 Where the bands form a succession chain (the **Education ladder**) a higher band dorms the lower via
 `requires.operate.dormant` (only-highest-active, no stacking) — the **same uniform `ReplacementBuildings → dormant`
 mirror as §2, not a special case** (there is no separate "education" ruling); chainless bands (crime/disease/
-pollution) compound, every in-band band active. Bands are **bidirectional** — effect-buildings can spawn on the
+pollution/tourism) compound, every in-band band active.
+
+> **⛔ A DORMANT TRIGGER TESTS WHETHER THE SUCCESSOR IS *ACTIVE*, NEVER WHETHER IT IS *PRESENT* — and under the
+> band model nothing else is even expressible.** A band is PLACED ONCE and never removed, so every rung of every
+> ladder is present in every city from turn one. A presence test therefore reads TRUE forever: each rung sees the
+> rung above it standing there and dorms, the top rung dorms on its own `operate` clause, and **only-highest-active
+> collapses to NOTHING-active** — in every city, on every ladder, for every property.
+> ⚑ **The blackened-skies case is the proof, not an analogy:** §2 promises the observatory *"goes dormant and
+> wakes when the skies clear"*. `BLACKENED_SKIES` is itself a band and is therefore permanently present, so only
+> its ACTIVE state ever clears — under a presence test the skies never clear at all.
+> ⚠ **Legacy tested presence and was right to**, which is what makes this easy to reintroduce: legacy added and
+> removed band buildings every turn, so present and active were THE SAME FACT. The band model is precisely what
+> separates them ([engine.md](../reference/engine.md): the per-turn add/remove maintainer is CUT), so the test has
+> to follow the half that still carries the meaning.
+> ⚑ **Two consequences for the fixpoint, both load-bearing.** (1) The operate/provides fixpoint now has TWO
+> coupled unknowns — the supply AND the active set — so it terminates only when BOTH are stable; stopping on the
+> supply alone freezes a ladder with every rung active, the mirror image of the same bug and equally silent.
+> (2) An ACTIVE flip must re-check whoever dorms on that building, via the dormant-triggered-by reverse index —
+> a route presence never needed, because presence only moved when something was built or destroyed, while an
+> active state moves whenever a property value crosses a band. Without it a ladder settles once and never
+> re-settles, so a rising property leaves two rungs depositing side by side.
+> ⚠ The ripple's queued-mark is therefore a de-duplicator for what is CURRENTLY QUEUED, never a processed-once
+> ledger: a rung genuinely must be re-classified after its successor settles. Bands are **bidirectional** — effect-buildings can spawn on the
 **negative** side, not just the positive ladder; a negative band is being considered for **every property**.
 
 **`requires.operate` on a UNIT** (FUTURE — e.g. tanks need fuel) would reversibly disable an existing unit while
@@ -405,11 +427,19 @@ ARRIVING here (which moves the count). Both therefore re-gate the whole capped s
 in this city on the building-changed fact beside the existing cap-scope fan. An unrouted gate input is a
 permanently stale verdict ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
 
-⚖ **ONE CITY CHALLENGE = NO wonder limits (owner).** OCC remains an UNSUPPORTED mode, but it is an ordinary game
-option like any other and needs no special machinery: while it is on, the category cap simply does not apply.
-⛔ There is deliberately **no curated OCC cap variant** — the option does not RESCALE the limit, it REMOVES it, so
-the legacy per-culture-level OCC cap field is not migrated. The gate reads the option at the CONSUMING system
-(here, the enabler) while the info keeps serving ungated data ([json.md §9](json.md)).
+⚖ **TWO GAME OPTIONS REMOVE THE CATEGORY CAP OUTRIGHT, and the gate must honour BOTH.**
+**`GAMEOPTION_NO_WONDER_LIMIT`** is the player asking for no limit — removing it is the whole point of the option —
+and **`GAMEOPTION_CHALLENGE_ONE_CITY`** = NO wonder limits (owner); OCC remains an UNSUPPORTED mode, but it is an
+ordinary game option like any other and needs no special machinery. While either is on, the category cap simply
+does not apply.
+⛔ There is deliberately **no curated cap variant** for either — neither RESCALES the limit, they REMOVE it, so the
+legacy per-culture-level OCC cap field is not migrated. The gate reads the options at the CONSUMING system (here,
+the enabler) while the info keeps serving ungated data ([json.md §9](json.md)).
+⚠ **The enabler computes this verdict itself and must therefore carry the carve-outs itself.** It may not read
+`CvCity::isWorldWondersMaxed()` — that is a computed output a gate must not ride in on
+([DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — so the option checks that answer
+holds there do NOT come along with the count, and an omitted one silently enforces a limit the player switched
+off. Re-deriving a verdict means re-deriving every carve-out on it, not just its arithmetic.
 
 ---
 

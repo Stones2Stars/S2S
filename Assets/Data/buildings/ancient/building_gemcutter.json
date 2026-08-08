@@ -47,9 +47,7 @@
      "enabled": {
       "type": "BONUS_DIAMOND",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -57,9 +55,7 @@
      "enabled": {
       "type": "BONUS_RUBIES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -67,9 +63,7 @@
      "enabled": {
       "type": "BONUS_SAPPHIRES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -77,9 +71,7 @@
      "enabled": {
       "type": "BONUS_AMBER",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -87,9 +79,7 @@
      "enabled": {
       "type": "BONUS_JADE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -97,9 +87,7 @@
      "enabled": {
       "type": "BONUS_TURQUOISE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -107,9 +95,7 @@
      "enabled": {
       "type": "BONUS_GEODE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

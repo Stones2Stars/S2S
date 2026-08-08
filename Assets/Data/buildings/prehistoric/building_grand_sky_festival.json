@@ -95,9 +95,7 @@
      "enabled": {
       "type": "BONUS_INCENSE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -105,9 +103,7 @@
      "enabled": {
       "type": "BONUS_INDIGO",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -115,9 +111,7 @@
      "enabled": {
       "type": "BONUS_MUSHROOMS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -125,9 +119,7 @@
      "enabled": {
       "type": "BONUS_TOBACCO",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -135,9 +127,7 @@
      "enabled": {
       "type": "BONUS_VANILLA",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -145,9 +135,7 @@
      "enabled": {
       "type": "BONUS_OPIUM",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -155,9 +143,7 @@
      "enabled": {
       "type": "BONUS_TEA",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

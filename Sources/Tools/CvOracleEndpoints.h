@@ -41,6 +41,16 @@ public:
 	// The ENABLER's per-city operating set: active / obsolete / provided + the provider ref-count.
 	static CvString enablerOperating(int iPlayer, int iCity, OracleSide eSide);
 
+	// THE CITY YIELD CENSUS -- the same decomposition the yield TOOLTIP renders, served.
+	// ⚖ A tooltip IS a census (owner), so the two must be the same document or they are two answers to one
+	// question. It carries, per yield channel: every term of the §2a combine, and the city's two bonus lists
+	// read LIVE at request time. ⛔ Live is the point: a load-end snapshot and a mid-game read are different
+	// questions, and a store that fills during the load and drains afterwards reads correct in the first and
+	// empty in the second. Only the second is what a player sees.
+	// ⛔ Not the banned route shape: every number here is the cascade's OWN computed term, never a legacy
+	// accumulator, so nothing is kept alive by its existence ([http-endpoints.md]).
+	static CvString cityYield(int iPlayer, int iCity);
+
 	// The TEAM CAPABILITY union of iPlayer's team (-1 = the active player's team).
 	static CvString teamCapabilities(int iPlayer, OracleSide eSide);
 };

@@ -47,9 +47,7 @@
      "enabled": {
       "type": "BONUS_BARLEY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -57,9 +55,7 @@
      "enabled": {
       "type": "BONUS_WHEAT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

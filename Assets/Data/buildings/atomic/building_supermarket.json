@@ -47,9 +47,7 @@
      "enabled": {
       "type": "BONUS_FRUIT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -57,9 +55,7 @@
      "enabled": {
       "type": "BONUS_VEGETABLES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -67,9 +63,7 @@
      "enabled": {
       "type": "BONUS_NUTS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -77,9 +71,7 @@
      "enabled": {
       "type": "BONUS_BERRIES",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -87,9 +79,7 @@
      "enabled": {
       "type": "BONUS_FLOWERS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -97,9 +87,7 @@
      "enabled": {
       "type": "BONUS_RAW_FISH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -107,9 +95,7 @@
      "enabled": {
       "type": "BONUS_RAW_MEAT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -117,9 +103,7 @@
      "enabled": {
       "type": "BONUS_SHELLFISH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -127,9 +111,7 @@
      "enabled": {
       "type": "BONUS_BREAD",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -137,9 +119,7 @@
      "enabled": {
       "type": "BONUS_EGGS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -147,9 +127,7 @@
      "enabled": {
       "type": "BONUS_CHEESE",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -157,9 +135,7 @@
      "enabled": {
       "type": "BONUS_HONEY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -167,9 +143,7 @@
      "enabled": {
       "type": "BONUS_ALCOHOL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -177,9 +151,7 @@
      "enabled": {
       "type": "BONUS_OLIVE_OIL",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -187,9 +159,7 @@
      "enabled": {
       "type": "BONUS_DRIED_FRUIT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -197,9 +167,7 @@
      "enabled": {
       "type": "BONUS_DRIED_FISH",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -207,9 +175,7 @@
      "enabled": {
       "type": "BONUS_DRIED_MEAT",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -217,9 +183,7 @@
      "enabled": {
       "type": "BONUS_LARD",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -227,9 +191,7 @@
      "enabled": {
       "type": "BONUS_CANDY",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -237,9 +199,7 @@
      "enabled": {
       "type": "BONUS_ENERGY_DRINK",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -247,9 +207,7 @@
      "enabled": {
       "type": "BONUS_SODA_POP",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -257,9 +215,7 @@
      "enabled": {
       "type": "BONUS_POTATO_CHIPS",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -267,9 +223,7 @@
      "enabled": {
       "type": "BONUS_NUTELLA",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -277,9 +231,7 @@
      "enabled": {
       "type": "BONUS_CANNED_FOOD",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     },
     {
@@ -287,9 +239,7 @@
      "enabled": {
       "type": "BONUS_MILK",
       "scope": "city",
-      "connection": "vicinity",
-      "min": 1,
-      "vicinity": "onSite"
+      "min": 1
      }
     }
    ]

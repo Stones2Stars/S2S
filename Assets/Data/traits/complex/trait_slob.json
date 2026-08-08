@@ -86,13 +86,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": -15
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": -25
@@ -102,6 +95,13 @@
   "empire": {
    "attitude": {
     "flat": -1
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -15
    }
   }
  },

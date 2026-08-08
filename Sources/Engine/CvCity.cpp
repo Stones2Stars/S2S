@@ -1639,8 +1639,18 @@ void CvCity::doTurn()
 void CvCity::placeSystemBuildings()
 {
 	PROFILE_EXTRA_FUNC();
-	foreach_(const BuildingTypes eBuilding, BuildingsRepo::get().systemPlacedBuildings())
+	// ⛔ THE POPULATION IS THE PROPERTY BANDS, AND NOTHING ELSE. `notConstructible` bars the production queue and
+	// says nothing about placement (enabler.md §3, owner) -- WHO places a queue-excluded entity belongs to the
+	// system that owns it: the grants machine hands over a granted building, setHeadquarters places a corporate
+	// HQ in the one city holding it, an achievement is awarded once. A band is the one population whose placing
+	// system genuinely puts it in EVERY city, and it is identified by what the DATA says -- its `requires.operate`
+	// carries a PROPERTY band -- which the enabler already derives.
+	// ⚑ It stays UNCONDITIONAL and removes nothing: the band is placed once and its operate clause then decides
+	// active vs dormant, which is what deletes the legacy per-turn add/remove churn.
+	const std::vector<int>& aBands = EnablerKernel::propertyBandBuildings();
+	for (size_t iBand = 0; iBand < aBands.size(); ++iBand)
 	{
+		const BuildingTypes eBuilding = (BuildingTypes)aBands[iBand];
 		if (!hasBuilding(eBuilding))
 		{
 			changeHasBuilding(eBuilding, true);   // present; the operate fixpoint decides active vs dormant
@@ -3693,24 +3703,16 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		owner.noteOrbitalInfrastructureCountDirty();
 	}
 
-	// The in-vicinity SUPPLY (json §5a `provides.bonuses`) -- not a deposit; it changes what the city HAS.
-	const CvProvides* pProvides = kBuilding.getProvides();
-	foreach_(const int iFreeBonus, pProvides->bonuses)
-	{
-		const BonusTypes eFreeBonus = (BonusTypes)iFreeBonus;
-		const int iSuppliedDelta = pProvides->countOf(iFreeBonus) * iChange;
-		changeFreeBonus(eFreeBonus, iSuppliedDelta);
-		// the event carries the applied local DELTA (a city can hold several of a bonus locally --
-		// a presence-flip gate would hide the 1->2/2->1 transitions and undercount downstream)
-		if (iSuppliedDelta > 0)
-		{
-			emitCityVicinityBonusAdded(getID(), getOwner(), iFreeBonus, iSuppliedDelta);
-		}
-		else
-		{
-			emitCityVicinityBonusRemoved(getID(), getOwner(), iFreeBonus, -iSuppliedDelta);
-		}
-	}
+	// ⛔ THE SUPPLY IS NOT DRIVEN FROM HERE. This function runs on building PRESENCE, and presence is the wrong
+	// axis: under the band model a building is placed once and then toggles active/dormant, so supplying from
+	// here makes a DORMANT building hand the city its resources. The supply is the ENABLER's operate/provides
+	// fixpoint -- it has to be, because one building's supply can satisfy another's operate condition, which
+	// only the fixpoint can resolve ([enabler.md] §3.2, [json.md] §5a).
+	// ⚠ Both ran, and they disagreed: the enabler's `provided` carried 173 resources for London while the plot
+	// group -- fed from here -- carried 96, so an industrial farm's pig, sheep and cow were supplied according to
+	// one and absent according to the other. A deposit asking whether the city held pig was answered NO while
+	// the farm stood there supplying it. The enabler owns it end to end now
+	// ([DEC-single-implementation]).
 
 	changeMaxAirlift(kBuilding.getAirlift() * iChange);
 	changeAirUnitCapacity(kBuilding.getAirUnitCapacity() * iChange);
@@ -7377,9 +7379,14 @@ int CvCity::getMaxTradeRoutes() const
 	{
 		return GC.getMAX_TRADE_ROUTES();
 	}
-	//	The empire's cap adjustment is a FLAT slot, so it reduces here.
+	// The cap adjustment is a FLAT slot, so it reduces here.
+	// ⚖ THE CITY'S OWN ROLL-UP, not the owner's -- the same chain totalTradeModifier reads. `realizedAtCity` folds
+	// team + empire + city, so an empire-scope cap change still lands (it rolls DOWN, [modifier.md] §1) while a
+	// city-scope one is no longer silently dropped. Asking the PLAYER for a value this city consumes made the two
+	// trade-route reads answer off different chains for one family, which is the kind of split that stays invisible
+	// until data authors the side nobody reads.
 	int aiTradeRoutes[NUM_TRADE_ROUTE_KINDS];
-	GET_PLAYER(getOwner()).getTradeRouteKinds(aiTradeRoutes);
+	getTradeRouteKinds(aiTradeRoutes);
 	return GC.getMAX_TRADE_ROUTES() + aiTradeRoutes[TRADE_ROUTE_MAX] / 100;
 }
 
@@ -12778,7 +12785,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 	// Widening a member is SOFT: the reader absorbs the narrower stored form (save.md §8), so this keeps
@@ -13473,7 +13479,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 

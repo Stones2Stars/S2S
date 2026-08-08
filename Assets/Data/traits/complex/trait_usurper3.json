@@ -113,9 +113,6 @@
   "empire": {
    "espionageDefense": {
     "percent": -20
-   },
-   "captureResistance": {
-    "percent": -30
    }
   }
  },
@@ -143,6 +140,13 @@
    },
    "distanceModifier": {
     "percent": 15
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -30
    }
   }
  },

@@ -42,6 +42,7 @@
 //
 
 #include "ContextDict.h"
+#include <vector>
 #include "CvCondition.h"   // CvCascVicinity -- the json par.3.4 ownership tiers the stored vicinity dicts key on
 #include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES -- the realized group forwards' out-array extents
 
@@ -122,6 +123,22 @@ public:
 	// central switch that fans out to whichever store a case happens to name ([DEC-dict-is-a-consumer]). A fact
 	// absent from this list does not reach the store, and that is readable HERE.
 	static bool wantsEvent(int iEventId);
+
+	// DIAGNOSTIC: how many distinct resources each of this city's bonus stores actually holds, emitted at load
+	// end. ⛔ It exists because every one of these stores is INVISIBLE on every served surface, so "the lists are
+	// empty" and "the lists are full but the deposits refuse" produce the SAME observable -- a short yield -- and
+	// the difference between them is the difference between a broken store and a broken route. Reading the wiring
+	// cannot settle it: the interest set, the appliers and the drain all read correct while the answer stayed
+	// wrong ([DEC-no-guessing]: at a gap, EMIT the decomposition rather than infer it).
+	// ⚠ Reports what the stores CONTAIN, never what they should -- it says nothing about correctness on its own,
+	// and it is not state anything may fold on ([event-spine.md] § THE RECEIVED LINE).
+	void reportBonusStoreCensus() const;
+
+	// The two bonus lists, by id, for a SERVED census. ⛔ Read live at request time -- a load-end snapshot and a
+	// mid-game read are different questions, and conflating them is what let a store that fills at load and
+	// drains afterwards look correct. The two lists are ORTHOGONAL and are handed back separately for the same
+	// reason they are stored separately: neither is derivable from the other.
+	void collectBonusStores(std::vector<int>& tradedOut, std::vector<int>& onSiteOut) const;
 	static void onSpineEvent(const CvSpineEvent& kEvent);
 
 	// --- MAINTENANCE ENTRY POINTS: called ONLY from this store's own consumer ---------------------------------------
@@ -293,6 +310,19 @@ private:
 	// VICINITY SPLIT). A herd building and an improved herd tile are the same act as far as the answer goes; they
 	// simply have different owners.
 	mutable ContextDict m_onSite;
+	// ⚖ THE TRADED STORE -- what this city holds OVER THE NETWORK, maintained from the city's own acquisition
+	// fact (SEVT_CITY_BONUS_ADDED/REMOVED, which CvCity::processBonus fires on a genuine 0<->non-zero crossing).
+	// ⛔ IT IS A STORE AND NOT A FORWARD, and that is the whole point: the traded half used to relay into
+	// CvCity::getNumBonuses, which walks the plot group and applies the engine's own tech-trade / minted /
+	// corporation adjustments. That is the ENGINE's answer, not the cascade's -- nothing about it is fed by a
+	// fact, so there was no maintained state to be right or wrong, and every deposit gate asking "does this city
+	// have this resource" was reaching past the cascade into legacy. A relay cannot be verified, cannot be
+	// diffed against an oracle, and cannot fail loud when an emit goes missing ([DEC-no-legacy-masking],
+	// [DEC-maintained-sum]).
+	// ⛔ ORTHOGONAL TO m_onSite, NEVER DERIVABLE FROM IT (owner): a resource can be held on site and not in the
+	// network -- having traded the only copy away -- and a bare `{type, scope:"city", min:1}` deposit gate asks
+	// THIS list alone. The two are never read together.
+	mutable ContextDict m_traded;
 	mutable int m_areaId;                      // the city's area ID (-1 = unassigned)
 	mutable int m_areaTileCount;               // that area's tile count -- AREA_SIZE served without dereferencing CvArea
 	// The largest ADJACENT water body, in tiles -- ONE int that answers isCoastal at EVERY threshold
