@@ -74,6 +74,10 @@ enum PyIntrinsicSlot
 	PYINT_VOTE_SOURCE,          // BUILDING_ VOTESOURCE_* FK -- the diplomatic body this building CONVENES
 	                            // (json par.9 `voteSource`); -1 for the overwhelming majority
 	PYINT_IS_BUILD,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
+	PYINT_UNIT_COMBAT,          // UNIT_ UNITCOMBAT_* FK, NO_UNITCOMBAT when the unit has none
+	PYINT_HURRY_GOLD_PER_PRODUCTION,   // HURRY_ -- gold paid per hammer
+	PYINT_HURRY_PRODUCTION_PER_POPULATION,
+	PYINT_HURRY_IS_ANGER,       // HURRY_ -- does using it anger the population
 	PYINT_ESPIONAGE_COST,       // ESPIONAGEMISSION_ -- its base cost, -1 when the mission is unavailable
 	PYINT_ESPIONAGE_TARGETS_CITY,
 	PYINT_ESPIONAGE_IS_PASSIVE,

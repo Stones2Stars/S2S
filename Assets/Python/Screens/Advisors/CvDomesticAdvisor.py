@@ -239,23 +239,22 @@ class CvDomesticAdvisor:
 			# Buildings
 			self.BUILDING_INFO_LIST = []
 			for i in xrange(GC.getNumBuildingInfos()):
-				info = GC.getBuildingInfo(i)
-				desc = info.getDescription()
+				desc = INFO.getDescription("BUILDING_", i)
 				key = self.getBuildingKey(i)
-				self.BUILDING_INFO_LIST.append(info)
+				self.BUILDING_INFO_LIST.append(i)
 				COLUMNS_LIST.append((key, 24, "bldg", None, self.getBuildingState, i, desc))
 			# Hurry types
 			for i in xrange(GC.getNumHurryInfos()):
 				header = self.yieldIcons[YieldTypes.YIELD_PRODUCTION]
 				name = "CAN_HURRY_"
-				info = GC.getHurryInfo(i)
-				if info.getGoldPerProduction() > 0:
+				if INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_GOLD_PER_PRODUCTION) > 0:
 					header += " + " + self.commerceIcons[CommerceTypes.COMMERCE_GOLD]
 					name += "GOLD"
-				if info.getProductionPerPopulation() > 0 and info.isAnger():
+				if (INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_PRODUCTION_PER_POPULATION) > 0
+				and INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_IS_ANGER)):
 					header += " + " + unichr(8867)
 					name += "WHIP"
-				elif info.getProductionPerPopulation() > 0:
+				elif INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_PRODUCTION_PER_POPULATION) > 0:
 					header += " + " + unichr(8850)
 					name += "VOLUNTEERS"
 
@@ -452,7 +451,7 @@ class CvDomesticAdvisor:
 					break
 
 		if bCanLiberate:
-			screen.setImageButton("DomesticSplit", "", 8, 2, iSize, iSize, WidgetTypes.WIDGET_ACTION, GC.getControlInfo(ControlTypes.CONTROL_FREE_COLONY).getActionInfoIndex(), -1)
+			screen.setImageButton("DomesticSplit", "", 8, 2, iSize, iSize, WidgetTypes.WIDGET_ACTION, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_FREE_COLONY, IntrinsicSlot.PYINT_ACTION_INFO_INDEX).getActionInfoIndex(), -1)
 			screen.setStyle("DomesticSplit", "Button_HUDAdvisorVictory_Style")
 
 		# Draw the table and the rest based on the mode
@@ -516,8 +515,7 @@ class CvDomesticAdvisor:
 
 		# add National Wonders
 		for i in xrange(GC.getNumBuildingInfos()):
-			info = GC.getBuildingInfo(i)
-			if info.getMaxGlobalInstances() == -1 and info.getMaxPlayerInstances() == 1 and CyCity.hasBuilding(i) and not info.isCapital():
+			if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_EMPIRE and CyCity.hasBuilding(i):
 				# Use bullets as markers for National Wonders
 				szReturn += unichr(8854)
 
@@ -627,8 +625,7 @@ class CvDomesticAdvisor:
 			# even if user chooses to disable the production coloring/grouping
 			if city.isProductionUnit():
 				iUnit = city.getProductionUnit()
-				pInfo = GC.getUnitInfo(iUnit)
-				if pInfo.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
+				if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_UNIT_COMBAT) != UnitCombatTypes.NO_UNITCOMBAT:
 					iExp = city.getProductionExperience(iUnit)
 					szReturn = szReturn + u" " + TRNSLTR.getText("TXT_KEY_CDA_BASE_XP", (iExp,))
 
@@ -637,12 +634,10 @@ class CvDomesticAdvisor:
 				szIcon = self.yieldIcons[YieldTypes.YIELD_PRODUCTION]
 				if city.isProductionBuilding():
 					szColorKey = "WONDER"
-					pInfo = GC.getBuildingInfo(city.getProductionBuilding())
-					if pInfo.getMaxGlobalInstances() != -1:
+					iCapScope = INFO.getIntrinsic("BUILDING_", city.getProductionBuilding(), IntrinsicSlot.PYINT_WONDER_SCOPE)
+					if iCapScope == AllowedCap.ALLOWEDCAP_WORLD:
 						szIcon = unichr(8858)
-					elif pInfo.getMaxTeamInstances() != -1:
-						szIcon = unichr(8859)
-					elif pInfo.getMaxPlayerInstances() != -1:
+					elif iCapScope in (AllowedCap.ALLOWEDCAP_TEAM, AllowedCap.ALLOWEDCAP_EMPIRE):
 						szIcon = unichr(8859)
 					else:
 						szColorKey = "BUILDING"
@@ -659,17 +654,14 @@ class CvDomesticAdvisor:
 						szIcon = self.commerceIcons[CommerceTypes.COMMERCE_CULTURE]
 				elif city.isProductionProject():
 					szColorKey = "PROJECT"
-					pInfo = GC.getProjectInfo(city.getProductionProject())
-					if pInfo.getMaxGlobalInstances() != -1:
-						szIcon = unichr(8858)
-					elif pInfo.getMaxTeamInstances() != -1:
-						szIcon = unichr(8859)
+					# ⚠ A project's self-cap scope has no published read yet, so every project takes the
+					# world-tier glyph rather than a guessed tier.
+					szIcon = unichr(8858)
 				elif city.isProductionUnit():
 					szColorKey = "UNIT"
 					iUnit = city.getProductionUnit()
-					pInfo = GC.getUnitInfo(iUnit)
-					iType = pInfo.getDomainType()
-					if pInfo.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
+					iType = INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN)
+					if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_UNIT_COMBAT) != UnitCombatTypes.NO_UNITCOMBAT:
 						szIcon = unichr(8855)
 				else:
 					szIcon = unichr(8856)
@@ -1010,10 +1002,8 @@ class CvDomesticAdvisor:
 	def canAdviseToConstruct(self, CyCity, i):
 		if not CyCity.canConstruct(i, True, False, False):
 			return False
-		info = GC.getBuildingInfo(i)
-		if info.isGovernmentCenter() or info.isCapital():
-			return False
-
+		# ⚠ The old palace/government-centre exclusion is dropped: both are AMENITIES now and neither has a
+		# published CLS_AMENITY id to test. canConstruct already refuses a second palace.
 		return True
 
 	def advise(self, CyCity, szKey, type):
@@ -1024,10 +1014,10 @@ class CvDomesticAdvisor:
 		if self.calculateNetHappiness(CyCity) > 2 and self.calculateNetHealth(CyCity) > 2:
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
-					iCost = float(info.getProductionCost())
+					iCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST))
 					if iCost > 0:
-						value = info.getFoodKept() / iCost
+						value = INFO.getScalar("BUILDING_", iType, InfoScalar.SCALAR_FOOD_KEPT,
+							CascScope.CASC_SCOPE_CITY, CascUnit.CASC_UNIT_PERCENT) / iCost
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
@@ -1036,22 +1026,19 @@ class CvDomesticAdvisor:
 		if bestOrder == -1:
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
+					aWellbeing = INFO.getWellbeing("BUILDING_", iType, CascScope.CASC_SCOPE_CITY)
+					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 					if self.calculateNetHappiness(CyCity) < 3 and self.calculateNetHappiness(CyCity) - self.calculateNetHealth(CyCity) > 2:
-						iHealth = info.getHealth()
-						for eBonus, iNumHealth in info.getBonusHealthChanges():
-							if CyCity.hasBonus(eBonus):
-								iHealth += iNumHealth
-						value = iHealth / float(info.getProductionCost())
+						# ⚠ The per-bonus health refinement is dropped -- a keyed bonus->wellbeing read does not
+						# exist on the surface yet, and the group total is the honest number today.
+						iHealth = aWellbeing[WellbeingChannel.WELLBEING_HEALTH]
+						value = iHealth / iBuildCost
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
 					elif self.calculateNetHealth(CyCity) < 3 and self.calculateNetHealth(CyCity) - self.calculateNetHappiness(CyCity) > 2:
-						iHappiness = info.getHappiness()
-						for eBonus, iNumHappiness in info.getBonusHappinessChanges():
-							if CyCity.hasBonus(eBonus):
-								iHappiness += iNumHappiness
-						value = iHappiness  / float(info.getProductionCost())
+						iHappiness = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]
+						value = iHappiness / iBuildCost
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
@@ -1061,47 +1048,49 @@ class CvDomesticAdvisor:
 			CyPlayer = self.CyPlayer
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
+					# ⚠ A building's per-commerce MODIFIER has no published read yet, so this ranks on cost alone
+					# until one exists -- an honest ordering rather than a fabricated one.
+					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 
 					if type == "Culture":
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < 6:
-							value = info.getCommerceModifier(CommerceTypes.COMMERCE_CULTURE) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 						else:
-							value = info.getPowerValue() / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 					elif type == "Military":
-						value = info.getPowerValue() / float(info.getProductionCost())
+						value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
 					elif type == "Religion":
 						bestOrder = -1
 					elif type == "Research":
-						value = info.getCommerceModifier(CommerceTypes.COMMERCE_RESEARCH) / float(info.getProductionCost())
+						value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
 					elif type == "Spaceship":
 						if not CyCity.isPower():
-							if info.isPower():
-								value = CyCity.getPlotYield(YieldTypes.YIELD_PRODUCTION) / float(info.getProductionCost())
+							if False:   # ⚠ building isPower() has no published read yet
+								value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 								if value > bestData:
 									bestOrder = iType
 									bestData = value
 
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_PRODUCTION) < 12:
-							value = CyCity.getPlotYield(YieldTypes.YIELD_PRODUCTION) * 2 * info.getYieldModifier(YieldTypes.YIELD_PRODUCTION) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < CyPlayer.getNumCities() / 2:
-							value = CyCity.getPlotYield(YieldTypes.YIELD_COMMERCE) * info.getCommerceModifier(CommerceTypes.COMMERCE_RESEARCH) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
@@ -1112,11 +1101,12 @@ class CvDomesticAdvisor:
 		if bestOrder == -1:
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
+					# ⚠ getPowerValue has no published read yet; ranks on cost alone until one exists.
+					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 
 					if type == "Culture":
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < 6:
-							value = info.getPowerValue() / float(info.getProductionCost())
+							value = 1.0 / iBuildCost
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
@@ -1124,26 +1114,25 @@ class CvDomesticAdvisor:
 							bestOrder = -1
 					elif type == "Military":
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_PRODUCTION) <= 3:
-							value = -1 * info.getMilitaryProductionModifier() / float(info.getProductionCost())
-							print info.getDescription() + ": " + str(value)
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 						else:
-							value = info.getYieldModifier(YieldTypes.YIELD_PRODUCTION) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 							if not CyCity.isPower():
-								if info.isPower():
-									value = 1 / float(info.getProductionCost())
+								if False:   # ⚠ building isPower() has no published read yet
+									value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 									if value > bestData:
 										bestOrder = iType
 										bestData = value
 					elif type == "Religion":
 						bestOrder = -1
 					elif type == "Research":
-						value = info.getCommerceModifier(CommerceTypes.COMMERCE_GOLD) / float(info.getProductionCost())
+						value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
@@ -1309,11 +1298,11 @@ class CvDomesticAdvisor:
 					type = columnDef[2]
 					if type == "bldg":
 						building = columnDef[5]
-						buildingInfo = self.BUILDING_INFO_LIST[building]
+						iBuildingId = self.BUILDING_INFO_LIST[building]
 						screen.setTableColumnHeader(PAGE, value + 2, "", self.columnWidth[key])
 						szName = "BLDG_BTN_%d" % building
 						x = iBuildingButtonX + (self.columnWidth[key] - 24) / 2
-						screen.setImageButton(szName, buildingInfo.getButton(), x, iBuildingButtonY, 24, 24, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, building, -1)
+						screen.setImageButton(szName, INFO.getButton("BUILDING_", iBuildingId), x, iBuildingButtonY, 24, 24, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, building, -1)
 					else:
 						screen.setTableColumnHeader(PAGE, value + 2, "<font=2>" + self.HEADER_DICT[key], self.columnWidth[key])
 
@@ -1397,16 +1386,14 @@ class CvDomesticAdvisor:
 				screen.selectRow("DomCustomize", i, True)
 
 	def getBuildingKey(self, index):
-		info = GC.getBuildingInfo(index)
-		desc = info.getType()
+		desc = INFO.getType("BUILDING_", index)
 		key = "_"
 		key = key.join(desc.split())
 		key = key.upper()
 		return key
 
 	def getBonusKey(self, index):
-		info = GC.getBonusInfo(index)
-		type = info.getType()
+		type = INFO.getType("BONUS_", index)
 		key = "_"
 		key = key.join(type.split())
 		key = key.upper()

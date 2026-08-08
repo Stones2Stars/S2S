@@ -17,6 +17,7 @@
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
+#include "Infos/CvHurryInfo.h"          // HURRY_ -- the hurry list's own numbers
 #include "Infos/CvUnitInfo.h"             // getGrantedBuildings -- the unit's MISSION_CONSTRUCT repertoire
 #include "Infos/CvAllowed.h"
 #include "Infos/CvSpecialBuildingInfo.h"   // the GROUP that may hold the cap for its members
@@ -545,6 +546,26 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	case PYINT_ERA:
 		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
 			return GC.getTechInfo((TechTypes)iId).getEra();
+		break;
+
+	case PYINT_UNIT_COMBAT:
+		if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
+			return GC.getUnitInfo((UnitTypes)iId).getCombatClass();
+		break;
+
+	case PYINT_HURRY_GOLD_PER_PRODUCTION:
+		if (szTypePrefix == "HURRY_" && iId < GC.getNumHurryInfos())
+			return GC.getHurryInfo((HurryTypes)iId).getGoldPerProduction();
+		break;
+
+	case PYINT_HURRY_PRODUCTION_PER_POPULATION:
+		if (szTypePrefix == "HURRY_" && iId < GC.getNumHurryInfos())
+			return GC.getHurryInfo((HurryTypes)iId).getProductionPerPopulation();
+		break;
+
+	case PYINT_HURRY_IS_ANGER:
+		if (szTypePrefix == "HURRY_" && iId < GC.getNumHurryInfos())
+			return GC.getHurryInfo((HurryTypes)iId).causesAnger() ? 1 : 0;
 		break;
 
 	case PYINT_ESPIONAGE_COST:
