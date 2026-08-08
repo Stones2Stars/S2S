@@ -51,6 +51,7 @@
 #include "Infos/CvGameSpeedInfo.h" // getTotalTurns -- the game-length straggler
 #include "Infos/CvWorldInfo.h"     // getDefaultPlayers -- the map-setup straggler (PYINT_DEFAULT_PLAYERS)
 #include "Infos/CvCorporationInfo.h"
+#include "Infos/CvPropertyInfo.h"   // PROPERTY_ -- the city property list's names
 #include "Infos/CvProjectInfo.h"   // isSpaceship -- the build-progress readout (PYINT_IS_SPACESHIP)
 #include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
 #include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
@@ -127,6 +128,7 @@ namespace
 		if (szTypePrefix == "ADVISOR_")          return iId < GC.getNumAdvisorInfos()          ? &GC.getAdvisorInfo((AdvisorTypes)iId) : NULL;
 		if (szTypePrefix == "EMPHASIZE_")        return iId < GC.getNumEmphasizeInfos()        ? &GC.getEmphasizeInfo((EmphasizeTypes)iId) : NULL;
 		if (szTypePrefix == "ESPIONAGEMISSION_") return iId < GC.getNumEspionageMissionInfos() ? &GC.getEspionageMissionInfo((EspionageMissionTypes)iId) : NULL;
+		if (szTypePrefix == "PROPERTY_")         return iId < GC.getNumPropertyInfos()         ? &GC.getPropertyInfo((PropertyTypes)iId) : NULL;
 		if (szTypePrefix == "GOODY_")            return iId < GC.getNumGoodyInfos()            ? &GC.getGoodyInfo((GoodyTypes)iId) : NULL;
 		if (szTypePrefix == "UPKEEP_")           return iId < GC.getNumUpkeepInfos()           ? &GC.getUpkeepInfo((UpkeepTypes)iId) : NULL;
 		if (szTypePrefix == "VOTESOURCE_")       return iId < GC.getNumVoteSourceInfos()       ? &GC.getVoteSourceInfo((VoteSourceTypes)iId) : NULL;
