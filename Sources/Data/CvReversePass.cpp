@@ -81,10 +81,8 @@ namespace
 	// by folder (modifier.md par.4: a complex trait keeps its own TRAIT_COMPLEX_ identity and is never re-keyed
 	// onto the base one). So there is no active-set choice to make here and NO game option to read -- asking both
 	// repos is total, and the order is arbitrary.
-	// TRAIT_BARBARIAN is the one id both sets carry (the NPC trait base-filled into complex/ so that set stays
-	// self-complete). Nothing references it and it carries no edges of its own, so which entry answers cannot
-	// change any reverse view. If a future shared id ever gains edges, this must land on BOTH entries instead of
-	// picking one -- the single-pointer return is what would have to change.
+	// The sets share NO id at all, so the single-pointer return can never be ambiguous: every simple trait is
+	// copied into complex/ under its OWN TRAIT_COMPLEX_ id, identical in content and distinct in identity.
 	CvInfo* rp_traitInfoForId(int iId)
 	{
 		const CvInfo* pTraitInfo = InfoRepo<CvTraitInfo>::get().get(iId);

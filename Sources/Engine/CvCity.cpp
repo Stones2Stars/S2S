@@ -3193,6 +3193,12 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 			}
 		}
 	}
+	// The unit's OWN `buildRate.self.percent` -- the off-spine self scope, read exactly as the building and
+	// project twins read theirs. It is NOT gated on `noNonTypeProdMods`: that skill opts out of the
+	// domain/combat-class modifiers above, and this one IS the unit's own type.
+	iMultiplier += kUnit.expectedModifierAt(
+		MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT, CASC_SCOPE_SELF,
+		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
 	return iMultiplier;
 }
 
@@ -3210,8 +3216,8 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 	// (curate_building's COND_KEYED bonus gate). A point read serves the unconditioned sum only, so the gate is
 	// resolved by the ONE evaluator against this city's contexts -- never a loop asking every bonus in the
 	// registry whether this building deposits against it (the own-data inversion).
-	iMultiplier += GC.getBuildingInfo(eBuilding).expectedModifier(
-		MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT,
+	iMultiplier += GC.getBuildingInfo(eBuilding).expectedModifierAt(
+		MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT, CASC_SCOPE_SELF,
 		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
 
 	if (GET_PLAYER(getOwner()).getStateReligion() != NO_RELIGION)
@@ -3238,8 +3244,8 @@ int CvCity::getProductionModifier(ProjectTypes eProject) const
 
 	// The project's own bonus-conditioned `buildRate.self.percent`, resolved by the ONE evaluator -- the same
 	// shape as the building twin above.
-	iMultiplier += GC.getProjectInfo(eProject).expectedModifier(
-		MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT,
+	iMultiplier += GC.getProjectInfo(eProject).expectedModifierAt(
+		MODFAM_BUILD_RATE, BUILD_RATE_AMOUNT, CASC_UNIT_PERCENT, CASC_SCOPE_SELF,
 		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
 	return iMultiplier;
 }

@@ -10,6 +10,7 @@
 #include "Data/CvDepositRead.h"           // MMKernel::applies / audienceOk / perScale (the entry carrier)
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- the eval state the contexts fill
 #include "CvModifiers.h"                  // the compiled read surface (sum / conditioned ranges / entries)
+#include "CvTraitInfo.h"                  // the ACTIVE trait set's record -- the §4 specialist-keyed leg
 #include "CvModEntry.h"                   // the compiled §3.9 entry + modSegmentLookup (the plots target id)
 #include "Engine/CityContext.h"           // fillEvalCtx (city/plot) + plotAttrs (the plot-predicate COUNTS)
 #include "Engine/EmpireContext.h"         // fillEvalCtx (player/team)
@@ -750,9 +751,46 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 }
 
 
+namespace
+{
+	//	The owner's HELD traits, as their ACTIVE-SET records: a BARE FETCH of the maintained store, reached through
+	//	the empire context the eval ctx already carries ([contexts.md] -- the HAVE axis is read through the scope's
+	//	context, never by an ad-hoc reach into CvPlayer).
+	//	⚑ The store exists because ENUMERATING the held set is a SCAN while TESTING one trait is a hop: off the
+	//	has-array this question walked all 369 trait records to rediscover the handful a leader carries, on every
+	//	realized read. It is now fed by the trait facts and read here as a fetch (Engine/TraitContext.h).
+	void val_collectHeldTraits(const CvCascadeEvalCtx& evalCtx, std::vector<TraitContext::HeldTrait>& heldTraits)
+	{
+		if (evalCtx.empireContext == NULL)
+		{
+			return;
+		}
+		evalCtx.empireContext->heldTraits(heldTraits);
+	}
+
+	//	One specialist's per-unit value contributed by the owner's HELD traits, keyed by that specialist
+	//	(modifier.md §4). The caller collects the active-set records once and passes them in, so this is a walk
+	//	of the handful a player holds rather than of the trait registry.
+	//	⚠ Every authored entry of this shape is a FLAT at empire scope (1232 across the seven yield/commerce
+	//	families), which is why the keyed sum -- which matches family/kind/target but no unit axis -- is exact
+	//	here; a percent authored on this address later would need the unit split before this could stay.
+	int64_t val_traitKeyedPerSpecialist(const std::vector<TraitContext::HeldTrait>& heldTraits,
+		ModifierFamily eFamily, int iKind, int iTargetSegment, int iSpecialist,
+		const CvCascadeEvalCtx& evalCtx)
+	{
+		int64_t iSum = 0;
+		for (size_t i = 0; i < heldTraits.size(); ++i)
+		{
+			iSum += InfoValuation::keyedTargetSum(heldTraits[i].info->getModifiers(), eFamily, iKind,
+				iTargetSegment, iSpecialist, evalCtx);
+		}
+		return iSum;
+	}
+}
+
 // THE SPECIALIST TERM (see the header): the ONE fold both the oracle and the stored read use.
 int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
-	std::vector<SpecialistTermRow>* pRowsOut)
+	std::vector<SpecialistTermRow>* pRowsOut, const std::vector<TraitContext::HeldTrait>* pHeldTraits)
 {
 	if (pRowsOut != NULL)
 	{
@@ -766,6 +804,23 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 	int64_t iSpecialists = 0;
 	const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
 	const int iKind = CascadeChannelRegistry::channelKind(iChannel);
+	// ⚖ THE TRAIT LEG (modifier.md §4, the per-set carve-out). A trait's specialist boost stays SOURCE-SIDE,
+	// keyed by the specialist, because a specialist is ONE shared file while a split trait carries DIFFERENT
+	// values in the simple and complex sets -- inverting it onto the specialist would force one value across
+	// both and break that separation. So it is read from the ACTIVE trait set and applied x the city's count,
+	// exactly like the specialist's own per-unit value beside it.
+	// ⚑ The held set is fetched ONCE here, never per specialist: the fold is (specialists x held traits), so the
+	// inner loop iterates the handful the player holds and nothing rediscovers it per item.
+	const int iSpecialistsSegment = keyedTargetSegment("specialists");
+	// ⛔ The caller normally hands its own list in -- cityReceiverRate needs the same one for the improvement leg,
+	// and a shared list is what keeps the two legs reading identical state within one call.
+	std::vector<TraitContext::HeldTrait> kOwnHeldTraits;
+	if (pHeldTraits == NULL && iSpecialistsSegment != (int)TARGET_SEGMENT_NONE)
+	{
+		val_collectHeldTraits(evalCtx, kOwnHeldTraits);
+	}
+	const std::vector<TraitContext::HeldTrait>& heldTraits =
+		(pHeldTraits != NULL) ? *pHeldTraits : kOwnHeldTraits;
 	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
 	{
 		const int iCount = city.getSpecialistCount((SpecialistTypes)iSpecialist);
@@ -773,7 +828,9 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 		{
 			const int64_t iPerUnit = groupSumAt(
 				GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
-				eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx);
+				eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx)
+				+ val_traitKeyedPerSpecialist(heldTraits, eFamily, iKind, iSpecialistsSegment,
+					iSpecialist, evalCtx);
 			iSpecialists += iCount * iPerUnit;
 			if (pRowsOut != NULL)
 			{
@@ -800,7 +857,9 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 				kRow.freeTyped = iFreeTyped;
 				kRow.perUnit = groupSumAt(
 					GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
-					eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx);
+					eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx)
+					+ val_traitKeyedPerSpecialist(heldTraits, eFamily, iKind, iSpecialistsSegment,
+						iSpecialist, evalCtx);
 				kRow.contribution = 0;
 				pRowsOut->push_back(kRow);
 			}
@@ -828,6 +887,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 		pTermsOut->workedPlots = 0;
 		pTermsOut->rate = 0;
 		pTermsOut->specialistRows.clear();
+		pTermsOut->traitImprovementRows.clear();
 	}
 	if (iChannel < 0)
 	{
@@ -840,6 +900,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	int64_t iPlotImprovement = 0;
 	int64_t iPlotRest = 0;
 	int iWorkedPlots = 0;
+	std::map<int, int> kWorkedImprovements;   // improvement id -> worked tiles carrying it (the trait leg's key)
 	const int iNumPlots = city.getNumCityPlots();
 	for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
 	{
@@ -859,10 +920,98 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 				iPlotImprovement += pWorkedPlot->getCascadePackage().readImprovementFlat(iChannel);
 				iPlotRest += pWorkedPlot->getCascadePackage().readRestFlat(iChannel);
 			}
+			// the improvement this worked tile carries -- the key the trait leg below is summed against
+			const ImprovementTypes eWorkedImprovement = pWorkedPlot->getImprovementType();
+			if (eWorkedImprovement != NO_IMPROVEMENT)
+			{
+				++kWorkedImprovements[(int)eWorkedImprovement];
+			}
 			++iWorkedPlots;
 		}
 	}
 	int64_t iBase = iPlotBase;
+	// ⛔ ONE ctx and ONE held-trait fetch per call, shared by both trait legs below -- building either per leg
+	// would resolve the same state twice for one read.
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
+	std::vector<TraitContext::HeldTrait> kHeldTraits;
+	val_collectHeldTraits(evalCtx, kHeldTraits);
+	// ⚖ THE TRAIT IMPROVEMENT LEG (modifier.md §4, the per-set carve-out). A building's / civic's / tech's
+	// `<yield>.<scope>.improvements.{IMPROVEMENT_X}` is REVERSE-LANDED onto the improvement at plot scope and so
+	// arrives inside plotBase above; a TRAIT's is deliberately NEVER landed (CvReversePass::rp_landOwnOutput),
+	// because a split trait carries different values in the simple and complex sets while an improvement is ONE
+	// shared file -- landing it would force a single value across both sets.
+	// ⇒ So the trait side is read SOURCE-SIDE here, per worked tile carrying that improvement, which is exactly
+	// what the landed path resolves to. 610 authored entries reached nothing before this.
+	// ⚠ It joins BASE (not the post-stack EXTRA) for the same reason: the landed equivalents are plot flats, so
+	// they sit inside the percent stack, and a trait entry that skipped it would be worth measurably less than
+	// the identical civic entry beside it.
+	if (!kWorkedImprovements.empty())
+	{
+		const int iImprovementsSegment = keyedTargetSegment("improvements");
+		if (iImprovementsSegment != (int)TARGET_SEGMENT_NONE)
+		{
+			// ⚖ ONE WALK PER SOURCE, not a keyed lookup per (improvement x trait) -- "the read is per-source and
+			// cheap because it iterates the handful an entity AUTHORED" ([modifier.md §5]). Each held trait's
+			// compiled entry list is walked ONCE and its improvements-keyed rows are matched against the tiles
+			// this city actually works; the alternative re-walked the family's conditioned range once per
+			// (improvement x trait), which is the per-read cost the compiled plane exists to remove.
+			// ⚠ The entry list is COMPLETE -- unconditioned entries are retained beside the conditioned ones
+			// ([patterns.md]: the folded sums are a derived fast plane, never a replacement) -- so this single
+			// pass covers both, and an unconditioned entry simply has no gate for `applies` to refuse.
+			const ModifierFamily eImprovementFamily = CascadeChannelRegistry::channelFamily(iChannel);
+			const int iImprovementKind = CascadeChannelRegistry::channelKind(iChannel);
+			for (size_t iTrait = 0; iTrait < kHeldTraits.size(); ++iTrait)
+			{
+				const CvModifiers* pTraitModifiers = kHeldTraits[iTrait].info->getModifiers();
+				if (pTraitModifiers == NULL)
+				{
+					continue;
+				}
+				const std::vector<CvModEntry*>& kTraitEntries = pTraitModifiers->entries();
+				for (size_t iEntry = 0; iEntry < kTraitEntries.size(); ++iEntry)
+				{
+					const CvModEntry& kEntry = *kTraitEntries[iEntry];
+					if (kEntry.family != eImprovementFamily
+					||  kEntry.targetSeg != iImprovementsSegment
+					||  kEntry.targetFk < 0
+					|| (iImprovementKind >= 0 && kEntry.kind != iImprovementKind)
+					||  kEntry.unitQual != NULL          // unit-carried values ride ON TOP live
+					|| !val_scopeFolds(kEntry.scope))    // the experienced-here fold set, as the point form
+					{
+						continue;
+					}
+					const std::map<int, int>::const_iterator itWorked =
+						kWorkedImprovements.find(kEntry.targetFk);
+					if (itWorked == kWorkedImprovements.end())
+					{
+						continue;   // authored for an improvement no worked tile of this city carries
+					}
+					if (!MMKernel::audienceOk(kEntry.aiOnly, evalCtx)
+					|| !MMKernel::applies(kEntry.enabled, kEntry.disabled, evalCtx))
+					{
+						continue;
+					}
+					const int64_t iPerTile = MMKernel::perScale(kEntry, evalCtx, kEntry.value);
+					const int64_t iContribution = iPerTile * itWorked->second;
+					iBase += iContribution;
+					// ⚑ The census row comes OUT of this fold, never a second walk beside it: a decomposition
+					// that recomputed itself could disagree with the number it claims to explain
+					// ([DEC-single-implementation]).
+					if (pTermsOut != NULL)
+					{
+						TraitImprovementRow kTraitRow;
+						kTraitRow.trait = kHeldTraits[iTrait].id;
+						kTraitRow.improvement = kEntry.targetFk;
+						kTraitRow.workedTiles = itWorked->second;
+						kTraitRow.perTile = iPerTile;
+						kTraitRow.contribution = iContribution;
+						pTermsOut->traitImprovementRows.push_back(kTraitRow);
+					}
+				}
+			}
+		}
+	}
 	int64_t iTradeYield = 0;
 	int64_t iGoldenAgeYield = 0;
 	// ⚖ THE TRADE-ROUTE YIELD IS TIER 1 BASE, NOT AN EXTRA (modifier.md §2a): it is the ONE sanctioned live-yield
@@ -908,8 +1057,6 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 			break;
 		}
 	}
-	CvCascadeEvalCtx evalCtx;
-	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
 	int64_t iUpperFlatSum = 0;
 	int64_t iCityFlatSum = 0;
 	int64_t iPercentSum = 0;
@@ -917,7 +1064,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	// the upper legs join the BASE the stack multiplies; only the city's own flats are the post-stack EXTRA
 	// the per-type rows come out of THIS fold, never a second one beside it ([DEC-single-implementation])
 	const int64_t iSpecialists = specialistTerm(city, iChannel, evalCtx,
-		pTermsOut != NULL ? &pTermsOut->specialistRows : NULL);
+		pTermsOut != NULL ? &pTermsOut->specialistRows : NULL, &kHeldTraits);
 	const int64_t iRate = cityRate(iBase + iUpperFlatSum, iSpecialists, (int)iPercentSum, iCityFlatSum);
 	if (pTermsOut != NULL)
 	{
@@ -1055,7 +1202,7 @@ void InfoValuation::cityRefusedDeposits(const CvCity& city, int iChannel,
 			int iEntryChannel = -1;
 			bool bEntryPercent = false;
 			int64_t iEntryValue = 0;
-			const bool bResolved = MMKernel::resolveEntry(*pEntry, 1, CASC_SCOPE_CITY, evalCtx, NULL, 0, false,
+			const bool bResolved = MMKernel::resolveEntry(*pEntry, 1, CASC_SCOPE_CITY, evalCtx, NULL, false,
 				iEntryChannel, bEntryPercent, iEntryValue);
 			const bool bConditioned = (pEntry->enabled != NULL || pEntry->disabled != NULL);
 			if (!bResolved)
@@ -1339,6 +1486,23 @@ int InfoValuation::expectedSum(const CvModifiers* modifiers, ModifierFamily eFam
 	// so every other read the conditioned tail makes stays the real city's.
 	evalCtx.hypothetical = pHypothetical;
 	return (int)groupSum(modifiers, eFamily, iKind, eUnit, evalCtx);
+}
+
+// The SCOPE-RESTRICTED twin of expectedSum -- identical but for asking ONE scope instead of the experienced-here
+// fold set. It exists for the OFF-SPINE `self` scope ([json.md §3.2]: "build THIS entity faster"), which is
+// deliberately absent from VAL_FOLD_SCOPES because it is not a place in the containment hierarchy and so can
+// never be part of a city-experienced sum -- while being exactly what a "what does building THIS cost me" read
+// must include. ⚠ Only `buildRate` authors it (471 records), which is why this stays a narrow endpoint rather
+// than a widening of the fold set: adding SELF there would leak a self-scope deposit into every family's
+// scope-wide answer.
+int InfoValuation::expectedSumAt(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+	CvCascScope eScope, const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, const CvCascadeHypothetical* pHypothetical)
+{
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
+	return (int)groupSumAt(modifiers, eFamily, iKind, eUnit, eScope, evalCtx);
 }
 
 int64_t InfoValuation::keyedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,

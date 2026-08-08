@@ -16195,7 +16195,7 @@ int CvUnit::buildWorkPercent(BuildTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildInfos(), eIndex);
 	return InfoValuation::keyedTarget(m_pUnitInfo->getModifiers(), MODFAM_WORK_RATE, -1,
-		InfoValuation::keyedTargetSegment("build"), eIndex) + getExtraWorkModForBuild(eIndex);
+		InfoValuation::keyedTargetSegment("builds"), eIndex) + getExtraWorkModForBuild(eIndex);
 }
 
 
@@ -17128,7 +17128,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		// a container the info no longer holds ([modifier.md par.5]; the own-data inversion).
 		std::vector<std::pair<int, int> > kBuildWork;
 		InfoValuation::collectKeyedTarget(kUnitCombat.getModifiers(), MODFAM_WORK_RATE, 0,
-			InfoValuation::keyedTargetSegment("build"), kBuildWork);
+			InfoValuation::keyedTargetSegment("builds"), kBuildWork);
 		for (size_t iI = 0; iI < kBuildWork.size(); ++iI)
 		{
 			m_worker->changeExtraWorkModForBuild((BuildTypes)kBuildWork[iI].first, kBuildWork[iI].second * iChange);
@@ -17583,7 +17583,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		{
 			std::vector<std::pair<int, int> > buildRates;
 			InfoValuation::collectKeyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, -1,
-				InfoValuation::keyedTargetSegment("build"), buildRates, CASC_SCOPE_UNIT);
+				InfoValuation::keyedTargetSegment("builds"), buildRates, CASC_SCOPE_UNIT);
 			for (size_t iRow = 0; iRow < buildRates.size(); ++iRow)
 			{
 				m_worker->changeExtraWorkModForBuild((BuildTypes)buildRates[iRow].first, buildRates[iRow].second * iChange);

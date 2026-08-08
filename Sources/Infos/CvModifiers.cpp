@@ -682,6 +682,73 @@ void CvModifiers::landReverseEntry(CvModEntry* pEntry)
 	finalizeCompiled();
 }
 
+//	LOAD-TIME ONLY -- the PURE_TRAITS alignment filter (modifier.md §4): under
+//	GAMEOPTION_LEADER_PURE_TRAITS a positive trait's DOWNSIDE values drop and a negative trait's UPSIDE values
+//	drop. It runs as a PARSE TRANSFORM, between the trait being read and its entries LANDING, which is the same
+//	class as the reverse pass's "land it on the target" (modifier.md §4: a parse transform, never an authored
+//	shape). The curator deliberately does NOT pre-filter -- "the JSON carries ALL values ... so the runtime gates
+//	below have the full data to act on" -- so this is the CLEAN gate that ruling hands to the cascade.
+//
+//	⛔ IT GATES; IT DOES NOT DROP. The option is per-GAME while an info is loaded once per PROCESS and shared by
+//	every game in it, so baking the verdict into the compiled data would make a shared immutable object mutable
+//	per game rather than per load ([DEC-json-not-cascade]). Composing the option onto the entry's `disabled`
+//	keeps the decision where it belongs -- evaluated live, by the ONE evaluator.
+//
+//	⚑ WHY THIS PLACE COSTS NOTHING ELSEWHERE, which is the whole point of doing it here: attaching a condition
+//	moves the entry OUT of the compiled unconditioned point sum and INTO the conditioned list (patterns.md: a
+//	null-condition entry folds straight into the sum, a conditioned one lands in the conditioned list). So the
+//	point reads become correct by construction -- a compiled sum can never be sign-filtered at read time, its
+//	positives and negatives are already added together -- and every entry-walking consumer honours it through
+//	the ONE MMKernel::applies they all already call. No parameter is threaded to any call site.
+//	⚠ This is the ONLY place the rule is applied. No consumer filters by alignment, and none may: a private
+//	filter in the oracle would be a rule the stored-vs-oracle diff could never report on.
+void CvModifiers::applyPureTraitGate(bool bNegativeTrait)
+{
+	bool bChanged = false;
+	for (size_t i = 0; i < m_entries.size(); ++i)
+	{
+		CvModEntry* pEntry = m_entries[i];
+		if (pEntry == NULL || pEntry->value == 0)
+		{
+			continue;   // a zero carries no alignment to oppose
+		}
+		const bool bOffAlignment = bNegativeTrait ? (pEntry->value > 0) : (pEntry->value < 0);
+		if (!bOffAlignment)
+		{
+			continue;
+		}
+		// The ONE typed-condition parser builds it, never a hand-rolled node ([DEC-single-implementation],
+		// enabler.md §3.1). One per entry: an entry OWNS its trees and frees them in its dtor.
+		const picojson::value kGateLeaf(std::string("GAMEOPTION_LEADER_PURE_TRAITS"));
+		CvCondition* pGate = cascadeParseCondition(kGateLeaf);
+		if (pGate == NULL)
+		{
+			continue;
+		}
+		if (pEntry->disabled == NULL)
+		{
+			pEntry->disabled = pGate;
+		}
+		else
+		{
+			// ⛔ NEVER an overwrite -- an authored `disabled` must keep suppressing what it was written to
+			// suppress. Two suppressors is an OR, and an OR is `any` over its direct children (json.md §3.4);
+			// the group node owns both, so the authored tree is re-parented rather than copied or leaked.
+			CvCondition* pEither = new CvCondition();
+			pEither->anyOf.push_back(pEntry->disabled);
+			pEither->anyOf.push_back(pGate);
+			pEntry->disabled = pEither;
+		}
+		bChanged = true;
+	}
+	if (bChanged)
+	{
+		// Re-derive the compiled forms from the (now gated) entry list -- exactly as a landed reverse entry
+		// does. This is what moves the gated entries out of the point sums and into the conditioned list.
+		finalizeCompiled();
+	}
+}
+
 void CvModifiers::resolveAboveToken(const char* szToken, int iBase)
 {
 	// LOAD-TIME ONLY (see the header): stamp the SOURCE-resolved base onto every entry carrying the token.

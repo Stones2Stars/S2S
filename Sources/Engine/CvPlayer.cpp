@@ -1059,6 +1059,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	// The ability union, bound and ZEROED for the same reason -- a delta store fed by the grantor facts.
 	m_capabilities.bind(this);
 	m_capabilities.clear();
+	// The held-trait set, bound and ZEROED for the same reason -- a delta store fed by the trait facts, so a
+	// reused player slot must not inherit a count the previous occupant's traits left behind.
+	m_traits.bind(this);
+	m_traits.clear();
 	// bind the EMPIRE-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
 	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, (int)eID, -1);
 	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
@@ -7230,8 +7234,13 @@ int CvPlayer::getImprovementUpgradeProgressRate(const ImprovementTypes eImprovem
 	{
 		if (hasTrait((TraitTypes)iTrait))
 		{
+			// ⚠ The segment is `improvements`, NOT the direct-keyed shape: a trait authors
+			// `improvementUpgradeRate.empire.improvements.{IMPROVEMENT_X}`, so the entries carry that interned
+			// segment. Passing -1 asks for entries with NO target segment and matches none of them -- silently,
+			// since a keyed read that finds nothing is indistinguishable from a trait that authored nothing.
 			iKeyed += InfoValuation::keyedTargetSum(GC.getTraitInfo((TraitTypes)iTrait).getModifiers(),
-				MODFAM_IMPROVEMENT_UPGRADE_RATE, CHANNEL_AMOUNT, -1, (int)eImprovement, evalCtx);
+				MODFAM_IMPROVEMENT_UPGRADE_RATE, CHANNEL_AMOUNT,
+				InfoValuation::keyedTargetSegment("improvements"), (int)eImprovement, evalCtx);
 		}
 	}
 
@@ -26800,8 +26809,28 @@ void CvPlayer::changeNationalDomainProductionModifier(DomainTypes eIndex, int iC
 
 int CvPlayer::getNationalTechResearchModifier(TechTypes eIndex) const
 {
+	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eIndex);
-	return m_paiNationalTechResearchModifier[eIndex];
+	// ⚖ The per-tech research modifier is AUTHORED `researchRate.<scope>.techs.{TECH_X}.percent` -- 3275 entries
+	// across 122 complex-trait records -- and is read here from the ACTIVE trait set, keyed by the tech being
+	// researched. It is the keyed shape's own read ([modifier.md §5]: a keyed deposit is an entry-list read over
+	// the live sources, never a scope package -- folding it scope-wide would hand every tech one tech's bonus).
+	// ⚠ The incremental accumulator this replaces had NO writer left, so every one of those entries reached
+	// nothing and the term contributed save history (0 on a new game). Its member is now unread and belongs to
+	// the accumulator cut ([DEC-accumulator-cut-uniform]) -- delete + savemigration, not a re-point.
+	CvCascadeEvalCtx evalCtx;
+	getEmpireContext().fillEvalCtx(evalCtx);
+	const int iTechsSegment = InfoValuation::keyedTargetSegment("techs");
+	int64_t iSum = 0;
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+	{
+		if (hasTrait((TraitTypes)iTrait))
+		{
+			iSum += InfoValuation::keyedTargetSum(GC.getTraitInfo((TraitTypes)iTrait).getModifiers(),
+				MODFAM_RESEARCH_RATE, CHANNEL_AMOUNT, iTechsSegment, (int)eIndex, evalCtx);
+		}
+	}
+	return (int)iSum;
 }
 
 void CvPlayer::setNationalTechResearchModifier(TechTypes eIndex, int iValue)

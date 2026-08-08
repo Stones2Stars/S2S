@@ -399,7 +399,6 @@ namespace
 		{ "worldWonder", BUILD_RATE_WORLD_WONDER },
 		{ "teamWonder", BUILD_RATE_TEAM_WONDER },
 		{ "nationalWonder", BUILD_RATE_NATIONAL_WONDER },
-		{ "specialBuildings", BUILD_RATE_SPECIAL_BUILDINGS },
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_BARBARIANS[] = {
@@ -524,6 +523,11 @@ namespace
 		{ MODFAM_COMBAT, "unitTargets" },
 		{ MODFAM_COMBAT, "defenders" },
 		{ MODFAM_COMBAT, "flanking" },
+		// buildRate's SpecialBuilding GROUP key -- `buildRate.<scope>.specialBuildings.{SPECIALBUILDING_X}`, the
+		// group-cap sibling of the `buildings.{BUILDING_X}` key beside it (json §4.4: a member authors its group,
+		// the group holds the cap). It is family-scoped rather than global because only buildRate addresses a
+		// SPECIALBUILDING as a modifier target; `enables.specialBuildings` is a SECTION and never reaches here.
+		{ MODFAM_BUILD_RATE, "specialBuildings" },
 		{ MODFAM_NONE, 0 }
 	};
 

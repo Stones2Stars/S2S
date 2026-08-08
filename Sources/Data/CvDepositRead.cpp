@@ -87,7 +87,7 @@ bool MMKernel::isRateFamily(ModifierFamily eFamily)
 // the answer goes. The apply path and the endpoint oracle both fold through it, so the tripwire they feed
 // compares one derivation against two builds rather than two derivations ([DEC-single-implementation]).
 bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascScope eScope,
-	const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, int iPureSign, bool bSkipRateChannels,
+	const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, bool bSkipRateChannels,
 	int& iChannelOut, bool& bPercentSideOut, int64_t& iValueOut, PerScaling ePerScaling)
 {
 	if (iMultiplier == 0)
@@ -210,14 +210,6 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 		{
 			return false;
 		}
-	}
-	if (iPureSign > 0 && kEntry.value < 0)
-	{
-		return false;   // PURE_TRAITS: a positive trait's downside values drop (modifier.md §4)
-	}
-	if (iPureSign < 0 && kEntry.value > 0)
-	{
-		return false;   // PURE_TRAITS: a negative trait's upside values drop
 	}
 	if (!audienceOk(kEntry.aiOnly, evalCtx))
 	{
@@ -382,8 +374,8 @@ int MMKernel::sumUnconditioned(const CvInfo* d, const std::string& wantAddress, 
 // The active trait set's CvTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE.
 // The two sets live in separate repos and are separated BY ID too (a complex trait keeps its own TRAIT_COMPLEX_
 // identity, modifier.md par.4), so a given id resolves in exactly one of them and the fall-through is total.
-// The OPTION read is still load-bearing for the one id BOTH sets carry -- TRAIT_BARBARIAN, base-filled into
-// complex/ so that set stays self-complete -- where it picks the entry belonging to the active set.
+// The OPTION read no longer disambiguates anything -- the sets share NO id, so a lookup could ask both repos in
+// either order and get the same answer. What it still does is keep a COMPLEX id from resolving in a SIMPLE game.
 // NEVER a runtime swap of a single shared engine CvTraitInfo.
 const CvTraitInfo* MMKernel::traitData(int t)
 {

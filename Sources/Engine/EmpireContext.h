@@ -19,10 +19,13 @@
 //	CvPlayer/CvTeam.
 //
 
+#include "TraitContext.h"   // TraitContext::HeldTrait -- the id+record pair the held-trait forward hands back
 #include "ContextDict.h"
 #include "Defines/CvEnums.h"   // NUM_COMMERCE_TYPES -- the realized-commerce group forward's out-array extent
+#include <vector>              // the held-trait group forward's out-container
 
 class CvPlayer;
+class CvTraitInfo;
 struct CvCascadeEvalCtx;
 
 class EmpireContext
@@ -43,6 +46,14 @@ public:
 	int  stateReligion() const;               // CvPlayer::getStateReligion (-1 = NO_RELIGION)
 	bool hasCivic(int eCivic) const;          // adopted in any civic option (the CIVIC_ presence atom)
 	bool hasTrait(int eTrait) const;          // CvPlayer::hasTrait (the TRAIT_ presence atom; active-set semantics ride the id)
+	// The empire's HELD TRAITS as their ACTIVE-SET records, APPENDED to a caller-owned vector -- the group read
+	// beside the per-id test above, and a genuinely different question: testing one trait is a pointer hop, while
+	// enumerating them off the has-array walks the whole registry. So this one is answered by a maintained STORE
+	// (Engine/TraitContext.h) rather than by a forward that computes, and it is reached HERE because the HAVE axis
+	// is read through the scope's context, never by an ad-hoc reach into CvPlayer (contexts.md).
+	// ⚑ Its reader is the keyed-deposit walk: a trait's target-keyed deposits stay source-side (modifier.md §4),
+	// so the live sources have to be enumerable cheaply for that read to be the cheap one modifier.md §5 describes.
+	void heldTraits(std::vector<TraitContext::HeldTrait>& heldTraits) const;
 	bool hasHeritage(int eHeritage) const;    // CvPlayer::hasHeritage
 	bool isGoldenAge() const;                 // CvPlayer::isGoldenAge (IS_GOLDEN_AGE)
 	bool isAnarchy() const;                   // CvPlayer::isAnarchy (IS_ANARCHY)

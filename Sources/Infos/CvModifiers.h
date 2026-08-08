@@ -62,6 +62,9 @@ public:
 	// civic's identity.cityLimit base). The token spelling STAYS on the entry -- it marks the eval-time
 	// world-size scaling leg (MMKernel::perScale multiplies the base by getCityLimitsScalePercent()/100).
 	void resolveAboveToken(const char* szToken, int iBase);
+	// LOAD-TIME ONLY -- the PURE_TRAITS alignment filter, applied as a PARSE TRANSFORM between the trait being
+	// read and its entries landing. Sibling of the pass above. See the .cpp for why it GATES rather than drops.
+	void applyPureTraitGate(bool bNegativeTrait);
 
 	// LOAD-TIME ONLY (the same SELF-collapse precedent, applied to the `per` COUNT axis): resolve every entry
 	// whose per.type carries szToken to the SOURCE's own engine id (CORPORATION_LEVEL = the depositing corp's

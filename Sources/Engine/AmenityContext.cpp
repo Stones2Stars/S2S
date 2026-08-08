@@ -322,12 +322,24 @@ void AmenityContext::applyKey(int iAmenityId, int iSign)
 	// leaving plane C holding deposits nothing withdraws ([DEC-maintained-sum]).
 	const bool bIsPowerKey = (iAmenityId == CLS_AMENITY_PROVIDES_POWER);
 	const bool bPoweredBefore = bIsPowerKey && m_city != NULL && m_city->isPowered();
+	// ⚖ THE GOVERNMENT CENTRE is the same crossing one key over, and it is SIMPLER than power's: no status gates
+	// its delivery, so the store's own 0 <-> non-zero verdict IS the fact and there is nothing to compose it with.
+	// It is read exactly that way -- CvCity::isGovernmentCenter is a bare `has` on this key.
+	const bool bIsGovernmentCenterKey = (iAmenityId == CLS_AMENITY_GOVERNMENT_CENTER);
+	const bool bGovernmentCenterBefore = bIsGovernmentCenterKey && has(iAmenityId);
 	add(iAmenityId, iSign);
-	// Power is the one amenity whose fact is wired today; the other per-attribute facts (government centre,
-	// fresh water) still ride their own counters and migrate onto this crossing as they convert.
-	if (bIsPowerKey && m_city != NULL)
+	// Power and the government centre are wired here; FRESH WATER is the last per-attribute fact still riding its
+	// own counter, and migrates onto this crossing as it converts.
+	if (m_city != NULL)
 	{
-		announcePowerCrossing(bPoweredBefore);
+		if (bIsPowerKey)
+		{
+			announcePowerCrossing(bPoweredBefore);
+		}
+		else if (bIsGovernmentCenterKey)
+		{
+			announceGovernmentCenterCrossing(bGovernmentCenterBefore);
+		}
 	}
 }
 
@@ -349,6 +361,31 @@ void AmenityContext::announcePowerCrossing(bool bPoweredBefore)
 	else
 	{
 		emitCityPowerRemoved(m_city->getID(), m_city->getOwner());
+	}
+}
+
+
+// ⚖ THE ONE ANNOUNCEMENT POINT for the government-centre verdict. The designation used to ride a hand-named
+// CvCity counter whose changer announced this fact; the counter is gone and the verdict is now this store's
+// `has` on one key, so the fact has to leave from HERE or it does not leave at all -- which is what left three
+// consumers waiting on an event nothing emitted (the enabler's per-city gate re-check, the DISTANCE_TO_
+// GOVERNMENT_CENTER refresh, and CityContext's interest set).
+// ⛔ Unlike power there is NO gated read to compare against: no status sits between this store and its targets,
+// so the refcount crossing IS the verdict crossing and composing one would invent a second definition.
+void AmenityContext::announceGovernmentCenterCrossing(bool bWasGovernmentCenter)
+{
+	const bool bIsGovernmentCenter = has(CLS_AMENITY_GOVERNMENT_CENTER);
+	if (bWasGovernmentCenter == bIsGovernmentCenter)
+	{
+		return;
+	}
+	if (bIsGovernmentCenter)
+	{
+		emitCityGovernmentCenterAdded(m_city->getID(), m_city->getOwner());
+	}
+	else
+	{
+		emitCityGovernmentCenterRemoved(m_city->getID(), m_city->getOwner());
 	}
 }
 

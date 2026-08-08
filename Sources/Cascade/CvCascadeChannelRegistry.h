@@ -185,6 +185,9 @@ public:
 	// say the count is the sum -- reporting both sizes that gap without moving a value.
 	static void reportSpecialistRead(int iPlayer, int iCity, int iChannelId, int iSpecialist,
 		int iAssigned, int iFreeTyped, int iPerUnit, int iContribution);
+	// ONE (trait x improvement) keyed deposit's share of a rate's BASE -- the leg that has no rateRead term.
+	static void reportTraitImprovementRead(int iPlayer, int iCity, int iChannelId, int iTrait,
+		int iImprovement, int iWorkedTiles, int iPerTile, int iContribution);
 };
 
 #endif // CV_CASCADE_CHANNEL_REGISTRY_H

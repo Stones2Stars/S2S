@@ -21,12 +21,14 @@
 //	(patterns.md static-class law; a namespace risks VC7.1/Boost name-mangling).
 //
 
+#include "Engine/TraitContext.h"   // TraitContext::HeldTrait -- the id+record pair the keyed trait legs walk
 #include "CvInfoKinds.h"                  // ModifierFamily / kind enums / WellbeingChannel / CvCascUnit / CvCascScope
 #include <vector>                         // the collectors' out-lists
 #include <utility>                        // std::pair -- the keyed-combat (target, percent) rows
 #include "Defines/CvEnums.h"              // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES -- the group out-array extents
 
 class CvModifiers;
+class CvTraitInfo;
 class CityContext;
 class EmpireContext;
 class CvPlotGroup;
@@ -242,6 +244,11 @@ public:
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 		const CvCascadeHypothetical* pHypothetical = NULL);
 
+	//	The SCOPE-RESTRICTED twin, for the off-spine `self` scope the fold set cannot carry (see the .cpp).
+	static int expectedSumAt(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+		CvCascScope eScope, const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, const CvCascadeHypothetical* pHypothetical = NULL);
+
 	//	THE KEYED TWIN of expectedSum -- the what-if for a deposit that is BOTH keyed and conditioned.
 	//	⚑ Why it must exist as its own read: `expectedSum` answers a family's POINT slot and deliberately skips
 	//	every targeted entry (a keyed entry never folds scope-wide -- folding it would hand a melee-only bonus to
@@ -416,8 +423,28 @@ public:
 	// A row is produced for every type the city HOLDS on either count, so a type contributing nothing BECAUSE it
 	// is only free-typed appears with contribution 0 rather than vanishing -- an absent row would hide precisely
 	// the gap this census exists to size.
+
+	// ONE held trait's improvement-keyed contribution to a rate's BASE, per improvement (modifier.md §4: a
+	// trait's keyed deposits stay source-side, so this leg is read per live source and lands in BASE).
+	// ⛔ IT HAS ITS OWN LINE FOR THE REASON THE SPECIALIST ROWS DO: the Σ carries axes the term cannot -- WHICH
+	// trait and WHICH improvement -- and `rateRead` is at the 16-field cap besides ([event-spine.md]: when a
+	// line is full the answer is a SECOND event, never swapping a term out).
+	// ⚠ Without it this leg is INVISIBLE: it is added to BASE after `plotBase` is captured, so it appears in NO
+	// reported term and the terms silently stop summing to the rate. That gap cost a live investigation --
+	// a -6.00 commerce residual had to be recovered by reconciling the combine by hand.
+	struct TraitImprovementRow
+	{
+		int     trait;         // the raw TraitTypes id -- named by the RENDERER, never resolved at emit
+		int     improvement;   // the raw ImprovementTypes id the entry is keyed on
+		int     workedTiles;   // how many worked tiles carry it (the count the per-tile value multiplies)
+		int64_t perTile;       // this entry's resolved value on ONE such tile
+		int64_t contribution;  // exactly what this (trait x improvement) added to BASE (perTile x workedTiles)
+	};
+	//	pHeldTraits (optional) is the caller's ALREADY-WALKED active-set trait list. Pass it whenever the caller
+	//	has one: collecting it here as well makes a single realized read pay the whole trait registry twice.
 	static int64_t specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
-		std::vector<SpecialistTermRow>* pRowsOut = NULL);
+		std::vector<SpecialistTermRow>* pRowsOut = NULL,
+		const std::vector<TraitContext::HeldTrait>* pHeldTraits = NULL);
 
 	// ⚖ THE CITY RECEIVER -- the realized §2a RATE of a channel this city CONSUMES, re-summed from the members
 	// it is made of rather than read from a stored total. Its BASE is the Σ over the city's WORKED PLOTS of
@@ -456,6 +483,9 @@ public:
 		// `specialists` DECOMPOSED, one row per held type -- filled from the same fold that produced the total,
 		// for the same reason the plot segments are (one number cannot say which type it came from).
 		std::vector<SpecialistTermRow> specialistRows;
+		// The trait improvement leg DECOMPOSED, one row per (trait x improvement) that contributed. It is NOT a
+		// decomposition of any field above -- this leg has no term of its own, which is exactly why it needs one.
+		std::vector<TraitImprovementRow> traitImprovementRows;
 	};
 	static int64_t cityReceiverRate(const CvCity& city, int iChannel, CityRateTerms* pTermsOut = NULL);
 

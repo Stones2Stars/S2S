@@ -93,9 +93,9 @@ namespace
 	// mask and the scratch vectors, neither of which the apply path has. That split is what keeps the
 	// stored-vs-oracle tripwire honest -- the two sides build the same numbers from ONE derivation, so a
 	// disagreement can only be a missed emit and never a drifted second copy of the fold.
-	// iMultiplier / pKeyPlot / iPureSign / bSkipRateChannels are passed straight through (documented on resolveEntry).
+	// iMultiplier / pKeyPlot / bSkipRateChannels are passed straight through (documented on resolveEntry).
 	void gt_foldInfo(const CvModifiers* pModifiers, int iMultiplier, CvCascScope eScope, int64_t iWantedBits,
-		const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, int iPureSign, bool bSkipRateChannels,
+		const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, bool bSkipRateChannels,
 		std::vector<int64_t>& flatSlots, std::vector<int>& percentSlots)
 	{
 		if (pModifiers == NULL || pModifiers->empty() || iMultiplier == 0)
@@ -113,7 +113,7 @@ namespace
 			int iChannel = -1;
 			bool bPercentSide = false;
 			int64_t iValue = 0;
-			if (!MMKernel::resolveEntry(*pEntry, iMultiplier, eScope, evalCtx, pKeyPlot, iPureSign,
+			if (!MMKernel::resolveEntry(*pEntry, iMultiplier, eScope, evalCtx, pKeyPlot,
 				bSkipRateChannels, iChannel, bPercentSide, iValue))
 			{
 				continue;
@@ -146,7 +146,7 @@ namespace
 	}
 
 	// Fold the EMPIRE-LEVEL source set's entries at eScope (the sources whose deposits can author any spine
-	// scope: civics, traits with the PURE gate, held techs, projects, handicap, heritage, presence-gated
+	// scope: civics, traits, held techs, projects, handicap, heritage, presence-gated
 	// bonuses/religions/corporations, owned buildings x count). Shared by the empire/team/city/plot gathers --
 	// which SCOPE'S entries fold is the eScope parameter; the source SET is the player's.
 	void gt_foldPlayerSources(const CvPlayer& player, CvCascScope eScope, int64_t iWantedBits,
@@ -158,10 +158,16 @@ namespace
 			const CivicTypes eCivic = player.getCivics((CivicOptionTypes)iOption);
 			if (eCivic != NO_CIVIC)
 			{
-				gt_foldInfo(GC.getCivicInfo(eCivic).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+				gt_foldInfo(GC.getCivicInfo(eCivic).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 			}
 		}
-		const bool bPureTraits = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
+		// ⛔ NO PURE_TRAITS FILTER HERE, deliberately. The alignment rule is applied ONCE, as a parse transform
+		// that gates an off-alignment entry on GAMEOPTION_LEADER_PURE_TRAITS (CvModifiers::applyPureTraitGate),
+		// so the ordinary condition evaluation this fold already performs enforces it -- the same way, through
+		// the same evaluator, as it does for every other consumer ([DEC-single-implementation]).
+		// ⚠ Filtering again here would be a SECOND implementation of one rule, and the dangerous kind: the
+		// oracle exists to disagree with the stored plane when a fact is missed, so a rule it applies privately
+		// is a rule the diff can never report on.
 		for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
 		{
 			if (!player.hasTrait((TraitTypes)iTrait))
@@ -173,15 +179,14 @@ namespace
 			{
 				continue;
 			}
-			const int iPureSign = bPureTraits ? (pTrait->isNegativeTrait() ? -1 : 1) : 0;
-			gt_foldInfo(pTrait->getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, iPureSign, false, flatSlots, percentSlots);
+			gt_foldInfo(pTrait->getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 		}
 		const CvTeam& team = GET_TEAM(player.getTeam());
 		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
 		{
 			if (team.isHasTech((TechTypes)iTech))
 			{
-				gt_foldInfo(GC.getTechInfo((TechTypes)iTech).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+				gt_foldInfo(GC.getTechInfo((TechTypes)iTech).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 			}
 		}
 		for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
@@ -189,33 +194,33 @@ namespace
 			const int iCount = team.getProjectCount((ProjectTypes)iProject);
 			if (iCount > 0)
 			{
-				gt_foldInfo(GC.getProjectInfo((ProjectTypes)iProject).getModifiers(), iCount, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+				gt_foldInfo(GC.getProjectInfo((ProjectTypes)iProject).getModifiers(), iCount, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 			}
 		}
 		if (player.getHandicapType() != NO_HANDICAP)
 		{
-			gt_foldInfo(GC.getHandicapInfo(player.getHandicapType()).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+			gt_foldInfo(GC.getHandicapInfo(player.getHandicapType()).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 		}
 		for (int iHeritage = 0; iHeritage < GC.getNumHeritageInfos(); ++iHeritage)
 		{
 			if (player.hasHeritage((HeritageTypes)iHeritage))
 			{
-				gt_foldInfo(GC.getHeritageInfo((HeritageTypes)iHeritage).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+				gt_foldInfo(GC.getHeritageInfo((HeritageTypes)iHeritage).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 			}
 		}
 		// presence-gated source classes: their entries carry their own presence conditions -- the fold's
 		// ordinary gate evaluation keeps an absent source silent (no pre-filter walk needed here).
 		for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
 		{
-			gt_foldInfo(GC.getBonusInfo((BonusTypes)iBonus).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+			gt_foldInfo(GC.getBonusInfo((BonusTypes)iBonus).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 		}
 		for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); ++iReligion)
 		{
-			gt_foldInfo(GC.getReligionInfo((ReligionTypes)iReligion).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+			gt_foldInfo(GC.getReligionInfo((ReligionTypes)iReligion).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 		}
 		for (int iCorporation = 0; iCorporation < GC.getNumCorporationInfos(); ++iCorporation)
 		{
-			gt_foldInfo(GC.getCorporationInfo((CorporationTypes)iCorporation).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+			gt_foldInfo(GC.getCorporationInfo((CorporationTypes)iCorporation).getModifiers(), 1, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 		}
 		// ⛔ This EMPIRE-scope fold deliberately leaves ctx.sourceBuilding unset (-1), unlike the city fold. The
 		// player may own N copies of one building, each built in a different year, so "how long has THIS
@@ -227,7 +232,7 @@ namespace
 			const int iOwned = player.getBuildingCount((BuildingTypes)iBuilding);
 			if (iOwned > 0)
 			{
-				gt_foldInfo(GC.getBuildingInfo((BuildingTypes)iBuilding).getModifiers(), iOwned, eScope, iWantedBits, evalCtx, pKeyPlot, 0, false, flatSlots, percentSlots);
+				gt_foldInfo(GC.getBuildingInfo((BuildingTypes)iBuilding).getModifiers(), iOwned, eScope, iWantedBits, evalCtx, pKeyPlot, false, flatSlots, percentSlots);
 			}
 		}
 	}
@@ -283,11 +288,11 @@ namespace
 		// (1) every PLOT-scope source, folded generically. This serves the channels whose combine IS a plain
 		// sum (health, defense, the property plane, ...). The YIELD channels are RECOMPUTED in (2): their
 		// combine is the §2a plot-as-base package, which floors PER SEGMENT and cannot be expressed as a sum.
-		gt_foldInfo(pTerrain,     1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
-		gt_foldInfo(pFeature,     1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
-		gt_foldInfo(pBonus,       1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
-		gt_foldInfo(pRoute,       1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
-		gt_foldInfo(pImprovement, 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, 0, false, flatSlots, percentSlots);
+		gt_foldInfo(pTerrain,     1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, false, flatSlots, percentSlots);
+		gt_foldInfo(pFeature,     1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, false, flatSlots, percentSlots);
+		gt_foldInfo(pBonus,       1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, false, flatSlots, percentSlots);
+		gt_foldInfo(pRoute,       1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, false, flatSlots, percentSlots);
+		gt_foldInfo(pImprovement, 1, CASC_SCOPE_PLOT, iWantedBits, evalCtx, &plot, false, flatSlots, percentSlots);
 
 		// The owner's PLOT-scope deposits (keyed by this plot's substrate / `plots`-target / bare plot flats)
 		// land in a SCRATCH as well as the totals: the §2a package puts them AFTER the substrate legs, so the
@@ -365,7 +370,7 @@ namespace
 				const bool bObsolete = cascadeIsBuildingObsolete(*it, evalCtx);
 				perBuildingCtx.sourceBuilding = *it;
 				gt_foldInfo(bObsolete ? building.getWhenObsolete() : building.getModifiers(),
-					1, CASC_SCOPE_CITY, iWantedBits, perBuildingCtx, NULL, 0, false, flatSlots, percentSlots);
+					1, CASC_SCOPE_CITY, iWantedBits, perBuildingCtx, NULL, false, flatSlots, percentSlots);
 			}
 		}
 		// (2) assigned specialists x count -- EXCLUDING the rate channels (§2a: a specialist's yield/commerce
@@ -376,7 +381,7 @@ namespace
 			if (iCount > 0)
 			{
 				gt_foldInfo(GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
-					iCount, CASC_SCOPE_CITY, iWantedBits, evalCtx, NULL, 0, true, flatSlots, percentSlots);
+					iCount, CASC_SCOPE_CITY, iWantedBits, evalCtx, NULL, true, flatSlots, percentSlots);
 			}
 		}
 		// (3) the empire-level source set's CITY-scope deposits (a civic's per-city flats, presence-gated
@@ -409,14 +414,14 @@ namespace
 			const int iCount = team.getProjectCount((ProjectTypes)iProject);
 			if (iCount > 0)
 			{
-				gt_foldInfo(GC.getProjectInfo((ProjectTypes)iProject).getModifiers(), iCount, CASC_SCOPE_TEAM, iWantedBits, evalCtx, NULL, 0, false, flatSlots, percentSlots);
+				gt_foldInfo(GC.getProjectInfo((ProjectTypes)iProject).getModifiers(), iCount, CASC_SCOPE_TEAM, iWantedBits, evalCtx, NULL, false, flatSlots, percentSlots);
 			}
 		}
 		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
 		{
 			if (team.isHasTech((TechTypes)iTech))
 			{
-				gt_foldInfo(GC.getTechInfo((TechTypes)iTech).getModifiers(), 1, CASC_SCOPE_TEAM, iWantedBits, evalCtx, NULL, 0, false, flatSlots, percentSlots);
+				gt_foldInfo(GC.getTechInfo((TechTypes)iTech).getModifiers(), 1, CASC_SCOPE_TEAM, iWantedBits, evalCtx, NULL, false, flatSlots, percentSlots);
 			}
 		}
 	}

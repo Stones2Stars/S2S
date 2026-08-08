@@ -103,3 +103,15 @@ bool EmpireContext::hasPolicy(int ePolicy) const
 {
 	return m_player != NULL && m_player->policies().has(ePolicy);
 }
+
+// The held-trait group read, forwarded to the store that owns it -- the same shape as hasPolicy above: this
+// context holds none of it and reaches the dictionary on the bound player. The out-container is APPENDED to, so
+// an unbound context contributes nothing rather than clearing what a caller already gathered.
+void EmpireContext::heldTraits(std::vector<TraitContext::HeldTrait>& heldTraits) const
+{
+	if (m_player == NULL)
+	{
+		return;
+	}
+	m_player->traits().heldTraits(heldTraits);
+}

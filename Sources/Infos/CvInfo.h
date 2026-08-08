@@ -266,6 +266,11 @@ public:
 	int expectedModifier(ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 		const CvCascadeHypothetical* pHypothetical = NULL) const;
+	// The SCOPE-RESTRICTED twin, for the off-spine `self` scope ("build THIS entity faster") that the
+	// experienced-here fold set deliberately cannot carry -- the entity's own build discount.
+	int expectedModifierAt(ModifierFamily eFamily, int iKind, CvCascUnit eUnit, CvCascScope eScope,
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	int expectedScalar(InfoScalar eScalar, CvCascUnit eUnit,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 		const CvCascadeHypothetical* pHypothetical = NULL) const;

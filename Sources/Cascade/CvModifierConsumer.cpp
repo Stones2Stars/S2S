@@ -437,7 +437,7 @@ namespace
 			bool bPercentSide = false;
 			int64_t iValue = 0;
 			if (pEntry == NULL || !MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_CITY,
-				evalCtx, NULL, 0, false, iChannel, bPercentSide, iValue))
+				evalCtx, NULL, false, iChannel, bPercentSide, iValue))
 			{
 				continue;
 			}
@@ -562,7 +562,7 @@ namespace
 				bool bPercentSide = false;
 				int64_t iValue = 0;
 				if (!MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_PLOT,
-					evalCtx, pLoopPlot, 0, false, iChannel, bPercentSide, iValue))
+					evalCtx, pLoopPlot, false, iChannel, bPercentSide, iValue))
 				{
 					continue;
 				}
@@ -714,6 +714,16 @@ namespace
 							iPlayer, pCity->getID(), iChannel, kRow.specialist,
 							kRow.assigned, kRow.freeTyped, (int)kRow.perUnit, (int)kRow.contribution);
 					}
+					// ⚑ The TRAIT IMPROVEMENT leg, one line per (trait x improvement). Unlike the rows above this
+					// decomposes NO field of rateRead -- the leg joins BASE after `plotBase` is captured, so it
+					// appears in no term at all and the terms do not sum to the rate without it.
+					for (size_t iRow = 0; iRow < kTerms.traitImprovementRows.size(); ++iRow)
+					{
+						const InfoValuation::TraitImprovementRow& kTraitRow = kTerms.traitImprovementRows[iRow];
+						CascadeChannelRegistry::reportTraitImprovementRead(
+							iPlayer, pCity->getID(), iChannel, kTraitRow.trait, kTraitRow.improvement,
+							kTraitRow.workedTiles, (int)kTraitRow.perTile, (int)kTraitRow.contribution);
+					}
 				}
 			}
 		}
@@ -754,7 +764,7 @@ namespace
 				bool bPercentSide = false;
 				int64_t iValue = 0;
 				if (pEntry == NULL || !MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_PLOT,
-					evalCtx, pPlot, 0, false, iChannel, bPercentSide, iValue))
+					evalCtx, pPlot, false, iChannel, bPercentSide, iValue))
 				{
 					continue;
 				}
@@ -875,7 +885,7 @@ namespace
 				bool bPercentSide = false;
 				int64_t iValue = 0;
 				if (pEntry != NULL && MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_EMPIRE,
-					evalCtx, NULL, 0, false, iChannel, bPercentSide, iValue))
+					evalCtx, NULL, false, iChannel, bPercentSide, iValue))
 				{
 					if (bPercentSide)
 					{
@@ -903,7 +913,7 @@ namespace
 				bPercentSide = false;
 				iValue = 0;
 				if (pEntry != NULL && MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_TEAM,
-					evalCtx, NULL, 0, false, iChannel, bPercentSide, iValue))
+					evalCtx, NULL, false, iChannel, bPercentSide, iValue))
 				{
 					const CvTeam& team = GET_TEAM(pPlayer->getTeam());
 					if (bPercentSide)
@@ -1108,7 +1118,7 @@ namespace
 				CvCascadeEvalCtx evalCtx;
 				InfoValuation::fillEvalCtxAtPlot(*pPlot, evalCtx);
 				evalCtx.hypothetical = pHypothetical;
-				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, pPlot, 0, false,
+				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, pPlot, false,
 					iChannel, bPercentSide, iValue, ePerScaling) && !bPercentSide)
 				{
 					pPlot->getCascadePackage().applyPlotSegment(
@@ -1144,7 +1154,7 @@ namespace
 					GET_PLAYER(pCity->getOwner()).getEmpireContext(), pCity->plotGroup(pCity->getOwner()), evalCtx);
 				EnablerKernel::wireOperatingBuildings(pCity, evalCtx);
 				evalCtx.hypothetical = pHypothetical;
-				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, 0, false,
+				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, false,
 					iChannel, bPercentSide, iValue, ePerScaling))
 				{
 					if (bPercentSide) pCity->getCascadePackage().applyPercent(iChannel, (int)iValue);
@@ -1173,7 +1183,7 @@ namespace
 				{
 					continue;
 				}
-				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, 0, false,
+				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, false,
 					iChannel, bPercentSide, iValue, ePerScaling))
 				{
 					if (bPercentSide) team.getCascadePackage().applyPercent(iChannel, (int)iValue);
@@ -1185,7 +1195,7 @@ namespace
 			{
 				continue;
 			}
-			if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, 0, false,
+			if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, false,
 				iChannel, bPercentSide, iValue, ePerScaling))
 			{
 				if (bPercentSide) pPlayer->getCascadePackage().applyPercent(iChannel, (int)iValue);
@@ -1354,7 +1364,7 @@ namespace
 			int iChannel = -1;
 			bool bPercentSide = false;
 			int64_t iValue = 0;
-			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_CITY, evalCtx, NULL, 0,
+			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_CITY, evalCtx, NULL,
 				false, iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
 			{
 				iChannel = -1;
@@ -1412,7 +1422,7 @@ namespace
 			bool bPercentSide = false;
 			int64_t iValue = 0;
 			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_PLOT, evalCtx, &kPlot,
-				0, false, iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
+				false, iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
 			{
 				iChannel = -1;
 				iValue = 0;
@@ -1487,7 +1497,7 @@ namespace
 			int iChannel = -1;
 			bool bPercentSide = false;
 			int64_t iValue = 0;
-			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_EMPIRE, evalCtx, NULL, 0, false,
+			if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_EMPIRE, evalCtx, NULL, false,
 				iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
 			{
 				iChannel = -1;
@@ -1768,7 +1778,7 @@ namespace
 		int iChannel = -1;
 		bool bPercentSide = false;
 		int64_t iValue = 0;
-		if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_CITY, evalCtx, NULL, 0, false,
+		if (!MMKernel::resolveEntry(*kGated.deposit->entry, 1, CASC_SCOPE_CITY, evalCtx, NULL, false,
 			iChannel, bPercentSide, iValue, MMKernel::PER_SCALE_APPLIED))
 		{
 			if (pByChannel != NULL)

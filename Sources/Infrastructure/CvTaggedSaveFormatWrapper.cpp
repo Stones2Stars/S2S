@@ -12,10 +12,11 @@
 #include "CvInfos.h"
 #include "CvTraitInfo.h"
 #include "CvUnitCombatInfo.h"
+#include "Repos/InfoRepo.h"
 
 // The stored-Type resolve (renamed-Type translation) is defined with the rest of the savemigration
 // helpers far below, but the class-array reads above them need it -- so it is declared here.
-namespace { int sm_resolveStoredType(const char* szStoredType); }
+namespace { int sm_resolveStoredType(RemappedClassType classType, const char* szStoredType); }
 #include "CvPopupInfo.h"
 #include "CvHeritageInfo.h"
 
@@ -1385,7 +1386,7 @@ int CvTaggedSaveFormatWrapper::getNewClassEnumValue(RemappedClassType classType,
 
 			if (info.m_id == -1 && !info.m_lookedUp)
 			{
-				info.m_id = sm_resolveStoredType(info.m_szType);
+				info.m_id = sm_resolveStoredType(classType, info.m_szType);
 
 				if (info.m_id == -1 && !allowMissing)
 				{
@@ -3471,7 +3472,7 @@ void CvTaggedSaveFormatWrapper::ReadClassArray(const char* name, RemappedClassTy
 
 				if (info.m_id == -1 && !info.m_lookedUp)
 				{
-					info.m_id = sm_resolveStoredType(info.m_szType);
+					info.m_id = sm_resolveStoredType(classType, info.m_szType);
 
 					//	If some objects are missing be tolerant provided their value was 0, -1, MIN_INT (assumed likely defaults
 					//	for most int array entries).  Need to do something like this because these arrays generally
@@ -3546,7 +3547,7 @@ void CvTaggedSaveFormatWrapper::ReadClassArray(const char* name, RemappedClassTy
 
 				if (info.m_id == -1 && !info.m_lookedUp)
 				{
-					info.m_id = sm_resolveStoredType(info.m_szType);
+					info.m_id = sm_resolveStoredType(classType, info.m_szType);
 
 					// If some objects are missing be tolerant provided their value was 0, -1, MIN_INT (assumed likely defaults
 					// for most int array entries).  Need to do something like this because these arrays generally
@@ -3623,7 +3624,7 @@ void CvTaggedSaveFormatWrapper::ReadClassArray(const char* name, RemappedClassTy
 
 				if (info.m_id == -1 && !info.m_lookedUp)
 				{
-					info.m_id = sm_resolveStoredType(info.m_szType);
+					info.m_id = sm_resolveStoredType(classType, info.m_szType);
 
 					//	If some obehjcts are mising be tolerant provided their value was false (assumed default
 					//	for most bool array entries).  Need to do something like this because these arrays generally
@@ -3701,7 +3702,7 @@ void CvTaggedSaveFormatWrapper::ReadClassArrayOfClassEnum(const char* name, Rema
 
 				if ( info.m_id == -1 && !info.m_lookedUp )
 				{
-					info.m_id = sm_resolveStoredType(info.m_szType);
+					info.m_id = sm_resolveStoredType(indexClassType, info.m_szType);
 					info.m_lookedUp = true;
 				}
 
@@ -3932,13 +3933,67 @@ namespace {
 	// save -- correct, because the thing genuinely no longer exists. A RENAME is the opposite case: the record is
 	// still there under a new id, so resolving the old name to -1 and dropping the slot throws away something the
 	// player still owns. The worked case is the complex-trait re-key (`TRAIT_X` -> `TRAIT_COMPLEX_X`,
-	// [modifier.md §4](../../docs/specs/modifier.md)), which is 57 rungs of a developing line.
+	// [modifier.md §4](../../docs/specs/modifier.md)), which is 240 records of the complex set.
 	// ⚑ It reuses the SAME `old -> new` table `savemigration.txt` already carries, and the two key spaces cannot
 	// collide: a FIELD rename is `Class::field` and a TYPE rename is a bare `INFOTYPE_NAME`.
 	// ⚠ The live name is tried FIRST, so a rename entry can never shadow a Type that still exists -- a stale
 	// entry left behind after a name is reused costs nothing.
-	int sm_resolveStoredType(const char* szStoredType)
+	// ⚖ A SAVE IS RESOLVED INTO THE ACTIVE TRAIT SET (owner): *"if you see it is a complex trait game, you make
+	// sure the trait is the complex version."* In a complex game EVERY stored trait id takes the prefix, with no
+	// exceptions -- the two sets are completely self-sufficient and share no id
+	// ([modifier.md §4](../../docs/specs/modifier.md)).
+	// ⛔ IT IS NOT A RENAME AND CANNOT LIVE IN THE RENAME TABLE. A rename fires on EVERY load, which is right for
+	// a record that MOVED; this one depends on a live game option, so as a table entry it would also convert a
+	// SIMPLE game's held traits into records that are not in its active set. Same resolution point, separate arm.
+	// ⛔ IT RUNS BEFORE THE LIVE-NAME LOOKUP, and that ordering is the whole of it: `TRAIT_INDUSTRIOUS1` resolves
+	// perfectly well to the simple record, so as a fallback this would never be reached and a complex game would
+	// keep loading simple rungs beside its complex ones -- the mix the prefix rule exists to make impossible.
+	// ⛔ THERE IS NO FALL-THROUGH, AND THAT IS THE POINT (owner): *"if it is falling through, it means that the
+	// complex version of a trait is not complete."* `complex/` is a SUPERSET of `simple/`, so a prefixed id that
+	// does not resolve is a DATA COMPLETENESS defect in the complex set -- and answering it with the SIMPLE record
+	// is the masking that hides it ([DEC-no-legacy-masking]), leaving a complex game holding a simple rung while
+	// every log line and check reports success. It fails loud instead, naming the id that is missing.
+	// ⚑ Measured: three lines lost their prefixed id to a source-side authoring bug (a base and its rung-1 sharing
+	// one `ReplacementID`), and the fall-through absorbed all of them in silence.
+	// ⛔ WHICH CLASS is asked of the CALLER, never sniffed out of the id string. Every call site is already
+	// resolving one known class, so testing a `TRAIT_` prefix would re-derive -- less reliably -- something the
+	// caller holds for certain, and would fire on any future class whose ids happen to start the same way.
+	int sm_resolveStoredType(RemappedClassType classType, const char* szStoredType)
 	{
+		if (classType == REMAPPED_CLASS_TYPE_TRAITS
+		&&  GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS)
+		&&  strncmp(szStoredType, "TRAIT_COMPLEX_", 14) != 0)
+		{
+			const std::string szComplex = std::string("TRAIT_COMPLEX_") + (szStoredType + 6);
+			const int iComplex = GC.getInfoTypeForString(szComplex.c_str(), true);
+			// ⛔ AN INCOMPLETE COMPLEX SET AND A REMOVED TYPE ARE DIFFERENT THINGS, AND ONLY THE FIRST IS A DEFECT.
+			// The set is incomplete when the BASE still exists and its twin does not -- that is the case with no
+			// legitimate answer. When NEITHER resolves the Type is simply GONE, which is SOFT by design
+			// ([save.md §7](../../docs/specs/save.md): every class read is allow-missing so deleting a Type never
+			// breaks a save), and a stored id that was RENAMED has not been reached yet at all -- the rename table
+			// is consulted below. Failing here would turn both of those into a crash on load.
+			if (iComplex == -1 && GC.getInfoTypeForString(szStoredType, true) != -1)
+			{
+				const CvString szCause = CvString::format(
+					"[TRAITSET] INCOMPLETE COMPLEX SET stored=%s wanted=%s -- this game runs "
+					"GAMEOPTION_LEADER_COMPLEX_TRAITS, in which every held trait resolves into the complex set. "
+					"complex/ is a superset of simple/, so a missing id is a curator/data defect.",
+					szStoredType, szComplex.c_str());
+				if (gDLL != NULL)
+				{
+					gDLL->logMsg("Exceptions.log", szCause.c_str(), true, false);
+					gDLL->logMsg("Loading.log", szCause.c_str(), true, false);
+				}
+				infoPlaneUnloadedRead(szComplex.c_str(), -1, GC.getNumTraitInfos());
+			}
+			if (iComplex != -1)
+			{
+				return iComplex;
+			}
+			// Not in the complex set and not a live base either: a REMOVED or RENAMED Type. Both are answered
+			// below -- the rename table first, then -1 for the allow-missing read to drop. Returning here would
+			// deny the rename a lookup and silently drop a rung the player still holds.
+		}
 		int iId = GC.getInfoTypeForString(szStoredType, true);
 		if (iId == -1)
 		{

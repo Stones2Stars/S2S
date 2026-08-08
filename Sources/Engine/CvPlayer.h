@@ -19,6 +19,7 @@
 #include "EmpireContext.h"
 #include "PolicyContext.h"   // the empire's enacted-policy dictionary: storage + maintenance, one place
 #include "CapabilityContext.h"   // the empire's ability union: storage + maintenance, one place
+#include "TraitContext.h"    // the empire's held-trait set: storage + maintenance, one place
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
 #include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
 #include "AI/CvSelectionGroupAI.h"
@@ -802,6 +803,9 @@ public:
 	// The empire's ABILITY union (capabilities / canTrade / canWorkOn / canTradeOn). It is the PLAYER's, never
 	// the team's -- CvTeam is the tech BRIDGE and owns no live-state surface ([DEC-scope-contexts]).
 	CapabilityContext& capabilities() const { return m_capabilities; }
+	// The empire's HELD-TRAIT set. A store rather than a forward because ENUMERATING the held traits off the
+	// has-array walks the whole trait registry, while TESTING one is a pointer hop (Engine/TraitContext.h).
+	TraitContext& traits() const { return m_traits; }
 
 	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
 	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
@@ -1852,6 +1856,7 @@ protected:
 	// (Engine/PolicyContext.h -- one place responsible). Its maintainer reaches this accessor directly.
 	mutable PolicyContext m_policies;
 	mutable CapabilityContext m_capabilities;
+	mutable TraitContext m_traits;   // the empire's held-trait set (see traits()); a delta store, never serialized
 	// the EMPIRE-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
 	CvCascadePackage<CvPlayer> m_cascadePackage;
 	PlayerTypes m_eParent;

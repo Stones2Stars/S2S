@@ -107,6 +107,10 @@ public:
 private:
 	// The single write point, so the CROSSING announcement exists exactly once.
 	void applyKey(int iAmenityId, int iSign);
+	// ⚖ THE GOVERNMENT-CENTRE CROSSING -- the plain refcount verdict, announced from the fold like power's. It
+	// takes no `before` from a caller because nothing outside this store can move it: no status gates it, so the
+	// only input is a grantor starting or stopping, which is applyKey itself.
+	void announceGovernmentCenterCrossing(bool bWasGovernmentCenter);
 
 	const CvCity* m_city;   // the bound game object; a binding, never cleared
 };

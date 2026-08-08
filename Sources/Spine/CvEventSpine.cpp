@@ -13,6 +13,7 @@
 #include "Engine/AmenityContext.h"         // the amenity CONTEXT's own consumer
 #include "Engine/PolicyContext.h"          // the enacted-policy dictionary's own consumer
 #include "Engine/CapabilityContext.h"      // the empire-ability union's own consumer
+#include "Engine/TraitContext.h"           // the held-trait set's own consumer
 #include "CvCascadeChannelRegistry.h"      // the [CASCADE] mask decode (channel names per scope)
 #include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
@@ -649,6 +650,7 @@ void spineRegisterConsumers()
 	amenityContextRegisterConsumer();
 	policyContextRegisterConsumer();
 	capabilityContextRegisterConsumer();
+	traitContextRegisterConsumer();
 	enablerRegisterConsumer();
 	modifierRegisterConsumer();
 	// The TRIGGER machine (json.md §5: a grant is a trigger with a null condition) registers LAST, and that is the

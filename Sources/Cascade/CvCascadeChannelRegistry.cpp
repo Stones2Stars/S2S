@@ -541,7 +541,8 @@ namespace
 		MODEVT_RATE_READ,           // one city's §2a yield RATE, term by term (the six quantities behind one int)
 		MODEVT_BONUS_STORES,        // one city's bonus stores, by size -- empty store vs refusing route
 		MODEVT_ATOM_ROUTE,          // ONE atom crossing's outcome: found / noSource / refused / applied
-		MODEVT_SPECIALIST_READ      // ONE specialist TYPE's share of a rate's `specialists` term (the Σ decomposed)
+		MODEVT_SPECIALIST_READ,     // ONE specialist TYPE's share of a rate's `specialists` term (the Σ decomposed)
+		MODEVT_TRAIT_IMPROVEMENT_READ   // ONE (trait x improvement) keyed deposit's share of a rate's BASE
 	};
 	enum ModifierDomainField
 	{
@@ -564,7 +565,8 @@ namespace
 		MODF_PLOTNATURE, MODF_PLOTIMPROVEMENT, MODF_PLOTREST,
 		MODF_ONSITE, MODF_VICALL, MODF_VICOWNED, MODF_VICWORKED, MODF_TRADED, MODF_NETLIST,
 		MODF_ATOM, MODF_LISTSIZE, MODF_FOUND, MODF_NOSOURCE, MODF_REFUSED, MODF_APPLIED,
-		MODF_SPECIALIST, MODF_ASSIGNED, MODF_FREETYPED, MODF_PERUNIT, MODF_CONTRIB
+		MODF_SPECIALIST, MODF_ASSIGNED, MODF_FREETYPED, MODF_PERUNIT, MODF_CONTRIB,
+		MODF_TRAIT, MODF_IMPROVEMENT, MODF_TILES, MODF_PERTILE
 	};
 
 	const char* cr_modifierDomainPrefix(int iEventId)
@@ -579,6 +581,7 @@ namespace
 		case MODEVT_BONUS_STORES:   return "[MODIFIER] bonusStores";
 		case MODEVT_ATOM_ROUTE:     return "[MODIFIER] atomRoute";
 		case MODEVT_SPECIALIST_READ: return "[MODIFIER] specialistRead";
+		case MODEVT_TRAIT_IMPROVEMENT_READ: return "[MODIFIER] traitImprovementRead";
 		default:                    return "[MODIFIER] ?";
 		}
 	}
@@ -644,6 +647,10 @@ namespace
 		case MODF_FREETYPED:   *peType = SFT_INT; return "freeTyped";
 		case MODF_PERUNIT:     *peType = SFT_INT; return "perUnit";
 		case MODF_CONTRIB:     *peType = SFT_INT; return "contribution";
+		case MODF_TRAIT:       *peType = SFT_TRAIT; return "trait";
+		case MODF_IMPROVEMENT: *peType = SFT_IMPROVEMENT; return "improvement";
+		case MODF_TILES:       *peType = SFT_INT; return "workedTiles";
+		case MODF_PERTILE:     *peType = SFT_INT; return "perTile";
 		case MODF_CHANNEL:     *peType = SFT_STR; return "channel";
 		case MODF_UNIT:        *peType = SFT_STR; return "unit";
 		case MODF_VALUE:       *peType = SFT_INT; return "value";
@@ -931,6 +938,29 @@ void CascadeChannelRegistry::reportSpecialistRead(int iPlayer, int iCity, int iC
 	row.addI(MODF_ASSIGNED, iAssigned);
 	row.addI(MODF_FREETYPED, iFreeTyped);
 	row.addI(MODF_PERUNIT, iPerUnit);
+	row.addI(MODF_CONTRIB, iContribution);
+	eventSpine().emit(row);
+}
+
+// ONE (trait x improvement) keyed deposit's share of a rate's BASE. Its OWN line rather than a rateRead field:
+// the Σ carries axes the term cannot (WHICH trait, WHICH improvement), and rateRead is at the 16-field cap
+// ([event-spine.md] -- a full line is answered by a SECOND event, never by swapping a term out).
+// ⛔ WITHOUT THIS THE LEG IS INVISIBLE. It joins BASE after `plotBase` is captured, so it shows in no reported
+// term and the terms silently stop summing to the rate -- a residual then has to be recovered by reconciling
+// the whole combine by hand, which is exactly what a census exists to make unnecessary.
+void CascadeChannelRegistry::reportTraitImprovementRead(int iPlayer, int iCity, int iChannelId, int iTrait,
+	int iImprovement, int iWorkedTiles, int iPerTile, int iContribution)
+{
+	cr_ensureModifierDomain();
+	CvSpineEvent row(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_TRAIT_IMPROVEMENT_READ, 3);
+	row.addI(MODF_PLAYER, iPlayer);
+	row.addI(MODF_CITY, iCity);
+	// the channel id RAW, exactly as rateRead and specialistRead carry it
+	row.addI(MODF_VALUE, iChannelId);
+	row.addI(MODF_TRAIT, iTrait);
+	row.addI(MODF_IMPROVEMENT, iImprovement);
+	row.addI(MODF_TILES, iWorkedTiles);
+	row.addI(MODF_PERTILE, iPerTile);
 	row.addI(MODF_CONTRIB, iContribution);
 	eventSpine().emit(row);
 }

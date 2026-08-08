@@ -34,15 +34,8 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	m_flavours.clear();
 	m_bCoastalAIInfluence = false;
 
-	// PROPERTY_* per-turn SOURCES: a trait's <PROPERTY_X>.city.flat deposits in EVERY owner city while the trait
-	// is held -- RELATION_ASSOCIATED, the player-gathered fan the legacy trait manipulators used. The ONE shared
-	// walk over the compiled entries; it clears the container first, per the mapFrom idempotency contract.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
-
-	if (!entity.is<picojson::object>())
+	if (entity.is<picojson::object>())
 	{
-		return;
-	}
 	const picojson::object& entityObj = entity.get<picojson::object>();
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
@@ -71,4 +64,21 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 			m_bCoastalAIInfluence = jsonIdBool(*pBehaviour, "coastalAIInfluence");
 		}
 	}
+	}
+
+	// ⚖ THE PURE_TRAITS ALIGNMENT GATE (modifier.md §4) -- a PARSE TRANSFORM, run here because this is the point
+	// between the trait having been READ (its alignment flag is set above) and its entries LANDING in the
+	// compiled forms. It gates rather than drops, and gating moves an entry out of the point sums into the
+	// conditioned list, so both planes come out right with nothing threaded to any consumer (CvModifiers.cpp).
+	// ⛔ IT RUNS BEFORE THE BRIDGE BELOW, and the order is load-bearing rather than cosmetic: the bridge walks
+	// these same entries to build the property manipulators, so a downside property source on a positive trait
+	// would otherwise be bridged ungated and deposit for the whole game.
+	m_modifiers.applyPureTraitGate(m_bNegativeTrait);
+
+	// PROPERTY_* per-turn SOURCES: a trait's <PROPERTY_X>.city.flat deposits in EVERY owner city while the trait
+	// is held -- RELATION_ASSOCIATED, the player-gathered fan the legacy trait manipulators used. The ONE shared
+	// walk over the compiled entries; it clears the container first, per the mapFrom idempotency contract.
+	// ⚠ Unconditional, on every path: it is what CLEARS the container, so skipping it for an entity that authored
+	// nothing would leave a re-mapped trait holding the previous map's manipulators.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
 }

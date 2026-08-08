@@ -31,10 +31,13 @@ public:
 	bool providesPolicies() const            { return !m_policies.isEmpty(); }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
-	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. NB the PURE
-	// TRAITS sign filter and the simple/complex set selection are CONSUMER-side reads over the active set --
-	// MMKernel::traitData selects the set, and the gather drops off-alignment values per entry (CascadeGather's
-	// iPureSign) -- never baked into these compiled sums.)
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. NB the
+	// simple/complex SET selection stays a consumer-side read -- MMKernel::traitData picks the active set by the
+	// live option. The PURE_TRAITS alignment rule does NOT: it is applied once at parse, which GATES an
+	// off-alignment entry rather than dropping it (CvModifiers::applyPureTraitGate). A gated entry is
+	// conditioned, so it is excluded from these compiled sums and evaluated by whoever walks the entries --
+	// which is what makes these point reads correct under the option, since a summed value could never be
+	// sign-filtered after the fact.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
 	int getYieldModifier(YieldTypes eYield, CvCascScope eScope) const

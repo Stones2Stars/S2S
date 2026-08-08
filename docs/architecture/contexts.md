@@ -117,7 +117,7 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 | context | owner | STORES (unique aggregate) | FORWARDS (read through the bound object / its owner) |
 |---|---|---|---|
 | **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **`amenities`** — the `AMENITY_*` id→COUNT fold over the city's OPERATING buildings + the empire-scope grantors (json §8; the count is load-bearing — see the callout below) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city and HEADQUARTERS counts** — how many religions / corporations name this city, each a delta store fed ±1 by its own fact | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`); **the TRADED count** — the gated network number, forwarded through `CvCity::getNumBonuses`, which relays to the PLOT GROUP that owns it ([enabler.md §8](../specs/enabler.md) RESIDENCY: nothing mirrors the group); **the CURRENT REALIZED YIELDS** (owner) — the city's own O(1) group read, forwarded so a valuation can resolve a percent against a real base (below); **the CURRENT REALIZED COMMERCE** — `CvCity::getCommerces`, the per-commerce SPLIT of that commerce yield by the empire's sliders plus each channel's own deposits ([modifier.md §2a](../specs/modifier.md)), forwarded for the same reason |
-| **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`), civics/traits/heritages presence, the team-held facts; **the CURRENT REALIZED COMMERCE** — `CvPlayer::getCommerces`, the four empire RECEIVER totals: the city-yields forward's empire twin, so an empire-scope percent resolves against a real base; **the COMMERCE SLIDER PERCENTAGES** (owner) — the player's gold / research / culture / espionage rates, the `GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE` tokens ([json.md §3.1](../specs/json.md)); a group keyed by `CommerceTypes`, forwarded because `CvPlayer` owns them O(1) |
+| **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) · **the HELD-TRAIT set** — the `TRAIT_` id→COUNT fold, a delta store fed ±1 by the trait facts (§ the callout below: enumerating what a player holds is a SCAN even though testing one trait is a hop) | state religion (single enum → `CvPlayer::getStateReligion`), civics/**trait presence**/heritages, the team-held facts; **the CURRENT REALIZED COMMERCE** — `CvPlayer::getCommerces`, the four empire RECEIVER totals: the city-yields forward's empire twin, so an empire-scope percent resolves against a real base; **the COMMERCE SLIDER PERCENTAGES** (owner) — the player's gold / research / culture / espionage rates, the `GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE` tokens ([json.md §3.1](../specs/json.md)); a group keyed by `CommerceTypes`, forwarded because `CvPlayer` owns them O(1) |
 | **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) · **`workableBy`** — the cities whose potential work area this plot is in, set by `CvCity::changeWorkableArea` and announced per plot (§ the VICINITY store) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`); **the plot's CURRENT REALIZED YIELDS** — `CvPlot::getYields`, the whole isolated per-plot base package as a bare cache fetch. ⛔ The PRE-IMPROVEMENT leg (`natureYield`) is a SECOND SLOT of that same package, never a per-call computation: it is asked per (plot × improvement × yield) by the placement gate and both improvement valuations, which is the cost class this whole section deletes. A read that recomputes it is the forwarded-read-that-COMPUTES defect above, and the number is already in the package |
 
 ⛔ **THE VICINITY SPLIT — the context holds the MAP half, the enabler holds the BUILDING half.** The §5a in-vicinity
@@ -604,12 +604,29 @@ CAPSTONE — LOAD is the only full build).
     > either count at city-founded or load-finish: the facts already carry them (`CvCity::read` announces every
     > designation the city holds), and a rebuild beside a delta store doubles it.
 - **`EmpireContext.policies`** ← the **civic / trait / player-init DOMAIN facts**, consumed by the policy store
-  itself, which refills the WHOLE union over the player's live civics + held (active-set) traits. It is the single
+  itself, which applies each grantor's policy block as a DELTA — never a refill, which would recount every time
+  and so hide the multi-grantor case the count exists for. It is the single
   source the one policy read (`ev_playerHasPolicy`) uses — reads never re-walk the grantors. The **player-init** fact
   is load-bearing on its own: a player's INITIAL traits are written straight into the has-array rather than through
   the trait setter, so that fact is the only announcement they ever make.
   ⛔ It is deliberately **not** maintained from `CvPlayer::setCivics` / `setHasTrait`: a direct hook beside an event
   is a second maintenance surface for one fact, and the fact already exists.
+- **The HELD-TRAIT set** ← the **same trait / player-init facts**, consumed by its own store beside the policy one
+  (one dictionary per area of responsibility — the `TRAIT_` and `POLICY_` key spaces are disjoint registries).
+  > **⚖ IT IS THE CASE WHERE ONE AXIS SPLITS ACROSS THE SCAN-vs-HOP TEST, and reading the FORWARD row as settling
+  > it is the mistake to avoid.** *Does this player hold `TRAIT_X`* resolves through one pointer, so trait
+  > PRESENCE is correctly a forward and earns no store. *Which traits does this player hold* is a different
+  > question with the same subject: off `m_pabHasTrait` it walks all 369 trait records to rediscover the handful a
+  > leader carries — the O(registry) sweep [state-repositories.md](state-repositories.md) names on the unit plane
+  > (*"the sum walks what the unit HOLDS, never the registry"*). ⇒ **Ask what the READ walks, never what the
+  > SUBJECT is:** the same axis can forward one question and store another.
+  > ⚑ **Its reader is the keyed-deposit walk** ([modifier.md §5](../specs/modifier.md)): a trait's target-keyed
+  > deposits stay SOURCE-side (the §4 per-set carve-out), so the read asks each LIVE SOURCE what it deposits onto
+  > that key. That read is cheap *"because it iterates the handful an entity AUTHORED"* — which holds only if
+  > discovering the live sources is itself cheap.
+  > ⛔ **The sign comes from the fact's IDENTITY, never from a re-read.** `setHasTraitInternal` writes the
+  > has-array BEFORE it emits, so a handler asking `hasTrait` would read the NEW value on both ends and never
+  > withdraw — the same reason a city can never reach down for a plot's old bits.
 - **AREAS are announced WHOLESALE.** `CvMap::recalculateAreas` clears every plot's area, empties the area list and
   recalculates, so it emits **`SEVT_AREAS_RECALCULATED`** (no payload — the fact IS "all of them") and every holder
   of an area id re-reads. Areas are virtually never recalculated (terrain levelled to sea level — the WMD mechanic —

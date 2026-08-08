@@ -81,6 +81,14 @@ int CvInfo::expectedModifier(ModifierFamily eFamily, int iKind, CvCascUnit eUnit
 		pHypothetical);
 }
 
+int CvInfo::expectedModifierAt(ModifierFamily eFamily, int iKind, CvCascUnit eUnit, CvCascScope eScope,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+	const CvCascadeHypothetical* pHypothetical) const
+{
+	return InfoValuation::expectedSumAt(getModifiers(), eFamily, iKind, eUnit, eScope, cityContext, empireContext,
+		plotGroup, pHypothetical);
+}
+
 int CvInfo::expectedScalar(InfoScalar eScalar, CvCascUnit eUnit,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 	const CvCascadeHypothetical* pHypothetical) const

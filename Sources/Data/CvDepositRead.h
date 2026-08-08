@@ -51,8 +51,11 @@ public:
 	//
 	// iMultiplier = the source's live multiplicity (owned building count, project count, specialist count; 1 for
 	// presence). pKeyPlot = the plot whose substrate keys plot-scope targeted entries, NULL off the plot plane.
-	// iPureSign = the PURE_TRAITS filter (+1 keep >= 0, -1 keep <= 0, 0 unfiltered). bSkipRateChannels = the §2a
-	// specialist carve-out (its yield/commerce joins the rate BASE at the receiver combine, never a city flat).
+	// bSkipRateChannels = the §2a specialist carve-out (its yield/commerce joins the rate BASE at the receiver
+	// combine, never a city flat).
+	// ⛔ There is deliberately NO pure-traits parameter: the alignment rule is applied ONCE as a parse transform
+	// that gates the entry (CvModifiers::applyPureTraitGate), so the `applies` call below enforces it like any
+	// other condition ([DEC-single-implementation]).
 	// Returns false when the entry deposits nothing here; the out-params are then untouched.
 	// ⚖ WHICH VALUE THE CALLER WANTS, and it is decided by WHICH FACT is applying.
 	// A SOURCE fact deposits what the source is worth right now, so the `per` scaler is APPLIED: `value × count`.
@@ -66,7 +69,7 @@ public:
 		PER_SCALE_SUPPRESSED,   // the per-UNIT value -- a COUNT fact scales it by its own Δ
 	};
 	static bool resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascScope eScope,
-		const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, int iPureSign, bool bSkipRateChannels,
+		const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, bool bSkipRateChannels,
 		int& iChannelOut, bool& bPercentSideOut, int64_t& iValueOut,
 		PerScaling ePerScaling = PER_SCALE_APPLIED);
 

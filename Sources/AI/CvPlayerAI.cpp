@@ -29529,7 +29529,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	{
 		//Team Project (4)
 		//WorkRateMod
-		iTemp = InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("build"), iI);
+		iTemp = InfoValuation::keyedTarget(kPromotion.getModifiers(), MODFAM_WORK_RATE, 0, InfoValuation::keyedTargetSegment("builds"), iI);
 		if (iTemp != 0)
 		{
 			iPass++;
