@@ -92,13 +92,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 25
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "corporation": {
@@ -138,6 +131,11 @@
    "badReligionMod": {
     "percent": 0.6
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 25
   }
  },
  "PROPERTY_CRIME": {

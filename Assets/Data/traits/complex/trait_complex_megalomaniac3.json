@@ -58,13 +58,6 @@
    "percent": 15
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -15
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "civic": {
@@ -91,6 +84,11 @@
    "attitude": {
     "flat": -2
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -15
   }
  },
  "PROPERTY_CRIME": {

@@ -253,13 +253,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -15
-   }
-  }
- },
  "durations": {
   "empire": {
    "civicAnarchy": {
@@ -275,6 +268,11 @@
    "attitude": {
     "flat": 1
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -15
   }
  },
  "PROPERTY_CRIME": {

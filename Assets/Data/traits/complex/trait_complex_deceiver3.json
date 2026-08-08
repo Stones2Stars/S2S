@@ -197,13 +197,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 30
-   }
-  }
- },
  "durations": {
   "empire": {
    "civicAnarchy": {
@@ -219,6 +212,11 @@
    "enemyWarWeariness": {
     "percent": -10
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 30
   }
  },
  "capture": {

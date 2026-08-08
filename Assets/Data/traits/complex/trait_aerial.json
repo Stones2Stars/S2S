@@ -759,12 +759,6 @@
   "empire": {
    "missileRange": {
     "flat": 1
-   },
-   "flightRange": {
-    "flat": 1
-   },
-   "missileCargo": {
-    "flat": 2
    }
   }
  },
@@ -833,6 +827,20 @@
   "empire": {
    "bombardDefense": {
     "percent": 5
+   }
+  }
+ },
+ "air": {
+  "empire": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
+ "cargo": {
+  "empire": {
+   "missileCargo": {
+    "flat": 2
    }
   }
  },

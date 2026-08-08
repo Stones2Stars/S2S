@@ -275,13 +275,6 @@
    "flat": 6
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 15
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -319,6 +312,11 @@
    "bombardDefense": {
     "percent": 15
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 15
   }
  },
  "grants": {

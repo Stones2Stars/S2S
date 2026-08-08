@@ -149,13 +149,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -25
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -198,6 +191,11 @@
    "amount": {
     "percent": -15
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -25
   }
  },
  "PROPERTY_CRIME": {

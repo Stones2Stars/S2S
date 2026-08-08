@@ -294,9 +294,6 @@
   "empire": {
    "missileRange": {
     "flat": 2
-   },
-   "flightRange": {
-    "flat": 1
    }
   }
  },
@@ -336,6 +333,13 @@
    },
    "nonStateSpreadProbability": {
     "percent": -15
+   }
+  }
+ },
+ "air": {
+  "empire": {
+   "range": {
+    "flat": 1
    }
   }
  },

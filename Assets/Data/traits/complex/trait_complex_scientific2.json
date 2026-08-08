@@ -280,13 +280,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "flightRange": {
-    "flat": 1
-   }
-  }
- },
  "workRate": {
   "empire": {
    "builds": {
@@ -323,6 +316,13 @@
    },
    "nonStateSpreadProbability": {
     "percent": -15
+   }
+  }
+ },
+ "air": {
+  "empire": {
+   "range": {
+    "flat": 1
    }
   }
  },

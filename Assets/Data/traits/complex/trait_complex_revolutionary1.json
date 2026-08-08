@@ -80,13 +80,6 @@
    "flat": 1
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 10
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "civic": {
@@ -141,6 +134,11 @@
    "distanceModifier": {
     "percent": -15
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 10
   }
  },
  "capture": {

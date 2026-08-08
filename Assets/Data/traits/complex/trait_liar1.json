@@ -65,13 +65,6 @@
    "flat": -1
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 20
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "flat": -1,
@@ -116,6 +109,11 @@
    "nonStateSpreadProbability": {
     "percent": 25
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 20
   }
  },
  "PROPERTY_EDUCATION": {

@@ -51,13 +51,6 @@
    "flat": 1
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 15
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -112,6 +105,11 @@
    "amount": {
     "percent": 10
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 15
   }
  },
  "PROPERTY_TOURISM": {

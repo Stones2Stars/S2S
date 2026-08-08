@@ -37,13 +37,6 @@
    "flat": -2
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": 20
-   }
-  }
- },
  "hurry": {
   "empire": {
    "anger": {
@@ -74,6 +67,11 @@
    "enemyWarWeariness": {
     "percent": 20
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 20
   }
  },
  "PROPERTY_CRIME": {

@@ -60,13 +60,6 @@
    "flat": 1
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -10
-   }
-  }
- },
  "goldenAge": {
   "empire": {
    "percent": 10
@@ -80,6 +73,11 @@
    "attitude": {
     "flat": 1
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -10
   }
  },
  "ai": {

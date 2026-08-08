@@ -279,13 +279,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "navalCargo": {
-    "flat": 1
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "numCities": {
@@ -353,6 +346,13 @@
     "IMPROVEMENT_BEACON_REEF": {
      "percent": 50
     }
+   }
+  }
+ },
+ "cargo": {
+  "empire": {
+   "navalCargo": {
+    "flat": 1
    }
   }
  },

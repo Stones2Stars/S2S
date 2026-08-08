@@ -147,15 +147,18 @@ SCALAR = {
     # (processTrait, CvPlayer.cpp:28613) -> the DEFENSE family's bombardDefense member; the old
     # combat.empire.bombardDefense had NO reader (the getBuildingBombardDefense national leg was dropped).
     "iBombardDefense":                 ("defense", "empire", "bombardDefense", "percent"),
-    "iEspionageDefense":               ("combat", "empire", "espionageDefense", "percent"),
+    # its OWN family (memberless kind 0) -- the engine reads espionageDefense, never a combat member;
+    # curate_building has always had it right. Under `combat` it matched no kind row and was dropped.
+    "iEspionageDefense":               ("espionageDefense", "empire", "", "percent"),
     # the CAPTURE family owns these, not combat: the engine reads capture[CAPTURE_PROBABILITY] /
     # [CAPTURE_RESISTANCE] via CvPlayer::getCaptureKinds. Under `combat` they matched no kind and were dropped.
     "iNationalCaptureProbabilityModifier": ("capture", "empire", "probability", "percent"),
     "iNationalCaptureResistanceModifier": ("capture", "empire", "resistance", "percent"),
     "iMissileRange":                   ("combat", "empire", "missileRange", "flat"),
-    "iFlightOperationRange":           ("combat", "empire", "flightRange", "flat"),
-    "iNavalCargoSpace":                ("combat", "empire", "navalCargo", "flat"),
-    "iMissileCargoSpace":              ("combat", "empire", "missileCargo", "flat"),
+    # AIR_RANGE -- the player leg CvUnit::airRange() folds in beside the unit's own resolved value.
+    "iFlightOperationRange":           ("air", "empire", "range", "flat"),
+    "iNavalCargoSpace":                ("cargo", "empire", "navalCargo", "flat"),
+    "iMissileCargoSpace":              ("cargo", "empire", "missileCargo", "flat"),
     # diplomacy
     "iAttitudeModifier":               ("diplomacy", "empire", "attitude", "flat"),
     "iWarWearinessAccumulationModifier":("diplomacy", "empire", "warWeariness", "percent"),

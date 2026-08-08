@@ -90,13 +90,6 @@
    "percent": 20
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -5
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "civic": {
@@ -122,6 +115,11 @@
    "distanceModifier": {
     "percent": 15
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -5
   }
  },
  "PROPERTY_CRIME": {

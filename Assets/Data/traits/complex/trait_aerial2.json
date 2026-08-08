@@ -331,13 +331,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "flightRange": {
-    "flat": 1
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -403,6 +396,13 @@
   "empire": {
    "bombardDefense": {
     "percent": 5
+   }
+  }
+ },
+ "air": {
+  "empire": {
+   "range": {
+    "flat": 1
    }
   }
  },

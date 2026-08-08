@@ -81,13 +81,6 @@
    "any": 1
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -10
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "modifier": {
@@ -124,6 +117,11 @@
    "spreadProbability": {
     "percent": -20
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -10
   }
  },
  "PROPERTY_EDUCATION": {

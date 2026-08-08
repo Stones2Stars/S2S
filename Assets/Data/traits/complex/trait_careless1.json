@@ -219,13 +219,6 @@
    ]
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -20
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "upgradePrice": {
@@ -236,6 +229,11 @@
  "goldenAge": {
   "empire": {
    "percent": 25
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -20
   }
  },
  "ai": {

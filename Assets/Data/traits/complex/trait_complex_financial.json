@@ -545,13 +545,6 @@
    "flat": -1
   }
  },
- "combat": {
-  "empire": {
-   "espionageDefense": {
-    "percent": -10
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "corporation": {
@@ -591,6 +584,11 @@
    "bombardDefense": {
     "percent": -10
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -10
   }
  },
  "costs": {
