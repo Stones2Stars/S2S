@@ -36,7 +36,6 @@
 #include "CvTraitInfo.h"
 #include "Repos/BuildingsRepo.h"
 #include "Spine/CvEventSpine.h"
-#include "CvCascadeGather.h"
 #include "Enabler/CvBuildingEnabler.h"   // onCityCreated -- the per-city domain lifecycle start (enabler.md 7.1)
 #include "Enabler/CvUnitEnabler.h"
 #include "Enabler/CvEnablerKernel.h"     // EnablerKernel:: -- the operate/gate surface (only fwd-declared above)

@@ -231,13 +231,12 @@ public:
 	// makes present IN-VICINITY (json §5a). `obsoleteOut` = the PRESENT ∧ obsoleted-by-held-tech buildings (json §4.2):
 	// a THIRD outcome collected in the SAME pass -- excluded from active/provides, it deposits its `whenObsolete` tree.
 	// Consumers never call it directly; they read the STANDING set via operatingBuildings()/
-	// wireOperatingBuildings() below. It is reached through recomputeOperatingSetInto().
+	// wireOperatingBuildings() below. It is reached through the load seed().
 	static void recomputeOperatingBuildingsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut, std::set<int>& obsoleteOut);
 
 	// The WHOLE set (the three fixpoint sets + the provider ref-count) recomputed from source into a
 	// CALLER-OWNED buffer -- the seed points it at the city's storage, the ENDPOINT ORACLE at its own scratch.
 	// Never given the maintained set, so serving the oracle structurally cannot repair it.
-	static void recomputeOperatingSetInto(const CvCity* pCity, OperatingBuildings& kOut);
 
 	// --- ACTIVE-SET targeted maintenance (state-repositories.md: the active-building set is maintained by
 	// targeted PROPAGATION, not blanket-recomputed). buildActiveIndex() inverts every building's `requires.operate`

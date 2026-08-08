@@ -34,7 +34,6 @@
 #include "Infrastructure/CvDLLEngineIFaceBase.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
-#include "CvCascadeGather.h"
 #include "CvCascadeChannelRegistry.h"   // channelLookup -- the group reads' channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Data/CvInfoValuation.h"       // realizedAtTeam -- the ONE cross-scope roll-up

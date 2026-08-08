@@ -1,15 +1,14 @@
 //
-//	OracleEndpoints -- the stored/oracle documents of the derived-state planes (see the header). ONE renderer
+//	StateEndpoints -- the served documents of the derived-state planes (see the header). ONE renderer
 //	per plane, called for BOTH sides, so the two documents are diffable field by field OUTSIDE the DLL.
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvOracleEndpoints.h"
-#include "Cascade/CvCascadeGather.h"        // the ORACLE leg: the gather*Into entry points
+#include "CvStateEndpoints.h"
 #include "Cascade/CvCascadeSlotValues.h"    // the served shape both sides answer in
 #include "Cascade/CvCascadeChannelRegistry.h"
 #include "Enabler/CvEnablerKernel.h"        // the operating set: the standing read + the from-source recompute
-#include "Engine/CapabilityContext.h"        // the empire ability union: the stored read + the from-source oracle
+#include "Engine/CapabilityContext.h"        // the empire ability union the grantor facts built
 #include "Infos/CvClassificationRegistry.h"  // id -> authored key, so a served ability names itself
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h"
@@ -56,11 +55,6 @@ namespace
 		case CASC_SCOPE_PLOT:   return "plot";
 		default:                return "?";
 		}
-	}
-
-	const char* oe_sideName(OracleEndpoints::OracleSide eSide)
-	{
-		return (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE) ? "oracle" : "stored";
 	}
 
 	// The identity every served value carries, INTERPRETED PER SCOPE (CvCascadeSlotValues.h) -- spelled out
@@ -235,9 +229,7 @@ namespace
 		return picojson::value(kRow);
 	}
 
-	// ---- the per-scope fill: STORED copies the package out, ORACLE recomputes from source into the SAME
-	// ---- document type. The oracle is handed this local buffer and never the package, which is what makes
-	// ---- "serving the oracle cannot repair the stored slots" structural. ----
+	// ---- the per-scope fill: the scope's package is copied out into the served document. ----
 
 	// ⛔ THE IDENTITY IS STAMPED FROM THE LIVE OWNER ON BOTH SIDES, AND THE STORED SIDE CANNOT INHERIT IT FROM THE
 	// PACKAGE. A package binds its identity in the owner's `reset()`, which on a LOAD runs from `readIdentity`
@@ -245,7 +237,7 @@ namespace
 	// while a FOUNDED one carries the truth. Serving that would make every city's row key on "-1-0", collapse
 	// them onto one another, and leave the two documents undiffable -- which is the whole point of the pair
 	// ([state-repositories.md]: a divergence must NAME the object that drifted).
-	// ⚑ The gather already stamps the live identity on the oracle side, so doing the same here is what puts both
+	// ⚑ The identity is stamped here so every served row carries the scope, owner and id that name it, which is what lets
 	// documents on ONE key space. `identityFirst/Second` is read by nothing but this renderer, so this is the
 	// point of use and there is no second consumer to keep in step.
 	void oe_stampIdentity(CvCascadeSlotValues& kValues, CvCascScope eScope, int iFirst, int iSecond)
@@ -255,60 +247,32 @@ namespace
 		kValues.identitySecond = iSecond;
 	}
 
-	void oe_fillCity(const CvCity& kCity, OracleEndpoints::OracleSide eSide, CvCascadeSlotValues& kValues)
+	void oe_fillCity(const CvCity& kCity, CvCascadeSlotValues& kValues)
 	{
-		if (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE)
-		{
-			CascadeGather::gatherCityInto(kCity, kValues);
-		}
-		else
-		{
 			kCity.getCascadePackage().readValuesInto(kValues);
 			oe_stampIdentity(kValues, CASC_SCOPE_CITY, (int)kCity.getOwner(), kCity.getID());
-		}
 	}
 
-	void oe_fillEmpire(const CvPlayer& kPlayer, OracleEndpoints::OracleSide eSide, CvCascadeSlotValues& kValues)
+	void oe_fillEmpire(const CvPlayer& kPlayer, CvCascadeSlotValues& kValues)
 	{
-		if (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE)
-		{
-			CascadeGather::gatherEmpireInto(kPlayer, kValues);
-		}
-		else
-		{
 			kPlayer.getCascadePackage().readValuesInto(kValues);
 			oe_stampIdentity(kValues, CASC_SCOPE_EMPIRE, (int)kPlayer.getID(), -1);
-		}
 	}
 
-	void oe_fillTeam(const CvTeam& kTeam, OracleEndpoints::OracleSide eSide, CvCascadeSlotValues& kValues)
+	void oe_fillTeam(const CvTeam& kTeam, CvCascadeSlotValues& kValues)
 	{
-		if (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE)
-		{
-			CascadeGather::gatherTeamInto(kTeam, kValues);
-		}
-		else
-		{
 			kTeam.getCascadePackage().readValuesInto(kValues);
 			oe_stampIdentity(kValues, CASC_SCOPE_TEAM, -1, (int)kTeam.getID());
-		}
 	}
 
-	void oe_fillPlot(const CvPlot& kPlot, OracleEndpoints::OracleSide eSide, CvCascadeSlotValues& kValues)
+	void oe_fillPlot(const CvPlot& kPlot, CvCascadeSlotValues& kValues)
 	{
-		if (eSide == OracleEndpoints::ORACLE_SIDE_ORACLE)
-		{
-			CascadeGather::gatherPlotInto(kPlot, kValues);
-		}
-		else
-		{
 			kPlot.getCascadePackage().readValuesInto(kValues);
 			oe_stampIdentity(kValues, CASC_SCOPE_PLOT, kPlot.getX(), kPlot.getY());
-		}
 	}
 }
 
-CvString OracleEndpoints::cascadePackages(int iPlayer, int iCity, OracleSide eSide)
+CvString StateEndpoints::cascadePackages(int iPlayer, int iCity)
 {
 	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
 	if (ePlayer == NO_PLAYER)
@@ -319,13 +283,13 @@ CvString OracleEndpoints::cascadePackages(int iPlayer, int iCity, OracleSide eSi
 	picojson::value::array kPackages;
 	CvCascadeSlotValues kValues;
 
-	oe_fillEmpire(kPlayer, eSide, kValues);
+	oe_fillEmpire(kPlayer, kValues);
 	kPackages.push_back(oe_renderSlotValues(kValues));
 
 	const TeamTypes eTeam = kPlayer.getTeam();
 	if (eTeam >= 0 && eTeam < MAX_TEAMS)
 	{
-		oe_fillTeam(GET_TEAM(eTeam), eSide, kValues);
+		oe_fillTeam(GET_TEAM(eTeam), kValues);
 		kPackages.push_back(oe_renderSlotValues(kValues));
 	}
 
@@ -340,7 +304,7 @@ CvString OracleEndpoints::cascadePackages(int iPlayer, int iCity, OracleSide eSi
 		{
 			continue;
 		}
-		oe_fillCity(*pLoopCity, eSide, kValues);
+		oe_fillCity(*pLoopCity, kValues);
 		kPackages.push_back(oe_renderSlotValues(kValues));
 		// The PLOT scope's way in: one named city's workable plots. Without a city selector the plot rows are
 		// left out -- the whole map's plot packages are a different question, asked one city at a time.
@@ -356,19 +320,18 @@ CvString OracleEndpoints::cascadePackages(int iPlayer, int iCity, OracleSide eSi
 			{
 				continue;
 			}
-			oe_fillPlot(*pLoopPlot, eSide, kValues);
+			oe_fillPlot(*pLoopPlot, kValues);
 			kPackages.push_back(oe_renderSlotValues(kValues));
 		}
 	}
 
 	picojson::value::object kRoot;
-	kRoot["side"] = picojson::value(std::string(oe_sideName(eSide)));
 	kRoot["player"] = picojson::value((double)ePlayer);
 	kRoot["packages"] = picojson::value(kPackages);
 	return oe_serialize(kRoot);
 }
 
-CvString OracleEndpoints::enablerOperating(int iPlayer, int iCity, OracleSide eSide)
+CvString StateEndpoints::enablerOperating(int iPlayer, int iCity)
 {
 	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
 	if (ePlayer == NO_PLAYER)
@@ -388,26 +351,16 @@ CvString OracleEndpoints::enablerOperating(int iPlayer, int iCity, OracleSide eS
 		{
 			continue;
 		}
-		if (eSide == ORACLE_SIDE_ORACLE)
-		{
-			OperatingBuildings kFresh;   // the oracle's own buffer -- the maintained set is never passed in
-			EnablerKernel::recomputeOperatingSetInto(pLoopCity, kFresh);
-			kCities.push_back(oe_renderOperatingSet(*pLoopCity, kFresh));
-		}
-		else
-		{
-			kCities.push_back(oe_renderOperatingSet(*pLoopCity, EnablerKernel::operatingBuildings(pLoopCity)));
-		}
+		kCities.push_back(oe_renderOperatingSet(*pLoopCity, EnablerKernel::operatingBuildings(pLoopCity)));
 	}
 
 	picojson::value::object kRoot;
-	kRoot["side"] = picojson::value(std::string(oe_sideName(eSide)));
 	kRoot["player"] = picojson::value((double)ePlayer);
 	kRoot["cities"] = picojson::value(kCities);
 	return oe_serialize(kRoot);
 }
 
-CvString OracleEndpoints::teamCapabilities(int iPlayer, OracleSide eSide)
+CvString StateEndpoints::teamCapabilities(int iPlayer)
 {
 	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
 	if (ePlayer == NO_PLAYER)
@@ -421,24 +374,14 @@ CvString OracleEndpoints::teamCapabilities(int iPlayer, OracleSide eSide)
 	}
 
 	picojson::value::object kRoot;
-	kRoot["side"] = picojson::value(std::string(oe_sideName(eSide)));
 	kRoot["player"] = picojson::value((double)ePlayer);
-	if (eSide == ORACLE_SIDE_ORACLE)
-	{
-		CapabilityContext kFresh;   // the oracle's own buffer -- the stored union is never passed in
-		CapabilityContext::recomputeInto(kPlayer, kFresh);
-		kRoot["capabilityUnion"] = oe_renderCapabilities((int)ePlayer, kFresh);
-	}
-	else
-	{
-		kRoot["capabilityUnion"] = oe_renderCapabilities((int)ePlayer, kPlayer.capabilities());
-	}
+	kRoot["capabilityUnion"] = oe_renderCapabilities((int)ePlayer, kPlayer.capabilities());
 	return oe_serialize(kRoot);
 }
 
 // ---- THE CITY YIELD CENSUS -- the tooltip's own document, served ------------------------------------------------
 
-CvString OracleEndpoints::cityYield(int iPlayer, int iCity)
+CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 {
 	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
 	if (ePlayer == NO_PLAYER)

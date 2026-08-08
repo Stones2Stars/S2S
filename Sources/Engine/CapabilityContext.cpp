@@ -182,25 +182,6 @@ int CapabilityContext::commerceRateCapability(int eCommerce)
 	}
 }
 
-// The ORACLE: the union rebuilt from SOURCE, into a store the caller owns. Deliberately a full walk of the
-// team's held techs -- an oracle reads nothing off the stored surface, which is the whole of its value.
-void CapabilityContext::recomputeInto(const CvPlayer& kPlayer, CapabilityContext& kOut)
-{
-	kOut.clear();
-	if (kPlayer.getTeam() == NO_TEAM)
-	{
-		return;
-	}
-	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-	const int iNumTechs = GC.getNumTechInfos();
-	for (int iTech = 0; iTech < iNumTechs; ++iTech)
-	{
-		if (kTeam.isHasTech((TechTypes)iTech))
-		{
-			kOut.foldTech(iTech, +1);
-		}
-	}
-}
 
 void capabilityContextRegisterConsumer()
 {

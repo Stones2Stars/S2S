@@ -39,7 +39,6 @@
 #include "Infrastructure/CvDLLPlotBuilderIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
-#include "CvCascadeGather.h"
 #include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group reads' channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Conditions/CvConditionEval.h"  // CvCascadeEvalCtx + cascadeEvalCondition -- the ONE evaluator

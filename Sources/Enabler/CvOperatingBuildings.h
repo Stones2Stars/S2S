@@ -15,7 +15,7 @@
 //	dirty/recompute cache is "burning down the library of Alexandria" (DESPAIR_INDEX #2) -- and never a parallel
 //	shadow-delta. Reads are BARE FETCHES: a propagation that fails to fire leaves the set visibly wrong, which is
 //	how the missing hook is found ([DEC-no-self-heal]). It is found by an EXTERNAL reader diffing the served
-//	set against the endpoint oracle's from-source recompute (EnablerKernel::recomputeOperatingSetInto, which
+//	set (built once by the load seed, which
 //	fills a caller-owned buffer) -- the DLL neither compares nor reports.
 //
 //	STATE HOME: a mutable CvCity member (`m_operatingBuildings`). Never serialized -- empty from birth, so a

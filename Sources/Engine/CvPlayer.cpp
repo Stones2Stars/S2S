@@ -55,7 +55,6 @@
 #include "Conditions/CvConditionEval.h"   // the CvCascadeEvalCtx DEFINITION (CvCascadeGather only forward-declares)
 #include "Conditions/CvConditionQuery.h"  // the ONE structural read over a compiled entry's condition tree
 #include "Infos/CvModEntry.h"             // the compiled entry the conditioned walk reads its trees off
-#include "CvCascadeGather.h"
 #include "Enabler/CvTechEnabler.h"        // initDomain x6 -- the per-player domain lifecycle start (enabler.md 7.1)
 #include "Enabler/CvCivicEnabler.h"
 #include "Enabler/CvProjectEnabler.h"

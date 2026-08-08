@@ -2,7 +2,7 @@
 #include "Infrastructure/CvDLLEntityIFaceBase.h"
 #include "CvHttpServer.h"
 #include "CvBuildingInfo.h"
-#include "Engine/CvPropertySource.h" // property-source completeness oracle: getSource()->getProperty()
+#include "Engine/CvPropertySource.h" // property-source completeness census: getSource()->getProperty()
 #include "Engine/CvPropertyManipulators.h" // the property CONSTANT-source recompute (the property channel's net)
 #include "Property/CvPropertyChannel.h"     // the §430 property channel's per-city sourced numbers
 #include <psapi.h>                           // /computed/perf memory gauge: GetProcessMemoryInfo (the CvPlotPaging mechanism)
@@ -10,7 +10,7 @@
 #include "Data/CvReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
 #include "Tally/CvTally.h"          // /computed/tally TAG_ routing -> countUnitsWithTag (the per-tag unit count)
 #include "CvClassificationBlock.h"        // /state/info classification exposure: the loaded tags/skills held-key sets
-#include "Enabler/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain's oracle verification
+#include "Enabler/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain census
 #include "Enabler/CvUnitEnabler.h"           // /computed/enabler/units: the per-unit verdict decomposition
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
@@ -33,11 +33,13 @@
 #include "Engine/CvUnit.h"
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
 #include "Enabler/CvEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
-#include "CvOracleEndpoints.h" // the derived-state planes' stored/oracle documents (the documents live THERE)
-// This surface serves RAW state (/state) and the engine's own answers (/computed). The /computed cache
-// documents read the cascade's OWN uniform channel-indexed surface -- never a legacy accumulator reached
-// around it -- and the STORED and ORACLE sides are SEPARATE routes with no in-DLL comparison between them:
-// the diff is an external consumer's job. See docs/specs/http-endpoints.md.
+#include "CvStateEndpoints.h" // the derived-state planes' served documents (the documents live THERE)
+// This surface serves RAW state (/state) and the engine's own answers (/computed). The /computed documents
+// read the cascade's OWN uniform channel-indexed surface -- never a legacy accumulator reached around it.
+// They say WHAT STATE EXPECTS: one leg of the three-leg check, beside the LOGS (what landed) and the JSON
+// INFO (what a source is authored to deposit). ⛔ There is no recompute-from-source twin to diff against and
+// none is coming back -- an endpoint cannot replay the event chain, so its answer was never comparable
+// ([superseded-ideas #33]). See docs/specs/http-endpoints.md.
 
 // Deliberately the winsock 1.1 header, NOT winsock2.h: some unity batches pull a
 // full-fat windows.h (no WIN32_LEAN_AND_MEAN) which includes winsock.h, and
@@ -270,33 +272,21 @@ namespace
 	{
 		if (szAction != NULL)
 		{
-			if (strcmp(szAction, "cascadePackagesStored") == 0)
+			if (strcmp(szAction, "cascadePackages") == 0)
 			{
-				return OracleEndpoints::cascadePackages(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_STORED);
+				return StateEndpoints::cascadePackages(iPlayer, iCity);
 			}
-			if (strcmp(szAction, "cascadePackagesOracle") == 0)
+			if (strcmp(szAction, "enablerOperating") == 0)
 			{
-				return OracleEndpoints::cascadePackages(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_ORACLE);
-			}
-			if (strcmp(szAction, "enablerOperatingStored") == 0)
-			{
-				return OracleEndpoints::enablerOperating(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_STORED);
-			}
-			if (strcmp(szAction, "enablerOperatingOracle") == 0)
-			{
-				return OracleEndpoints::enablerOperating(iPlayer, iCity, OracleEndpoints::ORACLE_SIDE_ORACLE);
+				return StateEndpoints::enablerOperating(iPlayer, iCity);
 			}
 			if (strcmp(szAction, "cityYield") == 0)
 			{
-				return OracleEndpoints::cityYield(iPlayer, iCity);
+				return StateEndpoints::cityYield(iPlayer, iCity);
 			}
-			if (strcmp(szAction, "capabilitiesStored") == 0)
+			if (strcmp(szAction, "capabilities") == 0)
 			{
-				return OracleEndpoints::teamCapabilities(iPlayer, OracleEndpoints::ORACLE_SIDE_STORED);
-			}
-			if (strcmp(szAction, "capabilitiesOracle") == 0)
-			{
-				return OracleEndpoints::teamCapabilities(iPlayer, OracleEndpoints::ORACLE_SIDE_ORACLE);
+				return StateEndpoints::teamCapabilities(iPlayer);
 			}
 		}
 		picojson::value::object o;
@@ -402,13 +392,10 @@ namespace
 		// a disagreement is a missed emit named by scope + channel + owner (state-repositories.md).
 		static const Route ROUTES[] =
 		{
-			{ "/computed/cascade/packages/stored",  "cascadePackagesStored",  "cascade packages as the events built them: per-scope flat/percent slots + receiver sums, by channel name. ?player=N[&city=M]; a city selector adds its workable plots" },
-			{ "/computed/cascade/packages/oracle",  "cascadePackagesOracle",  "the same packages recomputed from source into scratch -- diff against .../stored" },
-			{ "/computed/enabler/operating/stored", "enablerOperatingStored", "the per-city operating set the targeted propagation maintains: active/obsolete/provided + provider counts. ?player=N[&city=M]" },
-			{ "/computed/enabler/operating/oracle", "enablerOperatingOracle", "the same set recomputed from source into scratch -- diff against .../stored" },
+			{ "/computed/cascade/packages",  "cascadePackages",  "cascade packages as the events built them: per-scope flat/percent slots + receiver sums, by channel name. ?player=N[&city=M]; a city selector adds its workable plots" },
+			{ "/computed/enabler/operating", "enablerOperating", "the per-city operating set the targeted propagation maintains: active/obsolete/provided + provider counts. ?player=N[&city=M]" },
 			{ "/computed/city/yield",               "cityYield",              "the yield TOOLTIP's own census, served: every term of the §2a combine per yield, the refused deposits with the atom that refused them, and the city's traded/onSite bonus lists read LIVE. ?player=N[&city=M]" },
-			{ "/computed/capabilities/stored",      "capabilitiesStored",     "the empire ability union as the grantor facts built it: capabilities/canTrade/canWorkOn/canTradeOn. ?player=N" },
-			{ "/computed/capabilities/oracle",      "capabilitiesOracle",     "the same union recomputed from source into scratch -- diff against .../stored" }
+			{ "/computed/capabilities",      "capabilities",     "the empire ability union as the grantor facts built it: capabilities/canTrade/canWorkOn/canTradeOn. ?player=N" },
 		};
 
 		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));

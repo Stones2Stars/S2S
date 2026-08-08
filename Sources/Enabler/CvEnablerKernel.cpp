@@ -1027,19 +1027,20 @@ void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)
 	ek_recheckActiveSet(pCity, seeds);
 }
 
-// The WHOLE per-city operating set recomputed FROM SOURCE into a CALLER-OWNED buffer: the fixpoint's three
-// sets plus the provider ref-count the ripple bookkeeps. Two callers, one implementation -- the LOAD/creation
-// SEED points it at the city's own storage, and the ENDPOINT ORACLE points it at a scratch buffer it owns
-// (state-repositories.md, the endpoint oracle). Handing it the destination is what makes "the oracle cannot
-// repair the maintained set" structural rather than a discipline: it is never given the stored set at all.
-void EnablerKernel::recomputeOperatingSetInto(const CvCity* pCity, OperatingBuildings& kOut)
+// The WHOLE per-city operating set built FROM SOURCE: the fixpoint's three sets plus the provider ref-count
+// the ripple bookkeeps. Private to the LOAD SEED below, which is its ONE caller.
+// â It took a CALLER-OWNED buffer so the endpoint oracle could point it at scratch. That oracle is dead
+// ([superseded-ideas #33]) and the indirection died with it -- a `recompute...Into(buffer)` signature reads
+// like a live recompute path with several callers, which is exactly the wrong thing for the one full build
+// the load is allowed ([DEC-no-self-heal]: there is no other recompute, and none may be added).
+static void ek_buildOperatingSetInto(const CvCity* pCity, OperatingBuildings& kOut)
 {
 	kOut.active.clear();
 	kOut.obsolete.clear();
 	kOut.provided.clear();
 	kOut.providedCount.clear();
 	if (pCity == NULL) return;
-	recomputeOperatingBuildingsInto(pCity, kOut.active, kOut.provided, kOut.obsolete);
+	EnablerKernel::recomputeOperatingBuildingsInto(pCity, kOut.active, kOut.provided, kOut.obsolete);
 	for (std::set<int>::const_iterator it = kOut.active.begin(); it != kOut.active.end(); ++it)
 	{
 		const std::vector<int>* pProvidedBonuses = ek_provides(*it);
@@ -1060,7 +1061,7 @@ void EnablerKernel::recomputeOperatingSetInto(const CvCity* pCity, OperatingBuil
 void EnablerKernel::seedOperatingBuildings(const CvCity* pCity)
 {
 	if (pCity == NULL) return;
-	recomputeOperatingSetInto(pCity, pCity->m_operatingBuildings);
+	ek_buildOperatingSetInto(pCity, pCity->m_operatingBuildings);
 	// ANNOUNCE the computed verdict: every building this seed just resolved as OPERATING becomes processed-in.
 	// Without it the operating axis is silent on a load -- processBuilding is a play-time path, so a consumer
 	// keyed on the operating fact (the city's amenity fold) could never build. ⛔ This is NOT the banned

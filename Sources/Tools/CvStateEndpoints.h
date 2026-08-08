@@ -1,20 +1,22 @@
 #pragma once
-#ifndef CV_ORACLE_ENDPOINTS_H
-#define CV_ORACLE_ENDPOINTS_H
+#ifndef CV_STATE_ENDPOINTS_H
+#define CV_STATE_ENDPOINTS_H
 
 //
-//	OracleEndpoints -- the /computed documents of the derived-state planes, TWO PER PLANE: the STORED values
-//	the events built, and the ORACLE's fresh from-source recompute (state-repositories.md, the endpoint
-//	oracle; docs/specs/http-endpoints.md for the routes).
+//	StateEndpoints -- the /computed documents of the derived-state planes: what the EVENTS BUILT, rendered for
+//	a reader (docs/specs/http-endpoints.md for the routes).
 //
-//	⛔ THE DLL NEVER COMPARES THEM. Each side is rendered by the SAME renderer into the SAME shape, so an
-//	external consumer fetches both and diffs them field by field; a disagreement is a MISSED EMIT, named by
-//	scope + channel + owner. It is an OBSERVATION a reader makes about two served numbers, never a happening --
-//	no diff, no log line, no event, no field exists for it in here. A PULL cannot grow the consumer that
-//	"handles" a value known to be wrong by correcting it; a PUSH would ([DEC-no-self-heal]).
+//	⛔ THERE IS NO ORACLE SIDE, AND ONE IS NEVER COMING BACK ([superseded-ideas #33]). Each plane used to serve
+//	a second document that recomputed the same values FROM SOURCE, for an external consumer to diff as a
+//	missed-emit tripwire. It cannot work: reproducing event-built state means replaying the FULL EVENT CHAIN,
+//	and an endpoint has no way to build one -- so the recompute answered a number that was never comparable,
+//	and diffing it produced confident nonsense at scale (a measured run: ~1500 "divergent" city slots, the
+//	recompute 17-29x high, all of it the instrument). It is the project's most-revived dead idea.
 //
-//	The oracle side always recomputes into a buffer this module owns and hands in, so serving it can never
-//	write into the stored state -- that is structural, not a discipline to remember.
+//	⚖ WHAT THIS SURFACE IS FOR (owner) -- ONE LEG OF THREE, and two legs is not a check: the LOGS say what
+//	landed, the JSON INFO says what a source is authored to deposit, and THIS says WHAT STATE EXPECTS -- who
+//	holds what, which gates hold, what the counts are. A deposit is conditioned and scaled, so the authored
+//	number alone predicts nothing; correctness is all three agreeing, attributed to a named source with numbers.
 //
 //	These render on the GAME THREAD (the server's single-slot mailbox calls them); they read live game objects
 //	and are read-only. Purely-organizational static-methods class (patterns.md).
@@ -22,24 +24,16 @@
 
 #include "Defines/CvString.h"
 
-class OracleEndpoints
+class StateEndpoints
 {
 public:
-	// Which of the two documents to render. The shape is identical either way -- only where the numbers come
-	// from differs (the stored slots, or a from-source recompute into scratch).
-	enum OracleSide
-	{
-		ORACLE_SIDE_STORED = 0,
-		ORACLE_SIDE_ORACLE
-	};
-
 	// The cascade PACKAGES plane: the scoped objects' channel-indexed flat/percent slots + receiver sums.
 	// iPlayer -1 = the active player. iCity -1 = every city of that player (no plot rows); a city id restricts
 	// the document to that city AND adds its workable plots' packages, the plot scope's way in.
-	static CvString cascadePackages(int iPlayer, int iCity, OracleSide eSide);
+	static CvString cascadePackages(int iPlayer, int iCity);
 
 	// The ENABLER's per-city operating set: active / obsolete / provided + the provider ref-count.
-	static CvString enablerOperating(int iPlayer, int iCity, OracleSide eSide);
+	static CvString enablerOperating(int iPlayer, int iCity);
 
 	// THE CITY YIELD CENSUS -- the same decomposition the yield TOOLTIP renders, served.
 	// ⚖ A tooltip IS a census (owner), so the two must be the same document or they are two answers to one
@@ -52,7 +46,7 @@ public:
 	static CvString cityYield(int iPlayer, int iCity);
 
 	// The TEAM CAPABILITY union of iPlayer's team (-1 = the active player's team).
-	static CvString teamCapabilities(int iPlayer, OracleSide eSide);
+	static CvString teamCapabilities(int iPlayer);
 };
 
-#endif // CV_ORACLE_ENDPOINTS_H
+#endif // CV_STATE_ENDPOINTS_H

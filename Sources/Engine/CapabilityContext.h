@@ -79,7 +79,6 @@ public:
 	// Recompute the whole union FROM SOURCE into a caller-owned store, with no gate -- what an endpoint serves
 	// beside the union the facts built, for an EXTERNAL consumer to diff. It is never handed the stored union, so
 	// serving it cannot repair anything ([state-repositories.md] § THE RECOMPUTE IS AN ENDPOINT ORACLE).
-	static void recomputeInto(const CvPlayer& kPlayer, CapabilityContext& kOut);
 
 	// The served ENUMERATION -- the four dictionaries, so a renderer names what it holds rather than probing
 	// every minted id. Read-only; the maintenance verb is the fold below.
