@@ -333,3 +333,19 @@
     ⚠ NOT the same thing as the golden age's YIELD effects (the per-plot threshold bonus, the player golden-age
     yield, the golden-age commerce), which are live, authored and STAY
     ([golden-age.md](../reference/golden-age.md)).
+32. **THE `onTurnEnd` FREE-PROMOTION HAPPENING** — the authored token that carried every free-promotion entry
+    (buildings and traits alike), asserting that promotions are granted to the units present at END OF TURN
+    *(dead — owner: it "was a thing because repeatable grants could not do what triggers can")*.
+    ⚑ **It never described the engine.** The applier has always been TARGETED PROPAGATION off two crossing
+    facts — a unit ENTERING (`SEVT_UNIT_ENTERED_CITY`) and a source going ACTIVE
+    (`SEVT_CITY_BUILDING_ACTIVATED`) — which together maintain the relation *(active source × unit present)*.
+    The per-turn rescan it replaced measured **42,336 assign calls in ONE turn**, nearly all re-checking
+    promotions the units already held: the blanket-recompute shape
+    [DEC-no-self-heal](decisions.md#dec-no-self-heal) rejects.
+    ⚑ The token survived because the trigger plane could not name the real happening when it was written; once
+    it could, the data said one thing while the engine did another. The happening is now
+    `onUnitEnteredCity`, spelled once (`TRIGGER_UNIT_ENTERED_CITY`) because three sites string-match it.
+    ⛔ **Never re-add an end-turn sweep, or a per-turn rescan, for free promotions.**
+    ⚠ **NOT the same thing as the `onTurn` trigger, which is LIVE and needed (owner)** — a genuine recurring
+    roll (the property-scaled criminal spawn, [json.md §5](../specs/json.md)). Retiring one fossilised token is
+    not a trim of the cadence vocabulary, and reading it that way would take a working mechanic with it.

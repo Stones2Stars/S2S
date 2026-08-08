@@ -367,7 +367,17 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
   `{IS_HEADQUARTERS: CORPORATION_X}` (the city is that corporation's HQ — the corp analog of `{IS_HOLY_CITY: …}`;
   carries the corp-HQ revenue condition) ·
-  `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (GAME YEARS since built -- what the player has always been told: *"doubles in 1000 years"*. The city stores the build YEAR (`getGameTurnYear`) and every authored threshold is a year count; a turn's year is derived, never stored ([engine.md](../reference/engine.md)), so nothing needs converting) ·
+  `{HAS_CORPORATION: CORPORATION_X}` ·
+  **`{CIVIC_CATEGORY: CIVICOPTION_X}`** (the CIVIC whose value is being resolved sits in that category — the gate a
+  trait's *"religion civics cost no upkeep"* authors, as `upkeep.empire.civic.percent: -100` conditioned on it).
+  ⛔ It carries the **FULL `CIVICOPTION_` id**, never a bare `RELIGION`, so it can never be read as a `RELIGION_`
+  type. ⚑ It is a SOURCE-SLOT predicate ([contexts.md](../architecture/contexts.md) § THE SOURCE SLOTS): the walk
+  resolving a civic sets the slot, and with no civic in hand it answers **FALSE** — resolving it against whichever
+  civic a walk reached last would be worse than declining. ⚠ The legacy shape was a target-keyed
+  `upkeep.civicOptions.{CIVICOPTION_X}` member, which is the condition-as-member rollerskate
+  ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates)) AND matched no kind
+  row, so it parsed, reported `unkinded-member` and produced nothing ·
+  `{latitude:{min,max}}` · `{existedFor:{min:N}}` (GAME YEARS since built -- what the player has always been told: *"doubles in 1000 years"*. The city stores the build YEAR (`getGameTurnYear`) and every authored threshold is a year count; a turn's year is derived, never stored ([engine.md](../reference/engine.md)), so nothing needs converting) ·
   `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
   the default threshold, so an entity needing a *larger* sea body carries the size here).
 - **membership sugar** `{ terrain|feature|bonus: [TYPE,…] }` = "the plot's terrain/feature/bonus is one of these";
@@ -725,8 +735,16 @@ declare the number. Enforcement reads the [tally](tally.md) count.
   > handed over AT founding is a grant. Neither is ever a bespoke section.
 - **Recurring / chance-rolled / state-conditioned handouts are NOT grants — they are `triggers` entries**
   (trigger → chance → `action.grant`): the old `repeatable` wrapper and its `interval` field dissolve into the
-  trigger; the old building `freePromotions` (promotions to every unit present at end-turn — one mechanism, no
-  on-move flag) is a `triggers` entry whose action promotes the units present.
+  trigger; `freePromotions` is a `triggers` entry whose action promotes the units present.
+  > **⚖ ITS HAPPENING IS `onUnitEnteredCity` — there is NO per-turn sweep on this plane (owner).** The applier is
+  > TARGETED PROPAGATION off the unit entering, with the source going ACTIVE completing the same relation for
+  > units already present — the two-leg fold shape. The rescan that shape replaced measured 42,336 assign calls
+  > in ONE turn, nearly all re-checking promotions the units already held, so an end-turn pass is not to be added.
+  > ⚑ `action.promote.units: "present"` states the RELATION *(active source × unit present)*; the happening states
+  > when it is re-checked. Both legs together are what keep it current — neither is a cadence.
+  > ⛔ **The genuine per-turn trigger `onTurn` is a DIFFERENT thing and STAYS (owner)** — a recurring roll is a real
+  > happening, and the property-scaled criminal spawn above is exactly it. Do not read this as trimming the turn
+  > trigger; it retires ONE fossilised token, not the cadence vocabulary.
 - **Property pulses are `triggers` entries carrying spatial intent in the action** — a per-turn `PROPERTY_*`
   change an entity emits (the engine's `PropertyManipulator`):
   `{ "trigger": "onTurn", "action": { "PROPERTY_AIR_POLLUTION": -5, "on": "plot", "relation": "near",

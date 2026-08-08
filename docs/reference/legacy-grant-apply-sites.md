@@ -238,10 +238,22 @@ religionCount + corporationCount + greatPeople*2`, scaled by `(100 + culturePerc
 |---|---|---|
 | the unit info's own `getFreePromotions` — fed from **`grants.promotions`** (`CvUnitInfo.cpp:684`) | set at creation, never removed | **GRANT — this machine** |
 | the player free-promotion registry, keyed by unit type AND by unitcombat (`CvPlayer::isFreePromotion`) | written **ONLY** by `CvPlayer::applyEvent` (`:21245`) | **OUT OF SCOPE — random events** (and genuine one-shot event-store state) |
-| trait `isFreePromotionUnitCombats` | explicitly REMOVED when the trait is lost (`setFreePromotion`'s `!bAdding` branch) | **MODIFIER — alive-with-source** ([modifier.md](../specs/modifier.md)), the `freeSpecialists` precedent |
+| trait `isFreePromotionUnitCombats` | removed when the trait is lost (`setFreePromotion`'s `!bAdding` branch) | **TRIGGER/GRANT — this machine** (owner) |
 
-Moving the whole function would import a modifier AND an out-of-scope event store into the grants machine — the
-exact §1 mistake. Only the `grants.promotions` leg migrates.
+Moving the whole function would import an out-of-scope event store into the grants machine — the exact §1
+mistake. The unit-info and TRAIT legs migrate; the event-registry leg does not.
+
+> **⚖ FREE PROMOTIONS LIVE ON THE TRIGGER/GRANT PLANE — EVERY LEG, INCLUDING THE TRAIT'S (owner).** The
+> alive-with-source lifetime does NOT re-home this one to the modifier plane: a free promotion is a PAYLOAD handed
+> to units, not a magnitude deposited into a channel, and there is no `freePromotions` modifier family for it to
+> land in. It is the [json.md §5](../specs/json.md) `triggers` shape the BUILDING leg already uses — promotions to
+> the units present at END-TURN, one mechanism.
+> ⛔ So the removing-the-source-removes-it test ([json.md §5](../specs/json.md)) does not decide the PLANE here;
+> it decides `grants`-vs-`freeSpecialists` for a SPECIALIST, and reading it as a general plane test is what put
+> this row on the modifier plane.
+> ⚠ What stays banned is unchanged and is a different question: **do not restore a trait-side
+> promotion×unitcombat MAP** ([todo.md](../plans/structural-cleanup/todo.md)) — the legacy mechanism. The plane is
+> the trigger; the per-class filter is not that map's revival.
 
 **MODIFIER, not grant** — building `getFreeTraitTypes` ("conferred while active"); vote
 `tradeRoutes`/`isFreeTrade`/`isNoNukes`/`forceCivic` (reversed on repeal); vote-source religion yields;

@@ -100,8 +100,6 @@
   which lands in each PLAYER's package ([json.md §3.3](../../specs/json.md)). ⚑ Curator fix + regen in the same
   work item ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
 
-- Mint the `garrison` kind in the culture vocabulary. The curator already emits `culture.unit.garrison.flat`
-  and units author it, but no kind exists, so the deposits reach no getter.
 - Attach the ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`,
   `combat.nukeInterception`, `diplomacy.techShare`) to its trigger's `chance`
   ([triggers.md](../../specs/triggers.md)).
@@ -290,12 +288,14 @@
   ([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)); settle it by
   which surface the spec names and which entries each one actually reaches.
 
-- **The coverage census re-derives key classification and has drifted from the parse path.** It calls
-  `jsonClassifyKey` directly, which never learned about the reserved classification-block chain `CvInfo::mapFrom`
-  runs first, so a `§8` block reports as an unknown key on every load. It is a FALSE POSITIVE sitting on the one
-  line that would report a genuinely dropped section ([validation.md](../../specs/validation.md): an instrument
-  that cannot report a fault is the thing that makes every data check meaningless — and one that reports a fault
-  that is not there trains the reader to stop looking).
+- **The unresolved-FK census reports the §3.1 CATCH-ALL TOKENS as unresolved ids.** `CITY`, `TEAM`,
+  `POPULATION`, `ERA`, `SPECIALIST`, `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`, the slider rates
+  (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), `CULTURE_PERCENTAGE`,
+  `DISTANCE_TO_GOVERNMENT_CENTER`, `CORPORATION_LEVEL` are engine TOKENS ([json.md §3.1](../../specs/json.md)),
+  not entity ids — `jsonResolveId` is being handed them and reports each as a miss. They are the majority of the
+  census, so the genuinely unresolved ids are buried in false positives. Same disease the `amenities` unknown-key
+  line had: the instrument does not know a vocabulary the parse path does. ⚠ Settle the `TAG_*` entries with it —
+  those are classification ids minted at load, so whether they can resolve at FK time is the same question.
 
 - **Give citizen plot ASSIGNMENT the trade-route treatment — it is a poll, not a trigger.** The work is driven by
   hand-wired `AI_setAssignWorkDirty` setters across the engine, drained by a FRAME-LOOP sweep over every city of
@@ -347,8 +347,13 @@
   kind table, so the deposit is parsed, reported and then produces nothing. ⛔ **Read that census before
   anything else on this** — it is the authoritative list and it costs one grep of the load log.
   Each one resolves to exactly one of three dispositions, and they are NOT interchangeable:
-  - **a genuine KIND** that needs its row minted (the combat defensive/capture members, `upkeep.upgradePrice`,
-    `hurry.cost`, `gold.headquarters`, `culture.garrison`, `happiness.nonStateReligion`);
+  - **a genuine KIND** that needs its row minted (the combat defensive/capture members, `gold.headquarters` and
+    `culture.headquarters` — both riding the corporation rework);
+    ⚠ **Check the address before minting: three of this list were NOT kinds.** `upkeep.upgradePrice` was the
+    wrong FAMILY (an upgrade price is a COST — `costs.empire.upgrade` already existed);
+    `happiness.nonStateReligion` cannot be a kind at all (wellbeing mints ZERO kinds, ruling 12) and is the
+    §3.7 counted-kind filter `{religion: "!IS_STATE_RELIGION"}`; and `cityCapture.resistance` is DELIBERATELY
+    unkinded (ruling 16, trigger-plane). Minting a row for any of them would have carved the rollerskate in;
   - **a VARIANT that must become a CONDITION, never a kind** — `tradeRoutes.foreign` / `.coastal` are Ruling 11
     verbatim (*"the variant members are CONDITIONS, re-authored as predicates on the curator batch — never
     kinds"*), so this is the ruling not being implemented rather than a new decision. ⚠ The two are not the same
@@ -479,6 +484,13 @@
   ([modifier.md §6](../../specs/modifier.md), the worked case) — but `CvPlot::movementCost` takes the point read,
   which serves the unconditioned entries only, so the gated delta applies to nobody. ⚑ It wants the conditioned
   tail evaluated against the asking team, the same shape every other conditioned read uses.
+
+- Set `ctx.civic` where a CIVIC's value is resolved, so `{CIVIC_CATEGORY: CIVICOPTION_X}` can answer. The
+  predicate, the ctx slot and the authored deposit all exist (a trait waiving religion-civic upkeep authors
+  `upkeep.empire.civic.percent: -100` gated on it), but no walk sets the slot, so it answers FALSE everywhere and
+  the waiver is inert. ⚑ FALSE is the CORRECT unset answer (contexts.md § THE SOURCE SLOTS) — the gap is the
+  consumer, not the predicate. The civic-upkeep resolve is the walk that knows the civic; it sets the slot on a
+  LOCAL COPY of the ctx, exactly as the religion and sourceBuilding slots are set.
 
 - Apply the PER-CITY GATES AT THE COMBINE. [modifier.md §1](../../specs/modifier.md) specifies the realized value
   as the sum of the scope packages **with the per-city gates (state-religion-in-city, coastal, connected, area
@@ -859,22 +871,16 @@
   NPC/barbarian starts.
 - Retire the engine start selection (the whole-database scan + AI scoring, and the per-role starting counts)
   once packages carry the identities.
-- Finish the TRAIT free-promotion path on the trigger plane. ⛔ The DATA COMES FIRST: no trait authors a promote
-  action today, and no `units.unitCombats` filter exists in the data, the compiled entry or the parser — the
-  engine half below cannot be verified until a trait authors one. Two engine gaps then remain:
-  1. the per-unit promote pass walks only the city's OPERATING BUILDINGS, so no trait entry is ever consulted —
-     it wants the player's HELD-TRAIT walk beside it (the era-advance resolver is that walk, and the same
-     PRESENCE read, never the banned own-data inversion);
-  2. the promote applier IGNORES the entry's `units.unitCombats` filter, so a trait that arms one combat class
-     would promote every unit in the city. ⛔ Landing (1) without (2) is worse than landing neither.
-  ⚑ The CADENCE is the ruled one and is deliberately NOT the legacy one ([json.md §5](../../specs/json.md):
-  promotions to the units present at END-TURN, one mechanism) — legacy instead fanned every unit of the player
-  the moment the trait moved. ⚠ So the legacy removal half has no counterpart either: a promotion that stops
-  being valid is dropped by the PROMOTION SYSTEM itself ([triggers.md](../../specs/triggers.md)), which is why
-  the payload plane needs no take-away verb.
-  ⚠ Until it lands, trait-granted promotions reach nobody, and `CvUnit::setFreePromotion`'s trait legs dangle
-  naming exactly this. ⛔ Do not answer them by restoring a trait-side promotion×unitcombat map: that is the
-  legacy mechanism whose data has already moved.
+- Walk the player's HELD TRAITS in the per-unit promote pass. `tr_promoteOneUnit` walks the city's OPERATING
+  BUILDINGS only, so no trait entry is ever consulted and trait free promotions reach nobody — the data is
+  authored and in the ruled shape, so this is the whole of what is missing. The era-advance resolver is that
+  walk, and the same PRESENCE read, never the banned own-data inversion.
+  ⚑ The per-class filter needs NO new mechanism: it is the entry's own `enabled: "IS_<TAG>"` predicate, which
+  `tr_promoteFromEntries` already evaluates for the building leg. ⛔ Do not answer this by restoring a
+  trait-side promotion×unitcombat MAP — that is the legacy mechanism.
+  ⚠ The legacy removal half has no counterpart: a promotion that stops being valid is dropped by the PROMOTION
+  SYSTEM itself ([triggers.md](../../specs/triggers.md)), which is why the payload plane needs no take-away verb.
+  ⚠ `CvUnit::setFreePromotion`'s trait legs dangle naming exactly this.
 
 ## Scale conversion
 
