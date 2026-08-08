@@ -1094,10 +1094,16 @@ efficiency defect to reject in review"*).
 **PROVEN — measured on a real save, from the spine log's own timestamps:**
 
 ```
-gameLoadStarted              452.453
-gameLoadFinished             507.750     <- the whole save read, ~55s
-first cityBuildingActivated  507.766     <- 16ms AFTER the bracket closed
+gameLoadStarted   452.453      gameLoadFinished 507.750   (~55s of save read, ONE bracket)
+
+fact                     in-read     after
+cityBuildingAdded        165,862         0
+cityBuildingProcessed     32,309         0
+cityBuildingActivated          0   101,894    <- every operating verdict, after the bracket
+depositApply                   0     9,575    <- so every cascade deposit lands there too
 ```
+⚑ The INPUT facts are all present in-read. Nothing is missing from the emit side — the building's presence is
+announced 165,862 times while the stream runs.
 
 **Not one** operating verdict is announced during the save read. All ~102k `cityBuildingActivated` facts fire
 after `gameLoadFinished`, emitted by `EnablerKernel::seedOperatingBuildings` — a FULL per-city recompute called
@@ -1117,11 +1123,18 @@ shape `CityContext` already uses for the membership fold — not a recompute.
 ⛔ **Owner: *"the entire system is set up to be event driven from start to end"*, and *"recomputing would
 literally break the fold chain."***
 
-**PROVEN — the fold-chain hazard is real and ordering-dependent.** `CityContext.amenities` folds over the city's
-**OPERATING** buildings and builds at `GAME_LOAD_FINISHED` ([contexts.md](../../architecture/contexts.md)). The
-operating facts arrive inside that same bracket, from a different consumer. Which of the two runs first decides
-whether the fold sees an empty set and is then corrected by 102k facts, or double-applies. Correctness resting on
-consumer registration order is the thing the band contract exists to avoid, not to rely on.
+**⛔ THE BOTTOM LINE (owner): CASCADE AND ENABLER MUST BUILD ON THE SAME SEEDS.** They do not. The enabler's
+consumer is LOAD-ACTIVE and maintains its domains from the in-read facts; the cascade never sees an operating
+verdict until the load-end recompute announces 102k of them at once. One machine is event-built and the other is
+recompute-built, off the same save.
+
+⚠ **ORDER IS NOT THE HAZARD, and framing it that way sends the fix the wrong way (owner):** *"everything in the
+individual packages is always additive in some capacity, so it should not matter which order they enter."* A
+package is Σflat / Σpercent, so arrival sequence is irrelevant by construction. What matters is that each fact
+arrives **EXACTLY ONCE**. ⇒ The danger of a recompute beside an event-built set is therefore DOUBLE APPLICATION
+(or a silent withdrawal that never happens), never a race — which is also why it cannot be fixed by ordering the
+consumers, and why [DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed) says such a recompute
+"may never survive beside the setters".
 
 ⚠ **RULED OUT — this is NOT the "two-pass load".** [engine.md](../../reference/engine.md)'s two-pass rule is the
 JSON INFO registration (register every type→id, then `mapFrom`, so same-category forward FK refs resolve). It is
