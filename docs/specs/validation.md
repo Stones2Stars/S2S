@@ -96,6 +96,20 @@ banned shortcut — 99% of the time the value DOES reconcile once the missing so
 > ([DEC-no-guessing], [DEC-kraken]). Finish the data (curators + JSON) first, then build on solid, known data. This is
 > the specific case of the general rule that nothing is "deferred" ([DEC-no-deferred](../architecture/decisions.md#dec-no-deferred)).
 >
+> **⛔ AND IT IS AN ORDERING WITHIN THE WORK ITEM, NOT ONLY A PRIORITY BETWEEN THEM — THE CURATOR UPDATE GOES
+> FIRST, ALWAYS (owner): *"every time we have waited with a curator update, without fail, it has bitten me."***
+> Not "usually", not "as a rule of thumb" — the owner reports it has cost them EVERY time, which is why this is
+> stated as a sequence rather than a preference. ⇒ When a work item touches both the data and its consumer,
+> the curator change + regen land BEFORE the engine side, even when the engine side is the part that looks
+> urgent and the curator change looks trivial.
+> ⚑ **The mechanism, so it is not mistaken for ceremony:** an engine consumer written against the data's
+> EVENTUAL shape is written against an assumption, and the assumption is invisible once it compiles — so the
+> two halves drift and the drift surfaces later, as a wrong number nobody can attribute. Landing the data first
+> makes the consumer's input a FACT it can be checked against.
+> ⚠ It also decides what a half-finished item leaves behind: data ahead of its consumer is INERT and reported
+> (the `unkinded-member` / unconsumed censuses name it on every load), while a consumer ahead of its data is a
+> silent wrong answer. Of the two incomplete states, only the first announces itself.
+>
 > **⛔ Touching legacy is a LAST RESORT, never an agent's judgement call.** Only after a source is FULLY mapped — every
 > writer read, the value reproduced and shown to be genuinely non-deterministic (history/order-dependent, demonstrated
 > across MANY instances, with the engine code proving why) — may "streamline the legacy to be deterministic" even be
