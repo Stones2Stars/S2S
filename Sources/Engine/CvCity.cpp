@@ -10180,7 +10180,7 @@ bool CvCity::isFreePromotion(PromotionTypes ePromo) const
 {
 	PROFILE_EXTRA_FUNC();
 	// "Does an operating building here hand this promotion out unconditionally?" -- read off the `triggers`
-	// onTurnEnd promote entries. UNCONDITIONAL only: a conditioned entry may not apply to a given unit, and this
+	// onUnitEnteredCity promote entries. UNCONDITIONAL only: a conditioned entry may not apply to a given unit, and this
 	// answers a blanket question. The operating set already means present AND operating, so the old
 	// present-minus-disabled walk is subsumed.
 	const OperatingBuildings& ob = EnablerKernel::operatingBuildings(this);

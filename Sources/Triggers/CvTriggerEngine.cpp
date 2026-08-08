@@ -200,7 +200,7 @@ static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries
 //
 // It also closes a live defect: a unit that WALKED into a city never gained its promotions at all -- only units
 // trained there did -- because the path that should have handled it was gated on a flag hardcoded to false.
-// Apply ONE source's `onTurnEnd` promote entries to ONE unit -- the whole free-promotion plane, read off the
+// Apply ONE source's promote entries to ONE unit -- the whole free-promotion plane, read off the
 // TRIGGER entries the data actually authors (264 of them) -- the ONE place the payload lives, so every route
 // (trained here, walked in, a building completing) lands through this single applier.
 //
@@ -229,7 +229,7 @@ static int tr_promoteFromEntries(CvCity* pCity, CvUnit* pUnit, const CvInfo* j)
 	for (size_t i = 0; i < entries.size(); ++i)
 	{
 		const CvTriggerEntry* pEntry = entries[i];
-		if (pEntry->happening != "onTurnEnd" || pEntry->promotePromotions.empty()) continue;
+		if (pEntry->happening != TRIGGER_UNIT_ENTERED_CITY || pEntry->promotePromotions.empty()) continue;
 		if (pEntry->condition != NULL && !cascadeEvalCondition(pEntry->condition, ec, kFlags)) continue;
 		for (size_t k = 0; k < pEntry->promotePromotions.size(); ++k)
 		{
@@ -806,7 +806,7 @@ static void tr_applyCityPerTurn(CvCity* pCity)
 		for (size_t i = 0; i < entries.size(); ++i)
 		{
 			const CvTriggerEntry* pEntry = entries[i];
-			// This is the onTurn plane only -- the onTurnEnd promote entries ride the targeted-propagation
+			// This is the onTurn plane only -- the promote entries ride the targeted-propagation
 			// free-promotion path (SEVT_CITY_BUILDING_ACTIVATED / SEVT_UNIT_ENTERED_CITY), never a per-turn rescan.
 			if (pEntry->happening != "onTurn") continue;
 			// RECURRENCE (json §3.8 / §5): "onTurn" = every turn; {"onTurn": N} = every Nth.

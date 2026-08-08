@@ -23,12 +23,22 @@ class CvGrants;
 
 // One `triggers` entry. Exactly ONE action verb group is live per entry (the authored §5 shapes:
 // promote / grant / heal / property delta).
+
+// The FREE-PROMOTION happening, in ONE place because three sites string-match it and a typo in any of them
+// silently grants nothing. It is the unit ENTERING the city: the applier is targeted propagation off
+// SEVT_UNIT_ENTERED_CITY, with a source going ACTIVE completing the same relation for units already present.
+// ⛔ There is NO per-turn sweep on this plane and none is to be added: the rescan it replaced measured 42,336
+// assign calls in ONE turn, nearly all of them re-checking promotions the units already held.
+// ⚠ NOT to be confused with the genuine recurring trigger `onTurn`, which is a real happening and STAYS (the
+// property-scaled criminal spawn, json.md §5).
+extern const char* const TRIGGER_UNIT_ENTERED_CITY;
+
 class CvTriggerEntry
 {
 public:
 	// --- trigger: the WHEN/WHY, in one of THREE forms ---
-	std::string happening;         // the on-token ("onTurn" / "onTurnEnd" / ... -- the spine's DOMAIN happenings
-	                               // in authoring form, an OPEN registry); "" = state-conditioned only
+	std::string happening;         // the on-token ("onTurn" / "onUnitEnteredCity" / ... -- the spine's DOMAIN
+	                               // happenings in authoring form, an OPEN registry); "" = state-conditioned only
 	// The IMPLICIT happening: this entry came from the entity's own `grants` block, so it fires on the source's
 	// own CONSIDERED ACTION -- a building's construction, a tech's research, a civic's adoption, a settler's
 	// founding (json.md §5). It is never AUTHORED (a modder writes a plain `grants` block and no trigger field),

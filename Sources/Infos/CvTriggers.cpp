@@ -1,7 +1,7 @@
 //
 //	CvTriggers -- see the header. The parse is grounded in the authored data (the `triggers` arrays across
 //	Assets/Data; every shape below is authored, verified against the live corpus):
-//	  { "trigger": "onTurnEnd", "action": { "promote": { "promotions": ["PROMOTION_X"], "units": "present" } } }
+//	  { "trigger": "onUnitEnteredCity", "action": { "promote": { "promotions": ["PROMOTION_X"], "units":"present" } } }
 //	  { "trigger": "onTurn",    "action": { "heal": 5, "unitCombat": "UNITCOMBAT_X" } }
 //	  { "trigger": "onTurn",    "action": { "heal": "full", "count": 1 } }
 //	  { "trigger": "onTurn",    "action": { "PROPERTY_X": -3, "on": "plot", "relation": "near", "distance": 1 } }
@@ -19,6 +19,9 @@
 #include "CvModEntry.h"         // jsonParsePer -- the ONE §3.7 `per` parser (chance.per)
 #include "CvJsonParse.h"            // jsonResolveId / jsonX100 / jsonNoteUnconsumed
 #include <ctype.h>
+
+// The ONE spelling of the free-promotion happening (CvTriggers.h states what it means).
+const char* const TRIGGER_UNIT_ENTERED_CITY = "onUnitEnteredCity";
 
 CvTriggerEntry::CvTriggerEntry()
 	: consideredAction(false), happeningInterval(1), condition(NULL),

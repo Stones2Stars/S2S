@@ -23171,13 +23171,14 @@ void CvUnit::setFreePromotion(PromotionTypes ePromotion, bool bAdding, TraitType
 			}
 		}
 	}
-	// The TRAIT legs are gone from both halves. A trait's free promotions are a MODIFIER (alive-with-source --
-	// legacy-grant-apply-sites.md par.4), and the data has already moved to the trigger plane: the curated traits
-	// author `onTurnEnd` -> `action.promote` carrying the promotions AND a units.unitCombats filter
-	// (triggers.md). ⛔ Do NOT answer a dangling trait promotion by restoring a trait-side promotion x unitcombat
-	// map -- that is the legacy mechanism whose data moved, and it swept the whole trait registry per promotion
-	// to do it. Until the trigger engine's promote pass consults held traits, trait-granted promotions reach no
-	// unit; that hole is tracked, and is the correct exposed state rather than a legacy path kept breathing.
+	// The TRAIT legs are gone from both halves: a free promotion is a TRIGGER/GRANT payload (owner), so the
+	// curated traits author `onUnitEnteredCity` -> `action.promote`, each entry carrying its own
+	// `enabled: "IS_<TAG>"` predicate for the classes it arms -- the same shape the BUILDING leg uses.
+	// ⛔ Do NOT answer a dangling trait promotion by restoring a trait-side promotion x unitcombat map -- that is
+	// the legacy mechanism whose data moved, and it swept the whole trait registry per promotion to do it.
+	// Until the trigger engine's promote pass consults HELD TRAITS (it walks the city's operating buildings
+	// only), trait-granted promotions reach no unit; that hole is tracked, and is the correct exposed state
+	// rather than a legacy path kept breathing.
 }
 
 void CvUnit::doSetFreePromotions(bool bAdding, TraitTypes eTrait)
