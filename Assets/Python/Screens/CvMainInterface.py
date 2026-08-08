@@ -3179,7 +3179,7 @@ class CvMainInterface:
 			#Corporations
 			for i in xrange(self.iNumCorporationInfos):
 				if STATE.hasCorporation(iCityOwner, iCityID, i):
-					for eBonus in GC.getCorporationInfo(i).getPrereqBonuses():
+					for eBonus in INFO.getIdList("CORPORATION_", i, IdListSlot.PYLIST_CONSUMED_BONUSES):
 						if eBonus == iBonus:
 							szRightBuffer += u'%c' %(TEXT.getSymbolChar("CORPORATION_", i))
 			screen.appendTableRow(ID)
@@ -3956,11 +3956,10 @@ class CvMainInterface:
 		if iBestUnit > -1 and not self.isUnitMaxedOut(iBestUnit, InCity):
 			szRow = str(n)
 			screen.attachPanelAt(PnlRight, ROW + szRow, "", "", True, False, ePanelBlack, 0, y - 4, w3, iSize + 2, eWidGen, 1, 2)
-			unitInfo = GC.getUnitInfo(iBestUnit)
-			szTxt = uFont3 + TRNSLTR.getText("TXT_KEY_POPUP_RECOMMENDED", (unitInfo.getDescription(), city.getUnitProductionTurnsLeft(iBestUnit, 0), "TXT_KEY_UNIT_SETTLER"))
+			szTxt = uFont3 + TRNSLTR.getText("TXT_KEY_POPUP_RECOMMENDED", (INFO.getDescription("UNIT_", iBestUnit), city.getUnitProductionTurnsLeft(iBestUnit, 0), "TXT_KEY_UNIT_SETTLER"))
 
 			PF = "WID|UNIT|CityWork%d"
-			screen.addDDSGFCAt("", ROW + szRow, unitInfo.getButton(), -2, 0, iSize, iSize, eWidGen, 1, 2, False)
+			screen.addDDSGFCAt("", ROW + szRow, INFO.getButton("UNIT_", iBestUnit), -2, 0, iSize, iSize, eWidGen, 1, 2, False)
 			screen.setImageButtonAt((PF % iBestUnit) + "|img" + szRow, ROW + szRow, "", 0, 4, w3, iSize + 3, eWidGen, 1, 2)
 			screen.setTextAt((PF % iBestUnit) + "|" + szRow, ROW + szRow, szTxt, 1<<0, iSize + 4, iSize/2 - dy/2, 0, eFontGame, eWidGen, 1, 2)
 			n += 1
@@ -4250,7 +4249,7 @@ class CvMainInterface:
 				if iMissionCount > 1:
 					for i in xrange(iMissionCount):
 						szTxt2 = ""
-						if GC.getMissionInfo(CySelectionGroup.getMissionType(i)).isBuild():
+						if INFO.getIntrinsic("MISSION_", CySelectionGroup.getMissionType(i), IntrinsicSlot.PYINT_IS_BUILD) > 0:
 							if not i:
 								szTxt1 = INFO.getDescription("BUILD_", CySelectionGroup.getMissionData1(i))
 								szTxt2 = TRNSLTR.getText("INTERFACE_CITY_TURNS", (CySelectionGroup.plot().getBuildTurnsLeft(CySelectionGroup.getMissionData1(i), 0, 0), ))
@@ -5761,9 +5760,8 @@ class CvMainInterface:
 
 						elif TYPE == "BUILDING":
 							iOrder = OrderTypes.ORDER_CONSTRUCT
-							CvBuildingInfo = GC.getBuildingInfo(iType)
-							szTxt = CvBuildingInfo.getDescription()
-							iSpeci = CvBuildingInfo.getSpecialBuildingType()
+							szTxt = INFO.getDescription("BUILDING_", iType)
+							iSpeci = INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_SPECIAL_BUILDING)
 							if iSpeci > -1:
 								self.bUpdateCityTab = self.iCityTab > CITYTAB_ADMIN
 							else:

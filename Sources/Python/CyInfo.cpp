@@ -523,6 +523,16 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getTechInfo((TechTypes)iId).getEra();
 		break;
 
+	case PYINT_IS_BUILD:
+		if (szTypePrefix == "MISSION_" && iId < GC.getNumMissionInfos())
+			return GC.getMissionInfo((MissionTypes)iId).isBuild() ? 1 : 0;
+		break;
+
+	case PYINT_SPECIAL_BUILDING:
+		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
+			return GC.getBuildingInfo((BuildingTypes)iId).getSpecialBuildingType();
+		break;
+
 	case PYINT_DOMAIN:
 		if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
 			return GC.getUnitInfo((UnitTypes)iId).getDomain();

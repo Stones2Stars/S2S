@@ -167,6 +167,8 @@ void CyEnums::pythonPublish()
 		.value("PYINT_GRID_Y",           PYINT_GRID_Y)
 		.value("PYINT_TRADE_ROUTE_AMOUNT", PYINT_TRADE_ROUTE_AMOUNT)
 		.value("PYINT_DOMAIN",           PYINT_DOMAIN)
+		.value("PYINT_IS_BUILD", PYINT_IS_BUILD)
+		.value("PYINT_SPECIAL_BUILDING", PYINT_SPECIAL_BUILDING)
 		.value("PYINT_VOTE_SOURCE",      PYINT_VOTE_SOURCE)
 		;
 

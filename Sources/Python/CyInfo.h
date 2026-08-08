@@ -73,6 +73,8 @@ enum PyIntrinsicSlot
 	                            // cap, so a palace / culture building can be rebuilt elsewhere (json identity)        // is this project a spaceship part (the build-progress readout)
 	PYINT_VOTE_SOURCE,          // BUILDING_ VOTESOURCE_* FK -- the diplomatic body this building CONVENES
 	                            // (json par.9 `voteSource`); -1 for the overwhelming majority
+	PYINT_IS_BUILD,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
+	PYINT_SPECIAL_BUILDING,     // BUILDING_ SPECIALBUILDING_* FK -- the shared-cap group, -1 when ungrouped
 	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.
 	                            // ⛔ It is a genuine INTRINSIC, never a tag read ([json.md] par.7, [tags.md]): a
 	                            // tag says what a unit IS, a domain says where it OPERATES, and answering the
