@@ -1061,12 +1061,16 @@ does each re-derive that nothing invalidated.**
 **PROVEN -- WHAT THE TIME IS SPENT ON (owner): it RECALCULATES THE CURRENT AI VALUE before reassigning.** So the
 200ms is a per-city re-valuation, not the placement step.
 
-⛔ **AND THAT RECALCULATION IS NOT THE DEFECT -- there is no way to make the AI value derivable state YET
-(owner).** An AI score is a heuristic the asking side owns, not a cascade quantity: `expected*` is specified as
+⛔ **AND THAT RECALCULATION IS NOT THE DEFECT -- making the AI value derivable state is OUT OF SCOPE, not
+impossible (owner).** It could be done; it is simply not this work. Recording the distinction because the two
+read the same in a hurry and are opposite: an impossibility closes the option, a scope ruling parks it
+([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas) -- un-killed forward intent
+is kept, so do not retire the idea, and equally do not start it here).
+⚑ Today an AI score is a heuristic the asking side owns, not a cascade quantity: `expected*` is specified as
 a per-DECISION read and an AI that wants repeated access caches its OWN scores, the sanctioned AI-heuristic
 residual ([patterns.md](../../architecture/patterns.md); [superseded-ideas #1](../../architecture/superseded-ideas.md)).
-So "make it a maintained store" is NOT the fix available here, and an agent opening this issue by trying to
-event-maintain the AI value is chasing something the model does not yet support.
+So "make it a maintained store" is NOT the fix available in THIS issue -- an agent opening this one by
+event-maintaining the AI value has widened the work rather than closed the defect.
 
 ⇒ **What is therefore actually in question is narrower, and it is two things:**
 - **Does the valuation's own INPUT surface do per-read work it should not?** The scoring is legitimately
