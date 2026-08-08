@@ -6,6 +6,7 @@
 from CvPythonExtensions import *
 import CivicData
 import RevData
+import CvUtil
 import BugCore
 import DynamicCivNames
 
@@ -469,7 +470,7 @@ def computeWarOdds(CyPlayerA, CyPlayerB, CyArea, allowAttackerVassal=True, allow
 		if iAreaCitiesA > CyArea.getCitiesPerPlayer(iPlayerB):
 			warOdds += 10
 
-		if CyPlayerA.hasTrait(GC.getInfoTypeForString("TRAIT_AGGRESSIVE")):
+		if CyPlayerA.hasTrait(CvUtil.getActiveTraitId("TRAIT_AGGRESSIVE")):
 			warOdds += 10
 
 		if CyPlayerA.isRebel():

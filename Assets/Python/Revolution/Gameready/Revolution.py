@@ -8,6 +8,7 @@ from CvPythonExtensions import *
 import TextUtil
 # --------- Revolution mod -------------
 import RevDefs
+import CvUtil
 import RevData
 import RevUtils
 import RevEvents
@@ -1707,7 +1708,7 @@ class Revolution:
 		cultIdx = 0
 		if( cultPerc > 0 ) :
 			cultIdx += int(pow(cultPerc, 0.5))
-			if( pPlayer.hasTrait(GC.getInfoTypeForString("TRAIT_CREATIVE")) ):
+			if( pPlayer.hasTrait(CvUtil.getActiveTraitId("TRAIT_CREATIVE")) ):
 				cultIdx += cultIdx/3
 			if( bIsRevWatch ) : posList.append( (cultIdx, TRNSLTR.getText("TXT_KEY_REV_WATCH_CULTURE_SPENDING",())) )
 
@@ -1744,7 +1745,7 @@ class Revolution:
 			iThresholdPercent *= 2
 			iThresholdPercent /= 3
 
-		if( pPlayer.hasTrait(GC.getInfoTypeForString("TRAIT_ORGANIZED")) ):
+		if( pPlayer.hasTrait(CvUtil.getActiveTraitId("TRAIT_ORGANIZED")) ):
 			iThresholdPercent *= 10
 			iThresholdPercent /= 11
 
@@ -3911,8 +3912,8 @@ class Revolution:
 #-------------------------------------------------------------------------------------------------
 
 		pTeam = GC.getTeam( pPlayer.getTeam() )
-		iAggressive = GC.getInfoTypeForString(RevDefs.sXMLAggressive)
-		iSpiritual = GC.getInfoTypeForString(RevDefs.sXMLSpiritual)
+		iAggressive = CvUtil.getActiveTraitId(RevDefs.sXMLAggressive)
+		iSpiritual = CvUtil.getActiveTraitId(RevDefs.sXMLSpiritual)
 		numRevCities = len(revData.cityList)
 
 		pRevPlayer = None
@@ -4718,8 +4719,8 @@ class Revolution:
 
 		pTeam = GC.getTeam(pPlayer.getTeam())
 
-		iAggressive = GC.getInfoTypeForString(RevDefs.sXMLAggressive)
-		iSpiritual = GC.getInfoTypeForString(RevDefs.sXMLSpiritual)
+		iAggressive = CvUtil.getActiveTraitId(RevDefs.sXMLAggressive)
+		iSpiritual = CvUtil.getActiveTraitId(RevDefs.sXMLSpiritual)
 		numRevCities = len(cityList)
 		capital = pPlayer.getCapitalCity()
 		capitalArea = capital.area().getID()
@@ -4764,7 +4765,7 @@ class Revolution:
 				# Do switch
 				newCivicOption = INFO.civicOptions().getValue( newCivic )
 				pPlayer.setCivics( newCivicOption, newCivic )
-				iSpiritual = GC.getInfoTypeForString(RevDefs.sXMLSpiritual)
+				iSpiritual = CvUtil.getActiveTraitId(RevDefs.sXMLSpiritual)
 				pPlayer.changeRevolutionTimer(5)
 				if( not pPlayer.hasTrait(iSpiritual) ) :
 					if( pPlayer.getCurrentEra() > GC.getNumEraInfos()/2 ) :

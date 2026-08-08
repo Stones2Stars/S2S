@@ -101,7 +101,7 @@ def onCityAcquired(argsList):
 		nPartisan = nPartisan * (100 - CyCity.plot().calculateCulturePercent(iOwnerNew)) / 100
 
 	# +1 partisans with protective trait (only loserPlayer) ###
-	if nPartisan > -1 and CyPlayerOld.hasTrait(GC.getInfoTypeForString('TRAIT_PROTECTIVE')):
+	if nPartisan > -1 and CyPlayerOld.hasTrait(CvUtil.getActiveTraitId('TRAIT_PROTECTIVE')):
 		nPartisan += 1
 
 	# +3 partisans with Nationhood civic (only loserPlayer)

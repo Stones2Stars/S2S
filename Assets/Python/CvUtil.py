@@ -15,6 +15,25 @@ STATE = CyState()
 CyIF = CyInterface()
 TRNSLTR = CyTranslator()
 
+def getActiveTraitId(sSimpleTraitType):
+	"""The engine id of a trait IN THE SET THIS GAME IS RUNNING -- pass the SIMPLE id ('TRAIT_AGGRESSIVE').
+
+	The simple and complex trait sets are two separate populations that share NO id: the complex twin of
+	TRAIT_X is TRAIT_COMPLEX_X, and which set is live is decided at game start by
+	GAMEOPTION_LEADER_COMPLEX_TRAITS. Both sets are REGISTERED in the one engine id space, so a hardcoded
+	getInfoTypeForString("TRAIT_X") resolves to a perfectly valid id in EITHER game -- and in a complex game
+	that id is one no player can hold, so hasTrait() answers False forever and the effect silently never
+	fires. Nothing errors, which is why every such site has to come through here.
+
+	Returns -1 if neither spelling resolves, so a caller can guard exactly as it would for any other id.
+	"""
+	if GC.getGame().isOption(GameOptionTypes.GAMEOPTION_LEADER_COMPLEX_TRAITS):
+		iTrait = GC.getInfoTypeForString("TRAIT_COMPLEX_" + sSimpleTraitType[len("TRAIT_"):])
+		if iTrait != -1:
+			return iTrait
+	return GC.getInfoTypeForString(sSimpleTraitType)
+
+
 # Event IDs
 g_nextEventID = 9999
 def getNewEventID():
