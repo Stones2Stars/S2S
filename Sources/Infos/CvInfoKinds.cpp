@@ -925,7 +925,21 @@ bool infoKindAlignmentInverted(ModifierFamily eFamily, int iKind)
 	case MODFAM_HURRY_ANGER:
 	case MODFAM_LESS_YIELD_THRESHOLD:   // the threshold at which you get LESS -- a downside at ANY sign, which
 	                                    // is the case that exposed the whole bug (a positive 5 reading as a gain)
+	case MODFAM_GROWTH:                 // the growth THRESHOLD percentage: higher = more food per pop = slower.
+	                                    // â Reads like an upside and is not, which is why it surfaced on the FOOD
+	                                    // tooltip -- a positive trait was losing its upside and keeping its downside
+	                                    // on the one number that tooltip shows.
+	case MODFAM_ANARCHY:                // a minimum anarchy length
 		return true;
+
+	case MODFAM_DURATIONS:
+		// The ANARCHY timers: a longer one is worse. Only these two kinds are authored by traits.
+		return iKind == (int)DURATIONS_CIVIC_ANARCHY || iKind == (int)DURATIONS_RELIGIOUS_ANARCHY;
+
+	case MODFAM_DIPLOMACY:
+		// â BOTH POLARITIES, like revolution: accumulating war weariness FASTER is worse, but making the
+		// ENEMY weary faster is a gain, and ATTITUDE is an ordinary upside. Whose weariness it is decides.
+		return iKind == (int)DIPLOMACY_WAR_WEARINESS;
 
 	case MODFAM_UPKEEP:
 		// ⛔ The FREE-amount kinds are the exception and keep NORMAL polarity: a POSITIVE entry GRANTS free

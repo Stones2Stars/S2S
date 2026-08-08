@@ -776,10 +776,19 @@ authored shape.
 >     > table.** On an **INVERTED** (family, kind) a POSITIVE value is the DOWNSIDE, because the number counts a
 >     > cost, a penalty, a timer or a worse-when-higher threshold. Grounded row-for-row in the legacy per-getter
 >     > filters (`CvTraitInfo`): 48 members guard `isNegativeTrait() && x > 0` and **19** guard
->     > `isNegativeTrait() && x < 0`. Inverted today: `maintenance` · `costs` · `hurry` · `lessYieldThreshold`
->     > (whole families); `upkeep` **except** its free-amount kinds (§2: a positive `freeMilitary`/`freeCivilian`
->     > GRANTS, so it stays normal); `experience.levelModifier` only; and `revolution`'s unrest kinds — whose
->     > `*Good` twins stay normal, which is why polarity cannot be declared family-wide.
+>     > `isNegativeTrait() && x < 0`. Inverted today: `maintenance` · `costs` · `hurry` · `lessYieldThreshold` ·
+>     > `growth` · `anarchy` (whole families); `upkeep` **except** its free-amount kinds (§2: a positive
+>     > `freeMilitary`/`freeCivilian` GRANTS, so it stays normal); `experience.levelModifier` only;
+>     > `durations`' two ANARCHY timers; `diplomacy.warWeariness` only — its `enemyWarWeariness` twin is a GAIN
+>     > and `attitude` an ordinary upside; and `revolution`'s unrest kinds, whose `*Good` twins stay normal.
+>     > ⛔ **Three families carry BOTH polarities** (`revolution`, `diplomacy`, `durations`), which is why this is
+>     > declared per (family, KIND) and can never be collapsed to a per-family flag.
+>     > ⚠ **`growth` is the trap worth naming:** it is the growth THRESHOLD percentage — higher means more food
+>     > per citizen, i.e. slower — so it reads as an upside and is not. It surfaced on the FOOD tooltip, where a
+>     > positive trait was losing its upside and keeping its downside on the one number displayed.
+>     > ⛔ **Derive the list from the legacy getters, never from the authored SIGNS:** traits author both
+>     > directions in every one of these families, so the data cannot tell you the polarity — only the 48/19
+>     > getter split can.
 >     > ⚑ **A sign-only gate is wrong in BOTH directions and silently so:** it keeps `lessYieldThreshold: +5` on a
 >     > positive trait as though a gain, and drops `maintenance.distance: −10%` — a genuine upside — as though a
 >     > penalty. Neither shows as an anomaly; the totals stay plausible.
