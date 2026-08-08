@@ -1058,6 +1058,13 @@ stalled ~15s across the empire, over a decision whose inputs had not moved. Same
 first question is not "why is one assignment slow" but **how many assignments does one toggle run, and how much
 does each re-derive that nothing invalidated.**
 
+**PROVEN -- WHAT THE TIME IS SPENT ON (owner): it RECALCULATES VALUE before reassigning.** So the 200ms is a
+per-city re-valuation, not the placement step. That puts it squarely in the class
+[contexts.md](../../architecture/contexts.md) exists to delete: *"once contexts are PURELY event-updated, an
+enormous class of per-read CALCULATION becomes obsolete -- not 'gets faster', ceases to exist."* A value that a
+maintained store already holds should not be re-derived because the player flipped a toggle -- nothing about the
+city's yields moved when automation changed hands.
+
 ⚠ **NOT YET KNOWN:** whether the 200ms is one expensive pass per city or many cheap ones; and whether toggling
 automation OFF should re-assign at all -- turning it off hands control back to the player and need not re-decide
 anything. Establish the CALL COUNT before optimising any single pass.
