@@ -505,6 +505,15 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	// -> not-present (false), the NULL-object convention of this evaluator.
 	case CASC_PRED_IS_STATE_RELIGION:
 		return empireContext != NULL && ctx.religion >= 0 && empireContext->stateReligion() == ctx.religion;
+	// {CIVIC_CATEGORY: CIVICOPTION_X}: the CIVIC whose value is being resolved sits in that category -- the
+	// authored shape for "this trait waives the upkeep of religion civics" (a WHICH is a PREDICATE, never a
+	// keyed member: [DEC-conditions-are-predicates]). A SOURCE-SLOT predicate, so no civic in hand answers
+	// FALSE rather than resolving against whichever civic a walk happened to reach last
+	// (contexts.md § THE SOURCE SLOTS). ⚠ The civic-upkeep consumer must set ctx.civic per civic it charges;
+	// until it does, the deposit is inert -- visibly unapplied, never silently applied to every civic.
+	case CASC_PRED_CIVIC_CATEGORY:
+		return ctx.civic >= 0 && ctx.civic < GC.getNumCivicInfos()
+		    && GC.getCivicInfo((CivicTypes)ctx.civic).getCivicOption() == pr->id;
 	case CASC_PRED_STATE_RELIGION:
 	{
 		const int iStateReligion = empireContext != NULL ? empireContext->stateReligion() : -1;

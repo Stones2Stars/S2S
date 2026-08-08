@@ -33,6 +33,7 @@ static CvCascPredKind cp_predKind(const std::string& s)
 	if (s == "IS_REBEL") return CASC_PRED_IS_REBEL;
 	if (s == "IS_ANARCHY") return CASC_PRED_IS_ANARCHY;   if (s == "IS_OWNED") return CASC_PRED_IS_OWNED;
 	if (s == "IS_HOLY_CITY") return CASC_PRED_IS_HOLY_CITY; if (s == "IS_STATE_RELIGION_HOLY_CITY") return CASC_PRED_IS_STATE_RELIGION_HOLY_CITY;
+	if (s == "CIVIC_CATEGORY") return CASC_PRED_CIVIC_CATEGORY;   // {CIVIC_CATEGORY: CIVICOPTION_X}, the civic-category gate
 	if (s == "IS_STATE_RELIGION") return CASC_PRED_IS_STATE_RELIGION;   // the counted-religion test (ruling 23)
 	if (s == "IS_HEADQUARTERS") return CASC_PRED_IS_HEADQUARTERS;   // corp HQ city (ruling 10; bare = any corp's HQ)
 	return CASC_PRED_UNKNOWN;
@@ -80,6 +81,7 @@ const char* cascadeSpellPredKind(CvCascPredKind ePredKind)
 	case CASC_PRED_HAS_BONUS:                  return "HAS_BONUS";
 	case CASC_PRED_HAS_RELIGION:               return "HAS_RELIGION";
 	case CASC_PRED_STATE_RELIGION:             return "STATE_RELIGION";
+	case CASC_PRED_CIVIC_CATEGORY:             return "CIVIC_CATEGORY";
 	case CASC_PRED_HAS_CORPORATION:            return "HAS_CORPORATION";
 	case CASC_PRED_IS_HEADQUARTERS:            return "IS_HEADQUARTERS";
 	case CASC_PRED_LATITUDE:                   return "latitude";

@@ -74,6 +74,11 @@ enum CvCascPredKind
 	// {IS_HEADQUARTERS: CORPORATION_X} -- the city is the corp's HQ city (ruling 10, the {IS_HOLY_CITY: R}
 	// pattern; the corp HQ-revenue entries' gate). Bare form = HQ of ANY corporation.
 	CASC_PRED_IS_HEADQUARTERS,
+	// {CIVIC_CATEGORY: CIVICOPTION_X} -- the CIVIC whose value is being resolved sits in that category. A
+	// SOURCE-SLOT predicate (contexts.md § THE SOURCE SLOTS): it asks about the entity the walk is resolving,
+	// so with no civic in hand it answers FALSE rather than resolving against whatever was reached last.
+	// It carries the FULL `CIVICOPTION_` id, never a bare `RELIGION`, so it can never collide with a RELIGION_ type.
+	CASC_PRED_CIVIC_CATEGORY,
 	// numeric-parameterized
 	CASC_PRED_LATITUDE, CASC_PRED_EXISTED_FOR,
 	// {natureYield:{food:N,...}} -- the improvement PLACEMENT threshold (one node per channel): the target

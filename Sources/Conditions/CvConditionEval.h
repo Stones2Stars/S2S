@@ -121,10 +121,15 @@ struct CvCascadeEvalCtx
 	// ⛔ -1 means "no source in hand", and a source-predicate must answer FALSE there rather than guessing: a
 	// scope-wide read that never set it would otherwise age-gate against whatever building came last.
 	int sourceBuilding;
+	// The CIVIC whose value is being resolved (the `religion`/`sourceBuilding` slot's shape, one axis over):
+	// set per-iteration by the walk that knows the civic, on a LOCAL COPY of the ctx. -1 = no civic in hand,
+	// and {CIVIC_CATEGORY:X} then answers FALSE -- resolving it against whichever civic a walk reached last
+	// would be worse than declining (contexts.md § THE SOURCE SLOTS).
+	int civic;
 	// The AS-IF-HELD hypothetical (above) -- NULL on every ordinary evaluation, so the normal path pays one
 	// null test. Set ONLY by a caller asking a what-if, and never stored anywhere.
 	const CvCascadeHypothetical* hypothetical;
-	CvCascadeEvalCtx() : cityContext(NULL), empireContext(NULL), plotContext(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), sourceBuilding(-1), hypothetical(NULL) {}
+	CvCascadeEvalCtx() : cityContext(NULL), empireContext(NULL), plotContext(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1), sourceBuilding(-1), civic(-1), hypothetical(NULL) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.
