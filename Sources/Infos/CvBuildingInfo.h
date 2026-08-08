@@ -50,6 +50,11 @@ public:
 	virtual const CvClassificationBlock* getAttributes()   const { return &m_attributes; }
 	virtual const CvClassificationBlock* getAmenities()    const { return &m_amenities; }
 	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
+	// The entity-level applicability gate ([DEC-entity-gate], json.md §2). A building composing NONE meant the
+	// base returned NULL and cascadeGateOk answered "never barred" (enabler.md §8), so the 23 corporate-HQ
+	// buildings that author `disabled` were silently ungated -- the authored clause reported unconsumed on every
+	// load and refused nothing.
+	virtual const CvGate* getGate() const { return &m_gate; }
 
 	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §8) ====
 	// What the BUILDING ITSELF is/does (teamShare, destroyedOnCapture, orbital) -- never what it confers.
@@ -226,6 +231,7 @@ protected:
 	virtual CvClassificationBlock* mutAttributes()   { return &m_attributes; }
 	virtual CvClassificationBlock* mutAmenities()    { return &m_amenities; }
 	virtual CvClassificationBlock* mutCapabilities() { return &m_capabilities; }
+	virtual CvGate* mutGate()                        { return &m_gate; }
 
 private:
 	// --- the composed section units (availability · provisions · effects · classification) ---
@@ -239,6 +245,7 @@ private:
 	CvClassificationBlock m_attributes;
 	CvClassificationBlock m_amenities;
 	CvClassificationBlock m_capabilities;
+	CvGate m_gate;
 
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
 	int m_iCost;
