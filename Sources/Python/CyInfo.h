@@ -74,6 +74,10 @@ enum PyIntrinsicSlot
 	PYINT_VOTE_SOURCE,          // BUILDING_ VOTESOURCE_* FK -- the diplomatic body this building CONVENES
 	                            // (json par.9 `voteSource`); -1 for the overwhelming majority
 	PYINT_IS_BUILD,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
+	PYINT_ESPIONAGE_COST,       // ESPIONAGEMISSION_ -- its base cost, -1 when the mission is unavailable
+	PYINT_ESPIONAGE_TARGETS_CITY,
+	PYINT_ESPIONAGE_IS_PASSIVE,
+	PYINT_ESPIONAGE_TECH_PREREQ,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
 	PYINT_SPECIAL_BUILDING,     // BUILDING_ SPECIALBUILDING_* FK -- the shared-cap group, -1 when ungrouped
 	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.
 	                            // ⛔ It is a genuine INTRINSIC, never a tag read ([json.md] par.7, [tags.md]): a
@@ -235,6 +239,12 @@ public:
 	int getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) const;
 	// An info's own id LIST, by SLOT (see PyIdListSlot). Empty when the (prefix, slot) pair names nothing.
 	python::list getIdList(const std::string& szTypePrefix, int iId, int iSlot) const;
+
+	// The entity's OWN authored flat deposits for a scope, one entry per channel -- the cascade-shaped
+	// replacement for the per-type `getYieldProduced` / `getCommerceProduced` accessors that no longer exist.
+	// x100 like every amount ([DEC-fixedpoint-x100]); the reader divides at the point of use.
+	python::list getFlatYields(const std::string& szTypePrefix, int iId, int iScope) const;
+	python::list getFlatCommerces(const std::string& szTypePrefix, int iId, int iScope) const;
 
 	// ⚑ THE BULK INDEX SHAPE -- one boundary crossing for a WHOLE id->value column, not one per entity.
 	// A boost::python call costs far more than the lookup inside it, so the read that scales is the one that

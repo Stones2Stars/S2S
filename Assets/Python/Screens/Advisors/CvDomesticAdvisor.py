@@ -123,11 +123,14 @@ class CvDomesticAdvisor:
 			self.bonusCorpYields = {}
 			self.bonusCorpCommerces = {}
 			for eCorp in xrange(GC.getNumCorporationInfos()):
-				info = GC.getCorporationInfo(eCorp)
-				for eBonus in info.getPrereqBonuses():
+				# The corporation's OWN authored flats, per channel, at empire scope -- the cascade-shaped
+				# replacement for the per-type getYieldProduced / getCommerceProduced that no longer exist.
+				aFlatYields = INFO.getFlatYields("CORPORATION_", eCorp, CascScope.CASC_SCOPE_EMPIRE)
+				aFlatCommerces = INFO.getFlatCommerces("CORPORATION_", eCorp, CascScope.CASC_SCOPE_EMPIRE)
+				for eBonus in INFO.getIdList("CORPORATION_", eCorp, IdListSlot.PYLIST_CONSUMED_BONUSES):
 
 					for eYield in xrange(YieldTypes.NUM_YIELD_TYPES):
-						iYieldValue = info.getYieldProduced(eYield)
+						iYieldValue = aFlatYields[eYield]
 						if iYieldValue != 0:
 							if not self.bonusCorpYields.has_key(eBonus):
 								self.bonusCorpYields[eBonus] = {}
@@ -137,7 +140,7 @@ class CvDomesticAdvisor:
 								self.bonusCorpYields[eBonus][eYield][eCorp] = iYieldValue
 
 					for eCommerce in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-						iCommerceValue = info.getCommerceProduced(eCommerce)
+						iCommerceValue = aFlatCommerces[eCommerce]
 						if iCommerceValue != 0:
 							if not self.bonusCorpCommerces.has_key(eBonus):
 								self.bonusCorpCommerces[eBonus] = {}

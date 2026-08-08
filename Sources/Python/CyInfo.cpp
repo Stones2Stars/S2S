@@ -456,6 +456,28 @@ python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSl
 	return ids;
 }
 
+python::list CyInfo::getFlatYields(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	// CORPORATION_ only today -- the flats live on the concrete info, not on the CvInfo base, so each prefix
+	// that grows one is added here rather than the read pretending to be generic over a base it cannot reach.
+	python::list values = python::list();
+	if (szTypePrefix != "CORPORATION_" || iId < 0 || iId >= GC.getNumCorporationInfos()) return values;
+	const CvCorporationInfo& kInfo = GC.getCorporationInfo((CorporationTypes)iId);
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		values.append(kInfo.getFlatYield((YieldTypes)i, (CvCascScope)iScope));
+	return values;
+}
+
+python::list CyInfo::getFlatCommerces(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values = python::list();
+	if (szTypePrefix != "CORPORATION_" || iId < 0 || iId >= GC.getNumCorporationInfos()) return values;
+	const CvCorporationInfo& kInfo = GC.getCorporationInfo((CorporationTypes)iId);
+	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
+		values.append(kInfo.getFlatCommerce((CommerceTypes)i, (CvCascScope)iScope));
+	return values;
+}
+
 int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) const
 {
 	if (iId < 0) return -1;
@@ -521,6 +543,26 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	case PYINT_ERA:
 		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
 			return GC.getTechInfo((TechTypes)iId).getEra();
+		break;
+
+	case PYINT_ESPIONAGE_COST:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).getCost();
+		break;
+
+	case PYINT_ESPIONAGE_TARGETS_CITY:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isTargetsCity() ? 1 : 0;
+		break;
+
+	case PYINT_ESPIONAGE_IS_PASSIVE:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return GC.getEspionageMissionInfo((EspionageMissionTypes)iId).isPassive() ? 1 : 0;
+		break;
+
+	case PYINT_ESPIONAGE_TECH_PREREQ:
+		if (szTypePrefix == "ESPIONAGEMISSION_" && iId < GC.getNumEspionageMissionInfos())
+			return (int)GC.getEspionageMissionInfo((EspionageMissionTypes)iId).getTechPrereq();
 		break;
 
 	case PYINT_IS_BUILD:
@@ -740,6 +782,8 @@ void CyInfo::pythonPublish()
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
+		.def("getFlatYields", &CyInfo::getFlatYields)
+		.def("getFlatCommerces", &CyInfo::getFlatCommerces)
 		.def("getIdList", &CyInfo::getIdList)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;

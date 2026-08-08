@@ -442,12 +442,13 @@ class TheScreen:
 		screen.setStyle(LIST, "Table_StandardCiv_Style")
 		iCount = 0
 		for iMissionX in range(GC.getNumEspionageMissionInfos()):
-			pMission = GC.getEspionageMissionInfo(iMissionX)
 			# Filter
-			if pMission.getCost() == -1 or not pMission.isTargetsCity(): continue
-			if pMission.getTechPrereq() != -1 and not CyTeamAct.isHasTech(pMission.getTechPrereq()): continue
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_COST) == -1: continue
+			if not INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TARGETS_CITY): continue
+			iTechPrereq = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TECH_PREREQ)
+			if iTechPrereq != -1 and not CyTeamAct.isHasTech(iTechPrereq): continue
 			# Carry on
-			szText = uFont2 + pMission.getDescription()
+			szText = uFont2 + INFO.getDescription("ESPIONAGEMISSION_", iMissionX)
 			screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, iMissionX, 0, 1<<0)
 			# Default active mission
 			if self.iMissionAct == -1:
@@ -554,11 +555,10 @@ class TheScreen:
 		else: CyPlot = None
 
 		for iMissionX in range(GC.getNumEspionageMissionInfos()):
-			pMission = GC.getEspionageMissionInfo(iMissionX)
-			if pMission.getCost() == -1: continue
-			iTech = pMission.getTechPrereq()
-			bTargetCity = pMission.isTargetsCity()
-			if pMission.isPassive():
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_COST) == -1: continue
+			iTech = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TECH_PREREQ)
+			bTargetCity = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TARGETS_CITY)
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_IS_PASSIVE):
 				if bMissionList != bTargetCity:
 					iCost = CyPlayerAct.getEspionageMissionCost(iMissionX, iPlayer, CyPlot, -1)
 					if iCost == -1: continue
@@ -567,9 +567,9 @@ class TheScreen:
 						szCost += "<color=0,255,0>"
 					szCost += str(iCost)
 
-					szText = uFont2 + pMission.getDescription()
+					szText = uFont2 + INFO.getDescription("ESPIONAGEMISSION_", iMissionX)
 					if iTech != -1 and not CyTeamAct.isHasTech(iTech):
-						szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", pMission.getTechPrereq()))
+						szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", iTech))
 
 					iRow = screen.appendTableRow(EffectsTable)
 					screen.setTableText(EffectsTable, 0, iRow, szText, "", iWidGen, 0, 0, 1<<0)
@@ -583,9 +583,9 @@ class TheScreen:
 					szCost += "<color=0,255,0>"
 				szCost += str(iCost)
 
-				szText = uFont2 + pMission.getDescription()
+				szText = uFont2 + INFO.getDescription("ESPIONAGEMISSION_", iMissionX)
 				if iTech != -1 and not CyTeamAct.isHasTech(iTech):
-					szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", pMission.getTechPrereq()))
+					szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", iTech))
 
 				iRow = screen.appendTableRow(TABLE)
 				screen.setTableText(TABLE, 0, iRow, szText, "", iWidGen, 0, 0, 1<<0)
