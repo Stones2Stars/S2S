@@ -704,6 +704,16 @@ namespace
 						(int)kTerms.plotRest, (int)kTerms.tradeYield, (int)kTerms.goldenAge,
 						(int)kTerms.upperFlat, (int)kTerms.specialists, (int)kTerms.cityFlat,
 						kTerms.percentSum, kTerms.workedPlots, (int)kTerms.rate);
+					// ⚑ The `specialists` term DECOMPOSED, one line per held type. It reaches the line above as a
+					// single int over every type at once, so a term that is short -- or that disagrees with what
+					// the package plane holds for the same channel -- could be attributed to nothing.
+					for (size_t iRow = 0; iRow < kTerms.specialistRows.size(); ++iRow)
+					{
+						const InfoValuation::SpecialistTermRow& kRow = kTerms.specialistRows[iRow];
+						CascadeChannelRegistry::reportSpecialistRead(
+							iPlayer, pCity->getID(), iChannel, kRow.specialist,
+							kRow.assigned, kRow.freeTyped, (int)kRow.perUnit, (int)kRow.contribution);
+					}
 				}
 			}
 		}

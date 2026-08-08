@@ -540,7 +540,8 @@ namespace
 		MODEVT_DEPOSIT_APPLY,       // ONE deposit landing in ONE slot: who, which channel, which package, how much
 		MODEVT_RATE_READ,           // one city's §2a yield RATE, term by term (the six quantities behind one int)
 		MODEVT_BONUS_STORES,        // one city's bonus stores, by size -- empty store vs refusing route
-		MODEVT_ATOM_ROUTE           // ONE atom crossing's outcome: found / noSource / refused / applied
+		MODEVT_ATOM_ROUTE,          // ONE atom crossing's outcome: found / noSource / refused / applied
+		MODEVT_SPECIALIST_READ      // ONE specialist TYPE's share of a rate's `specialists` term (the Σ decomposed)
 	};
 	enum ModifierDomainField
 	{
@@ -562,7 +563,8 @@ namespace
 		MODF_CITYFLAT, MODF_PERCENTSUM, MODF_WORKEDPLOTS, MODF_RATE,
 		MODF_PLOTNATURE, MODF_PLOTIMPROVEMENT, MODF_PLOTREST,
 		MODF_ONSITE, MODF_VICALL, MODF_VICOWNED, MODF_VICWORKED, MODF_TRADED, MODF_NETLIST,
-		MODF_ATOM, MODF_LISTSIZE, MODF_FOUND, MODF_NOSOURCE, MODF_REFUSED, MODF_APPLIED
+		MODF_ATOM, MODF_LISTSIZE, MODF_FOUND, MODF_NOSOURCE, MODF_REFUSED, MODF_APPLIED,
+		MODF_SPECIALIST, MODF_ASSIGNED, MODF_FREETYPED, MODF_PERUNIT, MODF_CONTRIB
 	};
 
 	const char* cr_modifierDomainPrefix(int iEventId)
@@ -576,6 +578,7 @@ namespace
 		case MODEVT_RATE_READ:      return "[MODIFIER] rateRead";
 		case MODEVT_BONUS_STORES:   return "[MODIFIER] bonusStores";
 		case MODEVT_ATOM_ROUTE:     return "[MODIFIER] atomRoute";
+		case MODEVT_SPECIALIST_READ: return "[MODIFIER] specialistRead";
 		default:                    return "[MODIFIER] ?";
 		}
 	}
@@ -634,6 +637,13 @@ namespace
 		case MODF_PERCENTSUM:  *peType = SFT_INT; return "percentSum";
 		case MODF_WORKEDPLOTS: *peType = SFT_INT; return "workedPlots";
 		case MODF_RATE:        *peType = SFT_INT; return "rate";
+		// SFT_SPECIALIST -- a TYPED INDEX, so the id travels raw and the RENDERER names it behind the gate
+		// ([event-spine.md]: a payload carries typed fields and never a pre-resolved string).
+		case MODF_SPECIALIST:  *peType = SFT_SPECIALIST; return "specialist";
+		case MODF_ASSIGNED:    *peType = SFT_INT; return "assigned";
+		case MODF_FREETYPED:   *peType = SFT_INT; return "freeTyped";
+		case MODF_PERUNIT:     *peType = SFT_INT; return "perUnit";
+		case MODF_CONTRIB:     *peType = SFT_INT; return "contribution";
 		case MODF_CHANNEL:     *peType = SFT_STR; return "channel";
 		case MODF_UNIT:        *peType = SFT_STR; return "unit";
 		case MODF_VALUE:       *peType = SFT_INT; return "value";
@@ -901,4 +911,26 @@ void CascadeChannelRegistry::reportRateRead(int iPlayer, int iHuman, int iCity, 
 	rate.addI(MODF_WORKEDPLOTS, iWorkedPlots);
 	rate.addI(MODF_RATE, iRate);
 	eventSpine().emit(rate);
+}
+
+// ⚠ rateRead above stands at EXACTLY SPINE_MAX_FIELDS, and `addI` past the cap DROPS THE FIELD SILENTLY -- so the
+// specialist decomposition could not have ridden that line even if the per-TYPE axis had allowed it. It is its own
+// line for the same reason `plotBase`'s segments are not: one row per type is a different shape from one term.
+// ⚑ LEVEL 3 (the per-candidate tier, [observability.md]) -- rateRead is the per-decision line at 2, and this is
+// its per-candidate detail, so it costs nothing until someone asks the question it answers.
+void CascadeChannelRegistry::reportSpecialistRead(int iPlayer, int iCity, int iChannelId, int iSpecialist,
+	int iAssigned, int iFreeTyped, int iPerUnit, int iContribution)
+{
+	cr_ensureModifierDomain();
+	CvSpineEvent row(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_SPECIALIST_READ, 3);
+	row.addI(MODF_PLAYER, iPlayer);
+	row.addI(MODF_CITY, iCity);
+	// the channel id RAW, exactly as rateRead and the deposit census carry it
+	row.addI(MODF_VALUE, iChannelId);
+	row.addI(MODF_SPECIALIST, iSpecialist);
+	row.addI(MODF_ASSIGNED, iAssigned);
+	row.addI(MODF_FREETYPED, iFreeTyped);
+	row.addI(MODF_PERUNIT, iPerUnit);
+	row.addI(MODF_CONTRIB, iContribution);
+	eventSpine().emit(row);
 }

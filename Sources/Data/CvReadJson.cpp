@@ -794,8 +794,19 @@ void loadJson(JsonLoadPhase eLoadPhase)
 		gDLL->logMsg("Loading.log", CvString::format("[READJSON] ERROR unknown-key key=%s entities=%d",
 			it->first.c_str(), it->second).c_str(), true, false);
 	}
+	// ⛔ THE NAMES PRINT BESIDE THE COUNT, UNCONDITIONALLY -- a census whose items cannot be read is a number, not
+	// an instrument. The per-item detail also rides the SD_READJSON events above, but those are gated, so at any
+	// ordinary log level the counts below could not be turned into a worklist without re-running the load at a
+	// raised level -- which is exactly the state that let a residue sit unread. The unkinded-member block just
+	// below has always printed its items this way; these two now match it.
+	const std::set<std::string>& unresolvedFks = jsonUnresolvedIds();
+	for (std::set<std::string>::const_iterator it = unresolvedFks.begin(); it != unresolvedFks.end(); ++it)
+		gDLL->logMsg("Loading.log", CvString::format("[READJSON] unresolved-fk %s", it->c_str()).c_str(), true, false);
+	const std::set<std::string>& unconsumedSections = jsonUnconsumedSections();
+	for (std::set<std::string>::const_iterator it = unconsumedSections.begin(); it != unconsumedSections.end(); ++it)
+		gDLL->logMsg("Loading.log", CvString::format("[READJSON] unconsumed-section %s", it->c_str()).c_str(), true, false);
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] coverage unresolvedFk=%d unconsumedSections=%d unknownKeys=%d",
-		(int)jsonUnresolvedIds().size(), (int)jsonUnconsumedSections().size(), iUnknownKeyKinds).c_str(), true, false);
+		(int)unresolvedFks.size(), (int)unconsumedSections.size(), iUnknownKeyKinds).c_str(), true, false);
 
 	// The kind-coverage half of the same bar (CvInfoKinds): every authored member the vocabulary does not carry
 	// flowed through the compile pass as an interned segment -- surfaced per distinct family.member so a

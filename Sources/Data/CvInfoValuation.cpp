@@ -751,8 +751,14 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 
 
 // THE SPECIALIST TERM (see the header): the ONE fold both the oracle and the stored read use.
-int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx)
+int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
+	std::vector<SpecialistTermRow>* pRowsOut)
 {
+	if (pRowsOut != NULL)
+	{
+		// Cleared before any early return, so a caller never reads rows left over from a previous channel.
+		pRowsOut->clear();
+	}
 	if (iChannel < 0)
 	{
 		return 0;
@@ -765,9 +771,39 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 		const int iCount = city.getSpecialistCount((SpecialistTypes)iSpecialist);
 		if (iCount > 0)
 		{
-			iSpecialists += iCount * groupSumAt(
+			const int64_t iPerUnit = groupSumAt(
 				GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
 				eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx);
+			iSpecialists += iCount * iPerUnit;
+			if (pRowsOut != NULL)
+			{
+				SpecialistTermRow kRow;
+				kRow.specialist = iSpecialist;
+				kRow.assigned = iCount;
+				kRow.freeTyped = city.getFreeSpecialistCount((SpecialistTypes)iSpecialist);
+				kRow.perUnit = iPerUnit;
+				kRow.contribution = iCount * iPerUnit;
+				pRowsOut->push_back(kRow);
+			}
+		}
+		else if (pRowsOut != NULL)
+		{
+			// CENSUS ONLY -- a type the city holds ONLY as free-typed contributes nothing today, and an absent row
+			// would report that as "the city has no such specialist" rather than as the gap it is. The extra fold
+			// is paid only when the census asks; the value path above never reaches here.
+			const int iFreeTyped = city.getFreeSpecialistCount((SpecialistTypes)iSpecialist);
+			if (iFreeTyped > 0)
+			{
+				SpecialistTermRow kRow;
+				kRow.specialist = iSpecialist;
+				kRow.assigned = 0;
+				kRow.freeTyped = iFreeTyped;
+				kRow.perUnit = groupSumAt(
+					GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
+					eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx);
+				kRow.contribution = 0;
+				pRowsOut->push_back(kRow);
+			}
 		}
 	}
 	return iSpecialists;
@@ -791,6 +827,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 		pTermsOut->percentSum = 0;
 		pTermsOut->workedPlots = 0;
 		pTermsOut->rate = 0;
+		pTermsOut->specialistRows.clear();
 	}
 	if (iChannel < 0)
 	{
@@ -878,7 +915,9 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	int64_t iPercentSum = 0;
 	rolledLegsAtCity(city, iChannel, iUpperFlatSum, iCityFlatSum, iPercentSum);
 	// the upper legs join the BASE the stack multiplies; only the city's own flats are the post-stack EXTRA
-	const int64_t iSpecialists = specialistTerm(city, iChannel, evalCtx);
+	// the per-type rows come out of THIS fold, never a second one beside it ([DEC-single-implementation])
+	const int64_t iSpecialists = specialistTerm(city, iChannel, evalCtx,
+		pTermsOut != NULL ? &pTermsOut->specialistRows : NULL);
 	const int64_t iRate = cityRate(iBase + iUpperFlatSum, iSpecialists, (int)iPercentSum, iCityFlatSum);
 	if (pTermsOut != NULL)
 	{

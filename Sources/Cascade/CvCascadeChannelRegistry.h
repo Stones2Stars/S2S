@@ -179,6 +179,12 @@ public:
 		int iPlotBase, int iPlotNature, int iPlotImprovement, int iPlotRest,
 		int iTradeYield, int iGoldenAgeYield, int iUpperFlat, int iSpecialists,
 		int iCityFlatExtra, int iPercentSum, int iWorkedPlots, int iRate);
+	// ONE specialist TYPE's share of the rate's `specialists` term -- the Σ that reaches rateRead as a single int,
+	// decomposed per type so a short (or disagreeing) term names WHICH type it came from. `assigned` and
+	// `freeTyped` are separate because the term multiplies by the first alone while the spec and the engine both
+	// say the count is the sum -- reporting both sizes that gap without moving a value.
+	static void reportSpecialistRead(int iPlayer, int iCity, int iChannelId, int iSpecialist,
+		int iAssigned, int iFreeTyped, int iPerUnit, int iContribution);
 };
 
 #endif // CV_CASCADE_CHANNEL_REGISTRY_H

@@ -270,9 +270,13 @@
   one is the model before touching either.** The modifier consumer applies a specialist's deposits into the
   CITY PACKAGE on the specialist fact (source = the specialist, scope = city, multiplicity = the count), which
   the roll-up then reads as the city's own flats — TIER-2, OUTSIDE the percent stack. `InfoValuation::specialistTerm`
-  independently sums the same specialist's `city.flat` intrinsic — TIER-1, INSIDE it. Live, the two report
-  wildly different magnitudes for the same channel, so this is not a tidy duplicate: they are computing
-  different things under one name.
+  independently sums the same specialist's `city.flat` intrinsic — TIER-1, INSIDE it.
+  ⛔ **BOTH PLANES ARE LIVE AT ONCE, so wherever a specialist authors an output channel the city DOUBLE-COUNTS
+  it** — once inside the percent stack and once outside. That is worse than the disagreement this entry first
+  described, and it is what the `[MODIFIER] specialistRead` census shows: its per-type rows ARE the TIER-1
+  term, and those same specialists appear as `citySpecialistAdded` deposits feeding the TIER-2 side.
+  ⚠ The doubling is NOT uniform across channels — a channel no specialist authors is untouched — so a rate
+  that looks right on one yield says nothing about the others.
   ⚑ [modifier.md §2a](../../specs/modifier.md) is unambiguous that specialists are a TIER-1 BASE term and that
   TIER-2 EXTRA is BUILDINGS only, so the package application is the surface that looks wrong — but confirm
   against the apply path rather than deleting on the strength of the spec alone, because the apply is what the
@@ -285,17 +289,6 @@
   ⛔ Do NOT settle this by whether the resulting number moves toward a remembered figure
   ([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)); settle it by
   which surface the spec names and which entries each one actually reaches.
-
-- **Decompose the `specialists` term in the `rateRead` census.** It is a Σ over five sub-terms × per-type counts
-  reported as ONE int, which is why the gap above stayed invisible while `plotBase` — which carries its three
-  segments beside it — did not. One number explains nothing
-  ([http-endpoints.md](../../specs/http-endpoints.md): a term that is itself a Σ decomposes again).
-
-- **Name the readJson coverage residue.** The load census reports its unconsumed-section and unresolved-FK
-  COUNTS unconditionally but the per-item detail rides `SD_READJSON` events that are gated off at ordinary log
-  levels, so the counts cannot be turned into a worklist without re-running at a raised level. Either lower the
-  level of the per-item events or print the names beside the counts — a census whose items cannot be read is a
-  number, not an instrument.
 
 - **The coverage census re-derives key classification and has drifted from the parse path.** It calls
   `jsonClassifyKey` directly, which never learned about the reserved classification-block chain `CvInfo::mapFrom`

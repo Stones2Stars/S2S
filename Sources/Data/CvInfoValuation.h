@@ -393,7 +393,31 @@ public:
 	// many are assigned. Exposed because BOTH sides of the tripwire need it and neither may own it: the ORACLE
 	// folds it from fresh documents, the STORED read folds it beside the stored packages, and a second copy
 	// would make the two disagree for reasons that are not a missed emit ([DEC-single-implementation]).
-	static int64_t specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx);
+	//
+	// ⚖ ONE ROW PER SPECIALIST TYPE -- the DECOMPOSITION of that Σ ([http-endpoints.md]: a term that is itself a
+	// Σ decomposes again). `specialists` reaches the rate census as ONE int over every held type, so a rate that
+	// is short says nothing about WHICH type is short, and the term's disagreement with the package plane could
+	// not be attributed at all. The rows come OUT of the same walk the total does -- never re-derived beside it,
+	// which is the one thing a census must not do.
+	// ⚠ `assigned` and `freeTyped` are reported SEPARATELY and deliberately: the multiplier below counts
+	// `assigned` alone, while [modifier.md §2a] and the engine (`CvCity::getSpecialistCount +
+	// getFreeSpecialistCount`) both say the count is the SUM. Reporting both measures that gap without moving a
+	// value -- which is the whole point, since which surface is the model is an open owner ruling and the
+	// arithmetic must not be touched ahead of it ([DEC-baseline-is-a-smell-test]: settle it by which surface the
+	// spec names, never by which number looks better).
+	struct SpecialistTermRow
+	{
+		int     specialist;    // the raw SpecialistTypes id -- named by the RENDERER, never resolved at emit
+		int     assigned;      // getSpecialistCount -- the ONLY multiplier the term currently applies
+		int     freeTyped;     // getFreeSpecialistCount -- counted by the spec and the engine, NOT by the term
+		int64_t perUnit;       // this type's own city-scope flat output of the channel, per specialist
+		int64_t contribution;  // exactly what this type added to the total (perUnit x assigned)
+	};
+	// A row is produced for every type the city HOLDS on either count, so a type contributing nothing BECAUSE it
+	// is only free-typed appears with contribution 0 rather than vanishing -- an absent row would hide precisely
+	// the gap this census exists to size.
+	static int64_t specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
+		std::vector<SpecialistTermRow>* pRowsOut = NULL);
 
 	// ⚖ THE CITY RECEIVER -- the realized §2a RATE of a channel this city CONSUMES, re-summed from the members
 	// it is made of rather than read from a stored total. Its BASE is the Σ over the city's WORKED PLOTS of
@@ -429,6 +453,9 @@ public:
 		int     percentSum;    // Σ percent across the chain (the stack is 100 + this)
 		int     workedPlots;   // how many plots the Σ above actually walked
 		int64_t rate;          // what the combine produced
+		// `specialists` DECOMPOSED, one row per held type -- filled from the same fold that produced the total,
+		// for the same reason the plot segments are (one number cannot say which type it came from).
+		std::vector<SpecialistTermRow> specialistRows;
 	};
 	static int64_t cityReceiverRate(const CvCity& city, int iChannel, CityRateTerms* pTermsOut = NULL);
 

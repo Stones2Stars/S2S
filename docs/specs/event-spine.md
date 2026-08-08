@@ -54,7 +54,13 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
 - **`CvSpineEvent`** is a POD carrying **two payloads, not two exclusive modes**: the raw **DOMAIN state ints**
   (`iType`/`iA`/`iB`/`iC` + `iSrcLoc` = WHERE), which `grants` and the cache-invalidation consumer read; **and** the
   **render payload** (`iDomainTag`/`iEventId`/`aFields[]`, `SPINE_MAX_FIELDS = 16`; a field is `{int eTag; union{int
-  i; float f; char* s; wchar_t* w;}}`, 8B/POD) that the one logging path formats. A **`DOMAIN`** event carries BOTH —
+  i; float f; char* s; wchar_t* w;}}`, 8B/POD) that the one logging path formats.
+  ⛔ **THE FIELD CAP IS A SILENT CEILING — `addI`/`addStr` DROP a field past 16 rather than failing.** So a
+  census line that has grown to exactly 16 cannot be extended at all: the seventeenth term is simply absent from
+  the rendered line, and absent reads identically to zero. ⚑ Check a line's field count before adding a term,
+  and when it is full the answer is a SECOND event, never a swap of one term for another — which is the right
+  shape anyway wherever the new term has an axis of its own (a per-type row is not a term).
+  *(`[MODIFIER] rateRead` stands at exactly 16, which is why the `specialists` decomposition is its own line.)* A **`DOMAIN`** event carries BOTH —
   its state ints for the machine consumers **and** a domain tag + fields so it renders through the same registered
   path as everything else; a **`SAVELOAD`/`DIAGNOSTIC`/`TRACE`** event carries only the render payload. There is no
   inline-formatted event: the spine's own DOMAIN events register under `SD_SPINE` exactly like an AI domain.

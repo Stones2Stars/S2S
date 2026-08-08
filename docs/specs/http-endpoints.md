@@ -57,7 +57,14 @@ and a dead improvement leg is the same number in the total as a dead nature leg.
 RAW — pre-floor — so they need not add to `plotBase` exactly (`readFlat` floors nature at 0, improvement at
 −nature, the total at 0); **a gap between Σsegments and `plotBase` is itself the signal that a floor is biting**,
 which a floored report would have hidden. They come out of the SAME walk the total does
-([DEC-single-implementation]). ⛔ Its terms come OUT of the real
+([DEC-single-implementation]).
+⚑ **`specialists` decomposes too, and on its OWN line (`[MODIFIER] specialistRead`, one row per held type)** —
+because that Σ has an axis the term does not: WHICH specialist type. A per-type row is not a term, so it could
+never have ridden `rateRead` inline, and `rateRead` is at the field cap besides
+([event-spine.md](event-spine.md)). ⚠ Each row carries the ASSIGNED and the FREE-TYPED count **separately**: the
+term multiplies by assigned alone while [modifier.md §2a](modifier.md) and the engine both say the count is the
+sum, so the two columns SIZE that gap without moving a value. A type held only as free-typed reports a row with
+contribution 0 rather than no row at all — an absent row would read as "no such specialist here". ⛔ Its terms come OUT of the real
 combine rather than being re-derived beside it ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)):
 a census that recomputed its own decomposition could disagree with the number it claims to explain, which is the
 one thing it must never do.
