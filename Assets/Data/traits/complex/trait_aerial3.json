@@ -281,13 +281,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "missileRange": {
-    "flat": 2
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {

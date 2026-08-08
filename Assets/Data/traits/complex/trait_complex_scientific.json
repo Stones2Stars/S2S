@@ -581,13 +581,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "missileRange": {
-    "flat": 1
-   }
-  }
- },
  "workRate": {
   "empire": {
    "builds": {

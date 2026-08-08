@@ -154,7 +154,10 @@ SCALAR = {
     # [CAPTURE_RESISTANCE] via CvPlayer::getCaptureKinds. Under `combat` they matched no kind and were dropped.
     "iNationalCaptureProbabilityModifier": ("capture", "empire", "probability", "percent"),
     "iNationalCaptureResistanceModifier": ("capture", "empire", "resistance", "percent"),
-    "iMissileRange":                   ("combat", "empire", "missileRange", "flat"),
+    # iMissileRange is NOT a row here: a missile's range works EXACTLY like an air unit's operation range (owner),
+    # so it is the SAME air.range kind gated on IS_MISSILE -- a CONDITION, never a kind of its own
+    # ([DEC-conditions-are-predicates]). Under `combat` it matched no kind row and every one was dropped at load
+    # as `unkinded-member combat.missileRange`. Handled in the apply loop below.
     # AIR_RANGE -- the player leg CvUnit::airRange() folds in beside the unit's own resolved value.
     "iFlightOperationRange":           ("air", "empire", "range", "flat"),
     "iNavalCargoSpace":                ("cargo", "empire", "navalCargo", "flat"),
@@ -537,6 +540,24 @@ def curate(typ, rec, store):
             scope, unit, keys, pred = SPLIT_ARRAY_COND[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); predicate-gated deposit
                 _put_cond(fam, ident, scope, unit, v, pred)
+        elif tag == "iMissileRange":
+            # A missile's range works EXACTLY like an air unit's operation range (owner) -- the missile simply dies
+            # at the end of it -- so it is the SAME air.range kind gated on IS_MISSILE, never a kind of its own
+            # ([DEC-conditions-are-predicates]). Under `combat` it matched no kind row and every authoring was
+            # dropped at load as `unkinded-member combat.missileRange`.
+            # ⚑ Only the DIFFERENCE against iFlightOperationRange is gated, and that is what makes the conversion
+            # EXACT rather than approximate: where the two tags are EQUAL the author plainly meant "air and missile
+            # both get this range" (owner), and the unconditioned entry already reaches missiles -- so a gated entry
+            # there would double it for no authored reason. Where they differ the delta reproduces both values,
+            # including the NEGATIVE case (SCIENTIFIC2 authors flight 1 / missile 0, i.e. a missile gets nothing).
+            # ⚠ A missile therefore double-dips air.range + the delta by construction, which is the expected and
+            # owner-accepted shape; changing it is a BALANCE decision, not a curation one.
+            vMissile = _num(t) or 0
+            eFlight = rec.find("iFlightOperationRange")
+            vFlight = (_num(engine.text(eFlight)) or 0) if eFlight is not None else 0
+            vDelta = vMissile - vFlight
+            if vDelta not in (None, 0, 0.0):
+                _put_cond(fam, "air", "empire", "flat", vDelta, "IS_MISSILE", "range")
         elif tag == "iCoastalTradeRoutes":
             # +N routes, but only in a COASTAL city -- a CITY verdict, so the predicate is HAS_COAST (the shape
             # curate_building.py already uses for this same tag).

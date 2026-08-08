@@ -290,13 +290,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "missileRange": {
-    "flat": 2
-   }
-  }
- },
  "workRate": {
   "empire": {
    "builds": {
@@ -339,7 +332,13 @@
  "air": {
   "empire": {
    "range": {
-    "flat": 1
+    "flat": [
+     1,
+     {
+      "value": 1,
+      "enabled": "IS_MISSILE"
+     }
+    ]
    }
   }
  },

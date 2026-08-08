@@ -322,7 +322,13 @@
  "air": {
   "empire": {
    "range": {
-    "flat": 1
+    "flat": [
+     1,
+     {
+      "value": -1,
+      "enabled": "IS_MISSILE"
+     }
+    ]
    }
   }
  },
