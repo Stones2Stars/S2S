@@ -630,7 +630,9 @@ authored shape.
 > complex set DEFINES carries the prefix; a base-filled copy defines nothing.
 > **⚖ A SAVE IS RESOLVED INTO THE ACTIVE SET AT LOAD (owner): *"for savegames, if you see it is a complex trait
 > game, you make sure the trait is the complex version."*** A stored plain `TRAIT_X` in a game running
-> `GAMEOPTION_LEADER_COMPLEX_TRAITS` resolves to `TRAIT_COMPLEX_X` where that record exists. This is NOT the
+> `GAMEOPTION_LEADER_COMPLEX_TRAITS` takes the prefix — EVERY held id, with BARBARIAN the one exception (the
+> base-filled record above). It needs no per-id table and no does-it-exist test: `complex/` is a SUPERSET of
+> `simple/`, so the prefixed id always exists. This is NOT the
 > `savemigration.txt` rename plane: a rename translates one id whose record moved, while this picks WHICH SET an
 > id belongs to and so depends on a live game option — it belongs at the ONE stored-Type resolution point
 > (`sm_resolveStoredType`), beside the rename lookup rather than inside it.
