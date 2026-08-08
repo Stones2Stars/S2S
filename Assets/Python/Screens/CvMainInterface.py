@@ -2767,7 +2767,7 @@ class CvMainInterface:
 				screen.setTableColumnHeader(Tbl, 2, "", a16thX/2)
 				screen.setTableColumnRightJustify(Tbl, 1)
 				screen.setTableColumnRightJustify(Tbl, 2)
-				self.yields.processCity(CyCity)
+				self.yields.processCity(InCity.iPlayer, InCity.iCityID)
 				self.yields.fillTable(screen, Tbl, iYieldType, iYieldTiles)
 			else:
 				dx = iWidth/2 - 8

@@ -23,6 +23,7 @@
 #include "UI/CityOutputHistory.h"  // the city admin tab's recent-output rows
 #include "UI/CvBuildingFilters.h"   // BuildingFilterTypes -- the city screen's list VIEW state
 #include "UI/CvUnitFilters.h"       // UnitFilterTypes -- ditto
+#include "Data/CvInfoValuation.h"   // CityRateTerms -- the ONE city-yield decomposition
 
 extern const char* g_szLastCyRead;
 
@@ -64,6 +65,30 @@ namespace
 }
 
 // ---- GROUPS both scopes carry: iCity >= 0 reads the CITY, iCity < 0 reads the EMPIRE ----
+
+python::list CyState::getCityYieldTerms(int iPlayer, int iCity, int iYield) const
+{
+	PERF_SCOPE("CyState::getCityYieldTerms", -1);
+	python::list terms = python::list();
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL || iYield < 0 || iYield >= NUM_YIELD_TYPES) return terms;
+
+	InfoValuation::CityRateTerms t;
+	InfoValuation::cityReceiverRate(*pCity, iYield, &t);
+	terms.append((double)t.plotBase);
+	terms.append((double)t.plotNature);
+	terms.append((double)t.plotImprovement);
+	terms.append((double)t.plotRest);
+	terms.append((double)t.tradeYield);
+	terms.append((double)t.goldenAge);
+	terms.append((double)t.upperFlat);
+	terms.append((double)t.specialists);
+	terms.append((double)t.cityFlat);
+	terms.append(t.percentSum);
+	terms.append(t.workedPlots);
+	terms.append((double)t.rate);
+	return terms;
+}
 
 python::list CyState::getYields(int iPlayer, int iCity) const
 {
@@ -1259,6 +1284,7 @@ void CyState::pythonPublish()
 		.def("getVisionKinds",           &CyState::getVisionKinds)
 		.def("getRealizedWellbeing",     &CyState::getRealizedWellbeing)
 		.def("getYieldModifiers",        &CyState::getYieldModifiers)
+		.def("getCityYieldTerms",        &CyState::getCityYieldTerms)
 		.def("getSight",                 &CyState::getSight)
 		.def("getLiberationPlayer",      &CyState::getLiberationPlayer)
 		.def("getMaintenance",           &CyState::getMaintenance)

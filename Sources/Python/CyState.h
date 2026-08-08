@@ -86,6 +86,15 @@ public:
 	// The city's yield MODIFIER percents, indexed by YieldTypes -- the multiplier a base yield is scaled by.
 	// A PERCENT, so it is NOT x100 and a reader never divides it ([DEC-fixedpoint-x100]).
 	python::list getYieldModifiers(int iPlayer, int iCity) const;
+
+	// THE CITY YIELD CENSUS, for ONE channel -- the same decomposition InfoValuation::cityReceiverRate fills
+	// and the /computed census renders, published so the TOOLTIP reads the SAME DOCUMENT.
+	// â A tooltip IS a census (owner): if the panel recomputes its own breakdown it is a second answer to
+	// one question, and the two drift. This is the read that stops a screen hand-rolling yield arithmetic.
+	// Returns, in order: [plotBase, plotNature, plotImprovement, plotRest, tradeYield, goldenAge, upperFlat,
+	// specialists, cityFlat, percentSum, workedPlots, rate]. Amounts are x100; percentSum and workedPlots are
+	// whole numbers ([DEC-fixedpoint-x100] -- the reader divides at the point of use).
+	python::list getCityYieldTerms(int iPlayer, int iCity, int iYield) const;
 	int getSight(int iPlayer, int iCity) const;   // the city's sight BUDGET (vision.md)
 	// Which player would receive this city if it were liberated, or -1 for nobody. A lone id, so it stays a
 	// bare typed read (patterns.md category 4) rather than being forced into a group that would mean nothing.
