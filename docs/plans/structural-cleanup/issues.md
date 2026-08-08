@@ -1175,3 +1175,41 @@ puts an availability rule in a screen — the enabler owns the verdict
 
 ⚑ Cheap first read: the enabler's own served set (`/computed/enabler/operating?player=N`) beside what the list
 renders — the three-leg check ([superseded-ideas #33](../../architecture/superseded-ideas.md)), state leg first.
+
+
+## THE PYTHON HALF OF THE Cy DISCONNECT IS NOT DONE — ~2000 DEAD CALL SITES
+
+**PROVEN — measured, not estimated:**
+
+| dead surface | call sites | spread |
+|---|--:|---|
+| `CyCity` methods | **1,586** | 43 files |
+| `GC.get*Info` accessors | **~450** | 44 distinct accessors |
+
+`CyCity` retains **four** defs — `getID`, `getOwner`, `getX`, `getY`. Everything else a screen asks a city
+(`happyLevel`, `getYieldRate`, `canConstruct`, `isProductionUnit`, `getCultureThreshold`, …) raises
+`AttributeError`. Worst files: `Revolution.py` 478, `RevEvents.py` 141, `CvRandomEventInterface.py` 124,
+`WBCityEditScreen.py` 121, `CvEventManager.py` 117, `CvDomesticAdvisor.py` 108.
+
+⛔ **THE FAILURE MODE IS WHAT MAKES THIS DANGEROUS TO ESTIMATE FROM SYMPTOMS.** Python takes the surface with
+`from CvPythonExtensions import *` — 169 files star-import it against 6 with an explicit list — so **nothing
+declares a dependency and nothing fails at import**. Each dead call surfaces only when its code path runs, i.e.
+one panel at a time, as a player happens to open it. A screen that opens today is not a screen that works: it
+means you have not yet pressed the button that reaches its dead call.
+⚑ And a raising `__init__` leaves `None`, so every later `handleInput`/`onClose` on that screen fails too — one
+dead binding produced five distinct tracebacks in the espionage advisor.
+
+⚠ **A file with zero `GC.get*Info` is NOT fixed.** They are two independent populations. `CvDomesticAdvisor` had
+all 15 of its `GC.get*Info` calls cleared and still will not open, because 108 dead `CyCity` calls remain. Do
+not read a clean grep for one as progress on the other.
+
+**⚖ THE RULE FOR EACH SITE IS SETTLED (owner, worked repeatedly): the binding does not come back
+([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).** Check whether the read already exists
+on `INFO`/`STATE` — several did, and `CvAdvisorUtils` was already calling one of them correctly; grow a slot
+when it does not; and where no read exists and the value only feeds a heuristic, **the rewrite does not need to
+be faithful — it needs to show the info as it is today (owner)**, so an honest simplification beats a
+fabricated number.
+
+⚑ Worked precedent for the biggest case: `RawYields` was hand-computing a yield breakdown through this API. It
+was not re-bound — it now reads `CyState::getCityYieldTerms`, the SAME decomposition the `/computed` census
+renders, because a tooltip IS a census and two computations of one number drift.
