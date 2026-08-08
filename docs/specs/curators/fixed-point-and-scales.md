@@ -204,6 +204,33 @@ SizeMatters counts*, not a modifier channel — it is not a scale violation and 
 **Sequencing within a cluster (owner): set the mechanic up to spec FIRST, then wire the consumers.** Do not open
 with a hundred consumer edits; build the value chain so it is internally ×100-consistent, then reduce at the readers.
 
+### 4c-bis. ⛔ ×100 EVERYWHERE INTERNALLY — TRUNCATE ONCE, AT THE EDGE (owner)
+
+> *"This, right here, is why we truncate once, at edge — and use ×100 everywhere internally."*
+
+The ×100 exists so an amount can carry two decimals **to the edge**. A `÷100` anywhere before that edge throws
+those decimals away, and if it happens inside an AGGREGATION it throws them away once **per term**.
+
+> **`Σ trunc(xᵢ) ≠ trunc(Σ xᵢ)`** — and the gap grows with the number of terms.
+
+⇒ **A value stays ×100 through every intermediate step — every sum, every per-item calculation, every hand-off
+between systems — and reduces exactly once, at the surface that shows it.** An intermediate truncation is a
+DEFECT even when each individual truncation is "only" a rounding, because the error is systematic (always
+downward) and multiplies by the term count.
+
+⚑ **The worked case, and it is what forced this to be written down: the trade-route list against the food /
+production tooltip.** Both were internally consistent and neither had a missing modifier — they simply truncated
+at different points. The list computed and reduced PER ROUTE (`CvMainInterface` → `CyState::getTradeYield` →
+`calculateTradeYield`, once per route); the stored value reduces ONCE over the summed profit
+(`CvCity::updateTradeRoutes`). Over ~24 routes the two cannot reconcile, and no amount of checking the modifiers
+explains the gap — which is exactly what makes this class expensive to chase.
+⚖ **The stored side is the correct one; the per-item reducer is the defect.** Fixing it is never "make the
+totals agree" — it is removing the early `÷100` so the sum happens on the ×100 plane.
+
+⚠ **The tell to recognise:** two surfaces reporting the same quantity, each defensible on its own arithmetic,
+disagreeing by an amount that scales with how many things were added up. That is not a missing deposit; it is a
+reduction in the wrong place.
+
 ### 4c-ter. The COMBAT-STRENGTH cluster — the target shape (owner ruling)
 
 ⚖ **"The strength legs should not need to reduce to human until actually SHOWN IN THE UI."** Combat strength is an
