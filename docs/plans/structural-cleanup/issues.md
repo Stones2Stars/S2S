@@ -1151,3 +1151,27 @@ do — dropping a fact you needed is a permanent hole.**
 as *"the load seed and the validation oracle"*. Half of that phrase died with the oracle
 ([superseded-ideas #33](../../architecture/superseded-ideas.md)) and the other half contradicts event-spine.md's
 table above — so an agent reading enabler.md today is told the current shape is correct.
+
+
+## THE GREYED-OUT BUILD LIST OFFERS BUILDINGS WHOSE TECH IS NOT RESEARCHED
+
+**OBSERVED (owner, in play):** the greyed-out (`canConstruct`-failing but shown) portion of the build list
+includes buildings that are **not yet enabled by tech**.
+
+⚑ **Why this is an ENABLER question and not a display one:** the greyed tier is meant to be *"things this city
+cannot build YET"*, which is a different set from *"things that do not exist for this player yet"*. A building
+whose `PrereqTech` is unresearched is not on the frontier at all — it should not be a candidate. So the suspect
+is the CANDIDATE SET the list iterates, not the greying.
+
+⚠ **NOT YET KNOWN — establish which of these before touching anything:**
+- does the screen iterate the enabler's maintained domain vector, or the whole building database and then ask a
+  gate per entry? The second is the shape [enabler.md §6](../../specs/enabler.md) exists to delete (the frontier
+  IS the shared choice set), and it would show exactly this symptom;
+- or is the tech axis genuinely missing from the tri-state the greyed tier reads?
+
+⛔ Do NOT "fix" it by adding a tech test at the display site. That papers over whichever of the two it is, and
+puts an availability rule in a screen — the enabler owns the verdict
+([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
+
+⚑ Cheap first read: the enabler's own served set (`/computed/enabler/operating?player=N`) beside what the list
+renders — the three-leg check ([superseded-ideas #33](../../architecture/superseded-ideas.md)), state leg first.
