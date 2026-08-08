@@ -622,7 +622,12 @@ authored shape.
 > **⛔ EVERY RECORD IN THE COMPLEX SET CARRIES `TRAIT_COMPLEX_`, WITH NO EXCEPTIONS (owner).** *"If it was built
 > as complex, it's complex, no matter what."* The prefix STATES THE SET — it is not a marker for "is a variant of
 > a simple trait" — so a complex-ONLY line with no simple counterpart is `TRAIT_COMPLEX_` like every other record
-> in the folder. Folder and prefix agree by construction.
+> in the folder.
+> ⚖ **The BASE-FILL is not an exception, and the owner's own test is why: it was not BUILT as complex.** A
+> simple trait with no complex variant is copied into `complex/` whole so that set stays self-complete (below)
+> — it is the SIMPLE record, present in both folders under its one id, not a complex record wearing a plain
+> name. `TRAIT_BARBARIAN` is the only one and it stays as it is (owner). ⇒ Read the rule as: every record the
+> complex set DEFINES carries the prefix; a base-filled copy defines nothing.
 > ⚑ **The reason is that the alternative makes a WRONG SET UNDETECTABLE (owner): *"otherwise it will be
 > impossible to truly distinguish between the simple and complex set."*** If a plain `TRAIT_` id were legal
 > inside the complex set, a held `TRAIT_EFFICIENT1` would be indistinguishable from a simple-set leak — no
