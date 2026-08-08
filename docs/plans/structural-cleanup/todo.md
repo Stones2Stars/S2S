@@ -195,17 +195,6 @@
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
 > killed on the same terms. ⛔ Never record a found legacy surface as acceptable or "kept until X".
 
-- Cut the PLAYER's trade-route count accumulator — it DOUBLE-COUNTS every empire-scope route deposit today.
-  Its feeders read the building / trait / tech EMPIRE deposit and push it into the player member, while the city
-  ALSO adds its own realized roll-up of the same channel — and that roll-up already includes the empire leg, so
-  each deposit lands once per city PLUS once more
-  ([state-repositories.md](../../architecture/state-repositories.md): an upper scope's package is never added on
-  top of a Σ that already contains it). ⚑ The city read wants the world CONFIG leg plus the rolled channel and
-  nothing else. ⚠ The `INITIAL_TRADE_ROUTES` baseline pushed into the same member is a global define, not a
-  deposit — decide its home rather than sweeping it in. ⛔ Deleting the accumulator fires no `updateTradeRoutes`
-  rider, so confirm the trade-route ASSIGNMENT still re-runs off the surviving triggers
-  ([save.md §6](../../specs/save.md); the baked-consumer re-run in [enabler.md §8](../../specs/enabler.md)).
-
 - Retire the building-COST-modifier accumulator and move its readers. Its writer is already gone: the curator
   re-homed the legacy source-keyed cost map onto the TARGET, as a conditioned own-cost entry gated on
   possessing the source, so nothing feeds the accumulator and every reader now sees zero. The value lives in
@@ -332,17 +321,14 @@
   ⚑ **`<channel>.tradeRoute` is its own question:** a per-trade-route yield is a `per` SCALER on the channel, not
   a member of it — so it lands as the channel's ordinary deposit scaled by the route count, and needs the route
   count wired as a count-key first.
-- **Re-point `CvPlayer::getTradeRoutes()` onto the cascade and cut `m_iTradeRoutes`.** It is a legacy serialized
-  accumulator fed by two `changeTradeRoutes` calls in `processBuilding` / `processTech`, and NOTHING feeds it
-  from traits or civics — which author the large majority of the empire-scope route grants. The empire package
-  already carries the value on the `tradeRoutes` AMOUNT slot and no reader consumes it
-  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
-  ⚠ Two riders the cut must preserve ([save.md §6](../../specs/save.md)): `GC.getINITIAL_TRADE_ROUTES()`, applied
-  once at player init and not derivable from any deposit; and the `updateTradeRoutes()` call inside the changer —
-  without it the stored per-city trade YIELD never rebuilds when a route modifier moves, which is a second live
-  defect (the trade-route surface computes live while the tooltip reads the stored value, so the two disagree).
-  ⚠ `processTech` additionally reads `CASC_SCOPE_CITY` where `processBuilding` reads `CASC_SCOPE_EMPIRE` — a
-  scope mismatch to resolve in the same pass.
+- **Give the stored trade YIELD an in-play maintenance trigger.** `CvCity::m_aiTradeYield` is the engine's
+  trade-network OUTPUT folded into TIER-1 BASE, and no fact keeps it current — it moves only when something
+  calls `updateTradeRoutes()`. The LOAD build exists (`CvGame::onFinalInitialized`) and the modifier consumer
+  re-runs it for the owner a `tradeRoutes` deposit just moved, but a change that shifts a route's PROFIT
+  without touching a `tradeRoutes` channel (a population change, a new connection, a peace deal) leaves the
+  stored yield on its old value until something else rebuilds it.
+  ⚠ It is the one value the cascade FEEDS but does not HOLD, so it cannot ride the maintained sum — the trigger
+  set has to be named per input rather than derived from the deposit index.
 
 - **Settle what the stored-vs-oracle pair is FOR, because it cannot be what the spec currently claims (owner):
   *"oracle will never work like you want it, because it would require a republish of every event to rebuild."***

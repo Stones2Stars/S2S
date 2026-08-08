@@ -514,7 +514,19 @@ the total-observability bar below.)
     ([special-systems.md](docs/reference/special-systems.md)), a recent feature that is off because it broke
     HOTSEAT, and which the mechanical test flags identically to an abandoned alternate.
   - **No `#define` anywhere, not even commented ⇒ no switch ever existed** ⇒ an abandoned alternate parked
-    beside the live one. THAT is the attic, and it is deleted — git is the archaeology. ⚠ **The one FALSE POSITIVE the test has is a guard something ELSE defines**, and it is
+    beside the live one. THAT is the attic, and it is deleted — git is the archaeology.
+  - **⛔ AND THE INVERSE IS EQUALLY DEAD, AND WORSE: a guard defined UNCONDITIONALLY.** A `/D` in
+    `fbuild.bff`'s common defines that no config ever omits means the `#else` half has never compiled — the
+    same attic, wearing the opposite costume, and the mechanical test above sails straight past it because the
+    symbol *is* defined. ⚑ **It is worse because the surviving branch keeps a companion that JUSTIFIES ITS
+    SHAPE:** the live arm reads as one mode of a switch rather than as plain code, so whatever it does looks
+    deliberate and nobody audits it. *(Measured: `_MOD_FRACTRADE` was on for fifteen years; the `÷100` inside
+    its live arm read as "the fractional mode" and was actually a scale reduce sitting inside an aggregation,
+    flooring every city's trade yield to a whole unit before the percent stack multiplied it —
+    [fixed-point-and-scales.md §4c-bis](docs/specs/curators/fixed-point-and-scales.md).)*
+    ⇒ **The test is whether the guard can VARY, not whether it is defined.** If no config turns it off, delete
+    the guard and both `#else` halves, then re-read the survivor as the plain arithmetic it is.
+    ⚠ **The FALSE POSITIVE the test has is a guard something ELSE defines**, and it is
   the exception to know: **`__INTELLISENSE__` is defined by VS Code's IntelliSense parser** (`CvGameCoreDLL.h`),
   so being absent from `Sources/`+`fbuild.bff` is its NORMAL state and says nothing about it — it stays. Same
   for the compiler's own target predefines (`_M_IX86`, `WIN32`, `_DEBUG`), the resource editor's

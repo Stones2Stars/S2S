@@ -570,24 +570,19 @@ class CvDomesticAdvisor:
 
 	def calculateTrade(self, CyCity, szKey, arg):
 		# arg: None to sum all, 'D' to count domestic, 'F' to count foreign.
+		iOwner = CyCity.getOwner()
+		iCityID = CyCity.getID()
 		nTotalTradeProfit = 0
 
-		# For each trade route possible
-		for nTradeRoute in xrange(CyCity.getMaxTradeRoutes()):
-			# Get the next trade city
-			pTradeCity = CyCity.getTradeCity(nTradeRoute)
-			# Not quite sure what this does but it's in the MainInterface
-			if pTradeCity and pTradeCity.getOwner() > -1:
-				bForeign = CyCity.getOwner() != pTradeCity.getOwner()
-				if not arg or ((arg == "F" and bForeign) or (arg == "D" and not bForeign)):
-					iTradeProfit = CyCity.calculateTradeYield(YieldTypes.YIELD_COMMERCE, CyCity.calculateTradeProfitTimes100(CyCity.getTradeCity(nTradeRoute)))
-					nTotalTradeProfit += iTradeProfit
+		for iPartnerOwner, iPartnerCity, iProfitTimes100 in STATE.getTradeRoutes(iOwner, iCityID):
+			if iPartnerOwner < 0:
+				continue
+			bForeign = iOwner != iPartnerOwner
+			if not arg or ((arg == "F" and bForeign) or (arg == "D" and not bForeign)):
+				nTotalTradeProfit += STATE.getTradeYield(iOwner, iCityID, YieldTypes.YIELD_COMMERCE, iProfitTimes100)
 
-		nTotalTradeProfit //= 100
-		if nTotalTradeProfit < 0:
-			return "%d" % nTotalTradeProfit
-
-		return "%d" % nTotalTradeProfit
+		# the ONE reduce: the per-route yields summed on the x100 plane and come down once, here
+		return "%d" % (nTotalTradeProfit // 100)
 
 
 	def countTradeRoutes(self, city, szKey, arg):

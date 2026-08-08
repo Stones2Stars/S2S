@@ -670,7 +670,7 @@ python::list CyState::getTradeRoutes(int iPlayer, int iCity) const
 		python::list row = python::list();
 		row.append((int)pPartner->getOwner());
 		row.append(pPartner->getID());
-		row.append(pCity->calculateTradeProfitTimes100(pPartner));
+		row.append(pCity->calculateTradeProfit(pPartner));
 		rows.append(row);
 	}
 	return rows;

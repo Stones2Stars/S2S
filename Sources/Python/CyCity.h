@@ -259,16 +259,6 @@ public:
 	int getBaseYieldRateModifier(int /*YieldTypes*/ eIndex, int iExtra) const;
 	int getYieldRateModifier(int /*YieldTypes*/ eIndex) const;
 
-	int getTradeYield(int /*YieldTypes*/ eIndex) const;
-
-// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-	int calculateTradeProfitTimes100(const CyCity& kCity) const;
-#endif
-// BUG - Fractional Trade Routes - end
-	int calculateTradeProfit(const CyCity& kCity) const;
-	int calculateTradeYield(int /*YieldTypes*/ eIndex, int iTradeProfit) const;
-
 	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
 	int getDomainProductionModifier(int /*DomainTypes*/ eIndex) const;

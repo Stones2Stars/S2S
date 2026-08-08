@@ -1074,29 +1074,6 @@ int CyCity::getYieldRateModifier(int /*YieldTypes*/ eIndex) const
 	return m_pCity->getYieldRateModifier((YieldTypes)eIndex);
 }
 
-int CyCity::getTradeYield(int /*YieldTypes*/ eIndex) const
-{
-	return m_pCity->getTradeYield((YieldTypes)eIndex);
-}
-
-// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-int CyCity::calculateTradeProfitTimes100(const CyCity& kCity) const
-{
-	return m_pCity->calculateTradeProfitTimes100(kCity.getCity());
-}
-#endif
-// BUG - Fractional Trade Routes - end
-
-int CyCity::calculateTradeProfit(const CyCity& kCity) const
-{
-	return m_pCity->calculateTradeProfit(kCity.getCity());
-}
-
-int CyCity::calculateTradeYield(int /*YieldTypes*/ eIndex, int iTradeProfit) const
-{
-	return m_pCity->calculateTradeYield((YieldTypes)eIndex, iTradeProfit);
-}
 
 int CyCity::getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const
 {

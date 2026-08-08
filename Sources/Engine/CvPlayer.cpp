@@ -7283,6 +7283,9 @@ void CvPlayer::getRealizedCityWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]
 }
 
 
+// The whole empire's outbound route yield, summed ×100 and reduced ONCE on the way out -- the reduce used to sit
+// inside the city loop, so every city threw away its own fraction and the empire total was short by up to one
+// unit per city ([fixed-point-and-scales.md §4c-bis]).
 int CvPlayer::calculateTotalExports(YieldTypes eYield) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -7290,11 +7293,6 @@ int CvPlayer::calculateTotalExports(YieldTypes eYield) const
 
 	foreach_(const CvCity* pLoopCity, cities())
 	{
-// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-		int iCityExports = 0;
-#endif
-
 		for (int iTradeLoop = 0; iTradeLoop < pLoopCity->getTradeRoutes(); iTradeLoop++)
 		{
 			CvCity* pTradeCity = pLoopCity->getTradeCity(iTradeLoop);
@@ -7302,25 +7300,18 @@ int CvPlayer::calculateTotalExports(YieldTypes eYield) const
 			{
 				if (pTradeCity->getOwner() != getID())
 				{
-#ifdef _MOD_FRACTRADE
-					iCityExports += pLoopCity->calculateTradeYield(eYield, pLoopCity->calculateTradeProfitTimes100(pTradeCity));
-#else
 					iTotalExports += pLoopCity->calculateTradeYield(eYield, pLoopCity->calculateTradeProfit(pTradeCity));
-#endif
 				}
 			}
 		}
-
-#ifdef _MOD_FRACTRADE
-		iTotalExports += iCityExports / 100;
-#endif
-// BUG - Fractional Trade Routes - end
 	}
 
-	return iTotalExports;
+	return iTotalExports / 100;
 }
 
 
+// The mirror of calculateTotalExports, and it reduces the same way: ×100 through every partner and every city,
+// once on the way out.
 int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -7331,11 +7322,6 @@ int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 	{
 		if (iPlayerLoop != getID())
 		{
-// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-			int iCityImports = 0;
-#endif
-
 			foreach_(const CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iPlayerLoop).cities())
 			{
 				for (int iTradeLoop = 0; iTradeLoop < pLoopCity->getTradeRoutes(); iTradeLoop++)
@@ -7345,23 +7331,14 @@ int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 					{
 						if (pTradeCity->getOwner() == getID())
 						{
-#ifdef _MOD_FRACTRADE
-							iCityImports += pLoopCity->calculateTradeYield(eYield, pLoopCity->calculateTradeProfitTimes100(pTradeCity));
-#else
 							iTotalImports += pLoopCity->calculateTradeYield(eYield, pLoopCity->calculateTradeProfit(pTradeCity));
-#endif
 						}
 					}
 				}
 			}
-
-#ifdef _MOD_FRACTRADE
-			iTotalImports += iCityImports / 100;
-#endif
-// BUG - Fractional Trade Routes - end
 		}
 	}
-	return iTotalImports;
+	return iTotalImports / 100;
 }
 
 
@@ -10182,10 +10159,8 @@ void CvPlayer::changeNoForeignCorporationsCount(int iChange, bool bLimited)
 }
 
 
-// The empire's TRADE ROUTE COUNT. ⛔ It replaced a serialized accumulator that NOTHING fed from traits or civics
-// -- the two `changeTradeRoutes` feeders sat in processBuilding and processTech, so the 53 trait and 20 civic
-// empire-scope route grants in Assets/Data reached it through no path at all, while the cascade held every one of
-// them on the tradeRoutes AMOUNT slot with no reader ([DEC-accumulator-cut-uniform]).
+// The empire's TRADE ROUTE COUNT, read off the cascade's `tradeRoutes` AMOUNT slot -- which is where EVERY
+// empire-scope route grant lands, traits and civics included (they author the large majority of them).
 // ⚑ INITIAL_TRADE_ROUTES stays a DEFINE read here: it is the player's starting allowance, produced by no deposit
 // and therefore not derivable -- the same standing GC.getMAX_TRADE_ROUTES() has in getMaxTradeRoutes().
 int CvPlayer::getTradeRoutes() const
@@ -11859,15 +11834,11 @@ void CvPlayer::updateLessYieldThreshold(YieldTypes eIndex)
 // The PER-CHANNEL route-yield modifier: what scales the yield a trade route DELIVERS on this channel
 // (CvCity::calculateTradeYield). Ruling 27 -- the three channel kinds sit CONTIGUOUS in YieldTypes order, so the
 // parameterized read is TRADE_ROUTE_MODIFIER_FOOD + eYield.
-// ⛔ IT REPLACES A SERIALIZED ACCUMULATOR WHOSE ONLY LIVE WRITER WAS THE YIELD-INFO SEED, and that is what made
-// the old value indefensible rather than merely legacy: `m_aiTradeYieldModifier` was fed once at player init from
-// CvYieldInfo::getTradeModifier() (commerce 100, food 0, production 0) and by NOTHING else, yet it was
-// WRAPPER_READ_ARRAY'd back off the save -- so a loaded game carried per-channel modifiers no live source could
-// reproduce (London ate 126 food off its routes against a live food modifier of ZERO). That is the
-// STORED-ACCUMULATOR DRIFT class ([modifier.md] §2b): the recompute is the correct side
-// ([DEC-accumulator-cut-uniform]).
-// ⚑ The yield info supplies the IDENTITY and the cascade rides ON TOP -- the deposits are deltas against the
-// engine's own base, not a replacement for it.
+// ⚑ The yield info supplies the IDENTITY (commerce 100, food 0, production 0) and the cascade rides ON TOP --
+// the deposits are deltas against the engine's own base, not a replacement for it. Computed on every read from
+// live sources, never stored: a per-channel route modifier carried across a save is a value no live source can
+// reproduce, which is the STORED-ACCUMULATOR DRIFT class ([modifier.md] §2b,
+// [DEC-accumulator-cut-uniform]).
 int CvPlayer::getTradeYieldModifier(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
@@ -22930,35 +22901,18 @@ void CvPlayer::verifyUnitStacksValid()
 
 // BUG - Trade Totals - start
 /*
- * Adds the yield and count for each trade route with eWithPlayer.
+ * Adds the yield and count for each trade route with eWithPlayer, over every city.
  *
- * The yield and counts are not reset to zero.
- * If Fractional Trade Routes is enabled and bRound is false, the yield values are left times 100.
+ * The yields accumulate ×100 and the counts are plain counts; the caller reduces once at the surface that
+ * shows them ([fixed-point-and-scales.md §4c-bis]).
  */
-void CvPlayer::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer, bool bRound, bool bBase) const
+void CvPlayer::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer, bool bBase) const
 {
 	PROFILE_EXTRA_FUNC();
 	foreach_(CvCity* pCity, cities())
 	{
-		pCity->calculateTradeTotals(eIndex, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, bRound, bBase);
+		pCity->calculateTradeTotals(eIndex, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, bBase);
 	}
-}
-
-/*
- * Returns the total trade yield with eWithPlayer.
- *
- * If Fractional Trade Routes is enabled, the yield value is left times 100.
- * UNUSED
- */
-int CvPlayer::calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer, bool bRound, bool bBase) const
-{
-	int iDomesticYield = 0;
-	int iDomesticRoutes = 0;
-	int iForeignYield = 0;
-	int iForeignRoutes = 0;
-
-	calculateTradeTotals(eIndex, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, bRound, bBase);
-	return iDomesticYield + iForeignRoutes;
 }
 // BUG - Trade Totals - end
 

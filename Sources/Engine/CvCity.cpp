@@ -8346,6 +8346,8 @@ void CvCity::setTradeYield(YieldTypes eIndex, int iNewValue)
 	}
 }
 
+// ×100, like every other amount -- the engine's trade-network OUTPUT, folded into TIER-1 BASE by the combine
+// ([modifier.md] §2a). Derived, so it is never serialized; `CvGame::onFinalInitialized` rebuilds it at load.
 int CvCity::getTradeYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
@@ -8435,15 +8437,11 @@ int CvCity::getBaseTradeProfit(const CvCity* pCity) const
 	return iProfit;
 }
 
-// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-
-// Note: getBaseTradeProfit() already returns a times-100 value.
-
-/*
- * Returns the fractional (times 100) trade profit for the route to the given city.
- */
-int CvCity::calculateTradeProfitTimes100(const CvCity* pCity) const
+// The profit one route carries, ×100 like every other amount. `getBaseTradeProfit` is already ×100 and
+// `totalTradeModifier` is a plain percent, so the single `/100` here APPLIES the percentage -- it is not a scale
+// reduce, and there is deliberately no human twin beside it ([DEC-fixedpoint-x100]: no getter has a ×100
+// variant, and no name carries the scale). A reader wanting whole gold divides at its own point of use.
+int CvCity::calculateTradeProfit(const CvCity* pCity) const
 {
 	int iProfit = getBaseTradeProfit(pCity);
 
@@ -8452,33 +8450,6 @@ int CvCity::calculateTradeProfitTimes100(const CvCity* pCity) const
 
 	return iProfit;
 }
-
-/*
- * Returns the truncated trade profit for the route to the given city.
- *
- * This function is kept only for old Python code.
- */
-int CvCity::calculateTradeProfit(const CvCity* pCity) const
-{
-	return calculateTradeProfitTimes100(pCity) / 100;
-}
-
-#else
-
-// unchanged
-
-int CvCity::calculateTradeProfit(const CvCity* pCity) const
-{
-	int iProfit = getBaseTradeProfit(pCity);
-
-	iProfit *= totalTradeModifier(pCity);
-	iProfit /= 10000;
-
-	return iProfit;
-}
-
-#endif
-// BUG - Fractional Trade Routes - end
 
 int CvCity::calculateTradeYield(YieldTypes eIndex, int iTradeProfit) const
 {
@@ -8493,10 +8464,11 @@ int CvCity::calculateTradeYield(YieldTypes eIndex, int iTradeProfit) const
 /*
  * Adds the yield and count for each trade route with eWithPlayer.
  *
- * The yield and counts are not reset to zero.
- * If Fractional Trade Routes is enabled and bRound is false, or if bBase if true, the yield values are left times 100.
+ * The yields accumulate ×100 and the counts are plain counts; neither is reset to zero, so a caller may sum
+ * several cities into one pair and reduce ONCE at the surface that shows it ([fixed-point-and-scales.md §4c-bis]).
+ * `bBase` asks for the unmodified route profit instead of the channel's yield.
  */
-void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer, bool bRound, bool bBase) const
+void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer, bool bBase) const
 {
 	PROFILE_EXTRA_FUNC();
 	if (!isDisorder())
@@ -8521,13 +8493,7 @@ void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& i
 				}
 				else
 				{
-					// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-					const int iTradeProfit = calculateTradeProfitTimes100(pTradeCity);
-#else
 					const int iTradeProfit = calculateTradeProfit(pTradeCity);
-#endif
-					// BUG - Fractional Trade Routes - end
 					// ⛔ THE CHANNEL IS THE ONE ASKED FOR, NOT COMMERCE. This read `YIELD_COMMERCE` outright and
 					// ignored `eIndex`, so the function promised a per-yield total and answered commerce for every
 					// channel -- ask it for FOOD and it returned the commerce number.
@@ -8553,42 +8519,15 @@ void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& i
 			}
 		}
 
-		// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-		if (bRound)
-		{
-			iDomesticYield += iCityDomesticYield / 100;
-			iDomesticRoutes += iCityDomesticRoutes / 100;
-			iForeignYield += iCityForeignYield / 100;
-			iForeignRoutes += iCityForeignRoutes / 100;
-		}
-		else
-#endif
-			// BUG - Fractional Trade Routes - end
-		{
-			iDomesticYield += iCityDomesticYield;
-			iDomesticRoutes += iCityDomesticRoutes;
-			iForeignYield += iCityForeignYield;
-			iForeignRoutes += iCityForeignRoutes;
-		}
+		// ⛔ THE YIELDS STAY ×100 AND THE COUNTS STAY COUNTS. Callers sum several cities into one pair, so a
+		// reduce here would be `Σ trunc(x)` over an aggregation that is still being built -- the amount comes
+		// down once, at the surface that shows it ([fixed-point-and-scales.md §4c-bis]). ⚠ And a ROUTE COUNT is
+		// not a ×100 amount: reducing it alongside the yields zeroes any count below a hundred routes.
+		iDomesticYield += iCityDomesticYield;
+		iDomesticRoutes += iCityDomesticRoutes;
+		iForeignYield += iCityForeignYield;
+		iForeignRoutes += iCityForeignRoutes;
 	}
-}
-
-/*
- * Returns the total trade yield.
- *
- * If Fractional Trade Routes is enabled or bBase is true, the yield value is left times 100.
- * UNUSED
- */
-int CvCity::calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer, bool bRound, bool bBase) const
-{
-	int iDomesticYield = 0;
-	int iDomesticRoutes = 0;
-	int iForeignYield = 0;
-	int iForeignRoutes = 0;
-
-	calculateTradeTotals(eIndex, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, bRound, bBase);
-	return iDomesticYield + iForeignRoutes;
 }
 // BUG - Trade Totals - end
 
@@ -11184,13 +11123,7 @@ void CvCity::updateTradeRoutes()
 						{
 							if (pLoopCity->plotGroup(getOwner()) == plotGroup(getOwner()) || GC.getIGNORE_PLOT_GROUP_FOR_TRADE_ROUTES())
 							{
-								// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-								const int iValue = calculateTradeProfitTimes100(pLoopCity);
-#else
 								const int iValue = calculateTradeProfit(pLoopCity);
-#endif
-								// BUG - Fractional Trade Routes - end
 
 								for (int iJ = 0; iJ < iTradeRoutes; iJ++)
 								{
@@ -11226,25 +11159,19 @@ void CvCity::updateTradeRoutes()
 		{
 			pLoopCity->setTradeRoute(getOwner(), true);
 
-			// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-			iTradeProfit += calculateTradeProfitTimes100(pLoopCity);
-#else
 			iTradeProfit += calculateTradeProfit(pLoopCity);
-#endif
-			// BUG - Fractional Trade Routes - end
 		}
 	}
 
+	// ⛔ THE STORED YIELD IS ×100 AND REDUCES NOWHERE. A `/100` on this line floors the city's whole trade
+	// contribution to a WHOLE UNIT before it reaches TIER-1 BASE, where the combine lifts it back ×100 and the
+	// percent stack multiplies what is left -- the fraction is not deferred to the edge, it is gone
+	// ([fixed-point-and-scales.md §4c-bis]: an amount reduces once, at the surface that shows it).
+	// ⚑ This total and the per-route list agree BECAUSE both live on the ×100 plane: the list renders
+	// hundredths per row, this sums the same hundredths.
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		// BUG - Fractional Trade Routes - start
-#ifdef _MOD_FRACTRADE
-		setTradeYield(((YieldTypes)iI), calculateTradeYield(((YieldTypes)iI), iTradeProfit) / 100); // XXX could take this out if handled when CvPlotGroup changes...
-#else
 		setTradeYield(((YieldTypes)iI), calculateTradeYield(((YieldTypes)iI), iTradeProfit)); // XXX could take this out if handled when CvPlotGroup changes...
-#endif
-// BUG - Fractional Trade Routes - end
 	}
 }
 
@@ -16118,81 +16045,6 @@ int CvCity::getNonHolyReligionCount() const
 		}
 	}
 	return iCount;
-}
-
-void CvCity::calculateExtraTradeRouteProfit(int iExtra, int*& aiTradeYields) const
-{
-	PROFILE_FUNC();
-
-	const int iMaxTradeRoutes = getMaxTradeRoutes();
-
-	std::vector<int> paiBestValue(iMaxTradeRoutes, 0);
-	std::vector<IDInfo> paTradeCities(iMaxTradeRoutes, IDInfo());
-
-	if (!isDisorder() && !isPlundered())
-	{
-		const int iTradeRoutes = std::min(getTradeRoutes() + std::max(0, iExtra), iMaxTradeRoutes);
-
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			if (GET_PLAYER(getOwner()).canHaveTradeRoutesWith((PlayerTypes)iI))
-			{
-				foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
-				{
-					if (pLoopCity != this
-					&& (!pLoopCity->isTradeRoute(getOwner()) || getTeam() == GET_PLAYER((PlayerTypes)iI).getTeam())
-					&& (pLoopCity->plotGroup(getOwner()) == plotGroup(getOwner()) || GC.getIGNORE_PLOT_GROUP_FOR_TRADE_ROUTES()))
-					{
-						const int iValue = calculateTradeProfitTimes100(pLoopCity);
-
-						for (int iJ = 0; iJ < iTradeRoutes; iJ++)
-						{
-							if (iValue > paiBestValue[iJ])
-							{
-								for (int iK = (iTradeRoutes - 1); iK > iJ; iK--)
-								{
-									paiBestValue[iK] = paiBestValue[(iK - 1)];
-									paTradeCities[iK] = paTradeCities[(iK - 1)];
-								}
-
-								paiBestValue[iJ] = iValue;
-								paTradeCities[iJ] = pLoopCity->getIDInfo();
-
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	int iTradeProfit = 0;
-
-	for (int iI = 0; iI < std::min(getTradeRoutes(), iMaxTradeRoutes); iI++)
-	{
-		CvCity* pLoopCity = getCity(paTradeCities[iI]);
-
-		if (pLoopCity != NULL)
-		{
-			iTradeProfit -= calculateTradeProfitTimes100(pLoopCity);
-		}
-	}
-
-	for (int iI = 0; iI < std::min(getTradeRoutes() + iExtra, iMaxTradeRoutes); iI++)
-	{
-		CvCity* pLoopCity = getCity(paTradeCities[iI]);
-
-		if (pLoopCity != NULL)
-		{
-			iTradeProfit += calculateTradeProfitTimes100(pLoopCity);
-		}
-	}
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		aiTradeYields[iI] = calculateTradeYield(((YieldTypes)iI), iTradeProfit) / 100;
-	}
 }
 
 int CvCity::getMinimumDefenseLevel() const

@@ -835,13 +835,15 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	// PLAYER's own per-yield trade modifier (CvCity::calculateTradeYield -> CvPlayer::getTradeYieldModifier), so
 	// a player carrying a food trade modifier genuinely eats off its routes. There is no per-yield modifier on
 	// CvYieldInfo to consult, and assuming one reads food's contribution as zero.
-	// ⚑ AN EDGE CONVERTS: the city stores this one already reduced (setTradeYield divides by 100), so it lifts
-	// to the ×100 plane HERE rather than dragging the rate down to it ([DEC-fixedpoint-x100]).
+	// ⚑ NO CONVERSION HAPPENS HERE, and the absence is deliberate: the store is ×100 like every other amount, so
+	// the fold is a plain add. ⛔ A `× 100` on this line would mean the store had been reduced somewhere upstream
+	// — a round trip that keeps the scale and throws the FRACTION away, right under the percent stack
+	// ([fixed-point-and-scales.md §4c-bis]).
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		if (CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1) == iChannel)
 		{
-			iTradeYield = (int64_t)city.getTradeYield((YieldTypes)iYield) * 100;
+			iTradeYield = (int64_t)city.getTradeYield((YieldTypes)iYield);
 			iBase += iTradeYield;
 			break;
 		}

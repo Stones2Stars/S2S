@@ -146,13 +146,12 @@ class CvFinanceAdvisor:
 					if CyPlot and CyPlot.hasYield() and CyCity.isWorkingPlot(CyPlot):
 						iTiles += 1
 						iYield0 += CyPlot.getYield(YieldTypes.YIELD_COMMERCE)
-				# Trade
-				for j in range(CyCity.getTradeRoutes()):
-					CyCityX = CyCity.getTradeCity(j)
-					if not CyCityX: continue
+				# Trade -- the per-route yields sum on the x100 plane; iYield1/iYield2 reduce once at display below
+				for iPartnerOwner, iPartnerCity, iProfitTimes100 in STATE.getTradeRoutes(iPlayerID, CyCity.getID()):
+					if iPartnerOwner < 0: continue
 
-					trade = CyCity.calculateTradeYield(YieldTypes.YIELD_COMMERCE, CyCity.calculateTradeProfitTimes100(CyCityX))
-					if CyCityX.getTeam() == iTeam:
+					trade = STATE.getTradeYield(iPlayerID, CyCity.getID(), YieldTypes.YIELD_COMMERCE, iProfitTimes100)
+					if STATE.getPlayerTeam(iPartnerOwner) == iTeam:
 						iYield1 += trade
 					else: # Foreign Trade
 						iYield2 += trade

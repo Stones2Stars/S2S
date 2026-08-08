@@ -8791,7 +8791,8 @@ int CvUnit::getTradeGold(const CvPlot* pPlot) const
 
 	int iMult = m_pUnitInfo->getTradeMultiplier();
 
-	int iGold = m_pUnitInfo->getTradeBase() + iMult * ((pCapitalCity != NULL) ? pCity->calculateTradeProfit(pCapitalCity) : 0);
+	// the route profit is ×100, so it reduces once here -- after the multiplier, not before it
+	int iGold = m_pUnitInfo->getTradeBase() + ((pCapitalCity != NULL) ? iMult * pCity->calculateTradeProfit(pCapitalCity) / 100 : 0);
 
 	iGold *= (pPlot->getOwner() != getOwner() ? iMult : 1);
 
@@ -15661,7 +15662,8 @@ void CvUnit::collectBlockadeGold()
 		{
 			if (pCity->area() == area() || pCity->plot()->isAdjacentToArea(area()))
 			{
-				int iGold = pCity->calculateTradeProfit(pCity) * pCity->getTradeRoutes();
+				// ×100 through the multiply, reduced once after it
+				int iGold = pCity->calculateTradeProfit(pCity) * pCity->getTradeRoutes() / 100;
 				if (iGold > 0)
 				{
 					pCity->setPlundered(true);

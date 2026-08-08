@@ -13151,7 +13151,9 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 	}
 	else if (iCurrentTradeRoutes > 0)
 	{
-		iTradeRouteValue = getTradeYield(eYield) / iCurrentTradeRoutes;
+		// the stored yield is ×100 and this weight is human-scaled like the rest of the building score, so the
+		// reduce happens HERE, at the point of use, and only once ([DEC-fixedpoint-x100])
+		iTradeRouteValue = getTradeYield(eYield) / (100 * iCurrentTradeRoutes);
 	}
 	else
 	{
@@ -13164,7 +13166,7 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 
 		if (pCity)
 		{
-			iTradeRouteValue = calculateTradeYield(eYield, calculateTradeProfit(pCity));
+			iTradeRouteValue = calculateTradeYield(eYield, calculateTradeProfit(pCity)) / 100;
 
 			if (kOwner.isNoForeignTrade())
 			{
@@ -13178,7 +13180,9 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 
 	int aiTradeRoutes[NUM_TRADE_ROUTE_KINDS];
 	getTradeRouteKinds(aiTradeRoutes);
-	int iUnmodifiedCurrentValue = (100 * getTradeYield(eYield)) / (100 + aiTradeRoutes[TRADE_ROUTE_MODIFIER]);
+	// the ×100 the stored yield now carries IS the `100 *` this line used to manufacture, so the two cancel and
+	// the value comes out on exactly the scale it did before -- without pre-truncating the yield first
+	int iUnmodifiedCurrentValue = getTradeYield(eYield) / (100 + aiTradeRoutes[TRADE_ROUTE_MODIFIER]);
 
 	iValue += ((kBuilding.getTradeRoute(TRADE_ROUTE_MODIFIER, CASC_SCOPE_CITY) * iUnmodifiedCurrentValue) / (bForeignTrade ? 12 : 25));
 

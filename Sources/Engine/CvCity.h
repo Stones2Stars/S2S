@@ -966,13 +966,9 @@ public:
 	int getPopulationTradeModifier() const;
 	int getPeaceTradeModifier(TeamTypes eTeam) const;
 	int getBaseTradeProfit(const CvCity* pCity) const;
-#ifdef _MOD_FRACTRADE
-	int calculateTradeProfitTimes100(const CvCity* pCity) const;
-#endif
 	int calculateTradeProfit(const CvCity* pCity) const;
 	int calculateTradeYield(YieldTypes eIndex, int iTradeProfit) const;
-	void calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer = NO_PLAYER, bool bRound = false, bool bBase = false) const;
-	int calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer = NO_PLAYER, bool bRound = false, bool bBase = false) const;
+	void calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer = NO_PLAYER, bool bBase = false) const;
 	void setTradeYield(YieldTypes eIndex, int iNewValue);
 
 
@@ -1340,8 +1336,6 @@ public:
 	void changeEventAnger(int iChange);
 
 	int getNonHolyReligionCount() const;
-
-	void calculateExtraTradeRouteProfit(int iExtra, int* &aiTradeYields) const;
 
 	int getMinimumDefenseLevel() const;
 	void setMinimumDefenseLevel(int iNewValue);
