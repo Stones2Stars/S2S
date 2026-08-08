@@ -1087,3 +1087,54 @@ anything. Establish the CALL COUNT before optimising any single pass.
 the per-read-scan class this most likely belongs to is [contexts.md](../../architecture/contexts.md)
 (*"every evaluator predicate is an O(1) CONTEXT fetch -- a predicate that walks plots/units per call is the
 efficiency defect to reject in review"*).
+
+
+## ⛔ THE OPERATING SET IS NOT RESEEDED BY EVENTS — IT IS BUILT BY A LOAD-END RECOMPUTE
+
+**PROVEN — measured on a real save, from the spine log's own timestamps:**
+
+```
+gameLoadStarted              452.453
+gameLoadFinished             507.750     <- the whole save read, ~55s
+first cityBuildingActivated  507.766     <- 16ms AFTER the bracket closed
+```
+
+**Not one** operating verdict is announced during the save read. All ~102k `cityBuildingActivated` facts fire
+after `gameLoadFinished`, emitted by `EnablerKernel::seedOperatingBuildings` — a FULL per-city recompute called
+once per city from `BuildingEnabler::onLoadFinished`. The enabler's operating domain therefore has exactly one
+builder, and it is not the event stream.
+
+**PROVEN — the spec says this is the wrong shape**, in its own decision table
+([event-spine.md](../../specs/event-spine.md) § what does acting on this fact PRODUCE):
+
+| the handler | verdict |
+|---|---|
+| BUILDS derived state (a context store, **an enabler domain**, a package) | **no guard — this is the reseed's whole job** |
+| needs an object the stream has not delivered yet | **not a guard — a BUFFER with a load-end DRAIN** |
+
+The operating set is an enabler domain. The sanctioned answer to its ordering problem is buffer-and-drain — the
+shape `CityContext` already uses for the membership fold — not a recompute.
+⛔ **Owner: *"the entire system is set up to be event driven from start to end"*, and *"recomputing would
+literally break the fold chain."***
+
+**PROVEN — the fold-chain hazard is real and ordering-dependent.** `CityContext.amenities` folds over the city's
+**OPERATING** buildings and builds at `GAME_LOAD_FINISHED` ([contexts.md](../../architecture/contexts.md)). The
+operating facts arrive inside that same bracket, from a different consumer. Which of the two runs first decides
+whether the fold sees an empty set and is then corrected by 102k facts, or double-applies. Correctness resting on
+consumer registration order is the thing the band contract exists to avoid, not to rely on.
+
+⚠ **RULED OUT — this is NOT the "two-pass load".** [engine.md](../../reference/engine.md)'s two-pass rule is the
+JSON INFO registration (register every type→id, then `mapFrom`, so same-category forward FK refs resolve). It is
+static data and has nothing to do with the save read or with events. The two get conflated because both are
+"load" and both are "two passes"; they are unrelated mechanisms.
+
+⚠ **NOT YET KNOWN — and this is the reason the recompute has survived:** the operating set is a FIXPOINT (an
+`operate` condition may consume a bonus another active building provides), so it is not obviously a plain delta.
+Establish whether the ripple hooks (`on*Active`, targeted propagation) reach the fixpoint from a buffered drain
+of the in-read building facts before removing the recompute. **Do not delete the seed until they demonstrably
+do — dropping a fact you needed is a permanent hole.**
+
+⛔ **A DOC MUST MOVE WITH THE FIX:** [enabler.md §3.2](../../specs/enabler.md) currently SANCTIONS this recompute
+as *"the load seed and the validation oracle"*. Half of that phrase died with the oracle
+([superseded-ideas #33](../../architecture/superseded-ideas.md)) and the other half contradicts event-spine.md's
+table above — so an agent reading enabler.md today is told the current shape is correct.
