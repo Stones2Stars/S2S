@@ -80,25 +80,6 @@
   the cost as the build-and-merge equivalence — so this closes by IMPLEMENTING that spec, never by re-deciding
   it. Nothing else waits on it and no half of it is in the tree.
 
-- Rule on the EMPIRE RECEIVER SUM, because the specs contradict each other and the code implements one of them.
-  [DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape) says a receiver *"caches its
-  realized sum as one variable per channel in the same cache beside the packages"*, and
-  [state-repositories.md](../../architecture/state-repositories.md) says it twice more — while the SAME document
-  also carries **"THE RECEIVER RE-SUMS ITS PARTICIPATING MEMBERS, AND NOTHING IS BUILT TO AVOID THAT (owner)"**.
-  Both sentences carry an owner quote; they cannot both stand.
-  ⚑ **The code implements the re-sum.** `readSum` / `applySum` appear in COMMENTS ONLY — there is no slot — so
-  `InfoValuation::realizedAtEmpire` answers a receiver channel by walking the player's cities and asking each for
-  its realized value, and `CvPlayer::getTotalMaintenance` does the same on the expense side.
-  ⚠ **This has been read as done.** A reader meeting the cached-slot sentences concludes the receiver plane is
-  built and that `CvPlayer::getCommerces` is a bare fetch; it is a city walk.
-  ⛔ **The obstacle is real and belongs in the ruling, not discovered after it:** a member's REALIZED commerce is
-  the §2a combine — the commerce yield split by the empire's sliders, each channel then taking its own deposits
-  and percent stack — which is NOT linear in the deposits, so the slot cannot be delta-maintained the way a flat
-  channel is. And the two obvious escapes are already barred: pushing a realized delta upward, and a member
-  emitting *"my realized value changed"*. So "build the slot" needs its maintenance answered, not just ordered.
-  ⚑ What is landed meanwhile is CADENCE, not the slot: the one AI caller derives at most once per turn and the
-  gold income is banked in `cacheKeyFinanceNumbers` beside the tax band it belongs to.
-
 ## Data — curator
 
 - Re-scope the PROJECT `health.world` / `happiness.world` / `tradeRoutes.world` authorings. WORLD is CONFIG and

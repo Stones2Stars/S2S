@@ -356,12 +356,14 @@ consequence rather than being deleted as the fix. Sharpens the CAPSTONE RULE (LO
 Every derived cache on the cascade plane is the **SAME OBJECT TYPE** everywhere and they **ALL MAINTAIN THE SAME
 WAY** — one templated channel-indexed slot table on every owner, driven by ONE application derived from the
 deposit index; only WHICH SLOTS carry a value varies by scope. A hand-named scalar field is therefore a DEFECT,
-not untidiness: it cannot be addressed uniformly, so it forces a bespoke maintenance path per field. A **RECEIVER**
-(the scope that consumes a channel) is not a different kind of cache — it caches its realized sum as one variable
-per channel in the same cache beside the packages (`CvPlayer` research/gold/culture/espionage; `CvCity`
-production/culture), so there is no separate receiver mechanism. Rejecting the legacy push accumulator never
-licenses a per-read walk instead. ONE event reaches the packages it feeds AND the sum slots they feed, so no
-dependency-ordered rebuild pass exists. **Home:** [state-repositories.md](state-repositories.md).
+not untidiness: it cannot be addressed uniformly, so it forces a bespoke maintenance path per field. ⛔ A
+**CROSS-SCOPE RECEIVER TOTAL IS NOT ONE OF THESE SLOTS AND IS NOT STORED AT ALL** (owner): a scope consuming a
+channel from BELOW it — the empire's gold/research/culture/espionage over its cities — SUMS ITS MEMBERS' REALIZED
+VALUES AT THE READ, because a member's realized value is the §2a combine and is not linear in the deposits, so a
+stored total could not be moved by a deposit delta and would cost more to keep than to re-sum. The member count
+is therefore the honest cost of that read, and the defect is only ever asking it at the wrong CADENCE
+([patterns.md](patterns.md) § THE VALUATION PROTOCOL). ⚠ A scope combining its OWN packages (a city's production
+rate) is not this — that is an ordinary package read. **Home:** [state-repositories.md](state-repositories.md).
 
 ### DEC-flag-is-fossil
 

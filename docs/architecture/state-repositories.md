@@ -88,12 +88,29 @@ A derived cache in this model is:
 
 **Worked shape (the plot-yield cache):** `getYield()` = `return cached` — a bare fetch, always O(1), because the
 fact that moved the plot already applied its deposits into the slot;
-**⚖ THE SUM OF THE PACKAGES IS CACHED AT ITS TARGET — as a RECEIVER SLOT, never as a member beside it (owner).**
-Each channel has ONE consuming scope (production → city; the commerces further up), and the Σ that lands there is
-cached in that scope's OWN package (`CvCascadePackage::sum`, read `readSum`, moved `applySum`). **ONE EVENT REACHES
-BOTH LEVELS**: the same derivation that names the packages a source feeds also names the receiver sums those
-packages feed, so a fact applies to both at the instant it arrives and no ordering between them exists to get
-wrong.
+**⚖ A CROSS-SCOPE RECEIVER TOTAL IS RE-SUMMED AT READ, AND NO SLOT HOLDS IT (owner).** *"I believe it will cost
+more to cache such a number in most cases than it would to just do the sum of all cities."* Each channel has ONE
+consuming scope (production → city; the commerces further up), and where that scope is ABOVE its members the
+total is the Σ of their realized values, taken at the read — there is no `sum` slot, no `readSum`, and no
+`applySum`, and none is to be built.
+⚑ **The arithmetic is why, not thrift:** a member's realized value is the §2a combine, which is NOT linear in the
+deposits, so a cached total could not be moved by a deposit delta at all — it would have to be re-derived on
+every fact that touches any member, which is strictly more work than summing the members when someone asks.
+⚖ **THE THRESHOLD, so this is re-derivable rather than remembered (owner): *"I do not think for a million years
+it would ever be worth caching a value that loops X cities for 1 number and sums it, unless the number of cities
+is in the thousands."*** An empire holds tens of cities, so the Σ is tens of adds over values each member already
+holds. ⛔ That bar is nowhere near met, and it applies to a HAND-ROLLED bank of the same number just as much as
+to a package slot — caching it anywhere is the move being refused, not merely caching it in the cascade.
+⚑ **And the VOLATILITY settles it independently of the count (owner): *"especially a number like a commerce
+yield, that pretty much constantly fluctuates."*** A cache pays off in proportion to how long an entry stays
+valid; a commerce yield moves on nearly every fact in the economy, so a stored total would be re-derived about
+as often as it is read and would spend the rest of its life WRONG. ⇒ The two tests compose: cache-worthiness
+needs both a large member count and a stable value, and a receiver total has neither. ⚠ A staler variant — a
+once-per-turn snapshot of the same Σ — is the worse answer, not the safer one: it trades the cost for a value
+that is knowingly out of date on a number that never stops moving.
+⛔ So the cost of a receiver read is the MEMBER COUNT, and that is accepted. What is NOT accepted is asking it
+per candidate in a scoring loop ([patterns.md](patterns.md) § THE VALUATION PROTOCOL: a how-valuable weight is
+asked at most once per turn) — the cadence is the defect, never the Σ.
 
 ⛔ **What is banned is a HAND-NAMED field holding that same number** — a `CvCity::m_plotYieldSum`-shaped member is
 the defect [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) names (it cannot be addressed by the
@@ -595,7 +612,7 @@ correctness nothing else in the engine was ever checking.
 ⚑ **And a missing EMIT is multiply-observable** — a wrong availability verdict, an empty context store, a silent
 `/events` frame, a missing log line — while a missing MARK is observable in exactly one package, through one
 oracle diff, on one plane. The easier failure to find is the one to keep.
-- **ONE read surface, and it is a bare fetch.** `CvCascadePackage::readFlat/readPercent/readSum` is the whole of
+- **ONE read surface, and it is a bare fetch.** `CvCascadePackage::readFlat/readPercent` is the whole of
   it: a package has no second, rebuild-triggering read to reach for, so a cross-scope input needs no ordering
   guarantee and the load bracket has nothing to drain. **THERE IS NO GATE ON A READ** — nothing is tested on it,
   because nothing on it can recompute.
@@ -824,11 +841,12 @@ replaces them lands, never polished or re-homed onto the component on the way ou
   the SAME WAY.** That — not the per-scope layout — is the requirement the whole model rests on. One templated
   channel-indexed slot table on every owner, and ONE application path driving all of it, derived from the deposit
   index. What varies between scopes is only WHICH SLOTS carry a value; the type and the protocol never vary.
-  - **A RECEIVER is not a different kind of cache — it is the same cache holding a different slot (owner).**
-    Whatever scope CONSUMES a channel caches its realized sum as **one variable per channel**, in the same cache
-    beside the packages: `CvPlayer` caches research / gold / culture / espionage; `CvCity` caches production /
-    culture and the other sums it consumes. The city's realized yield rate (`yRate100[]`) is the general shape,
-    not a special case — so there is no separate "receiver mechanism" to build.
+  - **A RECEIVER IS NOT A STORED SLOT AT ALL WHERE IT SUMS MEMBERS (owner).** A scope that consumes a channel
+    from BELOW it — the empire's research / gold / culture / espionage over its cities — answers by summing its
+    members' realized values at the read (§ A CROSS-SCOPE RECEIVER TOTAL). There is no "receiver mechanism" to
+    build, and that is because there is no receiver STORE, not because one is shared.
+    ⚠ Do not read the city's own realized rate as an instance of this: a city consuming production is combining
+    ITS OWN packages, not summing members, so it is an ordinary package read and no member count enters it.
   - **⛔ THIS IS WHY HAND-NAMED SCALAR FIELDS ARE THE DEFECT, not just untidy.** A named field cannot be addressed
     uniformly, so it forces its own bespoke maintenance path — which is precisely how 33 of them accumulated.
     Channel-indexed slots are reached by the deposit's own compiled address, with no per-field code.
