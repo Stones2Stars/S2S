@@ -8,6 +8,7 @@ from CvPythonExtensions import *
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 MAP = GC.getMap()
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ACT = CyAct()
@@ -60,7 +61,7 @@ def onUnitBuilt( argsList):
 
 	if iMilitaryCivic:
 		if (aUnit[UnitReadKind.UNIT_READ_COMBAT_CLASS] not in gaiSettlerWorkerCombatList
-		and not isWorldUnit(aUnit[UnitReadKind.UNIT_READ_TYPE])):
+		and not INFO.isWorldUnit(aUnit[UnitReadKind.UNIT_READ_TYPE])):
 			aCityPos = STATE.getCityPosition(iCityOwner, iCityId)
 			iX = aCityPos[0]
 			iY = aCityPos[1]

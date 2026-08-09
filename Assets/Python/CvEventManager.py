@@ -1010,8 +1010,13 @@ class CvEventManager:
 					CyTeamW = GC.getTeam(iTeamW)
 					CyTeamL = GC.getTeam(iTeamL)
 
-				# Factor in winners handicap versus losers handicap
-				iHandicapFactor = 1000 * GC.getHandicapInfo(CyPlayerL.getHandicapType()).getCivicUpkeepPercent() / GC.getHandicapInfo(CyPlayerW.getHandicapType()).getCivicUpkeepPercent()
+				# Factor in winners handicap versus losers handicap.
+				# The difficulty scaler is the handicap's civic-upkeep percent (`upkeep.empire.civic.percent`).
+				iUpkeepW = INFO.getHandicapCivicUpkeepPercent(CyPlayerW.getHandicapType())
+				if iUpkeepW:
+					iHandicapFactor = 1000 * INFO.getHandicapCivicUpkeepPercent(CyPlayerL.getHandicapType()) / iUpkeepW
+				else:
+					iHandicapFactor = 1000
 
 				# Message
 				if iPlayerAct is None:
@@ -1373,7 +1378,9 @@ class CvEventManager:
 		MAP = GC.getMap()
 
 		if not CyPlayer.isFeatAccomplished(FeatTypes.FEAT_NATIONAL_WONDER):
-			if isNationalWonder(iBuilding):
+			# A building's wonder CATEGORY is WHICH self-cap scope it authors ([json.md] 4.4) -- EMPIRE is the
+			# national wonder. There is no isNationalWonder mirror to ask, and never was one on this surface.
+			if INFO.getIntrinsic("BUILDING_", iBuilding, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_EMPIRE:
 				CyPlayer.setFeatAccomplished(FeatTypes.FEAT_NATIONAL_WONDER, True)
 
 				if not self.bNetworkMP and GAME.getElapsedGameTurns() != 0 and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
@@ -2646,14 +2653,15 @@ class CvEventManager:
 										iPlot = GAME.getSorenRandNum(len(listPlots), "Partisan event placement")
 										CyPlayerHC.initUnit(iUnit, listPlots[iPlot].getX(), listPlots[iPlot].getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 
-									unitInfo = GC.getUnitInfo(iUnit)
+									szUnitKey = INFO.getTextKey("UNIT_", iUnit)
+									szUnitBtn = INFO.getButton("UNIT_", iUnit)
 									CvUtil.sendMessage(
-										TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_1", (iNumUnits, unitInfo.getTextKey(), CyCity.getName())),
-										iPlayerHC, 10, unitInfo.getButton(), ColorTypes(13), iX, iY, True, True, bForce=False
+										TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_1", (iNumUnits, szUnitKey, CyCity.getName())),
+										iPlayerHC, 10, szUnitBtn, ColorTypes(13), iX, iY, True, True, bForce=False
 									)
 									CvUtil.sendMessage(
-										TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_OTHER_1", (CyPlayerHC.getCivilizationAdjectiveKey(), CyCity.getName(), iNumUnits, unitInfo.getTextKey())),
-										iPlayer, 10, unitInfo.getButton(), ColorTypes(44), iX, iY, True, True
+										TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_OTHER_1", (CyPlayerHC.getCivilizationAdjectiveKey(), CyCity.getName(), iNumUnits, szUnitKey)),
+										iPlayer, 10, szUnitBtn, ColorTypes(44), iX, iY, True, True
 									)
 
 						if bAtCapital and not CyPlayerHC.isNPC():
@@ -2666,17 +2674,18 @@ class CvEventManager:
 								for i in xrange(iNumUnits):
 									CyPlayerHC.initUnit(iUnit, iX, iY, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 
-								unitInfo = GC.getUnitInfo(iUnit)
+								szUnitKey = INFO.getTextKey("UNIT_", iUnit)
+								szUnitBtn = INFO.getButton("UNIT_", iUnit)
 								CvUtil.sendMessage(
-									TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_2", (iNumUnits, unitInfo.getTextKey(), CyCity.getName())), iPlayerHC, 10,
-									unitInfo.getButton(), ColorTypes(13), iX, iY, True, True, bForce=False
+									TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_2", (iNumUnits, szUnitKey, CyCity.getName())), iPlayerHC, 10,
+									szUnitBtn, ColorTypes(13), iX, iY, True, True, bForce=False
 								)
 								if not capital.isRevealed(iPlayer, False):
 									iX = CyCity.getX(); iY = CyCity.getY()
 
 								CvUtil.sendMessage(
-									TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_OTHER_2", (CyPlayerHC.getCivilizationAdjectiveKey(), CyCity.getName(), iNumUnits, unitInfo.getTextKey())),
-									iPlayer, 10, unitInfo.getButton(), ColorTypes(44), iX, iY, True, True
+									TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_OTHER_2", (CyPlayerHC.getCivilizationAdjectiveKey(), CyCity.getName(), iNumUnits, szUnitKey)),
+									iPlayer, 10, szUnitBtn, ColorTypes(44), iX, iY, True, True
 								)
 						break
 					elif iCultureLevel == 2:

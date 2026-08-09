@@ -924,13 +924,14 @@ class WorldBuilder:
 					if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
 						continue
 				elif self.iSelectClass == 2:
-					if not isNationalWonder(i):
+					# The wonder CATEGORY is the self-cap's SCOPE ([json.md] 4.4) -- EMPIRE is the national wonder.
+					if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE) != AllowedCap.ALLOWEDCAP_EMPIRE:
 						continue
 				elif self.iSelectClass == 3:
-					if not isTeamWonder(i):
+					if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE) != AllowedCap.ALLOWEDCAP_TEAM:
 						continue
 				elif self.iSelectClass == 4:
-					if not isWorldWonder(i):
+					if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE) != AllowedCap.ALLOWEDCAP_WORLD:
 						continue
 				lItems.append([INFO.getDescription("BUILDING_", i), i])
 			lItems.sort()

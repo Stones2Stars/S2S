@@ -973,7 +973,8 @@ class CvInfoScreen:
 		aWonderList = []
 		# Make a wonder list
 		for i in xrange(GC.getNumBuildingInfos()):
-			if isWorldWonder(i):
+			# The wonder CATEGORY is the self-cap's SCOPE ([json.md] 4.4) -- WORLD is the world wonder.
+			if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_WORLD:
 				aWonderList.append(i)
 
 		aaiTopCitiesWonders = []
@@ -1084,7 +1085,7 @@ class CvInfoScreen:
 						iBuildingProd = cityX.getProductionBuilding()
 
 						# World Wonder Mode
-						if (self.szWonderDisplayMode == "WorldWonders" and isWorldWonder(iBuildingLoop)):
+						if (self.szWonderDisplayMode == "WorldWonders" and INFO.getIntrinsic("BUILDING_", iBuildingLoop, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_WORLD):
 							# Is this city building a wonder?
 							if (iBuildingProd == iBuildingLoop):
 								if (iTeamX == self.iTeam):
@@ -1104,7 +1105,8 @@ class CvInfoScreen:
 								iNumWonders += 1
 
 						# National/Team Wonder Mode
-						elif self.szWonderDisplayMode == "NationalWonders" and (isNationalWonder(iBuildingLoop) or isTeamWonder(iBuildingLoop)):
+						# The wonder CATEGORY is the self-cap's SCOPE ([json.md] 4.4): EMPIRE = national, TEAM = team.
+						elif self.szWonderDisplayMode == "NationalWonders" and INFO.getIntrinsic("BUILDING_", iBuildingLoop, IntrinsicSlot.PYINT_WONDER_SCOPE) in (AllowedCap.ALLOWEDCAP_EMPIRE, AllowedCap.ALLOWEDCAP_TEAM):
 
 							# Is this city building a wonder?
 							if (iBuildingProd == iBuildingLoop):

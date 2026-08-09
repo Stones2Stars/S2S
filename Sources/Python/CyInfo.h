@@ -260,9 +260,22 @@ public:
 	// enabler owns, while what the caller actually wants is authored directly as `spread.religion`
 	// ([json.md] §9 -- its own block precisely so a reader is not left inferring it from a prereq).
 	bool canSpreadReligion(int iUnitId) const;
+	// Is this unit WORLD-UNIQUE -- does it author a `world` self-cap ([json.md] §4.4)?
+	// ⚑ It is the UNIT twin of the building's PYINT_WONDER_SCOPE, and it is NAMED rather than given a slot for
+	// the reason [patterns.md] states: a slot read that falls through an unrouted prefix answers a shared -1 that
+	// is indistinguishable from a real verdict, while an unwired NAMED read does not compile.
+	// ⚠ The test is `>= 0` (a cap is AUTHORED), never `> 0` -- the enabler's own cap gate reads it the same way,
+	// so there is ONE meaning of "capped" rather than two that can drift.
+	bool isWorldUnit(int iUnitId) const;
 	// Does this BUILDING play a completion movie? The wonder-movie popup gates on the verdict alone, and the
 	// screen behind it resolves the ART_DEF_MOVIE_* tag itself -- so no tag string crosses the boundary.
 	bool hasMovie(int iBuildingId) const;
+	// A HANDICAP's civic-upkeep percentage (`upkeep.empire.civic.percent`) -- the difficulty scaler the combat
+	// theft handlers weigh a winner's difficulty against a loser's by.
+	// ⚑ NAMED rather than slotted for the same reason as isWorldUnit above, and because the value belongs to ONE
+	// registry ([patterns.md]: a value that belongs to one type is named on that type's accessor).
+	// ⚠ A PERCENT is NOT ×100 ([DEC-fixedpoint-x100]) -- it is a whole number and the caller uses it directly.
+	int getHandicapCivicUpkeepPercent(int iHandicapId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
 	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.

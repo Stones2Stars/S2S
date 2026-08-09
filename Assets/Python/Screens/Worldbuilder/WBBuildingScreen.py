@@ -145,11 +145,14 @@ class WBBuildingScreen:
 		lTeam = []
 		lWorld = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			if isNationalWonder(i):
+			# The wonder CATEGORY is WHICH self-cap scope the building authors ([json.md] 4.4) -- EMPIRE is the
+			# national wonder, TEAM the team wonder, WORLD the world wonder. -1 means uncapped: an ordinary building.
+			eScope = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE)
+			if eScope == AllowedCap.ALLOWEDCAP_EMPIRE:
 				lNational.append([INFO.getDescription("BUILDING_", i), i])
-			elif isTeamWonder(i):
+			elif eScope == AllowedCap.ALLOWEDCAP_TEAM:
 				lTeam.append([INFO.getDescription("BUILDING_", i), i])
-			elif isWorldWonder(i):
+			elif eScope == AllowedCap.ALLOWEDCAP_WORLD:
 				lWorld.append([INFO.getDescription("BUILDING_", i), i])
 			else:
 				lBuilding.append([INFO.getDescription("BUILDING_", i), i])

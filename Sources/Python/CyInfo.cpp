@@ -22,6 +22,7 @@
 #include "Infos/CvHurryInfo.h"          // HURRY_ -- the hurry list's own numbers
 #include "Infos/CvUnitInfo.h"             // getGrantedBuildings -- the unit's MISSION_CONSTRUCT repertoire
 #include "Infos/CvAllowed.h"
+#include "Infos/CvHandicapInfo.h"         // HANDICAP_ -- the civic-upkeep difficulty scaler
 #include "Infos/CvSpecialBuildingInfo.h"   // the GROUP that may hold the cap for its members
 #include "Infos/CvBonusInfo.h"
 #include "Infos/CvImprovementInfo.h"      // IMPROVEMENT_ -- the pillage-gold intrinsic
@@ -363,12 +364,29 @@ bool CyInfo::canSpreadReligion(int iUnitId) const
 	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
 	return pUnit ? !pUnit->getReligionSpread().empty() : false;
 }
+//	Is this unit WORLD-UNIQUE? The unit twin of the building's cap-scope read: a `world` self-cap is what makes a
+//	unit world-unique, exactly as a cap's SCOPE is what makes a building a world / team / national wonder
+//	([json.md] §4.4). Units carry world/empire caps only -- there is no team cap for a unit.
+bool CyInfo::isWorldUnit(int iUnitId) const
+{
+	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
+	return pUnit ? pUnit->getAllowed()->cap(ALLOWEDCAP_WORLD) >= 0 : false;
+}
 //	Does this building play a completion MOVIE -- the whole of what the wonder-movie popup gates on. The screen
 //	that follows resolves the ART_DEF_MOVIE_* tag itself, so the boundary hands over a verdict and never a tag.
 bool CyInfo::hasMovie(int iBuildingId) const
 {
 	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
 	return pBuilding ? pBuilding->hasMovie() : false;
+}
+//	The handicap's civic-upkeep percentage. The HUMAN audience is read deliberately: the caller weighs one
+//	player's difficulty against another's, and the AI sibling is a separate stage the engine applies itself
+//	(CvHandicapInfo -- every point getter carries its own audience).
+//	⚠ 0 when the handicap is unknown, which the caller must not divide by.
+int CyInfo::getHandicapCivicUpkeepPercent(int iHandicapId) const
+{
+	const CvHandicapInfo* pHandicap = static_cast<const CvHandicapInfo*>(cyi_info("HANDICAP_", iHandicapId));
+	return pHandicap ? pHandicap->getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, false) : 0;
 }
 
 bool CyInfo::hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const
@@ -855,7 +873,9 @@ void CyInfo::pythonPublish()
 		.def("isSpy",               &CyInfo::isSpy)
 		.def("isAnimal",            &CyInfo::isAnimal)
 		.def("canSpreadReligion",   &CyInfo::canSpreadReligion)
+		.def("isWorldUnit",         &CyInfo::isWorldUnit)
 		.def("hasMovie",            &CyInfo::hasMovie)
+		.def("getHandicapCivicUpkeepPercent", &CyInfo::getHandicapCivicUpkeepPercent)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
