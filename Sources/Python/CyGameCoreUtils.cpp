@@ -223,9 +223,12 @@ int cyGetEspionageModifier(int iOurTeam, int iTargetTeam)
 	return getEspionageModifier((TeamTypes)iOurTeam, (TeamTypes)iTargetTeam);
 }
 
-int64_t cyIntSqrt64(uint64_t iValue)
+int64_t cyIntSqrt64(int64_t iValue)
 {
-	return intSqrt64(iValue);
+	// Signed at the boundary on purpose: a caller legitimately holds a negative here (a treasury in debt is the
+	// reachable one), and the engine's unsigned signature would read that as an enormous positive rather than
+	// rejecting it. A root below zero has no answer, so the edge floors it instead of inventing one.
+	return iValue > 0 ? intSqrt64((uint64_t)iValue) : 0;
 }
 
 int64_t cyGetModifiedIntValue64(uint64_t iValue, const int iMod)

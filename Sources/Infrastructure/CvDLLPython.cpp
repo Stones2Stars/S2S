@@ -352,6 +352,10 @@ DllExport void DLLPublishToPython()
 	//	two ints in, one int out -- and the espionage advisor SHOWS the number the engine actually charges, so a
 	//	script-side copy would be a second implementation of a live game formula.
 	python::def("getEspionageModifier", cyGetEspionageModifier);
+	//	Integer square root, same shape and same justification. The war-prize, espionage-theft and great-people
+	//	handlers feed its result straight into a synced gameplay outcome, and the engine takes the root with
+	//	integer math -- so a script-side float sqrt would round differently from the one the game runs.
+	python::def("intSqrt", cyIntSqrt64);
 
 	Win32::pythonPublish();
 
