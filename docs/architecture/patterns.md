@@ -645,6 +645,29 @@ Four words carry the whole requirement:
 > **on demand, for the call site that wants it** (the § THE IDENTITY SET rule), never pre-emptively across a
 > registry.
 >
+> **⚖ THE ENEMY IS UNORGANIZED SPAGHETTI, NOT ENDPOINTS — AND A PER-TYPE ACCESSOR OBJECT IS WANTED, GAME
+> OBJECTS INCLUDED (owner): *"I do not mind named endpoints, or a CyCity object with named endpoints related to
+> city; what I don't like is when we get full getter spaghetti without organization or structure."*** This
+> widens the per-INFO accessor ruling above to the whole boundary: the shape is judged on whether a reader can
+> tell WHERE an endpoint lives and WHAT it addresses, and a `Cy<Type>` carrying that type's named reads passes
+> on both counts. ⛔ So **do NOT ration endpoints, and do not weigh their COUNT as a cost** — that is the wrong
+> axis, and deliberating over whether five named reads are "a lot" is the mistake this callout exists to stop.
+> ⚠ **What the ruling does bind is HOMING**: an endpoint belongs on the accessor for the type it addresses. A
+> flat class accumulating UNIT, BUILDING and HANDICAP reads side by side is the spaghetti wearing named
+> endpoints — organized is the requirement, and "named" alone does not satisfy it.
+>
+> **⚖ THE ORGANIZING PASS IS SCHEDULED, AND THE CURRENT PILE IS ACKNOWLEDGED DEBT (owner): *"we have created
+> some of that ourselves now, and we will go back to wire that up properly in a final pass when everything is
+> actually in and working."*** ⇒ Keep ADDING named reads wherever a call site demands one; the homing is
+> corrected wholesale later, not negotiated per endpoint.
+> ⚑ It is the DISCOVERY-FIRST sequencing below applied to the accessor layout rather than to imports — the
+> expensive work is finding every read and homing it on the right surface, and re-pointing the layer afterwards
+> is mechanical, so organizing AHEAD of the demand map is the failure that gets paid for twice.
+> ⚠ This is owner-ruled SEQUENCING with a named end state, so
+> [DEC-no-deferred](decisions.md#dec-no-deferred) does not reach it — the same standing as the golden-age /
+> anarchy status carve-out ([state.md](../specs/state.md)). ⛔ It is NOT licence to call the flat pile correct,
+> and NOT a reason to withhold a read a call site needs meanwhile.
+>
 > **⚖ THE REASON IS TRACING, AND IT IS THE POINT THE OTHER TWO SERVE (owner): *"it infinitely helps tracing —
 > for me, other modders, and agents; when you read the python code today anyone is hard pressed to figure out
 > where things come from."*** Not style, not hygiene: the question a reader must be able to answer is **where
