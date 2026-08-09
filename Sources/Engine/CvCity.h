@@ -1129,7 +1129,12 @@ public:
 	// filled into a caller-owned array. The scalar above is a slice of it, so a caller wanting several
 	// counts takes the group: asking the scalar in a loop re-walks the same sources once per specialist.
 	void getFreeSpecialists(std::vector<int64_t>& aiCounts) const;   // x100 -- the caller reduces
-	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
+	//	⛔ THERE IS NO SETTER FOR THE AMOUNT, AND THERE CANNOT BE. freeSpecialists is a MODIFIER family
+	//	([modifier.md] §6): a free specialist lives exactly as long as its source, so the derivable half is
+	//	summed from the live sources AT READ and has no writer at all -- that is what the cascade is for.
+	//	The only free-specialist state that persists is the UNATTRIBUTED pulse (handed over once, never
+	//	reclaimed -- a Great Person joining, an era advance), so these two touch ONLY that ledger.
+	void clearAddedFreeSpecialists();
 	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool bUnattributed = false);
 	int getAddedFreeSpecialistCount(SpecialistTypes eIndex) const;
 

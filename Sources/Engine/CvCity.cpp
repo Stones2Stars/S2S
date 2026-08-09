@@ -10157,40 +10157,53 @@ int CvCity::getAddedFreeSpecialistCount(SpecialistTypes eIndex) const
 	return m_paiFreeSpecialistCountUnattributed[eIndex];
 }
 
-void CvCity::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
+//	Drop the city's PERSISTED free-specialist pulses -- what a city carries into a new ownership that no live
+//	source justifies. The derivable half is not touched because it is not storage: it is re-summed from the
+//	owner's live sources on the next read.
+//	⚑ It replaces a 40-iteration `setFreeSpecialistCount(i, 0)` loop, each iteration of which walked the eval
+//	ctx, the operating set and the whole empire to compute a delta against a value nothing stored.
+void CvCity::clearAddedFreeSpecialists()
 {
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-
-	const int iOldValue = getFreeSpecialistCount(eIndex);
-
-	// The TEAM carries no free-specialist channel: the team only BRIDGES tech to its members (owner), so a
-	// tech's deposit is experienced PER PLAYER and already sits in the empire term below.
-	iNewValue += GET_PLAYER(getOwner()).getFreeSpecialistCount(eIndex);
-
-	iNewValue = std::max(0, iNewValue);
-	if (iOldValue != iNewValue)
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		//	iOldValue IS this read -- calling it again costs another full walk (eval ctx + operating set +
-		//	empire) for a value already in hand.
-		FASSERT_NOT_NEGATIVE(iOldValue);
-
-		changeNumGreatPeople(iNewValue - iOldValue);
-		processSpecialist(eIndex, (iNewValue - iOldValue));
-
-		if (isCitySelected())
+		const int iHeld = m_paiFreeSpecialistCountUnattributed[iI];
+		if (iHeld != 0)
 		{
-			gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
+			m_paiFreeSpecialistCountUnattributed[iI] = 0;
+			changeNumGreatPeople(-iHeld);
+			processSpecialist((SpecialistTypes)iI, -iHeld);
 		}
+	}
+	if (isCitySelected())
+	{
+		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
 	}
 }
 
+//	⛔ NO DERIVED READ. The old body reconstructed iChange by reading the city's derived total, adding the
+//	player's derived total, then differencing against that same city total -- five full walks (eval ctx +
+//	operating set + empire) to recover the delta it was already handed. Under the cascade the amount has no
+//	writer, so the only thing to write is the pulse.
 void CvCity::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool bUnattributed)
 {
-	setFreeSpecialistCount(eIndex, (getFreeSpecialistCount(eIndex) + iChange - GET_PLAYER(getOwner()).getFreeSpecialistCount(eIndex)));
+	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
+	if (iChange == 0)
+	{
+		return;
+	}
 
 	if (bUnattributed)
 	{
-		m_paiFreeSpecialistCountUnattributed[eIndex] += iChange;
+		m_paiFreeSpecialistCountUnattributed[eIndex] =
+			std::max(0, m_paiFreeSpecialistCountUnattributed[eIndex] + iChange);
+	}
+
+	changeNumGreatPeople(iChange);
+	processSpecialist(eIndex, iChange);
+
+	if (isCitySelected())
+	{
+		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
 	}
 }
 

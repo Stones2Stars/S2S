@@ -6392,10 +6392,7 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		pCity->setFreeSpecialistCount(((SpecialistTypes)iI), 0);
-	}
+	pCity->clearAddedFreeSpecialists();
 
 
 	if (hasCitiesStartwithStateReligion())
