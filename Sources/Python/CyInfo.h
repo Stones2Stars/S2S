@@ -260,6 +260,10 @@ public:
 	// enabler owns, while what the caller actually wants is authored directly as `spread.religion`
 	// ([json.md] §9 -- its own block precisely so a reader is not left inferring it from a prereq).
 	bool canSpreadReligion(int iUnitId) const;
+	// The SPECIFIC twin -- does it spread THIS religion? The general read above is the missionary test; a
+	// recommender choosing a missionary for the empire's own faith needs this one, or it offers a unit that
+	// spreads somebody else's.
+	bool spreadsReligion(int iUnitId, int iReligion) const;
 	// Is this unit WORLD-UNIQUE -- does it author a `world` self-cap ([json.md] §4.4)?
 	// ⚑ It is the UNIT twin of the building's PYINT_WONDER_SCOPE, and it is NAMED rather than given a slot for
 	// the reason [patterns.md] states: a slot read that falls through an unrouted prefix answers a shared -1 that

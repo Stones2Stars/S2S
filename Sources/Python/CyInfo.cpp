@@ -367,6 +367,21 @@ bool CyInfo::canSpreadReligion(int iUnitId) const
 	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
 	return pUnit ? !pUnit->getReligionSpread().empty() : false;
 }
+//	The SPECIFIC twin, and the pair is deliberate: "spreads anything" is the MISSIONARY test, while a
+//	recommender picking a missionary for the empire's own faith needs "spreads THIS one". Answering the
+//	specific question with the general read offers a unit that spreads somebody else's religion.
+//	⚑ It reads the unit's own authored `spread.religion` map by key -- never a sweep of the religion registry
+//	asking each id whether this unit spreads it, which is the own-data inversion [DEC-one-reverse-view] bans
+//	and which the info's own accessor comment warns about.
+bool CyInfo::spreadsReligion(int iUnitId, int iReligion) const
+{
+	if (iReligion < 0) return false;
+	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
+	if (pUnit == NULL) return false;
+	const std::map<int, int>& kSpread = pUnit->getReligionSpread();
+	const std::map<int, int>::const_iterator it = kSpread.find(iReligion);
+	return it != kSpread.end() && it->second > 0;
+}
 //	Is this unit WORLD-UNIQUE? The unit twin of the building's cap-scope read: a `world` self-cap is what makes a
 //	unit world-unique, exactly as a cap's SCOPE is what makes a building a world / team / national wonder
 //	([json.md] §4.4). Units carry world/empire caps only -- there is no team cap for a unit.
@@ -1008,6 +1023,7 @@ void CyInfo::pythonPublish()
 		.def("isSpy",               &CyInfo::isSpy)
 		.def("isAnimal",            &CyInfo::isAnimal)
 		.def("canSpreadReligion",   &CyInfo::canSpreadReligion)
+		.def("spreadsReligion",     &CyInfo::spreadsReligion)
 		.def("isWorldUnit",         &CyInfo::isWorldUnit)
 		.def("hasMovie",            &CyInfo::hasMovie)
 		.def("isShrine",            &CyInfo::isShrine)

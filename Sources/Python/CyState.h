@@ -146,6 +146,25 @@ public:
 	// The city's potential work area as [(x, y), …], RING-ORDERED from the centre outward ([contexts.md]).
 	// Plots the map does not hold are skipped, so a caller never meets a hole.
 	python::list getCityPlots(int iPlayer, int iCity) const;
+	// Two COUNTS over that same work area. They are their own reads rather than something a caller folds out
+	// of getCityPlots, because the predicate is engine state the coordinate list does not carry -- deriving
+	// them in script would mean a per-plot boundary crossing per city per turn to re-answer what the city
+	// already counts O(1).
+	int getImprovedPlotCount(int iPlayer, int iCity) const;
+	int getWaterPlotCount(int iPlayer, int iCity) const;
+
+	// ---- THE AI PLANE. ----
+	// ⛔ These are the AI's OWN HEURISTIC SCORES, not state -- the sanctioned residual that belongs to the
+	// asking side ([superseded-ideas] par.1). They sit on this surface because it is the (player, city)
+	// address every city read already takes, and the accessor HOMING is the scheduled later pass
+	// ([patterns.md] § THE PYTHON READ BOUNDARY -- the organizing pass is wholesale, never negotiated per
+	// endpoint). Named, findable, and cheap to move.
+	// ⚠ Read them as ADVICE, never as a fact about the city: a heuristic answers what the AI would weigh,
+	// and two AI implementations may weigh it differently.
+	int getAiCityValue(int iPlayer, int iCity) const;
+	// The count of worthwhile worker builds the AI sees in this city's own AREA -- the area is resolved from
+	// the city rather than passed, because the only question anyone asks is about the city's own.
+	int getAiBestBuildCount(int iPlayer, int iCity) const;
 	// The UNIT twin. ⚠ A unit's position is part of the IDENTITY SET on the handle
 	// ([patterns.md] THE IDENTITY SET: owner, id, POSITION), but an EVENT PAYLOAD carries only (owner, id) --
 	// so a handler that was handed a payload has no handle to ask and needs this. Answers (-1, -1) for a unit

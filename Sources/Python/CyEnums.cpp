@@ -489,6 +489,26 @@ void CyEnums::pythonPublish()
 		.value("NUM_WELLBEING_CHANNELS", NUM_WELLBEING_CHANNELS)
 	;
 
+	//	The DEFENSE group's kinds -- what getDefenseKinds / expectedDefenseKinds are indexed by. The whole
+	//	family is authored `percent` ([json.md] §6: additive defense points APPLIED as a percentage), so no
+	//	slot here is x100 and a reader never divides one.
+	python::enum_<DefenseKind>("DefenseKind")
+		.value("DEFENSE_AMOUNT", DEFENSE_AMOUNT)
+		.value("DEFENSE_MIN", DEFENSE_MIN)
+		.value("DEFENSE_AIR", DEFENSE_AIR)
+		.value("DEFENSE_BOMBARD", DEFENSE_BOMBARD)
+		.value("DEFENSE_NUKE", DEFENSE_NUKE)
+		.value("DEFENSE_DYNAMIC", DEFENSE_DYNAMIC)
+		.value("DEFENSE_NO_ENTRY_LEVEL", DEFENSE_NO_ENTRY_LEVEL)
+		.value("DEFENSE_RIVER_PENALTY", DEFENSE_RIVER_PENALTY)
+		.value("DEFENSE_BUILDING_RECOVERY", DEFENSE_BUILDING_RECOVERY)
+		.value("DEFENSE_CITY_RECOVERY", DEFENSE_CITY_RECOVERY)
+		.value("DEFENSE_ADJACENT_DAMAGE", DEFENSE_ADJACENT_DAMAGE)
+		.value("DEFENSE_COUNTER_DAMAGE", DEFENSE_COUNTER_DAMAGE)
+		.value("DEFENSE_COUNTER_DAMAGE_CHANCE", DEFENSE_COUNTER_DAMAGE_CHANCE)
+		.value("NUM_DEFENSE_KINDS", NUM_DEFENSE_KINDS)
+	;
+
 	//	The REVOLUTION group's kinds. Revolutions is Python-authoritative and due its own rework, so this
 	//	vocabulary only carries the authored data faithfully ([legacy-value-calc-map]: revolution is parsed,
 	//	never modelled). ⛔ LOCAL and NATIONAL are DISTINCT MECHANICS, not scope variants -- never collapse
