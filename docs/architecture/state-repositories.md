@@ -304,6 +304,22 @@ nobody remembers to call it.
 ⇒ **The disposition is the usual one and needs no new mechanism:** name the facts that genuinely move the
 score, register for them, and the flag has nothing left to do.
 
+⚑ **AND IT REUSES THE STORE, NOT JUST THE DISCIPLINE (owner): *"there is nothing at all stopping us from
+using ContextDict, or something similar, for the AI data, and have them invalidate on the spine events they
+care about."*** The AI plane is a tenant of the SAME replacement as everything else
+([DEC-contextdict-replaces-derivedcache](decisions.md#dec-contextdict-replaces-derivedcache)) -- a keyed store
+fed by the facts it declares -- so an AI cache needs no bespoke machinery and gets none.
+
+⚠ **"Or something similar" is the load-bearing half, and collapsing it to "use ContextDict" would be the
+conflation this document already warns about** (§ THEY BEHAVE SIMILARLY AND ARE NOT THE SAME): what varies is
+what the slot HOLDS. `ContextDict` is a REFCOUNT -- `add(id, ±1)`, read `has()`, and **deliberately no `set`**,
+because a `set` overwrites a refcount. An AI SCORE is not a refcount: it is REPLACED wholesale when its inputs
+move, so it wants a sibling with assignment, not the refcount type with a `set` bolted on.
+⇒ **What is shared is the MAINTENANCE RULE and the key space, never the value semantics** -- which is exactly
+[DEC-keyed-accumulator](decisions.md#dec-keyed-accumulator)'s own statement that the possession and magnitude
+planes are one structure differing in key space and value type. ⛔ Do NOT add `set` to `ContextDict` to make an
+AI score fit it.
+
 ⚠ **This does not license caching EARLY.** [DEC-legacy-decache-poisons-perf](decisions.md#dec-legacy-decache-poisons-perf)
 sequences it: run uncached, let the hot paths announce themselves, fix the READS that should never have
 computed, and only THEN let the AI plane cache its own scores. This rules how that cache is maintained when it
