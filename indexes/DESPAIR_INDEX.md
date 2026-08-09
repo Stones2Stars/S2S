@@ -68,7 +68,50 @@ appointment with the repository.*
 
 ---
 
-## 🥉 3. The (Un)Fortified Position — 92 cp
+## 🥉 3. The City That Rebuilt Itself For Every Building It Considered — 94 cp
+
+A city choosing what to build asks each candidate *"what are you worth to me?"* — and to answer, the
+valuation first works out what the city currently **is**: how happy, how healthy, how fed, how crowded.
+
+It did that for every candidate. Per building, per scoring pass:
+
+- **three** full wellbeing realizations — `netHappiness`, `netHealth`, `getWellbeing`, the same four channels
+  three times over, because three callers each wanted them in a slightly different shape;
+- **two** complete yield group reads;
+- a scan of the city's worked plots;
+- a scan of its specialists.
+
+None of that can differ between two buildings scored in the same pass. It describes the city. The
+candidate's own contribution — the actual question — is one call at the bottom.
+
+Then the punchline. One line of that prelude asks how valuable gold is right now, which reaches
+`AI_fundingHealth`, which sums the realized gold commerce of **every city in the empire**, each one a full
+per-city rate combine — to produce a number that is then bucketed into *"is the profit margin over 25?"*
+The empire was therefore totalled to nine significant figures in order to decide which of five buckets it
+was in, once per candidate building, per pass, per city.
+
+Those five buckets come back from a single `short` on five unrelated scales. One of them is `10000`, and
+it carries the immortal comment *"A magic number in case we want this state to have some kind of
+significance."* Its sibling `10001` exists in case a treasury ratio exceeds 9999. And the runway estimate
+underneath scales by `hammerCostPercent()` — the **production-cost** multiplier — while its own comment
+describes a count of *turns*. There is a gamespeed scaler for pace. It is a different one.
+
+Measured: `AI_chooseProduction` was **37.5 seconds of a 40.6-second turn phase**, and 99.8% of that was the
+building scoring. Thirty of thirty debugger samples landed on the same chain. The turn emitted nothing at
+all while it did this, because a spin writes no logs.
+
+The archaeology is the kind part, and it is the reason this is despair rather than blame: the loop was
+written when the AI scored the **entire building database** every time, and re-deriving the city per
+candidate was a rounding error beside that. The enabler now maintains a small frontier, so the comparison
+became cheap and the invariant became the whole bill. The cost did not appear — it was uncovered.
+
+*Status: the city is pre-calculated once per pass and handed to the comparison; the gold weight derives at
+most once per turn. The oracle it calls is still slated for removal — it is a precise answer to a question
+nobody asked, computed expensively, and then rounded off.*
+
+---
+
+## 4. The (Un)Fortified Position — 92 cp
 
 AI garrisons parked with one-turn `MISSION_SKIP`, so they never actually fortified —
 meaning **AI cities have never received fortification defense bonuses**, plausibly since
@@ -81,48 +124,6 @@ SKIP"*, and the wrongness was old enough to vote. Generations of defenders stood
 awake, slightly nervous, accruing nothing.
 
 *Status: fixed in the #342 campaign (persistent parks, staggered re-plans).*
-
----
-
-## 4. The Solvency Oracle That Walks Your Empire To Say "No" — 90 cp
-
-`AI_fundingHealth` answers one question — *can I pay my bills?* — and to answer it, it sums
-the realized gold commerce of **every city in the empire**. On the standing save that is 185
-cities, each one running its full per-city rate combine. Fine, perhaps, once a turn.
-
-It was being asked **once per candidate building**, inside the production scorer, for every
-city, across seven focus passes. Measured: `AI_chooseProduction` burned **45 seconds of a
-single turn**, and the phase census put effectively all of it here — 30 of 30 debugger
-samples landed on the same chain. The turn emitted nothing while it did this, because a spin
-writes no logs.
-
-The comedy is what the number is then used for. Three of its four branches never look at
-that empire-wide total at all — they answer from `getMinTaxIncome()` / `getMaxTaxIncome()`,
-which are *bare member reads*. And the branch that does use it feeds a step function:
-profit margin over 25 returns `200`, full stop. So the empire is walked to nine significant
-figures in order to decide which of five buckets it is in.
-
-Those five buckets, incidentally, are returned from one `short`, on five unrelated scales:
-`100` for anarchy, `200` for comfortable, `iProfitMargin * 2` (max 50) for uncomfortable, a
-treasury-vs-era-target percentage for the middle band, and `10000` — carrying the immortal
-comment *"A magic number in case we want this state to have some kind of significance."* Its
-sibling `10001` exists because the treasury ratio might exceed 9999. The consumer divides by
-this number to decide how much gold is worth, so crossing one profit-margin threshold moves
-the AI's valuation of gold **four-fold, in one step**.
-
-Underneath, the runway estimate scales by `hammerCostPercent()` — the **production-cost**
-gamespeed multiplier — while its own comment describes a count of *turns*. There is a scaler
-for game pace. It is a different one.
-
-The archaeology explains rather than excuses it: the clamps read as guards against the
-integer overflow gold used to suffer, since fixed structurally by widening the money plane to
-64-bit; and the whole premise dates from before buildings were reworked to grant *commerce*
-rather than *gold*, which made "current realized gold" a number the AI sets with a slider
-rather than a fact about its economy.
-
-*Status: the walk is hoisted into the one branch that reads it and the leaf memoized to once
-per turn, so it is no longer a stall. The function itself is slated for removal — it is a
-precise answer to a question nobody asked, computed expensively, and then rounded off.*
 
 ---
 
