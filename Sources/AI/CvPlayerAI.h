@@ -192,6 +192,7 @@ public:
 	bool AI_hasCriticalGold() const;
 	bool AI_isFinancialTrouble() const;
 	short AI_fundingHealth(int iExtraExpense = 0, int iExtraExpenseMod = 0) const;
+	short AI_fundingHealthUncached(int iExtraExpense, int iExtraExpenseMod) const;
 	short AI_safeFunding() const;
 	int64_t AI_goldTarget() const;
 	int AI_goldValueAssessmentModifier() const;
@@ -706,6 +707,18 @@ protected:
 	mutable int m_iFinancialTroubleCacheTurn;
 	mutable int64_t m_iFinancialTroubleCacheGold;
 	mutable bool m_bFinancialTroubleCachedValue;
+
+	// The same memo one level DOWN, on the shared leaf both callers reach. AI_isFinancialTrouble was cached above
+	// and AI_goldValueAssessmentModifier was not, so the identical 185-city walk survived on the second path --
+	// and that is the one the building scorer takes, once per CANDIDATE (measured: AI_chooseProduction 45s of a
+	// single turn, 100% of it under this read, 30/30 debugger samples).
+	// ⚑ Caching the LEAF rather than each caller is what stops the next caller re-opening it.
+	// ⚠ Keyed on the TURN ALONE, per the valuation cadence ruling ([patterns.md] § THE VALUATION PROTOCOL): a
+	// how-valuable-is-this weight is asked at most once per turn, so it must not re-derive when gold moves.
+	// ⚠ ONLY the default-argument form is memoized. CvTeamAI asks with a hypothetical extra expense to weigh a
+	// war it has not declared, and that answer is a different question per argument -- it derives every time.
+	mutable int m_iFundingHealthCacheTurn;
+	mutable short m_iFundingHealthCachedValue;
 
 	int *m_aiNumTrainAIUnits;
 	int *m_aiNumAIUnits;

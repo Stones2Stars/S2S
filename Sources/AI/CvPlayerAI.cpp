@@ -404,6 +404,10 @@ void CvPlayerAI::AI_reset(bool bConstructor)
 	m_iFinancialTroubleCacheGold = 0;
 	m_bFinancialTroubleCachedValue = false;
 
+	// Its sibling on the shared leaf, cleared for the same reason -- a reused slot must not inherit a verdict.
+	m_iFundingHealthCacheTurn = -1;
+	m_iFundingHealthCachedValue = 0;
+
 	if (bConstructor || getNumUnits() == 0)
 	{
 		for (int iI = 0; iI < NUM_UNITAI_TYPES; iI++)
@@ -3960,6 +3964,27 @@ short CvPlayerAI::AI_safeFunding() const
 //	Values above can signify particulary good funding levels,
 //	either from a very large treasury or from positive income at 0-10% taxation.
 short CvPlayerAI::AI_fundingHealth(int iExtraExpense, int iExtraExpenseMod) const
+{
+	// The plain question -- "how is my funding, as things stand" -- is the one every valuation asks, and it is a
+	// property of the empire, so it cannot differ between two candidates scored in the same pass. It derives once
+	// a turn ([patterns.md] § THE VALUATION PROTOCOL: a how-valuable weight is asked at most once per yield per
+	// doTurn), NOT once per gold change: keying on the treasury would surrender the ceiling the moment gold moved.
+	// ⚠ A HYPOTHETICAL (a war's extra expense CvTeamAI has not committed to) is a different question per argument
+	// and is never served from here.
+	if (iExtraExpense != 0 || iExtraExpenseMod != 0)
+	{
+		return AI_fundingHealthUncached(iExtraExpense, iExtraExpenseMod);
+	}
+	const int iTurn = GC.getGame().getGameTurn();
+	if (m_iFundingHealthCacheTurn != iTurn)
+	{
+		m_iFundingHealthCachedValue = AI_fundingHealthUncached(0, 0);
+		m_iFundingHealthCacheTurn = iTurn;
+	}
+	return m_iFundingHealthCachedValue;
+}
+
+short CvPlayerAI::AI_fundingHealthUncached(int iExtraExpense, int iExtraExpenseMod) const
 {
 	PROFILE_FUNC();
 	if (isAnarchy() || isNPC())

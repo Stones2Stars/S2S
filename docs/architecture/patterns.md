@@ -512,6 +512,25 @@ two surfaces.
      against another, which no amount of care prevents once they are two implementations
      ([DEC-single-implementation](decisions.md#dec-single-implementation)). It is also why the resolved DELTA is
      the right return: it is simultaneously what an AI weight multiplies and what a tooltip line prints.
+   - **⛔ A "HOW VALUABLE IS THIS YIELD" WEIGHT IS ASKED AT MOST ONCE PER YIELD, AT THE START OF A doTurn
+     (owner).** *"Those 'how valuable is this yield' questions is a question that at most should be asked once
+     per yield at start of a doTurn, at absolute most."* This is the CADENCE half of the protocol, and it is a
+     ceiling rather than a target: once per (yield × turn) is the most that is ever legitimate, and less is
+     better. ⛔ Per CANDIDATE is the banned shape — a weight describes the EMPIRE's standing, so it cannot
+     differ between two buildings scored in the same pass, and asking it per candidate multiplies whatever it
+     costs by the frontier.
+     ⚠ It must therefore not be keyed on anything that moves WITHIN a turn (a treasury balance is the tempting
+     one), or the ceiling is silently lost the moment that input twitches.
+   - **⛔ AND THE WEIGHT FOLLOWS WHAT THE EMPIRE *NEEDS*, NEVER A TOTAL OF WHAT EVERY OTHER CITY HAS (owner):**
+     *"It should not start caring about what all others have, but what that empire needs."* A need is a
+     property of the asking empire — its obligations against its means — so it is answerable from that
+     empire's own standing. ⛔ Deriving it by re-totalling every member's realized output is the wrong
+     question wearing the right answer's clothes: it makes a per-empire constant cost `O(cities)`, and at the
+     receiver Σ that is `O(cities)` per ask ([state-repositories.md](state-repositories.md) § A CROSS-SCOPE
+     receiver total).
+     ⚑ **The measured case this rules on:** the gold-value weight reached the empire's realized gold commerce,
+     which re-sums all 185 cities' §2a combines — asked once per BUILDING CANDIDATE, it was the whole of a
+     45-second `AI_chooseProduction` on the standing save.
 6. **⛔ A GROUP HANDS OUT ITS CHANNELS; A FINAL-STATE CALCULATION IS DOWNSTREAM OF IT (owner).** The wellbeing
    group returns `happiness` and `anger` as **two separate numbers** (and `health`/`unhealth` likewise) — *"then
    you will know the results from that"*. The realized end-state values (`angryPopulation`, `healthRate`) are
