@@ -4650,6 +4650,13 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 	const bool bAreaAlone = player.AI_isAreaAlone(area());
 	const int iProductionRank = findYieldRateRank(YIELD_PRODUCTION);
 
+	// ⚖ THE CITY IS PRE-CALCULATED ONCE FOR THE WHOLE PASS (owner: "the city can already pre-calculate the
+	// yield values, and then compare the buildings in milliseconds"). Every candidate below was re-deriving
+	// this same picture -- three wellbeing realizations, two yield group reads, a plot scan and a specialist
+	// scan apiece -- for an answer that cannot differ between two buildings scored in one pass.
+	CityValuationBasis kBasis;
+	AI_fillCityValuationBasis(kBasis);
+
 	foreach_(const BuildingTypes eBuilding, possibleBuildings)
 	{
 		FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
@@ -4684,7 +4691,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 				// invalidate the building if it doesn't influence the property we are interested in
 				|| AI_buildingInfluencesProperty(this, buildingInfo, eProperty))
 			{
-				iValue = AI_buildingValueThreshold(eBuilding, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue);
+				iValue = AI_buildingValueThreshold(eBuilding, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue, false, &kBasis);
 
 				// If this new building supersedes an old one, subtract the old value. The superseded set is a
 				// FORWARD EDGE FETCH off the candidate's own compiled `replaces` edge -- the same shape the
@@ -4707,7 +4714,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 							{
 								PROFILE("AI_bestBuildingThreshold.Replace");
 
-								iValue -= AI_buildingValueThreshold(eBuildingX, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue, true);
+								iValue -= AI_buildingValueThreshold(eBuildingX, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue, true, &kBasis);
 							}
 						}
 					}
@@ -4735,7 +4742,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 							continue;
 						}
 						// We only value the unlocked building at 1/2 rate
-						iValue += AI_buildingValueThreshold(eDependent, iFocusFlags, 0, false, true) / 2;
+						iValue += AI_buildingValueThreshold(eDependent, iFocusFlags, 0, false, true, &kBasis) / 2;
 					}
 				}
 			}
@@ -4928,7 +4935,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, bool bF
 	return iValue;
 }
 
-int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanConstruct)
+int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanConstruct, const CityValuationBasis* pBasis)
 {
 	PROFILE_FUNC();
 
@@ -4939,7 +4946,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	{
 		return 0;
 	}
-	return AI_buildingValueThresholdOriginal(eBuilding, iFocusFlags, iThreshold, bMaximizeFlaggedValue);
+	return AI_buildingValueThresholdOriginal(eBuilding, iFocusFlags, iThreshold, bMaximizeFlaggedValue, false, false, pBasis);
 }
 
 // XXX should some of these count cities, buildings, etc. based on teams (because wonders are shared...)
@@ -4948,7 +4955,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 // THE building valuation -- the single implementation ([DEC-single-implementation]). It is asked per candidate
 // over the enabler's maintained frontier (enabler.md §6); there is no precomputed all-buildings pass and no
 // partial-result cache feeding it, because a full recalc of every building is what this rebuild removed.
-int CvCityAI::AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanBuildReplacement, bool bForTech)
+int CvCityAI::AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanBuildReplacement, bool bForTech, const CityValuationBasis* pBasis)
 {
 	PROFILE_FUNC();
 
@@ -4967,7 +4974,7 @@ int CvCityAI::AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFo
 	{
 		return itr->second;
 	}
-	const int iResult = AI_buildingValueThresholdOriginalUncached(eBuilding, iFocusFlags, iThreshold, bMaximizeFlaggedValue, bIgnoreCanBuildReplacement, bForTech);
+	const int iResult = AI_buildingValueThresholdOriginalUncached(eBuilding, iFocusFlags, iThreshold, bMaximizeFlaggedValue, bIgnoreCanBuildReplacement, bForTech, pBasis);
 
 	m_buildValueCache.insert(std::make_pair(cacheKey.get(), iResult));
 
@@ -5005,7 +5012,62 @@ static int cai_expectedScalarHere(const CvBuildingInfo& kBuilding, InfoScalar eS
 	return (eUnit == CASC_UNIT_PERCENT) ? iRaw : iRaw / 100;
 }
 
-int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanBuildReplacement, bool bForTech)
+void CvCityAI::AI_fillCityValuationBasis(CityValuationBasis& basis) const
+{
+	PROFILE_FUNC();
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
+
+	basis.area = area();
+	basis.stateReligion = static_cast<ReligionTypes>(kOwner.getEmpireContext().stateReligion());
+	basis.areaAlone = kOwner.AI_isAreaAlone(basis.area);
+	basis.metAnyCiv = GET_TEAM(getTeam()).hasMetAnyCiv();
+
+	basis.foodDifference = foodDifference(false);
+
+	// Reduce reaction to espionage induced happy/health problems
+	basis.happinessLevel = netHappiness(1) + getEspionageHappinessCounter() / 2;
+	basis.angryPopulation = range(-basis.happinessLevel, 0, (getPopulation() + 1));
+	basis.healthLevel = netHealth(std::max(0, (basis.happinessLevel + 1) / 2)) + getEspionageHealthCounter() / 2;
+
+	basis.happyModifier = (basis.happinessLevel <= basis.healthLevel && basis.happinessLevel <= 6) ? 6 : 3;
+	if (basis.happinessLevel >= 10)
+	{
+		basis.happyModifier = 1;
+	}
+	basis.goldValueAssessmentModifier = kOwner.AI_goldValueAssessmentModifier();
+
+	getWellbeing(basis.wellbeing);
+	getYields(basis.yields);
+
+	// The opposing-pair BALANCES, not the §2b verdicts: the scorer wants the signed headroom, which
+	// healthRate's floor-at-zero would destroy. The espionage counters are RAW STATE the channels deliberately
+	// do not carry (modifier.md §2b), so they join at the point the balance becomes one.
+	basis.baseHappinessLevel =
+		(basis.wellbeing[WELLBEING_HAPPINESS] - basis.wellbeing[WELLBEING_ANGER]) / 100 + getEspionageHappinessCounter();
+	basis.baseHealthLevel =
+		(basis.wellbeing[WELLBEING_HEALTH] - basis.wellbeing[WELLBEING_UNHEALTH]) / 100 + getEspionageHealthCounter();
+	basis.baseFoodDifference =
+		(basis.yields[YIELD_FOOD] - getFoodConsumedByPopulation()) / 100 - std::max(0, -basis.healthLevel);
+
+	// Allow a bit of shrinking:
+	// Population is expendable if angry, working a bad tile, or running a not-so-good specialist
+	basis.allowedShrinkRate =
+	(
+		getFoodConsumedPerPopulation()
+		*
+		(
+			std::max(0, -basis.baseHappinessLevel - getPopulation() * getAngerPercent() / GC.getPERCENT_ANGER_DIVISOR())
+			+
+			std::min(1, std::max(0, getWorkingPopulation() - AI_countGoodTiles(true, false, 50)))
+			+
+			std::max(0, visiblePopulation() - AI_countGoodSpecialists(false))
+			)
+		/ 100
+	);
+	basis.totalPopulation = kOwner.getTotalPopulation();
+}
+
+int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanBuildReplacement, bool bForTech, const CityValuationBasis* pBasis)
 {
 	PROFILE_FUNC();
 
@@ -5016,33 +5078,40 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	int iLimitedWonderLimit = limitedWonderLimit(eBuilding);
 	bool bIsLimitedWonder = (iLimitedWonderLimit >= 0);
 
-	const ReligionTypes eStateReligion = static_cast<ReligionTypes>(kOwner.getEmpireContext().stateReligion());
-
-	const CvArea* pArea = area();
-	bool bAreaAlone = kOwner.AI_isAreaAlone(pArea);
-	const bool bMetAnyCiv = GET_TEAM(getTeam()).hasMetAnyCiv();
-
-	int iFoodDifference = foodDifference(false);
-
-	// Reduce reaction to espionage induced happy/health problems
-	int iHappinessLevel = netHappiness(1) + getEspionageHappinessCounter() / 2;
-	int iAngryPopulation = range(-iHappinessLevel, 0, (getPopulation() + 1));
-	int iHealthLevel = netHealth(std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter() / 2;
-
-	int iHappyModifier = (iHappinessLevel <= iHealthLevel && iHappinessLevel <= 6) ? 6 : 3;
-	if (iHappinessLevel >= 10)
+	// ⚖ THE CITY'S OWN PICTURE ARRIVES PRE-CALCULATED (owner). Everything below describes THIS CITY, so it is
+	// identical for every candidate scored in one pass: the scoring loop derives it ONCE and hands it down, and
+	// a caller outside that loop passes none and gets one derived here -- same answer, same cost as before.
+	// ⚑ What this removes from the per-candidate path, measured: three full wellbeing realizations, two whole
+	// yield group reads, a worked-plot scan and a specialist scan.
+	CityValuationBasis kLocalBasis;
+	if (pBasis == NULL)
 	{
-		iHappyModifier = 1;
+		AI_fillCityValuationBasis(kLocalBasis);
+		pBasis = &kLocalBasis;
 	}
-	const int iGoldValueAssessmentModifier = kOwner.AI_goldValueAssessmentModifier();
+	const CityValuationBasis& kBasis = *pBasis;
+
+	const ReligionTypes eStateReligion = kBasis.stateReligion;
+
+	const CvArea* pArea = kBasis.area;
+	bool bAreaAlone = kBasis.areaAlone;
+	const bool bMetAnyCiv = kBasis.metAnyCiv;
+
+	int iFoodDifference = kBasis.foodDifference;
+
+	int iHappinessLevel = kBasis.happinessLevel;
+	int iAngryPopulation = kBasis.angryPopulation;
+	int iHealthLevel = kBasis.healthLevel;
+
+	int iHappyModifier = kBasis.happyModifier;
+	const int iGoldValueAssessmentModifier = kBasis.goldValueAssessmentModifier;
 
 	//Don't consider a building if it causes the city to immediately start shrinking from unhealthiness
 	//For that purpose ignore bad health and unhappiness from Espionage.
 	// The city's OWN channels and the candidate's contribution are read in the SAME wellbeing vocabulary -- the
 	// city through its group read, the candidate through the what-if valuation (patterns.md § THE TWO READ ROLES:
 	// "what do I HAVE" vs "what do I CARRY"). Both are ×100, so the balances compose before anything reduces.
-	int aCityWellbeing[NUM_WELLBEING_CHANNELS];
-	getWellbeing(aCityWellbeing);
+	const int (&aCityWellbeing)[NUM_WELLBEING_CHANNELS] = kBasis.wellbeing;
 
 	int aBuildingWellbeing[NUM_WELLBEING_CHANNELS];
 	GC.getBuildingInfo(eBuilding).expectedWellbeing(
@@ -5057,38 +5126,25 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		(aBuildingWellbeing[WELLBEING_HAPPINESS] - aBuildingWellbeing[WELLBEING_ANGER]) / 100;
 	int iBuildingActualHealth =
 		(aBuildingWellbeing[WELLBEING_HEALTH] - aBuildingWellbeing[WELLBEING_UNHEALTH]) / 100;
-	const int iBaseHappinessLevel =
-		(aCityWellbeing[WELLBEING_HAPPINESS] - aCityWellbeing[WELLBEING_ANGER]) / 100 + getEspionageHappinessCounter();
-	const int iBaseHealthLevel =
-		(aCityWellbeing[WELLBEING_HEALTH] - aCityWellbeing[WELLBEING_UNHEALTH]) / 100 + getEspionageHealthCounter();
+	const int iBaseHappinessLevel = kBasis.baseHappinessLevel;
+	const int iBaseHealthLevel = kBasis.baseHealthLevel;
 
-	int aiCityYields[NUM_YIELD_TYPES];
-	getYields(aiCityYields);
-	int iBaseFoodDifference = (aiCityYields[YIELD_FOOD] - getFoodConsumedByPopulation()) / 100 - std::max(0, -iHealthLevel);
+	const int (&aiCityYields)[NUM_YIELD_TYPES] = kBasis.yields;
+	int iBaseFoodDifference = kBasis.baseFoodDifference;
 
 	int iBadHealthFromBuilding = std::max(0, -iBuildingActualHealth);
 	int iUnhealthyPopulationFromBuilding = std::min(0, -iBaseHealthLevel) + iBadHealthFromBuilding;
 
 	// Allow a bit of shrinking:
 	// Population is expendable if angry, working a bad tile, or running a not-so-good specialist
-	int iAllowedShrinkRate =
-	(
-		getFoodConsumedPerPopulation()
-		*
-		(
-			std::max(0, -iBaseHappinessLevel - getPopulation() * getAngerPercent() / GC.getPERCENT_ANGER_DIVISOR())
-			+
-			std::min(1, std::max(0, getWorkingPopulation() - AI_countGoodTiles(true, false, 50)))
-			+
-			std::max(0, visiblePopulation() - AI_countGoodSpecialists(false))
-			)
-		/ 100
-	);
+	// The shrink allowance is CITY state -- it walks the worked plots and the specialists -- so it arrives with
+	// the rest of the basis instead of being re-derived for every candidate.
+	int iAllowedShrinkRate = kBasis.allowedShrinkRate;
 	if (iUnhealthyPopulationFromBuilding > 0 && (iBaseFoodDifference + iAllowedShrinkRate < iUnhealthyPopulationFromBuilding))
 	{
 		return 0;
 	}
-	const int iTotalPopulation = kOwner.getTotalPopulation();
+	const int iTotalPopulation = kBasis.totalPopulation;
 
 	int iNumCities = kOwner.getNumCities();
 	int iNumCitiesInArea = pArea->getCitiesPerPlayer(getOwner());
@@ -6007,7 +6063,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				}
 				if (kBuilding.getGlobalPopulationChange() > 0)
 				{
-					const int iTotalPopulation = kOwner.getTotalPopulation();
+					const int iTotalPopulation = kBasis.totalPopulation;
 					for (int iI = 0; iI < kBuilding.getGlobalPopulationChange(); iI++)
 					{
 						iValue += 20 + 5 * ((iTotalPopulation + iNumCities * iI) / iNumCities);

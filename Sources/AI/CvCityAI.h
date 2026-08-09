@@ -162,6 +162,44 @@ class CvCityAI : public CvCity
 
 public:
 
+	//	⚖ THE CITY'S OWN PICTURE, PRE-CALCULATED ONCE PER SCORING PASS (owner).
+	//
+	//	The building scorer was shaped for the old score-everything loop, where re-deriving the city per candidate
+	//	was lost among the far larger cost of scoring the whole database. With the enabler maintaining the frontier
+	//	([enabler.md] par.6) the comparison itself is small, and that re-derivation became the dominant term:
+	//	"the city can already pre-calculate the yield values, and then compare the buildings in milliseconds".
+	//
+	//	⛔ Everything in here describes the CITY, so it cannot differ between two candidates scored in one pass --
+	//	which is exactly why it must not be computed inside the per-candidate valuation. Measured before this
+	//	landed: three full wellbeing realizations, two whole-yield group reads, a worked-plot scan and a
+	//	specialist scan, PER CANDIDATE BUILDING ([DEC-legacy-decache-poisons-perf]: the caller must stop asking a
+	//	scope-wide question per candidate).
+	//	⚠ A candidate-DEPENDENT value never belongs here, however convenient -- the what-if
+	//	(expectedWellbeing and its kin) is the whole point of the per-candidate half and stays there.
+	struct CityValuationBasis
+	{
+		const CvArea* area;
+		ReligionTypes stateReligion;
+		bool areaAlone;
+		bool metAnyCiv;
+		int foodDifference;
+		int happinessLevel;
+		int angryPopulation;
+		int healthLevel;
+		int happyModifier;
+		int goldValueAssessmentModifier;
+		int baseHappinessLevel;
+		int baseHealthLevel;
+		int baseFoodDifference;
+		int allowedShrinkRate;
+		int totalPopulation;
+		int wellbeing[NUM_WELLBEING_CHANNELS];
+		int yields[NUM_YIELD_TYPES];
+	};
+
+	//	Fills the basis above from this city's current state. Cheap to call once; ruinous to call per candidate.
+	void AI_fillCityValuationBasis(CityValuationBasis& basis) const;
+
 	CvCityAI();
 	virtual ~CvCityAI();
 
@@ -349,7 +387,7 @@ public:
 	 * - Evaluates building effects, yields, commerce, and modifiers.
 	 * - Returns the computed value for building selection.
 	 */
-	int AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags = 0, int iThreshold = 0, bool bMaximizeFlaggedValue = false, bool bIgnoreCanConstruct = false);
+	int AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags = 0, int iThreshold = 0, bool bMaximizeFlaggedValue = false, bool bIgnoreCanConstruct = false, const CityValuationBasis* pBasis = NULL);
 
 	/**
 	 * Calculates the value of a building for the city, using original uncached logic.
@@ -358,7 +396,7 @@ public:
 	 * - Computes value in two passes for focus flags and general effects.
 	 * - Returns the final weighted value.
 	 */
-	int AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFocusFlags = 0, int iThreshold = 0, bool bMaximizeFlaggedValue = false, bool bIgnoreCanBuildReplacement = false, bool bForTech = false);
+	int AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFocusFlags = 0, int iThreshold = 0, bool bMaximizeFlaggedValue = false, bool bIgnoreCanBuildReplacement = false, bool bForTech = false, const CityValuationBasis* pBasis = NULL);
 
 	/**
 	 * Calculates the value of a building for the city, without using cache.
@@ -366,7 +404,10 @@ public:
 	 * - Considers population, area, and victory strategies.
 	 * - Returns the computed value for building selection.
 	 */
-	int AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding, int iFocusFlags = 0, int iThreshold = 0, bool bMaximizeFlaggedValue = false, bool bIgnoreCanBuildReplacement = false, bool bForTech = false);
+	//	The basis is OPTIONAL: the scoring loop supplies one it built once, and every other caller passes none and
+//	gets a locally-derived one. That keeps the eleven callers outside the scoring loop untouched while the loop
+//	that actually iterates a frontier stops paying for the city per candidate.
+	int AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding, int iFocusFlags = 0, int iThreshold = 0, bool bMaximizeFlaggedValue = false, bool bIgnoreCanBuildReplacement = false, bool bForTech = false, const CityValuationBasis* pBasis = NULL);
 
 	/**
 	 * Returns the commerce value of a building for a specific commerce type.
