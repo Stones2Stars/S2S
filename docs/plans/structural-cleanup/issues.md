@@ -1352,27 +1352,49 @@ outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
 it — `RevolutionInit` imports the module and binds only `kbdEvent` / `GameStart` / `OnLoad` — so it cannot fire,
 and Revolution is a carve-out owed its own rework. ⛔ Do not "fix" it into the live set.
 
-## THE KEYED TERM IS RESOLVED INSIDE THE CITIZEN LOOP
+## THE FREE-SPECIALIST READ REBUILDS AN EVAL CTX AND WALKS THE EMPIRE, ~40x PER CITIZEN
 
-The segment-lookup half of this is closed (`modSegmentCached`), but that was the CHEAP half and it left
-the shape underneath it standing. The sampled stack is:
+The hoisted segment lookup was the frame the sampler caught, not the cost. The shape underneath it:
 
 ```
-InfoValuation::keyedTarget / keyedTargetSum  <- val_traitKeyedPerSpecialist <- specialistTerm
-  <- CvPlayer::getFreeSpecialistCount <- CvCity::getFreeSpecialistCount
-  <- CvCityAI::AI_foodAvailable <- AI_fillCitizensByPriority (per CITIZEN) <- AI_assignWorkingPlots (per CITY)
+CvCityAI::AI_assignWorkingPlots  (per CITY)
+  -> AI_fillCitizensByPriority   (per CITIZEN)
+    -> AI_foodAvailable
+      -> for iI in 0..getNumSpecialistInfos()      <- 40 specialists, the registry count
+        -> CvCity::getFreeSpecialistCount(iI)
+             fillEvalCtx(...)                       <- a FRESH CvCascadeEvalCtx, per call
+             for each ACTIVE building in the city: keyedTargetSum(...)
+             -> CvPlayer::getFreeSpecialistCount(iI)
+                  for each building the PLAYER HAS: collectKeyedTarget(...)
+                  for each civic option, each held trait: the same again
 ```
 
-⛔ A keyed read is specified as cheap because *“it iterates the handful an entity AUTHORED”*
-([modifier.md] par.5) — which holds only if discovering the LIVE SOURCES is itself cheap. Here the trait's
-keyed per-specialist term is re-resolved once per CITIZEN for a value that moves only when the city's
-sources move, so the cost is `O(cities × citizens × sources)` for an answer that is constant across the
-whole fill.
+So the per-turn cost carries a factor of `cities x citizens x 40 x (city buildings + empire buildings + civics
++ traits)`, for an answer that does not vary with the citizen being placed -- and `AI_foodAvailable`'s own
+`iExtra` parameter does not reach the specialist term at all, so the whole block is INVARIANT across the loop
+it sits in.
 
-⚡ [citizen-assignment.md](../../reference/citizen-assignment.md) already states the intended shape: the fill
-SCORES every option once, orders them, and walks the order — so a per-citizen re-resolve of a per-city
-quantity is the thing that design removed, reappearing one layer down.
+Y It is [DEC-legacy-decache-poisons-perf] exactly: the shape was always this, and every inner read used to hit
+a serialized accumulator and cost O(1). Stripping the accumulators is what turned it from wasteful into a
+stall -- and the same ruling says the decache is an INSTRUMENT, so this is the hot path announcing itself.
 
-⚠ The fix is NOT another cache: [DEC-legacy-decache-poisons-perf] sequences this explicitly — fix the READS
-that should never have computed, and only then let the AI plane cache its own scores. A cache added while a
-wrong-shaped read is still underneath it hides the read instead of fixing it.
+**BOTH HALVES ARE THE FIX, and neither alone is** (the same ruling):
+
+1. **The READ.** A per-specialist scalar forces one full walk PER SPECIALIST. The grammar already answers this:
+   ONE GETTER PER GROUP, filling a caller-owned array ([patterns.md] THE TWO READ ROLES rule 1 and rule 7) --
+   one eval ctx, one walk of the operating set, one walk of the player's sources, all 40 slots filled. That is
+   a ~40x constant factor and it is the spec'd shape rather than an optimization.
+   V The scalar has ~30 call sites, so it stays -- re-bodied onto the group read so there is ONE implementation
+   ([DEC-single-implementation]), never two that drift.
+2. **The CALLER.** Even at one walk per call it is still asked per CITIZEN for a value that moves only when the
+   city's sources move. The invariant term lifts out of the loop.
+
+X NOT to be answered with a new cache. [DEC-legacy-decache-poisons-perf] sequences it: run uncached, let the
+hot paths announce themselves, **fix the reads that should never have computed**, and only then let the AI
+plane cache its own scores. A cache added while a wrong-shaped read is still underneath it hides the read
+instead of fixing it.
+
+Y The keyed walk itself is spec-correct and is NOT the defect: a keyed deposit is an entry-list read over the
+live sources ([modifier.md] par.5), cheap "because it iterates the handful an entity AUTHORED" -- which holds
+only if discovering the live sources is itself cheap. Here it is rediscovered 40 times per citizen.
+
