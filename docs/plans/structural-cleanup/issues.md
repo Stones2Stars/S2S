@@ -1398,36 +1398,50 @@ Y The keyed walk itself is spec-correct and is NOT the defect: a keyed deposit i
 live sources ([modifier.md] par.5), cheap "because it iterates the handful an entity AUTHORED" -- which holds
 only if discovering the live sources is itself cheap. Here it is rediscovered 40 times per citizen.
 
-## `CvAdvisorUtils.cityAdvise` NEEDS TEN READS PUBLISHED BEFORE IT CAN BE CONVERTED
+## `CvAdvisorUtils.cityAdvise` -- FIVE READS AND TWO RULINGS, NOT TEN READS
 
-It is the largest single block of broken handlers left (the 17 `cityDoTurn` failures), and it cannot be fixed
-by re-pointing alone: it reads through `CyCity`, which carries the IDENTITY SET only, and ten of the eleven
-values it wants have no home on the read surface yet. Mapped over the LIVE body (its commented blocks
-excluded):
+It is the largest single block of broken handlers left (the 17 `cityDoTurn` failures). Its head is already
+converted -- the three UNIT recommendation blocks iterate `ENABLER.getAvailableUnits` and read through
+`STATE`/`INFO` -- and what remains is the missionary block plus the eight BUILDING blocks, all reading through
+a `CyCity` that is **never bound in the function** (hence `NameError`, not `AttributeError`).
 
-| read | sites | disposition |
-|---|--:|---|
-| `canConstruct` | 8 | ENABLER -- `getBuildingAvailability(...) == ENABLER_LISTED`, the maintained verdict |
-| `canTrain` | 1 | ENABLER -- `getUnitAvailability`, same |
-| `GC.getBuildingInfo` / `getUnitInfo` | 10 | INFO -- named or intrinsic reads per field |
-| `getMaintenance` | 1 | **already on `CyState`** |
-| `healthRate` · `angryPopulation` | 2 | CyState -- but see below |
-| `getCommerceRate` · `getBaseCommerceRate` | 3 | CyState |
-| `getBuildingDefense` · `isProductionBuilding` | 2 | CyState |
-| `countNumImprovedPlots` · `countNumWaterPlots` | 2 | CyState |
-| `area` · `plot` | 6 | the area ID is a FACT a city reads ([contexts.md]) -- an id, never a handle |
-| `AI_cityValue` · `AI_countBestBuilds` | 2 | ⛔ NOT settled -- see below |
+**Derived over the live body (520 lines, 386 non-comment), receiver by receiver:**
 
-⛔ **TWO OF THEM ARE DESIGN QUESTIONS, NOT MECHANICAL ADDS, and they are why this is not a sweep:**
+| what the body does | disposition | status |
+|---|---|---|
+| `canConstruct` x8 · `canTrain` x1 | **NOT reads to publish** -- each sits inside `xrange(GC.getNum*Infos())`, so the fix is the ENABLER frontier (`getAvailableBuildings` / `getAvailableUnits`), which SUBSUMES the gate exactly as the already-converted unit blocks in this same file show | both published |
+| `CyCity.area()` x5 · `CyCity.plot()` | `MAP.plot(x, y)` off `STATE.getCityPosition`, then `.area()` -- `CyPlot`, `CyArea` and `CyPlayer` all still publish their surfaces; `CyCity` alone is identity-only | published |
+| `getTextKey` x9 · unit `getDomainType` | `INFO.getTextKey` / `INFO.getIntrinsic(..., PYINT_DOMAIN)` | published, already used in-file |
+| building `getHealth` · `getHappiness` | `INFO.getWellbeing("BUILDING_", id, scope)` | published |
+| building `getCommerceChange` | `INFO.getFlatCommerces` | published |
+| `healthRate` · `angryPopulation` | `STATE.getRealizedWellbeing(p, c, iExtraPopulation)` -- the final-state read already exists, and already takes the projection argument | published |
+| `getCommerceRate` · `getBaseCommerceRate` x3 | `STATE.getCommerces` | published |
+| `getBuildingDefense` | `STATE.getDefenseKinds` | published |
+| `getMaintenance` | `STATE.getMaintenance` | published |
+| `isProductionBuilding` | `STATE.getOrder` | published |
+
+**⛔ WHAT IS GENUINELY MISSING -- five reads:**
+
+1. building **`getDefenseModifier`** -- `CyInfo` carries no defense group.
+2. building **`getCommerceModifier`** (x2) -- `CyInfo` serves flat commerce, not the modifier side.
+3. building **`getPlotYieldChange`** -- a `plots`-target deposit, which `getFlatYields` (the entity's own
+   scope flats) does not answer.
+4. **`countNumImprovedPlots`** / **`countNumWaterPlots`** -- `STATE.getCityPlots` hands back the ring-ordered
+   coordinates, not a predicate count over them.
+5. **`canSpreadReligion` is published but asks a DIFFERENT QUESTION.** It answers *"does this unit spread a
+   religion at all"*; the missionary block asks *"does it spread MY STATE religion"*
+   (`getReligionSpreads(eStateReligion)`). Either the read widens to take the religion, or a ruling says the
+   any-spread test is sufficient here.
+
+**⛔ TWO DESIGN QUESTIONS, unchanged and still owner-blocked:**
 
 1. **`AI_cityValue` / `AI_countBestBuilds` are AI HEURISTICS, not state.** The read library answers *"what do I
-   HAVE?"*; an AI's own valuation is the sanctioned heuristic residual that belongs to the asking side
+   HAVE?"*; an AI's own valuation is the sanctioned heuristic residual belonging to the asking side
    ([superseded-ideas](../../architecture/superseded-ideas.md) par.1). Publishing them would put an AI score on
    the state surface, and the advisor's question (*"should I suggest splitting this city off?"*) may be better
    answered by something else entirely. **Do not publish these without a ruling.**
-2. **`healthRate` / `angryPopulation` are FINAL-STATE CALCULATIONS, deliberately NOT group entries**
-   ([patterns.md] rule 6: they are computed over channels the group already hands out, and folding one into the
-   channel array is a category error). So each earns its own named read -- correct, but a naming decision
-   rather than a forward.
 
-⚑ The other eight are ordinary forwards and unblock the bulk of the file.
+⚠ **The earlier version of this entry claimed ten reads were missing and that only `getMaintenance` existed.**
+That was inferred from the dead method NAMES rather than checked against the published surface: most of the
+values already have a home, and the two `can*` families are loops to convert rather than reads to add. The
+disposition above is derived read-by-read against `CyState.h` / `CyInfo.h` / `CyEnabler.h` and the live body.
