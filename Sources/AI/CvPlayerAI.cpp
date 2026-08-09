@@ -3991,14 +3991,9 @@ short CvPlayerAI::AI_fundingHealthUncached(int iExtraExpense, int iExtraExpenseM
 	{
 		return 100;
 	}
-	int aiOwnCommerces[NUM_COMMERCE_TYPES];
-	getCommerces(aiOwnCommerces);
-	int64_t iNetIncome = aiOwnCommerces[COMMERCE_GOLD] / 100 + std::max(0, getGoldPerTurn());
 	int64_t iNetExpenses;
 	short iProfitMargin = getProfitMargin(iNetExpenses, iExtraExpense, iExtraExpenseMod);
 	FASSERT_NOT_NEGATIVE(iProfitMargin);
-
-	//FErrorMsg(CvString::format("iNetIncome=%I64d - iNetExpenses=%I64d - iProfitMargin: %d", iNetIncome, iNetExpenses, (int)iProfitMargin).c_str());
 
 	// Koshling - Never in financial difficulties if we can fund our ongoing expenses with zero taxation
 	if (getMinTaxIncome() >= iNetExpenses)
@@ -4013,6 +4008,17 @@ short CvPlayerAI::AI_fundingHealthUncached(int iExtraExpense, int iExtraExpenseM
 	// Toffer - At low to mid tax levels, and with some profit margin to go on, evaluate treasury rather than profit margin.
 	if (iProfitMargin > 15 && getCommercePercent(COMMERCE_GOLD) < 50)
 	{
+		// The empire's realized GOLD is read HERE, not at the top, because this is the only branch that consumes
+		// it. The three branches above answer from getMinTaxIncome / getMaxTaxIncome -- bare maintained members --
+		// against expenses, so the walk they used to pay for was discarded unread.
+		// ⚑ It is the expensive term by a wide margin: CvPlayer::getCommerces answers a receiver channel by
+		// re-summing every city's realized combine ([state-repositories.md] § A CROSS-SCOPE receiver total), which
+		// on the standing save is 185 cities. Hoisting it into the branch that reads it costs nothing and is
+		// exactly equivalent -- nothing between the old site and here consumed it.
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		const int64_t iNetIncome = aiOwnCommerces[COMMERCE_GOLD] / 100 + std::max(0, getGoldPerTurn());
+
 		// Toffer - Gamespeed (GS) influence the value of gold, so scale gold treshold to GS, era is exponential factor.
 		//	Prehistoric: 25 gold (ultrafast); 100 gold (normal); 1000 gold (eternity)
 		//	Ancient: 50 gold (ultrafast); 200 gold (normal); 2000 gold (eternity)

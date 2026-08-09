@@ -84,7 +84,49 @@ awake, slightly nervous, accruing nothing.
 
 ---
 
-## 4. Schrödinger's Job Application — 85 cp
+## 4. The Solvency Oracle That Walks Your Empire To Say "No" — 90 cp
+
+`AI_fundingHealth` answers one question — *can I pay my bills?* — and to answer it, it sums
+the realized gold commerce of **every city in the empire**. On the standing save that is 185
+cities, each one running its full per-city rate combine. Fine, perhaps, once a turn.
+
+It was being asked **once per candidate building**, inside the production scorer, for every
+city, across seven focus passes. Measured: `AI_chooseProduction` burned **45 seconds of a
+single turn**, and the phase census put effectively all of it here — 30 of 30 debugger
+samples landed on the same chain. The turn emitted nothing while it did this, because a spin
+writes no logs.
+
+The comedy is what the number is then used for. Three of its four branches never look at
+that empire-wide total at all — they answer from `getMinTaxIncome()` / `getMaxTaxIncome()`,
+which are *bare member reads*. And the branch that does use it feeds a step function:
+profit margin over 25 returns `200`, full stop. So the empire is walked to nine significant
+figures in order to decide which of five buckets it is in.
+
+Those five buckets, incidentally, are returned from one `short`, on five unrelated scales:
+`100` for anarchy, `200` for comfortable, `iProfitMargin * 2` (max 50) for uncomfortable, a
+treasury-vs-era-target percentage for the middle band, and `10000` — carrying the immortal
+comment *"A magic number in case we want this state to have some kind of significance."* Its
+sibling `10001` exists because the treasury ratio might exceed 9999. The consumer divides by
+this number to decide how much gold is worth, so crossing one profit-margin threshold moves
+the AI's valuation of gold **four-fold, in one step**.
+
+Underneath, the runway estimate scales by `hammerCostPercent()` — the **production-cost**
+gamespeed multiplier — while its own comment describes a count of *turns*. There is a scaler
+for game pace. It is a different one.
+
+The archaeology explains rather than excuses it: the clamps read as guards against the
+integer overflow gold used to suffer, since fixed structurally by widening the money plane to
+64-bit; and the whole premise dates from before buildings were reworked to grant *commerce*
+rather than *gold*, which made "current realized gold" a number the AI sets with a slider
+rather than a fact about its economy.
+
+*Status: the walk is hoisted into the one branch that reads it and the leaf memoized to once
+per turn, so it is no longer a stall. The function itself is slated for removal — it is a
+precise answer to a question nobody asked, computed expensively, and then rounded off.*
+
+---
+
+## 5. Schrödinger's Job Application — 85 cp
 
 A unit's first `processContracts` call of the turn *advertised* for work, found none, and
 returned `true` — "I did something!" The slice driver, taking it at its word, re-ran the
@@ -97,7 +139,7 @@ as a full shift — and the *system agreed*.
 
 ---
 
-## 5. The RESERVE ↔ PROPERTY_CONTROL Hokey Pokey — 78 cp
+## 6. The RESERVE ↔ PROPERTY_CONTROL Hokey Pokey — 78 cp
 
 The role-conversion gate asked *"could this unit theoretically help with crime?"* while
 the assignment handler asked *"does this unit actually have the equipment?"* Different
@@ -112,7 +154,7 @@ you corrupt the demand accounting. That's what it's all about.
 
 ---
 
-## 6. Strength by Committee — 72 cp
+## 7. Strength by Committee — 72 cp
 
 Ask a simple question — "how strong is this unit against that one?" — and the engine cannot tell
 you where the answer came from. A unit's combat strength is built by pouring **~40 signed
@@ -142,7 +184,7 @@ came from, the engine least of all.*
 
 ---
 
-## 7. The Unkillable Peasant — 71 cp
+## 8. The Unkillable Peasant — 71 cp
 
 `getCombatOdds` floored per-round damage to 0 against ~zero-strength defenders, making a
 dying militiaman **mathematically immortal**. The AI under-reported its own win odds
@@ -156,7 +198,7 @@ layer above it nodded along.
 
 ---
 
-## 8. The Lumber Mill That Remembers When It Was Born — 70 cp
+## 9. The Lumber Mill That Remembers When It Was Born — 70 cp
 
 A building's bonus/vicinity yield — *"+1 production for a Lumber Mill while you have Prime Timber
 nearby"* — depended not on whether you currently **had** the building and the bonus, but on whether the
@@ -191,7 +233,7 @@ irrelevant and the stamps' savegame ghosts are abandoned as dead data.*
 
 ---
 
-## 9. The Bear Patrol — 62 cp
+## 10. The Bear Patrol — 62 cp
 
 The world's city defenders kept abandoning their posts to duel wildlife. Garrison sorties
 fire at a **55% odds bar** against any "enemy" within reach — and in the prehistoric era,
@@ -212,7 +254,7 @@ The bears are now mostly unbothered, and exclusively by professionals.*
 
 ---
 
-## 10. Education Secedes From the Union — 61 cp
+## 11. Education Secedes From the Union — 61 cp
 
 Every property in the game runs on one rule: a building switches on when the property
 crosses a threshold and stays on — cumulatively, to infinity. Crime, disease, pollution,
@@ -241,7 +283,7 @@ crime; `BLACKENED_SKIES` disables instead of demolishing. The breakaway republic
 
 ---
 
-## 11. The Eternal Anesthesiologist — 60 cp
+## 12. The Eternal Anesthesiologist — 60 cp
 
 `AI_heal` returned `true` for a heal no-op when the unit *couldn't heal*, so units
 re-decided "heal in city" **49–196 times per turn** — and in rare alignments, the turn
@@ -254,7 +296,7 @@ pressing it 195 more times. Except occasionally the building never lets you leav
 
 ---
 
-## 12. The Wonder That Builds Character — 59 cp
+## 13. The Wonder That Builds Character — 59 cp
 
 A National Wonder reaches into your civilization and hands it a personality. Build the right
 one and you don't get a bonus — you acquire a *trait*, the same kind of thing a leader is
@@ -279,7 +321,7 @@ dares touch it. The wonder giveth a personality; the wrecking ball taketh it awa
 
 ---
 
-## 13. The Trait in a Trenchcoat — 58 cp
+## 14. The Trait in a Trenchcoat — 58 cp
 
 There is no such thing as a "complex trait." There are 64 ordinary traits, each of which is
 secretly *two* traits standing on each other's shoulders in one `<Type>`. The vanilla
@@ -322,7 +364,7 @@ the other's filing cabinet mid-sentence.*
 
 ---
 
-## 14. The Settler's Phantom Mortgage — 57 cp
+## 15. The Settler's Phantom Mortgage — 57 cp
 
 Open a settler's `UnitInfo`, change its production cost, build a settler. The price barely
 moves. The number you edited (`iCost`) is real, but it is a sliver — the *actual* cost of a
@@ -355,7 +397,7 @@ founder's `cost.production`). A settler has never once been priced by its own da
 
 ---
 
-## 15. International Civil Asset Forfeiture — 55 cp
+## 16. International Civil Asset Forfeiture — 55 cp
 
 Foreign police cars were observed parked on the human player's **resource tiles**, mission
 hover proudly reading *"Maintain property control."* The mechanism: when a property-control
@@ -377,7 +419,7 @@ fortified. The uranium has been returned.*
 
 ---
 
-## 16. The Merger With No Undo (Bring a Boat) — 54 cp
+## 17. The Merger With No Undo (Bring a Boat) — 54 cp
 
 Size Matters lets you fuse three units into one bigger one. The merge stamped the new unit
 with an *inhibit-split* flag — and the only line in the entire codebase that ever cleared it
@@ -402,7 +444,7 @@ oscillation ever returns. Boats are once more optional.*
 
 ---
 
-## 17. The .vcxproj of Lies — 47 cp
+## 18. The .vcxproj of Lies — 47 cp
 
 The Visual Studio project file confidently states `PlatformToolset: v142`. The actual
 compiler is the **Microsoft Visual C++ Toolkit 2003** (MSVC 7.1). The project file drives
@@ -419,7 +461,7 @@ agent that greps straight to the lie meets the truth on the same line.*
 
 ---
 
-## 18. The Outcome That Is the Mission — 46 cp
+## 19. The Outcome That Is the Mission — 46 cp
 
 Go looking for where the subdued-animal heritage missions are gated. You find a class named
 `CvOutcome` and reasonably conclude it models the *outcome* — the result, the thing that happens
