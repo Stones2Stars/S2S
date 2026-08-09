@@ -264,6 +264,7 @@ m_cachedBonusCount(NULL)
 
 	m_iMinTaxIncome = 0;
 	m_iMaxTaxIncome = 0;
+	m_iCurrentGoldIncome = -1;
 
 	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
 	{
@@ -1612,6 +1613,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iMinTaxIncome = 0;
 	m_iMaxTaxIncome = 0;
+	m_iCurrentGoldIncome = -1;
 
 	m_orbitalInfrastructureCountDirty = true;
 	m_iFocusPlotX = -1;
@@ -7481,6 +7483,7 @@ void CvPlayer::cacheKeyFinanceNumbers()
 	PROFILE_EXTRA_FUNC();
 	m_iMinTaxIncome = std::max(0, getGoldPerTurn());
 	m_iMaxTaxIncome = m_iMinTaxIncome;
+	m_iCurrentGoldIncome = 0;
 
 	foreach_(CvCity* cityX, cities())
 	{
@@ -7497,6 +7500,20 @@ void CvPlayer::cacheKeyFinanceNumbers()
 		aiSliders[COMMERCE_GOLD] = 100;
 		cityX->expectedCommercesAtSliders(aiSliders, aiBand);
 		m_iMaxTaxIncome += aiBand[COMMERCE_GOLD] / 100;
+
+		// The band says what taxation COULD raise; this says what it DOES, at the sliders actually set. It is
+		// banked here rather than derived on demand because the only reader (AI_fundingHealth) was reaching
+		// CvPlayer::getCommerces for it, which re-walks these very cities -- a second pass over the loop we are
+		// already standing in. ⚠ It is ×100 like every amount; the reader reduces.
+		// ⚠ A city in DISORDER contributes nothing, matching the realized empire read (economy.md: a city's
+		// package reaches the rest of the cascade only if no status negates it). The BAND above deliberately
+		// does not test disorder -- it asks what the city could raise, not what it currently sends.
+		if (!cityX->isDisorder())
+		{
+			int aiCityCommerces[NUM_COMMERCE_TYPES];
+			cityX->getCommerces(aiCityCommerces);
+			m_iCurrentGoldIncome += aiCityCommerces[COMMERCE_GOLD];
+		}
 	}
 }
 
@@ -7508,6 +7525,20 @@ int64_t CvPlayer::getMinTaxIncome() const
 int64_t CvPlayer::getMaxTaxIncome() const
 {
 	return m_iMaxTaxIncome;
+}
+
+// -1 until this player's first cacheKeyFinanceNumbers of the game (it runs at the END of doTurn, and nothing
+// serializes a derived value), so the one reader derives it live that once rather than reading a zero income
+// against real expenses and declaring every empire bankrupt on the first turn after a load.
+int64_t CvPlayer::getCurrentGoldIncome() const
+{
+	if (m_iCurrentGoldIncome < 0)
+	{
+		int aiOwnCommerces[NUM_COMMERCE_TYPES];
+		getCommerces(aiOwnCommerces);
+		m_iCurrentGoldIncome = aiOwnCommerces[COMMERCE_GOLD];
+	}
+	return m_iCurrentGoldIncome;
 }
 
 short CvPlayer::getProfitMargin(int64_t &iNetExpenses, int iExtraExpense, int iExtraExpenseMod) const

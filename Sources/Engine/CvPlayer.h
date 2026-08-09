@@ -347,6 +347,7 @@ public:
 	void cacheKeyFinanceNumbers();
 	int64_t getMinTaxIncome() const;
 	int64_t getMaxTaxIncome() const;
+	int64_t getCurrentGoldIncome() const;
 
 	int64_t calculateBaseNetGold() const;
 	int calculateBaseNetResearch(TechTypes eTech = NO_TECH) const;
@@ -2218,6 +2219,11 @@ private:
 
 	int64_t m_iMinTaxIncome;
 	int64_t m_iMaxTaxIncome;
+	// The CURRENT-slider gold beside the band it sits in -- the third point on the curve cacheKeyFinanceNumbers
+	// already draws. ⚠ NOT serialized, unlike its two siblings: it is derived
+	// ([DEC-derived-never-trusted]), and -1 means "this turn's cache has not run yet", which the one reader
+	// answers by deriving live that once.
+	mutable int64_t m_iCurrentGoldIncome;
 
 protected:
 	void constructTechPathSet(TechTypes eTech, std::vector<techPath*>& pathSet, techPath& rootPath) const;

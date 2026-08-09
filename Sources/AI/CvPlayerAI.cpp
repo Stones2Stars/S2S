@@ -4015,9 +4015,7 @@ short CvPlayerAI::AI_fundingHealthUncached(int iExtraExpense, int iExtraExpenseM
 		// re-summing every city's realized combine ([state-repositories.md] § A CROSS-SCOPE receiver total), which
 		// on the standing save is 185 cities. Hoisting it into the branch that reads it costs nothing and is
 		// exactly equivalent -- nothing between the old site and here consumed it.
-		int aiOwnCommerces[NUM_COMMERCE_TYPES];
-		getCommerces(aiOwnCommerces);
-		const int64_t iNetIncome = aiOwnCommerces[COMMERCE_GOLD] / 100 + std::max(0, getGoldPerTurn());
+		const int64_t iNetIncome = getCurrentGoldIncome() / 100 + std::max(0, getGoldPerTurn());
 
 		// Toffer - Gamespeed (GS) influence the value of gold, so scale gold treshold to GS, era is exponential factor.
 		//	Prehistoric: 25 gold (ultrafast); 100 gold (normal); 1000 gold (eternity)
