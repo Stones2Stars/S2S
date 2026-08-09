@@ -25062,11 +25062,18 @@ void CvPlayer::getFreeSpecialists(std::vector<int64_t>& aiCounts) const
 	}
 	//	The trait walk is a PRESENCE read (the HAVE axis), never the own-data inversion: it asks which traits
 	//	the player HOLDS, not which traits deposit onto this specialist.
-	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	//	⛔ ASK THE HELD-TRAIT STORE, NEVER SWEEP THE REGISTRY. Testing hasTrait across all ~369 trait records to
+	//	rediscover the handful a leader carries is the O(registry) sweep [contexts.md] names by that number --
+	//	and because CvCity::getFreeSpecialists calls this per CITY, it was paid cities x 369 every read.
+	//	The dictionary is a delta store fed by the trait facts and hands back exactly what is held, in the
+	//	ACTIVE set (simple vs complex by the live option), which the registry sweep did not even resolve.
+	std::vector<TraitContext::HeldTrait> heldTraits;
+	traits().heldTraits(heldTraits);
+	for (size_t iHeld = 0; iHeld < heldTraits.size(); ++iHeld)
 	{
-		if (!hasTrait((TraitTypes)iTrait)) continue;
+		if (heldTraits[iHeld].info == NULL) continue;
 		keyedRows.clear();
-		InfoValuation::collectKeyedTarget(GC.getTraitInfo((TraitTypes)iTrait).getModifiers(),
+		InfoValuation::collectKeyedTarget(heldTraits[iHeld].info->getModifiers(),
 			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, keyedRows, CASC_SCOPE_EMPIRE);
 		for (size_t iRow = 0; iRow < keyedRows.size(); ++iRow)
 		{
