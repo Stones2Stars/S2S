@@ -393,15 +393,19 @@ bool CyAct::setCityGrantedExtra(int iPlayer, int iCity, int iKind, int iValue) c
 	return false;
 }
 
-//	⚠ The engine's setBuildingYieldChange/CommerceChange are CHANGERS despite the name (they add), so the
-//	scenario's absolute is applied as the delta. Getting this backwards doubles a reloaded scenario's grants.
+//	⛔ THE BUILDING-KEYED ENGINE WRITERS ARE ABSOLUTE SETTERS, NOT CHANGERS -- the value is passed STRAIGHT
+//	THROUGH. `setBuildingYieldChange` / `…CommerceChange` / `…HappyChange` / `…HealthChange` each find the
+//	(building, key) record and ASSIGN it (`iChange` names the stored grant AMOUNT, and the `iOldChange` they keep
+//	is only how they compute the delta to apply to the city's own accumulators).
+//	⚠ Do NOT copy the `iValue - current` idiom from the CityGrantedExtra pair above: `changeExtraHappiness` is a
+//	genuine changer (`+=`), so subtracting there is right and subtracting HERE stores the DIFFERENCE instead of
+//	the value -- correct only on the first write from zero, and silently wrong on every later one.
 bool CyAct::setBuildingGrantedYield(int iPlayer, int iCity, int iBuilding, int iYield, int iValue) const
 {
 	CvCity* pCity = cya_city(iPlayer, iCity);
 	if (pCity == NULL || iBuilding < 0 || iBuilding >= GC.getNumBuildingInfos()) return false;
 	if (iYield < 0 || iYield >= NUM_YIELD_TYPES) return false;
-	const int iNow = pCity->getBuildingYieldChange((BuildingTypes)iBuilding, (YieldTypes)iYield);
-	pCity->setBuildingYieldChange((BuildingTypes)iBuilding, (YieldTypes)iYield, iValue - iNow);
+	pCity->setBuildingYieldChange((BuildingTypes)iBuilding, (YieldTypes)iYield, iValue);
 	return true;
 }
 
@@ -410,8 +414,7 @@ bool CyAct::setBuildingGrantedCommerce(int iPlayer, int iCity, int iBuilding, in
 	CvCity* pCity = cya_city(iPlayer, iCity);
 	if (pCity == NULL || iBuilding < 0 || iBuilding >= GC.getNumBuildingInfos()) return false;
 	if (iCommerce < 0 || iCommerce >= NUM_COMMERCE_TYPES) return false;
-	const int iNow = pCity->getBuildingCommerceChange((BuildingTypes)iBuilding, (CommerceTypes)iCommerce);
-	pCity->setBuildingCommerceChange((BuildingTypes)iBuilding, (CommerceTypes)iCommerce, iValue - iNow);
+	pCity->setBuildingCommerceChange((BuildingTypes)iBuilding, (CommerceTypes)iCommerce, iValue);
 	return true;
 }
 
@@ -422,10 +425,10 @@ bool CyAct::setBuildingGrantedWellbeing(int iPlayer, int iCity, int iBuilding, i
 	switch (iKind)
 	{
 	case BUILDING_GRANTED_HAPPINESS:
-		pCity->setBuildingHappyChange((BuildingTypes)iBuilding, iValue - pCity->getBuildingHappyChange((BuildingTypes)iBuilding));
+		pCity->setBuildingHappyChange((BuildingTypes)iBuilding, iValue);
 		return true;
 	case BUILDING_GRANTED_HEALTH:
-		pCity->setBuildingHealthChange((BuildingTypes)iBuilding, iValue - pCity->getBuildingHealthChange((BuildingTypes)iBuilding));
+		pCity->setBuildingHealthChange((BuildingTypes)iBuilding, iValue);
 		return true;
 	}
 	return false;
