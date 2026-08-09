@@ -66,6 +66,20 @@ void CvInfo::expectedFlatCommerce(const CityContext& cityContext, const EmpireCo
 	InfoValuation::expectedFlatCommerce(getModifiers(), cityContext, empireContext, plotGroup, flatCommerce, pHypothetical);
 }
 
+void CvInfo::expectedCommerceModifiers(const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, int (&commerceModifiers)[NUM_COMMERCE_TYPES],
+	const CvCascadeHypothetical* pHypothetical) const
+{
+	InfoValuation::expectedCommerceModifiers(getModifiers(), cityContext, empireContext, plotGroup, commerceModifiers, pHypothetical);
+}
+
+void CvInfo::expectedDefenseKinds(const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, int (&defenseKinds)[NUM_DEFENSE_KINDS],
+	const CvCascadeHypothetical* pHypothetical) const
+{
+	InfoValuation::expectedDefenseKinds(getModifiers(), cityContext, empireContext, plotGroup, defenseKinds, pHypothetical);
+}
+
 void CvInfo::expectedWellbeing(const CityContext& cityContext, const EmpireContext& empireContext,
 	const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS],
 	const CvCascadeHypothetical* pHypothetical) const

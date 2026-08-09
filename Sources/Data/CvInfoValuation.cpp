@@ -1413,6 +1413,34 @@ void InfoValuation::expectedYieldModifiers(const CvModifiers* modifiers,
 	}
 }
 
+void InfoValuation::expectedCommerceModifiers(const CvModifiers* modifiers,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+	int (&commerceModifiers)[NUM_COMMERCE_TYPES],
+	const CvCascadeHypothetical* pHypothetical)
+{
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		commerceModifiers[iCommerce] = (int)groupSum(modifiers, infoCommerceFamily(iCommerce), CHANNEL_AMOUNT, CASC_UNIT_PERCENT, evalCtx);
+	}
+}
+
+void InfoValuation::expectedDefenseKinds(const CvModifiers* modifiers,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+	int (&defenseKinds)[NUM_DEFENSE_KINDS],
+	const CvCascadeHypothetical* pHypothetical)
+{
+	CvCascadeEvalCtx evalCtx;
+	fillEvalCtx(cityContext, empireContext, plotGroup, evalCtx);
+	evalCtx.hypothetical = pHypothetical;
+	for (int iKind = 0; iKind < NUM_DEFENSE_KINDS; ++iKind)
+	{
+		defenseKinds[iKind] = (int)groupSum(modifiers, MODFAM_DEFENSE, iKind, CASC_UNIT_PERCENT, evalCtx);
+	}
+}
+
 void InfoValuation::expectedPlotYields(const CvModifiers* modifiers,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 	int (&plotYields)[NUM_YIELD_TYPES],

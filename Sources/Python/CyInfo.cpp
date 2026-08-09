@@ -666,12 +666,10 @@ python::list CyInfo::expectedCommerceModifiers(const std::string& szTypePrefix, 
 	const CvCity* pCity = NULL;
 	const CvPlayer* pOwner = NULL;
 	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
-	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
-	{
-		values.append(pInfo->expectedModifier(infoCommerceFamily(iCommerce), CHANNEL_AMOUNT,
-			CASC_UNIT_PERCENT, pCity->getCityContext(), pOwner->getEmpireContext(),
-			pCity->plotGroup((PlayerTypes)iPlayer)));
-	}
+	int aCommerce[NUM_COMMERCE_TYPES];
+	pInfo->expectedCommerceModifiers(pCity->getCityContext(), pOwner->getEmpireContext(),
+		pCity->plotGroup((PlayerTypes)iPlayer), aCommerce);
+	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) values.append(aCommerce[i]);
 	return values;
 }
 
@@ -682,12 +680,10 @@ python::list CyInfo::expectedDefenseKinds(const std::string& szTypePrefix, int i
 	const CvCity* pCity = NULL;
 	const CvPlayer* pOwner = NULL;
 	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
-	for (int iKind = 0; iKind < NUM_DEFENSE_KINDS; ++iKind)
-	{
-		values.append(pInfo->expectedModifier(MODFAM_DEFENSE, iKind, CASC_UNIT_PERCENT,
-			pCity->getCityContext(), pOwner->getEmpireContext(),
-			pCity->plotGroup((PlayerTypes)iPlayer)));
-	}
+	int aKinds[NUM_DEFENSE_KINDS];
+	pInfo->expectedDefenseKinds(pCity->getCityContext(), pOwner->getEmpireContext(),
+		pCity->plotGroup((PlayerTypes)iPlayer), aKinds);
+	for (int i = 0; i < NUM_DEFENSE_KINDS; ++i) values.append(aKinds[i]);
 	return values;
 }
 

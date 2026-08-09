@@ -253,6 +253,12 @@ public:
 	void expectedFlatCommerce(const CityContext& cityContext, const EmpireContext& empireContext,
 		const CvPlotGroup* plotGroup, int (&flatCommerce)[NUM_COMMERCE_TYPES],
 		const CvCascadeHypothetical* pHypothetical = NULL) const;
+	void expectedCommerceModifiers(const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, int (&commerceModifiers)[NUM_COMMERCE_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
+	void expectedDefenseKinds(const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, int (&defenseKinds)[NUM_DEFENSE_KINDS],
+		const CvCascadeHypothetical* pHypothetical = NULL) const;
 	void expectedWellbeing(const CityContext& cityContext, const EmpireContext& empireContext,
 		const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS],
 		const CvCascadeHypothetical* pHypothetical = NULL) const;

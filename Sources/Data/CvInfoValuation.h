@@ -223,6 +223,18 @@ public:
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
 		int (&flatCommerce)[NUM_COMMERCE_TYPES],
 		const CvCascadeHypothetical* pHypothetical = NULL);
+	// Their PERCENT twin -- the commerce sibling of expectedYieldModifiers.
+	static void expectedCommerceModifiers(const CvModifiers* modifiers,
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+		int (&commerceModifiers)[NUM_COMMERCE_TYPES],
+		const CvCascadeHypothetical* pHypothetical = NULL);
+	// The DEFENSE family's whole kind group. ⚑ It exists for the same reason every group read here does: a
+	// caller wanting the group must NOT loop expectedModifier per kind, because each of those calls rebuilds
+	// the eval ctx -- the group read builds it ONCE and walks the kinds inside it.
+	static void expectedDefenseKinds(const CvModifiers* modifiers,
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
+		int (&defenseKinds)[NUM_DEFENSE_KINDS],
+		const CvCascadeHypothetical* pHypothetical = NULL);
 	// The four wellbeing channels (modifier.md §2b): the authored happiness/health deposits, each contribution
 	// SIGN-ROUTED to its channel (a negative happiness value lands as positive anger -- a routing rule, never a
 	// storage shape). Every channel of the out-array carries a POSITIVE magnitude.
