@@ -831,6 +831,14 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 	}
 	const std::vector<TraitContext::HeldTrait>& heldTraits =
 		(pHeldTraits != NULL) ? *pHeldTraits : kOwnHeldTraits;
+	//	⛔ The FREE-TYPED counts are fetched ONCE, for the same reason the held traits above are: the per-type
+	//	read is a slice of a walk over the eval ctx, the city's operating set and the whole empire, so asking
+	//	it per specialist makes the census quadratic. Paid only when a census is actually being built.
+	std::vector<int64_t> aiFreeSpecialists;
+	if (pRowsOut != NULL)
+	{
+		city.getFreeSpecialists(aiFreeSpecialists);
+	}
 	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
 	{
 		const int iCount = city.getSpecialistCount((SpecialistTypes)iSpecialist);
@@ -847,7 +855,7 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 				SpecialistTermRow kRow;
 				kRow.specialist = iSpecialist;
 				kRow.assigned = iCount;
-				kRow.freeTyped = city.getFreeSpecialistCount((SpecialistTypes)iSpecialist);
+				kRow.freeTyped = (int)(aiFreeSpecialists[iSpecialist] / 100);
 				kRow.perUnit = iPerUnit;
 				kRow.contribution = iCount * iPerUnit;
 				pRowsOut->push_back(kRow);
@@ -858,7 +866,7 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 			// CENSUS ONLY -- a type the city holds ONLY as free-typed contributes nothing today, and an absent row
 			// would report that as "the city has no such specialist" rather than as the gap it is. The extra fold
 			// is paid only when the census asks; the value path above never reaches here.
-			const int iFreeTyped = city.getFreeSpecialistCount((SpecialistTypes)iSpecialist);
+			const int iFreeTyped = (int)(aiFreeSpecialists[iSpecialist] / 100);
 			if (iFreeTyped > 0)
 			{
 				SpecialistTermRow kRow;

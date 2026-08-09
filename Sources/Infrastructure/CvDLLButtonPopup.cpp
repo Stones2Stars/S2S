@@ -1874,12 +1874,15 @@ bool CvDLLButtonPopup::launchDoEspionageTargetPopup(CvPopup* pPopup, CvPopupInfo
 		// RevolutionDCM start
 		if (pCity)
 		{
+			//	⛔ The GROUP read, ONCE -- the per-type count is a slice of a full walk.
+			std::vector<int64_t> aiFreeSpecialists;
+			pCity->getFreeSpecialists(aiFreeSpecialists);
 			for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); iSpecialist++)
 			{
 				if (kPlayer.canDoEspionageMission(eMission, eTargetPlayer, pPlot, iSpecialist, pUnit))
 				{
 					//does this city contain this great specialist type?
-					if (pCity->getFreeSpecialistCount((SpecialistTypes)iSpecialist) > 0)
+					if (aiFreeSpecialists[iSpecialist] > 0)
 					{
 						const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo((SpecialistTypes)iSpecialist);
 						const int iCost = kPlayer.getEspionageMissionCost(eMission, eTargetPlayer, pPlot, iSpecialist, pUnit);

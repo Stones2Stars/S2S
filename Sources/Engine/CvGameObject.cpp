@@ -749,9 +749,13 @@ void CvGameObjectCity::foreachManipulator(ManipCallbackFn func) const
 	}
 
 	// Specialists
+	//	⛔ The GROUP read, ONCE -- the per-type count is a slice of a walk over the eval ctx, the operating set
+	//	and the empire, so asking it per specialist made this fan quadratic.
+	std::vector<int64_t> aiFreeSpecialists;
+	m_pCity->getFreeSpecialists(aiFreeSpecialists);
 	for (int i=0; i< GC.getNumSpecialistInfos(); i++)
 	{
-		const int iCount = m_pCity->getSpecialistCount((SpecialistTypes)i) + m_pCity->getFreeSpecialistCount((SpecialistTypes)i);
+		const int iCount = m_pCity->getSpecialistCount((SpecialistTypes)i) + (int)(aiFreeSpecialists[i] / 100);
 		for (int j=0; j<iCount; j++)
 		{
 			func(GC.getSpecialistInfo((SpecialistTypes)i).getPropertyManipulators());

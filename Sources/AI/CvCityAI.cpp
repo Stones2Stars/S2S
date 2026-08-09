@@ -13353,9 +13353,13 @@ int CvCityAI::getPropertyNonBuildingSource(PropertyTypes eProperty) const
 	}
 
 	//	Add in contribution from specialists
+	//	⛔ The GROUP read, ONCE. getFreeSpecialistCount is a slice of exactly this walk (an eval ctx + the
+	//	city's operating set + the whole empire), so calling it per specialist made the loop quadratic.
+	std::vector<int64_t> aiFreeSpecialists;
+	getFreeSpecialists(aiFreeSpecialists);
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		const int iNum = getSpecialistCount((SpecialistTypes)iI) + getFreeSpecialistCount((SpecialistTypes)iI);
+		const int iNum = getSpecialistCount((SpecialistTypes)iI) + (int)(aiFreeSpecialists[iI] / 100);
 
 		if (iNum > 0)
 		{

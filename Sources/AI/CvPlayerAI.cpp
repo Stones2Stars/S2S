@@ -15650,11 +15650,15 @@ EspionageMissionTypes CvPlayerAI::AI_bestPlotEspionage(CvPlot* pSpyPlot, PlayerT
 							if (NULL != pCity)
 							{
 								//loop through all great specialist types
+								//	⛔ The GROUP read, ONCE -- the per-type count walks the eval ctx, the operating
+								//	set and the empire, so asking it per specialist made this scan quadratic.
+								std::vector<int64_t> aiFreeSpecialists;
+								pCity->getFreeSpecialists(aiFreeSpecialists);
 								for (int iSpecialist = 7; iSpecialist < GC.getNumSpecialistInfos(); iSpecialist++)
 								{
 									SpecialistTypes tempSpecialist = (SpecialistTypes)0;
 									//does this city contain this great specialist type?
-									if (pCity->getFreeSpecialistCount((SpecialistTypes)iSpecialist) > 0)
+									if (aiFreeSpecialists[iSpecialist] > 0)
 									{
 										//sort who is the most significant great specialist in the city
 										//prefer any custom specialist	(SpecialistTypes)>13
@@ -15878,10 +15882,13 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 		CvCity* pCity = pPlot->getPlotCity();
 		if (NULL != pCity)
 		{
+			//	⛔ The GROUP read, ONCE (see the sibling scan above).
+			std::vector<int64_t> aiFreeSpecialists;
+			pCity->getFreeSpecialists(aiFreeSpecialists);
 			for (int iSpecialist = 7; iSpecialist < GC.getNumSpecialistInfos(); iSpecialist++)
 			{
 				SpecialistTypes tempSpecialist = (SpecialistTypes)0;
-				if (pCity->getFreeSpecialistCount((SpecialistTypes)iSpecialist) > 0)
+				if (aiFreeSpecialists[iSpecialist] > 0)
 				{
 					tempSpecialist = (SpecialistTypes)iSpecialist;
 					if (tempSpecialist > theGreatSpecialistTarget)
