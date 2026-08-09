@@ -284,6 +284,31 @@ not exist at bind). Identity is passed IN at bind — the scope owners share no 
 applies that source's deposits — the same shape the contexts use — and there is no rebuild anywhere for a sweep to
 batch (§ THE MAINTAINED SUM).
 
+## ⛔ THE AI PLANE IS NOT EXEMPT — AN AI CACHE IS INVALIDATED BY SPINE FACTS, LIKE ANYTHING ELSE (owner)
+
+> *"AI loops should not run the full run all the time, and if we cache the AI data, they should be invalidated
+> by the relevant spineEvents like anything else."*
+
+Two halves, and the second is the one that is easy to get wrong. **An AI loop re-running its full pass every
+time is the defect** — the same O(what EXISTS) shape the maintained sum deletes everywhere else. **And the
+cache that fixes it is an ordinary spine CONSUMER**: it declares the facts that move it and applies them, in
+exactly the shape [DEC-dict-is-a-consumer](decisions.md#dec-dict-is-a-consumer) specifies for every other
+store.
+
+⛔ **So a hand-set staleness flag on an AI cache is NOT the sanctioned residual.** The residual
+([superseded-ideas](superseded-ideas.md) #1) is that the AI may keep its OWN SCORES — it is about WHAT is
+cached, never about being excused from HOW every derived store is maintained. A `mark*Stale()` the AI calls
+itself is [DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil) on the AI plane: it asserts we cannot know what
+changed, which a saturated emit surface falsifies, and it drifts the moment a new fact moves the value and
+nobody remembers to call it.
+⇒ **The disposition is the usual one and needs no new mechanism:** name the facts that genuinely move the
+score, register for them, and the flag has nothing left to do.
+
+⚠ **This does not license caching EARLY.** [DEC-legacy-decache-poisons-perf](decisions.md#dec-legacy-decache-poisons-perf)
+sequences it: run uncached, let the hot paths announce themselves, fix the READS that should never have
+computed, and only THEN let the AI plane cache its own scores. This rules how that cache is maintained when it
+lands, not when it lands.
+
 ## ⚖ EVERY DERIVED STORE IS ONE SHAPE — a KEYED ACCUMULATOR maintained by a delta (owner)
 
 **A count is a sum.** The possession plane and the magnitude plane are not two mechanisms — they are one
