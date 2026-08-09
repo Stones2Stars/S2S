@@ -1309,3 +1309,45 @@ subtraction, the per-method KIND test and the raw-not-formalized bar live at
 ⚑ For `combatResult` that is `SEVT_COMBAT_RESULT` beside the ~10 surface additions above — and it is what makes
 the conversion verifiable at all, since a fixed handler is then observable on `/events` rather than inferred
 from the ABSENCE of a `PythonDbg` traceback.
+
+## The identity conversion is NOT closed — the log names the FIRST failure, never the handler
+
+**⛔ A `PythonDbg` line reports the FIRST exception in a handler invocation, so fixing it EXPOSES the next one.**
+An event is closed only when every one of its handlers has been read END TO END — never when its logged error
+stops appearing. ⚑ Two events looked closed on exactly that reasoning and are not: `cityDoTurn` (its logged
+error was `CvAdvisorUtils.cityAdvise`, whose BODY is still unconverted) and `BeginGameTurn` (its logged error
+was the `CvRandom` marshalling, with five dead calls after it in the same handler).
+
+**⛔ AND BUG FANS ONE EVENT TO EVERY REGISTERED HANDLER.** The log names the EVENT, so a second handler for the
+same event is invisible in it — `autologEventManager` alone carried seven broken handlers where the log could
+only ever show one. ⇒ Enumerate `def on<Event>` across the whole tree before calling an event done.
+
+**⚠ A HALF-CONVERSION LEAVES A DANGLING NAME, which fails differently.** `CvAdvisorUtils.cityAdvise` reads its
+head through `STATE` and then drives a `CyCity` that is **never bound anywhere in the function** — so it raises
+`NameError`, not the `AttributeError` the tuple-deref class produces. Grepping for the deref shapes alone does
+not find it ([roadmap.md](roadmap.md) § scope decision 6: half-converting RELOCATES the failure).
+
+### The remaining worklist, by handler
+
+The receivers below are city/unit HANDLES (identity set only) or pushed IDENTITIES; every method named is
+outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
+
+| file · handler | dead calls |
+|---|---|
+| `CvAdvisorUtils.cityAdvise` (reached from `onCityDoTurn`) | unbound `CyCity` + `area` · `canConstruct` · `canTrain` · `countNumImprovedPlots` · `countNumWaterPlots` · `getBaseCommerceRate` · `getBuildingDefense` · `getCommerceRate` · `getMaintenance` · `healthRate` · `isProductionBuilding` · `plot` · `angryPopulation` · `AI_cityValue` |
+| `Contrib/WoodlandCycle.onBeginGameTurn` | `canFight` · `changeDamage` · `getHP` · `getName` · `kill` |
+| `CvEventManager.onNukeExplosion` | `getName` · `getUnitType` · `kill` |
+| `CvEventManager.onCityBuilt` | `changeFood` · `changeHasBuilding` · `changePopulation` · `getExperience` · `getUnitType` · `growthThreshold` · `isHasPromotion` |
+| `CvEventManager.onCityRazed` | `findHighestCulture` · `getConscriptUnit` · `getCulture` · `getName` · `getNumWorldWonders` · `hasBuilding` · `isRevealed` |
+| `CvEventManager.onGreatPersonBorn` | `changeCulture` · `getAddedFreeSpecialistCount` · `getCultureThreshold` |
+| `CvEventManager.onChangeWar` | `addProductionExperience` · `changeHappinessTimer` · `getConscriptUnit` |
+| `CvEventManager.onCityLost` | `plot` |
+| `CvEventManager.onModNetMessage` · `freePromotions` · the two name-popup callbacks | `changeHasBuilding` · `changeHurryAngerTimer` · `flatHurryAngerLength` · `kill` · `maxMoves` · `setExperience` · `setHasPromotion` · `setMoves` · `isFound` · `getName` · `getNameNoDesc` |
+| `Contrib/autologEventManager` — `onCityAcquired` · `onCityBuilt` · `onCityRazed` · `onCorporationRemove` · `onCorporationSpread` · `onImprovementBuilt` · `onImprovementDestroyed` · `onReligionRemove` · `onReligionSpread` · `onUnitPillage` · `getUnitLocation` | `getName` · `plot` |
+| `DancingHoskuld/CaptureSlaves.onCityRazed` | `changeFreeSpecialistCount` · `getFreeSpecialistCount` · `getName` · `getPopulation` · `getSpecialistCount` |
+| `DancingHoskuld/Partisan.onCityAcquired` | `changePopulation` · `getName` · `getPopulation` · `isOccupation` · `plot` |
+| `CvGameUtils.getWidgetHelp` | the widest single site — ~30 city reads (`foodDifference` · `getCultureLevel` · `getProductionNeeded` · `isHolyCityByType` · …) |
+
+⚠ **`Revolution/RevEvents.onBuildingBuilt` is broken and is deliberately NOT on this list.** Nothing registers
+it — `RevolutionInit` imports the module and binds only `kbdEvent` / `GameStart` / `OnLoad` — so it cannot fire,
+and Revolution is a carve-out owed its own rework. ⛔ Do not "fix" it into the live set.
