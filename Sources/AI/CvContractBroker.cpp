@@ -1516,22 +1516,14 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 			continue;
 		}
 
-		if (!unitX->meetsUnitSelectionCriteria(&request.criteria) || unitInfo.iMinPriority > request.iPriority)
-		{
-			if (gPlayerLogLevel >= 4)
-			{
-				const bool bFailsCriteria = !unitX->meetsUnitSelectionCriteria(&request.criteria);
-				log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (%s)",
-					unitInfo.iUnitId, request.iWorkRequestId,
-					bFailsCriteria ? "fails selection criteria" : "unit minPriority above request priority");
-				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT,
-						bFailsCriteria ? CTB_ASSESS_REJECT_CRITERIA : CTB_ASSESS_REJECT_PRIORITY, 4)
-					.addI(CTBF_unit, unitInfo.iUnitId)
-					.addI(CTBF_workRequest, request.iWorkRequestId));
-			}
-			continue;
-		}
-
+		//	⛔ THE CHEAP GATE RUNS FIRST. meetsUnitSelectionCriteria below is NOT a cheap test: its property
+		//	clauses call AI_beneficialPropertyValueToCity, which fans every one of the unit's property
+		//	manipulators over the city and walks its specialists. Running that BEFORE the O(1) range test paid a
+		//	full property valuation for every advertiser the geometry was about to reject, per request --
+		//	advertisers x requests x that walk. The documented stage order is what fixes it: what is IN RANGE
+		//	first, and only then what is suitable (AGENTS.md § THE CONTRACT BROKER).
+		//	⚠ Both are pure filters that `continue`, so the surviving set is identical -- only the order of two
+		//	rejections changes.
 		//	STAGE 1 -- WHAT IS IN RANGE. An O(1) step-distance test that can only ever OVER-ADMIT, which
 		//	is the safe direction: stage 4 closes it with a real path (enabler.md par.5 -- over-inclusion
 		//	is safe, a MISS is the bug).
@@ -1564,6 +1556,22 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 				.addI(CTBF_workRequest, request.iWorkRequestId)
 				.addI(CTBF_stepDistance, iStepDistance)
 				.addI(CTBF_rangeSteps, iRangeSteps));
+			continue;
+		}
+
+		if (unitInfo.iMinPriority > request.iPriority || !unitX->meetsUnitSelectionCriteria(&request.criteria))
+		{
+			if (gPlayerLogLevel >= 4)
+			{
+				const bool bFailsCriteria = !unitX->meetsUnitSelectionCriteria(&request.criteria);
+				log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (%s)",
+					unitInfo.iUnitId, request.iWorkRequestId,
+					bFailsCriteria ? "fails selection criteria" : "unit minPriority above request priority");
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT,
+						bFailsCriteria ? CTB_ASSESS_REJECT_CRITERIA : CTB_ASSESS_REJECT_PRIORITY, 4)
+					.addI(CTBF_unit, unitInfo.iUnitId)
+					.addI(CTBF_workRequest, request.iWorkRequestId));
+			}
 			continue;
 		}
 
