@@ -1420,18 +1420,23 @@ a `CyCity` that is **never bound in the function** (hence `NameError`, not `Attr
 | `getMaintenance` | `STATE.getMaintenance` | published |
 | `isProductionBuilding` | `STATE.getOrder` | published |
 
-**⛔ WHAT IS GENUINELY MISSING -- five reads:**
+**⛔ WHAT IS STILL MISSING -- three reads:**
 
-1. building **`getDefenseModifier`** -- `CyInfo` carries no defense group.
-2. building **`getCommerceModifier`** (x2) -- `CyInfo` serves flat commerce, not the modifier side.
-3. building **`getPlotYieldChange`** -- a `plots`-target deposit, which `getFlatYields` (the entity's own
-   scope flats) does not answer.
-4. **`countNumImprovedPlots`** / **`countNumWaterPlots`** -- `STATE.getCityPlots` hands back the ring-ordered
+1. building **`getPlotYieldChange`** -- a `plots`-target deposit keyed by (plot type, yield). `getFlatYields`
+   answers the entity's own SCOPE flats, which is a different address.
+2. **`countNumImprovedPlots`** / **`countNumWaterPlots`** -- `STATE.getCityPlots` hands back the ring-ordered
    coordinates, not a predicate count over them.
-5. **`canSpreadReligion` is published but asks a DIFFERENT QUESTION.** It answers *"does this unit spread a
-   religion at all"*; the missionary block asks *"does it spread MY STATE religion"*
-   (`getReligionSpreads(eStateReligion)`). Either the read widens to take the religion, or a ruling says the
-   any-spread test is sufficient here.
+3. **`canSpreadReligion` is published but asks a DIFFERENT QUESTION.** It answers *"does this unit spread a
+   religion at all"*; the missionary block asks *"does it spread MY STATE religion"*. The data is there --
+   `CvUnitInfo::getReligionSpread()` is the `{religion -> strength}` map, and its own comment warns against
+   scanning the registry backwards -- so this is a parameter to add, not a question to ask.
+
+⚑ **LANDED: the building metric reads.** `getFlatYields` / `getFlatCommerces` answered **`CORPORATION_` ONLY**
+and returned an empty list for every other prefix, so a building's authored commerce read as "no such data"
+rather than as a value. Both now go through `CvInfo::modifier` on the base -- which is what the corporation
+accessor already was -- and `getCommerceModifiers` (the percent half) and `getDefenseKinds` were added beside
+them. ⚠ That was a SECOND name-not-checked error in this same entry: the read was listed as published on the
+strength of its name, and its `CORPORATION_` guard was two lines below the signature.
 
 **⛔ TWO DESIGN QUESTIONS, unchanged and still owner-blocked:**
 
