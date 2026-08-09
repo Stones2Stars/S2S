@@ -682,6 +682,19 @@ enum SpineDomainEvent
 	SEVT_UNIT_PROMOTION_REMOVED     = 157,
 	SEVT_UNIT_COMBAT_ADDED          = 158,
 	SEVT_UNIT_COMBAT_REMOVED        = 159,
+	// A COMBAT RESOLVED, with a winner and a loser (CvEventReporter::combatResult). Emitted BESIDE the Python
+	// callback the reporter already makes, never instead of it -- the reporter is untouched behaviourally.
+	// ⛔ NOT a duplicate of SEVT_UNIT_KILLED: a combat resolves whether or not anybody dies (a withdrawal, a
+	// retreat, a non-fatal exchange all resolve), and KILLED names one unit's death while this names the
+	// EXCHANGE and its two parties. Both fire on a fatal combat and neither substitutes for the other.
+	// ⚑ It exists because the happening reached PYTHON ONLY, so nothing on the C++ side could see a combat at
+	// all -- which is also why a captured unit was untraceable: SEVT_UNIT_CREATED said a unit appeared and no
+	// fact said where it came from.
+	// ⚠ The payload is RAW -- the reporter's own arguments, nothing modelled. Defining what a combat event MEANS
+	// waits for the event system to move over and be formalized in JSON; anything designed here is undone then.
+	// iType = winner unit TYPE, iA = winner unit id, iB = loser unit id, iC = winner owner, iSrcLoc = the plot.
+	// The loser's TYPE and OWNER do not fit the five DOMAIN ints and ride as render fields. DOMAIN.
+	SEVT_COMBAT_RESULT              = 160,
 
 	// ===== PROPERTY (any owner scope) =====
 	// A game object's PROPERTY VALUE moved (CvProperties -- the generic (PropertyTypes,int) bag on
@@ -913,6 +926,10 @@ void emitTeamMemberRemoved(int iTeam, int iCount);
 // unconditional end of a unit's life. iPlot = -1 where the unit held none.
 void emitUnitCreated(int iUnitType, int iUnitId, int iOwner);
 void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
+// A resolved combat. Called from CvEventReporter::combatResult, BESIDE its Python callback -- the reporter's
+// arguments verbatim, so the spine sees exactly what Python sees and a later migration is a swap.
+void emitCombatResult(int iWinnerUnitType, int iWinnerUnitId, int iWinnerOwner,
+					  int iLoserUnitType, int iLoserUnitId, int iLoserOwner, int iPlot);
 // A unit's death SCHEDULE. Call AFTER m_bDeathDelay is written, at BOTH transitions: ADDED where a delayed kill
 // deferred the death, REMOVED where an outcome brought the unit back.
 void emitUnitDeathScheduleAdded(int iUnitType, int iUnitId, int iOwner, int iPlot);

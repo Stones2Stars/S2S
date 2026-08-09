@@ -348,6 +348,9 @@ enum SpineDomainField
 	SPF_DEFINE, SPF_VALUE_F, SPF_VALUE_STR,
 	// the unit plane's two dirty triggers + the scoped ids the non-city/plot facts hang on
 	SPF_PROMOTION, SPF_UNITCOMBAT, SPF_UNIT_ID, SPF_TEAM, SPF_AREA, SPF_TIMER,
+	// the combat fact's SECOND party: a resolved combat has two units, and the five DOMAIN ints hold the winner
+	// plus the loser's id only, so the loser's type and owner ride here
+	SPF_LOSER_UNIT, SPF_LOSER_UNIT_ID, SPF_LOSER_OWNER,
 	// the load-pipeline diagnostic fields (SEVT_LOAD_PIPELINE)
 	SPF_MS_REBUILD, SPF_MS_FIXPOINT, SPF_PASSES, SPF_MS_PLOTWARM, SPF_MS_PKGWARM,
 	SPF_FLIPS, SPF_CONVERGED, SPF_VERIFY_CATCH, SPF_MS_FIX_ENSURE, SPF_MS_FIX_PROCESS
@@ -490,6 +493,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_UNIT_DEATH_SCHEDULE_REMOVED:      return "[SPINE] unitDeathScheduleRemoved";
 	case SEVT_UNIT_ENTERED_CITY:                return "[SPINE] unitEnteredCity";
 	case SEVT_UNIT_LEFT_CITY:                   return "[SPINE] unitLeftCity";
+	case SEVT_COMBAT_RESULT:                    return "[SPINE] combatResult";
 	case SEVT_UNIT_PROMOTION_ADDED:             return "[SPINE] unitPromotionAdded";
 	case SEVT_UNIT_PROMOTION_REMOVED:           return "[SPINE] unitPromotionRemoved";
 	case SEVT_UNIT_COMBAT_ADDED:                return "[SPINE] unitCombatAdded";
@@ -564,6 +568,9 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_PROMOTION:   *peType = SFT_PROMOTION;   return "promotion";
 	case SPF_UNITCOMBAT:  *peType = SFT_UNITCOMBAT;  return "unitCombat";
 	case SPF_UNIT_ID:     *peType = SFT_INT;         return "unitId";
+	case SPF_LOSER_UNIT:    *peType = SFT_UNIT;      return "loserUnit";
+	case SPF_LOSER_UNIT_ID: *peType = SFT_INT;       return "loserUnitId";
+	case SPF_LOSER_OWNER:   *peType = SFT_PLAYER;    return "loserOwner";
 	case SPF_TEAM:        *peType = SFT_INT;         return "team";
 	case SPF_AREA:        *peType = SFT_INT;         return "area";
 	case SPF_TIMER:       *peType = SFT_INT;         return "timer";
@@ -1791,6 +1798,20 @@ void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_KILLED, iUnitType, iUnitId, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+
+// A resolved combat, emitted beside CvEventReporter's Python callback. The payload is the reporter's own
+// arguments and nothing more -- what a combat event MEANS is formalized when the event system moves to C++.
+void emitCombatResult(int iWinnerUnitType, int iWinnerUnitId, int iWinnerOwner,
+					  int iLoserUnitType, int iLoserUnitId, int iLoserOwner, int iPlot)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_COMBAT_RESULT,
+				   iWinnerUnitType, iWinnerUnitId, iLoserUnitId, iWinnerOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iWinnerUnitType).addI(SPF_UNIT_ID, iWinnerUnitId).addI(SPF_OWNER, iWinnerOwner)
+	 .addI(SPF_LOSER_UNIT, iLoserUnitType).addI(SPF_LOSER_UNIT_ID, iLoserUnitId)
+	 .addI(SPF_LOSER_OWNER, iLoserOwner).addI(SPF_PLOT, iPlot);
 	eventSpine().emit(e);
 }
 

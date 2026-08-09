@@ -13,6 +13,7 @@
 #include "Engine/CvPlot.h"
 #include "Engine/CvSelectionGroup.h"
 #include "Engine/CvUnit.h"
+#include "Spine/CvEventSpine.h"   // the DOMAIN emit that rides BESIDE each Python callback
 #include "Tools/FInputDevice.h"
 
 //
@@ -224,6 +225,17 @@ void CvEventReporter::firstContact(TeamTypes eTeamID1, TeamTypes eTeamID2)
 void CvEventReporter::combatResult(CvUnit* pWinner, CvUnit* pLoser)
 {
 	PROFILE_FUNC();
+
+	//	The spine fact rides BESIDE the Python callback, never instead of it: a combat resolving reached Python
+	//	alone, so nothing C++-side could observe one. Both units are the reporter's contract -- the guard is
+	//	against a miscall crashing on the NEW code, not a suppression of the fact.
+	if (pWinner != NULL && pLoser != NULL)
+	{
+		const CvPlot* pCombatPlot = pWinner->plot();
+		emitCombatResult((int)pWinner->getUnitType(), pWinner->getID(), (int)pWinner->getOwner(),
+						 (int)pLoser->getUnitType(),  pLoser->getID(),  (int)pLoser->getOwner(),
+						 (pCombatPlot != NULL) ? GC.getMap().plotNum(pCombatPlot->getX(), pCombatPlot->getY()) : -1);
+	}
 
 	m_kPythonEventMgr.reportCombatResult(pWinner, pLoser);
 }
