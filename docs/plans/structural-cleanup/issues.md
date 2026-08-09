@@ -1351,3 +1351,58 @@ outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
 ⚠ **`Revolution/RevEvents.onBuildingBuilt` is broken and is deliberately NOT on this list.** Nothing registers
 it — `RevolutionInit` imports the module and binds only `kbdEvent` / `GameStart` / `OnLoad` — so it cannot fire,
 and Revolution is a carve-out owed its own rework. ⛔ Do not "fix" it into the live set.
+
+## A DELETED HELPER LEAVES ITS CALL SITES STANDING — and Python names them only at runtime
+
+**⛔ A helper removed during a conversion fails NOWHERE until the line runs.** C++ has a compiler census; Python
+has none, so a deleted module-level helper leaves every call site intact, silent, and green — until the handler
+fires and raises `NameError`. ⚑ This is the [roadmap.md](roadmap.md) § scope decision 6 half-conversion in its
+worst form: the site is not merely relocated, it is INVISIBLE to every check the tree has.
+
+Live instances, each used and defined NOWHERE:
+
+| name | used by | replacement |
+|---|---|---|
+| `isWorldUnit` | `CvEventManager.onUnitBuilt`, `DancingHoskuld/InitMilitaryPromos.onUnitBuilt` | the unit's `allowed.world` self-cap |
+| `isNationalWonder` · `isTeamWonder` | `CvEventManager.onBuildingBuilt`, `Screens/CvInfoScreen`, `Screens/Worldbuilder/WBBuildingScreen` | `INFO.getIntrinsic("BUILDING_", id, PYINT_WONDER_SCOPE)` — the cap's SCOPE **is** the wonder category ([json.md] par.4.4) |
+
+⚑ **The removal was DELIBERATE and is already recorded at one converted site** — `Screens/CvMainInterface.py`
+carries *"The cap's SCOPE is the wonder category — there is no isNationalWonder"*. One call site was converted
+and the rest were left. ⇒ When a helper goes, its call sites are the worklist; a converted neighbour is not
+evidence the sweep finished.
+
+Beside them, two `GC.get<X>Info` reads inside handlers reported as converted: `getHandicapInfo`
+(`CvEventManager.onCombatResult`, the civic-upkeep handicap factor) and `getUnitInfo`
+(`CvEventManager.onUnitBuilt`). Both were listed in a `GC.get*Info` scan during that session and neither was
+acted on — the scan found them and the conversion pass did not consume its own findings.
+
+## ⛔ `modSegmentLookup` IS A PER-CALL STRING-KEYED MAP WALK ON AN AI HOT PATH
+
+**Found by attaching a debugger to a running end turn** — the technique
+[DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) prescribes,
+because this class emits nothing and every log is silent while it runs. Sampled game-thread stacks:
+
+```
+InfoValuation::keyedTarget / keyedTargetSum  <- val_traitKeyedPerSpecialist <- InfoValuation::specialistTerm
+modSegmentLookup -> std::map<std::string, JsonKeyClass>::_Lbound
+  <- InfoValuation::keyedTargetSegment <- specialistTerm <- cityReceiverRate <- realizedAtCity
+  <- CvPlayer::getFreeSpecialistCount <- CvCity::getFreeSpecialistCount
+  <- CvCityAI::AI_foodAvailable <- AI_fillCitizensByPriority (per CITIZEN) <- AI_assignWorkingPlots (per CITY)
+```
+
+⛔ It is [DEC-materialize-at-mapfrom](../../architecture/decisions.md#dec-materialize-at-mapfrom) violated on a
+read path: a heap `std::string` construction plus a map walk, per call, underneath the citizen-assignment loop —
+so its cost is `O(cities × citizens × sources)`.
+
+⚑ **THE FIX IS ALREADY IN THE TREE, TWICE — copy it, do not invent one.** `Data/CvDepositRead.cpp`'s `mmk_modSeg`
+resolves a segment ONCE into a file-static (`if (iCache < 0) iCache = modSegmentLookup(...)`, safe because the
+interner is append-only so a miss can become a hit but an id never moves), and `Cascade/CvModifierConsumer.cpp`
+does the same with `s_iPlotsSeg`. The offenders pass a STRING LITERAL inline instead —
+`modSegmentLookup("unitCombats")` / `("buildings")` in `AI/CvCityAI.cpp`, among the inline-literal call sites
+across `Sources/`.
+
+⚠ **The lookup is the frame the sampler caught, not necessarily the whole cost.** The surrounding
+`keyedTargetSum` / `collectKeyedTarget` walk is re-resolved per citizen for a value that moves only when the
+city's sources move — so hoisting the segment id is the cheap half, and the standing question is why a keyed
+TRAIT term is being resolved inside the citizen loop at all ([modifier.md] par.5: a keyed read iterates the
+handful an entity AUTHORED, which is cheap only if discovering the live sources is).
