@@ -13368,6 +13368,8 @@ void CvUnit::getUnitRead(int (&unitRead)[NUM_UNIT_READS])
 	unitRead[UNIT_READ_CAPTURE_PROBABILITY]= captureProbabilityTotal();
 	unitRead[UNIT_READ_CAPTURE_RESISTANCE] = captureResistanceTotal();
 	unitRead[UNIT_READ_COMBAT_CLASS]       = (int)getUnitCombatType();
+	unitRead[UNIT_READ_PILLAGE_CHANGE]     = getPillageChange();
+	unitRead[UNIT_READ_NUKE_RANGE]         = nukeRange();
 	unitRead[UNIT_READ_GROUP_ID]           = -1;
 	unitRead[UNIT_READ_ACTIVITY]             = (int)NO_ACTIVITY;
 	unitRead[UNIT_READ_AUTOMATE]             = (int)NO_AUTOMATE;
@@ -13403,6 +13405,7 @@ void CvUnit::getUnitFlags(int (&flags)[NUM_UNIT_FLAGS]) const
 	flags[UNIT_FLAG_CAN_FIGHT]       = canFight() ? 1 : 0;
 	flags[UNIT_FLAG_CAN_AIR_ATTACK]  = canAirAttack() ? 1 : 0;
 	flags[UNIT_FLAG_MADE_ATTACK]     = isMadeAttack() ? 1 : 0;
+	flags[UNIT_FLAG_DEAD]            = isDead() ? 1 : 0;
 }
 
 

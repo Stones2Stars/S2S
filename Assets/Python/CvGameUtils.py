@@ -57,11 +57,13 @@ class CvGameUtils:
 		return -1 # Returning 0 means "No", 1 or greater means "Yes", and negative numbers means "continue this evaluation on the dll side".
 
 	def cannotMaintain(self, argsList):
-		CyCity, iProcess, = argsList
-		if not CyCity:
-			print "CyCity == None"
-			print "CyCity, iProcess", argsList
+		# The DLL PUSHES the city, so it arrives as its (owner, id) IDENTITY rather than as a handle.
+		aCity, iProcess, = argsList
+		if not aCity:
+			print "cannotMaintain: no city identity"
+			print "aCity, iProcess", argsList
 			return False
+		iOwner = aCity[0]
 
 		aMap = {
 			#"IDLE"		: ["PROCESS_WEALTH_MEAGER", "PROCESS_RESEARCH_MEAGER", "PROCESS_CULTURE_MEAGER"],
@@ -76,8 +78,6 @@ class CvGameUtils:
 
 		KEY = TYPE.split("_")[1]
 		if not KEY in aMap: return False
-
-		iOwner = CyCity.getOwner()
 
 		#	A lesser process is not worth maintaining once a BETTER rung of its ladder is available. Ask the
 		#	ENABLER for that verdict rather than testing the rung's prereq tech by hand: availability is the
@@ -173,7 +173,9 @@ class CvGameUtils:
 		return int(score)
 
 	def doPillageGold(self, argsList):
-		CyPlot, CyUnit, = argsList
+		# ⚠ The PLOT crosses as a handle (only CvCity/CvUnit carry an identity), the UNIT as its (owner, id) pair.
+		CyPlot, aUnit, = argsList
+		iUnitOwner, iUnitId = aUnit
 
 		iPlayer = CyPlot.getOwner()
 		if iPlayer > -1 and GC.getPlayer(iPlayer).hasBuilding(self.iHimejiCastle):
@@ -183,33 +185,39 @@ class CvGameUtils:
 		gold = GAME.getSorenRandNum(iTemp, "Pillage Gold 1")
 		gold += GAME.getSorenRandNum(iTemp, "Pillage Gold 2")
 
-		gold += CyUnit.getPillageChange() * gold / 100.0
+		aUnitRead = STATE.getUnitRead(iUnitOwner, iUnitId)
+		gold += aUnitRead[UnitReadKind.UNIT_READ_PILLAGE_CHANGE] * gold / 100.0
 
-		if GC.getPlayer(CyUnit.getOwner()).hasBuilding(self.iHimejiCastle):
+		if GC.getPlayer(iUnitOwner).hasBuilding(self.iHimejiCastle):
 			gold *= 2
 
 		return int(gold)
 
 
 	def doCityCaptureGold(self, argsList):
-		CyCity, iOwnerNew, = argsList
+		# The city is PUSHED, so it arrives as its (owner, id) IDENTITY -- the owner here is still the OLD one,
+		# which is what the Himeji test wants (iOwnerNew is the captor).
+		aCity, iOwnerNew, = argsList
+		iOwner, iCity = aCity
 
-		if GC.getPlayer(CyCity.getOwner()).hasBuilding(self.iHimejiCastle):
+		if GC.getPlayer(iOwner).hasBuilding(self.iHimejiCastle):
 			return 0
 
 		gold = self.BASE_CAPTURE_GOLD
 
-		gold += CyCity.getPopulation() * self.CAPTURE_GOLD_PER_POP
+		gold += STATE.getCityPopulation(iOwner, iCity) * self.CAPTURE_GOLD_PER_POP
 		gold += GAME.getSorenRandNum(self.CAPTURE_GOLD_RAND1, "One")
 		gold += GAME.getSorenRandNum(self.CAPTURE_GOLD_RAND2, "Two")
 
 		iMaxTurns = self.CAPTURE_GOLD_MAX_TURNS
 		if iMaxTurns > 0:
-			iTurns = GAME.getGameTurn() - CyCity.getGameTurnAcquired()
+			aCounts = STATE.getCityCounts(iOwner, iCity)
+			iTurns = GAME.getGameTurn() - aCounts[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED]
 			if iTurns > 0 and iTurns < iMaxTurns:
 				gold *= 1.0 * iTurns / iMaxTurns
 
-		if CyCity.isActiveBuilding(self.iNationalMint):
+		aMint = STATE.getBuildingInCity(iOwner, iCity, self.iNationalMint)
+		if aMint[CityBuildingRead.CITY_BUILDING_ACTIVE]:
 			gold *= 10
 
 		return int(gold)

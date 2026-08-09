@@ -1288,6 +1288,10 @@ enum UnitReadKind
 	// The unit's PRIMARY combat class. ⚠ Distinct from the HELD set (hasUnitCombat): a unit carries one primary
 	// plus its subs, and "which class IS it" cannot be answered by testing membership one id at a time.
 	UNIT_READ_COMBAT_CLASS,
+	//	The unit's accumulated extra PILLAGE gold percent (promotions), read by the pillage-gold callback.
+	UNIT_READ_PILLAGE_CHANGE,
+	//	The unit's nuke blast radius, -1 when it is not a nuke at all.
+	UNIT_READ_NUKE_RANGE,
 
 	NUM_UNIT_READS
 };
@@ -1312,6 +1316,9 @@ enum UnitFlagKind
 	// Has this unit already attacked this turn? The combat handlers gate the capture roll on it -- a captive is
 	// taken by the ATTACKER, so a defender that won its own defence must not mint one.
 	UNIT_FLAG_MADE_ATTACK,
+	//	⚠ DEAD here is the engine's isDead(): a unit whose death is merely SCHEDULED already reads true while
+	//	still being a live object ([unit-lifecycle.md]), so a sweep must skip one rather than act on it.
+	UNIT_FLAG_DEAD,
 
 	NUM_UNIT_FLAGS
 };
@@ -1335,6 +1342,9 @@ enum CityFlagKind
 	//	plot's owner, so the flag form carries the same verdict the per-player call gave every caller that asked
 	//	about the city's own player -- which is every one of them.
 	CITY_FLAG_CONNECTED_TO_CAPITAL,
+	//	Adjacent to water at all -- the engine's isCoastal(0). ⚠ A consumer needing a MINIMUM water-body size
+	//	is asking the {HAS_COAST:{minArea:N}} question ([json.md] par.3.5), which this flag deliberately does not answer.
+	CITY_FLAG_COASTAL,
 
 	NUM_CITY_FLAGS
 };
@@ -1393,6 +1403,8 @@ enum CityCountRead
 	CITY_COUNT_REVOLUTION_INDEX,
 	CITY_COUNT_REVOLUTION_AVERAGE,
 	CITY_COUNT_GAME_TURN_FOUNDED,
+	//	The turn this city last CHANGED HANDS -- distinct from FOUNDED, and what a capture payout scales on.
+	CITY_COUNT_GAME_TURN_ACQUIRED,
 
 	NUM_CITY_COUNT_READS
 };

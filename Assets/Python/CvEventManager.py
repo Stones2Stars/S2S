@@ -957,7 +957,8 @@ class CvEventManager:
 			iX = -1
 			if aL[UnitReadKind.UNIT_READ_DOMAIN] == self.mapDomain['DOMAIN_SEA']:
 				for CyCity in CyPlayerL.cities():
-					if CyCity.isCoastal(0):
+					# A handle answers its own address; the coastal verdict is a STATE flag read by that address.
+					if STATE.getCityFlags(iPlayerL, CyCity.getID())[CityFlagKind.CITY_FLAG_COASTAL]:
 						iX = CyCity.getX()
 						iY = CyCity.getY()
 						break
@@ -1150,8 +1151,11 @@ class CvEventManager:
 			if CyPlotW.isCity():
 				CyCity = CyPlotW.getPlotCity()
 				iReligion = CyPlayerW.getStateReligion()
-				if iReligion != -1 and not CyCity.isHasReligion(iReligion):
-					CyCity.setHasReligion(iReligion, True, True, True)
+				if iReligion != -1:
+					# getCityReligions gives rows of [id, bIsHolyCity], so presence is a membership test.
+					aHeld = [row[0] for row in STATE.getCityReligions(CyCity.getOwner(), CyCity.getID())]
+					if iReligion not in aHeld:
+						ACT.setCityReligion(CyCity.getOwner(), CyCity.getID(), iReligion, True)
 		# Warriors Of God - Fanatic
 		elif iUnitW == mapUnitType["FANATIC"]:
 			if not self.GO_ONE_CITY_CHALLENGE:
@@ -1161,12 +1165,15 @@ class CvEventManager:
 					CyPlotL = GC.getMap().plot(aPosL3[0], aPosL3[1])
 					if CyPlotL.isCity():
 						CyCity = CyPlotL.getPlotCity()
-						if not CyCity.isHasReligion(iReligion) and (self.GO_NO_CITY_RAZING or CyCity.getPopulation() > 1):
+						iCityOwnerL = CyCity.getOwner()
+						iCityIdL = CyCity.getID()
+						aHeld = [row[0] for row in STATE.getCityReligions(iCityOwnerL, iCityIdL)]
+						if iReligion not in aHeld and (self.GO_NO_CITY_RAZING or STATE.getCityPopulation(iCityOwnerL, iCityIdL) > 1):
 							if not CyTeamW:
 								iTeamW = CyPlayerW.getTeam()
 								CyTeamW = GC.getTeam(iTeamW)
-							if CyTeamW.isAtWarWith(GC.getPlayer(CyCity.getOwner()).getTeam()) and not STATE.getNumVisiblePotentialEnemyDefenders(iPlayerW, iUnitIdW, aPosL3[0], aPosL3[1]):
-								CyCity.setHasReligion(iReligion, True, True, True)
+							if CyTeamW.isAtWarWith(GC.getPlayer(iCityOwnerL).getTeam()) and not STATE.getNumVisiblePotentialEnemyDefenders(iPlayerW, iUnitIdW, aPosL3[0], aPosL3[1]):
+								ACT.setCityReligion(iCityOwnerL, iCityIdL, iReligion, True)
 
 
 	def onCombatLogCalc(self, argsList):
@@ -1545,11 +1552,15 @@ class CvEventManager:
 		# NANITE DEFUSER - destroyes all nukes from all players
 		elif iBuilding == mapBuildingType["NANITE_DEFUSER"]:
 			for iPlayerX in xrange(self.MAX_PLAYERS):
-				for CyUnit in GC.getPlayer(iPlayerX).units():
-					if CyUnit.isDead():
-						print "CvEventManager\onBuildingBuilt", ("CyUnit.isDead()", CyUnit.isDead())
-					elif CyUnit.nukeRange() > -1:
-						CyUnit.kill(0, -1)
+				# ⚠ The unit ids are taken FIRST: killing with no delay deletes the object, so iterating the live
+				# list while killing from it would invalidate the walk ([unit-lifecycle.md]).
+				aUnitIds = [CyUnitX.getID() for CyUnitX in GC.getPlayer(iPlayerX).units()]
+				for iUnitIdX in aUnitIds:
+					aFlags = STATE.getUnitFlags(iPlayerX, iUnitIdX)
+					if aFlags[UnitFlagKind.UNIT_FLAG_DEAD]:
+						continue
+					if STATE.getUnitRead(iPlayerX, iUnitIdX)[UnitReadKind.UNIT_READ_NUKE_RANGE] > -1:
+						ACT.killUnit(iPlayerX, iUnitIdX, False, -1)
 				# Global message
 				iPlayerAct = GAME.getActivePlayer()
 				if iPlayerAct > -1:
@@ -2191,11 +2202,20 @@ class CvEventManager:
 	def onUnitSpreadReligionAttempt(self, argsList):
 		#unit, iReligion, bSuccess = argsList
 		if not argsList[2]:
-			unit = argsList[0]
+			# The unit arrives as its (owner, id) IDENTITY, and the RELIGION being spread is already the second
+			# argument -- so the spread religion is taken from the event rather than inferred.
+			# ⚖ That is a deliberate change of QUESTION: the old line read the unit's `getPrereqReligion`, which is
+			# a BUILD GATE ("what did this unit need to be trained?") used to guess a CAPABILITY. The gate is now an
+			# ordinary requires.build atom the enabler owns, and what this wants is the religion the attempt was
+			# actually for ([json.md] par.9 -- a unit's spread strength is its own `spread.religion` block).
+			iUnitOwner, iUnitId = argsList[0]
+			iReligion = argsList[1]
 			aWonderTuple = self.aWonderTuple
-			if "FA_MEN_SI" in aWonderTuple[0] and unit.getOwner() == aWonderTuple[4][aWonderTuple[0].index("FA_MEN_SI")]:
-				CyCity = GC.getMap().plot(unit.getX(), unit.getY()).getPlotCity()
-				CyCity.setHasReligion(GC.getUnitInfo(unit.getUnitType()).getPrereqReligion(), True, True, True)
+			if "FA_MEN_SI" in aWonderTuple[0] and iUnitOwner == aWonderTuple[4][aWonderTuple[0].index("FA_MEN_SI")]:
+				aPos = STATE.getUnitPosition(iUnitOwner, iUnitId)
+				CyCity = MAP.plot(aPos[0], aPos[1]).getPlotCity()
+				if CyCity and iReligion > -1:
+					ACT.setCityReligion(CyCity.getOwner(), CyCity.getID(), iReligion, True)
 
 
 	'''
@@ -2354,32 +2374,37 @@ class CvEventManager:
 							break
 				if bNewEra:
 					NAZCA_LINES = GC.getInfoTypeForString("BUILDING_NAZCA_LINES")
-					CyCity = CyPlayer.getCity(aWonderTuple[3][i])
+					# The wonder tuple already holds the city's ID, so the city is addressed directly -- the
+					# one-shot event/vote grant store, read and written by (owner, city, building) exactly as the
+					# onBuildingBuilt twin does ([state-repositories.md]: events are not kept in the cache).
+					iNazcaCity = aWonderTuple[3][i]
 					iRandom = GAME.getSorenRandNum(8, "Nazca")
 					if not iRandom:
-						iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 0)
-						CyCity.setBuildingCommerceChange(NAZCA_LINES, 0, iBase + 4)
+						aBase = STATE.getBuildingGrantedCommerces(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 0, aBase[0] + 4)
 					elif iRandom == 1:
-						iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 1)
-						CyCity.setBuildingCommerceChange(NAZCA_LINES, 1, iBase + 4)
+						aBase = STATE.getBuildingGrantedCommerces(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 1, aBase[1] + 4)
 					elif iRandom == 2:
-						iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 2)
-						CyCity.setBuildingCommerceChange(NAZCA_LINES, 2, iBase + 4)
+						aBase = STATE.getBuildingGrantedCommerces(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 2, aBase[2] + 4)
 					elif iRandom == 3:
-						iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 3)
-						CyCity.setBuildingCommerceChange(NAZCA_LINES, 3, iBase + 4)
+						aBase = STATE.getBuildingGrantedCommerces(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 3, aBase[3] + 4)
 					elif iRandom == 4:
-						iBase = CyCity.getBuildingYieldChange(NAZCA_LINES, 0)
-						CyCity.setBuildingYieldChange(NAZCA_LINES, 0, iBase + 4)
+						aBase = STATE.getBuildingGrantedYields(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedYield(iPlayer, iNazcaCity, NAZCA_LINES, 0, aBase[0] + 4)
 					elif iRandom == 5:
-						iBase = CyCity.getBuildingYieldChange(NAZCA_LINES, 1)
-						CyCity.setBuildingYieldChange(NAZCA_LINES, 1, iBase + 4)
+						aBase = STATE.getBuildingGrantedYields(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedYield(iPlayer, iNazcaCity, NAZCA_LINES, 1, aBase[1] + 4)
 					elif iRandom == 6:
-						iBase = CyCity.getBuildingHappyChange(NAZCA_LINES)
-						CyCity.setBuildingHappyChange(NAZCA_LINES, iBase + 2)
+						iKind = BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS
+						aBase = STATE.getBuildingGrantedWellbeing(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedWellbeing(iPlayer, iNazcaCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
 					else:
-						iBase = CyCity.getBuildingHealthChange(NAZCA_LINES)
-						CyCity.setBuildingHealthChange(NAZCA_LINES, iBase + 2)
+						iKind = BuildingGrantedKind.BUILDING_GRANTED_HEALTH
+						aBase = STATE.getBuildingGrantedWellbeing(iPlayer, iNazcaCity, NAZCA_LINES)
+						ACT.setBuildingGrantedWellbeing(iPlayer, iNazcaCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
 					if iPlayer == GAME.getActivePlayer():
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MSG_NAZCA_LINES",()), iPlayer)
 

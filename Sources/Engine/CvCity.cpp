@@ -394,6 +394,7 @@ void CvCity::getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const
 	flags[CITY_FLAG_PLUNDERED]             = isPlundered() ? 1 : 0;
 	flags[CITY_FLAG_QUARANTINED]           = isQuarantined() ? 1 : 0;
 	flags[CITY_FLAG_CONNECTED_TO_CAPITAL]  = isConnectedToCapital() ? 1 : 0;
+	flags[CITY_FLAG_COASTAL]               = isCoastal(0) ? 1 : 0;
 }
 
 void CvCity::getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUILDING_READS]) const
@@ -438,6 +439,7 @@ void CvCity::getCityCounts(int (&counts)[NUM_CITY_COUNT_READS]) const
 	counts[CITY_COUNT_REVOLUTION_INDEX]     = getRevolutionIndex();
 	counts[CITY_COUNT_REVOLUTION_AVERAGE]   = getRevIndexAverage();
 	counts[CITY_COUNT_GAME_TURN_FOUNDED]    = getGameTurnFounded();
+	counts[CITY_COUNT_GAME_TURN_ACQUIRED]   = getGameTurnAcquired();
 }
 
 void CvCity::getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const

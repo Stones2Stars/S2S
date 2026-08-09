@@ -92,6 +92,9 @@ public:
 	// sites are CvEventManager's onCombatResult / onUnitKilled / onUnitCreated and the two DancingHoskuld
 	// combat mods -- all EXISTING gameplay being kept working, never new logic authored in script.
 	bool finishUnitMoves(int iPlayer, int iUnit) const;
+	// Kill a unit; bDelay is the engine's delayed-death flag ([unit-lifecycle.md]). ⛔ With bDelay false the
+	// object is deleted immediately, so an iterating caller must hold a snapshot.
+	bool killUnit(int iPlayer, int iUnit, bool bDelay, int iByPlayer) const;
 	bool setUnitDamage(int iPlayer, int iUnit, int iDamage, int iByPlayer) const;
 	// CvUnit::convert -- carry a unit's identity/XP/promotions onto another and (optionally) kill the original.
 	// The RESPAWN handler's call: the reborn unit inherits what the dead one was.

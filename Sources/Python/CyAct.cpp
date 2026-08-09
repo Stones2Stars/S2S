@@ -143,6 +143,19 @@ bool CyAct::finishUnitMoves(int iPlayer, int iUnit) const
 	return true;
 }
 
+//	Kill a unit. `bDelay` is the engine's own delayed-death flag: TRUE performs the pre-death bookkeeping and
+//	leaves the object intact for the reaper, FALSE deletes it now ([unit-lifecycle.md]).
+//	⛔ After a bDelay=false call the unit is GONE, so a caller iterating a unit list must be holding a snapshot --
+//	the same constraint an engine-side caller is under.
+bool CyAct::killUnit(int iPlayer, int iUnit, bool bDelay, int iByPlayer) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->kill(bDelay, (iByPlayer >= 0 && iByPlayer < MAX_PLAYERS) ? (PlayerTypes)iByPlayer : NO_PLAYER);
+	return true;
+}
+
 bool CyAct::setUnitDamage(int iPlayer, int iUnit, int iDamage, int iByPlayer) const
 {
 	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
@@ -460,6 +473,7 @@ void CyAct::pythonPublish()
 		.def("initUnit", &CyAct::initUnit)
 		.def("addUnitProductionExperience", &CyAct::addUnitProductionExperience)
 		.def("finishUnitMoves", &CyAct::finishUnitMoves)
+		.def("killUnit", &CyAct::killUnit)
 		.def("setUnitDamage", &CyAct::setUnitDamage)
 		.def("convertUnit", &CyAct::convertUnit)
 		.def("changeUnitExperience", &CyAct::changeUnitExperience)
