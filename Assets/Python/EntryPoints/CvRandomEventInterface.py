@@ -779,7 +779,6 @@ def applyGreatDepression(argsList):
   data = argsList[1]
 
   player = GC.getPlayer(data.ePlayer)
-  corporation = GC.getCorporationInfo(data.eCorporation)
 
   for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
     loopPlayer = GC.getPlayer(iPlayer)
@@ -787,7 +786,7 @@ def applyGreatDepression(argsList):
       loopPlayer.changeGold(-loopPlayer.getGold()/4)
 
       if iPlayer != data.ePlayer:
-        szText = TRNSLTR.getText("TXT_KEY_EVENTTRIGGER_GREAT_DEPRESSION", (player.getCivilizationAdjectiveKey(), u"", u"", u"", u"", corporation.getTextKey()))
+        szText = TRNSLTR.getText("TXT_KEY_EVENTTRIGGER_GREAT_DEPRESSION", (player.getCivilizationAdjectiveKey(), u"", u"", u"", u"", INFO.getTextKey("CORPORATION_", data.eCorporation)))
         szText += u"\n\n" + TRNSLTR.getText("TXT_KEY_EVENT_GREAT_DEPRESSION_HELP", (25, ))
         popupInfo = CyPopupInfo()
         popupInfo.setText(szText)
@@ -2875,13 +2874,13 @@ def canTriggerHostileTakeover(argsList):
 			break
 	else: return False
 
-	return getHostileTakeoverListResources(GC.getCorporationInfo(data.eCorporation), player) != []
+	return getHostileTakeoverListResources(data.eCorporation, player) != []
 
 def expireHostileTakeover1(argsList):
 	data = argsList[1]
 	return GC.getPlayer(data.ePlayer).getCity(data.iCityId) is None
 
-def getHostileTakeoverListResources(corporation, player):
+def getHostileTakeoverListResources(iCorporation, player):
   listHave = []
   for plot in GC.getMap().plots():
     if plot.getOwner() == player.getID():
@@ -2889,7 +2888,7 @@ def getHostileTakeoverListResources(corporation, player):
       if iBonus != -1 and not iBonus in listHave:
           listHave.append(iBonus)
   listNeed = []
-  for iBonus in corporation.getPrereqBonuses():
+  for iBonus in INFO.getIdList("CORPORATION_", iCorporation, IdListSlot.PYLIST_CONSUMED_BONUSES):
     if not iBonus in listHave:
         listNeed.append(iBonus)
   return listNeed
@@ -2898,7 +2897,7 @@ def getHelpHostileTakeover1(argsList):
   data = argsList[1]
   player = GC.getPlayer(data.ePlayer)
 
-  listResources = getHostileTakeoverListResources(GC.getCorporationInfo(data.eCorporation), player)
+  listResources = getHostileTakeoverListResources(data.eCorporation, player)
   szList = u""
   bFirst = True
   for iBonus in listResources:
@@ -2918,7 +2917,7 @@ def canTriggerHostileTakeoverDone(argsList):
   aPrereqEvents = INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)
   kOrigTriggeredData = player.getEventOccured(aPrereqEvents[0])
 
-  listResources = getHostileTakeoverListResources(GC.getCorporationInfo(kOrigTriggeredData.eCorporation), player)
+  listResources = getHostileTakeoverListResources(kOrigTriggeredData.eCorporation, player)
 
   if len(listResources) > 0:
     return False
