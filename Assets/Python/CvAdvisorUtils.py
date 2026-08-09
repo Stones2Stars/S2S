@@ -9,6 +9,18 @@ ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
 TRNSLTR = CyTranslator()
+MAP = GC.getMap()
+
+#	CyCity carries the IDENTITY SET only -- owner, id, position ([patterns.md] THE IDENTITY SET) -- so a
+#	handler holding (owner, id) reaches the city's PLOT and AREA through the MAP by its position, never off the
+#	handle. Both are ordinary engine handles the cut never touched: it was DIRECTIONAL and took the READ
+#	bindings, so CyPlot and CyArea still publish their own surfaces.
+def cityPlot(iPlayer, iCityID):
+	aPosition = STATE.getCityPosition(iPlayer, iCityID)
+	return MAP.plot(aPosition[0], aPosition[1])
+
+def cityArea(iPlayer, iCityID):
+	return cityPlot(iPlayer, iCityID).area()
 
 lPopulation = [
 	[2000000000, FeatTypes.FEAT_POPULATION_2_BILLION, "TXT_KEY_FEAT_2_BILLION"],
@@ -138,7 +150,9 @@ def unitBuiltFeats(CyCity, CyUnit):
 				popupInfo.addPopup(iPlayer)
 
 	if not CyPlayer.isFeatAccomplished(FeatTypes.FEAT_UNIT_SPY):
-		if GC.getUnitInfo(CyUnit.getUnitType()).isSpy():
+		#	The handle carries owner + id only, so the TYPE is asked of the state surface and the spy verdict
+		#	of the info surface -- neither is on a wrapper any more.
+		if INFO.isSpy(aUnit[UnitReadKind.UNIT_READ_TYPE]):
 			CyPlayer.setFeatAccomplished(FeatTypes.FEAT_UNIT_SPY, True)
 			if not GAME.isNetworkMultiPlayer() and GAME.getElapsedGameTurns() != 0 and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 				popupInfo = CyPopupInfo()
@@ -296,7 +310,7 @@ def cityAdvise(iPlayer, iCityID):
 							g_listNoLiberateCities.append(iCityID)
 							g_iAdvisorNags += 1
 
-				elif CyPlayer.canSplitEmpire() and CyPlayer.canSplitArea(CyCity.area().getID()) and CyCity.AI_cityValue() < 0:
+				elif CyPlayer.canSplitEmpire() and CyPlayer.canSplitArea(cityArea(iPlayer, iCityID).getID()) and STATE.getAiCityValue(iPlayer, iCityID) < 0:
 					popupInfo = CyPopupInfo()
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 					popupInfo.setData1(iCityID)
@@ -318,7 +332,7 @@ def cityAdvise(iPlayer, iCityID):
 
 					if GAME.getElapsedGameTurns() < 200 and STATE.getCityPopulation(iPlayer, iCityID) > 2 and not CyPlayer.AI_isFinancialTrouble():
 
-						CyArea = CyCity.area()
+						CyArea = cityArea(iPlayer, iCityID)
 						if not CyPlayer.AI_totalAreaUnitAIs(CyArea, UnitAITypes.UNITAI_SETTLE) and CyArea.getBestFoundValue(iPlayer) > 0:
 
 							iBestValue = 0
@@ -361,11 +375,11 @@ def cityAdvise(iPlayer, iCityID):
 								g_iAdvisorNags += 1
 
 				if (iTurn + 15) % 40 == iTurnFounded % 40:
-					if STATE.getCityPopulation(iPlayer, iCityID) > 1 and not CyCity.countNumImprovedPlots():
-						CyArea = CyCity.area()
+					if STATE.getCityPopulation(iPlayer, iCityID) > 1 and not STATE.getImprovedPlotCount(iPlayer, iCityID):
+						CyArea = cityArea(iPlayer, iCityID)
 						eBestUnit = -1
 
-						if CyCity.AI_countBestBuilds(CyArea) > 3:
+						if STATE.getAiBestBuildCount(iPlayer, iCityID) > 3:
 							iBestValue = 0
 							#	A queued unit stays on the frontier by design (multiple copies), so the
 							#	'already ordered' suppression is the recommender's, asked of the city.
@@ -397,9 +411,9 @@ def cityAdvise(iPlayer, iCityID):
 
 				if (iTurn + 27) % 40 == iTurnFounded % 40:
 
-					if not CyCity.plot().getNumDefenders(iPlayer):
+					if not cityPlot(iPlayer, iCityID).getNumDefenders(iPlayer):
 
-						CyArea = CyCity.area()
+						CyArea = cityArea(iPlayer, iCityID)
 						iBestValue = 0
 						eBestUnit = -1
 
@@ -433,7 +447,7 @@ def cityAdvise(iPlayer, iCityID):
 
 				if (iTurn + 36) % 40 == iTurnFounded % 40:
 
-					CyArea = CyCity.area()
+					CyArea = cityArea(iPlayer, iCityID)
 					if not CyPlayer.AI_totalAreaUnitAIs(CyArea, UnitAITypes.UNITAI_MISSIONARY) and not GC.getTeam(CyPlayer.getTeam()).isAtWar(False):
 
 						eStateReligion = CyPlayer.getStateReligion()
@@ -444,31 +458,29 @@ def cityAdvise(iPlayer, iCityID):
 
 								iBestValue = 0
 								iBestUnit = -1
-								CvUnitInfo = None
 
-								for iUnitX in xrange(GC.getNumUnitInfos()):
+								#	The maintained frontier, not the unit registry -- already gated, so canTrain
+								#	is subsumed. The religion test is the SPECIFIC one: a missionary for somebody
+								#	else's faith spreads the wrong religion.
+								for iUnitX in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
-									CvUnitInfoX = GC.getUnitInfo(iUnitX)
-									if CvUnitInfoX.getDomainType() != DomainTypes.DOMAIN_LAND: continue
-									if not CvUnitInfoX.getReligionSpreads(eStateReligion): continue
+									if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND: continue
+									if not INFO.spreadsReligion(iUnitX, eStateReligion): continue
 
-									if CyCity.canTrain(iUnitX, False, False, False, False):
+									iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_MISSIONARY, CyArea)
 
-										iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_MISSIONARY, CyArea)
+									if iValue > iBestValue:
 
-										if iValue > iBestValue:
+										iBestValue = iValue
+										iBestUnit = iUnitX
 
-											iBestValue = iValue
-											iBestUnit = iUnitX
-											CvUnitInfo = CvUnitInfoX
-
-								if CvUnitInfo:
+								if iBestUnit > -1:
 									popupInfo = CyPopupInfo()
 									popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 									popupInfo.setData1(iCityID)
 									popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 									popupInfo.setData3(iBestUnit)
-									popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MISSIONARY_DEMAND", (INFO.getTextKey("RELIGION_", eStateReligion), CvUnitInfo.getTextKey(), STATE.getCityName(iPlayer, iCityID))))
+									popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MISSIONARY_DEMAND", (INFO.getTextKey("RELIGION_", eStateReligion), INFO.getTextKey("UNIT_", iBestUnit), STATE.getCityName(iPlayer, iCityID))))
 									popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 									popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 									popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -477,38 +489,35 @@ def cityAdvise(iPlayer, iCityID):
 									popupInfo.addPopup(iPlayer)
 									g_iAdvisorNags += 1
 
-			if not CyCity.isProductionBuilding() and STATE.getOrderQueueLength(iPlayer, iCityID) <= 1:
+			if STATE.getOrder(iPlayer, iCityID)[CityOrderRead.ORDER_READ_TYPE] != OrderTypes.ORDER_CONSTRUCT and STATE.getOrderQueueLength(iPlayer, iCityID) <= 1:
 
-				if CyCity.healthRate(False, 0) < 0:
+				if STATE.getHealthRate(iPlayer, iCityID, 0) < 0:
 
 					if (iTurn + 6) % 40 == iTurnFounded % 40:
 
 						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	The ENABLER's maintained frontier, never the building registry -- it answers what this
+						#	city can actually construct, so canConstruct is subsumed ([enabler.md] par.6: the frontier
+						#	IS the shared choice set, iterated instead of the entity database).
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
-
-							iValue = CvBuildingInfoX.getHealth()
-							if iValue <= iBestValue: continue
-
-							if CyCity.canConstruct(iBuildingX, False, False, False):
+							iValue = INFO.expectedWellbeing("BUILDING_", iBuildingX, iPlayer, iCityID)[WellbeingChannel.WELLBEING_HEALTH]
+							if iValue > iBestValue:
 
 								iBestValue = iValue
 								iBestBuilding = iBuildingX
-								CvBuildingInfo = CvBuildingInfoX
 
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHEALTHY_CITIZENS_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHEALTHY_CITIZENS_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_UNHEALTHY_DO_SO_NEXT", ()), "")
@@ -517,36 +526,33 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if CyCity.angryPopulation(0) > 0:
+				if STATE.getAngryPopulation(iPlayer, iCityID, 0) > 0:
 
 					if (iTurn + 9) % 40 == iTurnFounded % 40:
 
 						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	The ENABLER's maintained frontier, never the building registry -- it answers what this
+						#	city can actually construct, so canConstruct is subsumed ([enabler.md] par.6: the frontier
+						#	IS the shared choice set, iterated instead of the entity database).
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
-
-							iValue = CvBuildingInfoX.getHappiness()
-							if iValue <= iBestValue: continue
-
-							if CyCity.canConstruct(iBuildingX, False, False, False):
+							iValue = INFO.expectedWellbeing("BUILDING_", iBuildingX, iPlayer, iCityID)[WellbeingChannel.WELLBEING_HAPPINESS]
+							if iValue > iBestValue:
 
 								iBestValue = iValue
 								iBestBuilding = iBuildingX
-								CvBuildingInfo = CvBuildingInfoX
 
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHAPPY_CITIZENS_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHAPPY_CITIZENS_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_UNHAPPY_DO_SO_NEXT", ()), "")
@@ -555,36 +561,33 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if iTurn < 100 and GC.getTeam(CyPlayer.getTeam()).getHasMetCivCount(True) > 0 and not CyCity.getBuildingDefense():
+				if iTurn < 100 and GC.getTeam(CyPlayer.getTeam()).getHasMetCivCount(True) > 0 and not STATE.getDefenseKinds(iPlayer, iCityID)[DefenseKind.DEFENSE_AMOUNT]:
 
 					if (iTurn + 12) % 40 == iTurnFounded % 40:
 
 						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	The ENABLER's maintained frontier, never the building registry -- it answers what this
+						#	city can actually construct, so canConstruct is subsumed ([enabler.md] par.6: the frontier
+						#	IS the shared choice set, iterated instead of the entity database).
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
-
-							iValue = CvBuildingInfoX.getDefenseModifier()
-							if iValue <= iBestValue: continue
-
-							if CyCity.canConstruct(iBuildingX, False, False, False):
+							iValue = INFO.expectedDefenseKinds("BUILDING_", iBuildingX, iPlayer, iCityID)[DefenseKind.DEFENSE_AMOUNT]
+							if iValue > iBestValue:
 
 								iBestValue = iValue
 								iBestBuilding = iBuildingX
-								CvBuildingInfo = CvBuildingInfoX
 
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_BUILDING_DEFENSE_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_BUILDING_DEFENSE_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -593,33 +596,28 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if CyCity.getMaintenance() >= 8:
+				if STATE.getMaintenance(iPlayer, iCityID) >= 800:
 
 					if (iTurn + 18) % 40 == iTurnFounded % 40:
 
-						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	No metric here -- the first constructible non-wonder wins, as it always did. The
+						#	frontier is already the constructible set, so the walk is the gate.
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
+							iBestBuilding = iBuildingX
+							break
 
-							if CyCity.canConstruct(iBuildingX, False, False, False):
-
-								iBestBuilding = iBuildingX
-								CvBuildingInfo = CvBuildingInfoX
-								break
-
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MAINTENANCE_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MAINTENANCE_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -628,36 +626,33 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if CyCity.getCommerceRate(CommerceTypes.COMMERCE_CULTURE) < 10 and not aFlags[CityFlagKind.CITY_FLAG_OCCUPATION]:
+				if STATE.getCommerces(iPlayer, iCityID)[CommerceTypes.COMMERCE_CULTURE] < 1000 and not aFlags[CityFlagKind.CITY_FLAG_OCCUPATION]:
 
 					if (iTurn + 21) % 40 == iTurnFounded % 40:
 
 						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	The ENABLER's maintained frontier, never the building registry -- it answers what this
+						#	city can actually construct, so canConstruct is subsumed ([enabler.md] par.6: the frontier
+						#	IS the shared choice set, iterated instead of the entity database).
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
-
-							iValue = CvBuildingInfoX.getCommerceChange(CommerceTypes.COMMERCE_CULTURE)
-							if iValue <= iBestValue: continue
-
-							if CyCity.canConstruct(iBuildingX, False, False, False):
+							iValue = INFO.expectedFlatCommerces("BUILDING_", iBuildingX, iPlayer, iCityID)[CommerceTypes.COMMERCE_CULTURE]
+							if iValue > iBestValue:
 
 								iBestValue = iValue
 								iBestBuilding = iBuildingX
-								CvBuildingInfo = CvBuildingInfoX
 
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_CULTURE_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_CULTURE_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -666,36 +661,33 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if CyCity.getBaseCommerceRate(CommerceTypes.COMMERCE_GOLD) > 10:
+				if STATE.getCommerces(iPlayer, iCityID)[CommerceTypes.COMMERCE_GOLD] > 1000:
 
 					if (iTurn + 24) % 40 == iTurnFounded % 40:
 
 						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	The ENABLER's maintained frontier, never the building registry -- it answers what this
+						#	city can actually construct, so canConstruct is subsumed ([enabler.md] par.6: the frontier
+						#	IS the shared choice set, iterated instead of the entity database).
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
-
-							iValue = CvBuildingInfoX.getCommerceModifier(CommerceTypes.COMMERCE_GOLD)
-							if iValue <= iBestValue: continue
-
-							if CyCity.canConstruct(iBuildingX, False, False, False):
+							iValue = INFO.expectedCommerceModifiers("BUILDING_", iBuildingX, iPlayer, iCityID)[CommerceTypes.COMMERCE_GOLD]
+							if iValue > iBestValue:
 
 								iBestValue = iValue
 								iBestBuilding = iBuildingX
-								CvBuildingInfo = CvBuildingInfoX
 
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_GOLD_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_GOLD_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -704,36 +696,33 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if CyCity.getBaseCommerceRate(CommerceTypes.COMMERCE_RESEARCH) > 10:
+				if STATE.getCommerces(iPlayer, iCityID)[CommerceTypes.COMMERCE_RESEARCH] > 1000:
 
 					if (iTurn + 30) % 40 == iTurnFounded % 40:
 
 						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	The ENABLER's maintained frontier, never the building registry -- it answers what this
+						#	city can actually construct, so canConstruct is subsumed ([enabler.md] par.6: the frontier
+						#	IS the shared choice set, iterated instead of the entity database).
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
-
-							iValue = CvBuildingInfoX.getCommerceModifier(CommerceTypes.COMMERCE_RESEARCH)
-							if iValue <= iBestValue: continue
-
-							if CyCity.canConstruct(iBuildingX, False, False, False):
+							iValue = INFO.expectedCommerceModifiers("BUILDING_", iBuildingX, iPlayer, iCityID)[CommerceTypes.COMMERCE_RESEARCH]
+							if iValue > iBestValue:
 
 								iBestValue = iValue
 								iBestBuilding = iBuildingX
-								CvBuildingInfo = CvBuildingInfoX
 
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_RESEARCH_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_RESEARCH_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -742,37 +731,35 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if CyCity.countNumWaterPlots() > 10:
+				if STATE.getWaterPlotCount(iPlayer, iCityID) > 10:
 
 					if (iTurn + 33) % 40 == iTurnFounded % 40:
 
 						iBestValue = 0
 						iBestBuilding = -1
-						CvBuildingInfo = None
 
-						for iBuildingX in xrange(GC.getNumBuildingInfos()):
+						#	The candidate's whole PLOTS-TARGET food contribution in ONE read, scaled by this
+						#	city's own stored plotAttrs counts ([contexts.md]). The legacy per-PlotType entry
+						#	walk has no counterpart: PLOT_OCEAN stopped being a key ([json.md] par.6.1 -- a water
+						#	plot is `plots {IS_WATER}`), and the data now authors this effect TWO ways at once
+						#	(a terrain-keyed flat, and a predicate-gated plots entry). The what-if folds both.
+						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
 
-							CvBuildingInfoX = GC.getBuildingInfo(iBuildingX)
+							iValue = INFO.expectedPlotYields("BUILDING_", iBuildingX, iPlayer, iCityID)[YieldTypes.YIELD_FOOD]
+							if iValue > iBestValue:
 
-							for entry in CvBuildingInfoX.getPlotYieldChange():
-								if entry.iType == PlotTypes.PLOT_OCEAN and entry.iIndex == YieldTypes.YIELD_FOOD:
-									iValue = entry.iValue
-									if iValue > iBestValue and CyCity.canConstruct(iBuildingX, False, False, False):
-										iBestValue = iValue
-										iBestBuilding = iBuildingX
-										CvBuildingInfo = CvBuildingInfoX
-									break
+								iBestValue = iValue
+								iBestBuilding = iBuildingX
 
-
-						if CvBuildingInfo:
+						if iBestBuilding > -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_WATER_FOOD_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_WATER_FOOD_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("BUILDING_", iBestBuilding))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")

@@ -417,6 +417,18 @@ python::list CyState::getCityPlots(int iPlayer, int iCity) const
 	return plots;
 }
 
+int CyState::getHealthRate(int iPlayer, int iCity, int iExtraPopulation) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->healthRate(iExtraPopulation) : 0;
+}
+
+int CyState::getAngryPopulation(int iPlayer, int iCity, int iExtraPopulation) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->angryPopulation(iExtraPopulation) : 0;
+}
+
 int CyState::getImprovedPlotCount(int iPlayer, int iCity) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
@@ -1418,6 +1430,8 @@ void CyState::pythonPublish()
 		.def("getCommerceRateRanks",     &CyState::getCommerceRateRanks)
 		.def("getCityPosition",          &CyState::getCityPosition)
 		.def("getCityPlots",             &CyState::getCityPlots)
+		.def("getHealthRate",            &CyState::getHealthRate)
+		.def("getAngryPopulation",       &CyState::getAngryPopulation)
 		.def("getImprovedPlotCount",     &CyState::getImprovedPlotCount)
 		.def("getWaterPlotCount",        &CyState::getWaterPlotCount)
 		.def("getAiCityValue",           &CyState::getAiCityValue)

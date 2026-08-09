@@ -83,6 +83,14 @@ public:
 	// starving, 0 for the current state) -- the overcrowding and per-citizen anger terms are non-linear in
 	// population, so this cannot be derived from the 0 answer.
 	python::list getRealizedWellbeing(int iPlayer, int iCity, int iExtraPopulation) const;
+	// The two FINAL-STATE values that sit DOWNSTREAM of that group -- calculations over the four channels,
+	// never slots in them ([patterns.md] rule 6, which is why they are not in the list above). They are
+	// published as their own named reads, delegating to the ONE engine calc, precisely so a script does not
+	// re-derive `min(0, health - unhealth)` / `clamp(anger - happiness, 0, pop)` and become a second
+	// implementation of a final-state rule ([DEC-single-implementation]).
+	// iExtraPopulation projects them exactly as it does the group read.
+	int getHealthRate(int iPlayer, int iCity, int iExtraPopulation) const;
+	int getAngryPopulation(int iPlayer, int iCity, int iExtraPopulation) const;
 	// The city's yield MODIFIER percents, indexed by YieldTypes -- the multiplier a base yield is scaled by.
 	// A PERCENT, so it is NOT x100 and a reader never divides it ([DEC-fixedpoint-x100]).
 	python::list getYieldModifiers(int iPlayer, int iCity) const;
