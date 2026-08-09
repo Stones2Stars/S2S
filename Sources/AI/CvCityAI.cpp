@@ -13003,9 +13003,13 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	}
 	iResult += iCommerceMultiplierValue;
 
-	int aiPlayerCommerces[NUM_COMMERCE_TYPES];
-	GET_PLAYER(getOwner()).getCommerces(aiPlayerCommerces);
-	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * aiPlayerCommerces[(CommerceTypes)iI] / 100 / 8;
+	//	The empire's realized commerce for this channel is ALREADY hoisted and memoized into aiPlayerCommerceRate
+	//	by the caller, and it is the SAME quantity: getTotalCityBaseCommerceRate is the sum over the player's
+	//	cities of each city's realized commerce, /100 -- precisely what this recomputed and then divided by 100.
+	//	⛔ Asking CvPlayer::getCommerces here re-walked EVERY CITY, per candidate, per channel, inside the
+	//	building-scoring loop ([DEC-legacy-decache-poisons-perf]: an AI loop asking a receiver sum per candidate
+	//	is answered by the CALLER, never by reshaping the machine -- and here the caller already answered it).
+	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * aiPlayerCommerceRate[iI] / 8;
 	{
 		const ReligionTypes eStateReligion = kOwner.getStateReligion();
 
@@ -13109,9 +13113,8 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	//	extra weight
 	if (iI == COMMERCE_RESEARCH)
 	{
-		int aiPlayerCommerces[NUM_COMMERCE_TYPES];
-		GET_PLAYER(getOwner()).getCommerces(aiPlayerCommerces);
-		int iPlayerTotal = aiPlayerCommerces[COMMERCE_RESEARCH] / 100;
+		//	The same hoisted receiver total as above -- never a second empire walk per candidate.
+		int iPlayerTotal = aiPlayerCommerceRate[COMMERCE_RESEARCH];
 
 		if (iPlayerTotal < 1)
 		{
