@@ -1615,6 +1615,68 @@ int64_t InfoValuation::keyedTargetSum(const CvModifiers* modifiers, ModifierFami
 	return iTotal;
 }
 
+//	The COLLECT twin of keyedTargetSum: the SAME two halves and the SAME filters, accumulated across every
+//	target instead of matched against one. Keeping the filter order identical to the per-target form is what
+//	makes the two answer alike -- they are one walk with one predicate, not two implementations
+//	([DEC-single-implementation]).
+void InfoValuation::collectKeyedTargetSums(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	int iTargetSegment, const CvCascadeEvalCtx& evalCtx, std::vector<int64_t>& targetTotals)
+{
+	if (modifiers == NULL || iTargetSegment == TARGET_SEGMENT_NONE)
+	{
+		return;
+	}
+	// (1) the UNCONDITIONED half -- the ONE keyed collect, so no second matcher stands beside it.
+	std::vector<std::pair<int, int> > kRows;
+	collectKeyedTarget(modifiers, eFamily, iKind, iTargetSegment, kRows);
+	for (size_t iRow = 0; iRow < kRows.size(); ++iRow)
+	{
+		const int iFk = kRows[iRow].first;
+		if (iFk >= 0 && iFk < (int)targetTotals.size())
+		{
+			targetTotals[iFk] += kRows[iRow].second;
+		}
+	}
+	// (2) the CONDITIONED tail -- the keyedTargetSum walk with the target axis COLLECTED rather than matched.
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	modifiers->conditionedRange(eFamily, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& conditioned = modifiers->conditioned();
+	for (size_t i = iBegin; i < iEnd; ++i)
+	{
+		const CvModEntry* pEntry = conditioned[i];
+		if (pEntry->targetSeg != iTargetSegment)
+		{
+			continue;
+		}
+		if (pEntry->targetFk < 0 || pEntry->targetFk >= (int)targetTotals.size())
+		{
+			continue;
+		}
+		if (iKind >= 0 && pEntry->kind != iKind)
+		{
+			continue;
+		}
+		if (!val_scopeFolds(pEntry->scope))
+		{
+			continue;   // the experienced-here fold set, exactly as the point form (modifier.md §1)
+		}
+		if (pEntry->unitQual != NULL)
+		{
+			continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top])
+		}
+		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
+		{
+			continue;
+		}
+		if (!MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
+		{
+			continue;
+		}
+		targetTotals[pEntry->targetFk] += MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
+	}
+}
+
 int InfoValuation::expectedKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 	int iTargetSegment, int iTargetFk,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,

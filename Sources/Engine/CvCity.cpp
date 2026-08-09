@@ -10102,25 +10102,54 @@ void CvCity::setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 //      source survives to re-derive them ([legacy-grant-apply-sites.md] §4, [save.md §5]).
 // ⚠ The count unit is ×100 like every other compiled magnitude, so the derivable half reduces here; the
 // one-shot ledger is a whole count and does not.
+//	The one-specialist slice of the group read below -- ~30 call sites want a single count. NOT a second
+//	implementation ([DEC-single-implementation]).
+//	⚠ A caller wanting SEVERAL specialists must take the GROUP: this builds an eval ctx and walks the city's
+//	whole operating set AND the empire's sources, so calling it in a loop pays all of that once per specialist.
+//	That was the measured stall -- 40 specialists x per CITIZEN, through AI_ignoreGrowth.
 int CvCity::getFreeSpecialistCount(SpecialistTypes eIndex) const
 {
-	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
+	std::vector<int64_t> aiCounts;
+	getFreeSpecialists(aiCounts);
+	if (eIndex < 0 || eIndex >= (int)aiCounts.size()) return 0;
+	return (int)(aiCounts[eIndex] / 100);   // the READ EDGE -- whole specialists for a whole-count consumer
+}
+
+//	THE GROUP READ -- every specialist in ONE pass: one eval ctx, one walk of the operating set, one empire
+//	read ([patterns.md] THE TWO READ ROLES rule 1 and rule 7).
+void CvCity::getFreeSpecialists(std::vector<int64_t>& aiCounts) const
+{
+	PROFILE_EXTRA_FUNC();
+	const int iNumSpecialists = GC.getNumSpecialistInfos();
 
 	const CvPlayer& kOwner = GET_PLAYER(getOwner());
 	CvCascadeEvalCtx evalCtx;
 	InfoValuation::fillEvalCtx(getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), evalCtx);
 
+	std::vector<int64_t> aiCityScope((size_t)iNumSpecialists, (int64_t)0);
 	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(this);
-	int64_t iCityScope = 0;
 	for (std::set<int>::const_iterator it = kOperating.active.begin(); it != kOperating.active.end(); ++it)
 	{
-		iCityScope += InfoValuation::keyedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
-			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, (int)eIndex, evalCtx);
+		InfoValuation::collectKeyedTargetSums(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
+			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, evalCtx, aiCityScope);
 	}
-	const int iDerivable = (int)std::max((int64_t)0, iCityScope) + kOwner.getFreeSpecialistCount(eIndex);
+	std::vector<int64_t> aiEmpire;
+	kOwner.getFreeSpecialists(aiEmpire);
 
-	return std::max(0, iDerivable + m_paiFreeSpecialistCountUnattributed[eIndex]);
+	//	⛔ NO REDUCE HERE -- the reduce belongs at the read edge.
+	//	⚠ The city leg used to be added RAW to an already-reduced empire leg: two operands on different scales,
+	//	the surviving-fudge-factor shape (AGENTS.md drift detector 2). With 167 city-scope keyed authorings, it
+	//	read Petra's authored 1 priest as 100.
+	//	⚠ The UNATTRIBUTED ledger is a WHOLE count and is LIFTED to meet the other two, never the reverse.
+	aiCounts.assign((size_t)iNumSpecialists, (int64_t)0);
+	for (int iI = 0; iI < iNumSpecialists; iI++)
+	{
+		const int64_t iDerivable = std::max((int64_t)0, aiCityScope[iI])
+			+ (iI < (int)aiEmpire.size() ? aiEmpire[iI] : (int64_t)0);
+		aiCounts[iI] = std::max((int64_t)0,
+			iDerivable + (int64_t)m_paiFreeSpecialistCountUnattributed[iI] * 100);
+	}
 }
 
 int CvCity::getAddedFreeSpecialistCount(SpecialistTypes eIndex) const

@@ -253,6 +253,16 @@ A whole-entity game-option gate authors as the ENTITY-LEVEL `enabled`/`disabled`
 "GAMEOPTION_X"`), evaluated live — never a bespoke section and never smuggled into `requires` (which holds only
 genuine needs). **Home:** [json.md §2](../specs/json.md) (the Applicability row) + [enabler.md §7](../specs/enabler.md).
 
+### DEC-no-spec-restating-comments
+
+A CODE comment never restates a spec ruling, and one that CONTRADICTS the spec is ROLLERSKATING LICENSE: the
+spec states a rule once for the whole engine, a call-site copy DRIFTS, and a drifted copy authorizes the next
+agent to act against the spec while believing they conform — strictly worse than no comment. The worked class
+is SCALE annotation (*"this is ×100"*), which [DEC-fixedpoint-x100](#dec-fixedpoint-x100) already answers
+universally; delete one you pass. A comment may carry what the spec cannot know (why THIS site is an edge),
+never the rule. The CODE application of [DEC-docs-current-truth](#dec-docs-current-truth). **Home:**
+[AGENTS.md](../../AGENTS.md) Conventions §Docs.
+
 ### DEC-no-rollerskate-evidence
 
 Leave NO evidence of a previous rollerskate — dead / commented-out old code, superseded dual surfaces, transitional

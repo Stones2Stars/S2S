@@ -632,6 +632,27 @@ the total-observability bar below.)
 
 - **When documentation is lacking or wrong, FIX IT NOW — it is part of the SAME work item**, never "noted for the
   next agent." A doc gap that bit you will bite the next contributor; close it in the same change.
+- **⛔ A CODE COMMENT NEVER RESTATES A SPEC RULING — a comment that CONTRADICTS the spec is ROLLERSKATING
+  LICENSE (owner).** *"Comments that contradict what spec says is rollerskating license, and license to tilt
+  me... again."* The spec states a rule ONCE, for the whole engine; a comment repeating it at a call site is a
+  second copy, second copies DRIFT, and a drifted copy does not merely go stale — it **authorizes** the next
+  agent to act against the spec while believing they are conforming. That is strictly worse than no comment,
+  and it is the same delete-don't-duplicate discipline
+  [DEC-docs-current-truth](docs/architecture/decisions.md#dec-docs-current-truth) applies to docs and
+  [DEC-no-rollerskate-evidence](docs/architecture/decisions.md#dec-no-rollerskate-evidence) applies to dead
+  names, now applied to CODE.
+  ⚑ **The worked class is SCALE.** The model is universal and stated once — integers carry two decimals, ×100
+  throughout, reduced only at a read edge
+  ([DEC-fixedpoint-x100](docs/architecture/decisions.md#dec-fixedpoint-x100)) — so a comment ASSERTING a
+  value's scale (*"this is ×100"*, *"this is ×1"*, *"the derivable half reduces here"*) says nothing the spec
+  does not, and says it wrongly the moment the code moves. ⚠ **Measured: two such comments were false in the
+  same file family.** One claimed a reduce that the code did not perform, beside a leg that genuinely reduced —
+  the surviving-fudge-factor shape wearing a reassuring comment; the other called a ×100 group read *"reduced
+  to the whole yields"*. Each read as authoritative and each was wrong.
+  ⇒ **So: do not annotate scales, and DELETE a scale annotation you pass.** What a comment may still carry is
+  the thing the spec cannot know — WHY this site is an edge, or why a value is genuinely exceptional — never a
+  restatement of the rule itself.
+
 - **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change.** A stale spec is worse than
   none — the next agent trusts it and builds on the wrong shape. The proactive twin of fix-docs-now.
 - **Docs state CURRENT TRUTH only — no dated rulings, no supersession trails, no session logs.** A doc never

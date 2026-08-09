@@ -1434,6 +1434,10 @@ public:
 	void acquireFort(CvPlot* pPlot);
 
 	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
+	// THE GROUP READ ([patterns.md] THE TWO READ ROLES rule 1/7) -- every specialist in ONE pass,
+	// filled into a caller-owned array. The scalar above is a slice of it, so a caller wanting several
+	// counts takes the group: asking the scalar in a loop re-walks the same sources once per specialist.
+	void getFreeSpecialists(std::vector<int64_t>& aiCounts) const;   // x100 -- the caller reduces
 	int getResourceConsumption(BonusTypes eBonus) const;
 	void recalculateAllResourceConsumption();
 

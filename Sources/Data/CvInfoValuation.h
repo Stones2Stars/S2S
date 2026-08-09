@@ -272,6 +272,18 @@ public:
 	static int64_t keyedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, int iTargetFk, const CvCascadeEvalCtx& evalCtx);
 
+	//	The COLLECT twin of keyedTargetSum -- every keyed target in ONE walk, ACCUMULATED into a caller-owned
+	//	array indexed by target FK. It stands to `keyedTargetSum` exactly as `collectKeyedTarget` stands to
+	//	`keyedTarget`, one axis over: the conditioned half included.
+	//	⚑ WHY IT EXISTS: asking the per-target form once per candidate re-walks the SAME entry list once per
+	//	target, so a caller wanting the whole group pays `targets x entries` for a walk that already visits
+	//	every target on its way past. The free-specialist read is the measured case -- 40 specialists x the
+	//	city's operating set x the empire's sources, per CITIZEN.
+	//	⚠ Values accumulate AS COMPILED -- the caller reduces at its point of use. The array is ADDED INTO,
+	//	never cleared, so a caller can fold several sources through it; size and zero it once before the walk.
+	static void collectKeyedTargetSums(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		int iTargetSegment, const CvCascadeEvalCtx& evalCtx, std::vector<int64_t>& targetTotals);
+
 	// The ctx-taking core the endpoints share (fill the ctx ONCE per endpoint, fold each channel through this):
 	// Σ over the folded scopes of the compiled unconditioned sums (audience-resolved) + the family's conditioned
 	// tail (kind/unit-matched, untargeted, gated via the ONE evaluator, per-resolved via the ONE §3.7 resolver).

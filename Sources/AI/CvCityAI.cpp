@@ -9688,7 +9688,7 @@ bool CvCityAI::AI_foodAvailable(int iExtra) const
 
 		if (pLoopPlot != NULL)
 		{
-			// the plot's group read, reduced to the whole yields this heuristic weighs ([DEC-fixedpoint-x100])
+			// the plot's group read
 			int aiPlotYields[NUM_YIELD_TYPES];
 			pLoopPlot->getYields(aiPlotYields);
 			if (iI == CITY_HOME_PLOT)
@@ -9742,9 +9742,17 @@ bool CvCityAI::AI_foodAvailable(int iExtra) const
 		iPopulation--;
 	}
 
+	//	⛔ ONE group read, not one scalar read per specialist. The scalar builds an eval ctx and walks the
+	//	city's whole operating set AND the empire's sources, so asking it per specialist paid all of that 40
+	//	times -- and this runs per CITIZEN, through AI_ignoreGrowth, which [citizen-assignment.md] assumes is
+	//	CHEAP. It was not; that assumption is what this restores.
+	std::vector<int64_t> aiFreeSpecialists;
+	getFreeSpecialists(aiFreeSpecialists);
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		iFoodCount += (GC.getSpecialistInfo((SpecialistTypes)iI).getFlatYield(YIELD_FOOD, CASC_SCOPE_CITY) * getFreeSpecialistCount((SpecialistTypes)iI));
+		//	The rescale belongs AT THE MULTIPLY, and lands on the plane iFoodCount and foodConsumption share.
+		iFoodCount += (int)((int64_t)GC.getSpecialistInfo((SpecialistTypes)iI).getFlatYield(YIELD_FOOD, CASC_SCOPE_CITY)
+			* aiFreeSpecialists[iI] / 100);
 	}
 
 	if (iFoodCount < foodConsumption(false, iExtra))

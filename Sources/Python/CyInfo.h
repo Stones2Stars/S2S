@@ -296,7 +296,6 @@ public:
 	// theft handlers weigh a winner's difficulty against a loser's by.
 	// ⚑ NAMED rather than slotted for the same reason as isWorldUnit above, and because the value belongs to ONE
 	// registry ([patterns.md]: a value that belongs to one type is named on that type's accessor).
-	// ⚠ A PERCENT is NOT ×100 ([DEC-fixedpoint-x100]) -- it is a whole number and the caller uses it directly.
 	int getHandicapCivicUpkeepPercent(int iHandicapId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately

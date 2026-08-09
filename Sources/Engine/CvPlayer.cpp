@@ -25003,25 +25003,42 @@ void CvPlayer::changeNoCapitalUnhappiness(int iChange)
 	}
 }
 
-//	The EMPIRE-scope free-specialist term -- what the city adds on top of its OWN scope's rows and its
-//	unattributed one-shot ledger. A KEYED deposit is an ENTRY-LIST read over the LIVE SOURCES
-//	([modifier.md] par.5), never a scope-package read, so this asks each thing the player holds -- its
-//	buildings anywhere, its adopted civics, its active traits -- what it deposits onto THIS specialist.
-//	⚠ The scope filter is what keeps this from double-counting: a building authors BOTH a city-scope row
-//	(counted by the city that holds it) and an empire-scope row (counted here), so the read is pinned to
-//	EMPIRE and the two legs cannot overlap.
-//	⚠ This is the UNCONDITIONED keyed read: a bonus/tech-gated free-specialist row is not served here yet,
-//	because the ctx-taking keyed sum carries no scope filter to pin the leg with. That is a surface gap, not
-//	a silent choice -- an unconditional sum would apply every gated slot from turn 0, which is worse.
-//	⚠ The count unit is x100 like every compiled magnitude, so it reduces here.
+//	The one-specialist slice of the group read below. It exists because ~30 call sites want a single count;
+//	it is NOT a second implementation ([DEC-single-implementation]).
+//	⚠ So a caller wanting SEVERAL specialists must take the GROUP -- calling this in a loop re-walks the
+//	empire's sources once per specialist, which is exactly the shape the group read was added to delete.
 int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
 {
-	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
+	std::vector<int64_t> aiCounts;
+	getFreeSpecialists(aiCounts);
+	if (eIndex < 0 || eIndex >= (int)aiCounts.size()) return 0;
+	return (int)(aiCounts[eIndex] / 100);   // the READ EDGE -- whole specialists for a whole-count consumer
+}
 
-	int64_t iEmpireScope = 0;
+//	The EMPIRE-scope free-specialist term -- what a city adds on top of its OWN scope's rows and its
+//	unattributed one-shot ledger. A KEYED deposit is an ENTRY-LIST read over the LIVE SOURCES
+//	([modifier.md] par.5), never a scope-package read, so this asks each thing the player holds -- its
+//	buildings anywhere, its adopted civics, its active traits -- what it deposits onto specialists.
+//
+//	THE GROUP READ -- every specialist in ONE walk of those sources ([patterns.md] THE TWO READ ROLES
+//	rule 1: the getter IS the group; rule 7: it fills a caller-owned array).
+//	⚑ It is not an optimization of the scalar, it is the shape the scalar was a slice of: each source's keyed
+//	collect ALREADY yields every specialist's row, so asking per specialist re-walked the same sources once per
+//	specialist and discarded all but one row each time.
+void CvPlayer::getFreeSpecialists(std::vector<int64_t>& aiCounts) const
+{
+	PROFILE_EXTRA_FUNC();
+	const int iNumSpecialists = GC.getNumSpecialistInfos();
+	std::vector<int64_t> aiTotals((size_t)iNumSpecialists, (int64_t)0);
 	std::vector<std::pair<int, int> > keyedRows;
 
+	//	⚠ The scope filter is what keeps this from double-counting: a building authors BOTH a city-scope row
+	//	(counted by the city that holds it) and an empire-scope row (counted here), so the read is pinned to
+	//	EMPIRE and the two legs cannot overlap.
+	//	⚠ This is the UNCONDITIONED keyed read: a bonus/tech-gated free-specialist row is not served here yet,
+	//	because the ctx-taking keyed sum carries no scope filter to pin the leg with. That is a surface gap, not
+	//	a silent choice -- an unconditional sum would apply every gated slot from turn 0, which is worse.
 	foreach_(const BuildingTypes eBuilding, getHasBuildings())
 	{
 		keyedRows.clear();
@@ -25029,7 +25046,8 @@ int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
 			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, keyedRows, CASC_SCOPE_EMPIRE);
 		for (size_t iRow = 0; iRow < keyedRows.size(); ++iRow)
 		{
-			if (keyedRows[iRow].first == (int)eIndex) iEmpireScope += keyedRows[iRow].second;
+			const int iFk = keyedRows[iRow].first;
+			if (iFk >= 0 && iFk < iNumSpecialists) aiTotals[iFk] += keyedRows[iRow].second;
 		}
 	}
 	for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); iOption++)
@@ -25041,7 +25059,8 @@ int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
 			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, keyedRows, CASC_SCOPE_EMPIRE);
 		for (size_t iRow = 0; iRow < keyedRows.size(); ++iRow)
 		{
-			if (keyedRows[iRow].first == (int)eIndex) iEmpireScope += keyedRows[iRow].second;
+			const int iFk = keyedRows[iRow].first;
+			if (iFk >= 0 && iFk < iNumSpecialists) aiTotals[iFk] += keyedRows[iRow].second;
 		}
 	}
 	//	The trait walk is a PRESENCE read (the HAVE axis), never the own-data inversion: it asks which traits
@@ -25054,10 +25073,16 @@ int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
 			MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1, keyedRows, CASC_SCOPE_EMPIRE);
 		for (size_t iRow = 0; iRow < keyedRows.size(); ++iRow)
 		{
-			if (keyedRows[iRow].first == (int)eIndex) iEmpireScope += keyedRows[iRow].second;
+			const int iFk = keyedRows[iRow].first;
+			if (iFk >= 0 && iFk < iNumSpecialists) aiTotals[iFk] += keyedRows[iRow].second;
 		}
 	}
-	return (int)std::max((int64_t)0, iEmpireScope / 100);
+	//	⛔ NO REDUCE HERE -- the single reduce belongs at the READ EDGE that consumes this as a whole count.
+	aiCounts.assign((size_t)iNumSpecialists, (int64_t)0);
+	for (int iI = 0; iI < iNumSpecialists; iI++)
+	{
+		aiCounts[iI] = std::max((int64_t)0, aiTotals[iI]);
+	}
 }
 
 int CvPlayer::getTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2) const
