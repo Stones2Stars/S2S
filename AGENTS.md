@@ -313,6 +313,38 @@ not findings to re-discover.
   what-if at all. It does not: tech drives MEMBERSHIP via `enables` and never the gate
   ([enabler.md §2](docs/specs/enabler.md)), so once the edge names the unlock, only the per-city gate remains.
 
+### The CONTRACT BROKER — matching is THREE STAGES, and distance never scores
+
+- **⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE (owner): *"I am in general very reticent
+  about having path distance as part of scoring at all"*, because *"relying too much on travel speed is how we
+  get to dog spam."*** A bid that depreciates by its own haul rewards a unit for being FAST on top of already
+  rewarding it for being CHEAP — cheap-and-fast wins twice — and that is the mechanism behind the standing
+  owner complaint of *over-reliance on the broker for deciding what units to make*. ⚑ The rule in one line:
+  **speed gets a unit CONSIDERED (it is admitted from further out); proximity gets it CHOSEN.**
+- **The shape is three stages, in order (owner): what is IN RANGE → SCORE what is in range → take the CLOSEST
+  of equals**, with ONE real path run on the winner to confirm it. ⚑ **The cost win is stage 4, not stage 1:**
+  the search runs ONCE for the whole request instead of once per candidate. ⛔ A tie-break must be
+  SPEED-INDEPENDENT or it smuggles the bias straight back in — use step distance, never `CvPath::length()`,
+  which returns TURNS and is therefore shorter for a faster unit.
+- **⛔ A STEP-DISTANCE RANGE GATE IS BOUNDED BY MOVEMENT POINTS, NEVER BY MOVES — AND TIGHTENING IT IS A BUG.**
+  A unit spends `baseMoves × MOVE_DENOMINATOR` points per turn and the CHEAPEST tile costs **one** point (a
+  railroad, or anything under `ignoreTerrainCost`), so points-per-turn is the only provable ceiling on
+  tiles-per-turn. ⚠ `budget × baseMoves` reads like the obvious bound and is wrong by two orders of magnitude:
+  it rejects a worker six tiles away along a road — a unit that arrives well inside the budget. A gate may only
+  ever OVER-admit ([enabler.md §5](docs/specs/enabler.md): over-inclusion is safe, a MISS is the bug), so being
+  provably safe makes this one coarse enough to exclude only the absurd. That is the correct trade; do not
+  "improve" it by narrowing.
+- **⚖ THE BUDGET IS PRODUCTION + TRAVEL = `AI_CONTRACT_MAX_TRAVEL_TURNS` turns TOTAL (owner)** — *"if you have
+  to spend more than 5 turns to get to wherever you need to go, from start of unit production, that is too far"*
+  (owner: *"a number squarely out of my ass, but it feels ok"*; it is a BUG-settable define). So the two sides
+  spend it differently and must not be given the same allowance: an ADVERTISING UNIT already exists, so its
+  whole budget is travel; a TENDERING CITY spends what its build time leaves over (`max(1, budget − buildTurns)`).
+- **⛔ NEVER LET EITHER PATH PROBE GO UNBOUNDED.** An A* that fails on an UNREACHABLE target explores the entire
+  reachable component before returning false — that is the turn-path spin, and it is why both probes are capped
+  by the budget. ⚠ The historic cap read `min(priority > LOW ? MAX_INT : 10, bestValue < 1 ? MAX_INT : …)`,
+  which degenerates to `min(MAX_INT, MAX_INT)` on the first candidate and on any priority above the escort
+  floor — i.e. it looked like a cap and bounded nothing.
+
 ### City garrison tiers
 
 - **City defense runs on two ledgers — do not conflate them (#384).** Garrison

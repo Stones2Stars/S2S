@@ -8731,13 +8731,11 @@ void CvCityAI::AI_doEmphasize()
 bool CvCityAI::AI_chooseUnit(const char* reason, UnitAITypes eUnitAI, int iOdds, int iUnitStrength, int iPriorityOverride, const CvUnitSelectionCriteria* criteria)
 {//Adding a unit type direct selection here...
 	PERF_ACCUM(g_chooseUnitMs); ++g_chooseUnitN;
-#ifdef USE_UNIT_TENDERING
 	//	Have we already contracted for a unit?
 	if (m_iRequestedUnit > MAX_REQUESTEDUNIT_PER_CITY)
 	{
 		return false;
 	}
-#endif
 
 	if (iOdds < 0 || GC.getGame().getSorenRandNum(100, "City AI choose unit") < iOdds)
 	{
@@ -8746,7 +8744,6 @@ bool CvCityAI::AI_chooseUnit(const char* reason, UnitAITypes eUnitAI, int iOdds,
 			iPriorityOverride = m_iTempBuildPriority;
 		}
 
-#ifdef USE_UNIT_TENDERING
 		if (!isNPC())
 		{
 			//	Check someone can build a suitable unit before putting out a tender for one.
@@ -8771,7 +8768,6 @@ bool CvCityAI::AI_chooseUnit(const char* reason, UnitAITypes eUnitAI, int iOdds,
 			//	queue it here (handles edge cases where building requirements mean it can be built locally but
 			//	not in capital or best coastal).  Do this by falling through to local handling
 		}
-#endif
 
 		return AI_chooseUnitImmediate(reason, eUnitAI, criteria, NO_UNIT);
 	}
@@ -9062,14 +9058,12 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 {
 	PROFILE_EXTRA_FUNC();
 	PERF_ACCUM(g_chooseBuildingMs); ++g_chooseBuildingN;
-#ifdef USE_UNIT_TENDERING
 	//	Have we already selected a building?
 	if (m_iRequestedBuilding > MAX_REQUESTEDBUILDING_PER_CITY)
 	{
 		return false;
 	}
 	m_iBuildPriority = m_iTempBuildPriority;
-#endif
 
 	if (iMaxTurns != MAX_INT)
 	{
@@ -9112,7 +9106,6 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 		}
 
 	}
-#ifdef USE_UNIT_TENDERING
 	if (enqueuedBuilding)
 	{
 		m_iRequestedBuilding ++;
@@ -9120,22 +9113,17 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 		return (isNPC() || m_iRequestedUnit > MAX_REQUESTEDUNIT_PER_CITY);
 	}
 	return false;
-#else
-	return enqueuedBuilding;
-#endif
 }
 
 
 bool CvCityAI::AI_chooseProject()
 {
-#ifdef USE_UNIT_TENDERING
 	if (m_iRequestedBuilding > MAX_REQUESTEDBUILDING_PER_CITY)
 	{
 		return false;
 	}
 
 	m_iBuildPriority = m_iTempBuildPriority;
-#endif
 
 	ProjectTypes eBestProject = AI_bestProject();
 
@@ -9159,13 +9147,11 @@ bool CvCityAI::AI_chooseProject()
 bool CvCityAI::AI_chooseProcess(CommerceTypes eCommerceType, int64_t* commerceWeights,bool bforce)
 {
 	PERF_ACCUM(g_chooseProcessMs); ++g_chooseProcessN;
-#ifdef USE_UNIT_TENDERING
 	if (eCommerceType != NO_COMMERCE && (m_iRequestedBuilding > MAX_REQUESTEDBUILDING_PER_CITY && m_iRequestedUnit > MAX_REQUESTEDUNIT_PER_CITY))
 	{
 		return false;
 	}
 	m_iBuildPriority = m_iTempBuildPriority;
-#endif
 
 	const ProcessTypes eBestProcess = AI_bestProcess(eCommerceType, commerceWeights);
 

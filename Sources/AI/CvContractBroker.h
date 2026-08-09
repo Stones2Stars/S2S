@@ -8,9 +8,6 @@
 class CvCity;
 class CvUnit;
 
-//	Define this to have cities advertise units needs and tender for the business of building them
-#define	USE_UNIT_TENDERING
-
 //	Capability flags - may be ORd together
 typedef enum	unitCapabilities
 {

@@ -1710,6 +1710,10 @@
 		<iDefineIntVal>5</iDefineIntVal>
 	</Define>
 	<Define>
+		<DefineName>AI_CONTRACT_MAX_TRAVEL_TURNS</DefineName>
+		<iDefineIntVal>5</iDefineIntVal>
+	</Define>
+	<Define>
 		<DefineName>SUPER_FORTS_DURATION_BEFORE_REVOLT</DefineName>
 		<iDefineIntVal>5</iDefineIntVal>
 	</Define>

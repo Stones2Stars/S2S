@@ -11160,14 +11160,10 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 			{
 				PROFILE("CvPlayer::setTurnActive.SetInactive.doTurn");
 
-#ifdef USE_UNIT_TENDERING
-				//const PlayerTypes eOwner = getOwner();
-				//CvPlayerAI& player = GET_PLAYER(eOwner);
-				if (isAlive() && !isHumanPlayer() &&!bFinancialTrouble)
+				if (isAlive() && !isHumanPlayer() && !bFinancialTrouble)
 				{
 					getContractBroker().finalizeTenderContracts();
 				}
-#endif
 				if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
 				{
 					if ((GC.getGame().isPbem() || GC.getGame().isHotSeat()) && isHumanPlayer() && GC.getGame().countHumanPlayersAlive() > 1)

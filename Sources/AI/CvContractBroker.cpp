@@ -100,12 +100,13 @@ namespace
 		CTB_ASSESS_NEWBEST,            // [CTB/assess] unit= workRequest= iValue= pathTurns=
 		CTB_ASSESS_NOPATH,             // [CTB/assess] action=noPath unit= workRequest= targetX= targetY= maxPathTurns= thisPlotOnly=
 		CTB_ASSESS_SUITABILITY,        // [CTB/assess] unit= workRequest= iValue= currentBest=
-		CTB_ASSESS_CHOSEN,             // [CTB/assess] unit= workRequest= index= bestValue=
+		CTB_ASSESS_CHOSEN,             // [CTB/assess] unit= workRequest= index= bestValue= stepDistance=
 		CTB_ASSESS_NONE,               // [CTB/assess] action=none workRequest= advertiserCount=
 		CTB_ASSESS_REJECT_GONE,        // [CTB/assess] action=rejectGone unit= workRequest=
 		CTB_ASSESS_REJECT_WRONGAI,     // [CTB/assess] action=rejectWrongAI unit= workRequest=
 		CTB_ASSESS_REJECT_CRITERIA,    // [CTB/assess] action=rejectCriteria unit= workRequest=
 		CTB_ASSESS_REJECT_PRIORITY,    // [CTB/assess] action=rejectPriority unit= workRequest=
+		CTB_ASSESS_OUT_OF_RANGE,       // [CTB/assess] action=outOfRange unit= workRequest= stepDistance= rangeSteps=
 
 		// [CTB/postprocess]
 		CTB_POSTPROCESS_BEGIN,         // [CTB/postprocess] advertisingUnits=
@@ -160,6 +161,7 @@ namespace
 		case CTB_ASSESS_REJECT_WRONGAI: return "[CTB/assess] action=rejectWrongAI";
 		case CTB_ASSESS_REJECT_CRITERIA:return "[CTB/assess] action=rejectCriteria";
 		case CTB_ASSESS_REJECT_PRIORITY:return "[CTB/assess] action=rejectPriority";
+		case CTB_ASSESS_OUT_OF_RANGE:   return "[CTB/assess] action=outOfRange";
 		case CTB_POSTPROCESS_BEGIN:     return "[CTB/postprocess] action=begin";
 		case CTB_POSTPROCESS_UNIT:      return "[CTB/postprocess] action=unit";
 		case CTB_POSTPROCESS_GONE:      return "[CTB/postprocess] action=gone";
@@ -229,7 +231,9 @@ namespace
 		CTBF_targetY,
 		CTBF_maxPathTurns,
 		CTBF_thisPlotOnly,
-		CTBF_advertiserCount
+		CTBF_advertiserCount,
+		CTBF_stepDistance,
+		CTBF_rangeSteps
 	};
 
 	const char* contractFieldInfo(int iFieldTag, SpineFieldType* peType)
@@ -297,6 +301,8 @@ namespace
 		case CTBF_maxPathTurns:           return "maxPathTurns";
 		case CTBF_thisPlotOnly:           return "thisPlotOnly";
 		case CTBF_advertiserCount:        return "advertiserCount";
+		case CTBF_stepDistance:           return "stepDistance";
+		case CTBF_rangeSteps:             return "rangeSteps";
 		default:                        return NULL;
 		}
 	}
@@ -828,6 +834,10 @@ void CvContractBroker::finalizeTenderContracts()
 		if (!m_workRequests[iI].bFulfilled)
 		{
 			int iBestValue = 0;
+			//	The tie-break, held apart from the value for the same reason the matching side holds it
+			//	apart: equal bids are settled by which CITY is nearer, never by folding proximity into
+			//	what the bid is worth.
+			int iBestStepDistance = MAX_INT;
 			int iBestCityTenderKey = 0;
 			UnitTypes eBestUnit = NO_UNIT;
 			UnitAITypes eBestAIType = NO_UNITAI;
@@ -1005,14 +1015,35 @@ void CvContractBroker::finalizeTenderContracts()
 									continue;
 								}
 
-								// generate the path to the destination, if it is too long the value of the unit drops. If no path, then can't supply the unit
-								if (CvSelectionGroup::getPathGenerator()->generatePathForHypotheticalUnit(pCity->plot(), pDestPlot, m_eOwner, eUnit, MOVE_NO_ENEMY_TERRITORY, m_workRequests[iI].iMaxPath))
+								//	Generate the path to the destination; a longer haul depreciates the bid, and no
+								//	path at all means this city cannot supply the unit.
+								//	⚖ The budget is PRODUCTION + TRAVEL, so what a bid may spend on travel is what
+								//	its build time leaves over: a city three turns from finishing has two turns of
+								//	haul, not a fresh five. Floored at one so a city AT the destination can always
+								//	bid, however slowly it builds. A city that cannot arrive inside the remainder
+								//	simply fails the probe and is skipped as unable to supply -- no separate
+								//	rejection path is minted for it.
+								//	⛔ Never unbounded: this probe runs per (bidding city x candidate unit) and is
+								//	the heavier of the broker's two spin sites.
+								const int iTravelBudget = std::max(1, GC.getAI_CONTRACT_MAX_TRAVEL_TURNS() - iTurns);
+								const int iMaxBidPathTurns = std::min(iTravelBudget, m_workRequests[iI].iMaxPath);
+								if (CvSelectionGroup::getPathGenerator()->generatePathForHypotheticalUnit(pCity->plot(), pDestPlot, m_eOwner, eUnit, MOVE_NO_ENEMY_TERRITORY, iMaxBidPathTurns))
 								{
-									const int iDistance = CvSelectionGroup::getPathGenerator()->getLastPath().length();
-									iValue /= (1 + intSqrt(iDistance));
+									//	⛔ The path answers ONE question -- can this city get the unit there inside the
+									//	budget -- and contributes NOTHING to what the bid is worth. It used to
+									//	depreciate the value by the haul, and because the path is generated FOR THE
+									//	CANDIDATE UNIT that made a faster unit bid higher purely for being faster,
+									//	on top of the production term already rewarding it for being cheap. Cheap
+									//	and fast won twice, which is how the broker came to bias what gets built.
+									//	⚑ The tie-break is the CITY's step distance, deliberately not the path's
+									//	turn count: it asks which city is nearer, a question no unit's speed can
+									//	answer differently, so proximity settles equal bids without smuggling
+									//	travel speed back in.
+									const int iStepDistance =
+										stepDistance(pCity->getX(), pCity->getY(), pDestPlot->getX(), pDestPlot->getY());
 
 									log(3,
-										"[CTB/tender/bid] workRequest=%d city=%S (%d) unit=%S aiType=%d baseValue=%d turns=%d distance=%d depreciatedValue=%d (prevBest=%d)",
+										"[CTB/tender/bid] workRequest=%d city=%S (%d) unit=%S aiType=%d baseValue=%d turns=%d stepDistance=%d bidValue=%d (prevBest=%d)",
 										m_workRequests[iI].iWorkRequestId,
 										pCity->getName().GetCString(),
 										pCity->getID(),
@@ -1020,15 +1051,20 @@ void CvContractBroker::finalizeTenderContracts()
 										(int)eAIType,
 										iBaseValue,
 										iTurns,
-										iDistance,
+										iStepDistance,
 										iValue,
 										iBestValue
 									);
 									// FLAG: pre-composed wide-string (%S city name, %S unit description) -- left on legacy only
 
-									if (iValue > iBestValue)
+									//	⚠ The tie-break is gated on an incumbent existing: `iBestValue` seeds at 0, so
+									//	without that test a worthless bid would tie with "no bid yet" and win the
+									//	request outright.
+									if (iValue > iBestValue
+									|| (pBestCity != NULL && iValue == iBestValue && iStepDistance < iBestStepDistance))
 									{
 										iBestValue = iValue;
+										iBestStepDistance = iStepDistance;
 										iBestCityTenderKey = iTenderAllocationKey;
 										eBestUnit = eUnit;
 										eBestAIType = eAIType;
@@ -1398,132 +1434,91 @@ workRequest* CvContractBroker::findWorkRequestByUnitId(int unitId)
 	return NULL;
 }
 
+namespace
+{
+	//	One ASSESSED advertiser, carried from the scan into the selection.
+	//	⛔ Merit and distance are held in SEPARATE fields on purpose: the selection decides on MERIT and
+	//	uses DISTANCE only to settle a tie, so a nearer unit can never outbid a better-suited one. Folding
+	//	them into a single score is exactly what put travel speed into the decision.
+	struct contractMatchCandidate
+	{
+		int iAdvertiserIndex;
+		int iMerit;
+		int iStepDistance;
+		bool bAtTarget;
+		bool bPathProbeFailed;
+	};
+}
+
 advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool bThisPlotOnly)
 {
 	PROFILE_FUNC();
 
-	int	iBestValue = -1;
-	int iBestUnitIndex = -1;
+	//	⚖ MATCHING IS THREE STAGES, IN ORDER (owner): work out what is IN RANGE, SCORE what is in range,
+	//	then take the CLOSEST of equals -- with ONE real path run on the winner to confirm it.
+	//	⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE. A unit that scores partly on how
+	//	quickly it can arrive wins twice for being cheap and fast, which is the mechanism behind the AI's
+	//	over-reliance on this broker for deciding what to build. Speed gets a unit CONSIDERED (it is
+	//	admitted from further out); proximity gets it CHOSEN.
+	//	⛔ And there is at most ONE path search per attempt, bounded by the travel budget: an A* that fails
+	//	on an unreachable target explores the entire reachable component before returning false, which is
+	//	the turn-path spin this shape exists to make unreachable.
+
+	const CvUnit* pTargetUnit = findUnit(request.iUnitId);
+	const CvPlot* pTargetPlot =
+		pTargetUnit != NULL ? pTargetUnit->plot() : GC.getMap().plot(request.iAtX, request.iAtY);
+
+	//	A request naming a plot that does not exist has no answer at all, and every advertiser would fail
+	//	it identically -- so it is reported once here rather than once per advertiser.
+	if (pTargetPlot == NULL)
+	{
+		log(4, "[CTB/assess] no target plot for workRequest=%d at (%d,%d)",
+			request.iWorkRequestId, request.iAtX, request.iAtY);
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NONE, 4)
+			.addI(CTBF_workRequest, request.iWorkRequestId)
+			.addI(CTBF_advertiserCount, (int)m_advertisingUnits.size()));
+		return NULL;
+	}
+
+	//	The travel budget sizes the stage-1 range gate AND caps the stage-4 confirmation path, so the two
+	//	stages cannot disagree about what "in range" means. An advertising unit already exists, so its
+	//	whole budget is travel -- the production half is spent on the tender side.
+	//	A caller may ask for LESS via iMaxPath, never for more.
+	//	⚠ Floored at one turn: a missing or zero define would otherwise reject every unit not already
+	//	standing on the target and switch matching off with nothing reporting it -- a define lookup is a
+	//	string with no compiler behind it, and its miss composes silently.
+	const int iMaxPathTurns = std::max(1, std::min(GC.getAI_CONTRACT_MAX_TRAVEL_TURNS(), request.iMaxPath));
+
+	std::vector<contractMatchCandidate> candidates;
 
 	for (int iI = 0; iI < (int)m_advertisingUnits.size(); iI++)
 	{
-		advertisingUnit& unitInfo = m_advertisingUnits[iI];
+		const advertisingUnit& unitInfo = m_advertisingUnits[iI];
 
 		if (unitInfo.iUnitId < 0) continue;
 		// Don't bother recalculating this advertiser/requestor pair if they have already been calculated previously
-		if ((bThisPlotOnly ? unitInfo.iMatchedToRequestSeqThisPlot : unitInfo.iMatchedToRequestSeqAnyPlot) < request.iWorkRequestId
-		&& unitInfo.iContractedWorkRequest == -1)
+		if ((bThisPlotOnly ? unitInfo.iMatchedToRequestSeqThisPlot : unitInfo.iMatchedToRequestSeqAnyPlot) >= request.iWorkRequestId
+		|| unitInfo.iContractedWorkRequest != -1)
 		{
-			const CvUnit* unitX = findUnit(unitInfo.iUnitId);
-			if (unitX == NULL || request.eAIType != NO_UNITAI && unitX->AI_getUnitAIType() != request.eAIType)
-			{
-					log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (%s)",
-					unitInfo.iUnitId, request.iWorkRequestId,
-					unitX == NULL ? "unit gone" : "wrong unitAI type");
-				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT,
-						unitX == NULL ? CTB_ASSESS_REJECT_GONE : CTB_ASSESS_REJECT_WRONGAI, 4)
-					.addI(CTBF_unit, unitInfo.iUnitId)
-					.addI(CTBF_workRequest, request.iWorkRequestId));
-				continue;
-			}
+			continue;
+		}
 
-			if (unitX->meetsUnitSelectionCriteria(&request.criteria) && unitInfo.iMinPriority <= request.iPriority)
-			{
-				int	iValue = 1;
+		const CvUnit* unitX = findUnit(unitInfo.iUnitId);
+		if (unitX == NULL || request.eAIType != NO_UNITAI && unitX->AI_getUnitAIType() != request.eAIType)
+		{
+			log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (%s)",
+				unitInfo.iUnitId, request.iWorkRequestId,
+				unitX == NULL ? "unit gone" : "wrong unitAI type");
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT,
+					unitX == NULL ? CTB_ASSESS_REJECT_GONE : CTB_ASSESS_REJECT_WRONGAI, 4)
+				.addI(CTBF_unit, unitInfo.iUnitId)
+				.addI(CTBF_workRequest, request.iWorkRequestId));
+			continue;
+		}
 
-				if ((request.eUnitFlags & WORKER_UNITCAPABILITIES) == 0 || (request.eUnitFlags & HEALER_UNITCAPABILITIES) == 0)
-				{
-					if (request.eAIType == NO_UNITAI || unitX->AI_getUnitAIType() == request.eAIType)
-					{
-						iValue += 10;
-
-						if (unitInfo.iDefensiveValue > 0 && (request.eUnitFlags == 0 || (request.eUnitFlags & DEFENSIVE_UNITCAPABILITIES) != 0))
-						{
-							iValue += unitInfo.iDefensiveValue;
-						}
-						if (unitInfo.iOffensiveValue > 0 && (request.eUnitFlags == 0 || (request.eUnitFlags & OFFENSIVE_UNITCAPABILITIES) != 0))
-						{
-							iValue += unitInfo.iOffensiveValue;
-						}
-					}
-				}
-				else if (unitInfo.bIsWorker)
-				{
-					iValue = 100;
-				}
-				else if (unitInfo.bIsHealer)
-				{
-					iValue = 100;
-				}
-
-				iValue *= 1000;
-
-				if (iValue > iBestValue)
-				{
-					const CvUnit* pTargetUnit = findUnit(request.iUnitId);
-					CvPlot* pTargetPlot;
-
-					if (pTargetUnit != NULL)
-					{
-						pTargetPlot = pTargetUnit->plot();
-					}
-					else
-					{
-						pTargetPlot = GC.getMap().plot(request.iAtX, request.iAtY);
-					}
-					int iPathTurns = 0;
-					int iMaxPathTurns = std::min((request.iPriority > LOW_PRIORITY_ESCORT_PRIORITY ? MAX_INT : 10), (iBestValue < 1 ? MAX_INT : 5 * iValue / iBestValue));
-
-					iValue = applyDistanceScoringFactor(iValue, unitX->plot(), pTargetPlot, 1);
-
-					if (request.iMaxPath < iMaxPathTurns)
-					{
-						iMaxPathTurns = request.iMaxPath;
-					}
-
-					// For low priority work never try to satisfy it with a distant unit
-					if (unitX->atPlot(pTargetPlot)
-					|| !bThisPlotOnly
-					&& unitX->generatePath(pTargetPlot, MOVE_SAFE_TERRITORY | MOVE_AVOID_ENEMY_UNITS, true, &iPathTurns, iMaxPathTurns))
-					{
-						//iValue /= (iPathTurns + 1);
-
-						if (iValue > iBestValue)
-						{
-							iBestValue = iValue;
-							iBestUnitIndex = iI;
-
-							log(3, "[CTB/assess] unit=%d is new best for workRequest=%d iValue=%d pathTurns=%d",
-								unitInfo.iUnitId, request.iWorkRequestId, iValue, iPathTurns);
-						eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NEWBEST, 3)
-							.addI(CTBF_unit, unitInfo.iUnitId)
-							.addI(CTBF_workRequest, request.iWorkRequestId)
-							.addI(CTBF_iValue, iValue)
-							.addI(CTBF_pathTurns, iPathTurns));
-						}
-					}
-					else
-					{
-						log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (no path to (%d,%d) within maxPathTurns=%d, thisPlotOnly=%d)",
-							unitInfo.iUnitId, request.iWorkRequestId, pTargetPlot->getX(), pTargetPlot->getY(), iMaxPathTurns, bThisPlotOnly ? 1 : 0);
-						eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NOPATH, 4)
-							.addI(CTBF_unit, unitInfo.iUnitId)
-							.addI(CTBF_workRequest, request.iWorkRequestId)
-							.addI(CTBF_targetX, pTargetPlot->getX())
-							.addI(CTBF_targetY, pTargetPlot->getY())
-							.addI(CTBF_maxPathTurns, iMaxPathTurns)
-							.addI(CTBF_thisPlotOnly, bThisPlotOnly ? 1 : 0));
-					}
-				}
-				OutputDebugString(CvString::format("Assessed unit %d suitability for work request %d (iValue = %d)\n", unitInfo.iUnitId, request.iWorkRequestId, iValue).c_str());
-				log(4, "[CTB/assess] unit=%d suitability for workRequest=%d iValue=%d (currentBest=%d)", unitInfo.iUnitId, request.iWorkRequestId, iValue, iBestValue);
-				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_SUITABILITY, 4)
-					.addI(CTBF_unit, unitInfo.iUnitId)
-					.addI(CTBF_workRequest, request.iWorkRequestId)
-					.addI(CTBF_iValue, iValue)
-					.addI(CTBF_currentBest, iBestValue));
-			}
-			else if (gPlayerLogLevel >= 4)
+		if (!unitX->meetsUnitSelectionCriteria(&request.criteria) || unitInfo.iMinPriority > request.iPriority)
+		{
+			if (gPlayerLogLevel >= 4)
 			{
 				const bool bFailsCriteria = !unitX->meetsUnitSelectionCriteria(&request.criteria);
 				log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (%s)",
@@ -1534,19 +1529,158 @@ advertisingUnit* CvContractBroker::findBestUnit(const workRequest& request, bool
 					.addI(CTBF_unit, unitInfo.iUnitId)
 					.addI(CTBF_workRequest, request.iWorkRequestId));
 			}
+			continue;
 		}
+
+		//	STAGE 1 -- WHAT IS IN RANGE. An O(1) step-distance test that can only ever OVER-ADMIT, which
+		//	is the safe direction: stage 4 closes it with a real path (enabler.md par.5 -- over-inclusion
+		//	is safe, a MISS is the bug).
+		//	⛔ THE BOUND MUST BE MOVEMENT POINTS, NOT MOVES, AND TIGHTENING IT IS A BUG. A unit spends
+		//	`baseMoves x MOVE_DENOMINATOR` points per turn and the CHEAPEST possible tile costs ONE point
+		//	(a railroad, or any tile under `ignoreTerrainCost`), so points-per-turn is the only provable
+		//	ceiling on tiles-per-turn. Using `baseMoves` alone reads like the obvious bound and is wrong
+		//	by two orders of magnitude: it rejects a worker six tiles away along a road, which is a unit
+		//	that arrives comfortably inside the budget.
+		//	⚠ Being provably safe makes this coarse -- on an ordinary map it excludes only the absurd. It
+		//	is worth keeping as the cheap outer bound, but the cost win is NOT here: it is that stage 4
+		//	runs ONE path search for the whole request instead of one per candidate.
+		//	⚑ Nothing is cached: the test is already O(1) arithmetic, so a cache would save nothing. A
+		//	cached reachable SET is what a bounded flood-fill would need, and building one ahead of a
+		//	measured cost is the speculative structure the roadmap rules out.
+		const bool bAtTarget = unitX->atPlot(pTargetPlot);
+		const int iStepDistance =
+			stepDistance(unitX->getX(), unitX->getY(), pTargetPlot->getX(), pTargetPlot->getY());
+		//	A this-plot-only request is answered by a unit already standing there and by nothing else, so
+		//	its range is zero and no path is ever generated for it.
+		const int iRangeSteps =
+			bThisPlotOnly ? 0 : iMaxPathTurns * std::max(1, unitX->baseMoves()) * GC.getMOVE_DENOMINATOR();
+
+		if (!bAtTarget && iStepDistance > iRangeSteps)
+		{
+			log(4, "[CTB/assess] unit=%d out of range for workRequest=%d (stepDistance=%d rangeSteps=%d)",
+				unitInfo.iUnitId, request.iWorkRequestId, iStepDistance, iRangeSteps);
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_OUT_OF_RANGE, 4)
+				.addI(CTBF_unit, unitInfo.iUnitId)
+				.addI(CTBF_workRequest, request.iWorkRequestId)
+				.addI(CTBF_stepDistance, iStepDistance)
+				.addI(CTBF_rangeSteps, iRangeSteps));
+			continue;
+		}
+
+		//	STAGE 2 -- SCORE WHAT IS IN RANGE, on merit alone: what this unit is FOR, and how good it is
+		//	at it. Nothing about where it stands enters here.
+		int iMerit = 1;
+
+		if ((request.eUnitFlags & WORKER_UNITCAPABILITIES) == 0 || (request.eUnitFlags & HEALER_UNITCAPABILITIES) == 0)
+		{
+			if (request.eAIType == NO_UNITAI || unitX->AI_getUnitAIType() == request.eAIType)
+			{
+				iMerit += 10;
+
+				if (unitInfo.iDefensiveValue > 0 && (request.eUnitFlags == 0 || (request.eUnitFlags & DEFENSIVE_UNITCAPABILITIES) != 0))
+				{
+					iMerit += unitInfo.iDefensiveValue;
+				}
+				if (unitInfo.iOffensiveValue > 0 && (request.eUnitFlags == 0 || (request.eUnitFlags & OFFENSIVE_UNITCAPABILITIES) != 0))
+				{
+					iMerit += unitInfo.iOffensiveValue;
+				}
+			}
+		}
+		else if (unitInfo.bIsWorker)
+		{
+			iMerit = 100;
+		}
+		else if (unitInfo.bIsHealer)
+		{
+			iMerit = 100;
+		}
+
+		contractMatchCandidate candidate;
+		candidate.iAdvertiserIndex = iI;
+		candidate.iMerit = iMerit;
+		candidate.iStepDistance = iStepDistance;
+		candidate.bAtTarget = bAtTarget;
+		candidate.bPathProbeFailed = false;
+		candidates.push_back(candidate);
+
+		OutputDebugString(CvString::format("Assessed unit %d suitability for work request %d (merit = %d)\n", unitInfo.iUnitId, request.iWorkRequestId, iMerit).c_str());
+		log(4, "[CTB/assess] unit=%d suitability for workRequest=%d merit=%d stepDistance=%d",
+			unitInfo.iUnitId, request.iWorkRequestId, iMerit, iStepDistance);
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_SUITABILITY, 4)
+			.addI(CTBF_unit, unitInfo.iUnitId)
+			.addI(CTBF_workRequest, request.iWorkRequestId)
+			.addI(CTBF_iValue, iMerit)
+			.addI(CTBF_stepDistance, iStepDistance));
 	}
 
-	if (iBestUnitIndex > -1)
+	//	STAGE 3 -- TAKE THE CLOSEST OF EQUALS, and STAGE 4 -- CONFIRM the winner with ONE real path.
+	//	A winner the pathfinder refuses is dropped and the next-best takes its place, so the stage-1
+	//	over-admission costs one bounded search rather than a wrong answer or none at all.
+	while (true)
 	{
-		log(1, "[CTB/assess] unit=%d chosen for workRequest=%d index=%d bestValue=%d",
-			m_advertisingUnits[iBestUnitIndex].iUnitId, request.iWorkRequestId, iBestUnitIndex, iBestValue);
-		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_CHOSEN, 1)
-			.addI(CTBF_unit, m_advertisingUnits[iBestUnitIndex].iUnitId)
+		int iBestCandidate = -1;
+
+		for (int iC = 0; iC < (int)candidates.size(); iC++)
+		{
+			if (candidates[iC].bPathProbeFailed)
+			{
+				continue;
+			}
+			if (iBestCandidate == -1
+			|| candidates[iC].iMerit > candidates[iBestCandidate].iMerit
+			|| (candidates[iC].iMerit == candidates[iBestCandidate].iMerit
+				&& candidates[iC].iStepDistance < candidates[iBestCandidate].iStepDistance))
+			{
+				iBestCandidate = iC;
+			}
+		}
+
+		if (iBestCandidate == -1)
+		{
+			break;
+		}
+
+		contractMatchCandidate& winner = candidates[iBestCandidate];
+		const advertisingUnit& winningUnitInfo = m_advertisingUnits[winner.iAdvertiserIndex];
+		const CvUnit* unitX = findUnit(winningUnitInfo.iUnitId);
+		int iPathTurns = 0;
+
+		log(3, "[CTB/assess] unit=%d leads workRequest=%d merit=%d stepDistance=%d",
+			winningUnitInfo.iUnitId, request.iWorkRequestId, winner.iMerit, winner.iStepDistance);
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NEWBEST, 3)
+			.addI(CTBF_unit, winningUnitInfo.iUnitId)
 			.addI(CTBF_workRequest, request.iWorkRequestId)
-			.addI(CTBF_index, iBestUnitIndex)
-			.addI(CTBF_bestValue, iBestValue));
-		return &m_advertisingUnits[iBestUnitIndex];
+			.addI(CTBF_iValue, winner.iMerit)
+			.addI(CTBF_stepDistance, winner.iStepDistance));
+
+		if (unitX != NULL
+		&& (winner.bAtTarget
+			|| unitX->generatePath(pTargetPlot, MOVE_SAFE_TERRITORY | MOVE_AVOID_ENEMY_UNITS, true, &iPathTurns, iMaxPathTurns)))
+		{
+			log(1, "[CTB/assess] unit=%d chosen for workRequest=%d index=%d merit=%d stepDistance=%d pathTurns=%d",
+				winningUnitInfo.iUnitId, request.iWorkRequestId, winner.iAdvertiserIndex,
+				winner.iMerit, winner.iStepDistance, iPathTurns);
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_CHOSEN, 1)
+				.addI(CTBF_unit, winningUnitInfo.iUnitId)
+				.addI(CTBF_workRequest, request.iWorkRequestId)
+				.addI(CTBF_index, winner.iAdvertiserIndex)
+				.addI(CTBF_bestValue, winner.iMerit)
+				.addI(CTBF_stepDistance, winner.iStepDistance));
+			return &m_advertisingUnits[winner.iAdvertiserIndex];
+		}
+
+		log(4, "[CTB/assess] unit=%d rejected for workRequest=%d (no path to (%d,%d) within maxPathTurns=%d, thisPlotOnly=%d)",
+			winningUnitInfo.iUnitId, request.iWorkRequestId, pTargetPlot->getX(), pTargetPlot->getY(), iMaxPathTurns, bThisPlotOnly ? 1 : 0);
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_ASSESS_NOPATH, 4)
+			.addI(CTBF_unit, winningUnitInfo.iUnitId)
+			.addI(CTBF_workRequest, request.iWorkRequestId)
+			.addI(CTBF_targetX, pTargetPlot->getX())
+			.addI(CTBF_targetY, pTargetPlot->getY())
+			.addI(CTBF_maxPathTurns, iMaxPathTurns)
+			.addI(CTBF_thisPlotOnly, bThisPlotOnly ? 1 : 0));
+
+		winner.bPathProbeFailed = true;
 	}
 
 	log(4, "[CTB/assess] no suitable unit found for workRequest=%d among %d advertisers", request.iWorkRequestId, m_advertisingUnits.size());
