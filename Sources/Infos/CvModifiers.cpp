@@ -57,6 +57,7 @@ void CvModifiers::clearParsed()
 	}
 	m_entries.clear();
 	m_conditioned.clear();
+	m_keyed.clear();
 	m_slots.clear();
 	m_propertySlots.clear();
 	m_slotsAiOnly.clear();
@@ -204,6 +205,22 @@ int CvModifiers::targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eSco
 int CvModifiers::propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly) const
 {
 	return propertySum(iPropertyFk, eScope, eUnit, bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
+}
+
+void CvModifiers::keyedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const
+{
+	// m_keyed is family-sorted by finalizeCompiled; the range is contiguous.
+	size_t i = 0;
+	while (i < m_keyed.size() && m_keyed[i]->family != eFamily)
+	{
+		++i;
+	}
+	iBeginOut = i;
+	while (i < m_keyed.size() && m_keyed[i]->family == eFamily)
+	{
+		++i;
+	}
+	iEndOut = i;
 }
 
 void CvModifiers::conditionedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const
@@ -817,6 +834,30 @@ void CvModifiers::finalizeCompiled()
 		}
 	}
 	std::stable_sort(m_conditioned.begin(), m_conditioned.end(), mod_conditionedFamilyBefore);
+	// The KEYED-unconditioned view, built the same way and for the same reason. A keyed read is specified as
+	// cheap because "it iterates the handful an entity AUTHORED" ([modifier.md] par.5) -- but it was iterating
+	// m_entries, i.e. EVERY deposit of every family the entity carries, once per call. A trait holds hundreds,
+	// and the read runs per city per candidate, which is what made it measurable.
+	// ⚠ m_entries KEEPS ITS AUTHORED ORDER -- the per-entry text render walks it ([patterns.md] category 5) --
+	// so this is a second borrowed view rather than a re-sort, exactly as m_conditioned is.
+	m_keyed.clear();
+	for (size_t i = 0; i < m_entries.size(); ++i)
+	{
+		const CvModEntry& kEntry = *m_entries[i];
+		// ⚠ Membership is the RESOLVED TARGET FK and NOTHING ELSE, and both temptations here are wrong:
+		// testing the SEGMENT would drop the direct-keyed shape, which sits straight under its scope with no
+		// plural container token and so carries none ([modifier.md] par.5); and testing isConditioned() would
+		// drop far more than a gate, since it also covers unitQual / religionQual / per / rank -- so every
+		// per-scaled and unit-qualified keyed deposit would vanish from the readers below, silently.
+		// ⇒ The view is EVERY keyed entry. Each reader keeps its own condition filter, which is where the
+		// readers differ: the two point reads want ungated entries only, while the improvement leg deliberately
+		// covers gated ones too.
+		if (kEntry.targetFk >= 0)
+		{
+			m_keyed.push_back(m_entries[i]);
+		}
+	}
+	std::stable_sort(m_keyed.begin(), m_keyed.end(), mod_conditionedFamilyBefore);
 }
 
 void CvModifiers::parseEntity(const picojson::object& entity)

@@ -79,6 +79,11 @@ public:
 	const std::vector<CvModEntry*>& entries() const { return m_entries; }
 	// The conditioned entries (prebuilt trees), grouped: sorted by family, range-addressable per group.
 	const std::vector<const CvModEntry*>& conditioned() const { return m_conditioned; }
+	// The KEYED-unconditioned view, the twin of conditioned(): entries carrying a resolved target key and no
+	// condition -- what a "how much does this source give THIS target" read wants ([modifier.md] par.5). Sorted
+	// by family so keyedRange answers a contiguous span.
+	const std::vector<const CvModEntry*>& keyed() const { return m_keyed; }
+	void keyedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const;
 	void conditionedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const;
 	// THE POINT READ: the load-compiled unconditioned ×100 sum of the (family, kind, scope, unit) slot --
 	// one lookup over the packed sorted slot table, 0 calculation ([DEC-scope-is-an-axis]: kind and scope are
@@ -132,6 +137,7 @@ private:
 
 	std::vector<CvModEntry*> m_entries;                  // owned
 	std::vector<const CvModEntry*> m_conditioned;        // borrowed views into m_entries, sorted by family
+	std::vector<const CvModEntry*> m_keyed;              // ditto, the keyed-unconditioned subset
 	std::vector<std::pair<int, int> > m_slots;           // packed slot key -> unconditioned ×100 sum, sorted (HUMAN audience)
 	std::vector<std::pair<int, int> > m_propertySlots;   // packed (propertyFk, scope, unit) -> ×100 sum, sorted (HUMAN audience)
 	std::vector<std::pair<int, int> > m_slotsAiOnly;           // the aiOnly twin of m_slots (the §3.9 `ai` audience)

@@ -231,16 +231,20 @@ void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFam
 	{
 		return;
 	}
-	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
-	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	// The KEYED view, not the whole entry list: m_keyed already holds every keyed entry,
+	// family-sorted, so the family filter becomes a RANGE rather than a test against every deposit the entity
+	// carries. A trait carries hundreds and this runs per city per candidate, which is what made it measurable.
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	modifiers->keyedRange(eFamily, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& kEntries = modifiers->keyed();
+	for (size_t iEntry = iBegin; iEntry < iEnd; ++iEntry)
 	{
 		const CvModEntry& kEntry = *kEntries[iEntry];
-		if (kEntry.family != eFamily
-		||  kEntry.targetSeg != iTargetSegment
-		||  kEntry.targetFk < 0
+		if (kEntry.targetSeg != iTargetSegment
 		|| (iKind >= 0 && kEntry.kind != iKind)
 		|| (iScope >= 0 && (int)kEntry.scope != iScope)
-		||  kEntry.enabled != NULL || kEntry.disabled != NULL)
+		||  kEntry.enabled != NULL || kEntry.disabled != NULL)   // the point read wants UNGATED entries only
 		{
 			continue;
 		}
@@ -265,15 +269,18 @@ int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFam
 		return 0;
 	}
 	int iTotal = 0;
-	const std::vector<CvModEntry*>& kEntries = modifiers->entries();
-	for (size_t iEntry = 0; iEntry < kEntries.size(); ++iEntry)
+	// The keyed view, family-ranged -- the same read its collect twin takes.
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	modifiers->keyedRange(eFamily, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& kEntries = modifiers->keyed();
+	for (size_t iEntry = iBegin; iEntry < iEnd; ++iEntry)
 	{
 		const CvModEntry& kEntry = *kEntries[iEntry];
-		if (kEntry.family == eFamily
-		&&  kEntry.targetSeg == iTargetSegment
+		if (kEntry.targetSeg == iTargetSegment
 		&&  kEntry.targetFk == iTargetFk
 		&& (iKind < 0 || kEntry.kind == iKind)
-		&&  kEntry.enabled == NULL && kEntry.disabled == NULL)
+		&&  kEntry.enabled == NULL && kEntry.disabled == NULL)   // ungated only, as its collect twin
 		{
 			iTotal += kEntry.value;
 		}
@@ -967,13 +974,18 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 				{
 					continue;
 				}
-				const std::vector<CvModEntry*>& kPrecheckEntries = pPrecheckModifiers->entries();
-				for (size_t iEntry = 0; iEntry < kPrecheckEntries.size(); ++iEntry)
+				// ⚑ The keyed view, family-ranged, for the same reason the legs below take it: this
+				// ran over EVERY entry of every held trait, on every call, only to decide whether the ring walk
+				// below is needed at all -- and the answer is a constant for a (player, channel), so the scan was
+				// the cost of asking a question whose answer could not have moved.
+				size_t iPrecheckBegin = 0;
+				size_t iPrecheckEnd = 0;
+				pPrecheckModifiers->keyedRange(ePrecheckFamily, iPrecheckBegin, iPrecheckEnd);
+				const std::vector<const CvModEntry*>& kPrecheckEntries = pPrecheckModifiers->keyed();
+				for (size_t iEntry = iPrecheckBegin; iEntry < iPrecheckEnd; ++iEntry)
 				{
 					const CvModEntry& kEntry = *kPrecheckEntries[iEntry];
-					if (kEntry.family == ePrecheckFamily
-					&&  kEntry.targetSeg == iPrecheckSegment
-					&&  kEntry.targetFk >= 0
+					if (kEntry.targetSeg == iPrecheckSegment
 					&& (iPrecheckKind < 0 || kEntry.kind == iPrecheckKind)
 					&&  kEntry.unitQual == NULL
 					&&  val_scopeFolds(kEntry.scope))
