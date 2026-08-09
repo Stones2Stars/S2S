@@ -1398,3 +1398,36 @@ Y The keyed walk itself is spec-correct and is NOT the defect: a keyed deposit i
 live sources ([modifier.md] par.5), cheap "because it iterates the handful an entity AUTHORED" -- which holds
 only if discovering the live sources is itself cheap. Here it is rediscovered 40 times per citizen.
 
+## `CvAdvisorUtils.cityAdvise` NEEDS TEN READS PUBLISHED BEFORE IT CAN BE CONVERTED
+
+It is the largest single block of broken handlers left (the 17 `cityDoTurn` failures), and it cannot be fixed
+by re-pointing alone: it reads through `CyCity`, which carries the IDENTITY SET only, and ten of the eleven
+values it wants have no home on the read surface yet. Mapped over the LIVE body (its commented blocks
+excluded):
+
+| read | sites | disposition |
+|---|--:|---|
+| `canConstruct` | 8 | ENABLER -- `getBuildingAvailability(...) == ENABLER_LISTED`, the maintained verdict |
+| `canTrain` | 1 | ENABLER -- `getUnitAvailability`, same |
+| `GC.getBuildingInfo` / `getUnitInfo` | 10 | INFO -- named or intrinsic reads per field |
+| `getMaintenance` | 1 | **already on `CyState`** |
+| `healthRate` · `angryPopulation` | 2 | CyState -- but see below |
+| `getCommerceRate` · `getBaseCommerceRate` | 3 | CyState |
+| `getBuildingDefense` · `isProductionBuilding` | 2 | CyState |
+| `countNumImprovedPlots` · `countNumWaterPlots` | 2 | CyState |
+| `area` · `plot` | 6 | the area ID is a FACT a city reads ([contexts.md]) -- an id, never a handle |
+| `AI_cityValue` · `AI_countBestBuilds` | 2 | ⛔ NOT settled -- see below |
+
+⛔ **TWO OF THEM ARE DESIGN QUESTIONS, NOT MECHANICAL ADDS, and they are why this is not a sweep:**
+
+1. **`AI_cityValue` / `AI_countBestBuilds` are AI HEURISTICS, not state.** The read library answers *"what do I
+   HAVE?"*; an AI's own valuation is the sanctioned heuristic residual that belongs to the asking side
+   ([superseded-ideas](../../architecture/superseded-ideas.md) par.1). Publishing them would put an AI score on
+   the state surface, and the advisor's question (*"should I suggest splitting this city off?"*) may be better
+   answered by something else entirely. **Do not publish these without a ruling.**
+2. **`healthRate` / `angryPopulation` are FINAL-STATE CALCULATIONS, deliberately NOT group entries**
+   ([patterns.md] rule 6: they are computed over channels the group already hands out, and folding one into the
+   channel array is a category error). So each earns its own named read -- correct, but a naming decision
+   rather than a forward.
+
+⚑ The other eight are ordinary forwards and unblock the bulk of the file.
