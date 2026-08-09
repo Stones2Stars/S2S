@@ -652,6 +652,18 @@ the total-observability bar below.)
   ⇒ **So: do not annotate scales, and DELETE a scale annotation you pass.** What a comment may still carry is
   the thing the spec cannot know — WHY this site is an edge, or why a value is genuinely exceptional — never a
   restatement of the rule itself.
+  ⚖ **THE SURVIVING ONES ARE NOT A BACKLOG, AND THE RULE IS WHAT MAKES THAT SAFE (owner): *"we now have the
+  rule in place that overrules comments that contradict spec, that should do; we clean out dumb comments as we
+  go along."*** The rule OUTRANKS them, so a contradicting comment carries no authority to act on and its
+  presence costs nothing on its own — what cost something was having no rule to overrule it with. ⛔ Therefore
+  do NOT plan, size or schedule a sweep, and do not record a count of them as a worklist entry: they are
+  deleted opportunistically, by whoever is already editing that code.
+  ⚑ Same disposition as the legacy logging surface ([observability.md](docs/reference/observability.md): *"not
+  a cleanup backlog — a surface you must not RELY on"*), and for the same reason — the danger was ever only in
+  TRUSTING it, which the rule now forecloses. ⚠ [DEC-no-deferred](docs/architecture/decisions.md#dec-no-deferred)
+  does not reach this: nothing is being parked, the defect is closed by the rule and the residue is cosmetic.
+  ⛔ A blanket regex purge is the wrong instrument anyway — it eats the comments that carry the EDGE reasoning,
+  which is exactly what a comment is still FOR.
 
 - **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change.** A stale spec is worse than
   none — the next agent trusts it and builds on the wrong shape. The proactive twin of fix-docs-now.
