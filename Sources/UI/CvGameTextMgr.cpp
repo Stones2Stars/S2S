@@ -1829,10 +1829,14 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		}
 
 		// free specialists (ToA, GL) and settled great people
+		//	⛔ The GROUP read, ONCE -- the per-type count is a slice of a walk over the eval ctx, the city's
+		//	operating set and the empire, so asking it per specialist made this listing quadratic.
+		std::vector<int64_t> aiFreeSpecialists;
+		pCity->getFreeSpecialists(aiFreeSpecialists);
 		bFirst = true;
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 		{
-			const int iCount = pCity->getFreeSpecialistCount((SpecialistTypes)iI);
+			const int iCount = (int)(aiFreeSpecialists[iI] / 100);
 			if (iCount > 0)
 			{
 				if (bFirst)
@@ -4047,11 +4051,17 @@ void CvGameTextMgr::buildFinanceSpecialistGoldString(CvWStringBuffer& szBuffer, 
 		int iCityGold = 0;
 		if (!pCity->isDisorder())
 		{
+			//	⛔ The GROUP read, ONCE. This loop asked the per-type count TWICE per specialist, and each ask
+			//	was a full walk (eval ctx + operating set + empire) -- so the demographics screen paid it
+			//	2 x specialists x cities.
+			std::vector<int64_t> aiFreeSpecialists;
+			pCity->getFreeSpecialists(aiFreeSpecialists);
 			for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 			{
-				iCounts[iI] += pCity->getSpecialistCount((SpecialistTypes)iI) + pCity->getFreeSpecialistCount((SpecialistTypes)iI);
+				const int iSpecialists = pCity->getSpecialistCount((SpecialistTypes)iI) + (int)(aiFreeSpecialists[iI] / 100);
+				iCounts[iI] += iSpecialists;
 
-				iCityGold += ((pCity->getSpecialistCount((SpecialistTypes)iI) + pCity->getFreeSpecialistCount((SpecialistTypes)iI))*player.specialistCommerceTimes100((SpecialistTypes)iI, COMMERCE_GOLD))/100;
+				iCityGold += (iSpecialists * player.specialistCommerceTimes100((SpecialistTypes)iI, COMMERCE_GOLD))/100;
 			}
 
 			iTotalSpecialists += pCity->getSpecialistPopulation() + pCity->getNumGreatPeople();

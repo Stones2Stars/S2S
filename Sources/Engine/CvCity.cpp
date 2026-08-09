@@ -10170,7 +10170,9 @@ void CvCity::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	iNewValue = std::max(0, iNewValue);
 	if (iOldValue != iNewValue)
 	{
-		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
+		//	iOldValue IS this read -- calling it again costs another full walk (eval ctx + operating set +
+		//	empire) for a value already in hand.
+		FASSERT_NOT_NEGATIVE(iOldValue);
 
 		changeNumGreatPeople(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
