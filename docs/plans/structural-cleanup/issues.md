@@ -1352,60 +1352,30 @@ outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
 it — `RevolutionInit` imports the module and binds only `kbdEvent` / `GameStart` / `OnLoad` — so it cannot fire,
 and Revolution is a carve-out owed its own rework. ⛔ Do not "fix" it into the live set.
 
-## A DELETED HELPER LEAVES ITS CALL SITES STANDING — and Python names them only at runtime
+## THE KEYED TERM IS RESOLVED INSIDE THE CITIZEN LOOP
 
-**⛔ A helper removed during a conversion fails NOWHERE until the line runs.** C++ has a compiler census; Python
-has none, so a deleted module-level helper leaves every call site intact, silent, and green — until the handler
-fires and raises `NameError`. ⚑ This is the [roadmap.md](roadmap.md) § scope decision 6 half-conversion in its
-worst form: the site is not merely relocated, it is INVISIBLE to every check the tree has.
-
-Live instances, each used and defined NOWHERE:
-
-| name | used by | replacement |
-|---|---|---|
-| `isWorldUnit` | `CvEventManager.onUnitBuilt`, `DancingHoskuld/InitMilitaryPromos.onUnitBuilt` | the unit's `allowed.world` self-cap |
-| `isNationalWonder` · `isTeamWonder` | `CvEventManager.onBuildingBuilt`, `Screens/CvInfoScreen`, `Screens/Worldbuilder/WBBuildingScreen` | `INFO.getIntrinsic("BUILDING_", id, PYINT_WONDER_SCOPE)` — the cap's SCOPE **is** the wonder category ([json.md] par.4.4) |
-
-⚑ **The removal was DELIBERATE and is already recorded at one converted site** — `Screens/CvMainInterface.py`
-carries *"The cap's SCOPE is the wonder category — there is no isNationalWonder"*. One call site was converted
-and the rest were left. ⇒ When a helper goes, its call sites are the worklist; a converted neighbour is not
-evidence the sweep finished.
-
-Beside them, two `GC.get<X>Info` reads inside handlers reported as converted: `getHandicapInfo`
-(`CvEventManager.onCombatResult`, the civic-upkeep handicap factor) and `getUnitInfo`
-(`CvEventManager.onUnitBuilt`). Both were listed in a `GC.get*Info` scan during that session and neither was
-acted on — the scan found them and the conversion pass did not consume its own findings.
-
-## ⛔ `modSegmentLookup` IS A PER-CALL STRING-KEYED MAP WALK ON AN AI HOT PATH
-
-**Found by attaching a debugger to a running end turn** — the technique
-[DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) prescribes,
-because this class emits nothing and every log is silent while it runs. Sampled game-thread stacks:
+The segment-lookup half of this is closed (`modSegmentCached`), but that was the CHEAP half and it left
+the shape underneath it standing. The sampled stack is:
 
 ```
-InfoValuation::keyedTarget / keyedTargetSum  <- val_traitKeyedPerSpecialist <- InfoValuation::specialistTerm
-modSegmentLookup -> std::map<std::string, JsonKeyClass>::_Lbound
-  <- InfoValuation::keyedTargetSegment <- specialistTerm <- cityReceiverRate <- realizedAtCity
+InfoValuation::keyedTarget / keyedTargetSum  <- val_traitKeyedPerSpecialist <- specialistTerm
   <- CvPlayer::getFreeSpecialistCount <- CvCity::getFreeSpecialistCount
   <- CvCityAI::AI_foodAvailable <- AI_fillCitizensByPriority (per CITIZEN) <- AI_assignWorkingPlots (per CITY)
 ```
 
-⛔ It is [DEC-materialize-at-mapfrom](../../architecture/decisions.md#dec-materialize-at-mapfrom) violated on a
-read path: a heap `std::string` construction plus a map walk, per call, underneath the citizen-assignment loop —
-so its cost is `O(cities × citizens × sources)`.
+⛔ A keyed read is specified as cheap because *“it iterates the handful an entity AUTHORED”*
+([modifier.md] par.5) — which holds only if discovering the LIVE SOURCES is itself cheap. Here the trait's
+keyed per-specialist term is re-resolved once per CITIZEN for a value that moves only when the city's
+sources move, so the cost is `O(cities × citizens × sources)` for an answer that is constant across the
+whole fill.
 
-⚑ **THE FIX IS ALREADY IN THE TREE, TWICE — copy it, do not invent one.** `Data/CvDepositRead.cpp`'s `mmk_modSeg`
-resolves a segment ONCE into a file-static (`if (iCache < 0) iCache = modSegmentLookup(...)`, safe because the
-interner is append-only so a miss can become a hit but an id never moves), and `Cascade/CvModifierConsumer.cpp`
-does the same with `s_iPlotsSeg`. The offenders pass a STRING LITERAL inline instead —
-`modSegmentLookup("unitCombats")` / `("buildings")` in `AI/CvCityAI.cpp`, among the inline-literal call sites
-across `Sources/`.
+⚡ [citizen-assignment.md](../../reference/citizen-assignment.md) already states the intended shape: the fill
+SCORES every option once, orders them, and walks the order — so a per-citizen re-resolve of a per-city
+quantity is the thing that design removed, reappearing one layer down.
 
-⚠ **The lookup is the frame the sampler caught, not necessarily the whole cost.** The surrounding
-`keyedTargetSum` / `collectKeyedTarget` walk is re-resolved per citizen for a value that moves only when the
-city's sources move — so hoisting the segment id is the cheap half, and the standing question is why a keyed
-TRAIT term is being resolved inside the citizen loop at all ([modifier.md] par.5: a keyed read iterates the
-handful an entity AUTHORED, which is cheap only if discovering the live sources is).
+⚠ The fix is NOT another cache: [DEC-legacy-decache-poisons-perf] sequences this explicitly — fix the READS
+that should never have computed, and only then let the AI plane cache its own scores. A cache added while a
+wrong-shaped read is still underneath it hides the read instead of fixing it.
 
 ## `AbandonCityEventManager` IS LIVE AND READS SIX DELETED INFO ACCESSORS
 
