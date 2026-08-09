@@ -1353,9 +1353,18 @@ class CvEventManager:
 
 
 	def onBuildingBuilt(self, argsList):
-		CyCity, iBuilding = argsList
-		iPlayer = CyCity.getOwner()
+		# The reporter pushes the city as its (owner, id) IDENTITY ([patterns.md] THE IDENTITY SET), so the city is
+		# addressed by that pair throughout and every read about it goes through STATE / ACT / INFO.
+		aCity, iBuilding = argsList
+		iPlayer, iCity = aCity
+		iCityX, iCityY = STATE.getCityPosition(iPlayer, iCity)
 		CyPlayer = GC.getPlayer(iPlayer)
+		# ⚠ Bound ONCE here, and deliberately: several branches below used to rebind MAP themselves, which makes
+		# it a FUNCTION-LOCAL for the whole body -- so any use before the first branch that assigned it raised
+		# UnboundLocalError. One binding at the top keeps the per-call freshness those rebinds wanted (maps can be
+		# switched, GC.switchMap) without the shadowing hazard.
+		MAP = GC.getMap()
+
 		if not CyPlayer.isFeatAccomplished(FeatTypes.FEAT_NATIONAL_WONDER):
 			if isNationalWonder(iBuilding):
 				CyPlayer.setFeatAccomplished(FeatTypes.FEAT_NATIONAL_WONDER, True)
@@ -1364,19 +1373,19 @@ class CvEventManager:
 					popupInfo = CyPopupInfo()
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 					popupInfo.setData1(FeatTypes.FEAT_NATIONAL_WONDER)
-					popupInfo.setData2(CyCity.getID())
-					popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_NATIONAL_WONDER", (INFO.getTextKey("BUILDING_", iBuilding), CyCity.getNameKey(), )))
+					popupInfo.setData2(iCity)
+					popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_NATIONAL_WONDER", (INFO.getTextKey("BUILDING_", iBuilding), STATE.getCityName(iPlayer, iCity), )))
 					popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 					popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 					popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
 					popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_MORE", ()), "")
 					popupInfo.addPopup(iPlayer)
 
-		if not self.bNetworkMP and iPlayer == GAME.getActivePlayer() and GC.getBuildingInfo(iBuilding).getMovie() and CyPlayer.countNumBuildings(iBuilding) == 1:
+		if not self.bNetworkMP and iPlayer == GAME.getActivePlayer() and INFO.hasMovie(iBuilding) and CyPlayer.countNumBuildings(iBuilding) == 1:
 			popupInfo = CyPopupInfo()
 			popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON_SCREEN)
 			popupInfo.setData1(iBuilding)
-			popupInfo.setData2(CyCity.getID())
+			popupInfo.setData2(iCity)
 			popupInfo.setData3(0)
 			popupInfo.setText('showWonderMovie')
 			popupInfo.addPopup(iPlayer)
@@ -1386,13 +1395,14 @@ class CvEventManager:
 		if iBuilding in aWonderTuple[1]:
 			i = aWonderTuple[1].index(iBuilding)
 			KEY = aWonderTuple[0][i]
-			aWonderTuple[3][i] = CyCity.getID()
+			aWonderTuple[3][i] = iCity
 			aWonderTuple[4][i] = iPlayer
 			if KEY == "CRUSADE":
 				iUnit = GC.getInfoTypeForString("UNIT_CRUSADER")
 				if iUnit > -1:
-					CyUnit = CyPlayer.initUnit(iUnit, CyCity.getX(), CyCity.getY(), UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
-					CyCity.addProductionExperience(CyUnit, False)
+					iNewUnit = ACT.initUnit(iPlayer, iUnit, iCityX, iCityY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
+					if iNewUnit > -1:
+						ACT.addUnitProductionExperience(iPlayer, iCity, iNewUnit, False)
 			elif KEY == "TAIPEI_101":
 				iTeam = CyPlayer.getTeam()
 				for iPlayerX in xrange(self.MAX_PC_PLAYERS):
@@ -1425,7 +1435,7 @@ class CvEventManager:
 				aPlotList = []
 				if aBonusList:
 					iPlots = 0
-					for CyPlot in CyCity.plot().rect(3, 3):
+					for CyPlot in MAP.plot(iCityX, iCityY).rect(3, 3):
 						if not CyPlot.isWater() or CyPlot.getBonusType(-1) != -1:
 							continue
 						aPlotList.append(CyPlot)
@@ -1449,42 +1459,50 @@ class CvEventManager:
 							if bMessage:
 								CvUtil.sendMessage(
 									TRNSLTR.getText("TXT_KEY_MSG_TSUKIJI", (INFO.getDescription("BONUS_", BONUS),)),
-									iPlayer, 16, INFO.getButton("BONUS_", BONUS), ColorTypes(11), CyCity.getX(), CyCity.getY(), True, True
+									iPlayer, 16, INFO.getButton("BONUS_", BONUS), ColorTypes(11), iCityX, iCityY, True, True
 								)
 
 			elif KEY == "NAZCA_LINES":
 				NAZCA_LINES = GC.getInfoTypeForString("BUILDING_NAZCA_LINES")
 				if NAZCA_LINES > -1:
 					iEra = CyPlayer.getCurrentEra() + 1
+					# What this pins to the building is the one-shot EVENT/VOTE grant store -- genuine
+					# non-derivable state, separately persisted outside the recompute path
+					# ([state-repositories.md]: "having events just be stored in the cache is lunacy"), read and
+					# written by (owner, city, building) through STATE / ACT like the scenario serializer does.
+					# ⚠ ONE draw per era step, in this order: the synchronized stream is shared save state
+					# ([DEC-synced-rng-is-shared-state]), so neither the count of draws nor their order may move.
 					for i in xrange(iEra):
 						iRandom = GAME.getSorenRandNum(8, "NazcaLines")
 						if not iRandom:
-							iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 0)
-							CyCity.setBuildingCommerceChange(NAZCA_LINES, 0, iBase + 4)
+							aBase = STATE.getBuildingGrantedCommerces(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 0, aBase[0] + 4)
 						elif iRandom == 1:
-							iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 1)
-							CyCity.setBuildingCommerceChange(NAZCA_LINES, 1, iBase + 4)
+							aBase = STATE.getBuildingGrantedCommerces(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 1, aBase[1] + 4)
 						elif iRandom == 2:
-							iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 2)
-							CyCity.setBuildingCommerceChange(NAZCA_LINES, 2, iBase + 4)
+							aBase = STATE.getBuildingGrantedCommerces(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 2, aBase[2] + 4)
 						elif iRandom == 3:
-							iBase = CyCity.getBuildingCommerceChange(NAZCA_LINES, 3)
-							CyCity.setBuildingCommerceChange(NAZCA_LINES, 3, iBase + 4)
+							aBase = STATE.getBuildingGrantedCommerces(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 3, aBase[3] + 4)
 						elif iRandom == 4:
-							iBase = CyCity.getBuildingYieldChange(NAZCA_LINES, 0)
-							CyCity.setBuildingYieldChange(NAZCA_LINES, 0, iBase + 4)
+							aBase = STATE.getBuildingGrantedYields(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedYield(iPlayer, iCity, NAZCA_LINES, 0, aBase[0] + 4)
 						elif iRandom == 5:
-							iBase = CyCity.getBuildingYieldChange(NAZCA_LINES, 1)
-							CyCity.setBuildingYieldChange(NAZCA_LINES, 1, iBase + 4)
+							aBase = STATE.getBuildingGrantedYields(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedYield(iPlayer, iCity, NAZCA_LINES, 1, aBase[1] + 4)
 						elif iRandom == 6:
-							iBase = CyCity.getBuildingHappyChange(NAZCA_LINES)
-							CyCity.setBuildingHappyChange(NAZCA_LINES, iBase + 2)
+							iKind = BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS
+							aBase = STATE.getBuildingGrantedWellbeing(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedWellbeing(iPlayer, iCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
 						else:
-							iBase = CyCity.getBuildingHealthChange(NAZCA_LINES)
-							CyCity.setBuildingHealthChange(NAZCA_LINES, iBase + 2)
+							iKind = BuildingGrantedKind.BUILDING_GRANTED_HEALTH
+							aBase = STATE.getBuildingGrantedWellbeing(iPlayer, iCity, NAZCA_LINES)
+							ACT.setBuildingGrantedWellbeing(iPlayer, iCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
 		# Ishtar or Marco Polo
 		elif iBuilding in (mapBuildingType["ISHTAR"], mapBuildingType["MARCO_POLO"]):
-			CyArea = CyCity.area()
+			CyArea = MAP.getArea(MAP.plot(iCityX, iCityY).getArea())
 			iTeam = CyPlayer.getTeam()
 			CyTeam = GC.getTeam(iTeam)
 			for iTeamX in xrange(GC.getMAX_PC_TEAMS()):
@@ -1511,16 +1529,17 @@ class CvEventManager:
 		elif iBuilding == mapBuildingType["CLEOPATRA_NEEDLE"]:
 			from operator import itemgetter
 
-			iCityID = CyCity.getID()
 			aList = []
 			for CyCityX in CyPlayer.cities():
-				if CyCityX.getID() != iCityID:
-					aList.append((CyCityX, CyCityX.getCulture(iPlayer)))
+				# A city handle carries its IDENTITY SET alone ([patterns.md]), so the id addresses the read.
+				iCityIdX = CyCityX.getID()
+				if iCityIdX != iCity:
+					aList.append((iCityIdX, STATE.getCultureForPlayer(iPlayer, iCityIdX, iPlayer)))
 			if aList:
 				# Sort by descending culture
 				aList.sort(key=itemgetter(1), reverse=True)
 				for i, entry in enumerate(aList):
-					entry[0].changeHasBuilding(iBuilding, True)
+					ACT.addCityBuilding(iPlayer, entry[0], iBuilding)
 					if i == 1: # Max. 2 other cities will get the needle for free
 						break
 		# NANITE DEFUSER - destroyes all nukes from all players
@@ -1540,14 +1559,14 @@ class CvEventManager:
 			iImprovement = GC.getInfoTypeForString("IMPROVEMENT_MACHU_PICCHU")
 			if iImprovement > -1:
 				aList = []
-				for CyPlot in CyCity.plot().rect(3, 3):
+				for CyPlot in MAP.plot(iCityX, iCityY).rect(3, 3):
 					if CyPlot.isPeak():
 						aList.append(CyPlot)
 				if aList:
 					CyPlot = aList[GAME.getSorenRandNum(len(aList), "Random Peak")]
 					CyPlot.setImprovementType(iImprovement)
 				else:
-					print ("Warning CvEventManager.onBuildingBuilt\n\tMachu Picchu has been built in %s where there is no peaks in vicinity." % CyCity.getName())
+					print ("Warning CvEventManager.onBuildingBuilt\n\tMachu Picchu has been built in %s where there is no peaks in vicinity." % STATE.getCityName(iPlayer, iCity))
 			else:
 				print "Warning CvEventManager.onBuildingBuilt\n\tIMPROVEMENT_MACHU_PICCHU doesn't exist"
 		# Field of the Cloth of Gold
@@ -1563,8 +1582,7 @@ class CvEventManager:
 		elif iBuilding == mapBuildingType["MAGINOTLINE"]:
 			iBunker = GC.getInfoTypeForString("IMPROVEMENT_COMMAND_BUNKER")
 			if iBunker > -1:
-				MAP = GC.getMap()
-				iArea = CyCity.plot().getArea()
+				iArea = MAP.plot(iCityX, iCityY).getArea()
 				iGridX = MAP.getGridWidth()
 				iGridY = MAP.getGridHeight()
 				bWrapX = MAP.isWrapX()
@@ -1629,10 +1647,10 @@ class CvEventManager:
 			if iUnit < 0:
 				print "Error CvEventManager.onBuildingBuilt\n\tUNIT_SPY doesn't exist, aborting python effect for the silk road"
 				return
-			MAP = GC.getMap()
-			CyPlot = CyCity.plot()
+			CyPlot = MAP.plot(iCityX, iCityY)
 			iArea = CyPlot.getArea()
-			CyPlot0 = CyPlot1 = CyPlayer.getCapitalCity().plot()
+			CyCapital = CyPlayer.getCapitalCity()
+			CyPlot0 = CyPlot1 = MAP.plot(CyCapital.getX(), CyCapital.getY())
 
 			iSilk = GC.getInfoTypeForString("BONUS_SILK")
 			iSilkFarm = GC.getInfoTypeForString("IMPROVEMENT_SILK_FARM")
@@ -1672,7 +1690,7 @@ class CvEventManager:
 					if CyPlotZ.isCity() == 1 and iOwner != iPlayer:
 						if MAP.generatePathForHypotheticalUnit(CyPlot0, CyPlotZ, iPlayer, iUnit, PathingFlags.MOVE_IGNORE_DANGER+PathingFlags.MOVE_THROUGH_ENEMY, 1000):
 							CyCityZ = CyPlotZ.getPlotCity()
-							iPopu = CyCityZ.getPopulation()
+							iPopu = STATE.getCityPopulation(CyCityZ.getOwner(), CyCityZ.getID())
 							iPath = MAP.getLastPathStepNum()
 							if iPopu > iThePopu or (iPath > iThePath and iPopu > iThePopu - iThePopu / 8):
 								CyPlot1 = CyPlotZ
@@ -1697,18 +1715,16 @@ class CvEventManager:
 			if iUnit < 0:
 				print "Error CvEventManager.onBuildingBuilt\n\tUNIT_WORKER doesn't exist, aborting python effect for Route 66"
 				return
-			iCityID = CyCity.getID()
-			MAP = GC.getMap()
-			CyPlot = CyCity.plot()
-			iAreaID = CyCity.area().getID()
+			CyPlot = MAP.plot(iCityX, iCityY)
+			iAreaID = CyPlot.getArea()
 
 			iThePopu = 0
 			iThePath = 0
 			for CyCityX in CyPlayer.cities():
-				if CyCityX.area().getID() == iAreaID and CyCityX.getID() != iCityID:
-					CyPlotX = CyCityX.plot()
+				CyPlotX = MAP.plot(CyCityX.getX(), CyCityX.getY())
+				if CyPlotX.getArea() == iAreaID and CyCityX.getID() != iCity:
 					if MAP.generatePathForHypotheticalUnit(CyPlot, CyPlotX, iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 1000):
-						iPopu = CyCityX.getPopulation()
+						iPopu = STATE.getCityPopulation(iPlayer, CyCityX.getID())
 						iPath = MAP.getLastPathStepNum()
 						if iPopu > iThePopu or (iPath > iThePath and iPopu > iThePopu - iThePopu / 8):
 							CyCityDo = CyCityX
@@ -1719,7 +1735,7 @@ class CvEventManager:
 			if iThePath and MAP.generatePathForHypotheticalUnit(CyPlot, CyPlotDo, iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 1000):
 				iBuilding = GC.getInfoTypeForString("BUILDING_ROUTE_66_TERMINUS")
 				if iBuilding > -1:
-					CyCityDo.changeHasBuilding(iBuilding, True)
+					ACT.addCityBuilding(iPlayer, CyCityDo.getID(), iBuilding)
 				iRoute = GC.getInfoTypeForString("ROUTE_HIGHWAY")
 				if iRoute > -1:
 					for k in xrange(MAP.getLastPathStepNum()):
@@ -1737,10 +1753,9 @@ class CvEventManager:
 				return
 			if iPlayer == GAME.getActivePlayer():
 				CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_APPIAN_BUILT",()), iPlayer)
-			MAP = GC.getMap()
 			# The appian city
-			iCityID = CyCity.getID()
-			iAreaID = CyCity.area().getID()
+			CyCityPlot = MAP.plot(iCityX, iCityY)
+			iAreaID = CyCityPlot.getArea()
 
 			# Find start-point and cache city info
 			aCityList = []
@@ -1748,8 +1763,9 @@ class CvEventManager:
 			iCities = 0
 			CyCityStart = None
 			for CyCityX in CyPlayer.cities():
-				if CyCityX.getID() != iCityID and CyCityX.area().getID() == iAreaID:
-					if MAP.generatePathForHypotheticalUnit(CyCity.plot(), CyCityX.plot(), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999):
+				CyPlotX = MAP.plot(CyCityX.getX(), CyCityX.getY())
+				if CyCityX.getID() != iCity and CyPlotX.getArea() == iAreaID:
+					if MAP.generatePathForHypotheticalUnit(CyCityPlot, CyPlotX, iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999):
 						iPath2Appia = MAP.getLastPathStepNum()
 						if iPath2Appia > iMaxPath2Appia:
 							iMaxPath2Appia = iPath2Appia
@@ -1767,7 +1783,7 @@ class CvEventManager:
 					i = 0
 					while i < iCities:
 						CyCityX = aCityList[i][0]
-						MAP.generatePathForHypotheticalUnit(CyCityStart.plot(), CyCityX.plot(), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999)
+						MAP.generatePathForHypotheticalUnit(MAP.plot(CyCityStart.getX(), CyCityStart.getY()), MAP.plot(CyCityX.getX(), CyCityX.getY()), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999)
 						iPath = MAP.getLastPathStepNum()
 						if iPath > iMaxPath:
 							iMaxPath = iPath
@@ -1776,7 +1792,7 @@ class CvEventManager:
 						i += 1
 					aCityList.pop(iIdx)
 					iCities -= 1
-					MAP.generatePathForHypotheticalUnit(CyCityEnd.plot(), CyCity.plot(), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999)
+					MAP.generatePathForHypotheticalUnit(MAP.plot(CyCityEnd.getX(), CyCityEnd.getY()), CyCityPlot, iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999)
 					iOtherPath2Appia = MAP.getLastPathStepNum()
 					aCityList0 = list(aCityList)
 					iCities0 = iCities
@@ -1792,7 +1808,7 @@ class CvEventManager:
 					while i < iCities:
 						CyCityX, iPath2Appia = aCityList[i]
 						if iPath2Appia <= iMaxPath2Appia:
-							MAP.generatePathForHypotheticalUnit(CyCityFrom.plot(), CyCityX.plot(), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999)
+							MAP.generatePathForHypotheticalUnit(MAP.plot(CyCityFrom.getX(), CyCityFrom.getY()), MAP.plot(CyCityX.getX(), CyCityX.getY()), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999)
 							iPath = MAP.getLastPathStepNum()
 							if not iMinPath or iPath < iMinPath:
 								iMinPath = iPath
@@ -1802,7 +1818,7 @@ class CvEventManager:
 						# Connect two cities on the way to appia
 						CyCityTo, iPath2Appia = aCityList.pop(iIdx)
 						iCities -= 1
-						if MAP.generatePathForHypotheticalUnit(CyCityFrom.plot(), CyCityTo.plot(), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999):
+						if MAP.generatePathForHypotheticalUnit(MAP.plot(CyCityFrom.getX(), CyCityFrom.getY()), MAP.plot(CyCityTo.getX(), CyCityTo.getY()), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999):
 							for j in xrange(MAP.getLastPathStepNum()):
 								pRoutePlot = MAP.getLastPathPlotByIndex(j)
 								if pRoutePlot:
@@ -1811,7 +1827,7 @@ class CvEventManager:
 						iMaxPath2Appia = iPath2Appia
 					else:
 						# Connect to the appian city
-						if MAP.generatePathForHypotheticalUnit(CyCityFrom.plot(), CyCity.plot(), iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999):
+						if MAP.generatePathForHypotheticalUnit(MAP.plot(CyCityFrom.getX(), CyCityFrom.getY()), CyCityPlot, iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 9999):
 							for j in xrange(MAP.getLastPathStepNum()):
 								pRoutePlot = MAP.getLastPathPlotByIndex(j)
 								if pRoutePlot:
@@ -1827,8 +1843,10 @@ class CvEventManager:
 
 			else: # The wonder should do something in this case.
 				# Let's fill out the fat cross of the city with the route.
-				for i in xrange(GC.getNUM_CITY_PLOTS()):
-					CyPlot = CyCity.getCityIndexPlot(i)
+				# The city's potential work area, ring-ordered from the centre out; plots the map does not hold
+				# are already skipped, so there is no hole to test for.
+				for iPlotX, iPlotY in STATE.getCityPlots(iPlayer, iCity):
+					CyPlot = MAP.plot(iPlotX, iPlotY)
 					if CyPlot and CyPlot.canBuild(iRoute, iPlayer, False):
 						CyPlot.setRouteType(iRoute)
 		# Golden Spike
@@ -1841,7 +1859,7 @@ class CvEventManager:
 			if iRoute < 0:
 				print "Error CvEventManager.onBuildingBuilt\n\tROUTE_RAILROAD doesn't exist, aborting python effect for Golden Spike"
 				return
-			cityPlot = CyCity.plot()
+			cityPlot = MAP.plot(iCityX, iCityY)
 			iArea = cityPlot.getArea()
 			x0 = x1 = x2 = cityPlot.getX()
 			y0 = y1 = y2 = cityPlot.getY()
@@ -1852,7 +1870,6 @@ class CvEventManager:
 			if iPlayer == GAME.getActivePlayer():
 				CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_GOLDEN_SPIKE_BUILT",()), iPlayer)
 
-			MAP = GC.getMap()
 
 			for plotX in MAP.plots():
 				if (plotX.getArea() != iArea
@@ -1911,8 +1928,8 @@ class CvEventManager:
 			CvUtil.sendImmediateMessage(TRNSLTR.getText("TXT_KEY_MSG_ZIZKOV_JAM",()))
 		elif iBuilding == mapBuildingType["NEANDERTHAL_EMBASSY"]:
 			iLocal = GC.getInfoTypeForString("BUILDING_C_L_NEANDERTHAL")
-			for cityX in CyPlayer.cities():
-				cityX.changeHasBuilding(iLocal, True)
+			for CyCityX in CyPlayer.cities():
+				ACT.addCityBuilding(iPlayer, CyCityX.getID(), iLocal)
 
 
 	def onProjectBuilt(self, argsList):

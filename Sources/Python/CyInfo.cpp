@@ -363,6 +363,13 @@ bool CyInfo::canSpreadReligion(int iUnitId) const
 	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
 	return pUnit ? !pUnit->getReligionSpread().empty() : false;
 }
+//	Does this building play a completion MOVIE -- the whole of what the wonder-movie popup gates on. The screen
+//	that follows resolves the ART_DEF_MOVIE_* tag itself, so the boundary hands over a verdict and never a tag.
+bool CyInfo::hasMovie(int iBuildingId) const
+{
+	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
+	return pBuilding ? pBuilding->hasMovie() : false;
+}
 
 bool CyInfo::hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const
 {
@@ -848,6 +855,7 @@ void CyInfo::pythonPublish()
 		.def("isSpy",               &CyInfo::isSpy)
 		.def("isAnimal",            &CyInfo::isAnimal)
 		.def("canSpreadReligion",   &CyInfo::canSpreadReligion)
+		.def("hasMovie",            &CyInfo::hasMovie)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)

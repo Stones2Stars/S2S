@@ -1265,6 +1265,36 @@ move, not a review step: `grep -rn '\.def("[^"]*<Concept>' Sources/Python/ Sourc
 ⚑ A live per-object question lands on `CyState` even when it reads as availability, which is exactly why a
 single-class grep misses it.
 
+**⛔ A LITERAL `.def("` GREP UNDER-REPORTS THE PUBLISHED SURFACE, IN TWO DIFFERENT WAYS — and believing one is
+how a read gets added that already exists, or a working read gets "fixed".**
+- **The surface lives in the LOADERS, not in the `Cy*.cpp` files.** `CyPlayer.cpp`, `CyPlot.cpp` and
+  `CyGlobalContext.cpp` publish NOTHING; their defs are in `Sources/Infrastructure/CvPython{Player,Plot,GlobalContext}Loader.cpp`.
+  Grepping the type's own file concludes the whole wrapper is dead when it is richly published.
+- **Some defs are MACRO-GENERATED and carry no literal name at all.** `DO_FOR_EACH_EXPOSED_INFO_TYPE` /
+  `DO_FOR_EACH_EXPOSED_INT_GLOBAL_DEFINE` expand to one def per entry, so `getUNIT_WORKER` and its kin are
+  published while no `.def("getUNIT_WORKER"` string exists anywhere.
+⇒ **Search the loaders too, and expand the macro tables before calling a read unserved.** ⚠ The failure is
+one-directional and quiet: it never reports a read as missing that is present, it reports a PRESENT read as
+missing — so the wasted work looks like ordinary work.
+
+**⛔ A CITY REACHES PYTHON IN TWO DIFFERENT REPRESENTATIONS, BOTH LIVE, AND WHICH ONE A SITE HOLDS DECIDES THE
+CONVERSION.** They are easy to conflate because both are "the identity":
+- **An identity TUPLE** — anything the engine PUSHES (`Cy::Args() << pCity`, so every `CvEventReporter` argument)
+  crosses through `DECLARE_PY_IDENTITY` as a plain `(owner, id)` pair. It has no methods at all; every `.getX()`
+  on one is the tuple-deref failure.
+- **An identity HANDLE** — anything a published accessor RETURNS (`CyPlayer.cities()`, `getCapitalCity()`,
+  `CyPlot.getPlotCity()`) is a real `CyCity` carrying exactly four defs: `getOwner` / `getID` / `getX` / `getY`.
+⇒ **A handler argument is unpacked; a handle is ASKED for its address and then read through `STATE`/`ACT` by that
+address.** ⛔ Do not "convert" a handle's `getID()` into an unpack — it works — and do not leave a pushed
+argument's `.getID()` standing because a handle elsewhere in the same function has one.
+
+**⚠ CONVERTING A HANDLER CAN INTRODUCE AN `UnboundLocalError` THAT WAS NOT THERE BEFORE — the `MAP` shape.**
+Several long handlers rebind a module global inside one branch (`MAP = GC.getMap()`), which makes that name a
+FUNCTION-LOCAL for the WHOLE body. Adding a use of it EARLIER — which the conversion does constantly, since a
+city's plot is now reached through the map — raises at runtime in branches that never touched it. ⇒ When a
+conversion starts using such a name earlier than its first assignment, bind it ONCE at the top and drop the
+per-branch rebinds; the rebinds were there for per-call freshness, which one top-level binding preserves.
+
 ⛔ **Do NOT half-convert.** A handler whose args are ids while its body still calls a method that does not exist
 RELOCATES the failure ([roadmap.md](roadmap.md) § scope decision 6) — finish a handler or leave it untouched.
 ⛔ And do not borrow a legacy read to fill a gap: ADD the read to the library

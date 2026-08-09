@@ -260,6 +260,9 @@ public:
 	// enabler owns, while what the caller actually wants is authored directly as `spread.religion`
 	// ([json.md] §9 -- its own block precisely so a reader is not left inferring it from a prereq).
 	bool canSpreadReligion(int iUnitId) const;
+	// Does this BUILDING play a completion movie? The wonder-movie popup gates on the verdict alone, and the
+	// screen behind it resolves the ART_DEF_MOVIE_* tag itself -- so no tag string crosses the boundary.
+	bool hasMovie(int iBuildingId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
 	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.

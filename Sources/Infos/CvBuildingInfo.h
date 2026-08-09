@@ -199,6 +199,13 @@ public:
 	// building ever authors, so every building answered "" and the interface asked the resource manager to load
 	// an empty texture path.
 	virtual const char* getButton() const;
+	// ui.art.movie.defineTag -- the ART_DEF_MOVIE_* tag of the one-off movie a wonder plays on completion, the
+	// same unmigrated ART boundary as getArtInfo: the JSON carries the tag id and the definition stays in the
+	// ART XML. 805 buildings author one, so the datum is live authored data rather than a legacy leftover.
+	// ⚠ hasMovie asks only WHETHER one is authored, which is the whole of what the completion popup gates on --
+	// resolving the tag is ARTFILEMGR's job at the moment the movie screen opens.
+	bool hasMovie() const                   { return !m_szMovieDefineTag.empty(); }
+	const char* getMovieDefineTag() const   { return m_szMovieDefineTag.c_str(); }
 	int getSpecialBuildingType() const      { return m_iSpecialBuildingType; }      // SPECIALBUILDING_* FK (group cap, json §4.4)
 	int getFreeStartEra() const             { return m_iFreeStartEra; }             // ERA FK
 	int getDiploVoteType() const            { return m_iDiploVoteType; }            // DIPLOVOTE_* FK
@@ -271,6 +278,7 @@ private:
 	int m_iGreatPeopleUnitType;
 	int m_iAdvisor;
 	std::string m_szArtDefineTag;
+	std::string m_szMovieDefineTag;
 	int m_iSpecialBuildingType;
 	int m_iFreeStartEra;
 	int m_iDiploVoteType;

@@ -113,6 +113,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_iGlobalPopulationChange = 0;
 	m_iFreeTechs = 0;
 	m_szArtDefineTag.clear();
+	m_szMovieDefineTag.clear();
 
 	// PROPERTY_* per-turn SOURCES: a building's <PROPERTY_X>.city.flat (the crime/disease/pollution cuts and
 	// adders that make the solver's numbers move) deposits in ITS OWN city -- NO_RELATION, the legacy building
@@ -132,6 +133,19 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	if (const picojson::object* pArt = jsonWorldArt(entityObj))
 	{
 		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+	}
+
+	// ui.art.movie.defineTag -- the completion movie's ART_DEF_MOVIE_* tag. It sits under UI art rather than
+	// world art because a movie is interface presentation, not the on-map model (json.md par.7).
+	if (const picojson::object* pUi = jsonChildObj(entityObj, "ui"))
+	{
+		if (const picojson::object* pUiArt = jsonChildObj(*pUi, "art"))
+		{
+			if (const picojson::object* pMovie = jsonChildObj(*pUiArt, "movie"))
+			{
+				jsonIdStr(*pMovie, "defineTag", m_szMovieDefineTag);
+			}
+		}
 	}
 
 	// --- the §9 FK sections: shrine (religion) + headquarters (corporation) -- the relationship IS the data ---

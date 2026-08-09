@@ -143,6 +143,9 @@ public:
 	// A coordinate is the one PAIR here: x and y are meaningless apart, so they cross as one [x, y] list rather
 	// than as two getters.
 	python::list getCityPosition(int iPlayer, int iCity) const;
+	// The city's potential work area as [(x, y), …], RING-ORDERED from the centre outward ([contexts.md]).
+	// Plots the map does not hold are skipped, so a caller never meets a hole.
+	python::list getCityPlots(int iPlayer, int iCity) const;
 	// The UNIT twin. ⚠ A unit's position is part of the IDENTITY SET on the handle
 	// ([patterns.md] THE IDENTITY SET: owner, id, POSITION), but an EVENT PAYLOAD carries only (owner, id) --
 	// so a handler that was handed a payload has no handle to ask and needs this. Answers (-1, -1) for a unit

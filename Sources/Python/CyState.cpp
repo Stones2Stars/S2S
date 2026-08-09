@@ -396,6 +396,27 @@ python::list CyState::getCityPosition(int iPlayer, int iCity) const
 	return cys_toList(values);
 }
 
+//	The city's PLOT TABLE as [(x, y), …] -- the potential work area, RING-ORDERED (index 0 the city centre, then
+//	ring 1, ring 2, ring 3), which is the addressing [contexts.md] specifies. A plot the map does not hold is
+//	SKIPPED rather than reported as a hole, so a caller iterates what it is given and never tests for one.
+//	⚠ It is the POTENTIAL table, not the worked or owned set -- a consumer wanting either asks for that verdict.
+python::list CyState::getCityPlots(int iPlayer, int iCity) const
+{
+	python::list plots = python::list();
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL) return plots;
+
+	for (int iIndex = 0; iIndex < NUM_CITY_PLOTS; ++iIndex)
+	{
+		const CvPlot* pPlot = pCity->getCityIndexPlot(iIndex);
+		if (pPlot != NULL)
+		{
+			plots.append(python::make_tuple(pPlot->getX(), pPlot->getY()));
+		}
+	}
+	return plots;
+}
+
 int CyState::getCityPopulation(int iPlayer, int iCity) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
@@ -1372,6 +1393,7 @@ void CyState::pythonPublish()
 		.def("getBaseYieldRateRanks",    &CyState::getBaseYieldRateRanks)
 		.def("getCommerceRateRanks",     &CyState::getCommerceRateRanks)
 		.def("getCityPosition",          &CyState::getCityPosition)
+		.def("getCityPlots",             &CyState::getCityPlots)
 		.def("getUnitPosition",          &CyState::getUnitPosition)
 		.def("getCityPopulation",        &CyState::getCityPopulation)
 		.def("getCityRealPopulation",    &CyState::getCityRealPopulation)
