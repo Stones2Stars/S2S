@@ -323,16 +323,32 @@ public:
 	// x100 like every amount ([DEC-fixedpoint-x100]); the reader divides at the point of use.
 	python::list getFlatYields(const std::string& szTypePrefix, int iId, int iScope) const;
 	python::list getFlatCommerces(const std::string& szTypePrefix, int iId, int iScope) const;
-	// The PERCENT side of the same address -- the modifier a source deposits onto a commerce channel, as
-	// opposed to the flat above. Its own read because the two are DIFFERENT SLOTS: the unit is part of the
-	// deposit's key (modifier.md §2), so one getter could not answer both without taking the unit as an
-	// argument, which is the scale-in-the-signature shape [DEC-fixedpoint-x100] rejects.
-	// ⚠ A PERCENT is NOT x100 -- a reader never divides one.
-	python::list getCommerceModifiers(const std::string& szTypePrefix, int iId, int iScope) const;
-	// The DEFENSE group, indexed by DefenseKind. The whole family is authored `percent` ([json.md] §6: the
-	// values are additive defense points APPLIED as a percentage, and defense carries no decimals), so this
-	// is the percent side throughout and is likewise never divided.
-	python::list getDefenseKinds(const std::string& szTypePrefix, int iId, int iScope) const;
+	// ---- THE WHAT-IF: what this CANDIDATE would ADD to that city, resolved against its live contexts ----
+	// ⚖ The valuation protocol ([patterns.md] § THE VALUATION PROTOCOL): the contexts go IN and the resolved
+	// DELTA comes out -- never the raw authored deposit and never the new total. The context IS the current
+	// value, so a percent resolves against the base it multiplies and the conditioned tail is evaluated
+	// through the ONE evaluator; a caller passes no amounts of its own.
+	// ⛔ These are NOT the `get*` reads above wearing a city argument. Those answer *what do I CARRY* off the
+	// authored data ([patterns.md] § THE TWO READ ROLES); these answer *what would I GAIN HERE*, and the two
+	// must never look interchangeable. A recommender asks THIS one.
+	// ⚑ ONE call answers a whole group, and the SAME call answers the AI's weighting and the build-list hover
+	// tooltip -- which is what keeps the number a player is shown and the number the AI plans against the same
+	// number, structurally ([DEC-single-implementation]).
+	// x100 like every amount; percents are unscaled ([DEC-fixedpoint-x100]).
+	// ⚠ Answers an empty list when the (player, city) pair does not resolve -- a caller tests it rather than
+	// reading a zero as "this candidate is worth nothing".
+	python::list expectedWellbeing(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const;
+	python::list expectedFlatYields(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const;
+	// The PLOTS-TARGET contribution in one read -- each plots-target deposit scaled by the city context's
+	// STORED `plotAttrs` count, so a "+1 food per water tile" answers against the tiles this city actually
+	// has. It is the read that retires the legacy per-PlotType table: `PLOT_OCEAN` is not a key any more
+	// ([json.md] §6.1 -- a water plot is `plots {IS_WATER}`), and the two shapes the data now authors (a
+	// terrain-keyed flat and a predicate-gated plots entry) are BOTH folded here.
+	python::list expectedPlotYields(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const;
+	python::list expectedFlatCommerces(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const;
+	// The grouped-family what-ifs, over the family's own kind enum.
+	python::list expectedCommerceModifiers(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const;
+	python::list expectedDefenseKinds(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const;
 
 	// ⚑ THE BULK INDEX SHAPE -- one boundary crossing for a WHOLE id->value column, not one per entity.
 	// A boost::python call costs far more than the lookup inside it, so the read that scales is the one that

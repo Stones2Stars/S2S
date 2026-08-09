@@ -15,6 +15,9 @@
 #include "Infos/CvEdges.h"           // the load-derived edge families ([DEC-one-reverse-view])
 #include "Infos/CvClassificationRegistry.h"   // the cold-path authored-key -> generated-id resolve
 #include "Infos/CvClassificationIds.h"        // the GENERATED CLS_* ids the NAMED endpoints resolve internally
+#include "Engine/CvCity.h"       // the what-if's CityContext + plot group
+#include "Engine/CvPlayer.h"     // the what-if's EmpireContext
+#include "AI/CvPlayerAI.h"       // GET_PLAYER -- the player resolve behind the (player, city) address
 #include "Infos/CvUnitInfo.h"                 // the spread block behind the named canSpreadReligion endpoint
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
@@ -567,26 +570,108 @@ python::list CyInfo::getFlatCommerces(const std::string& szTypePrefix, int iId, 
 	return values;
 }
 
-python::list CyInfo::getCommerceModifiers(const std::string& szTypePrefix, int iId, int iScope) const
+namespace
+{
+	// The what-if's three inputs, resolved from the (player, city) address every read on this surface takes.
+	// Answers false when either half does not resolve, so a caller gets an empty list rather than a zero it
+	// would read as a real verdict.
+	bool cyi_valuationCtx(int iPlayer, int iCity,
+		const CvCity** ppCity, const CvPlayer** ppOwner)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS || iCity < 0) return false;
+		const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)iPlayer);
+		const CvCity* pCity = kOwner.getCity(iCity);
+		if (pCity == NULL) return false;
+		*ppCity = pCity;
+		*ppOwner = &kOwner;
+		return true;
+	}
+}
+
+python::list CyInfo::expectedWellbeing(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const
 {
 	python::list values;
 	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	const CvCity* pCity = NULL;
+	const CvPlayer* pOwner = NULL;
+	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
+	int aChannels[NUM_WELLBEING_CHANNELS];
+	pInfo->expectedWellbeing(pCity->getCityContext(), pOwner->getEmpireContext(),
+		pCity->plotGroup((PlayerTypes)iPlayer), aChannels);
+	for (int i = 0; i < NUM_WELLBEING_CHANNELS; ++i) values.append(aChannels[i]);
+	return values;
+}
+
+python::list CyInfo::expectedFlatYields(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	const CvCity* pCity = NULL;
+	const CvPlayer* pOwner = NULL;
+	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
+	int aYields[NUM_YIELD_TYPES];
+	pInfo->expectedFlatYields(pCity->getCityContext(), pOwner->getEmpireContext(),
+		pCity->plotGroup((PlayerTypes)iPlayer), aYields);
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i) values.append(aYields[i]);
+	return values;
+}
+
+python::list CyInfo::expectedPlotYields(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	const CvCity* pCity = NULL;
+	const CvPlayer* pOwner = NULL;
+	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
+	int aYields[NUM_YIELD_TYPES];
+	pInfo->expectedPlotYields(pCity->getCityContext(), pOwner->getEmpireContext(),
+		pCity->plotGroup((PlayerTypes)iPlayer), aYields);
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i) values.append(aYields[i]);
+	return values;
+}
+
+python::list CyInfo::expectedFlatCommerces(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	const CvCity* pCity = NULL;
+	const CvPlayer* pOwner = NULL;
+	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
+	int aCommerce[NUM_COMMERCE_TYPES];
+	pInfo->expectedFlatCommerce(pCity->getCityContext(), pOwner->getEmpireContext(),
+		pCity->plotGroup((PlayerTypes)iPlayer), aCommerce);
+	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) values.append(aCommerce[i]);
+	return values;
+}
+
+python::list CyInfo::expectedCommerceModifiers(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	const CvCity* pCity = NULL;
+	const CvPlayer* pOwner = NULL;
+	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 	{
-		values.append(pInfo ? pInfo->modifier(infoCommerceFamily(iCommerce), CHANNEL_AMOUNT,
-			(CvCascScope)iScope, CASC_UNIT_PERCENT) : 0);
+		values.append(pInfo->expectedModifier(infoCommerceFamily(iCommerce), CHANNEL_AMOUNT,
+			CASC_UNIT_PERCENT, pCity->getCityContext(), pOwner->getEmpireContext(),
+			pCity->plotGroup((PlayerTypes)iPlayer)));
 	}
 	return values;
 }
 
-python::list CyInfo::getDefenseKinds(const std::string& szTypePrefix, int iId, int iScope) const
+python::list CyInfo::expectedDefenseKinds(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const
 {
 	python::list values;
 	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	const CvCity* pCity = NULL;
+	const CvPlayer* pOwner = NULL;
+	if (pInfo == NULL || !cyi_valuationCtx(iPlayer, iCity, &pCity, &pOwner)) return values;
 	for (int iKind = 0; iKind < NUM_DEFENSE_KINDS; ++iKind)
 	{
-		values.append(pInfo ? pInfo->modifier(MODFAM_DEFENSE, iKind,
-			(CvCascScope)iScope, CASC_UNIT_PERCENT) : 0);
+		values.append(pInfo->expectedModifier(MODFAM_DEFENSE, iKind, CASC_UNIT_PERCENT,
+			pCity->getCityContext(), pOwner->getEmpireContext(),
+			pCity->plotGroup((PlayerTypes)iPlayer)));
 	}
 	return values;
 }
@@ -936,8 +1021,12 @@ void CyInfo::pythonPublish()
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("getFlatYields", &CyInfo::getFlatYields)
 		.def("getFlatCommerces", &CyInfo::getFlatCommerces)
-		.def("getCommerceModifiers", &CyInfo::getCommerceModifiers)
-		.def("getDefenseKinds", &CyInfo::getDefenseKinds)
+		.def("expectedWellbeing", &CyInfo::expectedWellbeing)
+		.def("expectedFlatYields", &CyInfo::expectedFlatYields)
+		.def("expectedPlotYields", &CyInfo::expectedPlotYields)
+		.def("expectedFlatCommerces", &CyInfo::expectedFlatCommerces)
+		.def("expectedCommerceModifiers", &CyInfo::expectedCommerceModifiers)
+		.def("expectedDefenseKinds", &CyInfo::expectedDefenseKinds)
 		.def("getIdList", &CyInfo::getIdList)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;
