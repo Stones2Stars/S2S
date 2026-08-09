@@ -8348,7 +8348,6 @@ void CvCityAI::AI_updateBestBuild()
 	PROFILE_FUNC();
 	if (!m_bestBuildValuesStale)
 	{
-		OutputDebugString(CvString::format("City %S skips re-evaluation of build values\n", getName().GetCString()).c_str());
 		return;
 	}
 	m_bestBuildValuesStale = false;
