@@ -2019,12 +2019,14 @@ class CvEventManager:
 
 	def onUnitBuilt(self, argsList):
 		CyCity, CyUnit = argsList
+		iCityOwner, iCityID = CyCity
+		iPlayer, iUnitID = CyUnit
+		aUnit = STATE.getUnitRead(iPlayer, iUnitID)
 		if DebugUtils.bDebugMode:
-			print "%s Built %s in %s" %(GC.getPlayer(CyCity.getOwner()).getCivilizationDescription(0), CyUnit.getName(), CyCity.getName())
+			print "%s Built %s in %s" %(GC.getPlayer(iCityOwner).getCivilizationDescription(0), STATE.getUnitName(iPlayer, iUnitID), STATE.getCityName(iCityOwner, iCityID))
 		CvAdvisorUtils.unitBuiltFeats(CyCity, CyUnit)
-		iPlayer = CyUnit.getOwner()
 		CyPlayer = GC.getPlayer(iPlayer)
-		iUnit = CyUnit.getUnitType()
+		iUnit = aUnit[UnitReadKind.UNIT_READ_TYPE]
 		'''
 		## Hero Movie (Not implemented yet)
 		if not self.bNetworkMP and iPlayer == GAME.getActivePlayer() and isWorldUnit(iUnit):
@@ -2042,16 +2044,18 @@ class CvEventManager:
 			CyTeam = GC.getTeam(CyPlayer.getTeam())
 			if CyTeam.isHasTech(self.TECH_SMART_DUST):
 				iSensors = self.PROMOTION_SENSORS
-				if CyUnit.isPromotionValid(iSensors):
-					CyUnit.setHasPromotion(iSensors, True)
+				# The FREE-promotion gate, not canUnitAcquirePromotion: this is a GRANT, and the acquire read
+				# answers the level-up question ([special-systems.md]: a free promotion bypasses tech prereqs).
+				if STATE.isUnitPromotionValid(iPlayer, iUnitID, iSensors):
+					ACT.setUnitPromotion(iPlayer, iUnitID, iSensors, True)
 
 		# Immigration Mod
 		if iUnit == self.UNIT_IMMIGRANT:
-			iNewPop = CyCity.getPopulation() - 2
+			iNewPop = STATE.getCityPopulation(iCityOwner, iCityID) - 2
 			if iNewPop > -1:
 				if iNewPop == 0:
 					iNewPop = 1
-				CyCity.setPopulation(iNewPop)
+				ACT.setCityPopulation(iCityOwner, iCityID, iNewPop)
 
 
 	def onUnitKilled(self, argsList):

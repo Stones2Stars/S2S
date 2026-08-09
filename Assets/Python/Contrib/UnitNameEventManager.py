@@ -85,6 +85,7 @@ RENAME_EVENT_ID = CvUtil.getNewEventID()
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -107,26 +108,26 @@ class UnitNameEventManager:
 	def onUnitBuilt(self, argsList):
 		pUnit = argsList[1]
 		if pUnit is None: return
-
-		iPlayer = pUnit.getOwner()
+		iPlayer, iUnitId = pUnit
+		aUnit = STATE.getUnitRead(iPlayer, iUnitId)
 		if iPlayer != GC.getGame().getActivePlayer() or not UnitNamingOpt.isEnabled():
 			# Not having the same name for a unit will cause OOS issues if unit names are considered part of the game-state.
 			# Remove "iPlayer != GC.getGame().getActivePlayer()" to fix it if that's the case.
 			return
 
 		if UnitNamingOpt.isAdvanced():
-			zsUnitNameConv = UnitNamingOpt.getByEraAndClass(INFO.getType("C2C_ERA_", GC.getPlayer(iPlayer).getCurrentEra())[4:], INFO.getType("UNIT_", pUnit.getUnitType())[5:])
+			zsUnitNameConv = UnitNamingOpt.getByEraAndClass(INFO.getType("C2C_ERA_", GC.getPlayer(iPlayer).getCurrentEra())[4:], INFO.getType("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])[5:])
 		else: zsUnitNameConv = UnitNamingOpt.getDefault()
 
-		zsUnitName = UnitReName().getUnitName(zsUnitNameConv, pUnit, argsList[0], True)
+		zsUnitName = UnitReName().getUnitName(zsUnitNameConv, iPlayer, iUnitId, argsList[0], True)
 
 		if zsUnitName:
-			pUnit.setName(zsUnitName)
+			ACT.setUnitName(iPlayer, iUnitId, zsUnitName)
 
 
 class UnitReName(object):
 
-	def getUnitName(self, sUnitNameConv, pUnit, pCity, bIncrementCounter):
+	def getUnitName(self, sUnitNameConv, iPlayer, iUnitId, pCity, bIncrementCounter):
 		zsName = sUnitNameConv
 
 ##  - ^civ4^ - no naming convention, uses standard civ4
@@ -134,16 +135,16 @@ class UnitReName(object):
 		if zsName.find("^civ4^") != -1:
 			return ""
 
-		iPlayer = pUnit.getOwner()
+		aUnit = STATE.getUnitRead(iPlayer, iUnitId)
 		pPlayer = GC.getPlayer(iPlayer)
 
 		zsCiv = pPlayer.getCivilizationAdjective(0)
 		zsLeader = pPlayer.getName()
-		zsUnitCombat = self.getUnitCombat(pUnit)
-		zsUnitDomain = BugUtil.getPlainText("TXT_KEY_BUG_UNIT_NAMING_" + INFO.getType("DOMAIN_", pUnit.getDomainType()))
-		zsUnit = INFO.getDescription("UNIT_", pUnit.getUnitType())
+		zsUnitCombat = self.getUnitCombat(aUnit[UnitReadKind.UNIT_READ_COMBAT_CLASS])
+		zsUnitDomain = BugUtil.getPlainText("TXT_KEY_BUG_UNIT_NAMING_" + INFO.getType("DOMAIN_", aUnit[UnitReadKind.UNIT_READ_DOMAIN]))
+		zsUnit = INFO.getDescription("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])
 		if pCity:
-			zsCity = pCity.getName()
+			zsCity = STATE.getCityName(pCity[0], pCity[1])
 		else: zsCity = ""
 
 ##  - ^rd^ - random name
@@ -220,16 +221,16 @@ class UnitReName(object):
 		return zsName
 
 
-	def getUnitCombat(self, pUnit):
-		if pUnit is None:
+	def getUnitCombat(self, iUnitCombat):
+		if iUnitCombat is None or iUnitCombat < 0:
 			return "UNITCOMBAT_None"
 
-		infoUnitCombat = GC.getUnitCombatInfo(pUnit.getUnitCombatType())
+		szType = INFO.getType("UNITCOMBAT_", iUnitCombat)
 
-		if infoUnitCombat == None:
+		if not szType:
 			return "UNITCOMBAT_None"
 
-		return infoUnitCombat.getType()
+		return szType
 
 
 	def getCounter(self, conv):

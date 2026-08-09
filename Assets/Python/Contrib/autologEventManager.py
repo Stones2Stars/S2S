@@ -590,15 +590,19 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		if (AutologOpt.isLogBuildCompleted()):
 			pCity = argsList[0]
 			unit = argsList[1]
-			if pCity.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (pCity.getName(), INFO.getDescription("UNIT_", unit.getUnitType())))
+			iCityOwner, iCityID = pCity
+			iUnitOwner, iUnitID = unit
+			if iCityOwner == GAME.getActivePlayer():
+				aUnit = STATE.getUnitRead(iUnitOwner, iUnitID)
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (STATE.getCityName(iCityOwner, iCityID), INFO.getDescription("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onUnitPromoted(self, argsList):
 		if AutologOpt.isLogPromotion():
 			CyUnit, iPromotion = argsList
-			if CyUnit.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_PROMOTION", (CyUnit.getName(), INFO.getDescription("PROMOTION_", iPromotion)))
+			iUnitOwner, iUnitID = CyUnit
+			if iUnitOwner == GAME.getActivePlayer():
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_PROMOTION", (STATE.getUnitName(iUnitOwner, iUnitID), INFO.getDescription("PROMOTION_", iPromotion)))
 				Logger.writeLog(message, vColor="DarkOrange")
 
 	def onGoodyReceived(self, argsList):

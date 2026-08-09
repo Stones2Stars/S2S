@@ -1036,6 +1036,17 @@ bool CyState::hasUnitCombat(int iPlayer, int iUnit, int iUnitCombat) const
 	return pUnit->isHasUnitCombat((UnitCombatTypes)iUnitCombat);
 }
 
+bool CyState::isUnitPromotionValid(int iPlayer, int iUnit, int iPromotion) const
+{
+	g_szLastCyRead = "CyState::isUnitPromotionValid";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->isPromotionValid((PromotionTypes)iPromotion);
+}
+
 bool CyState::canUnitAcquirePromotion(int iPlayer, int iUnit, int iPromotion) const
 {
 	g_szLastCyRead = "CyState::canUnitAcquirePromotion";
@@ -1420,6 +1431,7 @@ void CyState::pythonPublish()
 		.def("isUnitPromotionOverridden",&CyState::isUnitPromotionOverridden)
 		.def("hasUnitCombat",           &CyState::hasUnitCombat)
 		.def("canUnitAcquirePromotion",  &CyState::canUnitAcquirePromotion)
+		.def("isUnitPromotionValid",     &CyState::isUnitPromotionValid)
 		.def("isUnitActionRecommended",  &CyState::isUnitActionRecommended)
 		.def("canUnitUpgrade",           &CyState::canUnitUpgrade)
 		.def("canUnitUpgradeToAny",      &CyState::canUnitUpgradeToAny)

@@ -10,6 +10,7 @@ GC = CyGlobalContext()
 MAP = GC.getMap()
 STATE = CyState()
 ENABLER = CyEnabler()
+ACT = CyAct()
 ENUMS = CyEnums()
 
 def init():
@@ -41,7 +42,10 @@ def init():
 def onUnitBuilt( argsList):
 	city = argsList[0]
 	unit = argsList[1]
-	pPlayer = GC.getPlayer(unit.getOwner())
+	iCityOwner, iCityId = city
+	iOwner, iUnitId = unit
+	aUnit = STATE.getUnitRead(iOwner, iUnitId)
+	pPlayer = GC.getPlayer(iOwner)
 
 # BEGIN MILITIA PROMOTIONS CODE - based on a prototype from FfH mod
 # If the civic is a military one and if the unit being built is not a settler, worker or hero, then begin the function
@@ -55,12 +59,14 @@ def onUnitBuilt( argsList):
 		iMilitaryCivic += 1
 
 	if iMilitaryCivic:
-		if unit.getUnitCombatType() not in gaiSettlerWorkerCombatList and not isWorldUnit(unit.getUnitType()):
-			iX = city.getX()
-			iY = city.getY()
+		if (aUnit[UnitReadKind.UNIT_READ_COMBAT_CLASS] not in gaiSettlerWorkerCombatList
+		and not isWorldUnit(aUnit[UnitReadKind.UNIT_READ_TYPE])):
+			aCityPos = STATE.getCityPosition(iCityOwner, iCityId)
+			iX = aCityPos[0]
+			iY = aCityPos[1]
 			MAP = GC.getMap()
 
-			if unit.getDomainType() == DomainTypes.DOMAIN_LAND:
+			if aUnit[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_LAND:
 				iNumCold = 0
 				iNumHot = 0
 				iNumBush = 0
@@ -102,14 +108,14 @@ def onUnitBuilt( argsList):
 						if iFeature > -1 and iFeature in aTreeList:
 							iNumTree += 1
 
-				attemptPromotion(unit, (iNumTree  * 1.25 * iMilitaryCivic), "PROMOTION_GREEN_WARDEN")
-				attemptPromotion(unit, (iNumCold  * 1.25 * iMilitaryCivic), "PROMOTION_WINTERBORN")
-				attemptPromotion(unit, (iNumHot   * 1.5  * iMilitaryCivic), "PROMOTION_SAND_DEVIL")
-				attemptPromotion(unit, (iNumBush  * 2    * iMilitaryCivic), "PROMOTION_BUSHMAN")
-				attemptPromotion(unit, (iNumHill  * 1.5  * iMilitaryCivic), "PROMOTION_CLIFF_WALKER")
-				attemptPromotion(unit, (iNumCoast * 1.5  * iMilitaryCivic), "PROMOTION_AMPHIBIOUS")
+				attemptPromotion(iOwner, iUnitId, (iNumTree  * 1.25 * iMilitaryCivic), "PROMOTION_GREEN_WARDEN")
+				attemptPromotion(iOwner, iUnitId, (iNumCold  * 1.25 * iMilitaryCivic), "PROMOTION_WINTERBORN")
+				attemptPromotion(iOwner, iUnitId, (iNumHot   * 1.5  * iMilitaryCivic), "PROMOTION_SAND_DEVIL")
+				attemptPromotion(iOwner, iUnitId, (iNumBush  * 2    * iMilitaryCivic), "PROMOTION_BUSHMAN")
+				attemptPromotion(iOwner, iUnitId, (iNumHill  * 1.5  * iMilitaryCivic), "PROMOTION_CLIFF_WALKER")
+				attemptPromotion(iOwner, iUnitId, (iNumCoast * 1.5  * iMilitaryCivic), "PROMOTION_AMPHIBIOUS")
 
-			elif unit.getDomainType() == DomainTypes.DOMAIN_SEA:
+			elif aUnit[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_SEA:
 				iNumReef = 0
 				iNumIce = 0
 				iIce = GC.getInfoTypeForString('FEATURE_ICE')
@@ -127,11 +133,13 @@ def onUnitBuilt( argsList):
 						elif iFeature == iIce:
 							iNumIce += 1
 
-				attemptPromotion(unit, (iNumReef * 1.25 * iMilitaryCivic), "PROMOTION_COASTAL_ASSAULT1")
-				attemptPromotion(unit, (iNumIce  * 1.25 * iMilitaryCivic), "PROMOTION_COASTAL_GUARD1")
+				attemptPromotion(iOwner, iUnitId, (iNumReef * 1.25 * iMilitaryCivic), "PROMOTION_COASTAL_ASSAULT1")
+				attemptPromotion(iOwner, iUnitId, (iNumIce  * 1.25 * iMilitaryCivic), "PROMOTION_COASTAL_GUARD1")
 
-def attemptPromotion(pUnit, iChance, szProposedPromotion):
+def attemptPromotion(iPlayer, iUnit, iChance, szProposedPromotion):
 	if GC.getGame().getSorenRandNum(100, "") < iChance:
 		ePromotion = GC.getInfoTypeForString(szProposedPromotion)
-		if pUnit.canAcquirePromotion(ePromotion):
-			pUnit.setHasPromotion(ePromotion, True)
+		# The WHOLE verdict, not ENABLER.getPromotionUnlocked: that one answers only whether the PLAYER has the
+		# promotion available and would offer it on units it does not apply to ([enabler.md] par.8).
+		if STATE.canUnitAcquirePromotion(iPlayer, iUnit, ePromotion):
+			ACT.setUnitPromotion(iPlayer, iUnit, ePromotion, True)

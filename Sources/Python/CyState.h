@@ -319,6 +319,12 @@ public:
 	// CAN this unit take that promotion right now? The per-unit applicability leg the enabler evaluates on
 	// demand at level-up ([enabler.md] par.7.1 carve-out) -- a POINTED question about one candidate.
 	bool canUnitAcquirePromotion(int iPlayer, int iUnit, int iPromotion) const;
+	// ⚖ THE SIBLING, AND THE TWO ARE NOT INTERCHANGEABLE. canUnitAcquirePromotion answers the LEVEL-UP question;
+	// this answers whether a promotion may be APPLIED to the unit at all, which is the gate a GRANT uses -- a
+	// free promotion bypasses tech prereqs ([special-systems.md]). ⛔ Gating a grant on the acquire read instead
+	// refuses every promotion an EVENT hands out, since those sit outside the normal list and cannot be taken by
+	// XP at all (owner).
+	bool isUnitPromotionValid(int iPlayer, int iUnit, int iPromotion) const;
 	bool isUnitActionRecommended(int iPlayer, int iUnit, int iAction) const;
 	// Can this unit become that one -- a PAIR question (this unit, that target type), so the target is in
 	// the call. bTestVisible asks the display question ("show the button") rather than the strict one.

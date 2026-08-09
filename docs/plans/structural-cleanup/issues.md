@@ -1244,6 +1244,27 @@ new surface does not publish. Union of what its four handlers do to the two unit
 |---|---|
 | `getOwner` (free) · `getUnitPosition` · `getUnitRead[UNIT_READ_TYPE\|_DOMAIN]` · `hasUnitPromotion` · `hasUnitCombat` · probably `getCaptureKinds` | `isMadeAttack` · `isAnimal` · `getCaptureUnitType` · `getUnitCombatType` · `getExperience` · `isHuman`/`isNPC` · a position→`CyPlot` path for `plot()` · a **CyAct** route for `setDamage` and `changeExperience` |
 
+**⛔ A PROMOTION GRANT NEVER CHECKS ACQUIRABILITY, AND ADDING THAT CHECK BREAKS IT (owner).** Events grant
+promotions that sit OUTSIDE the normal promotion list — *"they cannot be taken by xp, they can just be
+granted"* — so `canAcquirePromotion` (the LEVEL-UP question, which `CyState::canUnitAcquirePromotion` serves
+with `bForFree` defaulted false) refuses them BY CONSTRUCTION. ⚑ The mechanism is the event free-promotion
+registry keyed by UNITCOMBAT (`CvPlayer::isFreePromotion`, written only by `applyEvent`): the event names the
+combat classes it grants to and then fans over every matching unit
+([legacy-grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §4 marks that leg event-owned and
+out of scope).
+⇒ **GRANT path ⇒ `ACT.setUnitPromotion` and nothing else** (which is what the already-converted sites do);
+**LEVEL-UP/offer path ⇒ `STATE.canUnitAcquirePromotion`.** ⛔ A conversion PRESERVES whichever the original
+had — adding a gate silently drops event promotions, and removing one grants promotions a unit cannot hold,
+since `ACT.setUnitPromotion` does NOT validate (`setHasPromotionInternal` applies unconditionally).
+
+**⛔ GREP THE WHOLE PUBLISHED SURFACE BEFORE ADDING A READ — one class is not the surface.** `CyEnabler` was
+given a `canAcquirePromotion` that `CyState::canUnitAcquirePromotion` already served, identical body — the
+does-the-same-thing failure [patterns.md](../../architecture/patterns.md) names, reached by checking the class
+the concept *sounded* like it belonged to instead of every class. The check is one command and it is the FIRST
+move, not a review step: `grep -rn '\.def("[^"]*<Concept>' Sources/Python/ Sources/Infrastructure/CvPython*Loader.cpp`.
+⚑ A live per-object question lands on `CyState` even when it reads as availability, which is exactly why a
+single-class grep misses it.
+
 ⛔ **Do NOT half-convert.** A handler whose args are ids while its body still calls a method that does not exist
 RELOCATES the failure ([roadmap.md](roadmap.md) § scope decision 6) — finish a handler or leave it untouched.
 ⛔ And do not borrow a legacy read to fill a gap: ADD the read to the library

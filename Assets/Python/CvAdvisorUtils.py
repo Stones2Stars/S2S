@@ -100,19 +100,21 @@ def resetNoLiberateCities():
 def unitBuiltFeats(CyCity, CyUnit):
 	#	The handle carries its ADDRESS and nothing else ([DEC-cy-not-fixed] THE IDENTITY SET), so resolve the pair
 	#	once and ask STATE for every value below.
-	iPlayer = CyCity.getOwner()
-	iCityID = CyCity.getID()
+	iPlayer, iCityID = CyCity
+	iUnitOwner, iUnitID = CyUnit
+	aUnit = STATE.getUnitRead(iUnitOwner, iUnitID)
+	szUnitName = STATE.getUnitName(iUnitOwner, iUnitID)
 	CyPlayer = GC.getPlayer(iPlayer)
 
 	for iCombat, eFeat, szTxt in unitCombatFeats:
-		if not CyPlayer.isFeatAccomplished(eFeat) and CyUnit.isHasUnitCombat(iCombat):
+		if not CyPlayer.isFeatAccomplished(eFeat) and STATE.hasUnitCombat(iUnitOwner, iUnitID, iCombat):
 			CyPlayer.setFeatAccomplished(eFeat, True)
 			if not GAME.isNetworkMultiPlayer() and GAME.getElapsedGameTurns() != 0 and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 				popupInfo = CyPopupInfo()
 				popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 				popupInfo.setData1(eFeat)
 				popupInfo.setData2(iCityID)
-				popupInfo.setText(TRNSLTR.getText(szTxt, (CyUnit.getNameKey(), STATE.getCityName(iPlayer, iCityID),)))
+				popupInfo.setText(TRNSLTR.getText(szTxt, (szUnitName, STATE.getCityName(iPlayer, iCityID),)))
 				popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 				popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 				popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -120,14 +122,15 @@ def unitBuiltFeats(CyCity, CyUnit):
 				popupInfo.addPopup(iPlayer)
 
 	if not CyPlayer.isFeatAccomplished(FeatTypes.FEAT_UNIT_PRIVATEER):
-		if GC.getUnitInfo(CyUnit.getUnitType()).isHiddenNationality() and CyUnit.getDomainType() == DomainTypes.DOMAIN_SEA:
+		if (STATE.isUnitHiddenNationality(iUnitOwner, iUnitID)
+		and aUnit[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_SEA):
 			CyPlayer.setFeatAccomplished(FeatTypes.FEAT_UNIT_PRIVATEER, True)
 			if not GAME.isNetworkMultiPlayer() and GAME.getElapsedGameTurns() != 0 and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 				popupInfo = CyPopupInfo()
 				popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 				popupInfo.setData1(FeatTypes.FEAT_UNIT_PRIVATEER)
 				popupInfo.setData2(iCityID)
-				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_PRIVATEER", (CyUnit.getNameKey(), STATE.getCityName(iPlayer, iCityID), )))
+				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_PRIVATEER", (szUnitName, STATE.getCityName(iPlayer, iCityID), )))
 				popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 				popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 				popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -142,7 +145,7 @@ def unitBuiltFeats(CyCity, CyUnit):
 				popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 				popupInfo.setData1(FeatTypes.FEAT_UNIT_SPY)
 				popupInfo.setData2(iCityID)
-				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_SPY", (CyUnit.getNameKey(), STATE.getCityName(iPlayer, iCityID), )))
+				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_SPY", (szUnitName, STATE.getCityName(iPlayer, iCityID), )))
 				popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 				popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 				popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
