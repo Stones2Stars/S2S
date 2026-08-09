@@ -545,6 +545,29 @@ getters that hold the bare family name.
 
 ## ⛔ THE PYTHON READ BOUNDARY — ONE COMPLETE DATA-FETCHING LIBRARY (owner)
 
+> **⚖ READ THIS SECTION AS THE TARGET, NOT AS TODAY'S ACCEPTANCE BAR — THE RULES CANNOT BE FOLLOWED TO THE
+> LETTER RIGHT NOW (owner): *"we cannot follow these rules to the letter currently, because the python is a
+> gigantic clusterfuck, but we want to lay the groundwork; python reorganization is a separate independent
+> pass."*** Everything below states where the boundary is GOING. The tree it describes does not satisfy it and
+> is not expected to, so an agent measuring current code against these rules will read ordinary sanctioned work
+> as violation.
+>
+> ⇒ **What binds NOW is the groundwork, and it is a low bar deliberately: serve the read the call site needs,
+> NAME it, and put it somewhere a later pass can move cheaply.** That is the whole obligation. The homing, the
+> per-type accessor split and the import conversion are the SEPARATE INDEPENDENT PASS, taken as its own piece of
+> work when the demand map is known — never as a rider on a repair, and never opportunistically mid-sweep.
+>
+> ⛔ **It is NOT licence to skip a fix, and that is the failure this callout most needs to prevent** — the
+> roadmap already records the owner on exactly that (*"the amount of fixes getting skipped because of that
+> excuse is starting to drive me nuts"*, [roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision
+> 6). "The surface is not organized yet" is never a reason to leave a broken handler broken, and "it cannot be
+> done properly yet" is never a reason to do nothing.
+> ⛔ Equally it is NOT licence to call the current shape correct, or to ADD to the disorder knowingly: the point
+> of laying groundwork is that the later pass stays MECHANICAL, and every unnamed or unfindable read added
+> meanwhile is what makes it stop being mechanical.
+> ⚠ Owner-ruled SEQUENCING with a named end state, so [DEC-no-deferred](decisions.md#dec-no-deferred) does not
+> reach it — the same standing as the golden-age / anarchy status carve-out ([state.md](../specs/state.md)).
+>
 > The Python half of the access surface. Binding: [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed) — the `Cy*`
 > `.def` surface is NOT a contract to preserve. **This is a REBUILD, not an invention:** Python has always fetched
 > through a binding layer and that MECHANISM (boost::python) is fine and stays. What is wrong is the SHAPE —
