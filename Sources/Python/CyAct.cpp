@@ -154,6 +154,27 @@ bool CyAct::setUnitDamage(int iPlayer, int iUnit, int iDamage, int iByPlayer) co
 	return true;
 }
 
+bool CyAct::convertUnit(int iPlayer, int iUnit, int iFromPlayer, int iFromUnit, bool bKillOriginal) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)         return false;
+	if (iFromPlayer < 0 || iFromPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	CvUnit* pFrom = GET_PLAYER((PlayerTypes)iFromPlayer).getUnit(iFromUnit);
+	if (pUnit == NULL || pFrom == NULL) return false;
+	pUnit->convert(pFrom, bKillOriginal);
+	return true;
+}
+
+bool CyAct::changeUnitExperience(int iPlayer, int iUnit, int iChange, int iMax,
+								 bool bFromCombat, bool bInBorders, bool bUpdateGlobal) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->changeExperience(iChange, iMax, bFromCombat, bInBorders, bUpdateGlobal);
+	return true;
+}
+
 bool CyAct::setUnitName(int iPlayer, int iUnit, std::wstring szName) const
 {
 	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
@@ -437,6 +458,8 @@ void CyAct::pythonPublish()
 		.def("addUnitProductionExperience", &CyAct::addUnitProductionExperience)
 		.def("finishUnitMoves", &CyAct::finishUnitMoves)
 		.def("setUnitDamage", &CyAct::setUnitDamage)
+		.def("convertUnit", &CyAct::convertUnit)
+		.def("changeUnitExperience", &CyAct::changeUnitExperience)
 		.def("setUnitName", &CyAct::setUnitName)
 		.def("setUnitLeaderUnitType", &CyAct::setUnitLeaderUnitType)
 		.def("setUnitStatus", &CyAct::setUnitStatus)

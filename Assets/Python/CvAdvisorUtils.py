@@ -309,7 +309,7 @@ def cityAdvise(iPlayer, iCityID):
 
 		if aFlags[CityFlagKind.CITY_FLAG_PRODUCING]:
 
-			if not CyCity.isProductionUnit() and STATE.getOrderQueueLength(iPlayer, iCityID) <= 1:
+			if not STATE.isProductionUnit(iPlayer, iCityID) and STATE.getOrderQueueLength(iPlayer, iCityID) <= 1:
 
 				if (iTurn + 3) % 40 == iTurnFounded % 40:
 

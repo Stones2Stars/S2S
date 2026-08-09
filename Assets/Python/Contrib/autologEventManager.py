@@ -466,35 +466,40 @@ class AutoLogEvent(AbstractAutoLogEvent):
 	def onCombatResult(self, argsList):
 		if not AutologOpt.isLogCombat(): return
 		CyUnitW, CyUnitL = argsList # [W]inner & [L]ooser
+		iPlayerW, iUnitIdW = CyUnitW
+		iPlayerL, iUnitIdL = CyUnitL
 
 		self.UnitKilled = 1
 		iActivePlayer = GAME.getActivePlayer()
-		iPlayerW = CyUnitW.getOwner()
 
-		if iActivePlayer in (iPlayerW, CyUnitL.getOwner()):
-			fHealthW = CyUnitW.baseCombatStr() * CyUnitW.getHP() / float(CyUnitW.getMaxHP())
-			zsBattleLocn = self.getUnitLocation(CyUnitW)
+		if iActivePlayer in (iPlayerW, iPlayerL):
+			aW = STATE.getUnitRead(iPlayerW, iUnitIdW)
+			iStrW = STATE.getUnitBaseCombatStr(iPlayerW, iUnitIdW)
+			szNameW = STATE.getUnitName(iPlayerW, iUnitIdW)
+			szNameL = STATE.getUnitName(iPlayerL, iUnitIdL)
+			fHealthW = iStrW * aW[UnitReadKind.UNIT_READ_HP] / float(aW[UnitReadKind.UNIT_READ_MAX_HP])
+			zsBattleLocn = self.getUnitLocation(iPlayerW, iUnitIdW)
 
 			if iPlayerW == iActivePlayer:
-				szText = GC.getPlayer(CyUnitL.getVisualOwner()).getCivilizationAdjective(0)
+				szText = GC.getPlayer(STATE.getUnitVisualOwner(iPlayerL, iUnitIdL)).getCivilizationAdjective(0)
 				if self.bHumanPlaying:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_DEFEATS", (zsBattleLocn, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), szText, CyUnitL.getNameKey(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_DEFEATS", (zsBattleLocn, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, szText, szNameL, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleWonAttacking += 1
 				else:
 					self.fOdds = 100 - self.fOdds
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_DEFEATS", (zsBattleLocn, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), szText, CyUnitL.getNameKey(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_DEFEATS", (zsBattleLocn, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, szText, szNameL, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleWonDefending += 1
 
 				Logger.writeLog(message, vColor="DarkRed")
 
 			else:
-				szText = GC.getPlayer(CyUnitW.getVisualOwner()).getCivilizationAdjective(0)
+				szText = GC.getPlayer(STATE.getUnitVisualOwner(iPlayerW, iUnitIdW)).getCivilizationAdjective(0)
 				if self.bHumanPlaying:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_LOSES", (zsBattleLocn, CyUnitL.getNameKey(), szText, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_LOSES", (zsBattleLocn, szNameL, szText, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleLostAttacking = self.iBattleLostAttacking + 1
 				else:
 					self.fOdds = 100 - self.fOdds
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_LOSES", (zsBattleLocn, CyUnitL.getNameKey(), szText, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_LOSES", (zsBattleLocn, szNameL, szText, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleLostDefending = self.iBattleLostDefending + 1
 
 				Logger.writeLog(message, vColor="Red")
@@ -540,8 +545,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 		self.cdDefender = None
 
-	def getUnitLocation(self, CyUnit):
-		CyPlot = CyUnit.plot()
+	def getUnitLocation(self, iPlayer, iUnit):
+		aPos = STATE.getUnitPosition(iPlayer, iUnit)
+		CyPlot = GC.getMap().plot(aPos[0], aPos[1])
 		iOwner = CyPlot.getOwner()
 		if iOwner > -1:
 			szText = TRNSLTR.getText("TXT_KEY_AUTOLOG_IN_TERRITORY", (GC.getPlayer(iOwner).getCivilizationAdjective(0),))

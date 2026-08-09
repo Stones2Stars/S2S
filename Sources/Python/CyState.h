@@ -260,6 +260,14 @@ public:
 	// surface exists yet ([roadmap] scope decision 6), so the lists READ correctly and do not yet re-sort on a
 	// click. Reads run on every redraw; the writes fire only on user action, which is why the split is usable.
 	int getOrderQueueLength(int iPlayer, int iCity) const;
+	// Is the city's HEAD order a unit? The advisor nags on a city building something OTHER than a unit, so the
+	// queue LENGTH alone cannot answer it -- what is at the front is a separate question.
+	bool isProductionUnit(int iPlayer, int iCity) const;
+	// How many of a building the empire holds. ⚠ It replaces the DELETED CvPlayer::getBuildingCountWithUpgrades,
+	// and the difference is a stated behaviour change ([validation.md]: the spec leads, a change is named rather
+	// than hidden): that one also counted the building's upgrade-chain predecessors, this one counts the building.
+	// The engine accessor it wraps is the surviving plain count.
+	int getBuildingCount(int iPlayer, int iBuilding) const;
 	bool getBuildingListFilterActive(int iPlayer, int iCity, int iFilter) const;
 	int getBuildingListSorting(int iPlayer, int iCity) const;
 	bool getUnitListFilterActive(int iPlayer, int iCity, int iFilter) const;
@@ -284,6 +292,20 @@ public:
 	// The SELECTOR predicates: each asks about a PAIR, so the subject is in the call rather than a flag slot.
 	bool isUnitInvisible(int iPlayer, int iUnit, int iTeam) const;
 	bool hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const;
+	// ⛔ The LIVE per-unit verdict, NOT the type's skill block. hiddenNationality is promotion-grantable
+	// (PROMOTION_PROUD_PIRATE, [skills.md]), so `INFO.isHiddenNationality(unitType)` answers a DIFFERENT question
+	// and silently misses every unit that earned it -- which is why this is a STATE read and named for the unit.
+	bool isUnitHiddenNationality(int iPlayer, int iUnit) const;
+	// The owner a VIEWER sees -- which differs from the real owner for a hidden-nationality unit. A log or a
+	// message must use this one, or it names the civ the mechanic exists to conceal.
+	int getUnitVisualOwner(int iPlayer, int iUnit) const;
+	// Base combat strength on the HUMAN scale. ⛔ Deliberately NOT baseCombatStr(): that one returns x100 under
+	// GAMEOPTION_COMBAT_SIZE_MATTERS and human without it, so its scale depends on live game state and no caller
+	// can reason about it ([fixed-point-and-scales.md] §4c-ter). This is the boundary read, always human.
+	int getUnitBaseCombatStr(int iPlayer, int iUnit) const;
+	// A plot query asked RELATIVE TO A UNIT (whose owner decides who counts as an enemy). It takes the unit's
+	// identity + the tile rather than a unit handle, because a unit reaches Python as (owner, id).
+	int getNumVisiblePotentialEnemyDefenders(int iPlayer, int iUnit, int iX, int iY) const;
 	// ⛔ The unit's HELD promotions, as ONE list. Asking per-promotion instead costs a boundary crossing per
 	// PROMOTION per unit per redraw, and the registry is ~1500 entries -- a stack panel then spends tens of
 	// thousands of crossings a frame. The per-promotion read above stays for a single POINTED question.

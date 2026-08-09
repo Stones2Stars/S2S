@@ -877,42 +877,46 @@ class CvEventManager:
 
 	def onCombatResult(self, argsList):
 		CyUnitW, CyUnitL = argsList
-		iPlayerW = CyUnitW.getOwner()
+		iPlayerW, iUnitIdW = CyUnitW
+		iPlayerL, iUnitIdL = CyUnitL
 		CyPlayerW = GC.getPlayer(iPlayerW)
-		iPlayerL = CyUnitL.getOwner()
 		CyPlayerL = GC.getPlayer(iPlayerL)
+		aW = STATE.getUnitRead(iPlayerW, iUnitIdW)
+		aL = STATE.getUnitRead(iPlayerL, iUnitIdL)
 		CyTeamW = None
 		iPlayerAct = None
 		# WarPrizes
 		if self.iWAR_PRIZES:
 			iValid = GC.getInfoTypeForString("UNITCOMBAT_NAVAL_COMBATANT")
-			if iValid > -1 and CyUnitW.isHasUnitCombat(iValid) and CyUnitL.isHasUnitCombat(iValid):
+			if (iValid > -1 and STATE.hasUnitCombat(iPlayerW, iUnitIdW, iValid)
+			and STATE.hasUnitCombat(iPlayerL, iUnitIdL, iValid)):
 				# 20% chance
 				if GAME.getSorenRandNum(100, "WarPrize") < 20:
 
-					iUnitL = CyUnitL.getUnitType()
-					iX = CyUnitW.getX()
-					iY = CyUnitW.getY()
-					CyUnitWP = CyPlayerW.initUnit(iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-					CyUnitWP.finishMoves()
-					CyUnitWP.setDamage(GAME.getSorenRandNum(40, "XP") + 40, iPlayerW)
+					iUnitL = aL[UnitReadKind.UNIT_READ_TYPE]
+					aPosW = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+					iX = aPosW[0]
+					iY = aPosW[1]
+					iUnitWP = ACT.initUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					ACT.finishUnitMoves(iPlayerW, iUnitWP)
+					ACT.setUnitDamage(iPlayerW, iUnitWP, GAME.getSorenRandNum(40, "XP") + 40, iPlayerW)
 					# Message
 					iPlayerAct = GAME.getActivePlayer()
 					if iPlayerAct in (iPlayerW, iPlayerL):
-						CvUnitInfoL = GC.getUnitInfo(iUnitL)
-						szWP = CvUnitInfoL.getDescription()
+						szWP = INFO.getDescription("UNIT_", iUnitL)
 					if iPlayerW == iPlayerAct:
 						eColor = ColorTypes(GC.getCOLOR_GREEN())
-						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MISC_WARPRIZES_SUCCESS", (szWP,)), iPlayerW, 16, CvUnitInfoL.getButton(), eColor, iX, iY, True, True, bForce=False)
+						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MISC_WARPRIZES_SUCCESS", (szWP,)), iPlayerW, 16, INFO.getButton("UNIT_", iUnitL), eColor, iX, iY, True, True, bForce=False)
 					elif iPlayerL == iPlayerAct:
-						iX = CyUnitL.getX()
-						iY = CyUnitL.getY()
+						aPosL = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+						iX = aPosL[0]
+						iY = aPosL[1]
 						eColor = ColorTypes(GC.getCOLOR_RED())
 						artPath = 'Art/Interface/Buttons/General/warning_popup.dds'
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MISC_WARPRIZES_FAILURE", (szWP,)), iPlayerL, 16, artPath, eColor, iX, iY, True, True, bForce=False)
 					# Booty
 					iValid = GC.getInfoTypeForString("UNITCOMBAT_TRANSPORT")
-					if iValid > -1 and CyUnitL.isHasUnitCombat(iValid):
+					if iValid > -1 and STATE.hasUnitCombat(iPlayerL, iUnitIdL, iValid):
 						Loot = GAME.getSorenRandNum(100, "Loot") * self.iTrainPrcntGS / 100
 						if CyPlayerL.getGold() >= Loot:
 							CyPlayerW.changeGold(Loot)
@@ -928,28 +932,30 @@ class CvEventManager:
 		mapPromoType = self.mapPromoType
 		iRespawn2 = mapPromoType['PROMOTION_LIVE2']
 		iRespawn1 = mapPromoType['PROMOTION_LIVE1']
-		bRespawn2 = CyUnitL.isHasPromotion(iRespawn2)
+		bRespawn2 = STATE.hasUnitPromotion(iPlayerL, iUnitIdL, iRespawn2)
 
 		# Messenger (Hero) promo
-		if CyUnitW.isHasPromotion(mapPromoType['PROMOTION_RETINUE_MESSENGER']):
+		if STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_RETINUE_MESSENGER']):
 			# 10% chance
 			if not GAME.getSorenRandNum(10, "Gods"):
 
+				# SdToolKit already routes a (owner, id) identity through STATE/ACT (sdIsUnitId), so the unit
+				# tuple is passed through unchanged.
 				if not SDTK.sdObjectExists('Promo', CyUnitW):
-					CyUnitW.setDamage(0, -1)
+					ACT.setUnitDamage(iPlayerW, iUnitIdW, 0, -1)
 					SDTK.sdObjectInit('Promo', CyUnitW, {'HealTurn' : GAME.getGameTurn()})
 				else:
 					iHealTurn = SDTK.sdObjectGetVal('Promo', CyUnitW, 'HealTurn')
 					iTurn = GAME.getGameTurn()
 					if iHealTurn is None or iTurn > iHealTurn:
-						CyUnitW.setDamage(0, -1)
+						ACT.setUnitDamage(iPlayerW, iUnitIdW, 0, -1)
 						SDTK.sdObjectSetVal('Promo', CyUnitW, 'HealTurn', iTurn)
 
 		# Respawn promo
-		if CyUnitL.isHasPromotion(iRespawn1) or bRespawn2:
-			iUnit = CyUnitL.getUnitType()
+		if STATE.hasUnitPromotion(iPlayerL, iUnitIdL, iRespawn1) or bRespawn2:
+			iUnit = aL[UnitReadKind.UNIT_READ_TYPE]
 			iX = -1
-			if CyUnitL.getDomainType() == self.mapDomain['DOMAIN_SEA']:
+			if aL[UnitReadKind.UNIT_READ_DOMAIN] == self.mapDomain['DOMAIN_SEA']:
 				for CyCity in CyPlayerL.cities():
 					if CyCity.isCoastal(0):
 						iX = CyCity.getX()
@@ -961,37 +967,39 @@ class CvEventManager:
 					iX = CyCity.getX()
 					iY = CyCity.getY()
 			if iX == -1:
-				iX = CyUnitL.getX()
-				iY = CyUnitL.getY()
-			CyUnit = CyPlayerL.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
-			CyUnit.convert(CyUnitL, True)
-			CyUnit.setDamage(GAME.getSorenRandNum(40, "Damage") + 20, -1)
+				aPosL = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+				iX = aPosL[0]
+				iY = aPosL[1]
+			iNewUnit = ACT.initUnit(iPlayerL, iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+			# ⚠ convertUnit with bKillOriginal DELETES the loser, so nothing may read iUnitIdL after this.
+			ACT.convertUnit(iPlayerL, iNewUnit, iPlayerL, iUnitIdL, True)
+			ACT.setUnitDamage(iPlayerL, iNewUnit, GAME.getSorenRandNum(40, "Damage") + 20, -1)
 
-			CyUnit.finishMoves()
+			ACT.finishUnitMoves(iPlayerL, iNewUnit)
 
 			if bRespawn2:
-				CyUnit.setHasPromotion(iRespawn2, False)
+				ACT.setUnitPromotion(iPlayerL, iNewUnit, iRespawn2, False)
 			else:
-				CyUnit.setHasPromotion(iRespawn1, False)
+				ACT.setUnitPromotion(iPlayerL, iNewUnit, iRespawn1, False)
 
 			if iPlayerAct is None:
 				iPlayerAct = GAME.getActivePlayer()
 			if iPlayerL == iPlayerAct:
 				CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_REBORN",()), iPlayerL, 16, 'Art/Interface/Buttons/Phoenix1.dds', ColorTypes(44), iX, iY, True, True, bForce=False)
 
-		if CyUnitW.isNPC():
+		if CyPlayerW.isNPC():
 			# EXP boost for NPC
-			CyUnitW.changeExperience(1, 100, False, False, False)
+			ACT.changeUnitExperience(iPlayerW, iUnitIdW, 1, 100, False, False, False)
 
-		elif CyUnitL.isNPC():
+		elif CyPlayerL.isNPC():
 			# EXP boost for AI winning against NPC
-			if not CyUnitW.isHuman():
-				CyUnitW.changeExperience(1, 100, False, False, False)
+			if not CyPlayerW.isHuman():
+				ACT.changeUnitExperience(iPlayerW, iUnitIdW, 1, 100, False, False, False)
 
 		else: # Special outcomes not applicable to NPC teams
-			bSneak = CyUnitW.isHasPromotion(mapPromoType['PROMOTION_SNEAK'])
-			bMarauder = CyUnitW.isHasPromotion(mapPromoType['PROMOTION_MARAUDER'])
-			bIndustrySpy = CyUnitW.isHasPromotion(mapPromoType['PROMOTION_INDUSTRYESPIONAGE'])
+			bSneak = STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_SNEAK'])
+			bMarauder = STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_MARAUDER'])
+			bIndustrySpy = STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_INDUSTRYESPIONAGE'])
 			# Commerce Theft
 			if bSneak or bMarauder or bIndustrySpy:
 
@@ -1008,15 +1016,16 @@ class CvEventManager:
 				if iPlayerAct is None:
 					iPlayerAct = GAME.getActivePlayer()
 				if iPlayerAct in (iPlayerW, iPlayerL):
-					iX = CyUnitW.getX()
-					iY = CyUnitW.getY()
+					aPosW2 = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+					iX = aPosW2[0]
+					iY = aPosW2[1]
 					if iPlayerW == iPlayerAct:
-						if CyUnitL.isHiddenNationality():
+						if STATE.isUnitHiddenNationality(iPlayerL, iUnitIdL):
 							szTxt = TRNSLTR.getText("TXT_KEY_UNKNOWN_NATION",())
 						else:
 							szTxt = CyPlayerL.getName()
 					elif iPlayerL == iPlayerAct:
-						if CyUnitW.isHiddenNationality():
+						if STATE.isUnitHiddenNationality(iPlayerW, iUnitIdW):
 							szTxt = TRNSLTR.getText("TXT_KEY_UNKNOWN_NATION",())
 						else:
 							szTxt = CyPlayerW.getName()
@@ -1098,31 +1107,33 @@ class CvEventManager:
 					if iPlayer != iPlayerW: continue
 					KEY = aWonderTuple[0][i]
 					if KEY == "PERGAMON":
-						iGGP = intSqrt(CyUnitL.getExperience())
+						iGGP = intSqrt(aL[UnitReadKind.UNIT_READ_EXPERIENCE])
 						if iGGP:
 							CyPlayerW.changeCombatExperience(iGGP)
 					elif KEY == "GREAT_JAGUAR_TEMPLE":
 						iChance = GAME.getSorenRandNum(5, "Jaguar")
 						if not iChance:
-							CyUnitW.setDamage(0, -1)
+							ACT.setUnitDamage(iPlayerW, iUnitIdW, 0, -1)
 
-		iUnitW = CyUnitW.getUnitType()
+		iUnitW = aW[UnitReadKind.UNIT_READ_TYPE]
 		mapUnitType = self.mapUnitType
 		# Spartacus Capture Event
 		if iUnitW == mapUnitType["SPARTACUS"]:
 			# Capture 25%
 			if not GAME.getSorenRandNum(4, "Gods"):
 
-				CyPlotL = CyUnitL.plot()
+				aPosL2 = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+				CyPlotL = GC.getMap().plot(aPosL2[0], aPosL2[1])
 				if not CyPlotL.isVisibleEnemyUnit(iPlayerW):
-					iX = CyPlotL.getX()
-					iY = CyPlotL.getY()
+					iX = aPosL2[0]
+					iY = aPosL2[1]
 				else:
-					CyPlotW = CyUnitW.plot()
-					iX = CyPlotW.getX()
-					iY = CyPlotW.getY()
+					aPosW3 = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+					iX = aPosW3[0]
+					iY = aPosW3[1]
 
-				GC.getPlayer(iPlayerW).initUnit(mapUnitType["GLADIATOR"], iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH).finishMoves()
+				iGladiator = ACT.initUnit(iPlayerW, mapUnitType["GLADIATOR"], iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+				ACT.finishUnitMoves(iPlayerW, iGladiator)
 				# Message
 				if iPlayerAct is None:
 					iPlayerAct = GAME.getActivePlayer()
@@ -1134,7 +1145,8 @@ class CvEventManager:
 					)
 		# Warriors Of God - Monk
 		elif iUnitW == mapUnitType["MONK"]:
-			CyPlotW = CyUnitW.plot()
+			aPosW4 = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+			CyPlotW = GC.getMap().plot(aPosW4[0], aPosW4[1])
 			if CyPlotW.isCity():
 				CyCity = CyPlotW.getPlotCity()
 				iReligion = CyPlayerW.getStateReligion()
@@ -1145,14 +1157,15 @@ class CvEventManager:
 			if not self.GO_ONE_CITY_CHALLENGE:
 				iReligion = CyPlayerW.getStateReligion()
 				if iReligion != -1:
-					CyPlotL = CyUnitL.plot()
+					aPosL3 = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+					CyPlotL = GC.getMap().plot(aPosL3[0], aPosL3[1])
 					if CyPlotL.isCity():
 						CyCity = CyPlotL.getPlotCity()
 						if not CyCity.isHasReligion(iReligion) and (self.GO_NO_CITY_RAZING or CyCity.getPopulation() > 1):
 							if not CyTeamW:
 								iTeamW = CyPlayerW.getTeam()
 								CyTeamW = GC.getTeam(iTeamW)
-							if CyTeamW.isAtWarWith(GC.getPlayer(CyCity.getOwner()).getTeam()) and not CyPlotL.getNumVisibleEnemyDefenders(CyUnitW):
+							if CyTeamW.isAtWarWith(GC.getPlayer(CyCity.getOwner()).getTeam()) and not STATE.getNumVisiblePotentialEnemyDefenders(iPlayerW, iUnitIdW, aPosL3[0], aPosL3[1]):
 								CyCity.setHasReligion(iReligion, True, True, True)
 
 
@@ -2199,7 +2212,7 @@ class CvEventManager:
 		CyPlayer = GC.getPlayer(iPlayer)
 
 		if CyPlayer.isNPC() or not GAME.isFinalInitialized():
-			print "%s gained the technology %s" %(CyPlayer.getCivilizationDescription(0), GC.getTechInfo(iTech).getDescriptionForm(0))
+			print "%s gained the technology %s" %(CyPlayer.getCivilizationDescription(0), INFO.getDescription("TECH_", iTech))
 			return
 
 		# Show tech splash when applicable

@@ -13364,6 +13364,10 @@ void CvUnit::getUnitRead(int (&unitRead)[NUM_UNIT_READS])
 	unitRead[UNIT_READ_FACING_DIRECTION]   = (int)getFacingDirection(false);
 	unitRead[UNIT_READ_LEADER_UNIT_TYPE]   = (int)getLeaderUnitType();
 	unitRead[UNIT_READ_UNIT_AI]            = (int)AI_getUnitAIType();
+	unitRead[UNIT_READ_CAPTURE_UNIT_TYPE]  = (int)getCaptureUnitType();
+	unitRead[UNIT_READ_CAPTURE_PROBABILITY]= captureProbabilityTotal();
+	unitRead[UNIT_READ_CAPTURE_RESISTANCE] = captureResistanceTotal();
+	unitRead[UNIT_READ_COMBAT_CLASS]       = (int)getUnitCombatType();
 	unitRead[UNIT_READ_GROUP_ID]           = -1;
 	unitRead[UNIT_READ_ACTIVITY]             = (int)NO_ACTIVITY;
 	unitRead[UNIT_READ_AUTOMATE]             = (int)NO_AUTOMATE;
@@ -13398,6 +13402,7 @@ void CvUnit::getUnitFlags(int (&flags)[NUM_UNIT_FLAGS]) const
 	flags[UNIT_FLAG_CAN_MOVE]        = canMove() ? 1 : 0;
 	flags[UNIT_FLAG_CAN_FIGHT]       = canFight() ? 1 : 0;
 	flags[UNIT_FLAG_CAN_AIR_ATTACK]  = canAirAttack() ? 1 : 0;
+	flags[UNIT_FLAG_MADE_ATTACK]     = isMadeAttack() ? 1 : 0;
 }
 
 

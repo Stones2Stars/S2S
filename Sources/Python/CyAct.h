@@ -93,6 +93,15 @@ public:
 	// combat mods -- all EXISTING gameplay being kept working, never new logic authored in script.
 	bool finishUnitMoves(int iPlayer, int iUnit) const;
 	bool setUnitDamage(int iPlayer, int iUnit, int iDamage, int iByPlayer) const;
+	// CvUnit::convert -- carry a unit's identity/XP/promotions onto another and (optionally) kill the original.
+	// The RESPAWN handler's call: the reborn unit inherits what the dead one was.
+	// ⚠ bKillOriginal DELETES the source, so the caller must not touch it afterwards ([unit-lifecycle.md]).
+	bool convertUnit(int iPlayer, int iUnit, int iFromPlayer, int iFromUnit, bool bKillOriginal) const;
+	// CvUnit::changeExperience. ⚠ The HUMAN-scale entry point: XP is stored x100 and changeExperience multiplies
+	// on the way in, so a caller passes whole levels of XP exactly as the legacy script did -- do NOT hand it a
+	// x100 value ([special-systems.md]).
+	bool changeUnitExperience(int iPlayer, int iUnit, int iChange, int iMax,
+							  bool bFromCombat, bool bInBorders, bool bUpdateGlobal) const;
 	bool setUnitName(int iPlayer, int iUnit, std::wstring szName) const;
 	// A unit's LEADER attachment (the subdued/tamed-animal beastmaster art link), -1 to clear.
 	bool setUnitLeaderUnitType(int iPlayer, int iUnit, int iLeaderUnitType) const;

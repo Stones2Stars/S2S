@@ -90,6 +90,10 @@ enum PyIntrinsicSlot
 	                            // The domain tags (landUnit/seaUnit/airUnit) exist and are inert by ruling --
 	                            // there is deliberately no composition over them for this, so a consumer asking
 	                            // "which domain" asks HERE.
+	PYINT_PILLAGE_GOLD,         // IMPROVEMENT_ -- the gold a pillage of this improvement rolls against
+	                            // (identity.pillageGold). ⚠ NOT the building field of the same name, which is
+	                            // orphaned and unwired ([legacy-value-calc-map.md] par.10.3); this one is live and
+	                            // is the improvement's own value.
 	NUM_PYINT
 };
 
@@ -118,6 +122,11 @@ enum PyIdListSlot
 	                                   // OBSOLETING ones and drops the distinction ([enabler.md] §2), so a
 	                                   // consumer with ALL semantics -- a tech tree drawing prereq arrows --
 	                                   // cannot read it. These are the load-reconstructed forward views.
+	PYLIST_PREREQ_EVENTS,              // EVENTTRIGGER_ -> the events a trigger requires to have already fired.
+	                                   // ⚠ EVENT_ / EVENTTRIGGER_ are the #425 PERMANENT carve-out (events stay
+	                                   // Python and are due a ground-up rework), so this is a KEEP-WORKING read
+	                                   // and nothing more -- it rides the existing generic slot plane beside its
+	                                   // prereq siblings rather than earning the type its own accessor.
 	NUM_PYLIST
 };
 
@@ -242,6 +251,9 @@ public:
 	// to know that to ask a question about a unit.
 	bool isHiddenNationality(int iUnitId) const;
 	bool isSpy(int iUnitId) const;
+	// ⚠ Reads the FOLDED tag set, so a unit whose own block lists no tag still answers true through its combat
+	// classes (UNITCOMBAT_ANIMAL / SEA_ANIMAL) -- which is the whole point of the fold ([tags.md]).
+	bool isAnimal(int iUnitId) const;
 	// Does this unit spread a religion at all (the MISSIONARY test)?
 	// ⚖ It replaces a legacy `getPrereqReligion() > -1`, and the change of QUESTION is the point: that asked a
 	// BUILD GATE in order to infer a CAPABILITY. The gate is now an ordinary `requires.build` RELIGION_ atom the

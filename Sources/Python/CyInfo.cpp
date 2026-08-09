@@ -24,6 +24,7 @@
 #include "Infos/CvAllowed.h"
 #include "Infos/CvSpecialBuildingInfo.h"   // the GROUP that may hold the cap for its members
 #include "Infos/CvBonusInfo.h"
+#include "Infos/CvImprovementInfo.h"      // IMPROVEMENT_ -- the pillage-gold intrinsic
 #include "Infos/CvSpecialistInfo.h"
 #include "Infos/CvYieldInfo.h"
 #include "Infos/CvControlInfo.h"
@@ -353,6 +354,10 @@ bool CyInfo::isSpy(int iUnitId) const
 {
 	return hasTag("UNIT_", iUnitId, CLS_TAG_SPY);
 }
+bool CyInfo::isAnimal(int iUnitId) const
+{
+	return hasTag("UNIT_", iUnitId, CLS_TAG_ANIMAL);
+}
 bool CyInfo::canSpreadReligion(int iUnitId) const
 {
 	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
@@ -476,6 +481,13 @@ python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSl
 			for (size_t i = 0; i < techs.size(); ++i) ids.append((int)techs[i]);
 		}
 		break;
+	case PYLIST_PREREQ_EVENTS:
+		{
+			if (szTypePrefix != "EVENTTRIGGER_" || iId >= GC.getNumEventTriggerInfos()) break;
+			const CvEventTriggerInfo& kTrigger = GC.getEventTriggerInfo((EventTriggerTypes)iId);
+			for (int i = 0; i < kTrigger.getNumPrereqEvents(); ++i) ids.append(kTrigger.getPrereqEvent(i));
+		}
+		break;
 	default:
 		break;
 	}
@@ -537,6 +549,11 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	case PYINT_COLOR_TYPE:
 		if (szTypePrefix == "YIELD_" && iId < NUM_YIELD_TYPES)
 			return GC.getYieldInfo((YieldTypes)iId).getColorType();
+		break;
+
+	case PYINT_PILLAGE_GOLD:
+		if (szTypePrefix == "IMPROVEMENT_" && iId < GC.getNumImprovementInfos())
+			return GC.getImprovementInfo((ImprovementTypes)iId).getPillageGold();
 		break;
 
 	case PYINT_DEFAULT_PLAYERS:
@@ -829,6 +846,7 @@ void CyInfo::pythonPublish()
 		// target here; being readable at the call site is (owner). Grows one line per call site that asks.
 		.def("isHiddenNationality", &CyInfo::isHiddenNationality)
 		.def("isSpy",               &CyInfo::isSpy)
+		.def("isAnimal",            &CyInfo::isAnimal)
 		.def("canSpreadReligion",   &CyInfo::canSpreadReligion)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)

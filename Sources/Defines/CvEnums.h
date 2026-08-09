@@ -1280,6 +1280,14 @@ enum UnitReadKind
 	UNIT_READ_LEADER_UNIT_TYPE,
 	UNIT_READ_UNIT_AI,
 	UNIT_READ_GROUP_ID,
+	// The CAPTURE cluster the combat handlers ask of a loser: which unit it becomes when captured (-1 = none, the
+	// gate that decides whether a captive is minted at all), and the two per-unit totals the roll compares.
+	UNIT_READ_CAPTURE_UNIT_TYPE,
+	UNIT_READ_CAPTURE_PROBABILITY,
+	UNIT_READ_CAPTURE_RESISTANCE,
+	// The unit's PRIMARY combat class. ⚠ Distinct from the HELD set (hasUnitCombat): a unit carries one primary
+	// plus its subs, and "which class IS it" cannot be answered by testing membership one id at a time.
+	UNIT_READ_COMBAT_CLASS,
 
 	NUM_UNIT_READS
 };
@@ -1301,6 +1309,9 @@ enum UnitFlagKind
 	UNIT_FLAG_CAN_MOVE,
 	UNIT_FLAG_CAN_FIGHT,
 	UNIT_FLAG_CAN_AIR_ATTACK,
+	// Has this unit already attacked this turn? The combat handlers gate the capture roll on it -- a captive is
+	// taken by the ATTACKER, so a defender that won its own defence must not mint one.
+	UNIT_FLAG_MADE_ATTACK,
 
 	NUM_UNIT_FLAGS
 };

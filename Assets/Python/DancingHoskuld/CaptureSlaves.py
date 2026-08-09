@@ -27,22 +27,23 @@ def init():
 	global giDomainLand
 	giDomainLand = GC.getInfoTypeForString('DOMAIN_LAND')
 
-def getSurroundBonus(defender):
+def getSurroundBonus(iDefX, iDefY, iDefTeam):
     """
     Counts the number of surrounding enemy tiles and returns a bonus
     (e.g., 10 per enemy tile).
+    Takes the defender's POSITION and TEAM rather than the unit: a unit reaches Python as its (owner, id)
+    identity, and both values are already resolved at the one call site.
     """
     # used for checking if its called
     # CvUtil.sendMessage("getSurroundBonus called!", GAME.getActivePlayer(), 0, '', ColorTypes(7), 0, 0, True, True)
     iSurroundCount = -1
-    pPlot = defender.plot()
 
     for dx in [-1, 0, 1]:
         for dy in [-1, 0, 1]:
             if dx == 0 and dy == 0:
                 continue  # skip defender's own tile
-            x = pPlot.getX() + dx
-            y = pPlot.getY() + dy
+            x = iDefX + dx
+            y = iDefY + dy
 
             if 0 <= x < GC.getMap().getGridWidth() and 0 <= y < GC.getMap().getGridHeight():
                 plotX = GC.getMap().plot(x, y)
@@ -50,7 +51,8 @@ def getSurroundBonus(defender):
                 for i in range(plotX.getNumUnits()):
                     unitX = plotX.getUnit(i)
                     # enemy check — is at war with defender
-                    if unitX.getTeam() != defender.getTeam() and GC.getTeam(unitX.getTeam()).isAtWar(defender.getTeam()):
+                    iTeamX = GC.getPlayer(unitX.getOwner()).getTeam()
+                    if iTeamX != iDefTeam and GC.getTeam(iTeamX).isAtWar(iDefTeam):
                         iSurroundCount += 1
                         break  # only count one per tile
 
@@ -62,14 +64,25 @@ def getSurroundBonus(defender):
 
 def onCombatResult(argsList):
 	CyUnitW, CyUnitL = argsList
+	iOwnerW, iUnitW = CyUnitW
+	iOwnerL, iUnitL = CyUnitL
+
+	aW = STATE.getUnitRead(iOwnerW, iUnitW)
+	aL = STATE.getUnitRead(iOwnerL, iUnitL)
+	aFlagsW = STATE.getUnitFlags(iOwnerW, iUnitW)
 
 	# Captives
 	# Check that the losing unit is not an animal and the unit does not have a capture type defined in the XML
-	if (CyUnitW.isMadeAttack() and not CyUnitL.isAnimal() and CyUnitL.getDomainType() == giDomainLand
-	and CyUnitW.getDomainType() == giDomainLand and CyUnitL.getCaptureUnitType() == -1
+	if (aFlagsW[UnitFlagKind.UNIT_FLAG_MADE_ATTACK]
+	and not INFO.isAnimal(aL[UnitReadKind.UNIT_READ_TYPE])
+	and aL[UnitReadKind.UNIT_READ_DOMAIN] == giDomainLand
+	and aW[UnitReadKind.UNIT_READ_DOMAIN] == giDomainLand
+	and aL[UnitReadKind.UNIT_READ_CAPTURE_UNIT_TYPE] == -1
 	):
-		iCaptureProbability = CyUnitW.captureProbabilityTotal() + getSurroundBonus(CyUnitL)
-		iCaptureResistance = CyUnitL.captureResistanceTotal()
+		aPosL = STATE.getUnitPosition(iOwnerL, iUnitL)
+		iCaptureProbability = (aW[UnitReadKind.UNIT_READ_CAPTURE_PROBABILITY]
+		                       + getSurroundBonus(aPosL[0], aPosL[1], GC.getPlayer(iOwnerL).getTeam()))
+		iCaptureResistance = aL[UnitReadKind.UNIT_READ_CAPTURE_RESISTANCE]
 
 		iChance = iCaptureProbability - iCaptureResistance
 
@@ -77,16 +90,17 @@ def onCombatResult(argsList):
 
 		if iChance > GAME.getSorenRandNum(100, "Slave"):  # 0-99
 
-			if CyUnitL.isHasUnitCombat(GC.getInfoTypeForString('UNITCOMBAT_SPECIES_NEANDERTHAL')):
+			if STATE.hasUnitCombat(iOwnerL, iUnitL, GC.getInfoTypeForString('UNITCOMBAT_SPECIES_NEANDERTHAL')):
 				iUnit = GC.getInfoTypeForString('UNIT_CAPTIVE_NEANDERTHAL')
 				sMessage = TRNSLTR.getText("TXT_KEY_MSG_NEANDERTHAL_CAPTIVE",())
 			else:
 				iUnit = GC.getInfoTypeForString('UNIT_CAPTIVE_MILITARY')
 				sMessage = TRNSLTR.getText("TXT_KEY_MSG_MILITARY_CAPTIVE",())
 
-			iPlayerW = CyUnitW.getOwner()
-			X = CyUnitW.getX()
-			Y = CyUnitW.getY()
+			iPlayerW = iOwnerW
+			aPosW = STATE.getUnitPosition(iOwnerW, iUnitW)
+			X = aPosW[0]
+			Y = aPosW[1]
 			CyUnit = GC.getPlayer(iPlayerW).initUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 			if iPlayerW == GAME.getActivePlayer():
 				CvUtil.sendMessage(sMessage, iPlayerW, 8, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), X, Y, True, True)

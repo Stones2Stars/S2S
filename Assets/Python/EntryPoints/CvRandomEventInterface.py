@@ -177,7 +177,7 @@ def canTriggerHolyMountainDone(argsList):
 	data = argsList[0]
 
 	CyPlayer = GC.getPlayer(data.ePlayer)
-	dataOriginal = CyPlayer.getEventOccured(GC.getEventTriggerInfo(data.eTrigger).getPrereqEvent(0))
+	dataOriginal = CyPlayer.getEventOccured(INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)[0])
 
 	if not dataOriginal: return False
 
@@ -198,7 +198,7 @@ def canTriggerHolyMountainRevealed(argsList):
 	CyPlayer = GC.getPlayer(data.ePlayer)
 	if not CyPlayer.isHuman(): return False
 
-	dataOriginal = CyPlayer.getEventOccured(GC.getEventTriggerInfo(data.eTrigger).getPrereqEvent(0))
+	dataOriginal = CyPlayer.getEventOccured(INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)[0])
 	if not dataOriginal: return False
 
 	iPoints = 0
@@ -481,7 +481,6 @@ def applyLooters3(argsList):
 
 def canTriggerBrothersInNeed(argsList):
   data = argsList[0]
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
   player = GC.getPlayer(data.ePlayer)
   otherPlayer = GC.getPlayer(data.eOtherPlayer)
 
@@ -681,10 +680,10 @@ def canTriggerMonsoonCity(argsList):
 def canTriggerDustbowlCont(argsList):
   data = argsList[0]
 
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
+  aPrereqEvents = INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)
   player = GC.getPlayer(data.ePlayer)
 
-  kOrigTriggeredData = player.getEventOccured(trigger.getPrereqEvent(0))
+  kOrigTriggeredData = player.getEventOccured(aPrereqEvents[0])
 
   if (kOrigTriggeredData == None):
     return False
@@ -707,7 +706,7 @@ def canTriggerDustbowlCont(argsList):
     kActualTriggeredDataObject.iPlotX = bestPlot.getX()
     kActualTriggeredDataObject.iPlotY = bestPlot.getY()
   else:
-    player.resetEventOccured(trigger.getPrereqEvent(0))
+    player.resetEventOccured(aPrereqEvents[0])
     return False
 
   return True
@@ -1100,7 +1099,7 @@ def getHelpAncientOlympics2(argsList):
 def canTriggerModernOlympics(argsList):
 	data = argsList[0]
 	player = GC.getPlayer(data.ePlayer)
-	kOrigTriggeredData = player.getEventOccured(GC.getEventTriggerInfo(data.eTrigger).getPrereqEvent(0))
+	kOrigTriggeredData = player.getEventOccured(INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)[0])
 	if kOrigTriggeredData is None:
 		return False
 	kActualTriggeredDataObject = player.getEventTriggered(data.iId)
@@ -1851,7 +1850,7 @@ def canTriggerSecurityTax(argsList):
   player = GC.getPlayer(data.ePlayer)
 
   iWalls = GC.getInfoTypeForString("BUILDING_WALLS")
-  if player.getNumCities() > player.getBuildingCountWithUpgrades(iWalls):
+  if player.getNumCities() > STATE.getBuildingCount(data.ePlayer, iWalls):
     return False
 
   return True
@@ -1864,7 +1863,7 @@ def canTriggerLiteracy(argsList):
   player = GC.getPlayer(data.ePlayer)
 
   iLibrary = GC.getInfoTypeForString("BUILDING_LIBRARY")
-  if player.getNumCities() > player.getBuildingCountWithUpgrades(iLibrary):
+  if player.getNumCities() > STATE.getBuildingCount(data.ePlayer, iLibrary):
     return False
 
   return True
@@ -1894,7 +1893,7 @@ def getHelpHorseWhispering1(argsList):
 def canTriggerHorseWhisperingDone(argsList):
 	return (
 		WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) <=
-		GC.getPlayer(argsList[0].ePlayer).getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_STABLE"))
+		STATE.getBuildingCount(argsList[0].ePlayer, GC.getInfoTypeForString("BUILDING_STABLE"))
 	)
 
 def getHelpHorseWhisperingDone1(argsList):
@@ -1923,7 +1922,6 @@ def getHelpHarbormaster1(argsList):
 
 def canTriggerHarbormaster(argsList):
   data = argsList[0]
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
   player = GC.getPlayer(data.ePlayer)
 
   if GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY):
@@ -1942,12 +1940,11 @@ def canTriggerHarbormaster(argsList):
 
 def canTriggerHarbormasterDone(argsList):
   data = argsList[0]
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
   player = GC.getPlayer(data.ePlayer)
 
   iHarbor = GC.getInfoTypeForString("BUILDING_PORT")
   iHarborsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
-  if iHarborsRequired > player.getBuildingCountWithUpgrades(iHarbor):
+  if iHarborsRequired > STATE.getBuildingCount(data.ePlayer, iHarbor):
     return False
 
   iCaravelsRequired = iHarborsRequired / 2 + 1
@@ -1967,7 +1964,7 @@ def getHelpClassicLiterature1(argsList):
 def canTriggerClassicLiteratureDone(argsList):
 	return (
 		WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) <=
-		GC.getPlayer(argsList[0].ePlayer).getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_LIBRARY"))
+		STATE.getBuildingCount(argsList[0].ePlayer, GC.getInfoTypeForString("BUILDING_LIBRARY"))
 	)
 
 def getHelpClassicLiteratureDone2(argsList):
@@ -2048,10 +2045,10 @@ def canTriggerMasterBlacksmithDone(argsList):
 	data = argsList[0]
 	player = GC.getPlayer(data.ePlayer)
 
-	if WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) > player.getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_FORGE")):
+	if WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) > STATE.getBuildingCount(data.ePlayer, GC.getInfoTypeForString("BUILDING_FORGE")):
 		return False
 
-	prereqEventData = player.getEventOccured(GC.getEventTriggerInfo(data.eTrigger).getPrereqEvent(0))
+	prereqEventData = player.getEventOccured(INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)[0])
 
 	city = player.getCity(prereqEventData.iCityId)
 	if not city or city.getOwner() != data.ePlayer:
@@ -2124,12 +2121,11 @@ def getHelpBestDefense1(argsList):
 
 def canTriggerBestDefenseDone(argsList):
   data = argsList[0]
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
   player = GC.getPlayer(data.ePlayer)
 
   iCastle = GC.getInfoTypeForString("BUILDING_CASTLE")
   iBuildingsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
-  if iBuildingsRequired > player.getBuildingCountWithUpgrades(iCastle):
+  if iBuildingsRequired > STATE.getBuildingCount(data.ePlayer, iCastle):
     return False
 
   return True
@@ -2174,12 +2170,11 @@ def getHelpSportsLeague1(argsList):
 
 def canTriggerSportsLeagueDone(argsList):
   data = argsList[0]
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
   player = GC.getPlayer(data.ePlayer)
 
   iColosseum = GC.getInfoTypeForString("BUILDING_COLOSSEUM")
   iBuildingsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
-  if iBuildingsRequired > player.getBuildingCountWithUpgrades(iColosseum):
+  if iBuildingsRequired > STATE.getBuildingCount(data.ePlayer, iColosseum):
     return False
 
   return True
@@ -2234,7 +2229,7 @@ def canTriggerCrusadeDone(argsList):
 	data = argsList[0]
 	player = GC.getPlayer(data.ePlayer)
 
-	kOrigTriggeredData = player.getEventOccured(GC.getEventTriggerInfo(data.eTrigger).getPrereqEvent(0))
+	kOrigTriggeredData = player.getEventOccured(INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)[0])
 	holyCity = GAME.getHolyCity(kOrigTriggeredData.eReligion)
 
 	if holyCity.getOwner() != data.ePlayer:
@@ -2366,12 +2361,12 @@ def canTriggerExperiencedCaptain(argsList):
   data = argsList[0]
 
   player = GC.getPlayer(data.ePlayer)
-  unit = player.getUnit(data.iUnitId)
+  aUnit = STATE.getUnitRead(data.ePlayer, data.iUnitId)
 
-  if unit is None:
+  if aUnit[UnitReadKind.UNIT_READ_TYPE] == -1:
     return False
 
-  if unit.getExperience() < 7:
+  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] < 7:
     return False
 
   return True
@@ -2380,7 +2375,6 @@ def canTriggerExperiencedCaptain(argsList):
 
 def canTriggerGreed(argsList):
 	data = argsList[0]
-	#trigger = GC.getEventTriggerInfo(data.eTrigger)
 	CyPlayer = GC.getPlayer(data.ePlayer)
 	CyPlayerOther = GC.getPlayer(data.eOtherPlayer)
 	iTeam = CyPlayer.getTeam()
@@ -2476,8 +2470,8 @@ def expireGreed1(argsList):
 def canTriggerGreedDone(argsList):
 	data = argsList[0]
 	CyPlayer = GC.getPlayer(data.ePlayer)
-	trigger = GC.getEventTriggerInfo(data.eTrigger)
-	kOrigTriggeredData = CyPlayer.getEventOccured(trigger.getPrereqEvent(0))
+	aPrereqEvents = INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)
+	kOrigTriggeredData = CyPlayer.getEventOccured(aPrereqEvents[0])
 	CyPlot = GC.getMap().plot(kOrigTriggeredData.iPlotX, kOrigTriggeredData.iPlotY)
 
 	if CyPlot.getOwner() != kOrigTriggeredData.ePlayer:
@@ -2552,7 +2546,6 @@ def getHelpWarChariots1(argsList):
 
 def canTriggerWarChariotsDone(argsList):
   data = argsList[0]
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
   player = GC.getPlayer(data.ePlayer)
 
   iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1
@@ -2560,7 +2553,8 @@ def canTriggerWarChariotsDone(argsList):
   if player.getUnitCount(GC.getInfoTypeForString("UNIT_CHARIOT")) < iNumUnits:
     return False
 
-  kOrigTriggeredData = player.getEventOccured(trigger.getPrereqEvent(0))
+  aPrereqEvents = INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)
+  kOrigTriggeredData = player.getEventOccured(aPrereqEvents[0])
   kActualTriggeredDataObject = player.getEventTriggered(data.iId)
   kActualTriggeredDataObject.eReligion = kOrigTriggeredData.eReligion
 
@@ -2625,7 +2619,7 @@ def canApplyWarshipsDone2(argsList):
   player = GC.getPlayer(data.ePlayer)
 
   iBuilding = GC.getInfoTypeForString("BUILDING_THE_GREAT_LIGHTHOUSE")
-  if player.getBuildingCountWithUpgrades(iBuilding) == 0:
+  if STATE.getBuildingCount(data.ePlayer, iBuilding) == 0:
     return False
 
   return True
@@ -2653,7 +2647,7 @@ def canApplyGunsButterDone3(argsList):
   player = GC.getPlayer(data.ePlayer)
 
   iBuilding = GC.getInfoTypeForString("BUILDING_TAJ_MAHAL")
-  if player.getBuildingCountWithUpgrades(iBuilding) == 0:
+  if STATE.getBuildingCount(data.ePlayer, iBuilding) == 0:
     return False
 
   return True
@@ -2683,8 +2677,8 @@ def canTriggerNobleKnightsDone(argsList):
   if player.getUnitCount(GC.getInfoTypeForString("UNIT_KNIGHT")) < iNumUnits:
     return False
 
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
-  kOrigTriggeredData = player.getEventOccured(trigger.getPrereqEvent(0))
+  aPrereqEvents = INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)
+  kOrigTriggeredData = player.getEventOccured(aPrereqEvents[0])
   kActualTriggeredDataObject = player.getEventTriggered(data.iId)
   kActualTriggeredDataObject.eReligion = kOrigTriggeredData.eReligion
 
@@ -2773,7 +2767,7 @@ def canApplyOverwhelmDone3(argsList):
   iBuilding = GC.getInfoTypeForString("BUILDING_MANHATTAN_PROJECT")
 
 # if GC.getTeam(player.getTeam()).getProjectCount(iProject) == 0:
-  if player.getBuildingCountWithUpgrades(iBuilding) == 0:
+  if STATE.getBuildingCount(data.ePlayer, iBuilding) == 0:
     return False
 
   return True
@@ -2828,8 +2822,8 @@ def getHelpCorporateExpansion1(argsList):
 def canTriggerCorporateExpansionDone(argsList):
   data = argsList[0]
   player = GC.getPlayer(data.ePlayer)
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
-  kOrigTriggeredData = player.getEventOccured(trigger.getPrereqEvent(0))
+  aPrereqEvents = INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)
+  kOrigTriggeredData = player.getEventOccured(aPrereqEvents[0])
 
   iNumCitiesRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) + 1 + kOrigTriggeredData.iOtherPlayerCityId
 
@@ -2921,8 +2915,8 @@ def getHelpHostileTakeover1(argsList):
 def canTriggerHostileTakeoverDone(argsList):
   data = argsList[0]
   player = GC.getPlayer(data.ePlayer)
-  trigger = GC.getEventTriggerInfo(data.eTrigger)
-  kOrigTriggeredData = player.getEventOccured(trigger.getPrereqEvent(0))
+  aPrereqEvents = INFO.getIdList("EVENTTRIGGER_", data.eTrigger, IdListSlot.PYLIST_PREREQ_EVENTS)
+  kOrigTriggeredData = player.getEventOccured(aPrereqEvents[0])
 
   listResources = getHostileTakeoverListResources(GC.getCorporationInfo(kOrigTriggeredData.eCorporation), player)
 
@@ -3132,7 +3126,7 @@ def getHelpBillionsandBillions2 (argsList):
 
 def canApplyBillionsandBillions2(argsList):
 	data = argsList[1]
-	return GC.getPlayer(data.ePlayer).getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_HOLLYWOOD")) != 0
+	return STATE.getBuildingCount(data.ePlayer, GC.getInfoTypeForString("BUILDING_HOLLYWOOD")) != 0
 
 
 ################## FREE_ENTERPRISE (Free Market only) ###################
@@ -3199,17 +3193,16 @@ def canTriggerRubiconUnit(argsList):
   ePlayer = argsList[1]
   iUnit = argsList[2]
 
-  pPlayer = GC.getPlayer(ePlayer)
-  unit = pPlayer.getUnit(iUnit)
+  aUnit = STATE.getUnitRead(ePlayer, iUnit)
 
-  if unit is None:
+  if aUnit[UnitReadKind.UNIT_READ_TYPE] == -1:
     return False
 
-  if unit.getExperience() < 25:
+  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] < 25:
     return False
 
   iMorale = GC.getInfoTypeForString("PROMOTION_MORALE")
-  if unit.isHasPromotion(iMorale):
+  if STATE.hasUnitPromotion(ePlayer, iUnit, iMorale):
     return False
 
   return True
@@ -3285,8 +3278,8 @@ def canDoGeneralsPutsch1(argsList):
   pPlayer = GC.getPlayer(data.ePlayer)
   iEiffel = GC.getInfoTypeForString("BUILDING_EIFFEL_TOWER")
   iBroadcast = GC.getInfoTypeForString("BUILDING_BROADCAST_TOWER")
-  EifCnt = pPlayer.getBuildingCountWithUpgrades(iEiffel)
-  BrodCnt = pPlayer.getBuildingCountWithUpgrades(iBroadcast)
+  EifCnt = STATE.getBuildingCount(data.ePlayer, iEiffel)
+  BrodCnt = STATE.getBuildingCount(data.ePlayer, iBroadcast)
   bAggregate = EifCnt + BrodCnt
 
   if bAggregate < 1:
@@ -3308,7 +3301,7 @@ def canTriggerCureforCancer(argsList):
 
 	if pPlayer.isCivic(GC.getInfoTypeForString("CIVIC_DIVINE_CULT")):
 		return False
-	if pPlayer.getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_NATIONAL_MEDICAL_DATABASE")) == 0:
+	if STATE.getBuildingCount(data.ePlayer, GC.getInfoTypeForString("BUILDING_NATIONAL_MEDICAL_DATABASE")) == 0:
 		return False
 
 	return True
@@ -3364,12 +3357,12 @@ def canTriggerCarnationUnit(argsList):
   ePlayer = argsList[1]
   iUnit = argsList[2]
 
-  unit = GC.getPlayer(ePlayer).getUnit(iUnit)
+  aUnit = STATE.getUnitRead(ePlayer, iUnit)
 
-  if unit is None:
+  if aUnit[UnitReadKind.UNIT_READ_TYPE] == -1:
     return False
 
-  if unit.getExperience() < 50:
+  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] < 50:
     return False
 
   # do not use this event in multiplayer
@@ -3440,7 +3433,7 @@ def canTriggerSyntheticFuels(argsList):
 
 	if (
 		not pPlayer.hasBonus(GC.getInfoTypeForString("BONUS_COAL"))
-	or pPlayer.getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_HQ_STANDARD_ETHANOL")) > 0
+	or STATE.getBuildingCount(data.ePlayer, GC.getInfoTypeForString("BUILDING_HQ_STANDARD_ETHANOL")) > 0
 	):
 		return False
 
@@ -3486,9 +3479,9 @@ def doSyntheticFuels4(argsList):
 
 def canTriggerAlternativeEnergy(argsList):
 	CyPlayer = GC.getPlayer(argsList[0].ePlayer)
-	if CyPlayer.getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_THREE_GORGES_DAM")):
+	if STATE.getBuildingCount(argsList[0].ePlayer, GC.getInfoTypeForString("BUILDING_THREE_GORGES_DAM")):
 		return False
-	if not CyPlayer.getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_COAL_PLANT")):
+	if not STATE.getBuildingCount(argsList[0].ePlayer, GC.getInfoTypeForString("BUILDING_COAL_PLANT")):
 		return False
 	return True
 
@@ -3497,12 +3490,13 @@ def getHelpAlternativeEnergy1(argsList):
 	return TRNSLTR.getText("TXT_KEY_EVENT_ALTERNATIVE_ENERGY_HELP_1", (WORLD.getDefaultPlayers(GC.getMap().getWorldSize()), ))
 
 def expireAlternativeEnergy1(argsList):
-	return GC.getPlayer(argsList[1].ePlayer).getBuildingCountWithUpgrades(GC.getInfoTypeForString("BUILDING_THREE_GORGES_DAM"))
+	# The dam is capped `allowed: {world: 1}` and authors no replacedBy/obsoletes, so a count could only ever
+	# be 0 or 1 and hasBuilding is exact -- kept as the clearer read of the two.
+	return GC.getPlayer(argsList[1].ePlayer).hasBuilding(GC.getInfoTypeForString("BUILDING_THREE_GORGES_DAM"))
 
 
 def canTriggerAlternativeEnergyDone(argsList):
 	data = argsList[0]
-	trigger = GC.getEventTriggerInfo(data.eTrigger)
 	pPlayer = GC.getPlayer(data.ePlayer)
 	i3Gorges = GC.getInfoTypeForString("BUILDING_THREE_GORGES_DAM")
 
@@ -3511,7 +3505,7 @@ def canTriggerAlternativeEnergyDone(argsList):
 	iTotal = iNuke+iHydro
 	iBuildingsRequired = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 
-	if iBuildingsRequired > (pPlayer.getBuildingCountWithUpgrades(iHydro) + pPlayer.getBuildingCountWithUpgrades(iNuke)):
+	if iBuildingsRequired > (STATE.getBuildingCount(data.ePlayer, iHydro) + STATE.getBuildingCount(data.ePlayer, iNuke)):
 		return False
 
 	return True
@@ -4723,7 +4717,7 @@ def canTriggerV_Ger(argsList):
 	pPlayer = GC.getPlayer(data.ePlayer)
 	iObsrvty = GC.getInfoTypeForString("BUILDING_OBSERVATORY")
 
-	if pPlayer.getBuildingCountWithUpgrades(iObsrvty) < 1:
+	if STATE.getBuildingCount(data.ePlayer, iObsrvty) < 1:
 		return False
 
 	if GAME.isVictoryValid(GC.getInfoTypeForString("VICTORY_SPACE_RACE")):

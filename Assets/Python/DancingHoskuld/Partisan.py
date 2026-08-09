@@ -58,6 +58,7 @@ INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
+ACT = CyAct()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
@@ -376,25 +377,32 @@ def onCombatResult(argsList):
 	##  First we check that the winning unit is a patisan and the loosing a seige or "armour" unit
 	##  There is a small chance that the unit will be captured.
 	CyUnitW, CyUnitL = argsList
+	iOwnerW, iUnitIdW = CyUnitW
+	iOwnerL, iUnitIdL = CyUnitL
 
-	if CyUnitW.getUnitType() == GC.getInfoTypeForString('UNIT_PARTISAN'):
+	aW = STATE.getUnitRead(iOwnerW, iUnitIdW)
+	aL = STATE.getUnitRead(iOwnerL, iUnitIdL)
+
+	if aW[UnitReadKind.UNIT_READ_TYPE] == GC.getInfoTypeForString('UNIT_PARTISAN'):
 		captureChance = None
-		iCombatL = CyUnitL.getUnitCombatType()
+		iCombatL = aL[UnitReadKind.UNIT_READ_COMBAT_CLASS]
 		if iCombatL == GC.getInfoTypeForString('UNITCOMBAT_SIEGE'):
 			captureChance = 10
 		elif iCombatL in (GC.getInfoTypeForString('UNITCOMBAT_TRACKED'), GC.getInfoTypeForString('UNITCOMBAT_WHEELED')):
 			captureChance = 5
 		if captureChance and GAME.getSorenRandNum(100, "Partisan capture unit") < captureChance:
 
-			iPlayerW = CyUnitW.getOwner()
-			CyPlayerW = GC.getPlayer(iPlayerW)
+			iPlayerW = iOwnerW
 
-			iUnitL = CyUnitL.getUnitType()
-			iX = CyUnitW.getX()
-			iY = CyUnitW.getY()
-			CyUnit = CyPlayerW.initUnit(iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
-			CyUnit.setDamage(75, False)
-			CyUnit.finishMoves()
+			iUnitL = aL[UnitReadKind.UNIT_READ_TYPE]
+			aPosW = STATE.getUnitPosition(iOwnerW, iUnitIdW)
+			iX = aPosW[0]
+			iY = aPosW[1]
+			iNewUnit = ACT.initUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+			# -1 = NO_PLAYER: the damage is not attributed to anyone. The old call passed `False`, which coerced
+			# to 0 and therefore blamed player 0 -- a latent bug this conversion drops rather than carries over.
+			ACT.setUnitDamage(iPlayerW, iNewUnit, 75, -1)
+			ACT.finishUnitMoves(iPlayerW, iNewUnit)
 
 			iPlayerAct = GAME.getActivePlayer()
 			if iPlayerAct == iPlayerW:
@@ -402,7 +410,7 @@ def onCombatResult(argsList):
 					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT2", (INFO.getDescription("UNIT_", iUnitL),)),
 					iPlayerAct, 16, 'Art/Interface/Buttons/civics/despotism.dds', ColorTypes(7), iX, iY, True, True
 				)
-			elif iPlayerAct == CyUnitL.getOwner():
+			elif iPlayerAct == iOwnerL:
 				CvUtil.sendMessage(
 					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT1", (INFO.getDescription("UNIT_", iUnitL),)),
 					iPlayerAct, 16, 'Art/Interface/Buttons/civics/despotism.dds', ColorTypes(44), iX, iY, True, True

@@ -984,6 +984,36 @@ python::list CyState::getUnitPromotions(int iPlayer, int iUnit) const
 }
 
 
+bool CyState::isUnitHiddenNationality(int iPlayer, int iUnit) const
+{
+	g_szLastCyRead = "CyState::isUnitHiddenNationality";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	return pUnit ? pUnit->isHiddenNationality() : false;
+}
+
+int CyState::getNumVisiblePotentialEnemyDefenders(int iPlayer, int iUnit, int iX, int iY) const
+{
+	g_szLastCyRead = "CyState::getNumVisiblePotentialEnemyDefenders";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit == NULL) return 0;
+	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	return pPlot ? pPlot->getNumVisiblePotentialEnemyDefenders(pUnit) : 0;
+}
+
+int CyState::getUnitVisualOwner(int iPlayer, int iUnit) const
+{
+	g_szLastCyRead = "CyState::getUnitVisualOwner";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	return pUnit ? (int)pUnit->getVisualOwner() : -1;
+}
+
+int CyState::getUnitBaseCombatStr(int iPlayer, int iUnit) const
+{
+	g_szLastCyRead = "CyState::getUnitBaseCombatStr";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	return pUnit ? pUnit->baseCombatStrHuman() : 0;
+}
+
 bool CyState::hasUnitPromotion(int iPlayer, int iUnit, int iPromotion) const
 {
 	g_szLastCyRead = "CyState::hasUnitPromotion";
@@ -1076,6 +1106,19 @@ int CyState::getOrderQueueLength(int iPlayer, int iCity) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
 	return pCity ? pCity->getOrderQueueLength() : 0;
+}
+
+bool CyState::isProductionUnit(int iPlayer, int iCity) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	return pCity ? pCity->isProductionUnit() : false;
+}
+
+int CyState::getBuildingCount(int iPlayer, int iBuilding) const
+{
+	if (iBuilding < 0 || iBuilding >= GC.getNumBuildingInfos()) return 0;
+	const CvPlayer* pPlayer = cys_player(iPlayer);
+	return pPlayer ? pPlayer->getBuildingCount((BuildingTypes)iBuilding) : 0;
 }
 
 bool CyState::getBuildingListFilterActive(int iPlayer, int iCity, int iFilter) const
@@ -1369,6 +1412,10 @@ void CyState::pythonPublish()
 		.def("getPlotUnitIds",           &CyState::getPlotUnitIds)
 		.def("isUnitInvisible",          &CyState::isUnitInvisible)
 		.def("hasUnitPromotion",         &CyState::hasUnitPromotion)
+		.def("isUnitHiddenNationality",  &CyState::isUnitHiddenNationality)
+		.def("getUnitVisualOwner",       &CyState::getUnitVisualOwner)
+		.def("getUnitBaseCombatStr",     &CyState::getUnitBaseCombatStr)
+		.def("getNumVisiblePotentialEnemyDefenders", &CyState::getNumVisiblePotentialEnemyDefenders)
 		.def("getUnitPromotions",        &CyState::getUnitPromotions)
 		.def("isUnitPromotionOverridden",&CyState::isUnitPromotionOverridden)
 		.def("hasUnitCombat",           &CyState::hasUnitCombat)
@@ -1380,6 +1427,8 @@ void CyState::pythonPublish()
 		.def("isEmphasize",              &CyState::isEmphasize)
 		.def("getHurryQuote",            &CyState::getHurryQuote)
 		.def("getOrderQueueLength",      &CyState::getOrderQueueLength)
+		.def("isProductionUnit",         &CyState::isProductionUnit)
+		.def("getBuildingCount",         &CyState::getBuildingCount)
 		.def("getBuildingListFilterActive", &CyState::getBuildingListFilterActive)
 		.def("getBuildingListSorting",   &CyState::getBuildingListSorting)
 		.def("getUnitListFilterActive",  &CyState::getUnitListFilterActive)

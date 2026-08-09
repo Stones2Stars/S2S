@@ -1152,3 +1152,109 @@ fabricated number.
 ⚑ Worked precedent for the biggest case: `RawYields` was hand-computing a yield breakdown through this API. It
 was not re-bound — it now reads `CyState::getCityYieldTerms`, the SAME decomposition the `/computed` census
 renders, because a tooltip IS a census and two computations of one number drift.
+
+## `applyDistanceScoringFactor` exists TWICE, and both copies compute in FLOAT
+
+**OBSERVED.** Two definitions of one function, and both are live:
+
+| definition | reached by |
+|---|---|
+| `Sources/Engine/CvGameCoreUtils.cpp:3727` (global, declared in `CvGameCoreUtils.h:419`) | `CvUnitAI.cpp:3981` · `CvUnitAI.cpp:17517` — unqualified, both OUTSIDE `namespace scoring` |
+| `Sources/AI/CvUnitAI.cpp:15521`, inside `namespace scoring` (opens `:15393`) | `CvUnitAI.cpp:28828` · `CvUnitAI.cpp:28945` — explicitly `scoring::`-qualified |
+
+**PROVEN.**
+
+- The two bodies are **functionally identical** — a line-by-line diff of both 48-line bodies differs only by
+  one blank line and one commented-out formula (`//score = (int)(static_cast<float>(score)/sqrt(dist));`)
+  carried by the `CvUnitAI` copy. So this is a straight duplicate of one calculation
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), and the copy also
+  carries dead commented-out code ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
+- **Both compute in FLOAT** (`float d0 = 5.0f; float p = 0.4f;`) and are reached from AI decision paths that
+  run on every client in lockstep. Civ4 multiplayer is deterministic lockstep and CPU-dependent float math
+  desyncs ([engine.md](../../reference/engine.md); [modifier.md §2](../../specs/modifier.md): *"All integer,
+  ×100 fixed-point, no float"*).
+
+**RULED OUT.** The contract broker is no longer a caller — its matching does not score on distance at all any
+more, so that call site is gone rather than pending. The four sites above are `CvUnitAI`'s own.
+
+**NOT YET KNOWN.** Whether the float falloff actually yields a divergent int after truncation across the CPUs
+the mod runs on — i.e. whether this is a live desync or a latent one. That decides urgency, not whether the
+shape is wrong. Also unknown: whether the duplicate was a copy taken deliberately (to add the `scoring::`
+grouping) or by accident; nothing in either file says.
+
+## Engine→Python IDENTITY conversion left 46+ handlers dereferencing a tuple
+
+**OBSERVED.** `PythonDbg.log`, every turn with combat: 193 BUG-caught handler errors, 82% of them
+`combatResult`, reading `'tuple' object has no attribute 'getOwner' / 'isMadeAttack' / 'getUnitType'`.
+⚠ These do NOT appear in `PythonErr.log` — BUG catches them inside its own dispatch
+([external-tools-and-workflows.md](../../reference/external-tools-and-workflows.md)).
+
+**PROVEN — it is not a defect, it is an unconverted consumer set.** `CvUnit*` and `CvCity*` now cross to
+Python as their `(owner, id)` IDENTITY rather than as a `Cy*` handle:
+
+```
+Sources/Python/CyUnit.h:203   DECLARE_PY_IDENTITY(CvUnit*, getOwner(), getID());
+Sources/Python/CyCity.h:420   DECLARE_PY_IDENTITY(CvCity*, getOwner(), getID());
+```
+
+`CvPlot*` and `CvSelectionGroup*` still cross as wrappers. The handlers still do
+`CyUnitW, CyUnitL = argsList` — the unpack SUCCEEDS and the elements are tuples, which is why the failure
+reads as a mystery rather than as a missing binding.
+
+- **39 engine events pass a unit or a city** (`CvDllPythonEvents.cpp`, every `report*` taking `CvUnit*`/`CvCity*`).
+- **85 Python handlers subscribe to them; at least 46 dereference the passed object** across 11 files —
+  `Contrib/autologEventManager.py` 17 · `CvEventManager.py` 15 · `Revolution/RevEvents.py` 4 ·
+  `CaptureSlaves.py` 2 · `Partisan.py` 2 · six files with one each.
+- ⚠ **46 is a FLOOR.** The census keyed on `= argsList` at end-of-line and therefore MISSED any unpack with a
+  trailing comment (`autologEventManager.py` is exactly that). Re-run it with that fixed before trusting a total.
+- **Live gameplay is silently off, not merely noisy:** all three `combatResult` handlers raise every combat, so
+  `CaptureSlaves` (captives) and `Partisan` (unit capture) never run.
+
+**⚖ THE LOGS ARE THE PRIORITY ORDER; THE CENSUS IS THE UPPER BOUND.** A session's `PythonDbg` shows what FIRED,
+so it is a far shorter list than the census and is the right thing to work down — measured over one late-game
+session, the 278 deref errors were only SEVEN events (`combatResult` 189 · `unitBuilt` 36 · `buildingBuilt` 33 ·
+`cityDoTurn` 17 · `unitSpreadReligionAttempt`/`techAcquired` 1 each, plus `CvGameUtils.cannotMaintain`, which is
+a `BugGameUtils` callback rather than an event handler and which no handler census counts).
+⛔ **But a clean log is NOT a finished surface, and must not be read as one:** a session exercises a narrow
+slice, so the next one that opens the victory screen, runs WorldBuilder or generates a map surfaces a fresh
+batch. **424 `GC.get*Info(` call sites survive across the tree** — every one an `AttributeError` when its path
+runs ([python-read-map.md](../../reference/python-read-map.md) is the standing census). Treat log-clean as a
+checkpoint that is reachable and verifiable, never as completion.
+
+**⚠ THERE ARE TWO ERROR CLASSES IN THOSE LOGS AND THEY NEED DIFFERENT FIXES — reading them as one is why a
+first pass under-scopes.** The tuple deref above is one; the other is a read the new surface does not publish
+(`GC.get<X>Info` is published NOWHERE by ruling, so it is an `AttributeError` at the moment its handler fires,
+not a slow read). ⛔ The second class is never fixed by re-adding the legacy binding
+([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)) — it converts onto `CyInfo`/`CyState`,
+or, where the engine hands a TYPE across, by restoring the `class_<>` registration alone with zero `.def`s
+([patterns.md](../../architecture/patterns.md)).
+⚑ **A logged failure is reliably a floor on its own site count**: each of that class's seven logged items was
+between 1 and 23 actual sites in the tree, because only the paths that ran reported.
+
+**RULED OUT.** Not the contract broker, and not a regression from any recent change — the identity conversion is
+the deliberate IDENTITY SET ruling ([patterns.md](../../architecture/patterns.md)) landing ahead of its consumers.
+
+**The conversion PATTERN is settled** — `pyWB/CvWBDesc.py` is the worked precedent: unpack the identity, read
+through `STATE.xxx(iOwner, iId)`, write through `CyAct`. `.getOwner()` becomes free (element 0).
+
+**NOT YET KNOWN / what makes this bigger than a Python sweep.** The `combatResult` slice alone needs reads the
+new surface does not publish. Union of what its four handlers do to the two units:
+
+| served today | NOT served — must be ADDED |
+|---|---|
+| `getOwner` (free) · `getUnitPosition` · `getUnitRead[UNIT_READ_TYPE\|_DOMAIN]` · `hasUnitPromotion` · `hasUnitCombat` · probably `getCaptureKinds` | `isMadeAttack` · `isAnimal` · `getCaptureUnitType` · `getUnitCombatType` · `getExperience` · `isHuman`/`isNPC` · a position→`CyPlot` path for `plot()` · a **CyAct** route for `setDamage` and `changeExperience` |
+
+⛔ **Do NOT half-convert.** A handler whose args are ids while its body still calls a method that does not exist
+RELOCATES the failure ([roadmap.md](roadmap.md) § scope decision 6) — finish a handler or leave it untouched.
+⛔ And do not borrow a legacy read to fill a gap: ADD the read to the library
+([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)).
+⚠ `Assets/` is the live game, so Python edits ship the instant they are saved — never edit while the game runs.
+
+**⚖ EACH FIXED HANDLER ALSO OWES ITS SPINE FACT (owner).** A handler that calls back to C++ rides a happening
+that today reaches Python and nothing else, so `CvEventReporter` emits a spine fact beside its Python call in
+the same work item — an ADDITION, never a conversion of the reporter. The rule, the reporter-minus-existing-facts
+subtraction, the per-method KIND test and the raw-not-formalized bar live at
+[event-spine.md § `CvEventReporter` EMITS SPINE FACTS](../../specs/event-spine.md); they are not restated here.
+⚑ For `combatResult` that is `SEVT_COMBAT_RESULT` beside the ~10 surface additions above — and it is what makes
+the conversion verifiable at all, since a fixed handler is then observable on `/events` rather than inferred
+from the ABSENCE of a `PythonDbg` traceback.

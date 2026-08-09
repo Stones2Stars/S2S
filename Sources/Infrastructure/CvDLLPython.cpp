@@ -27,6 +27,7 @@
 #include "Python/CyUnit.h"
 #include "Python/CySelectionGroup.h"
 #include "Python/CyGameCoreUtils.h"   // the shared calc helpers published as free functions
+#include "Tools/CvRandom.h"           // registered (zero defs) so getMapRand's handle can cross
 #include "Tools/SCyDebug.h"
 #include "IDValueMap.h"
 #include "Tools/Win32.h"
@@ -222,6 +223,17 @@ DllExport void DLLPublishToPython()
 		.def_readwrite("x", &POINT::x)
 		.def_readwrite("y", &POINT::y)
 		;
+
+	//   CvRandom -- the engine HANDS ONE ACROSS (CyGame::getMapRand / getSorenRand, both published with
+	//               reference_existing_object) and Python passes it straight on to the EXE's own shuffleList.
+	//               So the def resolved and threw at CONVERSION: "No Python class registered for C++ class
+	//               class CvRandom", from WoodlandCycle's onBeginGameTurn -- once per game turn.
+	//               ⛔ ZERO defs, deliberately: Python never asks it anything, it only carries the handle from
+	//               one published call to another, so this is the marshalling IDENTITY and not a read surface
+	//               ([DEC-cy-not-fixed] bans the getter contract, never the class_<> that lets a type cross).
+	//               ⚠ shuffleList is the EXE's, not ours -- it has never existed in Sources/ -- so nothing here
+	//               is a revived binding; only the registration was missing.
+	python::class_<CvRandom>("CvRandom", python::no_init);
 
 	//   TradeData -- fails in BOTH directions, which is why it surfaced twice over. The engine RETURNS one
 	//               (CyDeal::getFirstTrade / getSecondTrade), so the scoreboard's deal walk resolved the def and
