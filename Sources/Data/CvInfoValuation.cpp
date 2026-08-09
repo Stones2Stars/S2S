@@ -784,18 +784,6 @@ namespace
 	//	⚠ Every authored entry of this shape is a FLAT at empire scope (1232 across the seven yield/commerce
 	//	families), which is why the keyed sum -- which matches family/kind/target but no unit axis -- is exact
 	//	here; a percent authored on this address later would need the unit split before this could stay.
-	int64_t val_traitKeyedPerSpecialist(const std::vector<TraitContext::HeldTrait>& heldTraits,
-		ModifierFamily eFamily, int iKind, int iTargetSegment, int iSpecialist,
-		const CvCascadeEvalCtx& evalCtx)
-	{
-		int64_t iSum = 0;
-		for (size_t i = 0; i < heldTraits.size(); ++i)
-		{
-			iSum += InfoValuation::keyedTargetSum(heldTraits[i].info->getModifiers(), eFamily, iKind,
-				iTargetSegment, iSpecialist, evalCtx);
-		}
-		return iSum;
-	}
 }
 
 // THE SPECIALIST TERM (see the header): the ONE fold both the oracle and the stored read use.
@@ -831,6 +819,29 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 	}
 	const std::vector<TraitContext::HeldTrait>& heldTraits =
 		(pHeldTraits != NULL) ? *pHeldTraits : kOwnHeldTraits;
+	//	⛔ THE TRAIT FOLD IS COLLECTED ONCE PER TRAIT, NOT RE-WALKED PER SPECIALIST. keyedTargetSum walks the
+	//	trait's whole CONDITIONED range and evaluates each entry's gate, so asking it per (specialist x trait)
+	//	re-walked and re-evaluated that range ~40 times per trait -- specialists x traits x entries, on the
+	//	city rate read. The collect twin answers every specialist key in ONE walk, which is exactly why it
+	//	exists; the totals are then indexed per specialist below.
+	std::vector<int64_t> aiTraitPerSpecialist;
+	if (iSpecialistsSegment != (int)TARGET_SEGMENT_NONE && !heldTraits.empty())
+	{
+		aiTraitPerSpecialist.assign((size_t)GC.getNumSpecialistInfos(), (int64_t)0);
+		std::vector<int64_t> aiOneTrait;
+		for (size_t iHeld = 0; iHeld < heldTraits.size(); ++iHeld)
+		{
+			if (heldTraits[iHeld].info == NULL) continue;
+			collectKeyedTargetSums(heldTraits[iHeld].info->getModifiers(), eFamily, iKind,
+				iSpecialistsSegment, evalCtx, aiOneTrait);
+			const size_t iLimit = std::min(aiOneTrait.size(), aiTraitPerSpecialist.size());
+			for (size_t k = 0; k < iLimit; ++k)
+			{
+				aiTraitPerSpecialist[k] += aiOneTrait[k];
+			}
+		}
+	}
+
 	//	⛔ The FREE-TYPED counts are fetched ONCE, for the same reason the held traits above are: the per-type
 	//	read is a slice of a walk over the eval ctx, the city's operating set and the whole empire, so asking
 	//	it per specialist makes the census quadratic. Paid only when a census is actually being built.
@@ -847,8 +858,8 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 			const int64_t iPerUnit = groupSumAt(
 				GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
 				eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx)
-				+ val_traitKeyedPerSpecialist(heldTraits, eFamily, iKind, iSpecialistsSegment,
-					iSpecialist, evalCtx);
+				+ (iSpecialist < (int)aiTraitPerSpecialist.size()
+					? aiTraitPerSpecialist[iSpecialist] : (int64_t)0);
 			iSpecialists += iCount * iPerUnit;
 			if (pRowsOut != NULL)
 			{
@@ -876,8 +887,8 @@ int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const Cv
 				kRow.perUnit = groupSumAt(
 					GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getModifiers(),
 					eFamily, iKind, CASC_UNIT_FLAT, CASC_SCOPE_CITY, evalCtx)
-					+ val_traitKeyedPerSpecialist(heldTraits, eFamily, iKind, iSpecialistsSegment,
-						iSpecialist, evalCtx);
+					+ (iSpecialist < (int)aiTraitPerSpecialist.size()
+						? aiTraitPerSpecialist[iSpecialist] : (int64_t)0);
 				kRow.contribution = 0;
 				pRowsOut->push_back(kRow);
 			}
