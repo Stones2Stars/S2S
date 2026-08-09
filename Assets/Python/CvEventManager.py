@@ -1980,22 +1980,28 @@ class CvEventManager:
 
 
 	def onUnitCreated(self, argsList): # Enabled in PythonCallbackDefines.xml (USE_ON_UNIT_CREATED_CALLBACK = True)
-		CyUnit, = argsList
+		aUnitId, = argsList
+		iPlayer = aUnitId[0]
+		iUnitID = aUnitId[1]
+		iUnitType = STATE.getUnitRead(iPlayer, iUnitID)[UnitReadKind.UNIT_READ_TYPE]
 
 		# Subdued/Tamed animal graphical attachment
 		iStoryTeller = getattr(self, "UNIT_STORY_TELLER", -1)
 		if iStoryTeller != -1:
-			KEY = INFO.getType("UNIT_", CyUnit.getUnitType())
+			KEY = INFO.getType("UNIT_", iUnitType)
 			if KEY[:13] == 'UNIT_SUBDUED_' or KEY[:11] == 'UNIT_TAMED_':
-				CyUnit.setLeaderUnitType(iStoryTeller)
+				ACT.setUnitLeaderUnitType(iPlayer, iUnitID, iStoryTeller)
 
 		# Inspired Missionary
+		# The religious test asks what the unit CAN SPREAD, not what its build gate required: the prereq is an
+		# ordinary requires.build RELIGION_ atom the enabler owns now, while "is this a missionary" is authored
+		# directly as spread.religion.
 		aWonderTuple = self.aWonderTuple
 		if "FA_MEN_SI" in aWonderTuple[0] \
-		and CyUnit.getOwner() == aWonderTuple[4][aWonderTuple[0].index("FA_MEN_SI")] \
-		and GC.getUnitInfo(CyUnit.getUnitType()).getPrereqReligion() > -1:
+		and iPlayer == aWonderTuple[4][aWonderTuple[0].index("FA_MEN_SI")] \
+		and INFO.canSpreadReligion(iUnitType):
 
-			CyUnit.setHasPromotion(GC.getInfoTypeForString("PROMOTION_FA_MEN_SI_INSPIRED"), True)
+			ACT.setUnitPromotion(iPlayer, iUnitID, GC.getInfoTypeForString("PROMOTION_FA_MEN_SI_INSPIRED"), True)
 
 
 	def onUnitBuilt(self, argsList):
@@ -2036,48 +2042,50 @@ class CvEventManager:
 
 
 	def onUnitKilled(self, argsList):
-		CyUnit, iAttacker = argsList # iAttacker is a PlayerType
+		aUnitId, iAttacker = argsList # iAttacker is a PlayerType
 		# Player who lost the unit
-		iPlayerL = CyUnit.getOwner()
+		iPlayerL = aUnitId[0]
+		iUnitID = aUnitId[1]
+		aUnit = STATE.getUnitRead(iPlayerL, iUnitID)
 
 		aWonderTuple = self.aWonderTuple
 		if iPlayerL in aWonderTuple[4]:
-			CyPlayerL = None
 			for i, iPlayerX in enumerate(aWonderTuple[4]):
 				if iPlayerX != iPlayerL: continue
 				KEY = aWonderTuple[0][i]
 				if KEY == "ALAMO":
-					if CyPlayerL is None:
-						CyPlayerL = GC.getPlayer(iPlayerL)
-					iValue = CyUnit.baseCombatStr()
-					for CyCity in CyPlayerL.cities():
-						CyCity.changeCulture(iPlayerL, iValue, False)
+					# ⚠ baseCombatStr carries the game-option-dependent scale the combat cluster still has
+					# (fixed-point-and-scales 4c-ter): x100 under SIZE_MATTERS, human without. Passed through
+					# exactly as legacy did -- reducing here would change the grant under one option only.
+					iValue = aUnit[UnitReadKind.UNIT_READ_BASE_COMBAT]
+					for iCityID in STATE.getCityIds(iPlayerL):
+						ACT.changeCityCulture(iPlayerL, iCityID, iPlayerL, iValue, False)
 				elif KEY == "CYRUS_TOMB":
-					if CyUnit.isHasPromotion(GC.getInfoTypeForString("PROMOTION_LEADER")) or CyUnit.getUnitType() == GC.getInfoTypeForString("UNIT_GREAT_GENERAL"):
-						if CyPlayerL is None:
-							CyPlayerL = GC.getPlayer(iPlayerL)
+					if STATE.hasUnitPromotion(iPlayerL, iUnitID, GC.getInfoTypeForString("PROMOTION_LEADER")) \
+					or aUnit[UnitReadKind.UNIT_READ_TYPE] == GC.getInfoTypeForString("UNIT_GREAT_GENERAL"):
 						iCityID = aWonderTuple[3][i]
-						CyCity = None
-						for CyCityX in CyPlayerL.cities():
-							if CyCityX.getID() == iCityID:
-								CyCity = CyCityX
-								break
-						if CyCity is None:
+						if iCityID not in STATE.getCityIds(iPlayerL):
 							continue
-						iX = CyCity.getX()
-						iY = CyCity.getY()
-						szName = CyUnit.getNameNoDesc()
-						CyUnitNew = CyPlayerL.initUnit(GC.getInfoTypeForString("UNIT_GREAT_GENERAL"), iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-						CyUnitNew.setName(szName)
-						CyUnitNew.setImmobileTimer(2 * (1 + GAME.getGameSpeedType()))
+						aPos = STATE.getCityPosition(iPlayerL, iCityID)
+						iX = aPos[0]
+						iY = aPos[1]
+						szName = STATE.getUnitNameNoDesc(iPlayerL, iUnitID)
+						iNewUnitID = ACT.initUnit(
+							iPlayerL, GC.getInfoTypeForString("UNIT_GREAT_GENERAL"), iX, iY,
+							UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION
+						)
+						if iNewUnitID > -1:
+							ACT.setUnitName(iPlayerL, iNewUnitID, szName)
+							# The immobile timer is a STATUS now (state.md); setImmobileTimer is gone.
+							ACT.setUnitStatus(iPlayerL, iNewUnitID, UnitStatus.STATUS_PARALYZED, 2 * (1 + GAME.getGameSpeedType()))
 						# Message
 						if iPlayerL == GAME.getActivePlayer():
 							CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_GG_REVIVE", (szName,)), iPlayerL, 16, 'Art/Interface/Buttons/Great_Wonders/cyrustomb.dds', ColorTypes(11), iX, iY, True, True, bForce=False)
 
 		# Subdued/Tamed animal graphical attachment
-		if CyUnit.getLeaderUnitType() == self.UNIT_STORY_TELLER:
+		if aUnit[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE] == self.UNIT_STORY_TELLER:
 			# This will prevent a 'beastmaster lost' message when the unit is killed.
-			CyUnit.setLeaderUnitType(-1)
+			ACT.setUnitLeaderUnitType(iPlayerL, iUnitID, -1)
 
 
 	def onUnitPromoted(self, argsList):
@@ -2735,14 +2743,18 @@ class CvEventManager:
 
 
 	def onCityDoTurn(self, argsList):
-		CyCity, iPlayer = argsList
+		# The callback hands over an IDENTITY, not a handle: a cut Cy* wrapper carries zero defs, so a script
+		# given one could not even ask which city it is. Everything below addresses the city by its (owner, id)
+		# pair -- reads through STATE, writes through ACT ([DEC-cy-not-fixed]).
+		aCityId, iPlayer = argsList
+		iCityID = aCityId[1]
 
 		if not self.bNetworkMP and iPlayer == GAME.getActivePlayer():
-			CvAdvisorUtils.cityAdvise(CyCity, iPlayer)
+			CvAdvisorUtils.cityAdvise(iPlayer, iCityID)
 
-		iCityID = CyCity.getID()
 		aWonderTuple = self.aWonderTuple
 		if iCityID in aWonderTuple[3] and iPlayer in aWonderTuple[4]:
+			aPos = STATE.getCityPosition(iPlayer, iCityID)
 			for i, ID in enumerate(aWonderTuple[3]):
 				if ID != iCityID: continue
 				if iPlayer != aWonderTuple[4][i]: continue # Obsolete
@@ -2750,34 +2762,34 @@ class CvEventManager:
 
 				if KEY == "CRUSADE":
 					iBuilding = aWonderTuple[1][i]
-					if CyCity.getBuildingOriginalOwner(iBuilding) == iPlayer and not (GAME.getGameTurn() % (1 + 2 * self.iTrainPrcntGS / 100)):
-						CyPlayer = GC.getPlayer(iPlayer)
+					aBuilding = STATE.getBuildingInCity(iPlayer, iCityID, iBuilding)
+					if aBuilding[CityBuildingRead.CITY_BUILDING_ORIGINAL_OWNER] == iPlayer and not (GAME.getGameTurn() % (1 + 2 * self.iTrainPrcntGS / 100)):
 						iUnit = GC.getInfoTypeForString("UNIT_CRUSADER")
-						CyUnit = CyPlayer.initUnit(iUnit, CyCity.getX(), CyCity.getY(), UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
-						CyCity.addProductionExperience(CyUnit, False)
+						iNewUnit = ACT.initUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
+						if iNewUnit != -1:
+							ACT.addUnitProductionExperience(iPlayer, iCityID, iNewUnit, False)
 
 				elif KEY == "GREAT_ZIMBABWE":
-					if CyCity.isFoodProduction():
-						iFoodSurplus = CyCity.getYieldRate(0) - CyCity.foodConsumption(False, 0)
+					aGrowth = STATE.getGrowth(iPlayer, iCityID)
+					if aGrowth[CityGrowthRead.GROWTH_READ_IS_FOOD_PRODUCTION]:
+						# The surplus IS the growth read's food-per-turn -- it is foodDifference(), which is what
+						# `yield - consumption` was spelling out by hand, already reduced to whole food.
+						iFoodSurplus = aGrowth[CityGrowthRead.GROWTH_READ_FOOD_PER_TURN]
 						if iFoodSurplus > 0:  # only process if there is an actual surplus
-							iNewFood = CyCity.getFood() + iFoodSurplus
-							iGrowthThreshold = CyCity.growthThreshold()
-							if iNewFood >= iGrowthThreshold:
-								CyCity.changePopulation(1)
-								CyCity.setFood(CyCity.getFoodKept())
+							iNewFood = aGrowth[CityGrowthRead.GROWTH_READ_FOOD_STORED] + iFoodSurplus
+							if iNewFood >= aGrowth[CityGrowthRead.GROWTH_READ_THRESHOLD]:
+								ACT.setCityPopulation(iPlayer, iCityID, STATE.getCityPopulation(iPlayer, iCityID) + 1)
+								ACT.setCityStoredFood(iPlayer, iCityID, aGrowth[CityGrowthRead.GROWTH_READ_FOOD_KEPT])
 							else:
-								CyCity.setFood(iNewFood)
+								ACT.setCityStoredFood(iPlayer, iCityID, iNewFood)
 
 				elif KEY == "BIODOME":
 					if not self.aBiodomeList or GAME.getGameTurn() % (4*self.iGameSpeedPercent/100 + 1):
 						continue
-					CyPlayer = GC.getPlayer(iPlayer)
-					iX = CyCity.getX()
-					iY = CyCity.getY()
 					iUnit = self.aBiodomeList[GAME.getSorenRandNum(len(self.aBiodomeList), "Which Animal")]
-					CyUnit = CyPlayer.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-					if iPlayer == GAME.getActivePlayer():
-						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MSG_BIODOME",(CyUnit.getName(),)), iPlayer, 16, CyUnit.getButton(), ColorTypes(11), iX, iY, True, True)
+					iNewUnit = ACT.initUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					if iNewUnit != -1 and iPlayer == GAME.getActivePlayer():
+						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MSG_BIODOME",(STATE.getUnitName(iPlayer, iNewUnit),)), iPlayer, 16, INFO.getButton("UNIT_", iUnit), ColorTypes(11), aPos[0], aPos[1], True, True)
 
 
 	'''

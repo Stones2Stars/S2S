@@ -98,7 +98,10 @@ def resetNoLiberateCities():
 
 
 def unitBuiltFeats(CyCity, CyUnit):
+	#	The handle carries its ADDRESS and nothing else ([DEC-cy-not-fixed] THE IDENTITY SET), so resolve the pair
+	#	once and ask STATE for every value below.
 	iPlayer = CyCity.getOwner()
+	iCityID = CyCity.getID()
 	CyPlayer = GC.getPlayer(iPlayer)
 
 	for iCombat, eFeat, szTxt in unitCombatFeats:
@@ -108,8 +111,8 @@ def unitBuiltFeats(CyCity, CyUnit):
 				popupInfo = CyPopupInfo()
 				popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 				popupInfo.setData1(eFeat)
-				popupInfo.setData2(CyCity.getID())
-				popupInfo.setText(TRNSLTR.getText(szTxt, (CyUnit.getNameKey(), CyCity.getNameKey(),)))
+				popupInfo.setData2(iCityID)
+				popupInfo.setText(TRNSLTR.getText(szTxt, (CyUnit.getNameKey(), STATE.getCityName(iPlayer, iCityID),)))
 				popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 				popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 				popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -123,8 +126,8 @@ def unitBuiltFeats(CyCity, CyUnit):
 				popupInfo = CyPopupInfo()
 				popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 				popupInfo.setData1(FeatTypes.FEAT_UNIT_PRIVATEER)
-				popupInfo.setData2(CyCity.getID())
-				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_PRIVATEER", (CyUnit.getNameKey(), CyCity.getNameKey(), )))
+				popupInfo.setData2(iCityID)
+				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_PRIVATEER", (CyUnit.getNameKey(), STATE.getCityName(iPlayer, iCityID), )))
 				popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 				popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 				popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -138,8 +141,8 @@ def unitBuiltFeats(CyCity, CyUnit):
 				popupInfo = CyPopupInfo()
 				popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 				popupInfo.setData1(FeatTypes.FEAT_UNIT_SPY)
-				popupInfo.setData2(CyCity.getID())
-				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_SPY", (CyUnit.getNameKey(), CyCity.getNameKey(), )))
+				popupInfo.setData2(iCityID)
+				popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_UNIT_SPY", (CyUnit.getNameKey(), STATE.getCityName(iPlayer, iCityID), )))
 				popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 				popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 				popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -154,6 +157,9 @@ def endTurnFeats(iPlayer):
 	CyPlayer = GC.getPlayer(iPlayer)
 	CyCity0 = CyPlayer.getCapitalCity()
 	if CyCity0 is None: return
+	# A city handle carries its ADDRESS only ([DEC-cy-not-fixed]); every value below it is asked of STATE by that
+	# address, so resolve the capital's id once rather than per read.
+	iCity0 = CyCity0.getID()
 
 	# Population feat
 	lRealPopulation = CyPlayer.getRealPopulation()
@@ -174,15 +180,17 @@ def endTurnFeats(iPlayer):
 	# Trade Route
 	if not CyPlayer.isFeatAccomplished(FeatTypes.FEAT_TRADE_ROUTE):
 		for CyCityX in CyPlayer.cities():
-			if not CyCityX.isCapital():
-				if CyCityX.isConnectedToCapital(iPlayer):
+			iCityX = CyCityX.getID()
+			aFlags = STATE.getCityFlags(iPlayer, iCityX)
+			if not aFlags[CityFlagKind.CITY_FLAG_CAPITAL]:
+				if aFlags[CityFlagKind.CITY_FLAG_CONNECTED_TO_CAPITAL]:
 					CyPlayer.setFeatAccomplished(FeatTypes.FEAT_TRADE_ROUTE, True)
 					if not GAME.isNetworkMultiPlayer() and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 						popupInfo = CyPopupInfo()
 						popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 						popupInfo.setData1(FeatTypes.FEAT_TRADE_ROUTE)
-						popupInfo.setData2(CyCityX.getID())
-						popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_TRADE_ROUTE", (CyCityX.getNameKey(), )))
+						popupInfo.setData2(iCityX)
+						popupInfo.setText(TRNSLTR.getText("TXT_KEY_FEAT_TRADE_ROUTE", (STATE.getCityName(iPlayer, iCityX), )))
 						popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 						popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
 						popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
@@ -193,13 +201,13 @@ def endTurnFeats(iPlayer):
 	for item in lBonus:
 		if CyPlayer.isFeatAccomplished(item[0]): continue
 		for iBonus in item[1]:
-			if CyCity0.hasBonus(iBonus):
+			if STATE.getNumBonuses(iPlayer, iCity0, iBonus) > 0:
 				CyPlayer.setFeatAccomplished(item[0], True)
 				if not GAME.isNetworkMultiPlayer() and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 					popupInfo = CyPopupInfo()
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 					popupInfo.setData1(item[0])
-					popupInfo.setData2(CyCity0.getID())
+					popupInfo.setData2(iCity0)
 					popupInfo.setText(TRNSLTR.getText(item[2], (INFO.getTextKey("BONUS_", iBonus),)))
 					popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
 					popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
@@ -249,23 +257,24 @@ def endTurnFeats(iPlayer):
 					break
 				i += 1
 
-def cityAdvise(CyCity, iPlayer):
+#	The caller hands over the city's ADDRESS, not a handle ([DEC-cy-not-fixed]) -- see CvEventManager.onCityDoTurn.
+def cityAdvise(iPlayer, iCityID):
 
 	global g_iAdvisorNags
 
-	if g_iAdvisorNags > 1 or CyCity.isDisorder():
+	aFlags = STATE.getCityFlags(iPlayer, iCityID)
+	if g_iAdvisorNags > 1 or aFlags[CityFlagKind.CITY_FLAG_DISORDER]:
 		return
 	CyPlayer = GC.getPlayer(iPlayer)
 
 	if CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 
 		iTurn = GAME.getGameTurn()
-		iTurnFounded = CyCity.getGameTurnFounded()
+		iTurnFounded = STATE.getCityCounts(iPlayer, iCityID)[CityCountRead.CITY_COUNT_GAME_TURN_FOUNDED]
 		if iTurn % 40 == iTurnFounded % 40:
 
-			iCityID = CyCity.getID()
 			if not iCityID in g_listNoLiberateCities:
-				iPlayerX = CyCity.getLiberationPlayer(False)
+				iPlayerX = STATE.getLiberationPlayer(iPlayer, iCityID)
 				if iPlayerX != -1:
 					CyPlayerX = GC.getPlayer(iPlayerX)
 
@@ -274,7 +283,7 @@ def cityAdvise(CyCity, iPlayer):
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 							popupInfo.setData1(iCityID)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_LIBERATION_DEMAND", (CyCity.getNameKey(), CyPlayerX.getCivilizationDescriptionKey(), CyPlayerX.getNameKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_LIBERATION_DEMAND", (STATE.getCityName(iPlayer, iCityID), CyPlayerX.getCivilizationDescriptionKey(), CyPlayerX.getNameKey())))
 							popupInfo.setOnClickedPythonCallback("liberateOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -288,7 +297,7 @@ def cityAdvise(CyCity, iPlayer):
 					popupInfo = CyPopupInfo()
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 					popupInfo.setData1(iCityID)
-					popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_COLONY_DEMAND", (CyCity.getNameKey(), )))
+					popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_COLONY_DEMAND", (STATE.getCityName(iPlayer, iCityID), )))
 					popupInfo.setOnClickedPythonCallback("colonyOnClickedCallback")
 					popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 					popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -298,13 +307,13 @@ def cityAdvise(CyCity, iPlayer):
 					g_listNoLiberateCities.append(iCityID)
 					g_iAdvisorNags += 1
 
-		if CyCity.isProduction():
+		if aFlags[CityFlagKind.CITY_FLAG_PRODUCING]:
 
-			if not CyCity.isProductionUnit() and CyCity.getOrderQueueLength() <= 1:
+			if not CyCity.isProductionUnit() and STATE.getOrderQueueLength(iPlayer, iCityID) <= 1:
 
 				if (iTurn + 3) % 40 == iTurnFounded % 40:
 
-					if GAME.getElapsedGameTurns() < 200 and CyCity.getPopulation() > 2 and not CyPlayer.AI_isFinancialTrouble():
+					if GAME.getElapsedGameTurns() < 200 and STATE.getCityPopulation(iPlayer, iCityID) > 2 and not CyPlayer.AI_isFinancialTrouble():
 
 						CyArea = CyCity.area()
 						if not CyPlayer.AI_totalAreaUnitAIs(CyArea, UnitAITypes.UNITAI_SETTLE) and CyArea.getBestFoundValue(iPlayer) > 0:
@@ -319,11 +328,11 @@ def cityAdvise(CyCity, iPlayer):
 							#	([enabler.md] par.7.1 -- the leave-rules differ per domain). Not nagging
 							#	about what is already ordered is the RECOMMENDER's own concern, so it is
 							#	asked of the CITY, never of availability.
-							for iUnitX in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
+							for iUnitX in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
 								if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
 									continue
-								if STATE.isUnitQueued(iPlayer, CyCity.getID(), iUnitX):
+								if STATE.isUnitQueued(iPlayer, iCityID, iUnitX):
 									continue
 
 								iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_SETTLE, CyArea)
@@ -336,7 +345,7 @@ def cityAdvise(CyCity, iPlayer):
 							if eBestUnit > -1:
 								popupInfo = CyPopupInfo()
 								popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-								popupInfo.setData1(CyCity.getID())
+								popupInfo.setData1(iCityID)
 								popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 								popupInfo.setData3(eBestUnit)
 								popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_SETTLE_DEMAND", (INFO.getTextKey("UNIT_", eBestUnit), )))
@@ -349,7 +358,7 @@ def cityAdvise(CyCity, iPlayer):
 								g_iAdvisorNags += 1
 
 				if (iTurn + 15) % 40 == iTurnFounded % 40:
-					if CyCity.getPopulation() > 1 and not CyCity.countNumImprovedPlots():
+					if STATE.getCityPopulation(iPlayer, iCityID) > 1 and not CyCity.countNumImprovedPlots():
 						CyArea = CyCity.area()
 						eBestUnit = -1
 
@@ -357,10 +366,10 @@ def cityAdvise(CyCity, iPlayer):
 							iBestValue = 0
 							#	A queued unit stays on the frontier by design (multiple copies), so the
 							#	'already ordered' suppression is the recommender's, asked of the city.
-							for iUnit in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
+							for iUnit in ENABLER.getAvailableUnits(iPlayer, iCityID):
 								if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
 									continue
-								if STATE.isUnitQueued(iPlayer, CyCity.getID(), iUnit):
+								if STATE.isUnitQueued(iPlayer, iCityID, iUnit):
 									continue
 
 								iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_WORKER, CyArea)
@@ -371,10 +380,10 @@ def cityAdvise(CyCity, iPlayer):
 						if eBestUnit != -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 							popupInfo.setData3(eBestUnit)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_WORKER_DEMAND", (CyCity.getNameKey(), INFO.getTextKey("UNIT_", eBestUnit))))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_WORKER_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("UNIT_", eBestUnit))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -394,7 +403,7 @@ def cityAdvise(CyCity, iPlayer):
 						#	The maintained frontier, not a registry sweep -- already gated, so canTrain is
 						#	subsumed. NO queued-suppression here, deliberately: this fires only when the
 						#	city has NO defender at all, and the legacy path did not suppress either.
-						for iUnit in ENABLER.getAvailableUnits(iPlayer, CyCity.getID()):
+						for iUnit in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
 							if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
 								continue
@@ -407,10 +416,10 @@ def cityAdvise(CyCity, iPlayer):
 						if eBestUnit != -1:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 							popupInfo.setData3(eBestUnit)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_DEFENSE_DEMAND", (CyCity.getNameKey(), INFO.getTextKey("UNIT_", eBestUnit))))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNIT_DEFENSE_DEMAND", (STATE.getCityName(iPlayer, iCityID), INFO.getTextKey("UNIT_", eBestUnit))))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -453,10 +462,10 @@ def cityAdvise(CyCity, iPlayer):
 								if CvUnitInfo:
 									popupInfo = CyPopupInfo()
 									popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-									popupInfo.setData1(CyCity.getID())
+									popupInfo.setData1(iCityID)
 									popupInfo.setData2(OrderTypes.ORDER_TRAIN)
 									popupInfo.setData3(iBestUnit)
-									popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MISSIONARY_DEMAND", (INFO.getTextKey("RELIGION_", eStateReligion), CvUnitInfo.getTextKey(), CyCity.getNameKey())))
+									popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MISSIONARY_DEMAND", (INFO.getTextKey("RELIGION_", eStateReligion), CvUnitInfo.getTextKey(), STATE.getCityName(iPlayer, iCityID))))
 									popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 									popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 									popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -465,7 +474,7 @@ def cityAdvise(CyCity, iPlayer):
 									popupInfo.addPopup(iPlayer)
 									g_iAdvisorNags += 1
 
-			if not CyCity.isProductionBuilding() and CyCity.getOrderQueueLength() <= 1:
+			if not CyCity.isProductionBuilding() and STATE.getOrderQueueLength(iPlayer, iCityID) <= 1:
 
 				if CyCity.healthRate(False, 0) < 0:
 
@@ -493,10 +502,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHEALTHY_CITIZENS_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHEALTHY_CITIZENS_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_UNHEALTHY_DO_SO_NEXT", ()), "")
@@ -531,10 +540,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHAPPY_CITIZENS_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_UNHAPPY_CITIZENS_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_UNHAPPY_DO_SO_NEXT", ()), "")
@@ -569,10 +578,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_BUILDING_DEFENSE_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_BUILDING_DEFENSE_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -604,10 +613,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MAINTENANCE_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_MAINTENANCE_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -616,7 +625,7 @@ def cityAdvise(CyCity, iPlayer):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if CyCity.getCommerceRate(CommerceTypes.COMMERCE_CULTURE) < 10 and not CyCity.isOccupation():
+				if CyCity.getCommerceRate(CommerceTypes.COMMERCE_CULTURE) < 10 and not aFlags[CityFlagKind.CITY_FLAG_OCCUPATION]:
 
 					if (iTurn + 21) % 40 == iTurnFounded % 40:
 
@@ -642,10 +651,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_CULTURE_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_CULTURE_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -680,10 +689,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_GOLD_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_GOLD_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -718,10 +727,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_RESEARCH_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_RESEARCH_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")
@@ -757,10 +766,10 @@ def cityAdvise(CyCity, iPlayer):
 						if CvBuildingInfo:
 							popupInfo = CyPopupInfo()
 							popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-							popupInfo.setData1(CyCity.getID())
+							popupInfo.setData1(iCityID)
 							popupInfo.setData2(OrderTypes.ORDER_CONSTRUCT)
 							popupInfo.setData3(iBestBuilding)
-							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_WATER_FOOD_DEMAND", (CyCity.getNameKey(), CvBuildingInfo.getTextKey())))
+							popupInfo.setText(TRNSLTR.getText("TXT_KEY_POPUP_WATER_FOOD_DEMAND", (STATE.getCityName(iPlayer, iCityID), CvBuildingInfo.getTextKey())))
 							popupInfo.setOnClickedPythonCallback("cityWarningOnClickedCallback")
 							popupInfo.setOnFocusPythonCallback("cityWarningOnFocusCallback")
 							popupInfo.addPythonButton(TRNSLTR.getText("TXT_KEY_POPUP_DEMAND_AGREE", ()), "")

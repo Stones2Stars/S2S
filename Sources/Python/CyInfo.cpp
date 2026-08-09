@@ -14,6 +14,8 @@
 #include "Infos/CvInfo.h"
 #include "Infos/CvEdges.h"           // the load-derived edge families ([DEC-one-reverse-view])
 #include "Infos/CvClassificationRegistry.h"   // the cold-path authored-key -> generated-id resolve
+#include "Infos/CvClassificationIds.h"        // the GENERATED CLS_* ids the NAMED endpoints resolve internally
+#include "Infos/CvUnitInfo.h"                 // the spread block behind the named canSpreadReligion endpoint
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
@@ -336,6 +338,27 @@ bool CyInfo::hasTag(const std::string& szTypePrefix, int iId, int iTagId) const
 	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
 	return pInfo ? pInfo->hasTag(iTagId) : false;
 }
+//
+//	The NAMED classification tests -- the Python CONSUMER surface (the header's owner ruling). Each is a one-line
+//	delegate to the parameterized read above, so the bitset walk has exactly ONE implementation
+//	([DEC-single-implementation]) and a named endpoint costs a line rather than a second code path.
+//	⚑ Note the two answer off DIFFERENT PLANES -- hidden nationality is a unit SKILL, spy is a unit TAG -- which
+//	is precisely what the naming buys: the caller asks its question and never learns which plane holds it.
+//
+bool CyInfo::isHiddenNationality(int iUnitId) const
+{
+	return hasSkill("UNIT_", iUnitId, CLS_SKILL_HIDDEN_NATIONALITY);
+}
+bool CyInfo::isSpy(int iUnitId) const
+{
+	return hasTag("UNIT_", iUnitId, CLS_TAG_SPY);
+}
+bool CyInfo::canSpreadReligion(int iUnitId) const
+{
+	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
+	return pUnit ? !pUnit->getReligionSpread().empty() : false;
+}
+
 bool CyInfo::hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const
 {
 	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
@@ -802,6 +825,11 @@ void CyInfo::pythonPublish()
 		.def("providesCapability", &CyInfo::providesCapability)
 		.def("providesPolicy", &CyInfo::providesPolicy)
 		.def("revokesSkill",       &CyInfo::revokesSkill)
+		// The NAMED classification tests -- the Python CONSUMER surface. Endpoint COUNT is deliberately not the
+		// target here; being readable at the call site is (owner). Grows one line per call site that asks.
+		.def("isHiddenNationality", &CyInfo::isHiddenNationality)
+		.def("isSpy",               &CyInfo::isSpy)
+		.def("canSpreadReligion",   &CyInfo::canSpreadReligion)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)

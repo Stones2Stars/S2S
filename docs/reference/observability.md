@@ -63,13 +63,20 @@ purge; the gauge needs a surface again when the route table is rebuilt.
 ## The live HTTP server (today)
 
 - Bind **`127.0.0.1:7227`**, GET-only HTTP/1.0 (405 otherwise). BUG option `Autolog__HttpServer` (default **off**).
-- **The routes that answer** ([http-endpoints](../specs/http-endpoints.md)) are the derived-state cache documents —
-  `/computed/cascade/packages/{stored,oracle}`, `/computed/enabler/operating/{stored,oracle}`,
-  `/computed/capabilities/{stored,oracle}` — two per plane, in one shape, diffed by an EXTERNAL consumer (the DLL
-  never compares them). Documents live in `Sources/Tools/CvOracleEndpoints.cpp`, never in the server file.
+- **The routes that answer** ([http-endpoints](../specs/http-endpoints.md)) are four STORED-side documents, each
+  serving what the events built, decomposed term by term: `/computed/cascade/packages` (per-scope flat/percent
+  slots + receiver sums, by channel name), `/computed/enabler/operating` (the per-city operating set targeted
+  propagation maintains), `/computed/city/yield` (the yield tooltip's own census — every term of the §2a combine,
+  plus the REFUSED deposits with the atom that refused each one), `/computed/capabilities` (the empire ability
+  union). Documents live in `Sources/Tools/CvStateEndpoints.cpp`, never in the server file.
+  ⛔ **There is no `oracle` side and none comes back** — an endpoint cannot replay the event chain, so its
+  recompute answers a number that was never comparable ([superseded-ideas #33](../architecture/superseded-ideas.md)).
+  A correctness check is the THREE-LEG one instead: the logs, the JSON info, and what state expects
+  ([http-endpoints](../specs/http-endpoints.md)).
   ⚠ **There is NO other route**, and that is deliberate: an endpoint is a LIVE CONSUMER, so a route reading a
   legacy member keeps that member alive past the compiler census. ⛔ **Restoring a route to read a legacy value is
-  the banned move** — the surface returns only with the access surface ([http-endpoints](../specs/http-endpoints.md)).
+  the banned move**; a DECOMPOSITION census over the cascade's own computed terms — which is what these four are —
+  is the sanctioned shape ([http-endpoints](../specs/http-endpoints.md)).
 - `/` (liveness), `/events` (SSE log stream, ≤8 concurrent slots). `/state` and `/computed` bare return their route
   index — `/state`'s is currently EMPTY.
 - **HARD CONSTRAINT:** the server thread NEVER touches live game objects. `/state` + `/computed` read live state, so

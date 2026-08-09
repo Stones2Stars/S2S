@@ -67,6 +67,55 @@ public:
 	// so the promotion fact is emitted and the resolved plane re-gathers exactly as an engine-side promote does.
 	bool setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewValue) const;
 
+	// Create a unit for this player at (iX, iY). ⚖ It earns its place the way this surface requires -- by
+	// EXISTING call sites that need it, several of them: the WarPrizes capture in CvEventManager.onCombatResult,
+	// the CRUSADE and BIODOME wonder spawns in onCityDoTurn, and CaptureSlaves' captive. All are existing
+	// gameplay being kept working, never new logic authored in script ([roadmap] scope decision 6: where the
+	// write a handler needs is not published yet, the answer is to ADD it to the surface that already exists).
+	// Answers the NEW UNIT'S ID so the caller can go on reading it through CyState by (iPlayer, id); -1 if the
+	// unit type or the plot was invalid.
+	// ⛔ The BIRTHMARK is drawn from the SYNCHRONIZED stream, exactly as every engine caller draws it, and
+	// exactly on the paths the legacy binding drew it on -- NOT on the two invalid ones. The number of draws and
+	// their order are shared save state ([DEC-synced-rng-is-shared-state]), so adding or skipping one desyncs
+	// multiplayer and stops a save replaying; this is not a detail to tidy.
+	int initUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int iDirection) const;
+
+	// Give a freshly-created unit the experience a unit BUILT in this city would start with. Its call site is the
+	// CRUSADE wonder's per-turn spawn, which has always handed the new crusader the city's production XP -- so
+	// this keeps existing behaviour working rather than authoring any.
+	bool addUnitProductionExperience(int iPlayer, int iCity, int iUnit, bool bConscript) const;
+
+	// ---- The UNIT actions the COMBAT / unit-lifecycle handlers need ----
+	// ⚖ Each earns its place the way this surface requires -- by an EXISTING call site that needs it
+	// ([roadmap] scope decision 6: where the write a handler needs is not published yet, ADD it to the surface
+	// that already exists; "the write surface is parked" is explicitly not a reason to skip a fix). The call
+	// sites are CvEventManager's onCombatResult / onUnitKilled / onUnitCreated and the two DancingHoskuld
+	// combat mods -- all EXISTING gameplay being kept working, never new logic authored in script.
+	bool finishUnitMoves(int iPlayer, int iUnit) const;
+	bool setUnitDamage(int iPlayer, int iUnit, int iDamage, int iByPlayer) const;
+	bool setUnitName(int iPlayer, int iUnit, std::wstring szName) const;
+	// A unit's LEADER attachment (the subdued/tamed-animal beastmaster art link), -1 to clear.
+	bool setUnitLeaderUnitType(int iPlayer, int iUnit, int iLeaderUnitType) const;
+
+	// ⚖ THE IMMOBILE TIMER IS A STATUS NOW, so this is the STATUS verb rather than a revived setImmobileTimer:
+	// "immobilised for N turns" is `STATUS_PARALYZED` on the per-scope status store ([state.md]: a status is a
+	// counter applied, ticked down, over at zero -- and `CvUnit::setStatus` is its ONE write path, which is what
+	// makes the 0-crossing announce). ⛔ Do not add a per-timer verb beside it; a new status is a new enum member.
+	bool setUnitStatus(int iPlayer, int iUnit, int iStatus, int iTurns) const;
+	// The unit's SCRIPT DATA -- the write sibling of CyState::getUnitScriptData, and the exact twin of
+	// setCityScriptData above. Python-authoritative gameplay keeps its own per-unit state here (SdToolKit), and
+	// with an identity-tuple payload a handler has no handle to call setScriptData on.
+	bool setUnitScriptData(int iPlayer, int iUnit, std::string szData) const;
+
+	// ---- The two remaining non-unit writes those handlers need ----
+	// ⚠ changePlayerGold is a DELTA, and deliberately so: the WarPrizes booty moves gold between two players, so
+	// an absolute setter would make every caller read-modify-write a value another handler may have moved.
+	bool changePlayerGold(int iPlayer, int iChange) const;
+	// ⚠ ADDITIVE, and distinct from setCityCulture above -- the Alamo grant ADDS to whatever the city holds.
+	// Culture is int64_t and ×100 on both sides ([culture-religion-research.md]: it accumulates and never decays,
+	// which is why it is 64-bit at all), so the delta is int64_t too.
+	bool changeCityCulture(int iPlayer, int iCity, int iForPlayer, int64_t iChange, bool bPlots) const;
+
 	// ---- The SCENARIO APPLY: what WorldBuilder puts back when it reads a .CivBeyondSwordWBSave ----
 	// ⚖ These earn their place the way this surface requires -- by existing call sites that need them
 	// (`CvWBDesc.CvCityDesc.apply`). They keep EXISTING behaviour working; nothing here is game logic authored

@@ -1320,6 +1320,10 @@ enum CityFlagKind
 	CITY_FLAG_OCCUPATION,
 	CITY_FLAG_PLUNDERED,
 	CITY_FLAG_QUARANTINED,
+	//	⚠ Answered for the city's OWN owner. `CvPlot::isConnectedToCapital` resolves a NO_PLAYER argument to the
+	//	plot's owner, so the flag form carries the same verdict the per-player call gave every caller that asked
+	//	about the city's own player -- which is every one of them.
+	CITY_FLAG_CONNECTED_TO_CAPITAL,
 
 	NUM_CITY_FLAGS
 };
@@ -1337,6 +1341,7 @@ enum CityBuildingRead
 	CITY_BUILDING_PROGRESS,
 	CITY_BUILDING_DELAY,
 	CITY_BUILDING_PRODUCTION_DECAY,
+	CITY_BUILDING_ORIGINAL_OWNER,
 
 	NUM_CITY_BUILDING_READS
 };
@@ -1376,6 +1381,7 @@ enum CityCountRead
 	CITY_COUNT_DEFENSE_DAMAGE,
 	CITY_COUNT_REVOLUTION_INDEX,
 	CITY_COUNT_REVOLUTION_AVERAGE,
+	CITY_COUNT_GAME_TURN_FOUNDED,
 
 	NUM_CITY_COUNT_READS
 };
@@ -1418,6 +1424,7 @@ enum CityGrowthRead
 	GROWTH_READ_THRESHOLD,
 	GROWTH_READ_TURNS_LEFT,
 	GROWTH_READ_IS_FOOD_PRODUCTION,
+	GROWTH_READ_FOOD_KEPT,
 
 	NUM_CITY_GROWTH_READS
 };

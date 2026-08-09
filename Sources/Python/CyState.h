@@ -143,6 +143,12 @@ public:
 	// A coordinate is the one PAIR here: x and y are meaningless apart, so they cross as one [x, y] list rather
 	// than as two getters.
 	python::list getCityPosition(int iPlayer, int iCity) const;
+	// The UNIT twin. ⚠ A unit's position is part of the IDENTITY SET on the handle
+	// ([patterns.md] THE IDENTITY SET: owner, id, POSITION), but an EVENT PAYLOAD carries only (owner, id) --
+	// so a handler that was handed a payload has no handle to ask and needs this. Answers (-1, -1) for a unit
+	// that does not resolve OR is off-map, which is a real state and not only a save defect
+	// ([unit-lifecycle.md] THE OFF-MAP UNIT).
+	python::list getUnitPosition(int iPlayer, int iUnit) const;
 	int getCityPopulation(int iPlayer, int iCity) const;          // citizens; a whole game count, NOT x100
 	int64_t getCityRealPopulation(int iPlayer, int iCity) const;  // the displayed head-count; exceeds 32 bits
 	int getGreatPeopleRate(int iPlayer, int iCity) const;

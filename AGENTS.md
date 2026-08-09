@@ -110,6 +110,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   regardless of position (`... _Build.ps1 Assert build nostop`). The `MakeDLL*.bat` shortcuts forward their extra
   arguments, so `MakeDLLAssert.bat nostop` works too. ⚠ It changes only how MUCH gets reported, never what
   compiles — and MSVC's 100-errors-per-TU cap (`C1003`) still truncates each unity batch.
+  - **⚖ THE OWNER'S LAUNCH PATH ALWAYS REBUILDS THE DLL — `LaunchS2S.bat` (owner): *"I will ALWAYS rebuild dll
+    when starting the game, I always run the game via LaunchS2S.bat, so it is unavoidable."*** ⇒ **Do NOT tell the
+    owner to build or deploy before playing, and do not report "not deployed" as a blocker on a C++ change** —
+    starting the game IS the deploy. A C++ edit sitting in the working tree reaches the next session by
+    construction.
+    ⚑ **What this does NOT retire is the ORDERING hazard, and the narrowing is the useful part:** since the DLL is
+    rebuilt at launch, new-Python-against-old-DLL is impossible ACROSS a launch and possible only for an edit made
+    **while the game is already running** — where `Assets/` is a symlink and Python ships on save while C++ does
+    not. ⇒ The rule that actually binds is the one below about not touching `Assets/Python` mid-session, not a
+    deploy reminder.
+    ⚠ It also does not retire VERIFYING a deployed artifact when you have reason to doubt it (the timestamp +
+    string-grep check below) — that is cheap and it is how this fact got confirmed rather than assumed.
   - **⛔ HARD RULE — KILL THE GAME BEFORE `deploy`.** A running game holds `Assets/CvGameCoreDLL.dll` OPEN, so the
     xcopy fails — but the build still reports `FBuild: OK`, so **the deploy failure is SILENT**. `Assets/` keeps
     the OLD DLL, the game then loads that OLD DLL, and you verify a binary that does not contain your change
@@ -381,8 +393,11 @@ the total-observability bar below.)
     feature did not fire."
   - **(3) The on-demand mailbox-snapshot endpoints** compute a game-thread snapshot via the single-slot mailbox and
     depend on no log file or gate — the most reliable read for a POINT-IN-TIME value. ⚠ **The route table was purged:
-    the only data routes today are the six stored-vs-oracle cache documents** (cascade packages, enabler operating
-    set, team capabilities); everything else 404s, and the route surface is defined with the access surface
+    the only data routes today are FOUR stored-side decomposition censuses** — `/computed/cascade/packages`,
+    `/computed/enabler/operating`, `/computed/city/yield`, `/computed/capabilities`. ⛔ There is **no `oracle`
+    twin and none comes back** (`superseded-ideas` #33: an endpoint cannot replay the event chain, so its
+    recompute answers a number that was never comparable — do not run one as evidence, and do not rebuild it).
+    Everything else 404s, and the route surface is defined with the access surface
     (see `docs/specs/http-endpoints.md`). Do not send an agent to poll a route that does not exist — and ⛔ do NOT
     "fix" that by adding one: an endpoint is a LIVE CONSUMER, so a route reading a legacy member keeps that member
     alive past the compiler census. Restoring a route to read a legacy value is the banned move; EMIT a spine event.

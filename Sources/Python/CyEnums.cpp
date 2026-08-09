@@ -29,6 +29,7 @@
 #include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
 #include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
 #include "Infos/CvInfoKinds.h"  // WellbeingChannel -- the group enum getRealizedWellbeing is indexed by
+#include "Engine/CvStatus.h"    // UnitStatus -- the vocabulary ACT.setUnitStatus is indexed by
 #include "Infos/CvVictoryInfo.h" // VictoryConditionFlag / Value -- CyVictoryInfo's two grouped reads' key spaces
 #include "Infos/CvClassificationIds.h"  // CapabilityClsTypes -- the GENERATED capability ids ([DEC-classification-infos])
 #include "UI/CvBuildingFilters.h"
@@ -100,6 +101,14 @@ void CyEnums::pythonPublish()
 	// reads yet would be vocabulary for nobody.
 	python::enum_<InfoScalar>("InfoScalar")
 		.value("SCALAR_SPEED", SCALAR_SPEED)
+		;
+
+	// The UNIT STATUS vocabulary -- what ACT.setUnitStatus is indexed by. An engine enum, so it IS the
+	// consumer's vocabulary ([patterns.md] THE TWO READ ROLES rule 2), and it grows by an enum member rather
+	// than by a verb per timer ([state.md]: a status is the standardized shape the legacy hand-named timers
+	// collapse into).
+	python::enum_<UnitStatus>("UnitStatus")
+		.value("STATUS_PARALYZED", STATUS_PARALYZED)
 		;
 
 	python::enum_<CvCascScope>("CascScope")
@@ -556,6 +565,7 @@ void CyEnums::pythonPublish()
 		.value("CITY_BUILDING_PROGRESS", CITY_BUILDING_PROGRESS)
 		.value("CITY_BUILDING_DELAY", CITY_BUILDING_DELAY)
 		.value("CITY_BUILDING_PRODUCTION_DECAY", CITY_BUILDING_PRODUCTION_DECAY)
+		.value("CITY_BUILDING_ORIGINAL_OWNER", CITY_BUILDING_ORIGINAL_OWNER)
 		.value("NUM_CITY_BUILDING_READS", NUM_CITY_BUILDING_READS)
 	;
 
@@ -568,6 +578,7 @@ void CyEnums::pythonPublish()
 		.value("CITY_COUNT_DEFENSE_DAMAGE", CITY_COUNT_DEFENSE_DAMAGE)
 		.value("CITY_COUNT_REVOLUTION_INDEX", CITY_COUNT_REVOLUTION_INDEX)
 		.value("CITY_COUNT_REVOLUTION_AVERAGE", CITY_COUNT_REVOLUTION_AVERAGE)
+		.value("CITY_COUNT_GAME_TURN_FOUNDED", CITY_COUNT_GAME_TURN_FOUNDED)
 		.value("NUM_CITY_COUNT_READS", NUM_CITY_COUNT_READS)
 	;
 
@@ -599,6 +610,7 @@ void CyEnums::pythonPublish()
 		.value("CITY_FLAG_OCCUPATION", CITY_FLAG_OCCUPATION)
 		.value("CITY_FLAG_PLUNDERED", CITY_FLAG_PLUNDERED)
 		.value("CITY_FLAG_QUARANTINED", CITY_FLAG_QUARANTINED)
+		.value("CITY_FLAG_CONNECTED_TO_CAPITAL", CITY_FLAG_CONNECTED_TO_CAPITAL)
 		.value("NUM_CITY_FLAGS", NUM_CITY_FLAGS)
 	;
 
@@ -649,6 +661,7 @@ void CyEnums::pythonPublish()
 		.value("GROWTH_READ_THRESHOLD", GROWTH_READ_THRESHOLD)
 		.value("GROWTH_READ_TURNS_LEFT", GROWTH_READ_TURNS_LEFT)
 		.value("GROWTH_READ_IS_FOOD_PRODUCTION", GROWTH_READ_IS_FOOD_PRODUCTION)
+		.value("GROWTH_READ_FOOD_KEPT", GROWTH_READ_FOOD_KEPT)
 		.value("NUM_CITY_GROWTH_READS", NUM_CITY_GROWTH_READS)
 	;
 

@@ -398,6 +398,12 @@ void CvPlayerAI::AI_reset(bool bConstructor)
 	m_eBestResearchTarget = NO_TECH;
 	m_cachedTechValues.clear();
 
+	// The AI_isFinancialTrouble memo -- cleared here because a player slot is REUSED, and a stale verdict
+	// inherited from the previous occupant is a wrong answer no later derivation would correct.
+	m_iFinancialTroubleCacheTurn = -1;
+	m_iFinancialTroubleCacheGold = 0;
+	m_bFinancialTroubleCachedValue = false;
+
 	if (bConstructor || getNumUnits() == 0)
 	{
 		for (int iI = 0; iI < NUM_UNITAI_TYPES; iI++)
@@ -4052,11 +4058,27 @@ bool CvPlayerAI::AI_isFinancialTrouble() const
 {
 	PROFILE_FUNC();
 	if (isNPC()) return false;
+
+	// ⛔ MEMOIZED, and the memo is the whole point of this body -- see the members' comment in CvPlayerAI.h.
+	// AI_fundingHealth reaches CvPlayer::getCommerces, which re-sums EVERY city's realized combine; asking that
+	// once per building candidate is what wedged a late-game turn at 99% of one core for 45+ minutes.
+	// ⚠ The key is (turn, gold) because gold is what moves the verdict inside a turn. A scoring pass moves
+	// neither, so it derives ONCE; a genuine change re-derives immediately.
+	const int iTurn = GC.getGame().getGameTurn();
+	const int64_t iGold = getGold();
+
+	if (m_iFinancialTroubleCacheTurn == iTurn && m_iFinancialTroubleCacheGold == iGold)
 	{
-		const bool isftrouble = AI_fundingHealth() < AI_safeFunding();
-		const bool isGoldcritical = AI_hasCriticalGold();
-		return isftrouble || isGoldcritical;
+		return m_bFinancialTroubleCachedValue;
 	}
+	const bool bFundingTrouble = AI_fundingHealth() < AI_safeFunding();
+	const bool bGoldCritical = AI_hasCriticalGold();
+
+	m_bFinancialTroubleCachedValue = bFundingTrouble || bGoldCritical;
+	m_iFinancialTroubleCacheTurn = iTurn;
+	m_iFinancialTroubleCacheGold = iGold;
+
+	return m_bFinancialTroubleCachedValue;
 }
 
 int64_t CvPlayerAI::AI_goldTarget() const

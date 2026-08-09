@@ -29,6 +29,16 @@ Other failure artifacts (all under `Documents\My Games\Beyond the Sword\Logs\`):
 - Asserts on an `Assert` build → `Asserts.log` + `AssertsJson.log`.
 - Python tracebacks → `PythonErr.log`. A `RuntimeError: unidentifiable C++ exception` there is a **C++
   access violation propagated out of a boost.python-wrapped DLL call** (the boost wrapper can't name it).
+- ⛔ **BUT AN EVENT-HANDLER FAILURE DOES NOT GO THERE — IT GOES TO `PythonDbg.log` (owner).** BUG catches the
+  exception inside its own dispatch and reports it as `TRACE: Error in <event> event handler <bound method …>`,
+  so it never reaches the `stderr` redirect that feeds `PythonErr.log`. **Both files matter and neither is a
+  superset**: `PythonErr` holds what escaped to stderr, `PythonDbg` holds what BUG caught.
+  ⚠ **The measured cost of not knowing this:** a session read `PythonErr` alone, counted ~30 tracebacks, and
+  concluded from that count that broken handlers could not be a material cost — while `PythonDbg` held **354**
+  for the same period. The ratio is the point: the handler surface is exactly the part the obvious file does
+  NOT show, so "the error log is small" proves nothing about handler health.
+  ⚑ The useful read is per-EVENT, since one broken read repeats per fire:
+  `grep -a "Error in .* event handler" PythonDbg.log | sed -E 's/.*Error in ([a-zA-Z]+) event handler .*(method [A-Za-z]+\.[A-Za-z]+|function [A-Za-z_]+).*/\1  \2/' | sort | uniq -c | sort -rn`
 
 ### Symbolize the dump
 
@@ -93,7 +103,7 @@ The in-tree tooling this doc deliberately does **not** restate — go to its own
   The `readjson` harness (`Tools/ReadJson/`) is the in-DLL JSON loader's offline driver, exercised by the
   same value-verification flow.
 - [`observability.md`](observability.md) — **the live surveillance surface** the crash/known-
-  issue debugging reads against (HTTP `127.0.0.1:7227`, `/events`, the six `/computed` cache documents, and the
+  issue debugging reads against (HTTP `127.0.0.1:7227`, `/events`, the four `/computed` censuses, and the
   gated logs) → [DEC-obs-scale](../architecture/decisions.md#dec-obs-scale). Delegate bulk data reads to the
   `data-reader` sub-agent rather than pulling raw dumps into context.
 - [`../README.md`](../README.md) — the comprehension map (where every subsystem doc lives).

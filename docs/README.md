@@ -46,7 +46,8 @@ Verify against the tree before acting on any claim that something is built.
 - **[specs/validation.md](specs/validation.md)** — the live-verification discipline: done-is-observable endpoint polls + turn time (parity and shadow are closed).
 - **[specs/http-endpoints.md](specs/http-endpoints.md)** — the HTTP transport + its two standing invariants, and
   ⛔ **why the route surface is EMPTY and must stay empty** (an endpoint is a live consumer: a route keeps a legacy
-  member alive past the compiler census). The six stored-vs-oracle cache documents are the whole surface today.
+  member alive past the compiler census). Four STORED-side decomposition censuses are the whole surface today;
+  the `oracle` twins are dead ([superseded-ideas #33](architecture/superseded-ideas.md)).
 - Unit classification — **[skills](specs/skills.md)** (mutable abilities) · **[tags](specs/tags.md)** (immutable
   membership) · **[state](specs/state.md)** (transient) · **[capabilities](specs/capabilities.md)** (empire).
 - **[specs/curators/](specs/curators/README.md)** — the migration conversion spec (**transient**; the old→new field

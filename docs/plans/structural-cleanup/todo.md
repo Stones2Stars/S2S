@@ -28,18 +28,6 @@
 
 ## Blocked on an owner ruling
 
-- Decide HOW PYTHON NAMES A CLASSIFICATION ID, because the tree carries two live precedents pulling opposite
-  ways and the choice governs the whole `CyInfo` classification plane. `CyEnums` publishes the generated ids as
-  boost enums for the capability and policy domains (a consumer writes `CapabilityId.CLS_CAPABILITY_…`), while
-  `CyInfo::canTradeItem` resolves the AUTHORED KEY by name through `ClassificationRegistry::keyId` — on the
-  stated grounds that "the Python surface resolves by authored key, not by generated id". Both cannot be the
-  rule. ⚠ The id-enum form needs the remaining domains published, and hand-listing them is the shape that
-  DRIFTS from the generated table — so if that form wins, the emit belongs in
-  `curate_classification_ids.py` beside the header it already generates, never in a hand-kept list. The
-  key-resolve form needs one parameterized lookup and no generated Python at all.
-  ⛔ Not an agent call: [patterns.md](../../architecture/patterns.md)'s ask-by-generated-id ruling is written
-  about the C++ consumer, where the id is a compile-time constant — Python has no such constant, which is
-  precisely why the second precedent exists.
 - Rule on how an ENACTED / HELD state pseudo-building expresses the CHOICE behind it — the ordinances, the
   culture `C_AC_*` set, the folklore requirement. This is the live ENABLE-SIDE OVER-OFFER the owner sees
   (a Speakeasy offered without alcohol banned; a culture building offered in a city with no culture; the

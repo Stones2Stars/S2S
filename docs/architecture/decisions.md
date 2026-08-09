@@ -289,7 +289,20 @@ loads." "Straight up missing" means it does not show in-game even if it loads (t
 apply/display). Every work item's acceptance is an endpoint-observable pass/fail on a real save, a real turn — the
 strict complement of [DEC-verify-in-game-not-reshadow](#dec-verify-in-game-not-reshadow). Programmatic already: the
 `/computed` oracle endpoints expose the real engine values as game-thread snapshots (a blind value is EMITTED first,
-step one of its fix). **Home:** [validation.md](../specs/validation.md).
+step one of its fix).
+⚖ **AND IT IS A SNAPSHOT, NEVER A PROPERTY — AN EVALUATION PATH IS NEVER "DONE" (owner): *"I don't think any
+evaluation path can ever be called done."*** The reason is structural rather than cautious: the classification
+registries and the modifier families are OPEN BY DESIGN
+([DEC-classification-infos](#dec-classification-infos)), so a valuation that reads every source today becomes
+incomplete the moment data authors a new one — with no code change, nothing failing, and no build that could
+name it. Completeness DECAYS on a data edit.
+⇒ **So the deliverable is the INSTRUMENT, not the claim**: the load-time censuses (`unkinded-member`, the FK
+and unconsumed-key counts), attribution to a named source with numbers, and the three-leg check
+([http-endpoints.md](../specs/http-endpoints.md)) keep working as the data moves; a completion statement does
+not. ⛔ Report an evaluation path as *"no known divergence, on this save, on this turn"* — never as done, which
+asserts a property the model cannot have. It is the same reason a remembered figure is a smell test rather than
+a target ([DEC-baseline-is-a-smell-test](#dec-baseline-is-a-smell-test)).
+**Home:** [validation.md](../specs/validation.md).
 
 ### DEC-cy-not-fixed
 
@@ -546,7 +559,31 @@ recomputes from scratch on EVERY call — so ANY perf measurement taken while le
 `badHealth(bNoAngry)` what-if re-sums per read; it vanished the instant the getters went cascade-only). All turn-time/
 FPS/lag numbers gathered with legacy on any hot read path are POISONED. Clean perf is only measurable AFTER legacy is
 fully purged — so the violent purge is a PREREQUISITE for the perf hunt, not merely a correctness/tidiness step.
-Sharpens [DEC-turn-time-is-king](#dec-turn-time-is-king). **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
+Sharpens [DEC-turn-time-is-king](#dec-turn-time-is-king).
+⛔ **AND IT DOES NOT ONLY POISON MEASUREMENT — IT CONVERTS AN AI LOOP INTO A HANG (owner): the AI loops "looping
+all the things when they don't need to" are a SYMPTOM, and they surface now "because we do not serialize their
+caches anymore."** The loops were always shaped this way; every inner read used to hit a serialized accumulator
+and cost O(1), so the shape was merely wasteful. Strip the accumulators and each read RECOMPUTES, so an
+`O(candidates × cities)` loop becomes `O(candidates × cities × cities)` and stalls outright.
+⇒ **Both halves are the fix, and neither alone is:** the READ must be an O(1) maintained slot again
+([DEC-maintained-sum](#dec-maintained-sum)), AND the caller must stop asking a scope-wide question per
+candidate. ⚑ **Expect MANY** — three surfaced in one session from one root (`AI_isFinancialTrouble` re-walking
+every city, `readFlat` doing a tree lookup, `cityReceiverRate` re-walking the plot ring), each found only by
+attaching a debugger to a spinning process, because a spin EMITS NOTHING and every log goes silent at once.
+⚠ So a hang with a saturated core and dead logs is this class until proven otherwise — and the CPU reading is
+per-core, so one pinned core reads as ~0% in Task Manager on a many-core box.
+⚖ **AND THE UNCACHED STATE IS AN INSTRUMENT, NOT ONLY A COST (owner): *"it is useful to run through like this
+without caching to see where the hottest path is."*** This is the half that inverts the entry above. Behind a
+serialized accumulator an `O(n³)` loop is INVISIBLE — it merely costs a slice of every turn forever, and
+nothing ever points at it. Strip the accumulator and the same shape becomes a HANG, which is locatable in
+minutes with a debugger attach. The decache did not create these; it made them findable.
+⇒ **Consequence for sequencing, and it is the actionable half: do NOT hurry caching back in.** Every cache
+restored re-blinds the surface it covers, so the order is (1) run uncached, (2) let the hot paths announce
+themselves as stalls, (3) fix the READS that should never have computed, (4) only then let the AI plane cache
+its own scores, simply ([ai-architecture-north-star.md](../plans/parked/ai-architecture-north-star.md)).
+⛔ A cache added while a wrong-shaped read is still underneath it hides the read instead of fixing it — the
+[DEC-no-self-heal](#dec-no-self-heal) failure one plane over.
+**Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
 
 ### DEC-accumulator-cut-uniform
 

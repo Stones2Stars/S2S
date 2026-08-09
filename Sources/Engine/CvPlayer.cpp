@@ -12433,7 +12433,17 @@ void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 		}
 		else
 		{
-			m_heldBuildings.erase(std::find(m_heldBuildings.begin(), m_heldBuildings.end(), eIndex));
+			//	⛔ erase(end()) is UNDEFINED BEHAVIOUR -- it walks off the buffer and faults, so an absent element
+			//	must be tested for rather than assumed. The count and this set can only disagree if something
+			//	moved the count without going through this choke point, which is a defect in THAT path: the assert
+			//	names it in a dev build while the guard keeps a shipping build from corrupting memory over it.
+			const std::vector<BuildingTypes>::iterator itHeld =
+				std::find(m_heldBuildings.begin(), m_heldBuildings.end(), eIndex);
+			FAssertMsg(itHeld != m_heldBuildings.end(), "held-building set disagrees with the building count");
+			if (itHeld != m_heldBuildings.end())
+			{
+				m_heldBuildings.erase(itHeld);
+			}
 		}
 	}
 
@@ -17035,6 +17045,23 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
+		//	The held-set is DERIVED from the count above and is never serialized
+		//	([DEC-derived-never-trusted]), so it is rebuilt HERE -- at the one place the count it mirrors arrives,
+		//	which is what stops the two drifting.
+		//	⛔ The city read restores building presence RAW (`m_bHasBuildings[eType] = true`) and only ANNOUNCES;
+		//	it does not go through changeHasBuilding -> handleBuildingCounts -> changeBuildingCount, so the
+		//	crossing that maintains this set never fires for anything a save already holds.
+		//	⚠ Without it the set is EMPTY while the count says held, and the first REMOVAL of any held building
+		//	(a tech obsoleting one, a building destroyed, a city lost) erases an iterator that is end() -- memory
+		//	corruption, not a wrong number. It is load-only: a new game builds both together.
+		m_heldBuildings.clear();
+		for (int iI = 0; iI < GC.getNumBuildingInfos(); ++iI)
+		{
+			if (getBuildingCount((BuildingTypes)iI) > 0)
+			{
+				m_heldBuildings.push_back((BuildingTypes)iI);
+			}
+		}
 
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);

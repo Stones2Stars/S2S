@@ -417,7 +417,22 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    - **NPC build-lockdown** (`stronglyRestricted`) — ⚖ losing it during the enabler flip is **ACCEPTED**: *"I truly
      don't care about NPC barbarians or neanderthals being locked down or not… we may after all want to do it in a
      better manner anyway."* So it is never a reason to preserve a legacy gate clause.
-5. **⛔ PURELY-PYTHON, NEVER-XML EFFECTS ARE OUT OF SCOPE (owner).** #430 migrates the **XML-dealt-with surface**
+5. **⛔ PURELY-PYTHON, NEVER-XML EFFECTS ARE OUT OF SCOPE (owner) — BUT OUT OF SCOPE IS NOT THEIR DESTINATION.**
+   ⚖ **THEY MOVE TO C++ AFTER THE REWORK, AND MOST OF THEM ARE TRIGGERS (owner): *"all these scripts is
+   something we will port to C++ after rework is done; having scripts like this in Python is root of all evil"*
+   — *"most of it can even be expressed as triggers."*** The gameplay scripts in `CvEventManager` and the contrib
+   mods (the per-wonder combat and turn effects, the combat-promotion mod, the respawn and revive handouts) are
+   **trigger-SHAPED by construction**: a happening, a chance, an action ([triggers.md](../../specs/triggers.md)) —
+   which is the same plane `CvEventReporter`'s successor already lands on
+   ([patterns.md](../../architecture/patterns.md): events move INTO C++, "but that is not 430").
+   ⛔ **This changes NOTHING about #430's scope** — it is still out, and the ban on DEVELOPING gameplay in Python
+   still binds. What it changes is how a KEEP-WORKING repair is judged: re-pointing such a handler onto the id
+   surface is holding a mechanic alive until its trigger exists, never an investment in the Python expression of
+   it. ⇒ Do the minimum that makes it work, and do not improve, restructure or extend the script while you are in
+   there (scope decision 6's develop-vs-keep-working line).
+   ⚠ **And do not start the port opportunistically either**: authoring one of these as a trigger needs its
+   happening and its verb to exist, and minting either speculatively for one mechanic is what
+   [triggers.md](../../specs/triggers.md) bans outright. #430 migrates the **XML-dealt-with surface**
    (XML data + the DLL machinery that reads it). Gameplay living ONLY in Python that reads NO XML field is a
    separate surface the cascade never touches — the hardcoded per-turn wonder spawns/grants in `CvEventManager`,
    and effects that are structurally INEXPRESSIBLE in the model (a culture burst when a unit dies has no home in

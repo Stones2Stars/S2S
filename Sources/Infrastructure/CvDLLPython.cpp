@@ -30,6 +30,7 @@
 #include "Tools/SCyDebug.h"
 #include "IDValueMap.h"
 #include "Tools/Win32.h"
+#include "Engine/CvUnit.h"           // CombatDetails -- the combat-log events' payload struct
 
 
 
@@ -165,12 +166,19 @@ DllExport void DLLPublishToPython()
 
 	// ⛔ TYPE REGISTRATION ONLY -- NOT a read surface, and NOT a revival of the cut Cy* bindings.
 	//
-	// `DECLARE_PY_WRAPPER` exists for exactly four types (CyCity / CyUnit / CySelectionGroup / CyPlot). When the
-	// engine calls into Python with a CvCity*/CvUnit*/CvSelectionGroup*, ArgTraits wraps it BY VALUE and marshals
-	// it through makePythonObject -> python::object(obj), which THROWS unless boost::python has a registered
-	// class_<> converter for that exact type. So without these three lines every engine event carrying a city, a
-	// unit or a selection group raises on the way out -- and CvDllPythonEvents fires those constantly, which is
-	// the Python-error popup storm rather than any fault in the Python tree.
+	// A type needs a `class_<>` iff some engine call site hands it ACROSS, and there are TWO routes that do:
+	//   `DECLARE_PY_WRAPPER` (CyPlot, CySelectionGroup) -- ArgTraits wraps the object BY VALUE and marshals it
+	//        through makePythonObject -> python::object(obj);
+	//   `CvGameObject::createPythonWrapper` -- builds a CyGame / CyTeam / CyPlayer / CyCity / CyUnit / CyPlot on
+	//        its own path, for the property and outcome systems.
+	// Either way the conversion THROWS unless boost::python holds a registered converter for that exact type, so
+	// a missing line here is an unhandled C++ exception on the way OUT of the engine -- never a fault in the
+	// Python tree, and never something a traceback names.
+	//
+	// ⚠ CyCity and CyUnit take NEITHER route through ArgTraits: they are `DECLARE_PY_IDENTITY`, crossing as an
+	// (owner, id) tuple that needs no converter. Their registration below is owed by createPythonWrapper ALONE.
+	// ⛔ So "it crosses as an identity, therefore it needs no class_<>" is false for them, and reading it that way
+	// eliminates the right suspect.
 	//
 	// ⚑ REGISTRATION IS NOT BINDING (patterns.md § THE PYTHON READ BOUNDARY). These carry `no_init` and ZERO
 	// `.def`s: Python can RECEIVE and pass one back, and can call NOTHING on it. That is the correct end state
@@ -229,6 +237,92 @@ DllExport void DLLPublishToPython()
 		.def_readwrite("iData",     &TradeData::m_iData)
 		.def_readwrite("bOffering", &TradeData::m_bOffering)
 		.def_readwrite("bHidden",   &TradeData::m_bHidden)
+		;
+
+	//   CombatDetails -- the engine PUSHES one (six sites in CvUnit::updateCombat, feeding the `combatLogCalc`
+	//               and `combatLogHit` generic events), so without the registration the conversion throws
+	//               BEFORE any handler is reached: an unhandled C++ exception (0xE06D7363) out of
+	//               boost::python's to_python, i.e. a HARD CRASH rather than a Python traceback.
+	//	⚑ Every push is guarded `isHuman() || pDefender->isHuman()`, so it fires whenever a human is on either
+	//	side of a fight -- the player attacking, and the AI attacking the player during its end-turn. That is the
+	//	whole of the repro, and it is why the same defect reads as two separate bugs.
+	//	⚠ It is a decomposition of ONE combat's modifiers, computed and handed over by value -- a snapshot, not a
+	//	handle to game state -- so its fields ARE the value and no getter contract is being revived here.
+	//	The published names match the members; `CvUtil.combatMessageBuilder` and both `CvEventManager` handlers
+	//	read `eOwner` / `eVisualOwner` / `iCurrCombatStr` / `sUnitName` by those spellings.
+	python::class_<CombatDetails>("CombatDetails")
+		.def_readwrite("iExtraCombatPercent",            &CombatDetails::iExtraCombatPercent)
+		.def_readwrite("iAnimalCombatModifierTA",        &CombatDetails::iAnimalCombatModifierTA)
+		.def_readwrite("iAIAnimalCombatModifierTA",      &CombatDetails::iAIAnimalCombatModifierTA)
+		.def_readwrite("iAnimalCombatModifierAA",        &CombatDetails::iAnimalCombatModifierAA)
+		.def_readwrite("iAIAnimalCombatModifierAA",      &CombatDetails::iAIAnimalCombatModifierAA)
+		.def_readwrite("iBarbarianCombatModifierTB",     &CombatDetails::iBarbarianCombatModifierTB)
+		.def_readwrite("iAIBarbarianCombatModifierTB",   &CombatDetails::iAIBarbarianCombatModifierTB)
+		.def_readwrite("iBarbarianCombatModifierAB",     &CombatDetails::iBarbarianCombatModifierAB)
+		.def_readwrite("iAIBarbarianCombatModifierAB",   &CombatDetails::iAIBarbarianCombatModifierAB)
+		.def_readwrite("iPlotDefenseModifier",           &CombatDetails::iPlotDefenseModifier)
+		.def_readwrite("iFortifyModifier",               &CombatDetails::iFortifyModifier)
+		.def_readwrite("iCityDefenseModifier",           &CombatDetails::iCityDefenseModifier)
+		.def_readwrite("iHillsAttackModifier",           &CombatDetails::iHillsAttackModifier)
+		.def_readwrite("iHillsDefenseModifier",          &CombatDetails::iHillsDefenseModifier)
+		.def_readwrite("iFeatureAttackModifier",         &CombatDetails::iFeatureAttackModifier)
+		.def_readwrite("iFeatureDefenseModifier",        &CombatDetails::iFeatureDefenseModifier)
+		.def_readwrite("iTerrainAttackModifier",         &CombatDetails::iTerrainAttackModifier)
+		.def_readwrite("iTerrainDefenseModifier",        &CombatDetails::iTerrainDefenseModifier)
+		.def_readwrite("iCityAttackModifier",            &CombatDetails::iCityAttackModifier)
+		.def_readwrite("iDomainDefenseModifier",         &CombatDetails::iDomainDefenseModifier)
+		.def_readwrite("iCityBarbarianDefenseModifier",  &CombatDetails::iCityBarbarianDefenseModifier)
+		.def_readwrite("iDefenseModifier",               &CombatDetails::iDefenseModifier)
+		.def_readwrite("iAttackModifier",                &CombatDetails::iAttackModifier)
+		.def_readwrite("iCombatModifierT",               &CombatDetails::iCombatModifierT)
+		.def_readwrite("iCombatModifierA",               &CombatDetails::iCombatModifierA)
+		.def_readwrite("iDomainModifierA",               &CombatDetails::iDomainModifierA)
+		.def_readwrite("iDomainModifierT",               &CombatDetails::iDomainModifierT)
+		.def_readwrite("iAnimalCombatModifierA",         &CombatDetails::iAnimalCombatModifierA)
+		.def_readwrite("iAnimalCombatModifierT",         &CombatDetails::iAnimalCombatModifierT)
+		.def_readwrite("iRiverAttackModifier",           &CombatDetails::iRiverAttackModifier)
+		.def_readwrite("iAmphibAttackModifier",          &CombatDetails::iAmphibAttackModifier)
+		.def_readwrite("iKamikazeModifier",              &CombatDetails::iKamikazeModifier)
+		.def_readwrite("iModifierTotal",                 &CombatDetails::iModifierTotal)
+		.def_readwrite("iBaseCombatStr",                 &CombatDetails::iBaseCombatStr)
+		.def_readwrite("iCombat",                        &CombatDetails::iCombat)
+		.def_readwrite("iMaxCombatStr",                  &CombatDetails::iMaxCombatStr)
+		.def_readwrite("iCurrHitPoints",                 &CombatDetails::iCurrHitPoints)
+		.def_readwrite("iMaxHitPoints",                  &CombatDetails::iMaxHitPoints)
+		.def_readwrite("iCurrCombatStr",                 &CombatDetails::iCurrCombatStr)
+		.def_readwrite("eOwner",                         &CombatDetails::eOwner)
+		.def_readwrite("eVisualOwner",                   &CombatDetails::eVisualOwner)
+		.def_readwrite("sUnitName",                      &CombatDetails::sUnitName)
+		;
+
+	//   EventTriggeredData -- the RANDOM-EVENT payload. Five sites in CvPlayer push it
+	//               (`Cy::Args() << &kTriggeredData`) into the random-event module: a trigger's
+	//               `<PythonCallback>`, an event's `<PythonCanDo>` / `<PythonCallback>` /
+	//               `<PythonExpireCheck>`. Those are XML-declared callbacks, so nothing in the Python tree
+	//               names them and no grep of it finds the dependency.
+	//	⛔ Without the registration the conversion throws before the callback is entered, and `CvPlayer::doEvents`
+	//	runs PER PLAYER PER TURN -- so it is an end-of-turn crash, not an occasional one.
+	//	⚠ The published names drop the `m_` prefix, which is what the handlers already read (`ePlayer` alone at
+	//	~400 sites); renaming them to the member spellings would break every one.
+	//	⚑ The two CvWString members are deliberately NOT published: `CvWString` derives from `std::wstring` and
+	//	boost's built-in converter does not cover the derived type, so a `def_readwrite` on one would compile and
+	//	then throw the first time a script touched it. No handler reads either, so there is no demand to serve --
+	//	when one appears it wants an accessor returning `std::wstring`, never this shortcut.
+	python::class_<EventTriggeredData>("EventTriggeredData")
+		.def_readwrite("iId",                  &EventTriggeredData::m_iId)
+		.def_readwrite("eTrigger",             &EventTriggeredData::m_eTrigger)
+		.def_readwrite("iTurn",                &EventTriggeredData::m_iTurn)
+		.def_readwrite("ePlayer",              &EventTriggeredData::m_ePlayer)
+		.def_readwrite("iCityId",              &EventTriggeredData::m_iCityId)
+		.def_readwrite("iPlotX",               &EventTriggeredData::m_iPlotX)
+		.def_readwrite("iPlotY",               &EventTriggeredData::m_iPlotY)
+		.def_readwrite("iUnitId",              &EventTriggeredData::m_iUnitId)
+		.def_readwrite("eOtherPlayer",         &EventTriggeredData::m_eOtherPlayer)
+		.def_readwrite("iOtherPlayerCityId",   &EventTriggeredData::m_iOtherPlayerCityId)
+		.def_readwrite("eReligion",            &EventTriggeredData::m_eReligion)
+		.def_readwrite("eCorporation",         &EventTriggeredData::m_eCorporation)
+		.def_readwrite("eBuilding",            &EventTriggeredData::m_eBuilding)
+		.def_readwrite("bExpired",             &EventTriggeredData::m_bExpired)
 		;
 
 	//

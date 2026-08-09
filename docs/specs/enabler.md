@@ -526,10 +526,11 @@ stream) and **updated in place on events** (a tech researched adds its `enables`
 obsoletes; a building built leaves `buildable`; …). Every read is a **pure O(1) lookup that NEVER calls a
 calculator.** The static calculators (`TechEnabler::available` / `BuildingEnabler::verifyCity`'s fresh-build +
 `EnablerKernel::gateSet`) are the **validation oracle ONLY — never the read path and never a load build**; the
-oracle-vs-maintained diff is the missed-emit tripwire (the enabler consumes ONLY events precisely so a missed
-emit surfaces as a visibly wrong enabler) — and that diff is taken **OUTSIDE the DLL**, between the two served
-documents (`/computed/enabler/operating/{stored,oracle}`, [http-endpoints.md](http-endpoints.md)); the engine
-never compares the two sides ([state-repositories.md](../architecture/state-repositories.md)). The `requires` gate re-runs **incrementally over only the affected candidates** (via the reverse
+enabler consumes ONLY events precisely so a missed emit surfaces as a visibly wrong enabler. ⛔ The
+oracle-vs-maintained ENDPOINT DIFF that once claimed to catch that is DEAD
+([superseded-ideas #33](../architecture/superseded-ideas.md)): an endpoint cannot replay the event chain, so its
+recompute side was never comparable. `/computed/enabler/operating` serves the MAINTAINED set alone, and a wrong
+verdict is caught by the three-leg check ([http-endpoints.md](http-endpoints.md)). The `requires` gate re-runs **incrementally over only the affected candidates** (via the reverse
 index), and the operating-building set (§3.2) is maintained the same way — this is
 [state-repositories](../architecture/state-repositories.md)' targeted propagation applied to the availability
 machine. The representation is deliberately primitive: **the HAS list, and the enabler list built from HAS, are

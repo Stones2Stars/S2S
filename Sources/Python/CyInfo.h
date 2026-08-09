@@ -199,8 +199,17 @@ public:
 	// the whole group in one read indexed by CommerceTypes ([patterns.md] THE TWO READ ROLES rule 1).
 	python::list getProductionToCommerce(const std::string& szTypePrefix, int iId, int iScope) const;
 
-	// A CLASSIFICATION test -- O(1) bitset, the parameterized read ([patterns.md] THE GETTER SETUP category 2:
-	// a consumer asks by generated ID, never by key NAME, and no per-key getter is ever added).
+	// A CLASSIFICATION test -- O(1) bitset, the parameterized read.
+	//
+	// ⛔ THIS IS NOT THE PYTHON CONSUMER SURFACE -- A NAMED ENDPOINT IS (owner): "you can easily make a Cy wrapper
+	// for a specific skill such as hidden nationality; I want the Cy endpoints to be understandable -- minimal
+	// amount of endpoints is not the target here, properly organized is." A consumer therefore calls
+	// `INFO.isHiddenNationality(unitId)`, never a test carrying an id ([patterns.md] THE PYTHON READ BOUNDARY).
+	// ⚠ The C++ surface is the OPPOSITE and correctly so ([patterns.md] THE GETTER SETUP category 2): there the id
+	// IS a compile-time constant, so `hasSkill(CLS_SKILL_BLITZ)` already names the thing at the call site. Python
+	// has no such constant, which is why the two planes diverge -- do not "align" them.
+	// ⇒ These parameterized reads stay as the SHARED IMPLEMENTATION the named endpoints below delegate to, so a
+	// named endpoint costs one line and never a second bitset walk ([DEC-single-implementation]).
 	//
 	// ⚑ ALL SEVEN DOMAINS, because the plane is only usable if it is COMPLETE. The name encodes HOLD vs PROVIDE
 	// exactly as the C++ surface does ([patterns.md] category 2, [json.md] §8): what the entity IS or HAS is
@@ -223,6 +232,22 @@ public:
 	// The REVOKE plane ([skills.md] §4): a PROMOTION authoring `false` takes a skill away. A separate read
 	// because absent and revoked are different answers, and `hasSkill` cannot express the second.
 	bool revokesSkill(const std::string& szTypePrefix, int iId, int iSkillId) const;
+
+	// ---- The NAMED classification tests -- the Python CONSUMER surface (the owner ruling above). ----
+	// One endpoint per key, spelled for what it ASKS, so a reader of the call site knows what is fetched without
+	// resolving an id. ⛔ Added ON DEMAND, for the call site that wants it -- never pre-emptively across a
+	// registry (the [patterns.md] THE IDENTITY SET rule: restore on demand, named by the call site that wanted it).
+	// ⚑ The named form is also what lets the CALLER stay ignorant of which PLANE the answer lives on: hidden
+	// nationality is a unit SKILL while spy is a unit TAG ([skills.md] §1, [tags.md]), and no consumer should have
+	// to know that to ask a question about a unit.
+	bool isHiddenNationality(int iUnitId) const;
+	bool isSpy(int iUnitId) const;
+	// Does this unit spread a religion at all (the MISSIONARY test)?
+	// ⚖ It replaces a legacy `getPrereqReligion() > -1`, and the change of QUESTION is the point: that asked a
+	// BUILD GATE in order to infer a CAPABILITY. The gate is now an ordinary `requires.build` RELIGION_ atom the
+	// enabler owns, while what the caller actually wants is authored directly as `spread.religion`
+	// ([json.md] §9 -- its own block precisely so a reader is not left inferring it from a prereq).
+	bool canSpreadReligion(int iUnitId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
 	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.

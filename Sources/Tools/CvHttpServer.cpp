@@ -387,9 +387,11 @@ namespace
 		// emit RAW inputs; /computed actions emit the engine's own answers. Every data route is serviced on the
 		// game thread via the mailbox (evalRequestBlocking). See docs/specs/http-endpoints.md.
 		struct Route { const char* szPath; const char* szAction; const char* szDoc; };
-		// The DERIVED-STATE planes, two routes each: what the EVENTS built, and a from-source recompute of the
-		// same values. The engine never compares them -- an external consumer fetches both and diffs them, and
-		// a disagreement is a missed emit named by scope + channel + owner (state-repositories.md).
+		// The DERIVED-STATE planes, one route each: what the EVENTS built, served DECOMPOSED term by term so a
+		// wrong total is attributable to a named source without a code read (http-endpoints.md). There is no
+		// from-source `oracle` twin: an endpoint cannot replay the event chain, so its recompute would answer a
+		// number that was never comparable (superseded-ideas #33). Correctness is the three-leg check instead --
+		// the logs, the JSON info, and what state expects.
 		static const Route ROUTES[] =
 		{
 			{ "/computed/cascade/packages",  "cascadePackages",  "cascade packages as the events built them: per-scope flat/percent slots + receiver sums, by channel name. ?player=N[&city=M]; a city selector adds its workable plots" },

@@ -893,42 +893,22 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	{
 		return 0;
 	}
-	// BASE -- the Σ over this city's WORKED PLOTS of their own package flats. This is the member re-sum a
-	// receiver IS; nothing maintains it as a total, because a total of combines cannot be delta'd.
-	int64_t iPlotBase = 0;
+	// BASE -- the Σ over this city's WORKED PLOTS of their own package flats, read as a MAINTAINED SLOT.
+	//
+	// ⛔ IT IS NOT RE-SUMMED HERE ANY MORE, and that is the whole point: this function is reached from
+	// CvCity::getYields, which is specified as a BARE FETCH, and it was walking the city's entire plot ring on
+	// every call. [state-repositories.md] names this exact shape with this exact caller -- "re-summing the radius
+	// on every getPlotYield call turns the game's hottest read O(radius) ... measured at 913M plot reads in one
+	// turn inside the governor's valuation" -- and it hung a late-game turn outright, on a saturated core with
+	// every log silent, because a spin emits nothing.
+	// ⛑ The slot is maintained by two legs that are total together: the RESOLVE delta (foldPlotSegment in
+	// CvModifierConsumer) and the WORKED membership fact (applyWorkedPlot). See CvCascadePackage::plotBaseFlat.
+	int64_t iPlotBase = city.getCascadePackage().readPlotBaseFlat(iChannel);
 	int64_t iPlotNature = 0;
 	int64_t iPlotImprovement = 0;
 	int64_t iPlotRest = 0;
 	int iWorkedPlots = 0;
 	std::map<int, int> kWorkedImprovements;   // improvement id -> worked tiles carrying it (the trait leg's key)
-	const int iNumPlots = city.getNumCityPlots();
-	for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
-	{
-		if (!city.isWorkingPlot(iPlotIndex))
-		{
-			continue;
-		}
-		const CvPlot* pWorkedPlot = city.getCityIndexPlot(iPlotIndex);
-		if (pWorkedPlot != NULL)
-		{
-			iPlotBase += pWorkedPlot->getCascadePackage().readFlat(iChannel);
-			// the SAME walk, decomposed -- the census reads the segments the total is made of rather than
-			// re-deriving them beside it ([DEC-single-implementation])
-			if (pTermsOut != NULL)
-			{
-				iPlotNature += pWorkedPlot->getCascadePackage().readSubstrateFlat(iChannel);
-				iPlotImprovement += pWorkedPlot->getCascadePackage().readImprovementFlat(iChannel);
-				iPlotRest += pWorkedPlot->getCascadePackage().readRestFlat(iChannel);
-			}
-			// the improvement this worked tile carries -- the key the trait leg below is summed against
-			const ImprovementTypes eWorkedImprovement = pWorkedPlot->getImprovementType();
-			if (eWorkedImprovement != NO_IMPROVEMENT)
-			{
-				++kWorkedImprovements[(int)eWorkedImprovement];
-			}
-			++iWorkedPlots;
-		}
-	}
 	int64_t iBase = iPlotBase;
 	// ⛔ ONE ctx and ONE held-trait fetch per call, shared by both trait legs below -- building either per leg
 	// would resolve the same state twice for one read.
@@ -936,6 +916,78 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(), NULL, evalCtx);
 	std::vector<TraitContext::HeldTrait> kHeldTraits;
 	val_collectHeldTraits(evalCtx, kHeldTraits);
+
+	// ⚖ THE RING WALK SURVIVES, BUT ONLY FOR THE TWO THINGS THE SLOT CANNOT ANSWER -- and neither is on the
+	// hot path. The CENSUS wants the per-segment decomposition and the worked-plot count; the TRAIT IMPROVEMENT
+	// LEG below wants which improvements this city actually works. A plain rate read (pTermsOut == NULL) with no
+	// improvement-keyed trait entry needs neither, and that is the read the AI takes per candidate.
+	// ⚠ The pre-check mirrors the leg's own filter exactly; if the two ever drift, the leg silently stops
+	// contributing. It is written here rather than shared because the leg needs the MATCHED entry and this needs
+	// only to know one exists.
+	bool bNeedWorkedImprovements = false;
+	{
+		const int iPrecheckSegment = keyedTargetSegment("improvements");
+		if (iPrecheckSegment != (int)TARGET_SEGMENT_NONE)
+		{
+			const ModifierFamily ePrecheckFamily = CascadeChannelRegistry::channelFamily(iChannel);
+			const int iPrecheckKind = CascadeChannelRegistry::channelKind(iChannel);
+			for (size_t iTrait = 0; iTrait < kHeldTraits.size() && !bNeedWorkedImprovements; ++iTrait)
+			{
+				const CvModifiers* pPrecheckModifiers = kHeldTraits[iTrait].info->getModifiers();
+				if (pPrecheckModifiers == NULL)
+				{
+					continue;
+				}
+				const std::vector<CvModEntry*>& kPrecheckEntries = pPrecheckModifiers->entries();
+				for (size_t iEntry = 0; iEntry < kPrecheckEntries.size(); ++iEntry)
+				{
+					const CvModEntry& kEntry = *kPrecheckEntries[iEntry];
+					if (kEntry.family == ePrecheckFamily
+					&&  kEntry.targetSeg == iPrecheckSegment
+					&&  kEntry.targetFk >= 0
+					&& (iPrecheckKind < 0 || kEntry.kind == iPrecheckKind)
+					&&  kEntry.unitQual == NULL
+					&&  val_scopeFolds(kEntry.scope))
+					{
+						bNeedWorkedImprovements = true;
+						break;
+					}
+				}
+			}
+		}
+	}
+	if (pTermsOut != NULL || bNeedWorkedImprovements)
+	{
+		const int iNumPlots = city.getNumCityPlots();
+		for (int iPlotIndex = 0; iPlotIndex < iNumPlots; ++iPlotIndex)
+		{
+			if (!city.isWorkingPlot(iPlotIndex))
+			{
+				continue;
+			}
+			const CvPlot* pWorkedPlot = city.getCityIndexPlot(iPlotIndex);
+			if (pWorkedPlot != NULL)
+			{
+				// ⚠ The census reads the SEGMENTS the total is made of rather than re-deriving them beside it
+				// ([DEC-single-implementation]). It deliberately does NOT re-sum the total: pTermsOut->plotBase
+				// reports the SLOT, which is the number every consumer actually uses -- so a gap between
+				// Σsegments and plotBase now signals either a biting floor (as before) or slot drift.
+				if (pTermsOut != NULL)
+				{
+					iPlotNature += pWorkedPlot->getCascadePackage().readSubstrateFlat(iChannel);
+					iPlotImprovement += pWorkedPlot->getCascadePackage().readImprovementFlat(iChannel);
+					iPlotRest += pWorkedPlot->getCascadePackage().readRestFlat(iChannel);
+				}
+				// the improvement this worked tile carries -- the key the trait leg below is summed against
+				const ImprovementTypes eWorkedImprovement = pWorkedPlot->getImprovementType();
+				if (eWorkedImprovement != NO_IMPROVEMENT)
+				{
+					++kWorkedImprovements[(int)eWorkedImprovement];
+				}
+				++iWorkedPlots;
+			}
+		}
+	}
 	// ⚖ THE TRAIT IMPROVEMENT LEG (modifier.md §4, the per-set carve-out). A building's / civic's / tech's
 	// `<yield>.<scope>.improvements.{IMPROVEMENT_X}` is REVERSE-LANDED onto the improvement at plot scope and so
 	// arrives inside plotBase above; a TRAIT's is deliberately NEVER landed (CvReversePass::rp_landOwnOutput),

@@ -364,6 +364,8 @@ void CvCity::getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const
 	growth[GROWTH_READ_THRESHOLD]          = growthThreshold();
 	growth[GROWTH_READ_TURNS_LEFT]         = getFoodTurnsLeft();
 	growth[GROWTH_READ_IS_FOOD_PRODUCTION] = isFoodProduction() ? 1 : 0;
+	//	The food CARRIED OVER on growth -- a whole-unit quantity like every other member of this group.
+	growth[GROWTH_READ_FOOD_KEPT]          = getFoodKept();
 }
 
 
@@ -391,6 +393,7 @@ void CvCity::getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const
 	flags[CITY_FLAG_OCCUPATION]            = isOccupation() ? 1 : 0;
 	flags[CITY_FLAG_PLUNDERED]             = isPlundered() ? 1 : 0;
 	flags[CITY_FLAG_QUARANTINED]           = isQuarantined() ? 1 : 0;
+	flags[CITY_FLAG_CONNECTED_TO_CAPITAL]  = isConnectedToCapital() ? 1 : 0;
 }
 
 void CvCity::getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUILDING_READS]) const
@@ -402,6 +405,9 @@ void CvCity::getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUI
 	read[CITY_BUILDING_PROGRESS]         = getProgressOnBuilding(eBuilding);
 	read[CITY_BUILDING_DELAY]            = getDelayOnBuilding(eBuilding);
 	read[CITY_BUILDING_PRODUCTION_DECAY] = isBuildingProductionDecay(eBuilding) ? 1 : 0;
+	//	WHO BUILT IT -- the ledger's own record, which is the only home this fact has ever had; there is no
+	//	`getBuildingOriginalOwner` on the city and never was, so a caller that wants it asks the ledger.
+	read[CITY_BUILDING_ORIGINAL_OWNER]   = (int)getBuildingData(eBuilding).eBuiltBy;
 }
 
 
@@ -431,6 +437,7 @@ void CvCity::getCityCounts(int (&counts)[NUM_CITY_COUNT_READS]) const
 	counts[CITY_COUNT_DEFENSE_DAMAGE]       = getDefenseDamage();
 	counts[CITY_COUNT_REVOLUTION_INDEX]     = getRevolutionIndex();
 	counts[CITY_COUNT_REVOLUTION_AVERAGE]   = getRevIndexAverage();
+	counts[CITY_COUNT_GAME_TURN_FOUNDED]    = getGameTurnFounded();
 }
 
 void CvCity::getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const

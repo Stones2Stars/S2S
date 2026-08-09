@@ -15,6 +15,8 @@
 #include "Engine/CvUnitGrouping.h"
 #include "Engine/CvPlayer.h"
 #include "AI/CvPlayerAI.h"                           // GET_PLAYER
+#include "AI/CvGameAI.h"                             // initUnit -- the synchronized birthmark draw
+#include "Engine/CvMap.h"                            // initUnit -- the plot validity test
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // selectCity -- the engine action this relays
 
 bool CyAct::selectCity(int iPlayer, int iCity, bool bTestProduction) const
@@ -132,6 +134,85 @@ bool CyAct::invalidateBuildingList(int iPlayer, int iCity) const
 	return true;
 }
 
+bool CyAct::finishUnitMoves(int iPlayer, int iUnit) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->finishMoves();
+	return true;
+}
+
+bool CyAct::setUnitDamage(int iPlayer, int iUnit, int iDamage, int iByPlayer) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	//	⚠ setDamage can KILL the unit (it ends in `if (isDead()) kill(...)`, [unit-lifecycle.md]), so the caller
+	//	must not assume the unit survives this call -- exactly as an engine-side caller must not.
+	pUnit->setDamage(iDamage, (iByPlayer >= 0 && iByPlayer < MAX_PLAYERS) ? (PlayerTypes)iByPlayer : NO_PLAYER);
+	return true;
+}
+
+bool CyAct::setUnitName(int iPlayer, int iUnit, std::wstring szName) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->setName(CvWString(szName));
+	return true;
+}
+
+bool CyAct::setUnitLeaderUnitType(int iPlayer, int iUnit, int iLeaderUnitType) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	if (iLeaderUnitType >= GC.getNumUnitInfos()) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	//	-1 CLEARS the attachment, which is a real call (the beastmaster link is dropped when the unit dies), so
+	//	a negative id is passed through rather than refused.
+	pUnit->setLeaderUnitType((UnitTypes)iLeaderUnitType);
+	return true;
+}
+
+bool CyAct::setUnitStatus(int iPlayer, int iUnit, int iStatus, int iTurns) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	if (iStatus < 0 || iStatus >= (int)NUM_UNIT_STATUSES) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	//	The ONE write path, so the 0-crossing announces and the load lands through it too ([state.md]).
+	pUnit->setStatus((UnitStatus)iStatus, iTurns);
+	return true;
+}
+
+bool CyAct::setUnitScriptData(int iPlayer, int iUnit, std::string szData) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->setScriptData(szData);
+	return true;
+}
+
+bool CyAct::changePlayerGold(int iPlayer, int iChange) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	GET_PLAYER((PlayerTypes)iPlayer).changeGold((int64_t)iChange);
+	return true;
+}
+
+bool CyAct::changeCityCulture(int iPlayer, int iCity, int iForPlayer, int64_t iChange, bool bPlots) const
+{
+	if (iForPlayer < 0 || iForPlayer >= MAX_PLAYERS) return false;
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	//	bUpdatePlotGroups mirrors the engine's own callers: the culture change itself never moves the trade
+	//	network, so it stays false and the plot-group pass is not paid per grant.
+	pCity->changeCulture((PlayerTypes)iForPlayer, iChange, bPlots, false);
+	return true;
+}
+
 bool CyAct::setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewValue) const
 {
 	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
@@ -139,6 +220,34 @@ bool CyAct::setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewVa
 	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
 	if (pUnit == NULL) return false;
 	pUnit->setHasPromotion((PromotionTypes)iPromotion, bNewValue);
+	return true;
+}
+
+int CyAct::initUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int iDirection) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return -1;
+	if (iUnitType < 0 || iUnitType >= GC.getNumUnitInfos()) return -1;
+	if (GC.getMap().plot(iX, iY) == NULL) return -1;
+
+	//	The birthmark draw sits AFTER the two validity tests for the same reason the legacy binding put it there:
+	//	it is a draw on the synchronized stream, so a path that rejects must not consume one
+	//	([DEC-synced-rng-is-shared-state]).
+	CvUnit* pUnit =
+		GET_PLAYER((PlayerTypes)iPlayer).initUnit(
+			(UnitTypes)iUnitType, iX, iY, (UnitAITypes)iUnitAI, (DirectionTypes)iDirection,
+			GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+
+	return pUnit ? pUnit->getID() : -1;
+}
+
+bool CyAct::addUnitProductionExperience(int iPlayer, int iCity, int iUnit, bool bConscript) const
+{
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pCity->addProductionExperience(pUnit, bConscript);
 	return true;
 }
 
@@ -324,6 +433,16 @@ void CyAct::pythonPublish()
 		.def("invalidateBuildingList", &CyAct::invalidateBuildingList)
 		.def("setBuildDisabled", &CyAct::setBuildDisabled)
 		.def("setUnitPromotion", &CyAct::setUnitPromotion)
+		.def("initUnit", &CyAct::initUnit)
+		.def("addUnitProductionExperience", &CyAct::addUnitProductionExperience)
+		.def("finishUnitMoves", &CyAct::finishUnitMoves)
+		.def("setUnitDamage", &CyAct::setUnitDamage)
+		.def("setUnitName", &CyAct::setUnitName)
+		.def("setUnitLeaderUnitType", &CyAct::setUnitLeaderUnitType)
+		.def("setUnitStatus", &CyAct::setUnitStatus)
+		.def("setUnitScriptData", &CyAct::setUnitScriptData)
+		.def("changePlayerGold", &CyAct::changePlayerGold)
+		.def("changeCityCulture", &CyAct::changeCityCulture)
 		// the SCENARIO APPLY
 		.def("setCityName", &CyAct::setCityName)
 		.def("setCityPopulation", &CyAct::setCityPopulation)

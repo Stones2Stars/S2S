@@ -624,7 +624,26 @@ Four words carry the whole requirement:
 > `INFO.getIntrinsic("WORLD_", id, PYINT_CORP_MAINT_PERCENT)` is decoupled from `GC` and still fails the test —
 > the call site names a slot rather than the thing, so a reader again "doesn't know what you would fetch".
 > ⇒ Reserve the generic prefix-addressed plane for what is genuinely UNIFORM across every registry (identity
-> text, classification tests, edge families); a value that belongs to ONE type is named on that type's accessor.
+> text, edge families); a value that belongs to ONE type is named on that type's accessor.
+>
+> **⚖ A CLASSIFICATION TEST IS NAMED, ONE ENDPOINT PER KEY — AND ENDPOINT COUNT IS EXPLICITLY NOT THE TARGET
+> (owner): *"you can easily make a Cy wrapper for a specific skill such as hidden nationality; I want the Cy
+> endpoints to be understandable — minimal amount of endpoints is not the target here, properly organized
+> is."*** So a consumer asks **`INFO.isHiddenNationality(unitId)`**, never a parameterized test carrying an id.
+> ⛔ **This settles the question of how Python names a classification id by REMOVING it: Python never names one
+> at all.** Both former precedents are retired for this plane — the generated-enum form
+> (`hasSkill(prefix, id, CLS_SKILL_HIDDEN_NATIONALITY)`) and the authored-key-string form
+> (`hasSkill(prefix, id, "hiddenNationality")`) are each the opaque-slot shape above wearing a different
+> costume, and neither survives the *"does the call site say what it fetches"* test.
+> ⚑ **It is the SAME ruling as the per-info accessor above, one level down**, and it is why endpoint count is
+> the wrong axis: the surface is judged on whether a reader can trace it, so N understandable endpoints beat
+> one parameterized endpoint that hides N meanings. ⚠ Read together with the C++ side
+> (§ THE GETTER SETUP category 2), which is the exact OPPOSITE and correctly so: there the id IS a
+> compile-time constant, so `hasSkill(CLS_SKILL_BLITZ)` names the thing at the call site. Python has no such
+> constant, which is why the two planes diverge rather than one being wrong.
+> ⛔ The parameterized `CyInfo::hasSkill`/`hasTag` are not the consumer surface; a named endpoint is added
+> **on demand, for the call site that wants it** (the § THE IDENTITY SET rule), never pre-emptively across a
+> registry.
 >
 > **⚖ THE REASON IS TRACING, AND IT IS THE POINT THE OTHER TWO SERVE (owner): *"it infinitely helps tracing —
 > for me, other modders, and agents; when you read the python code today anyone is hard pressed to figure out

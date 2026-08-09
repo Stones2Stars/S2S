@@ -32,74 +32,6 @@
 
 ---
 
-## 1. HARD CRASH — attacking a unit dies in a boost::python to_python conversion
-
-**Repro:** reliable. Attack any unit with a combat unit; observed attacking a **Wombat** (an animal, so the
-kill-outcome path is in play) with Modern Infantry. The game dies.
-
-**PROVEN — the failure mode.** An unhandled C++ exception (`e06d7363`), from a boost::python conversion that
-has no registered `to_python` converter for the type being pushed. Symbolized stack:
-
-```
-KERNELBASE!RaiseException
-msvcr71!CxxThrowException
-boost_python!boost::python::throw_error_already_set+0x18
-boost_python!boost::python::converter::registration::to_python+0x62
-boost_python!boost::python::converter::detail::arg_to_python_base::arg_to_python_base+0x11
-```
-
-The last engine output before the throw is mission traffic on both units:
-
-```
-Modern Infantry startMission endish mission=0...
-Modern Infantry part 1 continueMission 0...
-Wombat clearMissionQueue...
-```
-
-⚑ This is the failure class [patterns.md](../../architecture/patterns.md) predicts by name: an engine→Python
-push of a type whose `class_<>` registration is absent — *"publishing the accessor without registering what it
-returns yields a def that resolves and then raises at conversion."*
-
-**RULED OUT — do not re-tread these.** Both were checked against the tree, with evidence:
-
-- **A missing `Cy*` wrapper trait.** `CvUnit` / `CvCity` do NOT use `DECLARE_PY_WRAPPER`; they use
-  `DECLARE_PY_IDENTITY`, crossing as an `(owner, id)` INT PAIR by design (CyCity carries zero defs, so a handed
-  handle could be asked nothing). That path needs no converter and cannot be the throw.
-- **`CvGameObject::createPythonWrapper`.** Every type it builds — `CyGame` / `CyTeam` / `CyPlayer` / `CyCity` /
-  `CyUnit` / `CyPlot` — has a live `class_<>` registration.
-
-**NOT YET KNOWN.** WHICH type, and WHICH push site. The minidump cannot answer it: a minidump's stack is
-truncated (`Stack unwind information not available`), so it shows the boost frames but not the frame in our DLL
-that initiated the conversion. `!analyze -v` is useless here — it needs OS symbols we deliberately do not fetch
-offline and derails into `WRONG_SYMBOLS`.
-
-**THE NEXT STEP, and it is one word.** Arm cdb for **`eh`**, not just `av`:
-
-```
-sxe -c "kp 60;.dump /ma <path>;qd" eh
-```
-
-`av` was armed and this is a C++ EH exception, so cdb fell through to its default break — which is what froze
-the game and why no dump was written. `eh` breaks at **FIRST CHANCE**, at the throw, with the live process
-intact and the full stack present, which names the push site and the type in one shot.
-⚠ Run it against a **Release** build with `-y` pointing at `Assets` + `Build/Release` + `Build/Assert`; our DLL
-frames resolve with line numbers, EXE frames stay unresolved and that is expected
-([external-tools-and-workflows.md](../../reference/external-tools-and-workflows.md)).
-
----
-
-## 2. A stale comment names two wrappers that do not exist
-
-`Sources/Infrastructure/CvDLLPython.cpp:154` states that `DECLARE_PY_WRAPPER` *"exists for exactly four types
-(CyCity / CyUnit / CySelectionGroup / CyPlot)"*. It exists for **two** — `CyPlot` and `CySelectionGroup`; the
-city and unit entries moved to `DECLARE_PY_IDENTITY`.
-
-⚑ Recorded because it is not cosmetic: it is what sent the crash investigation above down its first wrong path.
-A comment naming a mechanism that is no longer there is exactly the bait
-[DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence) describes.
-
----
-
 ## 3. `MoreCiv4lerts` dies on a cut binding
 
 `PythonErr.log`, every active-player turn:
@@ -572,7 +504,9 @@ allows: the replacement MACHINE (the verb set) does not exist yet, and it is NAM
   `on*Active` hooks are equally unreached. `operatingBuildings()` is a bare fetch by ruling, so nothing rescues
   it: the set is empty for every city, so every building reads DORMANT, `wireOperatingBuildings` fills the eval
   ctx with empty active/provided sets, `cityHasVicinityBonus` answers false, and the trigger plane grants
-  nothing. ⚑ Diff `/computed/enabler/operating/{stored,oracle}` to confirm — that pair exists for exactly this.
+  nothing. ⚑ Confirm by fetching `/computed/enabler/operating` — an every-city-empty `active` set IS the symptom,
+  read directly. ⛔ Not by diffing an `oracle` twin: that pair is dead
+  ([superseded-ideas #33](../../architecture/superseded-ideas.md)).
 - **⛔ Stop reading a NEGATIVE band bound as "no bound" — this is the landmine directly behind the item above.**
   `CvJsonConditionParse` defaults an unauthored `min`/`max` to **-1**, and the PROPERTY band atom in
   `CvConditionEval` then treats *any* negative as absent (`a->min < 0 || …`). Its own comment four lines up says a
@@ -1002,6 +936,11 @@ allows: the replacement MACHINE (the verb set) does not exist yet, and it is NAM
   throw, so the throw is inside the engine's own `canAcquirePromotion` or somewhere after it. Symbolize the dump
   before theorising ([external-tools-and-workflows.md](../../reference/external-tools-and-workflows.md) carries
   the cdb recipe; use the **x86** debugger — the game is 32-bit).
+  ⚠ **RE-TEST BEFORE INVESTIGATING.** `CombatDetails` was being pushed to the `combatLogCalc` / `combatLogHit`
+  events with no `class_<>` registration, which threw this same code out of boost::python's to_python on every
+  fight involving a human — the player attacking, and the AI attacking the player during its end-turn. That
+  converter is now registered. Whether any end-turn throw SURVIVES it is unestablished; the breadcrumb above is
+  consistent with either, so do not assume this entry is separate until a fight-free end turn still crashes.
 
 ## ⛔ THE ENGINE→PYTHON CALLBACK PAYLOAD IS HANDING OVER TUPLES WHERE HANDLERS EXPECT OBJECTS
 

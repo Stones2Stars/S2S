@@ -689,6 +689,24 @@ protected:
 	mutable int m_iUpgradeUnitsCachedExpThreshold;
 	mutable int m_iUpgradeUnitsCachedGold;
 
+	// The AI-HEURISTIC memo for the no-arg AI_isFinancialTrouble verdict (the sanctioned residual --
+	// [superseded-ideas] #1; NOT cascade derived state, so the no-staleness rules do not govern it).
+	//
+	// ⛔ WHY IT EXISTS, because the number is the argument: the verdict reaches CvPlayer::getCommerces, which
+	// re-sums EVERY city's realized §2a combine ([state-repositories.md] § A CROSS-SCOPE receiver total -- the
+	// receiver Σ is owner-ruled correct and is NOT to be reshaped). It was being asked once per BUILDING
+	// CANDIDATE inside AI_getBuildingCommerceValue, i.e. ~5k candidates x 185 cities, each walking 185 cities.
+	// A late-game turn spun ~99% of one core for 45+ minutes and emitted NOTHING, which is why no log named it.
+	// ⇒ [state-repositories.md] names this exact case and its answer: "an AI loop asking a receiver Σ per
+	// candidate is answered by the CALLER caching its own scores, never by reshaping the machine."
+	//
+	// ⚠ Keyed on (turn, gold) rather than turn alone: gold is what actually moves the verdict INSIDE a turn, so
+	// a scoring pass -- during which neither moves -- collapses to one derivation, while a real change still
+	// re-derives. ⛔ It is NOT serialized and is cleared in AI_reset: a recycled player must not inherit one.
+	mutable int m_iFinancialTroubleCacheTurn;
+	mutable int64_t m_iFinancialTroubleCacheGold;
+	mutable bool m_bFinancialTroubleCachedValue;
+
 	int *m_aiNumTrainAIUnits;
 	int *m_aiNumAIUnits;
 	int *m_aiEffNumAIUnitsTimes100; // transient (#395)

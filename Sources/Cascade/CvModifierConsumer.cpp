@@ -35,6 +35,32 @@
 #include "Engine/CvGameCoreUtils.h"     // plotDirection -- the one-hop adjacency fan of the two adjacency verdicts
 #include "Engine/CvPlot.h"
 #include "Engine/CvCity.h"
+
+namespace
+{
+	//	⚖ APPLY A PLOT SEGMENT, AND FOLD THE RESOLVED DELTA INTO THE PLOT'S WORKING CITY.
+	//	This is the RESOLVE leg of the city's worked-plot Σ ([CvCascadePackage] plotBaseFlat): the city's
+	//	`basePlotYield` is a maintained slot rather than a per-read ring walk, and the only exact delta available
+	//	is the one the resolve itself moved -- the §2a floors make the slot non-linear in a DEPOSIT delta.
+	//	⛔ Every plot-segment apply goes through here. A direct applyPlotSegment call would move the plot and
+	//	leave the city's Σ short, permanently and silently ([DEC-no-self-heal]).
+	//	⚠ WORKED, not owned: only a worked plot is in the city's base, so an unworked plot moves its own slot and
+	//	folds nothing. Its value joins when the worked fact arrives (the MEMBERSHIP leg, applyWorkedPlot).
+	void foldPlotSegment(const CvPlot& kPlot, CvCascadePackage<CvPlot>::PlotSegment eSegment,
+	                     int iChannel, int64_t iValue)
+	{
+		const int64_t iResolvedDelta = kPlot.getCascadePackage().applyPlotSegment(eSegment, iChannel, iValue);
+		if (iResolvedDelta == 0 || !kPlot.isBeingWorked())
+		{
+			return;
+		}
+		const CvCity* pWorkingCity = kPlot.getWorkingCity();
+		if (pWorkingCity != NULL)
+		{
+			pWorkingCity->getCascadePackage().applyPlotBaseFlat(iChannel, iResolvedDelta);
+		}
+	}
+}
 #include "Engine/CvUnit.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
@@ -570,7 +596,7 @@ namespace
 				// the ORIGIN RULE: plot is yield-only, so a plot-landing percent has no side to land on
 				if (!bPercentSide)
 				{
-					pLoopPlot->getCascadePackage().applyPlotSegment(
+					foldPlotSegment(*pLoopPlot, 
 						CvCascadePackage<CvPlot>::PLOTSEG_REST, iChannel, iValue);
 					CascadeChannelRegistry::reportDepositApply("<plotsFan>", iChannel, CASC_SCOPE_PLOT,
 						false, iValue, (int)city.getOwner(), city.getID(), "plotsFan");
@@ -771,7 +797,7 @@ namespace
 				// the ORIGIN RULE: plot is yield-only, so a plot-scope percent has no side to land on
 				if (!bPercentSide)
 				{
-					pPlot->getCascadePackage().applyPlotSegment(ePlotSegment, iChannel, iValue);
+					foldPlotSegment(*pPlot, ePlotSegment, iChannel, iValue);
 					// THE BOOK, on the plot plane -- the same record mc_applyCityDeposits keeps, and it has to be
 					// kept HERE or the book is not a faithful account of the slot. mc_bookGatedPlot moves only the
 					// DIFFERENCE between what is booked and what the gate now owes, so an entry plane A applied
@@ -1121,7 +1147,7 @@ namespace
 				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, pPlot, false,
 					iChannel, bPercentSide, iValue, ePerScaling) && !bPercentSide)
 				{
-					pPlot->getCascadePackage().applyPlotSegment(
+					foldPlotSegment(*pPlot, 
 						CvCascadePackage<CvPlot>::PLOTSEG_REST, iChannel, iValue);
 				}
 				continue;
@@ -1444,10 +1470,10 @@ namespace
 			}
 			if (kBooked.iValue != 0 && kBooked.iChannel != iChannel)
 			{
-				kPlot.getCascadePackage().applyPlotSegment(kSegments[iGated], kBooked.iChannel, -kBooked.iValue);
+				foldPlotSegment(kPlot, kSegments[iGated], kBooked.iChannel, -kBooked.iValue);
 				if (iValue != 0)
 				{
-					kPlot.getCascadePackage().applyPlotSegment(kSegments[iGated], iChannel, iValue);
+					foldPlotSegment(kPlot, kSegments[iGated], iChannel, iValue);
 				}
 			}
 			else
@@ -1456,7 +1482,7 @@ namespace
 				const int iSlot = (iChannel >= 0) ? iChannel : kBooked.iChannel;
 				if (iDelta != 0 && iSlot >= 0)
 				{
-					kPlot.getCascadePackage().applyPlotSegment(kSegments[iGated], iSlot, iDelta);
+					foldPlotSegment(kPlot, kSegments[iGated], iSlot, iDelta);
 				}
 			}
 			kPlot.getCascadePackage().setBookedDeposit(kGated.deposit->entry, iChannel, false, iValue);
@@ -2201,11 +2227,33 @@ namespace
 				mc_applyPlotPredicate((CvCascPredKind)kEvent.iType, iCrossing, mc_plot(kEvent.iSrcLoc));
 				break;
 			}
-			// ⛔ NO case for the WORKING-CITY or WORKED facts. IS_WORKED is a plot VERDICT, so its deposits
-			// re-resolve through the predicate fact above like every other bit -- routing it here as well would
-			// apply the same crossing twice. What each fact additionally moves is a city RECEIVER SUM, which is
-			// the receiver's own route and not a mask to mark here ([state-repositories.md] § THE CROSS-SCOPE
-			// RECEIVER); the stubs that computed one and dropped it were left over from the retired protocol.
+			// ⛔ STILL NO case for the WORKING-CITY fact, and IS_WORKED's DEPOSITS are not routed here either:
+			// IS_WORKED is a plot VERDICT, so the deposits it gates re-resolve through the predicate fact above
+			// like every other bit, and routing them here as well would apply the same crossing twice.
+			// ⚖ BUT THE WORKED FACT DOES MOVE ONE THING HERE NOW -- the city's worked-plot Σ. That Σ used to be
+			// re-summed at the combine (cityReceiverRate walking getCityIndexPlot over the whole ring), which is
+			// the per-read walk [state-repositories.md] bans and which hung a late-game turn inside the citizen
+			// assignment. It is a MAINTAINED SLOT (CvCascadePackage::plotBaseFlat), and this is its MEMBERSHIP
+			// leg; the RESOLVE leg is foldPlotSegment above. ⚠ The two together are total -- drop either and the
+			// slot goes permanently short, with nothing to re-derive it ([DEC-no-self-heal]).
+			case SEVT_PLOT_WORKED_ADDED:
+			case SEVT_PLOT_WORKED_REMOVED:
+			{
+				// The fact NAMES its city (iB) and owner (iC), so the fold never depends on getWorkingCity()
+				// still answering -- which on the REMOVE end it may not.
+				const CvPlot* pWorkedPlot = mc_plot(kEvent.iSrcLoc);
+				if (pWorkedPlot != NULL && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+				{
+					const CvCity* pCity = GET_PLAYER((PlayerTypes)kEvent.iC).getCity(kEvent.iB);
+					if (pCity != NULL)
+					{
+						pCity->getCascadePackage().applyWorkedPlot(
+							pWorkedPlot->getCascadePackage(),
+							(kEvent.iEventId == SEVT_PLOT_WORKED_ADDED) ? +1 : -1);
+					}
+				}
+				break;
+			}
 			case SEVT_CITY_ORDER_ADDED:     // the queue HEAD is the active process (the production->commerce conversion)
 			case SEVT_CITY_ORDER_REMOVED:
 			{

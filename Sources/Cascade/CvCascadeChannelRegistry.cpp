@@ -51,9 +51,19 @@ namespace
 	struct CascadeScopeLayout
 	{
 		std::vector<int> channels;              // channel id per local slot
-		std::map<int, int> channelSlots;        // channel id -> local slot
+		std::map<int, int> channelSlots;        // channel id -> local slot (BUILD-time; never a read path)
 		std::vector<int> receiverChannels;      // channel id per receiver slot
-		std::map<int, int> receiverSlots;       // channel id -> receiver slot
+		std::map<int, int> receiverSlots;       // channel id -> receiver slot (BUILD-time; never a read path)
+
+		// ⛔ THE READ PATH -- DENSE channel id -> slot, -1 absent. A package read must be a BARE FETCH
+		// ([state-repositories.md]: "ONE read surface, and it is a bare fetch"), and the maps above are a
+		// red-black tree WALK per lookup. They were on every readFlat/readPercent/readSum AND every apply --
+		// the hottest reads in the engine -- which is a per-call calculation on a path specified to have none.
+		// ⚑ Dense is exact here because channel ids are minted CONSECUTIVELY from 0, and it does NOT reopen
+		// KEYS ONLY WHERE NEEDED: that ruling governs per-object STORAGE (the packages stay sparse), while this
+		// is one shared per-SCOPE index -- 5 scopes x the channel count, not per city/plot.
+		std::vector<int> slotByChannel;
+		std::vector<int> receiverByChannel;
 	};
 	CascadeScopeLayout s_layouts[CASCADE_PACKAGE_SCOPES];
 
@@ -101,6 +111,13 @@ namespace
 		const int iSlot = (int)layout.channels.size();
 		layout.channels.push_back(iChannel);
 		layout.channelSlots.insert(std::make_pair(iChannel, iSlot));
+
+		// Keep the dense read index in step at BUILD time, so the read never has to.
+		if ((int)layout.slotByChannel.size() <= iChannel)
+		{
+			layout.slotByChannel.resize(iChannel + 1, -1);
+		}
+		layout.slotByChannel[iChannel] = iSlot;
 	}
 
 	// The spec'd receiver table (state-repositories.md: one consuming scope per channel -- food/production ->
@@ -119,8 +136,16 @@ namespace
 		for (int iIndex = 0; iIndex < iCount; ++iIndex)
 		{
 			const int iChannel = cr_mint(aFamilies[iIndex], (int)CHANNEL_AMOUNT, -1, false);
-			kLayout.receiverSlots.insert(std::make_pair(iChannel, (int)kLayout.receiverChannels.size()));
+			const int iReceiverSlot = (int)kLayout.receiverChannels.size();
+			kLayout.receiverSlots.insert(std::make_pair(iChannel, iReceiverSlot));
 			kLayout.receiverChannels.push_back(iChannel);
+
+			// The dense read index, kept in step at BUILD time (see slotByChannel).
+			if ((int)kLayout.receiverByChannel.size() <= iChannel)
+			{
+				kLayout.receiverByChannel.resize(iChannel + 1, -1);
+			}
+			kLayout.receiverByChannel[iChannel] = iReceiverSlot;
 		}
 	}
 
@@ -347,8 +372,11 @@ int CascadeChannelRegistry::scopeSlotIndex(CvCascScope eScope, int iChannel)
 		return -1;
 	}
 	const CascadeScopeLayout& layout = s_layouts[(int)eScope];
-	const std::map<int, int>::const_iterator found = layout.channelSlots.find(iChannel);
-	return found == layout.channelSlots.end() ? -1 : found->second;
+	if (iChannel < 0 || iChannel >= (int)layout.slotByChannel.size())
+	{
+		return -1;
+	}
+	return layout.slotByChannel[iChannel];
 }
 
 int CascadeChannelRegistry::scopeSlotChannel(CvCascScope eScope, int iSlotIndex)
@@ -414,8 +442,11 @@ int CascadeChannelRegistry::scopeReceiverIndex(CvCascScope eScope, int iChannel)
 	}
 	cr_initReceivers();
 	const CascadeScopeLayout& layout = s_layouts[(int)eScope];
-	const std::map<int, int>::const_iterator found = layout.receiverSlots.find(iChannel);
-	return found == layout.receiverSlots.end() ? -1 : found->second;
+	if (iChannel < 0 || iChannel >= (int)layout.receiverByChannel.size())
+	{
+		return -1;
+	}
+	return layout.receiverByChannel[iChannel];
 }
 
 int CascadeChannelRegistry::scopeReceiverChannel(CvCascScope eScope, int iReceiverIndex)

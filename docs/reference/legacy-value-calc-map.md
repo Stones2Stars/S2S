@@ -591,5 +591,5 @@ inventory (§8) round it out.
 - [enabler](../specs/enabler.md) / [modifier](../specs/modifier.md) — the cascade design these accumulators replace;
   this map is the legacy side those summed accumulators are shadowed against.
 - [observability surface](observability.md) — what is actually readable today (the spine log, `/events`, and the
-  six cache documents), now that the diagnostic dump routes are gone.
+  four `/computed` censuses), now that the diagnostic dump routes are gone.
 - [docs map](../README.md) — the index that orients this reference.

@@ -240,3 +240,47 @@ in-memory carve-outs (steps 4–6) don't break saves, so their timing is driven 
 
 Nothing is migrated until profiling shows it matters and is recompute-bound (not work better
 *removed* than cached). Each step ships on a working game.
+
+---
+
+## The AI VALUATION plane — one memo shape, fact-invalidated (⛔ OUT OF SCOPE for #430)
+
+> **⚖ THE DIRECTION (owner): *"without extending AI valuation to some sort of cascade-alike structure,
+> we won't be able to avoid walks — that is the nature of the beast."* And its bound, same breath:
+> *"is that something that can be done? certainly to some degree, but it's not in scope."*** So this is
+> forward intent ([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas)),
+> recorded so it is not re-derived — ⛔ never a licence to start it inside #430.
+
+**⛔ FIRST, WHAT IS *NOT* THE PROBLEM — SIMPLE AI VALUATION CACHING IS ALLOWED (owner): *"we can cache AI
+valuation, in the simple way it used to be done — that is not banned."*** The per-site AI memos (the
+`AI_yieldValue` LRU, plot danger, the attitude cache, the strategy-hash turn stamp, the
+`AI_isFinancialTrouble` `(turn, gold)` memo) are the SANCTIONED heuristic residual
+([superseded-ideas #1](../../architecture/superseded-ideas.md)), not debt.
+⛔ **Do NOT cite [DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape) at them** —
+that ruling governs the CASCADE plane, where a slot is a Σ addressed by a compiled deposit address. An AI score
+is not, so "one uniform slot table" has nothing to bite on and the hand-named-scalar argument does not carry
+across. ⚠ This mislabelling was made once, in the session that wrote this note; it is recorded so the next
+reader does not repeat it and "clean up" caching the AI is entitled to.
+
+**⚖ WHAT THE CASCADE IS ACTUALLY FOR, HERE (owner): *"we use cascade to ensure AI does not loop ALL THE THINGS
+ALL THE TIME, which will make life better."*** That is the relationship, and it runs one way: the cascade does
+not become the AI's cache — it removes the AI's REASON to walk. The enabler hands it a small maintained
+candidate set instead of the entity database ([enabler.md §6](../../specs/enabler.md)), and the packages hand it
+O(1) inputs instead of re-derivations. The AI then caches its own scores however simply it likes, on top.
+⇒ **So the lever is making the cascade's reads genuinely cheap, never making the AI plane cascade-shaped.**
+
+
+**⚑ AND IT REFRAMES WHICH WALKS ARE ACTUALLY IRREDUCIBLE — three kinds, and only one is the beast:**
+
+1. **Walks over INPUTS** (`getYields`, `AI_isFinancialTrouble`, `getCommerces`). ⛔ NOT irreducible and not
+   the AI's problem: these are reads specified as O(1) that were computing. Fixing them is the CASCADE's job
+   ([state-repositories.md](../../architecture/state-repositories.md)) — three were found and fixed in one
+   session, all by attaching a debugger to a spinning process.
+2. **The FRONTIER walk** (candidates × cities) — intended and bounded by design
+   ([enabler.md §6](../../specs/enabler.md): the AI iterates a small maintained set, never the database).
+3. **The CONDITIONED tail** — genuinely irreducible, because the answer depends on the asking city.
+
+⇒ **Category 1 is what produced every hang so far, wearing category 3's clothes.** So the highest-value
+work is not this structure — it is the AUDIT of which "reads" still compute
+([DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf)). The
+structure is what stops category 1 recurring as fresh ad-hoc memos afterwards.

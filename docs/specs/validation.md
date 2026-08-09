@@ -61,14 +61,15 @@ hot read path are poisoned and prove nothing
 Live verification reads the HTTP surface ([http-endpoints.md](http-endpoints.md)) plus the spine-written logs
 ([observability.md](../reference/observability.md)).
 
-⚠ **The route surface is not built.** The route table was purged and is defined with the access surface (⛔ the
-[roadmap's OPEN ITEM](../plans/structural-cleanup/roadmap.md#-the-open-item--the-access-surface)), so what a
-manifestation poll can read today is the SPINE-WRITTEN LOGS. ⛔ The six stored-vs-oracle cache documents are
-DEAD and must not be run as evidence — the oracle cannot rebuild the event chain an endpoint has no way to
-replay, so it answers a number that was never comparable ([http-endpoints.md](http-endpoints.md),
-[superseded-ideas #33](../architecture/superseded-ideas.md)). Everything else a check wants must be EMITTED
-first; emitting it is step one of that item's fix, and a value not on the surface is not verifiable — never
-eyeballed off the screen as a substitute.
+⚠ **The route surface is barely built.** The route table was purged and is defined with the access surface (⛔ the
+[roadmap's OPEN ITEM](../plans/structural-cleanup/roadmap.md#-the-open-item--the-access-surface)), so a
+manifestation poll reads the SPINE-WRITTEN LOGS plus the four stored-side DECOMPOSITION censuses that survive
+(`/computed/cascade/packages`, `/computed/enabler/operating`, `/computed/city/yield`, `/computed/capabilities` —
+[http-endpoints.md](http-endpoints.md)). ⛔ Their `oracle` twins are DEAD and must not be run as evidence nor
+rebuilt — an endpoint cannot replay the event chain, so a recompute served beside the stored value answers a
+number that was never comparable ([superseded-ideas #33](../architecture/superseded-ideas.md)). Everything else a
+check wants must be EMITTED first; emitting it is step one of that item's fix, and a value not on the surface is
+not verifiable — never eyeballed off the screen as a substitute.
 
 ⛔ **Verification pressure is NOT a licence to restore a route.** An endpoint is a LIVE CONSUMER: a legacy member
 whose only remaining reader is a route survives the delete-driven cut invisibly, because the compiler census

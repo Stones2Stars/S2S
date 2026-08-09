@@ -13,6 +13,9 @@ from CvPythonExtensions import *
 import BugData
 import cPickle
 
+STATE = CyState()
+ACT = CyAct()
+
 #-=-=-=-=-=-=-=-= SD-DATA-STORAGE =-=-=-=-=-=-=-=-=-#
 # Every variable is a string, except for the actual
 # value you want to store, which can be anything.
@@ -113,15 +116,35 @@ def sdDelGlobal(ModID, var):
 #--------------- INTERNAL USE ONLY -----------------#
 
 # Loads previously initialized data from the central reservoir. If no data is found, init it.
+# An "object" here is either a Cy handle that still answers getScriptData/setScriptData, or a UNIT addressed as
+# the (owner, id) IDENTITY TUPLE the engine now hands to event handlers. A handler is given the tuple and has no
+# handle to call, so the two I/O primitives below accept both and every sdObject* entry point works unchanged.
+def sdIsUnitId(object):
+	return isinstance(object, tuple) and len(object) == 2
+
 def sdLoad(object):
 
 	cyTable = {}
 	if object:
-		temp = object.getScriptData()
+		if sdIsUnitId(object):
+			temp = STATE.getUnitScriptData(object[0], object[1])
+		else:
+			temp = object.getScriptData()
 		if temp:
 			cyTable = cPickle.loads(temp)
 
 	return cyTable
+
+# The ONE write path, so the six inline setScriptData calls this replaced cannot drift apart on the unit case.
+def sdStore(object, cyTable):
+
+	if not object:
+		return
+	szData = cPickle.dumps(cyTable)
+	if sdIsUnitId(object):
+		ACT.setUnitScriptData(object[0], object[1], szData)
+	else:
+		object.setScriptData(szData)
 
 # Loads previously initialized data from the central reservoir. If no data is found, init it.
 def sdObjectGetDict(ModID, object):
@@ -134,7 +157,7 @@ def sdObjectGetDict(ModID, object):
 def sdObjectSetDict(ModID, object, VarDictionary):
 	cyTable = sdLoad(object)
 	cyTable[ModID] = VarDictionary
-	object.setScriptData(cPickle.dumps(cyTable))
+	sdStore(object, cyTable)
 
 
 #----------------- OBJECT FUNCTIONS -------------------#
@@ -150,7 +173,7 @@ def sdObjectInit(ModID, object, VarDictionary):
 		cyTable = sdLoad(object)
 		if ModID not in cyTable:
 			cyTable[ModID] = VarDictionary
-			object.setScriptData(cPickle.dumps(cyTable))
+			sdStore(object, cyTable)
 			return 1
 
 
@@ -164,7 +187,7 @@ def sdObjectWipe(ModID, object):
 	cyTable = sdLoad(object)
 	if ModID in cyTable:
 		del cyTable[ModID]
-		object.setScriptData(cPickle.dumps(cyTable))
+		sdStore(object, cyTable)
 		return True
 	return False
 
@@ -207,7 +230,7 @@ def sdObjectSetVal(ModID, object, var, val):
 	cyTable = sdLoad(object)
 	if ModID in cyTable:
 		cyTable[ModID][var] = val
-		object.setScriptData(cPickle.dumps(cyTable))
+		sdStore(object, cyTable)
 		return True
 	return False
 
@@ -229,7 +252,7 @@ def sdObjectChangeVal(ModID, object, var, delta):
 		prevVal = sdObjectGetVal(ModID, object, var)
 		if not prevVal == None and var in mTable:
 			mTable[var] = prevVal + delta
-			object.setScriptData(cPickle.dumps(cyTable))
+			sdStore(object, cyTable)
 			return True
 	return False
 
@@ -250,6 +273,6 @@ def sdObjectUpdateVal(ModID, object, var, val):
 		mTable = cyTable[ModID]
 		if var in mTable:
 			mTable[var] = val
-			object.setScriptData(cPickle.dumps(cyTable))
+			sdStore(object, cyTable)
 			return True
 	return False

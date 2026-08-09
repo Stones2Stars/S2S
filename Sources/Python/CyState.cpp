@@ -363,6 +363,27 @@ python::list CyState::getCommerceRateRanks(int iPlayer, int iCity) const
 
 // ---- CITY plain FACTS ----
 
+python::list CyState::getUnitPosition(int iPlayer, int iUnit) const
+{
+	int values[2] = { -1, -1 };   // -1,-1 = no such unit, or the unit is OFF-MAP (a real state)
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	if (pUnit)
+	{
+		//	⛔ THE ON-MAP TEST IS THE COORDINATE RANGE, never `plot() != NULL` alone: plot() answers NULL for
+		//	exactly ONE pair (INVALID_PLOT_COORD) and resolves any OTHER out-of-range value to a WRONG plot
+		//	([unit-lifecycle.md]). A unit carrying a stored -1 would otherwise hand back a real but wrong tile,
+		//	which is worse than answering "off map" -- and saves do contain such units.
+		const int iX = pUnit->getX();
+		const int iY = pUnit->getY();
+		if (iX >= 0 && iY >= 0 && iX < GC.getMap().getGridWidth() && iY < GC.getMap().getGridHeight())
+		{
+			values[0] = iX;
+			values[1] = iY;
+		}
+	}
+	return cys_toList(values);
+}
+
 python::list CyState::getCityPosition(int iPlayer, int iCity) const
 {
 	int values[2] = { -1, -1 };   // -1,-1 = no such city; a real plot coordinate is never negative
@@ -1297,6 +1318,7 @@ void CyState::pythonPublish()
 		.def("getBaseYieldRateRanks",    &CyState::getBaseYieldRateRanks)
 		.def("getCommerceRateRanks",     &CyState::getCommerceRateRanks)
 		.def("getCityPosition",          &CyState::getCityPosition)
+		.def("getUnitPosition",          &CyState::getUnitPosition)
 		.def("getCityPopulation",        &CyState::getCityPopulation)
 		.def("getCityRealPopulation",    &CyState::getCityRealPopulation)
 		.def("getGreatPeopleRate",       &CyState::getGreatPeopleRate)

@@ -226,7 +226,16 @@ derivable** — *"having events just be stored in the cache is lunacy"* (a recom
 in their own serialized field (`CvCity::m_aBuildingCommerceChangeEvents`), outside the recompute path; the reader
 sums `player-recompute (empire) + city event/vote (persisted)`.
 
-## ⛔ THE RECOMPUTE IS AN ENDPOINT ORACLE — NOT THE READ PATH, AND NEVER AN IN-DLL DIFF (owner)
+## ⛔ THE READ IS A BARE FETCH — AND THE ENDPOINT ORACLE THAT ONCE STOOD BESIDE IT IS DEAD (owner)
+
+> ⛔ **The stored-vs-oracle endpoint pair is RETIRED** ([superseded-ideas #33](superseded-ideas.md)) — an endpoint
+> cannot rebuild the event chain, so its recompute side was never comparable. **What replaces it is the THREE-LEG
+> check: the LOGS (what landed), the JSON INFO (what the source is authored to deposit), and WHAT STATE EXPECTS
+> (who holds it, which gates hold, what the counts are) — all three agreeing, attributed to a named source with
+> numbers** ([http-endpoints.md](../specs/http-endpoints.md)). Two legs is not a check.
+> ⚑ What survives here unchanged is the ruling below about where a divergence may NOT live: it has no in-DLL
+> representation at all. That rule is what keeps any future verification shape from growing a self-healer, so it
+> is stated in full rather than retired with the mechanism it once governed.
 
 **"The ensures were some of the earliest rollerskates."** Read-side `ensure()` is tombstoned by name
 ([superseded-ideas](superseded-ideas.md) #14: *"never re-add … an `ensure`-on-read protocol"*) and measured:
@@ -549,14 +558,15 @@ oracle diff, on one plane. The easier failure to find is the one to keep.
   it: a package has no second, rebuild-triggering read to reach for, so a cross-scope input needs no ordering
   guarantee and the load bracket has nothing to drain. **THERE IS NO GATE ON A READ** — nothing is tested on it,
   because nothing on it can recompute.
-- **The two served surfaces, per plane** (`/computed/*`, [http-endpoints.md](../specs/http-endpoints.md)):
-  `.../stored` serves what the events built (`CvCascadePackage::readValuesInto`,
-  `EnablerKernel::operatingBuildings`, `CascadeCapabilities::storedUnion`) and `.../oracle` serves the
-  from-source recompute into a buffer the endpoint owns (`CascadeGather::gather*Into`,
-  `EnablerKernel::recomputeOperatingSetInto`, `CascadeCapabilities::refreshInto`). Both sides render through
-  ONE renderer per plane (`Sources/Tools/CvOracleEndpoints.cpp`), so the documents are diffable field by field.
-- **Where the oracle lives is decided by where the STORAGE lives** — the storage owner supplies the scratch (the
-  gather's `gather*Into` for the cascade packages), and the oracle is never handed the stored slots.
+- **The served surfaces are STORED-side only** (`/computed/*`, [http-endpoints.md](../specs/http-endpoints.md)):
+  each serves what the events built, DECOMPOSED term by term (`CvCascadePackage::readValuesInto`,
+  `EnablerKernel::operatingBuildings`, `CascadeCapabilities::storedUnion`, and the yield census), rendered in
+  `Sources/Tools/CvStateEndpoints.cpp`, never in the server file.
+- ⛔ **THE `oracle` TWIN IS DEAD AND DOES NOT COME BACK** ([superseded-ideas #33](superseded-ideas.md)): an
+  endpoint cannot replay the event chain, so a from-source recompute served beside the stored value is not a
+  second derivation of the same quantity — it answers a number that was never comparable, and diffing it
+  produces confident nonsense at scale. The paragraphs that follow describe what that twin WOULD have had to
+  be, and are kept only because their rulings bind any future verification shape:
 - **An oracle run is a FULL RECALC, by design (owner) — it reads NOTHING off the stored surface.** Every input,
   including every cross-scope one, is recomputed from source. ⛔ The tempting alternative — recompute only the
   asked-about object and read its cross-scope inputs off the stored packages — is **WRONG, and wrong in the

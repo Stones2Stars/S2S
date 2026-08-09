@@ -101,6 +101,22 @@ struct CvCascadePackage
 	// package, never a per-call walk). Sized at PLOT scope only; empty everywhere else, exactly as a channel
 	// no scope authors carries no storage.
 	mutable std::vector<int64_t> substrateFlat;
+	// ⚖ THE CITY'S WORKED-PLOT Σ -- `basePlotYield`, modifier.md §2a TIER-1, held as a MAINTAINED SLOT.
+	// Sized at CITY scope only, exactly as the segments above are sized at PLOT scope only.
+	//
+	// ⛔ WHY IT EXISTS: `InfoValuation::cityReceiverRate` used to SUM THE RING ON EVERY CALL
+	// (`getCityIndexPlot` x NUM_CITY_PLOTS), and CvCity::getYields is specified as a bare fetch. That is the
+	// per-read walk [state-repositories.md] names with this exact caller -- "re-summing the radius on every
+	// getPlotYield call turns the game's hottest read O(radius) ... measured at 913M plot reads in one turn
+	// inside the governor's valuation". The governor's valuation is AI_assignWorkingPlots, and it hung a
+	// late-game turn on a saturated core.
+	// ⚑ IT IS DELTA-ABLE EVEN THOUGH A PLOT'S RESOLVED FLAT IS NOT. The floors break linearity over a DEPOSIT
+	// delta (the note above), so this is NOT maintained from deposits -- it is maintained from the RESOLVE
+	// delta: resolvePlotFlat knows the slot's old and new value, and (new - old) is exact whatever the floors
+	// did. Two facts move it, and together they are total: a worked plot's resolved flat changing, and a plot
+	// entering or leaving the WORKED set (± that plot's whole resolved value).
+	// ⚠ WORKED, not owned: only worked plots contribute to the city's base ([modifier.md] §2a).
+	mutable std::vector<int64_t> plotBaseFlat;
 	// ⛔ THE OTHER TWO PLOT SEGMENTS -- and they exist because THE PLOT YIELD COMBINE IS NOT LINEAR.
 	// modifier.md §2a floors it in three places: nature = max(0, terrain+feature+bonus), the improvement
 	// floored at −nature, the total floored at 0. A floor does not distribute over a delta
@@ -191,6 +207,72 @@ struct CvCascadePackage
 	// existing anywhere.
 	// ⚠ The segment STORES the raw sum (that is what makes it delta-able), so the §2a `max(0, ·)` nature floor
 	// is applied here. One comparison, no walk -- the read is still O(1) and touches nothing but this slot.
+	// The CITY's worked-plot Σ for one channel -- a BARE FETCH, which is the whole point of it.
+	int64_t readPlotBaseFlat(int iChannel) const
+	{
+		if (scope != CASC_SCOPE_CITY)
+		{
+			return 0;
+		}
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0 || iSlot >= (int)plotBaseFlat.size())
+		{
+			return 0;
+		}
+		return plotBaseFlat[iSlot];
+	}
+
+	// Move the city's worked-plot Σ by an EXACT delta the caller computed (a resolve delta, or ± a whole plot
+	// as it joins or leaves the worked set). ⛔ Never a recount -- the caller always knows both ends.
+	void applyPlotBaseFlat(int iChannel, int64_t iDelta) const
+	{
+		if (scope != CASC_SCOPE_CITY || iDelta == 0)
+		{
+			return;
+		}
+		ensureSized();
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0)
+		{
+			return;
+		}
+		if (iSlot >= (int)plotBaseFlat.size())
+		{
+			plotBaseFlat.resize(iSlot + 1, 0);
+		}
+		plotBaseFlat[iSlot] += iDelta;
+	}
+
+	// THE MEMBERSHIP LEG of the worked-plot Σ: fold a plot's WHOLE resolved flat vector into this CITY package,
+	// +1 as it enters the worked set and -1 as it leaves. The resolve leg (applyPlotSegment's return) carries a
+	// worked plot's ONGOING changes; together the two are total, which is what makes the slot exact.
+	// ⚠ It reads the plot's RESOLVED slots, so it must run while the membership fact still describes reality --
+	// on the ADD after the plot is worked, on the REMOVE before its value is touched.
+	//	⚠ A MEMBER TEMPLATE because the two packages are different instantiations -- the city's is
+	//	CvCascadePackage<CvCity> and the plot's CvCascadePackage<CvPlot>, so a TOwner-typed parameter cannot
+	//	name it.
+	template <class TPlotOwner>
+	void applyWorkedPlot(const CvCascadePackage<TPlotOwner>& kPlotPackage, int iSign) const
+	{
+		if (scope != CASC_SCOPE_CITY || iSign == 0)
+		{
+			return;
+		}
+		for (int iSlot = 0; iSlot < (int)kPlotPackage.flat.size(); ++iSlot)
+		{
+			const int64_t iValue = kPlotPackage.flat[iSlot];
+			if (iValue == 0)
+			{
+				continue;
+			}
+			const int iChannel = CascadeChannelRegistry::scopeSlotChannel(CASC_SCOPE_PLOT, iSlot);
+			if (iChannel >= 0)
+			{
+				applyPlotBaseFlat(iChannel, iSign > 0 ? iValue : -iValue);
+			}
+		}
+	}
+
 	int64_t readSubstrateFlat(int iChannel) const
 	{
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
@@ -328,23 +410,23 @@ struct CvCascadePackage
 	// NOT a recompute: it reads three stored numbers and applies the §2a floors, so it is O(1) arithmetic and
 	// touches no source, no info and no game object. Doing it HERE rather than at the read is what keeps every
 	// consumer read a bare fetch.
-	void applyPlotSegment(PlotSegment eSegment, int iChannel, int64_t iDelta) const
+	int64_t applyPlotSegment(PlotSegment eSegment, int iChannel, int64_t iDelta) const
 	{
 		ensureSized();
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
 		if (iSlot < 0 || iDelta == 0)
 		{
-			return;
+			return 0;
 		}
 		std::vector<int64_t>& segment = (eSegment == PLOTSEG_NATURE) ? substrateFlat
 		                              : (eSegment == PLOTSEG_IMPROVEMENT) ? improvementFlat
 		                              : restFlat;
 		if (iSlot >= (int)segment.size())
 		{
-			return;
+			return 0;
 		}
 		segment[iSlot] += iDelta;
-		resolvePlotFlat(iSlot, iChannel);
+		return resolvePlotFlat(iSlot, iChannel);
 	}
 
 	// ⚖ RE-RESOLVE ONE CHANNEL'S PLOT SLOT WITHOUT MOVING A SEGMENT -- for when an operand of the RESOLVE moved
@@ -354,27 +436,24 @@ struct CvCascadePackage
 	// resolved under the old trait set, permanently ([DEC-no-self-heal]).
 	// ⚠ It is NOT a rebuild: nothing is re-derived from sources, and a plot whose step did not change writes the
 	// same number back.
-	void refreshPlotResolve(int iChannel) const
+	int64_t refreshPlotResolve(int iChannel) const
 	{
 		if (scope != CASC_SCOPE_PLOT)
 		{
-			return;
+			return 0;
 		}
 		ensureSized();
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
-		if (iSlot >= 0)
-		{
-			resolvePlotFlat(iSlot, iChannel);
-		}
+		return iSlot >= 0 ? resolvePlotFlat(iSlot, iChannel) : 0;
 	}
 
 	// The §2a plot-as-base combine over the three segments (modifier.md §2a basePlotYield). The SEGMENTS hold
 	// raw sums -- that is what makes them delta-able -- so every floor is applied here.
-	void resolvePlotFlat(int iSlot, int iChannel) const
+	int64_t resolvePlotFlat(int iSlot, int iChannel) const
 	{
 		if (iSlot < 0 || iSlot >= (int)flat.size())
 		{
-			return;
+			return 0;
 		}
 		int64_t iNature = iSlot < (int)substrateFlat.size() ? substrateFlat[iSlot] : 0;
 		if (iNature < 0)
@@ -405,7 +484,12 @@ struct CvCascadePackage
 		{
 			iTotal = InfoValuation::plotScaledYield(iTotal, yieldScaleInterval[iSlot], yieldScaleAmount[iSlot]);
 		}
+		//	⚑ ANSWERS THE EXACT DELTA IT MOVED, which is what makes the CITY's worked-plot Σ maintainable at all:
+		//	the floors above break linearity over a DEPOSIT delta, but (new - old) on the resolved slot is exact
+		//	whatever they did. The caller -- which knows the PLOT and therefore its working city -- applies it.
+		const int64_t iPrevious = flat[iSlot];
 		flat[iSlot] = iTotal;
+		return iTotal - iPrevious;
 	}
 
 	// ⛔ EVERY READ ABOVE IS A BARE FETCH, AND IT IS THE ONLY READ SURFACE THERE IS. A slot is correct the instant
