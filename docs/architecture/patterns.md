@@ -608,6 +608,16 @@ Four words carry the whole requirement:
   `InputTypes` is the EXE's and was never DLL-published. The DLL owes the vocabulary for the enums it DEFINES,
   and a name absent from `CvEnums.h` is the EXE's to serve, never a hole in the library.
 
+> **⛔⛔ `import *` IS THE REAL ENEMY — IT OUTRANKS EVERY OTHER CONCERN ON THIS BOUNDARY (owner): *"we want
+> python imports to be named, so that we know what we are fetching; `import *` is the real enemy."*** Read the
+> rest of this section against that ranking: named endpoints are never a problem, and endpoint HOMING is a real
+> but secondary one. ⚑ **It is also what CAUSES the duplication ruling below**, which is why the two are one
+> subject rather than two: a star import erases where a name came from, so the next modder cannot find the
+> endpoint that already answers their question and mints a near-synonym instead. Fix the import surface and the
+> duplicate-endpoint failure loses its mechanism.
+> ⚠ The SEQUENCING below is unchanged and is itself an owner ruling — the conversion follows the demand map
+> rather than preceding it — so this names the target, not a new order to do it in.
+>
 > **⛔ EXPLICIT IMPORTS, ALWAYS — A MODULE'S BINDINGS MUST SHOW WHAT IT USES (owner): *"I will always prefer
 > explicit imports, so you see what is used in python."*** This is what the `Cy*` cut was actually FOR, and
 > stating it as "no getter per registry" understated it in one direction and overstated it in the other.
@@ -655,6 +665,24 @@ Four words carry the whole requirement:
 > ⚠ **What the ruling does bind is HOMING**: an endpoint belongs on the accessor for the type it addresses. A
 > flat class accumulating UNIT, BUILDING and HANDICAP reads side by side is the spaghetti wearing named
 > endpoints — organized is the requirement, and "named" alone does not satisfy it.
+>
+> **⛔ AND THE FAILURE ORGANIZATION EXISTS TO PREVENT IS DUPLICATION, WHICH IS WHAT MAKES THIS MORE THAN TASTE
+> (owner): *"we need the endpoints we need, that is never a problem; what is a problem is 3 similarly named
+> endpoints that in essence do the same thing because the previous modder didn't know where to look."*** So the
+> test on a new endpoint is never *how many are there* — it is **could someone find the one that already
+> answers this?** An unfindable endpoint is re-minted under a near-synonym, and the surface then carries three
+> spellings of one question that drift apart.
+> ⇒ **Two obligations follow, and the first is the cheap one: LOOK BEFORE YOU ADD.** Read the accessor for the
+> type you are about to serve; a near-synonym you did not find is the defect you are about to file.
+> ⚑ **It is [DEC-single-implementation](decisions.md#dec-single-implementation) on the boundary** — *"a
+> file-`static` calculator is a DRY hazard: the next consumer can't see it, so it reimplements it — the exact
+> mechanism of the C2C rot"* — and the mechanism is identical whether the thing reimplemented is a calculator
+> or a read. ⚠ The in-tree worked case is C++ rather than Python and is the more convincing for it:
+> `modSegmentCached` existed as THREE separate file-static copies, one per consumer, each written because its
+> author could not see the others. Nobody decided to duplicate it; the shape did.
+> ⚠ So a genuine near-pair must SAY why it is two — `isShrine` (29 buildings) beside `isReligiousBuilding`
+> (213) is two questions, and the comment carries the discriminator precisely so the next reader does not
+> "consolidate" them or mint a third.
 >
 > **⚖ THE ORGANIZING PASS IS SCHEDULED, AND THE CURRENT PILE IS ACKNOWLEDGED DEBT (owner): *"we have created
 > some of that ourselves now, and we will go back to wire that up properly in a final pass when everything is
