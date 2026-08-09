@@ -6919,9 +6919,10 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	// The KEYED happiness deposits ([modifier.md §5]): an entry-list read over what this building
 	// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
+	static int s_segBuildings = -1;
 	std::vector<std::pair<int, int> > kKeyedHappy;
 	kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
-		CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
+		CASC_UNIT_FLAT, modSegmentCached("buildings", s_segBuildings), kKeyedHappy);
 	for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 	{
 		const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;

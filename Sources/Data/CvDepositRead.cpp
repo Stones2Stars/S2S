@@ -41,11 +41,6 @@ static int s_segmentCityLimit = -1;
 // targetSeg against the other map's id compiles clean, matches nothing, and silently stops every
 // plot-substrate keyed deposit from depositing. Same caching discipline as mmk_seg above: a hit is cached
 // forever, a miss re-looks-up (the interner is append-only, so a miss can become a hit but an id never moves).
-static int mmk_modSeg(const char* szSegment, int& iCache)
-{
-	if (iCache < 0) iCache = modSegmentLookup(std::string(szSegment));
-	return iCache;
-}
 static int s_segPlots = -1;
 static int s_segImprovements = -1;
 static int s_segTerrains = -1;
@@ -94,8 +89,8 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 	{
 		return false;
 	}
-	const int iEmpiresSeg = mmk_modSeg("empires", s_segEmpires);
-	const int iCitiesSeg = mmk_modSeg("cities", s_segCities);
+	const int iEmpiresSeg = modSegmentCached("empires", s_segEmpires);
+	const int iCitiesSeg = modSegmentCached("cities", s_segCities);
 	// json §3.3's `empires` plural target: a WORLD-scope deposit onto EVERY empire lands in each PLAYER's
 	// package, because WORLD is CONFIG and carries no package of its own (state-repositories.md). So the empire
 	// scope accepts it even though the authored scope is world.
@@ -122,7 +117,7 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 	// ⚠ THE AUTHORED SCOPE STILL DECIDES **WHOSE** PLOTS: the CALLER fans a CITY-scope entry over the plots of
 	// the city holding the source and an EMPIRE-scope one over every city's, so this only admits the entry to
 	// plot resolution -- it never widens its reach.
-	const int iPlotsSeg = mmk_modSeg("plots", s_segPlots);
+	const int iPlotsSeg = modSegmentCached("plots", s_segPlots);
 	const bool bScopePlots = (eScope == CASC_SCOPE_PLOT
 		&& (kEntry.scope == CASC_SCOPE_CITY || kEntry.scope == CASC_SCOPE_EMPIRE)
 		&& iPlotsSeg >= 0
@@ -166,32 +161,32 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 		{
 			// falls through: the fan IS the deposit, no per-target test applies
 		}
-		else if (kEntry.targetSeg == mmk_modSeg("plots", s_segPlots))
+		else if (kEntry.targetSeg == modSegmentCached("plots", s_segPlots))
 		{
 			// falls through: applies() below evaluates the per-plot filter against THIS plot's ctx
 		}
-		else if (kEntry.targetSeg == mmk_modSeg("improvements", s_segImprovements))
+		else if (kEntry.targetSeg == modSegmentCached("improvements", s_segImprovements))
 		{
 			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getImprovementType())
 			{
 				return false;
 			}
 		}
-		else if (kEntry.targetSeg == mmk_modSeg("terrains", s_segTerrains))
+		else if (kEntry.targetSeg == modSegmentCached("terrains", s_segTerrains))
 		{
 			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getTerrainType())
 			{
 				return false;
 			}
 		}
-		else if (kEntry.targetSeg == mmk_modSeg("features", s_segFeatures))
+		else if (kEntry.targetSeg == modSegmentCached("features", s_segFeatures))
 		{
 			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getFeatureType())
 			{
 				return false;
 			}
 		}
-		else if (kEntry.targetSeg == mmk_modSeg("bonuses", s_segBonuses))
+		else if (kEntry.targetSeg == modSegmentCached("bonuses", s_segBonuses))
 		{
 			const TeamTypes eSeeingTeam = (evalCtx.empireContext != NULL) ? (TeamTypes)evalCtx.empireContext->teamId() : NO_TEAM;
 			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getBonusType(eSeeingTeam))
@@ -199,7 +194,7 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 				return false;
 			}
 		}
-		else if (kEntry.targetSeg == mmk_modSeg("routes", s_segRoutes))
+		else if (kEntry.targetSeg == modSegmentCached("routes", s_segRoutes))
 		{
 			if (kEntry.targetFk < 0 || kEntry.targetFk != (int)pKeyPlot->getRouteType())
 			{

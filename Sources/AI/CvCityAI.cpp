@@ -4983,6 +4983,11 @@ int CvCityAI::AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFo
 // a FLAT is an AMOUNT carried ×100 and reduces here, a PERCENT is a whole number and must NOT -- a blanket
 // family-wide ÷100 would silently zero every percent slot it touched. The canonical unit comes from the
 // vocabulary (`infoKindUnit`), so no call site has to know which side of that split its kind sits on.
+// The interned ids of the target SEGMENTS these per-building AI scans key on, resolved once rather than
+// per call (modSegmentCached, CvModEntry.h -- a literal costs a heap string plus a map walk every time).
+static int s_segUnitCombats = -1;
+static int s_segBuildings = -1;
+
 static int cai_expectedHere(const CvBuildingInfo& kBuilding, ModifierFamily eFamily, int iKind,
 	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup)
 {
@@ -5285,7 +5290,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					// stands in the city -- so it is unscaled, exactly like defense.amount.
 					std::vector<std::pair<int, int> > kKeyedCombat;
 					kBuilding.getModifiers()->targetedSums(MODFAM_COMBAT, COMBAT_AMOUNT, CASC_SCOPE_CITY,
-						CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), kKeyedCombat);
+						CASC_UNIT_PERCENT, modSegmentCached("unitCombats", s_segUnitCombats), kKeyedCombat);
 					for (size_t iKeyed = 0; iKeyed < kKeyedCombat.size(); ++iKeyed)
 					{
 						const UnitCombatTypes eKeyedCombat = (UnitCombatTypes)kKeyedCombat[iKeyed].first;
@@ -5448,7 +5453,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				// authors onto NAMED other buildings -- never folded scope-wide. ×100 at the slot, human here.
 				std::vector<std::pair<int, int> > kKeyedHappy;
 				kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
-					CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
+					CASC_UNIT_FLAT, modSegmentCached("buildings", s_segBuildings), kKeyedHappy);
 				for (size_t iKeyed = 0; iKeyed < kKeyedHappy.size(); ++iKeyed)
 				{
 					const BuildingTypes eKeyedBuilding = (BuildingTypes)kKeyedHappy[iKeyed].first;
@@ -12672,7 +12677,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.providesAmenity(CLS_AMENITY_NUKE_IMMUNE) ||
 			GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_ZONE_OF_CONTROL) && kBuilding.providesAmenity(CLS_AMENITY_ZONE_OF_CONTROL) ||
 			kBuilding.getModifiers()->targetedSum(MODFAM_COMBAT, COMBAT_AMOUNT, CASC_SCOPE_CITY,
-				CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), -1) != 0 ||
+				CASC_UNIT_PERCENT, modSegmentCached("unitCombats", s_segUnitCombats), -1) != 0 ||
 			kBuilding.getDefense(DEFENSE_ADJACENT_DAMAGE, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.providesAmenity(CLS_AMENITY_PROTECTED_CULTURE) ||
 			kBuilding.getScalar(SCALAR_OCCUPATION_TIME, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0 ||
@@ -12688,7 +12693,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			kBuilding.getDefense(DEFENSE_BUILDING_RECOVERY, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getDefense(DEFENSE_CITY_RECOVERY, CASC_SCOPE_CITY) > 0 ||
 			kBuilding.getModifiers()->targetedSum(MODFAM_DEFENSE, DEFENSE_AMOUNT, CASC_SCOPE_CITY,
-				CASC_UNIT_PERCENT, modSegmentLookup("unitCombats"), -1) != 0)
+				CASC_UNIT_PERCENT, modSegmentCached("unitCombats", s_segUnitCombats), -1) != 0)
 		{
 			return true;
 		}
@@ -12702,7 +12707,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		// getter used to answer.
 		std::vector<std::pair<int, int> > kKeyedHappy;
 		kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
-			CASC_UNIT_FLAT, modSegmentLookup("buildings"), kKeyedHappy);
+			CASC_UNIT_FLAT, modSegmentCached("buildings", s_segBuildings), kKeyedHappy);
 		if (kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) > 0
 			|| kBuilding.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
 			|| kBuilding.providesAmenity(CLS_AMENITY_ABOLISHED_ANGER)

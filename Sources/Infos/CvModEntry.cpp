@@ -46,6 +46,12 @@ int modSegmentLookup(const std::string& szSegment)
 	return it == s_modSegments.end() ? -1 : it->second;
 }
 
+int modSegmentCached(const char* szSegment, int& iCache)
+{
+	if (iCache < 0) iCache = modSegmentLookup(std::string(szSegment));
+	return iCache;
+}
+
 const char* modSegmentSpell(int iSegmentId)
 {
 	if (iSegmentId < 0 || iSegmentId >= (int)s_modSegmentSpellings.size())

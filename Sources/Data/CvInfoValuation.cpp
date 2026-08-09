@@ -29,6 +29,12 @@
 
 namespace
 {
+	//	The interned ids of the target SEGMENTS these reads key on, resolved once rather than per call
+	//	(modSegmentCached, CvModEntry.h). These sit under the citizen-assignment loop, so a per-call
+	//	heap string construction plus a map walk is real turn-time cost.
+	int s_segPlots = -1;
+	int s_segUnitCombat = -1;
+
 	//
 	//	The scope FOLD SET of the experienced-here answer (modifier.md §1 scope principle: the realized value is
 	//	the trivial sum of the scope packages a city sits under -- world/team/empire/city). Plot-scope and
@@ -88,7 +94,7 @@ namespace
 	int64_t val_plotsTarget(const CvModifiers* modifiers, ModifierFamily eFamily,
 		const CvCascadeEvalCtx& evalCtx, const CityContext& cityContext)
 	{
-		const int iPlotsSeg = modSegmentLookup("plots");
+		const int iPlotsSeg = modSegmentCached("plots", s_segPlots);
 		if (iPlotsSeg < 0)
 		{
 			return 0;   // never authored anywhere
@@ -321,7 +327,11 @@ void InfoValuation::collectHealByUnitCombat(const CvModifiers* modifiers, std::v
 	{
 		return;
 	}
-	static const int iUnitCombatSeg = modSegmentLookup("unitCombat");
+	// ⚠ SINGULAR, and deliberately: the heal family authors `heal.unit.unitCombat` (the member), which is a
+	// different segment from the PLURAL `unitCombats` keyed target the combat/buildRate families use. Both are
+	// live in the data, so the spelling is not interchangeable -- a wrong one interns to -1 and answers
+	// "nothing is keyed on this" for every building, silently.
+	const int iUnitCombatSeg = modSegmentCached("unitCombat", s_segUnitCombat);
 	if (iUnitCombatSeg < 0)
 	{
 		return;   // nothing anywhere authored a unitCombat-keyed deposit

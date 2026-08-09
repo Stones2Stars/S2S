@@ -30,6 +30,19 @@ int modSegmentIntern(const std::string& szSegment);
 int modSegmentLookup(const std::string& szSegment);   // -1 = never authored anywhere
 const char* modSegmentSpell(int iSegmentId);          // "" for an invalid id
 
+//	The CACHED lookup every READ PATH uses. `modSegmentLookup` takes a `std::string`, so passing a literal costs
+//	a heap string construction plus a map walk on EVERY call -- which is [DEC-materialize-at-mapfrom] violated
+//	wherever it sits under a per-turn or per-candidate loop. The caller owns the cache slot (init it to -1).
+//
+//	⚠ A HIT is cached forever; a MISS re-looks-up. That asymmetry is the whole discipline: the interner is
+//	append-only, so a segment nothing has authored YET can become live later, while an id once assigned never
+//	moves. ⛔ A plain `static const int` initialised on first call caches the -1 permanently and then answers
+//	"nothing is keyed on this" for the rest of the session -- silently, since -1 is also the honest answer.
+//
+//	⚑ It lives HERE, beside the interner it reads, because a file-static copy per consumer is the DRY hazard
+//	[DEC-single-implementation] names: the next consumer cannot see it and writes a fifth one.
+int modSegmentCached(const char* szSegment, int& iCache);
+
 class CvModEntry;
 // The ONE §3.7 `per` count-scaler parser ({type|anyOf, each?} or a bare type string) -> the entry's per fields.
 // Shared: the modifier entries AND a trigger entry's `chance.per` both parse through it.
