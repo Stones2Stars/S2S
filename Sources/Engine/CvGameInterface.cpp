@@ -588,7 +588,7 @@ void CvGame::updateColoredPlots()
 
 		if (pHeadSelectedUnit->isBlockading())
 		{
-			const int iBlockadeRange = GC.getDefineINT("SHIP_BLOCKADE_RANGE");
+			const int iBlockadeRange = GC.getSHIP_BLOCKADE_RANGE();
 
 			for (int i = 0; i < MAX_PC_PLAYERS; ++i)
 			{
@@ -1708,7 +1708,7 @@ void CvGame::doControl(ControlTypes eControl)
 					CvUnit* pUnit = plotUnits[iI];
 
 					if (pUnit->getOwner() == getActivePlayer()
-					&& (!isMPOption(MPOPTION_SIMULTANEOUS_TURNS) || getTurnSlice() - pUnit->getLastMoveTurn() > GC.getDefineINT("MIN_TIMER_UNIT_DOUBLE_MOVES"))
+					&& (!isMPOption(MPOPTION_SIMULTANEOUS_TURNS) || getTurnSlice() - pUnit->getLastMoveTurn() > GC.getMIN_TIMER_UNIT_DOUBLE_MOVES())
 					&& pUnit->isHurt())
 					{
 						if (pGroupHead)

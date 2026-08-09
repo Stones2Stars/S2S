@@ -3016,7 +3016,7 @@ int countPlotGroup(FAStarNode* parent, FAStarNode* node, int data, const void* p
 
 int baseYieldToSymbol(int iNumYieldTypes, int iYieldStack)
 {
-	return iNumYieldTypes * GC.getDefineINT("MAX_YIELD_STACK") + iYieldStack;
+	return iNumYieldTypes * GC.getMAX_YIELD_STACK() + iYieldStack;
 }
 
 
@@ -3554,7 +3554,7 @@ int calcBaseExpNeeded(const int iLevel, const PlayerTypes ePlayer)
 
 	if (GC.getGame().isOption(GAMEOPTION_UNIT_MORE_XP_TO_LEVEL))
 	{
-		iThreshold *= GC.getDefineINT("MORE_XP_TO_LEVEL_MODIFIER");
+		iThreshold *= GC.getMORE_XP_TO_LEVEL_MODIFIER();
 		iThreshold /= 100;
 	}
 	return iThreshold / 100;

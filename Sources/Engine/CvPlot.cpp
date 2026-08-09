@@ -2762,7 +2762,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 	// Recon
 	if (getReconCount() > 0)
 	{
-		const int iRange = GC.getDefineINT("RECON_VISIBILITY_RANGE");
+		const int iRange = GC.getRECON_VISIBILITY_RANGE();
 		for (int iI = 0; iI < MAX_PLAYERS; ++iI)
 		{
 			foreach_(CvUnit* pLoopUnit, GET_PLAYER((PlayerTypes)iI).units())
@@ -3741,7 +3741,7 @@ CvUnit* CvPlot::getFirstDefender(PlayerTypes eOwner, PlayerTypes eAttackingPlaye
 int CvPlot::AI_sumStrength(PlayerTypes eOwner, PlayerTypes eAttackingPlayer, DomainTypes eDomainType, StrengthFlags::flags flags /*= StrengthFlags::DefensiveBonuses*/, int iRange) const
 {
 	PROFILE_EXTRA_FUNC();
-	const int COLLATERAL_COMBAT_DAMAGE = GC.getDefineINT("COLLATERAL_COMBAT_DAMAGE"); // K-Mod. (currently this number is "10")
+	const int COLLATERAL_COMBAT_DAMAGE = GC.getCOLLATERAL_COMBAT_DAMAGE(); // K-Mod. (currently this number is "10")
 
 	const bool bTestAtWar = flags & StrengthFlags::TestAtWar;
 	const bool bTestPotentialEnemy = flags & StrengthFlags::TestPotentialEnemy;
@@ -7182,7 +7182,7 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 					CvCity* cityX = plotX->getPlotCity();
 					if (cityX && cityX->getOwner() == getOwner())
 					{
-						cityX->changeLandmarkAngerTimer(GC.getDefineINT("LANDMARK_ANGER_DIVISOR") * 2);
+						cityX->changeLandmarkAngerTimer(GC.getLANDMARK_ANGER_DIVISOR() * 2);
 					}
 				}
 			}

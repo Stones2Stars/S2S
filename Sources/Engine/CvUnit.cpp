@@ -3299,7 +3299,7 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 				);
 				GET_TEAM(getTeam()).changeWarWearinessTimes100(pDefender->getTeam(), *pPlot, attackerWarWearinessChangeTimes100);
 
-				GET_TEAM(getTeam()).AI_changeWarSuccess(pDefender->getTeam(), GC.getDefineINT("WAR_SUCCESS_ATTACKING"));
+				GET_TEAM(getTeam()).AI_changeWarSuccess(pDefender->getTeam(), GC.getWAR_SUCCESS_ATTACKING());
 			}
 
 			const int iInfluenceRatio = GC.isIDW_ENABLED() ? doVictoryInfluence(pDefender, true, false) : 0;
@@ -5771,7 +5771,7 @@ bool CvUnit::canUnload() const
 			}
 			else
 			{
-				if (iNumAirUnits >= GC.getDefineINT("CITY_AIR_UNIT_CAPACITY"))
+				if (iNumAirUnits >= GC.getCITY_AIR_UNIT_CAPACITY())
 				{
 					return false;
 				}
@@ -7550,7 +7550,7 @@ void CvUnit::updatePlunder(int iChange, bool bUpdatePlotGroups)
 {
 	PROFILE_FUNC();
 
-	const int iBlockadeRange = GC.getDefineINT("SHIP_BLOCKADE_RANGE");
+	const int iBlockadeRange = GC.getSHIP_BLOCKADE_RANGE();
 	bool bChanged = false;
 
 	if (bUpdatePlotGroups)
@@ -8381,7 +8381,7 @@ int CvUnit::spreadCorporationCost(CorporationTypes eCorporation, const CvCity* p
 	{
 		if (getTeam() != pCity->getTeam() && !GET_TEAM(pCity->getTeam()).isVassal(getTeam()))
 		{
-			iCost *= GC.getDefineINT("CORPORATION_FOREIGN_SPREAD_COST_PERCENT");
+			iCost *= GC.getCORPORATION_FOREIGN_SPREAD_COST_PERCENT();
 			iCost /= 100;
 		}
 
@@ -12298,7 +12298,12 @@ int CvUnit::fortifyModifier() const
 	{
 		return 0;
 	}
-	return range(getFortifyTurns(), 0, GC.getDefineINT("MAX_FORTIFY_TURNS")) * GC.getFORTIFY_MODIFIER_PER_TURN();
+	//	⛔ BOTH defines read from the CACHED set. getDefineINT("...") is a string-keyed lookup through the
+	//	variable system on EVERY call, and this sits under the pathfinder's per-node cost function
+	//	(generatePath -> NewPathCostFunc -> AI_compareStacks -> AI_sumStrength -> currCombatStr -> maxCombatStr),
+	//	which is exactly the per-step-gate cost class [DEC-materialize-at-mapfrom] names. Its neighbour on this
+	//	same line was already cached; only this one was not.
+	return range(getFortifyTurns(), 0, GC.getMAX_FORTIFY_TURNS()) * GC.getFORTIFY_MODIFIER_PER_TURN();
 }
 
 int CvUnit::experienceNeeded(int iLvlOffset) const
@@ -14679,7 +14684,7 @@ int CvUnit::getFortifyTurns() const
 
 void CvUnit::setFortifyTurns(int iNewValue)
 {
-	const int iMaxFortify = GC.getDefineINT("MAX_FORTIFY_TURNS");
+	const int iMaxFortify = GC.getMAX_FORTIFY_TURNS();
 
 	iNewValue = range(iNewValue, 0, iMaxFortify);
 
@@ -15659,7 +15664,7 @@ void CvUnit::collectBlockadeGold()
 		return;
 	}
 
-	const int iBlockadeRange = GC.getDefineINT("SHIP_BLOCKADE_RANGE");
+	const int iBlockadeRange = GC.getSHIP_BLOCKADE_RANGE();
 
 	foreach_(const CvPlot* pLoopPlot, plot()->rect(iBlockadeRange, iBlockadeRange)
 	| filtered(CvPlot::fn::isRevealed(getTeam(), false)))
@@ -19530,7 +19535,7 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 			const int iTheirStrength = pBestUnit->baseCombatStr();
 			const int iStrengthFactor = (iCollateralStrength + iTheirStrength + 1) / 2;
 
-			int iCollateralDamage = 100 * GC.getDefineINT("COLLATERAL_COMBAT_DAMAGE");
+			int iCollateralDamage = 100 * GC.getCOLLATERAL_COMBAT_DAMAGE();
 
 			iCollateralDamage *= iStrengthFactor + iCollateralStrength;
 			iCollateralDamage /= iStrengthFactor + iTheirStrength;

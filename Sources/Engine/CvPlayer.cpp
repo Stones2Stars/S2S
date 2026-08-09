@@ -2841,7 +2841,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 			if (iTeamCulturePercent < GC.getDefineINT("OCCUPATION_CULTURE_PERCENT_THRESHOLD"))
 			{
-				int iOccupationTime = GC.getDefineINT("BASE_OCCUPATION_TURNS") + intSqrt(pNewCity->getPopulation());
+				int iOccupationTime = GC.getBASE_OCCUPATION_TURNS() + intSqrt(pNewCity->getPopulation());
 
 				iOccupationTime *= CvGameSpeedScale::speedPercent(); // Extra 100x
 
@@ -6716,7 +6716,7 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 	iProductionNeeded *= iModifier;
 	iProductionNeeded /= 100;
 
-	iModifier = GC.getDefineINT("BUILDING_PRODUCTION_PERCENT");
+	iModifier = GC.getBUILDING_PRODUCTION_PERCENT();
 	iProductionNeeded *= iModifier;
 	iProductionNeeded /= 100;
 
@@ -16148,7 +16148,7 @@ int CvPlayer::getAdvancedStartPopCost(bool bAdd, const CvCity* pCity) const
 		{
 			--iPopulation;
 
-			if (iPopulation < GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGame().getStartEra()).getFreePopulation())
+			if (iPopulation < GC.getINITIAL_CITY_POPULATION() + GC.getEraInfo(GC.getGame().getStartEra()).getFreePopulation())
 			{
 				return -1;
 			}
@@ -21874,7 +21874,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 	//	Don't initialise concripts until after the techs are set up else you'll get stone throwers!
 	foreach_(CvCity* pLoopCity, GET_PLAYER(eNewPlayer).cities())
 	{
-		for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i)
+		for (int i = 0; i < GC.getCOLONY_NUM_FREE_DEFENDERS(); ++i)
 		{
 			pLoopCity->initConscriptedUnit();
 		}

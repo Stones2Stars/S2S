@@ -10055,7 +10055,7 @@ bool CvGame::foundBarbarianCity()
 
 		if (bValid)
 		{
-			iValue += GET_PLAYER(BARBARIAN_PLAYER).AI_foundValue(plotX->getX(), plotX->getY(), GC.getDefineINT("MIN_BARBARIAN_CITY_STARTING_DISTANCE"));
+			iValue += GET_PLAYER(BARBARIAN_PLAYER).AI_foundValue(plotX->getX(), plotX->getY(), GC.getMIN_BARBARIAN_CITY_STARTING_DISTANCE());
 			iValue += getSorenRandNum(250, "Barb City Found");
 			if (iValue > iBestValue)
 			{
@@ -11381,7 +11381,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 		}
 	}
 	if (pBestCity != NULL
-	&& (getSorenRandNum(GC.getDefineINT("CORPORATION_SPREAD_RAND"), "Corporation Founding Rand") < iBestSpread || bForce))
+	&& (getSorenRandNum(GC.getCORPORATION_SPREAD_RAND(), "Corporation Founding Rand") < iBestSpread || bForce))
 	{
 		setHeadquarters(eCorporation, pBestCity, true);
 	}
@@ -11403,7 +11403,7 @@ int CvGame::getAverageCorporationInfluence(const CvCity* pCity, const Corporatio
 	const int iInfluence = GET_PLAYER(pCity->getOwner()).getCorporationInfluence(eCorporation);
 	if (iInfluence == 0) return 0;
 
-	const int iSpreadDistanceDivisor = GC.getDefineINT("CORPORATION_SPREAD_DISTANCE_DIVISOR");
+	const int iSpreadDistanceDivisor = GC.getCORPORATION_SPREAD_DISTANCE_DIVISOR();
 	const int iMaxPlotDistance = GC.getMap().maxPlotDistance();
 
 	int iTotalSpread = 0;

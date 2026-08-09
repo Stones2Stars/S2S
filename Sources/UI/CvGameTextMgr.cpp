@@ -1394,7 +1394,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		iRate = pCity->getHurryAngerTimer();
 		if (iRate > 0)
 		{
-			int iPop = ((iRate - 1) / pCity->flatHurryAngerLength() + 1) * GC.getDefineINT("HURRY_POP_ANGER");
+			int iPop = ((iRate - 1) / pCity->flatHurryAngerLength() + 1) * GC.getHURRY_POP_ANGER();
 			szTempBuffer.Format(L" (%d %c %d)", iPop, gDLL->getSymbolID(ANGRY_POP_CHAR), iRate);
 			szString.append(szTempBuffer);
 		}
@@ -1407,7 +1407,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		iRate = pCity->getConscriptAngerTimer();
 		if (iRate > 0)
 		{
-			int iPop = ((iRate - 1) / pCity->flatConscriptAngerLength() + 1) * GC.getDefineINT("CONSCRIPT_POP_ANGER");
+			int iPop = ((iRate - 1) / pCity->flatConscriptAngerLength() + 1) * GC.getCONSCRIPT_POP_ANGER();
 			szTempBuffer.Format(L" (%d %c %d)", iPop, gDLL->getSymbolID(CITIZEN_CHAR), iRate);
 			szString.append(szTempBuffer);
 		}
@@ -5055,26 +5055,26 @@ void CvGameTextMgr::setVassalRevoltHelp(CvWStringBuffer& szBuffer, TeamTypes eMa
 
 	int iMasterLand = kMaster.getTotalLand(false);
 	int iVassalLand = kVassal.getTotalLand(false);
-	if (iMasterLand > 0 && GC.getDefineINT("FREE_VASSAL_LAND_PERCENT") >= 0)
+	if (iMasterLand > 0 && GC.getFREE_VASSAL_LAND_PERCENT() >= 0)
 	{
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_VASSAL_LAND_STATS", (iVassalLand * 100) / iMasterLand, GC.getDefineINT("FREE_VASSAL_LAND_PERCENT")));
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_VASSAL_LAND_STATS", (iVassalLand * 100) / iMasterLand, GC.getFREE_VASSAL_LAND_PERCENT()));
 	}
 
 	int iMasterPop = kMaster.getTotalPopulation(false);
 	int iVassalPop = kVassal.getTotalPopulation(false);
-	if (iMasterPop > 0 && GC.getDefineINT("FREE_VASSAL_POPULATION_PERCENT") >= 0)
+	if (iMasterPop > 0 && GC.getFREE_VASSAL_POPULATION_PERCENT() >= 0)
 	{
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_VASSAL_POPULATION_STATS", (iVassalPop * 100) / iMasterPop, GC.getDefineINT("FREE_VASSAL_POPULATION_PERCENT")));
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_VASSAL_POPULATION_STATS", (iVassalPop * 100) / iMasterPop, GC.getFREE_VASSAL_POPULATION_PERCENT()));
 	}
 
-	if (GC.getDefineINT("VASSAL_REVOLT_OWN_LOSSES_FACTOR") > 0 && kVassal.getVassalPower() > 0)
+	if (GC.getVASSAL_REVOLT_OWN_LOSSES_FACTOR() > 0 && kVassal.getVassalPower() > 0)
 	{
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_VASSAL_AREA_LOSS", (iVassalLand * 100) / kVassal.getVassalPower(), GC.getDefineINT("VASSAL_REVOLT_OWN_LOSSES_FACTOR")));
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_VASSAL_AREA_LOSS", (iVassalLand * 100) / kVassal.getVassalPower(), GC.getVASSAL_REVOLT_OWN_LOSSES_FACTOR()));
 	}
 
-	if (GC.getDefineINT("VASSAL_REVOLT_MASTER_LOSSES_FACTOR") > 0 && kVassal.getMasterPower() > 0)
+	if (GC.getVASSAL_REVOLT_MASTER_LOSSES_FACTOR() > 0 && kVassal.getMasterPower() > 0)
 	{
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_MASTER_AREA_LOSS", (iMasterLand * 100) / kVassal.getMasterPower(), GC.getDefineINT("VASSAL_REVOLT_MASTER_LOSSES_FACTOR")));
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_MASTER_AREA_LOSS", (iMasterLand * 100) / kVassal.getMasterPower(), GC.getVASSAL_REVOLT_MASTER_LOSSES_FACTOR()));
 	}
 }
 
@@ -5410,28 +5410,28 @@ void CvGameTextMgr::setScoreHelp(CvWStringBuffer &szString, PlayerTypes ePlayer)
 		int iPopScore = 0;
 		if (iMaxPop > 0)
 		{
-			iPopScore = (GC.getDefineINT("SCORE_POPULATION_FACTOR") * iPop) / iMaxPop;
+			iPopScore = (GC.getSCORE_POPULATION_FACTOR() * iPop) / iMaxPop;
 		}
 		int iLand = player.getLandScore();
 		int iMaxLand = GC.getGame().getMaxLand();
 		int iLandScore = 0;
 		if (iMaxLand > 0)
 		{
-			iLandScore = (GC.getDefineINT("SCORE_LAND_FACTOR") * iLand) / iMaxLand;
+			iLandScore = (GC.getSCORE_LAND_FACTOR() * iLand) / iMaxLand;
 		}
 		int iTech = player.getTechScore();
 		int iMaxTech = GC.getGame().getMaxTech();
 		int iTechScore = 0;
 		if (iMaxTech > 0)
 		{
-			iTechScore = (GC.getDefineINT("SCORE_TECH_FACTOR") * iTech) / std::max(1, iMaxTech);
+			iTechScore = (GC.getSCORE_TECH_FACTOR() * iTech) / std::max(1, iMaxTech);
 		}
 		int iWonders = player.getWondersScore();
 		int iMaxWonders = GC.getGame().getMaxWonders();
 		int iWondersScore = 0;
 		if (iMaxWonders > 0)
 		{
-			iWondersScore = (GC.getDefineINT("SCORE_WONDER_FACTOR") * iWonders) / std::max(1, iMaxWonders);
+			iWondersScore = (GC.getSCORE_WONDER_FACTOR() * iWonders) / std::max(1, iMaxWonders);
 		}
 		int iTotalScore = iPopScore + iLandScore + iTechScore + iWondersScore;
 		int iVictoryScore = player.calculateScore(true, true);

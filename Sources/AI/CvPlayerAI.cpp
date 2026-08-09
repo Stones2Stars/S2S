@@ -10261,11 +10261,11 @@ int CvPlayerAI::AI_stopTradingTradeVal(TeamTypes eTradeTeam, PlayerTypes ePlayer
 		iValue /= 2;
 	}
 
-	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+	iValue -= (iValue % GC.getDIPLOMACY_VALUE_REMAINDER());
 
 	if (isHumanPlayer())
 	{
-		return std::max(iValue, GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+		return std::max(iValue, GC.getDIPLOMACY_VALUE_REMAINDER());
 	}
 	return iValue;
 }
@@ -10352,11 +10352,11 @@ int CvPlayerAI::AI_civicTradeVal(CivicTypes eCivic, PlayerTypes ePlayer) const
 		iValue /= 2;
 	}
 
-	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+	iValue -= (iValue % GC.getDIPLOMACY_VALUE_REMAINDER());
 
 	if (isHumanPlayer())
 	{
-		return std::max(iValue, GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+		return std::max(iValue, GC.getDIPLOMACY_VALUE_REMAINDER());
 	}
 	return iValue;
 }
@@ -11278,7 +11278,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 					int iCollateralDamageLimitWeight = 100 * iMAX_HIT_POINTS - std::max(0, ((iMAX_HIT_POINTS - iCollateralLimit) * (100 - iCollateralDamageMaxUnitsWeight)));
 					iCollateralDamageLimitWeight /= iMAX_HIT_POINTS;
 
-					int iCollateralValue = iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) * GC.getDefineINT("COLLATERAL_COMBAT_DAMAGE");
+					int iCollateralValue = iCombatValue * kUnitInfo.getCollateralModifier(COLLATERAL_DAMAGE, CASC_SCOPE_UNIT) * GC.getCOLLATERAL_COMBAT_DAMAGE();
 					iCollateralValue /= 100;
 					iCollateralValue *= std::max(100, (iCollateralMaxUnits * iCollateralDamageMaxUnitsWeight));
 					iCollateralValue /= 100;
@@ -18502,7 +18502,7 @@ void CvPlayerAI::AI_doDiplo()
 								{
 									int64_t iReceiveGold = std::min<int64_t>(std::max<int64_t>(0, GET_PLAYER((PlayerTypes)iI).getGold() - 50), GET_PLAYER((PlayerTypes)iI).AI_goldTarget());
 
-									iReceiveGold -= (iReceiveGold % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+									iReceiveGold -= (iReceiveGold % GC.getDIPLOMACY_VALUE_REMAINDER());
 
 									if (iReceiveGold > 50)
 									{
@@ -24458,7 +24458,7 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 				{
 					CvPlot* pPlot = GC.getMap().plotByIndex(iPlotLoop);
 
-					if (plotDistance(pPlot->getX(), pPlot->getY(), pStartingPlot->getX(), pStartingPlot->getY()) <= GC.getDefineINT("ADVANCED_START_SIGHT_RANGE"))
+					if (plotDistance(pPlot->getX(), pPlot->getY(), pStartingPlot->getX(), pStartingPlot->getY()) <= GC.getADVANCED_START_SIGHT_RANGE())
 					{
 						pPlot->setRevealed(getTeam(), true, false, NO_TEAM, false);
 					}
