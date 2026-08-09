@@ -1315,14 +1315,14 @@ from the ABSENCE of a `PythonDbg` traceback.
 **⛔ A `PythonDbg` line reports the FIRST exception in a handler invocation, so fixing it EXPOSES the next one.**
 An event is closed only when every one of its handlers has been read END TO END — never when its logged error
 stops appearing. ⚑ Two events looked closed on exactly that reasoning and are not: `cityDoTurn` (its logged
-error was `CvAdvisorUtils.cityAdvise`, whose BODY is still unconverted) and `BeginGameTurn` (its logged error
+error was a handler whose BODY was still unconverted) and `BeginGameTurn` (its logged error
 was the `CvRandom` marshalling, with five dead calls after it in the same handler).
 
 **⛔ AND BUG FANS ONE EVENT TO EVERY REGISTERED HANDLER.** The log names the EVENT, so a second handler for the
 same event is invisible in it — `autologEventManager` alone carried seven broken handlers where the log could
 only ever show one. ⇒ Enumerate `def on<Event>` across the whole tree before calling an event done.
 
-**⚠ A HALF-CONVERSION LEAVES A DANGLING NAME, which fails differently.** `CvAdvisorUtils.cityAdvise` reads its
+**⚠ A HALF-CONVERSION LEAVES A DANGLING NAME, which fails differently.** A handler that reads its
 head through `STATE` and then drives a `CyCity` that is **never bound anywhere in the function** — so it raises
 `NameError`, not the `AttributeError` the tuple-deref class produces. Grepping for the deref shapes alone does
 not find it ([roadmap.md](roadmap.md) § scope decision 6: half-converting RELOCATES the failure).
@@ -1334,7 +1334,6 @@ outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
 
 | file · handler | dead calls |
 |---|---|
-| `CvAdvisorUtils.cityAdvise` (reached from `onCityDoTurn`) | unbound `CyCity` + `area` · `canConstruct` · `canTrain` · `countNumImprovedPlots` · `countNumWaterPlots` · `getBaseCommerceRate` · `getBuildingDefense` · `getCommerceRate` · `getMaintenance` · `healthRate` · `isProductionBuilding` · `plot` · `angryPopulation` · `AI_cityValue` |
 | `Contrib/WoodlandCycle.onBeginGameTurn` | `canFight` · `changeDamage` · `getHP` · `getName` · `kill` |
 | `CvEventManager.onNukeExplosion` | `getName` · `getUnitType` · `kill` |
 | `CvEventManager.onCityBuilt` | `changeFood` · `changeHasBuilding` · `changePopulation` · `getExperience` · `getUnitType` · `growthThreshold` · `isHasPromotion` |
@@ -1397,56 +1396,3 @@ instead of fixing it.
 Y The keyed walk itself is spec-correct and is NOT the defect: a keyed deposit is an entry-list read over the
 live sources ([modifier.md] par.5), cheap "because it iterates the handful an entity AUTHORED" -- which holds
 only if discovering the live sources is itself cheap. Here it is rediscovered 40 times per citizen.
-
-## `CvAdvisorUtils.cityAdvise` -- FIVE READS AND TWO RULINGS, NOT TEN READS
-
-It is the largest single block of broken handlers left (the 17 `cityDoTurn` failures). Its head is already
-converted -- the three UNIT recommendation blocks iterate `ENABLER.getAvailableUnits` and read through
-`STATE`/`INFO` -- and what remains is the missionary block plus the eight BUILDING blocks, all reading through
-a `CyCity` that is **never bound in the function** (hence `NameError`, not `AttributeError`).
-
-**Derived over the live body (520 lines, 386 non-comment), receiver by receiver:**
-
-| what the body does | disposition | status |
-|---|---|---|
-| `canConstruct` x8 · `canTrain` x1 | **NOT reads to publish** -- each sits inside `xrange(GC.getNum*Infos())`, so the fix is the ENABLER frontier (`getAvailableBuildings` / `getAvailableUnits`), which SUBSUMES the gate exactly as the already-converted unit blocks in this same file show | both published |
-| `CyCity.area()` x5 · `CyCity.plot()` | `MAP.plot(x, y)` off `STATE.getCityPosition`, then `.area()` -- `CyPlot`, `CyArea` and `CyPlayer` all still publish their surfaces; `CyCity` alone is identity-only | published |
-| `getTextKey` x9 · unit `getDomainType` | `INFO.getTextKey` / `INFO.getIntrinsic(..., PYINT_DOMAIN)` | published, already used in-file |
-| building `getHealth` · `getHappiness` | `INFO.getWellbeing("BUILDING_", id, scope)` | published |
-| building `getCommerceChange` | `INFO.getFlatCommerces` | published |
-| `healthRate` · `angryPopulation` | `STATE.getRealizedWellbeing(p, c, iExtraPopulation)` -- the final-state read already exists, and already takes the projection argument | published |
-| `getCommerceRate` · `getBaseCommerceRate` x3 | `STATE.getCommerces` | published |
-| `getBuildingDefense` | `STATE.getDefenseKinds` | published |
-| `getMaintenance` | `STATE.getMaintenance` | published |
-| `isProductionBuilding` | `STATE.getOrder` | published |
-
-**⛔ WHAT IS STILL MISSING -- three reads:**
-
-1. building **`getPlotYieldChange`** -- a `plots`-target deposit keyed by (plot type, yield). `getFlatYields`
-   answers the entity's own SCOPE flats, which is a different address.
-2. **`countNumImprovedPlots`** / **`countNumWaterPlots`** -- `STATE.getCityPlots` hands back the ring-ordered
-   coordinates, not a predicate count over them.
-3. **`canSpreadReligion` is published but asks a DIFFERENT QUESTION.** It answers *"does this unit spread a
-   religion at all"*; the missionary block asks *"does it spread MY STATE religion"*. The data is there --
-   `CvUnitInfo::getReligionSpread()` is the `{religion -> strength}` map, and its own comment warns against
-   scanning the registry backwards -- so this is a parameter to add, not a question to ask.
-
-⚑ **LANDED: the building metric reads.** `getFlatYields` / `getFlatCommerces` answered **`CORPORATION_` ONLY**
-and returned an empty list for every other prefix, so a building's authored commerce read as "no such data"
-rather than as a value. Both now go through `CvInfo::modifier` on the base -- which is what the corporation
-accessor already was -- and `getCommerceModifiers` (the percent half) and `getDefenseKinds` were added beside
-them. ⚠ That was a SECOND name-not-checked error in this same entry: the read was listed as published on the
-strength of its name, and its `CORPORATION_` guard was two lines below the signature.
-
-**⛔ TWO DESIGN QUESTIONS, unchanged and still owner-blocked:**
-
-1. **`AI_cityValue` / `AI_countBestBuilds` are AI HEURISTICS, not state.** The read library answers *"what do I
-   HAVE?"*; an AI's own valuation is the sanctioned heuristic residual belonging to the asking side
-   ([superseded-ideas](../../architecture/superseded-ideas.md) par.1). Publishing them would put an AI score on
-   the state surface, and the advisor's question (*"should I suggest splitting this city off?"*) may be better
-   answered by something else entirely. **Do not publish these without a ruling.**
-
-⚠ **The earlier version of this entry claimed ten reads were missing and that only `getMaintenance` existed.**
-That was inferred from the dead method NAMES rather than checked against the published surface: most of the
-values already have a home, and the two `can*` families are loops to convert rather than reads to add. The
-disposition above is derived read-by-read against `CyState.h` / `CyInfo.h` / `CyEnabler.h` and the live body.
