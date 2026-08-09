@@ -323,6 +323,16 @@ public:
 	// x100 like every amount ([DEC-fixedpoint-x100]); the reader divides at the point of use.
 	python::list getFlatYields(const std::string& szTypePrefix, int iId, int iScope) const;
 	python::list getFlatCommerces(const std::string& szTypePrefix, int iId, int iScope) const;
+	// The PERCENT side of the same address -- the modifier a source deposits onto a commerce channel, as
+	// opposed to the flat above. Its own read because the two are DIFFERENT SLOTS: the unit is part of the
+	// deposit's key (modifier.md §2), so one getter could not answer both without taking the unit as an
+	// argument, which is the scale-in-the-signature shape [DEC-fixedpoint-x100] rejects.
+	// ⚠ A PERCENT is NOT x100 -- a reader never divides one.
+	python::list getCommerceModifiers(const std::string& szTypePrefix, int iId, int iScope) const;
+	// The DEFENSE group, indexed by DefenseKind. The whole family is authored `percent` ([json.md] §6: the
+	// values are additive defense points APPLIED as a percentage, and defense carries no decimals), so this
+	// is the percent side throughout and is likewise never divided.
+	python::list getDefenseKinds(const std::string& szTypePrefix, int iId, int iScope) const;
 
 	// ⚑ THE BULK INDEX SHAPE -- one boundary crossing for a WHOLE id->value column, not one per entity.
 	// A boost::python call costs far more than the lookup inside it, so the read that scales is the one that

@@ -544,23 +544,50 @@ python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSl
 
 python::list CyInfo::getFlatYields(const std::string& szTypePrefix, int iId, int iScope) const
 {
-	// CORPORATION_ only today -- the flats live on the concrete info, not on the CvInfo base, so each prefix
-	// that grows one is added here rather than the read pretending to be generic over a base it cannot reach.
-	python::list values = python::list();
-	if (szTypePrefix != "CORPORATION_" || iId < 0 || iId >= GC.getNumCorporationInfos()) return values;
-	const CvCorporationInfo& kInfo = GC.getCorporationInfo((CorporationTypes)iId);
-	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
-		values.append(kInfo.getFlatYield((YieldTypes)i, (CvCascScope)iScope));
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		// An entity that authors none answers 0 across the group -- a total read, never an error.
+		values.append(pInfo ? pInfo->modifier(infoYieldFamily((YieldTypes)iYield), CHANNEL_AMOUNT,
+			(CvCascScope)iScope, CASC_UNIT_FLAT) : 0);
+	}
 	return values;
 }
 
 python::list CyInfo::getFlatCommerces(const std::string& szTypePrefix, int iId, int iScope) const
 {
-	python::list values = python::list();
-	if (szTypePrefix != "CORPORATION_" || iId < 0 || iId >= GC.getNumCorporationInfos()) return values;
-	const CvCorporationInfo& kInfo = GC.getCorporationInfo((CorporationTypes)iId);
-	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
-		values.append(kInfo.getFlatCommerce((CommerceTypes)i, (CvCascScope)iScope));
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		values.append(pInfo ? pInfo->modifier(infoCommerceFamily(iCommerce), CHANNEL_AMOUNT,
+			(CvCascScope)iScope, CASC_UNIT_FLAT) : 0);
+	}
+	return values;
+}
+
+python::list CyInfo::getCommerceModifiers(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		values.append(pInfo ? pInfo->modifier(infoCommerceFamily(iCommerce), CHANNEL_AMOUNT,
+			(CvCascScope)iScope, CASC_UNIT_PERCENT) : 0);
+	}
+	return values;
+}
+
+python::list CyInfo::getDefenseKinds(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iKind = 0; iKind < NUM_DEFENSE_KINDS; ++iKind)
+	{
+		values.append(pInfo ? pInfo->modifier(MODFAM_DEFENSE, iKind,
+			(CvCascScope)iScope, CASC_UNIT_PERCENT) : 0);
+	}
 	return values;
 }
 
@@ -909,6 +936,8 @@ void CyInfo::pythonPublish()
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("getFlatYields", &CyInfo::getFlatYields)
 		.def("getFlatCommerces", &CyInfo::getFlatCommerces)
+		.def("getCommerceModifiers", &CyInfo::getCommerceModifiers)
+		.def("getDefenseKinds", &CyInfo::getDefenseKinds)
 		.def("getIdList", &CyInfo::getIdList)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;
