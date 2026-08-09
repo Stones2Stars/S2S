@@ -270,6 +270,28 @@ public:
 	// Does this BUILDING play a completion movie? The wonder-movie popup gates on the verdict alone, and the
 	// screen behind it resolves the ART_DEF_MOVIE_* tag itself -- so no tag string crosses the boundary.
 	bool hasMovie(int iBuildingId) const;
+
+	// ---- BUILDING facts a consumer classifies a city's buildings by. ----
+	// Each is NAMED because Python cannot name a classification id: the parameterized `providesAmenity` carries
+	// a CLS_* the caller has no vocabulary for, which is the opaque-slot shape the owner ruling above retires.
+	//
+	// Is this building the SHRINE of a religion (json §9 `shrine`)? ⚑ It replaces a legacy
+	// `getGlobalReligionCommerce() > 0`, and the change of QUESTION is the point: that read a MAGNITUDE in order
+	// to infer an identity. The shrine relationship IS the data, and its per-commerce values live on the
+	// RELIGION, scaled per city holding it ([json.md] §9) -- so the building's own number never was the fact.
+	bool isShrine(int iBuildingId) const;
+	// Is this building ASSOCIATED with a religion (its RELIGION_* FK -- a temple, a monastery)?
+	// ⚠ Distinct from isShrine: 213 buildings carry the association, 29 are shrines.
+	bool isReligiousBuilding(int iBuildingId) const;
+	// Is this building placed by the engine's own auto-placement (json §7 `autoBuild` ⊂ `notConstructible`)?
+	bool isAutoBuild(int iBuildingId) const;
+	// Does this building confer NUKE IMMUNITY on its city (the `nukeImmune` AMENITY)?
+	// ⚠ The BUILDING is not the thing protected -- the CITY is ([json.md] §8), which is why this is an amenity
+	// the building PROVIDES and not an attribute it HAS. The plot-substrate key of the same name is a
+	// CHARACTERISTIC and a different mechanic; the blocks are distinct precisely so they cannot merge.
+	bool providesNukeImmunity(int iBuildingId) const;
+	// Does this building confer CAPITAL status on its city (the `capital` AMENITY -- the palace)?
+	bool providesCapitalStatus(int iBuildingId) const;
 	// A HANDICAP's civic-upkeep percentage (`upkeep.empire.civic.percent`) -- the difficulty scaler the combat
 	// theft handlers weigh a winner's difficulty against a loser's by.
 	// ⚑ NAMED rather than slotted for the same reason as isWorldUnit above, and because the value belongs to ONE

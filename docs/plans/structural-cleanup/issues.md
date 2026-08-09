@@ -1376,33 +1376,3 @@ quantity is the thing that design removed, reappearing one layer down.
 ⚠ The fix is NOT another cache: [DEC-legacy-decache-poisons-perf] sequences this explicitly — fix the READS
 that should never have computed, and only then let the AI plane cache its own scores. A cache added while a
 wrong-shaped read is still underneath it hides the read instead of fixing it.
-
-## `AbandonCityEventManager` IS LIVE AND READS SIX DELETED INFO ACCESSORS
-
-The Abandon-City mod is wired on both routes — `Assets/Config/Abandon City Mod.xml` registers it as a BUG module
-(`module="AbandonCityEventManager"`) and `Screens/CvMainInterface.py` imports it directly — so it is not dormant
-contrib code that a cut may walk past.
-
-Its body reaches the info plane through `GC.get<X>Info`, which is published NOWHERE
-([python-read-map.md](../../reference/python-read-map.md)), so every one of these raises `AttributeError` at the
-moment its handler fires:
-
-| line | read | what it wants |
-|---|---|---|
-| 120 | `isWorldWonder` / `isTeamWonder` | the wonder CATEGORY — the self-cap's SCOPE ([json.md] 4.4) |
-| 122 | `GC.getBuildingInfo(...)` | `isNukeImmune` / `isAutoBuild` / `isCapital` / `getGlobalReligionCommerce` / `getProductionCost` |
-| 164 | `GC.getBuildingInfo(...).getReligionType()` | the building's religion FK |
-| 225 · 291 · 318 | `GC.getUnitInfo(...)` | unit identity for the message lines |
-| 350 | `GC.getBuildingInfo(...)` | the selected building's own numbers |
-
-⛔ **It is NOT a rider on the dangling-helper sweep, and converting only its wonder test would be the banned
-half-conversion** — arguments re-pointed at the id surface while the body still calls a method that does not
-exist, which relocates the failure instead of fixing it
-([roadmap.md](roadmap.md) § scope decision 6). The whole file converts or none of it does.
-
-⚑ The reads it needs are ordinary and already served: three of the five building booleans are the `attributes` /
-`amenities` classification planes (`isCapital` and `isNukeImmune` are AMENITIES — city-conferred, so the question
-is the CITY's fold, not the grantor's — [contexts.md](../../architecture/contexts.md)), `getProductionCost` is
-`PYINT_COST`, and the unit identity is `INFO.getTextKey` / `getButton`. ⚠ `isCapital` is the case to read
-carefully: it collides with `CvCity::isCapital`, and which one a site means is decided by its RECEIVER
-([patterns.md](../../architecture/patterns.md)).

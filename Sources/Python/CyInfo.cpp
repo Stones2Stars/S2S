@@ -379,6 +379,29 @@ bool CyInfo::hasMovie(int iBuildingId) const
 	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
 	return pBuilding ? pBuilding->hasMovie() : false;
 }
+bool CyInfo::isShrine(int iBuildingId) const
+{
+	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
+	return pBuilding ? pBuilding->getShrineReligion() >= 0 : false;
+}
+bool CyInfo::isReligiousBuilding(int iBuildingId) const
+{
+	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
+	return pBuilding ? pBuilding->getReligion() >= 0 : false;
+}
+bool CyInfo::isAutoBuild(int iBuildingId) const
+{
+	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
+	return pBuilding ? pBuilding->isAutoBuild() : false;
+}
+bool CyInfo::providesNukeImmunity(int iBuildingId) const
+{
+	return providesAmenity("BUILDING_", iBuildingId, CLS_AMENITY_NUKE_IMMUNE);
+}
+bool CyInfo::providesCapitalStatus(int iBuildingId) const
+{
+	return providesAmenity("BUILDING_", iBuildingId, CLS_AMENITY_CAPITAL);
+}
 //	The handicap's civic-upkeep percentage. The HUMAN audience is read deliberately: the caller weighs one
 //	player's difficulty against another's, and the AI sibling is a separate stage the engine applies itself
 //	(CvHandicapInfo -- every point getter carries its own audience).
@@ -875,6 +898,11 @@ void CyInfo::pythonPublish()
 		.def("canSpreadReligion",   &CyInfo::canSpreadReligion)
 		.def("isWorldUnit",         &CyInfo::isWorldUnit)
 		.def("hasMovie",            &CyInfo::hasMovie)
+		.def("isShrine",            &CyInfo::isShrine)
+		.def("isReligiousBuilding", &CyInfo::isReligiousBuilding)
+		.def("isAutoBuild",         &CyInfo::isAutoBuild)
+		.def("providesNukeImmunity",  &CyInfo::providesNukeImmunity)
+		.def("providesCapitalStatus", &CyInfo::providesCapitalStatus)
 		.def("getHandicapCivicUpkeepPercent", &CyInfo::getHandicapCivicUpkeepPercent)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getScalar",      &CyInfo::getScalar)

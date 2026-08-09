@@ -7,6 +7,10 @@ import CvScreensInterface
 GC = CyGlobalContext()
 GAME = GC.getGame()
 TRNSLTR = CyTranslator()
+# The one data-fetching library ([DEC-cy-not-fixed]): INFO = what an entity CARRIES,
+# ENABLER = "can I?" (its maintained verdict, never a re-derived prereq walk).
+INFO = CyInfo()
+ENABLER = CyEnabler()
 
 TEXT = CyGameTextMgr()
 # globals
@@ -112,23 +116,27 @@ class CityDemolish:
 		self.fGoldMod = fGoldMod
 		# Build List
 		CyCity = self.CyCity
-		CyTeam = GC.getTeam(self.CyPlayer.getTeam())
 		aList = []
 		iSum = 0
 		for iType in xrange(GC.getNumBuildingInfos()):
 			if CyCity.hasBuilding(iType) and not CyCity.isFreeBuilding(iType):
-				if isWorldWonder(iType) or isTeamWonder(iType):
+				# A wonder's CATEGORY is WHICH self-cap scope it authors ([json.md] 4.4): WORLD and TEAM are the
+				# world and team wonders. There is no isWorldWonder mirror to ask, and never was one.
+				eScope = INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_WONDER_SCOPE)
+				if eScope in (AllowedCap.ALLOWEDCAP_WORLD, AllowedCap.ALLOWEDCAP_TEAM):
 					continue
-				CvBuildingInfo = GC.getBuildingInfo(iType)
-				# Unique buildings are protected.
-				if CvBuildingInfo.isNukeImmune() or CvBuildingInfo.isAutoBuild() or CvBuildingInfo.isCapital() or CvBuildingInfo.getGlobalReligionCommerce() > 0:
+				# Unique buildings are protected. Each is asked of the BUILDING because the question is what
+				# this candidate IS, not what the city holds -- classify by the QUESTION, not the domain
+				# ([patterns.md]: gate -> the city; valuation / apply / display -> the grantor).
+				if (INFO.providesNukeImmunity(iType) or INFO.isAutoBuild(iType)
+				or INFO.providesCapitalStatus(iType) or INFO.isShrine(iType)):
 					continue
-				iGold = CvBuildingInfo.getProductionCost()
+				iGold = INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)
 				if iGold < 0:
 					iGold = 0
 				elif iGold != 0:
 					iGold = int(iGold * fGoldMod)
-				aList.append((CvBuildingInfo.getDescription(), CvBuildingInfo.getButton(), iType, iGold))
+				aList.append((INFO.getDescription("BUILDING_", iType), INFO.getButton("BUILDING_", iType), iType, iGold))
 				iSum += iGold
 		self.iSum = iSum
 		# Abandon City cost.
@@ -161,7 +169,9 @@ class CityDemolish:
 						szText += " (<color=197,0,0>" + str(iGold) + "</color> " + iconGold
 					else:
 						szText += " (" + str(iGold) + " " + iconGold
-				if GC.getBuildingInfo(iType).getReligionType() >= 0:
+				# A religious building costs a happy face to sell -- the RELIGION_* association, not the shrine
+				# relationship (213 buildings carry the first, 29 the second).
+				if INFO.isReligiousBuilding(iType):
 					if iGold:
 						szText += ","
 					else:
@@ -208,7 +218,6 @@ class CityDemolish:
 						CyMessageControl().sendModNetMessage(902, iPlayer, CyUnit.getID(), 0, 0)
 						break
 
-			CyTeam = GC.getTeam(CyPlayer.getTeam())
 			# Settler
 			if iOwnCulturePop > 0 or iForeignPop > 2:
 				aSettlerList = [
@@ -221,34 +230,13 @@ class CityDemolish:
 				]
 				for iUnit in aSettlerList:
 					if iUnit < 0: continue
-					bContinue = False
-					CvUnitInfo = GC.getUnitInfo(iUnit)
-					# Tech Prereq
-					iTech = CvUnitInfo.getPrereqAndTech()
-					if iTech > -1 and not CyTeam.isHasTech(iTech):
+					# "Can this city train it?" is the ENABLER's, and its verdict is a bare O(1) fetch of the
+					# maintained tri-state ([enabler.md] par.8). What stood here re-derived the tech, building
+					# and bonus prereqs by hand -- the scattered canTrain check the enabler exists to replace,
+					# and it read `isActiveBuilding`, a computed dormancy verdict a gate must not ride in on
+					# ([DEC-calc-zero-ride-in]).
+					if ENABLER.getUnitAvailability(iPlayer, iCity, iUnit) != EnablerState.ENABLER_LISTED:
 						continue
-					for iTech in CvUnitInfo.getPrereqAndTechs():
-						if not CyTeam.isHasTech(iTech):
-							bContinue = True
-							break
-					if bContinue: continue
-					# Building Prereq
-					for i in xrange(CvUnitInfo.getNumPrereqAndBuildings()):
-						if not CyCity.isActiveBuilding(CvUnitInfo.getPrereqAndBuilding(i)):
-							bContinue = True
-							break
-					if bContinue: continue
-					# Bonus Prereq
-					iBonus = CvUnitInfo.getPrereqAndBonus()
-					if iBonus > -1 and not CyCity.getNumBonuses(iBonus):
-						continue
-					if CvUnitInfo.getPrereqOrBonuses():
-						bContinue = True
-						for iBonus in CvUnitInfo.getPrereqOrBonuses():
-							if CyCity.getNumBonuses(iBonus):
-								bContinue = False
-								break
-					if bContinue: continue
 					# Found Valid Settler
 					CyMessageControl().sendModNetMessage(906, iPlayer, iCity, iExp, iUnit)
 					if iOwnCulturePop:
@@ -287,19 +275,11 @@ class CityDemolish:
 			]
 			for iUnit in aMerchantList:
 				if iUnit < 0: continue
-				bContinue = False
-				CvUnitInfo = GC.getUnitInfo(iUnit)
-				# Tech Prereq
-				iTech = CvUnitInfo.getPrereqAndTech()
-				if iTech > -1 and not CyTeam.isHasTech(iTech):
+				# The enabler's maintained verdict, never a re-derived prereq walk ([enabler.md] par.8).
+				if ENABLER.getUnitAvailability(iPlayer, iCity, iUnit) != EnablerState.ENABLER_LISTED:
 					continue
-				for iTech in CvUnitInfo.getPrereqAndTechs():
-					if not CyTeam.isHasTech(iTech):
-						bContinue = True
-						break
-				if bContinue: continue
 				# Found Valid Merchant
-				fCost = CvUnitInfo.getProductionCost() * fModifierGS
+				fCost = INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_COST) * fModifierGS
 				if fCost < 1: break
 				iNum = int(self.iSum / fCost)
 				for i in xrange(iNum):
@@ -314,19 +294,11 @@ class CityDemolish:
 			]
 			for iUnit in aMerchantList:
 				if iUnit < 0: continue
-				bContinue = False
-				CvUnitInfo = GC.getUnitInfo(iUnit)
-				# Tech Prereq
-				iTech = CvUnitInfo.getPrereqAndTech()
-				if iTech > -1 and not CyTeam.isHasTech(iTech):
+				# The enabler's maintained verdict, never a re-derived prereq walk ([enabler.md] par.8).
+				if ENABLER.getUnitAvailability(iPlayer, iCity, iUnit) != EnablerState.ENABLER_LISTED:
 					continue
-				for iTech in CvUnitInfo.getPrereqAndTechs():
-					if not CyTeam.isHasTech(iTech):
-						bContinue = True
-						break
-				if bContinue: continue
 				# Found Valid Merchant
-				fCost = CvUnitInfo.getProductionCost() * fModifierGS
+				fCost = INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_COST) * fModifierGS
 				iNum = int(CyCity.getFood() / fCost)
 				for i in xrange(iNum):
 					CyMessageControl().sendModNetMessage(905, iPlayer, iCity, -1, iUnit)
@@ -347,8 +319,7 @@ class CityDemolish:
 			CyAudioGame().Play2DSound("AS2D_DISCOVERBONUS")
 
 		else: # Sell a building
-			CvBuildingInfo = GC.getBuildingInfo(iSelected)
-			iGold = int(CvBuildingInfo.getProductionCost() * self.fGoldMod)
+			iGold = int(INFO.getIntrinsic("BUILDING_", iSelected, IntrinsicSlot.PYINT_COST) * self.fGoldMod)
 			CyMessageControl().sendModNetMessage(903, iPlayer, iCity, iSelected, iGold)
 			CyAudioGame().Play2DSound("AS2D_DISCOVERBONUS")
 
