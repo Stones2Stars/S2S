@@ -870,6 +870,22 @@ of them:
   > (`NiColorA(0,0,0,0)` for the dot-map overlay) — those raise `NameError` at IMPORT. The engine RETURNS others
   > (`Win32::getCursorPos` → `POINT`, still published) — those resolve and then throw at CONVERSION, at first
   > use, far from the cut. Restore on DEMAND, named by the call site that wanted it.
+  >
+  > **⚖ AND WHERE A MAP SCRIPT DRAWS THROUGH THE HANDLE, THE OPERATION STAYS ON THE HANDLE — a named endpoint
+  > beside it is the near-synonym duplication, not the fix.** `CvRandom` is the worked case: it is registered so
+  > the handle can cross (`getMapRand` → the EXE's `shuffleList`), and Python also DRAWS from it — the map
+  > scripts alone do so at dozens of sites (`CvMapGeneratorUtil`'s `mapRand`). Those are an OPEN EXTENSION
+  > POINT whose contract is the named callbacks (§ MAP SCRIPTS below), so a third-party script cannot be
+  > re-pointed and `get` has to exist on the type regardless.
+  > ⛔ **So publishing a tidier `getASyncRandNum` on the config context and re-pointing the in-tree callers is the
+  > wrong move twice over:** it leaves every map script still broken, and it creates a second spelling of one job
+  > — *"3 similarly named endpoints that in essence do the same thing"*, which this section names as the actual
+  > failure. ⚑ The test to apply: **can every caller be re-pointed?** If a map script or any other open extension
+  > point is among them, the answer is no and the operation belongs on the type.
+  > ⚠ It does reach the SYNCHRONIZED stream (`getSorenRand` hands that one across), but `getSorenRandNum` is
+  > already published, so restoring the draw adds a SPELLING and not a POWER. What still binds is where a given
+  > draw belongs: a cosmetic pick — which greeting variant a leader uses — is `getASyncRand`, because the synced
+  > stream's draw COUNT is shared save state ([DEC-synced-rng-is-shared-state](decisions.md#dec-synced-rng-is-shared-state)).
 
 **⛔ TWO THINGS THE LIBRARY DOES NOT OWN:**
 

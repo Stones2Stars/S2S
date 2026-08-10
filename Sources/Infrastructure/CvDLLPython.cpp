@@ -225,15 +225,25 @@ DllExport void DLLPublishToPython()
 		;
 
 	//   CvRandom -- the engine HANDS ONE ACROSS (CyGame::getMapRand / getSorenRand, both published with
-	//               reference_existing_object) and Python passes it straight on to the EXE's own shuffleList.
-	//               So the def resolved and threw at CONVERSION: "No Python class registered for C++ class
-	//               class CvRandom", from WoodlandCycle's onBeginGameTurn -- once per game turn.
-	//               ⛔ ZERO defs, deliberately: Python never asks it anything, it only carries the handle from
-	//               one published call to another, so this is the marshalling IDENTITY and not a read surface
-	//               ([DEC-cy-not-fixed] bans the getter contract, never the class_<> that lets a type cross).
-	//               ⚠ shuffleList is the EXE's, not ours -- it has never existed in Sources/ -- so nothing here
-	//               is a revived binding; only the registration was missing.
-	python::class_<CvRandom>("CvRandom", python::no_init);
+	//               reference_existing_object) and Python both passes it on to the EXE's own shuffleList and
+	//               DRAWS from it. So it needs the registration (or the def throws at CONVERSION: "No Python
+	//               class registered for C++ class class CvRandom") AND the draw.
+	//               ⚑ `get` is what a random is FOR: the map scripts draw through the handle at dozens of sites
+	//               (CvMapGeneratorUtil's mapRand), and those are an OPEN EXTENSION POINT whose contract is the
+	//               named Python callbacks -- a third-party script cannot be re-pointed, so the draw stays ON
+	//               the handle. [DEC-cy-not-fixed] bans the info/state GETTER contract; a draw is neither, the
+	//               same reading that keeps def_readwrite on the plain value structs above.
+	//               ⛔ Do NOT add a second, named draw beside it. One job, one spelling: near-synonyms are the
+	//               duplication the boundary ruling actually warns about ([patterns.md]).
+	//               ⚠ It reaches the SYNCHRONIZED stream too, since getSorenRand hands that one across -- but
+	//               that capability already exists as the published getSorenRandNum, so this adds a spelling and
+	//               not a power. The draw COUNT on that stream is shared save state
+	//               ([DEC-synced-rng-is-shared-state]): a cosmetic pick belongs on getASyncRand and must stay
+	//               there.
+	//               ⚠ shuffleList is the EXE's, not ours -- it has never existed in Sources/.
+	python::class_<CvRandom>("CvRandom", python::no_init)
+		.def("get", &CvRandom::get, "int (int iNum, str szLog) - a draw from 0 to iNum-1 inclusive")
+		;
 
 	//   TradeData -- fails in BOTH directions, which is why it surfaced twice over. The engine RETURNS one
 	//               (CyDeal::getFirstTrade / getSecondTrade), so the scoreboard's deal walk resolved the def and

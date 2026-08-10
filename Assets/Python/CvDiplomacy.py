@@ -387,9 +387,8 @@ class CvDiplomacy:
 		if DebugLogging:
 			print debugString, eComment
 
-		CvDiplomacyInfo = GC.getDiplomacyInfo(eComment)
-		if CvDiplomacyInfo:
-			szString = self.filterUserResponse(CvDiplomacyInfo)
+		if INFO.getDiplomacyNumResponses(eComment) > 0:
+			szString = self.filterUserResponse(eComment)
 		else:
 			print "CvDiplomacy.getDiplomacyComment: %s does not exist!" %(eComment,)
 			szString = "Error***: No string found for eComment: %s" % eComment
@@ -402,8 +401,8 @@ class CvDiplomacy:
 				return True
 		return False
 
-	def filterUserResponse(self, diploInfo):
-		"pick the user's response from a CvDiplomacyTextInfo, based on response conditions"
+	def filterUserResponse(self, eComment):
+		"pick the user's response from a DIPLOMACY_ comment's responses, based on response conditions"
 		iPlayer = self.diploScreen.getWhoTradingWith()
 		if iPlayer == -1:
 			return ""
@@ -421,36 +420,43 @@ class CvDiplomacy:
 		del iTheirPower, iOurPower
 		iAttitude = CyPlayer.AI_getAttitude(iPlayerAct)
 
+		# The response reads are named on the info library and carry the comment id, so bind them once here and
+		# the condition walk below reads exactly as it did against the old info object.
+		getAttitude = lambda i, j: INFO.getDiplomacyResponseAttitude(eComment, i, j)
+		getCivilization = lambda i, j: INFO.getDiplomacyResponseCivilization(eComment, i, j)
+		getLeaderHead = lambda i, j: INFO.getDiplomacyResponseLeaderHead(eComment, i, j)
+		getPower = lambda i, j: INFO.getDiplomacyResponsePower(eComment, i, j)
+
 		responses = []
-		for i in xrange(diploInfo.getNumResponses()):
+		for i in xrange(INFO.getDiplomacyNumResponses(eComment)):
 
 			# check attitude of other player towards us
-			if self.isUsed(diploInfo.getAttitudeTypes, i, AttitudeTypes.NUM_ATTITUDE_TYPES) and not diploInfo.getAttitudeTypes(i, iAttitude):
+			if self.isUsed(getAttitude, i, AttitudeTypes.NUM_ATTITUDE_TYPES) and not getAttitude(i, iAttitude):
 				continue
 
 			# check civ type
-			if self.isUsed(diploInfo.getCivilizationTypes, i, GC.getNumCivilizationInfos()) and not diploInfo.getCivilizationTypes(i, iCiv):
+			if self.isUsed(getCivilization, i, GC.getNumCivilizationInfos()) and not getCivilization(i, iCiv):
 				continue
 
 			# check leader type
-			if self.isUsed(diploInfo.getLeaderHeadTypes, i, GC.getNumLeaderHeadInfos()) and not diploInfo.getLeaderHeadTypes(i, iLeader):
+			if self.isUsed(getLeaderHead, i, GC.getNumLeaderHeadInfos()) and not getLeaderHead(i, iLeader):
 				continue
 
 			# check power type
-			if self.isUsed(diploInfo.getDiplomacyPowerTypes, i, DiplomacyPowerTypes.NUM_DIPLOMACYPOWER_TYPES):
+			if self.isUsed(getPower, i, DiplomacyPowerTypes.NUM_DIPLOMACYPOWER_TYPES):
 
-				if bUsInferior and not diploInfo.getDiplomacyPowerTypes(i, DiplomacyPowerTypes.DIPLOMACYPOWER_STRONGER):
+				if bUsInferior and not getPower(i, DiplomacyPowerTypes.DIPLOMACYPOWER_STRONGER):
 					continue
 
-				elif bUsSuperior and not diploInfo.getDiplomacyPowerTypes(i, DiplomacyPowerTypes.DIPLOMACYPOWER_WEAKER):
+				elif bUsSuperior and not getPower(i, DiplomacyPowerTypes.DIPLOMACYPOWER_WEAKER):
 					continue
 
-				elif not diploInfo.getDiplomacyPowerTypes(i, DiplomacyPowerTypes.DIPLOMACYPOWER_EQUAL):
+				elif not getPower(i, DiplomacyPowerTypes.DIPLOMACYPOWER_EQUAL):
 					continue
 
 			# passed all tests, so add to response list
-			for j in xrange(diploInfo.getNumDiplomacyText(i)):
-				responses.append(diploInfo.getDiplomacyText(i, j))
+			for j in xrange(INFO.getDiplomacyNumText(eComment, i)):
+				responses.append(INFO.getDiplomacyText(eComment, i, j))
 
 		# pick a random response
 		if responses:

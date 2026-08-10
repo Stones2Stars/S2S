@@ -307,6 +307,23 @@ public:
 	// ⚠ Cold display/AI path only; it is not on any turn read.
 	bool canTradeItem(const std::string& szTypePrefix, int iId, const std::string& szItem) const;
 
+	// The DIPLOMACY_ RESPONSE plane -- a comment's candidate responses, addressed by (comment, response).
+	// ⚑ NAMED on the type rather than routed through the generic prefix plane: a response belongs to ONE
+	// registry, so the call site says what it fetches ([patterns.md] THE PYTHON READ BOUNDARY).
+	// ⛔ These serve the FILTER, never the choice: which response a leader gives is picked in Python
+	// (CvDiplomacy.filterUserResponse weighs attitude / civ / leader / power and rolls the ASYNC stream, which
+	// is correct -- a cosmetic line must not touch the synchronized RNG, [DEC-synced-rng-is-shared-state]).
+	// Porting that selection into C++ belongs to the events move, not here.
+	// ⚠ Every read is total: an out-of-range comment or response answers 0/false/"" rather than raising, because
+	// the caller walks these indices to DISCOVER which responses apply.
+	int getDiplomacyNumResponses(int iComment) const;
+	bool getDiplomacyResponseAttitude(int iComment, int iResponse, int iAttitude) const;
+	bool getDiplomacyResponseCivilization(int iComment, int iResponse, int iCivilization) const;
+	bool getDiplomacyResponseLeaderHead(int iComment, int iResponse, int iLeaderHead) const;
+	bool getDiplomacyResponsePower(int iComment, int iResponse, int iPower) const;
+	int getDiplomacyNumText(int iComment, int iResponse) const;
+	std::string getDiplomacyText(int iComment, int iResponse, int iText) const;
+
 	// A STRAGGLER SCALAR off the compiled sums -- patterns.md's getScalar, the category-4 read for the genuinely
 	// lone unconditioned values that belong to no group. Keyed by the shared InfoScalar vocabulary, with SCOPE
 	// and UNIT as spelled-out arguments ([DEC-scope-is-an-axis]: scope is an axis, never a name fragment).

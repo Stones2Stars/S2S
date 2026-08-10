@@ -23,6 +23,7 @@
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvHurryInfo.h"          // HURRY_ -- the hurry list's own numbers
+#include "Defines/CvDiplomacyClasses.h" // DIPLOMACY_ -- the response set the diplo screen filters
 #include "Infos/CvUnitInfo.h"             // getGrantedBuildings -- the unit's MISSION_CONSTRUCT repertoire
 #include "Infos/CvAllowed.h"
 #include "Infos/CvHandicapInfo.h"         // HANDICAP_ -- the civic-upkeep difficulty scaler
@@ -475,6 +476,78 @@ bool CyInfo::canTradeItem(const std::string& szTypePrefix, int iId, const std::s
 	// registry does the name->id resolve here rather than the block carrying a string plane for it.
 	return GC.getTechInfo((TechTypes)iId).providesCanTrade(
 		ClassificationRegistry::keyId(CLSD_CANTRADE, szItem));
+}
+
+//	The DIPLOMACY_ response plane. The registry is XML-side and its data is intact; only the Python read was
+//	missing, which raised at the first contact and took the whole screen's option list with it.
+//	⚠ Bounds are answered, not asserted: the caller walks these indices to find out which responses apply, so an
+//	out-of-range index is an ordinary "no" rather than a fault.
+static const CvDiplomacyInfo* cyi_diplomacyResponse(int iComment, int iResponse)
+{
+	if (iComment < 0 || iComment >= GC.getNumDiplomacyInfos())
+	{
+		return NULL;
+	}
+	const CvDiplomacyInfo& kInfo = GC.getDiplomacyInfo(iComment);
+	if (iResponse < 0 || iResponse >= kInfo.getNumResponses())
+	{
+		return NULL;
+	}
+	return &kInfo;
+}
+
+int CyInfo::getDiplomacyNumResponses(int iComment) const
+{
+	if (iComment < 0 || iComment >= GC.getNumDiplomacyInfos())
+	{
+		return 0;
+	}
+	return GC.getDiplomacyInfo(iComment).getNumResponses();
+}
+
+bool CyInfo::getDiplomacyResponseAttitude(int iComment, int iResponse, int iAttitude) const
+{
+	const CvDiplomacyInfo* pInfo = cyi_diplomacyResponse(iComment, iResponse);
+	return pInfo != NULL && iAttitude >= 0 && iAttitude < NUM_ATTITUDE_TYPES
+	    && pInfo->getAttitudeTypes(iResponse, iAttitude);
+}
+
+bool CyInfo::getDiplomacyResponseCivilization(int iComment, int iResponse, int iCivilization) const
+{
+	const CvDiplomacyInfo* pInfo = cyi_diplomacyResponse(iComment, iResponse);
+	return pInfo != NULL && iCivilization >= 0 && iCivilization < GC.getNumCivilizationInfos()
+	    && pInfo->getCivilizationTypes(iResponse, iCivilization);
+}
+
+bool CyInfo::getDiplomacyResponseLeaderHead(int iComment, int iResponse, int iLeaderHead) const
+{
+	const CvDiplomacyInfo* pInfo = cyi_diplomacyResponse(iComment, iResponse);
+	return pInfo != NULL && iLeaderHead >= 0 && iLeaderHead < GC.getNumLeaderHeadInfos()
+	    && pInfo->getLeaderHeadTypes(iResponse, iLeaderHead);
+}
+
+bool CyInfo::getDiplomacyResponsePower(int iComment, int iResponse, int iPower) const
+{
+	const CvDiplomacyInfo* pInfo = cyi_diplomacyResponse(iComment, iResponse);
+	return pInfo != NULL && iPower >= 0 && iPower < NUM_DIPLOMACYPOWER_TYPES
+	    && pInfo->getDiplomacyPowerTypes(iResponse, iPower);
+}
+
+int CyInfo::getDiplomacyNumText(int iComment, int iResponse) const
+{
+	const CvDiplomacyInfo* pInfo = cyi_diplomacyResponse(iComment, iResponse);
+	return pInfo != NULL ? pInfo->getNumDiplomacyText(iResponse) : 0;
+}
+
+std::string CyInfo::getDiplomacyText(int iComment, int iResponse, int iText) const
+{
+	const CvDiplomacyInfo* pInfo = cyi_diplomacyResponse(iComment, iResponse);
+	if (pInfo == NULL || iText < 0 || iText >= pInfo->getNumDiplomacyText(iResponse))
+	{
+		return std::string();
+	}
+	const char* szText = pInfo->getDiplomacyText(iResponse, iText);
+	return szText != NULL ? std::string(szText) : std::string();
 }
 
 python::list CyInfo::getWellbeing(const std::string& szTypePrefix, int iId, int iScope) const
@@ -1029,6 +1102,13 @@ void CyInfo::pythonPublish()
 		.def("providesCapitalStatus", &CyInfo::providesCapitalStatus)
 		.def("getHandicapCivicUpkeepPercent", &CyInfo::getHandicapCivicUpkeepPercent)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
+		.def("getDiplomacyNumResponses",        &CyInfo::getDiplomacyNumResponses)
+		.def("getDiplomacyResponseAttitude",    &CyInfo::getDiplomacyResponseAttitude)
+		.def("getDiplomacyResponseCivilization",&CyInfo::getDiplomacyResponseCivilization)
+		.def("getDiplomacyResponseLeaderHead",  &CyInfo::getDiplomacyResponseLeaderHead)
+		.def("getDiplomacyResponsePower",       &CyInfo::getDiplomacyResponsePower)
+		.def("getDiplomacyNumText",             &CyInfo::getDiplomacyNumText)
+		.def("getDiplomacyText",                &CyInfo::getDiplomacyText)
 		.def("getScalar",      &CyInfo::getScalar)
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("getFlatYields", &CyInfo::getFlatYields)
