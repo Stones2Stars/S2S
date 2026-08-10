@@ -495,6 +495,30 @@ appear on that map.
 
 ---
 
+## 13h. THE CITY LAYOUT HAS FEWER SLOTS THAN A CITY HAS BUILDINGS (art data, not the DLL)
+
+**MEASURED from `LSystem.log`** ([observability.md](../../reference/observability.md)): **1,684**
+`Failed to place goal building <ART_DEF>` over **174 distinct buildings**, plus **147**
+`Layout failed to complete while adding generic buildings!`. Every one of the 174 is a building that HAS a
+model — `ASSEMBLY_PLANT`, `FACTORY`, `COLOSSEUM`, `HOSPITAL`, `COURTHOUSE` — so this is the layout engine
+running out of room, never a missing-art gap.
+
+⛔ **DISTINCT from the art-less flood (§13), and the two must not be conflated.** That one was the city offering
+the engine buildings with NO model (`is not associated with a CvCityLSystem node`), and it is fixed by
+`world.art.notShownInCity`. This one is the opposite condition: a real model with nowhere to put it. Checked
+rather than assumed — **0 of the 174 are flagged `notShownInCity`**.
+
+⚠ **Whether the §13 fix moves this number at all is UNKNOWN and is one measurement away.** It turns on whether
+the art-less buildings consumed layout slots before being rejected or never reached placement — the
+*"not associated with a node"* wording suggests the latter, in which case removing them frees nothing and the
+1,684 stand. `LSystem.log` is rewritten per session, so re-counting after a run on the new DLL answers it.
+
+⇒ **The fix, if one is wanted, is `Assets/XML/Buildings/CIV4CityLSystem.xml` having more or larger nodes — ART
+DATA** ([roadmap.md](roadmap.md) scope decision 3), never a DLL change. ⚑ Inherited rather than introduced: a
+layout grid sized for vanilla's building count against this mod's **5,180** is the ratio that produces it.
+
+---
+
 ## 13g. THE PER-CIV UNIT ART STYLE OVERRIDE IS NOT CARRIED
 
 `CvUnitArtStyleTypeInfo` is an identity-only info: it holds its `Type`/`Description` and nothing else, so a
