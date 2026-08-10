@@ -99,9 +99,7 @@ public:
 	// and the /computed census renders, published so the TOOLTIP reads the SAME DOCUMENT.
 	// â A tooltip IS a census (owner): if the panel recomputes its own breakdown it is a second answer to
 	// one question, and the two drift. This is the read that stops a screen hand-rolling yield arithmetic.
-	// Returns, in order: [plotBase, plotNature, plotImprovement, plotRest, tradeYield, goldenAge, upperFlat,
-	// specialists, cityFlat, percentSum, workedPlots, rate]. Amounts are x100; percentSum and workedPlots are
-	// whole numbers ([DEC-fixedpoint-x100] -- the reader divides at the point of use).
+	// Indexed by CityYieldTerm -- the reader names its slot, never a literal position.
 	python::list getCityYieldTerms(int iPlayer, int iCity, int iYield) const;
 	int getSight(int iPlayer, int iCity) const;   // the city's sight BUDGET (vision.md)
 	// Which player would receive this city if it were liberated, or -1 for nobody. A lone id, so it stays a

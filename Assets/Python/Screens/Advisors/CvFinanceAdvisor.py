@@ -140,12 +140,13 @@ class CvFinanceAdvisor:
 		iPlayerID = CyPlayer.getID()
 		for CyCity in CyPlayer.cities():
 			if not STATE.getCityFlags(iPlayerID, CyCity.getID())[CityFlagKind.CITY_FLAG_DISORDER]:
-				# Work plots
-				for j in range(GC.getNUM_CITY_PLOTS()):
-					CyPlot = CyCity.getCityIndexPlot(j)
-					if CyPlot and CyPlot.hasYield() and CyCity.isWorkingPlot(CyPlot):
-						iTiles += 1
-						iYield0 += CyPlot.getYield(YieldTypes.YIELD_COMMERCE)
+				#  The city's own yield CENSUS answers the worked-plot total and the tile count together, so this
+				#  panel reads the SAME document the tooltip does instead of re-deriving it a plot at a time
+				#  ([CyState.h]: a panel that recomputes its own breakdown is a second answer that drifts).
+				#  x100 like every amount; the reduce happens once, at the display below.
+				aTerms = STATE.getCityYieldTerms(iPlayerID, CyCity.getID(), YieldTypes.YIELD_COMMERCE)
+				iYield0 += int(aTerms[CityYieldTerm.YIELD_TERM_PLOT_BASE])
+				iTiles += int(aTerms[CityYieldTerm.YIELD_TERM_WORKED_PLOTS])
 				# Trade -- the per-route yields sum on the x100 plane; iYield1/iYield2 reduce once at display below
 				for iPartnerOwner, iPartnerCity, iProfitTimes100 in STATE.getTradeRoutes(iPlayerID, CyCity.getID()):
 					if iPartnerOwner < 0: continue
@@ -155,11 +156,13 @@ class CvFinanceAdvisor:
 						iYield1 += trade
 					else: # Foreign Trade
 						iYield2 += trade
-				# corporations
-				iYield3 += CyCity.getCorporationYield(YieldTypes.YIELD_COMMERCE)
-				# specialists
-				for iType in range(GC.getNumSpecialistInfos()):
-					iYield4 += CyPlayer.specialistYield(iType, YieldTypes.YIELD_COMMERCE) * (CyCity.getSpecialistCount(iType) + CyCity.getFreeSpecialistCount(iType))
+				#  corporations -- the census carries no corporation TERM, so there is nothing to itemize here.
+				#  ⚠ The amount is not lost from the rate: it rides inside the flat terms. What is missing is the
+				#  SPLIT, so the row stays unrendered rather than showing a number this panel cannot source.
+				iYield3 += 0
+				#  specialists -- the census sums the whole specialist contribution, so this reads the one document
+				#  instead of multiplying a per-type rate by a per-type count and hoping the two agree.
+				iYield4 += int(aTerms[CityYieldTerm.YIELD_TERM_SPECIALISTS])
 
 		Pnl = "FinAdv_Scroll_1"
 		screen.addScrollPanel(Pnl, "", x0, y0 + 32, dx, dy - 64, ePanelHudHelp)
@@ -169,6 +172,7 @@ class CvFinanceAdvisor:
 		y = 0
 		# Work plots
 		if iYield0:
+			iYield0 /= 100
 			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_WORKED_TILES", (iTiles,))
 			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 			screen.setLabelAt("", Pnl, uFont2 + str(iYield0), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
@@ -202,6 +206,7 @@ class CvFinanceAdvisor:
 
 		# specialists
 		if iYield4 > 0:
+			iYield4 /= 100
 			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_SPECIALISTS", ())
 			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 			screen.setLabelAt("", Pnl, uFont2 + str(iYield4), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)

@@ -1435,6 +1435,29 @@ enum BuildingGrantedKind
 	NUM_BUILDING_GRANTED_KINDS
 };
 
+//	The city's YIELD CENSUS for one channel -- the decomposition CyState::getCityYieldTerms returns, in order.
+//	⛔ The positions are the PUBLISHED contract: a consumer indexes this list by name, never by a literal, so
+//	inserting a term anywhere but before NUM_CITY_YIELD_TERMS silently re-points every reader.
+//	⚠ The AMOUNT terms are x100 like every amount; YIELD_TERM_PERCENT_SUM and YIELD_TERM_WORKED_PLOTS are whole
+//	numbers ([DEC-fixedpoint-x100] -- the reader reduces at the point of use).
+enum CityYieldTerm
+{
+	YIELD_TERM_PLOT_BASE = 0,
+	YIELD_TERM_PLOT_NATURE,
+	YIELD_TERM_PLOT_IMPROVEMENT,
+	YIELD_TERM_PLOT_REST,
+	YIELD_TERM_TRADE_YIELD,
+	YIELD_TERM_GOLDEN_AGE,
+	YIELD_TERM_UPPER_FLAT,
+	YIELD_TERM_SPECIALISTS,
+	YIELD_TERM_CITY_FLAT,
+	YIELD_TERM_PERCENT_SUM,
+	YIELD_TERM_WORKED_PLOTS,
+	YIELD_TERM_RATE,
+
+	NUM_CITY_YIELD_TERMS
+};
+
 //	The city's FOOD/GROWTH state: what is in the store, what this turn adds, what the next citizen costs, and
 //	how far off it is. One group, because every consumer that asks one of these asks three of them.
 //	⚠ GROWTH_READ_FOOD_PER_TURN is the BOTTOMED difference (the engine's own default) -- a starving city
