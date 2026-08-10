@@ -47,25 +47,87 @@ public:
 	// bare bool -- otherwise a greyed entry hands the player, and the AI, a question instead of an answer).
 	// ⛔ The reason is what is STORED; hide-vs-grey is READ OFF it (reasonHides) rather than being the whole of
 	// the verdict, so the two consumers the tri-state serves are both answerable from one stored fact.
+	//
+	// ⛔ THE `requires` HALF IS ONE REASON PER ATOM KIND, NEVER ONE BUNDLED VERDICT (par.6). A requires tree
+	// mixes kinds freely -- `all: [TECH_X, BONUS_Y]` is the ordinary shape -- so a single disposition cannot be
+	// right for both halves: a missing BONUS is exactly the "go get copper" case grey exists for, while an
+	// unresearched TECH is not something the asker can go and fetch.
 	enum GateReason
 	{
 		GATEREASON_NONE = 0,      // the gate passed
-		GATEREASON_REQUIRES,      // a `requires` clause is unmet -- GREYABLE (go connect it / go adopt it)
 		GATEREASON_DORMANT,       // a dormancy successor stands in this city (only-highest-active)
 		GATEREASON_REPLACED,      // HIDE_REPLACED: a reachable successor supersedes it
 		GATEREASON_OPTION,        // the entity-level enabled/disabled game-option gate (DEC-entity-gate)
 		GATEREASON_CAP_SELF,      // its own `allowed` world/team/empire cap is consumed
 		GATEREASON_CAP_GROUP,     // the SpecialBuilding group cap is consumed by a sibling
-		GATEREASON_CAP_CATEGORY   // this city's culture-level wonder-CATEGORY cap is full
+		GATEREASON_CAP_CATEGORY,  // this city's culture-level wonder-CATEGORY cap is full
+
+		// ==== the `requires` family -- one entry per ATOM KIND, CONTIGUOUS ====
+		// Contiguous so "is this a requires reason" is a range test (isRequiresReason) rather than a list every
+		// consumer has to keep in step. ⛔ The kinds STAY DISTINCT even where two currently share a disposition
+		// (par.6): collapsing later is one edit to reasonHides below, while pre-merging cannot be undone -- a
+		// merged entry no longer records which kind it meant.
+		GATEREASON_REQUIRES,              // an atom kind this vocabulary does not name (an unknown predicate)
+		GATEREASON_REQUIRES_TECH,
+		GATEREASON_REQUIRES_BUILDING,
+		GATEREASON_REQUIRES_BONUS,
+		GATEREASON_REQUIRES_CIVIC,
+		GATEREASON_REQUIRES_RELIGION,
+		GATEREASON_REQUIRES_CORPORATION,
+		GATEREASON_REQUIRES_HERITAGE,
+		GATEREASON_REQUIRES_UNIT,
+		GATEREASON_REQUIRES_PROMOTION,
+		GATEREASON_REQUIRES_POPULATION,   // the city is too small
+		GATEREASON_REQUIRES_CITY_COUNT,   // an empire/team COUNT token (CITY / TEAM)
+		GATEREASON_REQUIRES_PROPERTY,     // a PROPERTY_ operate band (crime / pollution / education / ...)
+		GATEREASON_REQUIRES_CULTURELEVEL,
+		GATEREASON_REQUIRES_VICTORY,      // a victory condition the game was not set up with
+		GATEREASON_REQUIRES_TERRAIN,
+		GATEREASON_REQUIRES_FEATURE,
+		GATEREASON_REQUIRES_IMPROVEMENT,
+		GATEREASON_REQUIRES_ROUTE,
+		GATEREASON_REQUIRES_MAPCATEGORY,  // earth / space / ... -- DERIVED from the plot's terrain
+		GATEREASON_REQUIRES_PLOT,         // the ground itself: river / coast / hills / latitude / nature yield
+		GATEREASON_REQUIRES_LAST = GATEREASON_REQUIRES_PLOT
 	};
 
-	// The DISPOSITION, read off the reason. A clause the player can act on GREYS (it names what to go get); one
-	// they cannot act on HIDES, because leaving it in the list says "unavailable" and nothing more.
+	// The DISPOSITION, read off the reason -- a MAPPING OVER the kind (par.6), never a property stored per
+	// entity. A clause the asker can act on GREYS (it names what to go get); one they cannot act on HIDES,
+	// because leaving it in the list says "unavailable" and nothing more.
 	// ⚠ A CAP is the worked case: a built world wonder can never be built again anywhere, so a greyed row for it
 	// is pure noise -- there is no action it could prompt.
 	static bool reasonHides(unsigned char eReason)
 	{
-		return eReason != (unsigned char)GATEREASON_NONE && eReason != (unsigned char)GATEREASON_REQUIRES;
+		switch (eReason)
+		{
+		// HIDE -- nothing the asker can do reaches these. A TECH is not fetched (and it is the `enables` edge
+		// besides, so before it lands the entity is normally not in the tree at all, par.2); the GROUND under a
+		// city never changes, so a landlocked city greying a harbour forever is pure noise.
+		case GATEREASON_DORMANT:
+		case GATEREASON_REPLACED:
+		case GATEREASON_OPTION:
+		case GATEREASON_CAP_SELF:
+		case GATEREASON_CAP_GROUP:
+		case GATEREASON_CAP_CATEGORY:
+		case GATEREASON_REQUIRES_TECH:
+		case GATEREASON_REQUIRES_PROMOTION:
+		case GATEREASON_REQUIRES_TERRAIN:
+		case GATEREASON_REQUIRES_MAPCATEGORY:
+		case GATEREASON_REQUIRES_PLOT:
+		case GATEREASON_REQUIRES_VICTORY:
+			return true;
+		default:
+			// GREY, and NONE. Staying VISIBLE is the safe direction, the same asymmetry par.5 draws for the
+			// reverse index: an extra greyed row costs a line, a wrong HIDE costs the asker the answer entirely.
+			return false;
+		}
+	}
+
+	// Is this reason a `requires` clause (whatever its atom kind)? The range test the contiguous block above
+	// exists for -- a consumer that renders WHICH atom is unmet asks this, never an equality against one entry.
+	static bool isRequiresReason(unsigned char eReason)
+	{
+		return eReason >= (unsigned char)GATEREASON_REQUIRES && eReason <= (unsigned char)GATEREASON_REQUIRES_LAST;
 	}
 
 	EnablerDomain() : m_bSeeded(false) {}

@@ -683,6 +683,112 @@ bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, con
 	return true;
 }
 
+// Walk toward the leaf a FALSE verdict turns on. `bWantTrue` says which way the CALLER needed this node to go,
+// and it inverts under `noneOf` -- a noneOf fails on a child that HOLDS, so the offending atom there is a true
+// one. Each arm mirrors cascadeEvalCondition's own, waiver included; nothing here decides truth.
+static const CvCondition* ev_offendingAtom(const CvCondition* c, const CvCascadeEvalCtx& ctx,
+	const CvCascadeEvalFlags& flags, bool bWantTrue)
+{
+	if (c == NULL)
+	{
+		return NULL;
+	}
+	if (c->kind != CASC_COND_GROUP)
+	{
+		return c;                                              // a leaf IS the answer
+	}
+
+	if (bWantTrue)
+	{
+		// The group had to HOLD and did not, so the first clause that fails is the cause.
+		for (size_t iAll = 0; iAll < c->all.size(); ++iAll)
+		{
+			if (!ev_isWaivedPrereq(ctx, c->all[iAll]) && !cascadeEvalCondition(c->all[iAll], ctx, flags))
+			{
+				return ev_offendingAtom(c->all[iAll], ctx, flags, true);
+			}
+		}
+		if (!c->anyOf.empty())
+		{
+			const CvCondition* pFirstCandidate = NULL;
+			bool bAnyHit = false;
+			for (size_t iAny = 0; iAny < c->anyOf.size(); ++iAny)
+			{
+				if (ev_isWaivedPrereq(ctx, c->anyOf[iAny]))
+				{
+					continue;
+				}
+				if (pFirstCandidate == NULL)
+				{
+					pFirstCandidate = c->anyOf[iAny];
+				}
+				if (cascadeEvalCondition(c->anyOf[iAny], ctx, flags))
+				{
+					bAnyHit = true;
+					break;
+				}
+			}
+			// EVERY non-waived member failed, so each one is a cause; the first names the kind. An all-waived
+			// OR imposes no requirement at all, exactly as the evaluator reads it.
+			if (pFirstCandidate != NULL && !bAnyHit)
+			{
+				return ev_offendingAtom(pFirstCandidate, ctx, flags, true);
+			}
+		}
+		for (size_t iNone = 0; iNone < c->noneOf.size(); ++iNone)
+		{
+			if (cascadeEvalCondition(c->noneOf[iNone], ctx, flags))
+			{
+				return ev_offendingAtom(c->noneOf[iNone], ctx, flags, false);
+			}
+		}
+		if (c->enabled != NULL && !cascadeEvalCondition(c->enabled, ctx, flags))
+		{
+			return ev_offendingAtom(c->enabled, ctx, flags, true);
+		}
+		if (!flags.ignoreDisabled && c->disabled != NULL && cascadeEvalCondition(c->disabled, ctx, flags))
+		{
+			return ev_offendingAtom(c->disabled, ctx, flags, false);
+		}
+		return NULL;                                           // it holds after all -- nothing refused
+	}
+
+	// The group had to be FALSE and it HELD, so every clause that had to pass for it to hold is a cause.
+	for (size_t iAll = 0; iAll < c->all.size(); ++iAll)
+	{
+		if (!ev_isWaivedPrereq(ctx, c->all[iAll]))
+		{
+			return ev_offendingAtom(c->all[iAll], ctx, flags, false);
+		}
+	}
+	for (size_t iAny = 0; iAny < c->anyOf.size(); ++iAny)
+	{
+		if (!ev_isWaivedPrereq(ctx, c->anyOf[iAny]) && cascadeEvalCondition(c->anyOf[iAny], ctx, flags))
+		{
+			return ev_offendingAtom(c->anyOf[iAny], ctx, flags, false);
+		}
+	}
+	if (!c->noneOf.empty())
+	{
+		return ev_offendingAtom(c->noneOf[0], ctx, flags, true);
+	}
+	if (c->enabled != NULL)
+	{
+		return ev_offendingAtom(c->enabled, ctx, flags, false);
+	}
+	return NULL;
+}
+
+const CvCondition* cascadeFailingAtom(const CvCondition* c, const CvCascadeEvalCtx& ctx,
+	const CvCascadeEvalFlags& flags)
+{
+	if (cascadeEvalCondition(c, ctx, flags))
+	{
+		return NULL;                                           // it holds -- there is nothing to explain
+	}
+	return ev_offendingAtom(c, ctx, flags, true);
+}
+
 // The ENTITY-LEVEL applicability gate (json.md §2 Applicability; owner 2026-07-08 -- the loadPrune replacement):
 // the entity applies only while `enabled` holds (NULL = always-on) and `disabled` does not (§3.9 order: enabled
 // first, disabled overrides). Same evaluator as every other condition -- a GAMEOPTION_X leaf reads the live options.

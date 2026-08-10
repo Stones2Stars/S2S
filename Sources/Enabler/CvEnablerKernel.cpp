@@ -21,6 +21,7 @@
 #include "Engine/CvTeam.h"
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
 #include "CvCondition.h"       // CvCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
+#include "Conditions/CvConditionQuery.h"   // bucketForType -- the ONE prefix router the atom-kind reason builds on
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"       // the provided-bonus set's divergence naming
 #include "CvUnitInfo.h"
@@ -242,6 +243,122 @@ bool EnablerKernel::requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, boo
 	return true;
 }
 
+// The ATOM KIND an offending leaf names. The HAVE axis routes through the ONE prefix table
+// (CvConditionQuery::bucketForType) rather than a second copy of it; what that table does not route -- the plot
+// substrate, the PROPERTY_ bands, the config types and the engine count tokens -- is named here, because each
+// has its own axis and none of them is an edge bucket ([enabler.md] par.8).
+static unsigned char ek_reasonForAtom(const CvCondition* pAtom)
+{
+	if (pAtom == NULL)
+	{
+		return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
+	}
+
+	if (pAtom->kind == CASC_COND_PRESENCE)
+	{
+		switch (CvConditionQuery::bucketForType(pAtom->type))
+		{
+		case EDGEB_TECHS:        return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_TECH;
+		case EDGEB_BUILDINGS:    return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_BUILDING;
+		case EDGEB_BONUSES:      return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_BONUS;
+		case EDGEB_CIVICS:       return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_CIVIC;
+		case EDGEB_RELIGIONS:    return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_RELIGION;
+		case EDGEB_CORPORATIONS: return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_CORPORATION;
+		case EDGEB_HERITAGES:    return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_HERITAGE;
+		case EDGEB_UNITS:        return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_UNIT;
+		case EDGEB_PROMOTIONS:
+		case EDGEB_PROMOTION_LINES: return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_PROMOTION;
+		case EDGEB_IMPROVEMENTS: return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_IMPROVEMENT;
+		case EDGEB_ROUTES:       return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_ROUTE;
+		default: break;                                        // NO_EDGEB -- not a HAVE-axis entity
+		}
+		// The axes the prefix table does not route, plus the catch-all count TOKENS (json.md par.3.1), which are
+		// engine concepts rather than infotype ids and so carry no prefix at all.
+		const std::string& szType = pAtom->type;
+		if (szType.compare(0, 8, "TERRAIN_") == 0)       return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_TERRAIN;
+		if (szType.compare(0, 8, "FEATURE_") == 0)       return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_FEATURE;
+		if (szType.compare(0, 12, "MAPCATEGORY_") == 0)  return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_MAPCATEGORY;
+		if (szType.compare(0, 9, "PROPERTY_") == 0)      return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_PROPERTY;
+		if (szType.compare(0, 13, "CULTURELEVEL_") == 0) return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_CULTURELEVEL;
+		if (szType.compare(0, 8, "VICTORY_") == 0)       return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_VICTORY;
+		if (szType == "POPULATION")                      return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_POPULATION;
+		if (szType == "CITY" || szType == "TEAM")        return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_CITY_COUNT;
+		return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
+	}
+
+	if (pAtom->kind == CASC_COND_PREDICATE)
+	{
+		switch (pAtom->predKind)
+		{
+		// The parameterized twins of the presence atoms above -- same kind, different spelling, so they must
+		// land on the same reason or one axis would report two different things about itself.
+		case CASC_PRED_HAS_TERRAIN:     return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_TERRAIN;
+		case CASC_PRED_HAS_FEATURE:     return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_FEATURE;
+		case CASC_PRED_HAS_IMPROVEMENT: return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_IMPROVEMENT;
+		case CASC_PRED_HAS_BONUS:       return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_BONUS;
+		case CASC_PRED_HAS_CORPORATION: return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_CORPORATION;
+		case CASC_PRED_IS_TAG:          return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_UNIT;
+		case CASC_PRED_HAS_RELIGION:
+		case CASC_PRED_STATE_RELIGION:
+		case CASC_PRED_HAS_STATE_RELIGION:
+		case CASC_PRED_STATE_RELIGION_IN_CITY:
+		case CASC_PRED_IS_STATE_RELIGION:
+		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY:
+		case CASC_PRED_IS_HOLY_CITY:
+			return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_RELIGION;
+		// THE GROUND ITSELF -- one kind, because the asker's position toward all of it is identical: a city
+		// cannot acquire a river, a coast, hills, a latitude or a nature yield, so naming them apart would
+		// split one disposition across a dozen entries that could never differ.
+		case CASC_PRED_IS_WATER:
+		case CASC_PRED_IS_LAND:
+		case CASC_PRED_IS_FLATLANDS:
+		case CASC_PRED_HAS_PEAK:
+		case CASC_PRED_HAS_HILLS:
+		case CASC_PRED_HAS_COAST:
+		case CASC_PRED_HAS_RIVER:
+		case CASC_PRED_HAS_FRESHWATER:
+		case CASC_PRED_HAS_IRRIGATION:
+		case CASC_PRED_HAS_LANDMARK:
+		case CASC_PRED_VICINITY:
+		case CASC_PRED_WORKABLE:
+		case CASC_PRED_IS_WORKED:
+		case CASC_PRED_LATITUDE:
+		case CASC_PRED_NATURE_YIELD:
+		case CASC_PRED_IS_OWNED:
+			return (unsigned char)EnablerDomain::GATEREASON_REQUIRES_PLOT;
+		default: break;
+		}
+	}
+	// A kind this vocabulary does not name yet. It GREYS (reasonHides' default), so an unnamed atom leaves the
+	// candidate visible and merely unexplained rather than silently removing it from the list.
+	return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
+}
+
+unsigned char EnablerKernel::requiresGateReason(const CvInfo* j, const CvCascadeEvalCtx& ec)
+{
+	if (j == NULL)
+	{
+		return (unsigned char)EnablerDomain::GATEREASON_NONE;
+	}
+	// The same ctx + flags requiresMet builds, so the reason cannot be derived against a different reading of
+	// the gate than the verdict was ([DEC-single-implementation]).
+	CvCascadeEvalCtx gateEc = ec;
+	gateEc.buildingAtomsPresence = true;
+	CvCascadeEvalFlags flags;
+	flags.strictStateReligionForBuild = true;
+
+	const CvCondition* pAtom = cascadeFailingAtom(j->requiresBuild(), gateEc, flags);
+	if (pAtom == NULL)
+	{
+		pAtom = cascadeFailingAtom(j->requiresOperate(), gateEc, flags);
+	}
+	if (pAtom == NULL)
+	{
+		return (unsigned char)EnablerDomain::GATEREASON_NONE;
+	}
+	return ek_reasonForAtom(pAtom);
+}
+
 // The system-placement gate (see the header for the role it plays and why it is not the availability read).
 bool EnablerKernel::everAvailable(EnEdgeBucket eBucket, int iId)
 {
@@ -303,11 +420,9 @@ unsigned char EnablerKernel::standardGateReason(const CvInfo* j, int iId, const 
 	{
 		return (unsigned char)EnablerDomain::GATEREASON_CAP_SELF;
 	}
-	if (!requiresMet(j, ec))
-	{
-		return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
-	}
-	return (unsigned char)EnablerDomain::GATEREASON_NONE;
+	// requiresGateReason answers the verdict AND the atom kind in one walk (GATEREASON_NONE when it holds), so
+	// there is no separate requiresMet call to fall out of step with it.
+	return requiresGateReason(j, ec);
 }
 
 bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket)

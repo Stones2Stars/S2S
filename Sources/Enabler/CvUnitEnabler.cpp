@@ -342,9 +342,11 @@ static unsigned char ud_gateReason(int u, UdGateCtx& x)
 		{
 			return (unsigned char)EnablerDomain::GATEREASON_OPTION;
 		}
-		if (!EnablerKernel::requiresMet(j, *x.ec))
+		//	The ATOM KIND that refused, not a bundled verdict ([enabler.md] par.6) -- GATEREASON_NONE when it holds.
+		const unsigned char eRequires = EnablerKernel::requiresGateReason(j, *x.ec);
+		if (eRequires != (unsigned char)EnablerDomain::GATEREASON_NONE)
 		{
-			return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
+			return eRequires;
 		}
 
 		//	DORMANT only when EVERY direct upgrade resolves to a reachable-trainable unit -- one dead branch keeps

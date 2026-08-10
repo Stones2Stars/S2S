@@ -166,6 +166,23 @@ int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, co
 // Evaluate the condition tree against the live engine. `c == NULL` -> true (vacuous).
 bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
 
+// WHICH ATOM refused -- the leaf a FALSE verdict actually turns on. Returns NULL when the tree holds (nothing
+// refused), so a caller tests the pointer rather than evaluating twice.
+//
+// ⛔ IT IS A NAVIGATION, NEVER A SECOND EVALUATOR ([DEC-single-implementation]). Every truth question it asks
+// goes to cascadeEvalCondition above; all this decides is WHICH CHILD to descend into, mirroring that
+// function's own arms (including the waived-prereq skip). A consumer re-deriving the cause by re-testing the
+// clauses itself would be a second gate implementation, free to disagree with the verdict it claims to explain
+// ([enabler.md] par.6) -- which is exactly why this is a declared surface beside the evaluator and not a walk
+// inside whichever consumer wanted it first.
+//
+// ⚠ POLARITY INVERTS UNDER `noneOf`, and that is the whole subtlety: a `noneOf` fails on a child that HOLDS,
+// so the offending atom there is a TRUE one. That is why "the tree mentions a tech" is not the same statement
+// as "a tech refused it" -- a `noneOf` names the thing it FORBIDS (json.md par.3.4), and CvConditionQuery,
+// which answers what a tree MENTIONS, deliberately cannot answer this question.
+const CvCondition* cascadeFailingAtom(const CvCondition* c, const CvCascadeEvalCtx& ctx,
+	const CvCascadeEvalFlags& flags);
+
 // The §3.7 counted-kind RELIGION filter's count leg (ruling 23): how many of ec.cityContext's present religions match
 // `filter` (each religion tested with ctx.religion set -- the IS_STATE_RELIGION predicate's input). A NULL
 // filter counts every present religion; no city -> 0. The ONE religion-count implementation -- the `religion:`

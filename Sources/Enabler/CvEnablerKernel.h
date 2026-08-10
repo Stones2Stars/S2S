@@ -158,6 +158,14 @@ public:
 	// bVisible=true relaxes the GREYABLE clauses (connectable resource / unadopted civic) for the visible frontier (enabler.md §6).
 	static bool requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible = false);
 
+	// WHICH ATOM KIND refused `requires` -- GATEREASON_NONE when build ∧ operate both hold ([enabler.md] par.6:
+	// "the reason names the ATOM KIND that refused, and hide-vs-grey is decided from that"). The verdict half is
+	// requiresMet above and the two cannot disagree: both ask the ONE evaluator, and the kind comes from the atom
+	// cascadeFailingAtom navigates to rather than from a second reading of the tree.
+	// ⚠ It answers for the atoms that CAUSED the failure, never for what the tree merely MENTIONS -- a `noneOf`
+	// names the thing it forbids, so CvConditionQuery cannot serve this and must not be reached for instead.
+	static unsigned char requiresGateReason(const CvInfo* j, const CvCascadeEvalCtx& ec);
+
 	// THE CAN-I-EVER BAR (enabler.md par.8) -- "is this entity barred for the WHOLE GAME, whoever asks, whatever
 	// they hold?" It is the PERMANENT half the tri-state deliberately does not model: HIDDEN conflates "nothing
 	// enables it YET" with "it can never be offered", and a valuation asking what an unlock is WORTH needs the

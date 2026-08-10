@@ -547,6 +547,21 @@ Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resou
 > ⚠ **A `noneOf` names the thing it FORBIDS**, so "the tree mentions a tech" is not the same as "a tech refused
 > it" — the kind must come from the atoms that actually caused the failure, not from what the tree merely
 > mentions ([CvConditionQuery] draws that same line).
+>
+> **⚖ THE DISCRIMINATOR, so the mapping is re-derivable rather than memorized: CAN THE ASKER ACT ON IT?** That
+> is the whole test, and it is the one the ruling above already states from the other side — a candidate the
+> asker can act on says what to go get, one they cannot says so and stops occupying the list. Two calls it
+> decides are worth naming, because both read as surprising until the test is applied: a **TECH HIDES** (it is
+> not fetched, and §2's multi-parent rule means the tech is the `enables` edge as well, so before it lands the
+> entity is normally not in the tree at all — greying it would double-list every future building), and **THE
+> GROUND HIDES** — river, coast, hills, latitude, terrain, map category — because a city cannot acquire the tile
+> it stands on, so a landlocked city greying a harbour forever is pure noise.
+> ⚑ **The DEFAULT is GREY, including for an atom kind the vocabulary does not name yet.** That is §5's asymmetry
+> applied to the disposition: an extra greyed row costs a line, while a wrong HIDE costs the asker the answer
+> entirely — so an unrecognised kind leaves the candidate visible and merely unexplained.
+> ⚠ **Changing a kind's disposition moves entries between HIDDEN and GREYED and NOTHING ELSE.** LISTED is the
+> gate-passed state and membership is its own stored plane (§7.1), so no buildability verdict rides on this
+> mapping — which is exactly what makes collapsing a kind later the cheap edit the ruling says it is.
 
 **The frontier is one shared choice set — UI *and* AI.** It is computed once per recompute; the UI greys from
 it, and the AI's production decision iterates **only this small frontier** instead of scoring the whole entity

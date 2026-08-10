@@ -2493,7 +2493,9 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 	{
 		const unsigned char eReason = pCity->getBuildingGateReason(eBuilding);
 		appendGateReason(szBuffer, eReason);
-		if (eReason == EnablerDomain::GATEREASON_REQUIRES)
+		// The reason names the KIND; WHICH atom is unmet is the requires tree's own per-clause render, so the
+		// two compose rather than the enabler duplicating the condition walk ([enabler.md] par.6).
+		if (EnablerDomain::isRequiresReason(eReason))
 		{
 			buildRequiresClauses(szBuffer, kInfo.requiresBuild(), pCity);
 			buildRequiresClauses(szBuffer, kInfo.requiresOperate(), pCity);
@@ -3983,6 +3985,28 @@ void CvGameTextMgr::appendGateReason(CvWStringBuffer& szBuffer, unsigned char eR
 	switch (eReason)
 	{
 	case EnablerDomain::GATEREASON_REQUIRES:     szKey = "TXT_KEY_GATEREASON_REQUIRES"; break;
+	// One line per ATOM KIND, so a greyed entry says what is missing rather than only that something is
+	// ([enabler.md] par.6 -- the reason exists so nobody has to guess, human or AI).
+	case EnablerDomain::GATEREASON_REQUIRES_TECH:         szKey = "TXT_KEY_GATEREASON_REQ_TECH"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_BUILDING:     szKey = "TXT_KEY_GATEREASON_REQ_BUILDING"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_BONUS:        szKey = "TXT_KEY_GATEREASON_REQ_BONUS"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_CIVIC:        szKey = "TXT_KEY_GATEREASON_REQ_CIVIC"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_RELIGION:     szKey = "TXT_KEY_GATEREASON_REQ_RELIGION"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_CORPORATION:  szKey = "TXT_KEY_GATEREASON_REQ_CORPORATION"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_HERITAGE:     szKey = "TXT_KEY_GATEREASON_REQ_HERITAGE"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_UNIT:         szKey = "TXT_KEY_GATEREASON_REQ_UNIT"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_PROMOTION:    szKey = "TXT_KEY_GATEREASON_REQ_PROMOTION"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_POPULATION:   szKey = "TXT_KEY_GATEREASON_REQ_POPULATION"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_CITY_COUNT:   szKey = "TXT_KEY_GATEREASON_REQ_CITY_COUNT"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_PROPERTY:     szKey = "TXT_KEY_GATEREASON_REQ_PROPERTY"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_CULTURELEVEL: szKey = "TXT_KEY_GATEREASON_REQ_CULTURELEVEL"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_VICTORY:      szKey = "TXT_KEY_GATEREASON_REQ_VICTORY"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_TERRAIN:      szKey = "TXT_KEY_GATEREASON_REQ_TERRAIN"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_FEATURE:      szKey = "TXT_KEY_GATEREASON_REQ_FEATURE"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_IMPROVEMENT:  szKey = "TXT_KEY_GATEREASON_REQ_IMPROVEMENT"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_ROUTE:        szKey = "TXT_KEY_GATEREASON_REQ_ROUTE"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_MAPCATEGORY:  szKey = "TXT_KEY_GATEREASON_REQ_MAPCATEGORY"; break;
+	case EnablerDomain::GATEREASON_REQUIRES_PLOT:         szKey = "TXT_KEY_GATEREASON_REQ_PLOT"; break;
 	case EnablerDomain::GATEREASON_DORMANT:      szKey = "TXT_KEY_GATEREASON_DORMANT"; break;
 	case EnablerDomain::GATEREASON_REPLACED:     szKey = "TXT_KEY_GATEREASON_REPLACED"; break;
 	case EnablerDomain::GATEREASON_OPTION:       szKey = "TXT_KEY_GATEREASON_OPTION"; break;

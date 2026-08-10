@@ -27947,6 +27947,86 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<English>[COLOR_WARNING_TEXT]Cannot be built yet — requirements are not met:[COLOR_REVERT]</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_TECH</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a technology you have not researched:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_BUILDING</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs another building first:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_BONUS</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a resource this city does not have:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CIVIC</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a civic you have not adopted:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_RELIGION</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a religion that is not present here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CORPORATION</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a corporation that is not active here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_HERITAGE</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a heritage you have not acquired:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_UNIT</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a unit you do not have:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_PROMOTION</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a promotion this unit has not earned:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_POPULATION</Tag>
+		<English>[COLOR_WARNING_TEXT]This city is not large enough yet:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CITY_COUNT</Tag>
+		<English>[COLOR_WARNING_TEXT]Your empire does not have enough cities yet:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_PROPERTY</Tag>
+		<English>[COLOR_WARNING_TEXT]This city is outside the required range:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CULTURELEVEL</Tag>
+		<English>[COLOR_WARNING_TEXT]This city needs more culture:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_VICTORY</Tag>
+		<English>[COLOR_WARNING_TEXT]This game was not set up with the victory condition it needs:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_TERRAIN</Tag>
+		<English>[COLOR_WARNING_TEXT]The terrain here is wrong for it:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_FEATURE</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a terrain feature that is not here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_IMPROVEMENT</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs an improvement that has not been built here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_ROUTE</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a route that has not been laid here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_MAPCATEGORY</Tag>
+		<English>[COLOR_WARNING_TEXT]It does not belong in this part of the world:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_PLOT</Tag>
+		<English>[COLOR_WARNING_TEXT]The ground here cannot support it:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_GATEREASON_DORMANT</Tag>
 		<English>[COLOR_WARNING_TEXT]Superseded by a building already in this city.[COLOR_REVERT]</English>
 	</TEXT>
