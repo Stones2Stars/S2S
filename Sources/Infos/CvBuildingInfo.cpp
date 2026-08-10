@@ -9,9 +9,11 @@
 #include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr / jsonResolveId / jsonCommerceMap
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "UI/CvArtFileMgr.h"    // ARTFILEMGR -- the getArtInfo shim (mirrors CvUnitInfo)
+#include "Infos/CvArtInfoBuilding.h"   // the COMPLETE art type getButton() dereferences
 
 CvBuildingInfo::CvBuildingInfo()
-	: m_iCost(0)
+	: m_bNotShownInCity(false)
+	, m_iCost(0)
 	, m_iCostSizeModifier(0)
 	, m_iCostMaterialsModifier(0)
 	, m_iCostComplexityModifier(0)
@@ -129,10 +131,13 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	}
 	const picojson::object& entityObj = entity.get<picojson::object>();
 
-	// world.art.define -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr (every building authors one).
+	// world.art.define -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr (every building authors one),
+	// beside the curator-derived verdict on whether that define carries a model the city can actually place.
+	m_bNotShownInCity = false;
 	if (const picojson::object* pArt = jsonWorldArt(entityObj))
 	{
 		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+		m_bNotShownInCity = jsonIdBool(*pArt, "notShownInCity");
 	}
 
 	// ui.art.movie.defineTag -- the completion movie's ART_DEF_MOVIE_* tag. It sits under UI art rather than

@@ -193,6 +193,11 @@ public:
 	// BOUNDARY (json.md par.7): the JSON carries only the tag id and the definitions stay in the ART XML,
 	// so this is a shim onto ARTFILEMGR rather than data the info holds.
 	const CvArtInfoBuilding* getArtInfo() const;
+	// world.art.notShownInCity -- TRUE when the building has NO model to place in the city, which is ~90% of them:
+	// they are game entities whose art define is scaled to nothing (while still carrying a real <Button> for the
+	// pedia and the build list). The curator DERIVES the verdict from the art define once, offline, so the engine
+	// reads a member here instead of interrogating the art plane per layout rebuild.
+	bool isNotShownInCity() const { return m_bNotShownInCity; }
 	// A building's BUTTON lives on its art define, not on the building -- the JSON carries the ART_DEF_* tag and
 	// the <Button> path stays in the ART XML with the rest of the definition (the same unmigrated boundary as
 	// getArtInfo above). Without this override the inherited CvInfoBase::getButton reads m_szButton, which no
@@ -278,6 +283,7 @@ private:
 	int m_iGreatPeopleUnitType;
 	int m_iAdvisor;
 	std::string m_szArtDefineTag;
+	bool m_bNotShownInCity;   // world.art.notShownInCity (curator-derived from the art define)
 	std::string m_szMovieDefineTag;
 	int m_iSpecialBuildingType;
 	int m_iFreeStartEra;

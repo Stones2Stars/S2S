@@ -13757,6 +13757,12 @@ void CvCity::getVisibleBuildings(std::list<BuildingTypes>& kChosenVisible, int& 
 		bool bValid = false;
 		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
 
+		//	A building with no model to place is not offered at all -- 90% of them are scaled to nothing.
+		if (kBuilding.isNotShownInCity())
+		{
+			continue;
+		}
+
 		const bool bIsWonder = isLimitedWonder(eType);
 		const bool bIsDefense = (kBuilding.getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY) > 0);
 
