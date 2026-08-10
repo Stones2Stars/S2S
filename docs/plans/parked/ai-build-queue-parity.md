@@ -1,7 +1,7 @@
 # AI build-queue parity — the AI uses the HUMAN's queue + overflow mechanics
 
-> **Status:** parked intent (owner rulings 2026-07-03, captured verbatim). Not scheduled; belongs to the AI
-> rework lane (see [ai-architecture-north-star.md](ai-architecture-north-star.md)).
+> **Status:** parked intent, owner rulings captured verbatim. Not scheduled; belongs to the AI rework lane
+> (see [ai-architecture-north-star.md](ai-architecture-north-star.md)).
 
 **The ruling:** *"I want to have AI set up the same kind of build queue, and have overflow instead of 'always
 use all your prod' — so it actually simulates human behaviour in this regard."* The asymmetry it kills:
@@ -22,9 +22,9 @@ each rung of the decision cascade tops up only what is missing and later rungs a
 candidate its availability gate or duplicate guard rejects, which is how a wonder completed elsewhere falls out
 of the shortlist without any second gate at this site ([enabler.md §6](../../specs/enabler.md)).
 
-**What remains parked:** production **overflow** carrying the way the human's does, and the turn-boundary
-snapshot half below — a shortlist re-derived at the turn boundary and frozen within the turn, so the mid-turn
-re-decision privilege disappears entirely rather than merely becoming rarer.
+**What remains parked:** production **overflow** carrying the way the human's does, and the retained-scoring
+half below (§ THE DOUBLE QUEUE) — which is what makes the mid-processing re-decision privilege disappear
+entirely rather than merely becoming rarer.
 
 > **⚖ THE OPEN QUESTION THE DEPTH RAISES — DOES A STANDING BUILDING QUEUE SQUEEZE UNITS OUT (owner)?** The
 > depth is what makes the scoring cheap, and it has a cost on the other side: `AI_chooseProduction` is the ONE
@@ -40,32 +40,72 @@ re-decision privilege disappears entirely rather than merely becoming rarer.
 > belongs to the pre-ship pass and not to the perf thread that produced the depth.
 > ⚑ **AND THE DEPTH IS THE WRONG LEVER FOR THE COST IT WAS REACHING FOR (owner).** Queue depth buys cheap
 > scoring by suppressing the DECISION, which is what spends the responsiveness. The scoring is what should be
-> retained instead — the build evaluations are exactly the AI data that
-> [state-repositories.md](../../architecture/state-repositories.md) § THE AI PLANE IS NOT EXEMPT already rules
-> on: an AI cache is an ordinary spine CONSUMER that declares the facts that move it, so a retained shortlist
-> is INVALIDATED BY THE EVENTS THAT CHANGE IT rather than by a queue that stops anyone asking.
-> ⛔ Its position in the sequence is unchanged and is the reason it is not built here:
-> [DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) puts
-> "let the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed — and a cache added over
-> one of those hides it ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) one plane over).
+> retained instead, and the shape that does it is § THE DOUBLE QUEUE below — which is also where this risk
+> goes away, since a decision that still runs still weighs units.
 
-**The target processing model (owner, same day):** *"build processing then uses the CACHE, until all buildings
-it can has been produced — and then the cache gets recalced in expectation of the next cycle."* I.e. reads
-inside the production cycle serve the turn-boundary SNAPSHOT (no mid-cycle freshness at all — mutations
-accumulate invisibly), and ONE recalc runs at cycle end, priming the next boundary. That inverts today's
-dirty-on-mutation/lazy-refresh model into snapshot-then-recalc — the cache becomes the fairness mechanism
-itself, not just a perf device.
-**Save-safety constraint (owner):** *"this is only possible with a serialized cache (which we don't want) or a
-full cache build on load (acceptable)"* — the cycle-end snapshot is load-bearing across turns, so a load must
-reproduce it; with serialization ruled out ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)),
-the **eager full cache build at load-end** (already the general policy, state-repositories.md) is the
-correctness PREREQUISITE of this model, not just a perf trade.
+## ⚖ THE DOUBLE QUEUE — a retained SCORING stack beside the production queue (owner)
+
+**The shape (owner):** *"a stack, with the highest scoring item on top, that gets popped and pushed to queue
+when previous item is finished; we only reevaluate buildings when that stack is empty."* Earlier phrasing of
+the same model: *"build processing then uses the CACHE, until all buildings it can has been produced — and
+then the cache gets recalced in expectation of the next cycle."* It is
+[state-repositories.md](../../architecture/state-repositories.md) § THE AI PLANE IS NOT EXEMPT's sanctioned
+residual made concrete for this one consumer — the AI keeping its OWN scores — and it is the successor to the
+queue-DEPTH lever above, which bought cheap scoring by suppressing the decision instead of retaining the
+score.
+
+⛔ **THE STACK RETAINS THE SCORING, NEVER THE DECISION — and that is what dissolves the unit question above.**
+`AI_chooseProduction` is the ONE cascade that weighs units as well as buildings, and `CvCity::doProduction`
+re-enters it only when the production queue EMPTIES. A pop that refills the queue by itself means the queue
+never empties, so the unit half is never reached at all — the depth's own defect, taken further. So the pop
+goes THROUGH the decision: a completion re-enters `AI_chooseProduction` as it does today, and the building
+half CONSULTS the stack instead of re-scoring.
+⚑ **The cost argument is measured and it is one-sided:** scoring is essentially the whole of a choose, so
+keeping the decision costs the sliver that is not scoring while restoring every unit evaluation. Suppressing
+it saves that sliver and buys back the unit-squeeze risk this document already records.
+
+⛔ **THE RECALC IS DRAIN-DRIVEN, NOT CLOCK-DRIVEN — a per-turn clear is a large cost INCREASE, not an
+optimization.** Only the cities whose queue actually empties choose at all in a given turn, and that is a small
+fraction of a late-game empire; re-scoring every city every turn is an order of magnitude MORE scoring than
+today. ⚑ Drain-driven also satisfies the fairness principle below for free — a stack that does not re-decide
+mid-processing structurally cannot take the mid-processing information a human is denied — so the turn
+boundary buys nothing the drain does not already have.
+
+⚖ **FRESHNESS IS THEREFORE THE SPINE'S JOB, NOT A CLOCK'S (owner: *"later we can derive ways to have that
+stack invalidated on other eventspine events"*) — and with no clock it is not polish, it is what makes
+drain-driven safe.** A stack can otherwise outlive its inputs by many turns.
+⚠ **The risk to design against is an interest set that degenerates to "everything".** A building's score reads
+the enabler frontier, the what-if valuation and the empire's standing, so a naive declaration invalidates on
+nearly every fact and the stack stops being worth keeping. [patterns.md](../../architecture/patterns.md)'s
+cadence ruling points at the bound: key it on the coarse facts that move the CHOICE SET or the empire's
+standing, never on anything that twitches within a turn. A slightly stale ORDERING is acceptable — this is an
+AI heuristic ([superseded-ideas #1](../../architecture/superseded-ideas.md)), not a cascade value.
+
+**The store shape, pinned by rulings that already exist:**
+- ⛔ **A sibling of `ContextDict`, never `ContextDict` itself.** A score is REPLACED wholesale when its inputs
+  move, so it wants assignment; the dictionary is a refcount and deliberately has no `set`
+  ([state-repositories.md](../../architecture/state-repositories.md) § THE AI PLANE IS NOT EXEMPT).
+- ⛔ **Never serialized, and CLEARED in `CvCity::reset()`** — a `CvCity` is recycled out of an
+  `FFreeListTrashArray`, so an uncleared slot inherits the previous city's shortlist
+  ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted); the enabler's
+  domains carry the same requirement for the same reason, [enabler.md §8](../../specs/enabler.md)).
+- ⚑ **Drain-driven recalc retires the save question the earlier phrasing raised.** *"This is only possible
+  with a serialized cache (which we don't want) or a full cache build on load (acceptable)"* — a stack that
+  rebuilds whenever it is found empty needs neither: a load starts every city empty and the first choose
+  fills it. No eager load-end build is owed.
+
+⚖ **PRIORITY (owner): *"the calculation itself is now relatively minor, so it is more of a 'medium'
+optimization step."*** ⛔ Its position in the sequence is unchanged either way —
+[DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) puts "let
+the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed, and a cache added over one of
+those hides it ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) one plane over).
 
 **The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
 getting a new building mid-processing, because humans do not get to do that either — they have already gotten
-the dump at that point."* Decision INPUTS are turn-boundary state; mid-processing mutations are invisible to
-deciders until the next boundary. (This generalizes past production choice — any AI decision that reads
-freshly-mutated mid-phase state holds an information privilege no human has.)
+the dump at that point."* Decision INPUTS are frozen as of the last recalc, so mid-processing mutations are
+invisible to deciders — which the drain-driven stack satisfies strictly, since it does not re-derive at every
+completion at all. (This generalizes past production choice — any AI decision that reads freshly-mutated
+mid-phase state holds an information privilege no human has.)
 
 Side benefits observed while building the modifier substrate (2026-07-03): the live re-decision is also a
 significant read-storm driver (each completion triggers immediate sibling-city rate evaluations — the
