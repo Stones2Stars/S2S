@@ -912,6 +912,15 @@ bool CyState::isCityRevealed(int iPlayer, int iCity, int iTeam) const
 	return pCity->isRevealed((TeamTypes)iTeam, false);
 }
 
+bool CyState::isCityCoastal(int iPlayer, int iCity, int iMinWaterSize) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	//	Through the CONTEXT, which holds the largest adjacent water body as a maintained int -- so every
+	//	threshold is answered by one comparison rather than by the 8-neighbour walk this read used to be.
+	return pCity->getCityContext().isCoastal(iMinWaterSize);
+}
+
 bool CyState::isEmphasize(int iPlayer, int iCity, int iEmphasize) const
 {
 	const CvCity* pCity = cys_city(iPlayer, iCity);
@@ -1465,6 +1474,7 @@ void CyState::pythonPublish()
 		.def("getGrowth",                &CyState::getGrowth)
 		.def("getCulture",               &CyState::getCulture)
 		.def("getCityFlags",             &CyState::getCityFlags)
+		.def("isCityCoastal",            &CyState::isCityCoastal)
 		.def("getBuildingInCity",        &CyState::getBuildingInCity)
 		.def("getUnitInCity",            &CyState::getUnitInCity)
 		.def("getProductionTurnsLeft",   &CyState::getProductionTurnsLeft)

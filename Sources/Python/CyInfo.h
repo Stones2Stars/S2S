@@ -58,6 +58,8 @@ enum PyIntrinsicSlot
 	PYINT_IS_LIMITED_WONDER,   // does this building carry a SELF-cap (world/team/empire) -- i.e. is it a wonder
 	PYINT_IS_PERMANENT,        // is this victory PERMANENT (never written into a scenario's victory list)
 	PYINT_IS_REPEAT,           // is this tech REPEATABLE (researchable more than once)
+	PYINT_IS_DISABLED,         // TECH_ is this tech switched OFF in the data (identity.disable) -- it exists
+	                           // in the registry and is never offered, so a LISTING must skip it
 	PYINT_DEFAULT_PLAYERS,     // a world size's default player count (the map-setup straggler)
 	PYINT_HEADQUARTERS_CORPORATION, // CORPORATION_* FK -- the corp this building is the HEADQUARTERS of (json §9)
 	PYINT_IS_SPACESHIP,
@@ -271,9 +273,29 @@ public:
 	// ⚠ The test is `>= 0` (a cap is AUTHORED), never `> 0` -- the enabler's own cap gate reads it the same way,
 	// so there is ONE meaning of "capped" rather than two that can drift.
 	bool isWorldUnit(int iUnitId) const;
+	// Is this TECH world-unique -- inventable once in the whole game (the religion founder techs). Same
+	// `allowed.world` cap as isWorldUnit reads, on the tech plane; it is what a trade screen must skip,
+	// because a global tech is nobody's to hand over.
+	bool isGlobalTech(int iTechId) const;
+	// Does this UNIT carry ANY self-cap (world or empire) -- i.e. is it a limited instance rather than
+	// something an empire may field freely. ⚠ Read `>= 0` (a cap is AUTHORED), the same test isWorldUnit
+	// uses, so "capped" has ONE meaning across the surface.
+	bool hasUnitInstanceCap(int iUnitId) const;
+	// Does this entity SUPPLY that bonus in its city while active (json §5a `provides.bonuses`)?
+	// ⛔ Not the merged EDGEF_RELATED bucket: that lands every reference together, so a building which
+	// merely REQUIRES the bonus would answer yes to a question about who PRODUCES it.
+	bool providesBonus(const std::string& szTypePrefix, int iId, int iBonusId) const;
 	// Does this BUILDING play a completion movie? The wonder-movie popup gates on the verdict alone, and the
 	// screen behind it resolves the ART_DEF_MOVIE_* tag itself -- so no tag string crosses the boundary.
 	bool hasMovie(int iBuildingId) const;
+
+	// ---- PROMOTION facts a consumer classifies the promotion registry by. ----
+	// Is this a STATUS pseudo-promotion -- a condition PUT ON a unit for N turns, not an ability it HAS
+	// ([state.md]). The two are listed apart because they are different mechanics wearing one carrier.
+	bool isStatusPromotion(int iPromotionId) const;
+	// Does this promotion belong to a BUILD-UP line? ⚑ The flag lives on the LINE, not on the rung, so this
+	// folds the promotion -> line hop rather than making script fetch a line id it has nothing else to do with.
+	bool isBuildUpPromotion(int iPromotionId) const;
 
 	// ---- BUILDING facts a consumer classifies a city's buildings by. ----
 	// Each is NAMED because Python cannot name a classification id: the parameterized `providesAmenity` carries

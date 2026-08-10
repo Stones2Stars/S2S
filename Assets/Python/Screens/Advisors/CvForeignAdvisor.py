@@ -226,7 +226,7 @@ class CvForeignAdvisor:
 		self.techsToTake = techsToTake = []
 		if not self.bNoTechTrade:
 			for iTech in range(GC.getNumTechInfos()):
-				if GC.getTechInfo(iTech).isGlobal():
+				if INFO.isGlobalTech(iTech):
 					continue
 				if CyTeam.isHasTech(iTech):
 					if not CyTeam.isNoTradeTech(iTech):

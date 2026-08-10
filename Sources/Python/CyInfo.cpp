@@ -22,6 +22,8 @@
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
+#include "Infos/CvPromotionInfo.h"      // the promotion classification endpoints
+#include "Infos/CvPromotionLineInfo.h"  // isBuildUp lives on the LINE, not the rung
 #include "Infos/CvHurryInfo.h"          // HURRY_ -- the hurry list's own numbers
 #include "Defines/CvDiplomacyClasses.h" // DIPLOMACY_ -- the response set the diplo screen filters
 #include "Infos/CvUnitInfo.h"             // getGrantedBuildings -- the unit's MISSION_CONSTRUCT repertoire
@@ -397,6 +399,43 @@ bool CyInfo::hasMovie(int iBuildingId) const
 {
 	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
 	return pBuilding ? pBuilding->hasMovie() : false;
+}
+bool CyInfo::isGlobalTech(int iTechId) const
+{
+	const CvInfo* pTech = cyi_info("TECH_", iTechId);
+	if (pTech == NULL || pTech->getAllowed() == NULL) return false;
+	return pTech->getAllowed()->cap(ALLOWEDCAP_WORLD) >= 0;
+}
+bool CyInfo::hasUnitInstanceCap(int iUnitId) const
+{
+	const CvInfo* pUnit = cyi_info("UNIT_", iUnitId);
+	if (pUnit == NULL || pUnit->getAllowed() == NULL) return false;
+	const CvAllowed* pAllowed = pUnit->getAllowed();
+	//	Units carry no TEAM cap ([json.md] §4.4), so the two scopes below are the whole of it.
+	return pAllowed->cap(ALLOWEDCAP_WORLD) >= 0 || pAllowed->cap(ALLOWEDCAP_EMPIRE) >= 0;
+}
+bool CyInfo::providesBonus(const std::string& szTypePrefix, int iId, int iBonusId) const
+{
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL || pInfo->getProvides() == NULL) return false;
+	return pInfo->getProvides()->has(iBonusId);
+}
+bool CyInfo::isStatusPromotion(int iPromotionId) const
+{
+	const CvPromotionInfo* pPromotion = static_cast<const CvPromotionInfo*>(cyi_info("PROMOTION_", iPromotionId));
+	return pPromotion ? pPromotion->isStatus() : false;
+}
+bool CyInfo::isBuildUpPromotion(int iPromotionId) const
+{
+	const CvPromotionInfo* pPromotion = static_cast<const CvPromotionInfo*>(cyi_info("PROMOTION_", iPromotionId));
+	if (pPromotion == NULL) return false;
+	//	The flag is the LINE's, so the hop lives here rather than in every caller -- and a promotion on no line
+	//	answers false rather than resolving a -1 id.
+	const PromotionLineTypes eLine = pPromotion->getPromotionLine();
+	if (eLine == NO_PROMOTIONLINE) return false;
+	const CvPromotionLineInfo* pLine =
+		static_cast<const CvPromotionLineInfo*>(cyi_info("PROMOTIONLINE_", (int)eLine));
+	return pLine ? pLine->isBuildUp() : false;
 }
 bool CyInfo::isShrine(int iBuildingId) const
 {
@@ -832,6 +871,11 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getTechInfo((TechTypes)iId).getEra();
 		break;
 
+	case PYINT_IS_DISABLED:
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+			return GC.getTechInfo((TechTypes)iId).isDisable() ? 1 : 0;
+		break;
+
 	case PYINT_UNIT_COMBAT:
 		if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
 			return GC.getUnitInfo((UnitTypes)iId).getCombatClass();
@@ -1005,6 +1049,10 @@ python::list CyInfo::getIndex(const std::string& szTypePrefix) const
 		kEntry["description"] = std::wstring(pInfo->getDescription());
 		kEntry["textKey"]     = std::wstring(pInfo->getTextKeyWide() != NULL ? pInfo->getTextKeyWide() : L"");
 		kEntry["button"]      = std::string(pInfo->getButton() != NULL ? pInfo->getButton() : "");
+		//	The ART-ONLY marker. It is on CvInfoBase, so it is total across both halves of the dispatch, and it
+		//	belongs on the INDEX because its only consumer is a LISTING deciding what to show -- an entity that
+		//	exists solely to carry art is not something a player can be shown a page for.
+		kEntry["graphicalOnly"] = pInfo->isGraphicalOnly();
 		//	The pedia BUCKET, on the index because the pedia builds LISTS: filtering a category is then one
 		//	crossing over the registry rather than a per-entity ask. Empty for an XML-only registry (the field is
 		//	on the JSON base) and for an uncategorised entity -- both mean the ordinary bucket.
@@ -1094,6 +1142,11 @@ void CyInfo::pythonPublish()
 		.def("canSpreadReligion",   &CyInfo::canSpreadReligion)
 		.def("spreadsReligion",     &CyInfo::spreadsReligion)
 		.def("isWorldUnit",         &CyInfo::isWorldUnit)
+		.def("hasUnitInstanceCap",      &CyInfo::hasUnitInstanceCap)
+		.def("providesBonus",           &CyInfo::providesBonus)
+		.def("isGlobalTech",            &CyInfo::isGlobalTech)
+		.def("isStatusPromotion",       &CyInfo::isStatusPromotion)
+		.def("isBuildUpPromotion",      &CyInfo::isBuildUpPromotion)
 		.def("hasMovie",            &CyInfo::hasMovie)
 		.def("isShrine",            &CyInfo::isShrine)
 		.def("isReligiousBuilding", &CyInfo::isReligiousBuilding)

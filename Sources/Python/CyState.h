@@ -276,6 +276,10 @@ public:
 	// Has this team SEEN the city. Fog state, so it is live and per-team -- an unrevealed city is one a screen
 	// may know of but must not name.
 	bool isCityRevealed(int iPlayer, int iCity, int iTeam) const;
+	// Is the city on a water body of at least iMinWaterSize tiles -- the `{HAS_COAST:{minArea:N}}` CITY form.
+	// ⛔ NOT the bare coastal flag getCityFlags already carries: that one asks at threshold 0, so it cannot
+	// answer a caller that needs an OCEAN rather than a lake. The two are different questions on one axis.
+	bool isCityCoastal(int iPlayer, int iCity, int iMinWaterSize) const;
 	// The city governor's EMPHASIS flags -- what the player told this city to prioritise. Per-city view state
 	// the engine stores, so it reads here; eEmphasize selects one flag, the sparse-selector shape again.
 	bool isEmphasize(int iPlayer, int iCity, int iEmphasize) const;

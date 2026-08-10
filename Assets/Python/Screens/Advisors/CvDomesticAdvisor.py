@@ -1280,7 +1280,7 @@ class CvDomesticAdvisor:
 				screen.appendTableRow(PAGE)
 				iCityID = cityList[i].getID()
 				screen.setTableText(PAGE, 0, i, "", zoomArt, WidgetTypes.WIDGET_ZOOM_CITY, iPlayer, iCityID, 1<<0)
-				screen.setTableText(PAGE, 1, i, cityList[i].getName(), "", eWidGen, 1, 1, 1<<0)
+				screen.setTableText(PAGE, 1, i, STATE.getCityName(iPlayer, iCityID), "", eWidGen, 1, 1, 1<<0)
 
 			# Order the columns
 			columns = []
