@@ -119,6 +119,13 @@ writes `LSystem.log` itself**, recording how it lays a city out from `XML/Buildi
 in this repo emits it and no gate controls it, so it is readable like a spine log and answers a question no DLL
 surface can: **what the render engine did with what we handed it.**
 
+⛔ **THE RUNNING GAME HOLDS IT OPEN, so it reads like a spine log and is NOT one (owner).** It is written by the
+EXE, which puts it in the same class as the not-yet-migrated `gDLL->logMsg` sinks above: a mid-session read is
+PARTIAL, and the file keeps growing. ⇒ **Re-read it every time, and take any absolute count from a CLOSED game.**
+⚠ **The trap is COMPARING two reads**, because the sizes are not stated anywhere in the numbers: a completed
+session diffed against one still being written looks like a real before/after and is not. Compare RATIOS that a
+truncation cannot explain (26,273 → 5), never totals — and re-read after the game closes before recording one.
+
 ⚑ **It is how an art gap becomes VISIBLE rather than merely suspected.** The lines that matter are
 `Warning: building <id> is not associated with a CvCityLSystem node; it will not be visible!`, the
 `does not contain a node called SHADOW` complaints (the engine loading `Art/Empty.nif` and trying to shadow it),
