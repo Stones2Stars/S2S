@@ -620,7 +620,14 @@
   legs double-count — and pinning it today costs the conditioned tail.
   ⛔ Not a second read: it is one parameter on the existing one, matching the collect's spelling, so the two
   keyed reads stop differing on an axis the data actually uses.
-- A home for pedia category / sort metadata ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
+- Move the pedia hub's CATEGORY CLASSIFIER onto `identity.pediaCategory`. The home is settled and the read is
+  published ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4), so what is left is the consumer:
+  the hub still derives its groupings from a pile of heuristics over legacy per-field getters — era banding,
+  cost tests, instance-cap tests, promotion-line flags — and, for three buckets, a SUBSTRING MATCH ON THE
+  LOCALIZED DISPLAY NAME, which is silently wrong in every non-English localization.
+  ⛔ **The banned repair is publishing those legacy getters so the classifier resolves** — that preserves the
+  name-matched buckets while reading as migrated ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
+  ⚠ The era SUB-category stays derived from the entity's own era and is not a second authored field.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
@@ -721,16 +728,16 @@
   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — each one is answered by
   a GROUP read, an intrinsic slot, an edge family or a classification test, or it is dead. ⛔ Adding a getter
   per legacy name is the half-migration reflex in its purest form.
-  ⚑ Two genuine surface gaps the sweep named, needing the library to GROW rather than a consumer to be
-  re-pointed: the pedia's category/sort taxonomy still has no home
-  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4); and **a plot-substrate cross-link has no
-  edge to read.** A page asking *"which buildings need this terrain / feature"* is the ordinary
-  [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) conversion everywhere else, and
-  here it has no target: the reverse pass does not route the plot plane
-  ([enabler.md §8](../../specs/enabler.md)) and no terrain or feature edge bucket exists to hold the answer.
-  ⛔ So those consumers are the DANGLING class, not a re-point — the missing piece is the MACHINE, and until it
-  lands the honest state is a page that does not render that panel, never a registry sweep restored to fill it
-  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)).
+  ⚑ **A CROSS-LINK ON THE PLOT SUBSTRATE READS `EDGEF_RELATED`, AND THE ABSENCE OF `EDGEF_REQUIRED_BY` THERE IS
+  NOT A GAP.** The two axes have different routers: `EDGEF_REQUIRED_BY` is landed by a per-prefix resolver that
+  covers the gate-bearing kinds only, while `EDGEF_RELATED` is landed through the BROAD repo routing, so a
+  terrain or feature named by a building's `requires` gets that building on its own RELATED list. A page asking
+  *"which buildings name this terrain"* is therefore the ordinary
+  [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) re-point, not a dangling
+  consumer. ⚠ RELATED is a MERGED bucket ([enabler.md §2](../../specs/enabler.md)), so it is safe for a DISPLAY
+  list with ANY semantics and never for a consumer with ALL semantics — a panel that split mandatory from
+  one-of loses that split, which is a stated display change and not a reason to hesitate
+  ([patterns.md](../../architecture/patterns.md)).
 - **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
   *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
   everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read

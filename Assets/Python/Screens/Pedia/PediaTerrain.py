@@ -1,7 +1,7 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
-GC = CyGlobalContext()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
 class Page:
@@ -32,9 +32,7 @@ class Page:
 
 
 	def interfaceScreen(self, iTheTerrain):
-		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheTerrain = GC.getTerrainInfo(iTheTerrain)
 		aName = self.main.getNextWidgetName
 
 		eWidGen		= WidgetTypes.WIDGET_GENERAL
@@ -56,13 +54,13 @@ class Page:
 
 		screen = self.main.screen()
 		# Main Panel
-		szTxt = szfontEdge + CvTheTerrain.getDescription()
+		szTxt = szfontEdge + INFO.getDescription("TERRAIN_", iTheTerrain)
 		screen.setText(aName(), "", szTxt, 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 1, 1)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_ROW_1 + 2, H_ROW_1 + 2, H_ROW_1 + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "ToolTip|TERRAIN%d" % iTheTerrain
-		screen.setImageButtonAt(Img, Pnl, CvTheTerrain.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
-		szTxt = CvTheTerrain.getCivilopedia()
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("TERRAIN_", iTheTerrain), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		szTxt = INFO.getCivilopedia("TERRAIN_", iTheTerrain)
 		if szTxt:
 			x = X_COL_1 + H_ROW_1 + 4
 			w = W_PEDIA_PAGE - H_ROW_1 - 4
@@ -70,11 +68,12 @@ class Page:
 			screen.addMultilineText(aName(), szfont2 + szTxt, x + 4, Y_ROW_1 + 8, w - 8, H_ROW_1 - 16, eWidGen, 1, 1, 1<<0)
 
 		# Required for building
+		#  The terrain's own RELATED list already names the buildings that reference it, so the panel reads that
+		#  instead of asking every building in turn. It merges the mandatory and one-of prereqs the two legacy
+		#  reads kept apart -- one list where there were two, which is what this panel displayed anyway.
 		aList = []
-		for iType in xrange(GC.getNumBuildingInfos()):
-			CvBuilding = GC.getBuildingInfo(iType)
-			if CvBuilding.isPrereqOrTerrain(iTheTerrain) or CvBuilding.isPrereqAndTerrain(iTheTerrain):
-				aList.append([iType, CvBuilding.getButton()])
+		for iBuilding in INFO.getEdgeIds("TERRAIN_", iTheTerrain, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_BUILDINGS):
+			aList.append([iBuilding, INFO.getButton("BUILDING_", iBuilding)])
 		if aList:
 			H_ROW_2 -= H_ROW_3
 			PF = "ToolTip|JumpTo|BUILDING%d"
@@ -93,9 +92,12 @@ class Page:
 		# Stats
 		szTxt = ""
 		temp = szfont3b + "%s: " % TRNSLTR.getText("TXT_KEY_BUG_OPT_CITYSCREEN__RAWYIELDS_TEXT", ())
+		#  A terrain's yield is its OWN plot-scope output, so this is the group read at that scope. The substrate
+		#  authors no fractional yields, so the reduce to whole faces here loses nothing.
+		aFlatYields = INFO.getFlatYields("TERRAIN_", iTheTerrain, CascScope.CASC_SCOPE_PLOT)
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
 
-			iYield = CvTheTerrain.getYield(k)
+			iYield = aFlatYields[k] / 100
 			if iYield:
 				szTxt += " %d%s " %(iYield, unichr(8483 + k))
 
