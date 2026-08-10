@@ -454,17 +454,23 @@ concern almost everywhere, which supports leaving it outside the data library.
 
 ### 4.2 (a′) REQ — the condition trees are an INFO need, not an API
 
-The `BoolExpr` binding (`Sources/Python/CyBoolExprInterface.cpp`) exposes `getType` / `getGOMType` / `getID` /
-`getFirstExpr` / `getSecondExpr` — a raw boolean-expression tree. Python walks it in exactly one place:
+**⛔ THE WHOLE MECHANISM IS GONE, AND ITS CALLERS ARE NOT — that is the state to know before reading further.**
+All three legs are absent: the `BoolExpr` binding file no longer exists in `Sources/Python/`; the
+`GOMTypes` / `BoolExprTypes` enums are published nowhere (`CyEnums.cpp` carries neither, so naming one is a
+`NameError`, not an `AttributeError`); and **`def getGOMReqs` is defined in no Python file in the tree** —
+`Screens/Debug/HelperFunctions.py` CALLS `self.getGOMReqs` and never defines it, so that module is
+self-broken independently of the binding cut.
 
-- **`Screens/Debug/HelperFunctions.py:464` `getGOMReqs(CyBoolExpr, GOMType, GOMReqList, eParentExpr)`** —
-  recurses `getFirstExpr`/`getSecondExpr`, collecting `getID()` at `BOOLEXPR_HAS` leaves into AND/OR buckets.
-- Entered from `CvBuildingInfo.getConstructCondition()` / `CvUnitInfo.getTrainCondition()` at
-  `HelperFunctions.py:110, 225, 275` and `Screens/Debug/TestCode.py:149`, plus the pedia pages.
+What still calls it: `HelperFunctions.py` itself, and the pedia pages that reach it through `self.HF`
+(`PediaBonus`, `PediaBuilding`, `PediaHeritage`, `PediaTech`, `PediaUnit`). Each is handed
+`getConstructCondition()` / `getTrainCondition()` plus a `GOMTypes` selector and expects a two-element list
+indexed `BOOLEXPR_AND` / `BOOLEXPR_OR` — i.e. the requirement tree FLATTENED into "all of these" vs "one of
+these", which is what let a pedia page render `&` runs and `{ … || … }` groups.
 
-The kind-count of 3 is an artefact — the walker's method names (`getType`, `getID`) collide with `CvInfoBase`
-names and are attributed to INFO, so the *tree walk itself* is nearly invisible to a name-keyed census. **The
-real weight is the mechanism, not the site count.**
+⚠ **Neither edge family preserves that split** ([CvEdges.h](../../Sources/Infos/CvEdges.h)):
+`EDGEF_REQUIRED_BY` is the reverse direction and `EDGEF_ENABLED_BY` the forward one, and both are merged
+buckets. So restoring the display needs the `CvRequires` section object below — there is no edge read that
+answers it, and reading one as though it did would silently present an OR-group as a mandatory list.
 
 This is an **INFO-plane need answered by the `CvRequires` section object** rendered as a structured display
 tree — independently the same conclusion as [pedia-map.md finding 3](pedia-read-map.md): *"no boolean-expression API

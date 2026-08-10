@@ -810,8 +810,15 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	switch (iSlot)
 	{
 	case PYINT_COST:
+		//	⚠ EVERY buildable registry routes here, and the reason is that an unrouted prefix does not fail --
+		//	it falls through to the shared -1, which reads as a real cost. A consumer testing `cost <= 0` then
+		//	classifies the whole registry as free, and a consumer multiplying by it hands out a negative price.
 		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
 			return GC.getBuildingInfo((BuildingTypes)iId).getCost();
+		if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
+			return GC.getUnitInfo((UnitTypes)iId).getProductionCost();
+		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
+			return GC.getProjectInfo((ProjectTypes)iId).getProductionCost();
 		break;
 
 	case PYINT_BONUS_CLASS:
