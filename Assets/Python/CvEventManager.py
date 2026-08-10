@@ -591,7 +591,7 @@ class CvEventManager:
 						CyCity.addProductionExperience(CyUnit, True)
 					else:
 						if iData4 > 0:
-							CyUnit.setExperience(iData4)
+							ACT.setUnitExperience(CyUnit.getOwner(), CyUnit.getID(), iData4)
 						if ID == 906 and self.PROMO_GUARDIAN_TRIBAL > -1:
 							CyUnit.setHasPromotion(self.PROMO_GUARDIAN_TRIBAL, True)
 					CyUnit.setMoves(CyUnit.maxMoves()-1)
@@ -2544,14 +2544,15 @@ class CvEventManager:
 				else:
 					iUnitTG = GC.getInfoTypeForString("UNIT_TRIBAL_GUARDIAN")
 				CyUnitTG = CyPlayer.initUnit(iUnitTG, CyUnit.getX(), CyUnit.getY(), UnitAITypes.UNITAI_PROPERTY_CONTROL, DirectionTypes.DIRECTION_SOUTH)
-				iExp = CyUnit.getExperience()
-				CyUnitTG.setExperience(iExp)
+				iExp = STATE.getUnitRead(CyUnit.getOwner(), CyUnit.getID())[UnitReadKind.UNIT_READ_EXPERIENCE]
+				ACT.setUnitExperience(CyUnitTG.getOwner(), CyUnitTG.getID(), iExp)
 		if iPop:
-			CyCity.changePopulation(iPop)
+			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), iPop)
+			iThreshold = STATE.getGrowth(CyCity.getOwner(), CyCity.getID())[CityGrowthRead.GROWTH_READ_THRESHOLD]
 			if self.GO_1_CITY_TILE_FOUNDING:
-				CyCity.changeFood(CyCity.growthThreshold()/4)
+				ACT.changeCityStoredFood(CyCity.getOwner(), CyCity.getID(), iThreshold/4)
 			else:
-				CyCity.changeFood(CyCity.growthThreshold()/8)
+				ACT.changeCityStoredFood(CyCity.getOwner(), CyCity.getID(), iThreshold/8)
 		# Human player city naming
 		iActivePlayer = GAME.getActivePlayer()
 		if iPlayer == iActivePlayer and not GAME.getAIAutoPlay(iActivePlayer):

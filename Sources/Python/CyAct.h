@@ -103,6 +103,8 @@ public:
 	// CvUnit::changeExperience. ⚠ The HUMAN-scale entry point: XP is stored x100 and changeExperience multiplies
 	// on the way in, so a caller passes whole levels of XP exactly as the legacy script did -- do NOT hand it a
 	// x100 value ([special-systems.md]).
+	// Absolute twin of changeUnitExperience -- the engine publishes both, so a caller that means SET says set.
+	bool setUnitExperience(int iPlayer, int iUnit, int iExperience) const;
 	bool changeUnitExperience(int iPlayer, int iUnit, int iChange, int iMax,
 							  bool bFromCombat, bool bInBorders, bool bUpdateGlobal) const;
 	bool setUnitName(int iPlayer, int iUnit, std::wstring szName) const;
@@ -139,8 +141,15 @@ public:
 	// describing a world that no longer exists ([roadmap] 1b: WB adding or removing anything EMITS, with no WB
 	// special case anywhere).
 	bool setCityName(int iPlayer, int iCity, std::wstring szName) const;
+	// ⛔ BOTH shapes are published for population and stored food because the ENGINE has both, and a caller that
+	// means a DELTA must be able to say so. Making it read-then-write instead would turn one atomic mutation into
+	// two steps that another consumer can interleave -- a different operation wearing the same name.
 	bool setCityPopulation(int iPlayer, int iCity, int iPopulation) const;
+	bool changeCityPopulation(int iPlayer, int iCity, int iChange) const;
 	bool setCityStoredFood(int iPlayer, int iCity, int iFood) const;
+	// bHandleGrowth defaults FALSE in the engine, matching every caller here: an event handing a city food is
+	// topping up the store, not resolving a growth step this instant.
+	bool changeCityStoredFood(int iPlayer, int iCity, int iChange) const;
 	// The city's culture HELD BY ONE PLAYER. ⚠ It is ×100 and 64-bit on both sides -- the exact twin of
 	// CyState::getCultureForPlayer, so a scenario round-trips the value it was handed rather than a rescaled one
 	// ([culture-religion-research.md]: city culture accumulates the ×100 rate and never decays, which is why it

@@ -389,7 +389,7 @@ def doBabyBoom(argList):
 		return 1
 
 	for CyCity in CyPlayer.cities():
-		CyCity.changeFood(iFood)
+		ACT.changeCityStoredFood(CyCity.getOwner(), CyCity.getID(), iFood)
 
 	return 1
 
@@ -875,7 +875,7 @@ def applyInfluenza2(argsList):
 
   for i in xrange(iNumCities):
     (iDist, loopCity) = listCities[i]
-    loopCity.changePopulation(-1)
+    ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -1)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_INFLUENZA_HIT_CITY", (loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
         CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
@@ -5117,7 +5117,7 @@ def applyBlackDeath2(argsList):
 
   for i in xrange(iNumCities):
     (iDist, loopCity) = listCities[i]
-    loopCity.changePopulation(-2)
+    ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -2)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_BLACK_DEATH_HIT_CITY", (loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
         CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
@@ -5168,7 +5168,7 @@ def applySmallpox2(argsList):
 
   for i in xrange(iNumCities):
     (iDist, loopCity) = listCities[i]
-    loopCity.changePopulation(-1)
+    ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -1)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SMALLPOX_HIT_CITY", (loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
         CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
@@ -5634,14 +5634,14 @@ def TriggerSuperVirus1(argsList):
 
   iKilledPop = (eventCity.getPopulation() * 75) / 100
 
-  eventCity.changePopulation(-iKilledPop)
+  ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iKilledPop)
   szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iKilledPop, eventCity.getNameKey(), ))
   if isLocalHumanPlayer(data.ePlayer) :
     CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
 
   for i in xrange(iNumCities):
     (iDist, loopCity) = listCities[i]
-    loopCity.changePopulation(-4)
+    ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -4)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (4, loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
       CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
@@ -5679,14 +5679,14 @@ def TriggerSuperVirus2(argsList):
 
   iKilledPop = (eventCity.getPopulation() * 45) / 100
 
-  eventCity.changePopulation(-iKilledPop)
+  ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iKilledPop)
   if isLocalHumanPlayer(data.ePlayer) :
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iKilledPop, eventCity.getNameKey(), ))
     CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
 
   for i in xrange(iNumCities):
     (iDist, loopCity) = listCities[i]
-    loopCity.changePopulation(-2)
+    ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -2)
     if isLocalHumanPlayer(data.ePlayer) :
       szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (2, loopCity.getNameKey(), ))
       CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
@@ -5723,7 +5723,7 @@ def TriggerSuperVirus3(argsList):
 
   iChangePopulation = eventCity.getPopulation() * 25
   iChangePopulation /= 100
-  eventCity.changePopulation(-iChangePopulation)
+  ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iChangePopulation)
   if isLocalHumanPlayer(data.ePlayer) :
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iChangePopulation, eventCity.getNameKey()))
     CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
@@ -5788,7 +5788,7 @@ def TriggerSuperVirus4(argsList):
 
   ACT.setCityBuilding(eventCity.getOwner(), eventCity.getID(), GC.getInfoTypeForString("BUILDING_HOSPITAL"), False)
 
-  eventCity.changePopulation(-iChangePopulation)
+  ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iChangePopulation)
   if isLocalHumanPlayer(data.ePlayer) :
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iChangePopulation, eventCity.getNameKey()))
     CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
@@ -5848,12 +5848,12 @@ def triggerNewWorldCities(argsList):
 	for CyCity in CyPlayer.cities():
 		if iEvent == GC.getInfoTypeForString("EVENT_NEW_WORLD_2"):
 			if CyCity.getPopulation() > 4:
-				CyCity.changePopulation(-1)
+				ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -1)
 		else:
 			if CyCity.getPopulation() > 9:
-				CyCity.changePopulation(-2)
+				ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -2)
 			elif CyCity.getPopulation() > 4:
-				CyCity.changePopulation(-1)
+				ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -1)
 
 	iNumUnits = GC.getNumUnitInfos()
 	MAP = GC.getMap()
@@ -5885,9 +5885,9 @@ def triggerNewWorldCities(argsList):
 			break
 
 		if iEvent == GC.getInfoTypeForString("EVENT_NEW_WORLD_2"):
-			CyCity.changePopulation(1)
+			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), 1)
 		else:
-			CyCity.changePopulation(3)
+			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), 3)
 
 		eStateReligion = CyPlayer.getStateReligion()
 		if eStateReligion > -1:
@@ -6425,7 +6425,7 @@ def doCatastrophicFire(argsList):
 			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITYFIRE_NOHIT_CITY", (CyCity.getNameKey(), ))
 			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 		if iKilledPop > 0:
-			CyCity.changePopulation(-iKilledPop)
+			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -iKilledPop)
 			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITYFIRE_HIT_CITY", (iKilledPop, CyCity.getNameKey(), ))
 			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 

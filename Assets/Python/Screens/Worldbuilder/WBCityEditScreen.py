@@ -415,9 +415,9 @@ class WBCityEditScreen:
 
 		elif inputClass.getFunctionName().find("CityPopulation") > -1:
 			if inputClass.getData1() == 1030:
-				pCity.changePopulation(iChange)
+				ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), iChange)
 			elif inputClass.getData1() == 1031:
-				pCity.changePopulation(- min(iChange, pCity.getPopulation()))
+				ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), - min(iChange, pCity.getPopulation()))
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CityFood") > -1:

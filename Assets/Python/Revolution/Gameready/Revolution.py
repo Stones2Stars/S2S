@@ -6419,7 +6419,7 @@ class Revolution:
 
 				if pCity.getPopulation() > 4 and len(newUnitList) >= 4:
 					deltaPop = int((len(newUnitList)-1)/3.0)
-					pCity.changePopulation(-deltaPop)
+					ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), -deltaPop)
 					if self.LOG_DEBUG:
 						print "[REV] Revolt: City population decreased by %d for %d rebel units spawned" % (deltaPop, len(newUnitList))
 
@@ -6552,7 +6552,7 @@ class Revolution:
 					deltaPop = int((len(newUnitList)-1)/2.5)
 					if deltaPop >= pCity.getPopulation():
 						deltaPop = pCity.getPopulation() - 1
-					pCity.changePopulation(-deltaPop)
+					ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), -deltaPop)
 
 				# Extra stuff for instigator city
 				if cityIdx == 0 and len(cityList) > 1 and iNumUnits > 0 and not bIsBarbRev:

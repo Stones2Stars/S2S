@@ -368,8 +368,8 @@ def onCityAcquired(argsList):
 	if nPartisan > 1:
 		nPartisan -= 1
 		if iPop > nPartisan:
-			CyCity.changePopulation(-nPartisan)
-		elif iPop > 1: CyCity.changePopulation(1 - iPop)
+			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -nPartisan)
+		elif iPop > 1: ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), 1 - iPop)
 
 
 # Partisan War Prize

@@ -178,6 +178,15 @@ bool CyAct::convertUnit(int iPlayer, int iUnit, int iFromPlayer, int iFromUnit, 
 	return true;
 }
 
+bool CyAct::setUnitExperience(int iPlayer, int iUnit, int iExperience) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->setExperience(iExperience);
+	return true;
+}
+
 bool CyAct::changeUnitExperience(int iPlayer, int iUnit, int iChange, int iMax,
 								 bool bFromCombat, bool bInBorders, bool bUpdateGlobal) const
 {
@@ -303,6 +312,22 @@ bool CyAct::setCityPopulation(int iPlayer, int iCity, int iPopulation) const
 	CvCity* pCity = cya_city(iPlayer, iCity);
 	if (pCity == NULL) return false;
 	pCity->setPopulation(iPopulation);
+	return true;
+}
+
+bool CyAct::changeCityPopulation(int iPlayer, int iCity, int iChange) const
+{
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	pCity->changePopulation(iChange);
+	return true;
+}
+
+bool CyAct::changeCityStoredFood(int iPlayer, int iCity, int iChange) const
+{
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	pCity->changeFood(iChange);
 	return true;
 }
 
@@ -494,6 +519,9 @@ void CyAct::pythonPublish()
 		// the SCENARIO APPLY
 		.def("setCityName", &CyAct::setCityName)
 		.def("setCityPopulation", &CyAct::setCityPopulation)
+		.def("changeCityPopulation", &CyAct::changeCityPopulation)
+		.def("changeCityStoredFood", &CyAct::changeCityStoredFood)
+		.def("setUnitExperience", &CyAct::setUnitExperience)
 		.def("setCityStoredFood", &CyAct::setCityStoredFood)
 		.def("setCityCulture", &CyAct::setCityCulture)
 		.def("setCityScriptData", &CyAct::setCityScriptData)

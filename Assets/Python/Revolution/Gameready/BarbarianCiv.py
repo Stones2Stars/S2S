@@ -697,7 +697,7 @@ class BarbarianCiv:
 				plotX.setOwner(iPlayer) # ...because this invalidates the cityX pointer.
 				cityX = plotX.getPlotCity()
 				self.setupFormerBarbCity(cityX, iPlayer, iDefender, int(iNumBarbDefenders*fMilitaryMod + 1))
-				cityX.changePopulation(1)
+				ACT.changeCityPopulation(cityX.getOwner(), cityX.getID(), 1)
 				if iWorker > -1:
 					CyPlayer.initUnit(iWorker, x, y, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 				if iExplorer > -1:

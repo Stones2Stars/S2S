@@ -317,7 +317,7 @@ def applyEditCity(iPlayer, userData, popupReturn):
 	except ValueError:
 		iPopChange = 0
 	if iPopChange:
-		city.changePopulation(iPopChange)
+		ACT.changeCityPopulation(city.getOwner(), city.getID(), iPopChange)
 
 	try:
 		iCultureChange = int(popupReturn.getEditBoxString(2))

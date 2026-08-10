@@ -29,6 +29,16 @@
   subtract threshold, pull from granary if `food < foodKept`, then `+1 pop`. `growthThreshold = getModifiedIntValue(
   player.threshold(pop), cityGrowthRatePercent + playerGrowthRatePercent)`, halved for barbarian.
 
+- ⛔ **THE FOOD STORE EMITS NO SPINE FACT, AND THAT IS CORRECT (owner):** *"changing food in and of itself does
+  not actually alter any other state anywhere"* — it is an inert accumulator. The fact belongs where the store
+  CROSSES into state something else depends on, which is the population step, and `setPopulationInternal` already
+  emits `SEVT_CITY_POPULATION_ADDED`/`_REMOVED` carrying the delta as a magnitude. ⚑ So a food mutator reaching
+  `m_iFood` without an emit is **not** a missing-fact defect and must not be "fixed" by adding one: a
+  `SEVT_CITY_FOOD_*` would fire on every tick of an accumulator no consumer can act on, and it would double-report
+  the only transition that matters. ⚠ The shape misleads because `m_iFood` is written in ~11 scattered places with
+  no `setFoodInternal` choke point, so it reads like population's commit-point pattern with the emit forgotten.
+  It is not — population needs one because a pop change moves dependent state; food does not.
+
 ## Improvements & plot yields
 
 - Per-plot per-turn order: ownership → bonus discover/deplete → improvement **upgrade** (only if worked OR
