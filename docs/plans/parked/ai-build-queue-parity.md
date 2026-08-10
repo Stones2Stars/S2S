@@ -64,16 +64,34 @@ half CONSULTS the stack instead of re-scoring.
 keeping the decision costs the sliver that is not scoring while restoring every unit evaluation. Suppressing
 it saves that sliver and buys back the unit-squeeze risk this document already records.
 
-⛔ **THE RECALC IS DRAIN-DRIVEN, NOT CLOCK-DRIVEN — a per-turn clear is a large cost INCREASE, not an
-optimization.** Only the cities whose queue actually empties choose at all in a given turn, and that is a small
-fraction of a late-game empire; re-scoring every city every turn is an order of magnitude MORE scoring than
-today. ⚑ Drain-driven also satisfies the fairness principle below for free — a stack that does not re-decide
-mid-processing structurally cannot take the mid-processing information a human is denied — so the turn
-boundary buys nothing the drain does not already have.
+⚖ **THE RECALC IS ONCE PER TURN — FOR NOW, AND FRESHNESS IS THE REASON (owner).** The clock is the STAND-IN
+for the spine invalidation that does not exist yet: a purely drain-driven stack would outlive its inputs
+indefinitely, so the turn boundary is what bounds the staleness until an interest set can.
 
-⚖ **FRESHNESS IS THEREFORE THE SPINE'S JOB, NOT A CLOCK'S (owner: *"later we can derive ways to have that
-stack invalidated on other eventspine events"*) — and with no clock it is not polish, it is what makes
-drain-driven safe.** A stack can otherwise outlive its inputs by many turns.
+⛔ **AND THE INVALIDATION IS OUT OF #430 — ITS OWN LANE, NOT A LATER STEP OF THIS ONE (owner): *"I do plan to
+introduce eventspine and cache management the same way to the AI side, but that is not for #430, that would
+probably end up killing me — 3 months of rollerskate wrangling is enough for 1 go."*** The destination is
+named and wanted; its POSITION is the ruling.
+⚠ **So the clock is not a short-lived interim — it is the shape for the duration of #430**, and the ~3× below
+is a STANDING cost rather than a temporary one. ⇒ Inside #430 the double queue buys FAIRNESS and unit
+responsiveness and pays scoring for them; the optimization arrives only in the later lane.
+⚠ **This is owner-ruled SEQUENCING with a named end state, so [DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred)
+does not reach it** — the same standing as the golden-age / anarchy status carve-out
+([state.md](../../specs/state.md)). ⛔ It is equally NOT licence to start the AI-plane spine work opportunistically
+while in here.
+
+⚠ **THE CLEAR IS LAZY, so the cost is ~3× today's scoring — not the empire's city count.** A city that
+completes nothing in a turn never asks for a building answer and never touches its stack, so the clear costs
+one scoring per *(city × turn in which it completed something)*, never one per city per turn. What it does
+cost is the AMORTIZATION: a depth-3 queue spreads ONE scoring across THREE completions, while a one-turn
+horizon spreads it across at most one turn's completions.
+⇒ **So the per-turn form is a FAIRNESS change that costs perf, not a perf change** — it buys units weighed at
+EVERY completion and a staleness bound of one turn, and pays back what the depth was amortizing. ⛔ Do not
+report it as the optimization; the optimization is the horizon extending, and the structure landing now is
+what that plugs into.
+
+⚖ **FRESHNESS BECOMES THE SPINE'S JOB (owner: *"later we can derive ways to have that stack invalidated on
+other eventspine events"*), and it is what RETIRES the clock rather than merely refining it.**
 ⚠ **The risk to design against is an interest set that degenerates to "everything".** A building's score reads
 the enabler frontier, the what-if valuation and the empire's standing, so a naive declaration invalidates on
 nearly every fact and the stack stops being worth keeping. [patterns.md](../../architecture/patterns.md)'s
@@ -89,13 +107,15 @@ AI heuristic ([superseded-ideas #1](../../architecture/superseded-ideas.md)), no
   `FFreeListTrashArray`, so an uncleared slot inherits the previous city's shortlist
   ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted); the enabler's
   domains carry the same requirement for the same reason, [enabler.md §8](../../specs/enabler.md)).
-- ⚑ **Drain-driven recalc retires the save question the earlier phrasing raised.** *"This is only possible
-  with a serialized cache (which we don't want) or a full cache build on load (acceptable)"* — a stack that
-  rebuilds whenever it is found empty needs neither: a load starts every city empty and the first choose
-  fills it. No eager load-end build is owed.
+- ⚑ **A LAZY rebuild retires the save question the earlier phrasing raised.** *"This is only possible with a
+  serialized cache (which we don't want) or a full cache build on load (acceptable)"* — a stack that refills
+  whenever it is found empty needs neither: a load starts every city empty and the first choose that asks
+  fills it. No eager load-end build is owed, and the per-turn clear needs no load special case either.
 
 ⚖ **PRIORITY (owner): *"the calculation itself is now relatively minor, so it is more of a 'medium'
-optimization step."*** ⛔ Its position in the sequence is unchanged either way —
+optimization step."*** ⚠ Read that as SCHEDULING WEIGHT, not as a claim about the kind of change: under the
+per-turn clock the scoring cost goes UP, so what is being weighed is a fairness gain against it (above).
+⛔ Its position in the sequence is unchanged either way —
 [DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) puts "let
 the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed, and a cache added over one of
 those hides it ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) one plane over).
@@ -103,9 +123,9 @@ those hides it ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-h
 **The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
 getting a new building mid-processing, because humans do not get to do that either — they have already gotten
 the dump at that point."* Decision INPUTS are frozen as of the last recalc, so mid-processing mutations are
-invisible to deciders — which the drain-driven stack satisfies strictly, since it does not re-derive at every
-completion at all. (This generalizes past production choice — any AI decision that reads freshly-mutated
-mid-phase state holds an information privilege no human has.)
+invisible to deciders — which the stack satisfies by construction, since a pop re-derives nothing. (This
+generalizes past production choice — any AI decision that reads freshly-mutated mid-phase state holds an
+information privilege no human has.)
 
 Side benefits observed while building the modifier substrate (2026-07-03): the live re-decision is also a
 significant read-storm driver (each completion triggers immediate sibling-city rate evaluations — the
