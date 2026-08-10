@@ -529,6 +529,24 @@ Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resou
 > ⇒ **So "unavailable" is never a complete verdict.** A candidate the player can act on says what to go get; one
 > they cannot says so and stops occupying the list. ⛔ Neither is served by a bit, which is why the reason is
 > STORED at the gate that already knows it rather than re-derived by whoever displays it.
+>
+> **⚖ THE DISPOSITION IS PER ATOM KIND, AND THE KINDS STAY DISTINCT (owner): *"per atom kind … then we can
+> collapse as needed when we want to."*** A `requires` tree mixes kinds freely — `all: [TECH_X, BONUS_Y]` is the
+> ordinary shape — so ONE disposition for the whole clause cannot be right for both halves: a missing BONUS is
+> exactly the "go get copper" case grey exists for, while an unresearched TECH is not something the player can go
+> and fetch. ⛔ So the reason names the ATOM KIND that refused, and hide-vs-grey is decided from that — never
+> from the clause as a whole, and never from one bundled REQUIRES verdict.
+> ⚑ **Carry the kinds SEPARATELY even where two currently share a disposition.** Collapsing is a deliberate later
+> decision and is cheap once the kinds are distinct (one mapping edits); pre-merging is not reversible without
+> re-deriving which kind an entry meant. ⇒ The disposition is a MAPPING OVER the kind, never a property stored
+> per entity.
+> ⚑ **Scale, so this is not read as an edge case: 4,381 of 5,180 buildings name a `TECH_` atom in
+> `requires.build`, 1,216 of them capped.** Nearly every building states its tech on BOTH sides — the `enables`
+> edge that proposes it and the `requires` clause that confirms it (§2's multi-parent rule) — so the tech clause's
+> disposition decides the visible build list for thousands of entities, not a handful.
+> ⚠ **A `noneOf` names the thing it FORBIDS**, so "the tree mentions a tech" is not the same as "a tech refused
+> it" — the kind must come from the atoms that actually caused the failure, not from what the tree merely
+> mentions ([CvConditionQuery] draws that same line).
 
 **The frontier is one shared choice set — UI *and* AI.** It is computed once per recompute; the UI greys from
 it, and the AI's production decision iterates **only this small frontier** instead of scoring the whole entity
