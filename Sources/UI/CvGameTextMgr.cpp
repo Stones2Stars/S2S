@@ -2585,16 +2585,18 @@ void CvGameTextMgr::buildRequiresClauses(CvWStringBuffer& szBuffer, const CvCond
 			szBuffer.append(szPhrase);
 			continue;
 		}
-		if (cascadeEvalCondition(pClause, ec, gateFlags))
-		{
-			szBuffer.append(CvWString(L"[COLOR_POSITIVE_TEXT]"));
-		}
-		else
-		{
-			szBuffer.append(CvWString(L"[COLOR_WARNING_TEXT]"));
-		}
+		// ⛔ The colour goes in as the CONTROL CODE (SETCOLR/ENDCOLR), never as a `[COLOR_X]` token. The bracket
+		// form is resolved by the TRANSLATOR while it resolves a TXT key (CvDllTranslator::initializeTags builds
+		// that map); a literal appended straight into a composed buffer never passes through it again, so it can
+		// only ever print as text. The tell is a heading that colours correctly -- it came from getText -- above
+		// lines that do not.
+		// ⚠ TEXT_COLOR expands its argument FOUR times (one per channel), so the verdict is resolved into a name
+		// FIRST -- passing the test itself would evaluate the clause four times per line.
+		const char* szClauseColor = cascadeEvalCondition(pClause, ec, gateFlags)
+			? "COLOR_POSITIVE_TEXT" : "COLOR_WARNING_TEXT";
+		szBuffer.append(CvWString::format(SETCOLR, TEXT_COLOR(szClauseColor)));
 		szBuffer.append(szPhrase);
-		szBuffer.append(CvWString(L"[COLOR_REVERT]"));
+		szBuffer.append(CvWString(ENDCOLR));
 	}
 }
 

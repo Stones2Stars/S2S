@@ -79,7 +79,11 @@ public:
 		GATEREASON_REQUIRES_PROMOTION,
 		GATEREASON_REQUIRES_POPULATION,   // the city is too small
 		GATEREASON_REQUIRES_CITY_COUNT,   // an empire/team COUNT token (CITY / TEAM)
-		GATEREASON_REQUIRES_PROPERTY,     // a PROPERTY_ operate band (crime / pollution / education / ...)
+		// A PROPERTY_ band. Every band the data authors today is PURE DORMANCY on a queue-excluded carrier (188
+		// atoms, all in `operate`, none on a constructible entity), so this reason is currently unreachable --
+		// it is carried because a constructible entity gated on a band SPAN is a design the owner is keeping
+		// open, and the kind is what lets that arrive as data rather than as an engine change.
+		GATEREASON_REQUIRES_PROPERTY,
 		GATEREASON_REQUIRES_CULTURELEVEL,
 		GATEREASON_REQUIRES_VICTORY,      // a victory condition the game was not set up with
 		GATEREASON_REQUIRES_TERRAIN,
