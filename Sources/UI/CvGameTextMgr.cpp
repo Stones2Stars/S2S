@@ -1209,7 +1209,7 @@ void createTestFontString(CvWStringBuffer& szString)
 // identically, so there is one formatter rather than two that could drift apart.
 static CvWString gt_scaled100(int64_t iValue);
 
-void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
+void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool bBreakdown)
 {
 	if (pPlot == NULL)
 	{
@@ -1266,12 +1266,21 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			continue;   // a channel this tile has never carried says nothing worth a line
 		}
 		szString.append(NEWLINE);
-		szString.append(gDLL->getText("TXT_KEY_PLOTHELP_YIELD",
-			GC.getYieldInfo((YieldTypes)iYield).getTextKeyWide(),
-			gt_scaled100(iTotal).GetCString(),
-			gt_scaled100(iNature).GetCString(),
-			gt_scaled100(iImprovement).GetCString(),
-			gt_scaled100(iRest).GetCString()));
+		if (bBreakdown)
+		{
+			szString.append(gDLL->getText("TXT_KEY_PLOTHELP_YIELD",
+				GC.getYieldInfo((YieldTypes)iYield).getTextKeyWide(),
+				gt_scaled100(iTotal).GetCString(),
+				gt_scaled100(iNature).GetCString(),
+				gt_scaled100(iImprovement).GetCString(),
+				gt_scaled100(iRest).GetCString()));
+		}
+		else
+		{
+			szString.append(gDLL->getText("TXT_KEY_PLOTHELP_YIELD_TOTAL",
+				GC.getYieldInfo((YieldTypes)iYield).getTextKeyWide(),
+				gt_scaled100(iTotal).GetCString()));
+		}
 	}
 }
 
@@ -7348,9 +7357,13 @@ void CvGameTextMgr::getPlotHelp(CvPlot* mousePlot, CvCity* city, CvPlot* flagPlo
 {
 	// The map-hover entry point. It routes to setPlotHelp rather than carrying its own copy of the tile
 	// description: the two were separate bodies historically and that is precisely how they came to disagree.
+	//
+	// ⚑ bAlt is the ENGINE's own extended-help modifier, handed in by the EXE, so the per-yield DECOMPOSITION
+	// hangs off it rather than off a hotkey of our own: the ordinary hover states the yield, ALT states where it
+	// came from. The census is a diagnostic read and every map hover is not the place for one.
 	if (mousePlot != NULL && mousePlot->isRevealed(GC.getGame().getActiveTeam(), true))
 	{
-		setPlotHelp(strHelp, mousePlot);
+		setPlotHelp(strHelp, mousePlot, bAlt);
 	}
 }
 

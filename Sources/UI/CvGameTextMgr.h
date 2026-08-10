@@ -64,7 +64,9 @@ public:
 	bool setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bAssassinate = false);
 	bool setMinimalCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool bAssassinate = false);
 	bool setAssassinatePlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, CvUnit* pAttacker, CvUnit* pDefender);
-	void setPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot);
+	// bBreakdown = decompose each yield into its stored segments. OFF by default: the census is a diagnostic
+	// read, and putting it in every ordinary map hover buries the number a player actually came for.
+	void setPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bBreakdown = false);
 	void setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity);
 	void setScoreHelp(CvWStringBuffer &szString, PlayerTypes ePlayer);
 
