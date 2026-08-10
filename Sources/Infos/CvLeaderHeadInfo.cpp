@@ -263,13 +263,16 @@ void CvLeaderHeadInfo::mapFrom(const picojson::value& entity)
 	jsonReadIdList(entityObj, "traits", m_aiTraits);
 	jsonReadIdList(entityObj, "complexTraits", m_aiComplexTraits);
 
-	// --- world.art.icon -> the EXE-bound leaderhead portrait ArtDefineTag ---
+	// --- world.art.define -> the ART_DEF_* tag ARTFILEMGR resolves the leaderhead's art from ---
+	// ⛔ The EXE reads this one through getArtInfo(), which is DllExport and is NOT null-checked on its side:
+	// an unresolved tag makes ARTFILEMGR answer NULL and the diplomacy screen dereferences it while reading the
+	// art's path strings. So an empty tag here is not a missing portrait, it is a crash on first contact.
 	if (const picojson::object* pWorldArt = jsonWorldArt(entityObj))
 	{
-		std::string szIconTag;
-		if (jsonIdStr(*pWorldArt, "icon", szIconTag))
+		std::string szArtDefineTag;
+		if (jsonIdStr(*pWorldArt, "define", szArtDefineTag))
 		{
-			m_szArtDefineTag = szIconTag.c_str();
+			m_szArtDefineTag = szArtDefineTag.c_str();
 		}
 	}
 

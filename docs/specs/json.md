@@ -1025,6 +1025,16 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   *definitions* stay in the ART XML (`CIV4ArtDefines_*`), resolved by `ARTFILEMGR` from the id (a `BUILDING_`/`UNIT_`
   entity keeps `getArtInfo()` = `ARTFILEMGR.get<X>ArtInfo(<the id>)`). `ART_`/`EFFECT_` ids are XML-only Types
   ([naming.md](naming.md)), *referenced* from here. · **`sound`** — audio assets.
+  > **⛔ THE TAG KEY IS `define`, AND AN INFO THAT READS A DIFFERENT ONE FAILS AS A CRASH, NOT AS A MISSING
+  > PICTURE.** `getArtInfo()` is `DllExport` and the EXE does **not** null-check it, so an unresolved tag makes
+  > `ARTFILEMGR` answer NULL and the EXE dereferences it while reading the art's own path strings — an access
+  > violation in the EXE's frame with nothing naming the entity ([DEC-info-plane-read-only](../architecture/decisions.md#dec-info-plane-read-only):
+  > the address is the bait). ⚠ The DLL-side reads around it (`getLeaderHead`, `getButton`) DO null-check, so
+  > they degrade quietly to "no art" and hide the fault until the EXE asks.
+  > ⚑ **The failure is a silent key mismatch, which no census catches:** the reader accounts every authored key
+  > to *some* consumer, so a key one info ignores while its siblings consume it is not an unknown key and not an
+  > unconsumed section. Nothing reports it. ⇒ When adding or reviewing a `world.art` read, check the key against
+  > what the data actually authors — not against what the surrounding comment says it reads.
 - **`ai`** — AI-only metadata (flavours, weights, personality); never affects rules, only AI behaviour.
 
 ---
