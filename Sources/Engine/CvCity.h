@@ -1970,7 +1970,9 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isCoastal, int);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, hasBuilding, BuildingTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isActiveBuilding, BuildingTypes);
-		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, int, getCultureTimes100, PlayerTypes);
+		//	int64_t like the member it wraps: culture accumulates every turn and never decays, so it outgrew `int`
+		//	-- declaring the functor `int` narrowed it back on every call, which is the wrap the widening fixed.
+		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, int64_t, getCultureTimes100, PlayerTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, const CvPlotGroup*, plotGroup, PlayerTypes);
 
 		DECLARE_MAP_FUNCTOR_CONST_2(CvCity, bool, isRevealed, TeamTypes, bool);
