@@ -38,6 +38,16 @@ re-decision privilege disappears entirely rather than merely becoming rarer.
 > ⛔ **It is not settleable on the standing save.** The effect is a shifted unit/building MIX over many turns,
 > not a value a turn's census can show, so it needs exposure rather than a measurement — which is why this
 > belongs to the pre-ship pass and not to the perf thread that produced the depth.
+> ⚑ **AND THE DEPTH IS THE WRONG LEVER FOR THE COST IT WAS REACHING FOR (owner).** Queue depth buys cheap
+> scoring by suppressing the DECISION, which is what spends the responsiveness. The scoring is what should be
+> retained instead — the build evaluations are exactly the AI data that
+> [state-repositories.md](../../architecture/state-repositories.md) § THE AI PLANE IS NOT EXEMPT already rules
+> on: an AI cache is an ordinary spine CONSUMER that declares the facts that move it, so a retained shortlist
+> is INVALIDATED BY THE EVENTS THAT CHANGE IT rather than by a queue that stops anyone asking.
+> ⛔ Its position in the sequence is unchanged and is the reason it is not built here:
+> [DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) puts
+> "let the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed — and a cache added over
+> one of those hides it ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) one plane over).
 
 **The target processing model (owner, same day):** *"build processing then uses the CACHE, until all buildings
 it can has been produced — and then the cache gets recalced in expectation of the next cycle."* I.e. reads
