@@ -149,6 +149,11 @@ public:
 	void appendClassificationLines(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock) const;
 	// ONE key of a block, for a widget that represents a single granted ability rather than the whole set.
 	void appendClassificationKey(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock, const char* szKey) const;
+	// The §5 PROVISIONS twin of the two renderers above: what the entity's CONSIDERED ACTION hands over. A grant
+	// is neither a magnitude nor a block key -- it is an entity handed to the player -- so it gets its own
+	// renderer rather than being hand-listed per composer ([DEC-single-implementation]). A conditioned entry
+	// carries its condition, because rendering one unconditionally claims something the data does not say.
+	void appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& info) const;
 	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);

@@ -6692,6 +6692,10 @@
 		<Spanish>%d1 [ICON_ESPIONAGE]: Coste total</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_ESPIONAGE_TEAM_MEMBERS</Tag>
+		<English>x%d1 [ICON_ESPIONAGE] for team size</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_ESPIONAGE_COUNTERESPIONAGE_MOD</Tag>
 		<English>%D1%%: for Counterespionage</English>
 		<French>%D1%% : pour le contre-espionnage</French>
@@ -27925,6 +27929,38 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<German>%s1 [ICON_COMMERCE]: Basisprofit</German>
 		<Italian>%s1 [ICON_COMMERCE]: Profitto base</Italian>
 		<Spanish>%s1 [ICON_COMMERCE]: Beneficio base</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_HELP_WITH</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Trade route with %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_HELP_MODIFIER</Tag>
+		<English>[NEWLINE][ICON_BULLET]%D1%% Trade route modifier</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_HELP_PROFIT</Tag>
+		<English>[NEWLINE][ICON_BULLET]%s1 [ICON_COMMERCE]: Profit</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_TECHS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants technologies:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_CIVICS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants civics:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_BUILDINGS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants buildings:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_PROMOTIONS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants promotions:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_GREATPEOPLE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants great people:[COLOR_REVERT]</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_ROUTE_MOD_BUILDING</Tag>

@@ -29,6 +29,7 @@
 #include "Infos/CvRequires.h"             // the build/operate trees the requires block renders
 #include "Infos/CvGrants.h"           // the considered-action payload the first-discoverer widgets render
 #include "Infos/CvTechInfo.h"         // canTradeOnTerrain + the tech's own compiled families
+#include "Infos/CvEspionageMissionInfo.h"  // the mission whose cost the espionage census decomposes
 #include "CvClassificationBlock.h"   // the §8/§9 block appendClassificationLines walks
 #include "UI/CvEntryText.h"           // entryDetailLine -- the ONE per-entry renderer
 #include "Enabler/CvEnablerKernel.h"  // operatingBuildings -- the enabler's OWN active/obsolete verdict
@@ -2130,8 +2131,26 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 //
 // Build Civilization Info Help Text
 //
+//	A CIVILIZATION is almost entirely PROVISIONS, which is why it needed a renderer the other composers did not:
+//	every one of the 54 authors a `grants` block and only six author a modifier family at all. Rendering the
+//	families alone — which is what a composer built to the usual shape would do — would leave the whole entity
+//	blank while looking correctly wired.
 void CvGameTextMgr::parseCivInfos(CvWStringBuffer &szInfoText, CivilizationTypes eCivilization, bool bDawnOfMan, bool bLinks)
 {
+	if ((int)eCivilization < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getCivilizationInfo(eCivilization);
+
+	//	The Dawn-of-Man screen supplies its own title and civilization framing.
+	if (!bDawnOfMan)
+	{
+		szInfoText.append(kInfo.getDescription());
+	}
+
+	appendGrantLines(szInfoText, kInfo);
+	appendEntityBlocks(szInfoText, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 
 
@@ -2240,8 +2259,23 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 	}
 	appendEntityBlocks(szBuffer, kInfo, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
 }
+//	The unit TYPE's help plus the legs only a CITY can answer — today the starting experience, which depends on the
+//	city's own free-XP sources and is halved for a draft.
+//
+//	⚑ The heading is deliberately suppressed: the conscript hover assigns the unit's name itself before calling
+//	here, so printing it again would title the block twice.
 void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText, CvCity* pCity, bool bConscript, bool bTBUnitView1, bool bTBUnitView2, bool bTBUnitView3)
 {
+	if ((int)eUnit < 0)
+	{
+		return;
+	}
+	setBasicUnitHelp(szBuffer, eUnit, true);
+
+	if (pCity != NULL)
+	{
+		setUnitExperienceHelp(szBuffer, NEWLINE, eUnit, pCity, bConscript);
+	}
 }
 
 // BUG - Starting Experience - start
@@ -3892,6 +3926,103 @@ void CvGameTextMgr::appendClassificationKey(CvWStringBuffer& szBuffer, const CvC
 	szBuffer.append(entryClassificationName(std::string(szKey)));
 }
 
+//	Which registry a granted id indexes. It rides the bucket TABLE below rather than being positional, so
+//	reordering that table cannot silently resolve a promotion id against the tech registry.
+enum GrantRegistry
+{
+	GRANTREG_TECH,
+	GRANTREG_CIVIC,
+	GRANTREG_BUILDING,
+	GRANTREG_PROMOTION,
+	GRANTREG_SPECIALIST,
+};
+
+//	A granted id resolved through the registry its bucket names.
+//
+//	⛔ Bounds-checked HERE: an id outside its registry renders NOTHING rather than reaching the info plane, which
+//	answers an unanswerable read by failing loud ([DEC-info-plane-read-only]). A tooltip is not a place to take a
+//	load defect down, and the load census is where that defect belongs.
+static CvWString gt_grantedEntityName(int eRegistry, int iId)
+{
+	if (iId < 0)
+	{
+		return CvWString();
+	}
+	switch (eRegistry)
+	{
+	case GRANTREG_TECH:
+		return (iId < GC.getNumTechInfos()) ? GC.getTechInfo((TechTypes)iId).getDescription() : CvWString();
+	case GRANTREG_CIVIC:
+		return (iId < GC.getNumCivicInfos()) ? GC.getCivicInfo((CivicTypes)iId).getDescription() : CvWString();
+	case GRANTREG_BUILDING:
+		return (iId < GC.getNumBuildingInfos()) ? GC.getBuildingInfo((BuildingTypes)iId).getDescription() : CvWString();
+	case GRANTREG_PROMOTION:
+		return (iId < GC.getNumPromotionInfos()) ? GC.getPromotionInfo((PromotionTypes)iId).getDescription() : CvWString();
+	case GRANTREG_SPECIALIST:
+		return (iId < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)iId).getDescription() : CvWString();
+	}
+	return CvWString();
+}
+
+void CvGameTextMgr::appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& info) const
+{
+	const CvGrants* pGrants = info.consideredGrants();
+	if (pGrants == NULL)
+	{
+		return;
+	}
+
+	//	The §5 list buckets the authored data carries, each with the registry its ids index and the heading its
+	//	entries are listed under. A bucket nothing authors renders nothing, so the table costs only its own row —
+	//	and a newly authored bucket is one row here rather than a new composer.
+	struct GrantBucket
+	{
+		const char* szBucket;
+		const char* szHeadingKey;
+		int eRegistry;
+	};
+	static const GrantBucket akBuckets[] =
+	{
+		{ "techs",       "TXT_KEY_GRANTHELP_TECHS",       GRANTREG_TECH },
+		{ "civics",      "TXT_KEY_GRANTHELP_CIVICS",      GRANTREG_CIVIC },
+		{ "buildings",   "TXT_KEY_GRANTHELP_BUILDINGS",   GRANTREG_BUILDING },
+		{ "promotions",  "TXT_KEY_GRANTHELP_PROMOTIONS",  GRANTREG_PROMOTION },
+		{ "greatPeople", "TXT_KEY_GRANTHELP_GREATPEOPLE", GRANTREG_SPECIALIST },
+	};
+
+	for (int iBucket = 0; iBucket < (int)(sizeof(akBuckets) / sizeof(akBuckets[0])); iBucket++)
+	{
+		const int iBucketKey = CvGrants::key(akBuckets[iBucket].szBucket);
+		const std::vector<int>* pList = pGrants->list(iBucketKey);
+		if (pList == NULL || pList->empty())
+		{
+			continue;
+		}
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText(akBuckets[iBucket].szHeadingKey));
+
+		for (size_t iEntry = 0; iEntry < pList->size(); iEntry++)
+		{
+			const CvWString szName = gt_grantedEntityName(akBuckets[iBucket].eRegistry, (*pList)[iEntry]);
+			if (szName.empty())
+			{
+				continue;
+			}
+			szBuffer.append(NEWLINE);
+			szBuffer.append(szName);
+
+			//	A conditioned grant states WHEN it is handed over. Dropping the condition would advertise a
+			//	provision the entity does not unconditionally give.
+			const CvCondition* pCondition = pGrants->listCond(iBucketKey, iEntry);
+			if (pCondition != NULL)
+			{
+				szBuffer.append(L" ");
+				szBuffer.append(entryConditionText(pCondition));
+			}
+		}
+	}
+}
+
 void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily) const
 {
 	appendEntryLinesFiltered(szBuffer, info, eFamily, -1, NO_EDGEB, -1);
@@ -4070,8 +4201,80 @@ void CvGameTextMgr::getWarplanString(CvWStringBuffer& szString, WarPlanTypes eWa
 	}
 }
 
+//	One attitude component, printed only where it actually moves the verdict — so the block reads as the reasons
+//	this leader feels the way they do, never as a table of zeroes.
+static void gt_attitudeTerm(CvWStringBuffer& szBuffer, int iValue, const char* szKey)
+{
+	if (iValue != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText(szKey, iValue));
+	}
+}
+
+//	WHY one leader regards another as they do: the attitude verdict, then every component that produced it, each
+//	with its own sign. Attitude is the master variable routing every AI diplomatic decision
+//	([special-systems.md]), so a hostile verdict the player cannot account for is the one number on this screen
+//	that most needs its terms.
+//
+//	⛔ Every term is read from the AI's OWN component getters, so the block cannot drift from the attitude the AI
+//	actually acts on ([DEC-single-implementation]) — a second summation here could disagree with the verdict it
+//	claims to explain.
 void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eTargetPlayer)
 {
+	if (ePlayer == NO_PLAYER || eTargetPlayer == NO_PLAYER)
+	{
+		return;
+	}
+	const CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_ATTITUDE_TOWARDS",
+		GC.getAttitudeInfo(kPlayer.AI_getAttitude(eTargetPlayer)).getTextKeyWide(),
+		GET_PLAYER(eTargetPlayer).getNameKey()));
+
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getCloseBordersAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_LAND_TARGET");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getWarAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_WAR");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getPeaceAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_PEACE");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getSameReligionAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_SAME_RELIGION");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getDifferentReligionAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_DIFFERENT_RELIGION");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getBonusTradeAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_BONUS_TRADE");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getOpenBordersAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_OPEN_BORDERS");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getDefensivePactAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_DEFENSIVE_PACT");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getRivalDefensivePactAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_RIVAL_DEFENSIVE_PACT");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getRivalVassalAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_RIVAL_VASSAL");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getShareWarAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_SHARE_WAR");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getFavoriteCivicAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_FAVORITE_CIVIC");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getTradeAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_TRADE");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getRivalTradeAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_RIVAL_TRADE");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getColonyAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_FREEDOM");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getFirstImpressionAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_FIRST_IMPRESSION");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getTeamSizeAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_TEAM_SIZE");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getBetterRankDifferenceAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_BETTER_RANK");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getWorseRankDifferenceAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_WORSE_RANK");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getLowRankAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_LOW_RANK");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getLostWarAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_LOST_WAR");
+
+	//	The unattributed residual — whatever the leader carries that no named component above accounts for.
+	const int iExtra = kPlayer.AI_getAttitudeExtra(eTargetPlayer);
+	if (iExtra != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText(iExtra > 0 ? "TXT_KEY_MISC_ATTITUDE_EXTRA_GOOD" : "TXT_KEY_MISC_ATTITUDE_EXTRA_BAD", iExtra));
+	}
+
+	//	The memory ledger: each remembered act that still carries weight, named by the memory it is. A decayed
+	//	memory weighs nothing and is simply absent.
+	for (int iMemory = 0; iMemory < NUM_MEMORY_TYPES; iMemory++)
+	{
+		const int iMemoryAttitude = kPlayer.AI_getMemoryAttitude(eTargetPlayer, (MemoryTypes)iMemory);
+		if (iMemoryAttitude != 0)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_ATTITUDE_MEMORY", iMemoryAttitude,
+				GC.getMemoryInfo((MemoryTypes)iMemory).getDescription()));
+		}
+	}
 }
 
 void CvGameTextMgr::getEspionageString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eTargetPlayer)
@@ -4275,8 +4478,65 @@ void CvGameTextMgr::buildFinanceInflationString(CvWStringBuffer& szBuffer, Playe
 	}
 }
 
+//	The finance advisor's unit-upkeep row, decomposed term by term: each side's gross, the free allowance that
+//	offsets it, the net that survives, then the difficulty adjustment and the one total the treasury pays. A row
+//	that served only the total would say a number is wrong without saying which term made it so.
+//
+//	⚑ UPKEEP *IS* MAINTENANCE and differs only in coming from UNITS instead of cities ([economy.md]), which is why
+//	this reads like the city-maintenance row beside it rather than like a parallel expense of its own.
 void CvGameTextMgr::buildFinanceUnitUpkeepString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
 {
+	if (NO_PLAYER == ePlayer)
+	{
+		return;
+	}
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+
+	const int iCivilianGross = (int)kPlayer.getUnitUpkeepCivilian();
+	const int iCivilianFree = kPlayer.getFreeUnitUpkeepCivilian();
+	const int iCivilianNet = (int)kPlayer.getUnitUpkeepCivilianNet();
+	const int iCivilianMod = kPlayer.getCivilianUnitUpkeepMod();
+	const int iMilitaryGross = (int)kPlayer.getUnitUpkeepMilitary();
+	const int iMilitaryFree = kPlayer.getFreeUnitUpkeepMilitary();
+	const int iMilitaryNet = (int)kPlayer.getUnitUpkeepMilitaryNet();
+	const int iMilitaryMod = kPlayer.getMilitaryUnitUpkeepMod();
+	const int iFinal = (int)kPlayer.getFinalUnitUpkeep();
+
+	CvWString szValue;
+
+	szValue.Format(L"%d", iCivilianGross);
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_CIVILIAN", szValue.GetCString()));
+	if (iCivilianMod != 0)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_HELPTEXT_UNIT_UPKEEP_MOD_CIVILIAN", iCivilianMod));
+	}
+	if (iCivilianFree != 0)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_FREE", iCivilianFree));
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_TOTAL_1", iCivilianNet));
+
+	szValue.Format(L"%d", iMilitaryGross);
+	szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_MILITARY", szValue.GetCString()));
+	if (iMilitaryMod != 0)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_HELPTEXT_UNIT_UPKEEP_MOD_MILITARY", iMilitaryMod));
+	}
+	if (iMilitaryFree != 0)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_FREE", iMilitaryFree));
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_TOTAL_1", iMilitaryNet));
+
+	//	Whatever the difficulty and the AI/era ramp add on top of the two nets. It is the residual by construction,
+	//	so it can never disagree with the total it is subtracted from.
+	const int iHandicap = iFinal - (iCivilianNet + iMilitaryNet);
+	if (iHandicap != 0)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_HANDICAP_ADJUSTMENT", iHandicap));
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_FINANCE_ADVISOR_UNIT_UPKEEP_TOTAL_2", iFinal));
 }
 
 void CvGameTextMgr::buildFinanceAwaySupplyString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const
@@ -6627,12 +6887,116 @@ void CvGameTextMgr::eventGoldHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, 
 	}
 }
 
+//	One trade route, decomposed: who it runs to, the base profit, the modifier stack that scales it, the profit
+//	that results, and what each yield channel actually receives from it.
+//
+//	⛔ The slot index is bound-checked HERE against getNumTradeRouteSlots(): getTradeCity's own guard is a
+//	FASSERT_BOUNDS, which compiles out of the builds this tooltip actually runs in, and the index arrives straight
+//	off a widget payload.
+//
+//	⚑ Profit and yield are both ×100 and render their hundredths, which is the whole reason the scale exists —
+//	a route worth a fraction of a commerce reads as that fraction rather than rounding away to nothing.
 void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvCity* pCity)
 {
+	if (pCity == NULL || iRoute < 0 || iRoute >= pCity->getNumTradeRouteSlots())
+	{
+		return;
+	}
+	CvCity* pPartner = pCity->getTradeCity(iRoute);
+	if (pPartner == NULL)
+	{
+		return;
+	}
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_WITH", pPartner->getName().GetCString()));
+
+	const int iBaseProfit = pCity->getBaseTradeProfit(pPartner);
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_BASE", gt_scaled100(iBaseProfit).GetCString()));
+
+	const int iModifier = pCity->totalTradeModifier(pPartner);
+	if (iModifier != 100)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_MODIFIER", iModifier - 100));
+	}
+
+	const int iProfit = pCity->calculateTradeProfit(pPartner);
+	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_PROFIT", gt_scaled100(iProfit).GetCString()));
+
+	//	What the route actually delivers, per channel. A channel with no trade share contributes nothing and is
+	//	simply absent rather than printed as a zero.
+	CvWString szYield;
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+	{
+		const int iTradeYield = pCity->calculateTradeYield((YieldTypes)iYield, iProfit);
+		if (iTradeYield != 0)
+		{
+			szYield.Format(L"%s %c", gt_scaled100(iTradeYield).GetCString(), GC.getYieldInfo((YieldTypes)iYield).getChar());
+			szBuffer.append(NEWLINE);
+			szBuffer.append(szYield);
+		}
+	}
 }
 
+//	What a mission costs, decomposed into the terms that set it: the contextual base, the modifier stack that
+//	scales it, the team-size multiplier, and the total — beside the points actually banked against that team,
+//	because a cost means nothing without the balance it is spent from.
+//
+//	⛔ The BASE here is the CONTEXTUAL one, not the mission info's authored number: the base already scales with
+//	the target (its population, its buildings, the distance), so serving the authored figure would decompose the
+//	total into a term that is not in it.
 void CvGameTextMgr::setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pSpyUnit)
 {
+	if (eMission == NO_ESPIONAGEMISSION)
+	{
+		return;
+	}
+	const PlayerTypes eActingPlayer = GC.getGame().getActivePlayer();
+	if (eActingPlayer == NO_PLAYER)
+	{
+		return;
+	}
+	const CvPlayer& kPlayer = GET_PLAYER(eActingPlayer);
+
+	//	-1 is the "this mission cannot be used here" verdict, and it is the answer the player most needs; the cost
+	//	terms below would all be meaningless beside it.
+	const int64_t iBaseCost = kPlayer.getEspionageMissionBaseCost(eMission, eTargetPlayer, pPlot, iExtraData, pSpyUnit);
+	if (iBaseCost == -1)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_CANNOT_DO_MISSION"));
+		return;
+	}
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_BASE_COST", (int)iBaseCost));
+
+	const int iModifier = kPlayer.getEspionageMissionCostModifier(eMission, eTargetPlayer, pPlot, pSpyUnit);
+	if (iModifier != 100)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_COST", iModifier));
+	}
+
+	const int iMembers = GET_TEAM(kPlayer.getTeam()).getNumMembers();
+	if (iMembers > 1)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_TEAM_MEMBERS", iMembers));
+	}
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_COST_TOTAL",
+		kPlayer.getEspionageMissionCost(eMission, eTargetPlayer, pPlot, iExtraData, pSpyUnit)));
+
+	if (eTargetPlayer != NO_PLAYER)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_EVENT_ESPIONAGE_POINTS",
+			GET_TEAM(kPlayer.getTeam()).getEspionagePointsAgainstTeam(GET_PLAYER(eTargetPlayer).getTeam()),
+			GET_PLAYER(eTargetPlayer).getNameKey()));
+	}
 }
 
 void CvGameTextMgr::getTradeScreenTitleIcon(CvString& szButton, CvWidgetDataStruct& widgetData, PlayerTypes ePlayer)
