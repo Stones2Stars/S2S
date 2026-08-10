@@ -10523,12 +10523,8 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 			// a legacy disabled-flag ([DEC-calc-zero-ride-in]).
 			if (m_operatingBuildings.active.count((int)eType) != 0)
 			{
-				if (isDormantBuilding(eType))
-				{
-				}
 				processBuilding(eType, -1, false, true);
 			}
-
 		}
 
 		// #430 event spine: the PRESENCE fact, at the presence choke point -- fires on EVERY genuine has-flip,
