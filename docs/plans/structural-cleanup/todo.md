@@ -738,6 +738,14 @@
   list with ANY semantics and never for a consumer with ALL semantics — a panel that split mandatory from
   one-of loses that split, which is a stated display change and not a reason to hesitate
   ([patterns.md](../../architecture/patterns.md)).
+- Give the reverse pass a LEADERHEAD source bucket, so "which leaders hold this trait" is answerable. A leader
+  names its own traits; the inverse has nowhere to land, because the bucket enum the reverse pass keys its source
+  side on carries no leaderhead entry — so the trait's own lists cannot hold the answer and the pedia's leaders
+  panel stays unrendered ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
+  ⚠ Distinct from AUTHORING the assignments below: closing that alone leaves the panel just as empty, because the
+  read does not exist either. Both halves are needed and neither substitutes for the other.
+  ⛔ It does NOT come back as a sweep of every leaderhead asking each one — that is the own-data inversion the
+  rule names, and it is what was removed.
 - **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
   *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
   everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read

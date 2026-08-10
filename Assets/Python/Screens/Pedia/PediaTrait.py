@@ -1,7 +1,7 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
-GC = CyGlobalContext()
+INFO = CyInfo()
 
 class Page:
 
@@ -22,8 +22,6 @@ class Page:
 
 
 	def interfaceScreen(self, iTheTrait):
-		GC = CyGlobalContext()
-		CvTheTraitInfo = GC.getTraitInfo(iTheTrait)
 		aName = self.main.getNextWidgetName
 
 		eWidGen		= WidgetTypes.WIDGET_GENERAL
@@ -32,26 +30,25 @@ class Page:
 		szfontEdge, szfont4b, szfont4, szfont3b, szfont3, szfont2b, szfont2 = self.main.aFontList
 
 		H_ROW_1 = self.H_TOP_ROW
-		H_ROW_2 = self.H_BOT_ROW
 		S_ICON = self.S_ICON
 		X_COL_1 = self.X_COL_1
 		Y_ROW_1 = self.Y_ROW_1
-		Y_ROW_3 = Y_ROW_2 = Y_ROW_1 + H_ROW_1
+		Y_ROW_3 = Y_ROW_1 + H_ROW_1
 		H_ROW_3 = self.H_PEDIA_PAGE - H_ROW_1
 		W_PEDIA_PAGE = self.W_PEDIA_PAGE
 
 		screen = self.main.screen()
 
 		# Main Panel
-		szTxt1 = szfontEdge + CvTheTraitInfo.getDescription()
+		szTxt1 = szfontEdge + INFO.getDescription("TRAIT_", iTheTrait)
 		screen.setText(aName(), "", szTxt1, 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, eWidGen, 1, 1)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_ROW_1 + 2, H_ROW_1 + 2, H_ROW_1 + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "ToolTip|TRAIT%d" % iTheTrait
-		screen.setImageButtonAt(Img, Pnl, CvTheTraitInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("TRAIT_", iTheTrait), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 		# Strategy & help text.
-		szTxt1 = CvTheTraitInfo.getStrategy()
-		szTxt2 = CvTheTraitInfo.getHelp()
+		szTxt1 = INFO.getStrategy("TRAIT_", iTheTrait)
+		szTxt2 = INFO.getHelp("TRAIT_", iTheTrait)
 		if szTxt2:
 			if szTxt1:
 				szTxt1 += "\n"
@@ -62,27 +59,12 @@ class Page:
 			screen.addPanel(aName(), "", "", True, True, x, Y_ROW_1, w, H_ROW_1, ePnlBlue50)
 			screen.addMultilineText(aName(), szfont2 + szTxt1, x + 4, Y_ROW_1 + 8, w - 8, H_ROW_1 - 16, eWidGen, 1, 1, 1<<0)
 		# Leaders
-		aList = []
-		for iLeader in range(GC.getNumLeaderHeadInfos()):
-			CvLeaderHead = GC.getLeaderHeadInfo(iLeader)
-			if CvLeaderHead.hasTrait(iTheTrait):
-				aList.append([iLeader, CvLeaderHead.getButton()])
-		if aList:
-			screen.addPanel(aName(), "", "", False, True, X_COL_1, Y_ROW_2, W_PEDIA_PAGE, H_ROW_2, ePnlBlue50)
-			iSize = H_ROW_2*4/5
-			Pnl = aName()
-			screen.addScrollPanel(Pnl, "", X_COL_1 - 4, Y_ROW_2, W_PEDIA_PAGE + 6, H_ROW_2 - 26, ePnlBlue50)
-			screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
-			x = 2
-			y = (H_ROW_2 - iSize)/2 - 6
-			for iLeader, BTN in aList:
-				screen.setImageButtonAt("ToolTip|JumpTo|LEADER%d" % iLeader, Pnl, BTN, x, y, iSize, iSize, eWidGen, 1, 1)
-				x += iSize + 6
-			Y_ROW_3 += H_ROW_2
-			H_ROW_3 -= H_ROW_2
+		#  There is no read for "which leaderheads hold this trait": a leader names its traits, and the reverse
+		#  pass has no leader bucket to land the inverse in, so the trait carries no such list. The panel stays
+		#  unrendered until that edge exists -- it does not come back as a sweep of every leaderhead.
 		# Pedia Text & Effects
 		szTxt1 = CyGameTextMgr().parseTraits(iTheTrait, False, True)[1:]
-		szTxt2 = CvTheTraitInfo.getCivilopedia()
+		szTxt2 = INFO.getCivilopedia("TRAIT_", iTheTrait)
 		if szTxt1 or szTxt2:
 			if szTxt1 and szTxt2:
 				W_ROW_3 = W_PEDIA_PAGE/2 - 4

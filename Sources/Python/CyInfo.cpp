@@ -78,6 +78,7 @@
 // The AUTHORED IDENTITY TEXTS that are not on CvInfoBase -- the civilization's name forms, and the two
 // key-backed siblings ([json.md] §7).
 #include "Infos/CvCivilizationInfo.h"
+#include "Infos/CvFeatureInfo.h"
 #include "Infos/CvReligionInfo.h"
 #include "Infos/CvTraitInfo.h"
 #include "Defines/CvGlobals.h"        // GC.getNumCivicInfos / getCivicInfo
@@ -489,6 +490,47 @@ int CyInfo::getAllowedCap(const std::string& szTypePrefix, int iId, int iCap) co
 	if (pAllowed == NULL) return -1;
 
 	return pAllowed->cap((EnAllowedCap)iCap);
+}
+
+int CyInfo::getFeatureGrowthProbability(int iFeatureId) const
+{
+	const CvFeatureInfo* pFeature = static_cast<const CvFeatureInfo*>(cyi_info("FEATURE_", iFeatureId));
+	return pFeature ? pFeature->getGrowthProbability() : 0;
+}
+
+int CyInfo::getFeatureDisappearanceProbability(int iFeatureId) const
+{
+	const CvFeatureInfo* pFeature = static_cast<const CvFeatureInfo*>(cyi_info("FEATURE_", iFeatureId));
+	return pFeature ? pFeature->getDisappearanceProbability() : 0;
+}
+
+python::list CyInfo::getCivilizationLeaders(int iCivilizationId) const
+{
+	python::list lIds;
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return lIds;
+
+	const std::vector<LeaderHeadTypes>& leaders = pCiv->getLeaders();
+	for (size_t i = 0; i < leaders.size(); ++i)
+	{
+		lIds.append((int)leaders[i]);
+	}
+	return lIds;
+}
+
+python::list CyInfo::getCivilizationCityNames(int iCivilizationId) const
+{
+	python::list lNames;
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return lNames;
+
+	for (int iName = 0; iName < pCiv->getNumCityNames(); ++iName)
+	{
+		lNames.append(pCiv->getCityName(iName));
+	}
+	return lNames;
 }
 
 bool CyInfo::hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const
@@ -1203,6 +1245,10 @@ void CyInfo::pythonPublish()
 		.def("getIdList", &CyInfo::getIdList)
 		.def("getCivicUpkeep", &CyInfo::getCivicUpkeep)
 		.def("getAllowedCap", &CyInfo::getAllowedCap)
+		.def("getFeatureGrowthProbability", &CyInfo::getFeatureGrowthProbability)
+		.def("getFeatureDisappearanceProbability", &CyInfo::getFeatureDisappearanceProbability)
+		.def("getCivilizationLeaders", &CyInfo::getCivilizationLeaders)
+		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;
 }

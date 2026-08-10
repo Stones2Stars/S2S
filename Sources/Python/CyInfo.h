@@ -334,6 +334,20 @@ public:
 	// ⚠ -1 means UNCAPPED, so a caller tests `>= 0` for "is capped" and prints the value only above it; reading
 	// it as a count would report every uncapped entity as capped at minus one.
 	int getAllowedCap(const std::string& szTypePrefix, int iId, int iCap) const;
+	// A FEATURE's per-turn spread and vanish odds (`identity.growth` / `identity.disappearance`). Both are plain
+	// authored numbers the caller scales by gamespeed itself -- the engine hands over what the data says and
+	// converts nothing for display.
+	// ⚑ NAMED, because they belong to ONE registry: a slot read would leave the call site naming a slot rather
+	// than the thing ([patterns.md]).
+	int getFeatureGrowthProbability(int iFeatureId) const;
+	int getFeatureDisappearanceProbability(int iFeatureId) const;
+	// A CIVILIZATION's OWN authored lists -- the leaderheads that may lead it, and its city-name pool.
+	// ⚑ These are the civ's own data, so the read hands the list over. Asking every leaderhead whether it
+	// belongs to this civ is the own-data inversion the reverse-view rule names, and it is what these replace.
+	// ⚠ The city names are TXT KEYS, not resolved text: the caller resolves them, because TXT is not this
+	// surface's to own ([patterns.md] -- the library serves the raw key reference).
+	python::list getCivilizationLeaders(int iCivilizationId) const;
+	python::list getCivilizationCityNames(int iCivilizationId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
 	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.
