@@ -7361,7 +7361,23 @@ void CvGameTextMgr::getPlotHelp(CvPlot* mousePlot, CvCity* city, CvPlot* flagPlo
 	// ⚑ bAlt is the ENGINE's own extended-help modifier, handed in by the EXE, so the per-yield DECOMPOSITION
 	// hangs off it rather than off a hotkey of our own: the ordinary hover states the yield, ALT states where it
 	// came from. The census is a diagnostic read and every map hover is not the place for one.
-	if (mousePlot != NULL && mousePlot->isRevealed(GC.getGame().getActiveTeam(), true))
+	//
+	// ⛔ THE EXE HANDS IN THREE SUBJECTS, NOT ONE, and answering only for the tile is why hovering a city or a
+	// unit flag said nothing at all. `city` is the billboard being pointed at and `flagPlot` the plot whose unit
+	// FLAG is, and each is a different question from "what is this tile" -- so each gets the composer that
+	// already answers it rather than a fourth body assembled here.
+	// ⚠ They are asked in PRECEDENCE order, because the pointer sits over all three at once: a flag and a
+	// billboard are drawn ON a tile, so testing the tile first would answer the tile every time and the other
+	// two would never be reachable.
+	if (city != NULL)
+	{
+		setCityBarHelp(strHelp, city);
+	}
+	else if (flagPlot != NULL)
+	{
+		setPlotListHelp(strHelp, flagPlot, false, true);
+	}
+	else if (mousePlot != NULL && mousePlot->isRevealed(GC.getGame().getActiveTeam(), true))
 	{
 		setPlotHelp(strHelp, mousePlot, bAlt);
 	}
