@@ -166,6 +166,11 @@ CvUnitInfo::CvUnitInfo()
 	, m_iSMChangeBase(0)
 	, m_iSMModifierBase(0)
 	, m_iBaseCargoVolume(1)   // the derivation's floor -- the getUnitCountSM divisor must never see < 1 geometry
+	, m_iMeshGroupSize(0)
+	, m_iMeleeWaveSize(0)
+	, m_iRangedWaveSize(0)
+	, m_fAnimationMaxSpeed(0.0f)
+	, m_fAnimationPadTime(0.0f)
 	, m_iEra(NO_ERA)
 	, m_bCanAcquireExperience(false)
 {
@@ -174,9 +179,50 @@ CvUnitInfo::CvUnitInfo()
 	m_iZobristValue = GC.getGame().getSorenRand().getInt();
 }
 
-const CvArtInfoUnit* CvUnitInfo::getArtInfo(int /*iIndex*/, EraTypes /*eEra*/, UnitArtStyleTypes /*eStyle*/) const
+//	The era INDEX each art band applies FROM, against the ordered era list (Assets/Data/eras/_order.json:
+//	0 prehistoric, 1 ancient, 2 classical, 3 medieval, 4 renaissance, 5 industrial, 6 atomic, 7 information,
+//	8 nanotech, 9 transhuman, 10 galactic, 11 cosmic, 12 transcendent, 13 future). The band names are the ART's
+//	vocabulary, not the era list's -- `late` opens at ATOMIC and `future` at TRANSHUMAN -- so the mapping is a
+//	table rather than a name lookup, and it lives here once.
+static const int s_aiUnitArtEraBandFrom[NUM_UNIT_ART_ERA_BANDS] =
 {
-	// One art-define tag (world.art.define) -- the archived per-(era,style) grid collapses to one tag.
+	0,   // early
+	2,   // classical
+	3,   // middle
+	4,   // renaissance
+	5,   // industrial
+	6,   // late
+	9,   // future
+};
+
+int CvUnitInfo::getUnitGroupRequired(int iGroup) const
+{
+	if (iGroup < 0 || iGroup >= (int)m_meshGroups.size())
+	{
+		return -1;
+	}
+	return m_meshGroups[iGroup].iRequired;
+}
+
+const CvArtInfoUnit* CvUnitInfo::getArtInfo(int iIndex, EraTypes eEra, UnitArtStyleTypes /*eStyle*/) const
+{
+	//	Walk DOWN from the highest band the era has reached to the first one this group actually authors, then
+	//	fall back to the unit's own top-level tag. A band the unit does not author is fallen THROUGH, which is
+	//	what lets a unit that only ever authors `early` keep its art for the whole game.
+	//	NO_ERA reads as the FIRST era, so a caller with no era in hand (the button) still gets the group's own
+	//	early art rather than the unit's top-level tag -- which differ the moment a unit has several groups.
+	const int iEra = ((int)eEra < 0) ? 0 : (int)eEra;
+	if (iIndex >= 0 && iIndex < (int)m_meshGroups.size())
+	{
+		const CvUnitMeshGroup& kGroup = m_meshGroups[iIndex];
+		for (int iBand = NUM_UNIT_ART_ERA_BANDS - 1; iBand >= 0; --iBand)
+		{
+			if (iEra >= s_aiUnitArtEraBandFrom[iBand] && !kGroup.aszEraDefine[iBand].empty())
+			{
+				return ARTFILEMGR.getUnitArtInfo(kGroup.aszEraDefine[iBand].c_str());
+			}
+		}
+	}
 	return ARTFILEMGR.getUnitArtInfo(m_szArtDefineTag.c_str());
 }
 
@@ -332,6 +378,12 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	// runs after every mapFrom. The guarded jsonIdStr string reads leave their target untouched on an absent
 	// key, so the string members reset here too.
 	m_szArtDefineTag.clear();
+	m_meshGroups.clear();
+	m_iMeshGroupSize = 0;
+	m_iMeleeWaveSize = 0;
+	m_iRangedWaveSize = 0;
+	m_fAnimationMaxSpeed = 0.0f;
+	m_fAnimationPadTime = 0.0f;
 	m_szFormationType.clear();
 	m_aiCombatClasses.clear();
 	m_aiUnitAIs.clear();
@@ -375,10 +427,51 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	// on (RELATION_SAME_PLOT) each turn -- the ONE shared walk.
 	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
 
-	// world.art.define -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr.
+	// world.art -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr, and the MESH GROUPS beside it: art
+	// is art, and the formation's numbers were authored in the same block as the tags that name their models
+	// (json.md par.7). The EXE lays the unit out and animates it through these, so an absent value is not
+	// "no art" -- it is a formation with no offsets and a walk cycle that never translates.
 	if (const picojson::object* pArt = jsonWorldArt(entityObj))
 	{
 		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+
+		if (const picojson::object* pMesh = jsonChildObj(*pArt, "meshGroups"))
+		{
+			m_iMeshGroupSize = jsonIdInt(*pMesh, "groupSize");
+			m_iMeleeWaveSize = jsonIdInt(*pMesh, "meleeWaveSize");
+			m_iRangedWaveSize = jsonIdInt(*pMesh, "rangedWaveSize");
+			m_fAnimationMaxSpeed = jsonIdFloat(*pMesh, "maxSpeed");
+			m_fAnimationPadTime = jsonIdFloat(*pMesh, "padTime");
+
+			// The BAND KEYS, in UnitArtEraBand order -- the band a tag is authored under IS its index.
+			static const char* aszBandKey[NUM_UNIT_ART_ERA_BANDS] =
+			{
+				"early", "classical", "middle", "renaissance", "industrial", "late", "future"
+			};
+			picojson::object::const_iterator itGroups = pMesh->find("groups");
+			if (itGroups != pMesh->end() && itGroups->second.is<picojson::array>())
+			{
+				const picojson::array& groups = itGroups->second.get<picojson::array>();
+				for (size_t iGroup = 0; iGroup < groups.size(); ++iGroup)
+				{
+					if (!groups[iGroup].is<picojson::object>())
+					{
+						continue;
+					}
+					const picojson::object& groupObj = groups[iGroup].get<picojson::object>();
+					CvUnitMeshGroup group;
+					group.iRequired = jsonIdInt(groupObj, "required");
+					if (const picojson::object* pDefine = jsonChildObj(groupObj, "define"))
+					{
+						for (int iBand = 0; iBand < NUM_UNIT_ART_ERA_BANDS; ++iBand)
+						{
+							jsonIdStr(*pDefine, aszBandKey[iBand], group.aszEraDefine[iBand]);
+						}
+					}
+					m_meshGroups.push_back(group);
+				}
+			}
+		}
 	}
 
 	// --- par.8 `builds` repertoire (BUILD_* FKs, top-level) ---

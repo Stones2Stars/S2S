@@ -31,6 +31,32 @@
 
 class CvArtInfoUnit;
 
+//	The ERA BANDS a unit's mesh-group art is authored over (world.art.meshGroups.groups[].define, json.md par.7).
+//	A band is not an era: it is the era from which that art applies, and the resolution walks DOWN from the
+//	highest band the observer has reached to the first one the unit actually authors.
+enum UnitArtEraBand
+{
+	UNIT_ART_ERA_EARLY = 0,
+	UNIT_ART_ERA_CLASSICAL,
+	UNIT_ART_ERA_MIDDLE,
+	UNIT_ART_ERA_RENAISSANCE,
+	UNIT_ART_ERA_INDUSTRIAL,
+	UNIT_ART_ERA_LATE,
+	UNIT_ART_ERA_FUTURE,
+
+	NUM_UNIT_ART_ERA_BANDS
+};
+
+//	One <UnitMeshGroup>: how many members the formation requires of it, and the art it wears per era band.
+//	An unauthored band is an empty tag -- the resolution falls through it to the next band down.
+struct CvUnitMeshGroup
+{
+	CvUnitMeshGroup() : iRequired(0) {}
+
+	int iRequired;
+	std::string aszEraDefine[NUM_UNIT_ART_ERA_BANDS];
+};
+
 class CvUnitInfo : public CvInfo
 {
 public:
@@ -241,8 +267,20 @@ public:
 	int getFlavour(int iFlavour) const { return mapValueOrDefault(m_flavours, iFlavour); }   // ai.flavours
 
 	// --- ui/world art (the ART_DEF_* tag resolved through ArtFileMgr -- the CvBonusInfo shim leaf) ---
+	// The MESH GROUPS the EXE lays the unit out and animates it through: the formation's own numbers, and the
+	// per-group art keyed by era band. Answering these with absent values does not degrade to "no art" -- a max
+	// animation speed of 0 plays the walk cycle without translating, and 0 group definitions leaves the models
+	// with no per-member offsets (json.md par.7).
 	const CvArtInfoUnit* getArtInfo(int iIndex, EraTypes eEra, UnitArtStyleTypes eStyle) const;
 	const char* getButton() const;   // art-define button (units carry no ui.art.icon)
+	int getGroupSize() const { return m_iMeshGroupSize; }
+	int getGroupDefinitions() const { return (int)m_meshGroups.size(); }
+	int getUnitGroupRequired(int iGroup) const;
+	int getMeleeWaveSize() const { return m_iMeleeWaveSize; }
+	int getRangedWaveSize() const { return m_iRangedWaveSize; }
+	// Art, in the EXE's own animation units -- no fixed-point scale, and never a cascade input.
+	float getAnimationMaxSpeed() const { return m_fAnimationMaxSpeed; }
+	float getAnimationPadTime() const { return m_fAnimationPadTime; }
 
 	// --- runtime members (documented write-once seams) ---
 	// Non-XML runtime map-hash, drawn from the synced RNG in the ctor (archive mirror; seeds CvUnit's
@@ -395,6 +433,12 @@ private:
 
 	// --- art / runtime ---
 	std::string m_szArtDefineTag;      // world.art.define
+	std::vector<CvUnitMeshGroup> m_meshGroups;   // world.art.meshGroups.groups
+	int m_iMeshGroupSize;              // world.art.meshGroups.groupSize
+	int m_iMeleeWaveSize;              // world.art.meshGroups.meleeWaveSize
+	int m_iRangedWaveSize;             // world.art.meshGroups.rangedWaveSize
+	float m_fAnimationMaxSpeed;        // world.art.meshGroups.maxSpeed
+	float m_fAnimationPadTime;         // world.art.meshGroups.padTime
 	int m_iZobristValue;               // runtime map-hash (ctor draw; a re-map must not redraw the synced RNG)
 	int m_iCommandType;                // runtime command-type (SetGlobalActionInfo)
 
