@@ -31,9 +31,12 @@ public:
 	// choice lives here, once, rather than being re-derived at each assignment site (it was inlined twice in
 	// CvPlayer, which is how these drift).
 	//
-	// ⚑ A leader that authors ONLY `traits` uses them under BOTH options. That is deliberate: the slots exist
-	// so modders can fill them, and the forgiving read means authoring the simple set alone still works in a
-	// complex game, rather than silently leaving a leader traitless.
+	// ⛔ THE ACTIVE SET ANSWERS ALONE -- no fall-through in EITHER direction (owner). A complex game does not fill
+	// a simple trait because the complex one is missing, and a simple game does not reach into the complex set.
+	// The two sets share no id, so either fall-through produces the mixed holding the prefix exists to make
+	// impossible ([modifier.md] §4).
+	// ⚠ An empty active list means the leader misses its traits. That is the state, not a case to accommodate:
+	// a leader authoring only half a pair is unfinished data, and reading the other half for it would hide that.
 	static const std::vector<int>& leaderTraits(const CvLeaderHeadInfo& kLeader);
 	// Whether the trait may be held under the LIVE game options.
 	//

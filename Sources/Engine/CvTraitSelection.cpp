@@ -11,9 +11,11 @@
 
 const std::vector<int>& CvTraitSelection::leaderTraits(const CvLeaderHeadInfo& kLeader)
 {
-	// The COMPLEX set answers only while its option is live AND the leader actually authored one; a leader
-	// with just `traits` keeps working under either option rather than coming up traitless (header).
-	if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && !kLeader.getComplexTraits().empty())
+	// ⛔ THE ACTIVE SET ANSWERS ALONE -- there is NO fall-through, in EITHER direction (owner). A complex game may
+	// not fill a simple trait because the complex one is absent, and a simple game may not reach the other way.
+	// ⚠ An EMPTY active list is not a defect and is not reported: that leader misses its traits, which is how the
+	// shipped data stands until the community authors the assignments.
+	if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS))
 	{
 		return kLeader.getComplexTraits();
 	}
