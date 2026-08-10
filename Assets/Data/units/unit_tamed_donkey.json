@@ -145,7 +145,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TAMED_DONKEY"
+   "define": "ART_DEF_UNIT_TAMED_DONKEY",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_TAMED_DONKEY"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

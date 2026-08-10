@@ -153,7 +153,23 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MERCHANT"
+   "define": "ART_DEF_UNIT_MERCHANT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MERCHANT",
+       "late": "ART_DEF_UNIT_MERCHANT_MODERN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

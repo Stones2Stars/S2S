@@ -103,7 +103,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_INTERSTELLAR_PROBE"
+   "define": "ART_DEF_UNIT_INTERSTELLAR_PROBE",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_INTERSTELLAR_PROBE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

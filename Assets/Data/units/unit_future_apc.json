@@ -119,7 +119,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_HITECH_APC"
+   "define": "ART_DEF_UNIT_HITECH_APC",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HITECH_APC"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

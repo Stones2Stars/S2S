@@ -101,7 +101,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_ORGAN_GUN"
+   "define": "ART_DEF_UNIT_ORGAN_GUN",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "rangedWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_ORGAN_GUN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

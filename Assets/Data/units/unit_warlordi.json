@@ -158,7 +158,33 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_VWARLORD_ANCIENT"
+   "define": "ART_DEF_UNIT_VWARLORD_ANCIENT",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 5,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VWARLORD_ANCIENT"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPEARMAN_BARBARIAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_AXEMAN_BARBARIAN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

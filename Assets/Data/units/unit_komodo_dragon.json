@@ -107,7 +107,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_KOMODO"
+   "define": "ART_DEF_UNIT_KOMODO",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_KOMODO"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

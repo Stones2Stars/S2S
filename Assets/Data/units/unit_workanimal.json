@@ -134,7 +134,28 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_DOGWORKER"
+   "define": "ART_DEF_UNIT_DOGWORKER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DOGWORKER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER",
+       "late": "ART_DEF_UNIT_WORKERMODERN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

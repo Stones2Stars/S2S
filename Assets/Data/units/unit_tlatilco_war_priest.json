@@ -125,7 +125,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TLATILCO_WAR_PRIEST"
+   "define": "ART_DEF_UNIT_TLATILCO_WAR_PRIEST",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_TLATILCO_WAR_PRIEST"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

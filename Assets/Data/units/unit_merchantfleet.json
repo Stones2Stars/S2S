@@ -57,7 +57,24 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MERCHANT_FLEET"
+   "define": "ART_DEF_UNIT_MERCHANT_FLEET",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MERCHANT_FLEET",
+       "middle": "ART_DEF_UNIT_MERCHANT_FLEET",
+       "late": "ART_DEF_UNIT_MERCHANT_FLEET"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

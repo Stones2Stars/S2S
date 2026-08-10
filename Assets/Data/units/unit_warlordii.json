@@ -157,7 +157,39 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_VWARLORD_MEDIEVAL"
+   "define": "ART_DEF_UNIT_VWARLORD_MEDIEVAL",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 5,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VWARLORD_MEDIEVAL"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TREBUCHET"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HEAVY_SWORDSMAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HEAVY_SPEARMAN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

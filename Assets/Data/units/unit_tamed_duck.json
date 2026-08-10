@@ -102,7 +102,27 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_DUCK"
+   "define": "ART_DEF_UNIT_DUCK",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DUCK"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

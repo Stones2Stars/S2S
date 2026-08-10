@@ -120,7 +120,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MATOPE"
+   "define": "ART_DEF_UNIT_MATOPE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MATOPE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

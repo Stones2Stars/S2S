@@ -76,7 +76,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_CYBORG"
+   "define": "ART_DEF_UNIT_CYBORG",
+   "meshGroups": {
+    "groupSize": 8,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_CYBORG"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -62,7 +62,20 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TALESOF_WHALESHARK"
+   "define": "ART_DEF_UNIT_TALESOF_WHALESHARK",
+   "meshGroups": {
+    "groupSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TALESOF_WHALESHARK"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

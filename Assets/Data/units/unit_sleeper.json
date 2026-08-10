@@ -49,7 +49,33 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_SETTLER_MALE"
+   "define": "ART_DEF_UNIT_SETTLER_MALE",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 4,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

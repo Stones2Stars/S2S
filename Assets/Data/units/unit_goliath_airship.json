@@ -105,7 +105,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_GOLIATH_AIRSHIP"
+   "define": "ART_DEF_UNIT_GOLIATH_AIRSHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GOLIATH_AIRSHIP"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

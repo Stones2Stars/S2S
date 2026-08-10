@@ -151,7 +151,27 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_CROCODILE_SMALL"
+   "define": "ART_DEF_UNIT_CROCODILE_SMALL",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 2,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CROCODILE_SMALL"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -169,7 +169,39 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_VWARLORD_INDUSTRIAL"
+   "define": "ART_DEF_UNIT_VWARLORD_INDUSTRIAL",
+   "meshGroups": {
+    "groupSize": 4,
+    "rangedWaveSize": 5,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VWARLORD_INDUSTRIAL"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CANNON"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_RIFLEMAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GRENADIER"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

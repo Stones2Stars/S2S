@@ -1186,6 +1186,48 @@ def curate(typ, rec, store):
                 put_art(art_blocks, "ArtDefineTag", tagv)
                 break
 
+    # world.art.meshGroups -- the unit's FORMATION + ANIMATION block, carried WHOLE beside the define it names
+    # (json.md §7 ART IS ART: they were authored together, so they stay together). Five DllExport reads lay the
+    # unit out through this, and an absent fMaxSpeed is not "no art" -- it is a unit that plays its walk cycle
+    # and never translates. The per-(era) grid is carried, never collapsed; reducing it is a separate pass.
+    mgs = rec.find("UnitMeshGroups")
+    if mgs is not None:
+        mesh = OrderedDict()
+        for key, tag in (("groupSize", "iGroupSize"), ("meleeWaveSize", "iMeleeWaveSize"),
+                         ("rangedWaveSize", "iRangedWaveSize")):
+            v = _int(mgs, tag)
+            if v:
+                mesh[key] = v
+        for key, tag in (("maxSpeed", "fMaxSpeed"), ("padTime", "fPadTime")):
+            raw = engine.text(mgs.find(tag))
+            if raw:
+                fv = float(raw)
+                if fv:
+                    # Human values, like every other authored number -- readJson owns any scaling.
+                    mesh[key] = int(fv) if fv == int(fv) else fv
+        groups = []
+        for grp in mgs.findall("UnitMeshGroup"):
+            entry = OrderedDict()
+            req = _int(grp, "iRequired")
+            if req:
+                entry["required"] = req
+            defines = OrderedDict()
+            for key, tag in (("early", "EarlyArtDefineTag"), ("classical", "ClassicalArtDefineTag"),
+                             ("middle", "MiddleArtDefineTag"), ("renaissance", "RennArtDefineTag"),
+                             ("industrial", "IndustrialArtDefineTag"), ("late", "LateArtDefineTag"),
+                             ("future", "FutureArtDefineTag")):
+                tv = engine.text(grp.find(tag))
+                if tv:
+                    defines[key] = tv
+            if defines:
+                entry["define"] = defines
+            if entry:
+                groups.append(entry)
+        if groups:
+            mesh["groups"] = groups
+        if mesh:
+            art_blocks.setdefault("world", OrderedDict()).setdefault("art", OrderedDict())["meshGroups"] = mesh
+
     # --- PASS 2: vs-keyed combat, vision/LOS, outcomes, GP-action grants, properties, BonusProd, cargo ---
     pass2(typ, rec, store, fams, caps, grants, vision, identity)
     outcomes = identity.pop("_outcomes", None)

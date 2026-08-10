@@ -119,7 +119,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_DOLPHIN_MECH"
+   "define": "ART_DEF_UNIT_DOLPHIN_MECH",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_DOLPHIN_MECH"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

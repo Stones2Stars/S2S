@@ -137,7 +137,57 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_PIONEER_MALE"
+   "define": "ART_DEF_UNIT_PIONEER_MALE",
+   "meshGroups": {
+    "groupSize": 7,
+    "meleeWaveSize": 7,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PIONEER_MALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HORSE_PACK"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DOG"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PIONEER_CHILD"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PIONEER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PIONEER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PIONEER_MALE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

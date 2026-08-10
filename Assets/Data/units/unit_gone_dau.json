@@ -76,7 +76,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_GONE_DAU"
+   "define": "ART_DEF_UNIT_GONE_DAU",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GONE_DAU"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -54,7 +54,20 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TALESOF_NARWHAL"
+   "define": "ART_DEF_UNIT_TALESOF_NARWHAL",
+   "meshGroups": {
+    "groupSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TALESOF_NARWHAL"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

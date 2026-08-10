@@ -140,7 +140,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_ARMOR_M60"
+   "define": "ART_DEF_UNIT_ARMOR_M60",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ARMOR_M60"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

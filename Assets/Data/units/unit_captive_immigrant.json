@@ -57,7 +57,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_CAPTIVE_IMMIGRANT"
+   "define": "ART_DEF_UNIT_CAPTIVE_IMMIGRANT",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 4,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPTIVE_IMMIGRANT"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

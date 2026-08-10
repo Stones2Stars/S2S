@@ -123,7 +123,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MOBILE_SAM"
+   "define": "ART_DEF_UNIT_MOBILE_SAM",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MOBILE_SAM"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

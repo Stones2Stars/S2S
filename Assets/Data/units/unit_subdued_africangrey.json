@@ -89,7 +89,28 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_AFRICANGREY"
+   "define": "ART_DEF_UNIT_AFRICANGREY",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 10,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_AFRICANGREY"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

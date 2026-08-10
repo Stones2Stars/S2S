@@ -163,7 +163,27 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_WILDEBEEST"
+   "define": "ART_DEF_UNIT_WILDEBEEST",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WILDEBEEST"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

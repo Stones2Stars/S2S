@@ -87,7 +87,27 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TRUNG_TRAC"
+   "define": "ART_DEF_UNIT_TRUNG_TRAC",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TRUNG_TRAC"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TRUNG_NHI"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

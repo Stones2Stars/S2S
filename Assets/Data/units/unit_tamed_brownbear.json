@@ -98,7 +98,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TAMED_BROWN_BEAR"
+   "define": "ART_DEF_UNIT_TAMED_BROWN_BEAR",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_TAMED_BROWN_BEAR"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

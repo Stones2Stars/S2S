@@ -55,7 +55,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_SOLAR_WORKER"
+   "define": "ART_DEF_UNIT_SOLAR_WORKER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SOLAR_WORKER",
+       "late": "ART_DEF_UNIT_SOLAR_WORKER"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

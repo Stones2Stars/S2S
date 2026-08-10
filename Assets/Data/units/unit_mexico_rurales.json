@@ -144,7 +144,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MEXICO_RURALES"
+   "define": "ART_DEF_UNIT_MEXICO_RURALES",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_MEXICO_RURALES"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

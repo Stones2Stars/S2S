@@ -104,7 +104,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_LYNX"
+   "define": "ART_DEF_UNIT_LYNX",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_LYNX"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

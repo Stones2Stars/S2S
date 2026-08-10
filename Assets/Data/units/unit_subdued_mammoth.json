@@ -158,7 +158,28 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MAMMOTH"
+   "define": "ART_DEF_UNIT_MAMMOTH",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MAMMOTH"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER",
+       "late": "ART_DEF_UNIT_WORKERMODERN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

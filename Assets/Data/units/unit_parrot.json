@@ -81,7 +81,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_PARROT"
+   "define": "ART_DEF_UNIT_PARROT",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 10,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_PARROT"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

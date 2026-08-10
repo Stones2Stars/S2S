@@ -163,7 +163,27 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_BUFFALO_CAPE"
+   "define": "ART_DEF_UNIT_BUFFALO_CAPE",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BUFFALO_CAPE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

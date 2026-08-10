@@ -87,7 +87,27 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MASTER_RANGER"
+   "define": "ART_DEF_UNIT_MASTER_RANGER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MASTER_RANGER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MASTER_HUNTER_DOG"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -132,7 +132,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MODERN_BATTLESHIP"
+   "define": "ART_DEF_UNIT_MODERN_BATTLESHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MODERN_BATTLESHIP"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

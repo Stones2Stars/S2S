@@ -131,7 +131,27 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_WORKER_FREIGHT"
+   "define": "ART_DEF_UNIT_WORKER_FREIGHT",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER_FREIGHT"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKERMODERN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -111,7 +111,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_POWER_ARMOR_INFANTRY"
+   "define": "ART_DEF_UNIT_POWER_ARMOR_INFANTRY",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1,
+    "padTime": 2.5,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_POWER_ARMOR_INFANTRY"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

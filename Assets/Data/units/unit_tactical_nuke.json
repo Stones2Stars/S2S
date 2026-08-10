@@ -71,7 +71,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TACTICAL_NUKE"
+   "define": "ART_DEF_UNIT_TACTICAL_NUKE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TACTICAL_NUKE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

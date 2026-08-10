@@ -97,7 +97,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_TAMED_REDPANDA"
+   "define": "ART_DEF_UNIT_TAMED_REDPANDA",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_TAMED_REDPANDA"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

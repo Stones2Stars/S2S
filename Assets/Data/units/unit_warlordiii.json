@@ -171,7 +171,39 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_VWARLORD_RENAISSANCE"
+   "define": "ART_DEF_UNIT_VWARLORD_RENAISSANCE",
+   "meshGroups": {
+    "groupSize": 4,
+    "rangedWaveSize": 5,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VWARLORD_RENAISSANCE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BOMBARD"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MUSKETMAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ARQUEBUSIER"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

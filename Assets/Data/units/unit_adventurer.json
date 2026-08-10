@@ -82,7 +82,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_ADVENTURER"
+   "define": "ART_DEF_UNIT_ADVENTURER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ADVENTURER"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

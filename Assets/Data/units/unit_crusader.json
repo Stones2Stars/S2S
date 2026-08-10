@@ -69,7 +69,39 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_CRUSADER"
+   "define": "ART_DEF_UNIT_CRUSADER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CRUSADER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CRUSADER"
+      }
+     },
+     {
+      "define": {
+       "early": "ART_DEF_UNIT_CRUSADER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_RELIC"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

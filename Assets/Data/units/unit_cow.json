@@ -124,7 +124,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_WILD_COW"
+   "define": "ART_DEF_UNIT_WILD_COW",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WILD_COW"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

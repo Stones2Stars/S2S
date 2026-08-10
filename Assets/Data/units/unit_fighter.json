@@ -109,7 +109,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_PROPERLLER_NAVAL_FIGHTER"
+   "define": "ART_DEF_UNIT_PROPERLLER_NAVAL_FIGHTER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_PROPERLLER_NAVAL_FIGHTER"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

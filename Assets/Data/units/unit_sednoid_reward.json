@@ -70,7 +70,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_SEDNOID_REWARD"
+   "define": "ART_DEF_UNIT_SEDNOID_REWARD",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SEDNOID_REWARD",
+       "late": "ART_DEF_UNIT_SEDNOID_REWARD"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

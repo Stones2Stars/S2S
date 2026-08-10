@@ -151,7 +151,44 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_VWARLORD_MODERN"
+   "define": "ART_DEF_UNIT_VWARLORD_MODERN",
+   "meshGroups": {
+    "groupSize": 4,
+    "rangedWaveSize": 5,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VWARLORD_MODERN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_LIGHT_ARTILLERY"
+      }
+     },
+     {
+      "define": {
+       "early": "ART_DEF_UNIT_FLAMETHROWER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MODERN_GRENADIER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MARINE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

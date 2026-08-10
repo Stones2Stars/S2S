@@ -151,7 +151,53 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL"
+   "define": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+   "meshGroups": {
+    "groupSize": 7,
+    "meleeWaveSize": 7,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+       "middle": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+       "late": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DOG"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

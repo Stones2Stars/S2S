@@ -130,7 +130,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_HEADHUNTER"
+   "define": "ART_DEF_UNIT_HEADHUNTER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HEADHUNTER"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

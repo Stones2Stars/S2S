@@ -39,7 +39,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_LOCUST_HUGE_SWARM"
+   "define": "ART_DEF_UNIT_LOCUST_HUGE_SWARM",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 8,
+      "define": {
+       "early": "ART_DEF_UNIT_LOCUST_HUGE_SWARM"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -66,7 +66,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MISSIONARY_ZOROASTRIANISM"
+   "define": "ART_DEF_UNIT_MISSIONARY_ZOROASTRIANISM",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MISSIONARY_ZOROASTRIANISM"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

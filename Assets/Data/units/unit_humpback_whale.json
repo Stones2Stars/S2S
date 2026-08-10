@@ -133,7 +133,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_HUMPBACK_WHALE"
+   "define": "ART_DEF_UNIT_HUMPBACK_WHALE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_HUMPBACK_WHALE"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

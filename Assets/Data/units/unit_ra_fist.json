@@ -83,7 +83,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_RA_FIST"
+   "define": "ART_DEF_UNIT_RA_FIST",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 5,
+      "define": {
+       "early": "ART_DEF_UNIT_RA_FIST"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -618,7 +618,23 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_CAPTIVE"
+   "define": "ART_DEF_UNIT_CAPTIVE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPTIVE",
+       "middle": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+       "late": "ART_DEF_UNIT_CAPTIVE_MODERN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

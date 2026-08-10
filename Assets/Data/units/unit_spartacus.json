@@ -65,7 +65,28 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_SPARTACUS"
+   "define": "ART_DEF_UNIT_SPARTACUS",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPARTACUS"
+      }
+     },
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_GLADIATOR"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

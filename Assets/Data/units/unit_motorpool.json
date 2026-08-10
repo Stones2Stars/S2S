@@ -117,7 +117,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MOTORPOOL"
+   "define": "ART_DEF_UNIT_MOTORPOOL",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_MOTORPOOL"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

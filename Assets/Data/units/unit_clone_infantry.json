@@ -67,7 +67,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_CLONE_INFANTRY"
+   "define": "ART_DEF_UNIT_CLONE_INFANTRY",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_CLONE_INFANTRY"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

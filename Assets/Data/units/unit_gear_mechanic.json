@@ -88,7 +88,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_GEAR_MECHANIC"
+   "define": "ART_DEF_UNIT_GEAR_MECHANIC",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_GEAR_MECHANIC"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

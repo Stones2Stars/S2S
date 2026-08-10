@@ -110,7 +110,28 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_GREATWHITE"
+   "define": "ART_DEF_UNIT_GREATWHITE",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 2,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GREATWHITE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKBOAT",
+       "late": "ART_DEF_UNIT_WORKBOAT_MODERN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

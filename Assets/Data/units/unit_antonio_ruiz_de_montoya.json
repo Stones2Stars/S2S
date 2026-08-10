@@ -84,7 +84,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_ANTONIO_RUIZ_DE_MONTOYA"
+   "define": "ART_DEF_UNIT_ANTONIO_RUIZ_DE_MONTOYA",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ANTONIO_RUIZ_DE_MONTOYA"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

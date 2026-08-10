@@ -142,7 +142,39 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_BAND_MALE"
+   "define": "ART_DEF_UNIT_BAND_MALE",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 4,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_MALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_CHILD"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

@@ -1035,6 +1035,25 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > to *some* consumer, so a key one info ignores while its siblings consume it is not an unknown key and not an
   > unconsumed section. Nothing reports it. ⇒ When adding or reviewing a `world.art` read, check the key against
   > what the data actually authors — not against what the surrounding comment says it reads.
+  >
+  > **⚖ ART IS ART, AND IT STAYS TOGETHER (owner).** A unit's MESH GROUPS were authored as one block with the
+  > art tags that name their models (`<UnitMeshGroups>`: `iGroupSize` · `fMaxSpeed` · `fPadTime` ·
+  > `iMeleeWaveSize` · `iRangedWaveSize`, then per `<UnitMeshGroup>` an `iRequired` and its **per-era** art
+  > tags). They belong in `world.art` **as that one block**, never split between an art half and an
+  > "animation numbers" half.
+  > ⛔ **THE PER-(ERA, STYLE) GRID IS CARRIED, NOT COLLAPSED (owner: *"I don't think the exe survives without
+  > it"*).** `getArtInfo(iIndex, eEra, eStyle)` resolves a civilization's UNIT ART STYLE override first
+  > (`CvUnitArtStyleTypeInfo`, keyed by unit) and falls back to the unit's own per-era tag. ⚠ Reducing the era
+  > or style dimensions is a SEPARATE consolidation pass and unrelated to carrying them — do not slim the grid
+  > while restoring it.
+  > ⚑ **Why it is load-bearing rather than cosmetic: five of these reads are `DllExport` and the EXE lays out
+  > and animates the unit through them** (`getGroupDefinitions` · `getUnitGroupRequired` · `isRenderAlways` ·
+  > `getAnimationMaxSpeed` · `getAnimationPadTime`). Answering them with absent values does not degrade to
+  > "no art": a max animation speed of **0** is a unit that plays its walk cycle and never translates, and
+  > **0** group definitions is a formation with no per-member offsets, so the models stack on one another.
+  > ⛔ It is NOT covered by the ART carve-out ([roadmap.md](../plans/structural-cleanup/roadmap.md) scope
+  > decision 3), which carves out the art DEFINES and asset files — these are the unit's own numbers, authored
+  > in the unit XML, that merely reference a define.
 - **`ai`** — AI-only metadata (flavours, weights, personality); never affects rules, only AI behaviour.
 
 ---

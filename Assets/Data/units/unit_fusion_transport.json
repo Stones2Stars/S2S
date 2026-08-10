@@ -105,7 +105,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_FUSION_TRANSPORT"
+   "define": "ART_DEF_UNIT_FUSION_TRANSPORT",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_FUSION_TRANSPORT"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

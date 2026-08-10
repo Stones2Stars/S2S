@@ -123,7 +123,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_EARLYCHARIOT"
+   "define": "ART_DEF_UNIT_EARLYCHARIOT",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_EARLYCHARIOT"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

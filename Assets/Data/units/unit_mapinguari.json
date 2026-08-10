@@ -105,7 +105,33 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_MAPINGUARI_SPEARMAN"
+   "define": "ART_DEF_UNIT_MAPINGUARI_SPEARMAN",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MAPINGUARI_SPEARMAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPEARMAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPEARMAN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

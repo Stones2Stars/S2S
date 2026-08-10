@@ -77,7 +77,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_DAVINCI_TANK"
+   "define": "ART_DEF_UNIT_DAVINCI_TANK",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.5,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DAVINCI_TANK"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

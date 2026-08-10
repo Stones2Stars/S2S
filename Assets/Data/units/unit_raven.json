@@ -84,7 +84,22 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_RAVEN"
+   "define": "ART_DEF_UNIT_RAVEN",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 10,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_RAVEN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

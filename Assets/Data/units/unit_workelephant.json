@@ -136,7 +136,28 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_WORKER_ELEPHANT"
+   "define": "ART_DEF_UNIT_WORKER_ELEPHANT",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER_ELEPHANT"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER",
+       "late": "ART_DEF_UNIT_WORKERMODERN"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {

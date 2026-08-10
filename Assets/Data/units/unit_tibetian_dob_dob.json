@@ -89,7 +89,21 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_UNIT_DOB_DOB"
+   "define": "ART_DEF_UNIT_DOB_DOB",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_DOB_DOB"
+      }
+     }
+    ]
+   }
   }
  },
  "identity": {
