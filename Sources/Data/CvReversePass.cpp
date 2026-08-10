@@ -37,6 +37,7 @@
 #include "CvSpecialistInfo.h"
 #include "CvTerrainInfo.h"
 #include "CvFeatureInfo.h"
+#include "CvLeaderHeadInfo.h"          // the trait FK lists the leaderhead inverse reads (not an InfoRepo kind)
 #include <cstring>
 #include <set>
 #include <string>
@@ -129,6 +130,10 @@ namespace
 		case EDGEB_TRAITS_AND:              return rp_traitInfoForId(iId);
 		case EDGEB_TRAITS_OR:               return rp_traitInfoForId(iId);
 		case EDGEB_SPECIALISTS:             return const_cast<CvInfo*>(InfoRepo<CvSpecialistInfo>::get().get(iId));
+		// ⚠ Leaderheads are NOT in an InfoRepo, so this one resolves through the globals rather than the repo
+		// table every other bucket uses.
+		case EDGEB_LEADERS:                 return (iId < GC.getNumLeaderHeadInfos())
+		                                        ? &GC.getLeaderHeadInfo((LeaderHeadTypes)iId) : NULL;
 		default:                            return NULL;
 		}
 	}
@@ -399,6 +404,34 @@ namespace
 		}
 	}
 
+	// The LEADERHEAD's trait assignment, inverted. A leader holds its traits as plain FK lists and a trait never
+	// names a leader, so "which leaders hold this trait" cannot be read forward from either side -- it exists
+	// only as this load-built inverse.
+	// ⛔ The leaderhead is not walked by the general kind table above: it is not in an InfoRepo, and the lists are
+	// root FKs rather than part of any compiled surface that walk sees.
+	// ⚑ The two sets need no option check and no active-set choice. They share no id, so a leader's simple
+	// entries land on simple traits and its complex entries on complex ones, and each trait ends up with exactly
+	// the leaders that named IT.
+	void rp_relatedFromLeaderTraits()
+	{
+		const int iNumLeaders = GC.getNumLeaderHeadInfos();
+		for (int iLeader = 0; iLeader < iNumLeaders; ++iLeader)
+		{
+			const CvLeaderHeadInfo& kLeader = GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader);
+
+			const std::vector<int>& simpleTraits = kLeader.getTraits();
+			for (size_t iTrait = 0; iTrait < simpleTraits.size(); ++iTrait)
+			{
+				rp_landRelated(rp_traitInfoForId(simpleTraits[iTrait]), EDGEB_LEADERS, iLeader);
+			}
+			const std::vector<int>& complexTraits = kLeader.getComplexTraits();
+			for (size_t iTrait = 0; iTrait < complexTraits.size(); ++iTrait)
+			{
+				rp_landRelated(rp_traitInfoForId(complexTraits[iTrait]), EDGEB_LEADERS, iLeader);
+			}
+		}
+	}
+
 	void rp_buildRelated()
 	{
 		#define X(REPO_TAG, COUNT_GETTER, SOURCE_BUCKET) rp_relatedWalkKind<REPO_TAG>(GC.COUNT_GETTER(), SOURCE_BUCKET);
@@ -408,6 +441,7 @@ namespace
 		// RELATED lists dedup, so a shared reference lands once)
 		rp_relatedWalkKind<CvComplexTraitTag>(GC.getNumTraitInfos(), EDGEB_TRAITS);
 		rp_relatedFromBuildProduces();
+		rp_relatedFromLeaderTraits();
 	}
 
 	// ==================== sub-pass (3): EDGEF_REQUIRED_BY -- the enabler's re-gate index ====================

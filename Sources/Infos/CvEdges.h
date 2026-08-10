@@ -83,6 +83,10 @@ enum EnEdgeBucket
 	EDGEB_TRAITS_AND,
 	EDGEB_TRAITS_OR,
 	EDGEB_SPECIALISTS,
+	// ⚑ DERIVED-ONLY, and the one bucket that is not an `enables` kind ([json.md] par.4.1). A leaderhead holds
+	// its traits as a plain FK list and a trait never names a leader, so "which leaders hold this" exists only
+	// as the load-built inverse -- which is what this bucket carries. No authored block fills it.
+	EDGEB_LEADERS,
 	NUM_EDGEB,
 	NO_EDGEB = -1
 };

@@ -30,10 +30,11 @@ class Page:
 		szfontEdge, szfont4b, szfont4, szfont3b, szfont3, szfont2b, szfont2 = self.main.aFontList
 
 		H_ROW_1 = self.H_TOP_ROW
+		H_ROW_2 = self.H_BOT_ROW
 		S_ICON = self.S_ICON
 		X_COL_1 = self.X_COL_1
 		Y_ROW_1 = self.Y_ROW_1
-		Y_ROW_3 = Y_ROW_1 + H_ROW_1
+		Y_ROW_3 = Y_ROW_2 = Y_ROW_1 + H_ROW_1
 		H_ROW_3 = self.H_PEDIA_PAGE - H_ROW_1
 		W_PEDIA_PAGE = self.W_PEDIA_PAGE
 
@@ -59,9 +60,24 @@ class Page:
 			screen.addPanel(aName(), "", "", True, True, x, Y_ROW_1, w, H_ROW_1, ePnlBlue50)
 			screen.addMultilineText(aName(), szfont2 + szTxt1, x + 4, Y_ROW_1 + 8, w - 8, H_ROW_1 - 16, eWidGen, 1, 1, 1<<0)
 		# Leaders
-		#  There is no read for "which leaderheads hold this trait": a leader names its traits, and the reverse
-		#  pass has no leader bucket to land the inverse in, so the trait carries no such list. The panel stays
-		#  unrendered until that edge exists -- it does not come back as a sweep of every leaderhead.
+		#  A leader holds its traits as a plain FK list and a trait never names a leader, so this reads the
+		#  inverse the load builds. It is EMPTY until the assignments are authored, which is expected.
+		aList = []
+		for iLeader in INFO.getEdgeIds("TRAIT_", iTheTrait, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_LEADERS):
+			aList.append([iLeader, INFO.getButton("LEADER_", iLeader)])
+		if aList:
+			screen.addPanel(aName(), "", "", False, True, X_COL_1, Y_ROW_2, W_PEDIA_PAGE, H_ROW_2, ePnlBlue50)
+			iSize = H_ROW_2*4/5
+			Pnl = aName()
+			screen.addScrollPanel(Pnl, "", X_COL_1 - 4, Y_ROW_2, W_PEDIA_PAGE + 6, H_ROW_2 - 26, ePnlBlue50)
+			screen.setStyle(Pnl, "ScrollPanel_Alt_Style")
+			x = 2
+			y = (H_ROW_2 - iSize)/2 - 6
+			for iLeader, BTN in aList:
+				screen.setImageButtonAt("ToolTip|JumpTo|LEADER%d" % iLeader, Pnl, BTN, x, y, iSize, iSize, eWidGen, 1, 1)
+				x += iSize + 6
+			Y_ROW_3 += H_ROW_2
+			H_ROW_3 -= H_ROW_2
 		# Pedia Text & Effects
 		szTxt1 = CyGameTextMgr().parseTraits(iTheTrait, False, True)[1:]
 		szTxt2 = INFO.getCivilopedia("TRAIT_", iTheTrait)
