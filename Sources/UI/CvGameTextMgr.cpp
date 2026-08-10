@@ -571,14 +571,23 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	//	⛔ THE HELD PROMOTIONS, WALKED FROM WHAT THE UNIT HOLDS -- never a sweep of the promotion registry asking
 	//	"do I have this?" ([contexts.md] a read that walks per call is the efficiency defect to reject in review).
 	//	This is the hottest text path in the game: it renders on every unit hover.
+	//	⛔ AS ICONS ON ONE ROW, NEVER A LINE PER PROMOTION. A named line each is unreadable on the units that
+	//	actually carry promotions -- a veteran holds dozens, so the hover grew one line per rung and buried the
+	//	unit's own numbers above it. The button is what the player already recognises them by everywhere else.
 	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeldPromotions = pUnit->getPromotionKeyedInfo();
+	bool bFirstPromotion = true;
 	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator itPromotion = kHeldPromotions.begin();
 		itPromotion != kHeldPromotions.end(); ++itPromotion)
 	{
 		if (itPromotion->second.m_bHasPromotion)
 		{
-			szString.append(NEWLINE);
-			szString.append(GC.getPromotionInfo(itPromotion->first).getDescription());
+			if (bFirstPromotion)
+			{
+				szString.append(NEWLINE);   // ONE break before the row, not one per icon
+				bFirstPromotion = false;
+			}
+			szString.append(CvWString::format(L"<img=%S size=16></img>",
+				GC.getPromotionInfo(itPromotion->first).getButton()));
 		}
 	}
 
