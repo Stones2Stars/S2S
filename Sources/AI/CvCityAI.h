@@ -49,7 +49,11 @@
 
 #define MAX_REQUESTEDUNIT_PER_CITY 1
 #define MAX_REQUESTEDBUILDING_PER_CITY 2
-#define NB_MAX_BUILDINGS 2
+
+//	How many CONSTRUCT orders a city keeps standing in its production queue -- a COUNT, deliberately. Bounding
+//	it by production-TURNS instead makes the depth shrink as a city's output grows, so the strongest cities
+//	empty their queue soonest and re-decide most often, which is the opposite of what the depth is for.
+#define AI_BUILDING_SHORTLIST_DEPTH 3
 
 
 class CvArea;

@@ -8,11 +8,23 @@ use all your prod' — so it actually simulates human behaviour in this regard."
 *"humans have 0 say in the matter during 'production time' — the AI does"* — in essence, **"the AI basically
 turns production choice into an RTS-style choice instead of a turn-based choice."**
 
-Today the AI re-decides its next build **live, mid-production-phase** — the moment a building completes it
-re-evaluates against the freshly-mutated city state and spends every hammer, an ability no human has (a human's
-queue is set before the turn resolves; overflow carries). The intent: the AI plans into the **same queue
-mechanism** the human uses, production **overflow** carries the same way, and the mid-turn re-decision privilege
-disappears.
+**⚠ The AI QUEUES — it does not re-decide per completed building.** `CvCityAI::AI_chooseBuilding` walks the
+sorted candidate list and APPENDS `ORDER_CONSTRUCT` orders up to `AI_BUILDING_SHORTLIST_DEPTH`, and
+`CvCity::doProduction` re-invokes `AI_chooseProduction` only when the queue EMPTIES. So the scoring is paid
+ONCE per shortlist rather than once per build, and a city coasts on the shortlist between decisions.
+
+**⛔ THE DEPTH IS A COUNT, NEVER A PRODUCTION-TURNS BUDGET (owner).** A turns budget makes the depth shrink as
+a city's output grows — the more production it has, the fewer builds the budget covers, the sooner its queue
+empties, and the MORE often it re-decides. Queue depth would be inversely proportional to output, which is the
+opposite of what depth is for. The count is taken from the queue's own standing `ORDER_CONSTRUCT` entries, so
+each rung of the decision cascade tops up only what is missing and later rungs add nothing once it is full.
+⚑ Whether an order LANDED is read off the queue length, never assumed from having asked: `pushOrder` refuses a
+candidate its availability gate or duplicate guard rejects, which is how a wonder completed elsewhere falls out
+of the shortlist without any second gate at this site ([enabler.md §6](../../specs/enabler.md)).
+
+**What remains parked:** production **overflow** carrying the way the human's does, and the turn-boundary
+snapshot half below — a shortlist re-derived at the turn boundary and frozen within the turn, so the mid-turn
+re-decision privilege disappears entirely rather than merely becoming rarer.
 
 **The target processing model (owner, same day):** *"build processing then uses the CACHE, until all buildings
 it can has been produced — and then the cache gets recalced in expectation of the next cycle."* I.e. reads

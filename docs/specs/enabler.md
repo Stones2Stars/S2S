@@ -506,6 +506,25 @@ it, and the AI's production decision iterates **only this small frontier** inste
 database. That consolidation — one recompute replacing dozens of scattered ad-hoc `canBuild` checks — is the
 biggest systemic win.
 
+> **⛔ A CONSUMER TAKES THE FRONTIER WHOLE — NOTHING FILTERS IT ON THE WAY OUT (owner): *"if it does anything
+> other than just give us the complete `canConstruct` list from enabler, then we are doing something wrong."***
+> The frontier IS the narrowing, so a second filter at the consumer is never a refinement of it — it is a
+> competing gate.
+> ⛔ **And NARROWING IT FOR COST IS REFUSED OUTRIGHT (owner): *"trying to do some fancy calculation to reduce
+> that would hurt far more than it helps."*** A cleverer candidate filter trades a guaranteed correctness risk
+> for a speculative saving, and §5's asymmetry already settles which way that goes: over-inclusion is SAFE, a
+> MISS is the bug. The scoring cost of the frontier is the honest cost of the decision.
+> ⚑ **The failure mode is not redundancy, it is CONTRADICTION — and the worked case is why this is a hard
+> rule.** The building scorer re-asked the empire cap via `CvPlayer::isBuildingMaxedOut` over the offered set.
+> That test adds `getMaxPlayerInstancesExtra()` to the cap, so it fires strictly LATER than `allowedOk` and
+> could never catch anything the enabler had let through — its only reachable effect was on the buildings
+> `allowedOk` deliberately WAIVES (`identity.noInstanceLimit`, the Palace-relocate case), where it dropped a
+> candidate the enabler had chosen to offer. A duplicate gate does not merely cost cycles; it overrides the
+> waiver the real gate exists to grant.
+> ⚠ So an over-offer is diagnosed exactly as §3.2 already says — **a fact that is not being read, fixed at the
+> ROUTE** — never by re-filtering at the consumer, which hides the gap instead of naming it
+> ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+
 ---
 
 ## 7. Recompute cadence + the runtime realization — event-maintained vectors over `f(HAVE)`

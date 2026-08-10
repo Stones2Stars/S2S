@@ -236,6 +236,16 @@ static double g_bestBldgsMs = 0, g_scoreBldgsMs = 0;
 static int g_chooseUnitN = 0, g_chooseUnitImmN = 0, g_chooseDefenderN = 0, g_chooseLeastRepN = 0;
 static int g_chooseBuildingN = 0, g_chooseProcessN = 0, g_bestUnitN = 0, g_bestUnitAIN = 0;
 static int g_bestBldgsN = 0, g_scoreBldgsN = 0;
+//	The shape of the scoring work, not its duration: cand = candidates OFFERED to the scorer summed over this
+//	choose's passes (so cand/scoreBldgs is the frontier size per pass), valued = those that reached the
+//	valuation at all, pass1skip = those whose SECOND valuation pass the threshold early-out skipped. The
+//	early-out was sized against the ~5200-building scan; pass1skip/valued is what it is still worth now that
+//	the enabler hands over a bounded frontier.
+//	compute = the valuations that actually RAN (m_buildValueCache misses). valued-compute is what the cache
+//	absorbed, and since its key carries iFocusFlags AND iThreshold, a cascade rung that differs in either
+//	misses by construction -- so compute/valued is the measure of how much of the per-rung repetition is real
+//	work rather than a re-read.
+static int g_scoreCandN = 0, g_scoreValuedN = 0, g_valueComputeN = 0, g_passOneSkipN = 0;
 
 namespace {
 //	RAII: AI_chooseProduction has ~100 early returns, so only scope-exit logging catches
@@ -256,6 +266,7 @@ struct ChoosePerfScope
 			g_chooseUnitN = g_chooseUnitImmN = g_chooseDefenderN = g_chooseLeastRepN = 0;
 			g_chooseBuildingN = g_chooseProcessN = g_bestUnitN = g_bestUnitAIN = 0;
 			g_bestBldgsN = g_scoreBldgsN = 0;
+			g_scoreCandN = g_scoreValuedN = g_valueComputeN = g_passOneSkipN = 0;
 			m_stopwatch.Start();
 		}
 	}
@@ -264,11 +275,12 @@ struct ChoosePerfScope
 		if (m_bActive)
 		{
 			m_stopwatch.Stop();
-			logPerf(1, "[PERF/choose] turn=%d owner=%d city=%d head=%d dirty=%d total=%.3f building=%.3f(%d) bestBldgs=%.3f(%d) scoreBldgs=%.3f(%d) unit=%.3f(%d) unitImm=%.3f(%d) defender=%.3f(%d) leastRep=%.3f(%d) process=%.3f(%d) bestUnit=%.3f(%d) bestUnitAI=%.3f(%d)",
+			logPerf(1, "[PERF/choose] turn=%d owner=%d city=%d head=%d dirty=%d total=%.3f building=%.3f(%d) bestBldgs=%.3f(%d) scoreBldgs=%.3f(%d) cand=%d valued=%d compute=%d pass1skip=%d unit=%.3f(%d) unitImm=%.3f(%d) defender=%.3f(%d) leastRep=%.3f(%d) process=%.3f(%d) bestUnit=%.3f(%d) bestUnitAI=%.3f(%d)",
 				GC.getGame().getGameTurn(), m_iOwner, m_iCity, m_iHeadOrder, m_iDirty,
 				m_stopwatch.ElapsedMilliseconds(),
 				g_chooseBuildingMs, g_chooseBuildingN, g_bestBldgsMs, g_bestBldgsN,
 				g_scoreBldgsMs, g_scoreBldgsN,
+				g_scoreCandN, g_scoreValuedN, g_valueComputeN, g_passOneSkipN,
 				g_chooseUnitMs, g_chooseUnitN, g_chooseUnitImmMs, g_chooseUnitImmN,
 				g_chooseDefenderMs, g_chooseDefenderN, g_chooseLeastRepMs, g_chooseLeastRepN,
 				g_chooseProcessMs, g_chooseProcessN,
@@ -4578,24 +4590,17 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 
 	std::vector<BuildingTypes> possibles;
 
-	// #430 F2b (enabler.md par.6): iterate the enabler's LISTED frontier, not the whole ~5200-building
-	// database. getAvailableBuildings fills the city's LISTED building frontier
-	// (CvCity.cpp:2489), so {idx : (getBuildingAvailability(idx) == EnablerDomain::STATE_LISTED)} == the listedIds set -- the identical membership, minus the
-	// per-turn 5200-probe scan (this loop ran ~7x/city/turn via AI_chooseProduction's focus ladder). isBuildingMaxedOut
-	// stays the per-candidate cap filter (the per-player extra-instances allowance the enabler allowedOk does not yet
-	// fully model); it now runs only over the small offered set. Order preserved: listedIds fills ascending id.
+	// The enabler's LISTED frontier IS the candidate set, taken WHOLE -- no second filter runs over it here.
+	// Every cap the AI would re-ask is applied once, in EnablerKernel::allowedOk, so a filter at this site could
+	// only ever drop a candidate the enabler deliberately offered -- including the ones its isNoInstanceLimit
+	// waiver exists to keep offered. An over-offer names a missing enabler route, and that route is the fix
+	// (enabler.md par.3.2); silently dropping it here would hide the gap instead.
 	std::vector<int> vecConstructible;
 	getAvailableBuildings(vecConstructible);
+	possibles.reserve(vecConstructible.size());
 	for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 	{
-		const BuildingTypes eBuilding = (BuildingTypes)*it;
-		// The `allowed` cap IS the authored real number ([json.md §4.4]) -- there is no "extra instances" term to
-		// add on top of it any more, so the cap is asked plainly. (The enabler applies the same self-caps in its
-		// own gate; this stays only as the AI's cheap pre-filter.)
-		if (!GET_PLAYER(getOwner()).isBuildingMaxedOut(eBuilding))
-		{
-			possibles.push_back(eBuilding);
-		}
+		possibles.push_back((BuildingTypes)*it);
 	}
 
 	AI_scoreBuildingsFromListThreshold(scoredBuildings, possibles, iFocusFlags, iMaxTurns, iMinThreshold, bAsync, eIgnoreAdvisor, bMaximizeFlaggedValue, eProperty);
@@ -4625,6 +4630,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 {
 	PROFILE_FUNC();
 	PERF_ACCUM(g_scoreBldgsMs); ++g_scoreBldgsN;
+	g_scoreCandN += (int)possibleBuildings.size();
 
 	// If we want score for the capital building (palace then we just give the production turns)
 	if (iFocusFlags & BUILDINGFOCUS_CAPITAL)
@@ -4691,6 +4697,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 				// invalidate the building if it doesn't influence the property we are interested in
 				|| AI_buildingInfluencesProperty(this, buildingInfo, eProperty))
 			{
+				++g_scoreValuedN;
 				iValue = AI_buildingValueThreshold(eBuilding, iFocusFlags, iMinThreshold, bMaximizeFlaggedValue, false, &kBasis);
 
 				// If this new building supersedes an old one, subtract the old value. The superseded set is a
@@ -4974,6 +4981,7 @@ int CvCityAI::AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFo
 	{
 		return itr->second;
 	}
+	++g_valueComputeN;
 	const int iResult = AI_buildingValueThresholdOriginalUncached(eBuilding, iFocusFlags, iThreshold, bMaximizeFlaggedValue, bIgnoreCanBuildReplacement, bForTech, pBasis);
 
 	m_buildValueCache.insert(std::make_pair(cacheKey.get(), iResult));
@@ -5283,6 +5291,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		{
 			if (iFocusFlags != 0 && iValue < 1 && iPass > 0)
 			{
+				++g_passOneSkipN;
 				continue;
 			}
 
@@ -9130,11 +9139,21 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 		iMaxTurns = std::max(1, iMaxTurns * CvGameSpeedScale::hammerCostPercent() / 100);
 	}
 	const std::vector<ScoredBuilding> bestBuildings = AI_bestBuildingsThreshold(iFocusFlags, iMaxTurns, iMinThreshold, false, NO_ADVISOR, bMaximizeFlaggedValue, eProperty);
-	const int stdDesiredQueueTurns = CvGameSpeedScale::hammerCostPercent() / 20;
-	const int desiredQueueTurns = std::max(1, std::min(stdDesiredQueueTurns, iMaxTurns));
+
+	//	Top the queue up to a fixed DEPTH of construct orders. The count is taken from the queue rather than
+	//	from this call, so each cascade rung adds only what is still missing and the later rungs add nothing
+	//	once it is full.
+	int iQueuedConstructs = 0;
+	for (int iOrder = 0, iOrders = getOrderQueueLength(); iOrder < iOrders; ++iOrder)
+	{
+		if (getOrderAt(iOrder).eOrderType == ORDER_CONSTRUCT)
+		{
+			++iQueuedConstructs;
+		}
+	}
+
 	bool enqueuedBuilding = false;
-	int nbBuildings = 0;
-	for (size_t i = 0; i < bestBuildings.size() && getTotalProductionQueueTurnsLeft() <= desiredQueueTurns; ++i)
+	for (size_t i = 0; i < bestBuildings.size() && iQueuedConstructs < AI_BUILDING_SHORTLIST_DEPTH; ++i)
 	{
 		const BuildingTypes eBestBuilding = bestBuildings[i].building;
 		if (iOdds < 0
@@ -9152,19 +9171,18 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 				.addI(CITF_score, (int)bestBuildings[i].score)
 				.addI(CITF_rank, (int)i).addI(CITF_count, (int)bestBuildings.size())
 				.addI(CITF_focus, iFocusFlags));
+			//	pushOrder REFUSES a candidate whose availability or duplicate guard says no, so the queue's own
+			//	length is what says whether the order landed -- never the fact that we asked for it.
+			const int iQueuedBefore = getOrderQueueLength();
 			pushOrder(ORDER_CONSTRUCT, eBestBuilding, -1, false, false, true); //not insert, append to queue
-			nbBuildings += 1;
-			enqueuedBuilding = true;
+			if (getOrderQueueLength() > iQueuedBefore)
+			{
+				++iQueuedConstructs;
+				enqueuedBuilding = true;
+			}
 		}
 		// If we failed a roll then abort now, we don't want to choose worse buildings
 		else break;
-
-		CvPlayer& player = GET_PLAYER(getOwner());
-		if (nbBuildings > (NB_MAX_BUILDINGS + player.getCurrentEra() / 2))
-		{
-			break;
-		}
-
 	}
 	if (enqueuedBuilding)
 	{
