@@ -721,9 +721,16 @@
   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — each one is answered by
   a GROUP read, an intrinsic slot, an edge family or a classification test, or it is dead. ⛔ Adding a getter
   per legacy name is the half-migration reflex in its purest form.
-  ⚑ A genuine surface gap the sweep named, needing the library to GROW rather than a consumer to be
+  ⚑ Two genuine surface gaps the sweep named, needing the library to GROW rather than a consumer to be
   re-pointed: the pedia's category/sort taxonomy still has no home
-  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4).
+  ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4); and **a plot-substrate cross-link has no
+  edge to read.** A page asking *"which buildings need this terrain / feature"* is the ordinary
+  [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) conversion everywhere else, and
+  here it has no target: the reverse pass does not route the plot plane
+  ([enabler.md §8](../../specs/enabler.md)) and no terrain or feature edge bucket exists to hold the answer.
+  ⛔ So those consumers are the DANGLING class, not a re-point — the missing piece is the MACHINE, and until it
+  lands the honest state is a page that does not render that panel, never a registry sweep restored to fill it
+  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)).
 - **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
   *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
   everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read
