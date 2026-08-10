@@ -3,6 +3,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
 TRNSLTR = CyTranslator()
+INFO = CyInfo()
 
 class Page:
 
@@ -44,7 +45,6 @@ class Page:
 		import string
 		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheReligionInfo = GC.getReligionInfo(iReligion)
 		aName = self.main.getNextWidgetName
 		screen = self.main.screen()
 
@@ -70,26 +70,24 @@ class Page:
 		S_BOT_ROW = self.S_BOT_ROW
 
 		# Main Panel
-		screen.setText(aName(), "",  szfontEdge + CvTheReligionInfo.getDescription(), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 1, 1)
+		screen.setText(aName(), "",  szfontEdge + INFO.getDescription("RELIGION_", iReligion), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 1, 1)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, H_TOP_ROW + 2, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
-		screen.setImageButtonAt("ToolTip|RELIGION" + str(iReligion), Pnl, CvTheReligionInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt("ToolTip|RELIGION" + str(iReligion), Pnl, INFO.getButton("RELIGION_", iReligion), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 
 		# Related Buildings/Units
 		PF = "ToolTip|JumpTo|"
 		szChild = PF + "BUILDING"
+		#  The religion's own RELATED family is the pedia's candidate list -- it merges every relation the three
+		#  hand-tested ones covered, so the panel reads it instead of sweeping both registries per entry.
 		buildings = []
-		for iBuilding in range(GC.getNumBuildingInfos()):
-			info = GC.getBuildingInfo(iBuilding)
-			if iReligion == info.getPrereqReligion() or iReligion == info.getReligionType() or iReligion == info.getPrereqStateReligion():
-				buildings.append([szChild + str(iBuilding),  info.getButton()])
+		for iBuilding in INFO.getEdgeIds("RELIGION_", iReligion, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_BUILDINGS):
+			buildings.append([szChild + str(iBuilding),  INFO.getButton("BUILDING_", iBuilding)])
 
 		szChild = PF + "UNIT"
 		units = []
-		for iUnit in range(GC.getNumUnitInfos()):
-			info = GC.getUnitInfo(iUnit)
-			if iReligion == info.getPrereqReligion() or iReligion == info.getReligionType() or iReligion == info.getStateReligion():
-				units.append([szChild + str(iUnit),  info.getButton()])
+		for iUnit in INFO.getEdgeIds("RELIGION_", iReligion, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_UNITS):
+			units.append([szChild + str(iUnit),  INFO.getButton("UNIT_", iUnit)])
 
 		if buildings or units:
 
@@ -150,10 +148,10 @@ class Page:
 
 		# History
 		szTxt = ""
-		szTemp = CvTheReligionInfo.getStrategy()
+		szTemp = INFO.getStrategy("RELIGION_", iReligion)
 		if szTemp:
 			szTxt += szfont2b + TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_STRATEGY", ()) + szfont2 + szTemp + "\n\n"
-		szTemp = CvTheReligionInfo.getCivilopedia()
+		szTemp = INFO.getCivilopedia("RELIGION_", iReligion)
 		if szTemp:
 			szTxt += szfont2b + TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_BACKGROUND", ()) + szfont2 + szTemp
 		if szTxt:

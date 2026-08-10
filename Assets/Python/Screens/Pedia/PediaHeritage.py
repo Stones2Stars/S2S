@@ -8,9 +8,6 @@ TRNSLTR = CyTranslator()
 class Page:
 
 	def __init__(self, parent, H_BOT_ROW):
-		import HelperFunctions
-		self.HF = HelperFunctions.HelperFunctions([0])
-
 		self.main = parent
 
 		H_PEDIA_PAGE = parent.H_PEDIA_PAGE
@@ -48,7 +45,6 @@ class Page:
 		import string
 		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		theHeritageInfo = GC.getHeritageInfo(iTheHeritage)
 		aName = self.main.getNextWidgetName
 		screen = self.main.screen()
 
@@ -74,10 +70,10 @@ class Page:
 		S_BOT_ROW = self.S_BOT_ROW
 
 		# Main Panel
-		screen.setText(aName(), "",  szfontEdge + theHeritageInfo.getDescription(), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 1, 1)
+		screen.setText(aName(), "",  szfontEdge + INFO.getDescription("HERITAGE_", iTheHeritage), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 1, 1)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, H_TOP_ROW + 2, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
-		screen.setImageButtonAt("ToolTip|HERITAGE" + str(iTheHeritage), Pnl, theHeritageInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt("ToolTip|HERITAGE" + str(iTheHeritage), Pnl, INFO.getButton("HERITAGE_", iTheHeritage), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 
 		# Related Buildings
 		PF = "ToolTip|JumpTo|"
@@ -85,15 +81,10 @@ class Page:
 		buildings = []
 		units = []
 
-		for iBuilding in xrange(GC.getNumBuildingInfos()):
-			aGOMBonusReqList = [[], []]
-			self.HF.getGOMReqs(GC.getBuildingInfo(iBuilding).getConstructCondition(), GOMTypes.GOM_HERITAGE, aGOMBonusReqList)
-
-			if iTheHeritage in GC.getBuildingInfo(iBuilding).getPrereqOrHeritage() \
-			or iTheHeritage in aGOMBonusReqList[BoolExprTypes.BOOLEXPR_AND] \
-			or iTheHeritage in aGOMBonusReqList[BoolExprTypes.BOOLEXPR_OR] \
-			:
-				buildings.append([szChild + str(iBuilding),  INFO.getButton("BUILDING_", iBuilding)])
+		#  The heritage's own reverse edge family already names the buildings that require it, so the panel reads
+		#  that list instead of sweeping the whole building registry to ask each one.
+		for iBuilding in INFO.getEdgeIds("HERITAGE_", iTheHeritage, EdgeFamily.EDGEF_REQUIRED_BY, EdgeBucket.EDGEB_BUILDINGS):
+			buildings.append([szChild + str(iBuilding),  INFO.getButton("BUILDING_", iBuilding)])
 
 		if buildings or units:
 
@@ -154,10 +145,10 @@ class Page:
 
 		# History
 		szTxt = ""
-		szTemp = theHeritageInfo.getStrategy()
+		szTemp = INFO.getStrategy("HERITAGE_", iTheHeritage)
 		if szTemp:
 			szTxt += szfont2b + TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_STRATEGY", ()) + szfont2 + szTemp + "\n\n"
-		szTemp = theHeritageInfo.getCivilopedia()
+		szTemp = INFO.getCivilopedia("HERITAGE_", iTheHeritage)
 		if szTemp:
 			szTxt += szfont2b + TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_BACKGROUND", ()) + szfont2 + szTemp
 		if szTxt:
