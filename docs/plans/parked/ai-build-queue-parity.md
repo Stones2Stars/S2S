@@ -26,6 +26,19 @@ of the shortlist without any second gate at this site ([enabler.md §6](../../sp
 snapshot half below — a shortlist re-derived at the turn boundary and frozen within the turn, so the mid-turn
 re-decision privilege disappears entirely rather than merely becoming rarer.
 
+> **⚖ THE OPEN QUESTION THE DEPTH RAISES — DOES A STANDING BUILDING QUEUE SQUEEZE UNITS OUT (owner)?** The
+> depth is what makes the scoring cheap, and it has a cost on the other side: `AI_chooseProduction` is the ONE
+> cascade that decides units as well as buildings, and `CvCity::doProduction` only re-enters it when the queue
+> EMPTIES. So a city holding three construct orders does not weigh a unit for three completions, and a shallow
+> queue — which is what the production-turns budget produced — was implicitly buying responsiveness.
+> ⚑ **What decides whether it actually bites is the INSERT path, and that is where a review starts:** unit
+> orders mostly APPEND like buildings do, but one site pushes with `bAppend = false` and therefore jumps a
+> standing queue. If the urgent cases (defence demand, a contract-broker tender) all reach that path, a deep
+> queue defers only DISCRETIONARY units and the risk is small; if they append, they wait behind three buildings.
+> ⛔ **It is not settleable on the standing save.** The effect is a shifted unit/building MIX over many turns,
+> not a value a turn's census can show, so it needs exposure rather than a measurement — which is why this
+> belongs to the pre-ship pass and not to the perf thread that produced the depth.
+
 **The target processing model (owner, same day):** *"build processing then uses the CACHE, until all buildings
 it can has been produced — and then the cache gets recalced in expectation of the next cycle."* I.e. reads
 inside the production cycle serve the turn-boundary SNAPSHOT (no mid-cycle freshness at all — mutations
