@@ -31,4 +31,10 @@ CvWString entryDetailLine(const CvModEntry& entry);
 // Shared by the detail line's enabled/disabled/qualifier clauses; future requires/gate renders reuse it.
 CvWString entryConditionText(const CvCondition* condition);
 
+// A §8/§9 CLASSIFICATION KEY -> a readable name ("canBuildBridges" -> "Can Build Bridges"). The classification
+// registries are minted from the authored keys at load ([DEC-classification-infos]), so no TXT key exists for
+// one and the authored spelling IS the vocabulary -- this is the same honest spell-back the detail line uses for
+// everything TXT cannot reach, differing only in that a block key is camelCase where a token is underscored.
+CvWString entryClassificationName(const std::string& szKey);
+
 #endif // CV_ENTRY_TEXT_H

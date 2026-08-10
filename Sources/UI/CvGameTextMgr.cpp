@@ -23,6 +23,7 @@
 #include "CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "Infos/CvModifiers.h"        // entries() -- the compiled §3.9 deposits a composer renders
+#include "CvClassificationBlock.h"   // the §8/§9 block appendClassificationLines walks
 #include "UI/CvEntryText.h"           // entryDetailLine -- the ONE per-entry renderer
 #include "Enabler/CvEnablerKernel.h"  // operatingBuildings -- the enabler's OWN active/obsolete verdict
 #include "Enabler/CvOperatingBuildings.h"
@@ -3194,8 +3195,25 @@ void CvGameTextMgr::setBonusHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, b
 	setBonusTradeHelp(szBuffer, eBonus, bCivilopediaText, NO_PLAYER);
 }
 
-void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, bool bCivilopediaText, PlayerTypes eTradePlayer)
+//	⚠ eTradePlayer is the TRADE-SCREEN variant's asker and is not read yet: what a resource is worth to a
+//	specific partner is a diplomacy question, not an entity one, and inventing an answer here would put a second
+//	renderer beside the one below. The BASE content is the same either way, which is what this serves.
+void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, bool bCivilopediaText, PlayerTypes /*eTradePlayer*/)
 {
+	if ((int)eBonus < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getBonusInfo(eBonus);
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	//	A bonus authors the CITY-plane families -- 85 carry commerce, 65 health, 58 food, 57 happiness, 49
+	//	production across the curated set -- so it renders through the ONE per-entry renderer like every other
+	//	entity ([DEC-single-implementation]), never a hand-assembled line.
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies,
+		sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 
 void CvGameTextMgr::setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eReligion, bool bCivilopedia)
@@ -3749,6 +3767,30 @@ void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& 
 		szBuffer.append(NEWLINE);
 		szBuffer.append(entryConditionText(pRequiresOperate));
 	}
+}
+
+void CvGameTextMgr::appendClassificationLines(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock) const
+{
+	if (pBlock == NULL)
+	{
+		return;
+	}
+	const std::set<std::string>& kNames = pBlock->all();
+	for (std::set<std::string>::const_iterator it = kNames.begin(); it != kNames.end(); ++it)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(entryClassificationName(*it));
+	}
+}
+
+void CvGameTextMgr::appendClassificationKey(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock, const char* szKey) const
+{
+	if (pBlock == NULL || szKey == NULL || !pBlock->has(szKey))
+	{
+		return;
+	}
+	szBuffer.append(NEWLINE);
+	szBuffer.append(entryClassificationName(std::string(szKey)));
 }
 
 void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily) const

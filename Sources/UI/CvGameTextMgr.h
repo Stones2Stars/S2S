@@ -22,7 +22,8 @@
 class CounterSet;
 class CvCity;
 class CvDeal;
-class CvInfo;                 // appendEntryLines renders any info's compiled entries
+class CvInfo;
+class CvClassificationBlock;   // appendClassificationLines renders an entity's §8/§9 block keys
 class CvPopupInfo;
 class CvPlayer;
 
@@ -130,6 +131,13 @@ public:
 	// rendered by the ONE renderer, so a new channel needs no composer edit at all.
 	void appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily) const;
 	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const;
+	// The §8/§9 CLASSIFICATION twin of the two above: an entity's authored block keys, rendered one per line
+	// through the ONE name renderer. What a capability/canTrade/canWorkOn block GRANTS is not a magnitude, so it
+	// has no compiled entry to hand appendEntryLines -- which is why the widget cases that ask about one were the
+	// only ones with nothing to call ([DEC-single-implementation]: one renderer, not a builder per key).
+	void appendClassificationLines(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock) const;
+	// ONE key of a block, for a widget that represents a single granted ability rather than the whole set.
+	void appendClassificationKey(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock, const char* szKey) const;
 	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);

@@ -5446,67 +5446,80 @@ void CvDLLWidgetData::parseLOSHelp(CvWidgetDataStruct &widgetDataStruct, CvWStri
 
 void CvDLLWidgetData::parseMapCenterHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildMapCenterString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCapabilities(), "hasCenteredMap");
 }
 
 void CvDLLWidgetData::parseMapRevealHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildMapRevealString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCapabilities(), "hasWholeMapRevealed");
 }
 
 void CvDLLWidgetData::parseMapTradeHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildMapTradeString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanTrade(), "maps");
 }
 
 void CvDLLWidgetData::parseTechTradeHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildTechTradeString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanTrade(), "techs");
 }
 
 void CvDLLWidgetData::parseGoldTradeHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildGoldTradeString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanTrade(), "gold");
 }
 
 void CvDLLWidgetData::parseOpenBordersHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildOpenBordersString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanTrade(), "openBorders");
 }
 
 void CvDLLWidgetData::parseDefensivePactHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildDefensivePactString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanTrade(), "defensivePact");
 }
 
 void CvDLLWidgetData::parsePermanentAllianceHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildPermanentAllianceString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanTrade(), "permanentAlliance");
 }
 
 void CvDLLWidgetData::parseVassalStateHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildVassalStateString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanTrade(), "vassals");
 }
 
 void CvDLLWidgetData::parseBuildBridgeHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildBridgeString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCapabilities(), "canBuildBridges");
 }
 
 void CvDLLWidgetData::parseIrrigationHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildIrrigationString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCapabilities(), "canSpreadIrrigation");
 }
 
 void CvDLLWidgetData::parseIgnoreIrrigationHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildIgnoreIrrigationString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCapabilities(), "canIgnoreIrrigation");
 }
 
 void CvDLLWidgetData::parseWaterWorkHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildWaterWorkString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+	GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCanWorkOn(), "water");
 }
 
 void CvDLLWidgetData::parseBuildHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
@@ -5532,7 +5545,8 @@ void CvDLLWidgetData::parseTerrainTradeHelp(CvWidgetDataStruct &widgetDataStruct
 	}
 	else if (widgetDataStruct.m_iData2 == GC.getNumTerrainInfos())
 	{
-		GAMETEXT.buildRiverTradeString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+		GAMETEXT.appendClassificationKey(szBuffer,
+		GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getCapabilities(), "hasRiverTrade");
 	}
 }
 

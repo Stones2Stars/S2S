@@ -456,6 +456,30 @@ namespace
 	}
 }
 
+CvWString entryClassificationName(const std::string& szKey)
+{
+	//	camelCase -> spaced words, first letter capitalised. A leading run of capitals is kept together so an
+	//	authored acronym does not explode into single letters.
+	CvWString szName;
+	for (size_t iChar = 0; iChar < szKey.size(); ++iChar)
+	{
+		const char cChar = szKey[iChar];
+		if (iChar == 0)
+		{
+			szName += (wchar_t)toupper(cChar);
+			continue;
+		}
+		const bool bUpper = (cChar >= 'A' && cChar <= 'Z');
+		const bool bPrevUpper = (szKey[iChar - 1] >= 'A' && szKey[iChar - 1] <= 'Z');
+		if (bUpper && !bPrevUpper)
+		{
+			szName += L' ';
+		}
+		szName += (wchar_t)cChar;
+	}
+	return szName;
+}
+
 CvWString entryConditionText(const CvCondition* condition)
 {
 	if (condition == NULL)
