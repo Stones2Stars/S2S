@@ -352,13 +352,19 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	EnablerKernel::wireOperatingBuildings(&kCity, ec);
 	CvCascadeEvalFlags gateFlags;
 	gateFlags.strictStateReligionForBuild = true;
-	d.setGateFailed(iB, bDormant
-	                 || bReplacedHidden
-	                 || (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
-	                 || !EnablerKernel::requiresMet(j, ec)
-	                 || !EnablerKernel::allowedOk(j, iB, kPlayer, /*bUnit*/ false)
-	                 || !bd_groupCapOk(iB, kPlayer)
-	                 || !bd_categoryCapOk(iB, kCity));
+	//	WHICH clause refuses is what gets stored ([enabler.md] par.6) -- a bare bool cannot tell a capped-out
+	//	wonder (nothing to be done: HIDE) from a missing resource (go connect it: GREY), so it leaves the player
+	//	and the AI to guess which they are looking at.
+	//	⚑ The building-only clauses are tested here and the shared trio defers to the ONE kernel implementation.
+	//	Order decides only WHICH reason a multiply-refused candidate reports: the clauses nothing can be done
+	//	about lead, so a wonder that is both capped and short a resource says the cap.
+	unsigned char eReason = EnablerDomain::GATEREASON_NONE;
+	if (bDormant)                         eReason = EnablerDomain::GATEREASON_DORMANT;
+	else if (bReplacedHidden)             eReason = EnablerDomain::GATEREASON_REPLACED;
+	else if (!bd_groupCapOk(iB, kPlayer)) eReason = EnablerDomain::GATEREASON_CAP_GROUP;
+	else if (!bd_categoryCapOk(iB, kCity)) eReason = EnablerDomain::GATEREASON_CAP_CATEGORY;
+	else eReason = EnablerKernel::standardGateReason(j, iB, kPlayer, ec, gateFlags, /*bUnit*/ false);
+	d.setGateReason(iB, eReason);
 	// QUEUED is the FRESH-OFFER exclusion (par.8, the legacy "!bContinue getFirstBuildingOrder"), NOT a gate reason:
 	// a SEPARATE read-time overlay so canConstruct(bContinue=true)/canContinueProduction can see past it. Folding it
 	// into the gate (as before) flipped a queued building to GREYED -> !listed -> canContinueProduction=false ->

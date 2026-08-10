@@ -319,26 +319,59 @@ static bool ud_reachable(int v, UdGateCtx& x)
 }
 
 // The ONE per-unit gate verdict: available ∧ NOT upgrade-dormant ∧ NOT superseded-by-an-available-replacer.
-static bool ud_verdict(int u, UdGateCtx& x)
+//	WHY this unit is not offered ([enabler.md] par.6: the gate carries the reason, so a greyed unit says what is
+//	missing instead of leaving the player and the AI to guess). It mirrors ud_isAvailable's clause ORDER exactly,
+//	because that is the order the verdict is actually decided in.
+//	⚑ Only the TOP candidate needs a reason -- the reachability closure below it stays a bool, since "some
+//	upgrade of this is reachable" has no single clause to name.
+static unsigned char ud_gateReason(int u, UdGateCtx& x)
 {
-	if (!ud_availMemo(u, x)) return false;
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
-	if (j == NULL) return true;
-	const std::vector<int>& dorm = j->dormantTriggers();
-	if (!dorm.empty())
+	if (j != NULL)
 	{
-		bool dormant = true;
-		for (size_t i = 0; i < dorm.size() && dormant; ++i)
-			if (!ud_reachable(dorm[i], x)) dormant = false;
-		if (dormant) return false;
+		//	Superseded by progress: the tech that obsoletes it is held, so nothing brings it back.
+		if (EnablerKernel::obsoletedByHeldTech(j, *x.team))
+		{
+			return (unsigned char)EnablerDomain::GATEREASON_REPLACED;
+		}
+		if (ud_capped(j, u, *x.player, x.noNationalLimit))
+		{
+			return (unsigned char)EnablerDomain::GATEREASON_CAP_SELF;
+		}
+		if (!cascadeGateOk(j->getGate(), *x.ec, *x.flags))
+		{
+			return (unsigned char)EnablerDomain::GATEREASON_OPTION;
+		}
+		if (!EnablerKernel::requiresMet(j, *x.ec))
+		{
+			return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
+		}
+
+		//	DORMANT only when EVERY direct upgrade resolves to a reachable-trainable unit -- one dead branch keeps
+		//	this unit buildable (the fail-safe default, [enabler.md] par.3).
+		const std::vector<int>& dorm = j->dormantTriggers();
+		if (!dorm.empty())
+		{
+			bool dormant = true;
+			for (size_t i = 0; i < dorm.size() && dormant; ++i)
+				if (!ud_reachable(dorm[i], x)) dormant = false;
+			if (dormant) return (unsigned char)EnablerDomain::GATEREASON_DORMANT;
+		}
+		// the superseder removal: the poco's m_superseding (the curated replacedBy.units), never j->edge
+		const CvUnitInfo* ju = (const CvUnitInfo*)j;
+		foreach_(const int sup, ju->getReplacedByUnits())
+		{
+			if (sup >= 0 && ud_availMemo(sup, x)) return (unsigned char)EnablerDomain::GATEREASON_REPLACED;
+		}
 	}
-	// the superseder removal: the poco's m_superseding (the curated replacedBy.units), never j->edge
-	const CvUnitInfo* ju = (const CvUnitInfo*)j;
-	foreach_(const int sup, ju->getReplacedByUnits())
+	//	The memo is the authority on availability (it is what the closure above consults), so a unit it refuses
+	//	for a reason not named above is still refused -- reported as the greyable default rather than silently
+	//	passing the gate.
+	if (!ud_availMemo(u, x))
 	{
-		if (sup >= 0 && ud_availMemo(sup, x)) return false;
+		return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
 	}
-	return true;
+	return (unsigned char)EnablerDomain::GATEREASON_NONE;
 }
 
 // One city's gate context, set up once per gate pass.
@@ -363,7 +396,7 @@ static void ud_gateSet(const CvCity& kCity, const std::set<int>& ids)
 	std::set<int> waived; CvCascadeEvalCtx ec; CvCascadeEvalFlags flags; UdGateCtx x;
 	ud_setupCtx(kCity, kPlayer, GET_TEAM(kPlayer.getTeam()), waived, ec, flags, x);
 	for (std::set<int>::const_iterator it = ids.begin(); it != ids.end(); ++it)
-		if (d.inTree(*it)) d.setGateFailed(*it, !ud_verdict(*it, x));
+		if (d.inTree(*it)) d.setGateReason(*it, ud_gateReason(*it, x));
 }
 
 // The touched candidate set of one HAVE-event source (O(delta) off its own info): its enables/removal unit
@@ -432,10 +465,10 @@ void UnitEnabler::gateCity(const CvCity& kCity)
 	std::set<int> waived; CvCascadeEvalCtx ec; CvCascadeEvalFlags flags; UdGateCtx x;
 	ud_setupCtx(kCity, kPlayer, GET_TEAM(kPlayer.getTeam()), waived, ec, flags, x);
 	for (int u = 0; u < GC.getNumUnitInfos(); ++u)
-		if (d.inTree(u)) d.setGateFailed(u, !ud_verdict(u, x));
+		if (d.inTree(u)) d.setGateReason(u, ud_gateReason(u, x));
 }
 
-// The decomposition: each ud_verdict leg evaluated independently against the SAME per-city gate context the
+// The decomposition: each gate leg evaluated independently against the SAME per-city gate context the
 // real gate uses -- the endpoint's attribution surface (never a read path).
 void UnitEnabler::explain(const CvCity& kCity, int iUnit, Explain& out)
 {

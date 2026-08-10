@@ -212,9 +212,7 @@ void EnablerKernel::applyPlayerHave(const CvPlayer& kPlayer, EnablerDomain& d, E
 	{
 		if (!d.inTree(*it)) continue;
 		const CvInfo* jCand = infoFor(eBucket, *it);
-		d.setGateFailed(*it, (jCand != NULL && !cascadeGateOk(jCand->getGate(), ec, gateFlags))   // DEC-entity-gate
-		                  || !requiresMet(jCand, ec)
-		                  || !allowedOk(jCand, *it, kPlayer, /*bUnit*/ false, eBucket));
+		d.setGateReason(*it, standardGateReason(jCand, *it, kPlayer, ec, gateFlags, /*bUnit*/ false, eBucket));
 	}
 }
 
@@ -292,6 +290,24 @@ bool EnablerKernel::requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket,
 	gateFlags.strictStateReligionForBuild = true;
 	if (!cascadeGateOk(j->getGate(), ec, gateFlags)) return false;
 	return requiresMet(j, ec, bVisible);
+}
+
+unsigned char EnablerKernel::standardGateReason(const CvInfo* j, int iId, const CvPlayer& kPlayer,
+	const CvCascadeEvalCtx& ec, const CvCascadeEvalFlags& gateFlags, bool bUnit, EnEdgeBucket eBucket)
+{
+	if (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))
+	{
+		return (unsigned char)EnablerDomain::GATEREASON_OPTION;
+	}
+	if (!allowedOk(j, iId, kPlayer, bUnit, eBucket))
+	{
+		return (unsigned char)EnablerDomain::GATEREASON_CAP_SELF;
+	}
+	if (!requiresMet(j, ec))
+	{
+		return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
+	}
+	return (unsigned char)EnablerDomain::GATEREASON_NONE;
 }
 
 bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket)

@@ -43,9 +43,7 @@ static void pj_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iProject)
 	CvCascadeEvalCtx ec;
 	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
-	d.setGateFailed(iProject, (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
-	                       || !EnablerKernel::requiresMet(j, ec)
-	                       || !EnablerKernel::allowedOk(j, iProject, kPlayer, /*bUnit*/ false, EDGEB_PROJECTS));
+	d.setGateReason(iProject, EnablerKernel::standardGateReason(j, iProject, kPlayer, ec, gateFlags, /*bUnit*/ false, EDGEB_PROJECTS));
 }
 
 // The touched candidate set of one event source (its enables/removal project targets + its EDGEF_REQUIRED_BY

@@ -94,6 +94,18 @@ EnablerDomain::State CvCity::getUnitAvailability(UnitTypes eUnit) const
 	return (EnablerDomain::State)m_enabler.units.state((int)eUnit);
 }
 
+// WHY it is not offered ([enabler.md] par.6). The gate already knew; storing it is what stops the display -- and
+// the AI -- from having to guess which clause refused.
+unsigned char CvCity::getBuildingGateReason(BuildingTypes eBuilding) const
+{
+	return m_enabler.buildings.gateReason((int)eBuilding);
+}
+
+unsigned char CvCity::getUnitGateReason(UnitTypes eUnit) const
+{
+	return m_enabler.units.gateReason((int)eUnit);
+}
+
 void CvCity::getAvailableBuildings(std::vector<int>& buildings) const
 {
 	m_enabler.buildings.listedIds(buildings);

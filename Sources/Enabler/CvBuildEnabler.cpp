@@ -44,9 +44,7 @@ static void bl_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iId)
 	CvCascadeEvalCtx ec;
 	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
-	d.setGateFailed(iId, (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // DEC-entity-gate
-	                  || !EnablerKernel::requiresMet(j, ec)
-	                  || !EnablerKernel::allowedOk(j, iId, kPlayer, /*bUnit*/ false, EDGEB_BUILDS));
+	d.setGateReason(iId, EnablerKernel::standardGateReason(j, iId, kPlayer, ec, gateFlags, /*bUnit*/ false, EDGEB_BUILDS));
 }
 
 // The touched candidate set of one event source (its enables/removal targets + its EDGEF_REQUIRED_BY dependents).

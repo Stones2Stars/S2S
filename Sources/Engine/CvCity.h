@@ -775,11 +775,15 @@ public:
 	// list needs, and §6's greying falls out of the same gate at no extra cost. Collapsing it here would force a
 	// second read to recover it. It answers TREE + GATE only.
 	// ⛔ The QUEUED overlay is deliberately NOT folded into it. EnablerDomain keeps FLAG_QUEUED separate from
-	// FLAG_GATE_FAILED precisely so "already in the queue" stays distinguishable from "requires unmet"; mapping a
+	// the gate REASON precisely so "already in the queue" stays distinguishable from "requires unmet"; mapping a
 	// queued candidate onto GREYED here would destroy that distinction and lie about why it is not offered. The
 	// overlay therefore rides the two reads that actually care -- the frontier, and the continue verdict.
 	EnablerDomain::State getBuildingAvailability(BuildingTypes eBuilding) const;
 	EnablerDomain::State getUnitAvailability(UnitTypes eUnit) const;
+	// WHY the gate refused (EnablerDomain::GateReason) -- the "what is needed" read a tooltip serves so a player
+	// meeting a greyed entry is not left guessing ([enabler.md] par.6).
+	unsigned char getBuildingGateReason(BuildingTypes eBuilding) const;
+	unsigned char getUnitGateReason(UnitTypes eUnit) const;
 
 	// THE FRESH OFFER -- the small frontier the AI's production decision iterates INSTEAD of scoring the whole
 	// entity database (enabler.md §6: one shared choice set for UI and AI), with queued candidates excluded.

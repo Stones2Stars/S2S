@@ -501,6 +501,35 @@ Each clause carries a disposition (set once by its kind):
 Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resource on `requires` to **grey**
 (surfacing "go get copper"), or on `enables` to **hide** until present. General lean: grey on resources.
 
+> **⛔ THE GATE CARRIES *WHY* IT FAILED, NOT A BOOLEAN — OTHERWISE THE TOOLTIP CANNOT SAY WHAT IS NEEDED
+> (owner).** The verdict is the failing clause's IDENTITY; hide-vs-grey is then read off that identity rather
+> than being the whole of what is stored. A single failed bit satisfies neither consumer: the UI cannot tell a
+> capped-out wonder (nothing to do about it — HIDE) from a missing resource (go connect it — GREY), and the
+> player is told a thing is unavailable without being told what would make it available.
+> ⚑ **It is the same shape the yield census already has one plane over** — the refused deposits are served WITH
+> the atom that refused each one ([http-endpoints.md](http-endpoints.md)) — and it is why a reason is worth
+> storing rather than re-deriving: a consumer that re-evaluated the clauses to find the cause would be a second
+> gate implementation, free to disagree with the verdict it claims to explain
+> ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+> ⛔ **So do NOT collapse the clause set into one flag.** Every clause the gate evaluates — dormancy, the
+> entity-level option gate, `requires`, and each `allowed` cap (self / group / per-city category) — is its own
+> reason, and a clause whose disposition is HIDE must not present as GREYED merely because it shares the bit.
+> ⚠ **This reaches the AI, not only the screen** (owner), which is why the disposition is part of the model and
+> not a rendering choice: the tri-state is the ONE shared choice set (below), so a consumer testing
+> `>= GREYED` ("could I build this eventually?") gets a different answer once a hide-clause stops greying.
+> ⚑ The REQUIRES reason names the clause kind; WHICH atom is unmet is the requires tree's own per-clause render,
+> so the two compose instead of the enabler duplicating the condition walk.
+>
+> **⚖ THE REASON EXISTS SO NOBODY HAS TO GUESS — HUMAN OR AI (owner): *"otherwise a user would just have to
+> guess what is wrong when they see greyed stuff, be it human or ai, and we try to avoid that."*** This is
+> [DEC-no-guessing](../architecture/decisions.md#dec-no-guessing) pointed at the CONSUMER rather than at us: a
+> greyed entry that does not say what is missing hands the player — and the AI — a question instead of an
+> answer, which is the same defect a non-specific fact commits on the emit side
+> ([DEC-facts-name-happenings](../architecture/decisions.md#dec-facts-name-happenings)).
+> ⇒ **So "unavailable" is never a complete verdict.** A candidate the player can act on says what to go get; one
+> they cannot says so and stops occupying the list. ⛔ Neither is served by a bit, which is why the reason is
+> STORED at the gate that already knows it rather than re-derived by whoever displays it.
+
 **The frontier is one shared choice set — UI *and* AI.** It is computed once per recompute; the UI greys from
 it, and the AI's production decision iterates **only this small frontier** instead of scoring the whole entity
 database. That consolidation — one recompute replacing dozens of scattered ad-hoc `canBuild` checks — is the

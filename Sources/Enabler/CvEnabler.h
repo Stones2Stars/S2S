@@ -19,10 +19,10 @@
 //
 //	REMOVAL WINS regardless of event arrival order -- the sequenced add/erase delta is BANNED (an enables-add
 //	arriving after an obsoletes-remove must NOT re-insert the candidate; the TECH_GAME_START-arrives-last /
-//	obsoleted-candidate edge case). The REQUIRES GATE (par.7.1 step 2) splits a tree member's state:
-//	gate passed -> LISTED, gate failed -> GREYED (the FLAG_GATE_FAILED bit, set by the domain enabler's
-//	gate-on-entry + EDGEF_REQUIRED_BY re-gates); the gate NEVER changes membership. A domain whose gate stage
-//	has not landed simply never sets the flag -- every tree member LISTED (the enable-side over-offer).
+//	obsoleted-candidate edge case). The GATE (par.7.1 step 2) splits a tree member's state by the REASON it
+//	stored (m_aGateReason, set by the domain enabler's gate-on-entry + EDGEF_REQUIRED_BY re-gates): a greyable
+//	reason -> GREYED, a hide reason -> HIDDEN, none -> LISTED. The gate NEVER changes membership. A domain whose
+//	gate stage has not landed simply never sets a reason -- every tree member LISTED (the enable-side over-offer).
 //
 //	The per-domain enabler (TechEnabler / BuildingEnabler / UnitEnabler) owns the delta LOGIC (which edges feed
 //	which domain); this component owns only the standardized storage + formula. HAVE itself is NEVER stored here --
@@ -39,9 +39,34 @@ public:
 	enum State
 	{
 		STATE_HIDDEN = 0,   // not in CAN GET -- generation never reached it, or a held source removes it
-		STATE_GREYED = 1,   // in CAN GET, requires unmet (the gate stage -- unused until it lands)
+		STATE_GREYED = 1,   // in CAN GET, a GREYABLE clause unmet -- the player is told what to go get
 		STATE_LISTED = 2    // in CAN GET, gate passed (enable-side stage: every tree member)
 	};
+
+	// WHY the gate refused ([enabler.md] par.6: the gate that decides buildability yields the REASON, never a
+	// bare bool -- otherwise a greyed entry hands the player, and the AI, a question instead of an answer).
+	// ⛔ The reason is what is STORED; hide-vs-grey is READ OFF it (reasonHides) rather than being the whole of
+	// the verdict, so the two consumers the tri-state serves are both answerable from one stored fact.
+	enum GateReason
+	{
+		GATEREASON_NONE = 0,      // the gate passed
+		GATEREASON_REQUIRES,      // a `requires` clause is unmet -- GREYABLE (go connect it / go adopt it)
+		GATEREASON_DORMANT,       // a dormancy successor stands in this city (only-highest-active)
+		GATEREASON_REPLACED,      // HIDE_REPLACED: a reachable successor supersedes it
+		GATEREASON_OPTION,        // the entity-level enabled/disabled game-option gate (DEC-entity-gate)
+		GATEREASON_CAP_SELF,      // its own `allowed` world/team/empire cap is consumed
+		GATEREASON_CAP_GROUP,     // the SpecialBuilding group cap is consumed by a sibling
+		GATEREASON_CAP_CATEGORY   // this city's culture-level wonder-CATEGORY cap is full
+	};
+
+	// The DISPOSITION, read off the reason. A clause the player can act on GREYS (it names what to go get); one
+	// they cannot act on HIDES, because leaving it in the list says "unavailable" and nothing more.
+	// ⚠ A CAP is the worked case: a built world wonder can never be built again anywhere, so a greyed row for it
+	// is pure noise -- there is no action it could prompt.
+	static bool reasonHides(unsigned char eReason)
+	{
+		return eReason != (unsigned char)GATEREASON_NONE && eReason != (unsigned char)GATEREASON_REQUIRES;
+	}
 
 	EnablerDomain() : m_bSeeded(false) {}
 
@@ -57,14 +82,17 @@ public:
 	void addRemove(int iId, int iDelta);           // a held source's obsoletes/replaces/disables edge
 	void setHeld(int iId, bool bHeld);             // the candidate itself is now held/built (leaves the frontier)
 	void setStaticExcluded(int iId, bool bExcluded); // static never-offered (identity.disable class) -- set at seed
-	// The REQUIRES-GATE verdict (par.7.1 step 2 -- the gate stage): set by the domain enabler's gate evaluation
-	// (gate-on-entry + the EDGEF_REQUIRED_BY re-gates); a failed gate flips a tree member LISTED -> GREYED
-	// (membership itself is untouched -- requires never adds/removes candidates, par.1).
-	void setGateFailed(int iId, bool bFailed);
+	// The GATE verdict (par.7.1 step 2): set by the domain enabler's gate evaluation (gate-on-entry + the
+	// EDGEF_REQUIRED_BY re-gates). It carries WHY it failed, so a greyed candidate can say what is missing and a
+	// hide-clause can stop occupying the list. Membership itself is untouched -- the gate never adds or removes
+	// a candidate (par.1).
+	void setGateReason(int iId, unsigned char eReason);
+	// WHY this candidate is not offered (GATEREASON_NONE = it is). The tooltip's "what is needed" read.
+	unsigned char gateReason(int iId) const;
 	// The QUEUED overlay (par.7.1 step 3 / par.8): a building currently in this city's production queue leaves the
 	// FRESH OFFER (listed / listedIds) but stays CONTINUABLE (listedForContinue) and in-tree. A read-time overlay,
 	// NOT a gate reason -- set from the live getFirstBuildingOrder read on SEVT_CITY_ORDER_CHANGED (+ the load-end
-	// gate pass). Split out from FLAG_GATE_FAILED precisely so bContinue can tell "queued" from "gate failed".
+	// gate pass). Split out from the gate REASON precisely so bContinue can tell "queued" from "gate refused".
 	void setQueued(int iId, bool bQueued);
 	bool isHeld(int iId) const;
 	// The STATIC-EXCLUSION read (enabler.md par.8): the permanent, life-of-the-owner bars seeded at initDomain
@@ -76,7 +104,12 @@ public:
 
 	// The bare O(1) reads.
 	unsigned char state(int iId) const;
-	bool inTree(int iId) const { return state(iId) >= (unsigned char)STATE_GREYED; }
+	// IN CAN GET -- the MEMBERSHIP verdict, which is what "in tree" means (par.1: the gate never changes
+	// membership). ⛔ It is deliberately NOT `state() >= GREYED` any more: a HIDE-clause candidate reports
+	// STATE_HIDDEN while remaining a tree member, and the domain enablers guard their re-gate loops on this read
+	// -- so deriving it from the display state would freeze such a candidate out of every future re-gate and it
+	// could never come back when its cap frees or its game option flips.
+	bool inTree(int iId) const;
 	// listed = the FRESH OFFER (canConstruct bContinue=false): gate-passed AND not currently queued. The QUEUED
 	// overlay (FLAG_QUEUED, the enabler.md par.8 "!bContinue getFirstBuildingOrder exclusion") is a read-time
 	// filter, NOT a gate/membership reason -- kept separate so a CONTINUE check can see past it.
@@ -117,7 +150,11 @@ public:
 	void inTreeIds(std::vector<int>& out) const;
 
 private:
-	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_GATE_FAILED = 4, FLAG_QUEUED = 8 };
+	// FLAG_IN_TREE is the stored MEMBERSHIP verdict, written by refresh() alongside the display state. It exists
+	// because the two genuinely differ once a hide-clause is in play, and inTree() must answer the membership
+	// half ([DEC-single-implementation]: one formula, one place -- refresh() applies it and both reads take it
+	// from there rather than each re-deriving it).
+	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_IN_TREE = 4, FLAG_QUEUED = 8 };
 
 	bool inRange(int iId) const { return iId >= 0 && iId < (int)m_aState.size(); }
 	bool isQueued(int iId) const { return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_QUEUED) != 0; }
@@ -126,7 +163,8 @@ private:
 	std::vector<unsigned char> m_aState;           // tri-state per enum id -- the frontier the reads serve
 	std::vector<short> m_aiEnable;                 // held sources enabling id
 	std::vector<short> m_aiRemove;                 // held sources removing id (obsoletes/replaces/disables)
-	std::vector<unsigned char> m_aFlags;           // FLAG_HELD | FLAG_STATIC_EXCLUDED
+	std::vector<unsigned char> m_aFlags;           // FLAG_HELD | FLAG_STATIC_EXCLUDED | FLAG_IN_TREE | FLAG_QUEUED
+	std::vector<unsigned char> m_aGateReason;      // GateReason per id -- WHY the gate refused
 	bool m_bSeeded;
 };
 

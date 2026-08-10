@@ -12,6 +12,7 @@ void EnablerDomain::init(int iCount)
 	m_aiEnable.assign(iCount, (short)0);
 	m_aiRemove.assign(iCount, (short)0);
 	m_aFlags.assign(iCount, (unsigned char)0);
+	m_aGateReason.assign(iCount, (unsigned char)GATEREASON_NONE);
 	m_bSeeded = true;
 }
 
@@ -21,20 +22,29 @@ void EnablerDomain::reset()
 	m_aiEnable.clear();
 	m_aiRemove.clear();
 	m_aFlags.clear();
+	m_aGateReason.clear();
 	m_bSeeded = false;
 }
 
 // THE MEMBERSHIP FORMULA -- never an operation sequence. Removal wins regardless of arrival order (the
-// sequenced add/erase delta is banned: a late enables-add must not resurrect a removed candidate). The
-// requires-gate verdict (FLAG_GATE_FAILED) only splits a member's state LISTED/GREYED -- never membership.
+// sequenced add/erase delta is banned: a late enables-add must not resurrect a removed candidate).
+//
+// ⛔ MEMBERSHIP AND THE DISPLAY STATE ARE TWO ANSWERS, and this is the ONE place both are derived. The gate
+// never changes membership (par.1), so a candidate refused by a HIDE-clause stays a tree member -- it merely
+// stops being offered. Storing both here is what lets inTree() keep re-gating it, so it comes back by itself
+// the moment its cap frees or its option flips.
 void EnablerDomain::refresh(int iId)
 {
 	const bool bIn = isMember((int)m_aiEnable[iId], (int)m_aiRemove[iId],
 		(m_aFlags[iId] & (unsigned char)FLAG_HELD) != 0,
 		(m_aFlags[iId] & (unsigned char)FLAG_STATIC_EXCLUDED) != 0);
-	m_aState[iId] = !bIn ? (unsigned char)STATE_HIDDEN
-		: ((m_aFlags[iId] & (unsigned char)FLAG_GATE_FAILED) != 0 ? (unsigned char)STATE_GREYED
-		                                                          : (unsigned char)STATE_LISTED);
+	if (bIn) m_aFlags[iId] |= (unsigned char)FLAG_IN_TREE;
+	else     m_aFlags[iId] &= (unsigned char)~FLAG_IN_TREE;
+
+	const unsigned char eReason = m_aGateReason[iId];
+	m_aState[iId] = (!bIn || reasonHides(eReason)) ? (unsigned char)STATE_HIDDEN
+		: (eReason != (unsigned char)GATEREASON_NONE ? (unsigned char)STATE_GREYED
+		                                            : (unsigned char)STATE_LISTED);
 }
 
 void EnablerDomain::addEnable(int iId, int iDelta)
@@ -74,12 +84,21 @@ bool EnablerDomain::isStaticExcluded(int iId) const
 	return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_STATIC_EXCLUDED) != 0;
 }
 
-void EnablerDomain::setGateFailed(int iId, bool bFailed)
+void EnablerDomain::setGateReason(int iId, unsigned char eReason)
 {
 	if (!inRange(iId)) return;
-	if (bFailed) m_aFlags[iId] |= (unsigned char)FLAG_GATE_FAILED;
-	else         m_aFlags[iId] &= (unsigned char)~FLAG_GATE_FAILED;
+	m_aGateReason[iId] = eReason;
 	refresh(iId);
+}
+
+unsigned char EnablerDomain::gateReason(int iId) const
+{
+	return inRange(iId) ? m_aGateReason[iId] : (unsigned char)GATEREASON_NONE;
+}
+
+bool EnablerDomain::inTree(int iId) const
+{
+	return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_IN_TREE) != 0;
 }
 
 void EnablerDomain::setQueued(int iId, bool bQueued)

@@ -80,9 +80,7 @@ static void te_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iTech)
 	CvCascadeEvalCtx ec;
 	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
-	d.setGateFailed(iTech, (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
-	                    || !EnablerKernel::requiresMet(j, ec)
-	                    || !EnablerKernel::allowedOk(j, iTech, kPlayer, false, EDGEB_TECHS));
+	d.setGateReason(iTech, EnablerKernel::standardGateReason(j, iTech, kPlayer, ec, gateFlags, /*bUnit*/ false, EDGEB_TECHS));
 }
 
 // The TOUCHED candidate set of one tech event H -- everything whose state or gate can change with H, all read

@@ -59,7 +59,7 @@ public:
 	static void onUnitCountChanged(PlayerTypes ePlayer, int eUnit);
 
 	// The DECOMPOSITION (the /computed/enabler/units no-guessing surface): one unit's verdict split into the
-	// NAMED ud_verdict legs, so a wrong offer attributes to a source instead of a hypothesis.
+	// NAMED gate legs, so a wrong offer attributes to a source instead of a hypothesis.
 	struct Explain
 	{
 		bool bInTree, bListed, bSpawnOnly, bObsoleteTech, bCapped, bEntityGateFail, bRequiresFail;

@@ -27943,6 +27943,34 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<English>[NEWLINE][ICON_BULLET]%s1 [ICON_COMMERCE]: Profit</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQUIRES</Tag>
+		<English>[COLOR_WARNING_TEXT]Cannot be built yet — requirements are not met:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_DORMANT</Tag>
+		<English>[COLOR_WARNING_TEXT]Superseded by a building already in this city.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REPLACED</Tag>
+		<English>[COLOR_WARNING_TEXT]Superseded — a replacement is available to you.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_OPTION</Tag>
+		<English>[COLOR_WARNING_TEXT]Disabled by a game option.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_CAP_SELF</Tag>
+		<English>[COLOR_WARNING_TEXT]No more of these may exist — the limit is already reached.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_CAP_GROUP</Tag>
+		<English>[COLOR_WARNING_TEXT]Another building of its group has taken the available slot.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_CAP_CATEGORY</Tag>
+		<English>[COLOR_WARNING_TEXT]This city already holds as many wonders of this kind as its culture allows.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_GRANTHELP_TECHS</Tag>
 		<English>[COLOR_HIGHLIGHT_TEXT]Grants technologies:[COLOR_REVERT]</English>
 	</TEXT>

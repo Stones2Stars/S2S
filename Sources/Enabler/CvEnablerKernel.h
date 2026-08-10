@@ -206,6 +206,18 @@ public:
 
 	// allowed cap gate: current tally count vs each scope cap (world/team/empire).
 	static bool allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket = NO_EDGEB);
+	// WHICH clause refused, for every domain whose gate is the standard trio -- the entity-level option gate, the
+	// `allowed` cap, and `requires` ([enabler.md] par.6: the gate carries the REASON, so a greyed candidate can
+	// say what is missing instead of leaving the player and the AI to guess). ONE implementation, so two domains
+	// cannot label the same clause differently ([DEC-single-implementation]); a domain with EXTRA clauses (the
+	// building domain's dormancy / replaced / group + category caps) tests those itself and defers here for the
+	// shared three.
+	// ⚑ The cap is asked BEFORE `requires` deliberately: a consumed cap is decisive and cannot be acted on, while
+	// requires is both actionable and the expensive clause (a condition-tree walk) -- so this reports the more
+	// useful reason AND stops evaluating a tree whose answer cannot change the verdict.
+	static unsigned char standardGateReason(const CvInfo* j, int iId, const CvPlayer& kPlayer,
+		const CvCascadeEvalCtx& ec, const CvCascadeEvalFlags& gateFlags, bool bUnit,
+		EnEdgeBucket eBucket = NO_EDGEB);
 
 	// canFoundReligion -- a PLAYER-WIDE state predicate reproduced from game state (CvPlayer::canFoundReligion).
 	static bool canFoundReligion(const CvPlayer& kPlayer);

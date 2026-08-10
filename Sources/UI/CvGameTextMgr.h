@@ -154,6 +154,11 @@ public:
 	// renderer rather than being hand-listed per composer ([DEC-single-implementation]). A conditioned entry
 	// carries its condition, because rendering one unconditionally claims something the data does not say.
 	void appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& info) const;
+	// WHY the enabler refuses a candidate, in one line ([enabler.md] par.6). The gate STORED the reason, so this
+	// reads it rather than re-deriving it -- a second evaluation here could disagree with the verdict it claims
+	// to explain ([DEC-single-implementation]). Without it a greyed row says only "unavailable", which leaves the
+	// player, and the AI reading the same tri-state, to guess what would unblock it.
+	void appendGateReason(CvWStringBuffer& szBuffer, unsigned char eReason) const;
 	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);

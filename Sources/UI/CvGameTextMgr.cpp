@@ -2486,6 +2486,19 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		szBuffer.append(kInfo.getDescription());
 	}
 	appendBuildingOperatingState(szBuffer, eBuilding, pCity);
+
+	//	WHY it is not offered here, and — where the player can actually act on it — WHAT is missing. A greyed row
+	//	that names no cause leaves them to guess, which is the one thing this surface exists to prevent.
+	if (pCity != NULL && !bCivilopediaText)
+	{
+		const unsigned char eReason = pCity->getBuildingGateReason(eBuilding);
+		appendGateReason(szBuffer, eReason);
+		if (eReason == EnablerDomain::GATEREASON_REQUIRES)
+		{
+			buildRequiresClauses(szBuffer, kInfo.requiresBuild(), pCity);
+			buildRequiresClauses(szBuffer, kInfo.requiresOperate(), pCity);
+		}
+	}
 	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 void CvGameTextMgr::setHeritageHelp(CvWStringBuffer &szBuffer, const HeritageTypes eType, CvCity* pCity, const bool bCivilopediaText, const bool bStrategyText, const bool bTechChooserText)
@@ -3962,6 +3975,24 @@ static CvWString gt_grantedEntityName(int eRegistry, int iId)
 		return (iId < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)iId).getDescription() : CvWString();
 	}
 	return CvWString();
+}
+
+void CvGameTextMgr::appendGateReason(CvWStringBuffer& szBuffer, unsigned char eReason) const
+{
+	const char* szKey = NULL;
+	switch (eReason)
+	{
+	case EnablerDomain::GATEREASON_REQUIRES:     szKey = "TXT_KEY_GATEREASON_REQUIRES"; break;
+	case EnablerDomain::GATEREASON_DORMANT:      szKey = "TXT_KEY_GATEREASON_DORMANT"; break;
+	case EnablerDomain::GATEREASON_REPLACED:     szKey = "TXT_KEY_GATEREASON_REPLACED"; break;
+	case EnablerDomain::GATEREASON_OPTION:       szKey = "TXT_KEY_GATEREASON_OPTION"; break;
+	case EnablerDomain::GATEREASON_CAP_SELF:     szKey = "TXT_KEY_GATEREASON_CAP_SELF"; break;
+	case EnablerDomain::GATEREASON_CAP_GROUP:    szKey = "TXT_KEY_GATEREASON_CAP_GROUP"; break;
+	case EnablerDomain::GATEREASON_CAP_CATEGORY: szKey = "TXT_KEY_GATEREASON_CAP_CATEGORY"; break;
+	default: return;   // GATEREASON_NONE -- it is offered, so there is nothing to explain
+	}
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText(szKey));
 }
 
 void CvGameTextMgr::appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& info) const
