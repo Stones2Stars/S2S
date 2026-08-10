@@ -214,6 +214,41 @@ value). This inflates **tech** value for those unit families. It does **not** hi
 
 ---
 
+---
+
+## E. The COST shape — the CANDIDATE SET is bounded, the VALUATION is not — **[V]**
+
+The frontier fix landed on the unit side: every unit-choice path walks `getAvailableUnits` (the enabler's
+maintained LISTED frontier) rather than the database ([enabler.md §6](../../specs/enabler.md)). What was never
+touched is what happens INSIDE the valuation, and it carries the same defect one level in.
+
+`CvPlayerAI::AI_unitValue` (`CvPlayerAI.cpp:10627`) is called **once per candidate** from the frontier walk
+(`CvCityAI.cpp:4503`), and contains **three full sweeps of the unit registry** (`:10818`, `:11251`, `:11463`)
+plus religion (`:10960`, `:11665`, `:11677`) and corporation (`:10973`, `:11686`) sweeps. So the pass is
+`O(frontier × database)` — the shape the frontier fix exists to delete, surviving inside the thing it bounded.
+
+**Two distinct dispositions, both already ruled — they are NOT one problem:**
+
+- **The `isDefendAgainstUnit` / `hasDefenderUnitCombat` sweeps (`:10818`, `:11463`) are REVERSE LOOKUPS.**
+  *"Does any unit in the database defend against me?"* is the own-data inversion
+  [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) answers: reverse edge families
+  populated ONCE at load on the referenced info, never a whole-database scan on a hot path. ⚠ `:11463` needs
+  the COUNT rather than a boolean, so it wants the family's size, not an early-out.
+- **⛔ The bombard sweep (`:11251`) NEVER READS THE CANDIDATE — it is a per-player constant recomputed per
+  candidate.** It totals the player's land-unit bombard capacity off `eLoopUnit` and `getUnitCount`, so every
+  candidate in a pass gets the identical number. That is the banned cadence exactly
+  ([patterns.md](../../architecture/patterns.md) § THE VALUATION PROTOCOL: a standing-of-the-empire weight is
+  asked at most once per `doTurn`, and *"per CANDIDATE is the banned shape"*) — and it is the same shape as the
+  gold-weight case that was the whole of a 45-second `AI_chooseProduction`. Counting units by type is the
+  [tally](../../specs/tally.md)'s job; a bespoke per-candidate count loop is an unwired tally domain.
+
+⚠ **Why the census has not shown this, and why that is not evidence it is cheap.** `[PERF/choose]` carries
+`unit=` with a call count beside `scoreBldgs`, and on the standing save the unit half is a rounding error —
+but that is a property of that save's BUILDING-heavy posture, not of the code. An empire on a war footing
+exercises this path hard, and nothing has measured one.
+⚑ **It is also the block to watch when the double queue lands** ([ai-build-queue-parity.md](ai-build-queue-parity.md)):
+a pop that goes through the decision runs the unit valuation at EVERY completion instead of every third.
+
 ## Open questions / where logging would help
 
 Per [[ai-logging-before-bug-audit]], before fixing, instrument and watch:

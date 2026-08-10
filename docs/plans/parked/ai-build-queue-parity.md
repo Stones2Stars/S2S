@@ -115,6 +115,21 @@ AI heuristic ([superseded-ideas #1](../../architecture/superseded-ideas.md)), no
 ⚖ **PRIORITY (owner): *"the calculation itself is now relatively minor, so it is more of a 'medium'
 optimization step."*** ⚠ Read that as SCHEDULING WEIGHT, not as a claim about the kind of change: under the
 per-turn clock the scoring cost goes UP, so what is being weighed is a fairness gain against it (above).
+
+⚖ **THE PERF HEADROOM IN THIS PATH IS SPENT, AND THE COST IS AN ACCEPTED STATE (owner): *"we already saw the
+cost reduction of just calculating properly over only the frontier … it's a state I can live with, knowing
+that we have identified more min/maxing improvements later."*** The large win here was structural — scoring
+the enabler's frontier instead of the database, and killing the per-candidate receiver Σ
+([patterns.md](../../architecture/patterns.md) § THE VALUATION PROTOCOL, the gold-weight case) — and what
+remains in this path is a small fraction of what that took. ⛔ So do NOT re-open the build-choice cost as a
+perf item, and do not weigh the per-turn clock's increase against a target: the trade was made knowingly.
+⚑ **And it needs no argument in advance, because it self-reports** — the `[PERF/choose]` census already
+carries chooses and ms per turn, so the increase (or its absence) is one line in the log the turn after this
+lands ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king): the revisit trigger is
+a MEASUREMENT, never an argument).
+⛔ **No figure is recorded here deliberately** — a banked percentage becomes a target
+([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)).
+
 ⛔ Its position in the sequence is unchanged either way —
 [DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) puts "let
 the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed, and a cache added over one of
