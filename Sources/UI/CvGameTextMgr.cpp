@@ -2486,6 +2486,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		szBuffer.append(kInfo.getDescription());
 	}
 	appendBuildingOperatingState(szBuffer, eBuilding, pCity);
+	appendBuildingProductionCost(szBuffer, eBuilding, pCity);
 
 	//	WHY it is not offered here, and — where the player can actually act on it — WHAT is missing. A greyed row
 	//	that names no cause leaves them to guess, which is the one thing this surface exists to prevent.
@@ -3979,6 +3980,46 @@ static CvWString gt_grantedEntityName(int eRegistry, int iId)
 		return (iId < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)iId).getDescription() : CvWString();
 	}
 	return CvWString();
+}
+
+// What it COSTS, and what this city has already sunk into it.
+//
+// ⚑ The two numbers come from different planes and neither is a cascade channel. The COST is the derived PRICE
+// (json.md §6's third cost plane): the authored `cost.production` composed by the engine with gamespeed, era,
+// handicap and the build-cost options, which is what `getProductionNeeded` answers -- so it is asked of the
+// CITY, the scope that knows those. The PROGRESS is the city's WAREHOUSE ([north-star.md] the warehouse
+// carve-out): banked hammers the city keeps when a build leaves the queue, which is precisely why it survives
+// long enough to be worth showing.
+// ⚠ Progress is rendered ONLY when there is some. A "0 invested" line on every building the city never started
+// would bury the case the line exists for -- the half-built thing you switched away from and forgot.
+void CvGameTextMgr::appendBuildingProductionCost(CvWStringBuffer& szBuffer, BuildingTypes eBuilding,
+	const CvCity* pCity) const
+{
+	int iCost = -1;
+	if (pCity != NULL)
+	{
+		iCost = pCity->getProductionNeeded(eBuilding);
+	}
+	else if (GC.getGame().getActivePlayer() != NO_PLAYER)
+	{
+		// The city-less view (the pedia) still has a price -- the asking player's, since era/handicap/options
+		// are theirs. A view with no player at all has no price to state and simply says nothing.
+		iCost = GET_PLAYER(GC.getGame().getActivePlayer()).getProductionNeeded(eBuilding);
+	}
+	if (iCost > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_HELP_PRODUCTION_COST", iCost));
+	}
+	if (pCity != NULL)
+	{
+		const int iStored = pCity->getProgressOnBuilding(eBuilding);
+		if (iStored > 0)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_HELP_PRODUCTION_STORED", iStored));
+		}
+	}
 }
 
 void CvGameTextMgr::appendGateReason(CvWStringBuffer& szBuffer, unsigned char eReason) const

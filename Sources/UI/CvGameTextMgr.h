@@ -159,6 +159,8 @@ public:
 	// to explain ([DEC-single-implementation]). Without it a greyed row says only "unavailable", which leaves the
 	// player, and the AI reading the same tri-state, to guess what would unblock it.
 	void appendGateReason(CvWStringBuffer& szBuffer, unsigned char eReason) const;
+	// The derived PRICE, and the hammers this city has already banked into it (rendered only when non-zero).
+	void appendBuildingProductionCost(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, const CvCity* pCity) const;
 	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);

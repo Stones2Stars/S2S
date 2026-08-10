@@ -27943,6 +27943,14 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<English>[NEWLINE][ICON_BULLET]%s1 [ICON_COMMERCE]: Profit</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUILDING_HELP_PRODUCTION_COST</Tag>
+		<English>Cost: %d1[ICON_PRODUCTION]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_HELP_PRODUCTION_STORED</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]%d1[ICON_PRODUCTION] already invested here[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_GATEREASON_REQUIRES</Tag>
 		<English>[COLOR_WARNING_TEXT]Cannot be built yet — requirements are not met:[COLOR_REVERT]</English>
 	</TEXT>
