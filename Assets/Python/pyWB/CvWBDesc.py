@@ -1388,7 +1388,7 @@ class CvCityDesc:
 		for key, date in self.bldgType:
 			iBuilding = GC.getInfoTypeForString(key)
 			if iBuilding > -1:
-				ACT.addCityBuilding(iOwner, iCity, iBuilding)
+				ACT.setCityBuilding(iOwner, iCity, iBuilding, True)
 
 		#	The holy-city / headquarters designation rides the SAME verb as the presence, so the two lists fold
 		#	into one pass instead of a second one re-resolving the same ids.

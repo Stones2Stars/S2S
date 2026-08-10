@@ -7,6 +7,7 @@ GC = CyGlobalContext()
 INFO = CyInfo()
 MAP = GC.getMap()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 bDebugMode = False
@@ -334,9 +335,9 @@ def applyEditCity(iPlayer, userData, popupReturn):
 		bAdd = popupReturn.getSelectedPullDownValue(0) == 1
 		if iBuilding == iNumBuildings:  # "All buildings" sentinel
 			for i in range(iNumBuildings):
-				city.changeHasBuilding(i, bAdd)
+				ACT.setCityBuilding(city.getOwner(), city.getID(), i, bAdd)
 		elif iBuilding < iNumBuildings:  # valid single building
-			city.changeHasBuilding(iBuilding, bAdd)
+			ACT.setCityBuilding(city.getOwner(), city.getID(), iBuilding, bAdd)
 
 
 def putOneOfEveryUnit():

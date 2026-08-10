@@ -330,11 +330,19 @@ bool CyAct::setCityScriptData(int iPlayer, int iCity, std::string szData) const
 	return true;
 }
 
-bool CyAct::addCityBuilding(int iPlayer, int iCity, int iBuilding) const
+bool CyAct::setCityBuilding(int iPlayer, int iCity, int iBuilding, bool bNewValue) const
 {
 	CvCity* pCity = cya_city(iPlayer, iCity);
 	if (pCity == NULL || iBuilding < 0 || iBuilding >= GC.getNumBuildingInfos()) return false;
-	pCity->changeHasBuilding((BuildingTypes)iBuilding, true);
+	pCity->changeHasBuilding((BuildingTypes)iBuilding, bNewValue);
+	return true;
+}
+
+bool CyAct::disbandCity(int iPlayer, int iCity) const
+{
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	GET_PLAYER(pCity->getOwner()).disband(pCity);
 	return true;
 }
 
@@ -489,7 +497,8 @@ void CyAct::pythonPublish()
 		.def("setCityStoredFood", &CyAct::setCityStoredFood)
 		.def("setCityCulture", &CyAct::setCityCulture)
 		.def("setCityScriptData", &CyAct::setCityScriptData)
-		.def("addCityBuilding", &CyAct::addCityBuilding)
+		.def("setCityBuilding", &CyAct::setCityBuilding)
+		.def("disbandCity", &CyAct::disbandCity)
 		.def("setCityReligion", &CyAct::setCityReligion)
 		.def("setCityCorporation", &CyAct::setCityCorporation)
 		.def("addCityFreeSpecialist", &CyAct::addCityFreeSpecialist)

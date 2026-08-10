@@ -30,6 +30,7 @@ INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -5239,7 +5240,7 @@ class Revolution:
 							#RevData.initCity(pCity)
 							# City has become invalid, will cause game to crash if left
 							print "Destroying city so game can continue"
-							pCity.kill()
+							ACT.disbandCity(pCity.getOwner(), pCity.getID())
 							continue
 
 
@@ -5255,7 +5256,7 @@ class Revolution:
 							if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 								if self.LOG_DEBUG:
 									print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
-								pCity.changeHasBuilding(buildingType, True)
+								ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), buildingType, True)
 
 						#if self.LOG_DEBUG: print "[REV] Revolt: %s at %d, %d"%(pCity.getName(),pCity.getX(),pCity.getY())
 
@@ -5420,7 +5421,7 @@ class Revolution:
 								#RevData.initCity(pCity)
 								# City has become invalid, will cause game to crash if left
 								print "Destroying city so game can continue"
-								pCity.kill()
+								ACT.disbandCity(pCity.getOwner(), pCity.getID())
 								continue
 
 
@@ -5734,7 +5735,7 @@ class Revolution:
 				except:
 					print "[ERROR] Failed to set owner of city, %s at plot %d, %d" % (pCity.getName(), cityPlot.getX(), cityPlot.getY())
 					print "\tDestroying city so game can continue"
-					pCity.kill()
+					ACT.disbandCity(pCity.getOwner(), pCity.getID())
 					continue
 
 				pCity = cityPlot.getPlotCity()
@@ -6348,7 +6349,7 @@ class Revolution:
 					#RevData.initCity(pCity)
 					# City has become invalid, will cause game to crash if left
 					print "Destroying city so game can continue"
-					pCity.kill()
+					ACT.disbandCity(pCity.getOwner(), pCity.getID())
 					continue
 
 
@@ -6443,7 +6444,7 @@ class Revolution:
 					if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 						if self.LOG_DEBUG:
 							print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
-						pCity.changeHasBuilding(buildingType, True)
+						ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), buildingType, True)
 
 				# Reveal surrounding countryside
 				if not bGaveMap:

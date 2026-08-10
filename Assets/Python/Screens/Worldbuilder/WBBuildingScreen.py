@@ -17,6 +17,7 @@ import WorldBuilder
 GC = CyGlobalContext()
 INFO = CyInfo()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -387,7 +388,7 @@ class WBBuildingScreen:
 		bEffects = False
 		if bAdd and WorldBuilder.bPython and not pCity.hasBuilding(item):
 			bEffects = True
-		pCity.changeHasBuilding(item, bAdd)
+		ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), item, bAdd)
 		if bEffects:
 			self.eventManager.onBuildingBuilt([pCity, item])
 

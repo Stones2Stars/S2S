@@ -573,7 +573,7 @@ class CvEventManager:
 				CyCity = CyPlayer.getCity(iData3)
 				# 903 Demolish Building || 904 Abandon City || 905/906 Abandon->Units
 				if ID == 903:
-					CyCity.changeHasBuilding(iData4, False)
+					ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iData4, False)
 					CyPlayer.changeGold(iData5)
 					CvScreensInterface.mainInterface.buildCityListLeft()
 					CyInterface().setDirty(InterfaceDirtyBits.SelectionButtons_DIRTY_BIT, True)
@@ -582,7 +582,7 @@ class CvEventManager:
 				elif ID == 904:
 					CyPlayer.changeGold(iData5)
 					self.onCityRazed((CyCity, iPlayer))
-					CyCity.kill()
+					ACT.disbandCity(CyCity.getOwner(), CyCity.getID())
 				elif ID == 905 or ID == 906:
 					X = CyCity.getX()
 					Y = CyCity.getY()
@@ -1553,7 +1553,7 @@ class CvEventManager:
 				# Sort by descending culture
 				aList.sort(key=itemgetter(1), reverse=True)
 				for i, entry in enumerate(aList):
-					ACT.addCityBuilding(iPlayer, entry[0], iBuilding)
+					ACT.setCityBuilding(iPlayer, entry[0], iBuilding, True)
 					if i == 1: # Max. 2 other cities will get the needle for free
 						break
 		# NANITE DEFUSER - destroyes all nukes from all players
@@ -1753,7 +1753,7 @@ class CvEventManager:
 			if iThePath and MAP.generatePathForHypotheticalUnit(CyPlot, CyPlotDo, iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 1000):
 				iBuilding = GC.getInfoTypeForString("BUILDING_ROUTE_66_TERMINUS")
 				if iBuilding > -1:
-					ACT.addCityBuilding(iPlayer, CyCityDo.getID(), iBuilding)
+					ACT.setCityBuilding(iPlayer, CyCityDo.getID(), iBuilding, True)
 				iRoute = GC.getInfoTypeForString("ROUTE_HIGHWAY")
 				if iRoute > -1:
 					for k in xrange(MAP.getLastPathStepNum()):
@@ -1947,7 +1947,7 @@ class CvEventManager:
 		elif iBuilding == mapBuildingType["NEANDERTHAL_EMBASSY"]:
 			iLocal = GC.getInfoTypeForString("BUILDING_C_L_NEANDERTHAL")
 			for CyCityX in CyPlayer.cities():
-				ACT.addCityBuilding(iPlayer, CyCityX.getID(), iLocal)
+				ACT.setCityBuilding(iPlayer, CyCityX.getID(), iLocal, True)
 
 
 	def onProjectBuilt(self, argsList):
@@ -2534,7 +2534,7 @@ class CvEventManager:
 			for iPromo, iBuilding, _ in self.aCultureList:
 				if -1 in (iPromo, iBuilding): continue
 				if CyUnit.isHasPromotion(iPromo):
-					CyCity.changeHasBuilding(iBuilding, True)
+					ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBuilding, True)
 
 			# Give a free defender to the first city when it is built
 			if iUnit == self.UNIT_BAND:

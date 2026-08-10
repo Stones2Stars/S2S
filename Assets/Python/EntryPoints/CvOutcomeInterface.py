@@ -7,6 +7,7 @@ GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -67,12 +68,12 @@ def doRemoveWVSlavery(argsList):
 			iCityY = city.getY()
 			# Remove the main slavery building
 			if city.hasBuilding(iWVSlavery):
-				city.changeHasBuilding(iWVSlavery, False)
+				ACT.setCityBuilding(city.getOwner(), city.getID(), iWVSlavery, False)
 
 			# Sell the Slave market if one exists
 			if city.hasBuilding(iSlaveMarket):
 
-				city.changeHasBuilding(iSlaveMarket, False)
+				ACT.setCityBuilding(city.getOwner(), city.getID(), iSlaveMarket, False)
 
 				iSum += iCost
 
@@ -83,7 +84,7 @@ def doRemoveWVSlavery(argsList):
 			# Remove all other Slavery Buildings if they exist
 			for ibuilding in aiSlaveBuildings:
 				if city.hasBuilding(ibuilding):
-					city.changeHasBuilding(ibuilding, False)
+					ACT.setCityBuilding(city.getOwner(), city.getID(), ibuilding, False)
 
 			iFreeSlaves = 0
 			for i in xrange(GC.getNumSpecialistInfos()):
@@ -151,9 +152,9 @@ def doRemoveWVCannibalism(argsList):
 		else:
 			iType0 = GC.getInfoTypeForString("BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE")
 			for CyCity in CyPlayer.cities():
-				CyCity.changeHasBuilding(iType, False)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iType, False)
 				if iType0 > -1:
-					CyCity.changeHasBuilding(iType0, False)
+					ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iType0, False)
 
 			if iPlayer == GC.getGame().getActivePlayer():
 				CvUtil.sendImmediateMessage(TRNSLTR.getText("TXT_KEY_MSG_NO_CANNIBALISM", ()))
@@ -174,17 +175,17 @@ def doRemoveWVHumanSacrifice(argsList):
 		for CyCity in CyPlayer.cities():
 			# Remove the main worldview building
 			if CyCity.hasBuilding(iWVSacrifice):
-				CyCity.changeHasBuilding(iWVSacrifice, False)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iWVSacrifice, False)
 				CyAudioGame().Play2DSound("AS2D_DISCOVERBONUS")
 
 				CyInterface().addMessage(CyPlayer.getID(),False,25,TRNSLTR.getText("TXT_KEY_MSG_NO_HUMAN_SACRIFICE",(CyCity.getName(),)),"AS2D_BUILD_BANK",InterfaceMessageTypes.MESSAGE_TYPE_INFO,CyUnit.getButton(),ColorTypes(8),CyCity.getX(),CyCity.getY(),True,True)
 
 			# Remove the worldview token building
-			CyCity.changeHasBuilding(iToken, False)
+			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iToken, False)
 
 			# Remove the human sacrifice altar
 			if CyCity.hasBuilding(iAltar):
-				CyCity.changeHasBuilding(iAltar, False)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iAltar, False)
 
 def getNumNonSpecialistSlaves(argsList):
 	# Returns the number of non specialist slave specialists more than the number of specialist slave specialists

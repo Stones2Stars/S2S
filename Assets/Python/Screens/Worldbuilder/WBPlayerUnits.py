@@ -17,6 +17,7 @@ import WorldBuilder
 GC = CyGlobalContext()
 INFO = CyInfo()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TEXT = CyGameTextMgr()
@@ -532,7 +533,7 @@ class WBPlayerUnits:
 			if pCityOwner:
 				pCity = pCityOwner.getCity(iCityID)
 				if pCity:
-					pCity.kill()
+					ACT.disbandCity(pCity.getOwner(), pCity.getID())
 					iCityID = -1
 					self.sortCities()
 					self.addPageSwitch()

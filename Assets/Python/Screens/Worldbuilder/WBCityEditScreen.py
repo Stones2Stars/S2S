@@ -15,6 +15,7 @@ import WBInfoScreen
 GC = CyGlobalContext()
 INFO = CyInfo()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -536,7 +537,7 @@ class WBCityEditScreen:
 		elif inputClass.getFunctionName() == "Commands":
 			iIndex = screen.getPullDownData("Commands", screen.getSelectedPullDownID("Commands"))
 			if iIndex == 5:
-				pCity.kill()
+				ACT.disbandCity(pCity.getOwner(), pCity.getID())
 			else:
 				self.WB.iMoveCity = pCity.getID()
 				self.WB.iCurrentPlayer = iPlayer

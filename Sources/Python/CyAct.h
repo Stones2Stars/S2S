@@ -147,7 +147,17 @@ public:
 	// is int64_t at all).
 	bool setCityCulture(int iPlayer, int iCity, int iForPlayer, int64_t iCulture) const;
 	bool setCityScriptData(int iPlayer, int iCity, std::string szData) const;
-	bool addCityBuilding(int iPlayer, int iCity, int iBuilding) const;
+	// PRESENCE of a building in this city, both directions. ⛔ ONE bool-parameterized verb, because the ENGINE
+	// models it as one (CvCity::changeHasBuilding) -- an add-only verb with a remove twin bolted beside it would be
+	// two Python spellings of a single transition, and the two drift ([DEC-single-implementation]).
+	// ⚑ The removal leg is NOT a field poke: it runs the ledger, the setup and processBuilding(-1), so the
+	// contribution is withdrawn and the domain fact fires exactly as a demolition in-game does.
+	bool setCityBuilding(int iPlayer, int iCity, int iBuilding, bool bNewValue) const;
+	// The city CEASES TO EXIST. ⛔ Routed through CvPlayer::disband -- the same path TASK_DISBAND takes -- and NOT
+	// through CvCity::kill, because disband owns bookkeeping kill() does not: it clears foundedFirstCity for a
+	// player losing their last city, and registers the name in the destroyed-city registry.
+	// ⚑ Every Python caller used to reach bare kill(), so each was silently skipping both.
+	bool disbandCity(int iPlayer, int iCity) const;
 	bool setCityReligion(int iPlayer, int iCity, int iReligion, bool bHolyCity) const;
 	bool setCityCorporation(int iPlayer, int iCity, int iCorporation, bool bHeadquarters) const;
 	bool addCityFreeSpecialist(int iPlayer, int iCity, int iSpecialist, int iChange) const;

@@ -21,6 +21,7 @@ INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -583,7 +584,7 @@ class BarbarianCiv:
 			iNational = GC.getInfoTypeForString(szNational)
 			iLocal = GC.getInfoTypeForString(szLocal)
 			if iNational > -1 and iLocal > -1 and CyCity.hasBuilding(iNational) and not CyCity.hasBuilding(iLocal):
-				CyCity.changeHasBuilding(iLocal, True)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iLocal, True)
 				break
 
 		# Free city defenders

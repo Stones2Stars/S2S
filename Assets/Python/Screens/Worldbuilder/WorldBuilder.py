@@ -23,6 +23,7 @@ INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 bPython = True
@@ -287,7 +288,7 @@ class WorldBuilder:
 				bEffects = False
 				if bPython and not pCity.hasBuilding(self.iSelection):
 					bEffects = True
-				pCity.changeHasBuilding(self.iSelection, True)
+				ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), self.iSelection, True)
 				if bEffects:
 					self.eventManager.onBuildingBuilt([pCity, self.iSelection])
 		elif self.iPlayerAddMode == "City":
@@ -374,11 +375,12 @@ class WorldBuilder:
 				return 1
 		elif self.iPlayerAddMode == "Buildings":
 			if self.m_pCurrentPlot.isCity():
-				self.m_pCurrentPlot.getPlotCity().changeHasBuilding(self.iSelection, False)
+				pRemoveCity = self.m_pCurrentPlot.getPlotCity()
+				ACT.setCityBuilding(pRemoveCity.getOwner(), pRemoveCity.getID(), self.iSelection, False)
 		elif self.iPlayerAddMode == "City":
 			if self.m_pCurrentPlot.isCity():
 				pCity = self.m_pCurrentPlot.getPlotCity()
-				pCity.kill()
+				ACT.disbandCity(pCity.getOwner(), pCity.getID())
 		elif self.iPlayerAddMode == "Improvements":
 			self.m_pCurrentPlot.setImprovementType(-1)
 			return 1
@@ -1218,7 +1220,7 @@ class WorldBuilder:
 				pNewCity.setName(sName, True)
 				self.copyCityStats(pOldCity, pNewCity, True)
 				pOldPlot = pOldCity.plot()
-				pOldCity.kill()
+				ACT.disbandCity(pOldCity.getOwner(), pOldCity.getID())
 				pOldPlot.setImprovementType(-1)
 				if self.iPlayerAddMode == "MoveCityPlus":
 					for item in self.lMoveUnit:
@@ -1274,7 +1276,8 @@ class WorldBuilder:
 
 			if GC.getBuildingInfo(iBuilding).isCapital() and not bMove:
 				continue
-			pNewCity.changeHasBuilding(iBuilding, pOldCity.hasBuilding(iBuilding))
+			bHadBuilding = STATE.getBuildingInCity(pOldCity.getOwner(), pOldCity.getID(), iBuilding)[CityBuildingRead.CITY_BUILDING_HAS]
+			ACT.setCityBuilding(pNewCity.getOwner(), pNewCity.getID(), iBuilding, bHadBuilding)
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pNewCity.setCultureTimes100(iPlayerX, pOldCity.getCultureTimes100(iPlayerX), False)
