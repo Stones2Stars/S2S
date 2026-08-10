@@ -513,8 +513,13 @@ the art-less buildings consumed layout slots before being rejected or never reac
 *"not associated with a node"* wording suggests the latter, in which case removing them frees nothing and the
 1,684 stand. `LSystem.log` is rewritten per session, so re-counting after a run on the new DLL answers it.
 
-⇒ **The fix, if one is wanted, is `Assets/XML/Buildings/CIV4CityLSystem.xml` having more or larger nodes — ART
-DATA** ([roadmap.md](roadmap.md) scope decision 3), never a DLL change. ⚑ Inherited rather than introduced: a
+⇒ **THE ASK IS TUNED DOWN — the two knobs are `GlobalDefines.xml`, and neither is a DLL change.**
+`CvCity::getVisibleBuildings` offers `10 + 2*pop^GAME_CITY_SIZE_EXP_MODIFIER` objects, of which
+`GAME_CITY_SIZE_MAX_PERCENT_UNIQUE` are distinct models. At the inherited **1.05 / 0.7** a population-40 city
+asked for **106** objects (74 unique); at **0.9 / 0.6** it asks for **64** (38 unique). ⚑ The `* 2` is hardcoded
+engine-side, so the exponent is the only curve knob and the percentage merely splits the total.
+⚠ The remaining lever, if the overflow survives that, is `Assets/XML/Buildings/CIV4CityLSystem.xml` carrying more
+or larger nodes — ART DATA ([roadmap.md](roadmap.md) scope decision 3). ⚑ Inherited rather than introduced: a
 layout grid sized for vanilla's building count against this mod's **5,180** is the ratio that produces it.
 
 ---
