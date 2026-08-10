@@ -37,6 +37,7 @@
 #include "Infrastructure/CvDLLEngineIFaceBase.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Infrastructure/CvDLLEntity.h"
+#include "UI/CvGraphicsTrace.h"   // the [GFX] scene-occupancy trace
 #include "Infrastructure/CvDLLEntityIFaceBase.h"
 #include "Infrastructure/CvDLLFAStarIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
@@ -187,6 +188,50 @@ bool CvUnit::isUsingDummyEntities() const
 	return entity && g_dummyEntity == entity;
 }
 
+void CvUnit::destroyCurrentEntity()
+{
+	const CvEntity* pEntity = getEntity();
+
+	if (pEntity == NULL)
+	{
+		return;
+	}
+
+	if (isRealEntity(pEntity))
+	{
+		// Destroy old entity, don't need to remove entity when the app is shutting down, or crash can occur
+		if (!gDLL->GetDone() && GC.IsGraphicsInitialized())
+		{
+			gDLL->getEntityIFace()->RemoveUnitFromBattle(this);
+			CvDLLEntity::removeEntity(); // remove entity from engine
+		}
+		CvDLLEntity::destroyEntity(); // delete CvUnitEntity and detach from us
+
+		//	Only the dummy-entity path ever incremented this, so only it may decrement — otherwise the count
+		//	the [GFX] entity line reports drifts negative on a build that hands every unit a real entity.
+		if (g_bUseDummyEntities)
+		{
+			g_numEntities--;
+		}
+	}
+	else
+	{
+		g_dummyUsage--;
+	}
+	setEntity(NULL);
+}
+
+void CvUnit::rebuildEntityArt()
+{
+	//	The unit's MODEL changed — a warlord attaching swaps its art — which is the one reason a scene node
+	//	genuinely has to be recreated. reloadEntity keeps a still-wanted one, so it cannot serve this.
+	if (!IsSelected())
+	{
+		destroyCurrentEntity();
+	}
+	reloadEntity();
+}
+
 void CvUnit::reloadEntity(bool bForceLoad)
 {
 	const bool bNeedsRealEntity =
@@ -198,27 +243,15 @@ void CvUnit::reloadEntity(bool bForceLoad)
 		(plot()->getCenterUnit(false) == this || getOwner() == GC.getGame().getActivePlayer())
 	);
 
-	//OutputDebugString(CvString::format("reloadEntity for %08lx\n", this).c_str());
 	if (!IsSelected())
 	{
-		if (!isUsingDummyEntities())
+		//	⛔ AN ENTITY THAT IS ALREADY THE KIND WE WANT IS KEPT. The engine's move queue lives ON the scene
+		//	node — which this function's own RemoveUnitFromBattle call concedes — and CvSelectionGroup::groupMove
+		//	destroys it between QueueMove and ExecuteMove. Recreating there executes the move on a node whose
+		//	queue is empty and strands the walk animation on the tile the unit left.
+		if (getEntity() != NULL && isRealEntity(getEntity()) != bNeedsRealEntity)
 		{
-			// Destroy old entity, don't need to remove entity when the app is shutting down, or crash can occur
-			if (!gDLL->GetDone() && GC.IsGraphicsInitialized())
-			{
-				gDLL->getEntityIFace()->RemoveUnitFromBattle(this);
-				CvDLLEntity::removeEntity(); // remove entity from engine
-			}
-			CvDLLEntity::destroyEntity(); // delete CvUnitEntity and detach from us
-			g_numEntities--;
-
-			setEntity(NULL);
-		}
-		else if (bNeedsRealEntity)
-		{
-			g_dummyUsage--;
-
-			setEntity(NULL);
+			destroyCurrentEntity();
 		}
 
 		if (!getEntity())
@@ -238,11 +271,17 @@ void CvUnit::reloadEntity(bool bForceLoad)
 					g_dummyUsage++;
 				}
 
-				// Log every now and again in non final release builds
-				if (g_numEntities%100 == 0)
-				{
-					OutputDebugString(CvString::format("Dummy unit entity usage: %d, real %d\n", g_dummyUsage, g_numEntities).c_str());
-				}
+				//	A REAL entity is a scene node, and a scene node is where the EXE's per-instance model/texture
+				//	memory goes (memory-footprint.md) -- so this is the memory question asked at the moment it
+				//	moves. It replaces an every-100 OutputDebugString, which put the one number that answers it on
+				//	no readable surface at all and compiled to nothing in FinalRelease besides.
+				//	bNeedsRealEntity's own terms, so the decision is readable rather than just its outcome -- it is
+				//	partly circular (a unit needs a real entity because it IS the centre unit, and the centre unit is
+				//	chosen from units that have one).
+				gfxTraceEntity(this, bNeedsRealEntity, g_numEntities, g_dummyUsage,
+					plot() != NULL && plot()->isActiveVisible(false),
+					plot() != NULL && plot()->getCenterUnit(false) == this,
+					getOwner() == GC.getGame().getActivePlayer());
 			}
 			else if (plot())
 			{
@@ -9848,7 +9887,7 @@ bool CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 
 			//update graphics models
 			m_eLeaderUnitType = pWarlord->getUnitType();
-			reloadEntity();
+			rebuildEntityArt();
 		}
 	}
 
@@ -10446,10 +10485,15 @@ InvisibleTypes CvUnit::getInvisibleType() const
 	// promotion inside this call.
 	for (int iI = 0; iI < GC.getNumInvisibleInfos(); ++iI)
 	{
-		const int iMethodSkill = GC.getMethodSkill((InvisibleTypes)iI);
-		if (iMethodSkill >= 0 && getUnitInfo().hasSkill(iMethodSkill))
+		const InvisibleTypes eMethod = (InvisibleTypes)iI;
+		const int iMethodSkill = GC.getMethodSkill(eMethod);
+
+		//	A method whose cover has been STRIPPED is not a method this unit hides by — the WANTED line does
+		//	exactly that. Without the suppression a marked unit still reported a hiding method, so the classic
+		//	branch read it as invisible to every foreign team that had no spotter for it.
+		if (iMethodSkill >= 0 && getUnitInfo().hasSkill(iMethodSkill) && !isNegatesInvisible(eMethod))
 		{
-			return (InvisibleTypes)iI;
+			return eMethod;
 		}
 	}
 	return NO_INVISIBLE;
@@ -13885,16 +13929,33 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			pNewPlot->updateMinimapColor();
 		}
 
-		if (GC.IsGraphicsInitialized() && isInViewport())
 		{
 			PROFILE("CvUnit::setXY.NewPlot2.Visibility");
 
-			// Override bShow if check plot visible
-			if (bShow || bCheckPlotVisible && pNewPlot->isVisibleToWatchingHuman())
+			//	⛔ THIS GATE DECIDES WHETHER THE MODEL FOLLOWS. With it false, NEITHER branch below runs and the
+			//	scene node is never told the unit left — it keeps drawing on the tile it came from.
+			const bool bGraphicsInitialized = GC.IsGraphicsInitialized();
+			const bool bInViewport = isInViewport();
+			const bool bWatched = pNewPlot->isVisibleToWatchingHuman();
+			GfxMoveOutcome eOutcome = GFX_MOVE_SKIPPED;
+
+			if (bGraphicsInitialized && bInViewport)
 			{
-				QueueMove(pNewPlot);
+				// Override bShow if check plot visible
+				if (bShow || bCheckPlotVisible && bWatched)
+				{
+					QueueMove(pNewPlot);
+					eOutcome = GFX_MOVE_QUEUED;
+				}
+				else
+				{
+					SetPosition(pNewPlot);
+					eOutcome = GFX_MOVE_TELEPORTED;
+				}
 			}
-			else SetPosition(pNewPlot);
+			gfxTraceMove(pOldPlot ? pOldPlot->getX() : -1, pOldPlot ? pOldPlot->getY() : -1,
+				pNewPlot->getX(), pNewPlot->getY(), eOutcome,
+				bGraphicsInitialized, bInViewport, isRealEntity(getEntity()), bShow, bWatched);
 		}
 
 		if (pNewPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
@@ -15767,7 +15828,7 @@ void CvUnit::setLeaderUnitType(UnitTypes leaderUnitType)
 	if (m_eLeaderUnitType != leaderUnitType)
 	{
 		m_eLeaderUnitType = leaderUnitType;
-		reloadEntity();
+		rebuildEntityArt();
 	}
 }
 
@@ -20443,23 +20504,21 @@ int CvUnit::getGroupSize() const
 	{
 		return groupRank();
 	}
-	return 0;
+	return m_pUnitInfo->getGroupSize();
 }
 
-//	The combat-ANIMATION formation data (group size / definitions / required members / render-always / the
-//	animation speed + pad time) is not carried by the rebuilt info: the curator drops it, and ART is out of
-//	scope for this rework ([roadmap.md] Scope decisions), so there is nothing to read. These four are DllExport
-//	-- the closed EXE calls them -- so the SYMBOLS stay and answer the absent value.
 int CvUnit::getGroupDefinitions() const
 {
-	return 0;
+	return m_pUnitInfo->getGroupDefinitions();
 }
 
 int CvUnit::getUnitGroupRequired(int i) const
 {
-	return -1;
+	return m_pUnitInfo->getUnitGroupRequired(i);
 }
 
+//	`bRenderAlways` lives in the unit SCHEMA and in no unit record -- nothing has ever authored it -- so there is
+//	no data to carry and false is the answer, not a gap. The symbol stays because the EXE calls it.
 bool CvUnit::isRenderAlways() const
 {
 	return false;
@@ -20467,12 +20526,12 @@ bool CvUnit::isRenderAlways() const
 
 float CvUnit::getAnimationMaxSpeed() const
 {
-	return 0.0f;
+	return m_pUnitInfo->getAnimationMaxSpeed();
 }
 
 float CvUnit::getAnimationPadTime() const
 {
-	return 0.0f;
+	return m_pUnitInfo->getAnimationPadTime();
 }
 
 const char* CvUnit::getFormationType() const
@@ -25378,6 +25437,16 @@ void CvUnit::changeExtraVisibilityIntensityType(InvisibleTypes eIndex, int iChan
 
 bool CvUnit::hasInvisibilityType(InvisibleTypes eInvisibleType) const
 {
+	//	⛔ MEMBERSHIP FIRST — a unit is hidden only by a method it actually HIDES BY. This test was a pure
+	//	negation filter, so it answered TRUE for all 14 methods on any unit that negated none of them; and
+	//	isInvisible's first clause returns INVISIBLE for a method no seer has registered against, which is
+	//	nearly all of them. The method is a SKILL (vision.md §4), so holding it is the membership question.
+	const int iMethodSkill = GC.getMethodSkill(eInvisibleType);
+
+	if (iMethodSkill < 0 || !getUnitInfo().hasSkill(iMethodSkill))
+	{
+		return false;
+	}
 	return !isNegatesInvisible(eInvisibleType) && !m_pUnitInfo->hasSkill(CLS_SKILL_NO_INVISIBILITY) && getNoInvisibilityCount() < 1;
 }
 
@@ -25426,7 +25495,9 @@ void CvUnit::setHasAnyInvisibility()
 	}
 	for (int iI = GC.getNumInvisibleInfos() - 1; iI > -1; iI--)
 	{
-		if (!isNegatesInvisible((InvisibleTypes)iI))
+		//	The same membership question hasInvisibilityType now asks, so the cached "does this unit hide at
+		//	all" answer cannot disagree with the per-method one it gates.
+		if (hasInvisibilityType((InvisibleTypes)iI))
 		{
 			m_bHasAnyInvisibility = true;
 			return;

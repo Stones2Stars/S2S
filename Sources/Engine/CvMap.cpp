@@ -516,8 +516,13 @@ void CvMap::updateFlagSymbolsInternal(bool bForce)
 	{
 		if (bForce || plotX.isFlagDirty())
 		{
-			plotX.updateFlagSymbol();
-			plotX.setFlagDirty(false);
+			//	⛔ THE MARK SURVIVES A PLOT THAT COULD NOT REPAINT. updateFlagSymbol declines while the plot's
+			//	UNIT graphics are paged out, and setFlagDirty has no other consumer — so clearing regardless ate
+			//	the request and the flag never repainted once the plot came back.
+			if (plotX.updateFlagSymbolIfVisible())
+			{
+				plotX.setFlagDirty(false);
+			}
 		}
 	}
 }

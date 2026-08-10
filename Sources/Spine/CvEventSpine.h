@@ -109,6 +109,10 @@ enum SpineDomainTag
 	SD_ESPIONAGE,  // [ESP] espionage (CvPlayerAI)
 	SD_CONTRACT,   // [CTB] contract broker (CvContractBroker)
 	SD_ENGINE,     // [ENG] engine integrity (CvPlot)
+	SD_GRAPHICS,   // [GFX] what the SCENE is asked to hold: the plot's centre-unit verdict, and real-vs-dummy unit
+	               // entities with their running counts (CvGraphicsTrace). The entity counts existed only as an
+	               // every-100 OutputDebugString, i.e. on no surface at all -- observability.md's "a fact that is
+	               // not on either surface is EMITTED".
 	// #430 cascade diagnostic domains (per-emitter, one file -- all tee to Cascade.log). Each self-registers in its
 	// own .cpp (spineRegisterDomain); the [TAG] sub-area lives in the per-domain prefix fn ([READJSON/*],
 	// [MODIFIER/*]). Diagnostic lines (EVENTKIND_DIAGNOSTIC) -- census/diagnostic traces, logging only.

@@ -5,6 +5,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvTraitSelection.h"
 #include "CvGame.h"
+#include "AI/CvGameAI.h"   // GC.getGame() is a CvGameAI& -- the complete type isOption() needs
 #include "Infos/CvTraitInfo.h"
 #include "Infos/CvLeaderHeadInfo.h"
 

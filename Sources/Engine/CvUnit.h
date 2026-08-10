@@ -401,6 +401,10 @@ public:
 	bool isInBattle() const;
 
 	void reloadEntity(bool bForceLoad = false);
+	//	The unit's MODEL changed, so its scene node has to be recreated — the one case reloadEntity does not
+	//	serve, because it keeps an entity that is already the kind the unit wants.
+	void rebuildEntityArt();
+	void destroyCurrentEntity();
 	void init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOwner, int iX, int iY, DirectionTypes eFacingDirection, int iBirthmark);
 	void changeIdentity(UnitTypes eUnit);
 	void reset(int iID = 0, UnitTypes eUnit = NO_UNIT, PlayerTypes eOwner = NO_PLAYER, bool bConstructorCall = false, bool bIdentityChange = false);

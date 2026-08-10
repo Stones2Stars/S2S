@@ -917,6 +917,9 @@ public:
 	DllExport CvFlagEntity* getFlagSymbol() const;
 	CvFlagEntity* getFlagSymbolOffset() const;
 	DllExport void updateFlagSymbol();
+	//	The same repaint, reporting whether it actually happened. The EXE-bound signature above cannot say,
+	//	so a caller holding a repaint MARK has no way to know the request was declined.
+	bool updateFlagSymbolIfVisible();
 
 	DllExport CvUnit* getCenterUnit() const;
 	DllExport CvUnit* getDebugCenterUnit() const;

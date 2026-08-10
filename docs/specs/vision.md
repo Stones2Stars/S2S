@@ -138,16 +138,27 @@ case to encode.
 
 ## 4. HIDE AND SEEK — the intent, written down
 
-> **⛔ THE DATA IS COLLAPSED ONTO THIS SHAPE AND THE CONTEST *IS* RUNNING — HALF-MIGRATED.** An earlier reading
-> here said the contest was "not yet evaluated by the engine"; that is FALSE and it misled a live investigation
-> into believing detection could not be the cause of anything. `CvUnit::isInvisible` inherited main's contest
-> wholesale and it still executes — only its CONCEALMENT operand was swapped to the collapsed field.
-> ⚠ So the two sides are on different models: concealment reads the new method-AGNOSTIC `concealment()`, while
-> detection still reads the OLD per-method plot registry, and the pairing this section specifies
-> (*one detection type counters one concealment type*) is enforced NOWHERE.
-> ⛔ **Detection failure is FAIL-OPEN TOWARD INVISIBILITY** — with the registry empty the loop can only decline
-> if `concealment() <= 0`, so a unit that authors any concealment reads invisible to every foreign team. The
-> live defects and their blast radius are [issues.md](../plans/structural-cleanup/issues.md) § 13a.
+> **⛔ MEMBERSHIP IS ASKED BEFORE THE CONTEST, AND HOLDING THE METHOD SKILL *IS* THE MEMBERSHIP QUESTION.** A
+> unit is hidden only by a method it actually hides BY, so `hasInvisibilityType(method)` asks whether the unit
+> holds `GC.getMethodSkill(method)` and only then applies the negation filters. ⚠ This is the clause that
+> carries the whole mechanic: the engine returns INVISIBLE for the first method no seer has registered against,
+> **before** the graduated contest is reached — so a membership test that answers yes for every method makes
+> every unit invisible to every foreign team, and no amount of authored detection can counter it.
+> ⚑ The legacy engine got the same discrimination for free from its per-method `invisibilityIntensityTotal`,
+> which the collapse to one method-agnostic `concealment` magnitude removed; the skill is what replaces it.
+> ⛔ **The failure direction is FAIL-OPEN TOWARD INVISIBILITY**, which is why this is stated rather than left to
+> the code: every way of getting the test wrong hides units rather than revealing them, and a hidden unit
+> produces no error, no wrong number and no log line.
+>
+> ⚠ **DETECTION IS KEYED BY SKILL ID, NEVER BY THE `INVISIBLE_*` INDEX.** `detectionAgainst` takes the method's
+> SKILL, so a registration passing the index files a seer's detection under whichever method happens to share
+> that number and reads 0 under the one it was authored for — silently, since `setSpotIntensity` stores nothing
+> for a zero.
+>
+> ⛔ **KNOWN BOUND — a PROMOTION-granted method does not register yet.** Both the method read and the membership
+> test ask the unit's INFO, while **73 promotions author a method** (below). Closing it wants a resolved per-unit
+> skill plane dirtied on promotion change — the shape the resolved detection block already uses — never a
+> per-read walk of every promotion inside `isInvisible`, which is one of the engine's hottest reads.
 >
 > ⚑ **WHY THIS MATTERS MORE THAN TIDINESS — the mechanic is playable but not UNDERSTANDABLE (owner):**
 > *"it's expressed in icons, and nowhere is it really stated what counters what"*, with four kinds of

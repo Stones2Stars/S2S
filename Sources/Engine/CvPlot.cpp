@@ -21,6 +21,7 @@
 #include "CvInfos.h"
 #include "Infos/CvClassificationIds.h"   // the generated CLS_* ids this file tests by constant
 #include "CvMap.h"
+#include "UI/CvGraphicsTrace.h"   // the [GFX] scene-occupancy trace
 #include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
 #include "UI/CvPlotPaging.h"
@@ -2654,7 +2655,10 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iSight, bool bIncrement, C
 						// Register this seer's DETECTION against the method (vision.md §4). No distance
 						// attenuation and no spot range: detection is an ADDENDUM to vision and rides the
 						// reach the budget already granted, so a plot we can see is a plot we detect on.
-						iFinalIntensity = pUnit->detectionAgainst(eInvisible);
+						//	detectionAgainst is keyed by SKILL id, not by the InvisibleTypes index — every other
+						//	call site passes GC.getMethodSkill(), including the one thirty lines above. Passing
+						//	the index registered each seer's detection under whichever method shares that number.
+						iFinalIntensity = pUnit->detectionAgainst(GC.getMethodSkill(eInvisible));
 					}
 					pPlot->changeVisibilityCount(eTeam, (bIncrement ? 1 : -1), eInvisible, bUpdatePlotGroups, iFinalIntensity, iUnitID);
 				}
@@ -3562,6 +3566,13 @@ CvUnit* CvPlot::getBestDefenderExternal(PlayerTypes eOwner, PlayerTypes eAttacki
 	CvUnit* bestDefender = getBestDefender(eOwner, eAttackingPlayer, pAttacker, bTestAtWar, bTestPotentialEnemy, bTestCanMove);
 	if (bestDefender == NULL || !bestDefender->isInViewport() || bestDefender->isUsingDummyEntities())
 	{
+		//	A defender that WAS found and is then thrown away leaves the caller a bare NULL, which reads
+		//	identically to "this plot has no defender at all". Say which filter refused it.
+		if (bestDefender != NULL)
+		{
+			gfxTraceDefenderRefused(getX(), getY(), bestDefender->getID(),
+				bestDefender->isInViewport(), bestDefender->isUsingDummyEntities());
+		}
 		return NULL;
 	}
 	return bestDefender;
@@ -3588,6 +3599,13 @@ namespace {
 		// Doesn't belong to the player we are interested in
 		||  eOwner != NO_PLAYER && unitX->getOwner() != eOwner)
 		{
+			//	⛔ THE LEAF. With pAttacker == NULL a score of 0 can come from nowhere but these three clauses --
+			//	defenderValue cannot return 0 without an attacker -- so this names the cause instead of leaving it
+			//	to be reasoned about. Emitted on the REJECT only, so its volume is the fault's own.
+			gfxTraceDefenderReject(unitX->getX(), unitX->getY(),
+				unitX->getID(), (int)unitX->getUnitType(),
+				unitX->AI_getPredictedHitPoints(), unitX->isDead(),
+				(int)eOwner, (int)unitX->getOwner());
 			return 0;
 		}
 		const CvPlot* plotX = unitX->plot();
@@ -3701,15 +3719,39 @@ CvUnit* CvPlot::getBestDefender(PlayerTypes eOwner, PlayerTypes eAttackingPlayer
 
 	// Toffer - The above comment is now false as I removed a redundant arg so that it is now exactly 9 arguments.
 
+	//	Counters for the anomaly emit below. They cost two increments on a path that already scores every unit.
+	int iUnitsSeen = 0;
+	int iScoredPositive = 0;
+	CvUnit* pSampleUnit = NULL;
+
 	foreach_ (CvUnit* unitX, units())
 	{
+		++iUnitsSeen;
+		if (pSampleUnit == NULL)
+		{
+			pSampleUnit = unitX;
+		}
 		int iValue = getDefenderScore(unitX, eOwner, eAttackingPlayer, pAttacker, bTestAtWar, bTestPotentialEnemy, bTestCanMove, bAssassinate, bClearCache ? ECacheAccess::Write : ECacheAccess::ReadWrite);
+		if (iValue > 0)
+		{
+			++iScoredPositive;
+		}
 
 		if (iValue > iBestValue && unitX->getOwner() != eAttackingPlayer)
 		{
 			pBestUnit = unitX;
 			iBestValue = iValue;
 		}
+	}
+
+	//	A NON-EMPTY list that still yields nothing is the whole question: an empty plot and a plot whose every unit
+	//	was rejected are indistinguishable from the NULL this returns, and getPreferredCenterUnit falls through five
+	//	of these before presenting no unit at all.
+	if (pBestUnit == NULL && iUnitsSeen > 0)
+	{
+		gfxTraceDefenderScan(getX(), getY(), iUnitsSeen, iScoredPositive,
+			pSampleUnit->getID(), (int)pSampleUnit->getUnitType(), pSampleUnit->canDefend(),
+			(int)eOwner, (int)eAttackingPlayer, bTestCanMove);
 	}
 	return pBestUnit;
 }
@@ -9817,8 +9859,17 @@ void CvPlot::updateRiverSymbol(bool bForce, bool bAdjacent)
 void CvPlot::updateRiverSymbolArt(bool bAdjacent)
 {
 	PROFILE_EXTRA_FUNC();
+
+	//	⛔ Its caller setFeatureType fires during new-game addGameElements floodplain placement, i.e. BEFORE the
+	//	render engine exists — and the symbol's own creator updateRiverSymbol is guarded, so m_pRiverSymbol is
+	//	guaranteed NULL there. The adjacent leg below already null-checks; this one did not.
+	if (!GC.IsGraphicsInitialized())
+	{
+		return;
+	}
+
 	//this is used to update floodplain features
-	if ( !GC.viewportsEnabled() || isRevealed(GC.getGame().getActiveTeam(), true) )
+	if (m_pRiverSymbol != NULL && (!GC.viewportsEnabled() || isRevealed(GC.getGame().getActiveTeam(), true)))
 	{
 		gDLL->getEntityIFace()->setupFloodPlains(m_pRiverSymbol);
 	}
@@ -9848,11 +9899,16 @@ CvFlagEntity* CvPlot::getFlagSymbolOffset() const
 
 void CvPlot::updateFlagSymbol()
 {
+	updateFlagSymbolIfVisible();
+}
+
+bool CvPlot::updateFlagSymbolIfVisible()
+{
 	PROFILE_FUNC();
 
 	if (!isGraphicsVisible(ECvPlotGraphics::UNIT))
 	{
-		return;
+		return false;
 	}
 	PlayerTypes ePlayer = NO_PLAYER;
 	PlayerTypes ePlayerOffset = NO_PLAYER;
@@ -9934,6 +9990,7 @@ void CvPlot::updateFlagSymbol()
 			gDLL->getFlagEntityIFace()->updateUnitInfo(m_pFlagSymbolOffset, this, true);
 		}
 	}
+	return true;
 }
 
 
@@ -9968,6 +10025,8 @@ void CvPlot::updateCenterUnit()
 {
 	PROFILE_FUNC();
 
+	const int iOldCenterUnitId = m_pCenterUnit ? m_pCenterUnit->getID() : -1;
+
 	if (m_bInhibitCenterUnitCalculation || !isGraphicsVisible(ECvPlotGraphics::UNIT))
 	{
 		//	Because we are inhibitting recalculation until all the adjusting code has run
@@ -9977,9 +10036,13 @@ void CvPlot::updateCenterUnit()
 		//	This makes the interim a safe state, and the correct value will be calculated once the
 		//	inhibitted section is exited
 		m_pCenterUnit = NULL;
+		gfxTraceCenterUnit(getX(), getY(),
+			m_bInhibitCenterUnitCalculation ? GFX_GATE_INHIBITED : GFX_GATE_NOT_VISIBLE,
+			false, iOldCenterUnitId, -1);
 		return;
 	}
-	CvUnit* newCenterUnit = isActiveVisible(true) ? getPreferredCenterUnit() : NULL;
+	const bool bActiveVisible = isActiveVisible(true);
+	CvUnit* newCenterUnit = bActiveVisible ? getPreferredCenterUnit() : NULL;
 	if (!newCenterUnit && gDLL->GetWorldBuilderMode())
 	{
 		const CLLNode<IDInfo>* pUnitNode = headUnitNode();
@@ -10002,6 +10065,12 @@ void CvPlot::updateCenterUnit()
 			newCenterUnit->setInfoBarDirty(true);
 		}
 	}
+
+	//	Emitted on EVERY pass, not only when the verdict moves: "this plot was asked and kept the same unit" and
+	//	"this plot was never asked" are different facts, and only the second is a bug.
+	gfxTraceCenterUnit(getX(), getY(),
+		bActiveVisible ? GFX_GATE_NONE : GFX_GATE_NOT_ACTIVE_VIS,
+		bActiveVisible, iOldCenterUnitId, newCenterUnit ? newCenterUnit->getID() : -1);
 }
 
 

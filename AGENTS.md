@@ -389,6 +389,25 @@ not findings to re-discover.
   signature points to a graphics path running pre-init, not a logic bug. Established
   guard sites: `CvPlot.cpp` `setPlotType` graphics block, `setLayoutDirty`,
   `shouldHaveGraphics`; `CvMap::setupGraphical`.
+- **⛔ THE UNIT'S IN-FLIGHT ANIMATION LIVES ON ITS SCENE ENTITY, so DESTROYING THE ENTITY DISCARDS THE QUEUED
+  MOVE.** `QueueMove` pushes onto the entity and `ExecuteMove` plays it; `CvUnit::reloadEntity`'s own
+  `RemoveUnitFromBattle` call — *"remove this unit from any active mission"* — is the admission, and the entity
+  interface is pointer-keyed throughout, with no re-bind and no queue transfer.
+  ⚠ **"MISSION" IS TWO DIFFERENT THINGS HERE AND CONFLATING THEM IS THE TRAP.** The entity holds the EXE's
+  VISUAL mission definition (`addMission(CvMissionDefinition…)` — the walk, the combat sequence). The ORDER is
+  DLL-side and untouched: `CvSelectionGroup::m_missionQueue`, with `isBusy()` = `getMissionTimer() > 0 ||
+  isCombat()`, both plain members. ⇒ Losing an entity loses the PICTURE, never the instruction — so this class
+  presents as a purely visual orphan while game state advances correctly, which is exactly why it survives.
+  ⛔ **It is NOT caused by graphics paging.** Paging only makes `isGraphicsVisible(UNIT)` false, and that path
+  EARLY-RETURNS before any reload. ⚑ **The window that makes this bite is `CvSelectionGroup::groupMove`:** it inhibits centre-unit
+  recalc on both plots, `setXY` **queues** the move onto the current entity, the inhibit **nulls
+  `m_pCenterUnit`** as a dangling-pointer guard, and lifting it therefore makes `newCenterUnit != m_pCenterUnit`
+  unconditionally true — so `updateCenterUnit` reloads the entity **between `QueueMove` and `ExecuteMove`**.
+  ⇒ **An entity that is already the kind the unit wants is KEPT**; only a genuine MODEL change (a warlord
+  attaching) rebuilds one, through `rebuildEntityArt()`. ⚠ The signature to recognise, because none of it looks
+  like a graphics bug: the walk animation plays **in place on the tile the unit left**, animations never end,
+  units render **stacked** (`setupGraphical`'s `ExecuteMove(0, false)` is what separates a stack, and it is
+  spent on the empty queue), and **re-selecting the unit fixes it** — `reloadEntity` skips a selected unit.
 
 ### ⛔ THE NO-GUESSING RULE — map everything, always
 

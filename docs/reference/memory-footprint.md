@@ -135,8 +135,21 @@ the (shared) Info, and per instance an index into the shared Info array.
   closed-EXE / no-symbols: the mechanism is inferred from the paging delta, not a symbol read — but the paging delta is
   a real measurement, no longer pure reasoning.) The **DLL art surface is a separate question and stays shared-once**
   (the DLL holds only the tag string, above) — per-instance texture memory lives on the EXE side.
-- **FPK:** art is delivered as packed `C2C*.fpk` archives via the external `FpkBuilder` — a packaging container,
-  orthogonal to the once-vs-per-instance question ([external-tools-and-workflows.md](external-tools-and-workflows.md)).
+- **⛔ FPK IS NOT A PACKAGING DETAIL — IT IS THE LARGEST SINGLE MEMORY LEVER (owner).** *"FPKs force loading of
+  all assets to memory. If we don't use FPKs but let the game load graphics directly, over half of memory use is
+  gone — but it takes about 10-15 minutes to load the game."* So a large part of the working set is a **RESIDENT
+  ART BASELINE** that has nothing to do with instance counts, and the earlier reading here — that FPK was "a
+  packaging container, orthogonal to the once-vs-per-instance question" — was wrong
+  ([external-tools-and-workflows.md](external-tools-and-workflows.md) owns the packing mechanics).
+  ⚑ **The two effects are SEPARATE and both are real:** the FPK baseline is flat and enormous, and the per-turn
+  climb happens **on top of it, with every FPK already loaded** — *"it makes no sense that, when all FPKs are
+  loaded, we still get graphic use increases every turn, but that is what happens, and graphics paging proves
+  this by managing it."* ⇒ Do not let either explain the other away.
+  ⚖ **THE HOME RUN IS NAMED (owner): *"if we can have the actual game load faster, without FPKs, that is the
+  home run."*** Halving memory is already established; the load time is the whole of what stands in the way, so
+  the work is a LOAD-TIME problem, not a memory investigation. ⚠ Note this inverts the usual ordering rule —
+  [DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king) spends load time to buy turn time,
+  and here load time is the currency that has run out.
 
 **Implication:** the **DLL art surface is flat after load** (shared once — tag strings only), so a per-turn
 working-set climb is not DLL art re-instantiation. But on the **EXE side** the per-instance texture evidence (above)
