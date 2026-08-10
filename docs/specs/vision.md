@@ -138,8 +138,16 @@ case to encode.
 
 ## 4. HIDE AND SEEK — the intent, written down
 
-> **The DATA is collapsed onto this shape; the CONTEST is not yet evaluated by the engine.** The pairing below
-> is what the data now says and what the runtime must come to enforce.
+> **⛔ THE DATA IS COLLAPSED ONTO THIS SHAPE AND THE CONTEST *IS* RUNNING — HALF-MIGRATED.** An earlier reading
+> here said the contest was "not yet evaluated by the engine"; that is FALSE and it misled a live investigation
+> into believing detection could not be the cause of anything. `CvUnit::isInvisible` inherited main's contest
+> wholesale and it still executes — only its CONCEALMENT operand was swapped to the collapsed field.
+> ⚠ So the two sides are on different models: concealment reads the new method-AGNOSTIC `concealment()`, while
+> detection still reads the OLD per-method plot registry, and the pairing this section specifies
+> (*one detection type counters one concealment type*) is enforced NOWHERE.
+> ⛔ **Detection failure is FAIL-OPEN TOWARD INVISIBILITY** — with the registry empty the loop can only decline
+> if `concealment() <= 0`, so a unit that authors any concealment reads invisible to every foreign team. The
+> live defects and their blast radius are [issues.md](../plans/structural-cleanup/issues.md) § 13a.
 >
 > ⚑ **WHY THIS MATTERS MORE THAN TIDINESS — the mechanic is playable but not UNDERSTANDABLE (owner):**
 > *"it's expressed in icons, and nowhere is it really stated what counters what"*, with four kinds of
