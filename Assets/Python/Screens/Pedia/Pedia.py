@@ -1099,6 +1099,28 @@ class Pedia:
 		self.aList = self.getSortedList("CONCEPT_")
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, "CONCEPT_")
 
+	#	The NewConcept registry holds three display sets distinguished only by a marker in the TYPE key.
+	#	szWanted "" is the ordinary set (neither marker); otherwise it selects that marker.
+	#	⚠ The prefix is NEWCONCEPT_, never CONCEPT_: both registries author CONCEPT_* ids, so the authored
+	#	token cannot tell them apart and routing on it answers from whichever the dispatch reached first.
+	def getNewConceptList(self, szWanted):
+		aList = []
+		for kEntry in INFO.getIndex("NEWCONCEPT_"):
+			szType = kEntry["type"]
+			bShortcut = szType.find("SHORTCUTS") != -1
+			bStrategy = szType.find("STRATEGY") != -1
+			if szWanted == "SHORTCUTS":
+				if not bShortcut:
+					continue
+			elif szWanted == "STRATEGY":
+				if not bStrategy:
+					continue
+			elif bShortcut or bStrategy:
+				continue
+			aList.append((kEntry["description"], kEntry["id"]))
+		aList.sort()
+		return aList
+
 	def placeBTSConcepts(self):
 		print "Category: BTS Concepts"
 		self.aList = self.getNewConceptList("")
