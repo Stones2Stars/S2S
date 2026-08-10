@@ -850,6 +850,12 @@
   `EDGEF_RELATED` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)), never a
   database scan; a promotion's per-unit lines read `CvPromotionAccrual::sum`, never a re-rolled rung loop
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
+  ⚠ They label their whole DEPOSIT total "from buildings", which is untrue — every source deposits into those
+  channels (civics, traits, bonuses, corporations, specialists, features, techs, projects), so the line names one
+  source for a sum that carries them all. ⛔ The fix is NOT to point the city source-walker at it: that walker
+  covers the buildings/civics/traits/culture-level set, which is complete for `defense` and PARTIAL for
+  wellbeing — and partial attribution rendered as complete is the defect the census exists to prevent. Either
+  widen the walker to wellbeing's full source set, or relabel the lump for what it is.
 - Re-point the unit power-value plane's readers.
 
 ## Triggers / grants

@@ -531,41 +531,138 @@ void CvGameTextMgr::setEspionageMissionHelp(CvWStringBuffer &szBuffer, const CvU
 //	The UNIT INSTANCE's help -- this unit, right now: what the unit-name widget, the selected-unit hover and the
 //	plot unit list all render. It is the LIVE half; the TYPE half is the sibling overload, delegated to at the end
 //	so the two never drift apart ([DEC-single-implementation]).
+//
+//	⚑ THE LIVE HEADER IS ONE COMMA-SEPARATED LINE, and that shape is load-bearing rather than cosmetic: this
+//	composer runs once per unit in a plot's stack, so a line per stat turns a ten-unit tile into a wall. Every
+//	leg below is CONDITIONAL -- a plain warrior prints its name, strength and moves and nothing else, while a
+//	commanding general in the field prints what it is actually carrying.
+//
+//	⛔ IT COMPOSES LIVE INSTANCE STATE ONLY. What the unit's TYPE carries -- every magnitude it was built with --
+//	is the TYPE overload's blocks, where each compiled entry renders ITSELF through the ONE renderer
+//	([patterns.md] THE DIVISION OF LABOUR). So no per-stat modifier line is hand-assembled here; a newly authored
+//	unit family reaches this hover with no edit to this function.
 void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, bool bOneLine, bool bShort, bool bdarkColor)
 {
 	if (pUnit == NULL)
 	{
 		return;
 	}
-	szString.append(pUnit->getName());
+
+	//	The name carries the caller's colour: the plot list darkens the units it lists beneath a heading so the
+	//	one being hovered stays legible against them. ⚠ TEXT_COLOR expands its argument FOUR times (once per
+	//	channel), so the colour is resolved to a NAME first and never a call.
+	const char* szNameColor = bdarkColor ? "COLOR_BROWN_TEXT" : "COLOR_UNIT_TEXT";
+	szString.append(CvWString::format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR(szNameColor), pUnit->getName().GetCString()));
 	if (bOneLine)
 	{
 		return;   // the caller asked for the name alone
 	}
 
-	//	The LIVE numbers, read through the same accessors every other consumer uses. Strength reduces at THIS out
-	//	boundary and nowhere earlier ([DEC-fixedpoint-x100]); the symbols are the text plane's, resolved by the
-	//	font manager rather than spelled out here.
-	szString.append(NEWLINE);
-	szString.append(CvWString::format(L"%d%c", pUnit->baseCombatStrHuman(), gDLL->getSymbolID(STRENGTH_CHAR)));
-
-	const int iMaxHP = pUnit->getMaxHP();
-	if (iMaxHP > 0 && pUnit->getHP() < iMaxHP)
+	//	STRENGTH. An air unit fights with its own air strength -- a different number from the ground one -- so the
+	//	DOMAIN decides which is read, never a fallback between them.
+	//	⚑ The ÷100 on the air twin is the READER's ([DEC-fixedpoint-x100]: a reader divides at its point of use).
+	//	`baseCombatStrHuman` is the ground cluster's ONE named human read; the air side has no such twin, and
+	//	minting one would grow the per-channel getter surface this rebuild is deleting.
+	const bool bAir = (pUnit->getDomainType() == DOMAIN_AIR);
+	const int iStrength = bAir ? (pUnit->airBaseCombatStr() / 100) : pUnit->baseCombatStrHuman();
+	if (iStrength > 0 && (bAir || pUnit->canFight()))
 	{
-		szString.append(CvWString::format(L" %d/%d", pUnit->getHP(), iMaxHP));
+		//	⚠ Mid-combat the CURRENT value is not answerable from here, so it says so rather than printing a
+		//	stale number that would read as authoritative.
+		if (pUnit->isInBattle())
+		{
+			szString.append(CvWString::format(L", ?/%d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
+		}
+		else
+		{
+			szString.append(CvWString::format(L", %d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
+		}
+
+		//	Damage, only when there is some -- a unit at full health says so by omission.
+		const int iMaxHP = pUnit->getMaxHP();
+		if (iMaxHP > 0 && pUnit->getHP() < iMaxHP)
+		{
+			szString.append(CvWString::format(L" (%d/%d)", pUnit->getHP(), iMaxHP));
+		}
 	}
 
+	//	MOVES. The remaining/total split is only meaningful for a unit the player commands and only worth the
+	//	characters when it has actually spent some; anything else prints the plain total.
 	const int iMoveDenominator = GC.getMOVE_DENOMINATOR();
 	if (iMoveDenominator > 0)
 	{
-		szString.append(CvWString::format(L"  %d/%d%c",
-			pUnit->movesLeft() / iMoveDenominator, pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
+		const int iMovesLeft = pUnit->movesLeft();
+		const int iCurrMoves = iMovesLeft / iMoveDenominator + ((iMovesLeft % iMoveDenominator > 0) ? 1 : 0);
+		if (iCurrMoves == pUnit->baseMoves() || pUnit->getTeam() != GC.getGame().getActiveTeam())
+		{
+			szString.append(CvWString::format(L", %d%c", pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
+		}
+		else
+		{
+			szString.append(CvWString::format(L", %d/%d%c", iCurrMoves, pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
+		}
 	}
 
-	if (pUnit->getLevel() > 0)
+	if (pUnit->airRange() > 0)
 	{
-		szString.append(CvWString::format(L"  %d (%d/%d)",
-			pUnit->getLevel(), pUnit->getExperience100() / 100, pUnit->experienceNeeded()));
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_AIR_RANGE", pUnit->airRange()));
+	}
+
+	//	WHAT IT IS DOING. A worker mid-build is the case this answers -- the build and how long is left on it is
+	//	the whole question a player hovers a worker to ask.
+	const BuildTypes eBuild = pUnit->getBuildType();
+	if (eBuild != NO_BUILD && pUnit->plot() != NULL)
+	{
+		szString.append(CvWString::format(L", %s (%d)",
+			GC.getBuildInfo(eBuild).getDescription(),
+			pUnit->plot()->getBuildTurnsLeft(eBuild, pUnit->getOwner())));
+	}
+
+	//	IMMOBILISED. ⚑ The immobile timer is a STATUS now ([state.md]: applied, ticking down, over at zero), so
+	//	this reads the turns remaining off the status store -- `hasStatus`/`getStatus` IS the read, and there is
+	//	deliberately no per-status named accessor to reach for.
+	const int iParalyzedTurns = pUnit->getStatus(STATUS_PARALYZED);
+	if (iParalyzedTurns > 0)
+	{
+		szString.append(L", ");
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_IMMOBILE", iParalyzedTurns));
+	}
+
+	//	EXPERIENCE, for a unit the player owns and not while its fate is still being decided.
+	if (pUnit->getTeam() == GC.getGame().getActiveTeam() && pUnit->getExperience100() > 0 && !pUnit->isInBattle())
+	{
+		const CvWString szExperience = CvWString::format(L"%d", pUnit->getExperience100() / 100);
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_XP", szExperience.GetCString(), pUnit->experienceNeeded()));
+	}
+
+	//	COMMAND. A commander's remaining control points are what decide whether it can back an attack at all
+	//	([modifier.md] §2b: the commander rides ON TOP, and the combat calc asks whether it has points left), so
+	//	they are the one thing worth reading off it at a glance.
+	const UnitCompCommander* pCommander = pUnit->getCommanderComp();
+	if (pCommander != NULL)
+	{
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_COMMAND_RANGE", pCommander->getCommandRange()));
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_COMMAND_POINTS",
+			pCommander->getControlPointsLeft(), pCommander->getControlPoints()));
+	}
+	const UnitCompCommodore* pCommodore = pUnit->getCommodoreComp();
+	if (pCommodore != NULL)
+	{
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_COMMAND_RANGE", pCommodore->getCommandRange()));
+		szString.append(gDLL->getText("TXT_KEY_UNITHELP_COMMAND_POINTS",
+			pCommodore->getControlPointsLeft(), pCommodore->getControlPoints()));
+	}
+
+	//	WHOSE IT IS -- for a foreign unit only, in that player's own colour. ⚠ A hidden-nationality unit and an
+	//	animal deliberately name nobody: concealing the owner IS the mechanic ([skills.md] `hiddenNationality`),
+	//	so printing it here would hand the player exactly what the unit is hiding.
+	if (pUnit->getOwner() != GC.getGame().getActivePlayer() && !pUnit->isAnimal() && !pUnit->isHiddenNationality())
+	{
+		const CvPlayer& kOwner = GET_PLAYER(pUnit->getOwner());
+		const wchar_t* szOwnerName = kOwner.isMinorCiv() ? kOwner.getCivilizationDescription() : kOwner.getName();
+		szString.append(CvWString::format(L", " SETCOLR L"%s" ENDCOLR,
+			kOwner.getPlayerTextColorR(), kOwner.getPlayerTextColorG(),
+			kOwner.getPlayerTextColorB(), kOwner.getPlayerTextColorA(), szOwnerName));
 	}
 
 	//	⛔ THE HELD PROMOTIONS, WALKED FROM WHAT THE UNIT HOLDS -- never a sweep of the promotion registry asking
@@ -574,12 +671,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	//	⛔ AS ICONS ON ONE ROW, NEVER A LINE PER PROMOTION. A named line each is unreadable on the units that
 	//	actually carry promotions -- a veteran holds dozens, so the hover grew one line per rung and buried the
 	//	unit's own numbers above it. The button is what the player already recognises them by everywhere else.
+	//	⚠ An OVERRIDDEN promotion is superseded by a later rung and is not what the unit is running on, so showing
+	//	its icon beside the rung that replaced it would double-count the line to a reader.
 	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeldPromotions = pUnit->getPromotionKeyedInfo();
 	bool bFirstPromotion = true;
 	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator itPromotion = kHeldPromotions.begin();
 		itPromotion != kHeldPromotions.end(); ++itPromotion)
 	{
-		if (itPromotion->second.m_bHasPromotion)
+		if (itPromotion->second.m_bHasPromotion && !pUnit->isPromotionOverriden(itPromotion->first))
 		{
 			if (bFirstPromotion)
 			{
@@ -1218,6 +1317,81 @@ void createTestFontString(CvWStringBuffer& szString)
 // identically, so there is one formatter rather than two that could drift apart.
 static CvWString gt_scaled100(int64_t iValue);
 
+//	The per-player culture rows of a plot, strongest first -- so "who is winning this tile" is the first line
+//	read rather than something the player reconstructs from an unordered list.
+static bool gt_cultureRowGreater(const std::pair<int64_t, int>& kLeft, const std::pair<int64_t, int>& kRight)
+{
+	return kLeft.first > kRight.first;
+}
+
+//	WHO HOLDS THIS TILE, AND WHO IS TAKING IT.
+//
+//	⚑ Cultural ownership is a CONTEST, which is why this is a per-player list and never one total: a single
+//	number would say a place has culture without saying whose
+//	([culture-religion-research.md] -- the per-player dimension is load-bearing).
+//	⚠ The CURRENT owner and the CULTURAL owner are different questions and can disagree -- that disagreement IS
+//	the interesting state (it is what revolt risk is built on), so the cultural owner is stated separately rather
+//	than inferred from the top row: `calculateCulturalOwner` carries the fixed-borders and city-adjacency rules,
+//	so the strongest culture is NOT always the holder.
+//	⛔ Percent arrives as TENTHS (the extra-digit form) and renders as integer whole/remainder -- no float, since
+//	presentation arithmetic in the DLL is the wrong side of the boundary ([patterns.md]).
+void CvGameTextMgr::appendPlotCultureLines(CvWStringBuffer& szString, const CvPlot* pPlot) const
+{
+	if (pPlot->getOwner() != NO_PLAYER)
+	{
+		const CvPlayer& kOwner = GET_PLAYER(pPlot->getOwner());
+		szString.append(NEWLINE);
+		szString.append(gDLL->getText("TXT_KEY_PLOTHELP_OWNER",
+			CvWString::format(SETCOLR L"%s" ENDCOLR,
+				kOwner.getPlayerTextColorR(), kOwner.getPlayerTextColorG(),
+				kOwner.getPlayerTextColorB(), kOwner.getPlayerTextColorA(),
+				kOwner.getCivilizationAdjective()).GetCString()));
+	}
+
+	std::vector<std::pair<int64_t, int> > aRows;   // (culture, playerId)
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		if (GET_PLAYER((PlayerTypes)iPlayer).isAlive() && pPlot->getCulture((PlayerTypes)iPlayer) > 0)
+		{
+			aRows.push_back(std::make_pair(pPlot->getCulture((PlayerTypes)iPlayer), iPlayer));
+		}
+	}
+	if (aRows.empty())
+	{
+		return;
+	}
+	std::sort(aRows.begin(), aRows.end(), gt_cultureRowGreater);
+
+	szString.append(NEWLINE);
+	szString.append(gDLL->getText("TXT_KEY_PLOTHELP_CULTURE"));
+	for (size_t iRow = 0; iRow < aRows.size(); ++iRow)
+	{
+		const PlayerTypes ePlayer = (PlayerTypes)aRows[iRow].second;
+		const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+		const int iTenths = pPlot->calculateCulturePercent(ePlayer, 1);
+		szString.append(NEWLINE);
+		szString.append(CvWString::format(L"  %d.%d%% " SETCOLR L"%s" ENDCOLR,
+			iTenths / 10, iTenths % 10,
+			kPlayer.getPlayerTextColorR(), kPlayer.getPlayerTextColorG(),
+			kPlayer.getPlayerTextColorB(), kPlayer.getPlayerTextColorA(),
+			kPlayer.getCivilizationAdjective()));
+	}
+
+	//	The verdict, stated only when it is NEWS -- an uncontested tile whose cultural owner is already its owner
+	//	would just repeat the line above.
+	const PlayerTypes eCulturalOwner = pPlot->calculateCulturalOwner();
+	if (eCulturalOwner != NO_PLAYER && eCulturalOwner != pPlot->getOwner())
+	{
+		const CvPlayer& kCultural = GET_PLAYER(eCulturalOwner);
+		szString.append(NEWLINE);
+		szString.append(gDLL->getText("TXT_KEY_PLOTHELP_CULTURAL_OWNER",
+			CvWString::format(SETCOLR L"%s" ENDCOLR,
+				kCultural.getPlayerTextColorR(), kCultural.getPlayerTextColorG(),
+				kCultural.getPlayerTextColorB(), kCultural.getPlayerTextColorA(),
+				kCultural.getCivilizationAdjective()).GetCString()));
+	}
+}
+
 void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool bBreakdown)
 {
 	if (pPlot == NULL)
@@ -1253,6 +1427,9 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(NEWLINE);
 		szString.append(CvWString(GC.getRouteInfo(pPlot->getRouteType()).getDescription()));
 	}
+
+	// ---- WHOSE TILE IT IS, AND WHO IS TAKING IT ----
+	appendPlotCultureLines(szString, pPlot);
 
 	// ---- WHAT THE TILE YIELDS, decomposed into the package's three stored segments ----
 	// ⛔ Read from the plot's OWN package, never recomputed here: this is the very number the city's Σ walks
@@ -2350,38 +2527,11 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 		szBuffer.append(kUnit.getDescription());
 	}
 
-	static const ModifierFamily aeDisplayFamilies[] =
-	{
-		// what it is in a fight
-		MODFAM_STRENGTH, MODFAM_COMBAT, MODFAM_FIRST_STRIKE, MODFAM_WITHDRAWAL, MODFAM_COLLATERAL,
-		MODFAM_BOMBARD, MODFAM_AIR, MODFAM_RANGE, MODFAM_CAPTURE,
-		// how it moves, sees, recovers and carries
-		MODFAM_MOVEMENT, MODFAM_DOMAIN_MOVES, MODFAM_VISION, MODFAM_HEAL, MODFAM_CARGO,
-		// what it costs and what it earns
-		MODFAM_UPKEEP, MODFAM_COSTS, MODFAM_EXPERIENCE, MODFAM_WORK_RATE, MODFAM_PILLAGE,
-		// what it brings to a city it stands in
-		MODFAM_HAPPINESS, MODFAM_HEALTH, MODFAM_UNDERWORLD, MODFAM_PROPERTY
-	};
-	for (size_t iFamily = 0; iFamily < sizeof(aeDisplayFamilies) / sizeof(aeDisplayFamilies[0]); ++iFamily)
-	{
-		appendEntryLines(szBuffer, kUnit, aeDisplayFamilies[iFamily]);
-	}
-
-	//	The REQUIRES block. Deciding that build and operate are separate lines -- they mean different things, so
-	//	merging them into one phrase would misreport both -- is the composer's call; rendering the tree itself is
-	//	the condition renderer's ([todo] the requires block composer, whose renderer already existed).
-	const CvCondition* pRequiresBuild = kUnit.requiresBuild();
-	if (pRequiresBuild != NULL)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(entryConditionText(pRequiresBuild));
-	}
-	const CvCondition* pRequiresOperate = kUnit.requiresOperate();
-	if (pRequiresOperate != NULL)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(entryConditionText(pRequiresOperate));
-	}
+	//	⛔ THE SHARED UNIT-PLANE LIST, not a local copy. This composer used to carry its own duplicate of it beside
+	//	a hand-rolled repeat of the entity spine, and the duplicate had already DRIFTED: it silently dropped
+	//	MODFAM_ODDS and MODFAM_SURVIVOR, so those families rendered on the basic-unit help and nowhere else. One
+	//	list, one spine ([DEC-single-implementation]) -- and the edge and requires blocks now come with it.
+	appendEntityBlocks(szBuffer, kUnit, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
 }
 
 // BUG - Building Actual Effects - start
@@ -3924,6 +4074,23 @@ void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& 
 	{
 		appendEntryLines(szBuffer, info, aeFamilies[iFamily]);
 	}
+
+	//	WHAT IT LEADS TO. Reading order is what it DOES (the families above), then what it GIVES YOU (here), then
+	//	what it NEEDS (the requires block below) -- and "what does this unlock" is the first question anyone asks
+	//	of a tech, so it is the one piece a barebones entity tooltip could least afford to be missing.
+	//	⚑ Living on the SHARED spine rather than in each composer is the point: tech, building, unit, project,
+	//	improvement, feature, terrain, route, heritage and unit-combat all gain it from this one place, and a
+	//	newly-composed entity type gets it with no edit at all ([DEC-single-implementation]).
+	appendEdgeLines(szBuffer, info, EDGEF_ENABLES,      "TXT_KEY_EDGE_UNLOCKS");
+	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETES,    "TXT_KEY_EDGE_OBSOLETES");
+	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETED_BY, "TXT_KEY_EDGE_OBSOLETED_BY");
+	appendEdgeLines(szBuffer, info, EDGEF_REPLACES,     "TXT_KEY_EDGE_REPLACES");
+	appendEdgeLines(szBuffer, info, EDGEF_DISABLES,     "TXT_KEY_EDGE_DISABLES");
+	//	⛔ EDGEF_RELATED and EDGEF_REQUIRED_BY are deliberately NOT rendered. RELATED is a merged candidate
+	//	SUPERSET that cannot tell an unlocking tech from an obsoleting one ([CvEdges.h]), so it would state
+	//	relationships that are not true; REQUIRED_BY is the gate axis, and 4,381 buildings name a TECH atom, so a
+	//	tech would list thousands. Neither is a display axis, and capping them would not make them correct.
+
 	const CvCondition* pRequiresBuild = info.requiresBuild();
 	if (pRequiresBuild != NULL)
 	{
@@ -3998,6 +4165,125 @@ static CvWString gt_grantedEntityName(int eRegistry, int iId)
 		return (iId < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)iId).getDescription() : CvWString();
 	}
 	return CvWString();
+}
+
+//	An EDGE id resolved through the registry its BUCKET names -- the same discipline as the grant resolver above,
+//	and bounds-checked for the same reason ([DEC-info-plane-read-only]): an id outside its registry renders
+//	NOTHING rather than reaching the info plane, which answers an unanswerable read by failing loud. A tooltip is
+//	not the place to take a load defect down; the load census is where that belongs.
+static CvWString gt_edgeEntityName(EnEdgeBucket eBucket, int iId)
+{
+	if (iId < 0)
+	{
+		return CvWString();
+	}
+	switch (eBucket)
+	{
+	case EDGEB_BUILDINGS:
+		return (iId < GC.getNumBuildingInfos()) ? GC.getBuildingInfo((BuildingTypes)iId).getDescription() : CvWString();
+	case EDGEB_UNITS:
+		return (iId < GC.getNumUnitInfos()) ? GC.getUnitInfo((UnitTypes)iId).getDescription() : CvWString();
+	case EDGEB_BUILDS:
+		return (iId < GC.getNumBuildInfos()) ? GC.getBuildInfo((BuildTypes)iId).getDescription() : CvWString();
+	case EDGEB_TECHS:
+		return (iId < GC.getNumTechInfos()) ? GC.getTechInfo((TechTypes)iId).getDescription() : CvWString();
+	case EDGEB_CIVICS:
+		return (iId < GC.getNumCivicInfos()) ? GC.getCivicInfo((CivicTypes)iId).getDescription() : CvWString();
+	case EDGEB_RELIGIONS:
+		return (iId < GC.getNumReligionInfos()) ? GC.getReligionInfo((ReligionTypes)iId).getDescription() : CvWString();
+	case EDGEB_CORPORATIONS:
+		return (iId < GC.getNumCorporationInfos()) ? GC.getCorporationInfo((CorporationTypes)iId).getDescription() : CvWString();
+	case EDGEB_PROJECTS:
+		return (iId < GC.getNumProjectInfos()) ? GC.getProjectInfo((ProjectTypes)iId).getDescription() : CvWString();
+	case EDGEB_PROCESSES:
+		return (iId < GC.getNumProcessInfos()) ? GC.getProcessInfo((ProcessTypes)iId).getDescription() : CvWString();
+	case EDGEB_PROMOTIONS:
+		return (iId < GC.getNumPromotionInfos()) ? GC.getPromotionInfo((PromotionTypes)iId).getDescription() : CvWString();
+	case EDGEB_PROMOTION_LINES:
+		return (iId < GC.getNumPromotionLineInfos()) ? GC.getPromotionLineInfo((PromotionLineTypes)iId).getDescription() : CvWString();
+	case EDGEB_HERITAGES:
+		return (iId < GC.getNumHeritageInfos()) ? GC.getHeritageInfo((HeritageTypes)iId).getDescription() : CvWString();
+	case EDGEB_SPECIAL_BUILDINGS:
+	case EDGEB_SPECIAL_BUILDINGS_WAIVED:
+		return (iId < GC.getNumSpecialBuildingInfos()) ? GC.getSpecialBuildingInfo((SpecialBuildingTypes)iId).getDescription() : CvWString();
+	case EDGEB_IMPROVEMENTS:
+		return (iId < GC.getNumImprovementInfos()) ? GC.getImprovementInfo((ImprovementTypes)iId).getDescription() : CvWString();
+	case EDGEB_BONUSES:
+		return (iId < GC.getNumBonusInfos()) ? GC.getBonusInfo((BonusTypes)iId).getDescription() : CvWString();
+	case EDGEB_ROUTES:
+	case EDGEB_ROUTES_AND:
+		return (iId < GC.getNumRouteInfos()) ? GC.getRouteInfo((RouteTypes)iId).getDescription() : CvWString();
+	case EDGEB_VOTES:
+		return (iId < GC.getNumVoteInfos()) ? GC.getVoteInfo((VoteTypes)iId).getDescription() : CvWString();
+	case EDGEB_HURRIES:
+		return (iId < GC.getNumHurryInfos()) ? GC.getHurryInfo((HurryTypes)iId).getDescription() : CvWString();
+	case EDGEB_TRAITS:
+	case EDGEB_TRAITS_AND:
+	case EDGEB_TRAITS_OR:
+		return (iId < GC.getNumTraitInfos()) ? GC.getTraitInfo((TraitTypes)iId).getDescription() : CvWString();
+	case EDGEB_SPECIALISTS:
+		return (iId < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)iId).getDescription() : CvWString();
+	default:
+		return CvWString();
+	}
+}
+
+//	ONE edge family -> one "Unlocks: A, B, C" line, across every bucket that family authored.
+//
+//	⚑ THIS IS A STRAIGHT FORWARD-EDGE FETCH, NEVER A DATABASE SCAN. The info ALREADY CARRIES its edge lists --
+//	the readJson reverse pass lands them at load ([DEC-one-reverse-view]), so "what does this unlock" is a list
+//	read of the authored handful. ⛔ Asking it backwards (sweeping every building to test whether this tech
+//	unlocks it) is the whole-database scan the enabler spec exists to delete.
+//
+//	⚖ THE DEFAULT IS THE OBVIOUS DATA; THE VERBOSE VERSION IS UNDER A HOTKEY (owner). Measured over the shipped
+//	data a tech's `enables` is a median of 8, but TECH_GAME_START -- the synthetic root every player holds --
+//	carries 575, and the fattest buildings and bonuses carry ~230. So the resting tooltip shows the first handful
+//	and ALT shows the lot, which is the same key this branch already uses for the plot-yield breakdown -- one
+//	verbose modifier across the surface, never a second convention to learn.
+//	⚠ The remainder is SHOWN, never swallowed: a silent truncation would misreport a capped list as complete, so
+//	the "+N more" is what keeps the bound honest and tells the player the hotkey is worth pressing.
+void CvGameTextMgr::appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& info,
+	EnEdgeFamily eFamily, const char* szHeadingKey) const
+{
+	std::vector<CvWString> aNames;
+	for (int iBucket = 0; iBucket < NUM_EDGEB; ++iBucket)
+	{
+		const EnEdgeBucket eBucket = (EnEdgeBucket)iBucket;
+		const std::vector<int>* pList = info.edge(eFamily, eBucket);
+		if (pList == NULL)
+		{
+			continue;
+		}
+		for (size_t iEntry = 0; iEntry < pList->size(); ++iEntry)
+		{
+			const CvWString szName = gt_edgeEntityName(eBucket, (*pList)[iEntry]);
+			if (!szName.empty())
+			{
+				aNames.push_back(szName);
+			}
+		}
+	}
+	if (aNames.empty())
+	{
+		return;
+	}
+
+	const size_t iCap = gDLL->altKey() ? aNames.size() : 12;
+	CvWString szList;
+	for (size_t iName = 0; iName < aNames.size() && iName < iCap; ++iName)
+	{
+		if (iName > 0)
+		{
+			szList += L", ";
+		}
+		szList += aNames[iName];
+	}
+	if (aNames.size() > iCap)
+	{
+		szList += gDLL->getText("TXT_KEY_EDGE_MORE", (int)(aNames.size() - iCap));
+	}
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText(szHeadingKey, szList.GetCString()));
 }
 
 // What it COSTS, and what this city has already sunk into it.
@@ -4319,12 +4605,16 @@ void CvGameTextMgr::getWarplanString(CvWStringBuffer& szString, WarPlanTypes eWa
 
 //	One attitude component, printed only where it actually moves the verdict — so the block reads as the reasons
 //	this leader feels the way they do, never as a table of zeroes.
-static void gt_attitudeTerm(CvWStringBuffer& szBuffer, int iValue, const char* szKey)
+//	ONE attitude component -> one signed line, and nothing at all when it carries no weight.
+//	⚑ Most components share a single key that reads correctly in both directions, so the BAD key is optional; the
+//	handful whose wording genuinely differs by sign (a shared civic PLEASES, a differing one OFFENDS) pass both
+//	rather than forcing one phrasing to cover a meaning it does not have.
+static void gt_attitudeTerm(CvWStringBuffer& szBuffer, int iValue, const char* szKey, const char* szBadKey = NULL)
 {
 	if (iValue != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText(szKey, iValue));
+		szBuffer.append(gDLL->getText((iValue < 0 && szBadKey != NULL) ? szBadKey : szKey, iValue));
 	}
 }
 
@@ -4370,6 +4660,45 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 	gt_attitudeTerm(szBuffer, kPlayer.AI_getWorseRankDifferenceAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_WORSE_RANK");
 	gt_attitudeTerm(szBuffer, kPlayer.AI_getLowRankAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_LOW_RANK");
 	gt_attitudeTerm(szBuffer, kPlayer.AI_getLostWarAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_LOST_WAR");
+	//	⚠ These three were missing while the RESIDUAL below was live, which is the shape that makes an incomplete
+	//	census actively misleading rather than merely short: their weight still reached the total, so it silently
+	//	inflated the "extra" line and the player read a real, named component as unexplained leader whim.
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getTraitAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_TRAIT_GOOD", "TXT_KEY_MISC_ATTITUDE_TRAIT_BAD");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getCivicShareAttitude(eTargetPlayer), "TXT_KEY_MISC_ATTITUDE_CIVIC_SHARE_GOOD", "TXT_KEY_MISC_ATTITUDE_CIVIC_SHARE_BAD");
+	gt_attitudeTerm(szBuffer, kPlayer.AI_getEmbassyAttitude(eTargetPlayer), "TXT_KEY_EMBASSY_DIPLOMACY_BONUS", "TXT_KEY_EMBASSY_DIPLOMACY_MALUS");
+
+	//	WHO THEY ANSWER TO. A vassal's attitude is not a leader opinion at all -- it is a standing relationship,
+	//	so it is stated rather than scored, and only for teams the target has actually met.
+	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
+	const CvTeam& kTargetTeam = GET_TEAM(GET_PLAYER(eTargetPlayer).getTeam());
+	for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+	{
+		const CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
+		if (!kLoopTeam.isAlive() || !kTargetTeam.isHasMet((TeamTypes)iTeam))
+		{
+			continue;
+		}
+		if (kTeam.isVassal((TeamTypes)iTeam))
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_ATTITUDE_VASSAL_OF", kLoopTeam.getName().GetCString()));
+		}
+		else if (kLoopTeam.isVassal(kPlayer.getTeam()))
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_ATTITUDE_MASTER_OF", kLoopTeam.getName().GetCString()));
+		}
+	}
+
+	//	WAR WEARINESS the target is carrying from fighting US -- their population's patience, which is a
+	//	diplomatic fact about this pair and belongs beside the attitude that reads it.
+	const int iWarWeariness = GET_PLAYER(eTargetPlayer).getModifiedWarWearinessPercentAnger(
+		kTargetTeam.getWarWeariness(kPlayer.getTeam()) * std::max(0, 100 + kTeam.getEnemyWarWearinessModifier()));
+	if (iWarWeariness / 10000 > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_WAR_WEAR_HELP", iWarWeariness / 10000));
+	}
 
 	//	The unattributed residual — whatever the leader carries that no named component above accounts for.
 	const int iExtra = kPlayer.AI_getAttitudeExtra(eTargetPlayer);
@@ -7062,6 +7391,182 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 //	⛔ The BASE here is the CONTEXTUAL one, not the mission info's authored number: the base already scales with
 //	the target (its population, its buildings, the distance), so serving the authored figure would decompose the
 //	total into a term that is not in it.
+//	WHAT AN ESPIONAGE MISSION ACTUALLY DOES -- the half a cost breakdown structurally cannot answer.
+//
+//	⚑ Every line is a live TARGET read (this improvement, this city, this player's current research), which is
+//	why it is hand-composed rather than rendered from entries: a mission's effect is not a deposit into a channel,
+//	so there is no compiled entry for the ONE renderer to turn into a line. This is the composer's own job
+//	([patterns.md] THE DIVISION OF LABOUR -- the BLOCK is the composer's; only sub-blocks are the renderer's).
+//	⛔ The gamespeed scaling goes through the ONE consuming-system calc (`CvGameSpeedScale`), never a re-derived
+//	`getSpeedPercent()` at the call site ([engine.md]: the same composition appearing at two call sites is the
+//	tell that one is needed, and those copies DRIFT).
+//	⚠ Every `iExtraData`-indexed lookup is BOUNDS-CHECKED: it is a caller-supplied id, and an out-of-range one
+//	would reach the info plane, which answers an unanswerable read by failing loud
+//	([DEC-info-plane-read-only]) -- a tooltip is not the place to take a load defect down.
+void CvGameTextMgr::appendEspionageMissionEffect(CvWStringBuffer& szBuffer, EspionageMissionTypes eMission,
+	PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData) const
+{
+	const CvEspionageMissionInfo& kMission = GC.getEspionageMissionInfo(eMission);
+	const int iSpeedPercent = CvGameSpeedScale::speedPercent();
+
+	if (pPlot != NULL)
+	{
+		if (kMission.isDestroyImprovement() && pPlot->getImprovementType() != NO_IMPROVEMENT)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_DESTROY_IMPROVEMENT",
+				GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide()));
+		}
+
+		const CvCity* pCity = pPlot->getPlotCity();
+		if (pCity != NULL)
+		{
+			if (kMission.getDestroyBuildingCostFactor() > 0 && iExtraData >= 0 && iExtraData < GC.getNumBuildingInfos())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_DESTROY_IMPROVEMENT",
+					GC.getBuildingInfo((BuildingTypes)iExtraData).getTextKeyWide()));
+			}
+			if (kMission.getDestroyProjectCostFactor() > 0 && iExtraData >= 0 && iExtraData < GC.getNumProjectInfos())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_DESTROY_IMPROVEMENT",
+					GC.getProjectInfo((ProjectTypes)iExtraData).getTextKeyWide()));
+			}
+			if (kMission.getDestroyProductionCostFactor() > 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_DESTROY_PRODUCTION", pCity->getProductionProgress()));
+			}
+			if (kMission.getBuyCityCostFactor() > 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_BRIBE", pCity->getNameKey()));
+			}
+			if (kMission.getCityInsertCultureCostFactor() > 0)
+			{
+				szBuffer.append(NEWLINE);
+				//	⚠ City culture is int64_t -- it accumulates every turn and never decays, so it wrapped `int`
+				//	on long games -- so the amount STAYS wide and narrows once, at the getText call, which is the
+				//	display edge and the only place a width is actually surrendered.
+				//	⚑ `std::max<int64_t>` names the type once: `std::max` deduces ONE type from both arguments, so
+				//	a bare `max(1, <int64 expr>)` is ambiguous rather than missing an overload.
+				const int64_t iInserted = std::max<int64_t>(1,
+					kMission.getCityInsertCultureAmountFactor() * pCity->countTotalCultureTimes100() / 10000);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_INSERT_CULTURE", pCity->getNameKey(),
+					(int)iInserted, kMission.getCityInsertCultureAmountFactor()));
+			}
+			if (kMission.getCityPoisonWaterCounter() > 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_POISON", kMission.getCityPoisonWaterCounter(),
+					gDLL->getSymbolID(UNHEALTHY_CHAR), pCity->getNameKey(), kMission.getCityPoisonWaterCounter()));
+			}
+			if (kMission.getCityUnhappinessCounter() > 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_POISON", kMission.getCityUnhappinessCounter(),
+					gDLL->getSymbolID(UNHAPPY_CHAR), pCity->getNameKey(), kMission.getCityUnhappinessCounter()));
+			}
+			if (kMission.getCityRevoltCounter() > 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_REVOLT", pCity->getNameKey(), kMission.getCityRevoltCounter()));
+			}
+			if (kMission.isNuke())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_NUKE", pCity->getNameKey()));
+			}
+			if (kMission.isRevolt())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_REVOLTUTION", pCity->getNameKey()));
+			}
+			if (kMission.isDisablePower())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_POWER", pCity->getNameKey(), 6 * iSpeedPercent / 100));
+			}
+			if (kMission.getWarWearinessCounter() > 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_WAR_WEARINESS", pCity->getNameKey(), kMission.getWarWearinessCounter()));
+			}
+			if (kMission.getSabatogeResearchCostFactor() > 0 && eTargetPlayer != NO_PLAYER)
+			{
+				const TechTypes eResearch = GET_PLAYER(eTargetPlayer).getCurrentResearch();
+				if (eResearch != NO_TECH)
+				{
+					szBuffer.append(NEWLINE);
+					szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_SABATOGE_RESEARCH",
+						GET_PLAYER(eTargetPlayer).getNameKey(), GC.getTechInfo(eResearch).getTextKeyWide()));
+				}
+			}
+			if (kMission.getRemoveReligionsCostFactor() > 0 && iExtraData >= 0 && iExtraData < GC.getNumReligionInfos())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_REMOVE_RELIGIONS",
+					GC.getReligionInfo((ReligionTypes)iExtraData).getTextKeyWide(), pCity->getNameKey()));
+			}
+			if (kMission.getRemoveCorporationsCostFactor() > 0 && iExtraData >= 0 && iExtraData < GC.getNumCorporationInfos())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_REMOVE_RELIGIONS",
+					GC.getCorporationInfo((CorporationTypes)iExtraData).getTextKeyWide(), pCity->getNameKey()));
+			}
+		}
+	}
+
+	if (eTargetPlayer == NO_PLAYER)
+	{
+		return;
+	}
+	const CvPlayer& kTarget = GET_PLAYER(eTargetPlayer);
+	if (kMission.getDestroyUnitCostFactor() > 0)
+	{
+		const CvUnit* pTargetUnit = kTarget.getUnit(iExtraData);
+		if (pTargetUnit != NULL)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_DESTROY_UNIT", pTargetUnit->getNameKey()));
+		}
+	}
+	if (kMission.getBuyUnitCostFactor() > 0)
+	{
+		const CvUnit* pTargetUnit = kTarget.getUnit(iExtraData);
+		if (pTargetUnit != NULL)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_BRIBE", pTargetUnit->getNameKey()));
+		}
+	}
+	if (kMission.getSwitchCivicCostFactor() > 0 && iExtraData >= 0 && iExtraData < GC.getNumCivicInfos())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_SWITCH_CIVIC", kTarget.getNameKey(),
+			GC.getCivicInfo((CivicTypes)iExtraData).getTextKeyWide()));
+	}
+	if (kMission.getSwitchReligionCostFactor() > 0 && iExtraData >= 0 && iExtraData < GC.getNumReligionInfos())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_SWITCH_CIVIC", kTarget.getNameKey(),
+			GC.getReligionInfo((ReligionTypes)iExtraData).getTextKeyWide()));
+	}
+	if (kMission.getPlayerAnarchyCounter() > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_ANARCHY", kTarget.getNameKey(),
+			kMission.getPlayerAnarchyCounter() * iSpeedPercent / 100));
+	}
+	if (kMission.getCounterespionageNumTurns() > 0 && kMission.getCounterespionageMod() > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_ESPIONAGE_HELP_COUNTERESPIONAGE", kMission.getCounterespionageMod(),
+			kTarget.getCivilizationAdjectiveKey(), kMission.getCounterespionageNumTurns() * iSpeedPercent / 100));
+	}
+}
+
 void CvGameTextMgr::setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pSpyUnit)
 {
 	if (eMission == NO_ESPIONAGEMISSION)
@@ -7074,6 +7579,10 @@ void CvGameTextMgr::setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMis
 		return;
 	}
 	const CvPlayer& kPlayer = GET_PLAYER(eActingPlayer);
+
+	//	WHAT THE MISSION DOES comes FIRST -- a price with no effect beside it is the one thing a player choosing
+	//	between missions cannot use.
+	appendEspionageMissionEffect(szBuffer, eMission, eTargetPlayer, pPlot, iExtraData);
 
 	//	-1 is the "this mission cannot be used here" verdict, and it is the answer the player most needs; the cost
 	//	terms below would all be meaningless beside it.
@@ -8068,25 +8577,76 @@ void CvGameTextMgr::getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	}
 	szBuffer.append(SEPARATOR);
 
-	// The per-source attribution: every OPERATING building that authors the family, rendered through the one
-	// entry renderer -- so each line carries its own magnitude, kind and condition and a new defense channel
-	// needs no edit here at all. A dormant building contributes nothing and says nothing.
+	//	The per-source attribution. ⚠ It walks EVERY live source, not just the buildings: culture levels author
+	//	the same `defense.city.amount` as buildings do ([json.md] par.6), and civics and traits deposit into it
+	//	too -- so a buildings-only walk left part of the total above with nothing naming it, which is precisely
+	//	the failure a decomposition census exists to prevent (a route that serves ONE number answers nothing when
+	//	that number is wrong).
+	appendCitySourceLines(szBuffer, city, MODFAM_DEFENSE);
+}
+
+//	ONE source of a city-scope family -> its heading + its own rendered entry lines. A source that deposits
+//	nothing into the family says nothing at all, so a census lists only what actually contributed.
+void CvGameTextMgr::appendSourceIfAny(CvWStringBuffer& szBuffer, const CvInfo& source, ModifierFamily eFamily) const
+{
+	CvWStringBuffer szLines;
+	appendEntryLines(szLines, source, eFamily);
+	if (szLines.isEmpty())
+	{
+		return;
+	}
+	szBuffer.append(NEWLINE);
+	szBuffer.append(source.getDescription());
+	szBuffer.append(szLines);
+}
+
+//	WHICH SOURCES built this city's total for a family -- the attribution half of a decomposition census.
+//
+//	⚑ The source SET is the composition this composer owns ([patterns.md] THE DIVISION OF LABOUR: the blocks are
+//	"different sources put together"); every magnitude still renders itself through the ONE entry renderer, so a
+//	newly authored kind appears here with no edit. It is shared rather than per-census because the source set is
+//	the same question every city census asks.
+//	⛔ A DORMANT building deposits nothing ([enabler.md] par.3.2), so it is skipped -- listing it would attribute a
+//	contribution the city is not receiving.
+void CvGameTextMgr::appendCitySourceLines(CvWStringBuffer& szBuffer, const CvCity& city, ModifierFamily eFamily) const
+{
 	foreach_(const BuildingTypes eType, city.getHasBuildings())
 	{
-		if (city.isDormantBuilding(eType))
+		if (!city.isDormantBuilding(eType))
 		{
-			continue;
+			appendSourceIfAny(szBuffer, GC.getBuildingInfo(eType), eFamily);
 		}
-		const CvInfo& kBuilding = GC.getBuildingInfo(eType);
-		CvWStringBuffer szLines;
-		appendEntryLines(szLines, kBuilding, MODFAM_DEFENSE);
-		if (szLines.isEmpty())
+	}
+
+	//	The EMPIRE-scope sources reach every city of the player, so they are as much a part of THIS city's total
+	//	as its own buildings are -- and they are the ones a buildings-only census silently dropped.
+	if (city.getOwner() == NO_PLAYER)
+	{
+		return;
+	}
+	const CvPlayer& kOwner = GET_PLAYER(city.getOwner());
+	for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); ++iOption)
+	{
+		const CivicTypes eCivic = kOwner.getCivics((CivicOptionTypes)iOption);
+		if (eCivic != NO_CIVIC)
 		{
-			continue;
+			appendSourceIfAny(szBuffer, GC.getCivicInfo(eCivic), eFamily);
 		}
-		szBuffer.append(NEWLINE);
-		szBuffer.append(kBuilding.getDescription());
-		szBuffer.append(szLines);
+	}
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+	{
+		if (kOwner.hasTrait((TraitTypes)iTrait))
+		{
+			appendSourceIfAny(szBuffer, GC.getTraitInfo((TraitTypes)iTrait), eFamily);
+		}
+	}
+
+	//	The city's CULTURE LEVEL -- the other authored half of the defense stack, and a source no other census
+	//	surface names at all.
+	const CultureLevelTypes eCultureLevel = city.getCultureLevel();
+	if (eCultureLevel != NO_CULTURELEVEL)
+	{
+		appendSourceIfAny(szBuffer, GC.getCultureLevelInfo(eCultureLevel), eFamily);
 	}
 }
 

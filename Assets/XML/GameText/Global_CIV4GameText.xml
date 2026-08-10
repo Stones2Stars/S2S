@@ -31118,5 +31118,41 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<Polish>Naci&#156;nij SHIFT aby zobaczy&#230; Klasy Bojowe</Polish>
 		<Russian>Нажмите SHIFT для просмотра атрибутов</Russian>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_UNLOCKS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Unlocks:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_OBSOLETES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Obsoletes:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_OBSOLETED_BY</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Obsoleted by:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_REPLACES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Replaces:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_DISABLES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Disables:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_MORE</Tag>
+		<English> (+%d1 more, hold ALT for all)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_OWNER</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Owned by:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_CULTURE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Culture:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_CULTURAL_OWNER</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Cultural control:[COLOR_REVERT] %s1</English>
+	</TEXT>
 </Civ4GameText>
 

@@ -67,6 +67,10 @@ public:
 	// bBreakdown = decompose each yield into its stored segments. OFF by default: the census is a diagnostic
 	// read, and putting it in every ordinary map hover buries the number a player actually came for.
 	void setPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bBreakdown = false);
+	// WHO holds a plot and who is taking it: the current owner, then every player's culture SHARE on it,
+	// strongest first, then the cultural owner when it differs from the holder. Cultural ownership is a CONTEST,
+	// so it is a per-player list and never one total ([culture-religion-research.md]).
+	void appendPlotCultureLines(CvWStringBuffer& szString, const CvPlot* pPlot) const;
 	void setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity);
 	void setScoreHelp(CvWStringBuffer &szString, PlayerTypes ePlayer);
 
@@ -144,6 +148,20 @@ public:
 	void appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily,
 		int iTargetFk, EnEdgeBucket eGateBucket, int iGateId) const;
 	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const;
+	// ONE `enables`-family EDGE list -> one "Unlocks: A, B, C" line. The info already CARRIES its edge lists (the
+	// readJson reverse pass lands them at load, [DEC-one-reverse-view]), so this is a forward list read of the
+	// authored handful -- never the whole-database scan the backwards question would be.
+	// ⚖ Capped at a handful by default and UNCAPPED under ALT -- the obvious data at rest, the verbose version
+	// under the same hotkey the plot-yield breakdown already uses; the remainder is always shown as "+N more"
+	// rather than silently dropped.
+	void appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& info,
+		EnEdgeFamily eFamily, const char* szHeadingKey) const;
+	// ONE source's contribution to a city-scope family (its heading + its own entry lines), and the WALK over
+	// every live source that feeds one: the city's operating buildings, the empire's adopted civics and held
+	// traits, and the city's culture level. This is the ATTRIBUTION half of a decomposition census -- a total
+	// with no named sources answers nothing when it is wrong ([http-endpoints.md] the census shape).
+	void appendSourceIfAny(CvWStringBuffer& szBuffer, const CvInfo& source, ModifierFamily eFamily) const;
+	void appendCitySourceLines(CvWStringBuffer& szBuffer, const CvCity& city, ModifierFamily eFamily) const;
 	// The §8/§9 CLASSIFICATION twin of the two above: an entity's authored block keys, rendered one per line
 	// through the ONE name renderer. What a capability/canTrade/canWorkOn block GRANTS is not a magnitude, so it
 	// has no compiled entry to hand appendEntryLines -- which is why the widget cases that ask about one were the
@@ -180,6 +198,11 @@ public:
 	void setEventHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, int iEventTriggeredId, PlayerTypes ePlayer);
 	void setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvCity* pCity);
 	void setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pSpyUnit);
+	// WHAT the mission does to its target, beside what it costs. Hand-composed by design: a mission's effect is
+	// not a deposit into a channel, so no compiled entry exists for the ONE renderer to turn into a line -- this
+	// is a BLOCK, which is the composer's own job ([patterns.md] THE DIVISION OF LABOUR).
+	void appendEspionageMissionEffect(CvWStringBuffer& szBuffer, EspionageMissionTypes eMission,
+		PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData) const;
 	void setEspionageMissionHelp(CvWStringBuffer &szBuffer, const CvUnit* pUnit);
 
 	void buildObsoleteString( CvWStringBuffer& szBuffer, int iItem, bool bList = false, bool bPlayerContext = false );
