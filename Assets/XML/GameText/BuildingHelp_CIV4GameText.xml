@@ -1492,6 +1492,34 @@
 		<English>[ICON_BULLET]%s1: +%d2% [COLOR_WARNING_TEXT]needs %s4[COLOR_REVERT]</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_SHARE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Slider share: %d1% of %s2 = %s3[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_DEPOSITS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]This channel's own sources: %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_PERCENT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: +%d1%[COLOR_REVERT] (applies to the slider share only)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_PROCESS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]From production (process): %s1[COLOR_REVERT] (added after the percent stack)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_TOTAL</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Total: %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DEFENSEHELP_TOTAL</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]City defense: +%d1%[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DEFENSEHELP_FLOOR</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Defense floor: +%d1%[COLOR_REVERT] (defense never falls below this)</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_STATE_ACTIVE</Tag>
 		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]Active[COLOR_REVERT] - its effects apply</English>
 	</TEXT>

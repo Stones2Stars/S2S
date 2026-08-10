@@ -141,7 +141,9 @@ void CvCity::getYields(int (&yields)[NUM_YIELD_TYPES]) const
 // The REALIZED read: the live sliders go in. Its what-if sibling below asks the same question against a
 // HYPOTHETICAL slider set, and both share the ONE gather so neither can drift from the other
 // ([DEC-single-implementation]).
-void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
+// The LIVE-slider read, with the census optionally kept. Both public reads come through here so the slider
+// gather exists once -- a second copy of it is exactly how a census drifts from the number it explains.
+void CvCity::commercesAtLiveSliders(int (&commerces)[NUM_COMMERCE_TYPES], CvCommerceSplitTerms* aTermsOut) const
 {
 	int aiCommerceRates[NUM_COMMERCE_TYPES];
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
@@ -152,14 +154,20 @@ void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
 	{
 		GET_PLAYER(getOwner()).getEmpireContext().commerceRates(aiCommerceRates);
 	}
-	expectedCommercesAtSliders(aiCommerceRates, commerces);
+	expectedCommercesAtSliders(aiCommerceRates, commerces, aTermsOut);
+}
+
+void CvCity::getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const
+{
+	commercesAtLiveSliders(commerces, NULL);
 }
 
 // ⚖ THE SLIDER WHAT-IF. The empire's slider percentages are what divide the city's COMMERCE yield across the four
 // channels (modifier.md §2a), so "what would gold be at 0% / 100%" is answered by feeding the ONE combine a
 // hypothetical slider -- never by exposing the combine's internals through a base-rate accessor.
 void CvCity::expectedCommercesAtSliders(const int (&sliderPercents)[NUM_COMMERCE_TYPES],
-										int (&commerces)[NUM_COMMERCE_TYPES]) const
+										int (&commerces)[NUM_COMMERCE_TYPES],
+										CvCommerceSplitTerms* aTermsOut) const
 {
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	getYields(aiRealizedYields);
@@ -185,8 +193,21 @@ void CvCity::expectedCommercesAtSliders(const int (&sliderPercents)[NUM_COMMERCE
 			iChannelPercentSum,
 			InfoValuation::realizedAtCity(*this, iChannel),
 			aiRealizedYields[YIELD_PRODUCTION],
-			iProductionToCommerce);
+			iProductionToCommerce,
+			(aTermsOut != NULL) ? &aTermsOut[iCommerce] : NULL);
 	}
+}
+
+void CvCity::getCommerceTerms(CommerceTypes eCommerce, CvCommerceSplitTerms& kTerms) const
+{
+	if ((int)eCommerce < 0 || (int)eCommerce >= NUM_COMMERCE_TYPES)
+	{
+		return;
+	}
+	int aiCommerces[NUM_COMMERCE_TYPES];
+	CvCommerceSplitTerms aTerms[NUM_COMMERCE_TYPES];
+	commercesAtLiveSliders(aiCommerces, aTerms);
+	kTerms = aTerms[eCommerce];
 }
 
 void CvCity::getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const

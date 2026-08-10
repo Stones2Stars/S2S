@@ -53,6 +53,30 @@ struct HealByUnitCombat
 	HealByUnitCombat() : iUnitCombat(-1), iHeal(0), iAdjacentHeal(0) {}
 };
 
+// ⚖ THE COMMERCE SPLIT, TERM BY TERM -- the CityRateTerms treatment for the commerce half. A channel's realized
+// value is FOUR independent quantities collapsed into one int (the slider's share of the commerce yield, the
+// channel's own percent stack, the channel's deposits, and the process conversion added after all of it), so
+// "research is too low" is unanswerable against the total and immediately answerable against the terms
+// ([http-endpoints.md]: a value served term by term attributes a divergence to a NAMED source).
+// ⛔ NOT a second combine ([DEC-single-implementation]): commerceSplit IS this with the terms discarded, so a
+// census can never describe arithmetic the split does not actually do.
+// Global scope on purpose -- `CvCity`'s census read forward-declares it instead of pulling the whole calc
+// surface into a core game-object header. Every magnitude is ×100 EXCEPT `sliderPercent` and `percentSum`,
+// which are plain counters ([DEC-fixedpoint-x100]: a percentage carries no decimals).
+struct CvCommerceSplitTerms
+{
+	int64_t commerceYield;      // the city's realized COMMERCE yield -- what the slider divides
+	int     sliderPercent;      // the player's plain 0..100 counter for this channel
+	int64_t share;              // the slider's share of that yield, BEFORE the channel's own stack
+	int     percentSum;         // Σ percent for this channel across the chain (the stack is 100 + this)
+	int64_t deposits;           // the channel's own deposits (a CONSUMED channel's maintained receiver sum)
+	int64_t processConversion;  // TIER 2 -- production converted by an active process, never multiplied
+	int64_t rate;               // what the split produced
+
+	CvCommerceSplitTerms()
+		: commerceYield(0), sliderPercent(0), share(0), percentSum(0), deposits(0), processConversion(0), rate(0) {}
+};
+
 class InfoValuation
 {
 public:
@@ -374,8 +398,18 @@ public:
 	// ⚠ CULTURE is the lone dual consumer: its `channelDeposits` is the city's MAINTAINED RECEIVER SUM (the
 	// combine the gather already wrote), not a roll-up -- so the receiver sum passes through untouched and only
 	// the commerce yield is slider-scaled. Scaling a receiver sum by a slider would re-scale a realized total.
+	// ⚖ THE SPLIT, TERM BY TERM -- the CityRateTerms treatment for the commerce half. A channel's realized value
+	// is FIVE independent quantities collapsed into one int (the slider's share of the commerce yield, the
+	// channel's own percent stack, the channel deposits, and the process conversion added after it all), so
+	// "research is too low" is unanswerable against the total and immediately answerable against the terms.
+	// ⛔ NOT a second combine ([DEC-single-implementation]): commerceSplit IS this with the terms discarded, so
+	// a census can never describe arithmetic the split does not actually do.
+	// (The struct is CvCommerceSplitTerms at global scope -- a consumer that only passes one, above all `CvCity`'s
+	// census read, forward-declares it rather than taking this whole calc header into a core game-object header.)
+	// `pTerms` NULL = the ordinary read; non-NULL fills the census beside the same answer.
 	static int64_t commerceSplit(int64_t commerceYieldRate, int iSliderPercent, int64_t channelPercentSum,
-		int64_t channelDeposits, int64_t productionYieldRate, int iProductionToCommerce);
+		int64_t channelDeposits, int64_t productionYieldRate, int iProductionToCommerce,
+		CvCommerceSplitTerms* pTerms = NULL);
 
 	// ---- THE CROSS-SCOPE ROLL-UP -- the GAME-OBJECT read role's realized answer (patterns.md § THE TWO READ
 	// ---- ROLES: *"what do I HAVE, right now?"*, the live-state twin of the expected* what-if walk above; the

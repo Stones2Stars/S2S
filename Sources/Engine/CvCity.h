@@ -27,6 +27,7 @@ class CvPlot;
 class CvPlotGroup;
 class CvUnit;
 class CvUnitSelectionCriteria;
+struct CvCommerceSplitTerms;   // getCommerceTerms fills it -- declared here rather than including the calc surface
 
 #define CITY_MAX_YIELD_RATE    99000000
 #define CITY_MAX_YIELD_RATE100 1900000000
@@ -820,7 +821,17 @@ public:
 	// consumer: its deposits term is this city's maintained culture receiver sum, which the slider never scales.
 	void getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const;
 	void expectedCommercesAtSliders(const int (&sliderPercents)[NUM_COMMERCE_TYPES],
-									int (&commerces)[NUM_COMMERCE_TYPES]) const;
+									int (&commerces)[NUM_COMMERCE_TYPES],
+									CvCommerceSplitTerms* aTermsOut = NULL) const;
+	// The CENSUS twin of getCommerces -- ONE channel's split, term by term, for a consumer that has to attribute a
+	// wrong number rather than merely show it (a tooltip; the served decomposition). It is the SAME gather and the
+	// SAME combine with the terms kept, so it can never describe arithmetic the realized read does not do
+	// ([DEC-single-implementation]).
+	void getCommerceTerms(CommerceTypes eCommerce, CvCommerceSplitTerms& kTerms) const;
+private:
+	// The ONE live-slider gather both public commerce reads come through.
+	void commercesAtLiveSliders(int (&commerces)[NUM_COMMERCE_TYPES], CvCommerceSplitTerms* aTermsOut) const;
+public:
 	// The four wellbeing channels (modifier.md §2b): happiness/anger/health/unhealth as four ORDINARY channels,
 	// each a positive magnitude -- the opposing pairs are summed at the verdict, which is not a read.
 	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;

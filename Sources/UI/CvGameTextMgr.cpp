@@ -4913,6 +4913,43 @@ void CvGameTextMgr::buildHintsList(CvWStringBuffer& szBuffer)
 
 void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eCommerceType)
 {
+	if ((int)eCommerceType < 0 || city.getOwner() == NO_PLAYER)
+	{
+		return;
+	}
+	// A commerce channel is the city's COMMERCE YIELD divided by the empire's slider and then given its own
+	// stack and deposits (modifier.md §2a), so the breakdown is TWO censuses stacked: the yield that is being
+	// divided, then the split of it. Showing only the second leaves "the yield is short" indistinguishable from
+	// "my slider is low".
+	setYieldHelp(szBuffer, city, YIELD_COMMERCE);
+	szBuffer.append(DOUBLE_SEPARATOR);
+
+	// ⛔ THE TERMS COME OUT OF THE REAL SPLIT, never re-derived beside it ([DEC-single-implementation]) -- the
+	// city's census read is the same gather and the same combine as its realized one, with the terms kept.
+	CvCommerceSplitTerms kTerms;
+	city.getCommerceTerms(eCommerceType, kTerms);
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_SHARE",
+		kTerms.sliderPercent, gt_scaled100(kTerms.commerceYield).GetCString(),
+		gt_scaled100(kTerms.share).GetCString()));
+
+	// Shown even at zero: a zero that OUGHT to be non-zero is a finding, and a hidden line cannot be one.
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_DEPOSITS", gt_scaled100(kTerms.deposits).GetCString()));
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_PERCENT", kTerms.percentSum));
+
+	if (kTerms.processConversion != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_PROCESS",
+			gt_scaled100(kTerms.processConversion).GetCString()));
+	}
+	szBuffer.append(SEPARATOR);
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_TOTAL", gt_scaled100(kTerms.rate).GetCString()));
 }
 
 // A ×100 fixed-point quantity, rendered whole.fraction ([DEC-fixedpoint-x100] -- the UI is a READ EDGE, so the
@@ -7411,6 +7448,43 @@ void CvGameTextMgr::getCorporationDataForWB(bool bHeadquarters, std::vector<CvWB
 */
 void CvGameTextMgr::getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
+	// ⛔ Defense is ONE additive stack: BUILDINGS and CULTURE LEVELS author the same `defense.city.amount`
+	// ([json.md] par.6), so the legacy building / wonder / resource / civic / trait buckets were never five
+	// quantities -- they were five hand-summed legs of one, and there is no `max(building, natural)` here either.
+	// What a census owes instead is the TOTAL, then WHICH SOURCE each contribution came from.
+	// ⚠ A defense value is a PERCENT and percents are NOT scaled ([DEC-fixedpoint-x100]), so these render plain
+	// -- a ÷100 here would zero the whole stack.
+	int aiDefenses[NUM_DEFENSE_KINDS];
+	city.getDefenseKinds(aiDefenses);
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_DEFENSEHELP_TOTAL", aiDefenses[DEFENSE_AMOUNT]));
+	if (aiDefenses[DEFENSE_MIN] != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_DEFENSEHELP_FLOOR", aiDefenses[DEFENSE_MIN]));
+	}
+	szBuffer.append(SEPARATOR);
+
+	// The per-source attribution: every OPERATING building that authors the family, rendered through the one
+	// entry renderer -- so each line carries its own magnitude, kind and condition and a new defense channel
+	// needs no edit here at all. A dormant building contributes nothing and says nothing.
+	foreach_(const BuildingTypes eType, city.getHasBuildings())
+	{
+		if (city.isDormantBuilding(eType))
+		{
+			continue;
+		}
+		const CvInfo& kBuilding = GC.getBuildingInfo(eType);
+		CvWStringBuffer szLines;
+		appendEntryLines(szLines, kBuilding, MODFAM_DEFENSE);
+		if (szLines.isEmpty())
+		{
+			continue;
+		}
+		szBuffer.append(NEWLINE);
+		szBuffer.append(kBuilding.getDescription());
+		szBuffer.append(szLines);
+	}
 }
 
 bool CvGameTextMgr::setBuildingAdditionalDefenseHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted)

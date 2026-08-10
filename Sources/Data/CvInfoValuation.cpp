@@ -628,7 +628,8 @@ int64_t InfoValuation::cityRate(int64_t base, int64_t specialists, int iPercentS
 }
 
 int64_t InfoValuation::commerceSplit(int64_t commerceYieldRate, int iSliderPercent, int64_t channelPercentSum,
-	int64_t channelDeposits, int64_t productionYieldRate, int iProductionToCommerce)
+	int64_t channelDeposits, int64_t productionYieldRate, int iProductionToCommerce,
+	CvCommerceSplitTerms* pTerms)
 {
 	// TIER 1 -- the slider share of the COMMERCE yield. The slider is a plain 0..100 counter (json §3.1), so the
 	// ÷100 is the percent-to-fraction conversion, not a fixed-point de-scale.
@@ -644,7 +645,18 @@ int64_t InfoValuation::commerceSplit(int64_t commerceYieldRate, int iSliderPerce
 	// yield truncates to whole hammers BEFORE the conversion scales it (the engine's order, mirrored verbatim);
 	// the conversion rate is ×100, so it de-scales to the authored human percent.
 	int64_t iProcessConversion = (productionYieldRate / 100) * ((int64_t)iProductionToCommerce / 100);
-	return iShare * iModifier / 100 + channelDeposits + iProcessConversion;
+	const int64_t iRate = iShare * iModifier / 100 + channelDeposits + iProcessConversion;
+	if (pTerms != NULL)
+	{
+		pTerms->commerceYield = commerceYieldRate;
+		pTerms->sliderPercent = iSliderPercent;
+		pTerms->share = iShare;
+		pTerms->percentSum = (int)channelPercentSum;
+		pTerms->deposits = channelDeposits;
+		pTerms->processConversion = iProcessConversion;
+		pTerms->rate = iRate;
+	}
+	return iRate;
 }
 
 namespace
