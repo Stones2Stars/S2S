@@ -470,6 +470,27 @@ int CyInfo::getHandicapCivicUpkeepPercent(int iHandicapId) const
 	return pHandicap ? pHandicap->getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, false) : 0;
 }
 
+int CyInfo::getCivicUpkeep(int iCivicId) const
+{
+	const CvCivicInfo* pCivic = static_cast<const CvCivicInfo*>(cyi_info("CIVIC_", iCivicId));
+	return pCivic ? pCivic->getUpkeepLevel() : -1;
+}
+
+int CyInfo::getAllowedCap(const std::string& szTypePrefix, int iId, int iCap) const
+{
+	if (iCap < 0 || iCap >= NUM_ALLOWEDCAP) return -1;
+
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL) return -1;
+
+	//	An entity that authors no `allowed` block is UNCAPPED, which is the same answer as an unauthored cap --
+	//	so both return -1 rather than one of them being an error the caller has to tell apart.
+	const CvAllowed* pAllowed = pInfo->getAllowed();
+	if (pAllowed == NULL) return -1;
+
+	return pAllowed->cap((EnAllowedCap)iCap);
+}
+
 bool CyInfo::hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const
 {
 	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
@@ -1180,6 +1201,8 @@ void CyInfo::pythonPublish()
 		.def("expectedCommerceModifiers", &CyInfo::expectedCommerceModifiers)
 		.def("expectedDefenseKinds", &CyInfo::expectedDefenseKinds)
 		.def("getIdList", &CyInfo::getIdList)
+		.def("getCivicUpkeep", &CyInfo::getCivicUpkeep)
+		.def("getAllowedCap", &CyInfo::getAllowedCap)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;
 }

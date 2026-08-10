@@ -323,6 +323,17 @@ public:
 	// ⚑ NAMED rather than slotted for the same reason as isWorldUnit above, and because the value belongs to ONE
 	// registry ([patterns.md]: a value that belongs to one type is named on that type's accessor).
 	int getHandicapCivicUpkeepPercent(int iHandicapId) const;
+	// A CIVIC's upkeep CLASS -- the `UPKEEP_` id, which the caller then names through the identity plane. The
+	// civic carries the FK and the upkeep entity carries the text, so handing back the id keeps the two apart
+	// instead of resolving a string here.
+	int getCivicUpkeep(int iCivicId) const;
+	// The AUTHORED `allowed` cap at one scope, or -1 where the entity authors none.
+	// ⚑ Parameterized over the SCOPE axis rather than split into a read per question, because scope is an axis
+	// and not part of a name ([DEC-scope-is-an-axis]) -- so one read serves buildings, units, techs and projects,
+	// and a wonder CATEGORY cap is the same read with a category cap id.
+	// ⚠ -1 means UNCAPPED, so a caller tests `>= 0` for "is capped" and prints the value only above it; reading
+	// it as a count would report every uncapped entity as capped at minus one.
+	int getAllowedCap(const std::string& szTypePrefix, int iId, int iCap) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
 	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.

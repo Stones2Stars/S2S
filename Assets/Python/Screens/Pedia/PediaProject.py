@@ -42,7 +42,6 @@ class PediaProject:
 		CyPlayer = self.main.CyPlayer
 		aName = self.main.getNextWidgetName
 
-		CvTheProjectInfo = GC.getProjectInfo(iTheProject)
 
 		iWidGen			= WidgetTypes.WIDGET_GENERAL
 		iPanelBlue50	= PanelStyles.PANEL_STYLE_BLUE50
@@ -63,9 +62,9 @@ class PediaProject:
 		W_STATS = self.W_STATS
 		H_STATS = self.H_STATS
 
-		szName = CvTheProjectInfo.getDescription()
-		iMaxGlobal = CvTheProjectInfo.getMaxGlobalInstances()
-		iMaxTeam = CvTheProjectInfo.getMaxTeamInstances()
+		szName = INFO.getDescription("PROJECT_", iTheProject)
+		iMaxGlobal = INFO.getAllowedCap("PROJECT_", iTheProject, AllowedCap.ALLOWEDCAP_WORLD)
+		iMaxTeam = INFO.getAllowedCap("PROJECT_", iTheProject, AllowedCap.ALLOWEDCAP_TEAM)
 		if iMaxGlobal > 0:
 			szName += "<color=192,192,128,255> | " + TRNSLTR.getText("TXT_KEY_PEDIA_WORLD_PROJECT",()) + " - Max. " + str(iMaxGlobal)
 		elif iMaxTeam > 0:
@@ -76,12 +75,12 @@ class PediaProject:
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_ROW_1 + 2, W_COL_1 + 8, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "Preview|Movie|PROJECT|ToolTip" + str(iTheProject)
 		self.main.aWidgetBucket.append(Img)
-		screen.setImageButtonAt(Img, Pnl, CvTheProjectInfo.getButton(), 4, 6, S_ICON, S_ICON, iWidGen, 1, 1)
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("PROJECT_", iTheProject), 4, 6, S_ICON, S_ICON, iWidGen, 1, 1)
 		# Stats
 		Pnl = aName()
 		screen.addListBoxGFC(Pnl, "", X_STATS, Y_STATS, W_STATS, H_STATS, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(Pnl, False)
-		iCost = CvTheProjectInfo.getProductionCost()
+		iCost = INFO.getIntrinsic("PROJECT_", iTheProject, IntrinsicSlot.PYINT_COST)
 		if iCost > 0:
 			if CyPlayer:
 				iCost = CyPlayer.getProjectProductionNeeded(iTheProject)
@@ -90,19 +89,22 @@ class PediaProject:
 			szCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", (iCost,))
 			screen.appendListBoxString(Pnl, szfont3b + szCost + u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION), iWidGen, 0, 0, 1<<0)
 		# Requires
-		iTech = CvTheProjectInfo.getTechPrereq()
-		if iTech != -1:
+		#  The project's unlocking techs are the inverse of a tech's own `enables.projects`, which is the same
+		#  edge the forward-compat FK is reconstructed from -- and a list, so a second prereq is not dropped.
+		aTechs = INFO.getEdgeIds("PROJECT_", iTheProject, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS)
+		if aTechs:
 			Pnl = aName()
 			szRequires = TRNSLTR.getText("TXT_KEY_PEDIA_REQUIRES", ()) + ":"
 			screen.addPanel(Pnl, szRequires, "", False, True, X_COL_1 + W_COL_1 - 108, Y_STATS + 16, 100, H_STATS - 16, PanelStyles.PANEL_STYLE_EMPTY)
 			screen.attachLabel(Pnl, "", "<font=4b>| ")
-			Img = "ToolTip|JumpTo|TECH" + str(iTech)
-			screen.attachImageButton(Pnl, Img, INFO.getButton("TECH_", iTech), self.main.enumGBS, iWidGen, 1, 1, False)
+			for iTech in aTechs:
+				Img = "ToolTip|JumpTo|TECH" + str(iTech)
+				screen.attachImageButton(Pnl, Img, INFO.getButton("TECH_", iTech), self.main.enumGBS, iWidGen, 1, 1, False)
 			screen.attachLabel(Pnl, "", "<font=4b> |")
 		# Strategy
 		screen.addPanel(aName(), "", "", False, False, X_COL_2, Y_ROW_1, W_COL_1, H_TOP_ROW, iPanelBlue50)
 		szText = szfont2b + "<color=192,192,128,255>" + TRNSLTR.getText("TXT_KEY_PEDIA_STRATEGY", ()) + ":    </color>"
-		szText += szfont2 + CvTheProjectInfo.getStrategy()
+		szText += szfont2 + INFO.getStrategy("PROJECT_", iTheProject)
 		screen.addMultilineText(aName(), szText, X_COL_2 + 4, Y_ROW_1 + 8, W_COL_1 - 8, H_TOP_ROW - 16, iWidGen, 0, 0, 1<<0)
 		# Special
 		screen.addPanel(aName(), "", "", True, False, X_COL_1, Y_ROW_2, W_COL_1, H_ROW_2, iPanelBlue50)
@@ -111,5 +113,5 @@ class PediaProject:
 		# History
 		screen.addPanel(aName(), "", "", True, False, X_COL_2, Y_ROW_2, W_COL_1, H_ROW_2, iPanelBlue50)
 		szText = szfont2b + "<color=192,192,128,255>" + TRNSLTR.getText("TXT_KEY_PEDIA_HISTORY", ()) + ":    </color>"
-		szText += szfont2 + CvTheProjectInfo.getCivilopedia()
+		szText += szfont2 + INFO.getCivilopedia("PROJECT_", iTheProject)
 		screen.addMultilineText(aName(), szText, X_COL_2 + 4, Y_ROW_2 + 8, W_COL_1 - 8, H_ROW_2 - 16, iWidGen, 0, 0, 1<<0)
