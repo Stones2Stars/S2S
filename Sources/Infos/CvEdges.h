@@ -42,6 +42,13 @@ namespace picojson { class value; }
 //                        `enables.buildings`. Without this family the target's sole recourse is the MERGED
 //                        EDGEF_RELATED bucket, which cannot tell an unlocking tech from an obsoleting one or
 //                        from one that merely deposits onto it. Populated by the same reverse pass.
+//   EDGEF_MEMBERS     -- the MEMBERSHIP axis: entities that BELONG TO this info, where belonging is a plain FK
+//                        the member carries and the group never lists (a unit names its combat classes; a
+//                        combat class names no units). ⛔ It cannot ride EDGEF_RELATED, and that is the whole
+//                        reason it exists: a unit also names a combat class to deposit a vs-modifier onto it,
+//                        so the RELATED superset mixes members with every unit that merely has a bonus
+//                        AGAINST them -- an answer that is wrong rather than merely wide. Populated by the
+//                        same reverse pass; a group's members are never re-derived by sweeping the members.
 enum EnEdgeFamily
 {
 	EDGEF_ENABLES = 0,
@@ -52,6 +59,7 @@ enum EnEdgeFamily
 	EDGEF_RELATED,
 	EDGEF_REQUIRED_BY,
 	EDGEF_ENABLED_BY,
+	EDGEF_MEMBERS,
 	NUM_EDGEF
 };
 

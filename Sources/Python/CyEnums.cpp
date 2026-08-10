@@ -88,6 +88,7 @@ void CyEnums::pythonPublish()
 		.value("EDGEF_RELATED",      EDGEF_RELATED)
 		.value("EDGEF_REQUIRED_BY",  EDGEF_REQUIRED_BY)
 		.value("EDGEF_ENABLED_BY",   EDGEF_ENABLED_BY)
+		.value("EDGEF_MEMBERS",      EDGEF_MEMBERS)
 		;
 
 	// The INTRINSIC STRAGGLER slots ([patterns.md] THE GETTER SETUP category 4) -- the lone values that belong

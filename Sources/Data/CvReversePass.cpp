@@ -38,6 +38,7 @@
 #include "CvTerrainInfo.h"
 #include "CvFeatureInfo.h"
 #include "CvLeaderHeadInfo.h"          // the trait FK lists the leaderhead inverse reads (not an InfoRepo kind)
+#include "CvUnitCombatInfo.h"          // the membership index's receiver (likewise reached through the globals)
 #include <cstring>
 #include <set>
 #include <string>
@@ -404,6 +405,19 @@ namespace
 		}
 	}
 
+	// Land one MEMBERSHIP reference: the member unit onto its combat class. Unitcombats are not an edge BUCKET
+	// (nothing stores a class id in an edge list), so the class is reached through the globals like the
+	// leaderhead is -- what the bucket names here is the kind of the ids being stored, which are units.
+	void rp_landMember(int iUnitCombat, int iUnit)
+	{
+		if (iUnitCombat < 0 || iUnitCombat >= GC.getNumUnitCombatInfos())
+		{
+			return;
+		}
+		GC.getUnitCombatInfo((UnitCombatTypes)iUnitCombat).addReverseEdge(EDGEF_MEMBERS, EDGEB_UNITS, iUnit);
+		++s_counts.relatedAdds;
+	}
+
 	// The LEADERHEAD's trait assignment, inverted. A leader holds its traits as plain FK lists and a trait never
 	// names a leader, so "which leaders hold this trait" cannot be read forward from either side -- it exists
 	// only as this load-built inverse.
@@ -432,6 +446,34 @@ namespace
 		}
 	}
 
+	// The UNIT-COMBAT membership index (class -> its member units), inverted from each unit's own combat-class
+	// FKs. A unit names its classes and a class names no units, so this is the only place the answer exists.
+	// ⛔ It is EDGEF_MEMBERS and not EDGEF_RELATED: a unit ALSO names a combat class to deposit a vs-modifier
+	// onto it, so the RELATED list of a class holds every unit that merely fights it well. Reading membership
+	// off that would report those as members.
+	// ⚑ PRIMARY + SUBS is the authored set, which is what a static listing means. Promotion-granted classes are
+	// per-unit runtime state and are not membership of the type.
+	void rp_deriveUnitCombatMembers()
+	{
+		const int iNumUnits = GC.getNumUnitInfos();
+		for (int iUnit = 0; iUnit < iNumUnits; ++iUnit)
+		{
+			const CvInfo* pUnitData = InfoRepo<CvUnitInfo>::get().get(iUnit);
+			if (pUnitData == NULL)
+			{
+				continue;
+			}
+			const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(pUnitData);
+
+			rp_landMember(pUnit->getCombatClass(), iUnit);
+			const std::vector<int>& subClasses = pUnit->getCombatClasses();
+			for (size_t iClass = 0; iClass < subClasses.size(); ++iClass)
+			{
+				rp_landMember(subClasses[iClass], iUnit);
+			}
+		}
+	}
+
 	void rp_buildRelated()
 	{
 		#define X(REPO_TAG, COUNT_GETTER, SOURCE_BUCKET) rp_relatedWalkKind<REPO_TAG>(GC.COUNT_GETTER(), SOURCE_BUCKET);
@@ -442,6 +484,7 @@ namespace
 		rp_relatedWalkKind<CvComplexTraitTag>(GC.getNumTraitInfos(), EDGEB_TRAITS);
 		rp_relatedFromBuildProduces();
 		rp_relatedFromLeaderTraits();
+		rp_deriveUnitCombatMembers();
 	}
 
 	// ==================== sub-pass (3): EDGEF_REQUIRED_BY -- the enabler's re-gate index ====================

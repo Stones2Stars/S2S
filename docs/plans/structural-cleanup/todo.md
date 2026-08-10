@@ -738,6 +738,14 @@
   list with ANY semantics and never for a consumer with ALL semantics — a panel that split mandatory from
   one-of loses that split, which is a stated display change and not a reason to hesitate
   ([patterns.md](../../architecture/patterns.md)).
+- Serve the unit STAT columns the enumeration screens render — the movement and air families have no group read,
+  so a screen listing units can show a name and a cost and nothing else. `strength` is reachable as a straggler
+  scalar, but `MOVEMENT_MOVES` and `AIR_AMOUNT`/`AIR_RANGE` are KINDS in their families, so they want the group
+  read per family that every other family already has ([patterns.md](../../architecture/patterns.md): one getter
+  per group, parameterized over the group's index), never a scalar row bolted on per value.
+  ⚠ The unit-combat page needs one more thing that is NOT this: its tech-grid column runs through a helper taking
+  an info OBJECT and calling the deleted condition walker, so that column rides the deliberately-dangling GOM
+  class and closes with the `requires` display, not with these reads.
 - **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
   *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
   everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read
