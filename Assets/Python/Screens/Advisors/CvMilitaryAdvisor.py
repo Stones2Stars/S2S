@@ -236,7 +236,7 @@ class CvMilitaryAdvisor:
 				if not CyPlayerX.isAlive(): continue
 
 				for CyUnit in CyPlayerX.units():
-					if not CyUnit.isDead() and CyUnit.getVisualOwner() in self.selectedCivs:
+					if not STATE.isUnitDead(iPlayerX, CyUnit.getID()) and CyUnit.getVisualOwner() in self.selectedCivs:
 						if not CyUnit.isInvisible(iTeam, False) and CyUnit.plot().isVisible(iTeam, False):
 							self.stats.processUnit(CyPlayer, CyTeam, CyUnit)
 

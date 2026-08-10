@@ -446,7 +446,7 @@ class CvDomesticAdvisor:
 		else:
 			bCanLiberate = False
 			for CyCity in CyPlayer.cities():
-				if CyCity.getLiberationPlayer(False) != -1:
+				if STATE.getLiberationPlayer(CyCity.getOwner(), CyCity.getID()) != -1:
 					bCanLiberate = True
 					break
 

@@ -326,6 +326,11 @@ public:
 	// (PROMOTION_PROUD_PIRATE, [skills.md]), so `INFO.isHiddenNationality(unitType)` answers a DIFFERENT question
 	// and silently misses every unit that earned it -- which is why this is a STATE read and named for the unit.
 	bool isUnitHiddenNationality(int iPlayer, int iUnit) const;
+	// ⛔ A unit whose death is DECIDED but not yet performed still answers TRUE here, and a consumer iterating
+	// a player's units must skip it: combat holds raw pointers across the exchange, so a killed unit stays a
+	// live object until the delayed-death pass reaps it ([unit-lifecycle.md]). Anything listing or counting
+	// units without this shows the dead ones.
+	bool isUnitDead(int iPlayer, int iUnit) const;
 	// The owner a VIEWER sees -- which differs from the real owner for a hidden-nationality unit. A log or a
 	// message must use this one, or it names the civ the mechanic exists to conceal.
 	int getUnitVisualOwner(int iPlayer, int iUnit) const;

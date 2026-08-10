@@ -333,14 +333,14 @@ class CvCorporationScreen:
 			if iLinkCorporation == -1:
 				bFirst = True
 				for iI in lCorporations:
-					szTempBuffer = CyGameTextMgr().getCorporationHelpCity(iI, cityX, False, False)
+					szTempBuffer = CyGameTextMgr().getCorporationHelpCity(iI, cityX.getOwner(), cityX.getID(), False, False)
 					if szTempBuffer:
 						if not bFirst:
 							szCityName += ", "
 						szCityName += szTempBuffer
 						bFirst = False
 
-			else: szCityName += CyGameTextMgr().getCorporationHelpCity(iLinkCorporation, cityX, False, True)
+			else: szCityName += CyGameTextMgr().getCorporationHelpCity(iLinkCorporation, cityX.getOwner(), cityX.getID(), False, True)
 
 			if bFirstColumn:
 				szLeftCities += "<font=3>" + szCityName + "\n"

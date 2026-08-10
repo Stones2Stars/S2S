@@ -1048,6 +1048,13 @@ bool CyState::isUnitHiddenNationality(int iPlayer, int iUnit) const
 	return pUnit ? pUnit->isHiddenNationality() : false;
 }
 
+bool CyState::isUnitDead(int iPlayer, int iUnit) const
+{
+	g_szLastCyRead = "CyState::isUnitDead";
+	const CvUnit* pUnit = cys_unit(iPlayer, iUnit);
+	return pUnit ? pUnit->isDead() : true;
+}
+
 int CyState::getNumVisiblePotentialEnemyDefenders(int iPlayer, int iUnit, int iX, int iY) const
 {
 	g_szLastCyRead = "CyState::getNumVisiblePotentialEnemyDefenders";
@@ -1488,6 +1495,7 @@ void CyState::pythonPublish()
 		.def("isUnitInvisible",          &CyState::isUnitInvisible)
 		.def("hasUnitPromotion",         &CyState::hasUnitPromotion)
 		.def("isUnitHiddenNationality",  &CyState::isUnitHiddenNationality)
+		.def("isUnitDead",               &CyState::isUnitDead)
 		.def("getUnitVisualOwner",       &CyState::getUnitVisualOwner)
 		.def("getUnitBaseCombatStr",     &CyState::getUnitBaseCombatStr)
 		.def("getNumVisiblePotentialEnemyDefenders", &CyState::getNumVisiblePotentialEnemyDefenders)

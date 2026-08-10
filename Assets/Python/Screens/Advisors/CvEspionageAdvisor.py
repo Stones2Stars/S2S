@@ -509,7 +509,7 @@ class TheScreen:
 		iCityActID = self.iCityActID
 		iCount = 0
 		for CyCity in CyPlayer.cities():
-			if CyCity.isRevealed(iTeamAct, False):
+			if STATE.isCityRevealed(CyCity.getOwner(), CyCity.getID(), iTeamAct):
 				szText = uFont2 + CyCity.getName()
 				screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, CyCity.getID(), 0, 1<<0)
 				iCityID = CyCity.getID()

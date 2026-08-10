@@ -904,7 +904,7 @@ class CvInfoScreen:
 					iMedianPop = iPop / 2
 				# City Value, could expand this one...
 				iTotalCityValue = (
-					6 * iPop + cityX.getCulture(i) / 30
+					6 * iPop + STATE.getCultureForPlayer(i, cityX.getID(), i) / 30
 					+ 2 * cityX.getYieldRate(YieldTypes.YIELD_FOOD)
 					+ 3 * cityX.getYieldRate(YieldTypes.YIELD_PRODUCTION)
 					+ 3 * cityX.getYieldRate(YieldTypes.YIELD_COMMERCE)
