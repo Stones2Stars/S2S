@@ -1520,6 +1520,46 @@
 		<English>[COLOR_HIGHLIGHT_TEXT]Defense floor: +%d1%[COLOR_REVERT] (defense never falls below this)</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_GPHELP_BASE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Base rate: %d1[COLOR_REVERT] (before the percent stack)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_MODIFIER</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: %d1%[COLOR_REVERT] (100% = unmodified)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_RATE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Great People per turn: %d1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_PROGRESS</Tag>
+		<English>[ICON_BULLET]Progress: %d1 of %d2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_SPECIALIST</Tag>
+		<English>%s1 (x%d2)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_POPULATION</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Population: %d1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_WORKING</Tag>
+		<English>[ICON_BULLET]Working tiles: %d1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_SPECIALISTS</Tag>
+		<English>[ICON_BULLET]Specialists: %d1 of %d2 allowed</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_IDLE</Tag>
+		<English>[COLOR_WARNING_TEXT][ICON_BULLET]Unassigned: %d1[COLOR_REVERT] (no option scored above zero)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_FREE</Tag>
+		<English>[ICON_BULLET]Free specialists: %d1</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_STATE_ACTIVE</Tag>
 		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]Active[COLOR_REVERT] - its effects apply</English>
 	</TEXT>

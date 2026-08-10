@@ -261,7 +261,6 @@ public:
 	DllExport void assignFontIds(int iFirstSymbolCode, int iPadAmount);
 
 	DllExport void getCityDataForAS(std::vector<CvWBData>& mapCityList, std::vector<CvWBData>& mapBuildingList, std::vector<CvWBData>& mapAutomateList);
-	DllExport void getUnitDataForAS(std::vector<CvWBData>& mapUnitList);
 	DllExport void getImprovementDataForAS(std::vector<CvWBData>& mapImprovementList, std::vector<CvWBData>& mapRouteList);
 	DllExport void getVisibilityDataForAS(std::vector<CvWBData>& mapVisibilityList);
 	DllExport void getTechDataForAS(std::vector<CvWBData>& mapTechList);

@@ -2158,6 +2158,26 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 
 void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const CvCity& kCity)
 {
+	// Free specialists split in two and the split is the whole point (modifier.md par.6): the GENERIC bucket is an
+	// amount the engine places into whatever type it judges best, while a TYPED one is already seated as its own
+	// kind. Showing one total would hide which of the two a city actually has.
+	const int iGeneric = kCity.totalFreeSpecialists();
+	if (iGeneric > 0)
+	{
+		szHelpString.append(NEWLINE);
+		szHelpString.append(gDLL->getText("TXT_KEY_EMPLOYHELP_FREE", iGeneric));
+	}
+	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
+	{
+		const int iTyped = kCity.getFreeSpecialistCount((SpecialistTypes)iSpecialist);
+		if (iTyped <= 0)
+		{
+			continue;
+		}
+		szHelpString.append(NEWLINE);
+		szHelpString.append(gDLL->getText("TXT_KEY_GPHELP_SPECIALIST",
+			GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getDescription(), iTyped));
+	}
 }
 //
 // Promotion Help
@@ -3308,6 +3328,20 @@ void CvGameTextMgr::setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eRe
 }
 void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes eReligion, CvCity *pCity, bool bCityBar, bool bForceReligion, bool bForceState, bool bNoStateReligion)
 {
+	if ((int)eReligion < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getReligionInfo(eReligion);
+	if (!bCityBar)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	// Everything the religion deposits at the city plane, through the ONE block renderer -- so a religion that
+	// gains a channel needs no edit here. Its SHRINE commerce is authored on the religion too
+	// ([legacy-value-calc-map.md] par.2) and rides these same families.
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies,
+		sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 
 void CvGameTextMgr::setCorporationHelp(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, bool bCivilopedia)
@@ -3325,6 +3359,20 @@ void CvGameTextMgr::setCorporationHelp(CvWStringBuffer &szBuffer, CorporationTyp
 }
 void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, CvCity *pCity, bool bCityBar, bool bForceCorporation)
 {
+	if ((int)eCorporation < 0)
+	{
+		return;
+	}
+	const CvInfo& kInfo = GC.getCorporationInfo(eCorporation);
+	if (!bCityBar)
+	{
+		szBuffer.append(kInfo.getDescription());
+	}
+	// The corp's per-city output. Its rate carries a `per:{anyOf: consumed bonuses}` scaler
+	// ([culture-religion-research.md]), so the entry renderer prints the rate AND its scaler together -- summing the
+	// bonus count by hand here would re-implement the scaler the entry already states.
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies,
+		sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 
 void CvGameTextMgr::buildObsoleteString(CvWStringBuffer &szBuffer, int iItem, bool bList, bool bPlayerContext)
@@ -5230,6 +5278,65 @@ void CvGameTextMgr::setVassalRevoltHelp(CvWStringBuffer& szBuffer, TeamTypes eMa
 
 void CvGameTextMgr::parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
+	if (city.getOwner() == NO_PLAYER)
+	{
+		return;
+	}
+	// The GP rate is the same TWO-TIER shape as a yield rate -- a base the stack multiplies, then the stack
+	// ([legacy-value-calc-map.md] par.9.5) -- so it decomposes the same way. The rate alone cannot say whether a low
+	// number is a thin base or a missing modifier, and those move for completely different reasons.
+	const int iBase = city.getBaseGreatPeopleRate();
+	const int iModifier = city.getTotalGreatPeopleRateModifier();
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_BASE", iBase));
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_MODIFIER", iModifier));
+	szBuffer.append(SEPARATOR);
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_RATE", city.getGreatPeopleRate()));
+
+	// Progress against the threshold -- the number that says WHEN, which a per-turn rate never does.
+	const int iThreshold = GET_PLAYER(city.getOwner()).greatPeopleThresholdNonMilitary();
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_PROGRESS", city.getGreatPeopleProgress(), iThreshold));
+
+	// The per-source attribution. A GP rate comes from OPERATING buildings and from ASSIGNED specialists, and a
+	// specialist's contribution scales by how many are seated -- so the count rides the line, since one merchant
+	// and six merchants are the same authored entry and very different numbers.
+	foreach_(const BuildingTypes eType, city.getHasBuildings())
+	{
+		if (city.isDormantBuilding(eType))
+		{
+			continue;
+		}
+		const CvInfo& kBuilding = GC.getBuildingInfo(eType);
+		CvWStringBuffer szLines;
+		appendEntryLines(szLines, kBuilding, MODFAM_GREAT_PEOPLE_RATE);
+		if (!szLines.isEmpty())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(kBuilding.getDescription());
+			szBuffer.append(szLines);
+		}
+	}
+	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
+	{
+		const int iCount = city.getSpecialistCount((SpecialistTypes)iSpecialist);
+		if (iCount <= 0)
+		{
+			continue;
+		}
+		const CvInfo& kSpecialist = GC.getSpecialistInfo((SpecialistTypes)iSpecialist);
+		CvWStringBuffer szLines;
+		appendEntryLines(szLines, kSpecialist, MODFAM_GREAT_PEOPLE_RATE);
+		if (!szLines.isEmpty())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_GPHELP_SPECIALIST",
+				kSpecialist.getDescription(), iCount));
+			szBuffer.append(szLines);
+		}
+	}
 }
 
 // BUG - Building Additional Great People - start
@@ -7169,10 +7276,6 @@ void CvGameTextMgr::getCityDataForAS(std::vector<CvWBData>& mapCityList, std::ve
 	mapAutomateList.push_back(CvWBData(0, szHelp, ARTFILEMGR.getInterfaceArtInfo("INTERFACE_AUTOMATE")->getPath()));
 }
 
-void CvGameTextMgr::getUnitDataForAS(std::vector<CvWBData>& mapUnitList)
-{
-}
-
 void CvGameTextMgr::getImprovementDataForAS(std::vector<CvWBData>& mapImprovementList, std::vector<CvWBData>& mapRouteList)
 {
 	PROFILE_EXTRA_FUNC();
@@ -7515,6 +7618,34 @@ bool CvGameTextMgr::setBuildingAdditionalDefenseHelp(CvWStringBuffer &szBuffer, 
 
 void CvGameTextMgr::setEmploymentHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
+	// Where the population actually IS: working tiles, seated as specialists, or neither. The last is the one
+	// worth seeing -- a citizen the assignment left UNASSIGNED is invisible in every other number, and the
+	// valuation leaves one deliberately whenever no option scores above zero
+	// ([citizen-assignment.md]: a non-positive option is not takeable).
+	const int iPopulation = city.getPopulation();
+	const int iWorking = city.getWorkingPopulation();
+	const int iSpecialists = city.getSpecialistPopulation();
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_EMPLOYHELP_POPULATION", iPopulation));
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_EMPLOYHELP_WORKING", iWorking));
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_EMPLOYHELP_SPECIALISTS", iSpecialists, city.getMaxSpecialistCount()));
+
+	const int iIdle = iPopulation - iWorking - iSpecialists;
+	if (iIdle > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_EMPLOYHELP_IDLE", iIdle));
+	}
+	// The free specialists sit BESIDE the seated ones (modifier.md par.6: the cascade owns the AMOUNT, the engine
+	// places them), so they are their own line rather than folded into the count above.
+	const int iFree = city.totalFreeSpecialists();
+	if (iFree > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_EMPLOYHELP_FREE", iFree));
+	}
 }
 
 
