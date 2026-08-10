@@ -360,14 +360,35 @@ group's natural index** — never N individual getters for a groupable set. This
      > removes its legacy accessor call with it.
      > ⛔ **Altered visible text is therefore never a reason to hesitate** — say what changed and move on.
      >
-     > **⚖ HOW A TOOLTIP LOOKS IS END-STAGE, NOT SWEEP WORK (owner): "how tooltips are rendered is fairly
-     > irrelevant right now, these are bugs we catch at the end."** ⚑ The reason it holds rather than being
-     > mere sequencing: *"I don't want us to chase visual perfection before we can — well — SEE things."* A red
-     > tree renders nothing, so any judgement about appearance is unverifiable guesswork. ⛔ Do not start a
-     > tooltip layout pass as part of a composer sweep.
-     > ⚑ **And the eventual tooltip SET is DEMAND-DRIVEN (owner): "we will figure out what tooltips we need,
-     > and what we miss, from community requests and playtests."** So a legacy tooltip line removed by a cut is
-     > not a regression to restore — legacy parity is not the target here.
+     > **⚖ TOOLTIPS ARE NOW THE INSTRUMENT — FEATURE-COMPLETE, AND THEY MUST LOOK RIGHT (owner): *"we are now
+     > so far along that tooltips are now very relevant … I want them to look right, get all the data, so we can
+     > find the final missing pieces."*** A tooltip carrying every term of a value is a DECOMPOSITION CENSUS in
+     > UI form — the shape [http-endpoints.md](../specs/http-endpoints.md) specs for a route (*"a route that
+     > serves ONE number answers nothing when that number is wrong"*), reached through the screen instead of the
+     > wire. That is why completeness is the bar and not polish: an incomplete tooltip does not merely look
+     > sparse, it **hides the gap it exists to reveal**.
+     > ⛔ **So the acceptance test is EVERY FAMILY THE ENTITY CARRIES RENDERS, not the subset a composer happens
+     > to have been converted onto.** ⚑ **MOVEMENT is the named exemplar (owner): *"especially with things like
+     > movement, it's easy to spot when it's wrong."*** A player checks a movement number against the unit in
+     > front of them, so that channel is where a missing or mis-scaled term is caught by eye — which makes it the
+     > canary for the rest, not a special case.
+     > ⚠ **The composer that renders NOTHING is the one to hunt, and it is silent:** an empty tooltip logs no
+     > line, fails no build and reads exactly like an entity with nothing to say. Enumerate the composers
+     > mechanically (which are empty, which are still called) rather than trusting that a screen looks populated.
+     >
+     > ⛔ **The retired ruling, recorded because its ABSENCE will look like drift to anyone who remembers it:**
+     > tooltips were once explicitly end-stage — *"how tooltips are rendered is fairly irrelevant right now,
+     > these are bugs we catch at the end"*. That was an **ANTI-RATHOLE GUARD, not a judgement about value**
+     > (owner): it was written when *"everything was fucked"* and agents *"consistently and constantly tried to
+     > 'keep the game running' despite it not even compiling"* — the owner *"could not drag agents off the
+     > tooltip to save my life"*. A red tree renders nothing, so attention spent there was unrecoverable. ⇒ The
+     > guard was scoped to a CONDITION, and the condition is over: the tree builds and the game runs, so the
+     > work it deferred is now the work. ⚑ Read this as the pattern rather than as one reversal — a sequencing
+     > guard earns its keep only while its premise holds, and the premise is the thing to re-check.
+     > ⚠ What does NOT come back with it is legacy PARITY: the tooltip SET is still demand-driven (owner: *"we
+     > will figure out what tooltips we need, and what we miss, from community requests and playtests"*), so a
+     > legacy line removed by a cut is not a regression to restore. **Completeness is measured against what the
+     > ENTITY CARRIES, never against what the legacy composer used to print.**
      >
      > **⚖ THE DLL DOES NOT CONVERT FOR DISPLAY — THE CONSUMER CONVERTS ITSELF (owner: "let python convert
      > themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL performing

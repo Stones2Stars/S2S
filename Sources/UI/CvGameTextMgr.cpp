@@ -23,6 +23,12 @@
 #include "CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "Infos/CvModifiers.h"        // entries() -- the compiled §3.9 deposits a composer renders
+#include "Infos/CvModEntry.h"         // targetFk + the entry conditions appendEntryLinesFiltered narrows on
+#include "Conditions/CvConditionQuery.h"  // namesId -- the ONE "what does this condition NAME" read
+#include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the ONE verdict, for the per-clause met/unmet
+#include "Infos/CvRequires.h"             // the build/operate trees the requires block renders
+#include "Infos/CvGrants.h"           // the considered-action payload the first-discoverer widgets render
+#include "Infos/CvTechInfo.h"         // canTradeOnTerrain + the tech's own compiled families
 #include "CvClassificationBlock.h"   // the §8/§9 block appendClassificationLines walks
 #include "UI/CvEntryText.h"           // entryDetailLine -- the ONE per-entry renderer
 #include "Enabler/CvEnablerKernel.h"  // operatingBuildings -- the enabler's OWN active/obsolete verdict
@@ -2466,8 +2472,79 @@ bool CvGameTextMgr::buildRequirementItemLink(GOMTypes eGOM, int iId, CvWString& 
 }
 
 
+// One `requires` tree, rendered CLAUSE BY CLAUSE with each clause's OWN verdict. Rendering the tree as a single
+// phrase answers "what does this need" and not "what is MISSING", which is the whole question a player hovering an
+// unbuildable building is asking -- so the top-level AND children render separately, each coloured by its own
+// evaluation, reusing the met/unmet colour convention the text data already carries.
+// ⚑ Only the TOP LEVEL is walked, and that is the BLOCK job the text manager keeps ([patterns.md] § THE DIVISION OF
+// LABOUR): deciding which clauses to show is composition. The per-clause PHRASE is the one renderer's and the
+// per-clause VERDICT is the one evaluator's -- neither is re-implemented here.
+void CvGameTextMgr::buildRequiresClauses(CvWStringBuffer& szBuffer, const CvCondition* pRoot, const CvCity* pCity) const
+{
+	if (pRoot == NULL)
+	{
+		return;
+	}
+	// A city gives every clause a verdict; with no city (the civilopedia) there is nothing to be met AGAINST, so
+	// the clauses render plain rather than being coloured against a city that does not exist.
+	CvCascadeEvalCtx ec;
+	bool bHaveVerdict = false;
+	if (pCity != NULL)
+	{
+		pCity->getCityContext().fillEvalCtx(ec);
+		GET_PLAYER(pCity->getOwner()).getEmpireContext().fillEvalCtx(ec);
+		EnablerKernel::wireOperatingBuildings(pCity, ec);
+		bHaveVerdict = true;
+	}
+	CvCascadeEvalFlags gateFlags;
+	gateFlags.strictStateReligionForBuild = true;
+
+	// An `all` root is a LIST of clauses; anything else is ONE clause and renders whole.
+	const bool bClauseList = (pRoot->kind == CASC_COND_GROUP && !pRoot->all.empty());
+	const int iClauses = bClauseList ? (int)pRoot->all.size() : 1;
+	for (int iClause = 0; iClause < iClauses; ++iClause)
+	{
+		const CvCondition* pClause = bClauseList ? pRoot->all[iClause] : pRoot;
+		const CvWString szPhrase = entryConditionText(pClause);
+		if (szPhrase.empty())
+		{
+			continue;
+		}
+		szBuffer.append(NEWLINE);
+		if (!bHaveVerdict)
+		{
+			szBuffer.append(szPhrase);
+			continue;
+		}
+		if (cascadeEvalCondition(pClause, ec, gateFlags))
+		{
+			szBuffer.append(CvWString(L"[COLOR_POSITIVE_TEXT]"));
+		}
+		else
+		{
+			szBuffer.append(CvWString(L"[COLOR_WARNING_TEXT]"));
+		}
+		szBuffer.append(szPhrase);
+		szBuffer.append(CvWString(L"[COLOR_REVERT]"));
+	}
+}
+
 void CvGameTextMgr::buildBuildingRequiresString(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, bool bCivilopediaText, bool bTechChooserText, const CvCity* pCity)
 {
+	if ((int)eBuilding < 0)
+	{
+		return;
+	}
+	const CvRequires* pRequires = GC.getBuildingInfo(eBuilding).getRequires();
+	if (pRequires == NULL)
+	{
+		return;
+	}
+	// BOTH timings render: `build` bars construction, and `operate` bars it too and then keeps barring it after
+	// the build ([enabler.md] par.3 -- the build-time gate is build AND operate). Showing only `build` hides
+	// exactly the clause that leaves a finished building sitting dormant.
+	buildRequiresClauses(szBuffer, pRequires->build, pCity);
+	buildRequiresClauses(szBuffer, pRequires->operate, pCity);
 }
 
 
@@ -3285,151 +3362,277 @@ void CvGameTextMgr::buildObsoleteSpecialString(CvWStringBuffer &szBuffer, int iI
 
 void CvGameTextMgr::buildMoveString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
+	// "Which routes does this tech speed up?" A TECH authors no movement family at all -- the change lives on
+	// the ROUTE as a movement entry gated on the tech ([modifier.md] par.6), so this is a reverse question and the
+	// reverse pass has already answered it: a route whose entry condition names the tech was landed on the
+	// tech's RELATED bucket, making the candidate set a list fetch rather than a registry sweep.
+	if ((int)eTech < 0)
+	{
+		return;
+	}
+	const CvEdges* pEdges = GC.getTechInfo(eTech).getEdges();
+	if (pEdges == NULL)
+	{
+		return;
+	}
+	const std::vector<int>* paiRoutes = pEdges->find(EDGEF_RELATED, EDGEB_ROUTES);
+	if (paiRoutes == NULL)
+	{
+		return;
+	}
+	for (std::vector<int>::const_iterator it = paiRoutes->begin(); it != paiRoutes->end(); ++it)
+	{
+		appendEntryLinesFiltered(szBuffer, GC.getRouteInfo((RouteTypes)*it), MODFAM_MOVEMENT,
+			-1, EDGEB_TECHS, (int)eTech);
+	}
 }
 
 void CvGameTextMgr::buildFreeUnitString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
+	if ((int)eTech < 0)
+	{
+		return;
+	}
+	const CvGrants* pGrants = GC.getTechInfo(eTech).consideredGrants();
+	if (pGrants == NULL)
+	{
+		return;
+	}
+	static const int iFirstFreeUnitKey = CvGrants::key("firstFreeUnit");
+	const int iFreeUnit = pGrants->firstListId(iFirstFreeUnitKey);
+	if (iFreeUnit < 0)
+	{
+		return;
+	}
+	// The reward is the FIRST discoverer's, so in player context it is gone once anyone holds the tech --
+	// a correctness gate, not chrome: without it the tooltip promises a unit nobody can still earn.
+	if (bPlayerContext && GC.getGame().countKnownTechNumTeams(eTech) != 0)
+	{
+		return;
+	}
+	if (bList)
+	{
+		szBuffer.append(NEWLINE);
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_FIRST_RECEIVES",
+		CvWString(GC.getUnitInfo((UnitTypes)iFreeUnit).getType()).GetCString(),
+		GC.getUnitInfo((UnitTypes)iFreeUnit).getTextKeyWide()));
 }
 
 void CvGameTextMgr::buildFeatureProductionString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
+	if ((int)eTech >= 0)
+	{
+		appendEntryLines(szBuffer, GC.getTechInfo(eTech), MODFAM_FEATURE_PRODUCTION);
+	}
 }
 
 void CvGameTextMgr::buildWorkerRateString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
+	if ((int)eTech >= 0)
+	{
+		appendEntryLines(szBuffer, GC.getTechInfo(eTech), MODFAM_WORK_RATE);
+	}
 }
 
 void CvGameTextMgr::buildTradeRouteString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
+	// `tradeRoutes` authors as its own SECTION ([json.md] par.2) but compiles into the ordinary family plane, so the
+	// whole of it renders here -- the route COUNT and the route-PROFIT percent alike, each carrying its own
+	// condition clause (the foreign-route leg is a conditioned entry, not a second member).
+	if ((int)eTech >= 0)
+	{
+		appendEntryLines(szBuffer, GC.getTechInfo(eTech), MODFAM_TRADE_ROUTES);
+	}
 }
 
 void CvGameTextMgr::buildHealthRateString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
-}
-
-//Team Project (1)
-void CvGameTextMgr::buildSpecialistHealthString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
+	if ((int)eTech >= 0)
+	{
+		appendEntryLines(szBuffer, GC.getTechInfo(eTech), MODFAM_HEALTH);
+	}
 }
 
 void CvGameTextMgr::buildHappinessRateString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
-}
-
-//Team Project (1)
-void CvGameTextMgr::buildSpecialistHappinessString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
+	if ((int)eTech >= 0)
+	{
+		appendEntryLines(szBuffer, GC.getTechInfo(eTech), MODFAM_HAPPINESS);
+	}
 }
 
 void CvGameTextMgr::buildFreeTechString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
+	if ((int)eTech < 0)
+	{
+		return;
+	}
+	const CvGrants* pGrants = GC.getTechInfo(eTech).consideredGrants();
+	if (pGrants == NULL)
+	{
+		return;
+	}
+	static const int iFreeTechsKey = CvGrants::key("freeTechs");
+	// A pulse is stored ×100 like every amount, so the READER reduces at its point of use ([DEC-fixedpoint-x100]).
+	const int iFreeTechs = pGrants->pulse(iFreeTechsKey) / 100;
+	if (iFreeTechs <= 0)
+	{
+		return;
+	}
+	if (bPlayerContext && GC.getGame().countKnownTechNumTeams(eTech) != 0)
+	{
+		return;
+	}
+	if (bList)
+	{
+		szBuffer.append(NEWLINE);
+	}
+	if (iFreeTechs == 1)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_FIRST_FREE_TECH"));
+	}
+	else
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_FIRST_FREE_TECHS", iFreeTechs));
+	}
 }
 
 void CvGameTextMgr::buildLOSString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
-}
-
-void CvGameTextMgr::buildMapCenterString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildMapRevealString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList)
-{
-}
-
-void CvGameTextMgr::buildMapTradeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildTechTradeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildGoldTradeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildOpenBordersString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildDefensivePactString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildPermanentAllianceString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildVassalStateString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-
-void CvGameTextMgr::buildEmbassyString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-
-void CvGameTextMgr::buildBridgeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildIrrigationString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildIgnoreIrrigationString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildWaterWorkString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
+	if ((int)eTech >= 0)
+	{
+		appendClassificationKey(szBuffer, GC.getTechInfo(eTech).getCapabilities(), "canSeeFurtherFromWater");
+	}
 }
 
 void CvGameTextMgr::buildImprovementString(CvWStringBuffer &szBuffer, TechTypes eTech, BuildTypes eBuild, bool bList, bool bPlayerContext)
 {
+	// Unlocking a worker build is an EDGE the tech carries ([json.md] par.4.1 `enables.builds`), so it is a membership
+	// test on the authored handful -- never the legacy sweep of every feature and terraform row asking each
+	// whether its prereq happens to be this tech.
+	if ((int)eTech < 0 || (int)eBuild < 0)
+	{
+		return;
+	}
+	const CvEdges* pEdges = GC.getTechInfo(eTech).getEdges();
+	if (pEdges == NULL || !pEdges->has(EDGEF_ENABLES, EDGEB_BUILDS, (int)eBuild))
+	{
+		return;
+	}
+	if (bList)
+	{
+		szBuffer.append(NEWLINE);
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_MISC_CAN_BUILD_IMPROVEMENT", GC.getBuildInfo(eBuild).getTextKeyWide()));
 }
 
 
 void CvGameTextMgr::buildDomainExtraMovesString(CvWStringBuffer &szBuffer, TechTypes eTech, int iDomainType, bool bList, bool bPlayerContext)
 {
+	// domainMoves is keyed by DOMAIN_*, and this widget represents ONE domain -- so the render is target-filtered
+	// rather than the whole family, which would repeat every domain's line under every domain's widget.
+	if ((int)eTech >= 0 && iDomainType >= 0)
+	{
+		appendEntryLinesFiltered(szBuffer, GC.getTechInfo(eTech), MODFAM_DOMAIN_MOVES,
+			iDomainType, NO_EDGEB, -1);
+	}
 }
 
 
 void CvGameTextMgr::buildAdjustString(CvWStringBuffer &szBuffer, TechTypes eTech, int iCommerceType, bool bList, bool bPlayerContext)
 {
+	// The commerce SLIDERS are three discrete capability keys ([capabilities.md]) -- after the split each is a
+	// genuine bare-bool ability rather than one parameterized flag. Gold has no slider and so has no key.
+	if ((int)eTech < 0)
+	{
+		return;
+	}
+	const char* szCapability = NULL;
+	switch ((CommerceTypes)iCommerceType)
+	{
+	case COMMERCE_RESEARCH:  szCapability = "canSetScienceRate";   break;
+	case COMMERCE_CULTURE:   szCapability = "canSetCultureRate";   break;
+	case COMMERCE_ESPIONAGE: szCapability = "canSetEspionageRate"; break;
+	default: return;
+	}
+	appendClassificationKey(szBuffer, GC.getTechInfo(eTech).getCapabilities(), szCapability);
 }
 
 
 void CvGameTextMgr::buildTerrainTradeString(CvWStringBuffer &szBuffer, TechTypes eTech, int iTerrainType, bool bList, bool bPlayerContext)
 {
-}
-
-void CvGameTextMgr::buildRiverTradeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
+	// Per-terrain trade is NOT a capability: it is the tech's own `canTradeOn` block, carrying real TERRAIN FKs
+	// so a new tradable terrain is pure data ([capabilities.md]).
+	if ((int)eTech < 0 || iTerrainType < 0 || !GC.getTechInfo(eTech).canTradeOnTerrain(iTerrainType))
+	{
+		return;
+	}
+	if (bList)
+	{
+		szBuffer.append(NEWLINE);
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_ON_TERRAIN", gDLL->getSymbolID(TRADE_CHAR),
+		GC.getTerrainInfo((TerrainTypes)iTerrainType).getTextKeyWide()));
 }
 
 void CvGameTextMgr::buildSpecialBuildingString(CvWStringBuffer &szBuffer, TechTypes eTech, int iBuildingType, bool bList, bool bPlayerContext)
 {
+	// The two legacy prereqs are two EDGE BUCKETS ([json.md] par.4.1): `specialBuildings` is what THIS player may
+	// then construct, `specialBuildingsWaived` is the anyone-may-build flip. Both render -- a tech can carry either.
+	if ((int)eTech < 0 || iBuildingType < 0)
+	{
+		return;
+	}
+	const CvEdges* pEdges = GC.getTechInfo(eTech).getEdges();
+	if (pEdges == NULL)
+	{
+		return;
+	}
+	const CvInfo& kSpecialBuilding = GC.getSpecialBuildingInfo((SpecialBuildingTypes)iBuildingType);
+	if (pEdges->has(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS, iBuildingType))
+	{
+		if (bList)
+		{
+			szBuffer.append(NEWLINE);
+		}
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_CAN_CONSTRUCT_BUILDING", kSpecialBuilding.getTextKeyWide()));
+	}
+	if (pEdges->has(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS_WAIVED, iBuildingType))
+	{
+		if (bList)
+		{
+			szBuffer.append(NEWLINE);
+		}
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_CAN_CONSTRUCT_BUILDING_ANYONE",
+			CvWString(kSpecialBuilding.getType()).GetCString(), kSpecialBuilding.getTextKeyWide()));
+	}
 }
 
-void CvGameTextMgr::buildYieldChangeString(CvWStringBuffer &szBuffer, TechTypes eTech, int iYieldType, bool bList, bool bPlayerContext)
+void CvGameTextMgr::buildYieldChangeString(CvWStringBuffer &szBuffer, TechTypes eTech, int iImprovement, bool bList, bool bPlayerContext)
 {
-}
-
-
-void CvGameTextMgr::buildBuildingTechSpecialistChangeString(CvWStringBuffer &szBuffer, TechTypes eTech, int iBuildingType, bool bList, bool bPlayerContext)
-{
-}
-
-
-void CvGameTextMgr::buildBuildingTechHappinessChangesString(CvWStringBuffer &szBuffer, TechTypes eTech, int iBuildingType, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildBuildingTechHealthChangesString(CvWStringBuffer &szBuffer, TechTypes eTech, int iBuildingType, bool bList, bool bPlayerContext)
-{
+	// The parameter is an IMPROVEMENT, not a yield: the question is "what does this tech do to that improvement's
+	// output", and the answer is authored on the IMPROVEMENT as its own conditioned yield entries gated on the
+	// tech (the own-output half of [DEC-deliveryguy]) -- so it is read there, gated, one line per channel.
+	if ((int)eTech < 0 || iImprovement < 0)
+	{
+		return;
+	}
+	const CvInfo& kImprovement = GC.getImprovementInfo((ImprovementTypes)iImprovement);
+	CvWStringBuffer szEntries;
+	appendEntryLinesFiltered(szEntries, kImprovement, MODFAM_FOOD,       -1, EDGEB_TECHS, (int)eTech);
+	appendEntryLinesFiltered(szEntries, kImprovement, MODFAM_PRODUCTION, -1, EDGEB_TECHS, (int)eTech);
+	appendEntryLinesFiltered(szEntries, kImprovement, MODFAM_COMMERCE,   -1, EDGEB_TECHS, (int)eTech);
+	if (szEntries.isEmpty())
+	{
+		return;
+	}
+	if (bList)
+	{
+		szBuffer.append(NEWLINE);
+	}
+	szBuffer.append(kImprovement.getDescription());
+	szBuffer.append(szEntries);
 }
 
 
@@ -3528,158 +3731,6 @@ bool CvGameTextMgr::buildFoundCorporationString(CvWStringBuffer &szBuffer, TechT
 		}
 	}
 	return bFirst;
-}
-
-bool CvGameTextMgr::buildPromotionString(CvWStringBuffer &szBuffer, TechTypes eTech, int iPromotionType, bool bFirst, bool bList) const
-{
-	CvWString szTempBuffer;
-
-	if (GC.getPromotionInfo((PromotionTypes) iPromotionType).getTechPrereq() == eTech)
-	{
-		if (bList && bFirst)
-		{
-			szBuffer.append(NEWLINE);
-		}
-		szTempBuffer.Format( SETCOLR L"<link=%s>%s</link>" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), CvWString(GC.getPromotionInfo((PromotionTypes) iPromotionType).getType()).GetCString(), GC.getPromotionInfo((PromotionTypes) iPromotionType).getDescription());
-		setListHelp(szBuffer, gDLL->getText("TXT_KEY_MISC_ENABLES").c_str(), szTempBuffer, L", ", bFirst);
-		bFirst = false;
-	}
-	return bFirst;
-}
-
-// Displays a list of derived technologies - no distinction between AND/OR prerequisites
-void CvGameTextMgr::buildSingleLineTechTreeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bPlayerContext)
-{
-	PROFILE_EXTRA_FUNC();
-	CvWString szTempBuffer;	// Formatting
-
-	if (NO_TECH == eTech)
-	{
-		// you need to specify a tech of origin for this method to do anything
-		return;
-	}
-
-	bool bFirst = true;
-	for (int iI = 0; iI < GC.getNumTechInfos(); ++iI)
-	{
-		bool bTechAlreadyAccessible = false;
-		if (bPlayerContext)
-		{
-			bTechAlreadyAccessible = (GET_TEAM(GC.getGame().getActiveTeam()).isHasTech((TechTypes)iI) || (GET_PLAYER(GC.getGame().getActivePlayer()).getTechAvailability((TechTypes)iI) == EnablerDomain::STATE_LISTED));
-		}
-		if (!bTechAlreadyAccessible)
-		{
-			if (algo::any_of_equal(GC.getTechInfo((TechTypes)iI).getPrereqOrTechs(), eTech)
-			||  algo::any_of_equal(GC.getTechInfo((TechTypes)iI).getPrereqAndTechs(), eTech))
-			{
-				szTempBuffer.Format( SETCOLR L"<link=%s>%s</link>" ENDCOLR , TEXT_COLOR("COLOR_TECH_TEXT"), CvWString(GC.getTechInfo((TechTypes)iI).getType()).GetCString(), GC.getTechInfo((TechTypes) iI).getDescription());
-				setListHelp(szBuffer, gDLL->getText("TXT_KEY_MISC_LEADS_TO").c_str(), szTempBuffer, L", ", bFirst);
-				bFirst = false;
-			}
-		}
-	}
-}
-
-// Information about other prerequisite technologies to eTech besides eFromTech
-void CvGameTextMgr::buildTechTreeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bPlayerContext, TechTypes eFromTech)
-{
-	PROFILE_EXTRA_FUNC();
-	CvWString szTempBuffer;	// Formatting
-
-	if (NO_TECH == eTech || NO_TECH == eFromTech)
-	{
-		return;
-	}
-
-	szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_TECH_TEXT"), GC.getTechInfo(eTech).getDescription());
-	szBuffer.append(szTempBuffer);
-
-	// Loop through OR prerequisites to make list
-	CvWString szOtherOrTechs;
-	int nOtherOrTechs = 0;
-	bool bOrTechFound = false;
-	foreach_(const TechTypes eTestTech, GC.getTechInfo(eTech).getPrereqOrTechs())
-	{
-		bool bTechAlreadyResearched = false;
-		if (bPlayerContext)
-		{
-			bTechAlreadyResearched = GET_TEAM(GC.getGame().getActiveTeam()).isHasTech(eTestTech);
-		}
-		if (!bTechAlreadyResearched)
-		{
-			if (eTestTech == eFromTech)
-			{
-				bOrTechFound = true;
-			}
-			else
-			{
-				szTempBuffer.Format( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_TECH_TEXT"), GC.getTechInfo(eTestTech).getDescription());
-				setListHelp(szOtherOrTechs, L"", szTempBuffer, gDLL->getText("TXT_KEY_OR").c_str(), 0 == nOtherOrTechs);
-				nOtherOrTechs++;
-			}
-		}
-	}
-
-	// Loop through AND prerequisites to make list
-	CvWString szOtherAndTechs;
-	int nOtherAndTechs = 0;
-	bool bAndTechFound = false;
-	foreach_(const TechTypes eTestTech, GC.getTechInfo(eTech).getPrereqAndTechs())
-	{
-		bool bTechAlreadyResearched = false;
-		if (bPlayerContext)
-		{
-			bTechAlreadyResearched = GET_TEAM(GC.getGame().getActiveTeam()).isHasTech(eTestTech);
-		}
-		if (!bTechAlreadyResearched)
-		{
-			if (eTestTech == eFromTech)
-			{
-				bAndTechFound = true;
-			}
-			else
-			{
-				szTempBuffer.Format( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_TECH_TEXT"), GC.getTechInfo(eTestTech).getDescription());
-				setListHelp(szOtherAndTechs, L"", szTempBuffer, L", ", 0 == nOtherAndTechs);
-				nOtherAndTechs++;
-			}
-		}
-	}
-
-	if (bOrTechFound || bAndTechFound)
-	{
-		if (nOtherAndTechs > 0 || nOtherOrTechs > 0)
-		{
-			szBuffer.append(L' ');
-
-			if (nOtherAndTechs > 0)
-			{
-				szBuffer.append(gDLL->getText("TXT_KEY_WITH"));
-				szBuffer.append(szOtherAndTechs);
-			}
-
-			if (nOtherOrTechs > 0)
-			{
-				if (bAndTechFound)
-				{
-					if (nOtherAndTechs > 0)
-					{
-						szBuffer.append(gDLL->getText("TXT_KEY_AND_SPACE"));
-					}
-					else
-					{
-						szBuffer.append(gDLL->getText("TXT_KEY_WITH"));
-					}
-					szBuffer.append(szOtherOrTechs);
-				}
-				else if (bOrTechFound)
-				{
-					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_MISC_ALTERNATIVELY_DERIVED", GC.getTechInfo(eTech).getTextKeyWide(), szOtherOrTechs.GetCString()));
-				}
-			}
-		}
-	}
 }
 
 void CvGameTextMgr::setPromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes ePromotion, bool bCivilopediaBodyText)
@@ -3795,6 +3846,12 @@ void CvGameTextMgr::appendClassificationKey(CvWStringBuffer& szBuffer, const CvC
 
 void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily) const
 {
+	appendEntryLinesFiltered(szBuffer, info, eFamily, -1, NO_EDGEB, -1);
+}
+
+void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily,
+	int iTargetFk, EnEdgeBucket eGateBucket, int iGateId) const
+{
 	const CvModifiers* pModifiers = info.getModifiers();
 	if (pModifiers == NULL)
 	{
@@ -3803,11 +3860,25 @@ void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& in
 	const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
 	for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
 	{
-		if (*it != NULL && (*it)->family == eFamily)
+		const CvModEntry* pEntry = *it;
+		if (pEntry == NULL || pEntry->family != eFamily)
 		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(entryDetailLine(**it));
+			continue;
 		}
+		if (iTargetFk >= 0 && pEntry->targetFk != iTargetFk)
+		{
+			continue;
+		}
+		// The gate axis asks what the entry's condition MENTIONS -- CvConditionQuery, never a walk of our own
+		// ([DEC-single-implementation]; the query surface exists precisely so each consumer does not grow one).
+		if (eGateBucket != NO_EDGEB
+		&& !CvConditionQuery::namesId(pEntry->enabled, eGateBucket, iGateId)
+		&& !CvConditionQuery::namesId(pEntry->disabled, eGateBucket, iGateId))
+		{
+			continue;
+		}
+		szBuffer.append(NEWLINE);
+		szBuffer.append(entryDetailLine(*pEntry));
 	}
 }
 
@@ -7320,23 +7391,6 @@ void CvGameTextMgr::getCorporationDataForWB(bool bHeadquarters, std::vector<CvWB
 }
 
 
-void CvGameTextMgr::buildCanPassPeaksString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildMoveFastPeaksString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildCanFoundOnPeaksString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-void CvGameTextMgr::buildCanRebaseAnywhereString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-}
-
-
 /*
 	+50% from Buildings
 	+25% from Wonders
@@ -7437,36 +7491,6 @@ void CvGameTextMgr::setFlagHelp(CvWStringBuffer &szBuffer)
 	}
 }
 
-
-void CvGameTextMgr::buildMaintenanceModifiersString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList)
-{
-	if (GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE) != 0)
-	{
-		if (bList)
-		{
-			szBuffer.append(NEWLINE);
-		}
-		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_MAINT_MOD", GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE)));
-	}
-
-	if (GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE) != 0)
-	{
-		if (bList)
-		{
-			szBuffer.append(NEWLINE);
-		}
-		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_DISTANCE_MAINT_MOD", GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_DISTANCE, CASC_SCOPE_EMPIRE)));
-	}
-
-	if (GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE) != 0)
-	{
-		if (bList)
-		{
-			szBuffer.append(NEWLINE);
-		}
-		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_NUM_CITIES_MAINT_MOD", GC.getTechInfo(eTech).getMaintenanceModifier(MAINTENANCE_NUM_CITIES, CASC_SCOPE_EMPIRE)));
-	}
-}
 
 void CvGameTextMgr::getGameObjectName(CvWString &szString, GameObjectTypes eObject) const
 {
