@@ -22,6 +22,22 @@
 > DIRECTION (the read surface is gone) and wrong about the ADDRESS, since a handle that cannot name which object
 > it holds makes every legacy consumer a rewrite.
 >
+> ⛔ **AND AN EVENT PAYLOAD IS NOT A HANDLE AT ALL — IT IS A PLAIN TUPLE, so the identity set does NOT save it.**
+> `DECLARE_PY_IDENTITY(CvCity*, getOwner(), getID())` (`CyCity.h`, `CyUnit.h`) routes every `Cy::Args` push through
+> `add_identity` → `python::make_tuple(iOwner, iId)`. So in a HANDLER, `argsList[0].getID()` raises
+> `AttributeError: 'tuple' object has no attribute 'getID'` — **the four identity methods fail there too.** The fix
+> is to UNPACK (`iOwner, iCityId = argsList[0]`), never to re-point the call.
+> ⚑ **The same expression is fine or broken depending on where the object CAME FROM**, which is why this reads as
+> nondeterministic until you know it: a handle from a RETURN VALUE (`CyPlayer.cities()`, `CyPlot.getPlotCity()`)
+> goes through the registered `class_<CyCity>` and its four methods work. One file can therefore carry both shapes —
+> measured in `CvEventManager.py`, where `onChangeWar` reads `getX()` off a `cities()` handle correctly and
+> `onCityRazed` reads `getX()` off an argsList tuple and dies.
+>
+> ⚠ `CySelectionGroup` is registered `python::no_init` with **ZERO** `.def`s (`CvDLLPython.cpp`), while
+> `CyPlayer.groups()`, `CyPlayer.getSelectionGroup()` and `CyUnit.getGroup()` all still hand one back — a handle
+> that can be asked nothing. Group ACTIVITY is served by `UnitReadKind.UNIT_READ_ACTIVITY`; there is no route for
+> `setActivityType` or `readyToMove`.
+>
 > So every count below is **DEMAND** — what a consumer must be SERVED by the one data-fetching library — never
 > what call survives. Counts are script-derived from the current tree; the method is in §1 so every number can be
 > re-derived.
@@ -454,12 +470,15 @@ concern almost everywhere, which supports leaving it outside the data library.
 
 ### 4.2 (a′) REQ — the condition trees are an INFO need, not an API
 
-**⛔ THE WHOLE MECHANISM IS GONE, AND ITS CALLERS ARE NOT — that is the state to know before reading further.**
-All three legs are absent: the `BoolExpr` binding file no longer exists in `Sources/Python/`; the
-`GOMTypes` / `BoolExprTypes` enums are published nowhere (`CyEnums.cpp` carries neither, so naming one is a
-`NameError`, not an `AttributeError`); and **`def getGOMReqs` is defined in no Python file in the tree** —
-`Screens/Debug/HelperFunctions.py` CALLS `self.getGOMReqs` and never defines it, so that module is
-self-broken independently of the binding cut.
+**⛔ THE WHOLE MECHANISM IS GONE, AND ITS CALLERS ARE DANGLING ON PURPOSE — that is the state to know before
+reading further.** All three legs are absent: the `BoolExpr` binding file no longer exists in
+`Sources/Python/`; the `GOMTypes` / `BoolExprTypes` enums are published nowhere (`CyEnums.cpp` carries
+neither, so naming one is a `NameError`, not an `AttributeError`); and **`def getGOMReqs` is defined in no
+Python file in the tree** — `Screens/Debug/HelperFunctions.py` deleted the walker and says so where it stood.
+⚑ **The dangling is DELIBERATE and must not be "repaired" by restoring a tree walk**
+([DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking)): the requirement lines stop
+rendering, which is the hole made visible rather than papered over. Reading the callers as an accident is the
+mistake to avoid — the in-code note at the deletion site is the authority.
 
 What still calls it: `HelperFunctions.py` itself, and the pedia pages that reach it through `self.HF`
 (`PediaBonus`, `PediaBuilding`, `PediaHeritage`, `PediaTech`, `PediaUnit`). Each is handed
@@ -817,3 +836,42 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    987 sites are writes. They are explicitly out of scope for a *data-fetching* library, but the same handlers
    read through it, and the legacy `Cy*` surface cannot be disconnected while a write path still depends on it.
    Stage 4 needs a decision on whether the write boundary is designed alongside the library or sequenced after.
+
+7. **WORLDBUILDER IS ITS OWN SURFACE — and it MUST travel the SAME engine paths (owner ruling).**
+   *"A dedicated worldbuilder surface is definitely the way to go, also when worldbuilder adds or removes, it has
+   to emit events the same way as if things were normally constructed, or removed"* — *"so it should use the same
+   paths."*
+   ⚑ **Why a separate surface at all:** a scenario editor's job is to poke ARBITRARY engine fields — cargo,
+   facing direction, base combat strength, made-attack flags. That is the opposite of what the read library
+   models, which is a bounded set of QUESTIONS ("what do I carry", "what do I have", "can I"). There is no
+   `UnitFlagKind` for *is this unit cargo* because nothing in the game model asks it; only the editor does. So
+   those reads are **not missing from the library — they are out of scope for it**, and widening `CyState`/`CyAct`
+   to carry them would shoehorn unmodelled fields into the modelled surface, which is
+   [DEC-cy-not-fixed](../architecture/decisions.md#dec-cy-not-fixed)'s failure mode aimed at the NEW surface
+   instead of the old one. Measured: **34 cargo/transport sites and 31 unit-write sites, every one of them in
+   `Screens/Worldbuilder/` or `pyWB/`** — zero in gameplay.
+   ⛔ **The binding half of the ruling — the editor writes through the engine's OWN mutator, never a field poke.**
+   An editor that sets a member directly leaves the cascade unaware, so the derived caches diverge SILENTLY —
+   precisely what the event spine exists to prevent. ⚠ And the fix is NOT "poke the field, then also emit": that
+   is two implementations of one transition and they drift
+   ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). Routing through the
+   mutator makes the emit STRUCTURAL — it cannot be forgotten by a future verb, because no verb owns it.
+   ⚑ The pattern already exists and is the model to copy: every `CyAct` verb resolves a handle, validates, then
+   calls the real engine setter (`CyAct::setCityBuilding` → `CvCity::changeHasBuilding` → `setHasBuilding`, which
+   runs the ledger, `setupBuilding` and `processBuilding(±1)`). Its neighbour's comment states the rule outright:
+   *"The DOMAIN fact still fires -- that is the setter's job and is exactly what must not be skipped."*
+   ⇒ Consequence for a would-be editor verb with no engine mutator behind it: the missing piece is the ENGINE
+   path, and that is what gets built — never a Python-side shortcut that writes the member and fakes the event.
+
+8. **REVOLUTION LIVE-STATE MIGRATES WHOLESALE TO THE PYTHON STORE (owner ruling).** *"Migrate wholesale."*
+   The revolution counters and timers — `getLocalRevIndex`, `getNumRevolts`, `getRevolutionCounter`,
+   `getReinforcementCounter`, `getRevRequestAngerTimer`, `getRevSuccessTimer`, `getRevIndexPercentAnger`,
+   `getRevIndexDistanceMod` (~120 reads and ~110 writes) — move into `RevData`'s SdToolKit store, NOT into
+   `CityCountRead` + new `CyAct` verbs. Revolution is Python-authoritative, so its own state belongs on the
+   Python side of the boundary.
+   ⛔ **Wholesale means the engine's two surviving slots come OUT too** (`CITY_COUNT_REVOLUTION_INDEX`,
+   `CITY_COUNT_REVOLUTION_AVERAGE`). Leaving them is the half-migration the drift detectors name: engine-persisted
+   revolution state beside a Python store for the rest is two homes for one fact, and the save carries both.
+   ⚠ **What this ruling does NOT cover:** Revolution's ~16 UNIT writes (`setUnitAIType`, `setXY`, `setMoves`,
+   `setPromotionReady`). Setting a unit's AI type is an ENGINE mutation, not revolution state — SdToolKit cannot
+   hold it, so those still need real `CyAct` verbs and are unaffected by the wholesale move.
