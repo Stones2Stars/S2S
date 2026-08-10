@@ -13,7 +13,15 @@ turns — what scales worse than "more cities"?
 
 ---
 
-## Current state & next levers (MEASURED 2026-06-10, post PR #314 — the live plan)
+## The measurement that located the cost (post PR #314)
+
+⛔ **These figures PREDATE the legacy-accumulator cut and describe a different machine — do not plan
+against them** ([DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf):
+numbers taken while a legacy calc still ran on a hot read path measure legacy's decache penalty). The shape
+has since inverted: the choose is now a small number of EXPENSIVE decisions rather than many cheap ones
+(~18 real chooses at ~1.4 s each on the standing save, against the ~47 ms × ~220 below), and
+`AI_scoreBuildingsFromListThreshold` is ~99.8% of it rather than ~91%. The live decomposition is the
+`[PERF/choose]` census itself — `cand` / `valued` / `compute` / `pass1skip` beside the ms — never this list.
 
 Clean instrumented FinalRelease sessions on the turn-1336 late-game save (`[PERF/choose]`
 decomposition + phase tree; per-turn, all AI players):
