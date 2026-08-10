@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERTEMPORAL_STOCK_MARKET"
+   "define": "ART_DEF_BUILDING_INTERTEMPORAL_STOCK_MARKET",
+   "notShownInCity": true
   }
  },
  "identity": {

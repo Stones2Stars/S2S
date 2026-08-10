@@ -90,7 +90,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_KILIMANJARO"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_KILIMANJARO",
+   "notShownInCity": true
   }
  },
  "identity": {

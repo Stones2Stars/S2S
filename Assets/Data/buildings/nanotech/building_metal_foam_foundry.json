@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METAL_FOAM_FOUNDRY"
+   "define": "ART_DEF_BUILDING_METAL_FOAM_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

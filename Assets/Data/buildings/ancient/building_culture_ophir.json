@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_OPHIR"
+   "define": "ART_DEF_BUILDING_CULTURE_OPHIR",
+   "notShownInCity": true
   }
  },
  "identity": {

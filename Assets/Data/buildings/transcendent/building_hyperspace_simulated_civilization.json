@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION",
+   "notShownInCity": true
   }
  },
  "identity": {

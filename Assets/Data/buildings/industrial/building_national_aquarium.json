@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_AQUARIUM"
+   "define": "ART_DEF_BUILDING_NATIONAL_AQUARIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_TAILORS"
+   "define": "ART_DEF_BUILDING_GUILD_TAILORS",
+   "notShownInCity": true
   }
  },
  "identity": {

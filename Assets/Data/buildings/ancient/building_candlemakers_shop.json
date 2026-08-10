@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CANDLEMAKERS_SHOP"
+   "define": "ART_DEF_BUILDING_CANDLEMAKERS_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

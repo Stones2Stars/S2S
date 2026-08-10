@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEDICAL_A"
+   "define": "ART_DEF_BUILDING_MEDICAL_A",
+   "notShownInCity": true
   }
  },
  "identity": {

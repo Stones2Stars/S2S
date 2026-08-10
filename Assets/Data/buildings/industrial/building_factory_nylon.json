@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_NYLON"
+   "define": "ART_DEF_BUILDING_FACTORY_NYLON",
+   "notShownInCity": true
   }
  },
  "identity": {

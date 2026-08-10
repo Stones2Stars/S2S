@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE"
+   "define": "ART_DEF_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
+   "notShownInCity": true
   }
  },
  "identity": {

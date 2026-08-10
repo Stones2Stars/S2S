@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INFRASOUND_DEFENSES"
+   "define": "ART_DEF_BUILDING_INFRASOUND_DEFENSES",
+   "notShownInCity": true
   }
  },
  "identity": {

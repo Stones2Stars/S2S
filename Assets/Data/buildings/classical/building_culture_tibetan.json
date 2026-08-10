@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TIBETAN"
+   "define": "ART_DEF_BUILDING_CULTURE_TIBETAN",
+   "notShownInCity": true
   }
  },
  "identity": {

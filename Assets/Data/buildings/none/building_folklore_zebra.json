@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_ZEBRA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_ZEBRA",
+   "notShownInCity": true
   }
  },
  "identity": {

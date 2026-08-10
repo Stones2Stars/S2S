@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_TIPIS"
+   "define": "ART_DEF_BUILDING_HOUSING_TIPIS",
+   "notShownInCity": true
   }
  },
  "identity": {

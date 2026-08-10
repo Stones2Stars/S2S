@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_ALLSPICES"
+   "define": "ART_DEF_BUILDING_PLANTATION_ALLSPICES",
+   "notShownInCity": true
   }
  },
  "identity": {

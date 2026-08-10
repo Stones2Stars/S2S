@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_WHITE_DWARF_COLONY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_WHITE_DWARF_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

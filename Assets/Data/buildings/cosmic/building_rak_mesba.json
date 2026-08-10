@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RAK_MESBA"
+   "define": "ART_DEF_BUILDING_RAK_MESBA",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMALL_STEEL_ARCH_BRIDGE"
+   "define": "ART_DEF_BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

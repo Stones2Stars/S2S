@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LADYBUG_SANCTUARY"
+   "define": "ART_DEF_BUILDING_LADYBUG_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "identity": {

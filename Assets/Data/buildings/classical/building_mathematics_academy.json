@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MATHEMATICS_ACADEMY"
+   "define": "ART_DEF_BUILDING_MATHEMATICS_ACADEMY",
+   "notShownInCity": true
   }
  },
  "identity": {

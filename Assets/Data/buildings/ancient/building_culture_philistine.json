@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_PHILISTINE"
+   "define": "ART_DEF_BUILDING_CULTURE_PHILISTINE",
+   "notShownInCity": true
   }
  },
  "identity": {

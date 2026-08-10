@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_PORTAL"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAPITOL_RECORDS_TOWER"
+   "define": "ART_DEF_BUILDING_CAPITOL_RECORDS_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

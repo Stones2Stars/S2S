@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_SOLAR_ARRAY"
+   "define": "ART_DEF_BUILDING_LUNAR_SOLAR_ARRAY",
+   "notShownInCity": true
   }
  },
  "identity": {

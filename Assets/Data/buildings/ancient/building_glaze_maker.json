@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLAZE_MAKER"
+   "define": "ART_DEF_BUILDING_GLAZE_MAKER",
+   "notShownInCity": true
   }
  },
  "sound": {

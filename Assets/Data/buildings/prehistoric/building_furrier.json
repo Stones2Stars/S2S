@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FURRIER"
+   "define": "ART_DEF_BUILDING_FURRIER",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -298,7 +298,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_EARTH_FESTIVAL"
+   "define": "ART_DEF_BUILDING_GRAND_EARTH_FESTIVAL",
+   "notShownInCity": true
   }
  },
  "identity": {

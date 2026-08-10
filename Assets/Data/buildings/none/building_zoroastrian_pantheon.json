@@ -108,7 +108,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ZOROASTRIAN_PANTHEON"
+   "define": "ART_DEF_BUILDING_ZOROASTRIAN_PANTHEON",
+   "notShownInCity": true
   }
  },
  "sound": {

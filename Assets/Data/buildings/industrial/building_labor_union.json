@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LABOR_UNION"
+   "define": "ART_DEF_BUILDING_LABOR_UNION",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMPUTER_CENTER"
+   "define": "ART_DEF_BUILDING_COMPUTER_CENTER",
+   "notShownInCity": true
   }
  },
  "sound": {

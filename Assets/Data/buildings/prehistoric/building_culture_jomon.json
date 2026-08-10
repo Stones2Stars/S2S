@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_JOMON"
+   "define": "ART_DEF_BUILDING_CULTURE_JOMON",
+   "notShownInCity": true
   }
  },
  "identity": {

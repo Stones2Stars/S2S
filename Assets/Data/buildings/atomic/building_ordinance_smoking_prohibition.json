@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_SMOKING_PROHIBITION"
+   "define": "ART_DEF_BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+   "notShownInCity": true
   }
  },
  "identity": {

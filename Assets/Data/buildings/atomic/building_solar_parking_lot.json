@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_PARKING_LOT"
+   "define": "ART_DEF_BUILDING_SOLAR_PARKING_LOT",
+   "notShownInCity": true
   }
  },
  "identity": {

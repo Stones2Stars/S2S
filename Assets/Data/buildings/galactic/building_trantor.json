@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANTOR"
+   "define": "ART_DEF_BUILDING_TRANTOR",
+   "notShownInCity": true
   }
  },
  "identity": {

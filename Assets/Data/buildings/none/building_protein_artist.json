@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROTEIN_ARTIST"
+   "define": "ART_DEF_BUILDING_PROTEIN_ARTIST",
+   "notShownInCity": true
   }
  },
  "identity": {

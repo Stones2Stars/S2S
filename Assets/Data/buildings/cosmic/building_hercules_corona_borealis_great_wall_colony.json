@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY"
+   "define": "ART_DEF_BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

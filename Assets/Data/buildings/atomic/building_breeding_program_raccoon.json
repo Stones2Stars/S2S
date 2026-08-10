@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_RACCOON"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_RACCOON",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_URBAN_VILLAGE"
+   "define": "ART_DEF_BUILDING_URBAN_VILLAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

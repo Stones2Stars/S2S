@@ -26,7 +26,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BEHAVIOR_PREDICTION"
+   "define": "ART_DEF_BUILDING_BEHAVIOR_PREDICTION",
+   "notShownInCity": true
   }
  },
  "identity": {

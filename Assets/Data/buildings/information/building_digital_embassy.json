@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIGITAL_EMBASSY"
+   "define": "ART_DEF_BUILDING_DIGITAL_EMBASSY",
+   "notShownInCity": true
   }
  },
  "identity": {

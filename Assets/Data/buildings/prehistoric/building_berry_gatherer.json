@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BERRY_GATHERER"
+   "define": "ART_DEF_BUILDING_BERRY_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERITAGE_DEER"
+   "define": "ART_DEF_BUILDING_HERITAGE_DEER",
+   "notShownInCity": true
   }
  },
  "sound": {

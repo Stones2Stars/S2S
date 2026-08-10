@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_SORORITY_HOUSE"
+   "define": "ART_DEF_BUILDING_HOUSING_SORORITY_HOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

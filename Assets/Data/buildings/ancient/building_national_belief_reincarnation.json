@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_REINCARNATION"
+   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_REINCARNATION",
+   "notShownInCity": true
   }
  },
  "identity": {

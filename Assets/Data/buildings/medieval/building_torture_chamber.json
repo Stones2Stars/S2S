@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TORTURE_CHAMBER"
+   "define": "ART_DEF_BUILDING_TORTURE_CHAMBER",
+   "notShownInCity": true
   }
  },
  "sound": {

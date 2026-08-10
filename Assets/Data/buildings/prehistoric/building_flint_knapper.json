@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FLINT_KNAPPER"
+   "define": "ART_DEF_BUILDING_FLINT_KNAPPER",
+   "notShownInCity": true
   }
  },
  "identity": {

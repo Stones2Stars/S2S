@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT",
+   "notShownInCity": true
   }
  },
  "identity": {

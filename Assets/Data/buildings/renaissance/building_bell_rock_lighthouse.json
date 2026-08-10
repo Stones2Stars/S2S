@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BELL_ROCK_LIGHTHOUSE"
+   "define": "ART_DEF_BUILDING_BELL_ROCK_LIGHTHOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

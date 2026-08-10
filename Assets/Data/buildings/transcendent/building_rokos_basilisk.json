@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROKOS_BASILISK"
+   "define": "ART_DEF_BUILDING_ROKOS_BASILISK",
+   "notShownInCity": true
   }
  },
  "identity": {

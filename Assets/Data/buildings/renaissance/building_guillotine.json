@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILLOTINE"
+   "define": "ART_DEF_BUILDING_GUILLOTINE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_HIGHRISES"
+   "define": "ART_DEF_BUILDING_HOUSING_HIGHRISES",
+   "notShownInCity": true
   }
  },
  "identity": {

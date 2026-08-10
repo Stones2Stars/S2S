@@ -90,7 +90,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EJE_SONG"
+   "define": "ART_DEF_BUILDING_EJE_SONG",
+   "notShownInCity": true
   }
  },
  "sound": {

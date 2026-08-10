@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

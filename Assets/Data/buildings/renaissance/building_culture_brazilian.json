@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BRAZILIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_BRAZILIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

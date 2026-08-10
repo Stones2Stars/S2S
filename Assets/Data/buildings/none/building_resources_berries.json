@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_BERRIES"
+   "define": "ART_DEF_BUILDING_RESOURCES_BERRIES",
+   "notShownInCity": true
   }
  },
  "identity": {

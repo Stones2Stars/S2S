@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB"
+   "define": "ART_DEF_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

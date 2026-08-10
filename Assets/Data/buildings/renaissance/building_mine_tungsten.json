@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_TUNGSTEN"
+   "define": "ART_DEF_BUILDING_MINE_TUNGSTEN",
+   "notShownInCity": true
   }
  },
  "identity": {

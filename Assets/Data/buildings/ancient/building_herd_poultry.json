@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_POULTRY"
+   "define": "ART_DEF_BUILDING_HERD_POULTRY",
+   "notShownInCity": true
   }
  },
  "sound": {

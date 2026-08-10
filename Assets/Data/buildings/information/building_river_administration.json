@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_RIVER_ADMINISTRATION"
+   "define": "ART_DEF_RIVER_ADMINISTRATION",
+   "notShownInCity": true
   }
  },
  "identity": {

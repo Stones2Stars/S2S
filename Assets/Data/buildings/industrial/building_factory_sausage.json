@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_SAUSAGE"
+   "define": "ART_DEF_BUILDING_FACTORY_SAUSAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

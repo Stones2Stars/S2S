@@ -123,7 +123,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUXURY_FURNITURE_WORKSHOP"
+   "define": "ART_DEF_BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ONYX"
+   "define": "ART_DEF_BUILDING_ONYX",
+   "notShownInCity": true
   }
  },
  "identity": {

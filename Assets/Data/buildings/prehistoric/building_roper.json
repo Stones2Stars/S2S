@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROPER"
+   "define": "ART_DEF_BUILDING_ROPER",
+   "notShownInCity": true
   }
  },
  "identity": {

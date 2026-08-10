@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
+   "notShownInCity": true
   }
  },
  "identity": {

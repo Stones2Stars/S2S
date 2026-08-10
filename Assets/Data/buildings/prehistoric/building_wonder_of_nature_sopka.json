@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_SOPKA"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_SOPKA",
+   "notShownInCity": true
   }
  },
  "identity": {

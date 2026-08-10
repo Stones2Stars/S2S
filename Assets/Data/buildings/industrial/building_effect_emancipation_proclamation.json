@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   "define": "ART_DEF_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+   "notShownInCity": true
   }
  },
  "identity": {

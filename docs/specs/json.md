@@ -1036,6 +1036,25 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > unconsumed section. Nothing reports it. ⇒ When adding or reviewing a `world.art` read, check the key against
   > what the data actually authors — not against what the surrounding comment says it reads.
   >
+  > **⚖ `world.art.notShownInCity` — THE ON-MAP PRESENCE VERDICT IS DATA, DERIVED ONCE BY THE CURATOR (owner).**
+  > **~90% of buildings have no model to place** (4,683 of 5,180): they are real game entities carrying a real
+  > `<Button>` for the pedia and the build list, whose ART define says *"nothing to draw"* by scaling the model to
+  > zero or pointing at the empty model. The flag is emitted only when TRUE, so an absent key means "placeable".
+  > ⛔ **The verdict is NOT sniffed out of the art plane at runtime.** Legacy re-derived it per read from
+  > `fScale == 0 || NIF == "Art/empty.nif" || no tag`; the curator now answers it once, offline, from those same
+  > three conditions, and the info reads a member. ⚑ Two reasons it belongs in the data rather than in a getter:
+  > the intent becomes VISIBLE (a zero scale is a marker nobody would recognise as "deliberately invisible"), and
+  > the art defines load through `SetGlobalArtDefines`, which is `DllExport` — so their order against the JSON load
+  > is the EXE's and is not readable from this tree ([python-load-sequence.md](../reference/python-load-sequence.md)),
+  > which is exactly what a `mapFrom` derivation would have had to assume.
+  > ⚠ **The three markers OVERLAP rather than partition** — 1,908 defines carry both scale 0 and the empty model,
+  > 2,766 only the scale — so all three are tested and none stands proxy for the others. An UNKNOWN tag counts as
+  > not-placeable: `ARTFILEMGR` answers NULL for one, and a NULL define is precisely what must not reach the layout.
+  > ⚑ **What it costs when it is missing is measurable, not theoretical:** `CvCity::getVisibleBuildings` offers the
+  > render engine every building the city holds, so without the flag a late-game save logs **26,273**
+  > `is not associated with a CvCityLSystem node` warnings over 260 buildings plus **4,168** `Art/Empty.nif` shadow
+  > complaints ([observability.md](../reference/observability.md) — `LSystem.log`), once per layout rebuild, per city.
+
   > **⚖ ART IS ART, AND IT STAYS TOGETHER (owner).** A unit's MESH GROUPS were authored as one block with the
   > art tags that name their models (`<UnitMeshGroups>`: `iGroupSize` · `fMaxSpeed` · `fPadTime` ·
   > `iMeleeWaveSize` · `iRangedWaveSize`, then per `<UnitMeshGroup>` an `iRequired` and its **per-era** art
@@ -1046,14 +1065,26 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > (`CvUnitArtStyleTypeInfo`, keyed by unit) and falls back to the unit's own per-era tag. ⚠ Reducing the era
   > or style dimensions is a SEPARATE consolidation pass and unrelated to carrying them — do not slim the grid
   > while restoring it.
-  > ⚑ **Why it is load-bearing rather than cosmetic: five of these reads are `DllExport` and the EXE lays out
-  > and animates the unit through them** (`getGroupDefinitions` · `getUnitGroupRequired` · `isRenderAlways` ·
-  > `getAnimationMaxSpeed` · `getAnimationPadTime`). Answering them with absent values does not degrade to
-  > "no art": a max animation speed of **0** is a unit that plays its walk cycle and never translates, and
-  > **0** group definitions is a formation with no per-member offsets, so the models stack on one another.
+  > ⚑ **Why it is load-bearing rather than cosmetic: six of these reads are `DllExport` and the EXE lays out
+  > and animates the unit through them** (`getGroupSize` · `getGroupDefinitions` · `getUnitGroupRequired` ·
+  > `isRenderAlways` · `getAnimationMaxSpeed` · `getAnimationPadTime`). Answering them with absent values does
+  > not degrade to "no art": a max animation speed of **0** is a unit that plays its walk cycle and never
+  > translates, and **0** group definitions is a formation with no per-member offsets, so the models stack on
+  > one another.
   > ⛔ It is NOT covered by the ART carve-out ([roadmap.md](../plans/structural-cleanup/roadmap.md) scope
   > decision 3), which carves out the art DEFINES and asset files — these are the unit's own numbers, authored
   > in the unit XML, that merely reference a define.
+  > **⛔ ART IS NOT A DECIMAL (owner) — the animation numbers carry NO fixed-point scale.**
+  > [DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100) governs an AMOUNT, i.e. a magnitude
+  > the cascade carries and combines; `maxSpeed` and `padTime` are neither — they are handed to the EXE in its
+  > own animation units and never enter a calculation, a package or a synced decision. So they are read as
+  > authored (`1.75` is `1.75`), and a ×100 on them would be a scale invented for a plane that has none.
+  > ⚠ The ×100 reflex is what makes this worth stating: a value with a decimal point LOOKS like the two-decimal
+  > case the scaling exists for, and the tell that it is not is that nothing ever sums or modifies it.
+  > ⚑ **The grid is what `isRanged()` reads, so this is a COMBAT surface too, not only a visual one.**
+  > `CvUnit::isRanged` walks `getGroupDefinitions()` asking each group's art `getActAsRanged()`, so a collapsed
+  > grid returned **0 groups and the loop answered TRUE for every unit in the game** — first-strike ordering in
+  > `updateCombat` reads it at ~10 sites. Carried, it is true for 606 units and false for 1,467.
 - **`ai`** — AI-only metadata (flavours, weights, personality); never affects rules, only AI behaviour.
 
 ---

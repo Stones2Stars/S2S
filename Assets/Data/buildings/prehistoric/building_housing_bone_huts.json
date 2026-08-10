@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_BONE_HUTS"
+   "define": "ART_DEF_BUILDING_HOUSING_BONE_HUTS",
+   "notShownInCity": true
   }
  },
  "identity": {

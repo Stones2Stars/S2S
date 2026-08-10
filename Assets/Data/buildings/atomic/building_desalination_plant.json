@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DESALINATION_PLANT"
+   "define": "ART_DEF_BUILDING_DESALINATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

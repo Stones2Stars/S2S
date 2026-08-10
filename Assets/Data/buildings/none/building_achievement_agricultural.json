@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACHIEVEMENT_AGRICULTURAL"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_AGRICULTURAL",
+   "notShownInCity": true
   }
  },
  "identity": {

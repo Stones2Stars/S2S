@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TABLET_MAKER"
+   "define": "ART_DEF_BUILDING_TABLET_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

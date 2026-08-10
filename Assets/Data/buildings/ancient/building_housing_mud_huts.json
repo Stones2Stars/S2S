@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_MUD_HUTS"
+   "define": "ART_DEF_BUILDING_HOUSING_MUD_HUTS",
+   "notShownInCity": true
   }
  },
  "identity": {

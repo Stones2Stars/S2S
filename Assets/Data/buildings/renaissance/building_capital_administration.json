@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAPITAL_ADMINISTRATION"
+   "define": "ART_DEF_BUILDING_CAPITAL_ADMINISTRATION",
+   "notShownInCity": true
   }
  },
  "sound": {

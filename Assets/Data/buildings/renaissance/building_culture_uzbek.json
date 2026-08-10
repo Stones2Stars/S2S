@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_UZBEK"
+   "define": "ART_DEF_BUILDING_CULTURE_UZBEK",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REJUVENATION_TANK"
+   "define": "ART_DEF_BUILDING_REJUVENATION_TANK",
+   "notShownInCity": true
   }
  },
  "identity": {

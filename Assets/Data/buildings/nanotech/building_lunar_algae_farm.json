@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ALGAE_FARM"
+   "define": "ART_DEF_BUILDING_LUNAR_ALGAE_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

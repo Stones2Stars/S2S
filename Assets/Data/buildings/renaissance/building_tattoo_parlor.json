@@ -127,7 +127,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TATTOO_PARLOR"
+   "define": "ART_DEF_BUILDING_TATTOO_PARLOR",
+   "notShownInCity": true
   }
  },
  "identity": {

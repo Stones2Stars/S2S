@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_KREEP_MINE"
+   "define": "ART_DEF_BUILDING_LUNAR_KREEP_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

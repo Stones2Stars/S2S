@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OBSIDIAN_QUARRY"
+   "define": "ART_DEF_BUILDING_OBSIDIAN_QUARRY",
+   "notShownInCity": true
   }
  },
  "identity": {

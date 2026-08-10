@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY"
+   "define": "ART_DEF_BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY",
+   "notShownInCity": true
   }
  },
  "identity": {

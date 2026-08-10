@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CURARE"
+   "define": "ART_DEF_BUILDING_CURARE",
+   "notShownInCity": true
   }
  },
  "identity": {

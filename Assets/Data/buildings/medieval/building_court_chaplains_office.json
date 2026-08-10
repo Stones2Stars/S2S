@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COURT_CHAPLAINS_OFFICE"
+   "define": "ART_DEF_BUILDING_COURT_CHAPLAINS_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

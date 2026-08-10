@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JOUST"
+   "define": "ART_DEF_BUILDING_JOUST",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_DIESELPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_DIESELPUNK",
+   "notShownInCity": true
   }
  },
  "identity": {

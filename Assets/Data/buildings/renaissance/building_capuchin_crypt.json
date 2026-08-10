@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAPUCHIN_CRYPT"
+   "define": "ART_DEF_BUILDING_CAPUCHIN_CRYPT",
+   "notShownInCity": true
   }
  },
  "identity": {

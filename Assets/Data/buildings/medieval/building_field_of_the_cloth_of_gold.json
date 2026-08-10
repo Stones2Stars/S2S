@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD"
+   "define": "ART_DEF_BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
+   "notShownInCity": true
   }
  },
  "identity": {

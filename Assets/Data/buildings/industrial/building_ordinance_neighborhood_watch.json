@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH"
+   "define": "ART_DEF_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+   "notShownInCity": true
   }
  },
  "sound": {

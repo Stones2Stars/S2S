@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROASTING_HOUSE"
+   "define": "ART_DEF_BUILDING_ROASTING_HOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

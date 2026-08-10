@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THUMBSCREW"
+   "define": "ART_DEF_BUILDING_THUMBSCREW",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTRONIC_SECURITY_SYSTEM"
+   "define": "ART_DEF_BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

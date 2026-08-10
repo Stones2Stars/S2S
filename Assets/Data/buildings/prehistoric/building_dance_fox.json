@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DANCE_FOX"
+   "define": "ART_DEF_BUILDING_DANCE_FOX",
+   "notShownInCity": true
   }
  },
  "sound": {

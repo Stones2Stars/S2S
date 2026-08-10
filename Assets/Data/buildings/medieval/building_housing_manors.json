@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_MANORS"
+   "define": "ART_DEF_BUILDING_HOUSING_MANORS",
+   "notShownInCity": true
   }
  },
  "identity": {

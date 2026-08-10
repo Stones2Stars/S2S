@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUPERCRITICAL_CO2_TURBINE"
+   "define": "ART_DEF_BUILDING_SUPERCRITICAL_CO2_TURBINE",
+   "notShownInCity": true
   }
  },
  "identity": {

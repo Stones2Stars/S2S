@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ECUMENOPOLIS_EARTH"
+   "define": "ART_DEF_BUILDING_ECUMENOPOLIS_EARTH",
+   "notShownInCity": true
   }
  },
  "identity": {

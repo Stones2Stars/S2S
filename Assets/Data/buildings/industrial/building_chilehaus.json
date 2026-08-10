@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHILEHAUS"
+   "define": "ART_DEF_BUILDING_CHILEHAUS",
+   "notShownInCity": true
   }
  },
  "identity": {

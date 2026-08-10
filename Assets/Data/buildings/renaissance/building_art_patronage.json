@@ -149,7 +149,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ART_PATRONAGE"
+   "define": "ART_DEF_BUILDING_ART_PATRONAGE",
+   "notShownInCity": true
   }
  },
  "sound": {

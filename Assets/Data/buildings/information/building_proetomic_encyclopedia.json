@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROETOMIC_ENCYCLOPEDIA"
+   "define": "ART_DEF_BUILDING_PROETOMIC_ENCYCLOPEDIA",
+   "notShownInCity": true
   }
  },
  "identity": {

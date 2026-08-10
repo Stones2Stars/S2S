@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARTIFICIAL_REEF"
+   "define": "ART_DEF_BUILDING_ARTIFICIAL_REEF",
+   "notShownInCity": true
   }
  },
  "identity": {

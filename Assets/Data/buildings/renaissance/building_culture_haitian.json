@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_HAITIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_HAITIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR",
+   "notShownInCity": true
   }
  },
  "identity": {

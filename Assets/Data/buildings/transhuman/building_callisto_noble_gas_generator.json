@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR"
+   "define": "ART_DEF_BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

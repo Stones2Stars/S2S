@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SURF_SHOP"
+   "define": "ART_DEF_BUILDING_SURF_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

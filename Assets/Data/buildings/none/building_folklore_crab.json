@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_CRAB"
+   "define": "ART_DEF_BUILDING_FOLKLORE_CRAB",
+   "notShownInCity": true
   }
  },
  "identity": {

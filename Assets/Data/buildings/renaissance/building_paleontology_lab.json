@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PALEONTOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_PALEONTOLOGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

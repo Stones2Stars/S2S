@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_SKY_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_VENUS_SKY_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

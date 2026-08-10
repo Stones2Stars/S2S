@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_SUPER_JUPITER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_SUPER_JUPITER",
+   "notShownInCity": true
   }
  },
  "identity": {

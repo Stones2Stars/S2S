@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_COMMAND_CENTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_COMMAND_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

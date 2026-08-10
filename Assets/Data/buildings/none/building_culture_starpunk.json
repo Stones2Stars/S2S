@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_STARPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_STARPUNK",
+   "notShownInCity": true
   }
  },
  "identity": {

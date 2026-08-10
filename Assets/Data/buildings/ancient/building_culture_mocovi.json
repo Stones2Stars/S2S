@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MOCOVI"
+   "define": "ART_DEF_BUILDING_CULTURE_MOCOVI",
+   "notShownInCity": true
   }
  },
  "identity": {

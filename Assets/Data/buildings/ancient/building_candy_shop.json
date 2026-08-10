@@ -172,7 +172,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CANDY_SHOP"
+   "define": "ART_DEF_BUILDING_CANDY_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

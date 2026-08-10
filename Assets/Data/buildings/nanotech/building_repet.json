@@ -156,7 +156,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REPET"
+   "define": "ART_DEF_BUILDING_REPET",
+   "notShownInCity": true
   }
  },
  "sound": {

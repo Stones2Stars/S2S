@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TYRANNOSAURUS_REX_BREEDER"
+   "define": "ART_DEF_BUILDING_TYRANNOSAURUS_REX_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

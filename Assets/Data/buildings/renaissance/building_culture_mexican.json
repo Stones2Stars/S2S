@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MEXICAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MEXICAN",
+   "notShownInCity": true
   }
  },
  "identity": {

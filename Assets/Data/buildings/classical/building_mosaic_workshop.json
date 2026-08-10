@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOSAIC_WORKSHOP"
+   "define": "ART_DEF_BUILDING_MOSAIC_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

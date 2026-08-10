@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_STONE_HUTS"
+   "define": "ART_DEF_BUILDING_HOUSING_STONE_HUTS",
+   "notShownInCity": true
   }
  },
  "identity": {

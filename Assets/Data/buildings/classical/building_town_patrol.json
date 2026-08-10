@@ -111,7 +111,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOWN_PATROL"
+   "define": "ART_DEF_BUILDING_TOWN_PATROL",
+   "notShownInCity": true
   }
  },
  "identity": {

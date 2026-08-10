@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_DOCKING_BAY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_DOCKING_BAY",
+   "notShownInCity": true
   }
  },
  "identity": {

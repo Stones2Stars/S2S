@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_PERSIMMON"
+   "define": "ART_DEF_BUILDING_ORCHARD_PERSIMMON",
+   "notShownInCity": true
   }
  },
  "identity": {

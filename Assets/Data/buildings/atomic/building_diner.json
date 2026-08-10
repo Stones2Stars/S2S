@@ -144,7 +144,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DINER"
+   "define": "ART_DEF_BUILDING_DINER",
+   "notShownInCity": true
   }
  },
  "identity": {

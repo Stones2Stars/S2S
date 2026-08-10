@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_MATERIALS_LAB"
+   "define": "ART_DEF_BUILDING_CISLUNAR_MATERIALS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

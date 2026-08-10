@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACHIEVEMENT_CULTURAL"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_CULTURAL",
+   "notShownInCity": true
   }
  },
  "identity": {

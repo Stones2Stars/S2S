@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_LOGISTICS_CENTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

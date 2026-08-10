@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ENGLISH"
+   "define": "ART_DEF_BUILDING_CULTURE_ENGLISH",
+   "notShownInCity": true
   }
  },
  "identity": {

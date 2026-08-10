@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RECHARGING_NODE"
+   "define": "ART_DEF_BUILDING_RECHARGING_NODE",
+   "notShownInCity": true
   }
  },
  "identity": {

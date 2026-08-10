@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CARPENTER"
+   "define": "ART_DEF_BUILDING_CARPENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

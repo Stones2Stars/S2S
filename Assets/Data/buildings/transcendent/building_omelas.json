@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OMELAS"
+   "define": "ART_DEF_BUILDING_OMELAS",
+   "notShownInCity": true
   }
  },
  "identity": {

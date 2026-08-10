@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER"
+   "define": "ART_DEF_BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -180,7 +180,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENCLOSURE_AMPHIBIAN_POND"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_MUSKOX"
+   "define": "ART_DEF_BUILDING_FOLKLORE_MUSKOX",
+   "notShownInCity": true
   }
  },
  "identity": {

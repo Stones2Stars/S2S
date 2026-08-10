@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_SASSAFRAS"
+   "define": "ART_DEF_BUILDING_GROVE_SASSAFRAS",
+   "notShownInCity": true
   }
  },
  "identity": {

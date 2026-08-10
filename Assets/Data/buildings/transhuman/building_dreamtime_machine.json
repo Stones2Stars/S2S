@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DREAMTIME_MACHINE"
+   "define": "ART_DEF_BUILDING_DREAMTIME_MACHINE",
+   "notShownInCity": true
   }
  },
  "identity": {

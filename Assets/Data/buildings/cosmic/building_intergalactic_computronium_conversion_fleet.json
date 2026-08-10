@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CELLPHONE_STORE"
+   "define": "ART_DEF_BUILDING_CELLPHONE_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

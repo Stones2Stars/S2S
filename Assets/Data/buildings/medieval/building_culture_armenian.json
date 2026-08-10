@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ARMENIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ARMENIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_TOPAZ"
+   "define": "ART_DEF_BUILDING_MINE_TOPAZ",
+   "notShownInCity": true
   }
  },
  "identity": {

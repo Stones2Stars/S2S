@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WIG_SHOP"
+   "define": "ART_DEF_BUILDING_WIG_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

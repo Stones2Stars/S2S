@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANDROID_PARENTS"
+   "define": "ART_DEF_BUILDING_ANDROID_PARENTS",
+   "notShownInCity": true
   }
  },
  "identity": {

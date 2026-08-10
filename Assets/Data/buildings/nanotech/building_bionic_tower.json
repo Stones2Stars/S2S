@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIONIC_TOWER"
+   "define": "ART_DEF_BUILDING_BIONIC_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

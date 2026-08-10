@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENERGY_BEAM_NETWORK"
+   "define": "ART_DEF_BUILDING_ENERGY_BEAM_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

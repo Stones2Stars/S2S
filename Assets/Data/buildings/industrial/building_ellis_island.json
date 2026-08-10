@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELLIS_ISLAND"
+   "define": "ART_DEF_BUILDING_ELLIS_ISLAND",
+   "notShownInCity": true
   }
  },
  "identity": {

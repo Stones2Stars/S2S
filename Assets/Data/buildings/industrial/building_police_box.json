@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POLICE_BOX"
+   "define": "ART_DEF_BUILDING_POLICE_BOX",
+   "notShownInCity": true
   }
  },
  "sound": {

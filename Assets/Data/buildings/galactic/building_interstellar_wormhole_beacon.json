@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_WORMHOLE_BEACON"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+   "notShownInCity": true
   }
  },
  "identity": {

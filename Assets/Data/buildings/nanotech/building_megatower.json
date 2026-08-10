@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGATOWER"
+   "define": "ART_DEF_BUILDING_MEGATOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

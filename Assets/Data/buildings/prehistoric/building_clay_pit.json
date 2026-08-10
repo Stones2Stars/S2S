@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLAY_PIT"
+   "define": "ART_DEF_BUILDING_CLAY_PIT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -152,7 +152,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FAIRGROUNDS"
+   "define": "ART_DEF_BUILDING_FAIRGROUNDS",
+   "notShownInCity": true
   }
  },
  "sound": {

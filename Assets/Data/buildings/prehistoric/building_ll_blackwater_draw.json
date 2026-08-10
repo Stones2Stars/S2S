@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LL_BLACKWATER_DRAW"
+   "define": "ART_DEF_BUILDING_LL_BLACKWATER_DRAW",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUPERSOLID_HELIUM_PLANT"
+   "define": "ART_DEF_BUILDING_SUPERSOLID_HELIUM_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

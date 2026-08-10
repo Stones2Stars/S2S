@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_SELECTIVE_DECOHERENCE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SELECTIVE_DECOHERENCE",
+   "notShownInCity": true
   }
  },
  "identity": {

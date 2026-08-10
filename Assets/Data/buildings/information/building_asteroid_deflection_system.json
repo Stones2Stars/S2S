@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_DEFLECTION_SYSTEM"
+   "define": "ART_DEF_BUILDING_ASTEROID_DEFLECTION_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

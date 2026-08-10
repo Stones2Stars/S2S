@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_DYSON_SPHERES"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_DYSON_SPHERES",
+   "notShownInCity": true
   }
  },
  "identity": {

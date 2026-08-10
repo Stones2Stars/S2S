@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OLODUMARE"
+   "define": "ART_DEF_BUILDING_OLODUMARE",
+   "notShownInCity": true
   }
  },
  "sound": {

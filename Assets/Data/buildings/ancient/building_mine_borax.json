@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_BORAX"
+   "define": "ART_DEF_BUILDING_MINE_BORAX",
+   "notShownInCity": true
   }
  },
  "identity": {

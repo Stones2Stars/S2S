@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DOCTORS_OFFICE_OFFICE"
+   "define": "ART_DEF_BUILDING_DOCTORS_OFFICE_OFFICE",
+   "notShownInCity": true
   }
  },
  "sound": {

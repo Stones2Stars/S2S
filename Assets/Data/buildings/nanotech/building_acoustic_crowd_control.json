@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACOUSTIC_CROWD_CONTROL"
+   "define": "ART_DEF_BUILDING_ACOUSTIC_CROWD_CONTROL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_OXPECKER"
+   "define": "ART_DEF_BUILDING_FOLKLORE_OXPECKER",
+   "notShownInCity": true
   }
  },
  "identity": {

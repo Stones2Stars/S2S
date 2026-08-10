@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_MOON_BEAR"
+   "define": "ART_DEF_BUILDING_FOLKLORE_MOON_BEAR",
+   "notShownInCity": true
   }
  },
  "identity": {

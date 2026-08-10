@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANCIENT_VETERINARIAN"
+   "define": "ART_DEF_BUILDING_ANCIENT_VETERINARIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

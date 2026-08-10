@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_PINE_NUT"
+   "define": "ART_DEF_BUILDING_GROVE_PINE_NUT",
+   "notShownInCity": true
   }
  },
  "identity": {

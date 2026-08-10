@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PIZZA_PARLOR"
+   "define": "ART_DEF_BUILDING_PIZZA_PARLOR",
+   "notShownInCity": true
   }
  },
  "identity": {

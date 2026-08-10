@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_ECONOMY"
+   "define": "ART_DEF_BUILDING_SOLAR_ECONOMY",
+   "notShownInCity": true
   }
  },
  "identity": {

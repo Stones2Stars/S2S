@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO"
+   "define": "ART_DEF_BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO",
+   "notShownInCity": true
   }
  },
  "identity": {

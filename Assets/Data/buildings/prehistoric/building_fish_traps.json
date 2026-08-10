@@ -117,7 +117,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FISH_TRAPS"
+   "define": "ART_DEF_BUILDING_FISH_TRAPS",
+   "notShownInCity": true
   }
  },
  "sound": {

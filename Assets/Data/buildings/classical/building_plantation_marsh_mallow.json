@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_MARSH_MALLOW"
+   "define": "ART_DEF_BUILDING_PLANTATION_MARSH_MALLOW",
+   "notShownInCity": true
   }
  },
  "identity": {

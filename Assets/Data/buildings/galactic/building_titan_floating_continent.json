@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TITAN_FLOATING_CONTINENT"
+   "define": "ART_DEF_BUILDING_TITAN_FLOATING_CONTINENT",
+   "notShownInCity": true
   }
  },
  "identity": {

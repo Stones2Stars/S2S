@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_OSMIUM_CORE_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COSMONAUT_TRAINING_CENTRE"
+   "define": "ART_DEF_BUILDING_COSMONAUT_TRAINING_CENTRE",
+   "notShownInCity": true
   }
  },
  "identity": {

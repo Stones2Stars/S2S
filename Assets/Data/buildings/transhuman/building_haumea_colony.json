@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HAUMEA_COLONY"
+   "define": "ART_DEF_BUILDING_HAUMEA_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

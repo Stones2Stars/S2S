@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
+   "notShownInCity": true
   }
  },
  "sound": {

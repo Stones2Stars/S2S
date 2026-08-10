@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MACEDONIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MACEDONIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

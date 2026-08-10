@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_SHIELDING"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SHIELDING",
+   "notShownInCity": true
   }
  },
  "identity": {

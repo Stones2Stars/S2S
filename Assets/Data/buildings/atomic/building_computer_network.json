@@ -165,7 +165,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMPUTER_NETWORK"
+   "define": "ART_DEF_BUILDING_COMPUTER_NETWORK",
+   "notShownInCity": true
   }
  },
  "sound": {

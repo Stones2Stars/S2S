@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CRYPTOLOGY_CENTER"
+   "define": "ART_DEF_BUILDING_CRYPTOLOGY_CENTER",
+   "notShownInCity": true
   }
  },
  "sound": {

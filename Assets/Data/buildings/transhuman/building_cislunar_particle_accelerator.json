@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_PARTICLE_ACCELERATOR"
+   "define": "ART_DEF_BUILDING_CISLUNAR_PARTICLE_ACCELERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

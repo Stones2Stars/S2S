@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_PEPPERMINT"
+   "define": "ART_DEF_BUILDING_FARM_CROP_PEPPERMINT",
+   "notShownInCity": true
   }
  },
  "identity": {

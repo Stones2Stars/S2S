@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN",
+   "notShownInCity": true
   }
  },
  "identity": {

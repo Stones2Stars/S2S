@@ -109,7 +109,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PEARL_HARBOR"
+   "define": "ART_DEF_BUILDING_PEARL_HARBOR",
+   "notShownInCity": true
   }
  },
  "identity": {

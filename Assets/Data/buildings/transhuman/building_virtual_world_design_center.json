@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD_DESIGN_CENTER"
+   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD_DESIGN_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

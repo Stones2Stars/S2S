@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP"
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AERIAL_HOTEL"
+   "define": "ART_DEF_BUILDING_AERIAL_HOTEL",
+   "notShownInCity": true
   }
  },
  "identity": {

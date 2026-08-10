@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_RAVEN"
+   "define": "ART_DEF_BUILDING_FOLKLORE_RAVEN",
+   "notShownInCity": true
   }
  },
  "identity": {

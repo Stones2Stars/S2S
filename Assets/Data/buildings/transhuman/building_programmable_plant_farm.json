@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROGRAMMABLE_PLANT_FARM"
+   "define": "ART_DEF_BUILDING_PROGRAMMABLE_PLANT_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

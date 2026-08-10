@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_MINING_COMPLEX"
+   "define": "ART_DEF_BUILDING_ASTEROID_MINING_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

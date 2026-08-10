@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PACHINKO_ARCADE"
+   "define": "ART_DEF_BUILDING_PACHINKO_ARCADE",
+   "notShownInCity": true
   }
  },
  "identity": {

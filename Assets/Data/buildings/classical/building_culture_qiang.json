@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_QIANG"
+   "define": "ART_DEF_BUILDING_CULTURE_QIANG",
+   "notShownInCity": true
   }
  },
  "identity": {

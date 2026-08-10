@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_SAFFRON"
+   "define": "ART_DEF_BUILDING_PLANTATION_SAFFRON",
+   "notShownInCity": true
   }
  },
  "identity": {

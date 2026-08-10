@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_DEER"
+   "define": "ART_DEF_BUILDING_HERD_DEER",
+   "notShownInCity": true
   }
  },
  "sound": {

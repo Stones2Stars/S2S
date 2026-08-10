@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RAT_BREEDER"
+   "define": "ART_DEF_BUILDING_RAT_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

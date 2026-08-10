@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT"
+   "define": "ART_DEF_BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

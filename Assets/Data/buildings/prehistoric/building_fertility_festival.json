@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FERTILITY_FESTIVAL"
+   "define": "ART_DEF_BUILDING_FERTILITY_FESTIVAL",
+   "notShownInCity": true
   }
  },
  "identity": {

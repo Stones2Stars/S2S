@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ARTIFICIAL_MOON"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
+   "notShownInCity": true
   }
  },
  "identity": {

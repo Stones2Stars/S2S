@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MITHRIL_IMPORTER"
+   "define": "ART_DEF_BUILDING_MITHRIL_IMPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

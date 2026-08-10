@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEMORY_TRANSFER_STATION"
+   "define": "ART_DEF_BUILDING_MEMORY_TRANSFER_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

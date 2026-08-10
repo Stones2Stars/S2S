@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TELEPHONE_NETWORK"
+   "define": "ART_DEF_BUILDING_TELEPHONE_NETWORK",
+   "notShownInCity": true
   }
  },
  "sound": {

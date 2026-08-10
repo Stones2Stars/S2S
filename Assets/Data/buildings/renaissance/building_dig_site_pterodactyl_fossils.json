@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIG_SITE_PTERODACTYL_FOSSILS"
+   "define": "ART_DEF_BUILDING_DIG_SITE_PTERODACTYL_FOSSILS",
+   "notShownInCity": true
   }
  },
  "identity": {

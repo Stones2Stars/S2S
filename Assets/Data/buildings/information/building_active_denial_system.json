@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACTIVE_DENIAL_SYSTEM"
+   "define": "ART_DEF_BUILDING_ACTIVE_DENIAL_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

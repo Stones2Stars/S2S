@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOURISM_A"
+   "define": "ART_DEF_BUILDING_TOURISM_A",
+   "notShownInCity": true
   }
  },
  "identity": {

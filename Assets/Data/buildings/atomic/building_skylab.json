@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SKYLAB"
+   "define": "ART_DEF_BUILDING_SKYLAB",
+   "notShownInCity": true
   }
  },
  "identity": {

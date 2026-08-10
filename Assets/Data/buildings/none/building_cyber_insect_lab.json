@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CYBER_INSECT_LAB"
+   "define": "ART_DEF_BUILDING_CYBER_INSECT_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

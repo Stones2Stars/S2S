@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PIER"
+   "define": "ART_DEF_BUILDING_PIER",
+   "notShownInCity": true
   }
  },
  "sound": {

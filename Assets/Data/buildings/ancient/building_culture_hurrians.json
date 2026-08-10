@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_HURRIANS"
+   "define": "ART_DEF_BUILDING_CULTURE_HURRIANS",
+   "notShownInCity": true
   }
  },
  "identity": {

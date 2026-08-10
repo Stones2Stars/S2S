@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATER_TOWER"
+   "define": "ART_DEF_BUILDING_WATER_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

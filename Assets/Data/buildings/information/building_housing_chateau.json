@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_CHATEAU"
+   "define": "ART_DEF_BUILDING_HOUSING_CHATEAU",
+   "notShownInCity": true
   }
  },
  "identity": {

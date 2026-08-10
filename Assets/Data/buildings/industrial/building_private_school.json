@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PRIVATE_SCHOOL"
+   "define": "ART_DEF_BUILDING_PRIVATE_SCHOOL",
+   "notShownInCity": true
   }
  },
  "sound": {

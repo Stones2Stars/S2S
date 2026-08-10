@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_PALEOLITHIC_CAT"
+   "define": "ART_DEF_BUILDING_FOLKLORE_PALEOLITHIC_CAT",
+   "notShownInCity": true
   }
  },
  "identity": {

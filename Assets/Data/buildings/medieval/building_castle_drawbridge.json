@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CASTLE_DRAWBRIDGE"
+   "define": "ART_DEF_BUILDING_CASTLE_DRAWBRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

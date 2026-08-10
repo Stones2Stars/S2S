@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLOCK"
+   "define": "ART_DEF_BUILDING_CLOCK",
+   "notShownInCity": true
   }
  },
  "sound": {

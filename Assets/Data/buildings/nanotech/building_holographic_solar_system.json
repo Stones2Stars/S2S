@@ -90,7 +90,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM"
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

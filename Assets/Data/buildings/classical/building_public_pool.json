@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PUBLIC_POOL"
+   "define": "ART_DEF_BUILDING_PUBLIC_POOL",
+   "notShownInCity": true
   }
  },
  "sound": {

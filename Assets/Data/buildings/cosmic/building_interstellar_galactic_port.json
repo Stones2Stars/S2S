@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_GALACTIC_PORT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GALACTIC_PORT",
+   "notShownInCity": true
   }
  },
  "identity": {

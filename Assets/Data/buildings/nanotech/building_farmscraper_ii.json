@@ -199,7 +199,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARMSCRAPER_II"
+   "define": "ART_DEF_BUILDING_FARMSCRAPER_II",
+   "notShownInCity": true
   }
  },
  "sound": {

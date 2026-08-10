@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_SOLAR_PANELS"
+   "define": "ART_DEF_BUILDING_LUNAR_SOLAR_PANELS",
+   "notShownInCity": true
   }
  },
  "identity": {

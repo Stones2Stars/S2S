@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_OSTRICH"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_OSTRICH",
+   "notShownInCity": true
   }
  },
  "identity": {

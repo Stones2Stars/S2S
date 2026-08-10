@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_AERODROME"
+   "define": "ART_DEF_BUILDING_GRAND_AERODROME",
+   "notShownInCity": true
   }
  },
  "identity": {

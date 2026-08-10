@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_BIOFORMING_STUDIO"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

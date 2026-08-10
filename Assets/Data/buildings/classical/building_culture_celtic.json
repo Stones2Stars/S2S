@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CELTIC"
+   "define": "ART_DEF_BUILDING_CULTURE_CELTIC",
+   "notShownInCity": true
   }
  },
  "identity": {

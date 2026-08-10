@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BAHRAINI"
+   "define": "ART_DEF_BUILDING_CULTURE_BAHRAINI",
+   "notShownInCity": true
   }
  },
  "identity": {

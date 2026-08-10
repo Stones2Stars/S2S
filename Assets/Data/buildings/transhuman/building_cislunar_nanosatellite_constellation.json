@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION"
+   "define": "ART_DEF_BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EXAVERSE_PORTAL"
+   "define": "ART_DEF_BUILDING_EXAVERSE_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

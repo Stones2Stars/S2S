@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_PINEAPPLE"
+   "define": "ART_DEF_BUILDING_PLANTATION_PINEAPPLE",
+   "notShownInCity": true
   }
  },
  "identity": {

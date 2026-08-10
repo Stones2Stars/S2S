@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLOBAL_POSITIONING_SYSTEM"
+   "define": "ART_DEF_BUILDING_GLOBAL_POSITIONING_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

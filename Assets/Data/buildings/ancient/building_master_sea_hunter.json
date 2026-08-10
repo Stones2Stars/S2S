@@ -48,7 +48,8 @@
  ],
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MASTER_SEA_HUNTER"
+   "define": "ART_DEF_BUILDING_MASTER_SEA_HUNTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -138,7 +138,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROYAL_TOMB"
+   "define": "ART_DEF_BUILDING_ROYAL_TOMB",
+   "notShownInCity": true
   }
  },
  "sound": {

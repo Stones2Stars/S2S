@@ -116,7 +116,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+   "notShownInCity": true
   }
  },
  "identity": {

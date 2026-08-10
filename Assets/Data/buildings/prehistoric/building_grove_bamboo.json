@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_BAMBOO"
+   "define": "ART_DEF_BUILDING_GROVE_BAMBOO",
+   "notShownInCity": true
   }
  },
  "identity": {

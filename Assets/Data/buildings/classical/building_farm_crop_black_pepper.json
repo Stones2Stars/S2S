@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_BLACK_PEPPER"
+   "define": "ART_DEF_BUILDING_FARM_CROP_BLACK_PEPPER",
+   "notShownInCity": true
   }
  },
  "identity": {

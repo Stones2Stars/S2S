@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIRTUAL_ECONOMY"
+   "define": "ART_DEF_BUILDING_VIRTUAL_ECONOMY",
+   "notShownInCity": true
   }
  },
  "identity": {

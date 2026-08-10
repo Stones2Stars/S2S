@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_HIGH_DIMENSIONAL"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_HIGH_DIMENSIONAL",
+   "notShownInCity": true
   }
  },
  "identity": {

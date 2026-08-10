@@ -147,7 +147,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MODERN_OFFICES"
+   "define": "ART_DEF_BUILDING_MODERN_OFFICES",
+   "notShownInCity": true
   }
  },
  "identity": {

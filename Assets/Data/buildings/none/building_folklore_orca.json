@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_ORCA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_ORCA",
+   "notShownInCity": true
   }
  },
  "identity": {

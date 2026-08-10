@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_LIZARDS"
+   "define": "ART_DEF_BUILDING_RESOURCES_LIZARDS",
+   "notShownInCity": true
   }
  },
  "identity": {

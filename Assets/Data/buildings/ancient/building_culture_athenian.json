@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ATHENIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ATHENIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

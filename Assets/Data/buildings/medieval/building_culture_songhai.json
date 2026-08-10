@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SONGHAI"
+   "define": "ART_DEF_BUILDING_CULTURE_SONGHAI",
+   "notShownInCity": true
   }
  },
  "identity": {

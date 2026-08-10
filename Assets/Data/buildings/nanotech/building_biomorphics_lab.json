@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIOMORPHICS_LAB"
+   "define": "ART_DEF_BUILDING_BIOMORPHICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

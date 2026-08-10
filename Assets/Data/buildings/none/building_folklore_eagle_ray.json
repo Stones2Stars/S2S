@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_EAGLE_RAY"
+   "define": "ART_DEF_BUILDING_FOLKLORE_EAGLE_RAY",
+   "notShownInCity": true
   }
  },
  "identity": {

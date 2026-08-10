@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_DRUG_PROHIBITION"
+   "define": "ART_DEF_BUILDING_NATIONAL_DRUG_PROHIBITION",
+   "notShownInCity": true
   }
  },
  "identity": {

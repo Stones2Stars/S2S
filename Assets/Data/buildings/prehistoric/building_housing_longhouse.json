@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_LONGHOUSE"
+   "define": "ART_DEF_BUILDING_HOUSING_LONGHOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

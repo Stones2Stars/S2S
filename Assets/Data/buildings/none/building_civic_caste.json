@@ -20,7 +20,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_CASTE"
+   "define": "ART_DEF_BUILDING_CIVIC_CASTE",
+   "notShownInCity": true
   }
  },
  "identity": {

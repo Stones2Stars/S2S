@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_ALTAR"
+   "define": "ART_DEF_BUILDING_NATURE_ALTAR",
+   "notShownInCity": true
   }
  },
  "sound": {

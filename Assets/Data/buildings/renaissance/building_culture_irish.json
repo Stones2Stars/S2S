@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_IRISH"
+   "define": "ART_DEF_BUILDING_CULTURE_IRISH",
+   "notShownInCity": true
   }
  },
  "identity": {

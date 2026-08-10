@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOPSCOTCH"
+   "define": "ART_DEF_BUILDING_HOPSCOTCH",
+   "notShownInCity": true
   }
  },
  "identity": {

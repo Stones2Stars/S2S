@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOTEL"
+   "define": "ART_DEF_BUILDING_MOTEL",
+   "notShownInCity": true
   }
  },
  "sound": {

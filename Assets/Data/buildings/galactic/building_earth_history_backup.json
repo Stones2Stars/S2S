@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EARTH_HISTORY_BACKUP"
+   "define": "ART_DEF_BUILDING_EARTH_HISTORY_BACKUP",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CERMET_PLANT"
+   "define": "ART_DEF_BUILDING_CERMET_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

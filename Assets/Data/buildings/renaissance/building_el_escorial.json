@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EL_ESCORIAL"
+   "define": "ART_DEF_BUILDING_EL_ESCORIAL",
+   "notShownInCity": true
   }
  },
  "identity": {

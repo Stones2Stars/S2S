@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WOODCARVER"
+   "define": "ART_DEF_BUILDING_WOODCARVER",
+   "notShownInCity": true
   }
  },
  "identity": {

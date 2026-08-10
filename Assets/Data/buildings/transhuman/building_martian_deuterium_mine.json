@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_DEUTERIUM_MINE"
+   "define": "ART_DEF_BUILDING_MARTIAN_DEUTERIUM_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

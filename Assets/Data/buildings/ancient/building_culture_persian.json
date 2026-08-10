@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_PERSIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_PERSIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

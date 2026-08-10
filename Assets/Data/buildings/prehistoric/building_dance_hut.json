@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DANCE_HUT"
+   "define": "ART_DEF_BUILDING_DANCE_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

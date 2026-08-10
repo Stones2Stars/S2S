@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
+   "define": "ART_DEF_BUILDING_RESOURCES_PETROLEUM_PRODUCTS",
+   "notShownInCity": true
   }
  },
  "identity": {

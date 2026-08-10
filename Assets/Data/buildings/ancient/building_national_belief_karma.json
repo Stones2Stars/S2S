@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_KARMA"
+   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_KARMA",
+   "notShownInCity": true
   }
  },
  "identity": {

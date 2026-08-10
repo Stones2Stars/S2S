@@ -141,7 +141,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PICOTECH_COMPLEX"
+   "define": "ART_DEF_BUILDING_PICOTECH_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_FLEMISH"
+   "define": "ART_DEF_BUILDING_CULTURE_FLEMISH",
+   "notShownInCity": true
   }
  },
  "identity": {

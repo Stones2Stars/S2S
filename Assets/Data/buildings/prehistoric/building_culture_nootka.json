@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NOOTKA"
+   "define": "ART_DEF_BUILDING_CULTURE_NOOTKA",
+   "notShownInCity": true
   }
  },
  "identity": {

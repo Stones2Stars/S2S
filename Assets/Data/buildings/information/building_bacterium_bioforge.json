@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BACTERIUM_BIOFORGE"
+   "define": "ART_DEF_BUILDING_BACTERIUM_BIOFORGE",
+   "notShownInCity": true
   }
  },
  "identity": {

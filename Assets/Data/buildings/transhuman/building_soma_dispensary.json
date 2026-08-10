@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOMA_DISPENSARY"
+   "define": "ART_DEF_BUILDING_SOMA_DISPENSARY",
+   "notShownInCity": true
   }
  },
  "identity": {

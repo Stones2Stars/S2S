@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AI_MUSICIAN"
+   "define": "ART_DEF_BUILDING_AI_MUSICIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

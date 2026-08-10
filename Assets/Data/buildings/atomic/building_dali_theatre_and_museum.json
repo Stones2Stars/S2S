@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DALI_THEATRE_AND_MUSEUM"
+   "define": "ART_DEF_BUILDING_DALI_THEATRE_AND_MUSEUM",
+   "notShownInCity": true
   }
  },
  "identity": {

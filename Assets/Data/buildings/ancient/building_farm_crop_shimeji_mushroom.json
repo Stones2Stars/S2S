@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_SHIMEJI_MUSHROOM"
+   "define": "ART_DEF_BUILDING_FARM_CROP_SHIMEJI_MUSHROOM",
+   "notShownInCity": true
   }
  },
  "identity": {

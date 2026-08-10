@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_PROJECT"
+   "define": "ART_DEF_BUILDING_VENUS_PROJECT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -191,7 +191,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+   "define": "ART_DEF_BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

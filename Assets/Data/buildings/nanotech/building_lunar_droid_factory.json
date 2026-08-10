@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_DROID_FACTORY"
+   "define": "ART_DEF_BUILDING_LUNAR_DROID_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

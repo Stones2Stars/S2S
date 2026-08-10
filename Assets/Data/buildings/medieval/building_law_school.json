@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LAW_SCHOOL"
+   "define": "ART_DEF_BUILDING_LAW_SCHOOL",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_HOUSING_WORKERS"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+   "notShownInCity": true
   }
  },
  "identity": {

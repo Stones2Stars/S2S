@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_TYPEWRITERS"
+   "define": "ART_DEF_BUILDING_FACTORY_TYPEWRITERS",
+   "notShownInCity": true
   }
  },
  "identity": {

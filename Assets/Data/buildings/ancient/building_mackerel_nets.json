@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MACKEREL_NETS"
+   "define": "ART_DEF_BUILDING_MACKEREL_NETS",
+   "notShownInCity": true
   }
  },
  "identity": {

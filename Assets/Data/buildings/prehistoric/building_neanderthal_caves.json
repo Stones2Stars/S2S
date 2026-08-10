@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEANDERTHAL_CAVES"
+   "define": "ART_DEF_BUILDING_NEANDERTHAL_CAVES",
+   "notShownInCity": true
   }
  },
  "identity": {

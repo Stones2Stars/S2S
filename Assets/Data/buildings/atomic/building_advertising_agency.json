@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ADVERTISING_AGENCY"
+   "define": "ART_DEF_BUILDING_ADVERTISING_AGENCY",
+   "notShownInCity": true
   }
  },
  "identity": {

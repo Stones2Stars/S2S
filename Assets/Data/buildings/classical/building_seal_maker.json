@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEAL_MAKER"
+   "define": "ART_DEF_BUILDING_SEAL_MAKER",
+   "notShownInCity": true
   }
  },
  "sound": {

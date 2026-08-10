@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE"
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

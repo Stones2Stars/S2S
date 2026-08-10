@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_CANDLES"
+   "define": "ART_DEF_BUILDING_FACTORY_CANDLES",
+   "notShownInCity": true
   }
  },
  "identity": {

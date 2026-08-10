@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PTERADACTYL_BREEDER"
+   "define": "ART_DEF_BUILDING_PTERADACTYL_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

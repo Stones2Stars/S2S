@@ -20,7 +20,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_MARTIAL_LAW"
+   "define": "ART_DEF_BUILDING_CIVIC_MARTIAL_LAW",
+   "notShownInCity": true
   }
  },
  "identity": {

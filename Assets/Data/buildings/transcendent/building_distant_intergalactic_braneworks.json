@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS"
+   "define": "ART_DEF_BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

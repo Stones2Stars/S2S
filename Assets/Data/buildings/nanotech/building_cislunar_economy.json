@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_ECONOMY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_ECONOMY",
+   "notShownInCity": true
   }
  },
  "identity": {

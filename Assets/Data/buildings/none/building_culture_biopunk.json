@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BIOPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_BIOPUNK",
+   "notShownInCity": true
   }
  },
  "identity": {

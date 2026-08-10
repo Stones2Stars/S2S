@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUGMENTED_SPORTS_ARENA"
+   "define": "ART_DEF_BUILDING_AUGMENTED_SPORTS_ARENA",
+   "notShownInCity": true
   }
  },
  "identity": {

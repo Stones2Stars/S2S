@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROPERTYTOURISM"
+   "define": "ART_DEF_BUILDING_PROPERTYTOURISM",
+   "notShownInCity": true
   }
  },
  "identity": {

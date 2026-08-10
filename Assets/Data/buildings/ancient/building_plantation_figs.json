@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_FIGS"
+   "define": "ART_DEF_BUILDING_PLANTATION_FIGS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EVOLUTIONARY_ALGORITHMS"
+   "define": "ART_DEF_BUILDING_EVOLUTIONARY_ALGORITHMS",
+   "notShownInCity": true
   }
  },
  "identity": {

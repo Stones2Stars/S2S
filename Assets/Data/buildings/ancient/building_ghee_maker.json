@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GHEE_MAKER"
+   "define": "ART_DEF_BUILDING_GHEE_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

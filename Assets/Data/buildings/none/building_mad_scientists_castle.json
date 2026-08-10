@@ -111,7 +111,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAD_SCIENTISTS_CASTLE"
+   "define": "ART_DEF_BUILDING_MAD_SCIENTISTS_CASTLE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OCEAN_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_OCEAN_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

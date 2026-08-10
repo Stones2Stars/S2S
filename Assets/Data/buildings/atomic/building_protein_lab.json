@@ -127,7 +127,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROTEIN_LAB"
+   "define": "ART_DEF_BUILDING_PROTEIN_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

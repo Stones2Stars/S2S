@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THINK_TANK"
+   "define": "ART_DEF_BUILDING_THINK_TANK",
+   "notShownInCity": true
   }
  },
  "sound": {

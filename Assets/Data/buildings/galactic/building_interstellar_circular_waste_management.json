@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CIRCULAR_WASTE_MANAGEMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

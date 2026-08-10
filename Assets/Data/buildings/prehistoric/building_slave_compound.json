@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SLAVE_MARKET"
+   "define": "ART_DEF_BUILDING_SLAVE_MARKET",
+   "notShownInCity": true
   }
  },
  "sound": {

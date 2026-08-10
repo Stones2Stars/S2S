@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_SAIGA_ANTELOPE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_SAIGA_ANTELOPE",
+   "notShownInCity": true
   }
  },
  "identity": {

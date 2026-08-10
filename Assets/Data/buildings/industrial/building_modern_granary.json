@@ -178,7 +178,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MODERN_GRANARY"
+   "define": "ART_DEF_BUILDING_MODERN_GRANARY",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_LA_PLATAN"
+   "define": "ART_DEF_BUILDING_CULTURE_LA_PLATAN",
+   "notShownInCity": true
   }
  },
  "identity": {

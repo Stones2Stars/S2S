@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

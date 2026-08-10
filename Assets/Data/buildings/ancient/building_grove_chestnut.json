@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_CHESTNUT"
+   "define": "ART_DEF_BUILDING_GROVE_CHESTNUT",
+   "notShownInCity": true
   }
  },
  "identity": {

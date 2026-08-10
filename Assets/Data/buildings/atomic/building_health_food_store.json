@@ -116,7 +116,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HEALTH_FOOD_STORE"
+   "define": "ART_DEF_BUILDING_HEALTH_FOOD_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

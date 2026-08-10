@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOMELAND_SECURITY_AGENCY"
+   "define": "ART_DEF_BUILDING_HOMELAND_SECURITY_AGENCY",
+   "notShownInCity": true
   }
  },
  "sound": {

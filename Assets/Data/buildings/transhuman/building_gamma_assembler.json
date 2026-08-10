@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GAMMA_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_GAMMA_ASSEMBLER",
+   "notShownInCity": true
   }
  },
  "identity": {

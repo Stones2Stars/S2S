@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PRIDE_PARADE"
+   "define": "ART_DEF_BUILDING_PRIDE_PARADE",
+   "notShownInCity": true
   }
  },
  "identity": {

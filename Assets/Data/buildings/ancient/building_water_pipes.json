@@ -157,7 +157,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATER_PIPES"
+   "define": "ART_DEF_BUILDING_WATER_PIPES",
+   "notShownInCity": true
   }
  },
  "identity": {

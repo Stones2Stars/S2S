@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_NEUROIMPLANTS"
+   "define": "ART_DEF_BUILDING_FACTORY_NEUROIMPLANTS",
+   "notShownInCity": true
   }
  },
  "identity": {

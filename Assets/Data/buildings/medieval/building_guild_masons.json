@@ -90,7 +90,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_MASONS"
+   "define": "ART_DEF_BUILDING_GUILD_MASONS",
+   "notShownInCity": true
   }
  },
  "identity": {

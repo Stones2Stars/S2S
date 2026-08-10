@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BANKS_ORBITAL"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BANKS_ORBITAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUDSON_YARDS"
+   "define": "ART_DEF_BUILDING_HUDSON_YARDS",
+   "notShownInCity": true
   }
  },
  "identity": {

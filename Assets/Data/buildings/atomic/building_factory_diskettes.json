@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_DISKETTES"
+   "define": "ART_DEF_BUILDING_FACTORY_DISKETTES",
+   "notShownInCity": true
   }
  },
  "identity": {

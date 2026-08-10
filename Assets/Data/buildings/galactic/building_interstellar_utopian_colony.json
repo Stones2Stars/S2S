@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_UTOPIAN_COLONY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_UTOPIAN_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

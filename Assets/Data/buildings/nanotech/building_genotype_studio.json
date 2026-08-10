@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GENOTYPE_STUDIO"
+   "define": "ART_DEF_BUILDING_GENOTYPE_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

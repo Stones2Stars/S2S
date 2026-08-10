@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MYSTICS_HUT"
+   "define": "ART_DEF_BUILDING_MYSTICS_HUT",
+   "notShownInCity": true
   }
  },
  "sound": {

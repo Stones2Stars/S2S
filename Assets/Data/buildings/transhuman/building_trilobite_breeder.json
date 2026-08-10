@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRILOBITE_BREEDER"
+   "define": "ART_DEF_BUILDING_TRILOBITE_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

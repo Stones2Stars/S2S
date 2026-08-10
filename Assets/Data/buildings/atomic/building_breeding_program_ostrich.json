@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_OSTRICH"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_OSTRICH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_SOIL_GENERATOR"
+   "define": "ART_DEF_BUILDING_LUNAR_SOIL_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

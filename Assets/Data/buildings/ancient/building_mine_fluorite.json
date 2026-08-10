@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_FLUORITE"
+   "define": "ART_DEF_BUILDING_MINE_FLUORITE",
+   "notShownInCity": true
   }
  },
  "identity": {

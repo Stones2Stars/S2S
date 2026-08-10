@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_DONKEY"
+   "define": "ART_DEF_BUILDING_HERD_DONKEY",
+   "notShownInCity": true
   }
  },
  "sound": {

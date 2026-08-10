@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JOVIAN_FUSION_CANDLE"
+   "define": "ART_DEF_BUILDING_JOVIAN_FUSION_CANDLE",
+   "notShownInCity": true
   }
  },
  "identity": {

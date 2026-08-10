@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CANTONESE"
+   "define": "ART_DEF_BUILDING_CULTURE_CANTONESE",
+   "notShownInCity": true
   }
  },
  "identity": {

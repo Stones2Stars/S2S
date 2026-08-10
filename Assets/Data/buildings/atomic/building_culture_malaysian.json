@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MALAYSIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MALAYSIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_TIN_INGOTS"
+   "define": "ART_DEF_BUILDING_RESOURCES_TIN_INGOTS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP",
+   "notShownInCity": true
   }
  },
  "identity": {

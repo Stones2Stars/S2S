@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STRATOSPHERIC_SPACEPORT"
+   "define": "ART_DEF_BUILDING_STRATOSPHERIC_SPACEPORT",
+   "notShownInCity": true
   }
  },
  "identity": {

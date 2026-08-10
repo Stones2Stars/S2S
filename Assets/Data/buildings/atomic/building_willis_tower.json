@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WILLIS_TOWER"
+   "define": "ART_DEF_BUILDING_WILLIS_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

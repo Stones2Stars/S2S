@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TEMPLE_OF_QUETZALCOATL"
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_QUETZALCOATL",
+   "notShownInCity": true
   }
  },
  "sound": {

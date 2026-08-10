@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_ARTISTS"
+   "define": "ART_DEF_BUILDING_GUILD_ARTISTS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGATOWER_MEDICAL_LEVEL"
+   "define": "ART_DEF_BUILDING_MEGATOWER_MEDICAL_LEVEL",
+   "notShownInCity": true
   }
  },
  "identity": {

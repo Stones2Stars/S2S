@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY"
+   "define": "ART_DEF_BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

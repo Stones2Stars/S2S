@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_KIWIFRUIT"
+   "define": "ART_DEF_BUILDING_ORCHARD_KIWIFRUIT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMA_SUPERCLUSTER_COLONY"
+   "define": "ART_DEF_BUILDING_COMA_SUPERCLUSTER_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

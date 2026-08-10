@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_GLASS_FACTORY"
+   "define": "ART_DEF_BUILDING_LUNAR_GLASS_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_MINI_NEPTUNE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_MINI_NEPTUNE",
+   "notShownInCity": true
   }
  },
  "identity": {

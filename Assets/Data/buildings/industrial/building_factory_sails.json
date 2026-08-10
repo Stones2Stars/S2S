@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_SAILS"
+   "define": "ART_DEF_BUILDING_FACTORY_SAILS",
+   "notShownInCity": true
   }
  },
  "identity": {

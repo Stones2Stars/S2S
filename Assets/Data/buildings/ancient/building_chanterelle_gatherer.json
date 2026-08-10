@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHANTERELLE_GATHERER"
+   "define": "ART_DEF_BUILDING_CHANTERELLE_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

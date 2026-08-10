@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_GORILLA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GORILLA",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_EXPLORERS_BASE"
+   "define": "ART_DEF_BUILDING_DISTANT_EXPLORERS_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

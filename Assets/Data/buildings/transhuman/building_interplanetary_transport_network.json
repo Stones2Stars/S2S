@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK"
+   "define": "ART_DEF_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

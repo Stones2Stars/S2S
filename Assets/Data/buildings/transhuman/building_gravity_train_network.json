@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAVITY_TRAIN_NETWORK"
+   "define": "ART_DEF_BUILDING_GRAVITY_TRAIN_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

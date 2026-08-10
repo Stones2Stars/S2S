@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRADITION_AESTHETIC_APPRECIATION"
+   "define": "ART_DEF_BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+   "notShownInCity": true
   }
  },
  "identity": {

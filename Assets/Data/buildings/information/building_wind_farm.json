@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WIND_FARM"
+   "define": "ART_DEF_BUILDING_WIND_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

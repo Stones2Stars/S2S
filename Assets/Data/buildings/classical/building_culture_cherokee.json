@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CHEROKEE"
+   "define": "ART_DEF_BUILDING_CULTURE_CHEROKEE",
+   "notShownInCity": true
   }
  },
  "identity": {

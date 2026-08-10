@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_HAUSA"
+   "define": "ART_DEF_BUILDING_CULTURE_HAUSA",
+   "notShownInCity": true
   }
  },
  "identity": {

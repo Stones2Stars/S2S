@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_APPLIED_SOCIOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_APPLIED_SOCIOLOGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

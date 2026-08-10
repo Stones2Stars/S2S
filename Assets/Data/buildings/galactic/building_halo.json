@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HALO"
+   "define": "ART_DEF_BUILDING_HALO",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MICRO_WORMHOLE"
+   "define": "ART_DEF_BUILDING_MICRO_WORMHOLE",
+   "notShownInCity": true
   }
  },
  "identity": {

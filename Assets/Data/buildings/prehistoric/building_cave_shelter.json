@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAVE_SHELTER"
+   "define": "ART_DEF_BUILDING_CAVE_SHELTER",
+   "notShownInCity": true
   }
  },
  "sound": {

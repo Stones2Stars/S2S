@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_COLD_FUSION"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_COLD_FUSION",
+   "notShownInCity": true
   }
  },
  "identity": {

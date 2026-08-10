@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAGE"
+   "define": "ART_DEF_BUILDING_SAGE",
+   "notShownInCity": true
   }
  },
  "sound": {

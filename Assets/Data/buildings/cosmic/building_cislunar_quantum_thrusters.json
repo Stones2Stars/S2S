@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_QUANTUM_THRUSTERS"
+   "define": "ART_DEF_BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_BLAZAR_FACTORY"
+   "define": "ART_DEF_BUILDING_DISTANT_BLAZAR_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

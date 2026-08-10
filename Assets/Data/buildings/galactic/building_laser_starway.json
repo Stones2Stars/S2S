@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LASER_STARWAY"
+   "define": "ART_DEF_BUILDING_LASER_STARWAY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY",
+   "notShownInCity": true
   }
  },
  "identity": {

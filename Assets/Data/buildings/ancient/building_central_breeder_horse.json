@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CENTRAL_BREEDER_HORSE"
+   "define": "ART_DEF_BUILDING_CENTRAL_BREEDER_HORSE",
+   "notShownInCity": true
   }
  },
  "sound": {

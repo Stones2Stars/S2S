@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BONNEVILLE_SPEEDWAY"
+   "define": "ART_DEF_BUILDING_BONNEVILLE_SPEEDWAY",
+   "notShownInCity": true
   }
  },
  "identity": {

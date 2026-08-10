@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_SHIPPING_WAREHOUSE"
+   "define": "ART_DEF_BUILDING_SPACE_SHIPPING_WAREHOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

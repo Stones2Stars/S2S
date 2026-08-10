@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOUL_REPLICATOR"
+   "define": "ART_DEF_BUILDING_SOUL_REPLICATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

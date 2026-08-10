@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERNET_ARCHIVE"
+   "define": "ART_DEF_BUILDING_INTERNET_ARCHIVE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIFE_METHANE_BASED"
+   "define": "ART_DEF_BUILDING_LIFE_METHANE_BASED",
+   "notShownInCity": true
   }
  },
  "identity": {

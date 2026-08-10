@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERITAGE_GIRAFFE"
+   "define": "ART_DEF_BUILDING_HERITAGE_GIRAFFE",
+   "notShownInCity": true
   }
  },
  "sound": {

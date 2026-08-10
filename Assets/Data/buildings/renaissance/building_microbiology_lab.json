@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MICROBIOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_MICROBIOLOGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_LITHUANIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_LITHUANIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

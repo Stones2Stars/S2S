@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BRAHMIN_LIBRARY"
+   "define": "ART_DEF_BUILDING_BRAHMIN_LIBRARY",
+   "notShownInCity": true
   }
  },
  "sound": {

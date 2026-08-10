@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HEAVY_WATER_PRODUCTION_PLANT"
+   "define": "ART_DEF_BUILDING_HEAVY_WATER_PRODUCTION_PLANT",
+   "notShownInCity": true
   }
  },
  "sound": {

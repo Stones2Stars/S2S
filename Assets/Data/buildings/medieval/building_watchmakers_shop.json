@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATCHMAKERS_SHOP"
+   "define": "ART_DEF_BUILDING_WATCHMAKERS_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

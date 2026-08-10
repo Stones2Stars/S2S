@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_SUGARCANE"
+   "define": "ART_DEF_BUILDING_PLANTATION_SUGARCANE",
+   "notShownInCity": true
   }
  },
  "identity": {

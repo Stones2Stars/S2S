@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_STEEL_INGOTS"
+   "define": "ART_DEF_BUILDING_RESOURCES_STEEL_INGOTS",
+   "notShownInCity": true
   }
  },
  "identity": {

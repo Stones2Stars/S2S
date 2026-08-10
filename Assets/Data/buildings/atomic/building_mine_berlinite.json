@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_BERLINITE"
+   "define": "ART_DEF_BUILDING_MINE_BERLINITE",
+   "notShownInCity": true
   }
  },
  "identity": {

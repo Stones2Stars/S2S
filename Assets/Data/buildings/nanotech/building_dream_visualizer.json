@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DREAM_VISUALIZER"
+   "define": "ART_DEF_BUILDING_DREAM_VISUALIZER",
+   "notShownInCity": true
   }
  },
  "identity": {

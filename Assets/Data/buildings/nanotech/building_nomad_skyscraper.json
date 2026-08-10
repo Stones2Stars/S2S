@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NOMAD_SKYSCRAPER"
+   "define": "ART_DEF_BUILDING_NOMAD_SKYSCRAPER",
+   "notShownInCity": true
   }
  },
  "identity": {

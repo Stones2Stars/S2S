@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BEHISTUN_INSCRIPTION"
+   "define": "ART_DEF_BUILDING_BEHISTUN_INSCRIPTION",
+   "notShownInCity": true
   }
  },
  "sound": {

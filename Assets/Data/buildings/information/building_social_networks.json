@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOCIAL_NETWORKS"
+   "define": "ART_DEF_BUILDING_SOCIAL_NETWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

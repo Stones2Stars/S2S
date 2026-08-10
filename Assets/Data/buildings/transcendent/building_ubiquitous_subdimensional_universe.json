@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_UBIQUITOUS_SUBDIMENSIONAL_UNIVERSE"
+   "define": "ART_DEF_BUILDING_UBIQUITOUS_SUBDIMENSIONAL_UNIVERSE",
+   "notShownInCity": true
   }
  },
  "identity": {

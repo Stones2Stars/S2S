@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_RESOURCE_HARVESTING_RIFT"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_RESOURCE_HARVESTING_RIFT",
+   "notShownInCity": true
   }
  },
  "identity": {

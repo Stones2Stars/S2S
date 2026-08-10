@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_POISON"
+   "define": "ART_DEF_BUILDING_RESOURCES_POISON",
+   "notShownInCity": true
   }
  },
  "identity": {

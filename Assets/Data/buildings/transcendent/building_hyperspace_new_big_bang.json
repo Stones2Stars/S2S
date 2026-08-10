@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_NEW_BIG_BANG"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_NEW_BIG_BANG",
+   "notShownInCity": true
   }
  },
  "identity": {

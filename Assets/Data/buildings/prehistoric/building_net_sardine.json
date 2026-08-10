@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NET_SARDINE"
+   "define": "ART_DEF_BUILDING_NET_SARDINE",
+   "notShownInCity": true
   }
  },
  "identity": {

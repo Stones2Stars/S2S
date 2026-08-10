@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_TITANIA"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_TITANIA",
+   "notShownInCity": true
   }
  },
  "identity": {

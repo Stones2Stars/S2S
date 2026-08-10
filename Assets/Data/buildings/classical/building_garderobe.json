@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GARDEROBE"
+   "define": "ART_DEF_BUILDING_GARDEROBE",
+   "notShownInCity": true
   }
  },
  "identity": {

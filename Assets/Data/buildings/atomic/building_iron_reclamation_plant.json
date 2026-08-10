@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_IRON_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_IRON_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

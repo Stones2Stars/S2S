@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANGORA_RABBIT_BREEDER"
+   "define": "ART_DEF_BUILDING_ANGORA_RABBIT_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

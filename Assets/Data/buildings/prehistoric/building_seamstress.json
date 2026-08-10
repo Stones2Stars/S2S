@@ -108,7 +108,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEAMSTRESS"
+   "define": "ART_DEF_BUILDING_SEAMSTRESS",
+   "notShownInCity": true
   }
  },
  "identity": {

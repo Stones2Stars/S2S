@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ILLYRIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ILLYRIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

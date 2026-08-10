@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GARBAGE_COLLECTION_AGENCY"
+   "define": "ART_DEF_BUILDING_GARBAGE_COLLECTION_AGENCY",
+   "notShownInCity": true
   }
  },
  "sound": {

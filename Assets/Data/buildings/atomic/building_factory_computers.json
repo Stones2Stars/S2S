@@ -121,7 +121,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_COMPUTERS"
+   "define": "ART_DEF_BUILDING_FACTORY_COMPUTERS",
+   "notShownInCity": true
   }
  },
  "identity": {

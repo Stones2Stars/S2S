@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_COMMERCIAL_DISTRICT"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_COMMERCIAL_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

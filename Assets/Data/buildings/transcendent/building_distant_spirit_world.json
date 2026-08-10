@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_SPIRIT_WORLD"
+   "define": "ART_DEF_BUILDING_DISTANT_SPIRIT_WORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

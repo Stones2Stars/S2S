@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STARGATE"
+   "define": "ART_DEF_BUILDING_STARGATE",
+   "notShownInCity": true
   }
  },
  "identity": {

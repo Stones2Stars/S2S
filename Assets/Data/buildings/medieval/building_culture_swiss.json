@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SWISS"
+   "define": "ART_DEF_BUILDING_CULTURE_SWISS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMA_GAMING_LEAGUE"
+   "define": "ART_DEF_BUILDING_ANIMA_GAMING_LEAGUE",
+   "notShownInCity": true
   }
  },
  "identity": {

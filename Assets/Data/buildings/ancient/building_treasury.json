@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TREASURY"
+   "define": "ART_DEF_BUILDING_TREASURY",
+   "notShownInCity": true
   }
  },
  "sound": {

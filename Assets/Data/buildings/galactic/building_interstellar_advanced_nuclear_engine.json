@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE",
+   "notShownInCity": true
   }
  },
  "identity": {

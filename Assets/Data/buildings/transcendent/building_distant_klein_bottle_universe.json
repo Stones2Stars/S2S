@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE"
+   "define": "ART_DEF_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE",
+   "notShownInCity": true
   }
  },
  "identity": {

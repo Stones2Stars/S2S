@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIRE_DANCE"
+   "define": "ART_DEF_BUILDING_FIRE_DANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

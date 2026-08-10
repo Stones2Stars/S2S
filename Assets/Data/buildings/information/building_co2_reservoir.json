@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CO2_RESERVOIR"
+   "define": "ART_DEF_BUILDING_CO2_RESERVOIR",
+   "notShownInCity": true
   }
  },
  "identity": {

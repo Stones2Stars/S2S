@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_LONGAN"
+   "define": "ART_DEF_BUILDING_ORCHARD_LONGAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_VANATUAN"
+   "define": "ART_DEF_BUILDING_CULTURE_VANATUAN",
+   "notShownInCity": true
   }
  },
  "identity": {

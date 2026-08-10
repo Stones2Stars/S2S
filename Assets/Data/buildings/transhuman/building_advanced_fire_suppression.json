@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ADVANCED_FIRE_SUPPRESSION"
+   "define": "ART_DEF_BUILDING_ADVANCED_FIRE_SUPPRESSION",
+   "notShownInCity": true
   }
  },
  "identity": {

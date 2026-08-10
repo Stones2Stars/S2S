@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OZONE_GENERATOR"
+   "define": "ART_DEF_BUILDING_OZONE_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

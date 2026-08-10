@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_WATERMELON"
+   "define": "ART_DEF_BUILDING_FARM_CROP_WATERMELON",
+   "notShownInCity": true
   }
  },
  "identity": {

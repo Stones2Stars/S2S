@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTESTINAL_RATS"
+   "define": "ART_DEF_BUILDING_INTESTINAL_RATS",
+   "notShownInCity": true
   }
  },
  "sound": {

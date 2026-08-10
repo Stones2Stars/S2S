@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NABATEANS"
+   "define": "ART_DEF_BUILDING_CULTURE_NABATEANS",
+   "notShownInCity": true
   }
  },
  "identity": {

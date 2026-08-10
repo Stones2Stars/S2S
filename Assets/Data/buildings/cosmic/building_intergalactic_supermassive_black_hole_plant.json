@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

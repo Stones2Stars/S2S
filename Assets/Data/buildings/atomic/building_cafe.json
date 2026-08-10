@@ -144,7 +144,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAFE"
+   "define": "ART_DEF_BUILDING_CAFE",
+   "notShownInCity": true
   }
  },
  "identity": {

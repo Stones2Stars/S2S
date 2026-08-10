@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE"
+   "define": "ART_DEF_BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
+   "notShownInCity": true
   }
  },
  "identity": {

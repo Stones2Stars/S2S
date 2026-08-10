@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_MADDER"
+   "define": "ART_DEF_BUILDING_PLANTATION_MADDER",
+   "notShownInCity": true
   }
  },
  "identity": {

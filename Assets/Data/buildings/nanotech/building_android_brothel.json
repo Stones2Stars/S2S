@@ -139,7 +139,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANDROID_BROTHEL"
+   "define": "ART_DEF_BUILDING_ANDROID_BROTHEL",
+   "notShownInCity": true
   }
  },
  "identity": {

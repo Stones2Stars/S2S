@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_AKKADIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_AKKADIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EXTREME_FORCE_CONCENTRATOR"
+   "define": "ART_DEF_BUILDING_EXTREME_FORCE_CONCENTRATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

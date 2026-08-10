@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BRICK_BRIDGE"
+   "define": "ART_DEF_BUILDING_BRICK_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

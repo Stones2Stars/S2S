@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_HOSTLERS"
+   "define": "ART_DEF_BUILDING_GUILD_HOSTLERS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+   "notShownInCity": true
   }
  },
  "identity": {

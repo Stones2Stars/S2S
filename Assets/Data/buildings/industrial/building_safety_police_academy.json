@@ -24,7 +24,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAFETY_POLICE_ACADEMY"
+   "define": "ART_DEF_BUILDING_SAFETY_POLICE_ACADEMY",
+   "notShownInCity": true
   }
  },
  "identity": {

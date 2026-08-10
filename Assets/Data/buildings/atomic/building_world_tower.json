@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WORLD_TOWER"
+   "define": "ART_DEF_BUILDING_WORLD_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

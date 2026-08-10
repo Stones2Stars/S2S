@@ -440,7 +440,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GREENHOUSE"
+   "define": "ART_DEF_BUILDING_GREENHOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

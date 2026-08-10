@@ -24,7 +24,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_GAMBLING_BAN"
+   "define": "ART_DEF_BUILDING_ORDINANCE_GAMBLING_BAN",
+   "notShownInCity": true
   }
  },
  "identity": {

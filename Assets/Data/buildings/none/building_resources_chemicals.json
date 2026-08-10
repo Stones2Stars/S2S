@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_CHEMICALS"
+   "define": "ART_DEF_BUILDING_RESOURCES_CHEMICALS",
+   "notShownInCity": true
   }
  },
  "identity": {

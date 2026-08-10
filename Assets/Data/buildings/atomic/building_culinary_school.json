@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULINARY_SCHOOL"
+   "define": "ART_DEF_BUILDING_CULINARY_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

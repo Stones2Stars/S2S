@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_LEAD"
+   "define": "ART_DEF_BUILDING_SMITH_LEAD",
+   "notShownInCity": true
   }
  },
  "identity": {

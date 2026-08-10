@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_MOUFLON"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_MOUFLON",
+   "notShownInCity": true
   }
  },
  "identity": {

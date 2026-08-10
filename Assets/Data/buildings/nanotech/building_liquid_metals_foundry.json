@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIQUID_METALS_FOUNDRY"
+   "define": "ART_DEF_BUILDING_LIQUID_METALS_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

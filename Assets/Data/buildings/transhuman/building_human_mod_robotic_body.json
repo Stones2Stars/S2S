@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_ROBOTIC_BODY"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ROBOTIC_BODY",
+   "notShownInCity": true
   }
  },
  "identity": {

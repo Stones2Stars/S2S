@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_HOLLOW_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_HOLLOW_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

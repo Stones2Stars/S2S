@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FEYMARCH"
+   "define": "ART_DEF_BUILDING_FEYMARCH",
+   "notShownInCity": true
   }
  },
  "identity": {

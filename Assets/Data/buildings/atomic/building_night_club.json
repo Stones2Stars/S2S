@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NIGHT_CLUB"
+   "define": "ART_DEF_BUILDING_NIGHT_CLUB",
+   "notShownInCity": true
   }
  },
  "identity": {

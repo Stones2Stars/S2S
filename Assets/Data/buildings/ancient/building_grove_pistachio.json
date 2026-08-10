@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_PISTACHIO"
+   "define": "ART_DEF_BUILDING_GROVE_PISTACHIO",
+   "notShownInCity": true
   }
  },
  "identity": {

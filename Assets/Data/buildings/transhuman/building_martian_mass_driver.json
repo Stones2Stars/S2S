@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_MASS_DRIVER"
+   "define": "ART_DEF_BUILDING_MARTIAN_MASS_DRIVER",
+   "notShownInCity": true
   }
  },
  "identity": {

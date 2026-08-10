@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARENA"
+   "define": "ART_DEF_BUILDING_ARENA",
+   "notShownInCity": true
   }
  },
  "sound": {

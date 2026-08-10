@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_PEAR"
+   "define": "ART_DEF_BUILDING_ORCHARD_PEAR",
+   "notShownInCity": true
   }
  },
  "identity": {

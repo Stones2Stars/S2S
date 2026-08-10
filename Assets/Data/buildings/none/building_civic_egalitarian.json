@@ -20,7 +20,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_EGALITARIAN"
+   "define": "ART_DEF_BUILDING_CIVIC_EGALITARIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

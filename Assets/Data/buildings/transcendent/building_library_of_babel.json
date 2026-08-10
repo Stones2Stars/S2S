@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIBRARY_OF_BABEL"
+   "define": "ART_DEF_BUILDING_LIBRARY_OF_BABEL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -110,7 +110,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BATH_HOUSE"
+   "define": "ART_DEF_BUILDING_BATH_HOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

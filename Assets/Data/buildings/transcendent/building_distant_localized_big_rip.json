@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_LOCALIZED_BIG_RIP"
+   "define": "ART_DEF_BUILDING_DISTANT_LOCALIZED_BIG_RIP",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_SURFACE_SCOOP"
+   "define": "ART_DEF_BUILDING_VENUS_SURFACE_SCOOP",
+   "notShownInCity": true
   }
  },
  "identity": {

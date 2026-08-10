@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_RAZORBILL"
+   "define": "ART_DEF_BUILDING_FOLKLORE_RAZORBILL",
+   "notShownInCity": true
   }
  },
  "identity": {

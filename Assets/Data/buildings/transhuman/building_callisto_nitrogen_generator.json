@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CALLISTO_NITROGEN_GENERATOR"
+   "define": "ART_DEF_BUILDING_CALLISTO_NITROGEN_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

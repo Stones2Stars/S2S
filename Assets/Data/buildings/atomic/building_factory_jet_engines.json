@@ -121,7 +121,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_JET_ENGINES"
+   "define": "ART_DEF_BUILDING_FACTORY_JET_ENGINES",
+   "notShownInCity": true
   }
  },
  "identity": {

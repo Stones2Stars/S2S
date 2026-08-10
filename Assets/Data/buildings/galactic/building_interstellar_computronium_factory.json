@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

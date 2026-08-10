@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HIKING_TRAILS"
+   "define": "ART_DEF_BUILDING_HIKING_TRAILS",
+   "notShownInCity": true
   }
  },
  "identity": {

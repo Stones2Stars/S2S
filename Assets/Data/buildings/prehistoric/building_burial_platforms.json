@@ -116,7 +116,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURIAL_PLATFORMS"
+   "define": "ART_DEF_BUILDING_BURIAL_PLATFORMS",
+   "notShownInCity": true
   }
  },
  "sound": {

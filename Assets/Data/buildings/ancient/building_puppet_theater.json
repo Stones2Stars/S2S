@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PUPPET_THEATER"
+   "define": "ART_DEF_BUILDING_PUPPET_THEATER",
+   "notShownInCity": true
   }
  },
  "identity": {

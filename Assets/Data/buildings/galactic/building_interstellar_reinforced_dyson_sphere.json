@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_REINFORCED_DYSON_SPHERE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_REINFORCED_DYSON_SPHERE",
+   "notShownInCity": true
   }
  },
  "identity": {

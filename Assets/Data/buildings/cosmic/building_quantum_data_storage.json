@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_QUANTUM_DATA_STORAGE"
+   "define": "ART_DEF_BUILDING_QUANTUM_DATA_STORAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

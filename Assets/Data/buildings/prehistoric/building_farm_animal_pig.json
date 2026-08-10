@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_PIG"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_PIG",
+   "notShownInCity": true
   }
  },
  "sound": {

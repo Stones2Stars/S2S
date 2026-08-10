@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JET_PROPULSION_LABORATORY"
+   "define": "ART_DEF_BUILDING_JET_PROPULSION_LABORATORY",
+   "notShownInCity": true
   }
  },
  "identity": {

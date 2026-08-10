@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOCCER_FIELD"
+   "define": "ART_DEF_BUILDING_SOCCER_FIELD",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARS_SCIENCE_LABORATORY"
+   "define": "ART_DEF_BUILDING_MARS_SCIENCE_LABORATORY",
+   "notShownInCity": true
   }
  },
  "identity": {

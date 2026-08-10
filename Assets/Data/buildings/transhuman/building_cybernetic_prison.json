@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CYBERNETIC_PRISON"
+   "define": "ART_DEF_BUILDING_CYBERNETIC_PRISON",
+   "notShownInCity": true
   }
  },
  "identity": {

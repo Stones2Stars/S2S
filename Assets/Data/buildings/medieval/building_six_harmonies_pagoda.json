@@ -90,7 +90,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SIX_HARMONIES_PAGODA"
+   "define": "ART_DEF_BUILDING_SIX_HARMONIES_PAGODA",
+   "notShownInCity": true
   }
  },
  "identity": {

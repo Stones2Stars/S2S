@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSPARENT_ALUMINUM_FOUNDRY"
+   "define": "ART_DEF_BUILDING_TRANSPARENT_ALUMINUM_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

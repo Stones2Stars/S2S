@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIVINE_MONUMENT"
+   "define": "ART_DEF_BUILDING_DIVINE_MONUMENT",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BAKERY"
+   "define": "ART_DEF_BUILDING_BAKERY",
+   "notShownInCity": true
   }
  },
  "sound": {

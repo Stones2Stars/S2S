@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_PLASTEEL_FACTORY"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_PLASTEEL_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

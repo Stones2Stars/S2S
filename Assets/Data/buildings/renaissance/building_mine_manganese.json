@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_MANGANESE"
+   "define": "ART_DEF_BUILDING_MINE_MANGANESE",
+   "notShownInCity": true
   }
  },
  "identity": {

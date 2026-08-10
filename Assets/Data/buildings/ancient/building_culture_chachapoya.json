@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CHACHAPOYA"
+   "define": "ART_DEF_BUILDING_CULTURE_CHACHAPOYA",
+   "notShownInCity": true
   }
  },
  "identity": {

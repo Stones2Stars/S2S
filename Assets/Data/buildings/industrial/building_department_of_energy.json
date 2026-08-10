@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_ENERGY"
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_ENERGY",
+   "notShownInCity": true
   }
  },
  "identity": {

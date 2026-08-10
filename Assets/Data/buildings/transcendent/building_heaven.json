@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HEAVEN"
+   "define": "ART_DEF_BUILDING_HEAVEN",
+   "notShownInCity": true
   }
  },
  "identity": {

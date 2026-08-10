@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER"
+   "define": "ART_DEF_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

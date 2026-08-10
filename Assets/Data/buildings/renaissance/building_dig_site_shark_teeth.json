@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIG_SITE_SHARK_TEETH"
+   "define": "ART_DEF_BUILDING_DIG_SITE_SHARK_TEETH",
+   "notShownInCity": true
   }
  },
  "identity": {

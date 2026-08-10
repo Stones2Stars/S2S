@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_HIGHWAY"
+   "define": "ART_DEF_BUILDING_SOLAR_HIGHWAY",
+   "notShownInCity": true
   }
  },
  "identity": {

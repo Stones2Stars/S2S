@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

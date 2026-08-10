@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_LITHIUM"
+   "define": "ART_DEF_BUILDING_MINE_LITHIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

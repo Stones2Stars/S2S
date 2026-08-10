@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PORTAL_CITY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PORTAL_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

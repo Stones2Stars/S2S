@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LL_MCCALLUM"
+   "define": "ART_DEF_BUILDING_LL_MCCALLUM",
+   "notShownInCity": true
   }
  },
  "identity": {

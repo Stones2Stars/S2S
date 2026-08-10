@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GOBEKLI_TEPE"
+   "define": "ART_DEF_BUILDING_GOBEKLI_TEPE",
+   "notShownInCity": true
   }
  },
  "identity": {

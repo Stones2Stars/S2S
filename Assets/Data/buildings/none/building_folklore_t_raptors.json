@@ -115,7 +115,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_RAPTORS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_RAPTORS",
+   "notShownInCity": true
   }
  },
  "identity": {

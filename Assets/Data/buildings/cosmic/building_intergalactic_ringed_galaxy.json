@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_RINGED_GALAXY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_RINGED_GALAXY",
+   "notShownInCity": true
   }
  },
  "identity": {

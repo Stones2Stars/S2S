@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_11_DIMENSIONAL_CITY"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_11_DIMENSIONAL_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

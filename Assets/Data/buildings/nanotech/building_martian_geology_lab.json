@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_GEOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_MARTIAN_GEOLOGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

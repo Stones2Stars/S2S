@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_IROQUOIS"
+   "define": "ART_DEF_BUILDING_CULTURE_IROQUOIS",
+   "notShownInCity": true
   }
  },
  "identity": {

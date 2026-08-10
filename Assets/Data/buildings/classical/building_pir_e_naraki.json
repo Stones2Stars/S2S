@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PIR_E_NARAKI"
+   "define": "ART_DEF_BUILDING_PIR_E_NARAKI",
+   "notShownInCity": true
   }
  },
  "sound": {

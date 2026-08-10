@@ -121,7 +121,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANTIGRAV_FIELD_GENERATOR_FACTORY"
+   "define": "ART_DEF_BUILDING_ANTIGRAV_FIELD_GENERATOR_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

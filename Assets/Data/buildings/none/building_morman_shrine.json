@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MORMAN_SHRINE"
+   "define": "ART_DEF_BUILDING_MORMAN_SHRINE",
+   "notShownInCity": true
   }
  },
  "sound": {

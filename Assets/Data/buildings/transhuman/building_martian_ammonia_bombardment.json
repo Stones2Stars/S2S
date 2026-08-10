@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_AMMONIA_BOMBARDMENT"
+   "define": "ART_DEF_BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

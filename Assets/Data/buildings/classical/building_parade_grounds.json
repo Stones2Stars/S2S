@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PARADE_GROUNDS"
+   "define": "ART_DEF_BUILDING_PARADE_GROUNDS",
+   "notShownInCity": true
   }
  },
  "sound": {

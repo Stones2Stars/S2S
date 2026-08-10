@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

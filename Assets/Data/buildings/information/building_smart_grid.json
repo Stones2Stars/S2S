@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMART_GRID"
+   "define": "ART_DEF_BUILDING_SMART_GRID",
+   "notShownInCity": true
   }
  },
  "identity": {

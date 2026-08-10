@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_PRISON"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_PRISON",
+   "notShownInCity": true
   }
  },
  "identity": {

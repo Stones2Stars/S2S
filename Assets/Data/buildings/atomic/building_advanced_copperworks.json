@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ADVANCED_COPPERWORKS"
+   "define": "ART_DEF_BUILDING_ADVANCED_COPPERWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

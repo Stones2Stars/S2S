@@ -118,7 +118,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TEMPLE_OF_TLALOC"
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_TLALOC",
+   "notShownInCity": true
   }
  },
  "sound": {

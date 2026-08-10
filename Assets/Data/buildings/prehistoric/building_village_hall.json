@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VILLAGE_HALL"
+   "define": "ART_DEF_BUILDING_VILLAGE_HALL",
+   "notShownInCity": true
   }
  },
  "sound": {

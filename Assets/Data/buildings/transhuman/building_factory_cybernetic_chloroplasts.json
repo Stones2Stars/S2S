@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_CYBERNETIC_CHLOROPLASTS"
+   "define": "ART_DEF_BUILDING_FACTORY_CYBERNETIC_CHLOROPLASTS",
+   "notShownInCity": true
   }
  },
  "identity": {

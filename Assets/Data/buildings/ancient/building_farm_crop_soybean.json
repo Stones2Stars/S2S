@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_SOYBEAN"
+   "define": "ART_DEF_BUILDING_FARM_CROP_SOYBEAN",
+   "notShownInCity": true
   }
  },
  "identity": {

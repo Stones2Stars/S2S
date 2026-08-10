@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_BONE"
+   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_BONE",
+   "notShownInCity": true
   }
  },
  "identity": {

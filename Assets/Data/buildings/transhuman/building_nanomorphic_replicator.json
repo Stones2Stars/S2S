@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NANOMORPHIC_REPLICATOR"
+   "define": "ART_DEF_BUILDING_NANOMORPHIC_REPLICATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

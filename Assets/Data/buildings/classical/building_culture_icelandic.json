@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ICELANDIC"
+   "define": "ART_DEF_BUILDING_CULTURE_ICELANDIC",
+   "notShownInCity": true
   }
  },
  "identity": {

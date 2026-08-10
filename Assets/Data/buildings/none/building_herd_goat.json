@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_GOAT"
+   "define": "ART_DEF_BUILDING_HERD_GOAT",
+   "notShownInCity": true
   }
  },
  "sound": {

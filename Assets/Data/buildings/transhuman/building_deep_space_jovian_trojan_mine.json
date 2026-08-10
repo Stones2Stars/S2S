@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_JOVIAN_TROJAN_MINE"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_JOVIAN_TROJAN_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JACKALOPE_BREEDER"
+   "define": "ART_DEF_BUILDING_JACKALOPE_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

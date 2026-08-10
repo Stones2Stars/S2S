@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FINANCIAL_RISK_MONITOR"
+   "define": "ART_DEF_BUILDING_FINANCIAL_RISK_MONITOR",
+   "notShownInCity": true
   }
  },
  "identity": {

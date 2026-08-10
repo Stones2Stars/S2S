@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_WORMHOLE_TO_EARTH"
+   "define": "ART_DEF_BUILDING_CISLUNAR_WORMHOLE_TO_EARTH",
+   "notShownInCity": true
   }
  },
  "identity": {

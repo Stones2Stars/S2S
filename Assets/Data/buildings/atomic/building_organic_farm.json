@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORGANIC_FARM"
+   "define": "ART_DEF_BUILDING_ORGANIC_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

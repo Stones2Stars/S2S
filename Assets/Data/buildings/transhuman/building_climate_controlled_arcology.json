@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLIMATE_CONTROLLED_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

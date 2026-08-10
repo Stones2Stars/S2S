@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+   "notShownInCity": true
   }
  },
  "identity": {

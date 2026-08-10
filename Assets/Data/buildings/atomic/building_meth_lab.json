@@ -106,7 +106,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METH_LAB"
+   "define": "ART_DEF_BUILDING_METH_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

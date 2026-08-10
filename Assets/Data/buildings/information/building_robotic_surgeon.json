@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROBOTIC_SURGEON"
+   "define": "ART_DEF_BUILDING_ROBOTIC_SURGEON",
+   "notShownInCity": true
   }
  },
  "identity": {

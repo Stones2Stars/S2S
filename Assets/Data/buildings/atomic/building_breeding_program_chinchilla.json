@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_CHINCHILLA"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+   "notShownInCity": true
   }
  },
  "identity": {

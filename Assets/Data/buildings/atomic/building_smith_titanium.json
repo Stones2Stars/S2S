@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_TITANIUM"
+   "define": "ART_DEF_BUILDING_SMITH_TITANIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

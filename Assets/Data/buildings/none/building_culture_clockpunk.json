@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CLOCKPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_CLOCKPUNK",
+   "notShownInCity": true
   }
  },
  "identity": {

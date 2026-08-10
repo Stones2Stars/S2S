@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_X_SEED_4000"
+   "define": "ART_DEF_BUILDING_X_SEED_4000",
+   "notShownInCity": true
   }
  },
  "identity": {

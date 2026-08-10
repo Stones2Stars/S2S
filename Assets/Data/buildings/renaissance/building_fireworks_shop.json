@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIREWORKS_SHOP"
+   "define": "ART_DEF_BUILDING_FIREWORKS_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

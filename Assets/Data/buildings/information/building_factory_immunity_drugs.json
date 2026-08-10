@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_IMMUNITY_DRUGS"
+   "define": "ART_DEF_BUILDING_FACTORY_IMMUNITY_DRUGS",
+   "notShownInCity": true
   }
  },
  "identity": {

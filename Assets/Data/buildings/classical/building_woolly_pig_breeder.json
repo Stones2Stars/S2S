@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WOOLLY_PIG_BREEDER"
+   "define": "ART_DEF_BUILDING_WOOLLY_PIG_BREEDER",
+   "notShownInCity": true
   }
  },
  "sound": {

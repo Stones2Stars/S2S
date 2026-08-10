@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROBOTIC_TRAPS"
+   "define": "ART_DEF_BUILDING_ROBOTIC_TRAPS",
+   "notShownInCity": true
   }
  },
  "sound": {

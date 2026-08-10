@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_STATION_TOURS"
+   "define": "ART_DEF_BUILDING_SPACE_STATION_TOURS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_FACTORY"
+   "define": "ART_DEF_BUILDING_MARTIAN_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

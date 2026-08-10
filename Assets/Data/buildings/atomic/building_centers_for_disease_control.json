@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CENTERS_FOR_DISEASE_CONTROL"
+   "define": "ART_DEF_BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_KHWARAZMIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_KHWARAZMIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

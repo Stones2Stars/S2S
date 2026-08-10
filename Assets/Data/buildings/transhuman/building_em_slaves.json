@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EM_SLAVES"
+   "define": "ART_DEF_BUILDING_EM_SLAVES",
+   "notShownInCity": true
   }
  },
  "identity": {

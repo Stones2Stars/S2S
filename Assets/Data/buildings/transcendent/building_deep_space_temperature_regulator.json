@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

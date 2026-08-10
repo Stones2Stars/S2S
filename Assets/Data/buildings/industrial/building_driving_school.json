@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DRIVING_SCHOOL"
+   "define": "ART_DEF_BUILDING_DRIVING_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

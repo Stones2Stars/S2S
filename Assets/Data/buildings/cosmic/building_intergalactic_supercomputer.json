@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_SUPERCOMPUTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

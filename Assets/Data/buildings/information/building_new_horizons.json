@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEW_HORIZONS"
+   "define": "ART_DEF_BUILDING_NEW_HORIZONS",
+   "notShownInCity": true
   }
  },
  "identity": {

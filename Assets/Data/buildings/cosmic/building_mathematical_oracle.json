@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MATHEMATICAL_ORACLE"
+   "define": "ART_DEF_BUILDING_MATHEMATICAL_ORACLE",
+   "notShownInCity": true
   }
  },
  "identity": {

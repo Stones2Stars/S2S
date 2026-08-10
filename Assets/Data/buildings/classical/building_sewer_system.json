@@ -135,7 +135,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEWER"
+   "define": "ART_DEF_BUILDING_SEWER",
+   "notShownInCity": true
   }
  },
  "sound": {

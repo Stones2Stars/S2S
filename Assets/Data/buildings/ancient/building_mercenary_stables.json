@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MERCENARY_STABLES"
+   "define": "ART_DEF_BUILDING_MERCENARY_STABLES",
+   "notShownInCity": true
   }
  },
  "sound": {

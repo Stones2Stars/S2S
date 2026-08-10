@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_ANIMAL_BURROW"
+   "define": "ART_DEF_BUILDING_HOUSING_ANIMAL_BURROW",
+   "notShownInCity": true
   }
  },
  "identity": {

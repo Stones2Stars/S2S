@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_BIOPOLYMERS"
+   "define": "ART_DEF_BUILDING_FACTORY_BIOPOLYMERS",
+   "notShownInCity": true
   }
  },
  "identity": {

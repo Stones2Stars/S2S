@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STARDATE_CALENDAR"
+   "define": "ART_DEF_BUILDING_STARDATE_CALENDAR",
+   "notShownInCity": true
   }
  },
  "identity": {

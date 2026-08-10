@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLEISTOCENE_PARK"
+   "define": "ART_DEF_BUILDING_PLEISTOCENE_PARK",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METALS_MEGACOMPLEX"
+   "define": "ART_DEF_BUILDING_METALS_MEGACOMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

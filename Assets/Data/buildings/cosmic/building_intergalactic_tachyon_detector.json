@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_DETECTOR"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+   "notShownInCity": true
   }
  },
  "identity": {

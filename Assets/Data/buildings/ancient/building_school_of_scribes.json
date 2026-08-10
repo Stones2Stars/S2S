@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SCHOOL_OF_SCRIBES"
+   "define": "ART_DEF_BUILDING_SCHOOL_OF_SCRIBES",
+   "notShownInCity": true
   }
  },
  "sound": {

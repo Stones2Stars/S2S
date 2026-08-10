@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MORPHOGEN_NANOBOTS"
+   "define": "ART_DEF_BUILDING_MORPHOGEN_NANOBOTS",
+   "notShownInCity": true
   }
  },
  "identity": {

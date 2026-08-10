@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RETIREMENT_HOME"
+   "define": "ART_DEF_BUILDING_RETIREMENT_HOME",
+   "notShownInCity": true
   }
  },
  "identity": {

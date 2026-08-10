@@ -108,7 +108,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MISSILE_BATTERY"
+   "define": "ART_DEF_BUILDING_MISSILE_BATTERY",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_FARM"
+   "define": "ART_DEF_BUILDING_MARTIAN_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

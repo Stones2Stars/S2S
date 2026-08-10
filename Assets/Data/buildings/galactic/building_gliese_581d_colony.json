@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLIESE_581D_COLONY"
+   "define": "ART_DEF_BUILDING_GLIESE_581D_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

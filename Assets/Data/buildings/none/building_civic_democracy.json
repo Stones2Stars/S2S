@@ -20,7 +20,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_DEMOCRACY"
+   "define": "ART_DEF_BUILDING_CIVIC_DEMOCRACY",
+   "notShownInCity": true
   }
  },
  "identity": {

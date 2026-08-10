@@ -122,7 +122,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATCH_TOWER"
+   "define": "ART_DEF_BUILDING_WATCH_TOWER",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE"
+   "define": "ART_DEF_BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE",
+   "notShownInCity": true
   }
  },
  "identity": {

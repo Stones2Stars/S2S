@@ -119,7 +119,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALTERNATIVE_MEDICINE"
+   "define": "ART_DEF_BUILDING_ALTERNATIVE_MEDICINE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -115,7 +115,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_SUPPLY"
+   "define": "ART_DEF_BUILDING_FARM_SUPPLY",
+   "notShownInCity": true
   }
  },
  "sound": {

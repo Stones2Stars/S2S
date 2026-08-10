@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
+   "notShownInCity": true
   }
  },
  "identity": {

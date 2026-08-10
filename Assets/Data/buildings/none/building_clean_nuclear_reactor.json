@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLEAN_NUCLEAR_REACTOR"
+   "define": "ART_DEF_BUILDING_CLEAN_NUCLEAR_REACTOR",
+   "notShownInCity": true
   }
  },
  "identity": {

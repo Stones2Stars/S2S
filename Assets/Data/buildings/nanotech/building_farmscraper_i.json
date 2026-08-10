@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARMSCRAPER_I"
+   "define": "ART_DEF_BUILDING_FARMSCRAPER_I",
+   "notShownInCity": true
   }
  },
  "sound": {

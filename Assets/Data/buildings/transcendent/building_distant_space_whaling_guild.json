@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_SPACE_WHALING_GUILD"
+   "define": "ART_DEF_BUILDING_DISTANT_SPACE_WHALING_GUILD",
+   "notShownInCity": true
   }
  },
  "identity": {

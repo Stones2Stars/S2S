@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_LILY"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_LILY",
+   "notShownInCity": true
   }
  },
  "identity": {

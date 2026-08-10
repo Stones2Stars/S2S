@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_EFFECT"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_EFFECT",
+   "notShownInCity": true
   }
  },
  "identity": {

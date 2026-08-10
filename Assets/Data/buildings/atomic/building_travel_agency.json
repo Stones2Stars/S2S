@@ -146,7 +146,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAVEL_AGENCY"
+   "define": "ART_DEF_BUILDING_TRAVEL_AGENCY",
+   "notShownInCity": true
   }
  },
  "sound": {

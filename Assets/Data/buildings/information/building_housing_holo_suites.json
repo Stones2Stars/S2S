@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_HOLO_SUITES"
+   "define": "ART_DEF_BUILDING_HOUSING_HOLO_SUITES",
+   "notShownInCity": true
   }
  },
  "identity": {

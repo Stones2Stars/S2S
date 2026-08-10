@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_ALTAR_PUMPKIN"
+   "define": "ART_DEF_BUILDING_NATURE_ALTAR_PUMPKIN",
+   "notShownInCity": true
   }
  },
  "sound": {

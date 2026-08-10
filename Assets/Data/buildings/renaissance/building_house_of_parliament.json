@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSE_OF_PARLIAMENT"
+   "define": "ART_DEF_BUILDING_HOUSE_OF_PARLIAMENT",
+   "notShownInCity": true
   }
  },
  "sound": {

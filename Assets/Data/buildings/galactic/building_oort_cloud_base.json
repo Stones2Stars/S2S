@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OORT_CLOUD_BASE"
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

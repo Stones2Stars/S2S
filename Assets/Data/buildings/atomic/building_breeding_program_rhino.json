@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_RHINO"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_RHINO",
+   "notShownInCity": true
   }
  },
  "identity": {

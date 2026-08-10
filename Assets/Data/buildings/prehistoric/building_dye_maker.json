@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DYE_MAKER"
+   "define": "ART_DEF_BUILDING_DYE_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

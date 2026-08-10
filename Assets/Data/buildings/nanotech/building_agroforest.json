@@ -109,7 +109,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AGROFOREST"
+   "define": "ART_DEF_BUILDING_AGROFOREST",
+   "notShownInCity": true
   }
  },
  "identity": {

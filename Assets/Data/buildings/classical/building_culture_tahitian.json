@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TAHITIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_TAHITIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

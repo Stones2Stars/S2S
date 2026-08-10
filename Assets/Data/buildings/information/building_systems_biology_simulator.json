@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR"
+   "define": "ART_DEF_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

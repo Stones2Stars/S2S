@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AI_JOURNALIST"
+   "define": "ART_DEF_BUILDING_AI_JOURNALIST",
+   "notShownInCity": true
   }
  },
  "identity": {

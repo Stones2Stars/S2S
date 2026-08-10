@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GALACTIC_ECONOMY"
+   "define": "ART_DEF_BUILDING_GALACTIC_ECONOMY",
+   "notShownInCity": true
   }
  },
  "identity": {

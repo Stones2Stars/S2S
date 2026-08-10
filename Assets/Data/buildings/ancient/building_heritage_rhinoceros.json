@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERITAGE_RHINOCEROS"
+   "define": "ART_DEF_BUILDING_HERITAGE_RHINOCEROS",
+   "notShownInCity": true
   }
  },
  "sound": {

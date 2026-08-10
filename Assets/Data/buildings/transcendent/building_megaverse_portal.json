@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGAVERSE_PORTAL"
+   "define": "ART_DEF_BUILDING_MEGAVERSE_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

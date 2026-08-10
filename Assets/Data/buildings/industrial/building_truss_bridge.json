@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRUSS_BRIDGE"
+   "define": "ART_DEF_BUILDING_TRUSS_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TENGRI_SONG"
+   "define": "ART_DEF_BUILDING_TENGRI_SONG",
+   "notShownInCity": true
   }
  },
  "sound": {

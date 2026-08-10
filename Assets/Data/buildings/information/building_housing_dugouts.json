@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_DUGOUTS"
+   "define": "ART_DEF_BUILDING_HOUSING_DUGOUTS",
+   "notShownInCity": true
   }
  },
  "identity": {

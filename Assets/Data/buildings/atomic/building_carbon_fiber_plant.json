@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CARBON_FIBER_PLANT"
+   "define": "ART_DEF_BUILDING_CARBON_FIBER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

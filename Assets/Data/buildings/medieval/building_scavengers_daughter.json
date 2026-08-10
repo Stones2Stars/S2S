@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SCAVENGERS_DAUGHTER"
+   "define": "ART_DEF_BUILDING_SCAVENGERS_DAUGHTER",
+   "notShownInCity": true
   }
  },
  "sound": {

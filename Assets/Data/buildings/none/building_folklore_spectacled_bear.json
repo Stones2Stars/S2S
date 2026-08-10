@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_SPECTACLED_BEAR"
+   "define": "ART_DEF_BUILDING_FOLKLORE_SPECTACLED_BEAR",
+   "notShownInCity": true
   }
  },
  "identity": {

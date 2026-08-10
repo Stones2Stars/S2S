@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_RECURSIVE_WORLD"
+   "define": "ART_DEF_BUILDING_DISTANT_RECURSIVE_WORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

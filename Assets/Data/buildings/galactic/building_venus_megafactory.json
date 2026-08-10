@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_MEGAFACTORY"
+   "define": "ART_DEF_BUILDING_VENUS_MEGAFACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

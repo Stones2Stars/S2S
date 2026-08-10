@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BICYCLE_SHOP"
+   "define": "ART_DEF_BUILDING_BICYCLE_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

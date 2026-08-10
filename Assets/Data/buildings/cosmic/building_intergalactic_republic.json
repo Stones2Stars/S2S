@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_REPUBLIC"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_REPUBLIC",
+   "notShownInCity": true
   }
  },
  "identity": {

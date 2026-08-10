@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PASTA"
+   "define": "ART_DEF_BUILDING_FACTORY_PASTA",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_RAILROAD_MUSEUM"
+   "define": "ART_DEF_BUILDING_NATIONAL_RAILROAD_MUSEUM",
+   "notShownInCity": true
   }
  },
  "identity": {

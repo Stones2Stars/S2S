@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_PUNTIC"
+   "define": "ART_DEF_BUILDING_CULTURE_PUNTIC",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -184,7 +184,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PHARMACY"
+   "define": "ART_DEF_BUILDING_PHARMACY",
+   "notShownInCity": true
   }
  },
  "sound": {

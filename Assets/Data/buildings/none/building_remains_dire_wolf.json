@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REMAINS_DIRE_WOLF"
+   "define": "ART_DEF_BUILDING_REMAINS_DIRE_WOLF",
+   "notShownInCity": true
   }
  },
  "identity": {

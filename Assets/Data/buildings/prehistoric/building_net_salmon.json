@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NET_SALMON"
+   "define": "ART_DEF_BUILDING_NET_SALMON",
+   "notShownInCity": true
   }
  },
  "identity": {

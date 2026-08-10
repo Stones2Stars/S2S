@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSAMERICA_TOWER"
+   "define": "ART_DEF_BUILDING_TRANSAMERICA_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

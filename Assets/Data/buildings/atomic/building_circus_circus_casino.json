@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIRCUS_CIRCUS_CASINO"
+   "define": "ART_DEF_BUILDING_CIRCUS_CIRCUS_CASINO",
+   "notShownInCity": true
   }
  },
  "identity": {

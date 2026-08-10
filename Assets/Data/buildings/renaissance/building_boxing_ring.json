@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BOXING_RING"
+   "define": "ART_DEF_BUILDING_BOXING_RING",
+   "notShownInCity": true
   }
  },
  "identity": {

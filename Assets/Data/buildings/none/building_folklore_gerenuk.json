@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_GERENUK"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GERENUK",
+   "notShownInCity": true
   }
  },
  "identity": {

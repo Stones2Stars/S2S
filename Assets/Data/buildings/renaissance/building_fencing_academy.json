@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FENCING_ACADEMY"
+   "define": "ART_DEF_BUILDING_FENCING_ACADEMY",
+   "notShownInCity": true
   }
  },
  "sound": {

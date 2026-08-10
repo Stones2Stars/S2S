@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+   "notShownInCity": true
   }
  },
  "identity": {

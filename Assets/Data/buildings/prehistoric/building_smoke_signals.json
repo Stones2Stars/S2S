@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMOKE_SIGNALS"
+   "define": "ART_DEF_BUILDING_SMOKE_SIGNALS",
+   "notShownInCity": true
   }
  },
  "identity": {

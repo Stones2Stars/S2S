@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POLAR_HOTEL"
+   "define": "ART_DEF_BUILDING_POLAR_HOTEL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMMUNICATIONS_SATELLITE"
+   "define": "ART_DEF_BUILDING_COMMUNICATIONS_SATELLITE",
+   "notShownInCity": true
   }
  },
  "sound": {

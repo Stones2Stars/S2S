@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_SNOW_FUNGUS"
+   "define": "ART_DEF_BUILDING_FARM_CROP_SNOW_FUNGUS",
+   "notShownInCity": true
   }
  },
  "identity": {

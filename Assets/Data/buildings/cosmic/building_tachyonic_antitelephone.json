@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TACHYONIC_ANTITELEPHONE"
+   "define": "ART_DEF_BUILDING_TACHYONIC_ANTITELEPHONE",
+   "notShownInCity": true
   }
  },
  "identity": {

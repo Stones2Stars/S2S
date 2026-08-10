@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_HOLOGRAPHIC_PROJECTORS"
+   "define": "ART_DEF_BUILDING_FACTORY_HOLOGRAPHIC_PROJECTORS",
+   "notShownInCity": true
   }
  },
  "identity": {

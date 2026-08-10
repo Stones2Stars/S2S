@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_HEAT_RECOVERY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_HEAT_RECOVERY",
+   "notShownInCity": true
   }
  },
  "identity": {

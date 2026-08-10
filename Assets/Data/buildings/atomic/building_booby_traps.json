@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BOOBY_TRAPS"
+   "define": "ART_DEF_BUILDING_BOOBY_TRAPS",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INVERSE_CITY"
+   "define": "ART_DEF_BUILDING_INVERSE_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

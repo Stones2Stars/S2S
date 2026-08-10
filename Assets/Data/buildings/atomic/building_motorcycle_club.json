@@ -232,7 +232,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOTORCYCLE_CLUB"
+   "define": "ART_DEF_BUILDING_MOTORCYCLE_CLUB",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_BLACKBERRY"
+   "define": "ART_DEF_BUILDING_FARM_CROP_BLACKBERRY",
+   "notShownInCity": true
   }
  },
  "identity": {

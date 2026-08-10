@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_BROADBAND"
+   "define": "ART_DEF_BUILDING_MARTIAN_BROADBAND",
+   "notShownInCity": true
   }
  },
  "identity": {

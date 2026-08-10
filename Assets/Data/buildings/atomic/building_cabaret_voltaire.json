@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CABARET_VOLTAIRE"
+   "define": "ART_DEF_BUILDING_CABARET_VOLTAIRE",
+   "notShownInCity": true
   }
  },
  "identity": {

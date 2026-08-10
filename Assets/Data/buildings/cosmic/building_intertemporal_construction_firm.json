@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
+   "define": "ART_DEF_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LL_CACTUS_HILL"
+   "define": "ART_DEF_BUILDING_LL_CACTUS_HILL",
+   "notShownInCity": true
   }
  },
  "identity": {

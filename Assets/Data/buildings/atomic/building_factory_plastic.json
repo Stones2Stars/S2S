@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PLASTIC"
+   "define": "ART_DEF_BUILDING_FACTORY_PLASTIC",
+   "notShownInCity": true
   }
  },
  "identity": {

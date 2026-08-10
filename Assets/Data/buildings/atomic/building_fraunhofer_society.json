@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FRAUNHOFER_SOCIETY"
+   "define": "ART_DEF_BUILDING_FRAUNHOFER_SOCIETY",
+   "notShownInCity": true
   }
  },
  "identity": {

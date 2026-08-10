@@ -122,7 +122,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASATRU_CATHEDRAL"
+   "define": "ART_DEF_BUILDING_ASATRU_CATHEDRAL",
+   "notShownInCity": true
   }
  },
  "sound": {

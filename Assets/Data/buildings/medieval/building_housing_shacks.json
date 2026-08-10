@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_SHACKS"
+   "define": "ART_DEF_BUILDING_HOUSING_SHACKS",
+   "notShownInCity": true
   }
  },
  "identity": {

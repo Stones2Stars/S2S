@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATERMILL"
+   "define": "ART_DEF_BUILDING_WATERMILL",
+   "notShownInCity": true
   }
  },
  "identity": {

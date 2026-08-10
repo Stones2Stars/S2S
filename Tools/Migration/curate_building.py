@@ -46,7 +46,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json, skip_inert, scale_vision
+from curate_common import put_art, put_art_derived, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json, skip_inert, scale_vision
 from curate_common import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
 from store import Store, REPO
 
@@ -1535,6 +1535,31 @@ def _families_of(building_json):
     return OrderedDict((k, v) for k, v in building_json.items() if k not in _RESERVED_TOPLEVEL)
 
 
+def _art_is_placeable(store, tag):
+    """Does this building's ART define carry a model the render engine can actually place in a city?
+
+    Three ways the art says NO, and they are the legacy verdict verbatim (the archived CvBuildingInfo::
+    setNotShowInCity): no tag at all, a model scaled to nothing, or the deliberate empty model. The two markers
+    overlap heavily rather than partitioning -- 1,908 defines carry both -- so all three are tested, never one as
+    a proxy for the others.
+
+    ⚠ An UNKNOWN tag reads as NOT placeable: ArtFileMgr answers NULL for a tag the ART XML does not define, and a
+    building offered to the layout engine on a NULL define is exactly the case this flag exists to keep out."""
+    if not tag:
+        return False
+    art = store.table("BuildingArtInfo").get(tag)
+    if art is None:
+        return False
+    scale = engine.text(art.find("fScale"))
+    nif = (engine.text(art.find("NIF")) or "").strip().lower()
+    try:
+        if float(scale or 0) == 0.0:
+            return False
+    except ValueError:
+        return False
+    return nif != "art/empty.nif"
+
+
 def curate(typ, rec, store):
     out = OrderedDict([("type", typ)])
     for tag, key in TEXT.items():
@@ -1743,6 +1768,14 @@ def curate(typ, rec, store):
     # --- art ---
     for tag in ART:
         put_art(art_blocks, tag, engine.text(rec.find(tag)))
+
+    # ⚖ ON-MAP PRESENCE, DERIVED ONCE HERE (json.md §7). ~90% of buildings are game entities that were never
+    # meant to stand in the city: the ART define says so by scaling the model to nothing or pointing at the
+    # empty model, while still carrying a real <Button> for the pedia and the build list. The legacy engine
+    # sniffed that verdict out of the art plane on every read; the DATA states it instead, so the info reads a
+    # member and the render engine is never handed a building with no model to place.
+    if not _art_is_placeable(store, engine.text(rec.find("ArtDefineTag"))):
+        put_art_derived(art_blocks, "world.art.notShownInCity", True)
 
     # --- assemble (reserved order, modifier-spec §1.1) ---
     if enables:

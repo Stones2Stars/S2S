@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_BAUXITE"
+   "define": "ART_DEF_BUILDING_MINE_BAUXITE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEAWALLS"
+   "define": "ART_DEF_BUILDING_SEAWALLS",
+   "notShownInCity": true
   }
  },
  "sound": {

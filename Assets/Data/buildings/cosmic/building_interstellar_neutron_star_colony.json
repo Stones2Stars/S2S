@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRON_STAR_COLONY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRON_STAR_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

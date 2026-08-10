@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_TERRAFORMED_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

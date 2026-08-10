@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NAHUA"
+   "define": "ART_DEF_BUILDING_CULTURE_NAHUA",
+   "notShownInCity": true
   }
  },
  "identity": {

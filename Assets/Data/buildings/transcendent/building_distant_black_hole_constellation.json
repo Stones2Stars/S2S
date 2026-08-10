@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION"
+   "define": "ART_DEF_BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION",
+   "notShownInCity": true
   }
  },
  "identity": {

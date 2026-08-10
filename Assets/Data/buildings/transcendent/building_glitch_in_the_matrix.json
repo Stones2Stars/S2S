@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLITCH_IN_THE_MATRIX"
+   "define": "ART_DEF_BUILDING_GLITCH_IN_THE_MATRIX",
+   "notShownInCity": true
   }
  },
  "identity": {

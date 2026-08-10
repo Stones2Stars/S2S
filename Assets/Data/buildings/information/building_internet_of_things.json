@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERNET_OF_THINGS"
+   "define": "ART_DEF_BUILDING_INTERNET_OF_THINGS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_COPPER"
+   "define": "ART_DEF_BUILDING_MINE_COPPER",
+   "notShownInCity": true
   }
  },
  "identity": {

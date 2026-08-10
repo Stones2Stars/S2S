@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CEMENT_BARRIER"
+   "define": "ART_DEF_BUILDING_CEMENT_BARRIER",
+   "notShownInCity": true
   }
  },
  "sound": {

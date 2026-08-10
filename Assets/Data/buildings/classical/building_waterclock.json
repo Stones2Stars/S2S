@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATERCLOCK"
+   "define": "ART_DEF_BUILDING_WATERCLOCK",
+   "notShownInCity": true
   }
  },
  "identity": {

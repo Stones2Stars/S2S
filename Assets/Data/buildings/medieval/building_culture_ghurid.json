@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_GHURID"
+   "define": "ART_DEF_BUILDING_CULTURE_GHURID",
+   "notShownInCity": true
   }
  },
  "identity": {

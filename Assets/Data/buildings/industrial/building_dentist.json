@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DENTIST"
+   "define": "ART_DEF_BUILDING_DENTIST",
+   "notShownInCity": true
   }
  },
  "identity": {

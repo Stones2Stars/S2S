@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSATLANTIC_TUNNEL"
+   "define": "ART_DEF_BUILDING_TRANSATLANTIC_TUNNEL",
+   "notShownInCity": true
   }
  },
  "identity": {

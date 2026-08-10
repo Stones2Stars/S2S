@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPEARPOINT_BURIAL"
+   "define": "ART_DEF_BUILDING_SPEARPOINT_BURIAL",
+   "notShownInCity": true
   }
  },
  "identity": {

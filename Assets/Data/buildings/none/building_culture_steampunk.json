@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_STEAMPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_STEAMPUNK",
+   "notShownInCity": true
   }
  },
  "identity": {

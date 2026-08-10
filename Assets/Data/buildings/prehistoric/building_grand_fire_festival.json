@@ -282,7 +282,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_FIRE_FESTIVAL"
+   "define": "ART_DEF_BUILDING_GRAND_FIRE_FESTIVAL",
+   "notShownInCity": true
   }
  },
  "identity": {

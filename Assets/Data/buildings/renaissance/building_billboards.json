@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BILLBOARDS"
+   "define": "ART_DEF_BUILDING_BILLBOARDS",
+   "notShownInCity": true
   }
  },
  "identity": {

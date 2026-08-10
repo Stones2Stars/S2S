@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LASER_BATTERY"
+   "define": "ART_DEF_BUILDING_LASER_BATTERY",
+   "notShownInCity": true
   }
  },
  "sound": {

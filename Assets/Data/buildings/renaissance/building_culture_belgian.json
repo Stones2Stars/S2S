@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BELGIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_BELGIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE"
+   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
+   "notShownInCity": true
   }
  },
  "identity": {

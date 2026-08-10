@@ -115,7 +115,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARMERS_MARKET"
+   "define": "ART_DEF_BUILDING_FARMERS_MARKET",
+   "notShownInCity": true
   }
  },
  "sound": {

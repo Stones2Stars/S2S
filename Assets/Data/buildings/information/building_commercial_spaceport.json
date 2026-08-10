@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMMERCIAL_SPACEPORT"
+   "define": "ART_DEF_BUILDING_COMMERCIAL_SPACEPORT",
+   "notShownInCity": true
   }
  },
  "sound": {

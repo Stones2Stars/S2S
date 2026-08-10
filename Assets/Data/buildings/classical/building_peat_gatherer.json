@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PEAT_GATHERER"
+   "define": "ART_DEF_BUILDING_PEAT_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

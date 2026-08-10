@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACOUSTIC_GRAVITY_WAVES"
+   "define": "ART_DEF_BUILDING_ACOUSTIC_GRAVITY_WAVES",
+   "notShownInCity": true
   }
  },
  "identity": {

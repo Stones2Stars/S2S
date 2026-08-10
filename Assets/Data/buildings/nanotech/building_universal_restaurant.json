@@ -241,7 +241,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_UNIVERSAL_RESTAURANT"
+   "define": "ART_DEF_BUILDING_UNIVERSAL_RESTAURANT",
+   "notShownInCity": true
   }
  },
  "identity": {

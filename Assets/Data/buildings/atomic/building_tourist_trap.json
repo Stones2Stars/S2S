@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOURIST_TRAP"
+   "define": "ART_DEF_BUILDING_TOURIST_TRAP",
+   "notShownInCity": true
   }
  },
  "identity": {

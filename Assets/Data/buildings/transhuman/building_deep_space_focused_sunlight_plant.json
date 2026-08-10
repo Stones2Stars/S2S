@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

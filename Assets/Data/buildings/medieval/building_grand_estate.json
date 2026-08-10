@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_ESTATE"
+   "define": "ART_DEF_BUILDING_GRAND_ESTATE",
+   "notShownInCity": true
   }
  },
  "sound": {

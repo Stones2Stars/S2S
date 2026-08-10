@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_LABS"
+   "define": "ART_DEF_BUILDING_CISLUNAR_LABS",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOUNTAIN"
+   "define": "ART_DEF_BUILDING_FOUNTAIN",
+   "notShownInCity": true
   }
  },
  "identity": {

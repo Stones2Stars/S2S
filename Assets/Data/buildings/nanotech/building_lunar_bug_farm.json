@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_BUG_FARM"
+   "define": "ART_DEF_BUILDING_LUNAR_BUG_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

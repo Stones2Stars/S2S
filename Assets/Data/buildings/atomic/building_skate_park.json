@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SKATE_PARK"
+   "define": "ART_DEF_BUILDING_SKATE_PARK",
+   "notShownInCity": true
   }
  },
  "identity": {

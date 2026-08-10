@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_AUROCHS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_AUROCHS",
+   "notShownInCity": true
   }
  },
  "identity": {

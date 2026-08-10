@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FORENSICS_LAB"
+   "define": "ART_DEF_BUILDING_FORENSICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

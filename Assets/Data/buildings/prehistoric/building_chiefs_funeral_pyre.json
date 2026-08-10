@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHIEFS_FUNERAL_PYRE"
+   "define": "ART_DEF_BUILDING_CHIEFS_FUNERAL_PYRE",
+   "notShownInCity": true
   }
  },
  "identity": {

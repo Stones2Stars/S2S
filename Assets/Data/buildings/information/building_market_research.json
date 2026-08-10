@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARKET_RESEARCH"
+   "define": "ART_DEF_BUILDING_MARKET_RESEARCH",
+   "notShownInCity": true
   }
  },
  "identity": {

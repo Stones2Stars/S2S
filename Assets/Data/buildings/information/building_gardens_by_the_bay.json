@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GARDENS_BY_THE_BAY"
+   "define": "ART_DEF_BUILDING_GARDENS_BY_THE_BAY",
+   "notShownInCity": true
   }
  },
  "identity": {

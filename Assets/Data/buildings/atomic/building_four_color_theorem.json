@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOUR_COLOR_THEOREM"
+   "define": "ART_DEF_BUILDING_FOUR_COLOR_THEOREM",
+   "notShownInCity": true
   }
  },
  "identity": {

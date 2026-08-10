@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_ANIMAL_HIDE_TENTS"
+   "define": "ART_DEF_BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "notShownInCity": true
   }
  },
  "identity": {

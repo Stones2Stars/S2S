@@ -148,7 +148,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FISHMONGER"
+   "define": "ART_DEF_BUILDING_FISHMONGER",
+   "notShownInCity": true
   }
  },
  "identity": {

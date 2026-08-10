@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OCEAN_SPIRAL"
+   "define": "ART_DEF_BUILDING_OCEAN_SPIRAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -24,7 +24,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL"
+   "define": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_SKYHOOK"
+   "define": "ART_DEF_BUILDING_MARTIAN_SKYHOOK",
+   "notShownInCity": true
   }
  },
  "identity": {

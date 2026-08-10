@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_OCEAN_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_OCEAN_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

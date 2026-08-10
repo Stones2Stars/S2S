@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOLODECK"
+   "define": "ART_DEF_BUILDING_HOLODECK",
+   "notShownInCity": true
   }
  },
  "identity": {

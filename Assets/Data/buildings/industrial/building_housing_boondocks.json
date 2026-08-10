@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_BOONDOCKS"
+   "define": "ART_DEF_BUILDING_HOUSING_BOONDOCKS",
+   "notShownInCity": true
   }
  },
  "identity": {

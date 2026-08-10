@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WIND_TURBINE_HIGHWAY"
+   "define": "ART_DEF_BUILDING_WIND_TURBINE_HIGHWAY",
+   "notShownInCity": true
   }
  },
  "identity": {

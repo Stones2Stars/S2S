@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_FUSION_PLANTS"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_FUSION_PLANTS",
+   "notShownInCity": true
   }
  },
  "identity": {

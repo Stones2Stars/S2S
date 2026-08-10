@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MIXTEC"
+   "define": "ART_DEF_BUILDING_CULTURE_MIXTEC",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_CONCRETE_MILL"
+   "define": "ART_DEF_BUILDING_LUNAR_CONCRETE_MILL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_RATITE"
+   "define": "ART_DEF_BUILDING_HERD_RATITE",
+   "notShownInCity": true
   }
  },
  "sound": {

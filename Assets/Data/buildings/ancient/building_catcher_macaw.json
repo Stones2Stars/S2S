@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATCHER_MACAW"
+   "define": "ART_DEF_BUILDING_CATCHER_MACAW",
+   "notShownInCity": true
   }
  },
  "identity": {

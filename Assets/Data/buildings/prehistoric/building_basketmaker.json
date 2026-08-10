@@ -126,7 +126,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BASKETMAKER"
+   "define": "ART_DEF_BUILDING_BASKETMAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

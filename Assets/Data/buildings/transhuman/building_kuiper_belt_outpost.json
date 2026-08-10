@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KUIPER_BELT_OUTPOST"
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_OUTPOST",
+   "notShownInCity": true
   }
  },
  "identity": {

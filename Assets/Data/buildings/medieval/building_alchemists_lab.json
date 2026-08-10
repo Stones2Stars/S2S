@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALCHEMISTS_LAB"
+   "define": "ART_DEF_BUILDING_ALCHEMISTS_LAB",
+   "notShownInCity": true
   }
  },
  "sound": {

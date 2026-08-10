@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEMANTIC_WEB"
+   "define": "ART_DEF_BUILDING_SEMANTIC_WEB",
+   "notShownInCity": true
   }
  },
  "identity": {

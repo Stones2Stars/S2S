@@ -132,7 +132,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_AUYANTEPUI"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_AUYANTEPUI",
+   "notShownInCity": true
   }
  },
  "identity": {

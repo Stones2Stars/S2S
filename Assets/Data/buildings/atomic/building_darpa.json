@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DARPA"
+   "define": "ART_DEF_BUILDING_DARPA",
+   "notShownInCity": true
   }
  },
  "identity": {

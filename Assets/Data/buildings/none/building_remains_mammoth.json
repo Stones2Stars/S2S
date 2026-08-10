@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REMAINS_MAMMOTH"
+   "define": "ART_DEF_BUILDING_REMAINS_MAMMOTH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AON_CENTER"
+   "define": "ART_DEF_BUILDING_AON_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

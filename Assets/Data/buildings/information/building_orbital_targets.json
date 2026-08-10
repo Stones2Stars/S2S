@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORBITAL_TARGETS"
+   "define": "ART_DEF_BUILDING_ORBITAL_TARGETS",
+   "notShownInCity": true
   }
  },
  "sound": {

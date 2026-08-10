@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_POTASH"
+   "define": "ART_DEF_BUILDING_MINE_POTASH",
+   "notShownInCity": true
   }
  },
  "identity": {

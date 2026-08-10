@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLADIATORIAL_SCHOOL"
+   "define": "ART_DEF_BUILDING_GLADIATORIAL_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

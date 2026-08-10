@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_CORE_PROBE"
+   "define": "ART_DEF_BUILDING_SOLAR_CORE_PROBE",
+   "notShownInCity": true
   }
  },
  "identity": {

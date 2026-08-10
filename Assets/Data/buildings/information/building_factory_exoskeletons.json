@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_EXOSKELETONS"
+   "define": "ART_DEF_BUILDING_FACTORY_EXOSKELETONS",
+   "notShownInCity": true
   }
  },
  "identity": {

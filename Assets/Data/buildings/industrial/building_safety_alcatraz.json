@@ -24,7 +24,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAFETY_ALCATRAZ"
+   "define": "ART_DEF_BUILDING_SAFETY_ALCATRAZ",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_DUTCH"
+   "define": "ART_DEF_BUILDING_CULTURE_DUTCH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANTIMATTER_HARVESTER"
+   "define": "ART_DEF_BUILDING_ANTIMATTER_HARVESTER",
+   "notShownInCity": true
   }
  },
  "identity": {

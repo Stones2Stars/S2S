@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AGRICULTURAL_EXTENSION"
+   "define": "ART_DEF_BUILDING_AGRICULTURAL_EXTENSION",
+   "notShownInCity": true
   }
  },
  "identity": {

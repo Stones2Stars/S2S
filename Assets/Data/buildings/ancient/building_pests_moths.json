@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_MOTHS"
+   "define": "ART_DEF_BUILDING_PESTS_MOTHS",
+   "notShownInCity": true
   }
  },
  "identity": {

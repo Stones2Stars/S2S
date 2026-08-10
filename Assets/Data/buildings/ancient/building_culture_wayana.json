@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_WAYANA"
+   "define": "ART_DEF_BUILDING_CULTURE_WAYANA",
+   "notShownInCity": true
   }
  },
  "identity": {

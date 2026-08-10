@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_IRRIGATION_CANALS"
+   "define": "ART_DEF_BUILDING_IRRIGATION_CANALS",
+   "notShownInCity": true
   }
  },
  "sound": {

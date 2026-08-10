@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HAAMONGA_A_MAUI"
+   "define": "ART_DEF_BUILDING_HAAMONGA_A_MAUI",
+   "notShownInCity": true
   }
  },
  "identity": {

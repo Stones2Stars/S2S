@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_FUSION_ENGINE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_FUSION_ENGINE",
+   "notShownInCity": true
   }
  },
  "identity": {

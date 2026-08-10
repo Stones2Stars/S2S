@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_TURQUOISE"
+   "define": "ART_DEF_BUILDING_MINE_TURQUOISE",
+   "notShownInCity": true
   }
  },
  "identity": {

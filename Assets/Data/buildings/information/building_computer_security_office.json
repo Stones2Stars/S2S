@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMPUTER_SECURITY_OFFICE"
+   "define": "ART_DEF_BUILDING_COMPUTER_SECURITY_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

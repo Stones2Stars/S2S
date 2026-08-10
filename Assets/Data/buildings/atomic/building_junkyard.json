@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JUNKYARD"
+   "define": "ART_DEF_BUILDING_JUNKYARD",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DOWNDRAFT_TOWER"
+   "define": "ART_DEF_BUILDING_DOWNDRAFT_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

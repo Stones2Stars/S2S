@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_STAR_ROAD"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STAR_ROAD",
+   "notShownInCity": true
   }
  },
  "identity": {

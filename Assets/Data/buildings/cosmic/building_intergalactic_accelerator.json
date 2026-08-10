@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_ACCELERATOR"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ACCELERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

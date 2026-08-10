@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AGORA"
+   "define": "ART_DEF_BUILDING_AGORA",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_RADIOS"
+   "define": "ART_DEF_BUILDING_FACTORY_RADIOS",
+   "notShownInCity": true
   }
  },
  "identity": {

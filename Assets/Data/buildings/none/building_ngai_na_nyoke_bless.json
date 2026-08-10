@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NGAI_NA_NYOKE_BLESS"
+   "define": "ART_DEF_BUILDING_NGAI_NA_NYOKE_BLESS",
+   "notShownInCity": true
   }
  },
  "sound": {

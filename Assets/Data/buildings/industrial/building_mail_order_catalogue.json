@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAIL_ORDER_CATALOGUE"
+   "define": "ART_DEF_BUILDING_MAIL_ORDER_CATALOGUE",
+   "notShownInCity": true
   }
  },
  "identity": {

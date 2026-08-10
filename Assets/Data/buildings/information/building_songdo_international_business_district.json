@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT"
+   "define": "ART_DEF_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

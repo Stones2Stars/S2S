@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TITAN_BIOFACTORY"
+   "define": "ART_DEF_BUILDING_TITAN_BIOFACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

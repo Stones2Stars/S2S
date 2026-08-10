@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_EXPORTER"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_EXPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

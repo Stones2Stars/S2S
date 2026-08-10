@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FULLERENE_PLANT"
+   "define": "ART_DEF_BUILDING_FULLERENE_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JADE_MERCHANT"
+   "define": "ART_DEF_BUILDING_JADE_MERCHANT",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MEDIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MEDIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

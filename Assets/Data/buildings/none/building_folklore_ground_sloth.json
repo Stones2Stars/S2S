@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_GROUND_SLOTH"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GROUND_SLOTH",
+   "notShownInCity": true
   }
  },
  "identity": {

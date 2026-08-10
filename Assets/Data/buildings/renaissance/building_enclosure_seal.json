@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENCLOSURE_SEAL"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_SEAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_TULIP"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_TULIP",
+   "notShownInCity": true
   }
  },
  "identity": {

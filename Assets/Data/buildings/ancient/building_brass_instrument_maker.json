@@ -119,7 +119,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BRASS_INSTRUMENT_MAKER"
+   "define": "ART_DEF_BUILDING_BRASS_INSTRUMENT_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

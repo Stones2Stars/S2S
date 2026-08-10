@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAFFIC_CAMERAS"
+   "define": "ART_DEF_BUILDING_TRAFFIC_CAMERAS",
+   "notShownInCity": true
   }
  },
  "identity": {

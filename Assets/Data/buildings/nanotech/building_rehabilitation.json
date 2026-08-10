@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REHABILITATION"
+   "define": "ART_DEF_BUILDING_REHABILITATION",
+   "notShownInCity": true
   }
  },
  "identity": {

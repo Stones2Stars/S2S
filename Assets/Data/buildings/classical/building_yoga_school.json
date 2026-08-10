@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_YOGA_SCHOOL"
+   "define": "ART_DEF_BUILDING_YOGA_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

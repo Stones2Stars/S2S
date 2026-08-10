@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINI_GOLF_COURSE"
+   "define": "ART_DEF_BUILDING_MINI_GOLF_COURSE",
+   "notShownInCity": true
   }
  },
  "identity": {

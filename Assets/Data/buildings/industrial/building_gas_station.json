@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GAS_STATION"
+   "define": "ART_DEF_BUILDING_GAS_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

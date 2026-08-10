@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERCULES_BEETLE_SANCTUARY"
+   "define": "ART_DEF_BUILDING_HERCULES_BEETLE_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "identity": {

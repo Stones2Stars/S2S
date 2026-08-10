@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_SPHEREWORLD"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SPHEREWORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

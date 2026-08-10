@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_CLOAKING"
+   "define": "ART_DEF_BUILDING_CISLUNAR_CLOAKING",
+   "notShownInCity": true
   }
  },
  "identity": {

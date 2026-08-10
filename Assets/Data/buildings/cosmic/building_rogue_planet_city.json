@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROGUE_PLANET_CITY"
+   "define": "ART_DEF_BUILDING_ROGUE_PLANET_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

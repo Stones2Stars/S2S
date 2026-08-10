@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

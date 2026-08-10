@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_JORDANIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_JORDANIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

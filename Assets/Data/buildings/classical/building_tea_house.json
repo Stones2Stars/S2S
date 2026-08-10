@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TEA_HOUSE"
+   "define": "ART_DEF_BUILDING_TEA_HOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

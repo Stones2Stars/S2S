@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_CULTURAL_AWAKENING"
+   "define": "ART_DEF_CULTURAL_AWAKENING",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_HYPERMAGLEV"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_HYPERMAGLEV",
+   "notShownInCity": true
   }
  },
  "identity": {

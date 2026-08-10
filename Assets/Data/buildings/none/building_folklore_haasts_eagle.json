@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_HAASTS_EAGLE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_HAASTS_EAGLE",
+   "notShownInCity": true
   }
  },
  "identity": {

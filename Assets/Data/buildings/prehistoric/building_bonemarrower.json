@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BONEMARROWER"
+   "define": "ART_DEF_BUILDING_BONEMARROWER",
+   "notShownInCity": true
   }
  },
  "identity": {

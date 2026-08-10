@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS"
+   "define": "ART_DEF_BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
+   "notShownInCity": true
   }
  },
  "identity": {

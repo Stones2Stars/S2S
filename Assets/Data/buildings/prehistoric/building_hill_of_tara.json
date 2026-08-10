@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HILL_OF_TARA"
+   "define": "ART_DEF_BUILDING_HILL_OF_TARA",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_CALABASH"
+   "define": "ART_DEF_BUILDING_FARM_CROP_CALABASH",
+   "notShownInCity": true
   }
  },
  "identity": {

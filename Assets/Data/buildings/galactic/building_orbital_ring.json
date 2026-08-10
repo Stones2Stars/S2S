@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORBITAL_RING"
+   "define": "ART_DEF_BUILDING_ORBITAL_RING",
+   "notShownInCity": true
   }
  },
  "identity": {

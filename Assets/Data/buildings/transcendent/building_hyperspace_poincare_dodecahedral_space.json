@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
+   "notShownInCity": true
   }
  },
  "identity": {

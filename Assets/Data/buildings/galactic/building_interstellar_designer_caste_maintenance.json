@@ -23,7 +23,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

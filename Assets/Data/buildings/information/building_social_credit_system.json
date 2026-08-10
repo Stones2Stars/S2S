@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOCIAL_CREDIT_SYSTEM"
+   "define": "ART_DEF_BUILDING_SOCIAL_CREDIT_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

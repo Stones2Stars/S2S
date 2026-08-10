@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORNITHOPTER_AERIE"
+   "define": "ART_DEF_BUILDING_ORNITHOPTER_AERIE",
+   "notShownInCity": true
   }
  },
  "sound": {

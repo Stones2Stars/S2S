@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EXODUS"
+   "define": "ART_DEF_BUILDING_EXODUS",
+   "notShownInCity": true
   }
  },
  "identity": {

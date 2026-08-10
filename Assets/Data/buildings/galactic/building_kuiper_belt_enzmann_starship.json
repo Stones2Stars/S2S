@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KUIPER_BELT_ENZMANN_STARSHIP"
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_ENZMANN_STARSHIP",
+   "notShownInCity": true
   }
  },
  "identity": {

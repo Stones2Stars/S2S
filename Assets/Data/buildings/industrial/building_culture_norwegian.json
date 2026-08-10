@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NORWEGIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_NORWEGIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

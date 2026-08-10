@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEMINARY"
+   "define": "ART_DEF_BUILDING_SEMINARY",
+   "notShownInCity": true
   }
  },
  "sound": {

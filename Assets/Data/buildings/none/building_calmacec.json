@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CALMACEC"
+   "define": "ART_DEF_BUILDING_CALMACEC",
+   "notShownInCity": true
   }
  },
  "sound": {

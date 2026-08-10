@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_GREAT_BARRIER_REEF",
+   "notShownInCity": true
   }
  },
  "identity": {

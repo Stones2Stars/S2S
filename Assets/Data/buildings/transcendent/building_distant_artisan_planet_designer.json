@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_ARTISAN_PLANET_DESIGNER"
+   "define": "ART_DEF_BUILDING_DISTANT_ARTISAN_PLANET_DESIGNER",
+   "notShownInCity": true
   }
  },
  "identity": {

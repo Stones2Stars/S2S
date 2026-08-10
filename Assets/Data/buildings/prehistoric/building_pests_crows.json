@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_CROWS"
+   "define": "ART_DEF_BUILDING_PESTS_CROWS",
+   "notShownInCity": true
   }
  },
  "identity": {

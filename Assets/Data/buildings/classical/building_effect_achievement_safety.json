@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_SAFETY"
+   "define": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
+   "notShownInCity": true
   }
  },
  "identity": {

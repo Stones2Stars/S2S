@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CRICKET_FIELD"
+   "define": "ART_DEF_BUILDING_CRICKET_FIELD",
+   "notShownInCity": true
   }
  },
  "identity": {

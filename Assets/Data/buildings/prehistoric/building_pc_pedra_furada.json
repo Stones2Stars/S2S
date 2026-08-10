@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PC_PEDRA_FURADA"
+   "define": "ART_DEF_BUILDING_PC_PEDRA_FURADA",
+   "notShownInCity": true
   }
  },
  "identity": {

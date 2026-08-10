@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_TIRES"
+   "define": "ART_DEF_BUILDING_FACTORY_TIRES",
+   "notShownInCity": true
   }
  },
  "identity": {

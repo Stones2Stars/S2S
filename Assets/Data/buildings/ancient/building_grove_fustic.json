@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_FUSTIC"
+   "define": "ART_DEF_BUILDING_GROVE_FUSTIC",
+   "notShownInCity": true
   }
  },
  "identity": {

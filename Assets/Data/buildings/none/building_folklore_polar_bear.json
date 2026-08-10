@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_POLAR_BEAR"
+   "define": "ART_DEF_BUILDING_FOLKLORE_POLAR_BEAR",
+   "notShownInCity": true
   }
  },
  "identity": {

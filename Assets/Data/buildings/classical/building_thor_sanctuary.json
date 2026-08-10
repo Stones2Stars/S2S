@@ -121,7 +121,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THOR"
+   "define": "ART_DEF_BUILDING_THOR",
+   "notShownInCity": true
   }
  },
  "sound": {

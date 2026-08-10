@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENHANCED_GEOTHERMAL_SYSTEM"
+   "define": "ART_DEF_BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERROGATION_BUILDING"
+   "define": "ART_DEF_BUILDING_INTERROGATION_BUILDING",
+   "notShownInCity": true
   }
  },
  "sound": {

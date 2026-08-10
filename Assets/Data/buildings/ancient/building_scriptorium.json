@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SCRIPTORIUM"
+   "define": "ART_DEF_BUILDING_SCRIPTORIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

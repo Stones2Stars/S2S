@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NANOFACTORY"
+   "define": "ART_DEF_BUILDING_NANOFACTORY",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACESCRAPER_COMMERCIAL_DISTRICT"
+   "define": "ART_DEF_BUILDING_SPACESCRAPER_COMMERCIAL_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

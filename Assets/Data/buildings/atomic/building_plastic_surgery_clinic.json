@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLASTIC_SURGERY_CLINIC"
+   "define": "ART_DEF_BUILDING_PLASTIC_SURGERY_CLINIC",
+   "notShownInCity": true
   }
  },
  "identity": {

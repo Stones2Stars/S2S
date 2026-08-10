@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DAY_CARE_CENTER"
+   "define": "ART_DEF_BUILDING_DAY_CARE_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

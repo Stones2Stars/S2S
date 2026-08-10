@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

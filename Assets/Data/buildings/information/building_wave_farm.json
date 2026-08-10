@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WAVE_FARM"
+   "define": "ART_DEF_BUILDING_WAVE_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

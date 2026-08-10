@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT",
+   "notShownInCity": true
   }
  },
  "identity": {

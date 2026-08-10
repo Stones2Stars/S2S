@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_PEYOTE"
+   "define": "ART_DEF_BUILDING_PLANTATION_PEYOTE",
+   "notShownInCity": true
   }
  },
  "identity": {

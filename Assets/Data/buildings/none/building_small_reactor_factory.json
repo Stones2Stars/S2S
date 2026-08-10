@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMALL_REACTOR_FACTORY"
+   "define": "ART_DEF_BUILDING_SMALL_REACTOR_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

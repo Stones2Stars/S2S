@@ -178,7 +178,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMUGGLERS_SHANTY"
+   "define": "ART_DEF_BUILDING_SMUGGLERS_SHANTY",
+   "notShownInCity": true
   }
  },
  "identity": {

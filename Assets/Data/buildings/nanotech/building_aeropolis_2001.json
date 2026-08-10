@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AEROPOLIS_2001"
+   "define": "ART_DEF_BUILDING_AEROPOLIS_2001",
+   "notShownInCity": true
   }
  },
  "identity": {

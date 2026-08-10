@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_GALAXY_SCAN"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GALAXY_SCAN",
+   "notShownInCity": true
   }
  },
  "identity": {

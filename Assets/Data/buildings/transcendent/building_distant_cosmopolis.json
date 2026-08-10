@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_COSMOPOLIS"
+   "define": "ART_DEF_BUILDING_DISTANT_COSMOPOLIS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CRYSTAL_ISLAND"
+   "define": "ART_DEF_BUILDING_CRYSTAL_ISLAND",
+   "notShownInCity": true
   }
  },
  "identity": {

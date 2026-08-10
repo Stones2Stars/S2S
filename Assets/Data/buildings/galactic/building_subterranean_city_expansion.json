@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUBTERRANEAN_CITY_EXPANSION"
+   "define": "ART_DEF_BUILDING_SUBTERRANEAN_CITY_EXPANSION",
+   "notShownInCity": true
   }
  },
  "identity": {

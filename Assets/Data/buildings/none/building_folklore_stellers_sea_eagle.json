@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_STELLERS_SEA_EAGLE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_STELLERS_SEA_EAGLE",
+   "notShownInCity": true
   }
  },
  "identity": {

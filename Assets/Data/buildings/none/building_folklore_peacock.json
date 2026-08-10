@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_PEACOCK"
+   "define": "ART_DEF_BUILDING_FOLKLORE_PEACOCK",
+   "notShownInCity": true
   }
  },
  "identity": {

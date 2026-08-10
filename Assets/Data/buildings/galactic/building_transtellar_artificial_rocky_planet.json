@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

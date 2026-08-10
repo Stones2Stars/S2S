@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_POWER_SATELLITE"
+   "define": "ART_DEF_BUILDING_SOLAR_POWER_SATELLITE",
+   "notShownInCity": true
   }
  },
  "sound": {

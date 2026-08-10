@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ZEUS_CANNON"
+   "define": "ART_DEF_BUILDING_ZEUS_CANNON",
+   "notShownInCity": true
   }
  },
  "identity": {

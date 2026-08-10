@@ -106,7 +106,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_ALLIANCE"
+   "define": "ART_DEF_BUILDING_NATURE_ALLIANCE",
+   "notShownInCity": true
   }
  },
  "sound": {

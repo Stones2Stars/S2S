@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUBTERRANEAN_TUNNEL_NETWORK"
+   "define": "ART_DEF_BUILDING_SUBTERRANEAN_TUNNEL_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

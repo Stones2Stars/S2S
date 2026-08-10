@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

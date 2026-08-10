@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STANDARD_ETHANOL_DISTILLERY"
+   "define": "ART_DEF_BUILDING_STANDARD_ETHANOL_DISTILLERY",
+   "notShownInCity": true
   }
  },
  "sound": {

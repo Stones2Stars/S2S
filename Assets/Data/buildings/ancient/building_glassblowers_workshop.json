@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLASSBLOWERS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_GLASSBLOWERS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "sound": {

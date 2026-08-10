@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN"
+   "define": "ART_DEF_BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
+   "notShownInCity": true
   }
  },
  "identity": {

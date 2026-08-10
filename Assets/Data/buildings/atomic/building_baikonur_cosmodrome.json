@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BAIKONUR_COSMODROME"
+   "define": "ART_DEF_BUILDING_BAIKONUR_COSMODROME",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_SOCIAL_ENGINEERING"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
+   "notShownInCity": true
   }
  },
  "identity": {

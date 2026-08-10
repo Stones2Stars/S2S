@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_MARS"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_MARS",
+   "notShownInCity": true
   }
  },
  "identity": {

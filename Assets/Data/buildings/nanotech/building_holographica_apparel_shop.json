@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOLOGRAPHICA_APPAREL_SHOP"
+   "define": "ART_DEF_BUILDING_HOLOGRAPHICA_APPAREL_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

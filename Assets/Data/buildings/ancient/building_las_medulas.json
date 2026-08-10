@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LAS_MEDULAS"
+   "define": "ART_DEF_BUILDING_LAS_MEDULAS",
+   "notShownInCity": true
   }
  },
  "identity": {

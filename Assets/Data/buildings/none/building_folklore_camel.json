@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_CAMEL"
+   "define": "ART_DEF_BUILDING_FOLKLORE_CAMEL",
+   "notShownInCity": true
   }
  },
  "identity": {

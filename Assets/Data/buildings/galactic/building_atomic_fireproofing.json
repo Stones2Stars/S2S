@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ATOMIC_FIREPROOFING"
+   "define": "ART_DEF_BUILDING_ATOMIC_FIREPROOFING",
+   "notShownInCity": true
   }
  },
  "identity": {

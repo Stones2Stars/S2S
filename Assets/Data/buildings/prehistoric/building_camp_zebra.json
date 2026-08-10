@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAMP_ZEBRA"
+   "define": "ART_DEF_BUILDING_CAMP_ZEBRA",
+   "notShownInCity": true
   }
  },
  "identity": {

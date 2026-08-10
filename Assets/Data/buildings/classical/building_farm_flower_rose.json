@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_ROSE"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_ROSE",
+   "notShownInCity": true
   }
  },
  "identity": {

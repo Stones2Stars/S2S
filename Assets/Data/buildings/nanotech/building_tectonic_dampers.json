@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TECTONIC_DAMPERS"
+   "define": "ART_DEF_BUILDING_TECTONIC_DAMPERS",
+   "notShownInCity": true
   }
  },
  "identity": {

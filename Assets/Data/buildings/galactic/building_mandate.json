@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MANDATE"
+   "define": "ART_DEF_BUILDING_MANDATE",
+   "notShownInCity": true
   }
  },
  "identity": {

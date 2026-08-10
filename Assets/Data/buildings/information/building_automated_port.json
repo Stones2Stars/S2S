@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUTOMATED_PORT"
+   "define": "ART_DEF_BUILDING_AUTOMATED_PORT",
+   "notShownInCity": true
   }
  },
  "identity": {

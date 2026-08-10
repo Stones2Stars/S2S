@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VACATION_RESORT"
+   "define": "ART_DEF_BUILDING_VACATION_RESORT",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_JOSEON"
+   "define": "ART_DEF_BUILDING_CULTURE_JOSEON",
+   "notShownInCity": true
   }
  },
  "identity": {

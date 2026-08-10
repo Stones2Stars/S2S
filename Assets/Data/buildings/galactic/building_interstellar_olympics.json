@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_OLYMPICS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_OLYMPICS",
+   "notShownInCity": true
   }
  },
  "identity": {

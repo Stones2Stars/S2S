@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KIVA"
+   "define": "ART_DEF_BUILDING_KIVA",
+   "notShownInCity": true
   }
  },
  "identity": {

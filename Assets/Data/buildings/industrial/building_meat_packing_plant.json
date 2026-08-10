@@ -121,7 +121,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEAT_PACKING_PLANT"
+   "define": "ART_DEF_BUILDING_MEAT_PACKING_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

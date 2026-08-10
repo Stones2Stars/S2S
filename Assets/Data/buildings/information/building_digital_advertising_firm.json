@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIGITAL_ADVERTISING_FIRM"
+   "define": "ART_DEF_BUILDING_DIGITAL_ADVERTISING_FIRM",
+   "notShownInCity": true
   }
  },
  "identity": {

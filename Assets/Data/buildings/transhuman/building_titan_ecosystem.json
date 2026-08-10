@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TITAN_ECOSYSTEM"
+   "define": "ART_DEF_BUILDING_TITAN_ECOSYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

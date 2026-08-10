@@ -119,7 +119,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CITY_COUNCIL"
+   "define": "ART_DEF_BUILDING_CITY_COUNCIL",
+   "notShownInCity": true
   }
  },
  "sound": {

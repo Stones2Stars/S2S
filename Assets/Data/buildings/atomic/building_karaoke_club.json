@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KARAOKE_CLUB"
+   "define": "ART_DEF_BUILDING_KARAOKE_CLUB",
+   "notShownInCity": true
   }
  },
  "identity": {

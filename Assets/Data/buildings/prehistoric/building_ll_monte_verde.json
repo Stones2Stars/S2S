@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LL_MONTE_VERDE"
+   "define": "ART_DEF_BUILDING_LL_MONTE_VERDE",
+   "notShownInCity": true
   }
  },
  "identity": {

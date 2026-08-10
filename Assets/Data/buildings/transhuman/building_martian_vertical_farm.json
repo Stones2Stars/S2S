@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_VERTICAL_FARM"
+   "define": "ART_DEF_BUILDING_MARTIAN_VERTICAL_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

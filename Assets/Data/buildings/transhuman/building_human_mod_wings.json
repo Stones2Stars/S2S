@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_WINGS"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_WINGS",
+   "notShownInCity": true
   }
  },
  "identity": {

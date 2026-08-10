@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_ENTERTAINMENT_COMPLEX"
+   "define": "ART_DEF_BUILDING_MARTIAN_ENTERTAINMENT_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

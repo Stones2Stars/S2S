@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAMP_GIANT_BISON"
+   "define": "ART_DEF_BUILDING_CAMP_GIANT_BISON",
+   "notShownInCity": true
   }
  },
  "identity": {

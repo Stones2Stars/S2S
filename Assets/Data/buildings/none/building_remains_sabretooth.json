@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_SABRETOOTH"
+   "define": "ART_DEF_BUILDING_FOLKLORE_SABRETOOTH",
+   "notShownInCity": true
   }
  },
  "identity": {

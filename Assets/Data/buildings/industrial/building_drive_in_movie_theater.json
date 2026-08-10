@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DRIVE_IN_MOVIE_THEATER"
+   "define": "ART_DEF_BUILDING_DRIVE_IN_MOVIE_THEATER",
+   "notShownInCity": true
   }
  },
  "identity": {

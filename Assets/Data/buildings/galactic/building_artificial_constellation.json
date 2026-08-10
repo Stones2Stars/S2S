@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARTIFICIAL_CONSTELLATION"
+   "define": "ART_DEF_BUILDING_ARTIFICIAL_CONSTELLATION",
+   "notShownInCity": true
   }
  },
  "identity": {

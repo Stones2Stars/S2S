@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHIMERA_SURGERY_CLINIC"
+   "define": "ART_DEF_BUILDING_CHIMERA_SURGERY_CLINIC",
+   "notShownInCity": true
   }
  },
  "identity": {

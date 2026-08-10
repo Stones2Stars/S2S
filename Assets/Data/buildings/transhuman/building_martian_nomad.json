@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_NOMAD"
+   "define": "ART_DEF_BUILDING_MARTIAN_NOMAD",
+   "notShownInCity": true
   }
  },
  "identity": {

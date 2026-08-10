@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHIEFS_HUT"
+   "define": "ART_DEF_BUILDING_CHIEFS_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

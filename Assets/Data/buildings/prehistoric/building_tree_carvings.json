@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TREE_CARVINGS"
+   "define": "ART_DEF_BUILDING_TREE_CARVINGS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

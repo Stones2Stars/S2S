@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGACORPORATE_HEADQUARTERS"
+   "define": "ART_DEF_BUILDING_MEGACORPORATE_HEADQUARTERS",
+   "notShownInCity": true
   }
  },
  "identity": {

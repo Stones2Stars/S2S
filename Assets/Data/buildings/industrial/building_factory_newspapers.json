@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_NEWSPAPERS"
+   "define": "ART_DEF_BUILDING_FACTORY_NEWSPAPERS",
+   "notShownInCity": true
   }
  },
  "identity": {

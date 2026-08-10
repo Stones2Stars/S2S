@@ -141,7 +141,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLASTIC_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_PLASTIC_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

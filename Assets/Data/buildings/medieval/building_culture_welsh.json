@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_WELSH"
+   "define": "ART_DEF_BUILDING_CULTURE_WELSH",
+   "notShownInCity": true
   }
  },
  "identity": {

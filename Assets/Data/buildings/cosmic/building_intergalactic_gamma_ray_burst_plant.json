@@ -23,7 +23,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

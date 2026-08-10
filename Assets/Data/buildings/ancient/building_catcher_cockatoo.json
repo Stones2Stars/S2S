@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATCHER_COCKATOO"
+   "define": "ART_DEF_BUILDING_CATCHER_COCKATOO",
+   "notShownInCity": true
   }
  },
  "identity": {

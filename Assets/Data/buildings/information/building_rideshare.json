@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RIDESHARE"
+   "define": "ART_DEF_BUILDING_RIDESHARE",
+   "notShownInCity": true
   }
  },
  "identity": {

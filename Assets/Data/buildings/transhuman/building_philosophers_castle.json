@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PHILOSOPHERS_CASTLE"
+   "define": "ART_DEF_BUILDING_PHILOSOPHERS_CASTLE",
+   "notShownInCity": true
   }
  },
  "identity": {

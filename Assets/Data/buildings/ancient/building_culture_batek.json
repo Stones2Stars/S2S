@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BATEK"
+   "define": "ART_DEF_BUILDING_CULTURE_BATEK",
+   "notShownInCity": true
   }
  },
  "identity": {

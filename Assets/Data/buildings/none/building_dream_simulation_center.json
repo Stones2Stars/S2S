@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DREAM_SIMULATION_CENTER"
+   "define": "ART_DEF_BUILDING_DREAM_SIMULATION_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

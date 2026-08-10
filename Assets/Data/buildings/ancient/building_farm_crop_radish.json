@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_RADISH"
+   "define": "ART_DEF_BUILDING_FARM_CROP_RADISH",
+   "notShownInCity": true
   }
  },
  "identity": {

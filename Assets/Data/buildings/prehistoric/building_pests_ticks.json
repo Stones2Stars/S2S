@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_TICKS"
+   "define": "ART_DEF_BUILDING_PESTS_TICKS",
+   "notShownInCity": true
   }
  },
  "identity": {

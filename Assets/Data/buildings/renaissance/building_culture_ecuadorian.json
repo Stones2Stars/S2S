@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ECUADORIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ECUADORIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

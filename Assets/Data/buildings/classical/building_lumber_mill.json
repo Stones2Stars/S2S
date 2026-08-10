@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUMBER_MILL"
+   "define": "ART_DEF_BUILDING_LUMBER_MILL",
+   "notShownInCity": true
   }
  },
  "identity": {

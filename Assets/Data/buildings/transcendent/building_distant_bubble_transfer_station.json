@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_BUBBLE_TRANSFER_STATION"
+   "define": "ART_DEF_BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

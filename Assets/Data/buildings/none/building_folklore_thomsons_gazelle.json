@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_THOMSONS_GAZELLE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_THOMSONS_GAZELLE",
+   "notShownInCity": true
   }
  },
  "identity": {

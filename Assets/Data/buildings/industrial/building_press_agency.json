@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PRESS_AGENCY"
+   "define": "ART_DEF_BUILDING_PRESS_AGENCY",
+   "notShownInCity": true
   }
  },
  "sound": {

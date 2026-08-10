@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HAWKING_HUT_HUT"
+   "define": "ART_DEF_BUILDING_HAWKING_HUT_HUT",
+   "notShownInCity": true
   }
  },
  "sound": {

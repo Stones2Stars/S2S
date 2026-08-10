@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_CHROMITE"
+   "define": "ART_DEF_BUILDING_MINE_CHROMITE",
+   "notShownInCity": true
   }
  },
  "identity": {

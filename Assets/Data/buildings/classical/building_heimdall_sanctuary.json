@@ -133,7 +133,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HEIMDALL"
+   "define": "ART_DEF_BUILDING_HEIMDALL",
+   "notShownInCity": true
   }
  },
  "sound": {

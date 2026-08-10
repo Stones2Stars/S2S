@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_LEMON"
+   "define": "ART_DEF_BUILDING_ORCHARD_LEMON",
+   "notShownInCity": true
   }
  },
  "identity": {

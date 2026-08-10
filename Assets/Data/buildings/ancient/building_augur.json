@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUGUR"
+   "define": "ART_DEF_BUILDING_AUGUR",
+   "notShownInCity": true
   }
  },
  "identity": {

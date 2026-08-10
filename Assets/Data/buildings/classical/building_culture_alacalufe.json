@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ALACALUFE"
+   "define": "ART_DEF_BUILDING_CULTURE_ALACALUFE",
+   "notShownInCity": true
   }
  },
  "identity": {

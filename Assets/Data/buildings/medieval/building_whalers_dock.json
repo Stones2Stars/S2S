@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WHALERS_DOCK"
+   "define": "ART_DEF_BUILDING_WHALERS_DOCK",
+   "notShownInCity": true
   }
  },
  "identity": {

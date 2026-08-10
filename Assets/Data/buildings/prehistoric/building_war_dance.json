@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WAR_DANCE"
+   "define": "ART_DEF_BUILDING_WAR_DANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

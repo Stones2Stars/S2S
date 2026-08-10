@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_STATION"
+   "define": "ART_DEF_BUILDING_SPACE_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

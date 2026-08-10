@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSE_OF_WISDOM"
+   "define": "ART_DEF_BUILDING_HOUSE_OF_WISDOM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_UNIVERSAL_AC"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_UNIVERSAL_AC",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REALM_OF_TRANQUILITY"
+   "define": "ART_DEF_BUILDING_REALM_OF_TRANQUILITY",
+   "notShownInCity": true
   }
  },
  "identity": {

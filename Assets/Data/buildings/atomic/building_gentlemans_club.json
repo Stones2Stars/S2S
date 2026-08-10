@@ -148,7 +148,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GENTLEMANS_CLUB"
+   "define": "ART_DEF_BUILDING_GENTLEMANS_CLUB",
+   "notShownInCity": true
   }
  },
  "identity": {

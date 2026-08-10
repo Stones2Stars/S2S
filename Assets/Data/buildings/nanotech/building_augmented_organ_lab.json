@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUGMENTED_ORGAN_LAB"
+   "define": "ART_DEF_BUILDING_AUGMENTED_ORGAN_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

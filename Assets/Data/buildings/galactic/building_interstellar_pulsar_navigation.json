@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
+   "notShownInCity": true
   }
  },
  "identity": {

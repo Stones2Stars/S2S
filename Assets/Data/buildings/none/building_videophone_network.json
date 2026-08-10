@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIDEOPHONE_NETWORK"
+   "define": "ART_DEF_BUILDING_VIDEOPHONE_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

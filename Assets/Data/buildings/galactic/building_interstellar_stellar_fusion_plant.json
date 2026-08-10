@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STELLAR_FUSION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

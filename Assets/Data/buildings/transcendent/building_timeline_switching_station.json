@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TIMELINE_SWITCHING_STATION"
+   "define": "ART_DEF_BUILDING_TIMELINE_SWITCHING_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

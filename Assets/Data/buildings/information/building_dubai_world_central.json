@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DUBAI_WORLD_CENTRAL"
+   "define": "ART_DEF_BUILDING_DUBAI_WORLD_CENTRAL",
+   "notShownInCity": true
   }
  },
  "identity": {

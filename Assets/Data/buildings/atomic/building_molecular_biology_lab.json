@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOLECULAR_BIOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

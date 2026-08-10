@@ -124,7 +124,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RIVER_ROUGE_COMPLEX"
+   "define": "ART_DEF_BUILDING_RIVER_ROUGE_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

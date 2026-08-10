@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POLLUTION_SCRUBBERS"
+   "define": "ART_DEF_BUILDING_POLLUTION_SCRUBBERS",
+   "notShownInCity": true
   }
  },
  "identity": {

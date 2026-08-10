@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_MAMMOTHS"
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+   "notShownInCity": true
   }
  },
  "sound": {

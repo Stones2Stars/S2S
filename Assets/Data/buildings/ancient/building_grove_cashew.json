@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_CASHEW"
+   "define": "ART_DEF_BUILDING_GROVE_CASHEW",
+   "notShownInCity": true
   }
  },
  "identity": {

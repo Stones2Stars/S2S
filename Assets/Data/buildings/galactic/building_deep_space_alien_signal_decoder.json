@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JOVIAN_MAGNETOSPHERE_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_JOVIAN_MAGNETOSPHERE_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NAZCA"
+   "define": "ART_DEF_BUILDING_CULTURE_NAZCA",
+   "notShownInCity": true
   }
  },
  "identity": {

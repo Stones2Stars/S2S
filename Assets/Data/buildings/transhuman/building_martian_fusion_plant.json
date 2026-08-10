@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_FUSION_PLANT"
+   "define": "ART_DEF_BUILDING_MARTIAN_FUSION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

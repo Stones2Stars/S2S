@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIANGZHU_JADE_CARVER"
+   "define": "ART_DEF_BUILDING_LIANGZHU_JADE_CARVER",
+   "notShownInCity": true
   }
  },
  "sound": {

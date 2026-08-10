@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROJECT_ICARUS"
+   "define": "ART_DEF_BUILDING_PROJECT_ICARUS",
+   "notShownInCity": true
   }
  },
  "identity": {

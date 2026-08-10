@@ -909,7 +909,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENHANCED_SPECIES"
+   "define": "ART_DEF_BUILDING_ENHANCED_SPECIES",
+   "notShownInCity": true
   }
  },
  "identity": {

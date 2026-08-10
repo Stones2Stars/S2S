@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_TIMBER"
+   "define": "ART_DEF_BUILDING_GROVE_TIMBER",
+   "notShownInCity": true
   }
  },
  "identity": {

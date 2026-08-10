@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_CACTUS"
+   "define": "ART_DEF_BUILDING_PLANTATION_CACTUS",
+   "notShownInCity": true
   }
  },
  "identity": {

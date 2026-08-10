@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROJECT_PERSEPHONE"
+   "define": "ART_DEF_BUILDING_PROJECT_PERSEPHONE",
+   "notShownInCity": true
   }
  },
  "identity": {

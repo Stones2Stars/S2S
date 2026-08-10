@@ -137,7 +137,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_FURNITURE"
+   "define": "ART_DEF_BUILDING_FACTORY_FURNITURE",
+   "notShownInCity": true
   }
  },
  "identity": {

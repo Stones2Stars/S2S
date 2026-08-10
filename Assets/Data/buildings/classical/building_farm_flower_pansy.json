@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_PANSY"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_PANSY",
+   "notShownInCity": true
   }
  },
  "identity": {

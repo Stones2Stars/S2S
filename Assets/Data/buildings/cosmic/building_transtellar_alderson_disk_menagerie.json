@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE",
+   "notShownInCity": true
   }
  },
  "identity": {

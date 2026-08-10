@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_OLED"
+   "define": "ART_DEF_BUILDING_FACTORY_OLED",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COAL_FIRED_DYNAMO"
+   "define": "ART_DEF_BUILDING_COAL_FIRED_DYNAMO",
+   "notShownInCity": true
   }
  },
  "identity": {

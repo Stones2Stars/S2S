@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_EARTH"
+   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_EARTH",
+   "notShownInCity": true
   }
  },
  "identity": {

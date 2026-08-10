@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_QUERANDI"
+   "define": "ART_DEF_BUILDING_CULTURE_QUERANDI",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -131,7 +131,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUARDHOUSE"
+   "define": "ART_DEF_BUILDING_GUARDHOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

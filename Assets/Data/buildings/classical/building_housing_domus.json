@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_DOMUS"
+   "define": "ART_DEF_BUILDING_HOUSING_DOMUS",
+   "notShownInCity": true
   }
  },
  "identity": {

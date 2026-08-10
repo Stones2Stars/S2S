@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_MUSKOX"
+   "define": "ART_DEF_BUILDING_HERD_MUSKOX",
+   "notShownInCity": true
   }
  },
  "sound": {

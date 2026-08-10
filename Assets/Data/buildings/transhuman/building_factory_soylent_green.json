@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_SOYLENT_GREEN"
+   "define": "ART_DEF_BUILDING_FACTORY_SOYLENT_GREEN",
+   "notShownInCity": true
   }
  },
  "identity": {

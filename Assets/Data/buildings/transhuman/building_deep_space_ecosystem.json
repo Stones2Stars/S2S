@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_ECOSYSTEM"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ECOSYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_ASTROPOLIS"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ASTROPOLIS",
+   "notShownInCity": true
   }
  },
  "identity": {

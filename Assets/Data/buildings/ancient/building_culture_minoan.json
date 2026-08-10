@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MINOAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MINOAN",
+   "notShownInCity": true
   }
  },
  "identity": {

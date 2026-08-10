@@ -130,7 +130,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUGMENTED_EQUIPMENT_CENTER"
+   "define": "ART_DEF_BUILDING_AUGMENTED_EQUIPMENT_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

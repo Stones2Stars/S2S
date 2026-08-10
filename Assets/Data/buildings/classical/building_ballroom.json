@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BALLROOM"
+   "define": "ART_DEF_BUILDING_BALLROOM",
+   "notShownInCity": true
   }
  },
  "identity": {

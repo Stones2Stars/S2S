@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SYRIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_SYRIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

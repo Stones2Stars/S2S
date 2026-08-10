@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SKY_GOD"
+   "define": "ART_DEF_BUILDING_SKY_GOD",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_COPPER"
+   "define": "ART_DEF_BUILDING_SMITH_COPPER",
+   "notShownInCity": true
   }
  },
  "identity": {

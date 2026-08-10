@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUINEA_PIG_BREEDER"
+   "define": "ART_DEF_BUILDING_GUINEA_PIG_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

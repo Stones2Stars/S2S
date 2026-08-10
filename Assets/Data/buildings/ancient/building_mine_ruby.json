@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_RUBY"
+   "define": "ART_DEF_BUILDING_MINE_RUBY",
+   "notShownInCity": true
   }
  },
  "identity": {

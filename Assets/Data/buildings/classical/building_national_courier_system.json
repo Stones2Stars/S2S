@@ -133,7 +133,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_COURIER_SYSTEM"
+   "define": "ART_DEF_BUILDING_NATIONAL_COURIER_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

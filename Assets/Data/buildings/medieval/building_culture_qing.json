@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_QING"
+   "define": "ART_DEF_BUILDING_CULTURE_QING",
+   "notShownInCity": true
   }
  },
  "identity": {

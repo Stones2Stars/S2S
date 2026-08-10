@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EKAL_MASHARTI"
+   "define": "ART_DEF_BUILDING_EKAL_MASHARTI",
+   "notShownInCity": true
   }
  },
  "sound": {

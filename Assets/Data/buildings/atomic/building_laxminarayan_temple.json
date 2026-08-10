@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LAXMINARAYAN_TEMPLE"
+   "define": "ART_DEF_BUILDING_LAXMINARAYAN_TEMPLE",
+   "notShownInCity": true
   }
  },
  "identity": {

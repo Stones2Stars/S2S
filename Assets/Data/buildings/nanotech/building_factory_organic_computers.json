@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_ORGANIC_COMPUTERS"
+   "define": "ART_DEF_BUILDING_FACTORY_ORGANIC_COMPUTERS",
+   "notShownInCity": true
   }
  },
  "identity": {

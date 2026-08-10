@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_LATVIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_LATVIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

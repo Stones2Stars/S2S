@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_GIANT_SQUID"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GIANT_SQUID",
+   "notShownInCity": true
   }
  },
  "identity": {

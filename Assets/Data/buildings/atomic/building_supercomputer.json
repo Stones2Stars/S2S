@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUPERCOMPUTER"
+   "define": "ART_DEF_BUILDING_SUPERCOMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

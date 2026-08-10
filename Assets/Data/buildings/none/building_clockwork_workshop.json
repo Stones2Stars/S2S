@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLOCKWORK_WORKSHOP"
+   "define": "ART_DEF_BUILDING_CLOCKWORK_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

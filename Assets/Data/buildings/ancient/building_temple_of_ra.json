@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_TEMPLE"
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_TEMPLE",
+   "notShownInCity": true
   }
  },
  "sound": {

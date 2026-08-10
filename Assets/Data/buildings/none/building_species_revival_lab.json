@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPECIES_REVIVAL_LAB"
+   "define": "ART_DEF_BUILDING_SPECIES_REVIVAL_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

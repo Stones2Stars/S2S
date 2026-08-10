@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NET_SEA_BASS"
+   "define": "ART_DEF_BUILDING_NET_SEA_BASS",
+   "notShownInCity": true
   }
  },
  "identity": {

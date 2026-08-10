@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAPTURED_IO"
+   "define": "ART_DEF_BUILDING_CAPTURED_IO",
+   "notShownInCity": true
   }
  },
  "identity": {

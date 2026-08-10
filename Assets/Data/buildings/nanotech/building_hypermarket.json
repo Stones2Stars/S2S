@@ -992,7 +992,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERMARKET"
+   "define": "ART_DEF_BUILDING_HYPERMARKET",
+   "notShownInCity": true
   }
  },
  "sound": {

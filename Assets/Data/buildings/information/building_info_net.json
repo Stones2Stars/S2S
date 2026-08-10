@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INFO_NET"
+   "define": "ART_DEF_BUILDING_INFO_NET",
+   "notShownInCity": true
   }
  },
  "sound": {

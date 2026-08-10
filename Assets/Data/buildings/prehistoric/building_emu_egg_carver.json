@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EMU_EGG_CARVER"
+   "define": "ART_DEF_BUILDING_EMU_EGG_CARVER",
+   "notShownInCity": true
   }
  },
  "identity": {

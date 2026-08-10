@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_IRON"
+   "define": "ART_DEF_BUILDING_MINE_IRON",
+   "notShownInCity": true
   }
  },
  "identity": {

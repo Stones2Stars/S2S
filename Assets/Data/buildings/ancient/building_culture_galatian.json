@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_GALATIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_GALATIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

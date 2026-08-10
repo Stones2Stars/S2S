@@ -111,7 +111,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIDER_HOUSE"
+   "define": "ART_DEF_BUILDING_CIDER_HOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

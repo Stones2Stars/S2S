@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DETECTIVE_AGENCY"
+   "define": "ART_DEF_BUILDING_DETECTIVE_AGENCY",
+   "notShownInCity": true
   }
  },
  "identity": {

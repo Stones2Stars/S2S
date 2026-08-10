@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_NARWHAL"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_NARWHAL",
+   "notShownInCity": true
   }
  },
  "identity": {

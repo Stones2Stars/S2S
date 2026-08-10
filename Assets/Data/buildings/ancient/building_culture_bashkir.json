@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BASHKIR"
+   "define": "ART_DEF_BUILDING_CULTURE_BASHKIR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY"
+   "define": "ART_DEF_BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY",
+   "notShownInCity": true
   }
  },
  "identity": {

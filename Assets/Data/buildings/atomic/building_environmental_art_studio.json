@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENVIRONMENTAL_ART_STUDIO"
+   "define": "ART_DEF_BUILDING_ENVIRONMENTAL_ART_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

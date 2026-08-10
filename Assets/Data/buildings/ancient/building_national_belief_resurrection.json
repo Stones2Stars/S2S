@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_RESURRECTION"
+   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_RESURRECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

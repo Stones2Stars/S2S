@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_WATER_SHIELD"
+   "define": "ART_DEF_BUILDING_ASTEROID_WATER_SHIELD",
+   "notShownInCity": true
   }
  },
  "identity": {

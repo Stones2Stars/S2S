@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ECUMENOPOLIS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+   "notShownInCity": true
   }
  },
  "identity": {

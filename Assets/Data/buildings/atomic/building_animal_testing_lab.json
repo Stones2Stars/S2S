@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_TESTING_LAB"
+   "define": "ART_DEF_BUILDING_ANIMAL_TESTING_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

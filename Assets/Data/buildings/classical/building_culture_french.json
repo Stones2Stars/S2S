@@ -116,7 +116,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_FRENCH"
+   "define": "ART_DEF_BUILDING_CULTURE_FRENCH",
+   "notShownInCity": true
   }
  },
  "identity": {

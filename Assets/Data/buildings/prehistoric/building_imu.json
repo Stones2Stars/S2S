@@ -117,7 +117,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_IMU"
+   "define": "ART_DEF_BUILDING_IMU",
+   "notShownInCity": true
   }
  },
  "identity": {

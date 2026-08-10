@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_BUFFALO"
+   "define": "ART_DEF_BUILDING_HERD_BUFFALO",
+   "notShownInCity": true
   }
  },
  "sound": {

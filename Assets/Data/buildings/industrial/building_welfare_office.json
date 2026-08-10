@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WELFARE_OFFICE"
+   "define": "ART_DEF_BUILDING_WELFARE_OFFICE",
+   "notShownInCity": true
   }
  },
  "sound": {

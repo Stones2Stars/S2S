@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_DURIAN"
+   "define": "ART_DEF_BUILDING_ORCHARD_DURIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

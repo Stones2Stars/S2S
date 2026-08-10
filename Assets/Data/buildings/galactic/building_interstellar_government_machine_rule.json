@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE",
+   "notShownInCity": true
   }
  },
  "identity": {

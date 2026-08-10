@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POST_OFFICE"
+   "define": "ART_DEF_BUILDING_POST_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

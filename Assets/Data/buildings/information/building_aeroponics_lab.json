@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AEROPONICS_LAB"
+   "define": "ART_DEF_BUILDING_AEROPONICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

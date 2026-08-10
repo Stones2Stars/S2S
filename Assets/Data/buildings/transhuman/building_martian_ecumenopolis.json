@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_ECUMENOPOLIS"
+   "define": "ART_DEF_BUILDING_MARTIAN_ECUMENOPOLIS",
+   "notShownInCity": true
   }
  },
  "identity": {

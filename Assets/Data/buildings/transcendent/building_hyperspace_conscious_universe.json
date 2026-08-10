@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE",
+   "notShownInCity": true
   }
  },
  "identity": {

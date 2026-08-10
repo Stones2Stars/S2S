@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CONSCIOUS_STAR"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CONSCIOUS_STAR",
+   "notShownInCity": true
   }
  },
  "identity": {

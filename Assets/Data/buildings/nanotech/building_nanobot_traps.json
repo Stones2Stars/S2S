@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NANOBOT_TRAPS"
+   "define": "ART_DEF_BUILDING_NANOBOT_TRAPS",
+   "notShownInCity": true
   }
  },
  "sound": {

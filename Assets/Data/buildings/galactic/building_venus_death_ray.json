@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_DEATH_RAY"
+   "define": "ART_DEF_BUILDING_VENUS_DEATH_RAY",
+   "notShownInCity": true
   }
  },
  "identity": {

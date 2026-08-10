@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_PEANUT"
+   "define": "ART_DEF_BUILDING_PLANTATION_PEANUT",
+   "notShownInCity": true
   }
  },
  "identity": {

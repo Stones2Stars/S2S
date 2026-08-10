@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_SHANTY_TOWN"
+   "define": "ART_DEF_BUILDING_HOUSING_SHANTY_TOWN",
+   "notShownInCity": true
   }
  },
  "identity": {

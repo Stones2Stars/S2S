@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_ALUMINUM_INGOTS"
+   "define": "ART_DEF_BUILDING_RESOURCES_ALUMINUM_INGOTS",
+   "notShownInCity": true
   }
  },
  "identity": {

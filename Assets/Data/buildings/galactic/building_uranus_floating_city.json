@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_URANUS_FLOATING_CITY"
+   "define": "ART_DEF_BUILDING_URANUS_FLOATING_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

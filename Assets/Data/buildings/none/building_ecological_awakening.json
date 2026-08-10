@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_ECOLOGICAL_AWAKENING"
+   "define": "ART_DEF_ECOLOGICAL_AWAKENING",
+   "notShownInCity": true
   }
  },
  "identity": {

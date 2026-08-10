@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPORTS_SHOP"
+   "define": "ART_DEF_BUILDING_SPORTS_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

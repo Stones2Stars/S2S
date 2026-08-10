@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIFE_HYDROGEN_PEROXIDE"
+   "define": "ART_DEF_BUILDING_LIFE_HYDROGEN_PEROXIDE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_IMMORTAL"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_IMMORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

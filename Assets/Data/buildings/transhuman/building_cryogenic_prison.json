@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CRYOGENIC_PRISON"
+   "define": "ART_DEF_BUILDING_CRYOGENIC_PRISON",
+   "notShownInCity": true
   }
  },
  "sound": {

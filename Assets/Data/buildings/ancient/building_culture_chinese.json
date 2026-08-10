@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CHINESE"
+   "define": "ART_DEF_BUILDING_CULTURE_CHINESE",
+   "notShownInCity": true
   }
  },
  "identity": {

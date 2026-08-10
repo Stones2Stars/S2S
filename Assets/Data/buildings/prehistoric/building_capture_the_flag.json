@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAPTURE_THE_FLAG"
+   "define": "ART_DEF_BUILDING_CAPTURE_THE_FLAG",
+   "notShownInCity": true
   }
  },
  "identity": {

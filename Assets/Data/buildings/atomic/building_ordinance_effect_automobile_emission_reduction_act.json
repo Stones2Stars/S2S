@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT"
+   "define": "ART_DEF_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_ZINC"
+   "define": "ART_DEF_BUILDING_MINE_ZINC",
+   "notShownInCity": true
   }
  },
  "identity": {

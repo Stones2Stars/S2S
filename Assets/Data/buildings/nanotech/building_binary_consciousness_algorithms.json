@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS"
+   "define": "ART_DEF_BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+   "notShownInCity": true
   }
  },
  "identity": {

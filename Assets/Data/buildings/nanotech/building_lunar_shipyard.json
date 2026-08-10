@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_SHIPYARD"
+   "define": "ART_DEF_BUILDING_LUNAR_SHIPYARD",
+   "notShownInCity": true
   }
  },
  "identity": {

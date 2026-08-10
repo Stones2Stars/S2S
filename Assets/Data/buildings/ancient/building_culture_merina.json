@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MERINA"
+   "define": "ART_DEF_BUILDING_CULTURE_MERINA",
+   "notShownInCity": true
   }
  },
  "identity": {

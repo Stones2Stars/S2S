@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_COCKROACHES"
+   "define": "ART_DEF_BUILDING_PESTS_COCKROACHES",
+   "notShownInCity": true
   }
  },
  "identity": {

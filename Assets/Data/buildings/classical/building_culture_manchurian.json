@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MANCHURIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MANCHURIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -131,7 +131,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TANNERY"
+   "define": "ART_DEF_BUILDING_TANNERY",
+   "notShownInCity": true
   }
  },
  "sound": {

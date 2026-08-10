@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CITY_GATEHOUSE"
+   "define": "ART_DEF_BUILDING_CITY_GATEHOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

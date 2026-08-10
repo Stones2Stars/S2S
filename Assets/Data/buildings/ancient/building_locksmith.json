@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOCKSMITH"
+   "define": "ART_DEF_BUILDING_LOCKSMITH",
+   "notShownInCity": true
   }
  },
  "identity": {

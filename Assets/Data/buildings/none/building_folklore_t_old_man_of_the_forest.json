@@ -111,7 +111,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST",
+   "notShownInCity": true
   }
  },
  "identity": {

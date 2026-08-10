@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CARNIVAL_TRAINED_SEAL"
+   "define": "ART_DEF_BUILDING_CARNIVAL_TRAINED_SEAL",
+   "notShownInCity": true
   }
  },
  "identity": {

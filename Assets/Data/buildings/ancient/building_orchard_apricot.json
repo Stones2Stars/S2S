@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_APRICOT"
+   "define": "ART_DEF_BUILDING_ORCHARD_APRICOT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -126,7 +126,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STEP_PYRAMID"
+   "define": "ART_DEF_BUILDING_STEP_PYRAMID",
+   "notShownInCity": true
   }
  },
  "sound": {

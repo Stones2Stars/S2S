@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PIERCER"
+   "define": "ART_DEF_BUILDING_PIERCER",
+   "notShownInCity": true
   }
  },
  "identity": {

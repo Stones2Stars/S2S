@@ -117,7 +117,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SYDNEY_OPERA_HOUSE"
+   "define": "ART_DEF_BUILDING_SYDNEY_OPERA_HOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

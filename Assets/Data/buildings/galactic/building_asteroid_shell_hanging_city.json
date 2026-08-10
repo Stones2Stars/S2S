@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_HANGING_CITY"
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_HANGING_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

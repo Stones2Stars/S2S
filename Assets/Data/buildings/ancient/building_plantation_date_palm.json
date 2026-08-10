@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_DATE_PALM"
+   "define": "ART_DEF_BUILDING_PLANTATION_DATE_PALM",
+   "notShownInCity": true
   }
  },
  "identity": {

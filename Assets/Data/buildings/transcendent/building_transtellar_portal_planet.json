@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_PORTAL_PLANET"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_PORTAL_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

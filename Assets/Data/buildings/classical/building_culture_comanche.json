@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_COMANCHE"
+   "define": "ART_DEF_BUILDING_CULTURE_COMANCHE",
+   "notShownInCity": true
   }
  },
  "identity": {

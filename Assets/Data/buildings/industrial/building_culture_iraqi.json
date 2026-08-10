@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_IRAQI"
+   "define": "ART_DEF_BUILDING_CULTURE_IRAQI",
+   "notShownInCity": true
   }
  },
  "identity": {

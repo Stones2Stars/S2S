@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CURE_FOR_ALZHEIMERS"
+   "define": "ART_DEF_BUILDING_CURE_FOR_ALZHEIMERS",
+   "notShownInCity": true
   }
  },
  "identity": {

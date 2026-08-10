@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_KAVA"
+   "define": "ART_DEF_BUILDING_PLANTATION_KAVA",
+   "notShownInCity": true
   }
  },
  "identity": {

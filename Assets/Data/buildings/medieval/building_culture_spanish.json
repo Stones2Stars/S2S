@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SPANISH"
+   "define": "ART_DEF_BUILDING_CULTURE_SPANISH",
+   "notShownInCity": true
   }
  },
  "identity": {

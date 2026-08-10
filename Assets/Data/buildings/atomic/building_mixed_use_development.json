@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MIXED_USE_DEVELOPMENT"
+   "define": "ART_DEF_BUILDING_MIXED_USE_DEVELOPMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

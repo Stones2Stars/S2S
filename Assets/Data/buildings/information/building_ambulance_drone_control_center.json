@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AMBULANCE_DRONE_CONTROL_CENTER"
+   "define": "ART_DEF_BUILDING_AMBULANCE_DRONE_CONTROL_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

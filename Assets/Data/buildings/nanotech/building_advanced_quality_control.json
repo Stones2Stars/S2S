@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ADVANCED_QUALITY_CONTROL"
+   "define": "ART_DEF_BUILDING_ADVANCED_QUALITY_CONTROL",
+   "notShownInCity": true
   }
  },
  "identity": {

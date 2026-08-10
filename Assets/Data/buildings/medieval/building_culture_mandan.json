@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MANDAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MANDAN",
+   "notShownInCity": true
   }
  },
  "identity": {

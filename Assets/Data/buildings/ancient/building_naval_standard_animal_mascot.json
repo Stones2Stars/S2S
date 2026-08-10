@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+   "define": "ART_DEF_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+   "notShownInCity": true
   }
  },
  "identity": {

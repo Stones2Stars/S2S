@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PARK_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_PARK_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "sound": {

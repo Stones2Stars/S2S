@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BULL_LEAPING"
+   "define": "ART_DEF_BUILDING_BULL_LEAPING",
+   "notShownInCity": true
   }
  },
  "sound": {

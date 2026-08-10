@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RAINBOW_SERPENT_BREEDER"
+   "define": "ART_DEF_BUILDING_RAINBOW_SERPENT_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

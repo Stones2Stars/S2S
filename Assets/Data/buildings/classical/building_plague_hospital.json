@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLAGUE_HOSPITAL"
+   "define": "ART_DEF_BUILDING_PLAGUE_HOSPITAL",
+   "notShownInCity": true
   }
  },
  "sound": {

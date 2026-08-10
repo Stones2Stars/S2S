@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SETI_PIR"
+   "define": "ART_DEF_BUILDING_SETI_PIR",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BRETON"
+   "define": "ART_DEF_BUILDING_CULTURE_BRETON",
+   "notShownInCity": true
   }
  },
  "identity": {

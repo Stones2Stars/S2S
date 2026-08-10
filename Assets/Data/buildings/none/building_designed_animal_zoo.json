@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DESIGNED_ANIMAL_ZOO"
+   "define": "ART_DEF_BUILDING_DESIGNED_ANIMAL_ZOO",
+   "notShownInCity": true
   }
  },
  "identity": {

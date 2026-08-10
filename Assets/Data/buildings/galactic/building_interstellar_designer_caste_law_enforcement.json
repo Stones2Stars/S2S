@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

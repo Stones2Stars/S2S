@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HISTORICAL_RECREATION"
+   "define": "ART_DEF_BUILDING_HISTORICAL_RECREATION",
+   "notShownInCity": true
   }
  },
  "identity": {

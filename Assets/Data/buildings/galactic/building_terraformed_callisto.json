@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_CALLISTO"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_CALLISTO",
+   "notShownInCity": true
   }
  },
  "identity": {

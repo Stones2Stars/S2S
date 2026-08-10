@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_VILLAS"
+   "define": "ART_DEF_BUILDING_HOUSING_VILLAS",
+   "notShownInCity": true
   }
  },
  "identity": {

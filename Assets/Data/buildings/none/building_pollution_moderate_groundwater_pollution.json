@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION"
+   "define": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION",
+   "notShownInCity": true
   }
  },
  "identity": {

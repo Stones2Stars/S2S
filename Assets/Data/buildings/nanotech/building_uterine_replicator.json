@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_UTERINE_REPLICATOR"
+   "define": "ART_DEF_BUILDING_UTERINE_REPLICATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

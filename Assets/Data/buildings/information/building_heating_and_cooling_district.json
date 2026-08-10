@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HEATING_AND_COOLING_DISTRICT"
+   "define": "ART_DEF_BUILDING_HEATING_AND_COOLING_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

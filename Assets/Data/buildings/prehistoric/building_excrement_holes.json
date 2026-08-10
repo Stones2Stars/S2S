@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EXCREMENT_HOLES"
+   "define": "ART_DEF_BUILDING_EXCREMENT_HOLES",
+   "notShownInCity": true
   }
  },
  "identity": {

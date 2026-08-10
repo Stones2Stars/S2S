@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_NUTELLA"
+   "define": "ART_DEF_BUILDING_FACTORY_NUTELLA",
+   "notShownInCity": true
   }
  },
  "identity": {

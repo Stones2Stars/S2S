@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_MAMMOTH"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_MAMMOTH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_ONYX"
+   "define": "ART_DEF_BUILDING_MINE_ONYX",
+   "notShownInCity": true
   }
  },
  "identity": {

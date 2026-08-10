@@ -115,7 +115,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_UNMANNED_AIRCRAFTS"
+   "define": "ART_DEF_BUILDING_FACTORY_UNMANNED_AIRCRAFTS",
+   "notShownInCity": true
   }
  },
  "identity": {

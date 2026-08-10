@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ARAWAK"
+   "define": "ART_DEF_BUILDING_CULTURE_ARAWAK",
+   "notShownInCity": true
   }
  },
  "identity": {

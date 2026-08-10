@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_STRAW_MUSHROOM"
+   "define": "ART_DEF_BUILDING_FARM_CROP_STRAW_MUSHROOM",
+   "notShownInCity": true
   }
  },
  "identity": {

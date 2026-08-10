@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COASTAL_PRESERVE"
+   "define": "ART_DEF_BUILDING_COASTAL_PRESERVE",
+   "notShownInCity": true
   }
  },
  "identity": {

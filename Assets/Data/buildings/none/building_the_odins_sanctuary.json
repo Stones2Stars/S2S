@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THE_ODINS_SANCTUARY"
+   "define": "ART_DEF_BUILDING_THE_ODINS_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "sound": {

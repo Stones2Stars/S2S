@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SNAKE_OIL_SALES"
+   "define": "ART_DEF_BUILDING_SNAKE_OIL_SALES",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC"
+   "define": "ART_DEF_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
+   "notShownInCity": true
   }
  },
  "identity": {

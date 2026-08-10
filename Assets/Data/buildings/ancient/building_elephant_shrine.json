@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELEPHANT_SHRINE"
+   "define": "ART_DEF_BUILDING_ELEPHANT_SHRINE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_HYDROGEN_GENERATOR"
+   "define": "ART_DEF_BUILDING_VENUS_HYDROGEN_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

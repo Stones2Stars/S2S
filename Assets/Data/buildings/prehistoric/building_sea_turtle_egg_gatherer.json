@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEA_TURTLE_EGG_GATHERER"
+   "define": "ART_DEF_BUILDING_SEA_TURTLE_EGG_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

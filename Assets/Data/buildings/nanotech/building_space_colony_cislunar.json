@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_COLONY_CISLUNAR"
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_CISLUNAR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_GEMSTONE"
+   "define": "ART_DEF_BUILDING_RESOURCES_GEMSTONE",
+   "notShownInCity": true
   }
  },
  "identity": {

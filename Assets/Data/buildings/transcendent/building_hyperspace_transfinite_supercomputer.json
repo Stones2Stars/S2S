@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

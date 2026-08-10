@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_STAR_CANNON"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_STAR_CANNON",
+   "notShownInCity": true
   }
  },
  "identity": {

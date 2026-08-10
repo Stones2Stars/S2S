@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EUROPA_SF6_GENERATOR"
+   "define": "ART_DEF_BUILDING_EUROPA_SF6_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GIVERNY"
+   "define": "ART_DEF_BUILDING_GIVERNY",
+   "notShownInCity": true
   }
  },
  "identity": {

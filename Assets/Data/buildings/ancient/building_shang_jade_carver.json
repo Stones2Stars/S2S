@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SHANG_JADE_CARVER"
+   "define": "ART_DEF_BUILDING_SHANG_JADE_CARVER",
+   "notShownInCity": true
   }
  },
  "sound": {

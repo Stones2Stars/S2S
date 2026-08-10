@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_QUANTIFIED_HEALTH_CENTER"
+   "define": "ART_DEF_BUILDING_QUANTIFIED_HEALTH_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

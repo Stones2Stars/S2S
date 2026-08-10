@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_DESIGNER"
+   "define": "ART_DEF_BUILDING_ANIMAL_DESIGNER",
+   "notShownInCity": true
   }
  },
  "identity": {

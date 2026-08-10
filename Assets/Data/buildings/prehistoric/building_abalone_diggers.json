@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ABALONE_DIGGERS"
+   "define": "ART_DEF_BUILDING_ABALONE_DIGGERS",
+   "notShownInCity": true
   }
  },
  "identity": {

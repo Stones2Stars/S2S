@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NOOTROPIC_DISPENSARY"
+   "define": "ART_DEF_BUILDING_NOOTROPIC_DISPENSARY",
+   "notShownInCity": true
   }
  },
  "identity": {

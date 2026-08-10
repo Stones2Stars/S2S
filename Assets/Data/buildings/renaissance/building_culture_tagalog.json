@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TAGALOG"
+   "define": "ART_DEF_BUILDING_CULTURE_TAGALOG",
+   "notShownInCity": true
   }
  },
  "identity": {

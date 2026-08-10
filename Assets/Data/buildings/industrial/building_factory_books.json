@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_BOOKS"
+   "define": "ART_DEF_BUILDING_FACTORY_BOOKS",
+   "notShownInCity": true
   }
  },
  "identity": {

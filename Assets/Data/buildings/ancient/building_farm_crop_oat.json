@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_OAT"
+   "define": "ART_DEF_BUILDING_FARM_CROP_OAT",
+   "notShownInCity": true
   }
  },
  "identity": {

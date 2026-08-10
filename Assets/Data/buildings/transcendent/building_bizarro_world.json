@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIZARRO_WORLD"
+   "define": "ART_DEF_BUILDING_BIZARRO_WORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

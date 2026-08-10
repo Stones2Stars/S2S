@@ -144,7 +144,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JAZZ_CLUB"
+   "define": "ART_DEF_BUILDING_JAZZ_CLUB",
+   "notShownInCity": true
   }
  },
  "identity": {

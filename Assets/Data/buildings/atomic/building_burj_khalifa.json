@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURJ_KHALIFA"
+   "define": "ART_DEF_BUILDING_BURJ_KHALIFA",
+   "notShownInCity": true
   }
  },
  "identity": {

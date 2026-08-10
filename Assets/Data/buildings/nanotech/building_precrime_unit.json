@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PRECRIME_UNIT"
+   "define": "ART_DEF_BUILDING_PRECRIME_UNIT",
+   "notShownInCity": true
   }
  },
  "identity": {

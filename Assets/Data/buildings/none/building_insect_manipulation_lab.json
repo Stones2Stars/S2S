@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INSECT_MANIPULATION_LAB"
+   "define": "ART_DEF_BUILDING_INSECT_MANIPULATION_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

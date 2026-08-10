@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_BANDITRY"
+   "define": "ART_DEF_BUILDING_CIVIC_BANDITRY",
+   "notShownInCity": true
   }
  },
  "identity": {

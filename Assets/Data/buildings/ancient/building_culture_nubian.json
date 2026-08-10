@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NUBIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_NUBIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

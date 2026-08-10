@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PARTS_MAKER"
+   "define": "ART_DEF_BUILDING_PARTS_MAKER",
+   "notShownInCity": true
   }
  },
  "sound": {

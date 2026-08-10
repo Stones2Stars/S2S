@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMPUTRONIUM_TITAN"
+   "define": "ART_DEF_BUILDING_COMPUTRONIUM_TITAN",
+   "notShownInCity": true
   }
  },
  "identity": {

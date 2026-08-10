@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_SETTLEMENT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SETTLEMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

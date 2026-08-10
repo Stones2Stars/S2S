@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_MILITARY"
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_MILITARY",
+   "notShownInCity": true
   }
  },
  "sound": {

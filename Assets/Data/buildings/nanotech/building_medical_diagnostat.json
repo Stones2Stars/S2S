@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEDICAL_DIAGNOSTAT"
+   "define": "ART_DEF_BUILDING_MEDICAL_DIAGNOSTAT",
+   "notShownInCity": true
   }
  },
  "identity": {

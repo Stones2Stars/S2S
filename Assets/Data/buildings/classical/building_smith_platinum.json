@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_PLATINUM"
+   "define": "ART_DEF_BUILDING_SMITH_PLATINUM",
+   "notShownInCity": true
   }
  },
  "identity": {

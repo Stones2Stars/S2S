@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KEPLER_SPACE_TELESCOPE"
+   "define": "ART_DEF_BUILDING_KEPLER_SPACE_TELESCOPE",
+   "notShownInCity": true
   }
  },
  "identity": {

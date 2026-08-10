@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALPHA_FEMALE"
+   "define": "ART_DEF_BUILDING_ALPHA_FEMALE",
+   "notShownInCity": true
   }
  },
  "identity": {

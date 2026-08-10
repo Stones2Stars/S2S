@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHARIOT_WORKSHOP"
+   "define": "ART_DEF_BUILDING_CHARIOT_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "sound": {

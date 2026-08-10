@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOUNTAIN_CLIMBING_SITE"
+   "define": "ART_DEF_BUILDING_MOUNTAIN_CLIMBING_SITE",
+   "notShownInCity": true
   }
  },
  "identity": {

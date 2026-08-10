@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SHAGGY_PARASOL_MUSHROOM_GATHERER"
+   "define": "ART_DEF_BUILDING_SHAGGY_PARASOL_MUSHROOM_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

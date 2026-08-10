@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_URANUS_HELIUM_3_MINE"
+   "define": "ART_DEF_BUILDING_URANUS_HELIUM_3_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

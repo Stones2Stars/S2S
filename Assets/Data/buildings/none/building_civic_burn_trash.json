@@ -24,7 +24,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_BURN_TRASH"
+   "define": "ART_DEF_BUILDING_CIVIC_BURN_TRASH",
+   "notShownInCity": true
   }
  },
  "identity": {

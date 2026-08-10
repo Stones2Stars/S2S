@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VACTRAIN_TERMINAL"
+   "define": "ART_DEF_BUILDING_VACTRAIN_TERMINAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_POTATO"
+   "define": "ART_DEF_BUILDING_FARM_CROP_POTATO",
+   "notShownInCity": true
   }
  },
  "identity": {

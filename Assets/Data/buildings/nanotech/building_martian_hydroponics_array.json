@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_HYDROPONICS_ARRAY"
+   "define": "ART_DEF_BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+   "notShownInCity": true
   }
  },
  "identity": {

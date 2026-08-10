@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MODERN_WATERWORKS"
+   "define": "ART_DEF_BUILDING_MODERN_WATERWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

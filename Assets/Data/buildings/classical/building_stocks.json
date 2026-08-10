@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STOCKS"
+   "define": "ART_DEF_BUILDING_STOCKS",
+   "notShownInCity": true
   }
  },
  "identity": {

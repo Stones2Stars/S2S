@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_SMELTER_PLATINUM"
+   "define": "ART_DEF_BUILDING_NATIONAL_SMELTER_PLATINUM",
+   "notShownInCity": true
   }
  },
  "identity": {

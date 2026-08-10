@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_RARE_MINERAL_EXPORTER"
+   "define": "ART_DEF_BUILDING_MARTIAN_RARE_MINERAL_EXPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

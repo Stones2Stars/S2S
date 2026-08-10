@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_SULPHUR"
+   "define": "ART_DEF_BUILDING_MINE_SULPHUR",
+   "notShownInCity": true
   }
  },
  "identity": {

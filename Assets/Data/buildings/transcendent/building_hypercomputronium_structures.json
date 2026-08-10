@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES"
+   "define": "ART_DEF_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+   "notShownInCity": true
   }
  },
  "identity": {

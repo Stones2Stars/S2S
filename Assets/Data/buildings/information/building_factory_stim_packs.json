@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_STIM_PACKS"
+   "define": "ART_DEF_BUILDING_FACTORY_STIM_PACKS",
+   "notShownInCity": true
   }
  },
  "identity": {

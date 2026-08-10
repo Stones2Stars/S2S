@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_TURBOLIFTS"
+   "define": "ART_DEF_BUILDING_CISLUNAR_TURBOLIFTS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARLIN_NETS"
+   "define": "ART_DEF_BUILDING_MARLIN_NETS",
+   "notShownInCity": true
   }
  },
  "identity": {

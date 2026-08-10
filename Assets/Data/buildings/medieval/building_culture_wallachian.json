@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_WALLACHIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_WALLACHIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

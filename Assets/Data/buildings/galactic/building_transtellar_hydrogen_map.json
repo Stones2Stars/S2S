@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_HYDROGEN_MAP"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+   "notShownInCity": true
   }
  },
  "identity": {

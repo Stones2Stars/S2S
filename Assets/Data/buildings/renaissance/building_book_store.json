@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BOOK_STORE"
+   "define": "ART_DEF_BUILDING_BOOK_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COPY_STORE"
+   "define": "ART_DEF_BUILDING_COPY_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

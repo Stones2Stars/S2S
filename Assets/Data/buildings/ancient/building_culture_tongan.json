@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TONGAN"
+   "define": "ART_DEF_BUILDING_CULTURE_TONGAN",
+   "notShownInCity": true
   }
  },
  "identity": {

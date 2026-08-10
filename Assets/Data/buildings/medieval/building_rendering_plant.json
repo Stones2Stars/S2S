@@ -127,7 +127,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RENDERING_PLANT"
+   "define": "ART_DEF_BUILDING_RENDERING_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

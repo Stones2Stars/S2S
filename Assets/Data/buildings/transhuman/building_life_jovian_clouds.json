@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIFE_JOVIAN_CLOUDS"
+   "define": "ART_DEF_BUILDING_LIFE_JOVIAN_CLOUDS",
+   "notShownInCity": true
   }
  },
  "identity": {

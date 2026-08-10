@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RAT_CATCHER"
+   "define": "ART_DEF_BUILDING_RAT_CATCHER",
+   "notShownInCity": true
   }
  },
  "identity": {

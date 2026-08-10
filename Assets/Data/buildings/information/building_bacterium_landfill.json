@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BACTERIUM_LANDFILL"
+   "define": "ART_DEF_BUILDING_BACTERIUM_LANDFILL",
+   "notShownInCity": true
   }
  },
  "identity": {

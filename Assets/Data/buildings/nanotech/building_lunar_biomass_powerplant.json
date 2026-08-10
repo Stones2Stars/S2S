@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_BIOMASS_POWERPLANT"
+   "define": "ART_DEF_BUILDING_LUNAR_BIOMASS_POWERPLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

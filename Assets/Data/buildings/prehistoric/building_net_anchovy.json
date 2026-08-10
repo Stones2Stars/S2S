@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NET_ANCHOVY"
+   "define": "ART_DEF_BUILDING_NET_ANCHOVY",
+   "notShownInCity": true
   }
  },
  "identity": {

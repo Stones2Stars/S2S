@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GERM_TRAPS"
+   "define": "ART_DEF_BUILDING_GERM_TRAPS",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE"
+   "define": "ART_DEF_BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE",
+   "notShownInCity": true
   }
  },
  "identity": {

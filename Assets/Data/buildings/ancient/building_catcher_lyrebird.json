@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATCHER_LYREBIRD"
+   "define": "ART_DEF_BUILDING_CATCHER_LYREBIRD",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_LICE"
+   "define": "ART_DEF_BUILDING_PESTS_LICE",
+   "notShownInCity": true
   }
  },
  "identity": {

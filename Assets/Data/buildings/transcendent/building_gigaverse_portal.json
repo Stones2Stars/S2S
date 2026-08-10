@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GIGAVERSE_PORTAL"
+   "define": "ART_DEF_BUILDING_GIGAVERSE_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

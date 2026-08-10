@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RIVER_RAFTING_DOCK"
+   "define": "ART_DEF_BUILDING_RIVER_RAFTING_DOCK",
+   "notShownInCity": true
   }
  },
  "identity": {

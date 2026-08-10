@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_KOLMOGOROV_TRANSPORTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_KOLMOGOROV_TRANSPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

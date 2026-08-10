@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_URANUS"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_URANUS",
+   "notShownInCity": true
   }
  },
  "identity": {

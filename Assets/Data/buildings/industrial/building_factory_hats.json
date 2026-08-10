@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_HATS"
+   "define": "ART_DEF_BUILDING_FACTORY_HATS",
+   "notShownInCity": true
   }
  },
  "identity": {

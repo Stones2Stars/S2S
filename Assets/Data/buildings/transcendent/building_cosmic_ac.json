@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COSMIC_AC"
+   "define": "ART_DEF_BUILDING_COSMIC_AC",
+   "notShownInCity": true
   }
  },
  "identity": {

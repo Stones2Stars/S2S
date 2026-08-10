@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VINTAGE_RED_WINE"
+   "define": "ART_DEF_BUILDING_VINTAGE_RED_WINE",
+   "notShownInCity": true
   }
  },
  "identity": {

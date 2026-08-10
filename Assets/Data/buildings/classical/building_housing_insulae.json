@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_INSULAE"
+   "define": "ART_DEF_BUILDING_HOUSING_INSULAE",
+   "notShownInCity": true
   }
  },
  "identity": {

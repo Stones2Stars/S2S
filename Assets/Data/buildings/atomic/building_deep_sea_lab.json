@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SEA_LAB"
+   "define": "ART_DEF_BUILDING_DEEP_SEA_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

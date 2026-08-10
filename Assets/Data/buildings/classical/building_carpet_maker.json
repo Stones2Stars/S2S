@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CARPET_MAKER"
+   "define": "ART_DEF_BUILDING_CARPET_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

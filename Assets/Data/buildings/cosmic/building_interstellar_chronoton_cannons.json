@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+   "notShownInCity": true
   }
  },
  "identity": {

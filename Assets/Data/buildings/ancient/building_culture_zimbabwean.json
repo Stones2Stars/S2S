@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ZIMBABWEAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ZIMBABWEAN",
+   "notShownInCity": true
   }
  },
  "identity": {

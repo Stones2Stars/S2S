@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TELEVANGELIST_STUDIO"
+   "define": "ART_DEF_BUILDING_TELEVANGELIST_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

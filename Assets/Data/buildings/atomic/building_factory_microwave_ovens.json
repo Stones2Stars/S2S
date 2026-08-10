@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_MICROWAVE_OVENS"
+   "define": "ART_DEF_BUILDING_FACTORY_MICROWAVE_OVENS",
+   "notShownInCity": true
   }
  },
  "identity": {

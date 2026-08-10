@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CONGRESS_OF_VIENNA"
+   "define": "ART_DEF_BUILDING_CONGRESS_OF_VIENNA",
+   "notShownInCity": true
   }
  },
  "identity": {

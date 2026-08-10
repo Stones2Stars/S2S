@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MIND_STORAGE"
+   "define": "ART_DEF_BUILDING_MIND_STORAGE",
+   "notShownInCity": true
   }
  },
  "sound": {

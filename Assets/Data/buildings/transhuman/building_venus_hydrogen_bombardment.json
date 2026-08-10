@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_HYDROGEN_BOMBARDMENT"
+   "define": "ART_DEF_BUILDING_VENUS_HYDROGEN_BOMBARDMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

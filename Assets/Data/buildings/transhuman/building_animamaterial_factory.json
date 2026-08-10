@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAMATERIAL_FACTORY"
+   "define": "ART_DEF_BUILDING_ANIMAMATERIAL_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

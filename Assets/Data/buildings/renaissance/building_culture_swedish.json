@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SWEDISH"
+   "define": "ART_DEF_BUILDING_CULTURE_SWEDISH",
+   "notShownInCity": true
   }
  },
  "identity": {

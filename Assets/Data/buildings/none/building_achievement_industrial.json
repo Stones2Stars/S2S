@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACHIEVEMENT_INDUSTRIAL"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_INDUSTRIAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRITON_HEAT_RING"
+   "define": "ART_DEF_BUILDING_TRITON_HEAT_RING",
+   "notShownInCity": true
   }
  },
  "identity": {

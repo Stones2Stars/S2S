@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_ESTATES"
+   "define": "ART_DEF_BUILDING_HOUSING_ESTATES",
+   "notShownInCity": true
   }
  },
  "identity": {

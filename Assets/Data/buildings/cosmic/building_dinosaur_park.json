@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DINOSAUR_PARK"
+   "define": "ART_DEF_BUILDING_DINOSAUR_PARK",
+   "notShownInCity": true
   }
  },
  "identity": {

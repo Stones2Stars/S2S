@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT"
+   "define": "ART_DEF_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

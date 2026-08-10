@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACOUSTIC_CONSTRUCTION_FIRM"
+   "define": "ART_DEF_BUILDING_ACOUSTIC_CONSTRUCTION_FIRM",
+   "notShownInCity": true
   }
  },
  "identity": {

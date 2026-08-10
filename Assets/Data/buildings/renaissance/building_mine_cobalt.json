@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_COBALT"
+   "define": "ART_DEF_BUILDING_MINE_COBALT",
+   "notShownInCity": true
   }
  },
  "identity": {

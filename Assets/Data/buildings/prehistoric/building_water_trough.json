@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATER_TROUGH"
+   "define": "ART_DEF_BUILDING_WATER_TROUGH",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POACHERS_CAMP"
+   "define": "ART_DEF_BUILDING_POACHERS_CAMP",
+   "notShownInCity": true
   }
  },
  "identity": {

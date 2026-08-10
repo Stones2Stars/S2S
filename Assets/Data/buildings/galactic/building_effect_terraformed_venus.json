@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_TERRAFORMED_VENUS"
+   "define": "ART_DEF_BUILDING_EFFECT_TERRAFORMED_VENUS",
+   "notShownInCity": true
   }
  },
  "identity": {

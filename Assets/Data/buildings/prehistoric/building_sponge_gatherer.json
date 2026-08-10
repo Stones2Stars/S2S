@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPONGE_GATHERER"
+   "define": "ART_DEF_BUILDING_SPONGE_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

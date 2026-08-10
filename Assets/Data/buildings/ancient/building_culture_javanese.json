@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_JAVANESE"
+   "define": "ART_DEF_BUILDING_CULTURE_JAVANESE",
+   "notShownInCity": true
   }
  },
  "identity": {

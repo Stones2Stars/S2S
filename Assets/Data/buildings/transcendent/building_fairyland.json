@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FAIRYLAND"
+   "define": "ART_DEF_BUILDING_FAIRYLAND",
+   "notShownInCity": true
   }
  },
  "identity": {

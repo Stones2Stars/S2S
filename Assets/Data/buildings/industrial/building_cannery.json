@@ -238,7 +238,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CANNERY"
+   "define": "ART_DEF_BUILDING_CANNERY",
+   "notShownInCity": true
   }
  },
  "sound": {

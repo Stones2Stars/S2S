@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_COSMOPOLITAN_AWAKENING"
+   "define": "ART_DEF_COSMOPOLITAN_AWAKENING",
+   "notShownInCity": true
   }
  },
  "identity": {

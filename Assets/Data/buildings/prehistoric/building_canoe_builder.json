@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CANOE_BUILDER"
+   "define": "ART_DEF_BUILDING_CANOE_BUILDER",
+   "notShownInCity": true
   }
  },
  "identity": {

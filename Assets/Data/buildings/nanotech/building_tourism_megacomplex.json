@@ -161,7 +161,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOURISM_MEGACOMPLEX"
+   "define": "ART_DEF_BUILDING_TOURISM_MEGACOMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

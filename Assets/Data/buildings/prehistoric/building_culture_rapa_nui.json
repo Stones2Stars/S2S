@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_RAPA_NUI"
+   "define": "ART_DEF_BUILDING_CULTURE_RAPA_NUI",
+   "notShownInCity": true
   }
  },
  "identity": {

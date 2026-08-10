@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_WALIA_IBEX"
+   "define": "ART_DEF_BUILDING_FOLKLORE_WALIA_IBEX",
+   "notShownInCity": true
   }
  },
  "identity": {

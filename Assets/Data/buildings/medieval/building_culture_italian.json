@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ITALIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ITALIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

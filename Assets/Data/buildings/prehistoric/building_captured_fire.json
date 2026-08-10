@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAPTURED_FIRE"
+   "define": "ART_DEF_BUILDING_CAPTURED_FIRE",
+   "notShownInCity": true
   }
  },
  "sound": {

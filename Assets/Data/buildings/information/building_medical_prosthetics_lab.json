@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEDICAL_PROSTHETICS_LAB"
+   "define": "ART_DEF_BUILDING_MEDICAL_PROSTHETICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

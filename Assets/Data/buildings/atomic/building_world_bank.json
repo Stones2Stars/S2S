@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WORLD_BANK"
+   "define": "ART_DEF_BUILDING_WORLD_BANK",
+   "notShownInCity": true
   }
  },
  "sound": {

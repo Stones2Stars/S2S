@@ -122,7 +122,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AMMUNITIONS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_AMMUNITIONS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "sound": {

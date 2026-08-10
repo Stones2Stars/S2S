@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JUNEBUG_SANCTUARY"
+   "define": "ART_DEF_BUILDING_JUNEBUG_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "identity": {

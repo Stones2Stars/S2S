@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EDEN"
+   "define": "ART_DEF_BUILDING_EDEN",
+   "notShownInCity": true
   }
  },
  "identity": {

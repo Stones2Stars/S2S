@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HAWAIIAN_SURFBOARD_CARVER"
+   "define": "ART_DEF_BUILDING_HAWAIIAN_SURFBOARD_CARVER",
+   "notShownInCity": true
   }
  },
  "identity": {

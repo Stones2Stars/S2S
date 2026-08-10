@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TASMANIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_TASMANIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

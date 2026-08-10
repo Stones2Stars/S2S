@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NANO_RESEARCH_DEPARTMENT"
+   "define": "ART_DEF_BUILDING_NANO_RESEARCH_DEPARTMENT",
+   "notShownInCity": true
   }
  },
  "sound": {

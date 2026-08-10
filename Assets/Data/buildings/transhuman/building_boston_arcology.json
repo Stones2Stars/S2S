@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BOSTON_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_BOSTON_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

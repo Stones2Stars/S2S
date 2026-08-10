@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_UNIVERSAL_ECONOMY"
+   "define": "ART_DEF_BUILDING_UNIVERSAL_ECONOMY",
+   "notShownInCity": true
   }
  },
  "identity": {

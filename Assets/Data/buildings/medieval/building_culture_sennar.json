@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SENNAR"
+   "define": "ART_DEF_BUILDING_CULTURE_SENNAR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_FILIPINO"
+   "define": "ART_DEF_BUILDING_CULTURE_FILIPINO",
+   "notShownInCity": true
   }
  },
  "identity": {

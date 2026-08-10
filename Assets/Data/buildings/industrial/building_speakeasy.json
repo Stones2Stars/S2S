@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPEAKEASY"
+   "define": "ART_DEF_BUILDING_SPEAKEASY",
+   "notShownInCity": true
   }
  },
  "identity": {

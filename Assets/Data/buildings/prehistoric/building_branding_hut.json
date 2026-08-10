@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BRANDING_HUT"
+   "define": "ART_DEF_BUILDING_BRANDING_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

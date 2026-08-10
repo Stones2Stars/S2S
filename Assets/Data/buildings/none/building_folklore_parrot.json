@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_PARROT"
+   "define": "ART_DEF_BUILDING_FOLKLORE_PARROT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WHALE_OIL_MAKER"
+   "define": "ART_DEF_BUILDING_WHALE_OIL_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

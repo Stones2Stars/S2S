@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AMBASSADORS_HOUSE"
+   "define": "ART_DEF_BUILDING_AMBASSADORS_HOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

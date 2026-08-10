@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_DESIGNER_BABIES"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_DESIGNER_BABIES",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SIAMESE"
+   "define": "ART_DEF_BUILDING_CULTURE_SIAMESE",
+   "notShownInCity": true
   }
  },
  "identity": {

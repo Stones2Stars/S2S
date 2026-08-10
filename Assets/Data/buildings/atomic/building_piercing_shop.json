@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PIERCING_SHOP"
+   "define": "ART_DEF_BUILDING_PIERCING_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

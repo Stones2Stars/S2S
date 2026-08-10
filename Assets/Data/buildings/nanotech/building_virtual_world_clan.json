@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD_CLAN"
+   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD_CLAN",
+   "notShownInCity": true
   }
  },
  "identity": {

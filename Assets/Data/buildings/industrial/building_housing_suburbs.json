@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_SUBURBS"
+   "define": "ART_DEF_BUILDING_HOUSING_SUBURBS",
+   "notShownInCity": true
   }
  },
  "identity": {

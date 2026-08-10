@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERNET_RADIO_STATION"
+   "define": "ART_DEF_BUILDING_INTERNET_RADIO_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CARAVAN_POST"
+   "define": "ART_DEF_BUILDING_CARAVAN_POST",
+   "notShownInCity": true
   }
  },
  "sound": {

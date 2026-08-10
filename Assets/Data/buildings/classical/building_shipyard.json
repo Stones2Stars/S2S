@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SHIPYARD"
+   "define": "ART_DEF_BUILDING_SHIPYARD",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE"
+   "define": "ART_DEF_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
+   "notShownInCity": true
   }
  },
  "identity": {

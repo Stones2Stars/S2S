@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WILD_WEST_HOTEL"
+   "define": "ART_DEF_BUILDING_WILD_WEST_HOTEL",
+   "notShownInCity": true
   }
  },
  "identity": {

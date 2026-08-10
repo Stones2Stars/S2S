@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_SHELTER"
+   "define": "ART_DEF_BUILDING_ANIMAL_SHELTER",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_SHOES"
+   "define": "ART_DEF_BUILDING_FACTORY_SHOES",
+   "notShownInCity": true
   }
  },
  "identity": {

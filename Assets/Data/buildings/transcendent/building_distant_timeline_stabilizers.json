@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_TIMELINE_STABILIZERS"
+   "define": "ART_DEF_BUILDING_DISTANT_TIMELINE_STABILIZERS",
+   "notShownInCity": true
   }
  },
  "identity": {

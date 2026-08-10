@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMMUNITY_DISCUSSIONS"
+   "define": "ART_DEF_BUILDING_COMMUNITY_DISCUSSIONS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_OBEDIENT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+   "notShownInCity": true
   }
  },
  "identity": {

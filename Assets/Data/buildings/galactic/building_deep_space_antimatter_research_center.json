@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLOBAL_RAIL_NETWORK"
+   "define": "ART_DEF_BUILDING_GLOBAL_RAIL_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

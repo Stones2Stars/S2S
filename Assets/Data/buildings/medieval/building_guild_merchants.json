@@ -90,7 +90,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_MERCHANTS"
+   "define": "ART_DEF_BUILDING_GUILD_MERCHANTS",
+   "notShownInCity": true
   }
  },
  "identity": {

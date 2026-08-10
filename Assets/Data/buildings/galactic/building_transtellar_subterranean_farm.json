@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

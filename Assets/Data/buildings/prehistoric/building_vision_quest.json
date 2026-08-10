@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VISION_QUEST"
+   "define": "ART_DEF_BUILDING_VISION_QUEST",
+   "notShownInCity": true
   }
  },
  "identity": {

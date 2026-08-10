@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARINA"
+   "define": "ART_DEF_BUILDING_MARINA",
+   "notShownInCity": true
   }
  },
  "sound": {

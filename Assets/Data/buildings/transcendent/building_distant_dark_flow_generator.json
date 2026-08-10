@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_DARK_FLOW_GENERATOR"
+   "define": "ART_DEF_BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

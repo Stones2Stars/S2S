@@ -221,7 +221,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERNATIONAL_PORT"
+   "define": "ART_DEF_BUILDING_INTERNATIONAL_PORT",
+   "notShownInCity": true
   }
  },
  "sound": {

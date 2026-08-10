@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PATENT_OFFICE"
+   "define": "ART_DEF_BUILDING_PATENT_OFFICE",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -110,7 +110,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAVEYARD"
+   "define": "ART_DEF_BUILDING_GRAVEYARD",
+   "notShownInCity": true
   }
  },
  "sound": {

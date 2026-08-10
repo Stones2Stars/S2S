@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_GPS"
+   "define": "ART_DEF_BUILDING_EFFECT_GPS",
+   "notShownInCity": true
   }
  },
  "identity": {

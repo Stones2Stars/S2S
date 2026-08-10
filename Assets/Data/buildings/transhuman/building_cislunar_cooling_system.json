@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_COOLING_SYSTEM"
+   "define": "ART_DEF_BUILDING_CISLUNAR_COOLING_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

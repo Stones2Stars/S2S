@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_BIONIC_SUITS"
+   "define": "ART_DEF_BUILDING_FACTORY_BIONIC_SUITS",
+   "notShownInCity": true
   }
  },
  "identity": {

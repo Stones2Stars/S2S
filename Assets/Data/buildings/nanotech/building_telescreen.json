@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TELESCREEN"
+   "define": "ART_DEF_BUILDING_TELESCREEN",
+   "notShownInCity": true
   }
  },
  "identity": {

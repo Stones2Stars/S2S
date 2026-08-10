@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTELLIGENT_PAVEMENT"
+   "define": "ART_DEF_BUILDING_INTELLIGENT_PAVEMENT",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANETARIUM"
+   "define": "ART_DEF_BUILDING_PLANETARIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

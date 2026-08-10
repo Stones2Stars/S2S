@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MUSIC_FACTORY"
+   "define": "ART_DEF_BUILDING_MUSIC_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

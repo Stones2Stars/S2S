@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_SKYSCRAPER"
+   "define": "ART_DEF_BUILDING_MARTIAN_SKYSCRAPER",
+   "notShownInCity": true
   }
  },
  "identity": {

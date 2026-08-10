@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_POWER_TOOLS"
+   "define": "ART_DEF_BUILDING_FACTORY_POWER_TOOLS",
+   "notShownInCity": true
   }
  },
  "identity": {

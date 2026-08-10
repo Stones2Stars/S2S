@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_SALT"
+   "define": "ART_DEF_BUILDING_RESOURCES_SALT",
+   "notShownInCity": true
   }
  },
  "identity": {

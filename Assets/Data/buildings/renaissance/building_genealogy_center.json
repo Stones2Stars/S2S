@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GENEALOGY_CENTER"
+   "define": "ART_DEF_BUILDING_GENEALOGY_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

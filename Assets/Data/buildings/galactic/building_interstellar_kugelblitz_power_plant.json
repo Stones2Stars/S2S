@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

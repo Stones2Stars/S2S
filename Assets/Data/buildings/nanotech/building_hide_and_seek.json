@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HIDE_AND_SEEK"
+   "define": "ART_DEF_BUILDING_HIDE_AND_SEEK",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_QUANTUM_SUPERCOMPUTER"
+   "define": "ART_DEF_BUILDING_QUANTUM_SUPERCOMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

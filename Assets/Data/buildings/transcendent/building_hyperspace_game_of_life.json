@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_GAME_OF_LIFE"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_GAME_OF_LIFE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPIRITS_LEGACY"
+   "define": "ART_DEF_BUILDING_SPIRITS_LEGACY",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BELIEF_REINCARNATION"
+   "define": "ART_DEF_BUILDING_BELIEF_REINCARNATION",
+   "notShownInCity": true
   }
  },
  "identity": {

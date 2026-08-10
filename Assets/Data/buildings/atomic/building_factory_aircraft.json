@@ -128,7 +128,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_AIRCRAFT"
+   "define": "ART_DEF_BUILDING_FACTORY_AIRCRAFT",
+   "notShownInCity": true
   }
  },
  "identity": {

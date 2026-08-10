@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WASTE_EXPORTATION_OFFICE"
+   "define": "ART_DEF_BUILDING_WASTE_EXPORTATION_OFFICE",
+   "notShownInCity": true
   }
  },
  "sound": {

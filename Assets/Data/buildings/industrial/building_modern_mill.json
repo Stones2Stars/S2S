@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MODERN_MILL"
+   "define": "ART_DEF_BUILDING_MODERN_MILL",
+   "notShownInCity": true
   }
  },
  "identity": {

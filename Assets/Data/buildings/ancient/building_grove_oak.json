@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_OAK"
+   "define": "ART_DEF_BUILDING_GROVE_OAK",
+   "notShownInCity": true
   }
  },
  "identity": {

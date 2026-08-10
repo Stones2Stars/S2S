@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACESCRAPER_FARM"
+   "define": "ART_DEF_BUILDING_SPACESCRAPER_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

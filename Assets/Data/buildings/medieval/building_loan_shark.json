@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOAN_SHARK"
+   "define": "ART_DEF_BUILDING_LOAN_SHARK",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_QUARTZ"
+   "define": "ART_DEF_BUILDING_MINE_QUARTZ",
+   "notShownInCity": true
   }
  },
  "identity": {

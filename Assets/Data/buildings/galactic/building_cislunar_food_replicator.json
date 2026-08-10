@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_FOOD_REPLICATOR"
+   "define": "ART_DEF_BUILDING_CISLUNAR_FOOD_REPLICATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

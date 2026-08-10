@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STAINED_GLASS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_STAINED_GLASS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

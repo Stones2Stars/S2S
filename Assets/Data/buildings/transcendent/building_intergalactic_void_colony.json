@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_VOID_COLONY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_VOID_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FERTILITY_CLINIC"
+   "define": "ART_DEF_BUILDING_FERTILITY_CLINIC",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_IKAROS"
+   "define": "ART_DEF_BUILDING_IKAROS",
+   "notShownInCity": true
   }
  },
  "identity": {

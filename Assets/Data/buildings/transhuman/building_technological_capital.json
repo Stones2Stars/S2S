@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TECHNOLOGICAL_CAPITAL"
+   "define": "ART_DEF_BUILDING_TECHNOLOGICAL_CAPITAL",
+   "notShownInCity": true
   }
  },
  "sound": {

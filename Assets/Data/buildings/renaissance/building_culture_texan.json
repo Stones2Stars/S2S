@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TEXAN"
+   "define": "ART_DEF_BUILDING_CULTURE_TEXAN",
+   "notShownInCity": true
   }
  },
  "identity": {

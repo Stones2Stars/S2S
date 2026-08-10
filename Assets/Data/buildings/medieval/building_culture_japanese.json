@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_JAPANESE"
+   "define": "ART_DEF_BUILDING_CULTURE_JAPANESE",
+   "notShownInCity": true
   }
  },
  "identity": {

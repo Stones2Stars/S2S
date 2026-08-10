@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RICE_TERRACE"
+   "define": "ART_DEF_BUILDING_RICE_TERRACE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ROMANI"
+   "define": "ART_DEF_BUILDING_CULTURE_ROMANI",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REMAINS_HAASTS_EAGLE"
+   "define": "ART_DEF_BUILDING_REMAINS_HAASTS_EAGLE",
+   "notShownInCity": true
   }
  },
  "identity": {

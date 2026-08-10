@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAUSEWAY"
+   "define": "ART_DEF_BUILDING_CAUSEWAY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE"
+   "define": "ART_DEF_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+   "notShownInCity": true
   }
  },
  "identity": {

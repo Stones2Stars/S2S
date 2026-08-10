@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERNET_TELEVISION_STATION"
+   "define": "ART_DEF_BUILDING_INTERNET_TELEVISION_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

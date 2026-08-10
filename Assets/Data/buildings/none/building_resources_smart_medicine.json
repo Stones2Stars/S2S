@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_SMART_MEDICINE"
+   "define": "ART_DEF_BUILDING_RESOURCES_SMART_MEDICINE",
+   "notShownInCity": true
   }
  },
  "identity": {

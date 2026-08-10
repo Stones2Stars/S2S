@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLYMOUTH_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_PLYMOUTH_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

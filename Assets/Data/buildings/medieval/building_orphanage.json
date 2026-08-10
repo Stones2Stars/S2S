@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORPHANAGE"
+   "define": "ART_DEF_BUILDING_ORPHANAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

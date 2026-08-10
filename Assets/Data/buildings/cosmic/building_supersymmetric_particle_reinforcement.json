@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT"
+   "define": "ART_DEF_BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

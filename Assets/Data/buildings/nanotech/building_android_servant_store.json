@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANDROID_SERVANT_STORE"
+   "define": "ART_DEF_BUILDING_ANDROID_SERVANT_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

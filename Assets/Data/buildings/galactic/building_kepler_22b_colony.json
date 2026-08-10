@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KEPLER_22B_COLONY"
+   "define": "ART_DEF_BUILDING_KEPLER_22B_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

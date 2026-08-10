@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIRE_ABATIS"
+   "define": "ART_DEF_BUILDING_FIRE_ABATIS",
+   "notShownInCity": true
   }
  },
  "sound": {

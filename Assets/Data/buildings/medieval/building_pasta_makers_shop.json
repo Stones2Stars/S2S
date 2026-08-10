@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PASTA_MAKERS_SHOP"
+   "define": "ART_DEF_BUILDING_PASTA_MAKERS_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

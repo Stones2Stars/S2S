@@ -124,7 +124,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METROPOLITAN_ADMINISTRATION"
+   "define": "ART_DEF_BUILDING_METROPOLITAN_ADMINISTRATION",
+   "notShownInCity": true
   }
  },
  "sound": {

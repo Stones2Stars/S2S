@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROPE_BRIDGE"
+   "define": "ART_DEF_BUILDING_ROPE_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

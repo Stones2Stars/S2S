@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INHERITANCE"
+   "define": "ART_DEF_BUILDING_INHERITANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

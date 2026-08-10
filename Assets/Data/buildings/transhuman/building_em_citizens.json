@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EM_CITIZENS"
+   "define": "ART_DEF_BUILDING_EM_CITIZENS",
+   "notShownInCity": true
   }
  },
  "identity": {

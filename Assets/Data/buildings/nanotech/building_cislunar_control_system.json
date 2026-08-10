@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_CONTROL_SYSTEM"
+   "define": "ART_DEF_BUILDING_CISLUNAR_CONTROL_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

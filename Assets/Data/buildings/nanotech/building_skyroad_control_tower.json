@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SKYROAD_CONTROL_TOWER"
+   "define": "ART_DEF_BUILDING_SKYROAD_CONTROL_TOWER",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FEMTOBOTIC_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_FEMTOBOTIC_ASSEMBLER",
+   "notShownInCity": true
   }
  },
  "identity": {

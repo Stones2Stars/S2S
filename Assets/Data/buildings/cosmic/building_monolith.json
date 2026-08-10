@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MONOLITH"
+   "define": "ART_DEF_BUILDING_MONOLITH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_GARBAGE_ATOMIZER"
+   "define": "ART_DEF_BUILDING_CISLUNAR_GARBAGE_ATOMIZER",
+   "notShownInCity": true
   }
  },
  "identity": {

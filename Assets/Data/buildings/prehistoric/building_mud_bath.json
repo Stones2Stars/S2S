@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MUD_BATH"
+   "define": "ART_DEF_BUILDING_MUD_BATH",
+   "notShownInCity": true
   }
  },
  "identity": {

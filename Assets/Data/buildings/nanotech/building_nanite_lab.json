@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NANITE_LAB"
+   "define": "ART_DEF_BUILDING_NANITE_LAB",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JUMILES_GATHERER"
+   "define": "ART_DEF_BUILDING_JUMILES_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

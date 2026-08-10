@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM"
+   "define": "ART_DEF_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+   "notShownInCity": true
   }
  },
  "identity": {

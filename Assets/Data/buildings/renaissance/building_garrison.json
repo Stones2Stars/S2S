@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GARRISON"
+   "define": "ART_DEF_BUILDING_GARRISON",
+   "notShownInCity": true
   }
  },
  "sound": {

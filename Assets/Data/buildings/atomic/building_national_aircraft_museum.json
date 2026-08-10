@@ -124,7 +124,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_AIRCRAFT_MUSEUM"
+   "define": "ART_DEF_BUILDING_NATIONAL_AIRCRAFT_MUSEUM",
+   "notShownInCity": true
   }
  },
  "identity": {

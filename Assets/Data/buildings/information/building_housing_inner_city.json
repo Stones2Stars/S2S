@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_INNER_CITY"
+   "define": "ART_DEF_BUILDING_HOUSING_INNER_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

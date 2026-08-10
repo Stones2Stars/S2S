@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_CASSAVA"
+   "define": "ART_DEF_BUILDING_FARM_CROP_CASSAVA",
+   "notShownInCity": true
   }
  },
  "identity": {

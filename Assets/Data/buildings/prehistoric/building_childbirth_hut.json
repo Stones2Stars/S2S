@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHILDBIRTH_HUT"
+   "define": "ART_DEF_BUILDING_CHILDBIRTH_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

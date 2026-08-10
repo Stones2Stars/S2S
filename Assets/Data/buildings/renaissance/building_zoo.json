@@ -242,7 +242,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ZOO"
+   "define": "ART_DEF_BUILDING_ZOO",
+   "notShownInCity": true
   }
  },
  "sound": {

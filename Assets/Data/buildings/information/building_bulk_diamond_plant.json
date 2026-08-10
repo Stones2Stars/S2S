@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BULK_DIAMOND_PLANT"
+   "define": "ART_DEF_BUILDING_BULK_DIAMOND_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

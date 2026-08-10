@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BLITZBALL_ARENA"
+   "define": "ART_DEF_BUILDING_BLITZBALL_ARENA",
+   "notShownInCity": true
   }
  },
  "identity": {

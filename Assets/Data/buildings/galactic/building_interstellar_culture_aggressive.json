@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+   "notShownInCity": true
   }
  },
  "identity": {

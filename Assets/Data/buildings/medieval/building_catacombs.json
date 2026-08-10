@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATACOMBS"
+   "define": "ART_DEF_BUILDING_CATACOMBS",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAFETY_YOUTH_CURFEW"
+   "define": "ART_DEF_BUILDING_SAFETY_YOUTH_CURFEW",
+   "notShownInCity": true
   }
  },
  "identity": {

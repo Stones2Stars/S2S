@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIA_APPIA"
+   "define": "ART_DEF_BUILDING_VIA_APPIA",
+   "notShownInCity": true
   }
  },
  "identity": {

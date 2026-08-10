@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SCOTTISH"
+   "define": "ART_DEF_BUILDING_CULTURE_SCOTTISH",
+   "notShownInCity": true
   }
  },
  "identity": {

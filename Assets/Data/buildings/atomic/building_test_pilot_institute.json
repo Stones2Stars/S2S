@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TEST_PILOT_INSTITUTE"
+   "define": "ART_DEF_BUILDING_TEST_PILOT_INSTITUTE",
+   "notShownInCity": true
   }
  },
  "identity": {

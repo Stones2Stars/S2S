@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CORPORATE_HIVE"
+   "define": "ART_DEF_BUILDING_CORPORATE_HIVE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIOFUEL_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_BIOFUEL_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

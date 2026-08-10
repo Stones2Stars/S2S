@@ -147,7 +147,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ATHLETIC_MEGACOMPLEX"
+   "define": "ART_DEF_BUILDING_ATHLETIC_MEGACOMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

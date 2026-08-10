@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RANGER_STATION"
+   "define": "ART_DEF_BUILDING_RANGER_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

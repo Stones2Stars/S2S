@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_SANITATION"
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_SANITATION",
+   "notShownInCity": true
   }
  },
  "sound": {

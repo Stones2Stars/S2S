@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_BRAZIL_NUT"
+   "define": "ART_DEF_BUILDING_GROVE_BRAZIL_NUT",
+   "notShownInCity": true
   }
  },
  "identity": {

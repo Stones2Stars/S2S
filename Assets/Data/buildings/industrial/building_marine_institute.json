@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARINE_INSTITUTE"
+   "define": "ART_DEF_BUILDING_MARINE_INSTITUTE",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CONCH_DIVER"
+   "define": "ART_DEF_BUILDING_CONCH_DIVER",
+   "notShownInCity": true
   }
  },
  "identity": {

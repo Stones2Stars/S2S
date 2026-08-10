@@ -26,7 +26,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_BEARS"
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_BEARS",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AMNESTY_INTERNATIONAL"
+   "define": "ART_DEF_BUILDING_AMNESTY_INTERNATIONAL",
+   "notShownInCity": true
   }
  },
  "identity": {

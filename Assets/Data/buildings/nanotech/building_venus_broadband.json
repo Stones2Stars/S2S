@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_BROADBAND"
+   "define": "ART_DEF_BUILDING_VENUS_BROADBAND",
+   "notShownInCity": true
   }
  },
  "identity": {

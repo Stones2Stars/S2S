@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SADDLER"
+   "define": "ART_DEF_BUILDING_SADDLER",
+   "notShownInCity": true
   }
  },
  "identity": {

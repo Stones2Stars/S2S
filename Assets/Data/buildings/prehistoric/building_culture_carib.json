@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CARIB"
+   "define": "ART_DEF_BUILDING_CULTURE_CARIB",
+   "notShownInCity": true
   }
  },
  "identity": {

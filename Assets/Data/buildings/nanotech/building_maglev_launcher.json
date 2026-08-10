@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAGLEV_LAUNCHER"
+   "define": "ART_DEF_BUILDING_MAGLEV_LAUNCHER",
+   "notShownInCity": true
   }
  },
  "identity": {

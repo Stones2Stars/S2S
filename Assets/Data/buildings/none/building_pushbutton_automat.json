@@ -466,7 +466,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PUSHBUTTON_AUTOMAT"
+   "define": "ART_DEF_BUILDING_PUSHBUTTON_AUTOMAT",
+   "notShownInCity": true
   }
  },
  "identity": {

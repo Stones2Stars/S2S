@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VALLEY_OF_THE_KINGS"
+   "define": "ART_DEF_BUILDING_VALLEY_OF_THE_KINGS",
+   "notShownInCity": true
   }
  },
  "identity": {

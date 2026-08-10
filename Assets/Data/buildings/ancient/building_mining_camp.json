@@ -211,7 +211,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINING_CAMP"
+   "define": "ART_DEF_BUILDING_MINING_CAMP",
+   "notShownInCity": true
   }
  },
  "identity": {

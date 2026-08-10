@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NANOPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_NANOPUNK",
+   "notShownInCity": true
   }
  },
  "identity": {

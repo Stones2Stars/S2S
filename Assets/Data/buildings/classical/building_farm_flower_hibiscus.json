@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_HIBISCUS"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_HIBISCUS",
+   "notShownInCity": true
   }
  },
  "identity": {

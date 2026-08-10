@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DOG_BREEDER"
+   "define": "ART_DEF_BUILDING_DOG_BREEDER",
+   "notShownInCity": true
   }
  },
  "sound": {

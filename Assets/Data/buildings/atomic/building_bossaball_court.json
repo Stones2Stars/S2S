@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BOSSABALL_COURT"
+   "define": "ART_DEF_BUILDING_BOSSABALL_COURT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -126,7 +126,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_FISH"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_FISH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ABATIS"
+   "define": "ART_DEF_BUILDING_ABATIS",
+   "notShownInCity": true
   }
  },
  "sound": {

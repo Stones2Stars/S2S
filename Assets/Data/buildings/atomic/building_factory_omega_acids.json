@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_OMEGA_ACIDS"
+   "define": "ART_DEF_BUILDING_FACTORY_OMEGA_ACIDS",
+   "notShownInCity": true
   }
  },
  "identity": {

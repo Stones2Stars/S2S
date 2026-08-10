@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_RING_TAILED_LEMUR"
+   "define": "ART_DEF_BUILDING_FOLKLORE_RING_TAILED_LEMUR",
+   "notShownInCity": true
   }
  },
  "identity": {

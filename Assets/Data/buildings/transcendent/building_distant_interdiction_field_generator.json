@@ -25,7 +25,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_INTERDICTION_FIELD_GENERATOR"
+   "define": "ART_DEF_BUILDING_DISTANT_INTERDICTION_FIELD_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_LUNDA"
+   "define": "ART_DEF_BUILDING_CULTURE_LUNDA",
+   "notShownInCity": true
   }
  },
  "identity": {

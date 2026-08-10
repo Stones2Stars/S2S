@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BALISTRARIA"
+   "define": "ART_DEF_BUILDING_BALISTRARIA",
+   "notShownInCity": true
   }
  },
  "sound": {

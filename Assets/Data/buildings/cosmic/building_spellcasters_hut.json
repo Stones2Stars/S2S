@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPELLCASTERS_HUT"
+   "define": "ART_DEF_BUILDING_SPELLCASTERS_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

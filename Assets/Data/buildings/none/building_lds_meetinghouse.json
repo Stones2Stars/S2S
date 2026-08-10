@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LDS_MEETINGHOUSE"
+   "define": "ART_DEF_BUILDING_LDS_MEETINGHOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

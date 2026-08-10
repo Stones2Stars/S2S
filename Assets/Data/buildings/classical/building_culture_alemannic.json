@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ALEMANNIC"
+   "define": "ART_DEF_BUILDING_CULTURE_ALEMANNIC",
+   "notShownInCity": true
   }
  },
  "identity": {

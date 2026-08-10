@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LASER_TAG_ARENA"
+   "define": "ART_DEF_BUILDING_LASER_TAG_ARENA",
+   "notShownInCity": true
   }
  },
  "identity": {

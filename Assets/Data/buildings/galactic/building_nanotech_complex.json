@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NANOTECH_COMPLEX"
+   "define": "ART_DEF_BUILDING_NANOTECH_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

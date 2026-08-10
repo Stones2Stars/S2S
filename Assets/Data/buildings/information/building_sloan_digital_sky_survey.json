@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SLOAN_DIGITAL_SKY_SURVEY"
+   "define": "ART_DEF_BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
+   "notShownInCity": true
   }
  },
  "identity": {

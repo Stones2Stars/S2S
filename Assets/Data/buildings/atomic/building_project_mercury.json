@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROJECT_MERCURY"
+   "define": "ART_DEF_BUILDING_PROJECT_MERCURY",
+   "notShownInCity": true
   }
  },
  "identity": {

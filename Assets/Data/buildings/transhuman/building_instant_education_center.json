@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INSTANT_EDUCATION_CENTER"
+   "define": "ART_DEF_BUILDING_INSTANT_EDUCATION_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -135,7 +135,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FREYA"
+   "define": "ART_DEF_BUILDING_FREYA",
+   "notShownInCity": true
   }
  },
  "sound": {

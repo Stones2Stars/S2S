@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_BANANA"
+   "define": "ART_DEF_BUILDING_PLANTATION_BANANA",
+   "notShownInCity": true
   }
  },
  "identity": {

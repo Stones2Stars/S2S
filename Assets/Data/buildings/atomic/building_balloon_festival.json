@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BALLOON_FESTIVAL"
+   "define": "ART_DEF_BUILDING_BALLOON_FESTIVAL",
+   "notShownInCity": true
   }
  },
  "sound": {

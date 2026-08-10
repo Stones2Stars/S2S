@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HAMSTER_BREEDER"
+   "define": "ART_DEF_BUILDING_HAMSTER_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

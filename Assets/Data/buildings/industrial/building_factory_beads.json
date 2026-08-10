@@ -157,7 +157,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_BEADS"
+   "define": "ART_DEF_BUILDING_FACTORY_BEADS",
+   "notShownInCity": true
   }
  },
  "sound": {

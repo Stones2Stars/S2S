@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POWER_NUCLEAR"
+   "define": "ART_DEF_BUILDING_POWER_NUCLEAR",
+   "notShownInCity": true
   }
  },
  "identity": {

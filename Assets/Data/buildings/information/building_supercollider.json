@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUPERCOLLIDER"
+   "define": "ART_DEF_BUILDING_SUPERCOLLIDER",
+   "notShownInCity": true
   }
  },
  "sound": {

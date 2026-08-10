@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_SECURITY_SYSTEM"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SECURITY_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

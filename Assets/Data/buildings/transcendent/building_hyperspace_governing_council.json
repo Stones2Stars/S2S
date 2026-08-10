@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_GOVERNING_COUNCIL"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_GOVERNING_COUNCIL",
+   "notShownInCity": true
   }
  },
  "identity": {

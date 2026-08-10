@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_MANSIONS"
+   "define": "ART_DEF_BUILDING_HOUSING_MANSIONS",
+   "notShownInCity": true
   }
  },
  "identity": {

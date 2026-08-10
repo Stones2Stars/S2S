@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_FARM"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

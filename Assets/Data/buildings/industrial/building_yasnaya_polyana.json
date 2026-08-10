@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_YASNAYA_POLYANA"
+   "define": "ART_DEF_BUILDING_YASNAYA_POLYANA",
+   "notShownInCity": true
   }
  },
  "identity": {

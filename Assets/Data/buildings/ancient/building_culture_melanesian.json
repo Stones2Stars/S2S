@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MELANESIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MELANESIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

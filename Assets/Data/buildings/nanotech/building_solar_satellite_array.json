@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_SATELLITE_ARRAY"
+   "define": "ART_DEF_BUILDING_SOLAR_SATELLITE_ARRAY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOWN_WELL"
+   "define": "ART_DEF_BUILDING_TOWN_WELL",
+   "notShownInCity": true
   }
  },
  "identity": {

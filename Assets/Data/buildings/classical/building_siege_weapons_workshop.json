@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SIEGE_WEAPONS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_SIEGE_WEAPONS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "sound": {

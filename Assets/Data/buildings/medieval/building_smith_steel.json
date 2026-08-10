@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_STEEL"
+   "define": "ART_DEF_BUILDING_SMITH_STEEL",
+   "notShownInCity": true
   }
  },
  "identity": {

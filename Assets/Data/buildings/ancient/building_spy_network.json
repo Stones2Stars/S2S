@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPY_NETWORK"
+   "define": "ART_DEF_BUILDING_SPY_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_SPACEPORT"
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_SPACEPORT",
+   "notShownInCity": true
   }
  },
  "identity": {

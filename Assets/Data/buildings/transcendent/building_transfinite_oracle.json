@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSFINITE_ORACLE"
+   "define": "ART_DEF_BUILDING_TRANSFINITE_ORACLE",
+   "notShownInCity": true
   }
  },
  "identity": {

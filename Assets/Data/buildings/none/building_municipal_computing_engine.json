@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMPUTING_ENGINE"
+   "define": "ART_DEF_BUILDING_COMPUTING_ENGINE",
+   "notShownInCity": true
   }
  },
  "identity": {

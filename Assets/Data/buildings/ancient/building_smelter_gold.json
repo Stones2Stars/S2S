@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMELTER_GOLD"
+   "define": "ART_DEF_BUILDING_SMELTER_GOLD",
+   "notShownInCity": true
   }
  },
  "identity": {

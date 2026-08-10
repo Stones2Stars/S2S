@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PRIME_DIRECTIVE"
+   "define": "ART_DEF_BUILDING_PRIME_DIRECTIVE",
+   "notShownInCity": true
   }
  },
  "identity": {

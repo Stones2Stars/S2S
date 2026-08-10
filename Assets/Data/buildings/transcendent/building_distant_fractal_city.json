@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_FRACTAL_CITY"
+   "define": "ART_DEF_BUILDING_DISTANT_FRACTAL_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

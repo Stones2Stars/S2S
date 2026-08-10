@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NETS_COD"
+   "define": "ART_DEF_BUILDING_NETS_COD",
+   "notShownInCity": true
   }
  },
  "identity": {

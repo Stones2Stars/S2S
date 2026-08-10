@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_ENTERTAINMENT_COMPLEX"
+   "define": "ART_DEF_BUILDING_VENUS_ENTERTAINMENT_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

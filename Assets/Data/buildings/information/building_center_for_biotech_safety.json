@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CENTER_FOR_BIOTECH_SAFETY"
+   "define": "ART_DEF_BUILDING_CENTER_FOR_BIOTECH_SAFETY",
+   "notShownInCity": true
   }
  },
  "identity": {

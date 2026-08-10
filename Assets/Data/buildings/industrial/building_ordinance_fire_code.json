@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_FIRE_CODE"
+   "define": "ART_DEF_BUILDING_ORDINANCE_FIRE_CODE",
+   "notShownInCity": true
   }
  },
  "sound": {

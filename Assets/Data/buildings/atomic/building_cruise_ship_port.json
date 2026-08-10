@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CRUISE_SHIP_PORT"
+   "define": "ART_DEF_BUILDING_CRUISE_SHIP_PORT",
+   "notShownInCity": true
   }
  },
  "sound": {

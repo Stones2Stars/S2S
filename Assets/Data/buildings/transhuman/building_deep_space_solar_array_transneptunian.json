@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

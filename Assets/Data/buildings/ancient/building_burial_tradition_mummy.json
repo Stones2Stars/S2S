@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_MUMMY"
+   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_MUMMY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -24,7 +24,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISNEYLAND"
+   "define": "ART_DEF_BUILDING_DISNEYLAND",
+   "notShownInCity": true
   }
  },
  "identity": {

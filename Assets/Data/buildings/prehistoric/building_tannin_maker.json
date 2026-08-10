@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TANNIN_MAKER"
+   "define": "ART_DEF_BUILDING_TANNIN_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

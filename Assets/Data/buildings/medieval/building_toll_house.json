@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOLL_HOUSE"
+   "define": "ART_DEF_BUILDING_TOLL_HOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

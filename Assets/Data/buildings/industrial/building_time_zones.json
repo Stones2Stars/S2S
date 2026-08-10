@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TIME_ZONES"
+   "define": "ART_DEF_BUILDING_TIME_ZONES",
+   "notShownInCity": true
   }
  },
  "identity": {

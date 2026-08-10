@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_PEACH"
+   "define": "ART_DEF_BUILDING_ORCHARD_PEACH",
+   "notShownInCity": true
   }
  },
  "identity": {

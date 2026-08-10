@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

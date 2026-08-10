@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIFE_CHIRAL_FLEXIBLE"
+   "define": "ART_DEF_BUILDING_LIFE_CHIRAL_FLEXIBLE",
+   "notShownInCity": true
   }
  },
  "identity": {

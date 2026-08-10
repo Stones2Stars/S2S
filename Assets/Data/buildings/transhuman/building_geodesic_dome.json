@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GEODESIC_DOME"
+   "define": "ART_DEF_BUILDING_GEODESIC_DOME",
+   "notShownInCity": true
   }
  },
  "identity": {

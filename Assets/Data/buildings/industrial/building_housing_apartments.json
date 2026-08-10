@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_APARTMENTS"
+   "define": "ART_DEF_BUILDING_HOUSING_APARTMENTS",
+   "notShownInCity": true
   }
  },
  "identity": {

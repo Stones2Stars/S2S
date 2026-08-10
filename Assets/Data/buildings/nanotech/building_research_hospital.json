@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESEARCH_HOSPITAL"
+   "define": "ART_DEF_BUILDING_RESEARCH_HOSPITAL",
+   "notShownInCity": true
   }
  },
  "sound": {

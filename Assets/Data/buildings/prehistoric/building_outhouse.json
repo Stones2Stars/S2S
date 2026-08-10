@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OUTHOUSE"
+   "define": "ART_DEF_BUILDING_OUTHOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

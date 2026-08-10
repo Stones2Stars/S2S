@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
+   "notShownInCity": true
   }
  },
  "identity": {

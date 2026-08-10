@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_MONUMENT"
+   "define": "ART_DEF_BUILDING_MARTIAN_MONUMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

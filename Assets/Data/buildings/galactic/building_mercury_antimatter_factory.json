@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MERCURY_ANTIMATTER_FACTORY"
+   "define": "ART_DEF_BUILDING_MERCURY_ANTIMATTER_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

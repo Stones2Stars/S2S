@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PALM_ISLANDS"
+   "define": "ART_DEF_BUILDING_PALM_ISLANDS",
+   "notShownInCity": true
   }
  },
  "identity": {

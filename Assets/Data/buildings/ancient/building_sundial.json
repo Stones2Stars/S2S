@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUNDIAL"
+   "define": "ART_DEF_BUILDING_SUNDIAL",
+   "notShownInCity": true
   }
  },
  "sound": {

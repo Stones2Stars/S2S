@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REFINERY"
+   "define": "ART_DEF_BUILDING_REFINERY",
+   "notShownInCity": true
   }
  },
  "sound": {

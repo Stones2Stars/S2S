@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERPETOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_HERPETOLOGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SATURN_RING_ICE_MINE"
+   "define": "ART_DEF_BUILDING_SATURN_RING_ICE_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

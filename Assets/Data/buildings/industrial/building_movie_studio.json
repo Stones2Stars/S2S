@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOVIE_STUDIO"
+   "define": "ART_DEF_BUILDING_MOVIE_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

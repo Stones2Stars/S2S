@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WELL"
+   "define": "ART_DEF_BUILDING_WELL",
+   "notShownInCity": true
   }
  },
  "sound": {

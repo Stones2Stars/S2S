@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAKERSPACE"
+   "define": "ART_DEF_BUILDING_MAKERSPACE",
+   "notShownInCity": true
   }
  },
  "identity": {

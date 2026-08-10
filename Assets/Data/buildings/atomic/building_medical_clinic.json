@@ -185,7 +185,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEDICAL_CLINIC"
+   "define": "ART_DEF_BUILDING_MEDICAL_CLINIC",
+   "notShownInCity": true
   }
  },
  "sound": {

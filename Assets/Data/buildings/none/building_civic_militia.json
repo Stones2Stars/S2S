@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_MILITIA"
+   "define": "ART_DEF_BUILDING_CIVIC_MILITIA",
+   "notShownInCity": true
   }
  },
  "identity": {

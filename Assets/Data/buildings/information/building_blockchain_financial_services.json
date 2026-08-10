@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+   "define": "ART_DEF_BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
+   "notShownInCity": true
   }
  },
  "identity": {

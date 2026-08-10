@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OPTRONIC_SUPERCOMPUTER"
+   "define": "ART_DEF_BUILDING_OPTRONIC_SUPERCOMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

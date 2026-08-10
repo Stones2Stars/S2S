@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PETTING_ZOO"
+   "define": "ART_DEF_BUILDING_PETTING_ZOO",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_COMMONS"
+   "define": "ART_DEF_BUILDING_HOUSING_COMMONS",
+   "notShownInCity": true
   }
  },
  "identity": {

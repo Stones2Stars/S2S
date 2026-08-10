@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIGITAL_LOGISTICS_CENTER"
+   "define": "ART_DEF_BUILDING_DIGITAL_LOGISTICS_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

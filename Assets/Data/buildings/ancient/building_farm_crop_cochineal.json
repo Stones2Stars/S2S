@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_COCHINEAL"
+   "define": "ART_DEF_BUILDING_FARM_CROP_COCHINEAL",
+   "notShownInCity": true
   }
  },
  "identity": {

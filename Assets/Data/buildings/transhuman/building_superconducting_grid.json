@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUPERCONDUCTING_GRID"
+   "define": "ART_DEF_BUILDING_SUPERCONDUCTING_GRID",
+   "notShownInCity": true
   }
  },
  "identity": {

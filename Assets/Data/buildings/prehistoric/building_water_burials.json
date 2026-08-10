@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATER_BURIALS"
+   "define": "ART_DEF_BUILDING_WATER_BURIALS",
+   "notShownInCity": true
   }
  },
  "identity": {

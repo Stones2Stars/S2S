@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STREET_CLEANER"
+   "define": "ART_DEF_BUILDING_STREET_CLEANER",
+   "notShownInCity": true
   }
  },
  "sound": {

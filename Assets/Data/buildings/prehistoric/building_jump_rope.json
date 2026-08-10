@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JUMP_ROPE"
+   "define": "ART_DEF_BUILDING_JUMP_ROPE",
+   "notShownInCity": true
   }
  },
  "identity": {

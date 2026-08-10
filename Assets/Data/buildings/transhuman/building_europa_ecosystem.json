@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EUROPA_ECOSYSTEM"
+   "define": "ART_DEF_BUILDING_EUROPA_ECOSYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

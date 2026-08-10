@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_MERCENARIES"
+   "define": "ART_DEF_BUILDING_CIVIC_MERCENARIES",
+   "notShownInCity": true
   }
  },
  "identity": {

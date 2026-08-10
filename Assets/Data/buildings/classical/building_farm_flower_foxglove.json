@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_FOXGLOVE"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_FOXGLOVE",
+   "notShownInCity": true
   }
  },
  "identity": {

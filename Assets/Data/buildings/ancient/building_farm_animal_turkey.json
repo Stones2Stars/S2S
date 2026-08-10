@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_TURKEY"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_TURKEY",
+   "notShownInCity": true
   }
  },
  "sound": {

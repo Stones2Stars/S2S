@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OLDOINYO"
+   "define": "ART_DEF_BUILDING_OLDOINYO",
+   "notShownInCity": true
   }
  },
  "sound": {

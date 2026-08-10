@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_INDIGO"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_INDIGO",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_SEA_BIRDS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_SEA_BIRDS",
+   "notShownInCity": true
   }
  },
  "identity": {

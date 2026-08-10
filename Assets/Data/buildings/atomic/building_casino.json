@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CASINO"
+   "define": "ART_DEF_BUILDING_CASINO",
+   "notShownInCity": true
   }
  },
  "sound": {

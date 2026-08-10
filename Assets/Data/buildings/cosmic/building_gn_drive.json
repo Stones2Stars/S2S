@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GN_DRIVE"
+   "define": "ART_DEF_BUILDING_GN_DRIVE",
+   "notShownInCity": true
   }
  },
  "identity": {

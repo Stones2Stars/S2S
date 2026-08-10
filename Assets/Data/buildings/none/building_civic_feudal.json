@@ -20,7 +20,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_FEUDAL"
+   "define": "ART_DEF_BUILDING_CIVIC_FEUDAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ADENAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ADENAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROOFTOP_FLYING_CAR_PORT"
+   "define": "ART_DEF_BUILDING_ROOFTOP_FLYING_CAR_PORT",
+   "notShownInCity": true
   }
  },
  "identity": {

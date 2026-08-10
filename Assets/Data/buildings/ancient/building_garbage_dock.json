@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GARBAGE_DOCK"
+   "define": "ART_DEF_BUILDING_GARBAGE_DOCK",
+   "notShownInCity": true
   }
  },
  "sound": {

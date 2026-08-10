@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_RADIATION_SHIELD"
+   "define": "ART_DEF_BUILDING_MARTIAN_RADIATION_SHIELD",
+   "notShownInCity": true
   }
  },
  "identity": {

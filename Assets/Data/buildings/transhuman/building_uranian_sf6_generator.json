@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_URANIAN_SF6_GENERATOR"
+   "define": "ART_DEF_BUILDING_URANIAN_SF6_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

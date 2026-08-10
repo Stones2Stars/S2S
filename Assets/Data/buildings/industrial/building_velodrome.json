@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VELODROME"
+   "define": "ART_DEF_BUILDING_VELODROME",
+   "notShownInCity": true
   }
  },
  "identity": {

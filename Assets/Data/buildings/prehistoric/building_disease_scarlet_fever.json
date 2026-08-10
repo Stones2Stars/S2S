@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROPERTYDISEASE"
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NANOBOTIC_PRINTING_MILL"
+   "define": "ART_DEF_BUILDING_NANOBOTIC_PRINTING_MILL",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALIEN_EMBASSY"
+   "define": "ART_DEF_BUILDING_ALIEN_EMBASSY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -299,7 +299,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_MARINE_FESTIVAL"
+   "define": "ART_DEF_BUILDING_GRAND_MARINE_FESTIVAL",
+   "notShownInCity": true
   }
  },
  "identity": {

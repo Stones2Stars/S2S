@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TEMPLE_OF_AH_CACAO"
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_AH_CACAO",
+   "notShownInCity": true
   }
  },
  "identity": {

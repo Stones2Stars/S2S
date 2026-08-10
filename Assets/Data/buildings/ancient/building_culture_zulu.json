@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ZULU"
+   "define": "ART_DEF_BUILDING_CULTURE_ZULU",
+   "notShownInCity": true
   }
  },
  "identity": {

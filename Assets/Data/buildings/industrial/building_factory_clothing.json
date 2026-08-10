@@ -102,7 +102,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_CLOTHING"
+   "define": "ART_DEF_BUILDING_FACTORY_CLOTHING",
+   "notShownInCity": true
   }
  },
  "identity": {

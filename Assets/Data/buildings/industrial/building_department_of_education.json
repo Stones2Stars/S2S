@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_EDUCATION"
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_EDUCATION",
+   "notShownInCity": true
   }
  },
  "sound": {

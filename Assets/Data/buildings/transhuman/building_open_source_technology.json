@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OPEN_SOURCE_TECHNOLOGY"
+   "define": "ART_DEF_BUILDING_OPEN_SOURCE_TECHNOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

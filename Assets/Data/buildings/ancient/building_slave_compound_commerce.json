@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_COMMERCE"
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_COMMERCE",
+   "notShownInCity": true
   }
  },
  "sound": {

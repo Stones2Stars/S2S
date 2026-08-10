@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTROWEAK_FORGE"
+   "define": "ART_DEF_BUILDING_ELECTROWEAK_FORGE",
+   "notShownInCity": true
   }
  },
  "identity": {

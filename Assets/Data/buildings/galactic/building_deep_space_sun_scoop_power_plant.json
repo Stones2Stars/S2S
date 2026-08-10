@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

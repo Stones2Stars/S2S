@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_ORANGUTAN"
+   "define": "ART_DEF_BUILDING_FOLKLORE_ORANGUTAN",
+   "notShownInCity": true
   }
  },
  "identity": {

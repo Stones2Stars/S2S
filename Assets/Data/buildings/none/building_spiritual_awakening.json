@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_SPIRITUAL_AWAKENING"
+   "define": "ART_DEF_SPIRITUAL_AWAKENING",
+   "notShownInCity": true
   }
  },
  "identity": {

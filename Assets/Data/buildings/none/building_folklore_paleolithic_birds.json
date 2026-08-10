@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_PALEOLITHIC_BIRDS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_PALEOLITHIC_BIRDS",
+   "notShownInCity": true
   }
  },
  "identity": {

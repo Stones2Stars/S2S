@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_EMS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
+   "notShownInCity": true
   }
  },
  "identity": {

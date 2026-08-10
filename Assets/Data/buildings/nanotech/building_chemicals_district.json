@@ -188,7 +188,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHEMICALS_DISTRICT"
+   "define": "ART_DEF_BUILDING_CHEMICALS_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

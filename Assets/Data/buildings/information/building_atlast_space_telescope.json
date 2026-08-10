@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ATLAST_SPACE_TELESCOPE"
+   "define": "ART_DEF_BUILDING_ATLAST_SPACE_TELESCOPE",
+   "notShownInCity": true
   }
  },
  "identity": {

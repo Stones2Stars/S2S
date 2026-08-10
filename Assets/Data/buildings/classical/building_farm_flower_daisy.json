@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_DAISY"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_DAISY",
+   "notShownInCity": true
   }
  },
  "identity": {

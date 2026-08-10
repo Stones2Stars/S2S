@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUTONOMOUS_MINE"
+   "define": "ART_DEF_BUILDING_AUTONOMOUS_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

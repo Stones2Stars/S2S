@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PIR_E_SABZ"
+   "define": "ART_DEF_BUILDING_PIR_E_SABZ",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARCHERY_RANGE"
+   "define": "ART_DEF_BUILDING_ARCHERY_RANGE",
+   "notShownInCity": true
   }
  },
  "sound": {

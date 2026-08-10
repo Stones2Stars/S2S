@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_COLA"
+   "define": "ART_DEF_BUILDING_GROVE_COLA",
+   "notShownInCity": true
   }
  },
  "identity": {

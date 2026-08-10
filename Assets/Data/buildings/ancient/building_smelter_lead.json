@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMELTER_LEAD"
+   "define": "ART_DEF_BUILDING_SMELTER_LEAD",
+   "notShownInCity": true
   }
  },
  "identity": {

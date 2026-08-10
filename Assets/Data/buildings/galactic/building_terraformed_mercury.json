@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_MERCURY"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_MERCURY",
+   "notShownInCity": true
   }
  },
  "identity": {

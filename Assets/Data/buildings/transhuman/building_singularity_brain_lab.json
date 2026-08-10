@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SINGULARITY_BRAIN_LAB"
+   "define": "ART_DEF_BUILDING_SINGULARITY_BRAIN_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

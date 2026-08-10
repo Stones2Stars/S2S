@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUPERHERO_GUILD"
+   "define": "ART_DEF_BUILDING_SUPERHERO_GUILD",
+   "notShownInCity": true
   }
  },
  "identity": {

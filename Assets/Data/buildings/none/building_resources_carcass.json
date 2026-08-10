@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_CARCASS"
+   "define": "ART_DEF_BUILDING_RESOURCES_CARCASS",
+   "notShownInCity": true
   }
  },
  "identity": {

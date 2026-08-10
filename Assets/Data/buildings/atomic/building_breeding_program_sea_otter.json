@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_SEA_OTTER"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+   "notShownInCity": true
   }
  },
  "identity": {

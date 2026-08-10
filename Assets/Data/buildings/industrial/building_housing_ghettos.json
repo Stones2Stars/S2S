@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_GHETTOS"
+   "define": "ART_DEF_BUILDING_HOUSING_GHETTOS",
+   "notShownInCity": true
   }
  },
  "identity": {

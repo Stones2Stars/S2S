@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMMUNITY_GARDEN"
+   "define": "ART_DEF_BUILDING_COMMUNITY_GARDEN",
+   "notShownInCity": true
   }
  },
  "sound": {

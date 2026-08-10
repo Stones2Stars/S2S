@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

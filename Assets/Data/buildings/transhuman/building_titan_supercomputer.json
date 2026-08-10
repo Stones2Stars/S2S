@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TITAN_SUPERCOMPUTER"
+   "define": "ART_DEF_BUILDING_TITAN_SUPERCOMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

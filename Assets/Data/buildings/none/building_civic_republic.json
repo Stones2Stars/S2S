@@ -20,7 +20,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_REPUBLIC"
+   "define": "ART_DEF_BUILDING_CIVIC_REPUBLIC",
+   "notShownInCity": true
   }
  },
  "identity": {

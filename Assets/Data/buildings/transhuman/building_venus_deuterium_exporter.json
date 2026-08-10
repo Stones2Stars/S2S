@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_DEUTERIUM_EXPORTER"
+   "define": "ART_DEF_BUILDING_VENUS_DEUTERIUM_EXPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

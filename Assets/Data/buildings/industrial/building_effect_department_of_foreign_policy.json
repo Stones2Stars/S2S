@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY"
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
+   "notShownInCity": true
   }
  },
  "identity": {

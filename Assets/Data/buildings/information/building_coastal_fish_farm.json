@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COASTAL_FISH_FARM"
+   "define": "ART_DEF_BUILDING_COASTAL_FISH_FARM",
+   "notShownInCity": true
   }
  },
  "sound": {

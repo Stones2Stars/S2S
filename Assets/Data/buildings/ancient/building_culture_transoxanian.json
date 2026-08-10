@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TRANSOXANIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_TRANSOXANIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

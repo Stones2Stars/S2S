@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_CAESIUM"
+   "define": "ART_DEF_BUILDING_MINE_CAESIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

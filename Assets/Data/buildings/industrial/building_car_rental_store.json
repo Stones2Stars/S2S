@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAR_RENTAL_STORE"
+   "define": "ART_DEF_BUILDING_CAR_RENTAL_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

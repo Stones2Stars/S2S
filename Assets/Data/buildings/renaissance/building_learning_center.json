@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LEARNING_CENTER"
+   "define": "ART_DEF_BUILDING_LEARNING_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

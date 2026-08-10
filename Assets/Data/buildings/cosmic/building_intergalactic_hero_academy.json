@@ -23,7 +23,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_HERO_ACADEMY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_HERO_ACADEMY",
+   "notShownInCity": true
   }
  },
  "identity": {

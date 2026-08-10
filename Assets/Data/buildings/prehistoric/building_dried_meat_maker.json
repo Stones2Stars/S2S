@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DRIED_MEAT_MAKER"
+   "define": "ART_DEF_BUILDING_DRIED_MEAT_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

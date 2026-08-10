@@ -126,7 +126,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COPPER_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_COPPER_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

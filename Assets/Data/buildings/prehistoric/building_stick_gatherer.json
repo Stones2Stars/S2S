@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STICK_GATHERER"
+   "define": "ART_DEF_BUILDING_STICK_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_POPPY"
+   "define": "ART_DEF_BUILDING_PLANTATION_POPPY",
+   "notShownInCity": true
   }
  },
  "identity": {

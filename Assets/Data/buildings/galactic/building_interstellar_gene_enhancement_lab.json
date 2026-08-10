@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GENE_ENHANCEMENT_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

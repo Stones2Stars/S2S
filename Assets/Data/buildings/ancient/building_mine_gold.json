@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_GOLD"
+   "define": "ART_DEF_BUILDING_MINE_GOLD",
+   "notShownInCity": true
   }
  },
  "identity": {

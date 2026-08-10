@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_UTOPIA"
+   "define": "ART_DEF_BUILDING_UTOPIA",
+   "notShownInCity": true
   }
  },
  "identity": {

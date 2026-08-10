@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_GRASS"
+   "define": "ART_DEF_BUILDING_RESOURCES_GRASS",
+   "notShownInCity": true
   }
  },
  "identity": {

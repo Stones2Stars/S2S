@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_GOVERNING_COUNCIL"
+   "define": "ART_DEF_BUILDING_MARTIAN_GOVERNING_COUNCIL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MONGOLIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_MONGOLIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

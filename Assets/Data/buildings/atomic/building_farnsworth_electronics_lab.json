@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARNSWORTH_ELECTRONICS_LAB"
+   "define": "ART_DEF_BUILDING_FARNSWORTH_ELECTRONICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

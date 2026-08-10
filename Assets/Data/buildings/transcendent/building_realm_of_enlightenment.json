@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REALM_OF_ENLIGHTENMENT"
+   "define": "ART_DEF_BUILDING_REALM_OF_ENLIGHTENMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

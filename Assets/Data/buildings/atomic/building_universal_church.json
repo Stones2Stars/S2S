@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_UNIVERSAL_CHURCH"
+   "define": "ART_DEF_BUILDING_UNIVERSAL_CHURCH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -308,7 +308,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   "define": "ART_DEF_BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+   "notShownInCity": true
   }
  },
  "identity": {

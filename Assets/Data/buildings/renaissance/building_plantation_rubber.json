@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_RUBBER"
+   "define": "ART_DEF_BUILDING_PLANTATION_RUBBER",
+   "notShownInCity": true
   }
  },
  "identity": {

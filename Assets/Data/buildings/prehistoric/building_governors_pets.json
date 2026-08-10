@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GOVERNORS_PETS"
+   "define": "ART_DEF_BUILDING_GOVERNORS_PETS",
+   "notShownInCity": true
   }
  },
  "identity": {

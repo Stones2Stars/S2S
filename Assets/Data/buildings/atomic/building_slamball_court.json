@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SLAMBALL_COURT"
+   "define": "ART_DEF_BUILDING_SLAMBALL_COURT",
+   "notShownInCity": true
   }
  },
  "identity": {

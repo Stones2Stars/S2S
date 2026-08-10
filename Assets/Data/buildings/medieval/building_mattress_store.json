@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MATTRESS_STORE"
+   "define": "ART_DEF_BUILDING_MATTRESS_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

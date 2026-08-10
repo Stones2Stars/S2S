@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

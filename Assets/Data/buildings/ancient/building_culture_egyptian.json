@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_EGYPTIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_EGYPTIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

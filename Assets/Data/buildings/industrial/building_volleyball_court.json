@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VOLLEYBALL_COURT"
+   "define": "ART_DEF_BUILDING_VOLLEYBALL_COURT",
+   "notShownInCity": true
   }
  },
  "identity": {

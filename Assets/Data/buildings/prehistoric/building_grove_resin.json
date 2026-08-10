@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_RESIN"
+   "define": "ART_DEF_BUILDING_GROVE_RESIN",
+   "notShownInCity": true
   }
  },
  "identity": {

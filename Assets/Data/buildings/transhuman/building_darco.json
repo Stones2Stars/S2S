@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DARCO"
+   "define": "ART_DEF_BUILDING_DARCO",
+   "notShownInCity": true
   }
  },
  "identity": {

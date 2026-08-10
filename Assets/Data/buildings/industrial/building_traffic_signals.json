@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAFFIC_SIGNALS"
+   "define": "ART_DEF_BUILDING_TRAFFIC_SIGNALS",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FINE_STONEWARE_CARVERS"
+   "define": "ART_DEF_BUILDING_FINE_STONEWARE_CARVERS",
+   "notShownInCity": true
   }
  },
  "identity": {

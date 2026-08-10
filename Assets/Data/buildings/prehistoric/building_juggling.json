@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JUGGLING"
+   "define": "ART_DEF_BUILDING_JUGGLING",
+   "notShownInCity": true
   }
  },
  "identity": {

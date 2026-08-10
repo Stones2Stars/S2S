@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_ELDERBERRY"
+   "define": "ART_DEF_BUILDING_FARM_CROP_ELDERBERRY",
+   "notShownInCity": true
   }
  },
  "identity": {

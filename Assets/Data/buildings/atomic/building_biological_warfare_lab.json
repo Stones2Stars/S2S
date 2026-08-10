@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIOLOGICAL_WARFARE_LAB"
+   "define": "ART_DEF_BUILDING_BIOLOGICAL_WARFARE_LAB",
+   "notShownInCity": true
   }
  },
  "sound": {

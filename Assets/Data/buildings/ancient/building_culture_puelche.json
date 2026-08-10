@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_PUELCHE"
+   "define": "ART_DEF_BUILDING_CULTURE_PUELCHE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

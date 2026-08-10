@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_ARRAY_OUTER_SOLAR_SYSTEM"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_ARRAY_OUTER_SOLAR_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

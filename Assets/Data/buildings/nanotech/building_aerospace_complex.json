@@ -146,7 +146,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AEROSPACE_COMPLEX"
+   "define": "ART_DEF_BUILDING_AEROSPACE_COMPLEX",
+   "notShownInCity": true
   }
  },
  "sound": {

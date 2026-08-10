@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_COLONY_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

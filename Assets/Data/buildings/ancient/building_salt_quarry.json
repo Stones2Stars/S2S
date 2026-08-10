@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SALT_QUARRY"
+   "define": "ART_DEF_BUILDING_SALT_QUARRY",
+   "notShownInCity": true
   }
  },
  "identity": {

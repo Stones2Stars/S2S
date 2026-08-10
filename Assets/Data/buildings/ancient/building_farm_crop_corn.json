@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_CORN"
+   "define": "ART_DEF_BUILDING_FARM_CROP_CORN",
+   "notShownInCity": true
   }
  },
  "identity": {

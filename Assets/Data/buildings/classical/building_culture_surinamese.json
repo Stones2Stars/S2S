@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SURINAMESE"
+   "define": "ART_DEF_BUILDING_CULTURE_SURINAMESE",
+   "notShownInCity": true
   }
  },
  "identity": {

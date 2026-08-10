@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_GUAVAS"
+   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_GUAVAS",
+   "notShownInCity": true
   }
  },
  "sound": {

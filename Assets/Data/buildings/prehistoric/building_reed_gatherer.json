@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REED_GATHERER"
+   "define": "ART_DEF_BUILDING_REED_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

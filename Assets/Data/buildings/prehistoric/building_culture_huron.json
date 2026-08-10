@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_HURON"
+   "define": "ART_DEF_BUILDING_CULTURE_HURON",
+   "notShownInCity": true
   }
  },
  "identity": {

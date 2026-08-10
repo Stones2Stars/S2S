@@ -125,7 +125,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NOBLEGARDEN"
+   "define": "ART_DEF_BUILDING_NOBLEGARDEN",
+   "notShownInCity": true
   }
  },
  "identity": {

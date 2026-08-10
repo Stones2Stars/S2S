@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIGAR_ROLLERS_SHOP"
+   "define": "ART_DEF_BUILDING_CIGAR_ROLLERS_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

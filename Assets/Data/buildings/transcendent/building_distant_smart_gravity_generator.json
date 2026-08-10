@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_SMART_GRAVITY_GENERATOR"
+   "define": "ART_DEF_BUILDING_DISTANT_SMART_GRAVITY_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CORE_MINE"
+   "define": "ART_DEF_BUILDING_CORE_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

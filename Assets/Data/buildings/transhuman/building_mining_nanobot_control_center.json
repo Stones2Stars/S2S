@@ -264,7 +264,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINING_NANOBOT_CONTROL_CENTER"
+   "define": "ART_DEF_BUILDING_MINING_NANOBOT_CONTROL_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

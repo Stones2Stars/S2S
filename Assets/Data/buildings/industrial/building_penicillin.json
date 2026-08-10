@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PENICILLIN"
+   "define": "ART_DEF_BUILDING_PENICILLIN",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOG_BRIDGE"
+   "define": "ART_DEF_BUILDING_LOG_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

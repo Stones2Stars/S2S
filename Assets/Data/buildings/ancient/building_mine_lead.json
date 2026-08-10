@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_LEAD"
+   "define": "ART_DEF_BUILDING_MINE_LEAD",
+   "notShownInCity": true
   }
  },
  "identity": {

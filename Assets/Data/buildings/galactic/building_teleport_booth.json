@@ -149,7 +149,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TELEPORT_BOOTH"
+   "define": "ART_DEF_BUILDING_TELEPORT_BOOTH",
+   "notShownInCity": true
   }
  },
  "sound": {

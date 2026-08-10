@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_WEATHER_SERVICE"
+   "define": "ART_DEF_BUILDING_NATIONAL_WEATHER_SERVICE",
+   "notShownInCity": true
   }
  },
  "sound": {

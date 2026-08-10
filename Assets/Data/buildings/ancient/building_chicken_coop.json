@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHICKEN_COOP"
+   "define": "ART_DEF_BUILDING_CHICKEN_COOP",
+   "notShownInCity": true
   }
  },
  "sound": {

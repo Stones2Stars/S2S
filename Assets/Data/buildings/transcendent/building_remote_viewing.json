@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REMOTE_VIEWING"
+   "define": "ART_DEF_BUILDING_REMOTE_VIEWING",
+   "notShownInCity": true
   }
  },
  "identity": {

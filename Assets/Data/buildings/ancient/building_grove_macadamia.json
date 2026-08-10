@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_MACADAMIA"
+   "define": "ART_DEF_BUILDING_GROVE_MACADAMIA",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIGITAL_GLOBE"
+   "define": "ART_DEF_BUILDING_DIGITAL_GLOBE",
+   "notShownInCity": true
   }
  },
  "identity": {

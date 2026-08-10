@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BRACEWELL_PROBES"
+   "define": "ART_DEF_BUILDING_BRACEWELL_PROBES",
+   "notShownInCity": true
   }
  },
  "identity": {

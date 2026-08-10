@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_PRESERVE"
+   "define": "ART_DEF_BUILDING_ANIMAL_PRESERVE",
+   "notShownInCity": true
   }
  },
  "identity": {

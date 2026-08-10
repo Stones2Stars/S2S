@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_ANDROIDS"
+   "define": "ART_DEF_BUILDING_FACTORY_ANDROIDS",
+   "notShownInCity": true
   }
  },
  "sound": {

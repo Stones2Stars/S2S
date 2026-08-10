@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_SPACESCRAPER"
+   "define": "ART_DEF_BUILDING_GRAND_SPACESCRAPER",
+   "notShownInCity": true
   }
  },
  "identity": {

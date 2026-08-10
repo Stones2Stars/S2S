@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PLASMA_GENERATORS"
+   "define": "ART_DEF_BUILDING_FACTORY_PLASMA_GENERATORS",
+   "notShownInCity": true
   }
  },
  "identity": {

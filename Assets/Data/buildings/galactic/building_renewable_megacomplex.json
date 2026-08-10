@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RENEWABLE_MEGACOMPLEX_PLANT"
+   "define": "ART_DEF_BUILDING_RENEWABLE_MEGACOMPLEX_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

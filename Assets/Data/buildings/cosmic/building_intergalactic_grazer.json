@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_GRAZER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GRAZER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGATOWER_THEME_PARK_CROWN_SECTION"
+   "define": "ART_DEF_BUILDING_MEGATOWER_THEME_PARK_CROWN_SECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

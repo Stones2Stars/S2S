@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_PECAN"
+   "define": "ART_DEF_BUILDING_GROVE_PECAN",
+   "notShownInCity": true
   }
  },
  "identity": {

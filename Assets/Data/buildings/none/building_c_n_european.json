@@ -26,7 +26,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_EUROPEAN"
+   "define": "ART_DEF_BUILDING_CULTURE_EUROPEAN",
+   "notShownInCity": true
   }
  },
  "identity": {

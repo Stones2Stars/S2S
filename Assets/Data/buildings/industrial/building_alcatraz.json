@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALCATRAZ"
+   "define": "ART_DEF_BUILDING_ALCATRAZ",
+   "notShownInCity": true
   }
  },
  "sound": {

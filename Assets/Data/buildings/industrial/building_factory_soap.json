@@ -113,7 +113,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_SOAP"
+   "define": "ART_DEF_BUILDING_FACTORY_SOAP",
+   "notShownInCity": true
   }
  },
  "identity": {

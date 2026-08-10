@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CONSPIRATORS_HIDEOUT"
+   "define": "ART_DEF_BUILDING_CONSPIRATORS_HIDEOUT",
+   "notShownInCity": true
   }
  },
  "identity": {

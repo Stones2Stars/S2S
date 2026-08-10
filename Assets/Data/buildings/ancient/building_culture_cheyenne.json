@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CHEYENNE"
+   "define": "ART_DEF_BUILDING_CULTURE_CHEYENNE",
+   "notShownInCity": true
   }
  },
  "identity": {

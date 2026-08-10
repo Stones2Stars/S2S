@@ -207,7 +207,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JEWELER"
+   "define": "ART_DEF_BUILDING_JEWELER",
+   "notShownInCity": true
   }
  },
  "sound": {

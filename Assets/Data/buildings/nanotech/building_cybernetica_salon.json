@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CYBERNETICA_SALON"
+   "define": "ART_DEF_BUILDING_CYBERNETICA_SALON",
+   "notShownInCity": true
   }
  },
  "identity": {

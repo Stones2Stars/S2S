@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_BIONIC_CORE"
+   "define": "ART_DEF_BUILDING_CISLUNAR_BIONIC_CORE",
+   "notShownInCity": true
   }
  },
  "identity": {

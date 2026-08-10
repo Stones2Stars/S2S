@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGATOWER_SKYBRIDGE"
+   "define": "ART_DEF_BUILDING_MEGATOWER_SKYBRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

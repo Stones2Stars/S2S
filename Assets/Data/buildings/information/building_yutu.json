@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_YUTU"
+   "define": "ART_DEF_BUILDING_YUTU",
+   "notShownInCity": true
   }
  },
  "identity": {

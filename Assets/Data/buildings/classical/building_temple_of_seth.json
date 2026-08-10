@@ -126,7 +126,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_SET"
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_SET",
+   "notShownInCity": true
   }
  },
  "sound": {

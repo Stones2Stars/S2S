@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PENCILS"
+   "define": "ART_DEF_BUILDING_FACTORY_PENCILS",
+   "notShownInCity": true
   }
  },
  "identity": {

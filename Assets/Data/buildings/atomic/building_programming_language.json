@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROGRAMMING_LANGUAGE"
+   "define": "ART_DEF_BUILDING_PROGRAMMING_LANGUAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

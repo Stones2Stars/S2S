@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAT_SHRINE"
+   "define": "ART_DEF_BUILDING_CAT_SHRINE",
+   "notShownInCity": true
   }
  },
  "identity": {

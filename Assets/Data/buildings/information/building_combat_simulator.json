@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMBAT_SIMULATOR"
+   "define": "ART_DEF_BUILDING_COMBAT_SIMULATOR",
+   "notShownInCity": true
   }
  },
  "sound": {

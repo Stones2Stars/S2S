@@ -167,7 +167,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PORT"
+   "define": "ART_DEF_BUILDING_PORT",
+   "notShownInCity": true
   }
  },
  "sound": {

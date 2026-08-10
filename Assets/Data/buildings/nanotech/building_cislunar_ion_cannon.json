@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_ION_CANNON"
+   "define": "ART_DEF_BUILDING_CISLUNAR_ION_CANNON",
+   "notShownInCity": true
   }
  },
  "identity": {

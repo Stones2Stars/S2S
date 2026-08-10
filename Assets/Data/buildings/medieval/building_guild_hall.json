@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_HALL"
+   "define": "ART_DEF_BUILDING_GUILD_HALL",
+   "notShownInCity": true
   }
  },
  "sound": {

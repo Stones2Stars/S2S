@@ -122,7 +122,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_DEAD_SEA"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+   "notShownInCity": true
   }
  },
  "identity": {

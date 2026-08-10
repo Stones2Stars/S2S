@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_UKRAINIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_UKRAINIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

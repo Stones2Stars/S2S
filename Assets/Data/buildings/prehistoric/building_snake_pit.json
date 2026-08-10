@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SNAKE_PIT"
+   "define": "ART_DEF_BUILDING_SNAKE_PIT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BONEWORKER"
+   "define": "ART_DEF_BUILDING_BONEWORKER",
+   "notShownInCity": true
   }
  },
  "identity": {

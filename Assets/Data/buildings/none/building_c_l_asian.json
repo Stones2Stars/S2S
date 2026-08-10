@@ -154,7 +154,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ASIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ASIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

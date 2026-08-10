@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMELTER_IRON"
+   "define": "ART_DEF_BUILDING_SMELTER_IRON",
+   "notShownInCity": true
   }
  },
  "identity": {

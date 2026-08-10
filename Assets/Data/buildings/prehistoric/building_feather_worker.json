@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FEATHER_WORKER"
+   "define": "ART_DEF_BUILDING_FEATHER_WORKER",
+   "notShownInCity": true
   }
  },
  "sound": {

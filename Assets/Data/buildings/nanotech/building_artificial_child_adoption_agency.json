@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARTIFICIAL_CHILD_ADOPTION_AGENCY"
+   "define": "ART_DEF_BUILDING_ARTIFICIAL_CHILD_ADOPTION_AGENCY",
+   "notShownInCity": true
   }
  },
  "identity": {

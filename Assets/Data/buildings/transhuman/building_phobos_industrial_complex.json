@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PHOBOS_INDUSTRIAL_COMPLEX"
+   "define": "ART_DEF_BUILDING_PHOBOS_INDUSTRIAL_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

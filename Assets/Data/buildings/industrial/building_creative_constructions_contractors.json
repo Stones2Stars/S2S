@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CREATIVE_CONSTRUCTIONS_CONTRACTORS"
+   "define": "ART_DEF_BUILDING_CREATIVE_CONSTRUCTIONS_CONTRACTORS",
+   "notShownInCity": true
   }
  },
  "sound": {

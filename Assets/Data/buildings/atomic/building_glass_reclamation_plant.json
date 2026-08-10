@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GLASS_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_GLASS_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

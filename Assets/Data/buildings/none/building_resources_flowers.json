@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_FLOWERS"
+   "define": "ART_DEF_BUILDING_RESOURCES_FLOWERS",
+   "notShownInCity": true
   }
  },
  "identity": {

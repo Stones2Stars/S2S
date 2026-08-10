@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_MEGAFACTORY"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_MEGAFACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIGITAL_RESURRECTION"
+   "define": "ART_DEF_BUILDING_DIGITAL_RESURRECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

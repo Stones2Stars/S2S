@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIAMOND_NANOTHREAD_FOUNDRY"
+   "define": "ART_DEF_BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

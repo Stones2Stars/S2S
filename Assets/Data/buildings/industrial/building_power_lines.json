@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POWER_LINES"
+   "define": "ART_DEF_BUILDING_POWER_LINES",
+   "notShownInCity": true
   }
  },
  "identity": {

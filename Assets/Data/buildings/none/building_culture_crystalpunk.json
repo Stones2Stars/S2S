@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CRYSTALPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_CRYSTALPUNK",
+   "notShownInCity": true
   }
  },
  "identity": {

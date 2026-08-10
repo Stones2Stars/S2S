@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_DILATON_GENERATOR"
+   "define": "ART_DEF_BUILDING_CISLUNAR_DILATON_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

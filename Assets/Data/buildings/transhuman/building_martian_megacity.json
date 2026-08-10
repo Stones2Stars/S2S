@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_MEGACITY"
+   "define": "ART_DEF_BUILDING_MARTIAN_MEGACITY",
+   "notShownInCity": true
   }
  },
  "identity": {

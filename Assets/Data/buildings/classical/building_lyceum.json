@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LYCEUM"
+   "define": "ART_DEF_BUILDING_LYCEUM",
+   "notShownInCity": true
   }
  },
  "identity": {

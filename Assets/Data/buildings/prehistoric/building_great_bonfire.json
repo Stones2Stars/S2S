@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GREAT_BONFIRE"
+   "define": "ART_DEF_BUILDING_GREAT_BONFIRE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AQUAPONICS_TANKS"
+   "define": "ART_DEF_BUILDING_AQUAPONICS_TANKS",
+   "notShownInCity": true
   }
  },
  "identity": {

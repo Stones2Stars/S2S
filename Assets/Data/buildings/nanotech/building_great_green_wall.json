@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GREAT_GREEN_WALL"
+   "define": "ART_DEF_BUILDING_GREAT_GREEN_WALL",
+   "notShownInCity": true
   }
  },
  "identity": {

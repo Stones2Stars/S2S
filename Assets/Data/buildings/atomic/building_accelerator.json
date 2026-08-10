@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACCELERATOR"
+   "define": "ART_DEF_BUILDING_ACCELERATOR",
+   "notShownInCity": true
   }
  },
  "sound": {

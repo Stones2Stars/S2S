@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHINAMPA"
+   "define": "ART_DEF_BUILDING_CHINAMPA",
+   "notShownInCity": true
   }
  },
  "identity": {

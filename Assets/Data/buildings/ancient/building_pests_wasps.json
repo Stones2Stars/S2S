@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_WASPS"
+   "define": "ART_DEF_BUILDING_PESTS_WASPS",
+   "notShownInCity": true
   }
  },
  "identity": {

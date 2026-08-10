@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ORGANIC_MATERIAL_STORAGE"
+   "define": "ART_DEF_BUILDING_LUNAR_ORGANIC_MATERIAL_STORAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

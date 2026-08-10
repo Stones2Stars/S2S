@@ -148,7 +148,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOB_STOREFRONT"
+   "define": "ART_DEF_BUILDING_MOB_STOREFRONT",
+   "notShownInCity": true
   }
  },
  "identity": {

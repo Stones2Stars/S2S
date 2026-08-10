@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REALM_OF_TORMENT"
+   "define": "ART_DEF_BUILDING_REALM_OF_TORMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

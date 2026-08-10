@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SHUTTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SHUTTER",
+   "notShownInCity": true
   }
  },
  "identity": {

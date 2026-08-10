@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JEDDAH_TOWER"
+   "define": "ART_DEF_BUILDING_JEDDAH_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

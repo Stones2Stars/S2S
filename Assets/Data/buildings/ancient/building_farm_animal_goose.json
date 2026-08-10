@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_GOOSE"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_GOOSE",
+   "notShownInCity": true
   }
  },
  "sound": {

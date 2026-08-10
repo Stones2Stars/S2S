@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PSYCHIC_ADVISOR"
+   "define": "ART_DEF_BUILDING_PSYCHIC_ADVISOR",
+   "notShownInCity": true
   }
  },
  "identity": {

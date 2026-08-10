@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAP_RABBIT"
+   "define": "ART_DEF_BUILDING_TRAP_RABBIT",
+   "notShownInCity": true
   }
  },
  "identity": {

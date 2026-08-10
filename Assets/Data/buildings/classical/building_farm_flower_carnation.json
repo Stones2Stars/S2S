@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_CARNATION"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_CARNATION",
+   "notShownInCity": true
   }
  },
  "identity": {

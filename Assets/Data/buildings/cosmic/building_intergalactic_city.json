@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_CITY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

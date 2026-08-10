@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_COLOMBIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_COLOMBIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

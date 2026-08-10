@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LETHAL_INJECTION"
+   "define": "ART_DEF_BUILDING_LETHAL_INJECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

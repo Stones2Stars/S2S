@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STEEL_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_STEEL_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

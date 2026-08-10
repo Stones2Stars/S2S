@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_TIME_POLICE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_TIME_POLICE",
+   "notShownInCity": true
   }
  },
  "identity": {

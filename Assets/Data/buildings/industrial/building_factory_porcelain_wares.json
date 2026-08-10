@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PORCELAIN_WARES"
+   "define": "ART_DEF_BUILDING_FACTORY_PORCELAIN_WARES",
+   "notShownInCity": true
   }
  },
  "identity": {

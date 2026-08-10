@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ASTEROID_MINING_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

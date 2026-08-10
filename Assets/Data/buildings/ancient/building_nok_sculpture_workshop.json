@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NOK_SCULPTURE_WORKSHOP"
+   "define": "ART_DEF_BUILDING_NOK_SCULPTURE_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

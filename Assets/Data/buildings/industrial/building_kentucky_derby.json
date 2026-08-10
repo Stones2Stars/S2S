@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KENTUCKY_DERBY"
+   "define": "ART_DEF_BUILDING_KENTUCKY_DERBY",
+   "notShownInCity": true
   }
  },
  "identity": {

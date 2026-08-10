@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GARBAGE_SPACEPORT"
+   "define": "ART_DEF_BUILDING_GARBAGE_SPACEPORT",
+   "notShownInCity": true
   }
  },
  "sound": {

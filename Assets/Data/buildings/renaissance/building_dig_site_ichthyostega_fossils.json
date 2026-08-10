@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS"
+   "define": "ART_DEF_BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS",
+   "notShownInCity": true
   }
  },
  "identity": {

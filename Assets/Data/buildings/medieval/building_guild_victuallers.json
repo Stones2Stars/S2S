@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_VICTUALLERS"
+   "define": "ART_DEF_BUILDING_GUILD_VICTUALLERS",
+   "notShownInCity": true
   }
  },
  "identity": {

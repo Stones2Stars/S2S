@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOWN_HALL"
+   "define": "ART_DEF_BUILDING_TOWN_HALL",
+   "notShownInCity": true
   }
  },
  "sound": {

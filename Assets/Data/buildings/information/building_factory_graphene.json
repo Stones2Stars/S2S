@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_GRAPHENE"
+   "define": "ART_DEF_BUILDING_FACTORY_GRAPHENE",
+   "notShownInCity": true
   }
  },
  "identity": {

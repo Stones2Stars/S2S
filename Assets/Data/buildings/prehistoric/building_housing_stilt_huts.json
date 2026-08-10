@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_STILT_HUTS"
+   "define": "ART_DEF_BUILDING_HOUSING_STILT_HUTS",
+   "notShownInCity": true
   }
  },
  "identity": {

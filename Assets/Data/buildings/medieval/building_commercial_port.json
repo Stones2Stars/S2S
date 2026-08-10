@@ -185,7 +185,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMMERCIAL_PORT"
+   "define": "ART_DEF_BUILDING_COMMERCIAL_PORT",
+   "notShownInCity": true
   }
  },
  "sound": {

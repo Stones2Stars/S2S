@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGATOWER_EDUCATION_LEVEL"
+   "define": "ART_DEF_BUILDING_MEGATOWER_EDUCATION_LEVEL",
+   "notShownInCity": true
   }
  },
  "identity": {

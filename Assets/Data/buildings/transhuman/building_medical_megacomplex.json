@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEDICAL_MEGACOMPLEX"
+   "define": "ART_DEF_BUILDING_MEDICAL_MEGACOMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

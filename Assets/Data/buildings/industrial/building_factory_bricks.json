@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_BRICKS"
+   "define": "ART_DEF_BUILDING_FACTORY_BRICKS",
+   "notShownInCity": true
   }
  },
  "identity": {

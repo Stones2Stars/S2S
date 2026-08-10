@@ -111,7 +111,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GEMCUTTER"
+   "define": "ART_DEF_BUILDING_GEMCUTTER",
+   "notShownInCity": true
   }
  },
  "identity": {

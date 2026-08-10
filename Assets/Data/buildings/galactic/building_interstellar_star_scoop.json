@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_STAR_SCOOP"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STAR_SCOOP",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_TRADITION_ARCHERY"
+   "define": "ART_DEF_BUILDING_EFFECT_TRADITION_ARCHERY",
+   "notShownInCity": true
   }
  },
  "identity": {

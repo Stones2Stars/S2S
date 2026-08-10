@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STARFLEET_ACADEMY"
+   "define": "ART_DEF_BUILDING_STARFLEET_ACADEMY",
+   "notShownInCity": true
   }
  },
  "identity": {

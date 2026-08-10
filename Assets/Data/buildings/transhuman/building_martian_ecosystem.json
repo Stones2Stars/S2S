@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_ECOSYSTEM"
+   "define": "ART_DEF_BUILDING_MARTIAN_ECOSYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

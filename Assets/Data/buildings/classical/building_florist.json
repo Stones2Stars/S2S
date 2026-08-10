@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FLORIST"
+   "define": "ART_DEF_BUILDING_FLORIST",
+   "notShownInCity": true
   }
  },
  "sound": {

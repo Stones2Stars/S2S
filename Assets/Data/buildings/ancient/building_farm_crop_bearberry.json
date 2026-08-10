@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_BEARBERRY"
+   "define": "ART_DEF_BUILDING_FARM_CROP_BEARBERRY",
+   "notShownInCity": true
   }
  },
  "identity": {

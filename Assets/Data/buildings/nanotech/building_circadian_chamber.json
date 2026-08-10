@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIRCADIAN_CHAMBER"
+   "define": "ART_DEF_BUILDING_CIRCADIAN_CHAMBER",
+   "notShownInCity": true
   }
  },
  "identity": {

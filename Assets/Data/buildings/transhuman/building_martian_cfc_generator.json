@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_CFC_GENERATOR"
+   "define": "ART_DEF_BUILDING_MARTIAN_CFC_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

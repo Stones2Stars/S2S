@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_GINKGO"
+   "define": "ART_DEF_BUILDING_GROVE_GINKGO",
+   "notShownInCity": true
   }
  },
  "identity": {

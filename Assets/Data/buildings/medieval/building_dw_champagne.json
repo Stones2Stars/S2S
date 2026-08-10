@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHAMPAGNE"
+   "define": "ART_DEF_BUILDING_CHAMPAGNE",
+   "notShownInCity": true
   }
  },
  "identity": {

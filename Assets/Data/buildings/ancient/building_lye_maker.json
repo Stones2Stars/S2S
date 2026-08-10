@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LYE_MAKER"
+   "define": "ART_DEF_BUILDING_LYE_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

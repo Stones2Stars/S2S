@@ -159,7 +159,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THRONE_ROOM"
+   "define": "ART_DEF_BUILDING_THRONE_ROOM",
+   "notShownInCity": true
   }
  },
  "identity": {

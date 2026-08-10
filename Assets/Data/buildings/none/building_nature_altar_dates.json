@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_ALTAR_DATES"
+   "define": "ART_DEF_BUILDING_NATURE_ALTAR_DATES",
+   "notShownInCity": true
   }
  },
  "sound": {

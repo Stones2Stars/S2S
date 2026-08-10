@@ -156,7 +156,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CITY_BISTRO"
+   "define": "ART_DEF_BUILDING_CITY_BISTRO",
+   "notShownInCity": true
   }
  },
  "identity": {

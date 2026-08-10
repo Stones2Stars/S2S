@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIADUCT"
+   "define": "ART_DEF_BUILDING_VIADUCT",
+   "notShownInCity": true
   }
  },
  "identity": {

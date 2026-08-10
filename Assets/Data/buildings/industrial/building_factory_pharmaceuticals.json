@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PHARMACEUTICALS"
+   "define": "ART_DEF_BUILDING_FACTORY_PHARMACEUTICALS",
+   "notShownInCity": true
   }
  },
  "identity": {

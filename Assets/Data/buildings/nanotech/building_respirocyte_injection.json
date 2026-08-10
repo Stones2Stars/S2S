@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESPIROCYTE_INJECTION"
+   "define": "ART_DEF_BUILDING_RESPIROCYTE_INJECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

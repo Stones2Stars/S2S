@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_INFLATABLE_HABITAT"
+   "define": "ART_DEF_BUILDING_CISLUNAR_INFLATABLE_HABITAT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_HOTEL_INFINITE"
+   "define": "ART_DEF_BUILDING_DISTANT_HOTEL_INFINITE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_MUSHROOMS"
+   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_MUSHROOMS",
+   "notShownInCity": true
   }
  },
  "sound": {

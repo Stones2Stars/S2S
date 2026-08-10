@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAD_STUDIO"
+   "define": "ART_DEF_BUILDING_CAD_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

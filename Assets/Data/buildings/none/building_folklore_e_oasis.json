@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_E_OASIS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_E_OASIS",
+   "notShownInCity": true
   }
  },
  "identity": {

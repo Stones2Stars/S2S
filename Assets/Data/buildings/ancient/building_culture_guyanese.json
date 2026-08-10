@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_GUYANESE"
+   "define": "ART_DEF_BUILDING_CULTURE_GUYANESE",
+   "notShownInCity": true
   }
  },
  "identity": {

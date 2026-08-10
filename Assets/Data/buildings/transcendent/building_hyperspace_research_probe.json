@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_RESEARCH_PROBE"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_RESEARCH_PROBE",
+   "notShownInCity": true
   }
  },
  "identity": {

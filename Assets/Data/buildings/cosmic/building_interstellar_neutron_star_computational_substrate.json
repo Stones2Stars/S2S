@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE",
+   "notShownInCity": true
   }
  },
  "identity": {

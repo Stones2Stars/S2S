@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TOBA"
+   "define": "ART_DEF_BUILDING_CULTURE_TOBA",
+   "notShownInCity": true
   }
  },
  "identity": {

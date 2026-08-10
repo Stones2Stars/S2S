@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENERGIZED_CRYSTALS"
+   "define": "ART_DEF_BUILDING_ENERGIZED_CRYSTALS",
+   "notShownInCity": true
   }
  },
  "identity": {

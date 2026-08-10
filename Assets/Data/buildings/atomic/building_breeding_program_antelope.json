@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_ANTELOPE"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_ANTELOPE",
+   "notShownInCity": true
   }
  },
  "identity": {

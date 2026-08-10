@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_DRAPERS"
+   "define": "ART_DEF_BUILDING_GUILD_DRAPERS",
+   "notShownInCity": true
   }
  },
  "identity": {

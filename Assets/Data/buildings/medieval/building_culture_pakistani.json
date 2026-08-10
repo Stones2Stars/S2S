@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_PAKISTANI"
+   "define": "ART_DEF_BUILDING_CULTURE_PAKISTANI",
+   "notShownInCity": true
   }
  },
  "identity": {

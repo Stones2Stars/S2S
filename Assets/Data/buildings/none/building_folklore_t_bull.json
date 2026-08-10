@@ -115,7 +115,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_BULL"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_BULL",
+   "notShownInCity": true
   }
  },
  "identity": {

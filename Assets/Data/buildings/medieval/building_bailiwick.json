@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BAILIWICK"
+   "define": "ART_DEF_BUILDING_BAILIWICK",
+   "notShownInCity": true
   }
  },
  "identity": {

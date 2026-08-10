@@ -163,7 +163,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AQUARIUM"
+   "define": "ART_DEF_BUILDING_AQUARIUM",
+   "notShownInCity": true
   }
  },
  "sound": {

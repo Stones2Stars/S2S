@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_HOGANS"
+   "define": "ART_DEF_BUILDING_HOUSING_HOGANS",
+   "notShownInCity": true
   }
  },
  "identity": {

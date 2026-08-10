@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_IQ_TESTING_CENTER"
+   "define": "ART_DEF_BUILDING_IQ_TESTING_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

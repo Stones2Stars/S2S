@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LANDMINES"
+   "define": "ART_DEF_BUILDING_LANDMINES",
+   "notShownInCity": true
   }
  },
  "sound": {

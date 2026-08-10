@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FLETCHERS_HUT"
+   "define": "ART_DEF_BUILDING_FLETCHERS_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OIL_REFINERY"
+   "define": "ART_DEF_BUILDING_OIL_REFINERY",
+   "notShownInCity": true
   }
  },
  "sound": {

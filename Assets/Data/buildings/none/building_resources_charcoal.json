@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_CHARCOAL"
+   "define": "ART_DEF_BUILDING_RESOURCES_CHARCOAL",
+   "notShownInCity": true
   }
  },
  "identity": {

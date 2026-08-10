@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SLOVENIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_SLOVENIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

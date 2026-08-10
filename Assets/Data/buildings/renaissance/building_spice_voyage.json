@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPICE_VOYAGE"
+   "define": "ART_DEF_BUILDING_SPICE_VOYAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

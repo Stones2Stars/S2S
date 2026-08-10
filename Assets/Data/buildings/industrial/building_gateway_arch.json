@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GATEWAY_ARCH"
+   "define": "ART_DEF_BUILDING_GATEWAY_ARCH",
+   "notShownInCity": true
   }
  },
  "identity": {

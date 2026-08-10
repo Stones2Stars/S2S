@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUARD_TOWER"
+   "define": "ART_DEF_BUILDING_GUARD_TOWER",
+   "notShownInCity": true
   }
  },
  "sound": {

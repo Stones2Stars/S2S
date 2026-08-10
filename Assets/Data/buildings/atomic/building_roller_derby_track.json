@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROLLER_DERBY_TRACK"
+   "define": "ART_DEF_BUILDING_ROLLER_DERBY_TRACK",
+   "notShownInCity": true
   }
  },
  "identity": {

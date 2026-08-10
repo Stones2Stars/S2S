@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLAYTRONIC_FIRE_SUPPRESSION"
+   "define": "ART_DEF_BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
+   "notShownInCity": true
   }
  },
  "identity": {

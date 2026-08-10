@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_ALGAE"
+   "define": "ART_DEF_BUILDING_FARM_CROP_ALGAE",
+   "notShownInCity": true
   }
  },
  "identity": {

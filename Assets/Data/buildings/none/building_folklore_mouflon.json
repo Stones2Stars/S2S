@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_MOUFLON"
+   "define": "ART_DEF_BUILDING_FOLKLORE_MOUFLON",
+   "notShownInCity": true
   }
  },
  "identity": {

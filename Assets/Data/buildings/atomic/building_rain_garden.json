@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RAIN_GARDEN"
+   "define": "ART_DEF_BUILDING_RAIN_GARDEN",
+   "notShownInCity": true
   }
  },
  "identity": {

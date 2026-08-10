@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_KLIKISS_TORCH"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_KLIKISS_TORCH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HIGHWAY"
+   "define": "ART_DEF_BUILDING_HIGHWAY",
+   "notShownInCity": true
   }
  },
  "sound": {

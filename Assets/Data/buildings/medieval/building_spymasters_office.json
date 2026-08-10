@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPYMASTERS_OFFICE"
+   "define": "ART_DEF_BUILDING_SPYMASTERS_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

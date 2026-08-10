@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_QUANTUM_DOT_FACTORY"
+   "define": "ART_DEF_BUILDING_QUANTUM_DOT_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

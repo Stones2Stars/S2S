@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_BIG_BANG_PROBE"
+   "define": "ART_DEF_BUILDING_DISTANT_BIG_BANG_PROBE",
+   "notShownInCity": true
   }
  },
  "identity": {

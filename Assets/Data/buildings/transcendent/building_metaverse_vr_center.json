@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METAVERSE_VR_CENTER"
+   "define": "ART_DEF_BUILDING_METAVERSE_VR_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

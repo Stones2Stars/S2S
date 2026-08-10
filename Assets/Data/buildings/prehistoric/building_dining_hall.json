@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DINING_HALL"
+   "define": "ART_DEF_BUILDING_DINING_HALL",
+   "notShownInCity": true
   }
  },
  "identity": {

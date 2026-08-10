@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ADVANCED_FLOODWALL"
+   "define": "ART_DEF_BUILDING_ADVANCED_FLOODWALL",
+   "notShownInCity": true
   }
  },
  "identity": {

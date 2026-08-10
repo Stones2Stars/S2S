@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MODERN_CARTOGRAPHER"
+   "define": "ART_DEF_BUILDING_MODERN_CARTOGRAPHER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TANZANIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_TANZANIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

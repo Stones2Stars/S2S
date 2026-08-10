@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PARKING_METERS"
+   "define": "ART_DEF_BUILDING_PARKING_METERS",
+   "notShownInCity": true
   }
  },
  "identity": {

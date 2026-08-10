@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHANGDEOKGUNG"
+   "define": "ART_DEF_BUILDING_CHANGDEOKGUNG",
+   "notShownInCity": true
   }
  },
  "identity": {

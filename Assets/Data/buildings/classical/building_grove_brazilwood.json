@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_BRAZILWOOD"
+   "define": "ART_DEF_BUILDING_GROVE_BRAZILWOOD",
+   "notShownInCity": true
   }
  },
  "identity": {

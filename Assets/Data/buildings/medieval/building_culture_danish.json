@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_DANISH"
+   "define": "ART_DEF_BUILDING_CULTURE_DANISH",
+   "notShownInCity": true
   }
  },
  "identity": {

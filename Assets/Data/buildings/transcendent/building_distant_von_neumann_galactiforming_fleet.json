@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET"
+   "define": "ART_DEF_BUILDING_DISTANT_VON_NEUMANN_GALACTIFORMING_FLEET",
+   "notShownInCity": true
   }
  },
  "identity": {

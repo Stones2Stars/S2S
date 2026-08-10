@@ -152,7 +152,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METAMATERIAL_FOUNDRY"
+   "define": "ART_DEF_BUILDING_METAMATERIAL_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

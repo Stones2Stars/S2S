@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EUROPA_VERTICAL_REEF"
+   "define": "ART_DEF_BUILDING_EUROPA_VERTICAL_REEF",
+   "notShownInCity": true
   }
  },
  "identity": {

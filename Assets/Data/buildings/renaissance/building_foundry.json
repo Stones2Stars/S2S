@@ -190,7 +190,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOUNDRY"
+   "define": "ART_DEF_BUILDING_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "sound": {

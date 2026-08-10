@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSONIC_TERMINAL"
+   "define": "ART_DEF_BUILDING_HYPERSONIC_TERMINAL",
+   "notShownInCity": true
   }
  },
  "identity": {

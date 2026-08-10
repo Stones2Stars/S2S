@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_HORSE"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_HORSE",
+   "notShownInCity": true
   }
  },
  "sound": {

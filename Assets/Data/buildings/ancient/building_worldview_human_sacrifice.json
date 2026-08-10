@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+   "define": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+   "notShownInCity": true
   }
  },
  "sound": {

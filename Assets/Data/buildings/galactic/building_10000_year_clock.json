@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_10000_YEAR_CLOCK"
+   "define": "ART_DEF_BUILDING_10000_YEAR_CLOCK",
+   "notShownInCity": true
   }
  },
  "identity": {

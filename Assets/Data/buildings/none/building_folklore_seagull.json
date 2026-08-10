@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_SEAGULL"
+   "define": "ART_DEF_BUILDING_FOLKLORE_SEAGULL",
+   "notShownInCity": true
   }
  },
  "identity": {

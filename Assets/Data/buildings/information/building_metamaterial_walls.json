@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METAMATERIAL_WALLS"
+   "define": "ART_DEF_BUILDING_METAMATERIAL_WALLS",
+   "notShownInCity": true
   }
  },
  "sound": {

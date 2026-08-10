@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHAIN_BRIDGE"
+   "define": "ART_DEF_BUILDING_CHAIN_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY"
+   "define": "ART_DEF_BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

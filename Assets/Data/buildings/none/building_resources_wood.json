@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_WOOD"
+   "define": "ART_DEF_BUILDING_RESOURCES_WOOD",
+   "notShownInCity": true
   }
  },
  "identity": {

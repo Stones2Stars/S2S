@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_ORANGE"
+   "define": "ART_DEF_BUILDING_ORCHARD_ORANGE",
+   "notShownInCity": true
   }
  },
  "identity": {

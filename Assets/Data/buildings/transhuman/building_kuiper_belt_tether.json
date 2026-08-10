@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KUIPER_BELT_TETHER"
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_TETHER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COUNTING_STICKS"
+   "define": "ART_DEF_BUILDING_COUNTING_STICKS",
+   "notShownInCity": true
   }
  },
  "identity": {

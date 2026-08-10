@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURAL_GAS_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_NATURAL_GAS_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

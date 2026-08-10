@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OPERA"
+   "define": "ART_DEF_BUILDING_OPERA",
+   "notShownInCity": true
   }
  },
  "sound": {

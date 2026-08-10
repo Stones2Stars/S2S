@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY",
+   "notShownInCity": true
   }
  },
  "identity": {

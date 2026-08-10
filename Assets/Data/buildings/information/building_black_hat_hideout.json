@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BLACK_HAT_HIDEOUT"
+   "define": "ART_DEF_BUILDING_BLACK_HAT_HIDEOUT",
+   "notShownInCity": true
   }
  },
  "sound": {

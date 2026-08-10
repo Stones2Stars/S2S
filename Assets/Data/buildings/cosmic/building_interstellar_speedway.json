@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_SPEEDWAY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SPEEDWAY",
+   "notShownInCity": true
   }
  },
  "sound": {

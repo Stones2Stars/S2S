@@ -209,7 +209,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+   "define": "ART_DEF_BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+   "notShownInCity": true
   }
  },
  "identity": {

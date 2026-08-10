@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BASKET_MAKERS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_BASKET_MAKERS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

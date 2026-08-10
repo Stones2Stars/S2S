@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_SUN_SCOOP"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SUN_SCOOP",
+   "notShownInCity": true
   }
  },
  "identity": {

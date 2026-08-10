@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_ELEPHANT"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_ELEPHANT",
+   "notShownInCity": true
   }
  },
  "sound": {

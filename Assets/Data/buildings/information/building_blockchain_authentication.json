@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BLOCKCHAIN_AUTHENTICATION"
+   "define": "ART_DEF_BUILDING_BLOCKCHAIN_AUTHENTICATION",
+   "notShownInCity": true
   }
  },
  "identity": {

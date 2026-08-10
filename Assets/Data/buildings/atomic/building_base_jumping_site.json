@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BASE_JUMPING_SITE"
+   "define": "ART_DEF_BUILDING_BASE_JUMPING_SITE",
+   "notShownInCity": true
   }
  },
  "identity": {

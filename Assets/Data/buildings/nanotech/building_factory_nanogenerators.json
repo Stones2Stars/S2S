@@ -106,7 +106,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_NANOGENERATORS"
+   "define": "ART_DEF_BUILDING_FACTORY_NANOGENERATORS",
+   "notShownInCity": true
   }
  },
  "identity": {

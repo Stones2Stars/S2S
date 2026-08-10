@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARSHALS_OFFICE"
+   "define": "ART_DEF_BUILDING_MARSHALS_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

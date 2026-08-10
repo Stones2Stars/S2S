@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COSTUME_SHOP"
+   "define": "ART_DEF_BUILDING_COSTUME_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_LLAMA"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_LLAMA",
+   "notShownInCity": true
   }
  },
  "sound": {

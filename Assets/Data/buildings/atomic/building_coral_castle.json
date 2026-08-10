@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CORAL_CASTLE"
+   "define": "ART_DEF_BUILDING_CORAL_CASTLE",
+   "notShownInCity": true
   }
  },
  "identity": {

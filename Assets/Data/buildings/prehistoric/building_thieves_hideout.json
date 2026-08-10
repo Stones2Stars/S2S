@@ -119,7 +119,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THIEVES_HIDEOUT"
+   "define": "ART_DEF_BUILDING_THIEVES_HIDEOUT",
+   "notShownInCity": true
   }
  },
  "identity": {

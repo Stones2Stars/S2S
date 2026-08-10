@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_ZEBRAS"
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_ZEBRAS",
+   "notShownInCity": true
   }
  },
  "sound": {

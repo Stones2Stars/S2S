@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ONLINE_GENEALOGY_CENTER"
+   "define": "ART_DEF_BUILDING_ONLINE_GENEALOGY_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

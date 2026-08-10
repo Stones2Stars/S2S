@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID",
+   "notShownInCity": true
   }
  },
  "identity": {

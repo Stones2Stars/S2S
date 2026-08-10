@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERNATIONAL_DOG_SHOW"
+   "define": "ART_DEF_BUILDING_INTERNATIONAL_DOG_SHOW",
+   "notShownInCity": true
   }
  },
  "identity": {

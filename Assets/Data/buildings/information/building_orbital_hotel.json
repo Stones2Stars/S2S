@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORBITAL_HOTEL"
+   "define": "ART_DEF_BUILDING_ORBITAL_HOTEL",
+   "notShownInCity": true
   }
  },
  "sound": {

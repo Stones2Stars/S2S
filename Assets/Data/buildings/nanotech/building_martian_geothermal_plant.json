@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_GEOTHERMAL_PLANT"
+   "define": "ART_DEF_BUILDING_MARTIAN_GEOTHERMAL_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -197,7 +197,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_AMERICAN"
+   "define": "ART_DEF_BUILDING_CULTURE_AMERICAN",
+   "notShownInCity": true
   }
  },
  "identity": {

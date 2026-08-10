@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_ELEPHANT"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_ELEPHANT",
+   "notShownInCity": true
   }
  },
  "sound": {

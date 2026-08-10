@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT"
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

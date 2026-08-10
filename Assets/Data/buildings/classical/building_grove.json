@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE"
+   "define": "ART_DEF_BUILDING_GROVE",
+   "notShownInCity": true
   }
  },
  "sound": {

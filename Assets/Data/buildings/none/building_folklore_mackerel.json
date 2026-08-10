@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_MACKEREL"
+   "define": "ART_DEF_BUILDING_FOLKLORE_MACKEREL",
+   "notShownInCity": true
   }
  },
  "identity": {

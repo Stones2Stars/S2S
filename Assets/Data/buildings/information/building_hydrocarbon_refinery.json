@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYDROCARBON_REFINERY"
+   "define": "ART_DEF_BUILDING_HYDROCARBON_REFINERY",
+   "notShownInCity": true
   }
  },
  "identity": {

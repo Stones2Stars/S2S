@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTROLOGY_SCHOOL"
+   "define": "ART_DEF_BUILDING_ASTROLOGY_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

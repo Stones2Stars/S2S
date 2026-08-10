@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WORLD_ELECTRIC_GRID"
+   "define": "ART_DEF_BUILDING_WORLD_ELECTRIC_GRID",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS",
+   "notShownInCity": true
   }
  },
  "identity": {

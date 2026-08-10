@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_ENLIGHTENED"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ENLIGHTENED",
+   "notShownInCity": true
   }
  },
  "identity": {

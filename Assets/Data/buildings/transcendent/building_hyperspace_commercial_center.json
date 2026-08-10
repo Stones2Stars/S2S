@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_COMMERCIAL_CENTER"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MODERN_WAREHOUSE"
+   "define": "ART_DEF_BUILDING_MODERN_WAREHOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

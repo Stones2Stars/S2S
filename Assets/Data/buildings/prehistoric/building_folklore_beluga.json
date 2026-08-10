@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_BELUGA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_BELUGA",
+   "notShownInCity": true
   }
  },
  "identity": {

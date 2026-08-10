@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_PIGEON"
+   "define": "ART_DEF_BUILDING_FOLKLORE_PIGEON",
+   "notShownInCity": true
   }
  },
  "identity": {

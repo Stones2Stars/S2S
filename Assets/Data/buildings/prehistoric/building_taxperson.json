@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TAXPERSON"
+   "define": "ART_DEF_BUILDING_TAXPERSON",
+   "notShownInCity": true
   }
  },
  "sound": {

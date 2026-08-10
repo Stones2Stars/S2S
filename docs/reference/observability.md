@@ -29,6 +29,22 @@
 - `OutputDebugString` is `#define`d to nothing under `FINAL_RELEASE` — it fires only in Release/Assert/Debug (any
   "fires in FinalRelease, CRIT" framing is wrong for the shipped build).
 
+## ⛔ A DOMAIN GETS ITS OWN LOG FILE — `Cascade.log` IS NOT THE DEFAULT (owner)
+
+> *"We really should stop having all these emits in the same file; `Cascade.log` is getting ridiculous as is."*
+
+`spineRegisterDomain` already takes the file as a parameter, and passing **`NULL` routes the domain into
+`Cascade.log`** — which is why they all ended up there. That is a per-registration choice, not a constraint:
+name the file.
+
+⚑ **The cost of not doing it is that the file stops being readable at the level you need.** A domain emitting at
+level 3 buries a level-1 line from another domain in the same file, so turning the volume up on ONE question
+costs legibility on every other — and the whole point of a spine-written file is that it is readable while the
+game runs.
+⚠ **This is not a sweep of the existing domains**, and it is not a backlog item: the ones sharing `Cascade.log`
+keep working. It binds NEW domains, and an existing one moves when someone is already in it — the same
+opportunistic disposition the contradicting-comment rule takes ([AGENTS.md](../../AGENTS.md) Conventions §Docs).
+
 ## Domain / tag registry
 
 14 domains, each `[TAG]` prefix → log file → scope global → source: e.g. `[WAI]` → `BuildEvaluation.log` →
@@ -95,6 +111,26 @@ purge; the gauge needs a surface again when the route table is rebuilt.
 - Predecessor surfaces (the flat `/units`/`/players`/`/cities` snapshot routes, the `/diagnostic/*` grab-bag, the
   cascade-vs-legacy `/shadow` sweeps) are gone and are not to be revived; the `/shadow` tombstone is
   [superseded-ideas](../architecture/superseded-ideas.md) #12.
+
+## ⚑ `LSystem.log` — the EXE's own city-render log, and the one surface that shows ART FAILING
+
+A THIRD kind of log sits beside the spine-written domains and the legacy `gDLL->logMsg` sinks: **the closed EXE
+writes `LSystem.log` itself**, recording how it lays a city out from `XML/Buildings/CIV4CityLSystem.xml`. Nothing
+in this repo emits it and no gate controls it, so it is readable like a spine log and answers a question no DLL
+surface can: **what the render engine did with what we handed it.**
+
+⚑ **It is how an art gap becomes VISIBLE rather than merely suspected.** The lines that matter are
+`Warning: building <id> is not associated with a CvCityLSystem node; it will not be visible!`, the
+`does not contain a node called SHADOW` complaints (the engine loading `Art/Empty.nif` and trying to shadow it),
+and `Failed to place goal building <ART_DEF>` / `Layout failed to complete while adding generic buildings!` —
+i.e. the engine hunting for art that is not there, per layout rebuild, per city.
+⚠ **The id is the building's RUNTIME INDEX**, so it reads as meaningless until resolved through the category's
+`_order.json` manifest ([engine.md](engine.md) § Info loading) — resolve it before concluding anything about
+which building is at fault.
+⛔ A warning naming a building that HAS real art and real scale is an **art-XML** gap (the entity is missing from
+`CIV4CityLSystem.xml`), which is the ART carve-out ([roadmap.md](../plans/structural-cleanup/roadmap.md) scope
+decision 3) — not a DLL defect. One that names an art-LESS building is ours: the city offered the engine
+something it was never meant to place.
 
 ## The field census (event-spine migration input)
 

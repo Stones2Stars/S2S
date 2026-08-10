@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BARK_GATHERER"
+   "define": "ART_DEF_BUILDING_BARK_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

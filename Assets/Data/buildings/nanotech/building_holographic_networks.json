@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_NETWORKS"
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_NETWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

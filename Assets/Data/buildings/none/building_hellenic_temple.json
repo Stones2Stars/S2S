@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HELLENIC_TEMPLE"
+   "define": "ART_DEF_BUILDING_HELLENIC_TEMPLE",
+   "notShownInCity": true
   }
  },
  "sound": {

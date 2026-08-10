@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT"
+   "define": "ART_DEF_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
+   "notShownInCity": true
   }
  },
  "identity": {

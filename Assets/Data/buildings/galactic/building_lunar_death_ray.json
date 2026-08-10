@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_DEATH_RAY"
+   "define": "ART_DEF_BUILDING_LUNAR_DEATH_RAY",
+   "notShownInCity": true
   }
  },
  "identity": {

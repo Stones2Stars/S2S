@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DATA_COLLECTION"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DATA_COLLECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

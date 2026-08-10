@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORGANIC_COMPUTER_LAB"
+   "define": "ART_DEF_BUILDING_ORGANIC_COMPUTER_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

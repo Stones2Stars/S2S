@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_ONEILL_CYLINDER"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+   "notShownInCity": true
   }
  },
  "identity": {

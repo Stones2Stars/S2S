@@ -137,7 +137,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STARPORT"
+   "define": "ART_DEF_BUILDING_STARPORT",
+   "notShownInCity": true
   }
  },
  "identity": {

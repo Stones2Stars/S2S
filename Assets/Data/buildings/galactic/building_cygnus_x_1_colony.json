@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CYGNUS_X_1_COLONY"
+   "define": "ART_DEF_BUILDING_CYGNUS_X_1_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

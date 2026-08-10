@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PERSONAL_SPACECRAFT_FACTORY"
+   "define": "ART_DEF_BUILDING_PERSONAL_SPACECRAFT_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

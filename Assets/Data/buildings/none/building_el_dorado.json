@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EL_DORADO"
+   "define": "ART_DEF_BUILDING_EL_DORADO",
+   "notShownInCity": true
   }
  },
  "sound": {

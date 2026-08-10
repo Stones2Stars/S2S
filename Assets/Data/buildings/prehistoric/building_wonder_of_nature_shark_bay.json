@@ -111,7 +111,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_SHARK_BAY"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_SHARK_BAY",
+   "notShownInCity": true
   }
  },
  "identity": {

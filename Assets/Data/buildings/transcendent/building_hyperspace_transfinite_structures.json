@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+   "notShownInCity": true
   }
  },
  "identity": {

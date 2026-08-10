@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
+   "define": "ART_DEF_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+   "notShownInCity": true
   }
  },
  "identity": {

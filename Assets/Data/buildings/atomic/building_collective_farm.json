@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COLLECTIVE_FARM"
+   "define": "ART_DEF_BUILDING_COLLECTIVE_FARM",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ANIMATED_PREON_STAR"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ANIMATED_PREON_STAR",
+   "notShownInCity": true
   }
  },
  "identity": {

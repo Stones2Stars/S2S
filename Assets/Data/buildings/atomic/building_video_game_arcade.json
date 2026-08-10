@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIDEO_GAME_ARCADE"
+   "define": "ART_DEF_BUILDING_VIDEO_GAME_ARCADE",
+   "notShownInCity": true
   }
  },
  "identity": {

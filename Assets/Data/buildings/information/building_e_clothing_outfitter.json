@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_E_CLOTHING_OUTFITTER"
+   "define": "ART_DEF_BUILDING_E_CLOTHING_OUTFITTER",
+   "notShownInCity": true
   }
  },
  "identity": {

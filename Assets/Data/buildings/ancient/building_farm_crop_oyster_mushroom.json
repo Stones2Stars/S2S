@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_OYSTER_MUSHROOM"
+   "define": "ART_DEF_BUILDING_FARM_CROP_OYSTER_MUSHROOM",
+   "notShownInCity": true
   }
  },
  "identity": {

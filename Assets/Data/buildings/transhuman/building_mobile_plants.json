@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOBILE_PLANTS"
+   "define": "ART_DEF_BUILDING_MOBILE_PLANTS",
+   "notShownInCity": true
   }
  },
  "identity": {

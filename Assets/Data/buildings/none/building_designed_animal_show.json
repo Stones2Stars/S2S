@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DESIGNED_ANIMAL_SHOW"
+   "define": "ART_DEF_BUILDING_DESIGNED_ANIMAL_SHOW",
+   "notShownInCity": true
   }
  },
  "identity": {

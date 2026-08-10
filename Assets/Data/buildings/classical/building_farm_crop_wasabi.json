@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_WASABI"
+   "define": "ART_DEF_BUILDING_FARM_CROP_WASABI",
+   "notShownInCity": true
   }
  },
  "identity": {

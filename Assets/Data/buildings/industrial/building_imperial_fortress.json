@@ -237,7 +237,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_IMPERIAL_FORTRESS"
+   "define": "ART_DEF_BUILDING_IMPERIAL_FORTRESS",
+   "notShownInCity": true
   }
  },
  "identity": {

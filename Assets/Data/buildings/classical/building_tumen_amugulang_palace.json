@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TUMEN_AMUGULANG_PALACE"
+   "define": "ART_DEF_BUILDING_TUMEN_AMUGULANG_PALACE",
+   "notShownInCity": true
   }
  },
  "identity": {

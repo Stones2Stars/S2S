@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPIKED_PIT_TRAPS"
+   "define": "ART_DEF_BUILDING_SPIKED_PIT_TRAPS",
+   "notShownInCity": true
   }
  },
  "sound": {

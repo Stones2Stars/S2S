@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS"
+   "define": "ART_DEF_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+   "notShownInCity": true
   }
  },
  "identity": {

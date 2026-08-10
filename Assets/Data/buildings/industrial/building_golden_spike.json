@@ -136,7 +136,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GOLDEN_SPIKE"
+   "define": "ART_DEF_BUILDING_GOLDEN_SPIKE",
+   "notShownInCity": true
   }
  },
  "identity": {

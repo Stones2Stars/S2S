@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CARAL_SUPE"
+   "define": "ART_DEF_BUILDING_CULTURE_CARAL_SUPE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PATTAKY_OF_OGGUN"
+   "define": "ART_DEF_BUILDING_PATTAKY_OF_OGGUN",
+   "notShownInCity": true
   }
  },
  "sound": {

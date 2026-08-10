@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_THOUGHT"
+   "define": "ART_DEF_BUILDING_DEEP_THOUGHT",
+   "notShownInCity": true
   }
  },
  "identity": {

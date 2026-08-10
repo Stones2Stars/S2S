@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CYBERNETICA_APPAREL_SHOP"
+   "define": "ART_DEF_BUILDING_CYBERNETICA_APPAREL_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

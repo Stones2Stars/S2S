@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_SICK_BAY"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SICK_BAY",
+   "notShownInCity": true
   }
  },
  "identity": {

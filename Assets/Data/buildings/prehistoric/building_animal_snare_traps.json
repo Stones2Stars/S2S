@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_SNARE_TRAPS"
+   "define": "ART_DEF_BUILDING_ANIMAL_SNARE_TRAPS",
+   "notShownInCity": true
   }
  },
  "identity": {

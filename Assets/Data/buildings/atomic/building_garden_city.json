@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GARDEN_CITY"
+   "define": "ART_DEF_BUILDING_GARDEN_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

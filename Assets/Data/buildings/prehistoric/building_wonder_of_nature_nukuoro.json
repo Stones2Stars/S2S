@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_NUKUORO"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_NUKUORO",
+   "notShownInCity": true
   }
  },
  "identity": {

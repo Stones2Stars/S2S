@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_DUGONG"
+   "define": "ART_DEF_BUILDING_FOLKLORE_DUGONG",
+   "notShownInCity": true
   }
  },
  "identity": {

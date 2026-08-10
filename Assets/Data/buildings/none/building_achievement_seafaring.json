@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACHIEVEMENT_SEAFARING"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_SEAFARING",
+   "notShownInCity": true
   }
  },
  "identity": {

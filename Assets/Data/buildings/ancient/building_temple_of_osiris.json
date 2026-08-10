@@ -130,7 +130,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_OSIRIS"
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_OSIRIS",
+   "notShownInCity": true
   }
  },
  "sound": {

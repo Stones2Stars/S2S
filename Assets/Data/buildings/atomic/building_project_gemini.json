@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROJECT_GEMINI"
+   "define": "ART_DEF_BUILDING_PROJECT_GEMINI",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_ALCOHOL"
+   "define": "ART_DEF_BUILDING_RESOURCES_ALCOHOL",
+   "notShownInCity": true
   }
  },
  "identity": {

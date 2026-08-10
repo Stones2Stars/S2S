@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASPHALT_ROADS"
+   "define": "ART_DEF_BUILDING_ASPHALT_ROADS",
+   "notShownInCity": true
   }
  },
  "sound": {

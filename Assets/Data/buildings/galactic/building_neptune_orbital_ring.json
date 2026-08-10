@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEPTUNE_ORBITAL_RING"
+   "define": "ART_DEF_BUILDING_NEPTUNE_ORBITAL_RING",
+   "notShownInCity": true
   }
  },
  "identity": {

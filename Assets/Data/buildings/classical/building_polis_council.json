@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POLIS_COUNCIL"
+   "define": "ART_DEF_BUILDING_POLIS_COUNCIL",
+   "notShownInCity": true
   }
  },
  "sound": {

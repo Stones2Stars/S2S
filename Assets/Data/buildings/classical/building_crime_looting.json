@@ -118,7 +118,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROPERTYCRIME"
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
   }
  },
  "identity": {

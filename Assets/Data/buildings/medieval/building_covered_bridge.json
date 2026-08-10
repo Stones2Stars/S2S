@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COVERED_BRIDGE"
+   "define": "ART_DEF_BUILDING_COVERED_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

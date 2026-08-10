@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUILD_SERVANTS"
+   "define": "ART_DEF_BUILDING_GUILD_SERVANTS",
+   "notShownInCity": true
   }
  },
  "identity": {

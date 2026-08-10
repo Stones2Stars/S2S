@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BONFIRE"
+   "define": "ART_DEF_BUILDING_BONFIRE",
+   "notShownInCity": true
   }
  },
  "identity": {

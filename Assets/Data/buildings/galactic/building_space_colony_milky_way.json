@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_COLONY_MILKY_WAY"
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_MILKY_WAY",
+   "notShownInCity": true
   }
  },
  "identity": {

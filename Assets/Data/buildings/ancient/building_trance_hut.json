@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANCE_HUT"
+   "define": "ART_DEF_BUILDING_TRANCE_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

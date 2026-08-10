@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIELD_GENERATOR"
+   "define": "ART_DEF_BUILDING_FIELD_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_SUGARLOAF"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_SUGARLOAF",
+   "notShownInCity": true
   }
  },
  "identity": {

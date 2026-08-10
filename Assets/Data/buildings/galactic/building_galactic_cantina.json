@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GALACTIC_CANTINA"
+   "define": "ART_DEF_BUILDING_GALACTIC_CANTINA",
+   "notShownInCity": true
   }
  },
  "identity": {

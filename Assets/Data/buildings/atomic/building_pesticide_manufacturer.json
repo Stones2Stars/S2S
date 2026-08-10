@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTICIDE_MANUFACTURER"
+   "define": "ART_DEF_BUILDING_PESTICIDE_MANUFACTURER",
+   "notShownInCity": true
   }
  },
  "identity": {

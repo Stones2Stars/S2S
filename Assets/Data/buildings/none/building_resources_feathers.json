@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_FEATHERS"
+   "define": "ART_DEF_BUILDING_RESOURCES_FEATHERS",
+   "notShownInCity": true
   }
  },
  "sound": {

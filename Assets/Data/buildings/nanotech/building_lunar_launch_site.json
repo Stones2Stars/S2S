@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_LAUNCH_SITE"
+   "define": "ART_DEF_BUILDING_LUNAR_LAUNCH_SITE",
+   "notShownInCity": true
   }
  },
  "identity": {

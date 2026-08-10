@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FORT_KNOX"
+   "define": "ART_DEF_BUILDING_FORT_KNOX",
+   "notShownInCity": true
   }
  },
  "identity": {

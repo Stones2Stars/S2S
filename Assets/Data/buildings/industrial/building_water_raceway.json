@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WATER_RACEWAY"
+   "define": "ART_DEF_BUILDING_WATER_RACEWAY",
+   "notShownInCity": true
   }
  },
  "sound": {

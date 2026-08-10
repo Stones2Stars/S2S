@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PRAYING_MANTIS_GATHERER"
+   "define": "ART_DEF_BUILDING_PRAYING_MANTIS_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

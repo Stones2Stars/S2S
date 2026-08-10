@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_ALPACA"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_ALPACA",
+   "notShownInCity": true
   }
  },
  "sound": {

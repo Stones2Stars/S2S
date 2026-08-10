@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EL_CAMINO_DE_SANTIAGO"
+   "define": "ART_DEF_BUILDING_EL_CAMINO_DE_SANTIAGO",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GAMBLING_DEN"
+   "define": "ART_DEF_BUILDING_GAMBLING_DEN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_E_PHOENIX"
+   "define": "ART_DEF_BUILDING_FOLKLORE_E_PHOENIX",
+   "notShownInCity": true
   }
  },
  "identity": {

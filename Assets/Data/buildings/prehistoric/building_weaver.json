@@ -165,7 +165,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WEAVER"
+   "define": "ART_DEF_BUILDING_WEAVER",
+   "notShownInCity": true
   }
  },
  "identity": {

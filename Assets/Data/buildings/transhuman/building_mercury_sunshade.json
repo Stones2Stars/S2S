@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MERCURY_SUNSHADE"
+   "define": "ART_DEF_BUILDING_MERCURY_SUNSHADE",
+   "notShownInCity": true
   }
  },
  "identity": {

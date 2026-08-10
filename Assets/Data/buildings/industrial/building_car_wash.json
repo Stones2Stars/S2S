@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAR_WASH"
+   "define": "ART_DEF_BUILDING_CAR_WASH",
+   "notShownInCity": true
   }
  },
  "identity": {

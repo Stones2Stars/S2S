@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BOWLING_ALLEY"
+   "define": "ART_DEF_BUILDING_BOWLING_ALLEY",
+   "notShownInCity": true
   }
  },
  "identity": {

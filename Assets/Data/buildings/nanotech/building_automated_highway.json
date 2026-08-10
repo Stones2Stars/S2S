@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUTOMATED_HIGHWAY"
+   "define": "ART_DEF_BUILDING_AUTOMATED_HIGHWAY",
+   "notShownInCity": true
   }
  },
  "identity": {

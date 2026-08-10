@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PRIME_TIMBER_CAMP"
+   "define": "ART_DEF_BUILDING_PRIME_TIMBER_CAMP",
+   "notShownInCity": true
   }
  },
  "identity": {

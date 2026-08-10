@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_DESERT_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_DESERT_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

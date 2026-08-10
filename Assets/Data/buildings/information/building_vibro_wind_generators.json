@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIBRO_WIND_GENERATORS"
+   "define": "ART_DEF_BUILDING_VIBRO_WIND_GENERATORS",
+   "notShownInCity": true
   }
  },
  "identity": {

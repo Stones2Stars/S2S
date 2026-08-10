@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CASSINI_HUYGENS"
+   "define": "ART_DEF_BUILDING_CASSINI_HUYGENS",
+   "notShownInCity": true
   }
  },
  "identity": {

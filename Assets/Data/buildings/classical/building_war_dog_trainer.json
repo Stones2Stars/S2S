@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WAR_DOG_TRAINER"
+   "define": "ART_DEF_BUILDING_WAR_DOG_TRAINER",
+   "notShownInCity": true
   }
  },
  "identity": {

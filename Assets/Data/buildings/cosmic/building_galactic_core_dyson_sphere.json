@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GALACTIC_CORE_DYSON_SPHERE"
+   "define": "ART_DEF_BUILDING_GALACTIC_CORE_DYSON_SPHERE",
+   "notShownInCity": true
   }
  },
  "identity": {

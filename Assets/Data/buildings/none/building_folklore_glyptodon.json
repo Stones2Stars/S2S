@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_GLYPTODON"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GLYPTODON",
+   "notShownInCity": true
   }
  },
  "identity": {

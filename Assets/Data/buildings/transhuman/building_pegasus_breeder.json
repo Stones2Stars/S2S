@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PEGASUS_BREEDER"
+   "define": "ART_DEF_BUILDING_PEGASUS_BREEDER",
+   "notShownInCity": true
   }
  },
  "identity": {

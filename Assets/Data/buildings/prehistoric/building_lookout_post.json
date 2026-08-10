@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOOKOUT_POST"
+   "define": "ART_DEF_BUILDING_LOOKOUT_POST",
+   "notShownInCity": true
   }
  },
  "identity": {

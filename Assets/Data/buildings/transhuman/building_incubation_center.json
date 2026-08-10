@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INCUBATION_CENTER"
+   "define": "ART_DEF_BUILDING_INCUBATION_CENTER",
+   "notShownInCity": true
   }
  },
  "sound": {

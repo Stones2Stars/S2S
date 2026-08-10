@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIRING_RANGE"
+   "define": "ART_DEF_BUILDING_FIRING_RANGE",
+   "notShownInCity": true
   }
  },
  "sound": {

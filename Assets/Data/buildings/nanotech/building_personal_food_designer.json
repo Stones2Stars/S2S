@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PERSONAL_FOOD_DESIGNER"
+   "define": "ART_DEF_BUILDING_PERSONAL_FOOD_DESIGNER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_CLAYTRONIC_CITY"
+   "define": "ART_DEF_BUILDING_VENUS_CLAYTRONIC_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

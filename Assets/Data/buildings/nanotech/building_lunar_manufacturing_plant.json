@@ -129,7 +129,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_MANUFACTURING_PLANT"
+   "define": "ART_DEF_BUILDING_LUNAR_MANUFACTURING_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

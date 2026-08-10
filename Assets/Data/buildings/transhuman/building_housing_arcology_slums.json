@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_ARCOLOGY_SLUMS"
+   "define": "ART_DEF_BUILDING_HOUSING_ARCOLOGY_SLUMS",
+   "notShownInCity": true
   }
  },
  "identity": {

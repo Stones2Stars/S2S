@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NET_SNAPPER"
+   "define": "ART_DEF_BUILDING_NET_SNAPPER",
+   "notShownInCity": true
   }
  },
  "identity": {

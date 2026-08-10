@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PERFUME"
+   "define": "ART_DEF_BUILDING_FACTORY_PERFUME",
+   "notShownInCity": true
   }
  },
  "identity": {

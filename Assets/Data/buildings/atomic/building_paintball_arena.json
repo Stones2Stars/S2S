@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PAINTBALL_ARENA"
+   "define": "ART_DEF_BUILDING_PAINTBALL_ARENA",
+   "notShownInCity": true
   }
  },
  "identity": {

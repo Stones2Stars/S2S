@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FORNAX_CLUSTER_COLONY"
+   "define": "ART_DEF_BUILDING_FORNAX_CLUSTER_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

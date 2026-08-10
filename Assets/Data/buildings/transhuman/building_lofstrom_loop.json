@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOFSTROM_LOOP"
+   "define": "ART_DEF_BUILDING_LOFSTROM_LOOP",
+   "notShownInCity": true
   }
  },
  "identity": {

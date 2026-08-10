@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURIAL_GROUND"
+   "define": "ART_DEF_BUILDING_BURIAL_GROUND",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGATOWER_MALL_LEVEL"
+   "define": "ART_DEF_BUILDING_MEGATOWER_MALL_LEVEL",
+   "notShownInCity": true
   }
  },
  "identity": {

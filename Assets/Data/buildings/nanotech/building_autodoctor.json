@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUTODOCTOR"
+   "define": "ART_DEF_BUILDING_AUTODOCTOR",
+   "notShownInCity": true
   }
  },
  "identity": {

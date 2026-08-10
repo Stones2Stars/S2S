@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TUMULUS"
+   "define": "ART_DEF_BUILDING_TUMULUS",
+   "notShownInCity": true
   }
  },
  "sound": {

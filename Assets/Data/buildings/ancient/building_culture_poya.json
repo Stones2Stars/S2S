@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_POYA"
+   "define": "ART_DEF_BUILDING_CULTURE_POYA",
+   "notShownInCity": true
   }
  },
  "identity": {

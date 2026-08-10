@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_YANOMAMI"
+   "define": "ART_DEF_BUILDING_CULTURE_YANOMAMI",
+   "notShownInCity": true
   }
  },
  "identity": {

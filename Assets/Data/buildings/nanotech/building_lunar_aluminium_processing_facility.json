@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY"
+   "define": "ART_DEF_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+   "notShownInCity": true
   }
  },
  "identity": {

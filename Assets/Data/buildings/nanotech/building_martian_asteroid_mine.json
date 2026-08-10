@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_ASTEROID_MINE"
+   "define": "ART_DEF_BUILDING_MARTIAN_ASTEROID_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

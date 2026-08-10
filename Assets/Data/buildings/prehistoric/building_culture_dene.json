@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_DENE"
+   "define": "ART_DEF_BUILDING_CULTURE_DENE",
+   "notShownInCity": true
   }
  },
  "identity": {

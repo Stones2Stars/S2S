@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SALT_FLAT_QUARRY"
+   "define": "ART_DEF_BUILDING_SALT_FLAT_QUARRY",
+   "notShownInCity": true
   }
  },
  "identity": {

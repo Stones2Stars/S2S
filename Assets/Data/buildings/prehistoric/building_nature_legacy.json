@@ -149,7 +149,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_LEGACY"
+   "define": "ART_DEF_BUILDING_NATURE_LEGACY",
+   "notShownInCity": true
   }
  },
  "sound": {

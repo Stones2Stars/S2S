@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RIVER_PORT"
+   "define": "ART_DEF_BUILDING_RIVER_PORT",
+   "notShownInCity": true
   }
  },
  "sound": {

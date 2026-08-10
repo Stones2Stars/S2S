@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL"
+   "define": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL",
+   "notShownInCity": true
   }
  },
  "identity": {

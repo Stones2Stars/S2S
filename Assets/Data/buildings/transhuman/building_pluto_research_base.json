@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLUTO_RESEARCH_BASE"
+   "define": "ART_DEF_BUILDING_PLUTO_RESEARCH_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

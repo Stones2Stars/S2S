@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_ALUMINUM"
+   "define": "ART_DEF_BUILDING_SMITH_ALUMINUM",
+   "notShownInCity": true
   }
  },
  "identity": {

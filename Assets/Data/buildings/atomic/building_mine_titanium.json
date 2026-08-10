@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_TITANIUM"
+   "define": "ART_DEF_BUILDING_MINE_TITANIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

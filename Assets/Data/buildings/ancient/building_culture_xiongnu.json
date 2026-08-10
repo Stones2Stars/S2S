@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_XIONGNU"
+   "define": "ART_DEF_BUILDING_CULTURE_XIONGNU",
+   "notShownInCity": true
   }
  },
  "identity": {

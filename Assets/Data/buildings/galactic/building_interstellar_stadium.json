@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_STADIUM"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STADIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

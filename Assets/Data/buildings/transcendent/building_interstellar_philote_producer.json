@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PHILOTE_PRODUCER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PHILOTE_PRODUCER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_SHELLFISH"
+   "define": "ART_DEF_BUILDING_RESOURCES_SHELLFISH",
+   "notShownInCity": true
   }
  },
  "identity": {

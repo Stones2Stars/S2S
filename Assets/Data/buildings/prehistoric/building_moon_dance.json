@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOON_DANCE"
+   "define": "ART_DEF_BUILDING_MOON_DANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

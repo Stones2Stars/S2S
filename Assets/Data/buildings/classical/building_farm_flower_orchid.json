@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_ORCHID"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_ORCHID",
+   "notShownInCity": true
   }
  },
  "identity": {

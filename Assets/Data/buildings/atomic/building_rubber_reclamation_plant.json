@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RUBBER_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_RUBBER_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

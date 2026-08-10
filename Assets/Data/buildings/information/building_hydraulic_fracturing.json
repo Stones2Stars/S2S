@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYDRAULIC_FRACTURING"
+   "define": "ART_DEF_BUILDING_HYDRAULIC_FRACTURING",
+   "notShownInCity": true
   }
  },
  "identity": {

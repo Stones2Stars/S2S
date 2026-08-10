@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_MINE_RARE_MINERALS"
+   "define": "ART_DEF_BUILDING_ASTEROID_MINE_RARE_MINERALS",
+   "notShownInCity": true
   }
  },
  "identity": {

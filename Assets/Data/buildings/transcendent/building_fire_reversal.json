@@ -27,7 +27,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIRE_REVERSAL"
+   "define": "ART_DEF_BUILDING_FIRE_REVERSAL",
+   "notShownInCity": true
   }
  },
  "identity": {

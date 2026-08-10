@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS"
+   "define": "ART_DEF_BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+   "notShownInCity": true
   }
  },
  "identity": {

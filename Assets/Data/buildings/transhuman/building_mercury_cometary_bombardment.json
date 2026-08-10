@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MERCURY_COMETARY_BOMBARDMENT"
+   "define": "ART_DEF_BUILDING_MERCURY_COMETARY_BOMBARDMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

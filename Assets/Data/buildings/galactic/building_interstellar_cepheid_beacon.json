@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CEPHEID_BEACON"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CEPHEID_BEACON",
+   "notShownInCity": true
   }
  },
  "identity": {

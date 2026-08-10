@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JAIL"
+   "define": "ART_DEF_BUILDING_JAIL",
+   "notShownInCity": true
   }
  },
  "sound": {

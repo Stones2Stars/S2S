@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_CARBONWORKS"
+   "define": "ART_DEF_BUILDING_VENUS_CARBONWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_FIRE"
+   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_FIRE",
+   "notShownInCity": true
   }
  },
  "identity": {

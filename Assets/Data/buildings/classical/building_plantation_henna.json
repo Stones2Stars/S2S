@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_HENNA"
+   "define": "ART_DEF_BUILDING_PLANTATION_HENNA",
+   "notShownInCity": true
   }
  },
  "identity": {

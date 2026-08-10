@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JUNGLE_TREEHOUSE_HOTEL"
+   "define": "ART_DEF_BUILDING_JUNGLE_TREEHOUSE_HOTEL",
+   "notShownInCity": true
   }
  },
  "identity": {

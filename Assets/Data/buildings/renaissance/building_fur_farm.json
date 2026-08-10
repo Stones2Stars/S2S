@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FUR_FARM"
+   "define": "ART_DEF_BUILDING_FUR_FARM",
+   "notShownInCity": true
   }
  },
  "sound": {

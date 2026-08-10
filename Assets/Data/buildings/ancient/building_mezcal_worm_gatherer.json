@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEZCAL_WORM_GATHERER"
+   "define": "ART_DEF_BUILDING_MEZCAL_WORM_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

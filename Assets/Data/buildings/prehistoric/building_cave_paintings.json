@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAVE_PAINTINGS"
+   "define": "ART_DEF_BUILDING_CAVE_PAINTINGS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
+   "notShownInCity": true
   }
  },
  "identity": {

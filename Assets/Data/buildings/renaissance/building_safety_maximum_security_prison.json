@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON"
+   "define": "ART_DEF_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
+   "notShownInCity": true
   }
  },
  "identity": {

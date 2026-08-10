@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_CAPITOL"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_CAPITOL",
+   "notShownInCity": true
   }
  },
  "identity": {

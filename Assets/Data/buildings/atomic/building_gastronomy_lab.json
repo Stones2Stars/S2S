@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GASTRONOMY_LAB"
+   "define": "ART_DEF_BUILDING_GASTRONOMY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

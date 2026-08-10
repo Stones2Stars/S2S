@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_NANOMORPHISM"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_NANOMORPHISM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUMBER_CAMP"
+   "define": "ART_DEF_BUILDING_LUMBER_CAMP",
+   "notShownInCity": true
   }
  },
  "identity": {

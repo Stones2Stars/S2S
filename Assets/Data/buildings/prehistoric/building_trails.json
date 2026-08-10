@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAILS"
+   "define": "ART_DEF_BUILDING_TRAILS",
+   "notShownInCity": true
   }
  },
  "sound": {

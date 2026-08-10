@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RING_OF_MARS"
+   "define": "ART_DEF_BUILDING_RING_OF_MARS",
+   "notShownInCity": true
   }
  },
  "identity": {

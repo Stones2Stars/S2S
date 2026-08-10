@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_MASCAGNITE"
+   "define": "ART_DEF_BUILDING_MINE_MASCAGNITE",
+   "notShownInCity": true
   }
  },
  "identity": {

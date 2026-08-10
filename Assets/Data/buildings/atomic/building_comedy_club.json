@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMEDY_CLUB"
+   "define": "ART_DEF_BUILDING_COMEDY_CLUB",
+   "notShownInCity": true
   }
  },
  "identity": {

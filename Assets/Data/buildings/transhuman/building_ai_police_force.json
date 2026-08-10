@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AI_POLICE_FORCE"
+   "define": "ART_DEF_BUILDING_AI_POLICE_FORCE",
+   "notShownInCity": true
   }
  },
  "identity": {

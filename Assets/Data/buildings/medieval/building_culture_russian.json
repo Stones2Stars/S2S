@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_RUSSIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_RUSSIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

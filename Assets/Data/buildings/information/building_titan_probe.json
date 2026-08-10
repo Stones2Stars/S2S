@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TITAN_PROBE"
+   "define": "ART_DEF_BUILDING_TITAN_PROBE",
+   "notShownInCity": true
   }
  },
  "identity": {

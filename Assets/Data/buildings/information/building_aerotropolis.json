@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AEROTROPOLIS"
+   "define": "ART_DEF_BUILDING_AEROTROPOLIS",
+   "notShownInCity": true
   }
  },
  "identity": {

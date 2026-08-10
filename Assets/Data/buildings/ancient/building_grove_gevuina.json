@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_GEVUINA"
+   "define": "ART_DEF_BUILDING_GROVE_GEVUINA",
+   "notShownInCity": true
   }
  },
  "identity": {

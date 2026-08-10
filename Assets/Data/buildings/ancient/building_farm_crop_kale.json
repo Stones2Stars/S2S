@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_KALE"
+   "define": "ART_DEF_BUILDING_FARM_CROP_KALE",
+   "notShownInCity": true
   }
  },
  "identity": {

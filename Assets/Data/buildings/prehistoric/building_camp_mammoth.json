@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAMP_MAMMOTH"
+   "define": "ART_DEF_BUILDING_CAMP_MAMMOTH",
+   "notShownInCity": true
   }
  },
  "identity": {

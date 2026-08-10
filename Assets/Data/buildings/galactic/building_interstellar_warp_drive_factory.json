@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_WARP_DRIVE_FACTORY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_WARP_DRIVE_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

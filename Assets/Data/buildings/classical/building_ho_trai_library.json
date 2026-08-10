@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HO_TRAI_LIBRARY"
+   "define": "ART_DEF_BUILDING_HO_TRAI_LIBRARY",
+   "notShownInCity": true
   }
  },
  "sound": {

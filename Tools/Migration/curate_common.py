@@ -160,6 +160,13 @@ def put_art(art_blocks, tag, val):
         _set_path(art_blocks, ART_BLOCK.get(tag, "ui.art." + de_i(tag)), av)
 
 
+def put_art_derived(art_blocks, dotted, val):
+    """Place a DERIVED art value at an explicit dotted path (`world.art.notShownInCity`). put_art routes an
+    ORIGINAL XML tag through ART_BLOCK; a value the curator works out for itself has no such tag, so it names its
+    own destination rather than being mapped from one."""
+    _set_path(art_blocks, dotted, val)
+
+
 def emit_art(out, art_blocks):
     """Emit the populated ui/world/sound blocks (reserved order) onto the output object — the bespoke-curator twin of
     curate()'s art emit. No-op for an empty block."""

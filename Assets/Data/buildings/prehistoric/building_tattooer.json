@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TATTOOER"
+   "define": "ART_DEF_BUILDING_TATTOOER",
+   "notShownInCity": true
   }
  },
  "identity": {

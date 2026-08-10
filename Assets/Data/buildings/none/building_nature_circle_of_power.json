@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_OF_POWER"
+   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_OF_POWER",
+   "notShownInCity": true
   }
  },
  "sound": {

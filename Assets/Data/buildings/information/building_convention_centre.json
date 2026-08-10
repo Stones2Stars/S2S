@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CONVENTION_CENTRE"
+   "define": "ART_DEF_BUILDING_CONVENTION_CENTRE",
+   "notShownInCity": true
   }
  },
  "sound": {

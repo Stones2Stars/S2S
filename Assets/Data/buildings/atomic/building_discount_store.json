@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISCOUNT_STORE"
+   "define": "ART_DEF_BUILDING_DISCOUNT_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

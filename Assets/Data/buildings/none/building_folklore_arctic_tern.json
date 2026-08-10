@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_ARCTIC_TERN"
+   "define": "ART_DEF_BUILDING_FOLKLORE_ARCTIC_TERN",
+   "notShownInCity": true
   }
  },
  "identity": {

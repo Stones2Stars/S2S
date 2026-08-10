@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAGLEV_RAILS"
+   "define": "ART_DEF_BUILDING_MAGLEV_RAILS",
+   "notShownInCity": true
   }
  },
  "identity": {

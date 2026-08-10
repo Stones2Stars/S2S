@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AUCTION_HOUSE"
+   "define": "ART_DEF_BUILDING_AUCTION_HOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

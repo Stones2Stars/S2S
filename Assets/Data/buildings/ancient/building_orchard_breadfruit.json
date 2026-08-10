@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_BREADFRUIT"
+   "define": "ART_DEF_BUILDING_ORCHARD_BREADFRUIT",
+   "notShownInCity": true
   }
  },
  "identity": {

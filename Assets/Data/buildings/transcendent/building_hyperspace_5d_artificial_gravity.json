@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
+   "notShownInCity": true
   }
  },
  "identity": {

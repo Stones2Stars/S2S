@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_AZTEC"
+   "define": "ART_DEF_BUILDING_CULTURE_AZTEC",
+   "notShownInCity": true
   }
  },
  "identity": {

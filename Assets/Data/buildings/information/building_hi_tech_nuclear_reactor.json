@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HI_TECH_NUCLEAR_REACTOR"
+   "define": "ART_DEF_BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "notShownInCity": true
   }
  },
  "identity": {

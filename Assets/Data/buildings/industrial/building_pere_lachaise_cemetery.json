@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PERE_LACHAISE_CEMETERY"
+   "define": "ART_DEF_BUILDING_PERE_LACHAISE_CEMETERY",
+   "notShownInCity": true
   }
  },
  "identity": {

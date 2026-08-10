@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STARTRAM"
+   "define": "ART_DEF_BUILDING_STARTRAM",
+   "notShownInCity": true
   }
  },
  "identity": {

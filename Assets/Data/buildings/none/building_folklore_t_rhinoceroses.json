@@ -113,7 +113,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_RHINOCEROSES"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_RHINOCEROSES",
+   "notShownInCity": true
   }
  },
  "identity": {

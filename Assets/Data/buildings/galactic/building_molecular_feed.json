@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MOLECULAR_FEED"
+   "define": "ART_DEF_BUILDING_MOLECULAR_FEED",
+   "notShownInCity": true
   }
  },
  "identity": {

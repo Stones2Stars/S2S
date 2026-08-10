@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STEWARDS_OFFICE"
+   "define": "ART_DEF_BUILDING_STEWARDS_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

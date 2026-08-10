@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ISP_OFFICES"
+   "define": "ART_DEF_BUILDING_ISP_OFFICES",
+   "notShownInCity": true
   }
  },
  "identity": {

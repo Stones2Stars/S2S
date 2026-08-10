@@ -71,6 +71,11 @@ ENTITIES = {
     "SpecialUnitInfo":   "*CIV4SpecialUnitInfos.xml",   # #33, rides the Unit pass (cargo-load rules + combat deposits)
     "HeritageInfo":      "*HeritageInfos.xml",
     "SpecialBuildingInfo": "*CIV4SpecialBuildingInfos.xml",
+    # ART DEFINES -- curator INPUT ONLY, read to DERIVE a building's on-map presence (json.md §7). The defines
+    # are the ART carve-out: nothing here migrates or emits them, and the game keeps resolving them through
+    # ARTFILEMGR. Reading one HERE is the ordinary curator-input relationship every legacy XML has
+    # ([DEC-no-xml-into-game] bans loading a replaced info's XML into the GAME, never reading one offline).
+    "BuildingArtInfo":   "*CIV4ArtDefines_Building.xml",
     # config/global entities — participate in NO enabler edges (enable nothing); registered for
     # module-merged table access by their curators.
     "HandicapInfo":      "*CIV4HandicapInfo.xml",

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BASQUE"
+   "define": "ART_DEF_BUILDING_CULTURE_BASQUE",
+   "notShownInCity": true
   }
  },
  "identity": {

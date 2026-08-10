@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CENTER_FOR_SHARK_STUDIES"
+   "define": "ART_DEF_BUILDING_CENTER_FOR_SHARK_STUDIES",
+   "notShownInCity": true
   }
  },
  "sound": {

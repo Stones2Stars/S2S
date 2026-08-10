@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_MEDICAL_TRICODERS"
+   "define": "ART_DEF_BUILDING_FACTORY_MEDICAL_TRICODERS",
+   "notShownInCity": true
   }
  },
  "identity": {

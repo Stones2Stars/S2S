@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_EGGS"
+   "define": "ART_DEF_BUILDING_RESOURCES_EGGS",
+   "notShownInCity": true
   }
  },
  "identity": {

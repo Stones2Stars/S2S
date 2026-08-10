@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_COMPUTRONIUM_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_COMPUTRONIUM_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

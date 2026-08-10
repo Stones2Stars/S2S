@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_BASALT_ORGAN"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_BASALT_ORGAN",
+   "notShownInCity": true
   }
  },
  "identity": {

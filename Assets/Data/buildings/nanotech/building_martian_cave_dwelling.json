@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_CAVE_DWELLING"
+   "define": "ART_DEF_BUILDING_MARTIAN_CAVE_DWELLING",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -109,7 +109,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VETERINARIAN"
+   "define": "ART_DEF_BUILDING_VETERINARIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

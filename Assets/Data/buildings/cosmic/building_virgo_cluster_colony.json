@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIRGO_CLUSTER_COLONY"
+   "define": "ART_DEF_BUILDING_VIRGO_CLUSTER_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_LLAMA"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_LLAMA",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION",
+   "notShownInCity": true
   }
  },
  "identity": {

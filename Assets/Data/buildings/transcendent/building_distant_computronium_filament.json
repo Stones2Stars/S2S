@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_COMPUTRONIUM_FILAMENT"
+   "define": "ART_DEF_BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

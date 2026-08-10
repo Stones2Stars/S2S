@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FERTILIZER_FACTORY"
+   "define": "ART_DEF_BUILDING_FERTILIZER_FACTORY",
+   "notShownInCity": true
   }
  },
  "sound": {

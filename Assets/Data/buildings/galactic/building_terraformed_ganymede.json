@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_GANYMEDE"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_GANYMEDE",
+   "notShownInCity": true
   }
  },
  "identity": {

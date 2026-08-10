@@ -108,7 +108,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_ULURU"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_ULURU",
+   "notShownInCity": true
   }
  },
  "identity": {

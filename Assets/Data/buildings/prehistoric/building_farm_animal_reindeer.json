@@ -127,7 +127,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_REINDEER"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_REINDEER",
+   "notShownInCity": true
   }
  },
  "sound": {

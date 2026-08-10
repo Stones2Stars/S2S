@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REMAINS_GIANT_RHINOCEROS"
+   "define": "ART_DEF_BUILDING_REMAINS_GIANT_RHINOCEROS",
+   "notShownInCity": true
   }
  },
  "identity": {

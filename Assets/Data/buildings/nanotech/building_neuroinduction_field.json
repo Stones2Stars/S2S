@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEUROINDUCTION_FIELD"
+   "define": "ART_DEF_BUILDING_NEUROINDUCTION_FIELD",
+   "notShownInCity": true
   }
  },
  "identity": {

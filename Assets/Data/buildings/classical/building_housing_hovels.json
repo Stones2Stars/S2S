@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_HOVELS"
+   "define": "ART_DEF_BUILDING_HOUSING_HOVELS",
+   "notShownInCity": true
   }
  },
  "identity": {

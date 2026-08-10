@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+   "define": "ART_DEF_BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

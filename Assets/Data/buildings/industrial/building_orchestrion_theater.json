@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHESTRION_THEATER"
+   "define": "ART_DEF_BUILDING_ORCHESTRION_THEATER",
+   "notShownInCity": true
   }
  },
  "identity": {

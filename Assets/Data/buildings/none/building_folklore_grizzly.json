@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_GRIZZLY"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GRIZZLY",
+   "notShownInCity": true
   }
  },
  "identity": {

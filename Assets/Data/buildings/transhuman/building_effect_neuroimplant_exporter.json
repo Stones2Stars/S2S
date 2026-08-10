@@ -18,7 +18,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER"
+   "define": "ART_DEF_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

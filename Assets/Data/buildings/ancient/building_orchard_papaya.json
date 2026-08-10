@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_PAPAYA"
+   "define": "ART_DEF_BUILDING_ORCHARD_PAPAYA",
+   "notShownInCity": true
   }
  },
  "identity": {

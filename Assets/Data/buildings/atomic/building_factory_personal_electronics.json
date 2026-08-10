@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_PERSONAL_ELECTRONICS"
+   "define": "ART_DEF_BUILDING_FACTORY_PERSONAL_ELECTRONICS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BED_N_BREAKFAST"
+   "define": "ART_DEF_BUILDING_BED_N_BREAKFAST",
+   "notShownInCity": true
   }
  },
  "identity": {

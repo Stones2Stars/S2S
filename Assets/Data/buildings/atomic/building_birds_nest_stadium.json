@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIRDS_NEST_STADIUM"
+   "define": "ART_DEF_BUILDING_BIRDS_NEST_STADIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

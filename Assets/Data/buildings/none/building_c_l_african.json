@@ -147,7 +147,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_AFRICAN"
+   "define": "ART_DEF_BUILDING_CULTURE_AFRICAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
+   "notShownInCity": true
   }
  },
  "identity": {

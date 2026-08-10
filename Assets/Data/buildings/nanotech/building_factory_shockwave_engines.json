@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_SHOCKWAVE_ENGINES"
+   "define": "ART_DEF_BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+   "notShownInCity": true
   }
  },
  "identity": {

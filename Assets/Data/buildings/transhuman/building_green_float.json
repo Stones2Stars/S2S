@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GREEN_FLOAT"
+   "define": "ART_DEF_BUILDING_GREEN_FLOAT",
+   "notShownInCity": true
   }
  },
  "identity": {

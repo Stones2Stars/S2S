@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_CENTRAL_STATION"
+   "define": "ART_DEF_BUILDING_GRAND_CENTRAL_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

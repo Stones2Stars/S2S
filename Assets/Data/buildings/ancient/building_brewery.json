@@ -111,7 +111,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREWERY"
+   "define": "ART_DEF_BUILDING_BREWERY",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FRONTIER_OUTPOST"
+   "define": "ART_DEF_BUILDING_FRONTIER_OUTPOST",
+   "notShownInCity": true
   }
  },
  "sound": {

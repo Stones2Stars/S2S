@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GONDOLA_CANALS"
+   "define": "ART_DEF_BUILDING_GONDOLA_CANALS",
+   "notShownInCity": true
   }
  },
  "identity": {

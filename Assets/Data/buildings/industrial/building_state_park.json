@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STATE_PARK"
+   "define": "ART_DEF_BUILDING_STATE_PARK",
+   "notShownInCity": true
   }
  },
  "identity": {

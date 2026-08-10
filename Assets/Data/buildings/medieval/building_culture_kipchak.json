@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_KIPCHAK"
+   "define": "ART_DEF_BUILDING_CULTURE_KIPCHAK",
+   "notShownInCity": true
   }
  },
  "identity": {

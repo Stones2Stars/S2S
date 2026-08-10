@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
+   "notShownInCity": true
   }
  },
  "identity": {

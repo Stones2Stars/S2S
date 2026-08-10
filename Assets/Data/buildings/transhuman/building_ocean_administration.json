@@ -233,7 +233,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OCEAN_ADMINISTRATION"
+   "define": "ART_DEF_BUILDING_OCEAN_ADMINISTRATION",
+   "notShownInCity": true
   }
  },
  "identity": {

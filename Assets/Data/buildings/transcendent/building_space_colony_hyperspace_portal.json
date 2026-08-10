@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL"
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

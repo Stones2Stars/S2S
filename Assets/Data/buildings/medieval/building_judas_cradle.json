@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JUDAS_CRADLE"
+   "define": "ART_DEF_BUILDING_JUDAS_CRADLE",
+   "notShownInCity": true
   }
  },
  "sound": {

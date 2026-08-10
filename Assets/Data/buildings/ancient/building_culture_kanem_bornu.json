@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_KANEM_BORNU"
+   "define": "ART_DEF_BUILDING_CULTURE_KANEM_BORNU",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIOLUMINESCENT_BOUTIQUE"
+   "define": "ART_DEF_BUILDING_BIOLUMINESCENT_BOUTIQUE",
+   "notShownInCity": true
   }
  },
  "identity": {

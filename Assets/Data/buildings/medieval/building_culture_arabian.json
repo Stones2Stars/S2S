@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ARABIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ARABIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

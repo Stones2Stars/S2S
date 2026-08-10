@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WET_NURSE"
+   "define": "ART_DEF_BUILDING_WET_NURSE",
+   "notShownInCity": true
   }
  },
  "identity": {

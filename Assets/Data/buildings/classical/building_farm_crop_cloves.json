@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_CLOVES"
+   "define": "ART_DEF_BUILDING_FARM_CROP_CLOVES",
+   "notShownInCity": true
   }
  },
  "identity": {

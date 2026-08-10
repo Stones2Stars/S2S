@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_AMUSEMENT"
+   "define": "ART_DEF_BUILDING_AMUSEMENT",
+   "notShownInCity": true
   }
  },
  "sound": {

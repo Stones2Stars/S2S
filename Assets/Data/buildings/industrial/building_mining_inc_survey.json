@@ -145,7 +145,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINING_INC_SURVEY"
+   "define": "ART_DEF_BUILDING_MINING_INC_SURVEY",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ECSTASY_LAB"
+   "define": "ART_DEF_BUILDING_ECSTASY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

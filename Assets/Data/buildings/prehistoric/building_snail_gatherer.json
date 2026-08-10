@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SNAIL_GATHERER"
+   "define": "ART_DEF_BUILDING_SNAIL_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

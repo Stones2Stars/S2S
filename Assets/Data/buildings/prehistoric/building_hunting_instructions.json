@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUNTING_INSTRUCTIONS"
+   "define": "ART_DEF_BUILDING_HUNTING_INSTRUCTIONS",
+   "notShownInCity": true
   }
  },
  "sound": {

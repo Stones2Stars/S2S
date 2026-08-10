@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIRD_CALLER"
+   "define": "ART_DEF_BUILDING_BIRD_CALLER",
+   "notShownInCity": true
   }
  },
  "identity": {

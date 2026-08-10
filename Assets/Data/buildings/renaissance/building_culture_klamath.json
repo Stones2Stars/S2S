@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_KLAMATH"
+   "define": "ART_DEF_BUILDING_CULTURE_KLAMATH",
+   "notShownInCity": true
   }
  },
  "identity": {

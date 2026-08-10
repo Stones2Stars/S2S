@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SWEAT_LODGE"
+   "define": "ART_DEF_BUILDING_SWEAT_LODGE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -191,7 +191,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DRUGLORDS_MANSON"
+   "define": "ART_DEF_BUILDING_DRUGLORDS_MANSON",
+   "notShownInCity": true
   }
  },
  "identity": {

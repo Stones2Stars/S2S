@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+   "notShownInCity": true
   }
  },
  "identity": {

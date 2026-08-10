@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PAVED_ROADS"
+   "define": "ART_DEF_BUILDING_PAVED_ROADS",
+   "notShownInCity": true
   }
  },
  "sound": {

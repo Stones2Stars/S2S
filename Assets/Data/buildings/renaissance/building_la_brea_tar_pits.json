@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LA_BREA_TAR_PITS"
+   "define": "ART_DEF_BUILDING_LA_BREA_TAR_PITS",
+   "notShownInCity": true
   }
  },
  "identity": {

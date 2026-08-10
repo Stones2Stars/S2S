@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_APACHE"
+   "define": "ART_DEF_BUILDING_CULTURE_APACHE",
+   "notShownInCity": true
   }
  },
  "identity": {

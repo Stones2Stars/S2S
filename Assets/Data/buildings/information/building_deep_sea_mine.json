@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SEA_MINE"
+   "define": "ART_DEF_BUILDING_DEEP_SEA_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

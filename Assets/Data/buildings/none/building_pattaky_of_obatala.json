@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PATTAKY_OF_OBATALA"
+   "define": "ART_DEF_BUILDING_PATTAKY_OF_OBATALA",
+   "notShownInCity": true
   }
  },
  "sound": {

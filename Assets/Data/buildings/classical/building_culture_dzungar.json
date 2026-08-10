@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_DZUNGAR"
+   "define": "ART_DEF_BUILDING_CULTURE_DZUNGAR",
+   "notShownInCity": true
   }
  },
  "identity": {

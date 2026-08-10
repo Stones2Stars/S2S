@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TREE_NURSERY"
+   "define": "ART_DEF_BUILDING_TREE_NURSERY",
+   "notShownInCity": true
   }
  },
  "identity": {

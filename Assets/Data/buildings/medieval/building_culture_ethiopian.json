@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ETHIOPIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ETHIOPIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

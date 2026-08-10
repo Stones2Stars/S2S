@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REVIVALIST_CHURCH"
+   "define": "ART_DEF_BUILDING_REVIVALIST_CHURCH",
+   "notShownInCity": true
   }
  },
  "identity": {

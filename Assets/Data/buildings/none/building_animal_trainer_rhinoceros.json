@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_RHINOCEROS"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+   "notShownInCity": true
   }
  },
  "sound": {

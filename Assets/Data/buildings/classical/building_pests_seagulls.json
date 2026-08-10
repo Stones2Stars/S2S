@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_SEAGULLS"
+   "define": "ART_DEF_BUILDING_PESTS_SEAGULLS",
+   "notShownInCity": true
   }
  },
  "identity": {

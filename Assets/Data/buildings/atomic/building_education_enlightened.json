@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION"
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
   }
  },
  "identity": {

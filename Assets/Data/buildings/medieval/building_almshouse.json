@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALMSHOUSE"
+   "define": "ART_DEF_BUILDING_ALMSHOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

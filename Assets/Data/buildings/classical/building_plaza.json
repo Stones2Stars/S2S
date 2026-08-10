@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLAZA"
+   "define": "ART_DEF_BUILDING_PLAZA",
+   "notShownInCity": true
   }
  },
  "identity": {

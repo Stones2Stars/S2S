@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_FLAMINGO"
+   "define": "ART_DEF_BUILDING_FOLKLORE_FLAMINGO",
+   "notShownInCity": true
   }
  },
  "identity": {

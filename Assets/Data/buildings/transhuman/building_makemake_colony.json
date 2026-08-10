@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAKEMAKE_COLONY"
+   "define": "ART_DEF_BUILDING_MAKEMAKE_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

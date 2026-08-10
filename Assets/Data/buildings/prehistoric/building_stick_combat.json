@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STICK_COMBAT"
+   "define": "ART_DEF_BUILDING_STICK_COMBAT",
+   "notShownInCity": true
   }
  },
  "identity": {

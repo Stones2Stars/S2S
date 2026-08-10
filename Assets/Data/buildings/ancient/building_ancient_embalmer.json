@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANCIENT_EMBALMER"
+   "define": "ART_DEF_BUILDING_ANCIENT_EMBALMER",
+   "notShownInCity": true
   }
  },
  "identity": {

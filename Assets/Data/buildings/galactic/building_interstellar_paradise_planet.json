@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PARADISE_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PARADISE_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

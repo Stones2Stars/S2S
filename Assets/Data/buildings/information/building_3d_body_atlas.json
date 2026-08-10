@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_3D_BODY_ATLAS"
+   "define": "ART_DEF_BUILDING_3D_BODY_ATLAS",
+   "notShownInCity": true
   }
  },
  "identity": {

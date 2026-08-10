@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MALINESE"
+   "define": "ART_DEF_BUILDING_CULTURE_MALINESE",
+   "notShownInCity": true
   }
  },
  "identity": {

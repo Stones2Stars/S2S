@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FALCONRY_SCHOOL"
+   "define": "ART_DEF_BUILDING_FALCONRY_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

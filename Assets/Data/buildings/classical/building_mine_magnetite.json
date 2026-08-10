@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_MAGNETITE"
+   "define": "ART_DEF_BUILDING_MINE_MAGNETITE",
+   "notShownInCity": true
   }
  },
  "identity": {

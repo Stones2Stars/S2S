@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POCKET_UNIVERSE_STORAGE"
+   "define": "ART_DEF_BUILDING_POCKET_UNIVERSE_STORAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

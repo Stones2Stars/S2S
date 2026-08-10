@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_SATURN"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_SATURN",
+   "notShownInCity": true
   }
  },
  "identity": {

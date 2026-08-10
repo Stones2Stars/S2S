@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_BRANE_COLLISION"
+   "define": "ART_DEF_BUILDING_DISTANT_BRANE_COLLISION",
+   "notShownInCity": true
   }
  },
  "identity": {

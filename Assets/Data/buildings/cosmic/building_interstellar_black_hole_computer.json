@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

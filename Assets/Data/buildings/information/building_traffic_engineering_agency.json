@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAFFIC_ENGINEERING_AGENCY"
+   "define": "ART_DEF_BUILDING_TRAFFIC_ENGINEERING_AGENCY",
+   "notShownInCity": true
   }
  },
  "identity": {

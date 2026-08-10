@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INDIA"
+   "define": "ART_DEF_BUILDING_INDIA",
+   "notShownInCity": true
   }
  },
  "sound": {

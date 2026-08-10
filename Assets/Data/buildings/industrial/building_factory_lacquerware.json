@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_LACQUERWARE"
+   "define": "ART_DEF_BUILDING_FACTORY_LACQUERWARE",
+   "notShownInCity": true
   }
  },
  "identity": {

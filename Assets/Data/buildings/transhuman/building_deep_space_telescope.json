@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_TELESCOPE"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_TELESCOPE",
+   "notShownInCity": true
   }
  },
  "identity": {

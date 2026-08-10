@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+   "notShownInCity": true
   }
  },
  "identity": {

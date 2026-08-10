@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_ALIEN_HYBRID"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ALIEN_HYBRID",
+   "notShownInCity": true
   }
  },
  "identity": {

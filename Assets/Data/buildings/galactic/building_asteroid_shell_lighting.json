@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_LIGHTING"
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_LIGHTING",
+   "notShownInCity": true
   }
  },
  "identity": {

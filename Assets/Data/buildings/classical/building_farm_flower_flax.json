@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_FLAX"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_FLAX",
+   "notShownInCity": true
   }
  },
  "identity": {

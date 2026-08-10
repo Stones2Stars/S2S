@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DROP_ZONE"
+   "define": "ART_DEF_BUILDING_DROP_ZONE",
+   "notShownInCity": true
   }
  },
  "identity": {

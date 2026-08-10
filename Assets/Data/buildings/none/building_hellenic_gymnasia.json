@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HELLENIC_GYMNASIA"
+   "define": "ART_DEF_BUILDING_HELLENIC_GYMNASIA",
+   "notShownInCity": true
   }
  },
  "sound": {

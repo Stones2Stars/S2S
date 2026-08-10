@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SWAZI"
+   "define": "ART_DEF_BUILDING_CULTURE_SWAZI",
+   "notShownInCity": true
   }
  },
  "identity": {

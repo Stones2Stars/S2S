@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_AUSTRALIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_AUSTRALIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

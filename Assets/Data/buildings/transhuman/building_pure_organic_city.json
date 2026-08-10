@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PURE_ORGANIC_CITY"
+   "define": "ART_DEF_BUILDING_PURE_ORGANIC_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

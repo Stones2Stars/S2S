@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARMSCRAPER"
+   "define": "ART_DEF_BUILDING_FARMSCRAPER",
+   "notShownInCity": true
   }
  },
  "sound": {

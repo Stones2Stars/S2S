@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIRE_BRIGADE"
+   "define": "ART_DEF_BUILDING_FIRE_BRIGADE",
+   "notShownInCity": true
   }
  },
  "sound": {

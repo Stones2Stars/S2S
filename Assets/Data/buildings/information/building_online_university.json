@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ONLINE_UNIVERSITY"
+   "define": "ART_DEF_BUILDING_ONLINE_UNIVERSITY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MERCENARY_CAMP"
+   "define": "ART_DEF_BUILDING_MERCENARY_CAMP",
+   "notShownInCity": true
   }
  },
  "sound": {

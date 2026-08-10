@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "notShownInCity": true
   }
  },
  "identity": {

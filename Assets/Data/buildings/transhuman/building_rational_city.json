@@ -118,7 +118,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RATIONAL_CITY"
+   "define": "ART_DEF_BUILDING_RATIONAL_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

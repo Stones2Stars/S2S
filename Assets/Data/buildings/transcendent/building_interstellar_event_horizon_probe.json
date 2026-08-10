@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+   "notShownInCity": true
   }
  },
  "identity": {

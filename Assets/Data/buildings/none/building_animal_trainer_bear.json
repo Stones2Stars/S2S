@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_BEAR"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_BEAR",
+   "notShownInCity": true
   }
  },
  "sound": {

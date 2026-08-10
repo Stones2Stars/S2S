@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PHOTOSYNTHESIS_BOUTIQUE"
+   "define": "ART_DEF_BUILDING_PHOTOSYNTHESIS_BOUTIQUE",
+   "notShownInCity": true
   }
  },
  "identity": {

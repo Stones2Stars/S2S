@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PUBLIC_HEALTH_AGENCY"
+   "define": "ART_DEF_BUILDING_PUBLIC_HEALTH_AGENCY",
+   "notShownInCity": true
   }
  },
  "identity": {

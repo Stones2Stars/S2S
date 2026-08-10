@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_TOBACCO"
+   "define": "ART_DEF_BUILDING_PLANTATION_TOBACCO",
+   "notShownInCity": true
   }
  },
  "identity": {

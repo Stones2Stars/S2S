@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_SQUASH"
+   "define": "ART_DEF_BUILDING_FARM_CROP_SQUASH",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_BUGS"
+   "define": "ART_DEF_BUILDING_RESOURCES_BUGS",
+   "notShownInCity": true
   }
  },
  "identity": {

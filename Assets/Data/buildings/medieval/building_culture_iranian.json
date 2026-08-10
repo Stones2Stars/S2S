@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_IRANIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_IRANIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

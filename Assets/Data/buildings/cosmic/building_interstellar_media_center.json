@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_MEDIA_CENTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_MEDIA_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

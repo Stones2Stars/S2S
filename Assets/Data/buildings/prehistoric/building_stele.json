@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STELE"
+   "define": "ART_DEF_BUILDING_STELE",
+   "notShownInCity": true
   }
  },
  "sound": {

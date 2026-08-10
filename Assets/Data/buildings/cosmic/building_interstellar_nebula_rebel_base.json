@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEBULA_REBEL_BASE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEBULA_REBEL_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

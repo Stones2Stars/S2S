@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MATTER_DECOMPILER"
+   "define": "ART_DEF_BUILDING_MATTER_DECOMPILER",
+   "notShownInCity": true
   }
  },
  "sound": {

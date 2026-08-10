@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_FLOWER_BEGONIA"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_BEGONIA",
+   "notShownInCity": true
   }
  },
  "identity": {

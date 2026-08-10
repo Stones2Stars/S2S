@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEDNA_COLONY"
+   "define": "ART_DEF_BUILDING_SEDNA_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

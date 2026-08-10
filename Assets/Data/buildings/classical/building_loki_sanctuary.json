@@ -126,7 +126,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOKI"
+   "define": "ART_DEF_BUILDING_LOKI",
+   "notShownInCity": true
   }
  },
  "sound": {

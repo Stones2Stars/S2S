@@ -106,7 +106,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS",
+   "notShownInCity": true
   }
  },
  "identity": {

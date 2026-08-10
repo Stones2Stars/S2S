@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SALT_EVAPORATION_POND"
+   "define": "ART_DEF_BUILDING_SALT_EVAPORATION_POND",
+   "notShownInCity": true
   }
  },
  "identity": {

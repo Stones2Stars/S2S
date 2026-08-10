@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GODWHEEL"
+   "define": "ART_DEF_BUILDING_GODWHEEL",
+   "notShownInCity": true
   }
  },
  "identity": {

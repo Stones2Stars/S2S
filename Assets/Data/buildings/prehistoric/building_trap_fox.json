@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAP_FOX"
+   "define": "ART_DEF_BUILDING_TRAP_FOX",
+   "notShownInCity": true
   }
  },
  "identity": {

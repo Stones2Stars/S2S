@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STAR_FORT"
+   "define": "ART_DEF_BUILDING_STAR_FORT",
+   "notShownInCity": true
   }
  },
  "sound": {

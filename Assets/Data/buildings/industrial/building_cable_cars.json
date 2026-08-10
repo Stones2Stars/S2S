@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CABLE_CARS"
+   "define": "ART_DEF_BUILDING_CABLE_CARS",
+   "notShownInCity": true
   }
  },
  "identity": {

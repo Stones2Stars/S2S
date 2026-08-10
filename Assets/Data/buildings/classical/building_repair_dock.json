@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REPAIR_DOCK"
+   "define": "ART_DEF_BUILDING_REPAIR_DOCK",
+   "notShownInCity": true
   }
  },
  "sound": {

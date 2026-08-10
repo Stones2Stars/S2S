@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_TREEHOUSES"
+   "define": "ART_DEF_BUILDING_HOUSING_TREEHOUSES",
+   "notShownInCity": true
   }
  },
  "identity": {

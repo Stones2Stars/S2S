@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARKET_SCALES"
+   "define": "ART_DEF_BUILDING_MARKET_SCALES",
+   "notShownInCity": true
   }
  },
  "identity": {

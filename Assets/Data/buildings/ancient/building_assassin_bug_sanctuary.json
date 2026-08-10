@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASSASSIN_BUG_SANCTUARY"
+   "define": "ART_DEF_BUILDING_ASSASSIN_BUG_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "identity": {

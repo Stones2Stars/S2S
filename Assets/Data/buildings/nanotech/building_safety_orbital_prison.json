@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAFETY_ORBITAL_PRISON"
+   "define": "ART_DEF_BUILDING_SAFETY_ORBITAL_PRISON",
+   "notShownInCity": true
   }
  },
  "identity": {

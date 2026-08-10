@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_POLISH"
+   "define": "ART_DEF_BUILDING_CULTURE_POLISH",
+   "notShownInCity": true
   }
  },
  "identity": {

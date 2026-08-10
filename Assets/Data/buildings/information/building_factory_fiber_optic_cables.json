@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_FIBER_OPTIC_CABLES"
+   "define": "ART_DEF_BUILDING_FACTORY_FIBER_OPTIC_CABLES",
+   "notShownInCity": true
   }
  },
  "identity": {

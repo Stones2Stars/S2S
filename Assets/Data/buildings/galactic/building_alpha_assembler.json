@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALPHA_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_ALPHA_ASSEMBLER",
+   "notShownInCity": true
   }
  },
  "identity": {

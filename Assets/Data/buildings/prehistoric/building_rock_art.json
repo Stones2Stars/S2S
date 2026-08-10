@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROCK_ART"
+   "define": "ART_DEF_BUILDING_ROCK_ART",
+   "notShownInCity": true
   }
  },
  "identity": {

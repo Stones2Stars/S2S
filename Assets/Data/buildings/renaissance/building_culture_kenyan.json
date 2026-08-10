@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_KENYAN"
+   "define": "ART_DEF_BUILDING_CULTURE_KENYAN",
+   "notShownInCity": true
   }
  },
  "identity": {

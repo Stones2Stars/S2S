@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATCHER_CANARY"
+   "define": "ART_DEF_BUILDING_CATCHER_CANARY",
+   "notShownInCity": true
   }
  },
  "identity": {

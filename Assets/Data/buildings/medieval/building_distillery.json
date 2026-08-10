@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTILLERY"
+   "define": "ART_DEF_BUILDING_DISTILLERY",
+   "notShownInCity": true
   }
  },
  "identity": {

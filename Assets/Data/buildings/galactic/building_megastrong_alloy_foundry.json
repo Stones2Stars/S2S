@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGASTRONG_ALLOY_FOUNDRY"
+   "define": "ART_DEF_BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

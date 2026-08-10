@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BAMBOO_BRIDGE"
+   "define": "ART_DEF_BUILDING_BAMBOO_BRIDGE",
+   "notShownInCity": true
   }
  },
  "identity": {

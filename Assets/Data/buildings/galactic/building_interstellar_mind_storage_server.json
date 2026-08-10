@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_MIND_STORAGE_SERVER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_MIND_STORAGE_SERVER",
+   "notShownInCity": true
   }
  },
  "identity": {

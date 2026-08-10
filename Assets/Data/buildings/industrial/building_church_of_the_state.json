@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHURCH_OF_THE_STATE"
+   "define": "ART_DEF_BUILDING_CHURCH_OF_THE_STATE",
+   "notShownInCity": true
   }
  },
  "identity": {

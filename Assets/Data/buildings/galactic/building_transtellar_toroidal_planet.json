@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_TOROIDAL_PLANET"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_TOROIDAL_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

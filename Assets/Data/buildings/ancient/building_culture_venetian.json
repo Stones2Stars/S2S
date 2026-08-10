@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_VENETIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_VENETIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

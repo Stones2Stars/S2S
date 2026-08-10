@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACHIEVEMENT_COMMERCIAL"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_COMMERCIAL",
+   "notShownInCity": true
   }
  },
  "identity": {

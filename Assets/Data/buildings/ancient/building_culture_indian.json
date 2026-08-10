@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_INDIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_INDIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

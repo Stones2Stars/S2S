@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOUVRE_MUSEUM"
+   "define": "ART_DEF_BUILDING_LOUVRE_MUSEUM",
+   "notShownInCity": true
   }
  },
  "sound": {

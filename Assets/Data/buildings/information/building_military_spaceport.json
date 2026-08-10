@@ -102,7 +102,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MILITARY_SPACEPORT"
+   "define": "ART_DEF_BUILDING_MILITARY_SPACEPORT",
+   "notShownInCity": true
   }
  },
  "sound": {

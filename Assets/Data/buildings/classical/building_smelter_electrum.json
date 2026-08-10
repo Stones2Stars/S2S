@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMELTER_ELECTRUM"
+   "define": "ART_DEF_BUILDING_SMELTER_ELECTRUM",
+   "notShownInCity": true
   }
  },
  "identity": {

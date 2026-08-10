@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FAST_BREEDER_REACTOR"
+   "define": "ART_DEF_BUILDING_FAST_BREEDER_REACTOR",
+   "notShownInCity": true
   }
  },
  "identity": {

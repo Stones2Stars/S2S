@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_SLOTH_BEAR"
+   "define": "ART_DEF_BUILDING_FOLKLORE_SLOTH_BEAR",
+   "notShownInCity": true
   }
  },
  "identity": {

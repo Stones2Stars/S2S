@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LL_MEADOWCROFT_ROCKSHELTER"
+   "define": "ART_DEF_BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
+   "notShownInCity": true
   }
  },
  "identity": {

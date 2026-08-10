@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATCHER_PEACOCK"
+   "define": "ART_DEF_BUILDING_CATCHER_PEACOCK",
+   "notShownInCity": true
   }
  },
  "identity": {

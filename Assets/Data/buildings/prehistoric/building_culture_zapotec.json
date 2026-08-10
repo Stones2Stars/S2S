@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ZAPOTEC"
+   "define": "ART_DEF_BUILDING_CULTURE_ZAPOTEC",
+   "notShownInCity": true
   }
  },
  "identity": {

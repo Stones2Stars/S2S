@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACHIEVEMENT_POLITICAL"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_POLITICAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_FURAWI"
+   "define": "ART_DEF_BUILDING_CULTURE_FURAWI",
+   "notShownInCity": true
   }
  },
  "identity": {

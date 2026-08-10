@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RUDOLPHINE"
+   "define": "ART_DEF_BUILDING_RUDOLPHINE",
+   "notShownInCity": true
   }
  },
  "identity": {

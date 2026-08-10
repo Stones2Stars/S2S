@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_TRADING_POST"
+   "define": "ART_DEF_BUILDING_VENUS_TRADING_POST",
+   "notShownInCity": true
   }
  },
  "identity": {

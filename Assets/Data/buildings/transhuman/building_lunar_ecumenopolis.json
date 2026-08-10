@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ECUMENOPOLIS"
+   "define": "ART_DEF_BUILDING_LUNAR_ECUMENOPOLIS",
+   "notShownInCity": true
   }
  },
  "identity": {

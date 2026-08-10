@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_TOURIST_AGENCY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_TOURIST_AGENCY",
+   "notShownInCity": true
   }
  },
  "identity": {

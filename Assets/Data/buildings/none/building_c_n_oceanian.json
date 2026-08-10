@@ -26,7 +26,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_OCEANIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_OCEANIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

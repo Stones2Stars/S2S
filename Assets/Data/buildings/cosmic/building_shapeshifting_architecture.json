@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SHAPESHIFTING_ARCHITECTURE"
+   "define": "ART_DEF_BUILDING_SHAPESHIFTING_ARCHITECTURE",
+   "notShownInCity": true
   }
  },
  "identity": {

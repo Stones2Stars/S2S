@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BUILDING_MEMBRANES"
+   "define": "ART_DEF_BUILDING_BUILDING_MEMBRANES",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ROCKET_FUEL_REFINERY"
+   "define": "ART_DEF_BUILDING_LUNAR_ROCKET_FUEL_REFINERY",
+   "notShownInCity": true
   }
  },
  "identity": {

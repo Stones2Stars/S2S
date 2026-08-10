@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_NOVEL_SENSES"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_NOVEL_SENSES",
+   "notShownInCity": true
   }
  },
  "identity": {

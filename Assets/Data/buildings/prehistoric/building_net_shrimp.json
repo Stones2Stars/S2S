@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NET_SHRIMP"
+   "define": "ART_DEF_BUILDING_NET_SHRIMP",
+   "notShownInCity": true
   }
  },
  "identity": {

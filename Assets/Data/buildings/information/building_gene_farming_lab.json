@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GENE_FARMING_LAB"
+   "define": "ART_DEF_BUILDING_GENE_FARMING_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

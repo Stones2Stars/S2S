@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTRIBUTED_SOCIAL_NETWORK"
+   "define": "ART_DEF_BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+   "notShownInCity": true
   }
  },
  "identity": {

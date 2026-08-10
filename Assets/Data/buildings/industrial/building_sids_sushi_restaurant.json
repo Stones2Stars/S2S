@@ -132,7 +132,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SIDS_SUSHI_RESTAURANT"
+   "define": "ART_DEF_BUILDING_SIDS_SUSHI_RESTAURANT",
+   "notShownInCity": true
   }
  },
  "sound": {

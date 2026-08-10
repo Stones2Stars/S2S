@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HARAPPAN_FAKE_GEMS"
+   "define": "ART_DEF_BUILDING_HARAPPAN_FAKE_GEMS",
+   "notShownInCity": true
   }
  },
  "sound": {

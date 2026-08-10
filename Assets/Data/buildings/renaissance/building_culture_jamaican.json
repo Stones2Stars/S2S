@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_JAMAICAN"
+   "define": "ART_DEF_BUILDING_CULTURE_JAMAICAN",
+   "notShownInCity": true
   }
  },
  "identity": {

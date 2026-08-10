@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MISSION_TO_CHALLENGER_DEEP"
+   "define": "ART_DEF_BUILDING_MISSION_TO_CHALLENGER_DEEP",
+   "notShownInCity": true
   }
  },
  "identity": {

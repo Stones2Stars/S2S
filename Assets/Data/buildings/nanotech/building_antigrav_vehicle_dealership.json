@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
+   "define": "ART_DEF_BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+   "notShownInCity": true
   }
  },
  "identity": {

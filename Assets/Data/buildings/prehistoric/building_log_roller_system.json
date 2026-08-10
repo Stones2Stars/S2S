@@ -116,7 +116,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LOG_ROLLER_SYSTEM"
+   "define": "ART_DEF_BUILDING_LOG_ROLLER_SYSTEM",
+   "notShownInCity": true
   }
  },
  "identity": {

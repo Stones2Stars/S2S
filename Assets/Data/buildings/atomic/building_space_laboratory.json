@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_LABORATORY"
+   "define": "ART_DEF_BUILDING_SPACE_LABORATORY",
+   "notShownInCity": true
   }
  },
  "sound": {

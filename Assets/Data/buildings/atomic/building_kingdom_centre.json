@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KINGDOM_CENTRE"
+   "define": "ART_DEF_BUILDING_KINGDOM_CENTRE",
+   "notShownInCity": true
   }
  },
  "identity": {

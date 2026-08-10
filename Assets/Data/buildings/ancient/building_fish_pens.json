@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FISH_PENS"
+   "define": "ART_DEF_BUILDING_FISH_PENS",
+   "notShownInCity": true
   }
  },
  "sound": {

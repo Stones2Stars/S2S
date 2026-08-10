@@ -123,7 +123,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MADISON_AVENUE"
+   "define": "ART_DEF_BUILDING_MADISON_AVENUE",
+   "notShownInCity": true
   }
  },
  "identity": {

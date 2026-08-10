@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TAJIK"
+   "define": "ART_DEF_BUILDING_CULTURE_TAJIK",
+   "notShownInCity": true
   }
  },
  "identity": {

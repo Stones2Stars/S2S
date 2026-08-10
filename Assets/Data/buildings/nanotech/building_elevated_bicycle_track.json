@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELEVATED_BICYCLE_TRACK"
+   "define": "ART_DEF_BUILDING_ELEVATED_BICYCLE_TRACK",
+   "notShownInCity": true
   }
  },
  "identity": {

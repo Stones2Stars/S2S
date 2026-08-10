@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GAS_LAMPS"
+   "define": "ART_DEF_BUILDING_GAS_LAMPS",
+   "notShownInCity": true
   }
  },
  "identity": {

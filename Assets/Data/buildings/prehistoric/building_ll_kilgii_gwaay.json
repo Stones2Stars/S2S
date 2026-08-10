@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LL_KILGII_GWAAY"
+   "define": "ART_DEF_BUILDING_LL_KILGII_GWAAY",
+   "notShownInCity": true
   }
  },
  "identity": {

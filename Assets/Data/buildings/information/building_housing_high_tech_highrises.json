@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_HIGHRISES"
+   "define": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+   "notShownInCity": true
   }
  },
  "identity": {

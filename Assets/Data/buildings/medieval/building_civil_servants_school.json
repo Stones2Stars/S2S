@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIL_SERVANTS_SCHOOL"
+   "define": "ART_DEF_BUILDING_CIVIL_SERVANTS_SCHOOL",
+   "notShownInCity": true
   }
  },
  "sound": {

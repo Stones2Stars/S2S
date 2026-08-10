@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTRONIC_GAMING_LEAGUE"
+   "define": "ART_DEF_BUILDING_ELECTRONIC_GAMING_LEAGUE",
+   "notShownInCity": true
   }
  },
  "identity": {

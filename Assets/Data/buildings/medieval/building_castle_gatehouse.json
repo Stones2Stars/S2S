@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CASTLE_GATEHOUSE"
+   "define": "ART_DEF_BUILDING_CASTLE_GATEHOUSE",
+   "notShownInCity": true
   }
  },
  "sound": {

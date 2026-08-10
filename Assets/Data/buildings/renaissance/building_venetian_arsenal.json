@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENETIAN_ARSENAL"
+   "define": "ART_DEF_BUILDING_VENETIAN_ARSENAL",
+   "notShownInCity": true
   }
  },
  "sound": {

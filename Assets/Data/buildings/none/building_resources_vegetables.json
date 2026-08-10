@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_VEGETABLES"
+   "define": "ART_DEF_BUILDING_RESOURCES_VEGETABLES",
+   "notShownInCity": true
   }
  },
  "identity": {

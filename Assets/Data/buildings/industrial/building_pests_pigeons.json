@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_PIGEONS"
+   "define": "ART_DEF_BUILDING_PESTS_PIGEONS",
+   "notShownInCity": true
   }
  },
  "identity": {

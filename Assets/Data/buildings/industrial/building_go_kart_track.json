@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GO_KART_TRACK"
+   "define": "ART_DEF_BUILDING_GO_KART_TRACK",
+   "notShownInCity": true
   }
  },
  "identity": {

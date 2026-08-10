@@ -129,7 +129,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_TALES_OF_FISH"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_TALES_OF_FISH",
+   "notShownInCity": true
   }
  },
  "identity": {

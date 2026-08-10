@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LAUNCH_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_LAUNCH_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

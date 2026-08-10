@@ -121,7 +121,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CONFECTIONERS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_CONFECTIONERS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

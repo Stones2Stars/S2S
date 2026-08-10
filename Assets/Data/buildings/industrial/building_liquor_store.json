@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIQUOR_STORE"
+   "define": "ART_DEF_BUILDING_LIQUOR_STORE",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -106,7 +106,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WINDMILL"
+   "define": "ART_DEF_BUILDING_WINDMILL",
+   "notShownInCity": true
   }
  },
  "identity": {

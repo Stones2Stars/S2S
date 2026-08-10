@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_DEATH_RAY"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_DEATH_RAY",
+   "notShownInCity": true
   }
  },
  "identity": {

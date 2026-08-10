@@ -134,7 +134,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHARCOAL_BURNER"
+   "define": "ART_DEF_BUILDING_CHARCOAL_BURNER",
+   "notShownInCity": true
   }
  },
  "identity": {

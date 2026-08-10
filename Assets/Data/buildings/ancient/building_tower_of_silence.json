@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOWER_OF_SILENCE"
+   "define": "ART_DEF_BUILDING_TOWER_OF_SILENCE",
+   "notShownInCity": true
   }
  },
  "sound": {

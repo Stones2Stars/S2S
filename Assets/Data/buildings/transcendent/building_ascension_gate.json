@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASCENSION_GATE"
+   "define": "ART_DEF_BUILDING_ASCENSION_GATE",
+   "notShownInCity": true
   }
  },
  "sound": {

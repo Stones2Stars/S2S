@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_HUASTEC"
+   "define": "ART_DEF_BUILDING_CULTURE_HUASTEC",
+   "notShownInCity": true
   }
  },
  "identity": {

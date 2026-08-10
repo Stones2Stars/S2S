@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_KOREAN"
+   "define": "ART_DEF_BUILDING_CULTURE_KOREAN",
+   "notShownInCity": true
   }
  },
  "identity": {

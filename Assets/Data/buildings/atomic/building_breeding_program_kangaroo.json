@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_KANGAROO"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_KANGAROO",
+   "notShownInCity": true
   }
  },
  "identity": {

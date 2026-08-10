@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CREATION_MYTH"
+   "define": "ART_DEF_BUILDING_CREATION_MYTH",
+   "notShownInCity": true
   }
  },
  "identity": {

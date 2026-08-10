@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GODELS_INCOMPLETENESS_THEOREMS"
+   "define": "ART_DEF_BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAPINGUARI_COMPOUND"
+   "define": "ART_DEF_BUILDING_MAPINGUARI_COMPOUND",
+   "notShownInCity": true
   }
  },
  "identity": {

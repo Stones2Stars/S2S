@@ -114,7 +114,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CELLAR"
+   "define": "ART_DEF_BUILDING_CELLAR",
+   "notShownInCity": true
   }
  },
  "identity": {

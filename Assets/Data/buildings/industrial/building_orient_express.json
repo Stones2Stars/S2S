@@ -109,7 +109,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORIENT_EXPRESS"
+   "define": "ART_DEF_BUILDING_ORIENT_EXPRESS",
+   "notShownInCity": true
   }
  },
  "identity": {

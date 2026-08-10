@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRITON_MILITARY_BASE"
+   "define": "ART_DEF_BUILDING_TRITON_MILITARY_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

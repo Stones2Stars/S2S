@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_MIRROR_ARRAY_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_SOLAR_MIRROR_ARRAY_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

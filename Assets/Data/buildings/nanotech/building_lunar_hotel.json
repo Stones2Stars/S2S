@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_HOTEL"
+   "define": "ART_DEF_BUILDING_LUNAR_HOTEL",
+   "notShownInCity": true
   }
  },
  "identity": {

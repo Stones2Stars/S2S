@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RAILGUN_BATTERY"
+   "define": "ART_DEF_BUILDING_RAILGUN_BATTERY",
+   "notShownInCity": true
   }
  },
  "sound": {

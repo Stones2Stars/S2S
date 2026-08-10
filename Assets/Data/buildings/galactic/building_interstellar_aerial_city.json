@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_AERIAL_CITY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_AERIAL_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

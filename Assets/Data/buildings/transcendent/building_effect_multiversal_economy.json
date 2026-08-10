@@ -22,7 +22,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_MULTIVERSAL_ECONOMY"
+   "define": "ART_DEF_BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+   "notShownInCity": true
   }
  },
  "identity": {

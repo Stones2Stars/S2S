@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TENNIS_COURT"
+   "define": "ART_DEF_BUILDING_TENNIS_COURT",
+   "notShownInCity": true
   }
  },
  "identity": {

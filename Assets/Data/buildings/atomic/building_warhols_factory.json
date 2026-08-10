@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WARHOLS_FACTORY"
+   "define": "ART_DEF_BUILDING_WARHOLS_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

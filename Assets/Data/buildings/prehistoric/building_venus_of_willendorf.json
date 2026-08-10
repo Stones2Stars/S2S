@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_OF_WILLENDORF"
+   "define": "ART_DEF_BUILDING_VENUS_OF_WILLENDORF",
+   "notShownInCity": true
   }
  },
  "identity": {

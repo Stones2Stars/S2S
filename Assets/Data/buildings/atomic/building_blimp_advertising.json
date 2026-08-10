@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BLIMP_ADVERTISING"
+   "define": "ART_DEF_BUILDING_BLIMP_ADVERTISING",
+   "notShownInCity": true
   }
  },
  "sound": {

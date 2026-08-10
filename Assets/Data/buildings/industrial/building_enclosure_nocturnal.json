@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENCLOSURE_NOCTURNAL"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_NOCTURNAL",
+   "notShownInCity": true
   }
  },
  "identity": {

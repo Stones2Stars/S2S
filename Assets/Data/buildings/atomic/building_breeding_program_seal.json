@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_SEAL"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_SEAL",
+   "notShownInCity": true
   }
  },
  "identity": {

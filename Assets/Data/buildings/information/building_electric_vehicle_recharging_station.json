@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION"
+   "define": "ART_DEF_BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

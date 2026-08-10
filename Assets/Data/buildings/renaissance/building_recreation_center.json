@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INDOOR_RECREATION_CENTER"
+   "define": "ART_DEF_BUILDING_INDOOR_RECREATION_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

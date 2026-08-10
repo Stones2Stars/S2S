@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEPTUNE_VOLATILE_MINE"
+   "define": "ART_DEF_BUILDING_NEPTUNE_VOLATILE_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

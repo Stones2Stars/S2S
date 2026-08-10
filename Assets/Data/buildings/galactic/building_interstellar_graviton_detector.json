@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+   "notShownInCity": true
   }
  },
  "identity": {

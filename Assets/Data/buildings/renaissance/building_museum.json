@@ -116,7 +116,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MUSEUM"
+   "define": "ART_DEF_BUILDING_MUSEUM",
+   "notShownInCity": true
   }
  },
  "sound": {

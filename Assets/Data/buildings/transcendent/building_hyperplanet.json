@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERPLANET"
+   "define": "ART_DEF_BUILDING_HYPERPLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

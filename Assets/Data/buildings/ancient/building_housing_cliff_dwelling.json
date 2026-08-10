@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_CLIFF_DWELLING"
+   "define": "ART_DEF_BUILDING_HOUSING_CLIFF_DWELLING",
+   "notShownInCity": true
   }
  },
  "identity": {

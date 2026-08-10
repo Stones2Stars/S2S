@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DREAM_PROPAGANDA"
+   "define": "ART_DEF_BUILDING_DREAM_PROPAGANDA",
+   "notShownInCity": true
   }
  },
  "identity": {

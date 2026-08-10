@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERURANION"
+   "define": "ART_DEF_BUILDING_HYPERURANION",
+   "notShownInCity": true
   }
  },
  "identity": {

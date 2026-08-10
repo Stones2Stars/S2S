@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMELTER_ALUMINUM"
+   "define": "ART_DEF_BUILDING_SMELTER_ALUMINUM",
+   "notShownInCity": true
   }
  },
  "sound": {

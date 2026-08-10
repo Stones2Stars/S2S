@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SANITATION_CHAMBER"
+   "define": "ART_DEF_BUILDING_SANITATION_CHAMBER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_AMETHYST"
+   "define": "ART_DEF_BUILDING_MINE_AMETHYST",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DE_MAT_POLICE_FORCE"
+   "define": "ART_DEF_BUILDING_DE_MAT_POLICE_FORCE",
+   "notShownInCity": true
   }
  },
  "identity": {

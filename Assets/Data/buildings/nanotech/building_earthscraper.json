@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EARTHSCRAPER"
+   "define": "ART_DEF_BUILDING_EARTHSCRAPER",
+   "notShownInCity": true
   }
  },
  "identity": {

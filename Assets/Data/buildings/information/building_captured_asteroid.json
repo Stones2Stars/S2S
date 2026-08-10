@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAPTURED_ASTEROID"
+   "define": "ART_DEF_BUILDING_CAPTURED_ASTEROID",
+   "notShownInCity": true
   }
  },
  "identity": {

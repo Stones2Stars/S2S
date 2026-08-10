@@ -23,7 +23,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+   "notShownInCity": true
   }
  },
  "identity": {

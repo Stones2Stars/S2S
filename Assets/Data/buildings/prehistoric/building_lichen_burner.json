@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LICHEN_BURNER"
+   "define": "ART_DEF_BUILDING_LICHEN_BURNER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER"
+   "define": "ART_DEF_BUILDING_MARTIAN_NOVUS_CHEMICAL_IMPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

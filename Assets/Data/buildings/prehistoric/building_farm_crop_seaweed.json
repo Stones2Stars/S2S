@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_SEAWEED"
+   "define": "ART_DEF_BUILDING_FARM_CROP_SEAWEED",
+   "notShownInCity": true
   }
  },
  "identity": {

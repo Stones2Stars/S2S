@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_DRYDOCK"
+   "define": "ART_DEF_BUILDING_CISLUNAR_DRYDOCK",
+   "notShownInCity": true
   }
  },
  "sound": {

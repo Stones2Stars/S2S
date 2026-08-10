@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SEA_TREE"
+   "define": "ART_DEF_BUILDING_SEA_TREE",
+   "notShownInCity": true
   }
  },
  "identity": {

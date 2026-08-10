@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARCTIC_DATA_CENTER"
+   "define": "ART_DEF_BUILDING_ARCTIC_DATA_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

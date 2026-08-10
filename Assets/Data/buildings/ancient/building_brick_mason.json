@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BRICK_MASON"
+   "define": "ART_DEF_BUILDING_BRICK_MASON",
+   "notShownInCity": true
   }
  },
  "identity": {

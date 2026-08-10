@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DARK_LIGHT_BEACON",
+   "notShownInCity": true
   }
  },
  "identity": {

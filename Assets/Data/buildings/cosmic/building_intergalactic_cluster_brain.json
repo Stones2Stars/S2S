@@ -23,7 +23,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_CLUSTER_BRAIN"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
+   "notShownInCity": true
   }
  },
  "identity": {

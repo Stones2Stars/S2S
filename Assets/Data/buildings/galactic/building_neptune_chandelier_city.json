@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEPTUNE_CHANDELIER_CITY"
+   "define": "ART_DEF_BUILDING_NEPTUNE_CHANDELIER_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

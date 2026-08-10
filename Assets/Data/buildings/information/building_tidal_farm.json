@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TIDAL_FARM"
+   "define": "ART_DEF_BUILDING_TIDAL_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

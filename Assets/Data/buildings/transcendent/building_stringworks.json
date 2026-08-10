@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STRINGWORKS"
+   "define": "ART_DEF_BUILDING_STRINGWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

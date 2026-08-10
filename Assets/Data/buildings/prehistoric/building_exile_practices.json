@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EXCILE_PRACTICES"
+   "define": "ART_DEF_BUILDING_EXCILE_PRACTICES",
+   "notShownInCity": true
   }
  },
  "identity": {

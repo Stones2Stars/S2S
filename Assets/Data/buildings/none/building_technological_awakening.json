@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_TECHNOLOGICAL_AWAKENING"
+   "define": "ART_DEF_TECHNOLOGICAL_AWAKENING",
+   "notShownInCity": true
   }
  },
  "identity": {

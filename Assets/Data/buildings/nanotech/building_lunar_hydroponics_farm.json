@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_HYDROPONICS_FARM"
+   "define": "ART_DEF_BUILDING_LUNAR_HYDROPONICS_FARM",
+   "notShownInCity": true
   }
  },
  "identity": {

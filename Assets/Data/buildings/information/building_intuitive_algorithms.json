@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTUITIVE_ALGORITHMS"
+   "define": "ART_DEF_BUILDING_INTUITIVE_ALGORITHMS",
+   "notShownInCity": true
   }
  },
  "identity": {

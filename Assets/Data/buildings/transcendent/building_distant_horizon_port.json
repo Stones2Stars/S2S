@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_HORIZON_PORT"
+   "define": "ART_DEF_BUILDING_DISTANT_HORIZON_PORT",
+   "notShownInCity": true
   }
  },
  "identity": {

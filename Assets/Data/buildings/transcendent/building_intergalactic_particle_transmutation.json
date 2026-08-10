@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION",
+   "notShownInCity": true
   }
  },
  "identity": {

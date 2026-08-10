@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DIGITAL_ART_MUSEUM"
+   "define": "ART_DEF_BUILDING_DIGITAL_ART_MUSEUM",
+   "notShownInCity": true
   }
  },
  "identity": {

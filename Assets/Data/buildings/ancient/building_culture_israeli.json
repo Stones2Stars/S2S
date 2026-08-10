@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ISRAELI"
+   "define": "ART_DEF_BUILDING_CULTURE_ISRAELI",
+   "notShownInCity": true
   }
  },
  "identity": {

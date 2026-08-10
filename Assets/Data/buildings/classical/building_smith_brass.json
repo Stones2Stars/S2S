@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_BRASS"
+   "define": "ART_DEF_BUILDING_SMITH_BRASS",
+   "notShownInCity": true
   }
  },
  "identity": {

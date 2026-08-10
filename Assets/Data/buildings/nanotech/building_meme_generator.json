@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEME_GENERATOR"
+   "define": "ART_DEF_BUILDING_MEME_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENCLOSURE_BAD_BOYS"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_BAD_BOYS",
+   "notShownInCity": true
   }
  },
  "identity": {

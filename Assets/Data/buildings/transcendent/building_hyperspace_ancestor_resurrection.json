@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_ANCESTOR_RESURRECTION"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_ANCESTOR_RESURRECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

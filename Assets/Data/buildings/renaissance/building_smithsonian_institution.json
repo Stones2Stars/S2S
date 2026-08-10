@@ -106,7 +106,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITHSONIAN_INSTITUTION"
+   "define": "ART_DEF_BUILDING_SMITHSONIAN_INSTITUTION",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_DREAM_WORLD"
+   "define": "ART_DEF_BUILDING_DISTANT_DREAM_WORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

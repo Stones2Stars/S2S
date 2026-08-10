@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_JAVA_RHINOCEROS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_JAVA_RHINOCEROS",
+   "notShownInCity": true
   }
  },
  "identity": {

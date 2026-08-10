@@ -154,7 +154,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELEMENTARY_SCHOOL"
+   "define": "ART_DEF_BUILDING_ELEMENTARY_SCHOOL",
+   "notShownInCity": true
   }
  },
  "sound": {

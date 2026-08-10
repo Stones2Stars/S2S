@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_EMP_POWER_SUPPLY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+   "notShownInCity": true
   }
  },
  "identity": {

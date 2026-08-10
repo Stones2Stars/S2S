@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORBITAL_HEAT_SINK"
+   "define": "ART_DEF_BUILDING_ORBITAL_HEAT_SINK",
+   "notShownInCity": true
   }
  },
  "identity": {

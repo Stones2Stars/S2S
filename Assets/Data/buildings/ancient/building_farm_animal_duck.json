@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_DUCK"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_DUCK",
+   "notShownInCity": true
   }
  },
  "sound": {

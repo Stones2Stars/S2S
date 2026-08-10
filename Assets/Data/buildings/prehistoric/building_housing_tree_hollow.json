@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_TREE_HOLLOW"
+   "define": "ART_DEF_BUILDING_HOUSING_TREE_HOLLOW",
+   "notShownInCity": true
   }
  },
  "identity": {

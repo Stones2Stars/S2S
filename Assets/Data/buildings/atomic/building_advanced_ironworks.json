@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ADVANCED_IRONWORKS"
+   "define": "ART_DEF_BUILDING_ADVANCED_IRONWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

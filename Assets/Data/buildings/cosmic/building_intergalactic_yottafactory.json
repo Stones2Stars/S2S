@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_YOTTAFACTORY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_YOTTAFACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

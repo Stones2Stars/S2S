@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BEACH_SAND_GATHERER"
+   "define": "ART_DEF_BUILDING_BEACH_SAND_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

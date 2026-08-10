@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SIMULATED_WORLD_MANIFESTATION"
+   "define": "ART_DEF_BUILDING_SIMULATED_WORLD_MANIFESTATION",
+   "notShownInCity": true
   }
  },
  "identity": {

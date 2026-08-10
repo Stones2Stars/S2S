@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FLIGHT_SIMULATOR"
+   "define": "ART_DEF_BUILDING_FLIGHT_SIMULATOR",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MASDAR_CITY"
+   "define": "ART_DEF_BUILDING_MASDAR_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

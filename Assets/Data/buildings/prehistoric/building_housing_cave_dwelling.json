@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_CAVE_DWELLING"
+   "define": "ART_DEF_BUILDING_HOUSING_CAVE_DWELLING",
+   "notShownInCity": true
   }
  },
  "identity": {

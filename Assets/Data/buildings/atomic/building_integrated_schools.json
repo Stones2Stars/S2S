@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTEGRATED_SCHOOLS"
+   "define": "ART_DEF_BUILDING_INTEGRATED_SCHOOLS",
+   "notShownInCity": true
   }
  },
  "identity": {

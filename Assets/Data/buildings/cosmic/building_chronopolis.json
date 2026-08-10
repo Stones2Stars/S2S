@@ -115,7 +115,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHRONOPOLIS"
+   "define": "ART_DEF_BUILDING_CHRONOPOLIS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HISTORY_REPAIR_CENTER"
+   "define": "ART_DEF_BUILDING_HISTORY_REPAIR_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

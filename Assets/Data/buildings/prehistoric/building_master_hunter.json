@@ -411,7 +411,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MASTER_HUNTER"
+   "define": "ART_DEF_BUILDING_MASTER_HUNTER",
+   "notShownInCity": true
   }
  },
  "identity": {

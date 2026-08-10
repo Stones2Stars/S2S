@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_ELECTROACTIVE_POLYMERS"
+   "define": "ART_DEF_BUILDING_FACTORY_ELECTROACTIVE_POLYMERS",
+   "notShownInCity": true
   }
  },
  "identity": {

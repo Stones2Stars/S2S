@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_RHEA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_RHEA",
+   "notShownInCity": true
   }
  },
  "identity": {

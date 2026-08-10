@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER",
+   "notShownInCity": true
   }
  },
  "identity": {

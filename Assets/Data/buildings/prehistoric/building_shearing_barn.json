@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SHEARING_BARN"
+   "define": "ART_DEF_BUILDING_SHEARING_BARN",
+   "notShownInCity": true
   }
  },
  "identity": {

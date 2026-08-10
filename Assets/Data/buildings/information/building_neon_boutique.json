@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NEON_BOUTIQUE"
+   "define": "ART_DEF_BUILDING_NEON_BOUTIQUE",
+   "notShownInCity": true
   }
  },
  "identity": {

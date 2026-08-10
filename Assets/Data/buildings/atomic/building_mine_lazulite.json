@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MINE_LAZULITE"
+   "define": "ART_DEF_BUILDING_MINE_LAZULITE",
+   "notShownInCity": true
   }
  },
  "identity": {

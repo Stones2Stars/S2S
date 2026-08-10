@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_APPLE"
+   "define": "ART_DEF_BUILDING_ORCHARD_APPLE",
+   "notShownInCity": true
   }
  },
  "identity": {

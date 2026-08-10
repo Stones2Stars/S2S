@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CREDIT_UNION"
+   "define": "ART_DEF_BUILDING_CREDIT_UNION",
+   "notShownInCity": true
   }
  },
  "sound": {

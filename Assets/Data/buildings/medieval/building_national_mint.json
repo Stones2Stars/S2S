@@ -124,7 +124,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_MINT"
+   "define": "ART_DEF_BUILDING_NATIONAL_MINT",
+   "notShownInCity": true
   }
  },
  "sound": {

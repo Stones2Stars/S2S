@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SAFE_HOUSE"
+   "define": "ART_DEF_BUILDING_SAFE_HOUSE",
+   "notShownInCity": true
   }
  },
  "identity": {

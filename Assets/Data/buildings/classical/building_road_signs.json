@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROAD_SIGNS"
+   "define": "ART_DEF_BUILDING_ROAD_SIGNS",
+   "notShownInCity": true
   }
  },
  "sound": {

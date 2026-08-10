@@ -125,7 +125,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROBOTICS_LAB"
+   "define": "ART_DEF_BUILDING_ROBOTICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

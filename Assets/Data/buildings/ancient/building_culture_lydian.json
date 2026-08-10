@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_LYDIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_LYDIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BARDIC_CIRCLE"
+   "define": "ART_DEF_BUILDING_BARDIC_CIRCLE",
+   "notShownInCity": true
   }
  },
  "sound": {

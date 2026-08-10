@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES"
+   "define": "ART_DEF_BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
+   "notShownInCity": true
   }
  },
  "identity": {

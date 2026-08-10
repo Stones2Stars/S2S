@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIOINFORMATICS_LAB"
+   "define": "ART_DEF_BUILDING_BIOINFORMATICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INDEPENDENCE_HALL"
+   "define": "ART_DEF_BUILDING_INDEPENDENCE_HALL",
+   "notShownInCity": true
   }
  },
  "identity": {

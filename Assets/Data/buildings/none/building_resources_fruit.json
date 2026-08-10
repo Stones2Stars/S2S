@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_FRUIT"
+   "define": "ART_DEF_BUILDING_RESOURCES_FRUIT",
+   "notShownInCity": true
   }
  },
  "identity": {

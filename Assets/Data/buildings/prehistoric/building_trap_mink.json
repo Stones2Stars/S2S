@@ -78,7 +78,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRAP_MINK"
+   "define": "ART_DEF_BUILDING_TRAP_MINK",
+   "notShownInCity": true
   }
  },
  "identity": {

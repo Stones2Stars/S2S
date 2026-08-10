@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIZARD_HUNTERS_CAMP"
+   "define": "ART_DEF_BUILDING_LIZARD_HUNTERS_CAMP",
+   "notShownInCity": true
   }
  },
  "identity": {

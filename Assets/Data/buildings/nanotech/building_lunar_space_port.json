@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_SPACE_PORT"
+   "define": "ART_DEF_BUILDING_LUNAR_SPACE_PORT",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_DOLPHIN"
+   "define": "ART_DEF_BUILDING_FOLKLORE_DOLPHIN",
+   "notShownInCity": true
   }
  },
  "identity": {

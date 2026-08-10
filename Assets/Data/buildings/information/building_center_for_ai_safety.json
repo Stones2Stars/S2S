@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CENTER_FOR_AI_SAFETY"
+   "define": "ART_DEF_BUILDING_CENTER_FOR_AI_SAFETY",
+   "notShownInCity": true
   }
  },
  "identity": {

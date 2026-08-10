@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PLANETARY_LANDING"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+   "notShownInCity": true
   }
  },
  "identity": {

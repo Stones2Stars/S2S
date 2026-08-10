@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_FOSSILS"
+   "define": "ART_DEF_BUILDING_RESOURCES_FOSSILS",
+   "notShownInCity": true
   }
  },
  "identity": {

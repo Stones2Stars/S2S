@@ -109,7 +109,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASATRU_TEMPLE"
+   "define": "ART_DEF_BUILDING_ASATRU_TEMPLE",
+   "notShownInCity": true
   }
  },
  "sound": {

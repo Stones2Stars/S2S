@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
+   "notShownInCity": true
   }
  },
  "identity": {

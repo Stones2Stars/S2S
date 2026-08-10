@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOWN_WATCH"
+   "define": "ART_DEF_BUILDING_TOWN_WATCH",
+   "notShownInCity": true
   }
  },
  "identity": {

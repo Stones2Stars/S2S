@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SWARM"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SWARM",
+   "notShownInCity": true
   }
  },
  "identity": {

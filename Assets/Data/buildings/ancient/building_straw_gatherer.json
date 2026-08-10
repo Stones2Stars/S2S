@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STRAW_GATHERER"
+   "define": "ART_DEF_BUILDING_STRAW_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

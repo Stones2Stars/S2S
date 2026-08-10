@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HERD_COW"
+   "define": "ART_DEF_BUILDING_HERD_COW",
+   "notShownInCity": true
   }
  },
  "sound": {

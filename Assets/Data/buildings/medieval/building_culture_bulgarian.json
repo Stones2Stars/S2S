@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BULGARIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_BULGARIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

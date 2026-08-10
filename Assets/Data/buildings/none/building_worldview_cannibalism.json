@@ -22,7 +22,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM"
+   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM",
+   "notShownInCity": true
   }
  },
  "sound": {

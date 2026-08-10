@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_BELL_PEPPER"
+   "define": "ART_DEF_BUILDING_FARM_CROP_BELL_PEPPER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -91,7 +91,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERMITE_CATCHER"
+   "define": "ART_DEF_BUILDING_TERMITE_CATCHER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ASSEMBLY_PLANT"
+   "define": "ART_DEF_BUILDING_LUNAR_ASSEMBLY_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

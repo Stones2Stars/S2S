@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION"
+   "define": "ART_DEF_BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

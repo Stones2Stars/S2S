@@ -55,7 +55,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE"
+   "define": "ART_DEF_BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE",
+   "notShownInCity": true
   }
  },
  "identity": {

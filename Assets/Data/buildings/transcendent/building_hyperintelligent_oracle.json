@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERINTELLIGENT_ORACLE"
+   "define": "ART_DEF_BUILDING_HYPERINTELLIGENT_ORACLE",
+   "notShownInCity": true
   }
  },
  "identity": {

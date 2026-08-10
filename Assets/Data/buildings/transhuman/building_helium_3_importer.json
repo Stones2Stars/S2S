@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HELIUM_3_IMPORTER"
+   "define": "ART_DEF_BUILDING_HELIUM_3_IMPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

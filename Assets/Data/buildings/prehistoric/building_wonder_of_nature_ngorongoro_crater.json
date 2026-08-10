@@ -117,7 +117,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_NGORONGORO_CRATER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLONING_FACTORY"
+   "define": "ART_DEF_BUILDING_CLONING_FACTORY",
+   "notShownInCity": true
   }
  },
  "sound": {

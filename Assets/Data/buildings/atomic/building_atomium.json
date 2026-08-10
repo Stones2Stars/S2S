@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ATOMIUM"
+   "define": "ART_DEF_BUILDING_ATOMIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -178,7 +178,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_SCHOOL"
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

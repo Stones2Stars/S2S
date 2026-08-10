@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION",
+   "notShownInCity": true
   }
  },
  "identity": {

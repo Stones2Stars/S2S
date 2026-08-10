@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DELI"
+   "define": "ART_DEF_BUILDING_DELI",
+   "notShownInCity": true
   }
  },
  "identity": {

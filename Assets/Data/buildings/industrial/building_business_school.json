@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BUSINESS_SCHOOL"
+   "define": "ART_DEF_BUILDING_BUSINESS_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

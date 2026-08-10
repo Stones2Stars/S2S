@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NUDGING_SPACE_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_NUDGING_SPACE_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THE_KARNAK_TEMPLE_COMPLEX"
+   "define": "ART_DEF_BUILDING_THE_KARNAK_TEMPLE_COMPLEX",
+   "notShownInCity": true
   }
  },
  "sound": {

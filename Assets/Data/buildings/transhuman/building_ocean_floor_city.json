@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OCEAN_FLOOR_CITY"
+   "define": "ART_DEF_BUILDING_OCEAN_FLOOR_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

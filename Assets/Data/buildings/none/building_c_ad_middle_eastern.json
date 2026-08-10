@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MIDDLE_EASTERN"
+   "define": "ART_DEF_BUILDING_CULTURE_MIDDLE_EASTERN",
+   "notShownInCity": true
   }
  },
  "identity": {

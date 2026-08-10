@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_REMOTE_NAVAL_TRAINING_CENTER"
+   "define": "ART_DEF_BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

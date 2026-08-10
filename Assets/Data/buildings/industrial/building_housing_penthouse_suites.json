@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_PENTHOUSE_SUITES"
+   "define": "ART_DEF_BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "notShownInCity": true
   }
  },
  "identity": {

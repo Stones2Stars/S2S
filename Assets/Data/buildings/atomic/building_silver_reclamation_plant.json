@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SILVER_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_SILVER_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

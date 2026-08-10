@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATCHER_BIRDS_OF_PARADISE"
+   "define": "ART_DEF_BUILDING_CATCHER_BIRDS_OF_PARADISE",
+   "notShownInCity": true
   }
  },
  "identity": {

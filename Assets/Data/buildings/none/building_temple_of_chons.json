@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_MONASTERY"
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_MONASTERY",
+   "notShownInCity": true
   }
  },
  "sound": {

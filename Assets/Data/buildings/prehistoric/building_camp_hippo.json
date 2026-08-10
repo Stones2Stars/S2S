@@ -89,7 +89,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CAMP_HIPPO"
+   "define": "ART_DEF_BUILDING_CAMP_HIPPO",
+   "notShownInCity": true
   }
  },
  "identity": {

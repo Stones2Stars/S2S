@@ -98,7 +98,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSGENICS_LAB"
+   "define": "ART_DEF_BUILDING_TRANSGENICS_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

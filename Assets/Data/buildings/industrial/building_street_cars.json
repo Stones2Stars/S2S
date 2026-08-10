@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STREET_CARS"
+   "define": "ART_DEF_BUILDING_STREET_CARS",
+   "notShownInCity": true
   }
  },
  "identity": {

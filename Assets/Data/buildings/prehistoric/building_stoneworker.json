@@ -127,7 +127,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STONEWORKER"
+   "define": "ART_DEF_BUILDING_STONEWORKER",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RIVER_AUTHORITY"
+   "define": "ART_DEF_BUILDING_RIVER_AUTHORITY",
+   "notShownInCity": true
   }
  },
  "sound": {

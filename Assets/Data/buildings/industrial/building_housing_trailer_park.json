@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_TRAILER_PARK"
+   "define": "ART_DEF_BUILDING_HOUSING_TRAILER_PARK",
+   "notShownInCity": true
   }
  },
  "identity": {

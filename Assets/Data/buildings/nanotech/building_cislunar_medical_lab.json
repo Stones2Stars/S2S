@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_MEDICAL_LAB"
+   "define": "ART_DEF_BUILDING_CISLUNAR_MEDICAL_LAB",
+   "notShownInCity": true
   }
  },
  "sound": {

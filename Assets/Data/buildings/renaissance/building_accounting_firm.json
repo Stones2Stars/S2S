@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ACCOUNTING_FIRM"
+   "define": "ART_DEF_BUILDING_ACCOUNTING_FIRM",
+   "notShownInCity": true
   }
  },
  "sound": {

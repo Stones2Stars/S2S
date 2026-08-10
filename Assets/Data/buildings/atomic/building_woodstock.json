@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WOODSTOCK"
+   "define": "ART_DEF_BUILDING_WOODSTOCK",
+   "notShownInCity": true
   }
  },
  "identity": {

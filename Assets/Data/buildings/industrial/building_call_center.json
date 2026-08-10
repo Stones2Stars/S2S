@@ -31,7 +31,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CALL_CENTER"
+   "define": "ART_DEF_BUILDING_CALL_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE"
+   "define": "ART_DEF_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANETARY_IMMIGRATION_OFFICE"
+   "define": "ART_DEF_BUILDING_PLANETARY_IMMIGRATION_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

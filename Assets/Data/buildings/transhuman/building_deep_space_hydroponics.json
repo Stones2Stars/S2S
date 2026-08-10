@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_HYDROPONICS"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_HYDROPONICS",
+   "notShownInCity": true
   }
  },
  "identity": {

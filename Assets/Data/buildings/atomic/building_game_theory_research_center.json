@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GAME_THEORY_RESEARCH_CENTER"
+   "define": "ART_DEF_BUILDING_GAME_THEORY_RESEARCH_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

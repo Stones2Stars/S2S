@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ATOMIC_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_ATOMIC_ASSEMBLER",
+   "notShownInCity": true
   }
  },
  "identity": {

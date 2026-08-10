@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NET_CRAB"
+   "define": "ART_DEF_BUILDING_NET_CRAB",
+   "notShownInCity": true
   }
  },
  "identity": {

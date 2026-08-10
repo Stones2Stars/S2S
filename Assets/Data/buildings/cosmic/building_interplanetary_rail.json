@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERPLANETARY_RAIL"
+   "define": "ART_DEF_BUILDING_INTERPLANETARY_RAIL",
+   "notShownInCity": true
   }
  },
  "identity": {

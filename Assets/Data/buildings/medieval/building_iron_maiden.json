@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_IRON_MAIDEN"
+   "define": "ART_DEF_BUILDING_IRON_MAIDEN",
+   "notShownInCity": true
   }
  },
  "sound": {

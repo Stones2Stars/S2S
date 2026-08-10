@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_CO2_REMOVAL"
+   "define": "ART_DEF_BUILDING_VENUS_CO2_REMOVAL",
+   "notShownInCity": true
   }
  },
  "identity": {

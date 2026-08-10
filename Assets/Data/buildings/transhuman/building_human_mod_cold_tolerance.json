@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_COLD_TOLERANCE"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_COLD_TOLERANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

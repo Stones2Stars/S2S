@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_CO2_SUBLIMATION"
+   "define": "ART_DEF_BUILDING_MARTIAN_CO2_SUBLIMATION",
+   "notShownInCity": true
   }
  },
  "identity": {

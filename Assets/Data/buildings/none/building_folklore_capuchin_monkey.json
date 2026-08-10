@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_CAPUCHIN_MONKEY"
+   "define": "ART_DEF_BUILDING_FOLKLORE_CAPUCHIN_MONKEY",
+   "notShownInCity": true
   }
  },
  "identity": {

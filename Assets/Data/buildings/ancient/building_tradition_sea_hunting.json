@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRADITION_SEA_HUNTING"
+   "define": "ART_DEF_BUILDING_TRADITION_SEA_HUNTING",
+   "notShownInCity": true
   }
  },
  "identity": {

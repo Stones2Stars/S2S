@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_RED_OCHER"
+   "define": "ART_DEF_BUILDING_CULTURE_RED_OCHER",
+   "notShownInCity": true
   }
  },
  "identity": {

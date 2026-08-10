@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_SEA_LION"
+   "define": "ART_DEF_BUILDING_FOLKLORE_SEA_LION",
+   "notShownInCity": true
   }
  },
  "identity": {

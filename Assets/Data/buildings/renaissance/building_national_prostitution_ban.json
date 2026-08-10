@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_PROSTITUTION_BAN"
+   "define": "ART_DEF_BUILDING_NATIONAL_PROSTITUTION_BAN",
+   "notShownInCity": true
   }
  },
  "identity": {

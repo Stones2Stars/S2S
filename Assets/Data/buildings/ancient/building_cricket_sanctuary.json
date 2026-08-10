@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CRICKET_SANCTUARY"
+   "define": "ART_DEF_BUILDING_CRICKET_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "identity": {

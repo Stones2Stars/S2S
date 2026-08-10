@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOY_CARVER"
+   "define": "ART_DEF_BUILDING_TOY_CARVER",
+   "notShownInCity": true
   }
  },
  "identity": {

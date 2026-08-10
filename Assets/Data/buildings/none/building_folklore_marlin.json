@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_MARLIN"
+   "define": "ART_DEF_BUILDING_FOLKLORE_MARLIN",
+   "notShownInCity": true
   }
  },
  "identity": {

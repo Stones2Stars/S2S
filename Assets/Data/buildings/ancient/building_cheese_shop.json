@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHEESE_SHOP"
+   "define": "ART_DEF_BUILDING_CHEESE_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

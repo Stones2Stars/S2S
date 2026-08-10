@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BIOGEOCOMPUTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BIOGEOCOMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

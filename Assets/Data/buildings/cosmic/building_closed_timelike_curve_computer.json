@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER"
+   "define": "ART_DEF_BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+   "notShownInCity": true
   }
  },
  "identity": {

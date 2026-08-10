@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RETREAT_CENTER"
+   "define": "ART_DEF_BUILDING_RETREAT_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

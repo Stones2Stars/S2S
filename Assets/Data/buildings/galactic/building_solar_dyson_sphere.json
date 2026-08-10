@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_DYSON_SPHERE"
+   "define": "ART_DEF_BUILDING_SOLAR_DYSON_SPHERE",
+   "notShownInCity": true
   }
  },
  "identity": {

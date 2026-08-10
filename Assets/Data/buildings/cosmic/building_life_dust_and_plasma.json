@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIFE_DUST_AND_PLASMA"
+   "define": "ART_DEF_BUILDING_LIFE_DUST_AND_PLASMA",
+   "notShownInCity": true
   }
  },
  "identity": {

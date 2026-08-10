@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_BISON"
+   "define": "ART_DEF_BUILDING_FOLKLORE_BISON",
+   "notShownInCity": true
   }
  },
  "identity": {

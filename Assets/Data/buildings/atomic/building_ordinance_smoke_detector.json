@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORDINANCE_SMOKE_DETECTOR"
+   "define": "ART_DEF_BUILDING_ORDINANCE_SMOKE_DETECTOR",
+   "notShownInCity": true
   }
  },
  "sound": {

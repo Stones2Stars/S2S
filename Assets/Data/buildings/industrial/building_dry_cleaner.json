@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DRY_CLEANER"
+   "define": "ART_DEF_BUILDING_DRY_CLEANER",
+   "notShownInCity": true
   }
  },
  "identity": {

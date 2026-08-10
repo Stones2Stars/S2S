@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_UIGHUR"
+   "define": "ART_DEF_BUILDING_CULTURE_UIGHUR",
+   "notShownInCity": true
   }
  },
  "identity": {

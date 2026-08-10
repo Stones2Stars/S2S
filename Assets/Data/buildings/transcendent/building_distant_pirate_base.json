@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_PIRATE_BASE"
+   "define": "ART_DEF_BUILDING_DISTANT_PIRATE_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

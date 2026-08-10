@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_TRADING_POST"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TRADING_POST",
+   "notShownInCity": true
   }
  },
  "identity": {

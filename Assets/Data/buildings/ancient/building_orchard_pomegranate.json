@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_POMEGRANATE"
+   "define": "ART_DEF_BUILDING_ORCHARD_POMEGRANATE",
+   "notShownInCity": true
   }
  },
  "identity": {

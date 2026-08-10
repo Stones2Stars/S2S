@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_SHIELD"
+   "define": "ART_DEF_BUILDING_NATIONAL_SHIELD",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PUBLIC_STONING"
+   "define": "ART_DEF_BUILDING_PUBLIC_STONING",
+   "notShownInCity": true
   }
  },
  "identity": {

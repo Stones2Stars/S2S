@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WIRELESS_ELECTRIC_FENCE"
+   "define": "ART_DEF_BUILDING_WIRELESS_ELECTRIC_FENCE",
+   "notShownInCity": true
   }
  },
  "sound": {

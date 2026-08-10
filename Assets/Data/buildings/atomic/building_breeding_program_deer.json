@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_DEER"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_DEER",
+   "notShownInCity": true
   }
  },
  "identity": {

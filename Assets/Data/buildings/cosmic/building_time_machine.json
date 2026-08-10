@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TIME_MACHINE"
+   "define": "ART_DEF_BUILDING_TIME_MACHINE",
+   "notShownInCity": true
   }
  },
  "identity": {

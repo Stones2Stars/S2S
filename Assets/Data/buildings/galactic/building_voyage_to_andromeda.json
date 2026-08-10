@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VOYAGE_TO_ANDROMEDA"
+   "define": "ART_DEF_BUILDING_VOYAGE_TO_ANDROMEDA",
+   "notShownInCity": true
   }
  },
  "identity": {

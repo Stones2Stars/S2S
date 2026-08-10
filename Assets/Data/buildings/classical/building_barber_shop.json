@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BARBER_SHOP"
+   "define": "ART_DEF_BUILDING_BARBER_SHOP",
+   "notShownInCity": true
   }
  },
  "sound": {

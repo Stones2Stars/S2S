@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CANNON_FORGE"
+   "define": "ART_DEF_BUILDING_CANNON_FORGE",
+   "notShownInCity": true
   }
  },
  "sound": {

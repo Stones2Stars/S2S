@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ADVANCED_METI"
+   "define": "ART_DEF_BUILDING_ADVANCED_METI",
+   "notShownInCity": true
   }
  },
  "identity": {

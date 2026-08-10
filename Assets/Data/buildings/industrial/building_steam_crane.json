@@ -104,7 +104,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_STEAM_CRANE"
+   "define": "ART_DEF_BUILDING_STEAM_CRANE",
+   "notShownInCity": true
   }
  },
  "sound": {

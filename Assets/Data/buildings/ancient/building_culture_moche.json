@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_MOCHE"
+   "define": "ART_DEF_BUILDING_CULTURE_MOCHE",
+   "notShownInCity": true
   }
  },
  "identity": {

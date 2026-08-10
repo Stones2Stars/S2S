@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CATCHER_PARROT"
+   "define": "ART_DEF_BUILDING_CATCHER_PARROT",
+   "notShownInCity": true
   }
  },
  "identity": {

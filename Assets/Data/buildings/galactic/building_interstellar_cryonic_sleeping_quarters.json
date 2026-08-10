@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS",
+   "notShownInCity": true
   }
  },
  "identity": {

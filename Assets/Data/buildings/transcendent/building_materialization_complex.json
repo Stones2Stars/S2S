@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MATERIALIZATION_COMPLEX"
+   "define": "ART_DEF_BUILDING_MATERIALIZATION_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

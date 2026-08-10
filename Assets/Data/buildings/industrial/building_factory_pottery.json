@@ -117,7 +117,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_POTTERY"
+   "define": "ART_DEF_BUILDING_FACTORY_POTTERY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -20,7 +20,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CIVIC_MIND_CONTROL"
+   "define": "ART_DEF_BUILDING_CIVIC_MIND_CONTROL",
+   "notShownInCity": true
   }
  },
  "identity": {

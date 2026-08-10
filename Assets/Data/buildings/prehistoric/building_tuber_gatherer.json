@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TUBER_GATHERER"
+   "define": "ART_DEF_BUILDING_TUBER_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

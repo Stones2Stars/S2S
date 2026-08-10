@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_AMMUNITION"
+   "define": "ART_DEF_BUILDING_FACTORY_AMMUNITION",
+   "notShownInCity": true
   }
  },
  "identity": {

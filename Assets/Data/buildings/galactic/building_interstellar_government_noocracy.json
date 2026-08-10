@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENCLOSURE_WALRUS"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_WALRUS",
+   "notShownInCity": true
   }
  },
  "identity": {

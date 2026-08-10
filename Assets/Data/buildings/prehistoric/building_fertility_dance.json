@@ -51,7 +51,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FERTILITY_DANCE"
+   "define": "ART_DEF_BUILDING_FERTILITY_DANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_FLEAS"
+   "define": "ART_DEF_BUILDING_PESTS_FLEAS",
+   "notShownInCity": true
   }
  },
  "identity": {

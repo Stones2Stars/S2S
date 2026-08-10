@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANTIKYTHERA_MECHANISM"
+   "define": "ART_DEF_BUILDING_ANTIKYTHERA_MECHANISM",
+   "notShownInCity": true
   }
  },
  "identity": {

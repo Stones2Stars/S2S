@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAMMATICUS"
+   "define": "ART_DEF_BUILDING_GRAMMATICUS",
+   "notShownInCity": true
   }
  },
  "identity": {

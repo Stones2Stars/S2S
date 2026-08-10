@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MECH_ASSEMBLY_PLANT"
+   "define": "ART_DEF_BUILDING_MECH_ASSEMBLY_PLANT",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -97,7 +97,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CHURCH_SCHOOL"
+   "define": "ART_DEF_BUILDING_CHURCH_SCHOOL",
+   "notShownInCity": true
   }
  },
  "sound": {

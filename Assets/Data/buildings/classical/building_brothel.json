@@ -127,7 +127,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BROTHEL"
+   "define": "ART_DEF_BUILDING_BROTHEL",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_LAUNCH_SITE"
+   "define": "ART_DEF_BUILDING_EFFECT_LAUNCH_SITE",
+   "notShownInCity": true
   }
  },
  "identity": {

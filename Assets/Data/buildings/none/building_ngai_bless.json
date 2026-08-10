@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NGAI_BLESS"
+   "define": "ART_DEF_BUILDING_NGAI_BLESS",
+   "notShownInCity": true
   }
  },
  "sound": {

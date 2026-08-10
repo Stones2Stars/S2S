@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_ALBEDO_REDUCTION"
+   "define": "ART_DEF_BUILDING_MARTIAN_ALBEDO_REDUCTION",
+   "notShownInCity": true
   }
  },
  "identity": {

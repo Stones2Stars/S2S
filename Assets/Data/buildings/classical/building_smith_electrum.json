@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_ELECTRUM"
+   "define": "ART_DEF_BUILDING_SMITH_ELECTRUM",
+   "notShownInCity": true
   }
  },
  "identity": {

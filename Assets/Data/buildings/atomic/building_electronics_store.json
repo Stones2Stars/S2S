@@ -134,7 +134,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTRONICS_STORE"
+   "define": "ART_DEF_BUILDING_ELECTRONICS_STORE",
+   "notShownInCity": true
   }
  },
  "identity": {

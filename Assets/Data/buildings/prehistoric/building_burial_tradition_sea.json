@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_SEA"
+   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_SEA",
+   "notShownInCity": true
   }
  },
  "identity": {

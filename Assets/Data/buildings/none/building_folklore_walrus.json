@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_WALRUS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_WALRUS",
+   "notShownInCity": true
   }
  },
  "identity": {

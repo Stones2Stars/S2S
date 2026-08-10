@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SERBIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_SERBIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

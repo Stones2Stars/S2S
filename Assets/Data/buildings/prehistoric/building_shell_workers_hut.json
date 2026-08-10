@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SHELL_WORKERS_HUT"
+   "define": "ART_DEF_BUILDING_SHELL_WORKERS_HUT",
+   "notShownInCity": true
   }
  },
  "sound": {

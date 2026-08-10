@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BELT_AND_ROAD_INITIATIVE"
+   "define": "ART_DEF_BUILDING_BELT_AND_ROAD_INITIATIVE",
+   "notShownInCity": true
   }
  },
  "identity": {

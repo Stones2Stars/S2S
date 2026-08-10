@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_GOLD"
+   "define": "ART_DEF_BUILDING_SMITH_GOLD",
+   "notShownInCity": true
   }
  },
  "identity": {

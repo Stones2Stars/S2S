@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SKYHOOK"
+   "define": "ART_DEF_BUILDING_SKYHOOK",
+   "notShownInCity": true
   }
  },
  "identity": {

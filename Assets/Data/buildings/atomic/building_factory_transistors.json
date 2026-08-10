@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_TRANSISTORS"
+   "define": "ART_DEF_BUILDING_FACTORY_TRANSISTORS",
+   "notShownInCity": true
   }
  },
  "identity": {

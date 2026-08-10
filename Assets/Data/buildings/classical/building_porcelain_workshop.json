@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PORCELAIN_WORKSHOP"
+   "define": "ART_DEF_BUILDING_PORCELAIN_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

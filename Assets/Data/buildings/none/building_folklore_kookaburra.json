@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_KOOKABURRA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_KOOKABURRA",
+   "notShownInCity": true
   }
  },
  "identity": {

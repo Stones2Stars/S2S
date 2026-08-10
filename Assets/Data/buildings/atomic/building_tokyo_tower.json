@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TOKYO_TOWER"
+   "define": "ART_DEF_BUILDING_TOKYO_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_MICROGENERATORS"
+   "define": "ART_DEF_BUILDING_FACTORY_MICROGENERATORS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BATHING_RITUAL"
+   "define": "ART_DEF_BUILDING_BATHING_RITUAL",
+   "notShownInCity": true
   }
  },
  "identity": {

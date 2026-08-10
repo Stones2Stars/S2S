@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_KING_GESAR_SONG"
+   "define": "ART_DEF_BUILDING_KING_GESAR_SONG",
+   "notShownInCity": true
   }
  },
  "sound": {

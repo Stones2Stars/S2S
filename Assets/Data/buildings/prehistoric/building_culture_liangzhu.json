@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_LIANGZHU"
+   "define": "ART_DEF_BUILDING_CULTURE_LIANGZHU",
+   "notShownInCity": true
   }
  },
  "identity": {

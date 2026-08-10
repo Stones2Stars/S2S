@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WEAVING_SPIDER_SANCTUARY"
+   "define": "ART_DEF_BUILDING_WEAVING_SPIDER_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "identity": {

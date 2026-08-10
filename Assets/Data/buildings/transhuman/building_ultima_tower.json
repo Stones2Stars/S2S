@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ULTIMA_TOWER"
+   "define": "ART_DEF_BUILDING_ULTIMA_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

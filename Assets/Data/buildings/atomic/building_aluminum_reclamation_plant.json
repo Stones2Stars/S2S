@@ -106,7 +106,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALUMINUM_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_ALUMINUM_RECLAMATION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

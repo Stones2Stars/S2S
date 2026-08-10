@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VENUS_GOVERNING_COUNCIL"
+   "define": "ART_DEF_BUILDING_VENUS_GOVERNING_COUNCIL",
+   "notShownInCity": true
   }
  },
  "identity": {

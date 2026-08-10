@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_TIMURID"
+   "define": "ART_DEF_BUILDING_CULTURE_TIMURID",
+   "notShownInCity": true
   }
  },
  "identity": {

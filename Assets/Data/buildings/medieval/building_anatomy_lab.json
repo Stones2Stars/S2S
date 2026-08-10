@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANATOMY_LAB"
+   "define": "ART_DEF_BUILDING_ANATOMY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_ELEPHANT"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_ELEPHANT",
+   "notShownInCity": true
   }
  },
  "identity": {

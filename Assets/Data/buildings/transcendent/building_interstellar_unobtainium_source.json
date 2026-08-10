@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_UNOBTAINIUM_SOURCE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_UNOBTAINIUM_SOURCE",
+   "notShownInCity": true
   }
  },
  "identity": {

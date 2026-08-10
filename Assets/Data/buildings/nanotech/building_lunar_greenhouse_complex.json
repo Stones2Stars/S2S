@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_GREENHOUSE_COMPLEX"
+   "define": "ART_DEF_BUILDING_LUNAR_GREENHOUSE_COMPLEX",
+   "notShownInCity": true
   }
  },
  "identity": {

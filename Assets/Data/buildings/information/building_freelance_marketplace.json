@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FREELANCE_MARKETPLACE"
+   "define": "ART_DEF_BUILDING_FREELANCE_MARKETPLACE",
+   "notShownInCity": true
   }
  },
  "identity": {

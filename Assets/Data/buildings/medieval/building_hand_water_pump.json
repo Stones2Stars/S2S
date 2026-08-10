@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HAND_WATER_PUMP"
+   "define": "ART_DEF_BUILDING_HAND_WATER_PUMP",
+   "notShownInCity": true
   }
  },
  "identity": {

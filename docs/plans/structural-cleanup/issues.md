@@ -405,214 +405,162 @@ allows: the replacement MACHINE (the verb set) does not exist yet, and it is NAM
 > symbols that may have moved ([docs README](../../README.md): the cheap check is to grep one or two of the
 > symbols an entry is anchored on).
 
-## 13a. ⛔ `getBestDefender` RETURNS NULL EVERYWHERE — a COMBAT defect, not a graphics one
+## 13a. The INVISIBILITY MEMBERSHIP TEST never asked whether the unit hides that way
 
-**MEASURED, live save, `GAMEOPTION_COMBAT_SIZE_MATTERS` ON / `COMBAT_HIDE_SEEK` OFF:** `getDefenderScore`
-returned 0 for **every unit on every scan — 64,485 of 64,485**, on plots holding units that `canDefend()`.
-`[GFX] defenderScan` lines carry `unitsSeen>0 scoredPositive=0`, so the plot's unit list is FINE and the
-SCORER rejects everything.
+**⛔ THE EARLIER HEADLINE HERE WAS WRONG AND IS RETRACTED.** It read *"`getBestDefender` returns NULL
+everywhere — 64,485 of 64,485"*, on the argument that `defenderValue` cannot return 0 without an attacker, so a
+zero score could only come from the three early returns. **`getDefenderScore` opens `int iValue = 0` and assigns
+only INSIDE its gate**, so a zero needs no early return at all — and `getPreferredCenterUnit` calls
+`getBestDefender` FIVE times, four of which return NULL in ordinary situations (call 1 tests `canMove()`, calls
+3–5 exclude the active player's own units via `unitX->getOwner() != eAttackingPlayer`). The `[GFX] defenderScan`
+emit fires exactly when a scan found nothing, so *"every emitted scan has `scoredPositive=0`"* is what CORRECT
+code produces on the fall-through. **The measurement was not diagnostic; no defender defect is established.**
 
-**⛔ THE ASYMMETRY IS WHY IT IS SILENT.** Every *"is there a defender here?"* predicate still answers YES —
-`hasDefender`, `isVisibleEnemyDefender`, `getNumDefenders`, `getWorstDefender` do **not** use
-`getDefenderScore`. Every *"give me the defender"* call answers NULL. Nothing looks broken from outside.
+⚑ **What settles it is the reject histogram, not another scan count** — `[GFX] defenderReject` names which of
+the three early returns fired, and `reason=ownerMismatch` is the normal case:
+`grep -a defenderReject Graphics.log | grep -ao "reason=[a-zA-Z]*" | sort | uniq -c`.
+`AI_getPredictedHitPoints()` resets to **-1**, not 0, so the predicted-dead clause is not a universal killer.
 
-**PROVEN — the scoring line is never reached.** `CvUnit::defenderValue` cannot return 0 when
-`pAttacker == NULL` (every path ends `return 1` or `return std::max(1, iValue)`; the zero-returns are all
-inside `if (pAttacker)`). So a 0 can only come from the three early returns at `CvPlot.cpp:3594-3600`.
+**⛔ WHAT WAS ACTUALLY FOUND, AND IS FIXED.** `CvUnit::hasInvisibilityType` was a pure NEGATION filter —
+`!isNegatesInvisible(e) && !hasSkill(NO_INVISIBILITY) && getNoInvisibilityCount() < 1` — and never asked whether
+the unit hides by that method at all, so it answered TRUE for all 14 methods on nearly every unit. `isInvisible`'s
+hide-and-seek branch then returns invisible on the FIRST method no seer has registered against, before the contest
+is reached. ⚠ **Byte-identical to `main`**, where the per-method `invisibilityIntensityTotal(eType)` supplied the
+discrimination the collapse to a method-agnostic `concealment()` removed — so this is inherited breakage the
+collapse exposed, not a branch regression, and it explains why `COMBAT_HIDE_SEEK` is unusable.
+⇒ The method is a SKILL ([vision.md §4](../../specs/vision.md)), so holding it IS the membership question;
+`hasInvisibilityType` now asks it and `setHasAnyInvisibility` asks the same one.
 
-**⛔ RULED OUT — do not re-tread:**
-- `getPreferredCenterUnit`, `getBestDefender`, `getDefenderScore`, `defenderValue`, `addUnit`/`removeUnit`/
-  `units()`, `updateCenterUnit` (body AND all 27 call sites), `m_bInhibitCenterUnitCalculation` — all
-  **byte-identical to `main`**.
-- `m_iPredictedHitPoints` initialises to -1 with identical set/reset sites on both branches.
-- `getMaxHP()` is identical and floored `max(1, …)`, so `isDead()` cannot fire universally that way.
-- The owner filter cannot explain it — the log shows failures at `ownerFilter=-1` (NO_PLAYER) too.
+Fixed with it, same plane:
+- **`getInvisibleType` lost `main`'s negation suppression** (`main:CvUnit.cpp:10733`) — the CLASSIC path, i.e.
+  the live one with hide-and-seek off. A unit whose cover is stripped (the `WANTED` line) still reported a hiding
+  method and read invisible to any team with no spotter for it. The suppression is restored.
+- **Detection was filed under the wrong key** (`CvPlot::changeAdjacentSight`) — `detectionAgainst(eInvisible)`
+  passed an `InvisibleTypes` INDEX into a parameter keyed by SKILL id. Every other call site passes
+  `GC.getMethodSkill()`, including one thirty lines above in the same function.
 
-**⚑ THE LIVE SUSPECT (hide-and-seek OFF path, `CvUnit.cpp:12542`):** `isInvisible`'s classic branch is
-`getInvisibleType() != NO_INVISIBLE && !plot()->isSpotterInSight(eTeam, getInvisibleType())`.
-`CvUnit::getInvisibleType` (`CvUnit.cpp:10438-10456`) was rewritten to scan `GC.getMethodSkill` over
-**`getUnitInfo()`** skills, and it **LOST main's `isNegatesInvisible` suppression** (`main:CvUnit.cpp:10733`).
-It also returns only the FIRST matching method and cannot see a promotion- or unitcombat-granted one.
-⇒ More units report an invisibility method than on `main`, and nothing negates it.
-
-**⚠ THE HIDE-AND-SEEK VARIANTS ARE REAL BUT WERE NOT ACTIVE IN THE MEASURED RUN** — they bite the moment
-`GAMEOPTION_COMBAT_HIDE_SEEK` is switched on, and both must be fixed:
-- **A — the contest lost its METHOD dimension** (`Engine/CvUnit.cpp:12559`). `main` used per-method
-  `invisibilityIntensityTotal(eType)`; this uses the collapsed, method-agnostic `concealment()`. The loop still
-  iterates all 14 methods, weighing ONE number against 14 separate per-method detection registries, 13 of which
-  can never match ⇒ **any unit with `concealment() > 0` reads invisible to every foreign team.** With
-  SIZE_MATTERS on, the whole `unitcombat_group_*` family authors concealment 400-800, i.e. every unit.
-- **B — detection is filed under the WRONG KEY** (`Engine/CvPlot.cpp:2657`). `detectionAgainst(eInvisible)`
-  passes an `InvisibleTypes` INDEX where a SKILL id is required. The correct form is 30 lines above in the same
-  function (`CvPlot.cpp:2627`, `detectionAgainst(GC.getMethodSkill(eMethod))`), and at `CvUnit.cpp:25338`.
-  Worked: the war dog's camouflage detection (skill id 10) registers under `INVISIBLE_POLITICAL` (index 10)
-  instead of `INVISIBLE_CAMOUFLAGE` (index 2), and 0 under the method it was authored for. Because
-  `setSpotIntensity` stores nothing when the value is 0, the correct method reads 0 forever.
-- ⛔ Fixing B alone does not restore defender selection; fixing A alone does not let detectors see. Two fixes.
-
-**⛔ THE SPEC IS WRONG AND MISLED THIS INVESTIGATION.** [vision.md §4](../../specs/vision.md) says *"the CONTEST
-is not yet evaluated by the engine"*. It IS evaluated — inherited from `main` and left running with only its
-concealment operand swapped. Fix the spec in the same work item as the code.
-
-**THE INSTRUMENT IS BUILT** — `[GFX] defenderReject` (`Sources/UI/CvGraphicsTrace.{h,cpp}`, `Graphics.log`)
-fires on the reject only and names which of the three early returns did it, carrying `predictedHP`, `isDead`
-and both owner values. One run settles the remaining question:
-`grep -a defenderReject Graphics.log | grep -ao "reason=[a-zA-Z]*" | sort | uniq -c`
+**⛔ STILL OPEN — a promotion-granted method does not register.** Both reads above ask `getUnitInfo().hasSkill()`,
+so a method granted by a PROMOTION or a unit-combat class is invisible to them — and **73 promotions author one**
+([vision.md §4](../../specs/vision.md)). The fix is a resolved per-unit skill plane dirtied on promotion change
+(the shape `UnitResolvedHideAndSeek` already uses for detection), never a per-read walk of every promotion inside
+`isInvisible`, which is one of the hottest reads in the engine.
 
 ---
 
-## 13b. The GAMEPLAY blast radius of 13a — the war layer is broken
+## 13b. IF a defender query does return NULL, this is the blast radius
 
-Verified caller inventory. ⛔ These are consequences of 13a, not separate defects; they close when it does.
+⚠ **Conditional on 13a, whose premise is now RETRACTED — this is a verified CALLER inventory, not evidence that
+any of it is happening.** Kept because the inventory is real work already done: if a defender query is ever found
+returning NULL wrongly, these are the consequences to expect, and the crash rows are worth guarding regardless.
 
 | site | what NULL does |
 |---|---|
-| `CvUnit.cpp:2504-2514` `updateCombat` | **attacks resolve as MOVES** — clears the attack plot and calls `groupMove`. The attacker walks onto the enemy tile. No combat, no losses, stacks interpenetrate |
-| `CvUnitAI.cpp:1265-1268` `AI_attackOddsAtPlot` | returns **100** on NULL ⇒ every AI attack evaluation everywhere reports certain victory; every odds threshold is trivially satisfied |
-| `CvUnit.cpp:4713-4722` `canEnterPlot` | the `!canAttack(*pDefender) → return false` legality veto **never runs**; `*ppDefender` never written |
-| `CvPlayerAI.cpp:23625` `AI_convertUnitAITypesForCrush` | the don't-strip-the-defender veto never fires ⇒ **the AI converts its own city garrisons to ATTACK_CITY and marches them out** |
-| `CvUnit.cpp:19725/23644` air strike | `canAirStrike` false ⇒ **the entire air-attack subsystem is dead** |
-| `CvUnitAI.cpp:19608` `AI_assaultSeaTransport` | `bCanCargoAllUnload=false` ⇒ **amphibious invasions permanently refused** |
-| `CvUnitAI.cpp:12125` `AI_guardCityBestDefender` | always false ⇒ garrisons never park, full decision cascade re-runs every turn |
+| `CvUnit.cpp` `updateCombat` | attacks resolve as MOVES — clears the attack plot and calls `groupMove` |
+| `CvUnitAI.cpp` `AI_attackOddsAtPlot` | returns **100** on NULL ⇒ every AI attack evaluation reports certain victory |
+| `CvUnit.cpp` `canEnterPlot` | the `!canAttack(*pDefender) → return false` legality veto never runs |
+| `CvPlayerAI.cpp` `AI_convertUnitAITypesForCrush` | the don't-strip-the-defender veto never fires |
+| `CvUnit.cpp` air strike | `canAirStrike` false ⇒ the air-attack subsystem is dead |
+| `CvUnitAI.cpp` `AI_assaultSeaTransport` | `bCanCargoAllUnload=false` ⇒ amphibious invasions refused |
 | **CRASHES — unguarded NULL deref** | `CvSelectionGroup.cpp:2089`, `CvUnitAI.cpp:26027`, `CvUnitAI.cpp:26195` |
 
-`CvGameCoreDLL.def:44` aliases the EXE's `CvPlot::getBestDefender` onto `getBestDefenderExternal`, so the
-closed EXE sees NULL at least as often as the DLL does.
+`CvGameCoreDLL.def:44` aliases the EXE's `CvPlot::getBestDefender` onto `getBestDefenderExternal`, so the closed
+EXE sees whatever the DLL does. ⚠ `getBestDefenderExternal`'s viewport / dummy-entity filter is **byte-identical
+to `main`** — it is the EXE's drawable-unit query by design, not a branch regression.
 
 ---
 
-## 13c. Entity CHURN orphans the move animation
-
-**MEASURED:** 3,466 entity attaches for a NET of ~519 real entities.
-
-**PROVEN mechanism.** `CvUnit::reloadEntity` (`CvUnit.cpp:205`) destroys any real entity **unconditionally, with
-no `bNeedsRealEntity` guard** — real→real is never a no-op. `CvSelectionGroup::groupMove` then routes that
-destroy into the worst possible window:
-1. inhibit centre-unit recalc on both plots (`CvSelectionGroup.cpp:3568-3569`)
-2. `move()` → `setXY` → **`QueueMove` pushes onto entity E1** (`CvUnit.cpp:13902`); the inhibit swallows the
-   `updateCenterUnit` calls AND **nulls `m_pCenterUnit`** (`CvPlot.cpp:10013`)
-3. `enableCenterUnitRecalc(true)` (`CvSelectionGroup.cpp:3635`) → `updateCenterUnit` → because the cache was
-   nulled, `newCenterUnit != m_pCenterUnit` is **guaranteed true** → `reloadEntity(true)` → **E1 destroyed with
-   the queued move on it** → E2 created
-4. `ExecuteMove` (`CvSelectionGroup.cpp:3644`) runs against **E2, whose queue is empty**
-
-The DLL concedes the entity owns mission state: `reloadEntity` calls `RemoveUnitFromBattle` — documented
-*"remove this unit from any active mission"* — immediately before destroying. The entity interface is
-pointer-keyed throughout; there is no re-bind and no queue transfer.
-
-⚑ **`if (!IsSelected())` at `CvUnit.cpp:203` is why RE-SELECTING FIXES IT** — a selected unit stops being
-reloaded, so its next entity survives long enough to finish.
-
-⛔ **ADVERSARIALLY KILLED:** "only fires when idle" (false — mid-move by construction); "`setupGraphical`
-re-issues it" (false — `ExecuteMove(0, false)` on an empty queue); "the engine tracks missions independently"
-(false — `RemoveUnitFromBattle` proves otherwise).
-⚠ **NOT a logic hang** — `isBusy()` runs off the DLL-side mission timer, independent of entity state, so game
-state advances. The endless animation is a purely visual orphan.
-⚠ `reloadEntity` and `groupMove` are **byte-identical to `main`**, so the trigger differs rather than the code
-— see 13a, which changes what `getPreferredCenterUnit` returns.
-**Minimal fix:** early-return in `reloadEntity` when the unit already holds a real entity and still needs one.
-**UNKNOWN:** whether the EXE parks an empty-queue `ExecuteMove` in a looping animation — closed-source.
-
----
-
-## 13d. Graphics paging — the hypothesis is FALSIFIED in direction, the coupling is real and REVERSED
+## 13d. Graphics paging — the hypothesis is FALSIFIED, and most of the coupling list was too
 
 **Owner hypothesis tested:** *"turning graphics paging off harms everything, because code expects paging on."*
 
-⛔ **FALSIFIED AS STATED.** `CvPlot.cpp:460-472`: `isGraphicsVisible` is
+⛔ **FALSIFIED AS STATED.** `CvPlot::isGraphicsVisible` is
 `IsGraphicsInitialized() && (!isGraphicalPaging() || (m_visibleGraphics & graphics)) && isInViewport()` — with
-paging **OFF the middle term short-circuits TRUE**, so every gate is *more* permissive, never less.
-Paging is a **BUG option** (`MainInterface__EnableGraphicalPaging`, default True), read at exactly three sites.
-Nothing outside the graphics layer reads the paging members; none is serialized; no RNG, so no OOS channel.
+paging **OFF the middle term short-circuits TRUE**, so every gate is *more* permissive, never less. Paging is a
+BUG option (`MainInterface__EnableGraphicalPaging`, default True) read at three sites; nothing outside the
+graphics layer reads its members, none is serialized, no RNG, so no OOS channel. **The paging surface is
+byte-identical to `main`.**
 
-⚑ **BUT THE COUPLING EXISTS AND ITS SIGN IS THE OPPOSITE:** gameplay logic is hard-coupled to plot-graphics
-RESIDENCY through `m_pCenterUnit` → dummy entities → defender queries. These misbehave when a plot is paged
-**OUT**, i.e. with paging **ON**:
+⛔ **AND TWO ROWS OF THE ORIGINAL COUPLING TABLE WERE FALSE FINDINGS — retracted:**
+- **`updateAirStrike`'s turn timer is NOT graphics-gated.** The gate is `pPlot->isVisibleToWatchingHuman()`,
+  which is FOG-OF-WAR (`isVisible(team, false)`), not `isGraphicsVisible`. `incrementTurnTimer` extends the
+  multiplayer timer to accommodate an ANIMATION; with nobody watching there is no animation to accommodate, and
+  the strike itself has already resolved in `airStrike()`. It is the same `bQuick` idiom the combat path uses.
+- **`getBestDefenderExternal` returning NULL on a dummy entity** is `main`'s design (13b).
 
-| site | non-visual thing gated |
-|---|---|
-| `CvPlot.cpp:10005` `updateCenterUnit` | nulls `m_pCenterUnit` — the root; **66% of 491,483 passes exited here** |
-| `CvUnit.cpp:193-200` `bNeedsRealEntity` | whether a unit gets a real entity or the shared dummy |
-| `CvPlot.cpp:3561-3574` `getBestDefenderExternal` | the **`DllExport`** defender query the EXE makes returns NULL on a dummy entity |
-| `CvStructs.cpp:508-524` `CvMissionDefinition::isValid` | whole battle definition invalidated |
-| `CvUnit.cpp:20678` `airStrike` | ⛔ **`setCombatTimer` AND `incrementTurnTimer` AND `addMission` are all inside a graphics gate** — turn-timer arming is graphics-gated |
-| `CvGame.cpp:2739` `selectAll` | player "select all" silently no-ops on a paged-out plot |
-
-⛔ **The paging surface is byte-identical to `main`** (include-path rewrites only). Not a branch regression.
-
-**One genuine paging-OFF-only defect, presentational:** `m_requiredVisibleGraphics` has a single writer in the
-paging-off world (the one-shot sweep at `CvPlotPaging.cpp:291-299`, latched by `g_bWasGraphicsPagingEnabled`
-over `GC.getMap()` only). Plots created after the latch flips — a second map under Parallel Maps — keep
-`NONE` forever, so `showRequiredGraphics` computes nothing and features/rivers/routes never appear.
+**The one genuine paging-OFF defect, presentational and narrow:** `m_requiredVisibleGraphics` has a single writer
+in the paging-off world — the one-shot sweep at `CvPlotPaging.cpp:291-299`, latched by
+`g_bWasGraphicsPagingEnabled` over `GC.getMap()` only. Plots created after the latch flips — a second map under
+Parallel Maps — keep `NONE` forever, so `showRequiredGraphics` computes nothing and features/rivers/routes never
+appear on that map.
 
 ---
 
-## 13e. A repaint request is CONSUMED AND DISCARDED — the lost wakeup
+## 13g. THE PER-CIV UNIT ART STYLE OVERRIDE IS NOT CARRIED
 
-`CvPlot::updateFlagSymbol` early-returns when `!isGraphicsVisible(ECvPlotGraphics::UNIT)`
-(`CvPlot.cpp:9885-9888`), but `CvMap::updateFlagSymbolsInternal` clears the dirty bit **unconditionally after
-the call** (`CvMap.cpp:520`). For a plot whose UNIT graphics are paged out the repaint request is eaten and the
-mark is gone — the flag never repaints. `setFlagDirty` has **no other consumer**, so there is no second chance;
-the only re-arm is `hideGraphics`/`showRequiredGraphics` calling `updateFlagSymbol` directly.
+`CvUnitArtStyleTypeInfo` is an identity-only info: it holds its `Type`/`Description` and nothing else, so a
+civilization's art STYLE contributes no art. `CvCivilizationInfo::getUnitArtStyleType()` still resolves a civ's
+style against the registry and `CvUnit::getArtInfo` still passes it down, so the parameter arrives and is
+declined — every civ therefore renders a unit with that unit's own art.
 
-⚠ Three of the four repaint flags (`CvCity::m_bInfoDirty`, `CvCity::m_bLayoutDirty`, `CvUnit::m_bInfoBarDirty`)
-are set true at ~40 sites and **never set false anywhere in `Sources/`**; their getters are `DllExport`, so the
-EXE is the only possible clearer. Inference, not observation — recorded as such.
+The data is `Assets/XML/Civilizations/CIV4UnitArtStyleTypeInfos.xml` — **6,012 `<StyleUnit>` entries**, each
+keyed by unit and carrying its own Early/Middle/Late tags (~20× the unit-side mesh-group data). The consuming
+shape already exists and is specified: the style is tried FIRST and falls back to the unit's own per-era tag
+([json.md §7](../../specs/json.md)), which is the leg that is live today — so this is additive, and nothing
+renders wrongly meanwhile, it merely renders un-styled.
 
----
-
-## 13f. `updateRiverSymbolArt` — the pre-init graphics signature, unguarded
-
-`CvPlot.cpp:9856-9877` has **no `IsGraphicsInitialized()` guard and no `isGraphicsVisible` gate**, and
-`:9862` calls `gDLL->getEntityIFace()->setupFloodPlains(m_pRiverSymbol)` with **no NULL check** — while the
-adjacent-plot loop at `:9868-9873` does null-check. Its caller `CvPlot::setFeatureType` (`:7267`) fires during
-new-game `addGameElements` floodplain placement, before render init, when `m_pRiverSymbol` is guaranteed NULL
-(its creator `updateRiverSymbol` IS guarded). This is the [AGENTS.md](../../../AGENTS.md) graphics-pre-init
-signature exactly.
-⚠ NOT paging-conditional — NULL pre-init in both modes. **UNKNOWN:** whether `setupFloodPlains(NULL)` faults
-inside the closed EXE.
+⚠ **NOT the long-standing simple-unit-graphics / no-animation defect (owner: it has persisted for years)** —
+that predates the rebuild and is a separate, inherited bug.
 
 ---
 
 ## 13. Unit graphics do not follow a moving unit, and units render stacked
 
 **OBSERVED (owner):** moving a unit leaves its graphics behind — the walk animation plays **in place, on the
-original tile** — and units have a tendency to **render on top of each other**. The art itself resolves fine;
-*"it is just something that does not get updated, on unit movement, and unit selection."*
-Beside it: an FPS drop after end turn that **completely disappears** under bare map (no fog of war, no city
-billboard bars, no units shown).
+original tile** — units **render on top of each other**, animations never end, and **re-selecting the unit or
+splitting the group fixes it**. Beside it: an FPS drop after end turn that **completely disappears** under bare
+map (no fog of war, no city billboard bars, no units shown).
 
-**⛔ RULED OUT — the rendering CODE is not what changed. Do not re-tread any of this.** Compared function by
-function against `main`:
+**⛔ THE MOVEMENT/STACKING HALF IS EXPLAINED AND FIXED — entity churn orphaned the queued move.**
+`CvUnit::reloadEntity` destroyed any real entity unconditionally, and `CvSelectionGroup::groupMove` routes that
+destroy into the worst possible window: inhibit centre-unit recalc on both plots → `setXY` **`QueueMove` pushes
+onto entity E1** → the inhibit **nulls `m_pCenterUnit`** → lifting the inhibit makes
+`newCenterUnit != m_pCenterUnit` **guaranteed true** → `reloadEntity(true)` → **E1 destroyed with the queued move
+on it** → E2 created → `ExecuteMove` runs against E2, whose queue is empty. The DLL concedes the entity owns
+mission state: `reloadEntity` calls `RemoveUnitFromBattle` — *"remove this unit from any active mission"* —
+immediately before destroying, and the interface is pointer-keyed with no re-bind. `if (!IsSelected())` is why
+re-selecting fixed it. `setupGraphical`'s own `ExecuteMove(0, false)` — commented *"forces multi-unit graphics to
+update; if it isn't done then only 1 unit shows up"* — is the stacking half, spent on the empty queue.
+**Fixed:** an entity that is already the kind the unit wants is KEPT; `rebuildEntityArt()` serves the one case
+that genuinely needs a new scene node (a warlord attaching swaps the model).
 
-| checked | result |
-|---|---|
-| all 16 `CvPlot` render functions (`updateSymbols`/`Display`/`Visibility`, `setLayoutDirty`, `updateFlagSymbol`, `updateMinimapColor`, `updateRiverSymbol`, `updateRouteSymbol`, `updateFeatureSymbol`, `setupGraphical`, `shouldHaveGraphics`, `updateFog`, `updateVisibility`, `updateCenterUnit`, `shouldUsePlotBuilder`) | **identical**, except `updateSymbolsInternal` |
-| `updateSymbolsInternal` | differs ONLY in where the **yield icons** get their numbers (`calculateYield(display)` → `getYields()` ÷100). Cannot produce these symptoms |
-| `CvUnit`: entity management block, dummy-entity gating, `ENABLE_DYNAMIC_UNIT_ENTITIES`, `setXY` (graphics half), `move` | **identical** |
-| `updateCenterUnit` — body AND all 27 call sites | **identical** |
-| `m_bInhibitCenterUnitCalculation` — all 4 set/clear/read sites | **identical** |
-| `CvSelectionGroup` (514 diff lines) | **no** entity / graphics / unit-membership changes |
-| `CvDLLEntity`, `CvDLLEntityIFaceBase`, `CvDLLFlagEntityIFaceBase`, `CvPlotPaging`, `CvMapExternal` | include-path edits only |
-| `CvViewport` | enum casts only |
-| `CvGameCoreDLL.def` (the export table the EXE resolves by mangled name) | **zero** diff |
-| unit `world.art` key | reads `"define"` correctly — NOT the leaderhead defect class ([json.md §7](../../specs/json.md)) |
+⛔ **RULED OUT — the rendering CODE is not what changed. Do not re-tread any of this.** All 16 `CvPlot` render
+functions, `CvUnit`'s entity management and dummy gating, `setXY`'s graphics half, `move`, `updateCenterUnit`
+(body and all 27 call sites), `m_bInhibitCenterUnitCalculation`, `CvSelectionGroup`, `CvDLLEntity`,
+`CvPlotPaging`, `CvMapExternal`, `CvViewport` and the `.def` export table are **identical to `main`** (the one
+difference is where `updateSymbolsInternal` gets its yield-icon numbers, which cannot produce these symptoms).
+⚠ A false lead, recorded so it is not re-derived: `setInfoDirty` drops from 51 call sites to 33. That is **not** a
+repaint purge — all 17 host functions were deleted whole by the sanctioned accumulator cut
+([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), and restoring them
+would revive the legacy accumulators.
 
-⚠ **A false lead recorded so it is not re-derived:** `setInfoDirty` drops from 51 call sites on `main` to 33.
-That is **not** a repaint purge — all 17 host functions (`changeBonusGoodHealth`, `changeBuildingYieldModifier`,
-`changeSpecialistHappiness`, …) were **deleted whole** by the sanctioned accumulator cut
-([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), and their
-`setInfoDirty` calls went with them. ⛔ There is nothing to restore, and restoring it would revive the legacy
-accumulators.
+**THE END-TURN FPS DROP IS THE ART GAP, ON TWO PLANES — the render engine hunting for graphics that are not
+there.** Resolved art stays cached until turn end and is dropped there, so the re-search is what the player feels
+AFTER ending a turn, and bare map removes it by rendering neither plane:
 
-**NOT YET KNOWN — the cause.** Since the rendering code is identical and the art resolves, the remaining
-suspect is the rendering **INPUT**: `updateCenterUnit` is gated on `isActiveVisible(true)`, so identical code
-fed wrong visibility gives exactly this shape — the old plot keeps its centre unit, the new one never acquires
-one, and stacked units are the centre-unit selection failing. That points at issue 14.
+- **UNITS** — a collapsed mesh-group grid answered **0 group definitions**, so the EXE had no formation to lay a
+  unit out from. This is the larger half, which is why bare map OFF (units drawn) lagged hardest.
+- **BUILDINGS** — `CvCity::getVisibleBuildings` lost its skip, so a city offered the engine **every** building it
+  holds, including the **4,674 of 5,180 (90%)** whose art define is scaled to nothing. `LSystem.log` measures the
+  result directly: **26,273** `is not associated with a CvCityLSystem node` warnings over **260** distinct
+  buildings, plus **4,168** `Art/Empty.nif ... SHADOW` complaints and **369** placement/layout failures. The
+  restored skip catches **258 of those 260**.
 
-⚑ **The instrument is BUILT:** the `[GFX]` spine domain (`UI/CvGraphicsTrace.{h,cpp}`, `Graphics.log`) emits
-`centerUnit` on **every** pass — carrying which of the three gates ended it, `isActiveVisible`, and the old/new
-centre-unit ids — so "asked and unchanged" is distinguishable from "never asked". One unit move answers it.
+⚠ The **2 it does not catch** (`BUILDING_PALACE`, `BUILDING_SNOWCASTLE_OF_KEMI`) carry real art at real scale and
+are simply absent from `CIV4CityLSystem.xml` — an ART-XML gap ([roadmap.md](roadmap.md) scope decision 3), which
+legacy warned about identically. Not a DLL defect.
+
+⚑ **`LSystem.log` is the instrument for this whole class** ([observability.md](../../reference/observability.md))
+— the EXE writes it itself, so it reports what the render engine did with what the DLL handed it.
 
 ---
 
@@ -631,15 +579,18 @@ work than `main`'s flat radius test. `updateSight`'s city leg is the one that ch
 `VISION_OPEN_GROUND_COST` itself, and the owned-territory leg converts `1` → `VISION_OPEN_GROUND_COST`
 correctly.
 
-**On dogs vs criminals — this is a KNOWN GAP, not a new regression.** [vision.md §4](../../specs/vision.md)
-states plainly that *"the DATA is collapsed onto this shape; the CONTEST is not yet evaluated by the engine."*
-The hide-and-seek detection plane was collapsed to `hideAndSeek.detection` entries qualified
-`{unit: HAS_<SKILL>}`, and the runtime contest that consumes them is not built. The War Dog's whole detection
-role is `SeeInvisible INVISIBLE_CAMOUFLAGE`, so it is exactly the population that goes blind first.
+**On dogs vs criminals — ⛔ the earlier reading here was wrong twice and is retracted.** It said the contest
+*"is not yet evaluated by the engine"*, quoting a [vision.md §4](../../specs/vision.md) line that was itself
+false: the contest is INHERITED FROM `main` AND RUNNING. Two live defects on that path are now fixed (13a) — the
+detection registration was filed under an `InvisibleTypes` index instead of a SKILL id, and the membership test
+never asked whether a unit hides by the method being contested.
+⚠ **What remains for the dogs specifically is the promotion-granted-method gap (13a):** the reads ask the unit's
+INFO, so a method a promotion grants does not register. The War Dog's detection role is
+`SeeInvisible INVISIBLE_CAMOUFLAGE`, so confirm against a live run before assuming either fix reached it.
 
-⚠ **These two are probably ONE work item, and it is the same one issue 13 is waiting on** — the owner's ruling
-is that `updateSight` is **reviewed, not reverted**, because reverting it would bury the whole-map-scan bugs
-rather than fix them.
+⚠ **The whole-map-scan half is untouched and is the same work item issue 13's remaining FPS drop points at** —
+the owner's ruling is that `updateSight` is **reviewed, not reverted**, because reverting it would bury the
+scan bugs rather than fix them.
 
 ---
 

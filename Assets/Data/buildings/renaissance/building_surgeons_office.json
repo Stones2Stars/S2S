@@ -131,7 +131,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SURGEONS_OFFICE"
+   "define": "ART_DEF_BUILDING_SURGEONS_OFFICE",
+   "notShownInCity": true
   }
  },
  "sound": {

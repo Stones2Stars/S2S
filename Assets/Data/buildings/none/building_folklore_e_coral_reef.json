@@ -107,7 +107,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_E_CORAL_REEF"
+   "define": "ART_DEF_BUILDING_FOLKLORE_E_CORAL_REEF",
+   "notShownInCity": true
   }
  },
  "identity": {

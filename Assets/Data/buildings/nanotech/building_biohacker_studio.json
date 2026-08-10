@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BIOHACKER_STUDIO"
+   "define": "ART_DEF_BUILDING_BIOHACKER_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

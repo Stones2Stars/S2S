@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_THE_RACK"
+   "define": "ART_DEF_BUILDING_THE_RACK",
+   "notShownInCity": true
   }
  },
  "sound": {

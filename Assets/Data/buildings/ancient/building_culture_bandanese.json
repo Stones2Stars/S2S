@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_BANDANESE"
+   "define": "ART_DEF_BUILDING_CULTURE_BANDANESE",
+   "notShownInCity": true
   }
  },
  "identity": {

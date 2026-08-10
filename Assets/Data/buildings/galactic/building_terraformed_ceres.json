@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TERRAFORMED_CERES"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_CERES",
+   "notShownInCity": true
   }
  },
  "identity": {

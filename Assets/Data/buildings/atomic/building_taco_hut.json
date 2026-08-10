@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TACO_HUT"
+   "define": "ART_DEF_BUILDING_TACO_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

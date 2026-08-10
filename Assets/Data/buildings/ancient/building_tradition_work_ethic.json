@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRADITION_SSTAR"
+   "define": "ART_DEF_BUILDING_TRADITION_SSTAR",
+   "notShownInCity": true
   }
  },
  "identity": {

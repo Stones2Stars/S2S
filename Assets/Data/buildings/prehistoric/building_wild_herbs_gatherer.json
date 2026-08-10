@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WILD_HERBS_GATHERER"
+   "define": "ART_DEF_BUILDING_WILD_HERBS_GATHERER",
+   "notShownInCity": true
   }
  },
  "identity": {

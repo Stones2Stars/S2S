@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VINTAGE_WHITE_WINE"
+   "define": "ART_DEF_BUILDING_VINTAGE_WHITE_WINE",
+   "notShownInCity": true
   }
  },
  "identity": {

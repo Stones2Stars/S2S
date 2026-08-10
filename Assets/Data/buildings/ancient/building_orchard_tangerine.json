@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORCHARD_TANGERINE"
+   "define": "ART_DEF_BUILDING_ORCHARD_TANGERINE",
+   "notShownInCity": true
   }
  },
  "identity": {

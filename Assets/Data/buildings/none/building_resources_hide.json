@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_HIDE"
+   "define": "ART_DEF_BUILDING_RESOURCES_HIDE",
+   "notShownInCity": true
   }
  },
  "identity": {

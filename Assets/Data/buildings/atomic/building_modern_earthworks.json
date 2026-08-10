@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MODERN_EARTHWORKS"
+   "define": "ART_DEF_BUILDING_MODERN_EARTHWORKS",
+   "notShownInCity": true
   }
  },
  "identity": {

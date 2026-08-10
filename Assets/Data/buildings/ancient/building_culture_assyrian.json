@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_ASSYRIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ASSYRIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

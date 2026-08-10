@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

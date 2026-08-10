@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SUBWAY_STATION"
+   "define": "ART_DEF_BUILDING_SUBWAY_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

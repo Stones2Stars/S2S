@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_BRANE_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_DISTANT_BRANE_ASSEMBLER",
+   "notShownInCity": true
   }
  },
  "identity": {

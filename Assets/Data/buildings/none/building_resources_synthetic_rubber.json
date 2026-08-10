@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_SYNTHETIC_RUBBER"
+   "define": "ART_DEF_BUILDING_RESOURCES_SYNTHETIC_RUBBER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PESTS_SLUGS"
+   "define": "ART_DEF_BUILDING_PESTS_SLUGS",
+   "notShownInCity": true
   }
  },
  "identity": {

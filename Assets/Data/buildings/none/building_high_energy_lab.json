@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HIGH_ENERGY_LAB"
+   "define": "ART_DEF_BUILDING_HIGH_ENERGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -69,7 +69,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OPTOMETRIST"
+   "define": "ART_DEF_BUILDING_OPTOMETRIST",
+   "notShownInCity": true
   }
  },
  "identity": {

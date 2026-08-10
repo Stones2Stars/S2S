@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_BOAR"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_BOAR",
+   "notShownInCity": true
   }
  },
  "identity": {

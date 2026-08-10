@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PC_KLASIES_RIVER_CAVES"
+   "define": "ART_DEF_BUILDING_PC_KLASIES_RIVER_CAVES",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -217,7 +217,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_BOT_CONTROL_CENTER"
+   "define": "ART_DEF_BUILDING_FARM_BOT_CONTROL_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

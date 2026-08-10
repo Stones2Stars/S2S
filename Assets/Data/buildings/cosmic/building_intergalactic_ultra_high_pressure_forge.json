@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+   "notShownInCity": true
   }
  },
  "identity": {

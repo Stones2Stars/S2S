@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+   "notShownInCity": true
   }
  },
  "identity": {

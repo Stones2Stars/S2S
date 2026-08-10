@@ -141,7 +141,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMATRONICS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_ANIMATRONICS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

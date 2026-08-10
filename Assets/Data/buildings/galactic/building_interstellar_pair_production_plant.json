@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

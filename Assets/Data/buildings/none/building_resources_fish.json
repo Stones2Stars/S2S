@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_FISH"
+   "define": "ART_DEF_BUILDING_RESOURCES_FISH",
+   "notShownInCity": true
   }
  },
  "identity": {

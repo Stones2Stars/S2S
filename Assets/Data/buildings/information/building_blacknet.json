@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BLACKNET"
+   "define": "ART_DEF_BUILDING_BLACKNET",
+   "notShownInCity": true
   }
  },
  "identity": {

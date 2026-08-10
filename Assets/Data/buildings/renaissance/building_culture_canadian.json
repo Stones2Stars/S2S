@@ -82,7 +82,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_CANADIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_CANADIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

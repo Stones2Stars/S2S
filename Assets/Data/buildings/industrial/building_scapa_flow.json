@@ -119,7 +119,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SCAPA_FLOW"
+   "define": "ART_DEF_BUILDING_SCAPA_FLOW",
+   "notShownInCity": true
   }
  },
  "identity": {

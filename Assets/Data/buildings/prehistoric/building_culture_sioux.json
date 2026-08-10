@@ -57,7 +57,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SIOUX"
+   "define": "ART_DEF_BUILDING_CULTURE_SIOUX",
+   "notShownInCity": true
   }
  },
  "identity": {

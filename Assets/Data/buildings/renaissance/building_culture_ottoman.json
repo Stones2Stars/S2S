@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_OTTOMAN"
+   "define": "ART_DEF_BUILDING_CULTURE_OTTOMAN",
+   "notShownInCity": true
   }
  },
  "identity": {

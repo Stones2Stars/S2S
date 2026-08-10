@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROUTE_66"
+   "define": "ART_DEF_BUILDING_ROUTE_66",
+   "notShownInCity": true
   }
  },
  "identity": {

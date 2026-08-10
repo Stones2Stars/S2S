@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIFE_STRUCTURAL_BACTERIA"
+   "define": "ART_DEF_BUILDING_LIFE_STRUCTURAL_BACTERIA",
+   "notShownInCity": true
   }
  },
  "identity": {

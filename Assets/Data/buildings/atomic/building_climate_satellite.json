@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLIMATE_SATELLITE"
+   "define": "ART_DEF_BUILDING_CLIMATE_SATELLITE",
+   "notShownInCity": true
   }
  },
  "identity": {

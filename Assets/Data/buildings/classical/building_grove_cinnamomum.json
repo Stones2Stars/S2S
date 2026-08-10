@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_CINNAMOMUM"
+   "define": "ART_DEF_BUILDING_GROVE_CINNAMOMUM",
+   "notShownInCity": true
   }
  },
  "identity": {

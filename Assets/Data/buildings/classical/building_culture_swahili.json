@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SWAHILI"
+   "define": "ART_DEF_BUILDING_CULTURE_SWAHILI",
+   "notShownInCity": true
   }
  },
  "identity": {

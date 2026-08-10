@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SIMULATED_WORLD"
+   "define": "ART_DEF_BUILDING_SIMULATED_WORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

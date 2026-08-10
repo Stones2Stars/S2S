@@ -66,7 +66,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_MATRIOSHKA_BRAIN"
+   "define": "ART_DEF_BUILDING_SOLAR_MATRIOSHKA_BRAIN",
+   "notShownInCity": true
   }
  },
  "identity": {

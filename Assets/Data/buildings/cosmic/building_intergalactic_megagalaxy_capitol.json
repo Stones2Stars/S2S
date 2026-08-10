@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
+   "notShownInCity": true
   }
  },
  "identity": {

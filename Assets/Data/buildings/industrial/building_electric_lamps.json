@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTRIC_LAMPS"
+   "define": "ART_DEF_BUILDING_ELECTRIC_LAMPS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSTELLAR_REST_STOP"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_REST_STOP",
+   "notShownInCity": true
   }
  },
  "identity": {

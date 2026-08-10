@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VOLCANOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_VOLCANOLOGY_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

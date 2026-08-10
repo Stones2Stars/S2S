@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_GALACTIC_AC"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GALACTIC_AC",
+   "notShownInCity": true
   }
  },
  "identity": {

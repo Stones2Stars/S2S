@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SCORPION_SANCTUARY"
+   "define": "ART_DEF_BUILDING_SCORPION_SANCTUARY",
+   "notShownInCity": true
   }
  },
  "identity": {

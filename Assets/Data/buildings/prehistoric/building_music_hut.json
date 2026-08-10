@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MUSIC_HUT"
+   "define": "ART_DEF_BUILDING_MUSIC_HUT",
+   "notShownInCity": true
   }
  },
  "identity": {

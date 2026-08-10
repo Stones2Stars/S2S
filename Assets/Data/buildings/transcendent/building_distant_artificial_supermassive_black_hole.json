@@ -28,7 +28,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE"
+   "define": "ART_DEF_BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+   "notShownInCity": true
   }
  },
  "identity": {

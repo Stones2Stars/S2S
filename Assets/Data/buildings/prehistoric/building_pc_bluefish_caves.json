@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PC_BLUEFISH_CAVES"
+   "define": "ART_DEF_BUILDING_PC_BLUEFISH_CAVES",
+   "notShownInCity": true
   }
  },
  "identity": {

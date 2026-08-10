@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC",
+   "notShownInCity": true
   }
  },
  "identity": {

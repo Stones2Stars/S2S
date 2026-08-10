@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_LOON"
+   "define": "ART_DEF_BUILDING_FOLKLORE_LOON",
+   "notShownInCity": true
   }
  },
  "identity": {

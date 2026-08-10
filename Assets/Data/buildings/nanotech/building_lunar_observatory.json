@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_OBSERVATORY"
+   "define": "ART_DEF_BUILDING_LUNAR_OBSERVATORY",
+   "notShownInCity": true
   }
  },
  "identity": {

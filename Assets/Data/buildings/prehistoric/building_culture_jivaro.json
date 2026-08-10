@@ -49,7 +49,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_JIVARO"
+   "define": "ART_DEF_BUILDING_CULTURE_JIVARO",
+   "notShownInCity": true
   }
  },
  "identity": {

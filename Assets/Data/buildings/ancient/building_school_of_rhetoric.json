@@ -70,7 +70,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SCHOOL_OF_RHETORIC"
+   "define": "ART_DEF_BUILDING_SCHOOL_OF_RHETORIC",
+   "notShownInCity": true
   }
  },
  "sound": {

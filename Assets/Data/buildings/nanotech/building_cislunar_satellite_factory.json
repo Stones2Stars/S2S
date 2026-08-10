@@ -32,7 +32,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_SATELLITE_FACTORY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SATELLITE_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

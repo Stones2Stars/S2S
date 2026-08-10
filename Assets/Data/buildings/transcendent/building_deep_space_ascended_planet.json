@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DEEP_SPACE_ASCENDED_PLANET"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

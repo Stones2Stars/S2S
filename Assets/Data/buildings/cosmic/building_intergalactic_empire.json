@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_EMPIRE"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_EMPIRE",
+   "notShownInCity": true
   }
  },
  "identity": {

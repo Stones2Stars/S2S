@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WOODWIND_INSTRUMENT_MAKER"
+   "define": "ART_DEF_BUILDING_WOODWIND_INSTRUMENT_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

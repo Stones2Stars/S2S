@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_QUANTUM_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_QUANTUM_ASSEMBLER",
+   "notShownInCity": true
   }
  },
  "identity": {

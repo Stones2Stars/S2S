@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ORGAN_HALL"
+   "define": "ART_DEF_BUILDING_ORGAN_HALL",
+   "notShownInCity": true
   }
  },
  "identity": {

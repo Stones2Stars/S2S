@@ -64,7 +64,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FREE_PORT"
+   "define": "ART_DEF_BUILDING_FREE_PORT",
+   "notShownInCity": true
   }
  },
  "sound": {

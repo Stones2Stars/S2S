@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MITHRIL_FOUNDRY"
+   "define": "ART_DEF_BUILDING_MITHRIL_FOUNDRY",
+   "notShownInCity": true
   }
  },
  "identity": {

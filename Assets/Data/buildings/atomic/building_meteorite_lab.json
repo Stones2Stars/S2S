@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METEORITE_LAB"
+   "define": "ART_DEF_BUILDING_METEORITE_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

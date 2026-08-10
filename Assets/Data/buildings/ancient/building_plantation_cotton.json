@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_COTTON"
+   "define": "ART_DEF_BUILDING_PLANTATION_COTTON",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARBLE_QUARRY"
+   "define": "ART_DEF_BUILDING_MARBLE_QUARRY",
+   "notShownInCity": true
   }
  },
  "identity": {

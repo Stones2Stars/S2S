@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MIRANDA_BASE_JUMPING"
+   "define": "ART_DEF_BUILDING_MIRANDA_BASE_JUMPING",
+   "notShownInCity": true
   }
  },
  "identity": {

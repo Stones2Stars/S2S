@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RESOURCES_COPPER_INGOTS"
+   "define": "ART_DEF_BUILDING_RESOURCES_COPPER_INGOTS",
+   "notShownInCity": true
   }
  },
  "identity": {

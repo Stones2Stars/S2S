@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_ZEBRA"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_ZEBRA",
+   "notShownInCity": true
   }
  },
  "identity": {

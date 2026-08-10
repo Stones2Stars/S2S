@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ET_DISCOVERY"
+   "define": "ART_DEF_BUILDING_ET_DISCOVERY",
+   "notShownInCity": true
   }
  },
  "identity": {

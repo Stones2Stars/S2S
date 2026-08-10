@@ -60,7 +60,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TELECOURSE_STUDIO"
+   "define": "ART_DEF_BUILDING_TELECOURSE_STUDIO",
+   "notShownInCity": true
   }
  },
  "identity": {

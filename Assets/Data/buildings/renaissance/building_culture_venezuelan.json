@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_VENEZUELAN"
+   "define": "ART_DEF_BUILDING_CULTURE_VENEZUELAN",
+   "notShownInCity": true
   }
  },
  "identity": {

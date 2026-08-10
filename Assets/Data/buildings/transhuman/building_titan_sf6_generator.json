@@ -29,7 +29,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TITAN_SF6_GENERATOR"
+   "define": "ART_DEF_BUILDING_TITAN_SF6_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

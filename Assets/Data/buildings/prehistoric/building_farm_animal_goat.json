@@ -101,7 +101,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_ANIMAL_GOAT"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_GOAT",
+   "notShownInCity": true
   }
  },
  "sound": {

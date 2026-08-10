@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PARKING_GARAGE"
+   "define": "ART_DEF_BUILDING_PARKING_GARAGE",
+   "notShownInCity": true
   }
  },
  "identity": {

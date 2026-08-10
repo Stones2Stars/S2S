@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLAYING_FIELDS"
+   "define": "ART_DEF_BUILDING_PLAYING_FIELDS",
+   "notShownInCity": true
   }
  },
  "identity": {

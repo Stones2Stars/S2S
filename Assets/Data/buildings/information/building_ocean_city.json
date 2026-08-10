@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OCEAN_CITY"
+   "define": "ART_DEF_BUILDING_OCEAN_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

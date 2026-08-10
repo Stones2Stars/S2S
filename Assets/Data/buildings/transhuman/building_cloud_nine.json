@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CLOUD_NINE"
+   "define": "ART_DEF_BUILDING_CLOUD_NINE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TRANSDISCIPLINARY_UNIVERSITY"
+   "define": "ART_DEF_BUILDING_TRANSDISCIPLINARY_UNIVERSITY",
+   "notShownInCity": true
   }
  },
  "identity": {

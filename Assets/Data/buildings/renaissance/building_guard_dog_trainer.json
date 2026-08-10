@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUARD_DOG_TRAINER"
+   "define": "ART_DEF_BUILDING_GUARD_DOG_TRAINER",
+   "notShownInCity": true
   }
  },
  "identity": {

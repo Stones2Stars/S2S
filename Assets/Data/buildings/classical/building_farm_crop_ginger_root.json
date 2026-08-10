@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FARM_CROP_GINGER_ROOT"
+   "define": "ART_DEF_BUILDING_FARM_CROP_GINGER_ROOT",
+   "notShownInCity": true
   }
  },
  "identity": {

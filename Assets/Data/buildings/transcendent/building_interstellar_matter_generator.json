@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_MATTER_GENERATOR"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_MATTER_GENERATOR",
+   "notShownInCity": true
   }
  },
  "identity": {

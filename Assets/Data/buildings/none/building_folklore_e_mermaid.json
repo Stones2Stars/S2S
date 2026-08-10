@@ -100,7 +100,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_E_MERMAID"
+   "define": "ART_DEF_BUILDING_FOLKLORE_E_MERMAID",
+   "notShownInCity": true
   }
  },
  "identity": {

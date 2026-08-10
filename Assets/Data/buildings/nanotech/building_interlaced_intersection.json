@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERLACED_INTERSECTION"
+   "define": "ART_DEF_BUILDING_INTERLACED_INTERSECTION",
+   "notShownInCity": true
   }
  },
  "identity": {

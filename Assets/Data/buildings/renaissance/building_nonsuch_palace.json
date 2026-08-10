@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NONSUCH_PALACE"
+   "define": "ART_DEF_BUILDING_NONSUCH_PALACE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_METALLIC_HYDROGEN_PLANT"
+   "define": "ART_DEF_BUILDING_METALLIC_HYDROGEN_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

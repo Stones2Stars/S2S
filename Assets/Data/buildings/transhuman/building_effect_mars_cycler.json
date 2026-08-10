@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EFFECT_MARS_CYCLER"
+   "define": "ART_DEF_BUILDING_EFFECT_MARS_CYCLER",
+   "notShownInCity": true
   }
  },
  "identity": {

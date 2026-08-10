@@ -65,7 +65,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPACE_NEEDLE"
+   "define": "ART_DEF_BUILDING_SPACE_NEEDLE",
+   "notShownInCity": true
   }
  },
  "identity": {

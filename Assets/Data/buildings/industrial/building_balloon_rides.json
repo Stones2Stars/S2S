@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BALLOON_RIDES"
+   "define": "ART_DEF_BUILDING_BALLOON_RIDES",
+   "notShownInCity": true
   }
  },
  "sound": {

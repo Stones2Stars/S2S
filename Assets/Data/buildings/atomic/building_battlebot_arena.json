@@ -75,7 +75,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BATTLEBOT_ARENA"
+   "define": "ART_DEF_BUILDING_BATTLEBOT_ARENA",
+   "notShownInCity": true
   }
  },
  "identity": {

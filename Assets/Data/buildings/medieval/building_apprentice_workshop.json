@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_APPRENTICE_WORKSHOP"
+   "define": "ART_DEF_BUILDING_APPRENTICE_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "sound": {

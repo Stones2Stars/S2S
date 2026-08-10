@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_CAMEL"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_CAMEL",
+   "notShownInCity": true
   }
  },
  "sound": {

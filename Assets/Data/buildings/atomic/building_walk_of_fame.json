@@ -74,7 +74,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WALK_OF_FAME"
+   "define": "ART_DEF_BUILDING_WALK_OF_FAME",
+   "notShownInCity": true
   }
  },
  "identity": {

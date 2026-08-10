@@ -34,7 +34,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_OMNISURVEILLANCE"
+   "define": "ART_DEF_BUILDING_CISLUNAR_OMNISURVEILLANCE",
+   "notShownInCity": true
   }
  },
  "identity": {

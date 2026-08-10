@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PALACE_WALLS"
+   "define": "ART_DEF_BUILDING_PALACE_WALLS",
+   "notShownInCity": true
   }
  },
  "identity": {

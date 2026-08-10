@@ -92,7 +92,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ABU_SIMBEL"
+   "define": "ART_DEF_BUILDING_ABU_SIMBEL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -87,7 +87,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_HAWK"
+   "define": "ART_DEF_BUILDING_FOLKLORE_HAWK",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_ARTIFICIALLY_INTELLIGENT_SHIP"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ARTIFICIALLY_INTELLIGENT_SHIP",
+   "notShownInCity": true
   }
  },
  "identity": {

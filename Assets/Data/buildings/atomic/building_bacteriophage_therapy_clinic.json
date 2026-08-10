@@ -112,7 +112,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC"
+   "define": "ART_DEF_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+   "notShownInCity": true
   }
  },
  "identity": {

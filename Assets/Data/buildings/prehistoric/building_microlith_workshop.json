@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MICROLITH_WEAPONS_FACTORY"
+   "define": "ART_DEF_BUILDING_MICROLITH_WEAPONS_FACTORY",
+   "notShownInCity": true
   }
  },
  "sound": {

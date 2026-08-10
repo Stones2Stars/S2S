@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OFFICIUM"
+   "define": "ART_DEF_BUILDING_OFFICIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

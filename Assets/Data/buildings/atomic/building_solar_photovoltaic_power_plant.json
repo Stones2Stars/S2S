@@ -73,7 +73,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SOLAR_PHOTOVOLTAIC_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_SOLAR_PHOTOVOLTAIC_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

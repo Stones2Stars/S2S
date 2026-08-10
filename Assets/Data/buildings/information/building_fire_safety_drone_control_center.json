@@ -48,7 +48,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER"
+   "define": "ART_DEF_BUILDING_FIRE_SAFETY_DRONE_CONTROL_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

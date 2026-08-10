@@ -139,7 +139,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_RESEARCH_BASE"
+   "define": "ART_DEF_BUILDING_LUNAR_RESEARCH_BASE",
+   "notShownInCity": true
   }
  },
  "identity": {

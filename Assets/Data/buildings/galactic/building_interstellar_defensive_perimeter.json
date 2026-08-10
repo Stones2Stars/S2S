@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
+   "notShownInCity": true
   }
  },
  "identity": {

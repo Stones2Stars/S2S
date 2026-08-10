@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_HOLOGRAPHIC_MULTIVERSE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_HOLOGRAPHIC_MULTIVERSE",
+   "notShownInCity": true
   }
  },
  "identity": {

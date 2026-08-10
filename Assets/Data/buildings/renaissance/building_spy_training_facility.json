@@ -84,7 +84,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SPY_TRAINING_FACILITY"
+   "define": "ART_DEF_BUILDING_SPY_TRAINING_FACILITY",
+   "notShownInCity": true
   }
  },
  "identity": {

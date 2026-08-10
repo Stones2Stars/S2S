@@ -132,7 +132,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ENGINEERING_SCHOOL"
+   "define": "ART_DEF_BUILDING_ENGINEERING_SCHOOL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -53,7 +53,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PERSEUS_ARM_COLONY"
+   "define": "ART_DEF_BUILDING_PERSEUS_ARM_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

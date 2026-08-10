@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_CYBERSECURITY_CENTER"
+   "define": "ART_DEF_BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -71,7 +71,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GROVE_MONGONGO"
+   "define": "ART_DEF_BUILDING_GROVE_MONGONGO",
+   "notShownInCity": true
   }
  },
  "identity": {

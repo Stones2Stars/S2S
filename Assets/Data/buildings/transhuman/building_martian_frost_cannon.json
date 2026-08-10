@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_FROST_CANNON"
+   "define": "ART_DEF_BUILDING_MARTIAN_FROST_CANNON",
+   "notShownInCity": true
   }
  },
  "identity": {

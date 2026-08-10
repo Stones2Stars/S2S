@@ -155,7 +155,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_BEADMAKERS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_BEADMAKERS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -43,7 +43,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_EARTH_2_0"
+   "define": "ART_DEF_BUILDING_EARTH_2_0",
+   "notShownInCity": true
   }
  },
  "identity": {

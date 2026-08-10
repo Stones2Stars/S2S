@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_OIL_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_OIL_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

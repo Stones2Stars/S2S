@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_ORGANIC_COLONY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_ORGANIC_COLONY",
+   "notShownInCity": true
   }
  },
  "identity": {

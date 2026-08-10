@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_MARTIAN"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_MARTIAN",
+   "notShownInCity": true
   }
  },
  "identity": {

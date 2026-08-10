@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMART_DUST_WALLS"
+   "define": "ART_DEF_BUILDING_SMART_DUST_WALLS",
+   "notShownInCity": true
   }
  },
  "sound": {

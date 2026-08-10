@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WARRIORS_HUT"
+   "define": "ART_DEF_BUILDING_WARRIORS_HUT",
+   "notShownInCity": true
   }
  },
  "sound": {

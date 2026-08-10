@@ -44,7 +44,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_YOTTAVERSE_PORTAL"
+   "define": "ART_DEF_BUILDING_YOTTAVERSE_PORTAL",
+   "notShownInCity": true
   }
  },
  "identity": {

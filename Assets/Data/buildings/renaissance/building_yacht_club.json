@@ -81,7 +81,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_YACHT_CLUB"
+   "define": "ART_DEF_BUILDING_YACHT_CLUB",
+   "notShownInCity": true
   }
  },
  "sound": {

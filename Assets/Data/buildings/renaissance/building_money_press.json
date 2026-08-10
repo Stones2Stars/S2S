@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MONEY_PRESS"
+   "define": "ART_DEF_BUILDING_MONEY_PRESS",
+   "notShownInCity": true
   }
  },
  "sound": {

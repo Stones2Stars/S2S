@@ -105,7 +105,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FACTORY_TANKS"
+   "define": "ART_DEF_BUILDING_FACTORY_TANKS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -96,7 +96,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUXOR_CASINO"
+   "define": "ART_DEF_BUILDING_LUXOR_CASINO",
+   "notShownInCity": true
   }
  },
  "identity": {

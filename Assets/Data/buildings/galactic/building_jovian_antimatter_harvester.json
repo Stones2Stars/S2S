@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_JOVIAN_ANTIMATTER_HARVESTER"
+   "define": "ART_DEF_BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HUMAN_MOD_ATEMPORAL"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ATEMPORAL",
+   "notShownInCity": true
   }
  },
  "identity": {

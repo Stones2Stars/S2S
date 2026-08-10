@@ -117,7 +117,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_NATIONAL_AEROSPACE_AGENCY"
+   "define": "ART_DEF_BUILDING_NATIONAL_AEROSPACE_AGENCY",
+   "notShownInCity": true
   }
  },
  "identity": {

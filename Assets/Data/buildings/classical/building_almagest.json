@@ -59,7 +59,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ALMAGEST"
+   "define": "ART_DEF_BUILDING_ALMAGEST",
+   "notShownInCity": true
   }
  },
  "identity": {

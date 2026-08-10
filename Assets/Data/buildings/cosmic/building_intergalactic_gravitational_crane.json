@@ -30,7 +30,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_GRAVITATIONAL_CRANE"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GRAVITATIONAL_CRANE",
+   "notShownInCity": true
   }
  },
  "identity": {

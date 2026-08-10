@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ARBORETUM"
+   "define": "ART_DEF_BUILDING_ARBORETUM",
+   "notShownInCity": true
   }
  },
  "sound": {

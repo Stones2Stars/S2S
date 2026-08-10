@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMITH_TIN"
+   "define": "ART_DEF_BUILDING_SMITH_TIN",
+   "notShownInCity": true
   }
  },
  "identity": {

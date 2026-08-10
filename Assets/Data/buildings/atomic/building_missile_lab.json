@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MISSILE_LAB"
+   "define": "ART_DEF_BUILDING_MISSILE_LAB",
+   "notShownInCity": true
   }
  },
  "sound": {

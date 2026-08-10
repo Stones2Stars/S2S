@@ -116,7 +116,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_T_LEVIATHAN"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_LEVIATHAN",
+   "notShownInCity": true
   }
  },
  "identity": {

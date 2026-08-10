@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MEETING"
+   "define": "ART_DEF_BUILDING_MEETING",
+   "notShownInCity": true
   }
  },
  "sound": {

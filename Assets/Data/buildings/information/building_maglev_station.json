@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MAGLEV_STATION"
+   "define": "ART_DEF_BUILDING_MAGLEV_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SHERIFFS_OFFICE"
+   "define": "ART_DEF_BUILDING_SHERIFFS_OFFICE",
+   "notShownInCity": true
   }
  },
  "sound": {

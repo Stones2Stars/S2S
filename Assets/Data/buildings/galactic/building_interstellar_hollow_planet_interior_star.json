@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_HOLLOW_PLANET_INTERIOR_STAR"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_HOLLOW_PLANET_INTERIOR_STAR",
+   "notShownInCity": true
   }
  },
  "identity": {

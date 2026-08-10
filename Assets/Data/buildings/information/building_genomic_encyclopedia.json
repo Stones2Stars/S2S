@@ -94,7 +94,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GENOMIC_ENCYCLOPEDIA"
+   "define": "ART_DEF_BUILDING_GENOMIC_ENCYCLOPEDIA",
+   "notShownInCity": true
   }
  },
  "identity": {

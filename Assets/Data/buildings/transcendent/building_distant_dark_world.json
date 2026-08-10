@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DISTANT_DARK_WORLD"
+   "define": "ART_DEF_BUILDING_DISTANT_DARK_WORLD",
+   "notShownInCity": true
   }
  },
  "identity": {

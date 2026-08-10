@@ -47,7 +47,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANNING_OFFICE"
+   "define": "ART_DEF_BUILDING_PLANNING_OFFICE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -26,7 +26,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_NUCLEAR_DAMPER"
+   "define": "ART_DEF_BUILDING_CISLUNAR_NUCLEAR_DAMPER",
+   "notShownInCity": true
   }
  },
  "identity": {

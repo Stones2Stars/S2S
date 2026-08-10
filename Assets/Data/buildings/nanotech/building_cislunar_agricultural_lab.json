@@ -63,7 +63,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_AGRICULTURAL_LAB"
+   "define": "ART_DEF_BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+   "notShownInCity": true
   }
  },
  "identity": {

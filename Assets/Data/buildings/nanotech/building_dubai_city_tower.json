@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_DUBAI_CITY_TOWER"
+   "define": "ART_DEF_BUILDING_DUBAI_CITY_TOWER",
+   "notShownInCity": true
   }
  },
  "identity": {

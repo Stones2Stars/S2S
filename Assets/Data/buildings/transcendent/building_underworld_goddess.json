@@ -42,7 +42,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_UNDERWORLD_GODDESS"
+   "define": "ART_DEF_BUILDING_UNDERWORLD_GODDESS",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_GHANA"
+   "define": "ART_DEF_BUILDING_CULTURE_GHANA",
+   "notShownInCity": true
   }
  },
  "identity": {

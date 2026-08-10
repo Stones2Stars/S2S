@@ -37,7 +37,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERGALACTIC_AESTIVATION_CENTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_AESTIVATION_CENTER",
+   "notShownInCity": true
   }
  },
  "identity": {

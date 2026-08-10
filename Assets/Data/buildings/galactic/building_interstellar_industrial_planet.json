@@ -99,7 +99,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

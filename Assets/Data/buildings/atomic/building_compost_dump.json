@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COMPOST_DUMP"
+   "define": "ART_DEF_BUILDING_COMPOST_DUMP",
+   "notShownInCity": true
   }
  },
  "sound": {

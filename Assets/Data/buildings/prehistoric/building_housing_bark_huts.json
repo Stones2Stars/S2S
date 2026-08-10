@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOUSING_BARK_HUTS"
+   "define": "ART_DEF_BUILDING_HOUSING_BARK_HUTS",
+   "notShownInCity": true
   }
  },
  "identity": {

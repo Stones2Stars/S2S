@@ -36,7 +36,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_FARM_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_FARM_PLANET",
+   "notShownInCity": true
   }
  },
  "identity": {

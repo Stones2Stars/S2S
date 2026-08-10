@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SMELTER_TITANIUM"
+   "define": "ART_DEF_BUILDING_SMELTER_TITANIUM",
+   "notShownInCity": true
   }
  },
  "identity": {

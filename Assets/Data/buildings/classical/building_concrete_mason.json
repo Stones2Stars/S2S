@@ -72,7 +72,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CONCRETE_MASON"
+   "define": "ART_DEF_BUILDING_CONCRETE_MASON",
+   "notShownInCity": true
   }
  },
  "identity": {

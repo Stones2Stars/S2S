@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SENTINEL"
+   "define": "ART_DEF_BUILDING_SENTINEL",
+   "notShownInCity": true
   }
  },
  "identity": {

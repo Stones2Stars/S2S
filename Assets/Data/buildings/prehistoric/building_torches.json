@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_TORCHES"
+   "define": "ART_DEF_BUILDING_TORCHES",
+   "notShownInCity": true
   }
  },
  "identity": {

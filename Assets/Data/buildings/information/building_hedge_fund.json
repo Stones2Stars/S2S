@@ -68,7 +68,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HEDGE_FUND"
+   "define": "ART_DEF_BUILDING_HEDGE_FUND",
+   "notShownInCity": true
   }
  },
  "identity": {

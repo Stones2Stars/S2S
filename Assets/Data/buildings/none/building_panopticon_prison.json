@@ -67,7 +67,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PANOPTICON_PRISON"
+   "define": "ART_DEF_BUILDING_PANOPTICON_PRISON",
+   "notShownInCity": true
   }
  },
  "identity": {

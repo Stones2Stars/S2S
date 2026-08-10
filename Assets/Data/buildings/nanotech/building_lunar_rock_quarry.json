@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ROCK_QUARRY"
+   "define": "ART_DEF_BUILDING_LUNAR_ROCK_QUARRY",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -54,7 +54,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LIVING_BUILDINGS"
+   "define": "ART_DEF_BUILDING_LIVING_BUILDINGS",
+   "notShownInCity": true
   }
  },
  "identity": {

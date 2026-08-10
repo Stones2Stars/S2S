@@ -38,7 +38,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_COMMUNICATION_BEACON"
+   "define": "ART_DEF_BUILDING_MARTIAN_COMMUNICATION_BEACON",
+   "notShownInCity": true
   }
  },
  "identity": {

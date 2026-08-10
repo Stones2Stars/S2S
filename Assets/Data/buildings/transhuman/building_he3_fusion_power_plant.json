@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HE3_FUSION_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_HE3_FUSION_POWER_PLANT",
+   "notShownInCity": true
   }
  },
  "identity": {

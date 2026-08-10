@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_GIRAFFE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GIRAFFE",
+   "notShownInCity": true
   }
  },
  "identity": {

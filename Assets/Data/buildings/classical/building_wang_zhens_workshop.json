@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_WANG_ZHENS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_WANG_ZHENS_WORKSHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

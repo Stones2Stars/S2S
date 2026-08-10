@@ -50,7 +50,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ASTEROID_INTERIOR_CITY"
+   "define": "ART_DEF_BUILDING_ASTEROID_INTERIOR_CITY",
+   "notShownInCity": true
   }
  },
  "identity": {

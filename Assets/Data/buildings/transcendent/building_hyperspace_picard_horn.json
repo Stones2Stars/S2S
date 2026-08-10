@@ -33,7 +33,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HYPERSPACE_PICARD_HORN"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_PICARD_HORN",
+   "notShownInCity": true
   }
  },
  "identity": {

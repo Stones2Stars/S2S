@@ -40,7 +40,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -56,7 +56,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROCK_GARDEN"
+   "define": "ART_DEF_BUILDING_ROCK_GARDEN",
+   "notShownInCity": true
   }
  },
  "identity": {

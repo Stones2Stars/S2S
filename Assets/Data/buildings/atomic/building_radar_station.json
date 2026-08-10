@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RADAR_STATION"
+   "define": "ART_DEF_BUILDING_RADAR_STATION",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -93,7 +93,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ROSETTA_STONE"
+   "define": "ART_DEF_BUILDING_ROSETTA_STONE",
+   "notShownInCity": true
   }
  },
  "identity": {

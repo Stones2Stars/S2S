@@ -52,7 +52,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_POLITICAL_AWAKENING"
+   "define": "ART_DEF_POLITICAL_AWAKENING",
+   "notShownInCity": true
   }
  },
  "identity": {

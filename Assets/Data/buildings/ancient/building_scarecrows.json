@@ -62,7 +62,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_SCARECROWS"
+   "define": "ART_DEF_BUILDING_SCARECROWS",
+   "notShownInCity": true
   }
  },
  "identity": {

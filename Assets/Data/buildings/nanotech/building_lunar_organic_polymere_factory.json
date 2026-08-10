@@ -80,7 +80,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY"
+   "define": "ART_DEF_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -45,7 +45,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_SPACEPORT"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SPACEPORT",
+   "notShownInCity": true
   }
  },
  "identity": {

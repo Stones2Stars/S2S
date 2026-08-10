@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_SOUTH_AMERICAN"
+   "define": "ART_DEF_BUILDING_CULTURE_SOUTH_AMERICAN",
+   "notShownInCity": true
   }
  },
  "identity": {

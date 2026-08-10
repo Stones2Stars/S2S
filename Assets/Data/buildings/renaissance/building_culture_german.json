@@ -95,7 +95,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_GERMAN"
+   "define": "ART_DEF_BUILDING_CULTURE_GERMAN",
+   "notShownInCity": true
   }
  },
  "identity": {

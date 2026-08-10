@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_INTERSPECIES_COMMUNITY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_INTERSPECIES_COMMUNITY",
+   "notShownInCity": true
   }
  },
  "identity": {

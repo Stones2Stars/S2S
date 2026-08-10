@@ -103,7 +103,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INSANE_ASYLUM"
+   "define": "ART_DEF_BUILDING_INSANE_ASYLUM",
+   "notShownInCity": true
   }
  },
  "identity": {

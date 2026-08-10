@@ -83,7 +83,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FUNERAL_PYRE"
+   "define": "ART_DEF_BUILDING_FUNERAL_PYRE",
+   "notShownInCity": true
   }
  },
  "identity": {

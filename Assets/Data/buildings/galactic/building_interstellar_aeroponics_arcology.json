@@ -41,7 +41,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY",
+   "notShownInCity": true
   }
  },
  "identity": {

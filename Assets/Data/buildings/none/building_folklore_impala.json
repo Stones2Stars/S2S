@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_IMPALA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_IMPALA",
+   "notShownInCity": true
   }
  },
  "identity": {

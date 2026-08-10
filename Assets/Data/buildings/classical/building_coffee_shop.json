@@ -77,7 +77,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_COFFEE_SHOP"
+   "define": "ART_DEF_BUILDING_COFFEE_SHOP",
+   "notShownInCity": true
   }
  },
  "identity": {

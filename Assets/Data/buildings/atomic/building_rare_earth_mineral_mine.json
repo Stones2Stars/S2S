@@ -79,7 +79,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_RARE_EARTH_MINERAL_MINE"
+   "define": "ART_DEF_BUILDING_RARE_EARTH_MINERAL_MINE",
+   "notShownInCity": true
   }
  },
  "identity": {

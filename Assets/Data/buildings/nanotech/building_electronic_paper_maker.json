@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_ELECTRONIC_PAPER_MAKER"
+   "define": "ART_DEF_BUILDING_ELECTRONIC_PAPER_MAKER",
+   "notShownInCity": true
   }
  },
  "identity": {

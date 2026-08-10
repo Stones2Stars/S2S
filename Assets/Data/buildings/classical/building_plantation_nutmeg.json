@@ -76,7 +76,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_PLANTATION_NUTMEG"
+   "define": "ART_DEF_BUILDING_PLANTATION_NUTMEG",
+   "notShownInCity": true
   }
  },
  "identity": {

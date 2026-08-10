@@ -88,7 +88,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_THEATER"
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_THEATER",
+   "notShownInCity": true
   }
  },
  "sound": {

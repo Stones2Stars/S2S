@@ -122,7 +122,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MILITARY_BASE"
+   "define": "ART_DEF_BUILDING_MILITARY_BASE",
+   "notShownInCity": true
   }
  },
  "sound": {

@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CISLUNAR_REFUELING_STATION"
+   "define": "ART_DEF_BUILDING_CISLUNAR_REFUELING_STATION",
+   "notShownInCity": true
   }
  },
  "identity": {

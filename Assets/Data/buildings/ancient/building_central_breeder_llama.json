@@ -61,7 +61,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CENTRAL_BREEDER_LLAMA"
+   "define": "ART_DEF_BUILDING_CENTRAL_BREEDER_LLAMA",
+   "notShownInCity": true
   }
  },
  "sound": {

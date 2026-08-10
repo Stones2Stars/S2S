@@ -85,7 +85,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_BARBARY_MACAQUE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_BARBARY_MACAQUE",
+   "notShownInCity": true
   }
  },
  "identity": {

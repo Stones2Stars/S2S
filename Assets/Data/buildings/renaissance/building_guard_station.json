@@ -130,7 +130,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GUARD_STATION"
+   "define": "ART_DEF_BUILDING_GUARD_STATION",
+   "notShownInCity": true
   }
  },
  "sound": {

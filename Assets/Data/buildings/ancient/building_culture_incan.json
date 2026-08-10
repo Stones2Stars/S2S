@@ -58,7 +58,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_INCAN"
+   "define": "ART_DEF_BUILDING_CULTURE_INCAN",
+   "notShownInCity": true
   }
  },
  "identity": {

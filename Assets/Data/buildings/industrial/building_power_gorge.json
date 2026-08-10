@@ -35,7 +35,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_POWER_GORGE"
+   "define": "ART_DEF_BUILDING_POWER_GORGE",
+   "notShownInCity": true
   }
  },
  "identity": {

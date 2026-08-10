@@ -255,7 +255,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_GRAND_SKY_FESTIVAL"
+   "define": "ART_DEF_BUILDING_GRAND_SKY_FESTIVAL",
+   "notShownInCity": true
   }
  },
  "identity": {

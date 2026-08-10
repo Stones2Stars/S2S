@@ -46,7 +46,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_CULTURE_YAGUA"
+   "define": "ART_DEF_BUILDING_CULTURE_YAGUA",
+   "notShownInCity": true
   }
  },
  "identity": {

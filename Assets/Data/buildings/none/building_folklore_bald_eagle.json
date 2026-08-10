@@ -86,7 +86,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_FOLKLORE_BALD_EAGLE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_BALD_EAGLE",
+   "notShownInCity": true
   }
  },
  "identity": {

@@ -39,7 +39,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER"
+   "define": "ART_DEF_BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER",
+   "notShownInCity": true
   }
  },
  "identity": {

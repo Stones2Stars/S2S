@@ -120,7 +120,8 @@
  },
  "world": {
   "art": {
-   "define": "ART_DEF_BUILDING_VIP_CLUB"
+   "define": "ART_DEF_BUILDING_VIP_CLUB",
+   "notShownInCity": true
   }
  },
  "identity": {
