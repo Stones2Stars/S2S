@@ -1094,6 +1094,17 @@ state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
   player's whole group list emptied — then **repaint**, `colorRegion` from each still-uncolored plot. So the
   network is demolished and rebuilt whole, and anything the old groups held is gone unless the repaint knows
   how to find it again.
+  > **⛔ THIS IS THE LOAD PATH AND NOTHING ELSE — `reInitialize` HAS EXACTLY ONE CALLER (`CvGame::onFinalInitialized`),
+  > SO IT RUNS ONCE PER LOAD.** ⚠ Read the teardown as the ordinary shape and you conclude the trade network is
+  > deleted and rebuilt whenever a plot joins a group, which is wrong by orders of magnitude and invites
+  > "optimizing" a pass that does not exist.
+  > ⚑ **In PLAY the work is incremental and targeted:** every other `updatePlotGroups` takes the
+  > `reInitialize = false` branch — `CvPlotGroup::recalculatePlots` per group, which EARLY-OUTS when the same
+  > cities and bonuses are still connected — and a single plot joining, splitting or merging goes through
+  > `CvPlot::updatePlotGroup`, which touches only the affected region. Nothing is torn down.
+  > ⇒ **The demolition is the price of a LOAD, paid once**, which is what makes it the sanctioned full pass
+  > ([state-repositories.md](../architecture/state-repositories.md) CAPSTONE: LOAD is the only full build) rather
+  > than a blanket recompute.
   > **⛔ THE LEAVE IS SILENT AND THE JOIN IS ANNOUNCED — the two steps pass OPPOSITE flags, and that asymmetry
   > is the whole mechanism of the loss.** `CvPlot::setPlotGroup`'s `bRecalculateEffect` is what makes a group
   > change a real transition: it withdraws the plot's contributions from the old group, fires the per-bonus
@@ -1103,9 +1114,17 @@ state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
   > ⚑ **That is correct, not sloppy:** withdrawing from groups deleted three lines later is wasted work, and a
   > removal fact naming a group id that is about to stop existing tells a consumer nothing. It is also what
   > keeps the load free of double-counts — the counts restart from zero on new objects.
-  > ⚠ **But it is exactly why a supply the repaint cannot re-find vanishes WITHOUT A TRACE.** The demolition
-  > carries it off without announcing the loss, so no consumer hears it go and nothing re-derives it — a silent
-  > subtraction with no matching fact, which is why no total ever looks wrong.
+  > ⚑ **THE CITY STILL HEARS THE NET RESULT, and knowing that is what stops a phantom being blamed for a real
+  > loss.** `CvPlayer::updatePlotGroups` brackets the WHOLE teardown+repaint per city
+  > (`startDeferredBonusProcessing` snapshots every bonus's network count on entry;
+  > `endDeferredBonusProcessing` compares on exit and fires `processNumBonusChange`), so the two steps are
+  > ATOMIC to a consumer: a bonus that survives announces nothing (no double-add), and one that does not
+  > announces `SEVT_CITY_BONUS_REMOVED`. ⛔ So the traded store does NOT inflate across a load, and a re-push
+  > running AFTER the bracket closes takes each bonus 0 → 1 and announces its own crossing cleanly.
+  > ⚠ **What is genuinely untraced is the PLOT-GROUP level**: the destroyed group's counts are never
+  > decremented, the object is simply deleted, so no `SEVT_PLOTGROUP_BONUS_REMOVED` is ever emitted for it.
+  > ⇒ **The loss is therefore REPORTED but not REPAIRED** — the city correctly learns the supply is gone and
+  > nothing re-derives it, which is why the symptom is an empty list rather than a wrong number.
   > ⇒ **A re-push must therefore go through `CvPlotGroup::changeNumBonuses`**, which on a presence crossing
   > emits `SEVT_PLOTGROUP_BONUS_ADDED` and fans `onNetworkBonusChanged` into every member city. That is the
   > live entry point, and it is the fact that TELLS THE TRUTH about what happened — the network component's
