@@ -1087,6 +1087,13 @@ state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
   terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
   re-colors membership from current state and folds the counts through the live entry points as each plot joins,
   announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
+  ⚑ **RE-COLOR is the engine's own verb, and knowing the mechanism is what makes the gap below legible.**
+  `CvPlotGroup::colorRegion` is a FLOOD FILL — it starts on a plot, walks every trade-network-connected
+  neighbour, paints them into one group and merges into any adjacent group it meets. The `reInitialize` pass
+  (`CvPlayer::updatePlotGroups`) does it in two steps: **destroy** — every plot's group pointer nulled and the
+  player's whole group list emptied — then **repaint**, `colorRegion` from each still-uncolored plot. So the
+  network is demolished and rebuilt whole, and anything the old groups held is gone unless the repaint knows
+  how to find it again.
   > **⛔ THE RE-COLOR RE-FOLDS THE TILE HALF ONLY, SO THE BUILDING-SUPPLIED HALF MUST BE RE-PUSHED BEHIND IT.**
   > `CvPlot::updatePlotGroupBonus` folds a plot's own extracted resource, a city's free bonuses and the capital's
   > import/export — and nothing else. Every resource an ACTIVE BUILDING supplies through `provides.bonuses`
