@@ -5161,114 +5161,8 @@ void CvGameTextMgr::setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		}
 	}
 
-	if (city.getOwner() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalFood", true, "BUG_BUILDING_ADDITIONAL_FOOD_HOVER"))
-	{
-		setBuildingAdditionalYieldHelp(szBuffer, city, YIELD_FOOD, DOUBLE_SEPARATOR);
-	}
 }
 
-
-// BUG - Building Additional Yield - start
-bool CvGameTextMgr::setBuildingAdditionalYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eIndex, const CvWString& szStart, bool bStarted)
-{
-	PROFILE_EXTRA_FUNC();
-	const CvYieldInfo& info = GC.getYieldInfo(eIndex);
-
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
-
-		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		{
-			const int iChange = city.getAdditionalYieldByBuilding(eIndex, eBuilding);
-
-			if (iChange != 0)
-			{
-				if (!bStarted)
-				{
-					szBuffer.append(szStart);
-					bStarted = true;
-				}
-
-				CvWString szLabel;
-				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
-				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iChange, info.getChar(), false, true);
-			}
-		}
-	}
-
-	return bStarted;
-}
-// BUG - Building Additional Yield - end
-
-// BUG - Building Additional Commerce - start
-bool CvGameTextMgr::setBuildingAdditionalCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eIndex, const CvWString& szStart, bool bStarted)
-{
-	PROFILE_EXTRA_FUNC();
-	const CvCommerceInfo& info = GC.getCommerceInfo(eIndex);
-
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
-
-		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		{
-			int iChange = city.getAdditionalCommerceByBuilding(eIndex, eBuilding);
-			const int iCommerce = city.getAdditionalYieldByBuilding(YIELD_COMMERCE, eBuilding);
-			iChange += iCommerce * GET_PLAYER(city.getOwner()).getCommercePercent(eIndex);
-
-			if (iChange != 0)
-			{
-				if (!bStarted)
-				{
-					szBuffer.append(szStart);
-					bStarted = true;
-				}
-
-				CvWString szLabel;
-				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
-				setResumableValueTimes100ChangeHelp(szBuffer, szLabel, L": ", L"", iChange, info.getChar(), true);
-			}
-		}
-	}
-	// BUG jdog5000 - need to verify building type is correct for this player to avoid asserts - end
-
-	return bStarted;
-}
-// BUG - Building Additional Commerce - end
-
-// BUG - Building Saved Maintenance - start
-bool CvGameTextMgr::setBuildingSavedMaintenanceHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted)
-{
-	PROFILE_EXTRA_FUNC();
-	const CvCommerceInfo& info = GC.getCommerceInfo(COMMERCE_GOLD);
-
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
-
-		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		{
-			const int iChange = -city.getSavedMaintenanceTimes100ByBuilding(eBuilding); //Afforess: saved maintenance is displayed as negative in hover
-
-			if (iChange != 0)
-			{
-				if (!bStarted)
-				{
-					szBuffer.append(szStart);
-					bStarted = true;
-				}
-
-				CvWString szLabel;
-				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
-				setResumableValueTimes100ChangeHelp(szBuffer, szLabel, L": ", L"", iChange, info.getChar(), true);
-			}
-		}
-	}
-
-	return bStarted;
-}
-// BUG - Building Saved Maintenance - end
 
 void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
@@ -5276,11 +5170,6 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 
 	setYieldHelp(szBuffer, city, YIELD_PRODUCTION);
 
-	if (city.getOwner() == GC.getGame().getActivePlayer()
-	&& getBugOptionBOOL("MiscHover__BuildingAdditionalProduction", true, "BUG_BUILDING_ADDITIONAL_PRODUCTION_HOVER"))
-	{
-		setBuildingAdditionalYieldHelp(szBuffer, city, YIELD_PRODUCTION, DOUBLE_SEPARATOR);
-	}
 }
 
 
@@ -5975,39 +5864,6 @@ void CvGameTextMgr::parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city
 		}
 	}
 }
-
-// BUG - Building Additional Great People - start
-bool CvGameTextMgr::setBuildingAdditionalGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city, const CvWString& szStart, bool bStarted)
-{
-	PROFILE_EXTRA_FUNC();
-	CvWString szLabel;
-
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
-
-		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		{
-			// ×100 delta, reduced at this read edge before it is shown.
-			const int iChange = city.getAdditionalGreatPeopleRateByBuilding(eBuilding) / 100;
-
-			if (iChange != 0)
-			{
-				if (!bStarted)
-				{
-					szBuffer.append(szStart);
-					bStarted = true;
-				}
-
-				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
-				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iChange, gDLL->getSymbolID(GREAT_PEOPLE_CHAR), false, true);
-			}
-		}
-	}
-
-	return bStarted;
-}
-// BUG - Building Additional Great People - end
 
 
 void CvGameTextMgr::parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& kPlayer)
@@ -8582,31 +8438,6 @@ void CvGameTextMgr::appendCitySourceLines(CvWStringBuffer& szBuffer, const CvCit
 	}
 }
 
-bool CvGameTextMgr::setBuildingAdditionalDefenseHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted)
-{
-	PROFILE_EXTRA_FUNC();
-	CvWString szLabel;
-
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
-		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		{
-			const int iChange = city.getAdditionalDefenseByBuilding(eBuilding);
-			if (iChange != 0)
-			{
-				if (!bStarted)
-				{
-					szBuffer.append(szStart);
-					bStarted = true;
-				}
-				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
-				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iChange, gDLL->getSymbolID(DEFENSE_CHAR), true, true);
-			}
-		}
-	}
-	return bStarted;
-}
 
 void CvGameTextMgr::setEmploymentHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {

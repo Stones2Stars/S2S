@@ -5042,12 +5042,6 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(szTempBuffer);
 			}
 
-			// BUG - Building Saved Maintenance - start
-			if (pHeadSelectedCity->getOwner() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingSavedMaintenance", true, "BUG_BUILDING_SAVED_MAINTENANCE_HOVER"))
-			{
-				GAMETEXT.setBuildingSavedMaintenanceHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
-			}
-			// BUG - Building Saved Maintenance - end
 		}
 	}
 }

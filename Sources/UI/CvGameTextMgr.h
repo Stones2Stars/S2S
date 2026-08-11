@@ -91,7 +91,6 @@ public:
 	void parsePlayerHasFixedBorders(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer);
 	void parseLeaderHeadHelp(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);
 	void parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	bool setBuildingAdditionalGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city, const CvWString& szStart, bool bStarted = false);
 	void parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& kPlayer);
 	void setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText = false, bool bPlayerContext = false, bool bStrategyText = false, bool bTreeInfo = true, TechTypes eFromTech = NO_TECH);
 	void setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false);
@@ -184,11 +183,8 @@ public:
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);
 	void setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeature, bool bCivilopediaText = false);
 	void setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	bool setBuildingAdditionalYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eIndex, const CvWString& szStart, bool bStarted = false);
 	void setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eCommerceType);
-	bool setBuildingAdditionalCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eIndex, const CvWString& szStart, bool bStarted = false);
-	bool setBuildingSavedMaintenanceHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted = false);
 	void setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType);
 	void setConvertHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, ReligionTypes eReligion);
 	void setRevolutionHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer);
@@ -222,7 +218,6 @@ public:
 	void buildSpecialBuildingString( CvWStringBuffer& szBuffer, TechTypes eTech, int iBuildingType, bool bList = false, bool bPlayerContext = false );
 	// The int is an IMPROVEMENT id, not a yield -- the widget asks what this tech does to that improvement's output.
 	void buildYieldChangeString( CvWStringBuffer& szBuffer, TechTypes eTech, int iImprovement, bool bList = false, bool bPlayerContext = false );
-	bool setBuildingAdditionalDefenseHelp(CvWStringBuffer &szBuffer, const CvCity& city, const CvWString& szStart, bool bStarted = false);
 	void getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void setEmploymentHelp(CvWStringBuffer &szBuffer, CvCity& city);
 
