@@ -279,24 +279,14 @@
   ([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)); settle it by
   which surface the spec names and which entries each one actually reaches.
 
-- **⛔ SERVE THE PLURAL-TARGET ENTRY SUM — a deposit onto `cities` / `plots` / `units` / `areas` / `empires` is
-  readable by NO getter, so every consumer of one silently reads ZERO.** The point read
-  (`CvModifiers::sum`) folds only `isPointFoldable` entries, which excludes anything carrying a target;
-  `targetedSum` covers the other shape, a NAMED-entity key, and returns 0 without an FK. A plural target token
-  has no FK, so it falls between the two.
-  ⚑ **The live class is a resource's happiness/health.** [modifier.md §2b](../../specs/modifier.md) requires a
-  bonus to author `happiness.empire.cities` and states plainly that a bare `empire` flat would be WRONG (it
-  would roll down to every city instead of landing in the holding one) — so the DATA is right and the READ is
-  the defect. Every bonus that authors wellbeing authors it this way.
-  ⛔ **It is not a pedia problem.** `CvPlayerAI`'s bonus valuation adds these two channels, its
-  happiness/health resource gates test them, and `CvPlayer`'s bonus-of-interest classification splits on
-  them — so the AI presently values no resource for happiness or health, and the classification's two legs
-  both read 0. ⚠ Invisible from every direction: it compiles, it runs, the number is plausible, and no census
-  names it ([state-repositories.md](../../architecture/state-repositories.md) — the writerless-accumulator
-  shape, one plane over).
-  ⚠ Two comments assert the opposite and are false where they stand — `CvBonusInfo`'s point-read block calls
-  these "empire flats", and `CyInfo::getWellbeing` advertises asking which bonuses are a luxury. Fix them with
-  the read.
+- **Fold the `empires` fan into the flat point read, as the `cities` fan already is.**
+  [modifier.md §5](../../specs/modifier.md) names it the one target whose fold IS the deposit, so a project's
+  `health.<scope>.empires.flat` should answer on the info's flat read; `CvModifiers::pluralTargetSum` already
+  serves the shape and `CvInfo::flatWithCityFan` is the one place that decides which tokens fold.
+  ⚠ It rides the curator item above that re-scopes those same project authorings, so settle the authored
+  address first — folding a token the data is about to stop using buys nothing.
+  ⛔ `plots` and `units` stay UNFOLDED and that is not an omission: those are per-object and predicate-filtered,
+  so a scope-wide sum of one is the silently-plausible-wrong fold [modifier.md §5](../../specs/modifier.md) bans.
 
 - **The unresolved-FK census reports the §3.1 CATCH-ALL TOKENS as unresolved ids.** `CITY`, `TEAM`,
   `POPULATION`, `ERA`, `SPECIALIST`, `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`, the slider rates

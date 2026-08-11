@@ -38,21 +38,13 @@ public:
 	// conditioned percents (the §2a own percent layer), the wonder-conditioned empire flats, and the tech
 	// keep-on-self wellbeing entries are ALL conditioned -- conditioned-list/valuation reads by design.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
 	// The authored wellbeing families' SIGNED sums. ⛔ ANGER/UNHEALTH read 0 here BY CONSTRUCTION and that is
 	// never a gap to chase: an INFO keeps a negative in its POSITIVE family (happiness -1, not anger +1) --
 	// the sign ROUTING to the opposing channel happens at FILL, on the city PACKAGE, not on authored data
 	// (modifier.md §2b). So this read already carries the negatives; there is nothing to verify in the JSON.
-	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
-	{
-		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
-		{
-			return 0;
-		}
-		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
-	}
 	int getExperience(ExperienceKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_EXPERIENCE, eKind, eScope, infoKindUnit(MODFAM_EXPERIENCE, eKind, eScope)); }
 	// experience.city.unitCombats.{UNITCOMBAT_*}.flat -- the XP this specialist gives units of ONE combat

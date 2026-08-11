@@ -38,25 +38,17 @@ public:
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getYieldModifier(YieldTypes eYield, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
 	int getCommerceModifier(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	// The authored wellbeing families' SIGNED sums. ⛔ ANGER/UNHEALTH read 0 here BY CONSTRUCTION and that is
 	// never a gap to chase: an INFO keeps a negative in its POSITIVE family (happiness -1, not anger +1) --
 	// the sign ROUTING to the opposing channel happens at FILL, on the city PACKAGE, not on authored data
 	// (modifier.md §2b). So this read already carries the negatives; there is nothing to verify in the JSON.
-	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
-	{
-		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
-		{
-			return 0;
-		}
-		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
-	}
 	// freeSpecialists.<scope>.any -- the GENERIC free-specialist slots this civic grants while adopted
 	// ([modifier.md §6]: the cascade owns the AMOUNT, the engine picks each slot's type at placement). The
 	// TYPED `{SPECIALIST_X}` rows beside it are keyed and stay an entry-list read. ×100; the reader reduces.

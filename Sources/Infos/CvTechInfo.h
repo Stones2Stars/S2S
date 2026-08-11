@@ -57,14 +57,6 @@ public:
 	// corporation, ruling 15; workRate / featureProduction / tradeMission / inflation are getScalar
 	// stragglers; domainMoves.empire.domains.{DOMAIN} and freeSpecialists.team.{SPECIALIST} are keyed shapes --
 	// entry-list reads by design.)
-	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
-	{
-		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
-		{
-			return 0;
-		}
-		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
-	}
 	int getTradeRoute(TradeRouteKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_TRADE_ROUTES, eKind, eScope, infoKindUnit(MODFAM_TRADE_ROUTES, eKind)); }
 	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const

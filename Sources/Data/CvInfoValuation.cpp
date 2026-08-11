@@ -1554,7 +1554,20 @@ void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 		// (1) the compiled unconditioned sums per folded scope, net-sign-routed
 		for (int iScopeIdx = 0; iScopeIdx < NUM_VAL_FOLD_SCOPES; ++iScopeIdx)
 		{
-			const int iSum = modifiers->sum(eFamily, CHANNEL_AMOUNT, VAL_FOLD_SCOPES[iScopeIdx], CASC_UNIT_FLAT, bAiAudience);
+			//	⛔ TWO PLANES, exactly as the point read sums ([CvInfo.h] getFlatWellbeing). A source fans its
+			//	wellbeing to the scope's cities (`happiness.empire.cities.flat` -- what [modifier.md] §2b
+			//	REQUIRES of a resource, and what traits overwhelmingly author), and such an entry reaches
+			//	NEITHER pass below on its own: the compiled sum excludes anything targeted, and the conditioned
+			//	tail skips `targetSeg >= 0` a few lines down. Omitting it valued every one of them at zero.
+			//	⚑ The asking CITY is one of the cities fanned to, so the flat IS this candidate's delta here --
+			//	no city count enters a per-city valuation.
+			//	⚠ A QUALIFIED plural entry stays unserved by design ([modifier.md] §5: a keyed+conditioned
+			//	deposit is honestly UNSERVED rather than papered over with an unconditional sum) -- pluralTargetSum
+			//	declines those, so this cannot smuggle one in.
+			static int s_iCitiesSeg = -1;
+			const int iSum = modifiers->sum(eFamily, CHANNEL_AMOUNT, VAL_FOLD_SCOPES[iScopeIdx], CASC_UNIT_FLAT, bAiAudience)
+				+ modifiers->pluralTargetSum(eFamily, CHANNEL_AMOUNT, VAL_FOLD_SCOPES[iScopeIdx], CASC_UNIT_FLAT,
+					modSegmentCached("cities", s_iCitiesSeg), bAiAudience);
 			if (iSum >= 0)
 			{
 				wellbeing[GOOD_OF[iPair]] += iSum;

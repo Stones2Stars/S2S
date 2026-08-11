@@ -114,6 +114,26 @@ public:
 		int iTargetSeg, int iTargetFk, CvModAudience eAudience) const;
 	int targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
 		int iTargetSeg, int iTargetFk, bool bIncludeAiOnly = false) const;
+	// THE PLURAL-TARGET READ ([json.md] §3.3: a target is PLURAL -- `cities` / `plots` / `units` / `areas` /
+	// `empires` -- and means every object of that kind in scope). It is the third shape, and it had no read at
+	// all: the point sum above folds only `isPointFoldable` entries, which excludes ANYTHING carrying a target,
+	// while the keyed reads bail on `targetFk < 0`. A plural target token resolves no FK, so it fell between
+	// them and every consumer of one silently read ZERO.
+	//
+	// ⚑ The live class is a resource's happiness/health. [modifier.md] §2b REQUIRES a bonus to author
+	// `happiness.empire.cities` and states that a bare `empire` flat would be WRONG -- it would roll down to
+	// every city rather than landing in the holding one -- so the DATA is right and the missing read was the
+	// defect.
+	//
+	// ⛔ UNQUALIFIED entries only, and that is the load-bearing limit rather than a simplification. An entry may
+	// carry a PREDICATE on its plural target (`cities.{unit: IS_MILITARY}`, `plots {IS_WATER}`), and summing
+	// those scope-wide is the silently-plausible-wrong fold [modifier.md] §5 bans by name -- "+1 food per water
+	// plot" is not "+1 food". Such an entry is the VALUATION's, which resolves it against a real context.
+	int pluralTargetSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+		int iTargetSeg, CvModAudience eAudience) const;
+	int pluralTargetSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+		int iTargetSeg, bool bIncludeAiOnly = false) const;
+
 	int propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const;
 
 private:

@@ -38,7 +38,7 @@ public:
 	// over radius plots ÷100 by the wellbeing calc (modifier.md §2b); cultureDistance.plot.flat is the
 	// getScalar(SCALAR_CULTURE_DISTANCE) straggler.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getDefense(DefenseKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind)); }
 	// The authored wellbeing families' SIGNED sums. ⛔ ANGER/UNHEALTH read 0 here BY CONSTRUCTION and that is

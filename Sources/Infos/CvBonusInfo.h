@@ -39,15 +39,7 @@ public:
 	// participation: food/production/commerce plot flats -- the bonus's OWN tile output, modifier.md §5
 	// plot-substrate own-output -- and health/happiness empire flats, the connected-resource benefit.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
-	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
-	{
-		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
-		{
-			return 0;
-		}
-		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
-	}
+	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 
 	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
 	int getBonusClassType() const { return m_iBonusClassType; }    // identity.bonusClassType (BONUSCLASS_* FK)

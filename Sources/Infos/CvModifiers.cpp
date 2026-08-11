@@ -161,7 +161,10 @@ void CvModifiers::targetedSums(ModifierFamily eFamily, int iKind, CvCascScope eS
 	{
 		const CvModEntry* pEntry = m_entries[iEntry];
 		if (pEntry->family != eFamily || pEntry->scope != eScope || pEntry->unit != eUnit) continue;
-		if (pEntry->targetFk < 0) continue;                       // untargeted -- the point slot answers it
+		//	⚠ NOT "untargeted, the point slot answers it" -- that was the assumption that left the plural plane
+		//	unreadable. An entry here may be genuinely untargeted (the point slot does answer it) OR carry a
+		//	PLURAL token with no FK, which the point slot rejects too; `pluralTargetSum` owns the second.
+		if (pEntry->targetFk < 0) continue;                       // not the NAMED-target plane this read serves
 		if (iTargetSeg >= 0 && pEntry->targetSeg != iTargetSeg) continue;   // the AXIS: never mix keyed planes
 		if (iKind >= 0 && pEntry->kind != iKind) continue;
 		if (pEntry->enabled != NULL || pEntry->disabled != NULL) continue;   // conditioned -> the valuation
@@ -181,6 +184,41 @@ void CvModifiers::targetedSums(ModifierFamily eFamily, int iKind, CvCascScope eS
 	int iTargetSeg, std::vector<std::pair<int, int> >& kOut, bool bIncludeAiOnly) const
 {
 	targetedSums(eFamily, iKind, eScope, eUnit, iTargetSeg, kOut, bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
+}
+
+int CvModifiers::pluralTargetSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+	int iTargetSeg, CvModAudience eAudience) const
+{
+	if (iTargetSeg < 0)
+	{
+		return 0;   // the token was never authored anywhere -- nothing can be keyed on it
+	}
+	int iSum = 0;
+	for (size_t iEntry = 0; iEntry < m_entries.size(); ++iEntry)
+	{
+		const CvModEntry* pEntry = m_entries[iEntry];
+		if (pEntry->family != eFamily || pEntry->scope != eScope || pEntry->unit != eUnit) continue;
+		if (pEntry->targetSeg != iTargetSeg) continue;
+		//	A resolved FK means a NAMED target (`buildings.{B}`) -- that is the keyed plane and targetedSum
+		//	owns it. This read is the FK-LESS half: the plural token standing alone.
+		if (pEntry->targetFk >= 0) continue;
+		if (iKind >= 0 && pEntry->kind != iKind) continue;
+		//	⛔ Anything QUALIFIED is the valuation's, not a scope-wide sum ([modifier.md] §5). A predicate on the
+		//	target, a unit/religion filter or a `per` scaler each make the value conditional on state this read
+		//	has none of, and folding one anyway is the plausible-wrong case that rule names.
+		if (pEntry->enabled != NULL || pEntry->disabled != NULL) continue;
+		if (pEntry->unitQual != NULL || pEntry->religionQual != NULL || pEntry->hasPer) continue;
+		if (pEntry->aiOnly && eAudience == MOD_AUDIENCE_HUMAN) continue;
+		if (!pEntry->aiOnly && eAudience == MOD_AUDIENCE_AI_ONLY) continue;
+		iSum += pEntry->value;
+	}
+	return iSum;
+}
+int CvModifiers::pluralTargetSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+	int iTargetSeg, bool bIncludeAiOnly) const
+{
+	return pluralTargetSum(eFamily, iKind, eScope, eUnit, iTargetSeg,
+		bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
 }
 
 int CvModifiers::targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,

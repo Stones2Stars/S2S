@@ -51,14 +51,6 @@ public:
 	// never a gap to chase: an INFO keeps a negative in its POSITIVE family (happiness -1, not anger +1) --
 	// the sign ROUTING to the opposing channel happens at FILL, on the city PACKAGE, not on authored data
 	// (modifier.md §2b). So this read already carries the negatives; there is nothing to verify in the JSON.
-	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
-	{
-		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
-		{
-			return 0;
-		}
-		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
-	}
 	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MAINTENANCE, eKind, eScope, CASC_UNIT_PERCENT); }
 	int getDiplomacy(DiplomacyKind eKind, CvCascScope eScope) const

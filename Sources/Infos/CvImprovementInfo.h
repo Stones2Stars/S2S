@@ -43,9 +43,9 @@ public:
 	// yield entries -- irrigated / riverside / per-bonus / tech-gated + the reverse-landed cross-entity
 	// boosts -- are the compiled conditioned list, walked by the plot package rebuild and the pedia.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
 	// Scope-aware unit axis: DEFENSE_AIR is the one scope-split defense kind (plot = the FLAT rolled air-defense
 	// magnitude the improvements author; city = the PERCENT damage modifier) -- the scope-blind overload would
 	// answer the city plane for the plot air read.

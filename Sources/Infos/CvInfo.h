@@ -231,13 +231,39 @@ public:
 	// four-channel sign ROUTING is a fill/valuation rule (modifier.md §2b -- expectedWellbeing), so the two
 	// unauthored channels (ANGER/UNHEALTH) hold no slot and read 0 here. On the BASE so every registry serves
 	// it -- a bonus carries wellbeing exactly as a building does.
+	//	⛔ IT SUMS TWO PLANES, AND OMITTING THE SECOND READ ZERO FOR EVERY RESOURCE IN THE GAME. Wellbeing is
+	//	authored two ways: scope-wide (a tech's `health.empire.flat`) and fanned to the scope's cities (a
+	//	bonus's `happiness.empire.cities.flat`). [modifier.md] §2b REQUIRES the second for a resource and says a
+	//	bare `empire` flat would be WRONG -- it would roll down to every city instead of landing in the holding
+	//	one -- so the fan is the correct authoring and the point sum alone simply cannot see it (a targeted
+	//	entry is not `isPointFoldable`). The AI's resource valuation, its happiness/health resource gates and
+	//	the bonus-of-interest split all read this, and all read 0 while only the first plane was summed.
+	//	⚠ The two cannot double-count: an entry carries the `cities` target or it does not, and the point slot
+	//	rejects every entry that does.
+	//	⚑ ONE implementation, because the SAME two planes feed wellbeing AND every yield channel -- a per-getter
+	//	copy is how one of them silently keeps summing half ([DEC-single-implementation]).
+	//	⛔ ONLY the `cities` fan folds. A `plots` or `units` target is PER-OBJECT and predicate-filtered, so
+	//	folding one into a single scope-wide flat is the silently-plausible-wrong case [modifier.md] §5 bans by
+	//	name -- "+1 food per water plot" is not "+1 food".
+	int flatWithCityFan(ModifierFamily eFamily, int iKind, CvCascScope eScope) const
+	{
+		int iFlat = modifier(eFamily, iKind, eScope, CASC_UNIT_FLAT);
+		const CvModifiers* pMods = getModifiers();
+		if (pMods != NULL)
+		{
+			static int s_iCitiesSeg = -1;
+			iFlat += pMods->pluralTargetSum(eFamily, iKind, eScope, CASC_UNIT_FLAT,
+				modSegmentCached("cities", s_iCitiesSeg));
+		}
+		return iFlat;
+	}
 	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
 	{
 		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
 		{
 			return 0;
 		}
-		return modifier(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
+		return flatWithCityFan(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope);
 	}
 	// The compiled conditioned list + its per-family range (patterns.md § THE GETTER SETUP read 2: the typed
 	// entries with prebuilt trees -- what the package rebuild, the pedia, and the valuation walk). Empty/0-range

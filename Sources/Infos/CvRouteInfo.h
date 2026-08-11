@@ -46,7 +46,7 @@ public:
 		return it != m_improvementYield.end() ? it->second : 0;
 	}
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 
 	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
 	int getValue() const { return m_iValue; }                       // identity.value (route quality rank)

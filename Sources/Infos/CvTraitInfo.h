@@ -39,11 +39,11 @@ public:
 	// which is what makes these point reads correct under the option, since a summed value could never be
 	// sign-filtered after the fact.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getYieldModifier(YieldTypes eYield, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
-	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	{ return flatWithCityFan(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
 	int getCommerceModifier(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	// The ledgered PERMANENT golden-age member-mirror (modifier.md §3): the channel families' goldenAge kind.
@@ -55,14 +55,6 @@ public:
 	// never a gap to chase: an INFO keeps a negative in its POSITIVE family (happiness -1, not anger +1) --
 	// the sign ROUTING to the opposing channel happens at FILL, on the city PACKAGE, not on authored data
 	// (modifier.md §2b). So this read already carries the negatives; there is nothing to verify in the JSON.
-	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
-	{
-		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
-		{
-			return 0;
-		}
-		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
-	}
 	// The grouped families this type's census participation covers.
 	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MAINTENANCE, eKind, eScope, CASC_UNIT_PERCENT); }
