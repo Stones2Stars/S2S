@@ -15,9 +15,7 @@ import string
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
-GC = CyGlobalContext()
 INFO = CyInfo()
-gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -85,7 +83,7 @@ class SevoPediaSpecialist:
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, "", "", True, True, self.X_TEXT, self.Y_TEXT, self.W_TEXT, self.H_TEXT, PanelStyles.PANEL_STYLE_BLUE50)
-		szText = gc.getSpecialistInfo(self.iSpecialist).getCivilopedia()
+		szText = INFO.getCivilopedia("SPECIALIST_", self.iSpecialist)
 		screen.attachMultilineText(panelName, "Text", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
 

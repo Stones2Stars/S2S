@@ -209,6 +209,13 @@ public:
 	// inferring it from an empty name.
 	bool exists(const std::string& szTypePrefix, int iId) const;
 
+	// How many ids a registry holds -- the bound of an enumeration, for a consumer that walks ids rather than
+	// rendering rows. ⚑ A screen that wants the ROWS asks `getIndex` instead: it carries the identity block and
+	// crosses the boundary ONCE, where an id walk pays a crossing per entity.
+	// ⚠ A prefix no registry answers to reports 0, matching `getIndex`'s empty list -- so a bounded walk runs
+	// zero times rather than erroring.
+	int getCount(const std::string& szTypePrefix) const;
+
 	// The entity's EDGE ids for one (family, bucket) -- "what do I unlock", "what unlocks me", "what needs me".
 	// ⚑ This is a SERVED answer to a question script currently asks by SCANNING A WHOLE REGISTRY and testing a
 	// per-id predicate. The readJson reverse pass already lands every reverse family on the info
@@ -216,6 +223,42 @@ public:
 	// ⛔ Parameterized over the family/bucket ENUMS, never a getter per relation: the axes are the spec's fixed
 	// vocabulary, so a new bucket is data and this surface does not grow.
 	python::list getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const;
+
+	// The entity's DORMANT-TRIGGER ids -- the json §4.3 `requires.{build|operate}.dormant` list. This is what
+	// the data actually holds for the two SUCCESSION relations a pedia tree draws: a unit's DIRECT UPGRADES
+	// ([enabler.md] §3 -- `UnitUpgrades` maps to `requires.build.dormant.all`) and a building's SUCCESSORS (the
+	// legacy `ReplacementBuildings`, mirrored as the TARGET's `requires.operate.dormant` -- [enabler.md] §2, so
+	// there is deliberately no `replaces` edge to read instead).
+	// ⚑ It reads the BASE `CvInfo`, so it is TOTAL across every registry: an entity authoring none answers
+	// EMPTY rather than erroring.
+	//
+	// ⛔ THE BUCKET MERGES TWO POPULATIONS, AND NO READ HERE CAN SPLIT THEM. It holds the successors that
+	// supersede this entity AND the unrelated entities whose mere PRESENCE dorms it -- a pollution band dorming
+	// an observatory. [enabler.md] §2 unified the two mechanisms deliberately, so the distinction does not
+	// survive into the data; a consumer that treats the whole bucket as "upgrades" counts the band as one,
+	// plausibly and silently.
+	// ⚑ The STRUCTURAL discriminator, for a consumer that needs one, is `isNotConstructible` below: a genuine
+	// successor is a real buildable, while a band or an ordinance is queue-excluded and placed by its own
+	// system. That is the split coming from the data instead of a hand-kept list of offending ids.
+	python::list getDormantTriggerIds(const std::string& szTypePrefix, int iId) const;
+
+	// Whether this BUILDING is excluded from the player production queue (`identity.notConstructible`, json §7):
+	// it is placed by whichever system OWNS it -- the property solver's bands, `setHeadquarters`, the achievement
+	// award -- and never built. Any other prefix answers false.
+	bool isNotConstructible(const std::string& szTypePrefix, int iId) const;
+
+	// The ids this entity's `requires` NAMES in one bucket, across BOTH timings (`build` and `operate`) -- a
+	// caller asking "does this reference X" does not care which one greys and which one dorms.
+	//
+	// ⛔ MENTION SEMANTICS -- this answers what the tree REFERENCES, never what it REQUIRES. `CvConditionQuery`
+	// reports the atoms of an `all`, an `anyOf` and a `noneOf` alike ([CvConditionQuery.h] states that limit),
+	// so an id here may be one the entity is forbidden to have. That is exactly what a FILTER wants (the pedia
+	// tree excluding corporation-gated and culture-gated units) and it is why the read is named for the tree
+	// rather than for a requirement.
+	// ⛔ SO IT IS NOT THE REQUIRES DISPLAY. Composing that block -- the heading, the ordering, which clauses
+	// belong together, and the AND-vs-OR structure -- is the text manager's job ([patterns.md] THE DIVISION OF
+	// LABOUR), and rendering this list as "requirements" would present a FORBIDDEN entity as a required one.
+	python::list getRequiresIds(const std::string& szTypePrefix, int iId, int iBucket) const;
 
 	// THE COMPILED CONDITIONED LIST -- the SECOND of the three reads every modifier group owes
 	// ([patterns.md] § THE GETTER SETUP category 3: the straight point read, the conditioned list, the what-if

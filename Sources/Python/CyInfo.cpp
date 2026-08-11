@@ -16,6 +16,7 @@
 #include "Infos/CvModifiers.h"          // the compiled entry list the conditioned read walks
 #include "Infos/CvModEntry.h"
 #include "Conditions/CvConditionQuery.h" // the ONE read over a condition tree (atoms + the negation probe)
+#include "Infos/CvRequires.h"            // the build/operate trees the requires-mention read walks
 #include "Infos/CvClassificationRegistry.h"   // the cold-path authored-key -> generated-id resolve
 #include "Infos/CvClassificationIds.h"        // the GENERATED CLS_* ids the NAMED endpoints resolve internally
 #include "Engine/CvCity.h"       // the what-if's CityContext + plot group
@@ -321,6 +322,61 @@ std::string CyInfo::getPediaCategory(const std::string& szTypePrefix, int iId) c
 bool CyInfo::exists(const std::string& szTypePrefix, int iId) const
 {
 	return cyi_infoBase(szTypePrefix, iId) != NULL;
+}
+
+int CyInfo::getCount(const std::string& szTypePrefix) const
+{
+	const int iCount = rjCountForType(szTypePrefix);
+	return iCount > 0 ? iCount : 0;   // -1 (not a JSON registry) reads as an empty enumeration
+}
+
+python::list CyInfo::getDormantTriggerIds(const std::string& szTypePrefix, int iId) const
+{
+	python::list lIds;
+
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL) return lIds;
+
+	//	dormantTriggers() lives on the BASE and answers an empty static when the entity authors no `requires`,
+	//	so every registry is served and none needs a case here.
+	const std::vector<int>& aTriggers = pInfo->dormantTriggers();
+	for (std::vector<int>::const_iterator it = aTriggers.begin(); it != aTriggers.end(); ++it)
+	{
+		lIds.append(*it);
+	}
+	return lIds;
+}
+
+bool CyInfo::isNotConstructible(const std::string& szTypePrefix, int iId) const
+{
+	if (szTypePrefix != "BUILDING_") return false;
+	if (iId < 0 || iId >= GC.getNumBuildingInfos()) return false;
+	return GC.getBuildingInfo((BuildingTypes)iId).isNotConstructible();
+}
+
+python::list CyInfo::getRequiresIds(const std::string& szTypePrefix, int iId, int iBucket) const
+{
+	python::list lIds;
+
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL) return lIds;
+
+	const CvRequires* pRequires = pInfo->getRequires();
+	if (pRequires == NULL) return lIds;   // an entity that authors no `requires` answers EMPTY, never an error
+
+	if (iBucket < 0 || iBucket >= NUM_EDGEB) return lIds;
+
+	//	BOTH timings, into one list: `build` greys and `operate` also dorms ([enabler.md] §3), which is a
+	//	distinction about WHEN the gate is checked and not about what the tree names.
+	std::vector<int> aIds;
+	CvConditionQuery::collectIds(pRequires->build,   (EnEdgeBucket)iBucket, aIds);
+	CvConditionQuery::collectIds(pRequires->operate, (EnEdgeBucket)iBucket, aIds);
+
+	for (std::vector<int>::const_iterator it = aIds.begin(); it != aIds.end(); ++it)
+	{
+		lIds.append(*it);
+	}
+	return lIds;
 }
 
 python::list CyInfo::getRevolution(const std::string& szTypePrefix, int iId, int iScope) const
@@ -1432,6 +1488,10 @@ void CyInfo::pythonPublish()
 		.def("exists",         &CyInfo::exists)
 		.def("getIndex",       &CyInfo::getIndex)
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
+		.def("getCount",       &CyInfo::getCount)
+		.def("getDormantTriggerIds", &CyInfo::getDormantTriggerIds)
+		.def("getRequiresIds",       &CyInfo::getRequiresIds)
+		.def("isNotConstructible",   &CyInfo::isNotConstructible)
 		.def("getConditionedEntries", &CyInfo::getConditionedEntries)
 		.def("getWellbeing",   &CyInfo::getWellbeing)
 		.def("getRevolution",  &CyInfo::getRevolution)
