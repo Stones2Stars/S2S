@@ -7987,6 +7987,12 @@ void CvCity::setCitizensAutomated(bool bNewValue)
 			{
 				setForceSpecialistCount(((SpecialistTypes)iI), 0);
 			}
+			// ⛔ RELEASING THE FORCED SPECIALISTS STRANDS THE CITIZENS THAT HELD THOSE SLOTS, so this branch has to
+			// re-seat them exactly as the branch above does. `setForceSpecialistCount` only MARKS the city, and a
+			// mark is not work: `AI_updateAssignWork` discards it outright while the city screen is up -- which is
+			// precisely where automation is toggled -- so relying on it leaves a third of the population unassigned
+			// until some later immediate assignment happens to run.
+			AI_assignWorkingPlots();
 		}
 
 		if (isCitySelected())
