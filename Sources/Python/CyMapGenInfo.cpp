@@ -4,6 +4,7 @@
 #include "Infos/CvFeatureInfo.h"
 #include "Infos/CvTerrainInfo.h"
 #include "Infos/CvSeaLevelInfo.h"
+#include "Infos/CvBonusClassInfo.h"
 #include "Defines/CvGlobals.h"
 
 namespace
@@ -105,6 +106,94 @@ int CyBonusInfo::getConstAppearance(int iBonus) const
 	return pBonus ? pBonus->getConstAppearance() : 0;
 }
 
+//	The unanswerable-read neutrals below are the INFO'S OWN CONSTRUCTED DEFAULTS, not invented ones: a bonus
+//	that authors nothing and an id that resolves to nothing then answer alike, so a caller cannot tell them
+//	apart and act on the difference.
+int CyBonusInfo::getMinAreaSize(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->getMinAreaSize() : 0;
+}
+
+int CyBonusInfo::getMinLatitude(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->getMinLatitude() : 0;
+}
+
+int CyBonusInfo::getMaxLatitude(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	//	90 is the whole-globe default -- an absent bound must not narrow placement to the equator.
+	return pBonus ? pBonus->getMaxLatitude() : 90;
+}
+
+int CyBonusInfo::getMinLandPercent(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->getMinLandPercent() : 0;
+}
+
+int CyBonusInfo::getGroupRange(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->getGroupRange() : 0;
+}
+
+int CyBonusInfo::getGroupRand(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->getGroupRand() : 0;
+}
+
+bool CyBonusInfo::isHills(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->isHills() : false;
+}
+
+bool CyBonusInfo::isPeaks(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->isPeaks() : false;
+}
+
+bool CyBonusInfo::isFlatlands(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->isFlatlands() : false;
+}
+
+bool CyBonusInfo::isBonusCoastalOnly(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->isBonusCoastalOnly() : false;
+}
+
+bool CyBonusInfo::isNoRiverSide(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->isNoRiverSide() : false;
+}
+
+bool CyBonusInfo::isNormalize(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->isNormalize() : false;
+}
+
+int CyBonusInfo::getBonusClassType(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->getBonusClassType() : -1;
+}
+
+int CyBonusInfo::getTechReveal(int iBonus) const
+{
+	const CvBonusInfo* pBonus = cyg_bonus(iBonus);
+	return pBonus ? pBonus->getTechReveal() : NO_TECH;
+}
+
 int CyFeatureInfo::getAppearanceProbability(int iFeature) const
 {
 	const CvFeatureInfo* pFeature = cyg_feature(iFeature);
@@ -119,10 +208,28 @@ int CyFeatureInfo::getNumVarieties(int iFeature) const
 	return pFeature ? pFeature->getNumVarieties() : 1;
 }
 
+bool CyFeatureInfo::isRequiresFlatlands(int iFeature) const
+{
+	const CvFeatureInfo* pFeature = cyg_feature(iFeature);
+	return pFeature ? pFeature->isRequiresFlatlands() : false;
+}
+
 bool CyTerrainInfo::isWaterTerrain(int iTerrain) const
 {
 	const CvTerrainInfo* pTerrain = cyg_terrain(iTerrain);
 	return pTerrain ? pTerrain->isWaterTerrain() : false;
+}
+
+bool CyTerrainInfo::isFound(int iTerrain) const
+{
+	const CvTerrainInfo* pTerrain = cyg_terrain(iTerrain);
+	return pTerrain ? pTerrain->isFound() : false;
+}
+
+int CyBonusClassInfo::getUniqueRange(int iBonusClass) const
+{
+	if (iBonusClass < 0 || iBonusClass >= GC.getNumBonusClassInfos()) return 0;
+	return GC.getBonusClassInfo((BonusClassTypes)iBonusClass).getUniqueRange();
 }
 
 int CySeaLevelInfo::getSeaLevelChange(int iSeaLevel) const
@@ -146,6 +253,20 @@ void CyBonusInfo::pythonPublish()
 		.def("getRandAppearance",         &CyBonusInfo::getRandAppearance)
 		.def("getNumRandAppearanceBands", &CyBonusInfo::getNumRandAppearanceBands)
 		.def("getConstAppearance",        &CyBonusInfo::getConstAppearance)
+		.def("getMinAreaSize",            &CyBonusInfo::getMinAreaSize)
+		.def("getMinLatitude",            &CyBonusInfo::getMinLatitude)
+		.def("getMaxLatitude",            &CyBonusInfo::getMaxLatitude)
+		.def("getMinLandPercent",         &CyBonusInfo::getMinLandPercent)
+		.def("getGroupRange",             &CyBonusInfo::getGroupRange)
+		.def("getGroupRand",              &CyBonusInfo::getGroupRand)
+		.def("isHills",                   &CyBonusInfo::isHills)
+		.def("isPeaks",                   &CyBonusInfo::isPeaks)
+		.def("isFlatlands",               &CyBonusInfo::isFlatlands)
+		.def("isBonusCoastalOnly",        &CyBonusInfo::isBonusCoastalOnly)
+		.def("isNoRiverSide",             &CyBonusInfo::isNoRiverSide)
+		.def("isNormalize",               &CyBonusInfo::isNormalize)
+		.def("getBonusClassType",         &CyBonusInfo::getBonusClassType)
+		.def("getTechReveal",             &CyBonusInfo::getTechReveal)
 		;
 }
 
@@ -154,6 +275,7 @@ void CyFeatureInfo::pythonPublish()
 	python::class_<CyFeatureInfo>("CyFeatureInfo")
 		.def("getAppearanceProbability", &CyFeatureInfo::getAppearanceProbability)
 		.def("getNumVarieties",          &CyFeatureInfo::getNumVarieties)
+		.def("isRequiresFlatlands",      &CyFeatureInfo::isRequiresFlatlands)
 		;
 }
 
@@ -161,6 +283,14 @@ void CyTerrainInfo::pythonPublish()
 {
 	python::class_<CyTerrainInfo>("CyTerrainInfo")
 		.def("isWaterTerrain", &CyTerrainInfo::isWaterTerrain)
+		.def("isFound",        &CyTerrainInfo::isFound)
+		;
+}
+
+void CyBonusClassInfo::pythonPublish()
+{
+	python::class_<CyBonusClassInfo>("CyBonusClassInfo")
+		.def("getUniqueRange", &CyBonusClassInfo::getUniqueRange)
 		;
 }
 

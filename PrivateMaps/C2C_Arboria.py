@@ -11,6 +11,13 @@ from CvPythonExtensions import *
 import CvMapGeneratorUtil
 from CvMapGeneratorUtil import HintedWorld
 
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+FEATURE = CyFeatureInfo()
+INFO = CyInfo()
+WORLD = CyWorldInfo()
+
 def getDescription():
 	return "TXT_KEY_MAP_SCRIPT_ARBORIA_DESCR"
 
@@ -145,7 +152,7 @@ class ArboriaFeatureGenerator(CvMapGeneratorUtil.FeatureGenerator):
 		self.iGridW = self.map.getGridWidth()
 		self.iGridH = self.map.getGridHeight()
 
-		self.forest_grain = forest_grain + GC.getWorldInfo(self.map.getWorldSize()).getFeatureGrainChange()
+		self.forest_grain = forest_grain + WORLD.getFeatureGrainChange(self.map.getWorldSize())
 
 		self.fracXExp = fracXExp
 		self.fracYExp = fracYExp
@@ -176,10 +183,10 @@ class ArboriaFeatureGenerator(CvMapGeneratorUtil.FeatureGenerator):
 		pPlot = self.map.sPlot(iX, iY)
 
 		for iI in range(GC.getNumFeatureInfos()):
-#			print GC.getFeatureInfo(iI).getDescription()
+#			print INFO.getDescription("FEATURE_", iI)
 			if pPlot.canHaveFeature(iI):
-#				print "Can have feature with probability: %d" % GC.getFeatureInfo(iI).getAppearanceProbability()
-				if self.mapRand.get(10000, "Add Feature PYTHON") < GC.getFeatureInfo(iI).getAppearanceProbability():
+#				print "Can have feature with probability: %d" % FEATURE.getAppearanceProbability(iI)
+				if self.mapRand.get(10000, "Add Feature PYTHON") < FEATURE.getAppearanceProbability(iI):
 #					print "Setting feature"
 					pPlot.setFeatureType(iI, -1)
 
@@ -240,7 +247,7 @@ def addBonusType(argsList):
 	[iBonusType] = argsList
 	GC = CyGlobalContext()
 	map = CyMap()
-	type_string = GC.getBonusInfo(iBonusType).getType()
+	type_string = INFO.getType("BONUS_", iBonusType)
 
 	if not (type_string in forest):
 		print('Default', type_string, 'Default')

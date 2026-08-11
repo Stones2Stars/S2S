@@ -37,6 +37,18 @@ int CyWorldInfo::getOceanMinAreaSize(int iWorldSize) const
 	return pWorld ? pWorld->getOceanMinAreaSize() : 0;
 }
 
+int CyWorldInfo::getGridWidth(int iWorldSize) const
+{
+	const CvWorldInfo* pWorld = cyw_world(iWorldSize);
+	return pWorld ? pWorld->getGridWidth() : 0;
+}
+
+int CyWorldInfo::getGridHeight(int iWorldSize) const
+{
+	const CvWorldInfo* pWorld = cyw_world(iWorldSize);
+	return pWorld ? pWorld->getGridHeight() : 0;
+}
+
 int CyWorldInfo::getTerrainGrainChange(int iWorldSize) const
 {
 	const CvWorldInfo* pWorld = cyw_world(iWorldSize);
@@ -63,6 +75,8 @@ void CyWorldInfo::pythonPublish()
 		.def("getDefaultPlayers",                &CyWorldInfo::getDefaultPlayers)
 		.def("getTargetNumCities",               &CyWorldInfo::getTargetNumCities)
 		.def("getOceanMinAreaSize",              &CyWorldInfo::getOceanMinAreaSize)
+		.def("getGridWidth",                     &CyWorldInfo::getGridWidth)
+		.def("getGridHeight",                    &CyWorldInfo::getGridHeight)
 		.def("getTerrainGrainChange",            &CyWorldInfo::getTerrainGrainChange)
 		.def("getFeatureGrainChange",            &CyWorldInfo::getFeatureGrainChange)
 		.def("getCorporationMaintenancePercent", &CyWorldInfo::getCorporationMaintenancePercent)

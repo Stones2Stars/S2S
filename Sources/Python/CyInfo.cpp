@@ -594,6 +594,10 @@ bool CyInfo::providesNukeImmunity(int iBuildingId) const
 {
 	return providesAmenity("BUILDING_", iBuildingId, CLS_AMENITY_NUKE_IMMUNE);
 }
+bool CyInfo::isUnfoundable(int iFeatureId) const
+{
+	return hasCharacteristic("FEATURE_", iFeatureId, CLS_CHARACTERISTIC_UNFOUNDABLE);
+}
 bool CyInfo::providesCapitalStatus(int iBuildingId) const
 {
 	return providesAmenity("BUILDING_", iBuildingId, CLS_AMENITY_CAPITAL);
@@ -1516,6 +1520,7 @@ void CyInfo::pythonPublish()
 		.def("isAutoBuild",         &CyInfo::isAutoBuild)
 		.def("providesNukeImmunity",  &CyInfo::providesNukeImmunity)
 		.def("providesCapitalStatus", &CyInfo::providesCapitalStatus)
+		.def("isUnfoundable",         &CyInfo::isUnfoundable)
 		.def("getHandicapCivicUpkeepPercent", &CyInfo::getHandicapCivicUpkeepPercent)
 		.def("canTradeItem",   &CyInfo::canTradeItem)
 		.def("getDiplomacyNumResponses",        &CyInfo::getDiplomacyNumResponses)

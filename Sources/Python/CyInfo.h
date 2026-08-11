@@ -457,6 +457,10 @@ public:
 	bool providesNukeImmunity(int iBuildingId) const;
 	// Does this building confer CAPITAL status on its city (the `capital` AMENITY -- the palace)?
 	bool providesCapitalStatus(int iBuildingId) const;
+	// Does this FEATURE bar a city from being founded on its plot (the `unfoundable` CHARACTERISTIC)?
+	// ⚑ FEATURE-scoped because that is what the data authors: the key is a plot-substrate characteristic whose
+	// four carriers ([json.md] §8) could all hold it, and only features do. It widens by prefix if one ever does.
+	bool isUnfoundable(int iFeatureId) const;
 	// A HANDICAP's civic-upkeep percentage (`upkeep.empire.civic.percent`) -- the difficulty scaler the combat
 	// theft handlers weigh a winner's difficulty against a loser's by.
 	// ⚑ NAMED rather than slotted for the same reason as isWorldUnit above, and because the value belongs to ONE

@@ -134,6 +134,7 @@ DllExport void DLLPublishToPython()
 	CyFeatureInfo::pythonPublish();
 	CyTerrainInfo::pythonPublish();
 	CySeaLevelInfo::pythonPublish();
+	CyBonusClassInfo::pythonPublish();
 	CyImprovementInfo::pythonPublish();
 	CyUnitInfo::pythonPublish();
 	CyBuildInfo::pythonPublish();

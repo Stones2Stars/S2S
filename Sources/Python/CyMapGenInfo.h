@@ -33,6 +33,25 @@ public:
 	bool isFeature(int iBonus, int iFeature) const;
 	bool isFeatureTerrain(int iBonus, int iTerrain) const;
 
+	//	Placement GEOMETRY -- where the generator may put it, and how it clusters once it does.
+	int  getMinAreaSize(int iBonus) const;      // the landmass floor a placement needs
+	int  getMinLatitude(int iBonus) const;
+	int  getMaxLatitude(int iBonus) const;
+	int  getMinLandPercent(int iBonus) const;   // the share of instances that must sit on land
+	int  getGroupRange(int iBonus) const;       // the cluster radius around a placed instance
+	int  getGroupRand(int iBonus) const;        // the cluster roll CEILING -- the roll is the caller's
+
+	//	Relief and adjacency placement predicates -- what ground the bonus accepts.
+	bool isHills(int iBonus) const;
+	bool isPeaks(int iBonus) const;
+	bool isFlatlands(int iBonus) const;
+	bool isBonusCoastalOnly(int iBonus) const;
+	bool isNoRiverSide(int iBonus) const;
+	bool isNormalize(int iBonus) const;         // the starting-position normalizer may add this one
+
+	int  getBonusClassType(int iBonus) const;   // BONUSCLASS_ FK -- the shared min-spacing group
+	int  getTechReveal(int iBonus) const;       // TECH_ FK -- the tech that reveals it on the map
+
 	//	⚠ THE BANDS ARE FOUR DICE THAT ARE SUMMED, NEVER ALTERNATIVES TO PICK BETWEEN: the appearance count is
 	//	`getConstAppearance` plus ONE DRAW PER BAND, which is exactly what the legacy single-value getter
 	//	returned. This getter serves the band's roll CEILING; the DRAW is the caller's.
@@ -53,6 +72,7 @@ public:
 
 	int getAppearanceProbability(int iFeature) const;  // -1 = the generator never adds it
 	int getNumVarieties(int iFeature) const;           // how many art variants a placed feature picks from
+	bool isRequiresFlatlands(int iFeature) const;      // the feature may only sit on flat ground
 
 	static void pythonPublish();
 };
@@ -63,6 +83,18 @@ public:
 	CyTerrainInfo() {}
 
 	bool isWaterTerrain(int iTerrain) const;
+	bool isFound(int iTerrain) const;                  // a city may be founded on this terrain
+
+	static void pythonPublish();
+};
+
+//	The bonus GROUPING -- what several resources share for placement purposes.
+class CyBonusClassInfo
+{
+public:
+	CyBonusClassInfo() {}
+
+	int getUniqueRange(int iBonusClass) const;         // min spacing between bonuses of the same class
 
 	static void pythonPublish();
 };

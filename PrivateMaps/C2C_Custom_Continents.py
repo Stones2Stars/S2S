@@ -10,6 +10,11 @@
 from CvPythonExtensions import *
 import CvMapGeneratorUtil as MGU
 
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+INFO = CyInfo()
+
 balancer = MGU.BonusBalancer()
 
 def getDescription():
@@ -99,7 +104,7 @@ def normalizeAddExtras():
 
 def addBonusType(argsList):
 	[iBonusType] = argsList
-	type_string = CyGlobalContext().getBonusInfo(iBonusType).getType()
+	type_string = INFO.getType("BONUS_", iBonusType)
 
 	if CyMap().getCustomMapOption(2) == 1 and type_string in balancer.resourcesToBalance:
 		return None # don't place any of this bonus randomly

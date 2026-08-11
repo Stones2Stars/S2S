@@ -19,7 +19,15 @@ import re
 import sys
 
 
-ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Assets", "Python")
+_REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+#	Every tree of SHIPPED Python the embedded 2.4 interpreter imports. The map scripts are the second one and
+#	are easy to forget: they live outside Assets/, so a scan rooted there reports "clean" while leaving the
+#	whole map-generation surface unchecked -- and a 2.5+ line there is a SyntaxError at map-generation time.
+ROOTS = [
+	os.path.join(_REPO, "Assets", "Python"),
+	os.path.join(_REPO, "PrivateMaps"),
+	os.path.join(_REPO, "PublicMaps"),
+]
 
 # Each rule: (name, compiled pattern, the version that introduced it, what to write instead).
 RULES = [
@@ -71,10 +79,17 @@ def strip_noise(line):
 	return "".join(out)
 
 
+def walk_roots():
+	"""Every shipped-Python root, walked as one sequence so the scan body stays root-agnostic."""
+	for scan_root in ROOTS:
+		for entry in os.walk(scan_root):
+			yield entry
+
+
 def main():
 	hits = []
 	scanned = 0
-	for root, dirs, files in os.walk(ASSETS):
+	for root, dirs, files in walk_roots():
 		for name in sorted(files):
 			if not name.endswith(".py"):
 				continue
@@ -94,10 +109,10 @@ def main():
 					continue
 				for label, pattern, version, remedy in RULES:
 					if pattern.search(code):
-						rel = os.path.relpath(path, ASSETS)
+						rel = os.path.relpath(path, _REPO)
 						hits.append((rel, number, label, version, remedy, raw.strip()))
 
-	print("scanned %d Python files under Assets/Python" % scanned)
+	print("scanned %d Python files under %s" % (scanned, ", ".join(os.path.basename(r.rstrip(os.sep)) for r in ROOTS)))
 	if not hits:
 		print("clean -- no post-2.4 syntax found")
 		return 0

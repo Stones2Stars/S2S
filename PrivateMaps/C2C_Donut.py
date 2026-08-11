@@ -11,6 +11,12 @@ from CvPythonExtensions import *
 import CvMapGeneratorUtil as MGU
 from math import sqrt
 
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+CLIMATE = CyClimateInfo()
+INFO = CyInfo()
+
 def getDescription():
 	return "TXT_KEY_MAP_SCRIPT_DONUT_DESCR"
 
@@ -104,7 +110,7 @@ def normalizeAddExtras():
 def addBonusType(argsList):
 	[iBonusType] = argsList
 
-	if CyMap().getCustomMapOption(3) == 1 and CyGlobalContext().getBonusInfo(iBonusType).getType() in MGU.BonusBalancer().resourcesToBalance:
+	if CyMap().getCustomMapOption(3) == 1 and INFO.getType("BONUS_", iBonusType) in MGU.BonusBalancer().resourcesToBalance:
 		return None # don't place any of this bonus randomly
 
 	CyPythonMgr().allowDefaultImpl() # pretend we didn't implement this method, and let C handle this bonus in the default way
@@ -260,7 +266,7 @@ class DonutFeatureGenerator(MGU.FeatureGenerator):
 		else: #Normal Jungles
 			if pPlot.canHaveFeature(self.featureJungle):
 				iJungleHeight = self.jungles.getHeight(iX, iY)
-				if self.iJungleTop >= iJungleHeight >= self.iJungleBottom + (self.iJungleTop - self.iJungleBottom)*self.GC.getClimateInfo(self.map.getClimate()).getJungleLatitude()*lat:
+				if self.iJungleTop >= iJungleHeight >= self.iJungleBottom + (self.iJungleTop - self.iJungleBottom)*CLIMATE.getJungleLatitude(self.map.getClimate())*lat:
 					pPlot.setFeatureType(self.featureJungle, -1)
 
 def addFeatures():

@@ -112,6 +112,13 @@ import CvMapGeneratorUtil
 import math
 import sys
 import gc
+
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+BONUS = CyBonusInfo()
+FEATURE = CyFeatureInfo()
+WORLD = CyWorldInfo()
 try:
 	import cPickle as pickle
 except:
@@ -479,8 +486,7 @@ def getGridSize(argsList):
 	worldTypes = []
 	chosenWorldType = -1
 	for i in range(cgc.getNumWorldInfos()):
-		worldInfo = cgc.getWorldInfo(i)
-		worldTypes.append(worldInfo)
+		worldTypes.append(i)
 
 	map = cgc.getMap()
 	worldSize = map.getWorldSize()
@@ -494,9 +500,9 @@ def getGridSize(argsList):
 		rasta = False
 		for index, worldType in enumerate(worldTypes):
 			#print "World Type", worldType.getType()
-			if cgc.getInfoTypeForString(worldType.getType()) == worldSize:
-				iW = worldType.getGridWidth() * 4
-				iH = worldType.getGridHeight() * 4
+			if cgc.getInfoTypeForString(INFO.getType("WORLD_", worldType)) == worldSize:
+				iW = WORLD.getGridWidth(worldType) * 4
+				iH = WORLD.getGridHeight(worldType) * 4
 				rasta = True
 				chosenWorldType = index
 				break
@@ -2440,11 +2446,11 @@ def getContinentDistribution():
 	map = cgc.getMap()
 
 	if chosenWorldType == -1:
-		worldInfo = worldTypes[0]
+		iWorldTypeId = worldTypes[0]
 	else:
-		worldInfo = worldTypes[chosenWorldType]
+		iWorldTypeId = worldTypes[chosenWorldType]
 
-	mapArea = worldInfo.getGridHeight() * worldInfo.getGridWidth() * 16
+	mapArea = WORLD.getGridHeight(iWorldTypeId) * WORLD.getGridWidth(iWorldTypeId) * 16
 
 	if distributionOption == "smart-random":
 		if mapArea <= 40 * 24: #duel
@@ -3170,8 +3176,8 @@ def addFeatures():
 				#randomFeat[10000] = featNone
 				for iI in range(cgc.getNumFeatureInfos()):
 					if plot.canHaveFeature(iI):
-						#randomFeat[cgc.getFeatureInfo(iI).getAppearanceProbability()] = iI
-						if dice.get(10000, "Add Feature PYTHON") < cgc.getFeatureInfo(iI).getAppearanceProbability():
+						#randomFeat[FEATURE.getAppearanceProbability(iI)] = iI
+						if dice.get(10000, "Add Feature PYTHON") < FEATURE.getAppearanceProbability(iI):
 							plot.setFeatureType(iI, -1)
 				#plot.setFeatureType(randomTerrain.randomItem(dice),-1)
 
@@ -3616,23 +3622,23 @@ def normalizeAddExtras():
 		bonusTypesLand = []
 		for index in range(len(bonusTypes)):
 			bonusInt = bonusTypes._data[index][0]
-			bonusInfo = bonusTypes._data[index][1][1]
+			iBonusId = bonusTypes._data[index][1][1]
 			bWater = False
 			for terrain in terrainWater:
-				if bonusInfo.isTerrain(terrain):
+				if BONUS.isTerrain(iBonusId, terrain):
 					bWater = True
 					break
 			if bWater:
-				bonusTypesOcean.append([bonusInt,bonusInfo])
+				bonusTypesOcean.append([bonusInt,iBonusId])
 			bLand = False
 			for terrain in terrainLand:
-				if bonusInfo.isTerrain(terrain):
+				if BONUS.isTerrain(iBonusId, terrain):
 					bLand = True
 					break
 			if bLand:
-				bonusTypesLand.append([bonusInt,bonusInfo])
-		bonusTypesOcean.sort(lambda x, y: cmp(x[1].getPlacementOrder(), y[1].getPlacementOrder()))
-		bonusTypesLand.sort(lambda x, y: cmp(x[1].getPlacementOrder(), y[1].getPlacementOrder()))
+				bonusTypesLand.append([bonusInt,iBonusId])
+		bonusTypesOcean.sort(lambda x, y: cmp(BONUS.getPlacementOrder(x[1]), BONUS.getPlacementOrder(y[1])))
+		bonusTypesLand.sort(lambda x, y: cmp(BONUS.getPlacementOrder(x[1]), BONUS.getPlacementOrder(y[1])))
 		print "bonusTypesOcean:",bonusTypesOcean
 		print "bonusTypesLand:",bonusTypesLand
 
@@ -3667,13 +3673,12 @@ def normalizeAddExtras():
 			print "WARNING: size limit exceeded!"
 
 		for index in range(cgc.getNumBonusInfos()):
-			bonusInfo = cgc.getBonusInfo(index)
 
 		featIce = cgc.getInfoTypeForString("FEATURE_ICE")
 		featOasis = cgc.getInfoTypeForString("FEATURE_OASIS")
 
 		for item in bonusTypesLand:
-			bonusInt, bonusInfo = item
+			bonusInt, iBonusId = item
 			usedTiles = bArray()
 			playerResCount = []
 			for index in range(len(bonusBuilders)):
@@ -3701,15 +3706,14 @@ def normalizeAddExtras():
 					plot.setBonusType(bonusTypes._data[index+5][0])
 
 def cmpByPlacementOrder(x, y):
-	return x[1].getPlacementOrder() - y[0].getPlacementOrder()
+	return BONUS.getPlacementOrder(x[1]) - BONUS.getPlacementOrder(y[1])
 
 def enumeratePlaceableBonusTypes():
 	cgc = CyGlobalContext()
 	arr = bArray()
 	for i in range(cgc.getNumBonusInfos()):
-		bonusInfo = cgc.getBonusInfo(i)
-		if bonusInfo.getTilesPer() > 0 or bonusInfo.getPercentPerPlayer() > 0:
-			arr[i] = [i, bonusInfo]
+		if BONUS.getTilesPer(i) > 0 or BONUS.getPercentPerPlayer(i) > 0:
+			arr[i] = [i, i]
 	return arr
 
 #----------------------------------------------
@@ -3773,9 +3777,8 @@ def getClosestMapSizeName(width, height):
 	cgc = CyGlobalContext()
 	area = width * height / 16
 	for i in range(cgc.getNumWorldInfos()):
-		worldInfo = cgc.getWorldInfo(i)
-		if worldInfo.getGridHeight() * worldInfo.getGridWidth() == area:
-			return " (" + worldInfo.getText() + ")"
+		if WORLD.getGridHeight(i) * WORLD.getGridWidth(i) == area:
+			return " (" + WORLD.getText(i) + ")"
 	return ""
 
 def getCustomMapOptionDescAt(argsList):

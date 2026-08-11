@@ -720,6 +720,23 @@
   starting units and gold, `freePopulation`, `FreeStartEra`
   ([legacy-grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §5): none is exercisable on the
   standing save, so none can be observed until a new game is started.
+  ⛔ **The MAP SCRIPTS (`PrivateMaps/`) are part of that path and are easy to miss — they sit OUTSIDE `Assets/`,**
+  so a sweep rooted there reports clean while every selectable map type is still dead. They read the same named
+  accessors as everything else.
+
+- ⛔ **THE KEYED + CONDITIONED READ IS UNSERVED, AND THREE MAP SCRIPTS DANGLE ON IT.** A keyed deposit serves its
+  UNCONDITIONED entries only; the conditioned tail belongs to the `expected*` valuation
+  ([modifier.md §5](../../specs/modifier.md)), and no keyed twin of it exists. Two reads have no bare successor:
+  an improvement's BONUS-conditioned yield, and a feature's HAS_RIVER-conditioned yield — both plain members
+  once, both now conditioned entries.
+  ⚠ The PerfectWorld-lineage starting-position normalizers (`C2C_PerfectMongoose_v310` · `C2C_PerfectWorld2f` ·
+  `C2C_Totestra`) each keep ONE dead handle for exactly this, commented at the site. ⛔ Do NOT close them by
+  summing the conditioned tail: that applies every tech- and age-gated deposit from turn 0, plausibly and
+  silently ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking) — a visible break
+  beats a wrong number).
+  ⚑ Those same three scripts also call `isRequiresFlatlands()` on a BONUS, which no `CvBonusInfo` has ever
+  carried (it is a FEATURE member) — a PRE-EXISTING crash, not a migration casualty. Which bonus predicate was
+  meant is a data question, so it is left standing rather than given an invented meaning.
 
 > Contract: [patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md). Read maps:
 > [pedia-read-map.md](../../reference/pedia-read-map.md) · [python-read-map.md](../../reference/python-read-map.md).

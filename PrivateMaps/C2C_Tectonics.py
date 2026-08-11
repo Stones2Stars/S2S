@@ -91,6 +91,11 @@ import CvMapGeneratorUtil as MGU
 ##################################################################################
 import MapScriptToolsOld as mst
 
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+FEATURE = CyFeatureInfo()
+
 # The following two functions are not exactly neccessary, but they should be
 # in all map-scripts. Just comment them out if they are already in the script.
 # ----------------------------------------------------------------------------
@@ -2137,7 +2142,7 @@ def addFloodPlains(plot):
 		if (plot.getFeatureType() == FeatureTypes.NO_FEATURE):
 			for iI in range(gc.getNumFeatureInfos()):
 				if plot.canHaveFeature(iI):
-					if 10000 == gc.getFeatureInfo(iI).getAppearanceProbability():
+					if 10000 == FEATURE.getAppearanceProbability(iI):
 						plot.setFeatureType(iI, -1)
 
 def normalizeRemovePeaks():

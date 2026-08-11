@@ -36,6 +36,9 @@ public:
 	int getTargetNumCities(int iWorldSize) const;
 	// Map-generation shaping: the smallest water body that counts as ocean, and the terrain/feature grain deltas.
 	int getOceanMinAreaSize(int iWorldSize) const;
+	//	The world size's map DIMENSIONS -- the grid a map script lays its plots out on.
+	int getGridWidth(int iWorldSize) const;
+	int getGridHeight(int iWorldSize) const;
 	int getTerrainGrainChange(int iWorldSize) const;
 	int getFeatureGrainChange(int iWorldSize) const;
 	// Corporate maintenance scales with map size ([economy.md] -- a per-size CONFIG percent, HUMAN, never x100).

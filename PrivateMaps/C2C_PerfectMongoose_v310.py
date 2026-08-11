@@ -213,6 +213,15 @@ import BugUtil
 from array	import array
 from random import random, randint, seed
 import math
+
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+BONUS = CyBonusInfo()
+BONUSCLASS = CyBonusClassInfo()
+FEATURE = CyFeatureInfo()
+INFO = CyInfo()
+SEALEVEL = CySeaLevelInfo()
 #import profile
 
 
@@ -1495,7 +1504,7 @@ class ElevationMap(FloatMap):
 		if not mc.AllowPangeas:
 			land *= mc.MeteorCompensationFactor
 		gc = CyGlobalContext()
-		sea = gc.getSeaLevelInfo(gc.getMap().getSeaLevel()).getSeaLevelChange()
+		sea = SEALEVEL.getSeaLevelChange(gc.getMap().getSeaLevel())
 		if sea > 0:
 			land /= (1 + mc.SeaLevelFactor)
 		elif sea == -7:
@@ -2439,7 +2448,7 @@ def GenerateMountainMap(width, height, wrapX, wrapY, initFreq):
 	if not mc.AllowPangeas:
 		land *= mc.MeteorCompensationFactor
 	gc = CyGlobalContext()
-	sea = gc.getSeaLevelInfo(gc.getMap().getSeaLevel()).getSeaLevelChange()
+	sea = SEALEVEL.getSeaLevelChange(gc.getMap().getSeaLevel())
 	if sea > 0:
 		land /= (1 + mc.SeaLevelFactor)
 	elif sea == -7:
@@ -3394,8 +3403,7 @@ class BonusPlacer:
 
 		orderSet = {}
 		for i in range(numBonuses):  #Check which placement orders are used, discard -1
-			bonusInfo = gc.getBonusInfo(self.bonusList[i].eBonus)
-			porder = bonusInfo.getPlacementOrder()
+			porder = BONUS.getPlacementOrder(self.bonusList[i].eBonus)
 			if porder >= 0:
 				orderSet[porder] = 1
 
@@ -3407,8 +3415,7 @@ class BonusPlacer:
 		for order in porderList:
 			placementList = []
 			for i in range(numBonuses):
-				bonusInfo = gc.getBonusInfo(self.bonusList[i].eBonus)
-				if bonusInfo.getPlacementOrder() == order:
+				if BONUS.getPlacementOrder(self.bonusList[i].eBonus) == order:
 					for n in range(self.bonusList[i].desiredBonusCount):
 						placementList.append(self.bonusList[i].eBonus)
 			#Create a list of map indices and shuffle them
@@ -3431,17 +3438,15 @@ class BonusPlacer:
 		#now report resources that simply could not be placed
 		for i in range(numBonuses):
 			bonus = self.bonusList[i]
-			bonusInfo = gc.getBonusInfo(bonus.eBonus)
 			if bonus.currentBonusCount == 0 and bonus.desiredBonusCount > 0:
-				print "No room at all found for %(bt)s!!!" % {"bt":bonusInfo.getType()}
-			print "Placed %(cb)d, desired %(db)d for %(bt)s" % {"cb":bonus.currentBonusCount, "db":bonus.desiredBonusCount, "bt":bonusInfo.getType()}
+				print "No room at all found for %(bt)s!!!" % {"bt":INFO.getType("BONUS_", bonus.eBonus)}
+			print "Placed %(cb)d, desired %(db)d for %(bt)s" % {"cb":bonus.currentBonusCount, "db":bonus.desiredBonusCount, "bt":INFO.getType("BONUS_", bonus.eBonus)}
 
 # AIAndy: Changed to start at the end of the last run in the plot list and not shuffle an extra plot list
 	def AddEmergencyBonus(self,bonus,ignoreClass, plotIndexList, startAtIndex):
 		gc = CyGlobalContext()
 		gameMap = gc.getMap()
 		featureForest = gc.getInfoTypeForString("FEATURE_FOREST")
-		bonusInfo = gc.getBonusInfo(bonus.eBonus)
 		plotListLength = len(plotIndexList)
 		lastI = 0
 		for i in range(startAtIndex, startAtIndex + plotListLength):
@@ -3466,9 +3471,9 @@ class BonusPlacer:
 				bonus.currentBonusCount += 1
 				#restore the feature if possible
 				if featureEnum == featureForest:
-					if bonusInfo == None or bonusInfo.isFeature(featureEnum):
+					if bonus.eBonus == -1 or BONUS.isFeature(bonus.eBonus, featureEnum):
 						plot.setFeatureType(featureEnum,featureVariety)
-				print "Emergency placement of 1 %(bt)s" % {"bt":bonusInfo.getType()}
+				print "Emergency placement of 1 %(bt)s" % {"bt":INFO.getType("BONUS_", bonus.eBonus)}
 				break
 		lastI = (lastI + 1) % plotListLength
 		return lastI
@@ -3480,7 +3485,6 @@ class BonusPlacer:
 		featureForest = gc.getInfoTypeForString("FEATURE_FOREST")
 		#first get bonus/area link
 		bonus = self.bonusList[self.bonusDict[eBonus]]
-		bonusInfo = gc.getBonusInfo(eBonus)
 		if bonus.currentBonusCount >= bonus.desiredBonusCount:
 			return False
 		bonusPlaced = False
@@ -3509,9 +3513,9 @@ class BonusPlacer:
 				bonus.currentBonusCount += 1
 				#restore the feature if possible
 				if featureEnum == featureForest:
-					if bonusInfo == None or bonusInfo.isFeature(featureEnum):
+					if eBonus == -1 or BONUS.isFeature(eBonus, featureEnum):
 						plot.setFeatureType(featureEnum, featureVariety)
-				groupRange = bonusInfo.getGroupRange()
+				groupRange = BONUS.getGroupRange(eBonus)
 				#NEW CODE - Fuyu/LM
 				#added/maxAdd: avoid grouping ALL the resources of a type together.
 				#it's annoying to find 6 wines together and nowhere else on the map.
@@ -3533,7 +3537,7 @@ class BonusPlacer:
 								if loopPlot.getX() == -1:
 									raise ValueError, "plotXY returns invalid plots plot= %(x)d, %(y)d" % {"x":x, "y":y}
 								if self.CanPlaceBonusAt(loopPlot,eBonus,False,False):
-									if PRand.randint(0, 99) < bonusInfo.getGroupRand():
+									if PRand.randint(0, 99) < BONUS.getGroupRand(eBonus):
 										#temporarily remove any feature
 										featureEnum = loopPlot.getFeatureType()
 										if featureEnum == featureForest:
@@ -3544,7 +3548,7 @@ class BonusPlacer:
 										bonus.currentBonusCount += 1
 										#restore the feature if possible
 										if featureEnum == featureForest:
-											if bonusInfo == None or bonusInfo.isFeature(featureEnum):
+											if eBonus == -1 or BONUS.isFeature(eBonus, featureEnum):
 												loopPlot.setFeatureType(featureEnum, featureVariety)
 										#NEW CODE - Fuyu
 										added += 1
@@ -3581,10 +3585,9 @@ class BonusPlacer:
 			bonus = BonusArea()
 			bonus.eBonus = i
 			self.bonusList.append(bonus)
-			bonusInfo = gc.getBonusInfo(i)
-			if bonusInfo.isOneArea() == True:
+			if BONUS.isOneArea(i) == True:
 				numUniqueBonuses += 1
-				minAreaSize = bonusInfo.getMinAreaSize()
+				minAreaSize = BONUS.getMinAreaSize(i)
 				if (minLandAreaSize == -1 or minLandAreaSize > minAreaSize) and minAreaSize > 0:
 					minLandAreaSize = minAreaSize
 
@@ -3595,8 +3598,7 @@ class BonusPlacer:
 			eBonus = self.bonusList[i].eBonus
 			self.bonusDict[eBonus] = i
 			self.bonusList[i].desiredBonusCount = self.CalculateNumBonusesToAdd(eBonus)
-			bonusInfo = gc.getBonusInfo(eBonus)
-			if bonusInfo.isOneArea() == False:
+			if BONUS.isOneArea(eBonus) == False:
 				continue #Only assign areas to area bonuses
 			areaSuitabilityList = list()
 			for area in self.areas:
@@ -3630,17 +3632,12 @@ class BonusPlacer:
 		#	loopPlot = plotDirection(x,y,DirectionTypes(i))
 		#	if loopPlot.getBonusType(TeamTypes.NO_TEAM) != BonusTypes.NO_BONUS and loopPlot.getBonusType(TeamTypes.NO_TEAM) != eBonus:
 		#		 return False
-		bonusInfo = gc.getBonusInfo(eBonus)
-		classInfo = gc.getBonusClassInfo(bonusInfo.getBonusClassType())
 		if plot.isWater():
-			if gameMap.getNumBonusesOnLand(eBonus) * 100 / (gameMap.getNumBonuses(eBonus) + 1) < bonusInfo.getMinLandPercent():
+			if gameMap.getNumBonusesOnLand(eBonus) * 100 / (gameMap.getNumBonuses(eBonus) + 1) < BONUS.getMinLandPercent(eBonus):
 				return False
 		#Make sure there are no bonuses of the same class (but a different type) nearby:
-		if classInfo != None:
-			try:
-				iRange = classInfo.getUniqueRange()
-			except:
-				iRange = classInfo.getUniqueRange #<--attribute for vanilla
+		if BONUS.getBonusClassType(eBonus) != -1:
+			iRange = BONUSCLASS.getUniqueRange(BONUS.getBonusClassType(eBonus))
 			iRange = max(0, int(iRange - (round(mc.BonusBonus) - 1)))
 			for dx in range(-iRange,iRange + 1):
 				for dy in range(-iRange,iRange + 1):
@@ -3650,10 +3647,10 @@ class BonusPlacer:
 							if plotDistance(x, y, loopPlot.getX(), loopPlot.getY()) <= iRange:
 								eOtherBonus = loopPlot.getBonusType(TeamTypes.NO_TEAM)
 								if eOtherBonus != BonusTypes.NO_BONUS:
-									if gc.getBonusInfo(eOtherBonus).getBonusClassType() == bonusInfo.getBonusClassType():
+									if BONUS.getBonusClassType(eOtherBonus) == BONUS.getBonusClassType(eBonus):
 										return False
 		#Make sure there are no bonuses of the same type nearby:
-		iRange = bonusInfo.getUniqueRange()
+		iRange = BONUS.getUniqueRange(eBonus)
 		iRange = max(0, int(iRange - (round(mc.BonusBonus) - 1)))
 		for dx in range(-iRange, iRange + 1):
 			for dy in range(-iRange, iRange + 1):
@@ -3677,49 +3674,48 @@ class BonusPlacer:
 			return True
 		if plot.getBonusType(TeamTypes.NO_TEAM) != BonusTypes.NO_BONUS:
 			return False
-		bonusInfo = gc.getBonusInfo(eBonus)
 		if plot.isPeak():
-			if not bonusInfo.isPeaks():
+			if not BONUS.isPeaks(eBonus):
 				return False
 		else:
 			#Here is the change from canHaveBonus. Forest does not block bonus
-			requiresForest = bonusInfo.isFeature(featureForest)
+			requiresForest = BONUS.isFeature(eBonus, featureForest)
 			plotIsForest = plot.getFeatureType() == featureForest
 			#To avoid silk and spices on ice/tundra
 			if plotIsForest and requiresForest:
-				if not bonusInfo.isFeatureTerrain(plot.getTerrainType()):
+				if not BONUS.isFeatureTerrain(eBonus, plot.getTerrainType()):
 					return False
 			#now that bonuses that require forest are dealt with, count forest
 			#as no feature
 			else:
 				if plot.getFeatureType() != FeatureTypes.NO_FEATURE and not plotIsForest:
-					if not bonusInfo.isFeature(plot.getFeatureType()):
+					if not BONUS.isFeature(eBonus, plot.getFeatureType()):
 						return False
-					if not bonusInfo.isFeatureTerrain(plot.getTerrainType()):
+					if not BONUS.isFeatureTerrain(eBonus, plot.getTerrainType()):
 						return False
 				else:
-					if not bonusInfo.isTerrain(plot.getTerrainType()):
+					if not BONUS.isTerrain(eBonus, plot.getTerrainType()):
 						return False
 			if plot.isHills():
-				if not bonusInfo.isHills():
+				if not BONUS.isHills(eBonus):
 					return False
 			if plot.isFlatlands():
-				if not bonusInfo.isFlatlands():
+				if not BONUS.isFlatlands(eBonus):
 					return False
-		if bonusInfo.isNoRiverSide():
+		if BONUS.isNoRiverSide(eBonus):
 			if plot.isRiverSide():
 				return False
-		if bonusInfo.getMinAreaSize() != -1:
-			if plot.area().getNumTiles() < bonusInfo.getMinAreaSize():
+		if BONUS.getMinAreaSize(eBonus) != -1:
+			if plot.area().getNumTiles() < BONUS.getMinAreaSize(eBonus):
 				return False
 		if not bIgnoreLatitude:
-			if plot.getLatitude() > bonusInfo.getMaxLatitude():
+			if plot.getLatitude() > BONUS.getMaxLatitude(eBonus):
 				return False
-			if plot.getLatitude() < bonusInfo.getMinLatitude():
+			if plot.getLatitude() < BONUS.getMinLatitude(eBonus):
 				return False
 		if not plot.isPotentialCityWork():
 			return False
-		if bonusInfo.isOneArea() and not bIgnoreArea:
+		if BONUS.isOneArea(eBonus) and not bIgnoreArea:
 			areaID = plot.getArea()
 			areaFound = False
 			i = self.bonusDict[eBonus]
@@ -3739,21 +3735,20 @@ class BonusPlacer:
 		gc = CyGlobalContext()
 		gameMap = CyMap()
 		game = CyGame()
-		bonusInfo = gc.getBonusInfo(eBonus)
-		if bonusInfo.getPlacementOrder() < 0:
+		if BONUS.getPlacementOrder(eBonus) < 0:
 			return 0
 		bIgnoreLatitude = False
 		bIgnoreArea = True
 		landTiles = 0
 		numPossible = 0
-		if bonusInfo.getTilesPer() > 0:
+		if BONUS.getTilesPer(eBonus) > 0:
 			for i in range(em.length):
 				plot = gameMap.plotByIndex(i)
 				if self.PlotCanHaveBonus(plot,eBonus,bIgnoreLatitude,bIgnoreArea):
 					numPossible += 1
-			landTiles += numPossible/bonusInfo.getTilesPer()
-		players = game.countCivPlayersAlive() * bonusInfo.getPercentPerPlayer() / 100
-		bonusCount = bonusInfo.getRandAppearance() * (landTiles + players) / 100
+			landTiles += numPossible/BONUS.getTilesPer(eBonus)
+		players = game.countCivPlayersAlive() * BONUS.getPercentPerPlayer(eBonus) / 100
+		bonusCount = BONUS.getRandAppearance(eBonus) * (landTiles + players) / 100
 		bonusCount = max(1, int(bonusCount * mc.BonusBonus))
 		return bonusCount
 
@@ -3764,8 +3759,7 @@ class BonusPlacer:
 		uniqueBonusCount = 0
 		for i in range(len(self.bonusList)):
 			areaList = self.bonusList[i].areaList
-			bonusInfo = gc.getBonusInfo(self.bonusList[i].eBonus)
-			if bonusInfo.isOneArea() == False:
+			if BONUS.isOneArea(self.bonusList[i].eBonus) == False:
 				continue
 			for n in range(len(areaList)):
 				if areaList[n] == areaID:
@@ -3778,24 +3772,18 @@ class BonusPlacer:
 		gc = CyGlobalContext()
 		areaID = area.getID()
 		uniqueBonusCount = 0
-		bonusInfo = gc.getBonusInfo(eBonus)
-		eClass = bonusInfo.getBonusClassType()
+		eClass = BONUS.getBonusClassType(eBonus)
 		if eClass == BonusClassTypes.NO_BONUSCLASS:
 			return 0
-		classInfo = gc.getBonusClassInfo(eClass)
-		if classInfo == None:
+		if eClass == -1:
 			return 0
-		try:
-			uRange = classInfo.getUniqueRange()
-		except:
-			uRange = classInfo.getUniqueRange #<--vanilla Civ4
+		uRange = BONUSCLASS.getUniqueRange(eClass)
 		uRange = max(0, int(uRange - (round(mc.BonusBonus) - 1)))
 		for i in range(len(self.bonusList)):
 			areaList = self.bonusList[i].areaList
-			bonusInfo = gc.getBonusInfo(self.bonusList[i].eBonus)
-			if bonusInfo.isOneArea() == False:
+			if BONUS.isOneArea(self.bonusList[i].eBonus) == False:
 				continue
-			if bonusInfo.getBonusClassType() != eClass:
+			if BONUS.getBonusClassType(self.bonusList[i].eBonus) != eClass:
 				continue
 			for n in range(len(areaList)):
 				if areaList[n] == areaID:
@@ -4077,35 +4065,43 @@ class StartingPlotFinder:
 		food			 = plot.calculateBestNatureYield(YieldTypes.YIELD_FOOD,				TeamTypes.NO_TEAM)
 		production = plot.calculateBestNatureYield(YieldTypes.YIELD_PRODUCTION, TeamTypes.NO_TEAM)
 		featureEnum = plot.getFeatureType()
+		#	⛔ UNSERVED, NOT AN OVERSIGHT: the handle survives ONLY for `getRiverYieldChange` below. A feature's
+		#	river yield is no longer a member -- it is a HAS_RIVER-conditioned entry beside the plain flat, so it is
+		#	the same keyed+conditioned case as the improvement read ([modifier.md] §5) and has no bare successor.
+		#	The unconditioned half is already served through INFO.getFlatYields.
 		featureInfo = gc.getFeatureInfo(featureEnum)
-		#if featureEnum != FeatureTypes.NO_FEATURE and featureInfo.getYieldChange(YieldTypes.YIELD_FOOD) < 0:
+		#if featureEnum != FeatureTypes.NO_FEATURE and INFO.getFlatYields("FEATURE_", featureEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_FOOD] < 0:
 		#	for n in range(gc.getNumBuildInfos()):
 		#		buildInfo = gc.getBuildInfo(n)
-		#		if buildInfo.isFeatureRemove(featureEnum) and gc.getTechInfo(buildInfo.getFeatureTech(featureEnum)).getEra() <= max(game.getStartEra(), 1):
+		#		if len([r for r in aFeatureRows if r["feature"] == featureEnum and r["remove"]]) > 0 and INFO.getIntrinsic("TECH_", ([r["tech"] for r in aFeatureRows if r["feature"] == featureEnum] + [-1])[0], IntrinsicSlot.PYINT_ERA) <= max(game.getStartEra(), 1):
 		#			featureEnum = FeatureTypes.NO_FEATURE
 		#			break
 		#Get best bonus improvement score. Test technology era of bonus
 		#first, then test each improvement
 		bestImp = None
 		bonusEnum = plot.getBonusType(TeamTypes.NO_TEAM)
-		bonusInfo = gc.getBonusInfo(bonusEnum)
-		if bonusInfo != None and (gc.getTechInfo(bonusInfo.getTechReveal()) == None or gc.getTechInfo(bonusInfo.getTechReveal()).getEra() <= max(game.getStartEra(), 1)):
-			commerce	 += bonusInfo.getYieldChange(YieldTypes.YIELD_COMMERCE)
-			food			 += bonusInfo.getYieldChange(YieldTypes.YIELD_FOOD)
-			production += bonusInfo.getYieldChange(YieldTypes.YIELD_PRODUCTION)
+		if bonusEnum != -1 and (BONUS.getTechReveal(bonusEnum) == -1 or INFO.getIntrinsic("TECH_", BONUS.getTechReveal(bonusEnum), IntrinsicSlot.PYINT_ERA) <= max(game.getStartEra(), 1)):
+			commerce	 += INFO.getFlatYields("BONUS_", bonusEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_COMMERCE]
+			food			 += INFO.getFlatYields("BONUS_", bonusEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_FOOD]
+			production += INFO.getFlatYields("BONUS_", bonusEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_PRODUCTION]
 		else:
 			bonusEnum = -1
 			bonusInfo = None
 		improvementList = list()
 		for n in range(gc.getNumBuildInfos()):
 			#Test for improvement validity
-			buildInfo = gc.getBuildInfo(n)
-			impEnum = buildInfo.getImprovement()
+			aFeatureRows = BUILD.getFeatureRows(n)
+			impEnum = BUILD.getImprovement(n)
+			#	⛔ UNSERVED, NOT AN OVERSIGHT: `getImprovementBonusYield` is the improvement's BONUS-CONDITIONED
+			#	yield, which is a keyed+conditioned deposit -- and a keyed read serves the UNCONDITIONED entries only
+			#	([modifier.md] §5). Summing the conditioned tail here would apply every tech- and age-gated deposit
+			#	from turn 0, plausibly and silently, so the handle stays and this read stays visibly broken until the
+			#	keyed what-if lands. Leaving it dangling is the exposed state, not a gap papered over.
 			impInfo = gc.getImprovementInfo(impEnum)
-			if impInfo == None:
+			if impEnum == -1:
 				continue
 			#some mods use improvements for other things, so if there's no tech requirement we still don't want it factored in. Not good behavior for C2C, so changed.
-			if buildInfo.getTechPrereq() != TechTypes.NO_TECH and gc.getTechInfo(buildInfo.getTechPrereq()).getEra() > max(game.getStartEra(), 1):
+			if BUILD.getTechPrereq(n) != TechTypes.NO_TECH and INFO.getIntrinsic("TECH_", BUILD.getTechPrereq(n), IntrinsicSlot.PYINT_ERA) > max(game.getStartEra(), 1):
 				continue
 			if plot.canHaveImprovement(impEnum, TeamTypes.NO_TEAM, True):
 				#This function will not find bonus yield changes for NO_PLAYER much to my annoyance
@@ -4118,11 +4114,11 @@ class StartingPlotFinder:
 					impProduction += impInfo.getImprovementBonusYield(bonusEnum,YieldTypes.YIELD_PRODUCTION)
 				#See if feature is removed, if so we must subtract the added yield from that feature
 				bProceed = True
-				if featureEnum != FeatureTypes.NO_FEATURE and buildInfo.isFeatureRemove(featureEnum):
-					if buildInfo.getFeatureTech(featureEnum) == TechTypes.NO_TECH or gc.getTechInfo(buildInfo.getFeatureTech(featureEnum)).getEra() <= max(game.getStartEra(), 1):
-						impCommerce		-= featureInfo.getYieldChange(YieldTypes.YIELD_COMMERCE)	 + featureInfo.getRiverYieldChange(YieldTypes.YIELD_COMMERCE)
-						impFood				-= featureInfo.getYieldChange(YieldTypes.YIELD_FOOD)			 + featureInfo.getRiverYieldChange(YieldTypes.YIELD_FOOD)
-						impProduction -= featureInfo.getYieldChange(YieldTypes.YIELD_PRODUCTION) + featureInfo.getRiverYieldChange(YieldTypes.YIELD_PRODUCTION)
+				if featureEnum != FeatureTypes.NO_FEATURE and len([r for r in aFeatureRows if r["feature"] == featureEnum and r["remove"]]) > 0:
+					if ([r["tech"] for r in aFeatureRows if r["feature"] == featureEnum] + [-1])[0] == TechTypes.NO_TECH or INFO.getIntrinsic("TECH_", ([r["tech"] for r in aFeatureRows if r["feature"] == featureEnum] + [-1])[0], IntrinsicSlot.PYINT_ERA) <= max(game.getStartEra(), 1):
+						impCommerce		-= INFO.getFlatYields("FEATURE_", featureEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_COMMERCE]	 + featureInfo.getRiverYieldChange(YieldTypes.YIELD_COMMERCE)
+						impFood				-= INFO.getFlatYields("FEATURE_", featureEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_FOOD]			 + featureInfo.getRiverYieldChange(YieldTypes.YIELD_FOOD)
+						impProduction -= INFO.getFlatYields("FEATURE_", featureEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_PRODUCTION] + featureInfo.getRiverYieldChange(YieldTypes.YIELD_PRODUCTION)
 					else:
 						bProceed = False
 				if bProceed:
@@ -4217,20 +4213,19 @@ class StartingPlotFinder:
 					plot.setFeatureType(FeatureTypes.NO_FEATURE, -1)
 				for b in range(gc.getNumBonusInfos()):
 					bonusEnum = shuffledBonuses[b]
-					bonusInfo = gc.getBonusInfo(bonusEnum)
-					#if not bonusInfo.isNormalize():
+					#if not BONUS.isNormalize(bonusEnum):
 					#	continue
-					if bonusInfo.getYieldChange(currentYield) < 1:
+					if INFO.getFlatYields("BONUS_", bonusEnum, CascScope.CASC_SCOPE_PLOT)[currentYield] < 1:
 						continue
 					#NEW CODE - Fuyu/LM
-					if gc.getTechInfo(bonusInfo.getTechReveal()) != None and gc.getTechInfo(bonusInfo.getTechReveal()).getEra() > max(game.getStartEra(), 1):
+					if BONUS.getTechReveal(bonusEnum) != -1 and INFO.getIntrinsic("TECH_", BONUS.getTechReveal(bonusEnum), IntrinsicSlot.PYINT_ERA) > max(game.getStartEra(), 1):
 						continue
 					if not bp.PlotCanHaveBonus(plot, bonusEnum, False, False):
 						if PRand.random() > mc.ignoreAreaRestrictionChance:
 							continue
 						if not bp.PlotCanHaveBonus(plot, bonusEnum, False, True):
 							continue
-					if bonusInfo.getBonusClassType() == gc.getInfoTypeForString("BONUSCLASS_STRATEGIC"):
+					if BONUS.getBonusClassType(bonusEnum) == gc.getInfoTypeForString("BONUSCLASS_STRATEGIC"):
 						if not bAllowStrategicBonus:
 							continue
 						bAllowStrategicBonus = False
@@ -4239,8 +4234,7 @@ class StartingPlotFinder:
 					break
 				#restore the feature if possible
 				if featureEnum != FeatureTypes.NO_FEATURE:
-					bonusInfo = gc.getBonusInfo(plot.getBonusType(TeamTypes.NO_TEAM))
-					if bonusInfo == None or bonusInfo.isFeature(featureEnum):
+					if plot.getBonusType(TeamTypes.NO_TEAM) == -1 or BONUS.isFeature(plot.getBonusType(TeamTypes.NO_TEAM), featureEnum):
 						plot.setFeatureType(featureEnum, featureVariety)
 
 
@@ -4254,13 +4248,12 @@ class StartingPlotFinder:
 		for i in range(21): #gc.getNUM_CITY_PLOTS()
 			plot = plotCity(x, y, i)
 			if not plot: continue
-			featureInfo = gc.getFeatureInfo(plot.getFeatureType())
 			if plot.getX() == x and plot.getY() == y:
 				#remove bad feature on start but don't count it.
-				if featureInfo != None:
+				if plot.getFeatureType() != -1:
 					totalYield = 0
 					for yi in range(YieldTypes.NUM_YIELD_TYPES):
-						totalYield += featureInfo.getYieldChange(YieldTypes(yi))
+						totalYield += INFO.getFlatYields("FEATURE_", plot.getFeatureType(), CascScope.CASC_SCOPE_PLOT)[YieldTypes(yi)]
 					if totalYield <= 0:#bad feature
 						plot.setFeatureType(FeatureTypes.NO_FEATURE, -1)
 				continue
@@ -4268,11 +4261,11 @@ class StartingPlotFinder:
 				hillsFound += 1
 			if plot.getPlotType() == PlotTypes.PLOT_PEAK:
 				peaksFound += 1
-			if featureInfo != None:
+			if plot.getFeatureType() != -1:
 				#now count the bad features
 				totalYield = 0
 				for yi in range(YieldTypes.NUM_YIELD_TYPES):
-					totalYield += featureInfo.getYieldChange(YieldTypes(yi))
+					totalYield += INFO.getFlatYields("FEATURE_", plot.getFeatureType(), CascScope.CASC_SCOPE_PLOT)[YieldTypes(yi)]
 				if totalYield <= 0:#bad feature
 					badFeaturesFound += 1
 			if plot.isWater():
@@ -4297,8 +4290,12 @@ class StartingPlotFinder:
 			for plot in plotList:
 				if hillsNeeded <= 0:
 					break
-				featureInfo = gc.getFeatureInfo(plot.getFeatureType())
-				requiresFlatlands = (featureInfo != None and featureInfo.isRequiresFlatlands())
+				requiresFlatlands = (plot.getFeatureType() != -1 and FEATURE.isRequiresFlatlands(plot.getFeatureType()))
+				#	⛔ PRE-EXISTING BUG, not a migration casualty: the only use below is `bonusInfo.isRequiresFlatlands()`,
+				#	which a BONUS has never had -- it is a FEATURE member (CvFeatureInfo), and no CvBonusInfo in this mod's
+				#	history declared one. This call raised on legacy too, whenever a bonus was present here. Left standing
+				#	rather than given an invented meaning: which bonus predicate was intended is a data question, not a
+				#	translation ([DEC-no-guessing]: at a gap, verify or ask).
 				bonusInfo = gc.getBonusInfo(plot.getBonusType(TeamTypes.NO_TEAM))
 				if plot.getPlotType() != PlotTypes.PLOT_HILLS and plot.getArea() == gameMap.plot(x, y).getArea() and bonusInfo == None and not requiresFlatlands:
 					plot.setPlotType(PlotTypes.PLOT_HILLS, True, True)
@@ -4320,12 +4317,11 @@ class StartingPlotFinder:
 				if badFeaturesToRemoveFromFlatlands <= 0 and badFeaturesToRemove <= 0:
 					break
 				featureEnum = plot.getFeatureType()
-				featureInfo = gc.getFeatureInfo(featureEnum)
 				bonusEnum = plot.getBonusType(TeamTypes.NO_TEAM)
-				if featureInfo != None:
+				if featureEnum != -1:
 					totalYield = 0
 					for yi in range(YieldTypes.NUM_YIELD_TYPES):
-						totalYield += featureInfo.getYieldChange(YieldTypes(yi))
+						totalYield += INFO.getFlatYields("FEATURE_", featureEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes(yi)]
 					if totalYield <= 0:#bad feature
 						if plot.getPlotType() == PlotTypes.PLOT_LAND and badFeaturesToRemoveFromFlatlands > 0:
 							badFeaturesToRemoveFromFlatlands -= 1
@@ -4340,11 +4336,10 @@ class StartingPlotFinder:
 			for plot in plotList:
 				if badFeaturesToRemove <= 0:
 					break
-				featureInfo = gc.getFeatureInfo(plot.getFeatureType())
-				if featureInfo != None:
+				if plot.getFeatureType() != -1:
 					totalYield = 0
 					for yi in range(YieldTypes.NUM_YIELD_TYPES):
-						totalYield += featureInfo.getYieldChange(YieldTypes(yi))
+						totalYield += INFO.getFlatYields("FEATURE_", plot.getFeatureType(), CascScope.CASC_SCOPE_PLOT)[YieldTypes(yi)]
 					if totalYield <= 0:#bad feature
 						badFeaturesToRemove -= 1
 						plot.setFeatureType(FeatureTypes.NO_FEATURE, -1)
@@ -5402,10 +5397,10 @@ def addFeatures():
 
 			if plot.getFeatureType() == FeatureTypes.NO_FEATURE:
 				for iI in range(gc.getNumFeatureInfos()):
-		#			print gc.getFeatureInfo(iI).getDescription()
+		#			print INFO.getDescription("FEATURE_", iI)
 					if plot.canHaveFeature(iI):
-		#				print "Can have feature with probability: %d" % gc.getFeatureInfo(iI).getAppearanceProbability()
-						if PRand.random() * 10000 < gc.getFeatureInfo(iI).getAppearanceProbability():
+		#				print "Can have feature with probability: %d" % FEATURE.getAppearanceProbability(iI)
+						if PRand.random() * 10000 < FEATURE.getAppearanceProbability(iI):
 		#					print "Setting feature"
 							plot.setFeatureType(iI, -1)
 
