@@ -136,6 +136,15 @@ stale-cache divergences resolved **at the source**, behaviour-preserving
 > mechanism is exactly the evidence-of-the-abandoned-path that teaches the next agent to reach for it
 > ([DEC-no-rollerskate-evidence](decisions.md#dec-no-rollerskate-evidence)), and this one names a CLAIM the
 > engine can no longer make.
+>
+> **⛔ AND NEITHER DO WE CALL A READ "HOT" (owner) — A PACKAGE READ IS JUST A READ.** *"They are not a hottest
+> read, they are just a read."* A read can only be HOT if reading does WORK, so the word asserts there is
+> something to recalculate — it smuggles the recompute model back in over code that has none, exactly as "dirty"
+> and "cache" do. Under the maintained sum a read is a bare fetch, so its FREQUENCY is not a property worth
+> naming: nothing is saved by reading less often and nothing is spent by reading more.
+> ⚠ **The tell is a justification, not a slur:** the moment a slot is defended on the grounds that it keeps some
+> read cheap, the reasoning has left the model — a slot exists because a FACT applies a delta into it, and that
+> is the whole of the argument for it. Performance framing around a package read is how "cache it" comes back.
 
 > **⚖ WHEN IT WENT OBSOLETE, and why nothing announced it (owner): *"I did not recognize that marking became
 > obsolete the moment we landed on eventspine for everything."*** The derived-cache protocol was one of the
