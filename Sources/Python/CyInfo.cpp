@@ -759,6 +759,20 @@ python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSl
 			for (size_t i = 0; i < buildings.size(); ++i) ids.append((int)buildings[i]);
 		}
 		break;
+	case PYLIST_TRADE_PROVIDING_IMPROVEMENTS:
+		{
+			if (szTypePrefix != "BONUS_" || iId >= GC.getNumBonusInfos()) break;
+			//	⚠ getTradeProvidingImprovements is non-const on the info, so the const overload of getBonusInfo
+			//	cannot serve it; the read itself mutates nothing.
+			const std::vector<std::pair<ImprovementTypes, BuildTypes> >* pPairs =
+				GC.getBonusInfo((BonusTypes)iId).getTradeProvidingImprovements();
+			if (pPairs == NULL) break;
+			for (size_t i = 0; i < pPairs->size(); ++i)
+			{
+				ids.append((int)(*pPairs)[i].first);
+			}
+		}
+		break;
 	case PYLIST_CONSUMED_BONUSES:
 		{
 			if (szTypePrefix != "CORPORATION_" || iId >= GC.getNumCorporationInfos()) break;
@@ -978,6 +992,31 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	case PYINT_IS_MAP_BONUS:
 		if (szTypePrefix == "BONUS_" && iId < GC.getNumBonusInfos())
 			return GC.getBonusInfo((BonusTypes)iId).isMapBonus() ? 1 : 0;
+		break;
+
+	case PYINT_TECH_REVEAL:
+		if (szTypePrefix == "BONUS_" && iId < GC.getNumBonusInfos())
+			return GC.getBonusInfo((BonusTypes)iId).getTechReveal();
+		break;
+
+	case PYINT_TECH_CITY_TRADE:
+		if (szTypePrefix == "BONUS_" && iId < GC.getNumBonusInfos())
+			return GC.getBonusInfo((BonusTypes)iId).getTechCityTrade();
+		break;
+
+	case PYINT_TECH_OBSOLETE:
+		if (szTypePrefix == "BONUS_" && iId < GC.getNumBonusInfos())
+			return GC.getBonusInfo((BonusTypes)iId).getTechObsolete();
+		break;
+
+	case PYINT_MIN_LATITUDE:
+		if (szTypePrefix == "BONUS_" && iId < GC.getNumBonusInfos())
+			return GC.getBonusInfo((BonusTypes)iId).getMinLatitude();
+		break;
+
+	case PYINT_MAX_LATITUDE:
+		if (szTypePrefix == "BONUS_" && iId < GC.getNumBonusInfos())
+			return GC.getBonusInfo((BonusTypes)iId).getMaxLatitude();
 		break;
 
 	case PYINT_IS_VISIBLE:

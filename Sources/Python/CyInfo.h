@@ -111,6 +111,17 @@ enum PyIntrinsicSlot
 	                            // (identity.pillageGold). ⚠ NOT the building field of the same name, which is
 	                            // orphaned and unwired ([legacy-value-calc-map.md] par.10.3); this one is live and
 	                            // is the improvement's own value.
+	// BONUS_ -- the three TECH gates that bracket a resource's usable life: when it becomes VISIBLE on the map,
+	// when it becomes TRADEABLE by a city, and when it stops counting. -1 for any the bonus does not gate.
+	// ⚠ Reveal and city-trade are frequently the SAME tech, which a display collapses into one line rather than
+	// printing twice -- so a consumer compares them rather than assuming two.
+	PYINT_TECH_REVEAL,
+	PYINT_TECH_CITY_TRADE,
+	PYINT_TECH_OBSOLETE,
+	// BONUS_ -- the latitude BAND a resource can be placed in (identity, map-generation metadata). Degrees, so
+	// HUMAN and never x100: it is a coordinate on the globe, not a magnitude the cascade carries.
+	PYINT_MIN_LATITUDE,
+	PYINT_MAX_LATITUDE,
 	NUM_PYINT
 };
 
@@ -150,6 +161,10 @@ enum PyIdListSlot
 	                                   // Python and are due a ground-up rework), so this is a KEEP-WORKING read
 	                                   // and nothing more -- it rides the existing generic slot plane beside its
 	                                   // prereq siblings rather than earning the type its own accessor.
+	// BONUS_ -> the IMPROVEMENTS that make this resource tradeable when built on it. The bonus's OWN reverse
+	// list, landed at load, so "what do I build here" is a fetch rather than a sweep of every improvement
+	// asking each whether it trades this one ([DEC-one-reverse-view]).
+	PYLIST_TRADE_PROVIDING_IMPROVEMENTS,
 	NUM_PYLIST
 };
 
