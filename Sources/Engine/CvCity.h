@@ -486,7 +486,6 @@ public:
 	// sequence of setter calls rather than a second place that knows how to announce a city.
 	void setPopulationInternal(int iNewValue);
 	void setCultureLevelInternal(CultureLevelTypes eNewValue);
-	void changeFreshWaterInternal(int iChange);
 	void setHasReligionInternal(ReligionTypes eIndex, bool bNewValue);
 	void setHasCorporationInternal(CorporationTypes eIndex, bool bNewValue);
 	void setSpecialistCountInternal(SpecialistTypes eIndex, int iNewValue);
@@ -736,7 +735,12 @@ public:
 	// A MAINTAINED SUM ([DEC-maintained-sum]): the DOMAIN fact names the source, the compiled index names that
 	// source's deposits, and APPLYING them is the whole maintenance -- nothing marked, deferred or rebuilt. Never
 	// serialized; the reseed's own in-read facts build it.
-	const CvCascadePackage<CvCity>& getCascadePackage() const { return m_cascadePackage; }
+	// ⛔ THE CITY HAS TWO YIELD PLANES AND THEY ARE DIFFERENT TYPES ([DEC-hard-typing-or-rollerskate],
+	// [state-repositories.md] § THE ORIGIN RULE). BUILDING yields are tier 2 -- added after the percent stack;
+	// SPECIALIST yields are tier 1 -- inside it. Handing one where the other belongs does not compile, which is
+	// the whole point: as prose this rule was re-corrected more times than the owner cares to count.
+	const CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING>& getBuildingYields() const { return m_buildingYields; }
+	const CvCascadePackage<CvCity, CASC_ORIGIN_SPECIALIST>& getSpecialistYields() const { return m_specialistYields; }
 
 	// ---- THE ENABLER'S PER-CITY STATE (enabler.md §7.1) -- the "can I?" machine's host on this scope owner.
 	// ⛔ NOT a value cache and carrying NO dirty protocol: there is no dirty->recompute path at all. Both are
@@ -871,7 +875,6 @@ public:
 	// the registry is sparse and a city answers about one method at a time.
 	void getHurryQuote(HurryTypes eHurry, int (&quote)[NUM_CITY_HURRY_QUOTES]) const;
 
-	bool isAreaCleanPower() const;
 
 	int getDefenseDamage() const;
 	void changeDefenseDamage(int iChange);
@@ -1292,8 +1295,8 @@ public:
 	void changeWorkableArea(int iOldNumCityPlots, int iNewNumCityPlots) const;
 	int getPopulationgrowthratepercentage() const;
 
-	void changeFreshWater(int iChange);
 	bool hasFreshWater() const;
+	void refreshFreshWaterDerived();
 
 	bool canUpgradeUnit(UnitTypes eUnit) const;
 
@@ -1563,8 +1566,11 @@ protected:
 	int m_iGameTurnAcquired;
 	int m_iPopulation;
 	CityContext m_cityContext;   // per-city isolated live state (see getCityContext); event-maintained, never a per-turn recompute
-	// the CITY-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
-	CvCascadePackage<CvCity> m_cascadePackage;
+	// the CITY-scope yield planes, one per ORIGIN (see getBuildingYields / getSpecialistYields); the percent
+	// stack lives on the building plane, since percents combine additively and have no origin to keep apart.
+	// A maintained sum, never serialized.
+	CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING> m_buildingYields;
+	CvCascadePackage<CvCity, CASC_ORIGIN_SPECIALIST> m_specialistYields;
 	int m_iHighestPopulation;
 	int m_iWorkingPopulation;
 	int m_iSpecialistPopulation;
@@ -1612,7 +1618,6 @@ protected:
 	int m_iLostProduction;
 	int m_iEventAnger;
 
-	int m_iFreshWater;
 
 
 	// The free-bonus supply, split by NATURE (savemigration.txt: the old mixed ledger was retired).

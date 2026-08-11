@@ -62,7 +62,23 @@
 // ⚠ The arithmetic itself is not here: it lives once on the calc surface (InfoValuation::plotScaledYield), which
 // the what-if plot reads share ([DEC-single-implementation]). This plane only stores and feeds.
 
-template <class TOwner>
+// ⛔ THE YIELD ORIGIN IS PART OF THE PACKAGE'S TYPE ([DEC-hard-typing-or-rollerskate]).
+// A city's yields come from THREE origins -- plots, SPECIALISTS and BUILDINGS -- and they are three separate
+// packages, not one ([state-repositories.md] § THE ORIGIN RULE). The split is FORCED: modifier.md §2a puts
+// specialists in TIER 1 (inside the percent stack) and buildings in TIER 2 (added after it), while the maintained
+// sum bans a per-source decomposition -- so two origins sharing one Σ slot can never be told apart again, and the
+// rate becomes inexpressible.
+// ⛔ THIS IS A TYPE AND NOT A CONVENTION FOR ONE REASON: as prose ("specialists do not live in the building
+// package") it was re-corrected more times than the owner cares to count. As a type parameter, a specialist
+// deposit reaching the building plane DOES NOT COMPILE.
+enum CvCascOrigin
+{
+	CASC_ORIGIN_SINGLE = 0,     // every scope but CITY: one yield origin, so there is nothing to keep apart
+	CASC_ORIGIN_SPECIALIST,     // CITY tier 1 -- multiplied by the percent stack
+	CASC_ORIGIN_BUILDING        // CITY tier 2 -- added flat, AFTER the stack, never multiplied
+};
+
+template <class TOwner, int Origin = CASC_ORIGIN_SINGLE>
 struct CvCascadePackage
 {
 	CvCascScope scope;                     // which layout this package lives on (set at bind)
@@ -251,8 +267,8 @@ struct CvCascadePackage
 	//	⚠ A MEMBER TEMPLATE because the two packages are different instantiations -- the city's is
 	//	CvCascadePackage<CvCity> and the plot's CvCascadePackage<CvPlot>, so a TOwner-typed parameter cannot
 	//	name it.
-	template <class TPlotOwner>
-	void applyWorkedPlot(const CvCascadePackage<TPlotOwner>& kPlotPackage, int iSign) const
+	template <class TPlotOwner, int PlotOrigin>
+	void applyWorkedPlot(const CvCascadePackage<TPlotOwner, PlotOrigin>& kPlotPackage, int iSign) const
 	{
 		if (scope != CASC_SCOPE_CITY || iSign == 0)
 		{

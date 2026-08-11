@@ -782,6 +782,60 @@ static int tr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
 	return (int)eUnit;
 }
 
+// ⚖ THE FEATURE DIES AS ITS CITY GROWS -- the `destroy: self` action, whose one live carrier is a FEATURE.
+// The containment chain is ordinary and needs no target vocabulary: a city knows its plot, the plot carries the
+// feature, so the feature reads the city's POPULATION fact and goes.
+// ⛔ THE SUBJECT IS THE CITY'S OWN PLOT, NEVER ITS WORKED RADIUS. This is urbanisation consuming the tile the
+// city stands on; FOREST / JUNGLE / SWAMP / FLOOD_PLAINS all author it, so reading "self" as the radius would
+// strip every one of them from every city that reached the threshold.
+// ⚑ ONE hook covers founding AND growth: CvCity::init sets the population, so the ADDED fact fires there too --
+// which is why the legacy pair (a founding branch plus a setPopulation branch) collapses to this single route.
+static void tr_resolveFeatureDestroy(int iOwner, int iCity)
+{
+	if (iOwner < 0 || iOwner >= MAX_PLAYERS)
+	{
+		return;
+	}
+	CvCity* pCity = GET_PLAYER((PlayerTypes)iOwner).getCity(iCity);
+	if (pCity == NULL)
+	{
+		return;
+	}
+	CvPlot* pPlot = pCity->plot();
+	if (pPlot == NULL || pPlot->getFeatureType() == NO_FEATURE)
+	{
+		return;
+	}
+	const CvTriggers* pTriggers = GC.getFeatureInfo(pPlot->getFeatureType()).getTriggers();
+	if (pTriggers == NULL)
+	{
+		return;
+	}
+	const CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
+	CvCascadeEvalCtx ec;
+	pCity->getCityContext().fillEvalCtx(ec);
+	player.getEmpireContext().fillEvalCtx(ec);
+	EnablerKernel::wireOperatingBuildings(pCity, ec);
+	const CvCascadeEvalFlags kFlags;
+
+	const std::vector<CvTriggerEntry*>& entries = pTriggers->entries();
+	for (size_t i = 0; i < entries.size(); ++i)
+	{
+		const CvTriggerEntry* pEntry = entries[i];
+		if (!pEntry->destroySelf)
+		{
+			continue;
+		}
+		// The threshold is an ordinary §3 state condition, through the ONE evaluator ([DEC-single-implementation]).
+		if (pEntry->condition != NULL && !cascadeEvalCondition(pEntry->condition, ec, kFlags))
+		{
+			continue;
+		}
+		pPlot->setFeatureType(NO_FEATURE);
+		return;   // the subject is gone -- a second entry has nothing left to act on
+	}
+}
+
 static void tr_applyCityPerTurn(CvCity* pCity)
 {
 	const CvInfo* pAny = NULL;
@@ -1105,6 +1159,12 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// the perf/observability fact, not a grant trigger. Legacy ran the per-turn spawn inside CvCity::doTurn within
 	// CvPlayer::doTurn, so the player boundary is the ordering-faithful grain.
 	case SEVT_TURN_STARTED:     if (e.iC >= 0) { tr_applyPerTurn(e.iC); } break;
+	// The city GREW -- its own plot's feature may have a population threshold it has now crossed.
+	// iC = owner, iSrcLoc = city. Withheld during the save read like every other apply: the saved plot already
+	// carries whatever feature it should, and mutating the map mid-stream is not this machine's business.
+	case SEVT_CITY_POPULATION_ADDED:
+		if (!s_bSuppressed) { tr_resolveFeatureDestroy(e.iC, e.iSrcLoc); }
+		break;
 	// Trigger (2) for free promotions: a building went ACTIVE in a city -- a fresh build OR a step out of
 	// dormancy (the operate crossing covers both). Hand its promotions to everyone already standing there.
 	// ⚑ The machine subscribes to the ACTIVATION alone, so there is no direction left to test

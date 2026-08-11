@@ -249,7 +249,7 @@ namespace
 
 	void oe_fillCity(const CvCity& kCity, CvCascadeSlotValues& kValues)
 	{
-			kCity.getCascadePackage().readValuesInto(kValues);
+			kCity.getBuildingYields().readValuesInto(kValues);
 			oe_stampIdentity(kValues, CASC_SCOPE_CITY, (int)kCity.getOwner(), kCity.getID());
 	}
 
@@ -455,7 +455,7 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 			// THE PERCENT STACK, SPLIT BY SCOPE. percentSum alone cannot say which LEVEL a modifier came from,
 			// and the three move for completely different reasons -- so a stack that looks too big is
 			// unattributable without this.
-			kTermsOut["percentCity"] = picojson::value((double)pLoopCity->getCascadePackage().readPercent(iChannel));
+			kTermsOut["percentCity"] = picojson::value((double)pLoopCity->getBuildingYields().readPercent(iChannel));
 			kTermsOut["percentEmpire"] = picojson::value((double)kPlayer.getCascadePackage().readPercent(iChannel));
 			kTermsOut["percentTeam"] = picojson::value(
 				(double)GET_TEAM(kPlayer.getTeam()).getCascadePackage().readPercent(iChannel));

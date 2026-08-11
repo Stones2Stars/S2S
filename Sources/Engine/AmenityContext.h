@@ -111,6 +111,10 @@ private:
 	// takes no `before` from a caller because nothing outside this store can move it: no status gates it, so the
 	// only input is a grantor starting or stopping, which is applyKey itself.
 	void announceGovernmentCenterCrossing(bool bWasGovernmentCenter);
+	// ⚖ THE FRESH-WATER CROSSING -- the government centre's shape, with one obligation neither of the others
+	// carries: the verdict feeds PLOT irrigation and the city's fresh-water health, so those refresh OFF the
+	// crossing rather than at whatever moved it.
+	void announceFreshWaterCrossing(bool bHadFreshWater);
 
 	const CvCity* m_city;   // the bound game object; a binding, never cleared
 };

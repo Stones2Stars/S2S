@@ -5628,7 +5628,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	// ⚠ Split per scope deliberately: merging them into one "+131%" is exactly what hides which level a missing
 	// modifier belongs to, and the city/empire halves move for completely different reasons.
 	const CvPlayer& kOwner = GET_PLAYER(city.getOwner());
-	const int iCityPercent = city.getCascadePackage().readPercent(iChannel);
+	const int iCityPercent = city.getBuildingYields().readPercent(iChannel);
 	const int iEmpirePercent = kOwner.getCascadePackage().readPercent(iChannel);
 	const int iTeamPercent = GET_TEAM(kOwner.getTeam()).getCascadePackage().readPercent(iChannel);
 	szBuffer.append(NEWLINE);

@@ -223,7 +223,7 @@ public:
 	bool isHeadquartersAny() const;           // CvCity::isHeadquarters() -- see the CONTEXT GAP note below
 	bool isCapital() const;                   // CvCity::isCapital (IS_CAPITAL)
 	bool isGovernmentCenter() const;          // CvCity::isGovernmentCenter (the owner-sanctioned engine counter)
-	bool hasFreshWaterAccess() const;         // CvCity::hasFreshWater -- the provider-building-fed ACCESS counter (m_iFreshWater)
+	bool hasFreshWaterAccess() const;         // CvCity::hasFreshWater -- the provider-building-fed ACCESS verdict
 	int  propertyValue(int eProperty) const;  // CvProperties::getValueByProperty (the PROPERTY_ band read)
 	// The §3.7 `per` COUNT domains this scope answers (tally.md: let the OBJECT own the aggregate, the context
 	// forwards it -- never a tally side-store). A per-scaler over these read 0/1 through the presence fallback

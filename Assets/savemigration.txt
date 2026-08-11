@@ -1639,3 +1639,17 @@ TYPE::BONUS_ELEPHANTS -> TYPE::BONUS_ELEPHANT
 TYPE::BONUS_BEAVERS -> TYPE::BONUS_BEAVER
 TYPE::BONUS_PARROTS -> TYPE::BONUS_PARROT
 TYPE::BONUS_GUINEA_PIGS -> TYPE::BONUS_GUINEA_PIG
+
+| CvCity::m_iFreshWater -- REPLACED by the `providesFreshWater` AMENITY refcount. The counter was a second,
+| serialized store for a verdict CityContext's amenity dictionary already holds, and its changer had lost every
+| caller, so provider buildings conferred nothing at all. The verdict is now the refcount's own 0 <-> non-zero
+| crossing, announced from AmenityContext like power's and the government centre's.
+| REPLACEMENT: CityContext.amenities[CLS_AMENITY_PROVIDES_FRESH_WATER], derived at load by the event reseed.
+CvCity::m_iFreshWater                    (int)
+
+| CvArea::m_aiCleanPowerCount -- DELETED. There is no "clean power": power is power, and an area-wide power
+| source is an ordinary building granting `providesPower` at EMPIRE scope (building_three_gorges_dam and its
+| five siblings), which lands on every city's amenity refcount through the normal path. The per-(area x team)
+| counter, its spine fact pair and its CyArea bindings were residue from before that and had no authored data
+| feeding them at all. REPLACEMENT: CityContext.amenities[CLS_AMENITY_PROVIDES_POWER].
+CvArea::m_aiCleanPowerCount              (int array, MAX_TEAMS)

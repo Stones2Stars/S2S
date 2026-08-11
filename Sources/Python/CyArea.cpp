@@ -125,12 +125,6 @@ int CyArea::getBestFoundValue(PlayerTypes eIndex) const
 	return (pArea != NULL) ? pArea->getBestFoundValue(eIndex) : 0;
 }
 
-bool CyArea::isCleanPower(TeamTypes eIndex) const
-{
-	const CvArea* pArea = getArea();
-	return (pArea != NULL) ? pArea->isCleanPower(eIndex) : false;
-}
-
 bool CyArea::isBorderObstacle(TeamTypes eIndex) const
 {
 	const CvArea* pArea = getArea();
@@ -147,15 +141,6 @@ int CyArea::getNumTotalBonuses() const
 {
 	const CvArea* pArea = getArea();
 	return (pArea != NULL) ? pArea->getNumTotalBonuses() : 0;
-}
-
-void CyArea::changeCleanPowerCount(TeamTypes eIndex, int iChange) const
-{
-	CvArea* pArea = getArea();
-	if (pArea != NULL)
-	{
-		pArea->changeCleanPowerCount(eIndex, iChange);
-	}
 }
 
 //
@@ -187,7 +172,6 @@ void CyArea::pythonPublish()
 		.def("getBestFoundValue", &CyArea::getBestFoundValue)
 
 
-		.def("isCleanPower", &CyArea::isCleanPower)
 		.def("isBorderObstacle", &CyArea::isBorderObstacle)
 
 
@@ -198,7 +182,6 @@ void CyArea::pythonPublish()
 /*                                                                                              */
 /*                                                                                              */
 /************************************************************************************************/
-		.def("changeCleanPowerCount", &CyArea::changeCleanPowerCount)
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/

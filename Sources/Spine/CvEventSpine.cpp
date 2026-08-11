@@ -485,8 +485,6 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PLOTGROUP_BONUS_REMOVED:          return "[SPINE] plotgroupBonusRemoved";
 	case SEVT_AREA_TILE_ADDED:                  return "[SPINE] areaTileAdded";
 	case SEVT_AREA_TILE_REMOVED:                return "[SPINE] areaTileRemoved";
-	case SEVT_AREA_CLEAN_POWER_ADDED:           return "[SPINE] areaCleanPowerAdded";
-	case SEVT_AREA_CLEAN_POWER_REMOVED:         return "[SPINE] areaCleanPowerRemoved";
 	case SEVT_UNIT_CREATED:                     return "[SPINE] unitCreated";
 	case SEVT_UNIT_KILLED:                      return "[SPINE] unitKilled";
 	case SEVT_UNIT_DEATH_SCHEDULE_ADDED:        return "[SPINE] unitDeathScheduleAdded";
@@ -1566,22 +1564,6 @@ void emitAreaTileRemoved(int iArea, int iCount)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_TILE_REMOVED, -1, iCount, 0, -1, iArea);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_AREA, iArea).addI(SPF_COUNT, iCount);
-	eventSpine().emit(e);
-}
-
-void emitAreaCleanPowerAdded(int iArea, int iTeam)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_CLEAN_POWER_ADDED, -1, 0, iTeam, -1, iArea);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_AREA, iArea).addI(SPF_TEAM, iTeam);
-	eventSpine().emit(e);
-}
-
-void emitAreaCleanPowerRemoved(int iArea, int iTeam)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREA_CLEAN_POWER_REMOVED, -1, 0, iTeam, -1, iArea);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_AREA, iArea).addI(SPF_TEAM, iTeam);
 	eventSpine().emit(e);
 }
 

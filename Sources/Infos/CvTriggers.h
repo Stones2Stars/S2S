@@ -54,6 +54,12 @@ public:
 	int chancePerEach;             // the per quantum (default 1)
 	int chancePerScope;            // the AUTHORED per scope (a CvCascScope value; -1 = the entry's own scope)
 	std::vector<int> chancePerAnyOf;   // per.anyOf summed-count FK ids (json §3.7)
+	// --- action: destroy (the trigger's own SUBJECT is removed) ---
+	// The subject is the entity the trigger is authored on, implicit exactly as a `grants` happening is
+	// (json.md §5), so "self" needs no target vocabulary. Live carrier: a FEATURE dying as its city grows past
+	// the authored population -- the containment chain is ordinary (a city knows its plot, the plot carries the
+	// feature), so the feature reads the city's POPULATION fact and goes.
+	bool destroySelf;
 	// --- action: promote (units in scope gain promotions) ---
 	std::vector<int> promotePromotions;   // action.promote.promotions FK ids
 	std::string promoteUnits;             // action.promote.units target selector ("present")

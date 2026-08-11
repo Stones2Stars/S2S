@@ -5231,8 +5231,10 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		SAFE_DELETE_ARRAY(paiFreeSpecialistYield);
 
 		// The untyped slots this building opens IN THIS CITY -- the engine picks each one's type at placement
-		// (modifier.md §6), so the loop asks it per slot. A COUNT takes no ×100 -- read as authored.
-		const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
+		// (modifier.md §6), so the loop asks it per slot. THE READ EDGE reduces: the deposit is ×100 like every
+		// authored amount ([fixed-point-and-scales] §2 -- there is no count exemption) and a slot count is whole.
+		// THE READ EDGE -- the accessor is x100 like every authored amount; a slot count is whole.
+		const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
 		for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 		{
 			const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -5816,15 +5818,16 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 						// The manual-assign slots this building opens for this specialist type. The address is keyed
 						// DIRECTLY by the type with no container token (`allowedSpecialists.city.{SPECIALIST_X}`), which
-						// is exactly what the -1 segment selects ([modifier.md §5]); a COUNT takes no ×100.
+						// is exactly what the -1 segment selects ([modifier.md §5]); the read edge reduces the ×100.
 						// ⚑ The KEYED TWIN, because this family authors BOTH shapes: the plain slots a building always
 						// opens, and the tech-gated ones beside them (a University's scientist slots arriving with
 						// Biology / Physics / Psychology). The twin evaluates that conditioned tail through the ONE
 						// evaluator against this city's contexts, so a slot counts when its tech is actually held.
+						// THE READ EDGE: ×100 like every authored amount; a slot count is whole.
 						const int iAllowedSlots =
 							InfoValuation::expectedKeyedTarget(kBuilding.getModifiers(), MODFAM_ALLOWED_SPECIALISTS,
 								CHANNEL_AMOUNT, -1, iI,
-								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()));
+								getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 100;
 
 						if (iAllowedSlots > 0)
 						{
@@ -5975,8 +5978,8 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				// The slots this building opens here, and the empire-scope ones it opens in every city. One
 				// empire read covers both legacy legs: the area term authors at EMPIRE too (a landmass is not
 				// an ownable scope), so it reaches the whole empire rather than stopping at the coastline.
-				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) * 16;
-				iValue += kBuilding.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) * iNumCities * 12;
+				iValue += (kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100) * 16;
+				iValue += (kBuilding.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) / 100) * iNumCities * 12;
 				iValue += kBuilding.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
 
 				int iMilitaryProductionModifier = kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY);

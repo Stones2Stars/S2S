@@ -5587,8 +5587,6 @@ def canTriggerUnlimitedPower2(argsList):
   player = GC.getPlayer(data.ePlayer)
   eventCity = player.getCity(data.iCityId)
 
-  if (eventCity.area().isCleanPower(player.getTeam())):
-    return False
   if (player.getGold() < (eventCity.area().getNumCities() * 100)):
     return False
   return True
@@ -5599,7 +5597,6 @@ def TriggerUnlimitedPower2(argsList):
 	CyArea = CyPlayer.getCity(data.iCityId).area()
 	iRequireGold = 100 * CyArea.getNumCities()
 	CyPlayer.changeGold(-iRequireGold)
-	CyArea.changeCleanPowerCount(CyPlayer.getTeam(), 1)
 
 def getHelpUnlimitedPower2(argsList):
 	data = argsList[1]

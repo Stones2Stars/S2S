@@ -447,10 +447,9 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_HAS_COAST:       return pr->min >= 0 ? (cityContext != NULL && cityContext->isCoastal(pr->min))
 	                                                     : (plotContext != NULL && plotContext->hasCoast());
 	// Fresh water is target-relative (json §3.5): on a PLOT target the tile's own access; with a CITY in
-	// context ALSO the city's fresh-water ACCESS counter (providesFreshWater buildings feed it via
-	// changeFreshWater) -- the engine's own dormancy leg is plot()->isFreshWater() || hasFreshWater()
-	// so a plot-only read wrongly dorms every city fed by a provider building (the
-	// AQUEDUCT/WATER_TOWER chain -- the worked-plot yield collapse).
+	// context ALSO the city's fresh-water ACCESS verdict (the `providesFreshWater` amenity refcount) -- the
+	// engine's own dormancy leg is plot()->isFreshWater() || hasFreshWater(), so a plot-only read wrongly dorms
+	// every city fed by a provider building (the AQUEDUCT/WATER_TOWER chain -- the worked-plot yield collapse).
 	case CASC_PRED_HAS_FRESHWATER:  return (plotContext != NULL && plotContext->hasFreshWater())
 	                                     || (cityContext != NULL && cityContext->hasFreshWaterAccess());
 	case CASC_PRED_HAS_TERRAIN:     return ev_cityPlotHas(cityContext, evp_workedTerrain, pr);

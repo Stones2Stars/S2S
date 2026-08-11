@@ -109,8 +109,6 @@ public:
 	int getNumRevealedFeatureTiles(TeamTypes eTeam, FeatureTypes eFeature) const;
 	int getNumRevealedTerrainTiles(TeamTypes eTeam, TerrainTypes eTerrain) const;
 
-	bool isCleanPower(TeamTypes eIndex) const;
-	void changeCleanPowerCount(TeamTypes eIndex, int iChange);
 
 	int getBorderObstacleCount(TeamTypes eIndex) const;
 	bool isBorderObstacle(TeamTypes eIndex) const;
@@ -177,7 +175,6 @@ protected:
 	int* m_aiPower;
 	int* m_aiBestFoundValue;
 	int* m_aiNumRevealedTiles;
-	int* m_aiCleanPowerCount;
 	int* m_aiBorderObstacleCount;
 	int* m_aiSpawnValidPlotCount;
 	int* m_paiNumBonuses;

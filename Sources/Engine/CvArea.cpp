@@ -16,7 +16,7 @@
 #include "AI/CvTeamAI.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
-#include "Spine/CvEventSpine.h"         // emitAreaCleanPowerChanged / emitAreaTilesChanged -- the area DOMAIN facts
+#include "Spine/CvEventSpine.h"         // emitAreaTilesChanged -- the area DOMAIN facts
 
 // Public Functions...
 
@@ -32,7 +32,6 @@ CvArea::CvArea()
 	m_abHomeArea = new bool[MAX_PLAYERS];
 
 	m_aiNumRevealedTiles = new int[MAX_TEAMS];
-	m_aiCleanPowerCount = new int[MAX_TEAMS];
 	m_aiBorderObstacleCount = new int[MAX_TEAMS];
 
 	m_aeAreaAIType = new AreaAITypes[MAX_TEAMS];
@@ -80,7 +79,6 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY(m_aiBestFoundValue);
 	SAFE_DELETE_ARRAY(m_abHomeArea);
 	SAFE_DELETE_ARRAY(m_aiNumRevealedTiles);
-	SAFE_DELETE_ARRAY(m_aiCleanPowerCount);
 	SAFE_DELETE_ARRAY(m_aiBorderObstacleCount);
 	SAFE_DELETE_ARRAY(m_aeAreaAIType);
 	SAFE_DELETE_ARRAY(m_aTargetCities);
@@ -146,7 +144,6 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 	for (int iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		m_aiNumRevealedTiles[iI] = 0;
-		m_aiCleanPowerCount[iI] = 0;
 		m_aiBorderObstacleCount[iI] = 0;
 		m_aeAreaAIType[iI] = NO_AREAAI;
 	}
@@ -211,7 +208,6 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_abHomeArea);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiNumRevealedTiles);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiCleanPowerCount);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiBorderObstacleCount);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_TEAMS, (int*)m_aeAreaAIType);
@@ -293,7 +289,6 @@ void CvArea::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_abHomeArea);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiNumRevealedTiles);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiCleanPowerCount);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_TEAMS, m_aiBorderObstacleCount);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_TEAMS, (int*)m_aeAreaAIType);
@@ -779,46 +774,6 @@ void CvArea::changeNumRevealedTiles(TeamTypes eIndex, int iChange)
 	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
 	m_aiNumRevealedTiles[eIndex] += iChange;
 	FASSERT_NOT_NEGATIVE(getNumRevealedTiles(eIndex));
-}
-
-
-bool CvArea::isCleanPower(TeamTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
-	return m_aiCleanPowerCount[eIndex] > 0;
-}
-
-
-void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
-
-	if (iChange != 0)
-	{
-		const bool bWasCleanPower = m_aiCleanPowerCount[eIndex] > 0;
-
-		m_aiCleanPowerCount[eIndex] += iChange;
-
-		if (bWasCleanPower != (m_aiCleanPowerCount[eIndex] > 0))
-		{
-			// A leg of CvCity::hasPowerSource() (reached through isAreaCleanPower) -- power supplied to every city
-			// of this team in this area. The count crossing IS the fact: the raw count moves per providing
-			// building, the (area x team) verdict only here.
-			if (m_aiCleanPowerCount[eIndex] > 0)
-			{
-				emitAreaCleanPowerAdded(getID(), (int)eIndex);
-			}
-			else
-			{
-				emitAreaCleanPowerRemoved(getID(), (int)eIndex);
-			}
-
-			if (eIndex == GC.getGame().getActiveTeam())
-			{
-				gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-			}
-		}
-	}
 }
 
 

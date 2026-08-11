@@ -751,8 +751,8 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 		upperFlatSum += owner.getCascadePackage().readFlat(iChannel);
 		percentSum += owner.getCascadePackage().readPercent(iChannel);
 	}
-	cityFlatSum += city.getCascadePackage().readFlat(iChannel);
-	percentSum += city.getCascadePackage().readPercent(iChannel);
+	cityFlatSum += city.getBuildingYields().readFlat(iChannel);
+	percentSum += city.getBuildingYields().readPercent(iChannel);
 }
 
 void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum)
@@ -775,8 +775,8 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 		flatSum += owner.getCascadePackage().readFlat(iChannel);
 		percentSum += owner.getCascadePackage().readPercent(iChannel);
 	}
-	flatSum += city.getCascadePackage().readFlat(iChannel);
-	percentSum += city.getCascadePackage().readPercent(iChannel);
+	flatSum += city.getBuildingYields().readFlat(iChannel);
+	percentSum += city.getBuildingYields().readPercent(iChannel);
 }
 
 
@@ -951,7 +951,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	// every log silent, because a spin emits nothing.
 	// ⛑ The slot is maintained by two legs that are total together: the RESOLVE delta (foldPlotSegment in
 	// CvModifierConsumer) and the WORKED membership fact (applyWorkedPlot). See CvCascadePackage::plotBaseFlat.
-	int64_t iPlotBase = city.getCascadePackage().readPlotBaseFlat(iChannel);
+	int64_t iPlotBase = city.getBuildingYields().readPlotBaseFlat(iChannel);
 	int64_t iPlotNature = 0;
 	int64_t iPlotImprovement = 0;
 	int64_t iPlotRest = 0;
@@ -1167,9 +1167,17 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	int64_t iPercentSum = 0;
 	rolledLegsAtCity(city, iChannel, iUpperFlatSum, iCityFlatSum, iPercentSum);
 	// the upper legs join the BASE the stack multiplies; only the city's own flats are the post-stack EXTRA
-	// the per-type rows come out of THIS fold, never a second one beside it ([DEC-single-implementation])
-	const int64_t iSpecialists = specialistTerm(city, iChannel, evalCtx,
-		pTermsOut != NULL ? &pTermsOut->specialistRows : NULL, &kHeldTraits);
+	// ⚖ THE SPECIALIST TERM IS A BARE FETCH off the city's SPECIALIST plane -- a maintained sum, applied by the
+	// specialist fact ([state-repositories.md] § THE ORIGIN RULE), never a read-time walk over the registry.
+	// It holds FLATS ONLY: a percent a specialist authors is an ordinary city modifier and is already in the
+	// stack below, so this joins BASE and takes that one stack exactly as the worked plots do.
+	const int64_t iSpecialists = city.getSpecialistYields().readFlat(iChannel);
+	// The per-type census ROWS only -- the decomposition the [MODIFIER] specialistRead line renders, which a
+	// summed plane cannot itemise. ⛔ Its return is NOT the value: that is the plane above.
+	if (pTermsOut != NULL)
+	{
+		specialistTerm(city, iChannel, evalCtx, &pTermsOut->specialistRows, &kHeldTraits);
+	}
 	const int64_t iRate = cityRate(iBase + iUpperFlatSum, iSpecialists, (int)iPercentSum, iCityFlatSum);
 	if (pTermsOut != NULL)
 	{

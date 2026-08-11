@@ -57,7 +57,7 @@ namespace
 		const CvCity* pWorkingCity = kPlot.getWorkingCity();
 		if (pWorkingCity != NULL)
 		{
-			pWorkingCity->getCascadePackage().applyPlotBaseFlat(iChannel, iResolvedDelta);
+			pWorkingCity->getBuildingYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
 		}
 	}
 }
@@ -431,8 +431,35 @@ namespace
 	// One city's share of a source's deposits. Its OWN eval ctx, so the entry's `per` scalers and conditions
 	// resolve against THIS city -- which is the whole reason an above-city deposit is folded per city rather
 	// than resolved once and handed out.
+	// Apply ONE resolved entry into whichever yield plane its ORIGIN names. Templated because the planes are
+	// DIFFERENT TYPES ([DEC-hard-typing-or-rollerskate]): no runtime reference could hold either, which is the
+	// property that stops a specialist deposit ever reaching the building plane.
+	template <class TPkg>
+	void mc_applyEntryToPlane(const TPkg& kPackage, const CvModEntry* pEntry, int iChannel, bool bPercentSide,
+		int64_t iValue, int iMultiplicity)
+	{
+		if (bPercentSide)
+		{
+			kPackage.applyPercent(iChannel, (int)iValue);
+		}
+		else
+		{
+			kPackage.applyFlat(iChannel, iValue);
+		}
+		// THE BOOK: a conditioned entry plane A just applied is booked, so the ATOM route finds it already there
+		// and does not stack a second copy ([DEC-maintained-sum]). A withdrawal clears it.
+		if (pEntry->enabled != NULL || pEntry->disabled != NULL)
+		{
+			const typename TPkg::BookedDeposit kPrev = kPackage.bookedDeposit(pEntry);
+			kPackage.setBookedDeposit(pEntry, iChannel, bPercentSide,
+				(iMultiplicity > 0) ? (kPrev.iValue + iValue) : 0);
+		}
+	}
+
+	// ⛔ eOrigin decides WHICH yield plane these deposits join, and it is REQUIRED -- a new source kind must
+	// state its plane rather than inherit one ([state-repositories.md] § THE ORIGIN RULE).
 	void mc_applyCityDeposits(const std::vector<CvModEntry*>& entries, int iMultiplicity, int iSourceIndex, const CvCity& city,
-		const char* szSource, const char* szOnFact, int iSourceBuilding)
+		const char* szSource, const char* szOnFact, int iSourceBuilding, CvCascOrigin eOrigin)
 	{
 		CvCascadeEvalCtx evalCtx;
 		// ⛔ THE CTX MUST CARRY THE PLOT GROUP **AND** THE ENABLER'S OPERATING SET, or the conditioned half of
@@ -467,32 +494,33 @@ namespace
 			{
 				continue;
 			}
-			if (bPercentSide)
+			// THE ORIGIN DECIDES THE PLANE, BUT ONLY FOR THE FLATS. A specialist's yield is TIER 1 and a
+			// building's is TIER 2 ([modifier.md] 2a), and a summed slot cannot tell them apart afterwards --
+			// so the FLATS never share a plane.
+			// ⛔ A PERCENT AUTHORED BY A SPECIALIST IS AN ORDINARY CITY MODIFIER (owner) and joins the ONE
+			// additive stack exactly like every other source's -- it is NOT confined to the specialist's own
+			// yields. ⚠ Do not confuse it with a percent TARGETING specialists, which is what scales the
+			// specialist term; that is a KEYED deposit and a different mechanism.
+			if (eOrigin == CASC_ORIGIN_SPECIALIST && !bPercentSide)
 			{
-				city.getCascadePackage().applyPercent(iChannel, (int)iValue);
+				mc_applyEntryToPlane(city.getSpecialistYields(), pEntry, iChannel, bPercentSide, iValue, iMultiplicity);
 			}
 			else
 			{
-				city.getCascadePackage().applyFlat(iChannel, iValue);
-			}
-			// THE BOOK: a conditioned entry that plane A just applied is now booked, so the ATOM route finds it
-			// already there and does not stack a second copy on top ([DEC-maintained-sum] -- the two planes move
-			// one slot and must agree about what is in it). A withdrawal (negative multiplicity) clears it.
-			if (pEntry->enabled != NULL || pEntry->disabled != NULL)
-			{
-				// Plane A books the AMOUNT it just applied, so a later re-book differences against the real
-				// contribution rather than against a yes/no.
-				const CvCascadePackage<CvCity>::BookedDeposit kPrev =
-					city.getCascadePackage().bookedDeposit(pEntry);
-				city.getCascadePackage().setBookedDeposit(pEntry, iChannel, bPercentSide,
-					(iMultiplicity > 0) ? (kPrev.iValue + iValue) : 0);
+				mc_applyEntryToPlane(city.getBuildingYields(), pEntry, iChannel, bPercentSide, iValue, iMultiplicity);
 			}
 			mc_noteChannelApplied(iChannel, (int)city.getOwner());
 			// The per-source ATTRIBUTION line (DIAGNOSTIC, level 3 -- free until asked for).
 			CascadeChannelRegistry::reportDepositApply(szSource, iChannel, CASC_SCOPE_CITY, bPercentSide,
 				iValue, (int)city.getOwner(), city.getID(), szOnFact);
 		}
-		city.getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
+		// A specialist reaches BOTH planes -- its flats the specialist plane, its percents the city stack on
+		// the building plane -- so it is noted on both, or a later withdrawal would not find one of them.
+		if (eOrigin == CASC_ORIGIN_SPECIALIST)
+		{
+			city.getSpecialistYields().noteSourceApplied(iSourceIndex, iMultiplicity);
+		}
+		city.getBuildingYields().noteSourceApplied(iSourceIndex, iMultiplicity);
 	}
 
 	// A `plots`-TARGET deposit, resolved once PER PLOT so the entry's own filter (`enabled: IS_WATER`) decides
@@ -758,9 +786,12 @@ namespace
 	// Apply ONE source's compiled deposits into every package they feed. The scopes a source reaches come from
 	// its own entries (resolveEntry declines any entry not at the scope being applied), so nothing here decides
 	// what a source deposits -- only WHERE the owner objects are.
+	// ⛔ eOrigin is REQUIRED and has NO DEFAULT: a new yield source must state which plane it deposits into
+	// ([DEC-hard-typing-or-rollerskate]). A default would silently send the next provider to the building plane,
+	// which is the exact bug this split exists to end.
 	void mc_applySourceDeposits(const CvInfo* pSourceInfo, int iMultiplicity,
 		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot,
-		CvCascadePackage<CvPlot>::PlotSegment ePlotSegment, const char* szOnFact)
+		CvCascadePackage<CvPlot>::PlotSegment ePlotSegment, const char* szOnFact, CvCascOrigin eOrigin)
 	{
 		if (pSourceInfo == NULL || iMultiplicity == 0)
 		{
@@ -848,7 +879,7 @@ namespace
 		if (pCity != NULL)
 		{
 			mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, *pCity, pSourceInfo->getType(), szOnFact,
-				mc_buildingIdOf(pSourceInfo));
+				mc_buildingIdOf(pSourceInfo), eOrigin);
 			// a CITY-scope `plots` deposit reaches THIS city's worked plots and no other city's
 			std::vector<const CvModEntry*> cityPlotEntries;
 			if (!bBankPlotsFan && mc_selectPlotsTargetEntries(entries, CASC_SCOPE_CITY, cityPlotEntries))
@@ -867,7 +898,7 @@ namespace
 				if (*cityIterator != NULL)
 				{
 					mc_applyCityDeposits(entries, iMultiplicity, iSourceIndex, **cityIterator, pSourceInfo->getType(), szOnFact,
-						mc_buildingIdOf(pSourceInfo));
+						mc_buildingIdOf(pSourceInfo), eOrigin);
 				}
 			}
 		}
@@ -1035,12 +1066,12 @@ namespace
 				continue;
 			}
 			const int iSourceIndex = DepositIndex::sourceIndexOf(pSourceInfo);
-			if (kCity.getCascadePackage().hasAppliedSource(iSourceIndex))
+			if (kCity.getBuildingYields().hasAppliedSource(iSourceIndex))
 			{
 				continue;   // the fan already delivered this one -- folding it again is the double
 			}
 			mc_applyCityDeposits(pModifiers->entries(), 1, iSourceIndex, kCity,
-				pSourceInfo->getType(), szOnFact, mc_buildingIdOf(pSourceInfo));
+				pSourceInfo->getType(), szOnFact, mc_buildingIdOf(pSourceInfo), CASC_ORIGIN_BUILDING);
 		}
 	}
 
@@ -1154,7 +1185,7 @@ namespace
 			}
 			if (eScope == CASC_SCOPE_CITY)
 			{
-				if (pCity == NULL || !pCity->getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+				if (pCity == NULL || !pCity->getBuildingYields().hasAppliedSource(kGated.sourceIndex))
 				{
 					if (pCity != NULL)
 					{
@@ -1183,8 +1214,8 @@ namespace
 				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, false,
 					iChannel, bPercentSide, iValue, ePerScaling))
 				{
-					if (bPercentSide) pCity->getCascadePackage().applyPercent(iChannel, (int)iValue);
-					else              pCity->getCascadePackage().applyFlat(iChannel, iValue);
+					if (bPercentSide) pCity->getBuildingYields().applyPercent(iChannel, (int)iValue);
+					else              pCity->getBuildingYields().applyFlat(iChannel, iValue);
 					// Planes B and C attribute too -- a count or an atom crossing moving a deposit is exactly the
 					// class a total can never explain, so leaving it out would make the decomposition lie by omission.
 					CascadeChannelRegistry::reportDepositApply(
@@ -1259,10 +1290,10 @@ namespace
 	// ([state-repositories.md] § THE INVARIANT). ⛔ The OTHER axes are still unrouted -- plane B (the COUNT route)
 	// and plane C for the non-bonus atoms -- and remain a HOLE rather than a decision.
 	void mc_applySource(const CvInfo* pSourceInfo, int iMultiplicity, int iEventId,
-		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot)
+		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot, CvCascOrigin eOrigin)
 	{
 		mc_applySourceDeposits(pSourceInfo, iMultiplicity, pPlayer, pCity, pPlot, mc_plotSegmentFor(iEventId),
-			spineEventName(iEventId));
+			spineEventName(iEventId), eOrigin);
 	}
 
 
@@ -1299,8 +1330,8 @@ namespace
 	void mc_rebookCity(const CvCity& kCity, const DepositIndex::GatedDeposit& kGated,
 		int iOwedChannel, bool bOwedPercent, int64_t iOwedValue, McGatedTally* pTally)
 	{
-		const CvCascadePackage<CvCity>::BookedDeposit kBooked =
-			kCity.getCascadePackage().bookedDeposit(kGated.deposit->entry);
+		const CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING>::BookedDeposit kBooked =
+			kCity.getBuildingYields().bookedDeposit(kGated.deposit->entry);
 		if (kBooked.iChannel == iOwedChannel && kBooked.bPercent == bOwedPercent && kBooked.iValue == iOwedValue)
 		{
 			if (pTally != NULL && iOwedValue == 0) { pTally->iRefused++; }
@@ -1308,12 +1339,12 @@ namespace
 		}
 		if (kBooked.iValue != 0 && (kBooked.iChannel != iOwedChannel || kBooked.bPercent != bOwedPercent))
 		{
-			if (kBooked.bPercent) kCity.getCascadePackage().applyPercent(kBooked.iChannel, (int)-kBooked.iValue);
-			else                  kCity.getCascadePackage().applyFlat(kBooked.iChannel, -kBooked.iValue);
+			if (kBooked.bPercent) kCity.getBuildingYields().applyPercent(kBooked.iChannel, (int)-kBooked.iValue);
+			else                  kCity.getBuildingYields().applyFlat(kBooked.iChannel, -kBooked.iValue);
 			if (iOwedValue != 0)
 			{
-				if (bOwedPercent) kCity.getCascadePackage().applyPercent(iOwedChannel, (int)iOwedValue);
-				else              kCity.getCascadePackage().applyFlat(iOwedChannel, iOwedValue);
+				if (bOwedPercent) kCity.getBuildingYields().applyPercent(iOwedChannel, (int)iOwedValue);
+				else              kCity.getBuildingYields().applyFlat(iOwedChannel, iOwedValue);
 			}
 		}
 		else
@@ -1324,12 +1355,12 @@ namespace
 				const int iSlot = (iOwedChannel >= 0) ? iOwedChannel : kBooked.iChannel;
 				if (iSlot >= 0)
 				{
-					if (bOwedPercent || kBooked.bPercent) kCity.getCascadePackage().applyPercent(iSlot, (int)iDelta);
-					else                                  kCity.getCascadePackage().applyFlat(iSlot, iDelta);
+					if (bOwedPercent || kBooked.bPercent) kCity.getBuildingYields().applyPercent(iSlot, (int)iDelta);
+					else                                  kCity.getBuildingYields().applyFlat(iSlot, iDelta);
 				}
 			}
 		}
-		kCity.getCascadePackage().setBookedDeposit(kGated.deposit->entry, iOwedChannel, bOwedPercent, iOwedValue);
+		kCity.getBuildingYields().setBookedDeposit(kGated.deposit->entry, iOwedChannel, bOwedPercent, iOwedValue);
 		mc_noteChannelApplied(iOwedChannel, (int)kCity.getOwner());
 		if (pTally != NULL) { pTally->iApplied++; }
 		if (iOwedValue != 0)
@@ -1377,7 +1408,7 @@ namespace
 				continue;
 			}
 			if (pTally != NULL) { pTally->iFound++; }
-			if (!kCity.getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+			if (!kCity.getBuildingYields().hasAppliedSource(kGated.sourceIndex))
 			{
 				if (pTally != NULL) { pTally->iNoSource++; }
 				if (spineGameLoadInProgress())
@@ -1801,14 +1832,14 @@ namespace
 		McDrainByChannel* pByChannel)
 	{
 		if (kGated.deposit == NULL || kGated.deposit->entry == NULL
-			|| !kCity.getCascadePackage().hasAppliedSource(kGated.sourceIndex))
+			|| !kCity.getBuildingYields().hasAppliedSource(kGated.sourceIndex))
 		{
 			return false;
 		}
 		// The drain owes an arrival ONLY for a deposit that is not already booked -- otherwise it stacks on top of
 		// whatever plane A or an earlier crossing already put in the slot, which is the same double-apply the book
 		// exists to stop.
-		if (kCity.getCascadePackage().isGatedBooked(kGated.deposit->entry))
+		if (kCity.getBuildingYields().isGatedBooked(kGated.deposit->entry))
 		{
 			return false;
 		}
@@ -1832,9 +1863,9 @@ namespace
 			return false;
 		}
 		if (pByChannel != NULL) { pByChannel->applied[iChannel]++; }
-		if (bPercentSide) kCity.getCascadePackage().applyPercent(iChannel, (int)iValue);
-		else              kCity.getCascadePackage().applyFlat(iChannel, iValue);
-		kCity.getCascadePackage().setBookedDeposit(kGated.deposit->entry, iChannel, bPercentSide, iValue);
+		if (bPercentSide) kCity.getBuildingYields().applyPercent(iChannel, (int)iValue);
+		else              kCity.getBuildingYields().applyFlat(iChannel, iValue);
+		kCity.getBuildingYields().setBookedDeposit(kGated.deposit->entry, iChannel, bPercentSide, iValue);
 		CascadeChannelRegistry::reportDepositApply(
 			(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_CITY,
 			bPercentSide, iValue, (int)kCity.getOwner(), kCity.getID(), "atomDrain");
@@ -1927,7 +1958,7 @@ namespace
 			}
 			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)it->iOwner);
 			const CvCity* pCity = kOwner.getCity(it->iCityId);
-			if (pCity == NULL || !pCity->getCascadePackage().hasAppliedSource(pGated->sourceIndex))
+			if (pCity == NULL || !pCity->getBuildingYields().hasAppliedSource(pGated->sourceIndex))
 			{
 				continue;   // the city went, or its source never arrived at all -- neither is this drain's to fix
 			}
@@ -2011,7 +2042,7 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
 				{
 					mc_applySource(&GC.getBuildingInfo((BuildingTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, pCity, NULL);
+						pPlayer, pCity, NULL, CASC_ORIGIN_BUILDING);
 				}
 				break;
 			}
@@ -2041,7 +2072,7 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumReligionInfos())
 				{
 					mc_applySource(&GC.getReligionInfo((ReligionTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, pCity, NULL);
+						pPlayer, pCity, NULL, CASC_ORIGIN_BUILDING);
 				}
 				mc_applyGated(DepositIndex::gatedByReligionCounts(), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, pCity, NULL);
@@ -2059,7 +2090,7 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumCorporationInfos())
 				{
 					mc_applySource(&GC.getCorporationInfo((CorporationTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, pCity, NULL);
+						pPlayer, pCity, NULL, CASC_ORIGIN_BUILDING);
 					mc_applyTypeAtom(GC.getCorporationInfo((CorporationTypes)kEvent.iType).getType(),
 						EDGEB_CORPORATIONS, kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, pCity);
 				}
@@ -2071,8 +2102,13 @@ namespace
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumSpecialistInfos())
 				{
+					// THE SPECIALIST PLANE. A specialist's YIELD is TIER 1 -- inside the city stack, unlike a
+					// building's ([modifier.md] 2a) -- so its flats land on their own plane. Its PERCENTS do not:
+					// a modifier a specialist authors is an ordinary city modifier (owner) and joins the one
+					// additive stack with everyone else's. Buildings issue free specialist COUNTS; the SPECIALIST
+					// issues the yield.
 					mc_applySource(&GC.getSpecialistInfo((SpecialistTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, pCity, NULL);
+						pPlayer, pCity, NULL, CASC_ORIGIN_SPECIALIST);
 				}
 				break;
 			}
@@ -2089,7 +2125,7 @@ namespace
 					// resource again ([enabler.md] §8). The vicinity case below re-gates only; the plot-group case
 					// declines entirely.
 					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, pCity, NULL);
+						pPlayer, pCity, NULL, CASC_ORIGIN_BUILDING);
 					// PLANE C: what everything ELSE deposits BECAUSE this city holds the resource -- the building
 					// yields gated on it. ⛔ Without this the two are silently different questions with one answer:
 					// the resource's own deposits move and every deposit CONDITIONED on it keeps whatever verdict it
@@ -2189,7 +2225,7 @@ namespace
 						// mc_plotSegmentFor routes it to the right SEGMENT of the plot package (nature / improvement /
 						// rest), which is what keeps the §2a floors derivable from three plain sums.
 						mc_applySource(pSubstrate, mc_sourceDirection(kEvent), kEvent.iEventId,
-							pPlayer, pPlot->getPlotCity(), pPlot);
+							pPlayer, pPlot->getPlotCity(), pPlot, CASC_ORIGIN_BUILDING);
 					}
 					// ⛔ The fresh-water verdict is NOT re-derived here, and the ring is not walked. Terrain and
 					// feature are two of the axes PlotContext derives HAS_FRESHWATER from, so it re-derives the bit
@@ -2279,7 +2315,12 @@ namespace
 					const CvCity* pCity = GET_PLAYER((PlayerTypes)kEvent.iC).getCity(kEvent.iB);
 					if (pCity != NULL)
 					{
-						pCity->getCascadePackage().applyWorkedPlot(
+						// The PLOT origin folds into its own PLOT-BASE SEGMENT, which is addressed separately from the
+					// building flats on this plane (readPlotBaseFlat vs readFlat) -- so plot yields were never
+					// the origins that got conflated. ⚠ It is a SEGMENT and not yet its own typed package, which
+					// is the remaining step to the three typed planes [state-repositories.md] § THE ORIGIN RULE
+					// describes.
+					pCity->getBuildingYields().applyWorkedPlot(
 							pWorkedPlot->getCascadePackage(),
 							(kEvent.iEventId == SEVT_PLOT_WORKED_ADDED) ? +1 : -1);
 					}
@@ -2306,7 +2347,7 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumTechInfos())
 				{
 					mc_applySource(&GC.getTechInfo((TechTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, NULL, NULL);
+						pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
 					mc_applyTypeAtom(GC.getTechInfo((TechTypes)kEvent.iType).getType(), EDGEB_TECHS,
 						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, NULL);
 				}
@@ -2319,7 +2360,7 @@ namespace
 				{
 					const CvTraitInfo* pTrait = MMKernel::traitData(kEvent.iType);   // the ACTIVE set's record
 					mc_applySource(pTrait, mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, NULL, NULL);
+						pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
 					if (pTrait != NULL)
 					{
 						mc_applyTypeAtom(pTrait->getType(), EDGEB_TRAITS, kEvent.iType,
@@ -2338,7 +2379,7 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumCivicInfos())
 				{
 					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iType), 1, kEvent.iEventId,
-						pPlayer, NULL, NULL);
+						pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
 					// PLANE C, the ARRIVING side: it is now HELD.
 					mc_applyTypeAtom(GC.getCivicInfo((CivicTypes)kEvent.iType).getType(), EDGEB_CIVICS,
 						kEvent.iType, true, pPlayer, NULL);
@@ -2346,7 +2387,7 @@ namespace
 				if (kEvent.iB >= 0 && kEvent.iB < GC.getNumCivicInfos())
 				{
 					mc_applySource(&GC.getCivicInfo((CivicTypes)kEvent.iB), -1, kEvent.iEventId,
-						pPlayer, NULL, NULL);
+						pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
 					// ...and the DISPLACED side: it is now NOT held. Same reason the source halves take opposite
 					// signs -- one fact carries both ends, so the verdict is written per end, never asked of the fact.
 					mc_applyTypeAtom(GC.getCivicInfo((CivicTypes)kEvent.iB).getType(), EDGEB_CIVICS,
@@ -2360,7 +2401,7 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumProjectInfos())
 				{
 					mc_applySource(&GC.getProjectInfo((ProjectTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, NULL, NULL);
+						pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
 					mc_applyTypeAtom(GC.getProjectInfo((ProjectTypes)kEvent.iType).getType(), EDGEB_PROJECTS,
 						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, NULL);
 				}
@@ -2372,7 +2413,7 @@ namespace
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumHeritageInfos())
 				{
 					mc_applySource(&GC.getHeritageInfo((HeritageTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, NULL, NULL);
+						pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
 					mc_applyTypeAtom(GC.getHeritageInfo((HeritageTypes)kEvent.iType).getType(), EDGEB_HERITAGES,
 						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, NULL);
 				}

@@ -51,14 +51,12 @@ public:
 	int getPower(PlayerTypes eIndex) const;
 	int getBestFoundValue(PlayerTypes eIndex) const;
 
-	bool isCleanPower(TeamTypes eIndex) const;
 	bool isBorderObstacle(TeamTypes eIndex) const;
 
 
 	int getNumBonuses(BonusTypes eBonus) const;
 	int getNumTotalBonuses() const;
 
-	void changeCleanPowerCount(TeamTypes eIndex, int iChange) const;
 
 protected:
 	int m_iAreaID;

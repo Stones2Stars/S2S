@@ -26,7 +26,7 @@ const char* const TRIGGER_UNIT_ENTERED_CITY = "onUnitEnteredCity";
 CvTriggerEntry::CvTriggerEntry()
 	: consideredAction(false), happeningInterval(1), condition(NULL),
 	  chanceValue(0), chancePerTypeId(-1), chancePerEach(1), chancePerScope(-1),
-	  grant(NULL),
+	  grant(NULL), destroySelf(false),
 	  heal(0), healFull(false), healUnitCombatId(-1), healCount(0),
 	  propertyId(-1), propertyAmount(0), spatialDistance(0)
 {
@@ -215,6 +215,15 @@ static void triggersParseAction(CvTriggerEntry* pEntry, const picojson::value& v
 		else if (szKey == "count" && val.is<double>())
 		{
 			pEntry->healCount = (int)val.get<double>();
+		}
+		else if (szKey == "destroy" && val.is<std::string>())
+		{
+			// "self" is the only subject: the action's subject is the entity the entry is authored on.
+			pEntry->destroySelf = (val.get<std::string>() == "self");
+			if (!pEntry->destroySelf)
+			{
+				jsonNoteUnconsumed("triggers.action.destroy", val.get<std::string>());
+			}
 		}
 		else if (szKey == "on" && val.is<std::string>())
 		{

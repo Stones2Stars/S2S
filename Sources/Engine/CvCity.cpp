@@ -698,12 +698,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 		}
 	}
 
-	if (pPlot->getFeatureType() != NO_FEATURE && pPlot->getFeatureType() != GC.getFEATURE_FLOOD_PLAINS()
-	&& (GC.getFeatureInfo(pPlot->getFeatureType()).getPopDestroys() == 0 || GC.getFeatureInfo(pPlot->getFeatureType()).getPopDestroys() == 1))
-	{
-		pPlot->setFeatureType(NO_FEATURE);
-	}
-
 	pPlot->updateCityRoute(false);
 
 	for (int iI = 0; iI < MAX_TEAMS; iI++)
@@ -820,8 +814,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	// correct ONLY from a known zero -- a reused slot would inherit the previous occupant's plotAttrs / vicinity
 	// counts, which no later ±1 can ever correct ([DEC-keyed-accumulator]).
 	m_cityContext.clear();
-	// bind the CITY-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
-	m_cascadePackage.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
+	// bind the CITY-scope yield planes, one per ORIGIN ([state-repositories.md] § THE ORIGIN RULE). Both start
+	// EMPTY and are filled ONLY by the facts ([DEC-maintained-sum]).
+	m_buildingYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
+	m_specialistYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	// The enabler's per-city state starts EMPTY and UN-READY: the domains are init'd by their domain enabler at
 	// this city's lifecycle start and filled by DOMAIN events thereafter ([DEC-spine-reseed]) -- never from the
 	// save. Clearing here is load-bearing because a CvCity is RECYCLED out of an FFreeListTrashArray: without it
@@ -898,7 +894,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_icachedPropertyNeedsTurn = 0;
 	m_iCiv = NO_CIVILIZATION;
 	m_iLandmarkAngerTimer = 0;
-	m_iFreshWater = 0;
 	m_iLostProduction = 0;
 	m_iWorkableRadiusOverride = 0;
 	m_iProtectedCultureCount = 0;
@@ -5541,30 +5536,6 @@ void CvCity::setCultureLevelInternal(CultureLevelTypes eNewValue)
 	}
 }
 
-// The provider-BUILDING-fed access verdict. Only the 0-crossing is a state change; a second aqueduct leaves the
-// city just as watered as it was.
-void CvCity::changeFreshWaterInternal(int iChange)
-{
-	if (iChange == 0)
-	{
-		return;
-	}
-	const bool bDidHaveFreshWater = m_iFreshWater > 0;
-	m_iFreshWater += iChange;
-	if (bDidHaveFreshWater == (m_iFreshWater > 0))
-	{
-		return;
-	}
-	if (m_iFreshWater > 0)
-	{
-		emitCityFreshWaterAdded(getID(), getOwner(), m_iFreshWater);
-	}
-	else
-	{
-		emitCityFreshWaterRemoved(getID(), getOwner(), m_iFreshWater);
-	}
-}
-
 void CvCity::setHasReligionInternal(ReligionTypes eIndex, bool bNewValue)
 {
 	if (m_pabHasReligion[eIndex] == bNewValue)
@@ -5645,14 +5616,6 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 
 	if (iNewValue > 0)
 	{
-		if (plot()->getFeatureType() != NO_FEATURE)
-		{
-			const int iPopDestroys = GC.getFeatureInfo(plot()->getFeatureType()).getPopDestroys();
-			if (iPopDestroys > -1 && iNewValue >= iPopDestroys)
-			{
-				plot()->setFeatureType(NO_FEATURE);
-			}
-		}
 		if (bNormal)
 		{
 		}
@@ -6016,11 +5979,11 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 	{
 		// The TYPED free slots this building opens for this specialist. The address is keyed directly by
-		// the type with no container token, which is what the -1 segment selects ([modifier.md §5]); the
-		// A COUNT takes no ×100 -- read as authored.
+		// the type with no container token, which is what the -1 segment selects ([modifier.md §5]).
+		// THE READ EDGE: ×100 like every authored amount; a slot count is whole.
 		const int iTypedFreeSlots =
 			InfoValuation::keyedTarget(kBuilding.getModifiers(), MODFAM_FREE_SPECIALISTS,
-				CHANNEL_AMOUNT, -1, iI);
+				CHANNEL_AMOUNT, -1, iI) / 100;
 		if (iTypedFreeSlots != 0)
 		{
 			iExtraRate += getAdditionalBaseGreatPeopleRateBySpecialist((SpecialistTypes)iI, iTypedFreeSlots);
@@ -6028,8 +5991,9 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	}
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
-	// ([modifier.md §6]), so the loop asks it per slot. A COUNT takes no ×100.
-	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
+	// ([modifier.md §6]), so the loop asks it per slot. ⚠ THE READ EDGE: the accessor is ×100 like every other
+	// authored amount and the reader reduces -- a slot count is whole.
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -6892,8 +6856,9 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	int iSpecialistExtraHappy = 0;
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
-	// ([modifier.md §6]), so the loop asks it per slot. A COUNT takes no ×100.
-	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
+	// ([modifier.md §6]), so the loop asks it per slot. ⚠ THE READ EDGE: the accessor is ×100 like every other
+	// authored amount and the reader reduces -- a slot count is whole.
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -7014,8 +6979,9 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	int iSpecialistExtraHealth = 0;
 
 	// The untyped slots this building opens here -- the engine picks each one's type at placement
-	// ([modifier.md §6]), so the loop asks it per slot. A COUNT takes no ×100.
-	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY);
+	// ([modifier.md §6]), so the loop asks it per slot. ⚠ THE READ EDGE: the accessor is ×100 like every other
+	// authored amount and the reader reduces -- a slot count is whole.
+	const int iCityFreeSpecialistSlots = kBuilding.getFreeSpecialistsAny(CASC_SCOPE_CITY) / 100;
 	for (int iI = 1; iI < iCityFreeSpecialistSlots + 1; iI++)
 	{
 		const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
@@ -7575,11 +7541,12 @@ int CvCity::getFreeSpecialist() const
 	// The realized free-specialist AMOUNT -- the cascade's half of the two-part seam (modifier.md §6); the
 	// engine still picks WHICH specialist each untyped slot becomes. It is the cross-scope roll-up over the
 	// chain this city sits under (team + empire + city), so the empire-authored civic / trait / building slots
-	// are ALREADY inside it. ⛔ A COUNT IS NOT SCALED (owner: a count is game state, not a yield), so this
-	// read does NOT reduce -- the freeSpecialists leaf parses as CASC_UNIT_COUNT and mod_valueForUnit leaves
-	// COUNT alone. A ÷100 here returned 0 for every count below 100, i.e. no free specialists at all.
+	// are ALREADY inside it.
+	// ⚠ THE READ EDGE: the deposit is ×100 like every authored amount ([fixed-point-and-scales] §2 -- there is
+	// no count exemption), and a slot count is whole, so it reduces HERE. This feeds totalFreeSpecialists ->
+	// getMaxSpecialistCount, the cap the assignment fills: left scaled, a city seats 100x its specialists.
 	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1);
-	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel));
+	return std::max(0, InfoValuation::realizedAtCity(*this, iChannel) / 100);
 }
 
 
@@ -7596,7 +7563,7 @@ int CvCity::getPowerCount() const
 //	blackout does not touch it -- two power plants are two live grantors throughout an outage.
 bool CvCity::hasPowerSource() const
 {
-	return getPowerCount() > 0 || isAreaCleanPower();
+	return getPowerCount() > 0;
 }
 
 
@@ -7612,12 +7579,6 @@ bool CvCity::hasPowerSource() const
 bool CvCity::isPowered() const
 {
 	return hasPowerSource() && !hasStatus(CITYSTATUS_POWER_DISABLED);
-}
-
-
-bool CvCity::isAreaCleanPower() const
-{
-	return area() != NULL && area()->isCleanPower(getTeam());
 }
 
 
@@ -10094,8 +10055,9 @@ int CvCity::getMaxSpecialistCount() const
 //	evaluator against this city's contexts, so a slot appears exactly when its tech is held -- which is what the
 //	team ledger was pre-computing on every tech acquire.
 //	⛔ OPERATING buildings only: a dormant or obsolete building confers nothing ([enabler.md §3.2]).
-//	⚠ A COUNT takes no ×100 ([DEC-fixedpoint-x100]: the scaling exists to carry two decimals, and a headcount has
-//	none), so the cap is read exactly as authored -- nothing to reduce.
+//	⚠ THE READ EDGE: the deposit is ×100 like every authored amount ([fixed-point-and-scales] §2 -- there is no
+//	count exemption), and a slot cap is whole, so it reduces HERE. This is the cap the AI seats up to: leaving it
+//	scaled seats 100x the specialists.
 int CvCity::getMaxSpecialistCount(SpecialistTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
@@ -10109,7 +10071,7 @@ int CvCity::getMaxSpecialistCount(SpecialistTypes eIndex) const
 		iTotal += InfoValuation::keyedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
 			MODFAM_ALLOWED_SPECIALISTS, CHANNEL_AMOUNT, -1, (int)eIndex, evalCtx);
 	}
-	return (int)std::max((int64_t)0, iTotal);
+	return (int)std::max((int64_t)0, iTotal / 100);
 }
 
 bool CvCity::isSpecialistValid(SpecialistTypes eIndex, int iExtra) const
@@ -12988,11 +12950,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iLandmarkAngerTimer);
 
-	// Lands through its internal setter. m_iFreshWater is still 0 from reset(), so the change IS the 0-crossing
-	// and the access fact fires exactly once -- from the one body that owns it, not from here.
-	int iLoadedFreshWater = 0;
-	WRAPPER_READ_DECORATED(wrapper, "CvCity", &iLoadedFreshWater, "m_iFreshWater");
-	changeFreshWaterInternal(iLoadedFreshWater);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWorkableRadiusOverride);
 	WRAPPER_READ(wrapper, "CvCity", &m_iProtectedCultureCount);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessTimer);
@@ -13578,7 +13535,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLandmarkAngerTimer);
 
-	WRAPPER_WRITE(wrapper, "CvCity", m_iFreshWater);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWorkableRadiusOverride);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iProtectedCultureCount);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWarWearinessTimer);
@@ -15549,27 +15505,21 @@ int CvCity::getPopulationgrowthratepercentage() const
 
 
 
-void CvCity::changeFreshWater(int iChange)
-{
-	if (iChange != 0)
-	{
-		const bool bDidHaveFreshWater = m_iFreshWater > 0;
-		// The commit and the crossing fact. ⚠ The city's access verdict is DISTINCT from the plot's adjacency
-		// HAS_FRESHWATER fact -- a building can grant a city access on a plot with no water at all.
-		changeFreshWaterInternal(iChange);
-
-		if (bDidHaveFreshWater != hasFreshWater())
-		{
-			algo::for_each(plots(), bind(CvPlot::updateIrrigated, _1));
-
-			updateFreshWaterHealth();
-		}
-	}
-}
-
+// The provider-BUILDING-fed access verdict, read straight off the amenity refcount that holds it -- the same
+// shape as isPowered/isGovernmentCenter. ⚠ DISTINCT from the plot's adjacency HAS_FRESHWATER fact: a building can
+// grant a city access on a plot with no water at all.
 bool CvCity::hasFreshWater() const
 {
-	return m_iFreshWater > 0;
+	return m_cityContext.amenityCount(CLS_AMENITY_PROVIDES_FRESH_WATER) > 0;
+}
+
+// The derived state the access verdict feeds. Called from the crossing announcement, so it runs once per genuine
+// 0 <-> non-zero move and never on a second provider arriving.
+void CvCity::refreshFreshWaterDerived()
+{
+	algo::for_each(plots(), bind(CvPlot::updateIrrigated, _1));
+
+	updateFreshWaterHealth();
 }
 
 

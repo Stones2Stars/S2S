@@ -327,9 +327,12 @@ void AmenityContext::applyKey(int iAmenityId, int iSign)
 	// It is read exactly that way -- CvCity::isGovernmentCenter is a bare `has` on this key.
 	const bool bIsGovernmentCenterKey = (iAmenityId == CLS_AMENITY_GOVERNMENT_CENTER);
 	const bool bGovernmentCenterBefore = bIsGovernmentCenterKey && has(iAmenityId);
+	// ⚖ FRESH WATER is the government centre's shape: nothing gates delivery, so this store's own 0 <-> non-zero
+	// verdict IS the fact. It rode a serialized CvCity counter whose changer had lost every caller, so a provider
+	// building granted its city nothing at all -- the grantor's own amenity is the feeder that was missing.
+	const bool bIsFreshWaterKey = (iAmenityId == CLS_AMENITY_PROVIDES_FRESH_WATER);
+	const bool bFreshWaterBefore = bIsFreshWaterKey && has(iAmenityId);
 	add(iAmenityId, iSign);
-	// Power and the government centre are wired here; FRESH WATER is the last per-attribute fact still riding its
-	// own counter, and migrates onto this crossing as it converts.
 	if (m_city != NULL)
 	{
 		if (bIsPowerKey)
@@ -339,6 +342,10 @@ void AmenityContext::applyKey(int iAmenityId, int iSign)
 		else if (bIsGovernmentCenterKey)
 		{
 			announceGovernmentCenterCrossing(bGovernmentCenterBefore);
+		}
+		else if (bIsFreshWaterKey)
+		{
+			announceFreshWaterCrossing(bFreshWaterBefore);
 		}
 	}
 }
@@ -386,6 +393,40 @@ void AmenityContext::announceGovernmentCenterCrossing(bool bWasGovernmentCenter)
 	else
 	{
 		emitCityGovernmentCenterRemoved(m_city->getID(), m_city->getOwner());
+	}
+}
+
+
+// ⚖ THE ONE ANNOUNCEMENT POINT for the fresh-water access verdict. The verdict used to live in a serialized
+// CvCity counter fed by changeFreshWater -- which had no caller left, so `providesFreshWater` buildings conferred
+// nothing and the crossing this store now announces could never happen. The refcount IS the verdict, exactly as
+// the government centre's is: no status sits between a provider and the city.
+// ⛔ Unlike the other two crossings this one owes DERIVED state -- plot irrigation and the city's fresh-water
+// health both read the verdict -- so they refresh HERE, off the crossing, rather than at whatever moved it.
+void AmenityContext::announceFreshWaterCrossing(bool bHadFreshWater)
+{
+	const bool bHasFreshWater = has(CLS_AMENITY_PROVIDES_FRESH_WATER);
+	if (bHadFreshWater == bHasFreshWater)
+	{
+		return;
+	}
+	const int iCityId = m_city->getID();
+	const PlayerTypes eOwner = m_city->getOwner();
+	if (bHasFreshWater)
+	{
+		emitCityFreshWaterAdded(iCityId, eOwner, count(CLS_AMENITY_PROVIDES_FRESH_WATER));
+	}
+	else
+	{
+		emitCityFreshWaterRemoved(iCityId, eOwner, count(CLS_AMENITY_PROVIDES_FRESH_WATER));
+	}
+	if (eOwner != NO_PLAYER)
+	{
+		CvCity* pMutableCity = GET_PLAYER(eOwner).getCity(iCityId);
+		if (pMutableCity != NULL)
+		{
+			pMutableCity->refreshFreshWaterDerived();
+		}
 	}
 }
 

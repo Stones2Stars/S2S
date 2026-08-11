@@ -469,7 +469,7 @@ enum SpineDomainEvent
 	// player alert -- re-implements the same sweep ([DEC-single-implementation]).
 	SEVT_CITY_PROPERTY_BAND_ADDED    = 196,
 	SEVT_CITY_PROPERTY_BAND_REMOVED  = 197,
-	// The city GAINED / LOST fresh-water ACCESS (CvCity::changeFreshWater, at its count crossing) -- the
+	// The city GAINED / LOST fresh-water ACCESS (announced from the amenity refcount crossing) -- the
 	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
 	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
 	// iB = the new counter, iC = owner, iSrcLoc = cityId. DOMAIN.
@@ -626,12 +626,6 @@ enum SpineDomainEvent
 	// iA = HOW MANY, unsigned. iSrcLoc = areaId. DOMAIN.
 	SEVT_AREA_TILE_ADDED            = 142,
 	SEVT_AREA_TILE_REMOVED          = 143,
-	// An AREA GAINED / LOST clean power for a TEAM (CvArea::changeCleanPowerCount, at its count crossing) -- a leg
-	// of CvCity::hasPowerSource(), reached through CvCity::isAreaCleanPower(). The fact is scoped to
-	// (area x team), which has no owning player, so iC stays -1 and the team rides iB.
-	// iB = teamId, iSrcLoc = areaId. DOMAIN.
-	SEVT_AREA_CLEAN_POWER_ADDED     = 144,
-	SEVT_AREA_CLEAN_POWER_REMOVED   = 145,
 
 	// ⚖ THE PLOT SERVES A RESOURCE ON SITE -- the plot's own derived verdict that this tile makes bonus B AVAILABLE
 	// to a city that can work it: the tile CARRIES B *and* its improvement TRADES it
@@ -920,8 +914,6 @@ void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCoun
 void emitPlotGroupBonusRemoved(int iOwner, int iPlotGroupId, int iBonus, int iCount);
 void emitAreaTileAdded(int iArea, int iCount);
 void emitAreaTileRemoved(int iArea, int iCount);
-void emitAreaCleanPowerAdded(int iArea, int iTeam);
-void emitAreaCleanPowerRemoved(int iArea, int iTeam);
 // ===== TEAM =====
 void emitTeamMemberAdded(int iTeam, int iCount);
 void emitTeamMemberRemoved(int iTeam, int iCount);
