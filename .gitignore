@@ -108,3 +108,7 @@ Sources/sweep_tmp
 *AppDataLocalTempclaude*
 # per-session docs-gate acknowledgment markers (the .claude/hooks/docs-gate.py hook)
 .claude/docs-ack/
+
+# Python bytecode, anywhere -- the per-directory rules above kept missing new locations
+__pycache__/
+*.pyc
