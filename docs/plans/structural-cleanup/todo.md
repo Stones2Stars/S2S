@@ -709,10 +709,12 @@
   (climate · sea level · bonus · feature · terrain) have no published read, and `CvMapGeneratorUtil.py` is the
   DLL's own fallback implementation ([engine.md](../../reference/engine.md): undefined callbacks fall back to
   it), so this is not one screen failing — it is the generation path.
-  ⚠ **"Map scripts are their own boundary" scopes them out of the LIBRARY, never out of being SERVED**
-  ([python-read-map.md](../../reference/python-read-map.md) ruling 1) — the callback contract is untouched by
-  the `Cy*` cut, the READS inside the callbacks are not. Reading that ruling as "not a gap" is the misreading
-  to avoid; it cost one pass already.
+  ⚠ **They are NOT outside the library — only their CALLBACK contract is separate**
+  ([python-read-map.md](../../reference/python-read-map.md) ruling 1). The old `GC.get<X>Info` endpoints are
+  not coming back, so the reads move onto the named surface like every other consumer's.
+  ⚖ **What IS genuinely theirs is the ENUMERATION: a map script really does have to iterate every bonus,
+  terrain and feature**, so the whole-registry loop is correct here and STAYS — the pedia's carve-out, second
+  instance. ⛔ Do not convert a map-gen sweep to an edge read; only where each value comes from changes.
   ⚑ The shape is settled by precedent, not open: a per-info accessor per map-gen type, the `CyWorldInfo` shape
   (which already carries map-gen reads). `CyImprovementInfo` exists and takes the one improvement read.
   ⚑ It also gates VERIFICATION of everything that only fires at game start — the era/civ free techs, the

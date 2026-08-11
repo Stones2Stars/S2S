@@ -772,8 +772,33 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
 
 ## 7. The boundary rulings — and the two questions still open
 
-1. **Map scripts are THEIR OWN BOUNDARY (owner ruling).** They are outside the data-fetching library entirely, and the census backs the split on
-   four independent counts: `CvMapGeneratorUtil.py` (269) + `MapScriptToolsOld.py` (672) + the `Assets/Maps`
+1. **Map scripts keep their own CALLBACK contract — they are NOT outside the library (owner).**
+   ⛔ **THE OLD `GC.get<X>Info` ENDPOINTS ARE NOT COMING BACK, SO A MAP SCRIPT'S READS MOVE ONTO THE NAMED
+   SURFACE LIKE EVERY OTHER CONSUMER'S.** What is separate is the **contract** — the named Python callbacks
+   ([engine.md](engine.md)) — never the reads made inside them.
+   ⚠ **The earlier wording here said they were "outside the data-fetching library entirely" and "unaffected by
+   the `Cy*` cut", and BOTH were wrong.** The callback names are unaffected; the reads are not, and every one
+   of them went dead with the cut. ⛔ **The measured cost of that wording: map GENERATION cannot read its data,
+   so a NEW GAME cannot be generated at all** — `CvMapGeneratorUtil.py` is the DLL's own fallback
+   implementation, so this is the generation path rather than one screen ([todo.md](../plans/structural-cleanup/todo.md)).
+   ⚑ It reads as a scope boundary and is a BLOCKER, which is exactly why an agent files it as out-of-scope and
+   moves on. That has now happened; do not repeat it.
+   ⚑ The shape is the ordinary one: a per-info accessor per map-gen type, the `CyWorldInfo` shape — which
+   already carries map-gen reads, so nothing new is being invented for them.
+   ⚖ **WHAT IS GENUINELY DIFFERENT IS THE ENUMERATION, NOT THE SURFACE (owner): a map script is the real case
+   that HAS to iterate every bonus, terrain and feature.** Placing resources and laying terrain is a decision
+   over the whole registry, so the whole-registry loop is CORRECT here and stays — exactly as it is in the
+   pedia ([patterns.md](../architecture/patterns.md): *"it is the pedia, it is where all info is stored, as an
+   encyclopedia"*). Map generation is the SECOND legitimate full-scan consumer, and the only other one.
+   ⛔ So the [patterns.md](../architecture/patterns.md) rule that *a whole-registry loop is the actual defect*
+   does NOT reach these files: there is no maintained set to convert them to, because the answer genuinely
+   depends on every entity. ⚠ Do not "fix" a map-gen sweep into an edge read — that is the opposite error from
+   the one above, and it would delete the mechanic.
+   ⇒ **The loop stays; only where each value COMES FROM changes.** What still applies is the cost note the
+   pedia carries: an enumeration that crosses the boundary once per entity wants ONE crossing, so a per-type
+   read that fills a list beats a call per id.
+   The observations the split was built on stand, and they say why the map-gen TYPES are read by nobody else,
+   never that the reads go unserved: `CvMapGeneratorUtil.py` (269) + `MapScriptToolsOld.py` (672) + the `Assets/Maps`
    scripts (a) consume map-generation info types (`WorldInfo` 60 · `ClimateInfo` 20 · `SeaLevelInfo` 3 ·
    `MapInfo`) **nothing else reads**, (b) run **before most game state exists** — a different lifetime than any
    screen or gameplay consumer, (c) are **write-dominated** (they BUILD the map; the library is a read surface),
