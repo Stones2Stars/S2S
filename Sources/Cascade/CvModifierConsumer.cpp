@@ -388,18 +388,18 @@ namespace
 		case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:
 		case SEVT_EMPIRE_STATE_RELIGION_REMOVED: return -1;
 
-		// These four carry a MAGNITUDE (iA), so the multiplicity is the payload and the SIGN is still the id --
+		// These carry a MAGNITUDE (iA), so the multiplicity is the payload and the SIGN is still the id --
 		// "CITY_SPECIALIST_REMOVED 3" withdraws three times over ([event-spine.md]: the event is the operator).
+		// ⚠ The VICINITY pair is here for its SIGN alone: it drives a gate re-check and deposits nothing, so its
+		// count is read as a direction and never as a multiplicity.
 		case SEVT_CITY_SPECIALIST_ADDED:
 		case SEVT_CITY_POPULATION_ADDED:
 		case SEVT_EMPIRE_PROJECT_ADDED:
-		case SEVT_PLOTGROUP_BONUS_ADDED:
 		case SEVT_CITY_VICINITY_BONUS_ADDED:   return  kEvent.iA;
 
 		case SEVT_CITY_SPECIALIST_REMOVED:
 		case SEVT_CITY_POPULATION_REMOVED:
 		case SEVT_EMPIRE_PROJECT_REMOVED:
-		case SEVT_PLOTGROUP_BONUS_REMOVED:
 		case SEVT_CITY_VICINITY_BONUS_REMOVED: return -kEvent.iA;
 
 		default:                               return 0;
@@ -2063,13 +2063,16 @@ namespace
 			}
 			case SEVT_CITY_BONUS_ADDED:              // the city obtained a bonus over the network
 			case SEVT_CITY_BONUS_REMOVED:            // ... or lost it
-			case SEVT_CITY_VICINITY_BONUS_ADDED:     // a city's local (vicinity) supply count moved
-			case SEVT_CITY_VICINITY_BONUS_REMOVED:
 			{
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
 				{
 					// PLANE A: what the RESOURCE itself deposits at this city.
+					// ⛔ THIS FACT IS THE SOLE CARRIER, because it is the only one of the three that is a CITY's
+					// has-verdict. The other two describe the same holding from further out -- the city's local
+					// supply, and the network component it hangs off -- so each one that deposits here counts one
+					// resource again ([enabler.md] §8). The vicinity case below re-gates only; the plot-group case
+					// declines entirely.
 					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
 						pPlayer, pCity, NULL);
 					// PLANE C: what everything ELSE deposits BECAUSE this city holds the resource -- the building
@@ -2090,16 +2093,30 @@ namespace
 				}
 				break;
 			}
-			case SEVT_PLOTGROUP_BONUS_ADDED:     // the trade network's resource set -- reaches every connected city
-			case SEVT_PLOTGROUP_BONUS_REMOVED:
+			// A city's LOCAL (vicinity) supply count moved -- PLANE C ONLY, so what moves here is the VERDICT of
+			// the deposits gated on this bonus and never the bonus's own ([enabler.md] §8, [json.md] §3.4).
+			// ⚠ Its payload is a COUNT, which is what made depositing here COMPOUND rather than merely double: the
+			// count is the multiplicity, so a city with three local copies scaled the resource's own deposit by
+			// three -- and the supply only ever grew on this save, so nothing came back out.
+			case SEVT_CITY_VICINITY_BONUS_ADDED:
+			case SEVT_CITY_VICINITY_BONUS_REMOVED:
 			{
-				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+				if (pCity != NULL && kEvent.iType >= 0 && kEvent.iType < GC.getNumBonusInfos())
 				{
-					mc_applySource(&GC.getBonusInfo((BonusTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
-						pPlayer, NULL, NULL);
+					mc_applyBonusAtom(kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, pCity);
 				}
 				break;
 			}
+			// The trade network's resource set. ⛔ DELIBERATELY NO DEPOSIT AND NO RE-GATE -- declining IS the
+			// handler. `CvPlotGroup::changeNumBonuses` already fans its member cities so each fires its own
+			// crossing, so every city this could reach is served by the case above, naming itself.
+			// ⚠ It could not have been served here anyway, and that is the part worth knowing: `iSrcLoc` is a
+			// PLOT-GROUP id rather than a city, so there is no city to resolve and the owner-wide fan it fell back
+			// on reached the player's OTHER plot groups too -- cities that never held the resource at all.
+			case SEVT_PLOTGROUP_BONUS_ADDED:
+			case SEVT_PLOTGROUP_BONUS_REMOVED:
+				break;
 			// ⛔ SEVT_CITY_NETWORK_CHANGED is deliberately NOT handled here, and its absence is a DECISION rather
 			// than a missing route. The membership move's resource consequences are announced individually and
 			// FIRST, by the same choke point: CvCity::onNetworkSupplyChanged walks the old and new groups' holdings

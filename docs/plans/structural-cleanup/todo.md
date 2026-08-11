@@ -362,10 +362,6 @@
   ⛔ Do NOT "fix the gather" to make the two agree, and do not bend the stored side to it: agreement bought by
   replaying events is not independence, it is the same derivation twice (the false-confirmation trap
   [validation.md](../../specs/validation.md) names).
-- **Attribute the empire package's wellbeing flats.** They stand far above anything the data authors, which is
-  the compounding-phantom signature a missed WITHDRAWAL leaves ([state-repositories.md](../../architecture/state-repositories.md):
-  a phantom nothing later clears). This one needs no oracle — the authored total is the reference.
-
 - **Route the remaining `per` COUNT scalers.** Deposits scale on the commerce-slider rates
   (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), on the wonder counts
   (`WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`) and on per-improvement counts, and none of those counts moves

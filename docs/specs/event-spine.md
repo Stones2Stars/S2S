@@ -482,6 +482,26 @@ surface that — but the gap still closes in the same work item.
 > also be a near-duplicate of the crossing fact on every 0 ⇄ 1 transition. **The test that separates the two: a
 > gap is a fact nobody DECIDED to leave out.** Ask whether the omission is recorded as a decision; if it is,
 > the rule above does not apply to it.
+>
+> **⛔ THREE FACTS DESCRIBE ONE RESOURCE REACHING ONE CITY, AND ONLY ONE OF THEM IS A CROSSING — a consumer that
+> acts on more than one counts the same holding twice.** They are easy to mistake for one family because they
+> share a payload slot and a name stem:
+>
+> | fact | what it announces | payload `iA` |
+> |---|---|---|
+> | **`SEVT_CITY_BONUS_ADDED` / `_REMOVED`** | the CITY's has-verdict (above) | — (a crossing) |
+> | **`SEVT_CITY_VICINITY_BONUS_ADDED` / `_REMOVED`** | the city's LOCAL supply COUNT moving | how many |
+> | **`SEVT_PLOTGROUP_BONUS_ADDED` / `_REMOVED`** | the NETWORK component's holdings moving | how many |
+>
+> ⇒ **The has-verdict is the only one a value may be applied on.** The other two are the same holding seen from
+> the local tile set and from the connectivity component, and each already CAUSES the crossing — the plot group
+> fans its member cities so every one fires its own ([enabler.md §8](enabler.md) RESIDENCY; vicinity answers
+> `connection:"vicinity"` atoms and nothing else).
+> ⚠ **The two count-carrying facts fail WORSE than a plain double, and that is why the split is spelled out
+> here:** their payload is a multiplicity, so a consumer using it scales the deposit by the count — three local
+> copies apply three times — and a supply that only ever grows never hands any of it back.
+> ⚑ A GATE re-check on all three is correct and is not this: re-resolving a deposit CONDITIONED on the resource
+> is idempotent (it moves the difference), where applying the resource's OWN deposit is not.
 
 ⚠ **The ruling is about EMITS, and it does NOT extend to what a consumer DOES with one.** A surplus emit is
 ~free; work a consumer performs is paid on the turn path at event volume. So: **emit liberally, apply
