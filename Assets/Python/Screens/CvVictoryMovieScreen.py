@@ -7,6 +7,7 @@ import CvScreenEnums
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+VICTORY = CyVictoryInfo()   # the per-info accessor: the win movie is an intrinsic on the victory
 gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -31,9 +32,12 @@ class CvVictoryMovieScreen:
 		if ( game.isNetworkMultiPlayer() or game.isPitbossHost()):
 			return
 
-		if (iVictory == -1 or len(gc.getVictoryInfo(iVictory).getMovie()) == 0):
+		if iVictory == -1:
 			return
-		self.createMovieScreen(gc.getVictoryInfo(iVictory).getMovie())
+		szMovie = VICTORY.getMovie(iVictory)
+		if len(szMovie) == 0:
+			return
+		self.createMovieScreen(szMovie)
 
 	def createMovieScreen(self, movieArtDef):
 		# Create a new screen, called VictoryMovieScreen, using the file CvVictoryMovieScreen.py for input

@@ -8,6 +8,7 @@ import math
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -135,7 +136,7 @@ class CvUnVictoryScreen:
 			fY = int(fLeaderArcTop + fRadius * math.sin(deltaTheta * leaderMap[iPlayer]) - iLeaderHeight/2)
 
 			szLeaderHead = self.getNextWidgetName()
-			screen.addDDSGFC(szLeaderHead, gc.getLeaderHeadInfo(player.getLeaderType()).getButton(), int(fX), int(fY), iLeaderWidth, iLeaderHeight, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			screen.addDDSGFC(szLeaderHead, INFO.getButton("LEADER_", player.getLeaderType()), int(fX), int(fY), iLeaderWidth, iLeaderHeight, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 			szName = self.getNextWidgetName()
 			szText = u"<font=3>" + player.getName() + u"</font>"

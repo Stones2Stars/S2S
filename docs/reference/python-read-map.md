@@ -16,6 +16,18 @@
 > ⚠ **`GC.get<X>Info` is published NOWHERE**, so a surviving one is not a slow read — it is an `AttributeError`
 > at the moment its handler fires. That is the shape of what is left to wire, and it is why the counts below
 > are DEMAND rather than a surviving-call census.
+> ⛔ **REPLACE ONE THE MOMENT YOU FIND IT — never leave it for the owner to hit by hand (owner).** A found dead
+> read is not a report, a census line, or a follow-up item: by the time you have grepped it you already know
+> what answers it, so re-point it in the same change. ⚑ **The reason is that the ERROR LOG IS NOT A WORKLIST:**
+> a traceback names only the FIRST dead read a code path reached, so fixing what threw leaves every read behind
+> it live and hands the owner the next one on the next click — the defect arrives one screen at a time, forever.
+> *(Measured: four advisor tracebacks named five reads; the same files actually carried a second `canResearch`,
+> nine `isRevealed`, four `getBuildingOriginalTime`, three `hasBuilding` and two `plot()` — all of which would
+> have thrown on the following click.)* ⇒ When you touch a file for ANY reason, clear its dead reads while you
+> are in it, and grep the file rather than trusting the traceback that sent you there.
+> ⚠ The exception that is NOT a licence to defer: a read whose replacement surface **does not exist yet** (the
+> vote / vote-source / victory-threshold family) is a SURFACE to build, not a call to re-point — build it, and
+> say so plainly rather than re-pointing onto something that answers a different question.
 > The `Cy*` WRAPPER classes stay for the engine→Python direction, and each carries its **IDENTITY SET** — owner,
 > id, position, and nothing else ([patterns.md](../architecture/patterns.md) § THE IDENTITY SET). ⛔ The earlier
 > reading here — *"a wrapper with no binding is the correct end state"* — is SUPERSEDED: it was right about the
