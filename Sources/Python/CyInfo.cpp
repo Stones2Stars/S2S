@@ -380,6 +380,17 @@ bool CyInfo::isAnimal(int iUnitId) const
 {
 	return hasTag("UNIT_", iUnitId, CLS_TAG_ANIMAL);
 }
+bool CyInfo::isNPCLeader(int iLeaderId) const
+{
+	if (iLeaderId < 0 || iLeaderId >= GC.getNumLeaderHeadInfos()) return false;
+	return GC.getLeaderHeadInfo((LeaderHeadTypes)iLeaderId).isNPC();
+}
+std::string CyInfo::getLeaderHeadArt(int iLeaderId) const
+{
+	if (iLeaderId < 0 || iLeaderId >= GC.getNumLeaderHeadInfos()) return std::string();
+	const char* szArt = GC.getLeaderHeadInfo((LeaderHeadTypes)iLeaderId).getLeaderHead();
+	return szArt ? std::string(szArt) : std::string();
+}
 int CyInfo::getUnitAirCombat(int iUnitId) const
 {
 	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
@@ -941,6 +952,14 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 		if (szTypePrefix == "IMPROVEMENT_" && iId < GC.getNumImprovementInfos())
 			return GC.getImprovementInfo((ImprovementTypes)iId).getPillageGold();
 		break;
+	case PYINT_FAVORITE_CIVIC:
+		if (szTypePrefix == "LEADER_" && iId < GC.getNumLeaderHeadInfos())
+			return GC.getLeaderHeadInfo((LeaderHeadTypes)iId).getFavoriteCivic();
+		break;
+	case PYINT_FAVORITE_RELIGION:
+		if (szTypePrefix == "LEADER_" && iId < GC.getNumLeaderHeadInfos())
+			return GC.getLeaderHeadInfo((LeaderHeadTypes)iId).getFavoriteReligion();
+		break;
 
 	case PYINT_DEFAULT_PLAYERS:
 		if (szTypePrefix == "WORLD_" && iId < GC.getNumWorldInfos())
@@ -1248,6 +1267,8 @@ void CyInfo::pythonPublish()
 		.def("isWorldUnit",         &CyInfo::isWorldUnit)
 		.def("hasUnitInstanceCap",      &CyInfo::hasUnitInstanceCap)
 		.def("getUnitAirCombat",        &CyInfo::getUnitAirCombat)
+		.def("isNPCLeader",             &CyInfo::isNPCLeader)
+		.def("getLeaderHeadArt",        &CyInfo::getLeaderHeadArt)
 		.def("providesBonus",           &CyInfo::providesBonus)
 		.def("isGlobalTech",            &CyInfo::isGlobalTech)
 		.def("isStatusPromotion",       &CyInfo::isStatusPromotion)

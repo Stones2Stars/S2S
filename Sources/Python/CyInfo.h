@@ -93,6 +93,11 @@ enum PyIntrinsicSlot
 	                            // there is deliberately no composition over them for this, so a consumer asking
 	                            // "which domain" asks HERE.
 	PYINT_PILLAGE_GOLD,         // IMPROVEMENT_ -- the gold a pillage of this improvement rolls against
+	PYINT_FAVORITE_CIVIC,       // LEADER_ CIVIC_* FK -- the civic this leader favours, -1 when none
+	PYINT_FAVORITE_RELIGION,    // LEADER_ RELIGION_* FK -- likewise. Both are the leader's OWN datum, so this
+	                            // is a straight member read; ⛔ the inverse ("which leaders favour this civic")
+	                            // is a reverse lookup and belongs to the edge families, never to a scan of
+	                            // every leader testing this slot ([DEC-one-reverse-view]).
 	                            // (identity.pillageGold). ⚠ NOT the building field of the same name, which is
 	                            // orphaned and unwired ([legacy-value-calc-map.md] par.10.3); this one is live and
 	                            // is the improvement's own value.
@@ -299,6 +304,15 @@ public:
 	// ⛔ So a screen picks BETWEEN this and SCALAR_STRENGTH by what the unit actually fights with; summing them
 	// would double a plane the unit does not have.
 	int getUnitAirCombat(int iUnitId) const;
+
+	// ---- LEADERHEAD facts. ----
+	// Is this leader an NPC (barbarians, animals, the neanderthals) rather than a playable personality? The
+	// pedia tags the name with it, and a civ-selection consumer filters on it.
+	bool isNPCLeader(int iLeaderId) const;
+	// The leader's PORTRAIT art path -- distinct from getButton's small icon, which is the same entity's other
+	// image. Art is an untouched system boundary (the roadmap's scope decision 3): this hands over the path the
+	// info already resolved, and resolves nothing itself.
+	std::string getLeaderHeadArt(int iLeaderId) const;
 	// Does this entity SUPPLY that bonus in its city while active (json §5a `provides.bonuses`)?
 	// ⛔ Not the merged EDGEF_RELATED bucket: that lands every reference together, so a building which
 	// merely REQUIRES the bonus would answer yes to a question about who PRODUCES it.
