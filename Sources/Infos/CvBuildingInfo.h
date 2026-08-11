@@ -89,11 +89,11 @@ public:
 	// The engine-enum channel groups (ruling 1: the engine enum IS the kind axis; the flat-vs-modifier split
 	// lives in the NAME, never a scale suffix -- [DEC-fixedpoint-x100]).
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
+	{ return flatWithFans(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getYieldModifier(YieldTypes eYield, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
-	{ return flatWithCityFan(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
+	{ return flatWithFans(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
 	int getCommerceModifier(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	// The PER-POPULATION plane of the same two channel groups -- the §3.7 count-scaled deposit the yield/commerce

@@ -240,20 +240,29 @@ public:
 	//	the bonus-of-interest split all read this, and all read 0 while only the first plane was summed.
 	//	⚠ The two cannot double-count: an entry carries the `cities` target or it does not, and the point slot
 	//	rejects every entry that does.
-	//	⚑ ONE implementation, because the SAME two planes feed wellbeing AND every yield channel -- a per-getter
+	//	⚑ ONE implementation, because the SAME planes feed wellbeing AND every yield channel -- a per-getter
 	//	copy is how one of them silently keeps summing half ([DEC-single-implementation]).
-	//	⛔ ONLY the `cities` fan folds. A `plots` or `units` target is PER-OBJECT and predicate-filtered, so
-	//	folding one into a single scope-wide flat is the silently-plausible-wrong case [modifier.md] §5 bans by
-	//	name -- "+1 food per water plot" is not "+1 food".
-	int flatWithCityFan(ModifierFamily eFamily, int iKind, CvCascScope eScope) const
+	//	⚖ TWO tokens fold, and they are the two whose fan IS the deposit: `cities` (a source delivering to each
+	//	city of the scope) and `empires` ([modifier.md] §5 names it "the one target whose fold IS the deposit").
+	//	⛔ `plots` and `units` do NOT, and that is not an omission: they are PER-OBJECT and predicate-filtered,
+	//	so folding one into a single scope-wide flat is the silently-plausible-wrong case [modifier.md] §5 bans
+	//	by name -- "+1 food per water plot" is not "+1 food".
+	//	⚠ A source may author the `empires` fan BESIDE an ordinary scope flat, and summing both is FAITHFUL
+	//	rather than a double-count: they come from two different legacy tags with two different reaches -- the
+	//	empire flat applies inside the builder's team, the fan to every alive player (`curate_project`). Cure
+	//	for Cancer carries both deliberately, so its owner is reached twice and that is the mechanic.
+	int flatWithFans(ModifierFamily eFamily, int iKind, CvCascScope eScope) const
 	{
 		int iFlat = modifier(eFamily, iKind, eScope, CASC_UNIT_FLAT);
 		const CvModifiers* pMods = getModifiers();
 		if (pMods != NULL)
 		{
 			static int s_iCitiesSeg = -1;
+			static int s_iEmpiresSeg = -1;
 			iFlat += pMods->pluralTargetSum(eFamily, iKind, eScope, CASC_UNIT_FLAT,
 				modSegmentCached("cities", s_iCitiesSeg));
+			iFlat += pMods->pluralTargetSum(eFamily, iKind, eScope, CASC_UNIT_FLAT,
+				modSegmentCached("empires", s_iEmpiresSeg));
 		}
 		return iFlat;
 	}
@@ -263,7 +272,7 @@ public:
 		{
 			return 0;
 		}
-		return flatWithCityFan(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope);
+		return flatWithFans(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope);
 	}
 	// The compiled conditioned list + its per-family range (patterns.md § THE GETTER SETUP read 2: the typed
 	// entries with prebuilt trees -- what the package rebuild, the pedia, and the valuation walk). Empty/0-range

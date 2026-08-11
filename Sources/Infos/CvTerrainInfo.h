@@ -34,7 +34,7 @@ public:
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
 	// participation: food/production/commerce plot flats (own tile output); defense.plot.amount.percent.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
+	{ return flatWithFans(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getDefense(DefenseKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind)); }
 

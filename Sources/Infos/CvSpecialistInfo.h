@@ -38,9 +38,9 @@ public:
 	// conditioned percents (the §2a own percent layer), the wonder-conditioned empire flats, and the tech
 	// keep-on-self wellbeing entries are ALL conditioned -- conditioned-list/valuation reads by design.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
+	{ return flatWithFans(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
-	{ return flatWithCityFan(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
+	{ return flatWithFans(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
 	// The authored wellbeing families' SIGNED sums. ⛔ ANGER/UNHEALTH read 0 here BY CONSTRUCTION and that is
 	// never a gap to chase: an INFO keeps a negative in its POSITIVE family (happiness -1, not anger +1) --
 	// the sign ROUTING to the opposing channel happens at FILL, on the city PACKAGE, not on authored data

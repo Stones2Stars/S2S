@@ -82,12 +82,6 @@
 
 ## Data — curator
 
-- Re-scope the PROJECT `health.world` / `happiness.world` / `tradeRoutes.world` authorings. WORLD is CONFIG and
-  carries no package ([state-repositories.md](../../architecture/state-repositories.md)), so a deposit landing
-  there reaches nobody — a project granting something to every player authors the plural TARGET `world.empires`,
-  which lands in each PLAYER's package ([json.md §3.3](../../specs/json.md)). ⚑ Curator fix + regen in the same
-  work item ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
-
 - Attach the ruling-16 trigger-plane set (`survivor`, `cityCapture`, `combat.subdueAnimal`,
   `combat.nukeInterception`, `diplomacy.techShare`) to its trigger's `chance`
   ([triggers.md](../../specs/triggers.md)).
@@ -278,15 +272,6 @@
   ⛔ Do NOT settle this by whether the resulting number moves toward a remembered figure
   ([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)); settle it by
   which surface the spec names and which entries each one actually reaches.
-
-- **Fold the `empires` fan into the flat point read, as the `cities` fan already is.**
-  [modifier.md §5](../../specs/modifier.md) names it the one target whose fold IS the deposit, so a project's
-  `health.<scope>.empires.flat` should answer on the info's flat read; `CvModifiers::pluralTargetSum` already
-  serves the shape and `CvInfo::flatWithCityFan` is the one place that decides which tokens fold.
-  ⚠ It rides the curator item above that re-scopes those same project authorings, so settle the authored
-  address first — folding a token the data is about to stop using buys nothing.
-  ⛔ `plots` and `units` stay UNFOLDED and that is not an omission: those are per-object and predicate-filtered,
-  so a scope-wide sum of one is the silently-plausible-wrong fold [modifier.md §5](../../specs/modifier.md) bans.
 
 - **The unresolved-FK census reports the §3.1 CATCH-ALL TOKENS as unresolved ids.** `CITY`, `TEAM`,
   `POPULATION`, `ERA`, `SPECIALIST`, `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`, the slider rates

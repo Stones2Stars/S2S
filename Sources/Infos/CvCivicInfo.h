@@ -38,11 +38,11 @@ public:
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface.)
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
-	{ return flatWithCityFan(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
+	{ return flatWithFans(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getYieldModifier(YieldTypes eYield, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
-	{ return flatWithCityFan(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
+	{ return flatWithFans(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
 	int getCommerceModifier(CommerceTypes eCommerce, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT); }
 	// The authored wellbeing families' SIGNED sums. ⛔ ANGER/UNHEALTH read 0 here BY CONSTRUCTION and that is
