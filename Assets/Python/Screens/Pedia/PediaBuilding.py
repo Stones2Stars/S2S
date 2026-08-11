@@ -9,8 +9,6 @@ TEXT = CyGameTextMgr()
 class PediaBuilding:
 
 	def __init__(self, parent, H_BOT_ROW):
-		import HelperFunctions
-		self.HF = HelperFunctions.HelperFunctions([0])
 
 		self.main = parent
 
@@ -317,31 +315,6 @@ class PediaBuilding:
 			bPlus = True
 			i += 1
 
-		# GOM tech requirements
-		aGOMTechReqList = []
-		for i in range(2):
-			aGOMTechReqList.append([])
-		self.HF.getGOMReqs(CvTheBuildingInfo.getConstructCondition(), GOMTypes.GOM_TECH, aGOMTechReqList)
-
-		#GOM AND requirements
-		for GOMTech in xrange(len(aGOMTechReqList[BoolExprTypes.BOOLEXPR_AND])):
-			iType = aGOMTechReqList[BoolExprTypes.BOOLEXPR_AND][GOMTech]
-			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
-			bPlus = True
-			i += 1
-
-		# GOM OR requirements
-		if len(aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR]) > 0:
-			screen.attachLabel(panelName, "", szBracketL)
-			for GOMTech in xrange(len(aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR])):
-				iType = aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR][GOMTech]
-				screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
-				if GOMTech+1 != len(aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR]):
-					screen.attachLabel(panelName, "", szOr)
-				bPlus = True
-				i += 1
-			screen.attachLabel(panelName, "", szBracketR)
-
 		# Religion Req
 		szChild = PF + "RELIGION"
 		iType = CvTheBuildingInfo.getPrereqReligion()
@@ -361,7 +334,6 @@ class PediaBuilding:
 				bPlus = True
 			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("CORPORATION_", iType), enumGBS, eWidGen, 1, 1, False)
 		# Bonus Req
-		# TODO: Expand functionality so it can handle 8 differently defined bonus requirements: Bonus, Bonuses, RawBonus, RawBonuses, VicinityRawBonus, VicinityRawBonuses, GOM AND/OR Bonus
 		szChild = PF + "BONUS"
 		iType = CvTheBuildingInfo.getPrereqAndBonus()
 		nOr = 0
@@ -425,21 +397,6 @@ class PediaBuilding:
 		# Or building requirements
 		for j in xrange(CvTheBuildingInfo.getNumPrereqOrBuilding()):
 			aList2.append(CvTheBuildingInfo.getPrereqOrBuilding(j))
-
-		# GOM building requirements
-		aGOMBuildingReqList = []
-		for i in range(2):
-			aGOMBuildingReqList.append([])
-		self.HF.getGOMReqs(CvTheBuildingInfo.getConstructCondition(), GOMTypes.GOM_BUILDING, aGOMBuildingReqList)
-
-		#GOM AND prereqs
-		for GOMBuilding in xrange(len(aGOMBuildingReqList[BoolExprTypes.BOOLEXPR_AND])):
-			aList4.append(aGOMBuildingReqList[BoolExprTypes.BOOLEXPR_AND][GOMBuilding])
-
-		#GOM OR prereqs
-		for GOMBuilding in xrange(len(aGOMBuildingReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aList5.append(aGOMBuildingReqList[BoolExprTypes.BOOLEXPR_OR][GOMBuilding])
-
 
 		if aList1 or aList2 or aList3 or aList4 or aList5:
 			if bPlus:

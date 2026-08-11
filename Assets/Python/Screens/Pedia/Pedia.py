@@ -18,8 +18,6 @@ TEXT = CyGameTextMgr()
 class Pedia:
 
 	def __init__(self, screenId):
-		import HelperFunctions
-		self.HF = HelperFunctions.HelperFunctions([0])
 
 		self.screenId = screenId
 		self.bNotPedia = True

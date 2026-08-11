@@ -9,8 +9,6 @@ TEXT = CyGameTextMgr()
 class PediaUnit:
 
 	def __init__(self, parent, H_BOT_ROW):
-		import HelperFunctions
-		self.HF = HelperFunctions.HelperFunctions([0])
 
 		self.main = parent
 
@@ -154,8 +152,6 @@ class PediaUnit:
 		PF = "ToolTip|JumpTo|"
 		aList0 = []
 		aList1 = []
-		aList2 = []
-		aList3 = []
 		#Combat types
 		for k in xrange(GC.getNumUnitCombatInfos()):
 			if CvTheUnitInfo.isSubCombatType(k):
@@ -201,7 +197,7 @@ class PediaUnit:
 		OR = ["TXT", "<font=4b>||", 1<<2, 6, 10]
 		braL = ["TXT", "<font=4b> {", 1<<0, 0, 14]
 		braR = ["TXT", "<font=4b>} ", 1<<0, 0, 14]
-		# Tech Req, TODO: Add GOM AND/OR requirements, when units will have GOM tech requirements.
+		# Tech Req
 		aReqList = []
 		n = 0
 		szChild = PF + "TECH"
@@ -216,33 +212,17 @@ class PediaUnit:
 		# Bonus Req
 		szChild = PF + "BONUS"
 		nOr = 0
-		nGOMOr = 0
-
-		# GOM bonus requirements
-		aGOMBUnitReqList = []
-		for i in range(2):
-			aGOMBUnitReqList.append([])
-		self.HF.getGOMReqs(CvTheUnitInfo.getTrainCondition(), GOMTypes.GOM_BONUS, aGOMBUnitReqList)
 
 		for iType in CvTheUnitInfo.getPrereqOrBonuses():
 			aList0.append(iType)
 			n += 1
 			nOr += 1
-		for iType in xrange(len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aList2.append(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_OR][iType])
-			n += 1
-			nGOMOr += 1
 		iType = CvTheUnitInfo.getPrereqAndBonus()
-		if iType != -1 or aList0 or aList2:
+		if iType != -1 or aList0:
 			if aReqList:
 				aReqList.append(AND)
 			if iType != -1:
 				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
-				n += 1
-			if aReqList and len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND]) > 0:
-				aReqList.append(AND)
-			for iType in xrange(len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND])):
-				aReqList.append([szChild + str(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND][iType]) + "|" + str(n), INFO.getButton("BONUS_", aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND][iType])])
 				n += 1
 
 			if aList0:
@@ -259,19 +239,6 @@ class PediaUnit:
 					aReqList.append(braR)
 				aList0 = []
 				nOr = 0
-			if aList2:
-				if nGOMOr > 1:
-					aReqList.append(braL)
-				iType = aList2.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
-				n += 1
-				for iType in aList2:
-					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
-					n += 1
-				if nGOMOr > 1:
-					aReqList.append(braR)
-				aList2 = []
 
 		# Civic Req
 		szChild = PF + "CIVIC"
@@ -310,31 +277,10 @@ class PediaUnit:
 			aList1.append(CvTheUnitInfo.getPrereqOrBuilding(i))
 			nOr += 1
 
-		# GOM building requirements
-		aGOMBUnitReqList = []
-		for i in range(2):
-			aGOMBUnitReqList.append([])
-		self.HF.getGOMReqs(CvTheUnitInfo.getTrainCondition(), GOMTypes.GOM_BUILDING, aGOMBUnitReqList)
-		# GOM AND requirements
-		for GOMBuilding in xrange(len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND])):
-			aList2.append(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND][GOMBuilding])
-
-		# GOM OR requirements
-		nGOMOr = 0
-		for GOMBuilding in xrange(len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aList3.append(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_OR][GOMBuilding])
-			nGOMOr += 1
-
-		if aList0 or aList1 or aList2 or aList3:
+		if aList0 or aList1:
 			if aReqList:
 				aReqList.append(AND)
 			for iType in aList0:
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
-				n += 1
-
-			if aReqList and len(aGOMBUnitReqList[BoolExprTypes.BOOLEXPR_AND]) > 0:
-				aReqList.append(AND)
-			for iType in aList2:
 				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 				n += 1
 
@@ -349,19 +295,6 @@ class PediaUnit:
 					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
 					n += 1
 				if nOr > 1:
-					aReqList.append(braR)
-
-			if aList3:
-				if nGOMOr > 1:
-					aReqList.append(braL)
-				iType = aList3.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
-				n += 1
-				for iType in aList3:
-					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
-					n += 1
-				if nGOMOr > 1:
 					aReqList.append(braR)
 
 		# Upgrades To
