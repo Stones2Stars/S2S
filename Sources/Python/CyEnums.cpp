@@ -104,6 +104,15 @@ void CyEnums::pythonPublish()
 	//	tail ahead of demand is the pre-emptive surface [patterns.md] refuses.
 	//	⚑ STRENGTH and RANGE are the UNIT stat columns an enumeration screen renders: a unit fights with ONE of
 	//	them (a land unit's strength, an air unit's range beside its `identity.base.airCombat`), never both.
+	// The modifier-FAMILY axis of the conditioned-entry read (CyInfo::getConditionedEntries). ⚑ Entries are
+	// added AS CONSUMERS APPEAR, exactly like the straggler scalars below -- the family vocabulary is large and
+	// publishing all of it ahead of demand is the pre-emptive surface [patterns.md] refuses.
+	python::enum_<ModifierFamily>("ModifierFamily")
+		//	What SPEEDS UP building a specific thing -- the resource page's "units this makes cheaper" panel,
+		//	where the bonus is the entry's GATE rather than a key ([DEC-conditions-are-predicates]).
+		.value("MODFAM_BUILD_RATE", MODFAM_BUILD_RATE)
+		;
+
 	python::enum_<InfoScalar>("InfoScalar")
 		.value("SCALAR_SPEED", SCALAR_SPEED)
 		.value("SCALAR_STRENGTH", SCALAR_STRENGTH)

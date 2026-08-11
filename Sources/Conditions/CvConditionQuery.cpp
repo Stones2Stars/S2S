@@ -156,6 +156,33 @@ namespace
 }
 
 
+//	⛔ This does NOT ride cq_walk, and the reason is structural rather than a preference: that walk hands its
+//	visitor a NODE, never the node's position, so a leaf test cannot tell an atom under `all` from the same
+//	atom under `noneOf` -- which is precisely the distinction being asked for here. A question about a tree's
+//	SHAPE needs a recursion over the shape.
+bool CvConditionQuery::hasNegation(const CvCondition* pRoot)
+{
+	if (pRoot == NULL)
+	{
+		return false;
+	}
+	//	A `noneOf` with children negates; so does a `disabled` twin, which suppresses while it holds.
+	if (!pRoot->noneOf.empty() || pRoot->disabled != NULL)
+	{
+		return true;
+	}
+	for (size_t iChild = 0; iChild < pRoot->all.size(); ++iChild)
+	{
+		if (hasNegation(pRoot->all[iChild])) return true;
+	}
+	for (size_t iChild = 0; iChild < pRoot->anyOf.size(); ++iChild)
+	{
+		if (hasNegation(pRoot->anyOf[iChild])) return true;
+	}
+	return hasNegation(pRoot->enabled);
+}
+
+
 EnEdgeBucket CvConditionQuery::bucketForType(const std::string& szType)
 {
 	for (int iRow = 0; CQ_PREFIX_ROWS[iRow].szPrefix != 0; ++iRow)

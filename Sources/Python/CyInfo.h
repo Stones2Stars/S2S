@@ -202,6 +202,30 @@ public:
 	// vocabulary, so a new bucket is data and this surface does not grow.
 	python::list getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const;
 
+	// THE COMPILED CONDITIONED LIST -- the SECOND of the three reads every modifier group owes
+	// ([patterns.md] § THE GETTER SETUP category 3: the straight point read, the conditioned list, the what-if
+	// valuation). The point read answers the unconditioned sum and by construction CANNOT see a gated entry,
+	// so a consumer asking "what does this source give me WHEN X holds" had no read at all on this boundary.
+	//
+	// ⚑ THE PEDIA IS A NAMED CONSUMER OF IT, which is why it lands here first: a resource page shows which
+	// units it speeds up and by how much, and in the data that is not a keyed value -- it is 271 units each
+	// carrying `buildRate.self.percent` entries gated on a BONUS_ atom ([DEC-conditions-are-predicates]: the
+	// condition is a predicate, never a member). The magnitude and the gate live on the entry together.
+	//
+	// Each entry is a dict: {"value", "unit", "scope", "kind", "atoms"} -- `atoms` being the FK-resolved
+	// presence-atom ids of the REQUESTED bucket that the entry's condition names, so a caller filters to the
+	// entity it is rendering rather than re-walking a tree in script.
+	//
+	// ⛔ IT FAILS CLOSED ON A NEGATED GATE. An entry whose condition negates anywhere is SKIPPED rather than
+	// reported, because every mention-read on this plane reports an `all`, an `anyOf` and a `noneOf` alike
+	// ([CvConditionQuery.h] states that limit), and a consumer attributing a positive meaning to a negated
+	// clause says the exact opposite of what the data says -- "this bonus makes it cheaper" for a bonus whose
+	// ABSENCE does. ⚠ No authored entry negates today (all 271 are bare positive atoms), so this costs nothing
+	// now; the registries are OPEN, so it is what stops a future authoring reading backwards in silence.
+	// ⛔ Do NOT "improve" it into reporting negated entries with a flag: that hands script the structure this
+	// surface refuses to expose ([pedia-read-map.md] finding 3).
+	python::list getConditionedEntries(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const;
+
 	// THE PER-TYPE INDEX PAYLOAD (pedia-read-map §5 shape 2) -- the WHOLE registry in ONE crossing.
 	//
 	// ⚑ This is what every enumeration screen actually renders: the pedia hub's item lists, the A-Z index, the

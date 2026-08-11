@@ -56,6 +56,20 @@ public:
 	// bucket, because they are not a HAVE axis.
 	static void collectPredicateIds(const CvCondition* pRoot, CvCascPredKind ePredicate, std::vector<int>& aIdsOut);
 
+	// --- the NEGATION probe: the one thing the reads above deliberately cannot tell you ---
+
+	// Does this tree negate anywhere -- a `noneOf` branch, or a node carrying a `disabled` twin?
+	//
+	// ⚑ It exists because of the limit stated at the top of this header: every read here reports what a tree
+	// MENTIONS, and an `all`, an `anyOf` and a `noneOf` report their atoms alike -- so a consumer attributing
+	// a positive meaning to a mentioned id ("this bonus is what makes that unit cheaper") is silently WRONG
+	// on a negated clause, which means the opposite. Such a consumer previously had no way to even detect the
+	// case; this lets it FAIL CLOSED and decline the entry rather than mis-attribute it.
+	// ⛔ It is NOT a step toward exposing structure ([pedia-read-map.md] finding 3 -- no boolean-expression API
+	// belongs on this surface). It answers one bool and names no node, no combinator and no branch. A consumer
+	// that wants to know WHICH clause negates is asking the evaluator's question, not this one.
+	static bool hasNegation(const CvCondition* pRoot);
+
 	// --- the axis router ---
 
 	// The edge bucket an INFOTYPE id routes to, by its prefix ([naming.md]: the prefix identifies the kind and

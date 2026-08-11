@@ -13,6 +13,9 @@
 #include "Data/CvReadJson.h"     // the ONE infotype-prefix -> InfoRepo dispatch, READ-ONLY half (rjInfoForTypeConst / rjCountForType)
 #include "Infos/CvInfo.h"
 #include "Infos/CvEdges.h"           // the load-derived edge families ([DEC-one-reverse-view])
+#include "Infos/CvModifiers.h"          // the compiled entry list the conditioned read walks
+#include "Infos/CvModEntry.h"
+#include "Conditions/CvConditionQuery.h" // the ONE read over a condition tree (atoms + the negation probe)
 #include "Infos/CvClassificationRegistry.h"   // the cold-path authored-key -> generated-id resolve
 #include "Infos/CvClassificationIds.h"        // the GENERATED CLS_* ids the NAMED endpoints resolve internally
 #include "Engine/CvCity.h"       // the what-if's CityContext + plot group
@@ -1244,6 +1247,63 @@ python::list CyInfo::getIndex(const std::string& szTypePrefix) const
 	return lEntries;
 }
 
+python::list CyInfo::getConditionedEntries(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const
+{
+	python::list lEntries;
+
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL) return lEntries;
+
+	const CvModifiers* pModifiers = pInfo->getModifiers();
+	if (pModifiers == NULL) return lEntries;   // an entity authoring no family answers EMPTY, never an error
+
+	if (iBucket < 0 || iBucket >= NUM_EDGEB) return lEntries;
+
+	const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
+	for (size_t iEntry = 0; iEntry < aEntries.size(); ++iEntry)
+	{
+		const CvModEntry* pEntry = aEntries[iEntry];
+		if (pEntry == NULL || (int)pEntry->family != iFamily)
+		{
+			continue;
+		}
+		//	The UNCONDITIONED entries are the point read's business ([patterns.md] category 3) -- this is the
+		//	conditioned tail beside it, so a null-condition entry is not ours to report twice.
+		if (pEntry->enabled == NULL)
+		{
+			continue;
+		}
+		//	FAIL CLOSED: a negated gate means the OPPOSITE of what a caller filtering on a named atom would
+		//	read, and no read on this surface can tell the two apart ([CvConditionQuery.h]).
+		if (CvConditionQuery::hasNegation(pEntry->enabled) || pEntry->disabled != NULL)
+		{
+			continue;
+		}
+
+		std::vector<int> aAtomIds;
+		CvConditionQuery::collectIds(pEntry->enabled, (EnEdgeBucket)iBucket, aAtomIds);
+		if (aAtomIds.empty())
+		{
+			continue;   // gated on something else entirely -- not this caller's axis
+		}
+
+		python::list lAtoms;
+		for (size_t iAtom = 0; iAtom < aAtomIds.size(); ++iAtom)
+		{
+			lAtoms.append(aAtomIds[iAtom]);
+		}
+
+		python::dict entry;
+		entry["value"] = pEntry->value;
+		entry["unit"]  = (int)pEntry->unit;
+		entry["scope"] = (int)pEntry->scope;
+		entry["kind"]  = pEntry->kind;
+		entry["atoms"] = lAtoms;
+		lEntries.append(entry);
+	}
+	return lEntries;
+}
+
 python::list CyInfo::getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const
 {
 	python::list lIds;
@@ -1304,6 +1364,7 @@ void CyInfo::pythonPublish()
 		.def("exists",         &CyInfo::exists)
 		.def("getIndex",       &CyInfo::getIndex)
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
+		.def("getConditionedEntries", &CyInfo::getConditionedEntries)
 		.def("getWellbeing",   &CyInfo::getWellbeing)
 		.def("getRevolution",  &CyInfo::getRevolution)
 		.def("getProductionToCommerce", &CyInfo::getProductionToCommerce)
