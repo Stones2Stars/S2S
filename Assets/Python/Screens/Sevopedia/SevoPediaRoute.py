@@ -8,6 +8,7 @@ import string
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDINFO = CyBuildInfo()
 gc = GC   # this module spells it lowercase
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -84,8 +85,11 @@ class SevoPediaRoute:
 		screen.enableSelect(panelName, False)
 		iFontSize = 3
 
+		# The route's OWN plot-scope output -- a plot-substrate entity owns its plot yield (modifier.md par.4).
+		# x100 like every amount, so the reduce happens here, at the read edge.
+		aYields = INFO.getFlatYields("ROUTE_", self.iRoute, CascScope.CASC_SCOPE_PLOT)
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
-			iYieldChange = gc.getRouteInfo(self.iRoute).getYieldChange(k)
+			iYieldChange = aYields[k] / 100
 			if (iYieldChange != 0):
 				if (iYieldChange > 0):
 					sign = "+"
@@ -104,24 +108,17 @@ class SevoPediaRoute:
 				 self.X_BONUS_YIELDS_PANE, self.Y_BONUS_YIELDS_PANE, self.W_BONUS_YIELDS_PANE, self.H_BONUS_YIELDS_PANE, PanelStyles.PANEL_STYLE_BLUE50 )
 
 		szYield = u""
+		# ⛔ THIS PANEL IS DELIBERATELY EMPTY, and the emptiness is TRUTHFUL rather than a missing read.
+		# A route's per-improvement yield is governing-deliverer data authored ON THE ROUTE keyed by
+		# improvement (modifier.md par.4). A KEYED entry never folds scope-wide (par.5), and the plot's route leg
+		# reads the route's UNTARGETED output -- so that authored data currently reaches no plot yield at all.
+		# Rendering it here would promise the player a yield the game does not apply.
+		# ⚠ The legacy form asked every improvement in the registry what this route gave it, which was both the
+		# own-data inversion [DEC-one-reverse-view] bans AND a read of the improvement side of a relationship
+		# the route owns. Serving it needs the improvement's FK passed beside its modifiers so the route's keyed
+		# entry can resolve -- the tracked todo item, not something to invent at a pedia call site
+		# ([DEC-no-legacy-masking]: the hole shows rather than being papered over).
 		bImprovementYieldChange = False
-		for l in range(gc.getNumImprovementInfos()):
-			bImprovementChange = False
-			szImprovementYield  = u""
-			for k in range(YieldTypes.NUM_YIELD_TYPES):
-				iYieldChange = gc.getImprovementInfo(l).getRouteYieldChanges(self.iRoute, k)
-				if (iYieldChange != 0):
-					if bImprovementChange == True:
-						szImprovementYield += (u",")
-					szImprovementYield += (u" %i %c" % (iYieldChange, TEXT.getSymbolChar("YIELD_", k)))
-					bImprovementYieldChange = True
-					bImprovementChange = True
-			if bImprovementChange:
-				childPanelName = self.top.getNextWidgetName()
-				screen.attachPanel(panelName, childPanelName, "", "", False, False, PanelStyles.PANEL_STYLE_EMPTY)
-				screen.attachLabel(childPanelName, "", "  ")
-				screen.attachImageButton( childPanelName, "", INFO.getButton("IMPROVEMENT_", l), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, l, 1, False )
-				screen.attachLabel(childPanelName, "", u"<font=4>" + szImprovementYield + u"</font>")
 
 		if bImprovementYieldChange == False:
 			szYield += localText.getText("TXT_KEY_PEDIA_NO_PLOT_YIELD_CHANGE", ())
@@ -141,23 +138,28 @@ class SevoPediaRoute:
 
 		screen.attachLabel(panelName, "", "  ")
 
+		# The techs behind the builds that LAY this route. The builds are the route's own reverse edge family
+		# (a build's `produces.route` is landed onto the route at load), so this no longer sweeps every build
+		# asking what it produces ([DEC-one-reverse-view]).
 		aTechList = []
-		for iBuild in range(gc.getNumBuildInfos()):
-			if (gc.getBuildInfo(iBuild).getRoute() == self.iRoute):
-				iTech = gc.getBuildInfo(iBuild).getTechPrereq()
-				if (iTech > -1):
-					if not iTech in aTechList:
-						aTechList.append(iTech)
+		for iBuild in INFO.getEdgeIds("ROUTE_", self.iRoute, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_BUILDS):
+			iTech = BUILDINFO.getTechPrereq(iBuild)
+			if (iTech > -1):
+				if not iTech in aTechList:
+					aTechList.append(iTech)
 		for i in aTechList:
 			screen.attachImageButton( panelName, "", INFO.getButton("TECH_", i), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, i, 2, False )
 
-		RouteInfo = gc.getRouteInfo(self.iRoute)
+		# The route's bonus prereqs, read PER CLAUSE so the mandatory one and the one-of group stay apart --
+		# which is exactly the AND/OR this panel draws. REQCLAUSE_NONE is never asked for: a `noneOf` names
+		# what BARS the route, and listing it under "Requires" would invert its meaning.
+		aReqAll = INFO.getRequiresIdsInClause("ROUTE_", self.iRoute, EdgeBucket.EDGEB_BONUSES, RequiresClause.REQCLAUSE_ALL)
+		aReqAny = INFO.getRequiresIdsInClause("ROUTE_", self.iRoute, EdgeBucket.EDGEB_BONUSES, RequiresClause.REQCLAUSE_ANY)
 		bFirst = True
-		iPrereq = RouteInfo.getPrereqBonus()
-		if (iPrereq >= 0):
+		for iPrereq in aReqAll:
 			bFirst = False
 			screen.attachImageButton(panelName, "", INFO.getButton("BONUS_", iPrereq), GenericButtonSizes.BUTTON_SIZE_46, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, iPrereq, 2, False)
-		nOr = len(RouteInfo.getPrereqOrBonuses())
+		nOr = len(aReqAny)
 		szLeftDelimeter = ""
 		szRightDelimeter = ""
 		if (not bFirst):
@@ -169,7 +171,7 @@ class SevoPediaRoute:
 		if len(szLeftDelimeter) > 0:
 			screen.attachLabel(panelName, "", szLeftDelimeter)
 		bFirst = True
-		for eBonus in RouteInfo.getPrereqOrBonuses():
+		for eBonus in aReqAny:
 			if not bFirst:
 				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
 			else:
@@ -208,21 +210,24 @@ class SevoPediaRoute:
 		if bRedraw:
 			screen.clearListBoxGFC(self.top.LIST_ID)
 
-		# sort Routes alphabetically
-		rowListName=[(0,0)]*gc.getNumRouteInfos()
-		for j in range(gc.getNumRouteInfos()):
-			rowListName[j] = (INFO.getDescription("ROUTE_", j), j)
+		# The whole route registry in ONE crossing -- the per-type INDEX read carries the description and the
+		# art-only marker together, so the list no longer pays a boundary call per entity to ask each one.
+		# ⚑ Enumerating a registry to LIST every entity is the pedia's own job and is the sanctioned full scan
+		# (patterns.md); what changed is the cost of the crossing, not the shape.
+		rowListName = []
+		for kRoute in INFO.getIndex("ROUTE_"):
+			if not kRoute["graphicalOnly"]:
+				rowListName.append((kRoute["description"], kRoute["id"]))
 		rowListName.sort()
 
 		iSelected = 0
 		i = 0
-		for iI in range(gc.getNumRouteInfos()):
-			if (not gc.getRouteInfo(rowListName[iI][1]).isGraphicalOnly()):
-				if bRedraw:
-					screen.appendListBoxString(self.top.LIST_ID, rowListName[iI][0], WidgetTypes.WIDGET_HELP_MOVE_BONUS, rowListName[iI][1], 0, 1<<0)
-				if rowListName[iI][1] == self.iRoute:
-					iSelected = i
-				i += 1
+		for szName, iRouteId in rowListName:
+			if bRedraw:
+				screen.appendListBoxString(self.top.LIST_ID, szName, WidgetTypes.WIDGET_HELP_MOVE_BONUS, iRouteId, 0, 1<<0)
+			if iRouteId == self.iRoute:
+				iSelected = i
+			i += 1
 
 		screen.setSelectedListBoxStringGFC(self.top.LIST_ID, iSelected)
 

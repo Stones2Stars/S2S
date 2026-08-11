@@ -404,6 +404,11 @@ namespace
 			{
 				rp_landRelated(rp_infoForBucket(EDGEB_TECHS, (int)pBuild->getFeatureTech((FeatureTypes)iFeature)), EDGEB_BUILDS, iBuild);
 			}
+			//	WHAT LAYING THIS BUILD PRODUCES, landed back onto the produced thing -- so an improvement or a
+			//	route can answer "which builds make me" without a consumer sweeping the build registry asking
+			//	each one what it produces ([DEC-one-reverse-view]: the reverse view is derived ONCE, at load).
+			rp_landRelated(rp_infoForBucket(EDGEB_IMPROVEMENTS, (int)pBuild->getImprovement()), EDGEB_BUILDS, iBuild);
+			rp_landRelated(rp_infoForBucket(EDGEB_ROUTES,       (int)pBuild->getRoute()),       EDGEB_BUILDS, iBuild);
 		}
 	}
 
