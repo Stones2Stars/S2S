@@ -1657,17 +1657,17 @@ class Pedia:
 				elif self.SECTION[1] == TRNSLTR.getText("TXT_KEY_PEDIA_CATEGORY_IMPROVEMENT", ()):
 					screen.addImprovementGraphicGFC("Preview|Max", iData1, 0, 0, self.xRes, self.yRes, WidgetTypes.WIDGET_GENERAL, 0, 0, -20, 30, 0.7, True)
 			elif szSplit[1] == "Quote":
-				szSound = GC.getTechInfo(ID).getSound()
-				CyAudioGame().Play2DSound(szSound)
+				CyAudioGame().Play2DSound(INFO.getSound("TECH_", ID))
 			elif szSplit[1] == "Movie":
+				# Both author ui.art.movie.defineTag, so ONE path resolves either -- ART stays an unmigrated
+				# boundary, so JSON carries the tag and ARTFILEMGR turns it into a file.
 				if szSplit[2] == "PROJECT":
-					ArtDef = GC.getProjectInfo(ID).getMovieArtDef()
-					if not ArtDef: return
-					path = CyArtFileMgr().getMovieArtInfo(ArtDef).getPath()
+					ArtDef = INFO.getMovieDefineTag("PROJECT_", ID)
 				elif szSplit[2] == "BUILDING":
-					path = GC.getBuildingInfo(ID).getMovie()
-					if not path: return
+					ArtDef = INFO.getMovieDefineTag("BUILDING_", ID)
 				else: return
+				if not ArtDef: return
+				path = CyArtFileMgr().getMovieArtInfo(ArtDef).getPath()
 				self.bMovie = True
 				screen.playMovie(path, self.X_PEDIA_PAGE, self.Y_PEDIA_PAGE, 720, 480, 0)
 		elif szSplit[0] == "Letter":

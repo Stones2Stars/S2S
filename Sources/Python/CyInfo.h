@@ -201,6 +201,14 @@ public:
 	// that stays ([roadmap] Scope decisions), so what crosses here is the TAG the art manager resolves -- never
 	// pixels, and never an art OBJECT. This is the read every enumeration screen makes beside the description.
 	std::string getButton(const std::string& szTypePrefix, int iId) const;
+	// The entity's MOVIE art-define TAG (`ui.art.movie.defineTag`, json §7) -- empty when it has none.
+	// ⚑ A TAG, never a path: ART is an unmigrated system boundary, so JSON carries the id and `ARTFILEMGR`
+	// resolves it ([roadmap] Scope decisions). A caller plays it via getMovieArtInfo(tag).getPath().
+	// ⚠ Legacy handed a building's movie back as a PATH and a project's as a tag, so the two had different
+	// call shapes; the curated data authors both the same way, so they resolve identically now.
+	std::string getMovieDefineTag(const std::string& szTypePrefix, int iId) const;
+	// The entity's AUDIO reference (`sound`, json §7) -- the tech-completed jingle. Empty when none.
+	std::string getSound(const std::string& szTypePrefix, int iId) const;
 	//	The pedia BUCKET (identity.pediaCategory) for ONE entity -- the per-id twin of the same field on
 	//	getIndex. Both exist because the pedia asks both questions: which entities are in a bucket (the list),
 	//	and which bucket is THIS entity in (the jump-to-page). Empty = the ordinary bucket.

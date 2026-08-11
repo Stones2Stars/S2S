@@ -324,6 +324,22 @@ bool CyInfo::exists(const std::string& szTypePrefix, int iId) const
 	return cyi_infoBase(szTypePrefix, iId) != NULL;
 }
 
+std::string CyInfo::getMovieDefineTag(const std::string& szTypePrefix, int iId) const
+{
+	if (szTypePrefix == "BUILDING_" && iId >= 0 && iId < GC.getNumBuildingInfos())
+		return GC.getBuildingInfo((BuildingTypes)iId).getMovieDefineTag();
+	if (szTypePrefix == "PROJECT_" && iId >= 0 && iId < GC.getNumProjectInfos())
+		return GC.getProjectInfo((ProjectTypes)iId).getMovieDefineTag();
+	return "";
+}
+
+std::string CyInfo::getSound(const std::string& szTypePrefix, int iId) const
+{
+	if (szTypePrefix == "TECH_" && iId >= 0 && iId < GC.getNumTechInfos())
+		return GC.getTechInfo((TechTypes)iId).getSound();
+	return "";
+}
+
 int CyInfo::getCount(const std::string& szTypePrefix) const
 {
 	const int iCount = rjCountForType(szTypePrefix);
@@ -1488,6 +1504,8 @@ void CyInfo::pythonPublish()
 		.def("exists",         &CyInfo::exists)
 		.def("getIndex",       &CyInfo::getIndex)
 		.def("getEdgeIds",     &CyInfo::getEdgeIds)
+		.def("getMovieDefineTag", &CyInfo::getMovieDefineTag)
+		.def("getSound",       &CyInfo::getSound)
 		.def("getCount",       &CyInfo::getCount)
 		.def("getDormantTriggerIds", &CyInfo::getDormantTriggerIds)
 		.def("getRequiresIds",       &CyInfo::getRequiresIds)
