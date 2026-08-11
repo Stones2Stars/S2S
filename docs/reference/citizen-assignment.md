@@ -82,6 +82,12 @@ being ranked against.
 > ⇒ **Growth value is an ADDITION on top of food's intrinsic worth, never a CEILING over it.** The food a tile
 > yields does not stop existing when growth is unwanted: it offsets consumption and feeds the very specialists
 > that are out-scoring it.
+> ⚑ **THE DECIDING FACT IS THE ENGINE'S OWN (owner): SURPLUS FOOD IS NOT WASTED.** `CvCity::doGrowth`
+> SUBTRACTS the threshold and the remainder rolls into the next bar, so every point of food eventually
+> becomes a citizen — which is why a cap on food's value can never be right in general.
+> ⚖ **The ONE state where a cap IS right is the one the engine discards food in:** under avoid-growth it
+> PINS `m_iFood` at the threshold, so surplus above it genuinely evaporates. The growth-value cap applies
+> there and nowhere else.
 > ⚠ **Emphasis MASKS this rather than fixing it** — emphasizing food lifts the term back above the specialists,
 > which is why the defect reads as "emphasis is required to get sane assignment" instead of as a food-valuation
 > bug.

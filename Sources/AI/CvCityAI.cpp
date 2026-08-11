@@ -10404,7 +10404,20 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 
 	int iProductionValue = 0;
 	int iCommerceValue = 0;
-	int iFoodValue = std::min(iFoodGrowthValue, iMaxFoodValue * aiYields[YIELD_FOOD]);
+	//	⛔ SURPLUS FOOD IS NOT WASTED, SO ITS VALUE IS NOT CAPPED BY HOW BADLY THIS CITY WANTS TO GROW (owner).
+	//	`CvCity::doGrowth` SUBTRACTS the threshold and the remainder rolls into the next bar, so every point of
+	//	food eventually becomes a citizen. Capping the food term at `iFoodGrowthValue` therefore threw the tile's
+	//	real output away the moment growth was slow or unwanted: a 7-food plot scored its hammers alone and lost
+	//	to a specialist, which is the base-yield-under-a-commerce-yield inversion the ruling forbids
+	//	([citizen-assignment.md]).
+	//	⚑ THE ONE STATE WHERE THE CAP IS RIGHT is the one the engine itself discards food in: under avoid-growth
+	//	it PINS `m_iFood` at the threshold, so surplus above it genuinely evaporates. The cap belongs there and
+	//	nowhere else.
+	int iFoodValue = iMaxFoodValue * aiYields[YIELD_FOOD];
+	if (bAvoidGrowth || AI_isEmphasizeAvoidGrowth())
+	{
+		iFoodValue = std::min(iFoodGrowthValue, iFoodValue);
+	}
 	// if food is production, the count it
 	int adjustedYIELD_PRODUCTION = (((bFoodIsProduction) ? aiYields[YIELD_FOOD] : 0) + aiYields[YIELD_PRODUCTION]);
 
