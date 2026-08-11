@@ -19,6 +19,7 @@
 #include "Python/CyState.h"
 #include "Python/CyWorldInfo.h"
 #include "Python/CyImprovementInfo.h"
+#include "Python/CyUnitInfo.h"
 #include "Python/CyGameSpeedInfo.h"
 #include "Python/CyEspionageMissionInfo.h"
 #include "Python/CyVictoryInfo.h"
@@ -123,6 +124,7 @@ DllExport void DLLPublishToPython()
 	// its dependency list ([patterns.md]: explicit imports, always -- you see what is used).
 	CyWorldInfo::pythonPublish();
 	CyImprovementInfo::pythonPublish();
+	CyUnitInfo::pythonPublish();
 	CyGameSpeedInfo::pythonPublish();
 	CyEspionageMissionInfo::pythonPublish();
 	CyVictoryInfo::pythonPublish();

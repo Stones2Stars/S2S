@@ -3,6 +3,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
 INFO = CyInfo()
+UNITINFO = CyUnitInfo()
 TRNSLTR = CyTranslator()
 
 TEXT = CyGameTextMgr()
@@ -53,7 +54,6 @@ class PediaUnit:
 		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
 		screen = self.main.screen()
-		CvTheUnitInfo = GC.getUnitInfo(iTheUnit)
 		CyPlayer = self.main.CyPlayer
 		aName = self.main.getNextWidgetName
 
@@ -81,8 +81,8 @@ class PediaUnit:
 		H_ROW_2 = H_TOP_ROW * 3
 		S_BOT_ROW = self.S_BOT_ROW
 
-		szText = CvTheUnitInfo.getDescription()
-		iCombatType = CvTheUnitInfo.getUnitCombatType()
+		szText = INFO.getDescription("UNIT_", iTheUnit)
+		iCombatType = INFO.getIntrinsic("UNIT_", iTheUnit, IntrinsicSlot.PYINT_UNIT_COMBAT)
 		if iCombatType != -1:
 			if szfontEdge == "<font=4b>":
 				aSize = 22
@@ -90,8 +90,7 @@ class PediaUnit:
 				aSize = 18
 			else:
 				aSize = 16
-			CvCombatInfo = GC.getUnitCombatInfo(iCombatType)
-			szText += " - " + '<img=%s size=%d></img>' %(CvCombatInfo.getButton(), aSize) + " " + CvCombatInfo.getDescription()
+			szText += " - " + '<img=%s size=%d></img>' %(INFO.getButton("UNITCOMBAT_", iCombatType), aSize) + " " + INFO.getDescription("UNITCOMBAT_", iCombatType)
 
 			Txt = "JumpTo|COMBAT" + str(iCombatType)
 			self.main.aWidgetBucket.append(Txt)
@@ -102,7 +101,7 @@ class PediaUnit:
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, W_COL_1 + 8, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "ToolTip|UNIT" + str(iTheUnit)
-		screen.setImageButtonAt(Img, Pnl, CvTheUnitInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("UNIT_", iTheUnit), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 
 		# Stats
 		szName = aName()
@@ -111,14 +110,16 @@ class PediaUnit:
 
 		import TextUtil
 
-		iType = CvTheUnitInfo.getTotalModifiedCombatStrength100(GC.getGame().isOption(GameOptionTypes.GAMEOPTION_COMBAT_SIZE_MATTERS))
+		# The unit's AUTHORED base strength. The realized, Size-Matters-composed value is a COMPUTED game-state
+		# read and stays off the info payload ([pedia-read-map.md] finding 5); the pedia is a static reader.
+		iType = INFO.getScalar("UNIT_", iTheUnit, InfoScalar.SCALAR_STRENGTH, CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT)
 
 		if iType > 0:
 			szText = TextUtil.floatToString(iType / 100.0) + " " + unichr(8855)
 		else: szText = ""
 
 
-		iType = CvTheUnitInfo.getMoves()
+		iType = INFO.getMovementKinds("UNIT_", iTheUnit, CascScope.CASC_SCOPE_UNIT)[MovementKind.MOVEMENT_MOVES] / 100
 		if iType > 0:
 			szTemp = "%d" %iType + unichr(8856)
 			if szText:
@@ -129,21 +130,21 @@ class PediaUnit:
 			screen.appendListBoxStringNoUpdate(szName, szfont3 + szText, eWidGen, 0, 0, 1<<0)
 
 		szText = ""
-		iType = CvTheUnitInfo.getProductionCost()
+		iType = INFO.getIntrinsic("UNIT_", iTheUnit, IntrinsicSlot.PYINT_COST)
 		if iType >= 0:
 			if CyPlayer:
 				szText = str(CyPlayer.getUnitProductionNeeded(iTheUnit))
-			elif not CvTheUnitInfo.isFound():
+			elif not UNITINFO.isFound(iTheUnit):
 				szText = str(iType * GC.getDefineINT("UNIT_PRODUCTION_PERCENT")/100)
 			if szText:
 				szText += u" %c" % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION)
 				screen.appendListBoxStringNoUpdate(szName, szfont3 + szText, eWidGen, 0, 0, 1<<0)
-		iType = CvTheUnitInfo.getAirRange()
+		iType = INFO.getScalar("UNIT_", iTheUnit, InfoScalar.SCALAR_RANGE, CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT) / 100
 		if iType > 0:
 			szText = TRNSLTR.getText("TXT_KEY_PEDIA_RANGE", (iType,))
 			screen.appendListBoxStringNoUpdate(szName, szfont3 + szText, eWidGen, 0, 0, 1<<0)
 
-		iType = CvTheUnitInfo.getWorkRate()
+		iType = INFO.getScalar("UNIT_", iTheUnit, InfoScalar.SCALAR_WORK_RATE, CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT) / 100
 		if iType > 0:
 			szText = TRNSLTR.getText("TXT_KEY_PEDIA_WORKRATE", (iType,))
 			screen.appendListBoxStringNoUpdate(szName, szfont3 + szText, eWidGen, 0, 0, 1<<0)
@@ -152,12 +153,11 @@ class PediaUnit:
 		PF = "ToolTip|JumpTo|"
 		aList0 = []
 		aList1 = []
-		#Combat types
-		for k in xrange(GC.getNumUnitCombatInfos()):
-			if CvTheUnitInfo.isSubCombatType(k):
-				CvUnitCombatInfo = GC.getUnitCombatInfo(k)
-				if not CvUnitCombatInfo.isGraphicalOnly():
-					aList0.append((CvUnitCombatInfo.getButton(), k))
+		# The unit's OWN combat classes -- primary first, then the subs. The legacy form swept the whole
+		# unitcombat registry asking each id whether the unit held it, which is the own-data inversion
+		# [DEC-one-reverse-view] bans: the unit already carries the handful it names.
+		for k in UNITINFO.getCombatClasses(iTheUnit):
+			aList0.append((INFO.getButton("UNITCOMBAT_", k), k))
 		if aList0:
 			Pnl = aName()
 			screen.addPanel(Pnl, "", "", True, True, X_COL_2, Y_TOP_ROW_1, W_COL_2 - 4, H_TOP_ROW, ePnlBlue50)
@@ -192,119 +192,37 @@ class PediaUnit:
 		screen.addUnitGraphicGFC("Preview|Min", iTheUnit, X_COL_2 + W_COL_2 + 4, Y_TOP_ROW_1 + 8, s, s, eWidGen, iTheUnit, 0, -20, 30, 0.4, True)
 		self.main.aWidgetBucket.append("Preview|Min")
 
-		# Requires
-		AND = ["TXT", "<font=4b>&#38", 1<<2, 10, 14]
-		OR = ["TXT", "<font=4b>||", 1<<2, 6, 10]
-		braL = ["TXT", "<font=4b> {", 1<<0, 0, 14]
-		braR = ["TXT", "<font=4b>} ", 1<<0, 0, 14]
-		# Tech Req
+		# Requires -- one BUCKET read per entity kind off the unit's own `requires` section.
+		# ⚠ The AND/OR bracket structure the legacy form drew is NOT reproduced, and that is deliberate:
+		# getRequiresIds has MENTION semantics (it reports all/anyOf/noneOf alike), so it is explicitly not the
+		# requires display. The requires BLOCK COMPOSER that would restore the structure is the text manager's
+		# job and is unbuilt ([patterns.md] THE DIVISION OF LABOUR) -- so this lists what is named, flat, rather
+		# than asserting a grouping the read cannot support.
 		aReqList = []
 		n = 0
-		szChild = PF + "TECH"
-		iType = CvTheUnitInfo.getPrereqAndTech()
-		if iType != -1:
-			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
-			n += 1
-		for iType in CvTheUnitInfo.getPrereqAndTechs():
-			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
-			n += 1
-
-		# Bonus Req
-		szChild = PF + "BONUS"
-		nOr = 0
-
-		for iType in CvTheUnitInfo.getPrereqOrBonuses():
-			aList0.append(iType)
-			n += 1
-			nOr += 1
-		iType = CvTheUnitInfo.getPrereqAndBonus()
-		if iType != -1 or aList0:
-			if aReqList:
-				aReqList.append(AND)
-			if iType != -1:
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
+		for szPrefix, eBucket in (
+			("TECH",     EdgeBucket.EDGEB_TECHS),
+			("BONUS",    EdgeBucket.EDGEB_BONUSES),
+			("CIVIC",    EdgeBucket.EDGEB_CIVICS),
+			("RELIGION", EdgeBucket.EDGEB_RELIGIONS),
+			("BUILDING", EdgeBucket.EDGEB_BUILDINGS),
+		):
+			szChild = PF + szPrefix
+			for iType in INFO.getRequiresIds("UNIT_", iTheUnit, eBucket):
+				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton(szPrefix + "_", iType)])
 				n += 1
 
-			if aList0:
-				if nOr > 1:
-					aReqList.append(braL)
-				iType = aList0.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
-				n += 1
-				for iType in aList0:
-					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
-					n += 1
-				if nOr > 1:
-					aReqList.append(braR)
-				aList0 = []
-				nOr = 0
-
-		# Civic Req
-		szChild = PF + "CIVIC"
-		for iType in xrange(GC.getNumCivicInfos()):
-			if CvTheUnitInfo.isPrereqOrCivics(iType):
-				aList0.append(iType)
-				nOr += 1
-		if aList0:
-			if aReqList:
-				aReqList.append(AND)
-			if nOr > 1:
-				aReqList.append(braL)
-			iType = aList0.pop(0)
-			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("CIVIC_", iType)])
-			n += 1
-			for iType in aList0:
-				aReqList.append(OR)
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("CIVIC_", iType)])
-				n += 1
-			if nOr > 1:
-				aReqList.append(braR)
-			aList0 = []
-			nOr = 0
-		# Religion Req
-		szChild = PF + "RELIGION"
-		iType = CvTheUnitInfo.getPrereqReligion()
-		if iType != -1:
-			aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("RELIGION_", iType)])
-			n += 1
-		# Building Req
-		szChild = PF + "BUILDING"
-		for i in xrange(CvTheUnitInfo.getNumPrereqAndBuildings()):
-			aList0.append(CvTheUnitInfo.getPrereqAndBuilding(i))
-
-		for i in xrange(CvTheUnitInfo.getPrereqOrBuildingsNum()):
-			aList1.append(CvTheUnitInfo.getPrereqOrBuilding(i))
-			nOr += 1
-
-		if aList0 or aList1:
-			if aReqList:
-				aReqList.append(AND)
-			for iType in aList0:
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
-				n += 1
-
-			if aList1:
-				if nOr > 1:
-					aReqList.append(braL)
-				iType = aList1.pop(0)
-				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
-				n += 1
-				for iType in aList1:
-					aReqList.append(OR)
-					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BUILDING_", iType)])
-					n += 1
-				if nOr > 1:
-					aReqList.append(braR)
-
-		# Upgrades To
+		# Upgrades To -- the FORWARD successor set (a unit's direct upgrades are its dormant triggers,
+		# [enabler.md] par.3). The inverse ("what upgrades INTO me") is not asked here.
 		aUpgList = []
 		szChild = PF + "UNIT"
-		for i in xrange(CvTheUnitInfo.getNumUnitUpgrades()):
-			iUnit = CvTheUnitInfo.getUnitUpgrade(i)
+		for iUnit in INFO.getDormantTriggerIds("UNIT_", iTheUnit):
 			aUpgList.append([szChild + str(iUnit),  INFO.getButton("UNIT_", iUnit)])
 
-		iType = CvTheUnitInfo.getObsoleteTech()
+		aObsList = INFO.getEdgeIds("UNIT_", iTheUnit, EdgeFamily.EDGEF_OBSOLETED_BY, EdgeBucket.EDGEB_TECHS)
+		iType = -1
+		if aObsList:
+			iType = aObsList[0]
 		H_SCROLL = H_BOT_ROW - 50
 		if aReqList or aUpgList or iType != -1:
 			W_BOT_ROW = W_PEDIA_PAGE
@@ -373,19 +291,16 @@ class PediaUnit:
 			Y_BOT_ROW_2 += H_BOT_ROW
 			Y_BOT_ROW_3 += H_BOT_ROW
 
-		# Promotions
+		# Promotions -- the ones this unit is CREATED with (its `grants.promotions`).
+		# ⚠ This is NOT the legacy panel. That one swept the whole promotion registry asking each id whether the
+		# unit QUALIFIED for it -- a whole-database scan [DEC-one-reverse-view] bans, and the rebuilt info carries
+		# no qualified-promotion member to answer it from. A promotion's own qualified-unitcombat list is the
+		# authored direction; the inverse is UNSERVED, so it is dropped rather than approximated
+		# ([DEC-no-legacy-masking]: the hole shows).
 		aList0 = []
 		aList1 = []
-		for k in xrange(GC.getNumPromotionInfos()):
-			if CvTheUnitInfo.isQualifiedPromotionType(k):
-				CvPromotionInfo = GC.getPromotionInfo(k)
-				if not CvPromotionInfo.isGraphicalOnly():
-					aList0.append((CvPromotionInfo.getButton(), k))
-			if CvTheUnitInfo.getFreePromotions(k):
-				CvPromotionInfo = GC.getPromotionInfo(k)
-				for j in xrange(CvPromotionInfo.getNumAddsBuildTypes()):
-					iBuild = CvPromotionInfo.getAddsBuildType(j)
-					aList1.append((INFO.getButton("BUILD_", iBuild), iBuild))
+		for k in UNITINFO.getGrantedPromotions(iTheUnit):
+			aList0.append((INFO.getButton("PROMOTION_", k), k))
 
 		if aList0:
 			screen.addPanel(aName(), "", "", False, False, X_COL_1, Y_BOT_ROW_2, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
@@ -410,9 +325,8 @@ class PediaUnit:
 			H_ROW_2 += H_BOT_ROW
 			Y_BOT_ROW_3 += H_BOT_ROW
 
-		# Builds
-		for k in xrange(CvTheUnitInfo.getNumBuilds()):
-			iBuild = CvTheUnitInfo.getBuild(k)
+		# Builds -- the unit's own BUILD_* repertoire (json par.9: which builds THIS unit can perform).
+		for iBuild in UNITINFO.getBuilds(iTheUnit):
 			aList1.append((INFO.getButton("BUILD_", iBuild), iBuild))
 
 		if aList1:
@@ -436,19 +350,19 @@ class PediaUnit:
 
 		# Special
 		szSpecial = ""
-		if CvTheUnitInfo.isIgnoreBuildingDefense():
+		if UNITINFO.isIgnoreBuildingDefense(iTheUnit):
 			szSpecial += TRNSLTR.getText("TXT_KEY_PEDIA_UNIT_IGNORES_BUILDING_DEFENSE", ()) + "\n"
-		if CvTheUnitInfo.getConscriptionValue() > 0:
+		if UNITINFO.getConscription(iTheUnit) > 0:
 			szSpecial += TRNSLTR.getText("TXT_KEY_PEDIA_UNIT_DRAFTABLE", ()) + "\n"
-		if CvTheUnitInfo.getUnitCaptureType() > 0:
+		if UNITINFO.getCaptureUnit(iTheUnit) > 0:
 			szSpecial += TRNSLTR.getText("TXT_KEY_PEDIA_UNIT_CAN_BE_CAPTURED", ()) + "\n"
 		szSpecial += CyGameTextMgr().getUnitHelp(iTheUnit, True, False, False, -1, -1)[1:]
 		# History
 		szText = ""
-		szTemp = CvTheUnitInfo.getStrategy()
+		szTemp = INFO.getStrategy("UNIT_", iTheUnit)
 		if szTemp:
 			szText += TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_STRATEGY", ()) + szTemp + "\n\n"
-		szTemp = CvTheUnitInfo.getCivilopedia()
+		szTemp = INFO.getCivilopedia("UNIT_", iTheUnit)
 		if szTemp:
 			szText += TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_BACKGROUND", ()) + szTemp
 
