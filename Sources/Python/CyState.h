@@ -237,6 +237,13 @@ public:
 	int getProductionTurnsLeft(int iPlayer, int iCity, int iOrder, int iType, int iNum) const;
 	python::list getSpecialistInCity(int iPlayer, int iCity, int iSpecialist) const;
 	python::list getCityCounts(int iPlayer, int iCity) const;
+	// The city's FOUNDING date, already decoded. ⛔ NOT derivable from the CITY_COUNT_GAME_TURN_FOUNDED slot:
+	// under the accurate calendar the stored member holds an ENCODED date rather than a turn, so a script that
+	// read that slot and ran getTurnYear over it would print nonsense for exactly the option that needs it.
+	// This wraps the ONE engine decode rather than letting script become a second implementation of it
+	// ([DEC-single-implementation]). The calendar mode is a live modder option, so the caller passes which
+	// question it is asking rather than the engine re-reading the option behind its back.
+	int getCityDateFounded(int iPlayer, int iCity, bool bHistoricalCalendar) const;
 	// The city's TRADE ROUTES as rows: [partnerOwner, partnerCity, profitTimes100]. Routes are live STATE, so
 	// they are walked rather than looked up -- nothing authors a route.
 	python::list getTradeRoutes(int iPlayer, int iCity) const;

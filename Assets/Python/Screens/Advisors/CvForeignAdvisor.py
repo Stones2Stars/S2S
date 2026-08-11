@@ -231,7 +231,7 @@ class CvForeignAdvisor:
 				if CyTeam.isHasTech(iTech):
 					if not CyTeam.isNoTradeTech(iTech):
 						techsToGive.append(iTech)
-				elif CyPlayer.canResearch(iTech, True, True):
+				elif ENABLER.getTechAvailability(iPlayer, iTech) == EnablerState.ENABLER_LISTED:
 					techsToTake.append(iTech)
 
 
@@ -635,9 +635,8 @@ class CvForeignAdvisor:
 				if iNum - CyPlayer.getBonusImport(iBonus):
 					ourBonuses.append(iBonus)
 				continue
-			CvBonus = GC.getBonusInfo(iBonus)
-			if CyTeam.isHasTech(CvBonus.getTechCityTrade()):
-				aList0.append([iBonus, CvBonus])
+			if CyTeam.isHasTech(INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_TECH_CITY_TRADE)):
+				aList0.append([iBonus, None])
 		iBon = 0
 		w1 = w0 - 72
 		if aList0:
@@ -646,14 +645,14 @@ class CvForeignAdvisor:
 			screen.setStyle(ScPnl, "ScrollPanel_Alt_Style")
 			iPerRow = (w1 - 16) / 40
 			for i, entry in enumerate(aList0):
-				iBonus, CvBonus = entry
+				iBonus = entry[0]
 				if not i % iPerRow:
 					x = 0
 					if i:
 						y += 40
 					else:
 						y = 0
-				BTN = CvBonus.getButton()
+				BTN = INFO.getButton("BONUS_", iBonus)
 				screen.setImageButtonAt("WID|BONUS|%d|%d" %(iBonus, iBon), ScPnl, BTN, x, y, 40, 40, eWidGen, 1, 1)
 				iBon += 1
 				x += 40
@@ -725,9 +724,8 @@ class CvForeignAdvisor:
 								aList0.append([iBonus, None])
 							continue
 						if iBonus in ourBonuses:
-							CvBonus = GC.getBonusInfo(iBonus)
-							if CyTeamX.isHasTech(CvBonus.getTechCityTrade()):
-								aList1.append([iBonus, CvBonus])
+							if CyTeamX.isHasTech(INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_TECH_CITY_TRADE)):
+								aList1.append([iBonus, None])
 				else:
 					for iBonus in aBonusList:
 						TradeData1.iData = iBonus
@@ -811,16 +809,14 @@ class CvForeignAdvisor:
 				screen.attachPanelAt(ScPnl, Pnl, "", "", True, True, ePnlBlue50, 80, y+1, w1, h, eWidGen, 1, 1)
 				screen.setPanelColor(Pnl, 230, 200, 140)
 				for i, entry in enumerate(aList0):
-					iBonus, CvBonus = entry
-					if CvBonus is None:
-						CvBonus = GC.getBonusInfo(iBonus)
+					iBonus = entry[0]
 					if not i % iPerRow:
 						x1 = x0
 						if i:
 							y1 += 40
 						else:
 							y1 = 3
-					BTN = CvBonus.getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|%d|%d" %(iBonus, iBon), Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iBon += 1
 					x1 += 40
@@ -828,16 +824,14 @@ class CvForeignAdvisor:
 				screen.attachPanelAt(ScPnl, Pnl, "", "", True, True, ePnlBlue50, 106+w1, y+1, w1, h, eWidGen, 1, 1)
 				screen.setPanelColor(Pnl, 230, 200, 140)
 				for i, entry in enumerate(aList1):
-					iBonus, CvBonus = entry
-					if CvBonus is None:
-						CvBonus = GC.getBonusInfo(iBonus)
+					iBonus = entry[0]
 					if not i % iPerRow:
 						x1 = x0
 						if i:
 							y1 += 40
 						else:
 							y1 = 3
-					BTN = CvBonus.getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|%d|%d" %(iBonus, iBon), Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iBon += 1
 					x1 += 40
@@ -970,12 +964,12 @@ class CvForeignAdvisor:
 				bHuman = CyPlayerX.isHuman()
 
 			# Build row
-			CvLeaderHead = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType())
+			iLeaderX = CyPlayerX.getLeaderType()
 
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlOut, 0, y, w, dy, eWidGen, 1, 1)
 
 			x = 4
-			BTN = CvLeaderHead.getButton()
+			BTN = INFO.getButton("LEADER_", iLeaderX)
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, x, y + 5, iSize0, iSize0, eWidGen, 1, 1)
 			x += dx
 
@@ -1034,9 +1028,9 @@ class CvForeignAdvisor:
 			# Favorite Civic
 			if not bActivePlayer:
 				if bRandomPers:
-					iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+					iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 				else:
-					iCivic = CvLeaderHead.getFavoriteCivic()
+					iCivic = INFO.getIntrinsic("LEADER_", iLeaderX, IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 
 				if iCivic > -1:
 					Img = "WID|CIVIC%d|%d" %(iCivic, iter2)
@@ -1125,7 +1119,7 @@ class CvForeignAdvisor:
 			if not szNoTechTrade:
 
 				for iTech in techsToGive:
-					if not CyPlayerX.canResearch(iTech, True, True):
+					if ENABLER.getTechAvailability(iPlayerX, iTech) != EnablerState.ENABLER_LISTED:
 						continue
 					if bHuman:
 						aList0.append(iTech)

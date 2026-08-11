@@ -508,11 +508,11 @@ class TheScreen:
 
 		iCityActID = self.iCityActID
 		iCount = 0
-		for CyCity in CyPlayer.cities():
-			if STATE.isCityRevealed(CyCity.getOwner(), CyCity.getID(), iTeamAct):
-				szText = uFont2 + CyCity.getName()
-				screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, CyCity.getID(), 0, 1<<0)
-				iCityID = CyCity.getID()
+		#	The id enumeration: a CyCity carries only its identity, so the reads are addressed by (owner, id).
+		for iCityID in STATE.getCityIds(iPlayer):
+			if STATE.isCityRevealed(iPlayer, iCityID, iTeamAct):
+				szText = uFont2 + STATE.getCityName(iPlayer, iCityID)
+				screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, iCityID, 0, 1<<0)
 
 				if iCityActID == -1:
 					self.iCityActID = iCityActID = iCityID
@@ -521,7 +521,8 @@ class TheScreen:
 					screen.setSelectedListBoxStringGFC(LIST, iCount)
 				iCount += 1
 
-				iCost = CyPlayerAct.getEspionageMissionCost(iMissionAct, iPlayer, CyCity.plot(), -1)
+				aCityPos = STATE.getCityPosition(iPlayer, iCityID)
+				iCost = CyPlayerAct.getEspionageMissionCost(iMissionAct, iPlayer, CyMap().plot(aCityPos[0], aCityPos[1]), -1)
 				if iCost > -1:
 					szCost = uFont2
 					if iCost <= iEP:

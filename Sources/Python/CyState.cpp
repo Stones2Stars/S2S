@@ -761,6 +761,13 @@ python::list CyState::getCityCounts(int iPlayer, int iCity) const
 	return cys_toList(values);
 }
 
+int CyState::getCityDateFounded(int iPlayer, int iCity, bool bHistoricalCalendar) const
+{
+	const CvCity* pCity = cys_city(iPlayer, iCity);
+	if (pCity == NULL) return 0;
+	return pCity->getGameDateFounded(bHistoricalCalendar);
+}
+
 python::list CyState::getTradeRoutes(int iPlayer, int iCity) const
 {
 	python::list rows = python::list();
@@ -1533,6 +1540,7 @@ void CyState::pythonPublish()
 		.def("getOrderQueueLength",      &CyState::getOrderQueueLength)
 		.def("isProductionUnit",         &CyState::isProductionUnit)
 		.def("getBuildingCount",         &CyState::getBuildingCount)
+		.def("getCityDateFounded",       &CyState::getCityDateFounded)
 		.def("getBuildingListFilterActive", &CyState::getBuildingListFilterActive)
 		.def("getBuildingListSorting",   &CyState::getBuildingListSorting)
 		.def("getUnitListFilterActive",  &CyState::getUnitListFilterActive)
