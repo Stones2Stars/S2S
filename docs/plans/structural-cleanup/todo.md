@@ -282,6 +282,16 @@
   line had: the instrument does not know a vocabulary the parse path does. ⚠ Settle the `TAG_*` entries with it —
   those are classification ids minted at load, so whether they can resolve at FK time is the same question.
 
+- **`CityContext::m_traded` consumes TWO of the three bonus facts, and only one of them may carry a value.**
+  It takes the has-verdict crossing (`SEVT_CITY_BONUS_*`, ±1) AND the vicinity supply COUNT
+  (`SEVT_CITY_VICINITY_BONUS_*`, ±count) — the double-consumption
+  [event-spine.md](../../specs/event-spine.md) bans outright, since the plot group ALREADY fans the has-verdict
+  to the providing city. A city that supplies a resource itself therefore counts its own holding twice.
+  ⚠ It is a COUNT defect, not a visibility one — the readers test `> 0`, so the lists are right and the numbers
+  they print are not; do not chase it expecting an empty list.
+  ⚑ Same shape as the wellbeing triple-count already cut on the modifier plane, one store over: decide which
+  fact carries the value (the has-verdict), and let the other move only the vicinity dictionaries.
+
 - **Cut the citizen valuation's WHIP term — the AI trades food away for a mechanic that is never worth taking
   (owner: *"with how whipping currently functions, it is never worth"*).** `iSlaveryValue` re-books a tile's food
   value as PRODUCTION whenever pop-rush is available and the city is happy, so citizen assignment is steered

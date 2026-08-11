@@ -641,6 +641,46 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	if (!bNewGame)
 	{
 		updatePlotGroups(/*reInitialize*/ true);
+
+		// ⛔ RE-PUSH THE BUILDING-SUPPLIED RESOURCES -- the rebuild above DISCARDS them and nothing else puts them
+		// back. The re-color folds a plot's own extracted resource, a city's free bonuses and the capital's
+		// import/export (CvPlot::updatePlotGroupBonus) and NOTHING ELSE, so every resource an active building
+		// supplies through `provides.bonuses` ([json.md §5a]) is dropped on the floor: the enabler pushed it into
+		// the DESERIALIZED group as each building resolved its dormancy in-read, and that group has just been
+		// drained and thrown away.
+		// ⚑ Nothing re-derives it, because the operating set is already CONVERGED -- a no-op write crosses nothing
+		// and announces nothing, so the gate pass at GAME_LOAD_FINISHED re-confirms `provided` without emitting a
+		// single crossing. This is exactly the BAKED-CONSUMER RE-RUN [enabler.md §8] already names for the
+		// trade-route assignment: state baked before the load-end rebuild, whose result self-heals never.
+		// ⚠ The measured symptom is a whole class of resource going invisible, not a wrong number: a culture is
+		// supplied by its own world-unique building, so after the drain every city's traded store read <= 0 for it
+		// and the city screen's culture list -- which asks exactly that store -- was empty. A tile resource
+		// survived only because the re-color happens to re-fold THAT half.
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive())
+			{
+				continue;
+			}
+			foreach_(CvCity* pLoopCity, kPlayer.cities())
+			{
+				CvPlotGroup* pGroup = pLoopCity->plotGroup(pLoopCity->getOwner());
+				if (pGroup == NULL)
+				{
+					continue;
+				}
+				const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(pLoopCity);
+				for (std::map<int, int>::const_iterator it = kOperating.providedCount.begin();
+					it != kOperating.providedCount.end(); ++it)
+				{
+					if (it->second > 0)
+					{
+						pGroup->changeNumBonuses((BonusTypes)it->first, it->second);
+					}
+				}
+			}
+		}
 	}
 
 	// The load-lifecycle bracket CLOSE (event-spine.md): the per-object read()s and every load-end rebuild in this

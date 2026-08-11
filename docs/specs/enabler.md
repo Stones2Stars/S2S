@@ -1075,6 +1075,20 @@ state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
   terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
   re-colors membership from current state and folds the counts through the live entry points as each plot joins,
   announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
+  > **⛔ THE RE-COLOR RE-FOLDS THE TILE HALF ONLY, SO THE BUILDING-SUPPLIED HALF MUST BE RE-PUSHED BEHIND IT.**
+  > `CvPlot::updatePlotGroupBonus` folds a plot's own extracted resource, a city's free bonuses and the capital's
+  > import/export — and nothing else. Every resource an ACTIVE BUILDING supplies through `provides.bonuses`
+  > (§5a) was pushed into the DESERIALIZED group as that building resolved its dormancy in-read, and the drain
+  > throws it away.
+  > ⛔ **Nothing re-derives it, and that is structural rather than a missed hook:** by then the operating set has
+  > CONVERGED, and a no-op write crosses nothing and announces nothing (§3.2) — so the `GAME_LOAD_FINISHED` gate
+  > pass re-confirms `provided` without emitting a single crossing, and the supply is simply gone.
+  > ⚑ It is the BAKED-CONSUMER RE-RUN below, one row up: state baked before the rebuild, whose result self-heals
+  > never. The re-push walks each city's converged `providedCount` into its NEW group, after the re-color.
+  > ⚠ **The failure is a whole CLASS of resource going invisible rather than a wrong number**, which is why no
+  > total looked wrong: a culture is supplied by its own world-unique building, so after the drain every city's
+  > traded store read ≤ 0 for it and the city screen's culture list — which asks exactly that store — was empty,
+  > while the tile-supplied resources beside it were unaffected.
 - **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
   [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
