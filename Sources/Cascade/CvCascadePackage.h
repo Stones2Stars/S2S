@@ -76,7 +76,12 @@ enum CvCascOrigin
 	CASC_ORIGIN_SINGLE = 0,     // every scope but CITY: one yield origin, so there is nothing to keep apart
 	CASC_ORIGIN_PLOT,           // CITY tier 1 -- the worked plots' own packages, folded in by the worked fact
 	CASC_ORIGIN_SPECIALIST,     // CITY tier 1 -- multiplied by the percent stack
-	CASC_ORIGIN_BUILDING        // CITY tier 2 -- added flat, AFTER the stack, never multiplied
+	CASC_ORIGIN_BUILDING,       // CITY tier 2 -- added flat, AFTER the stack, never multiplied
+	// ⚠ NOT an origin -- the general law is that package identity is (scope x COMBINE POSITION x channel), and
+	// origin is that law's yield-plane instance. The percent stack is a position of its own: percents combine
+	// into ONE additive stack whatever deposits them, so it has no origin to keep apart and every source's
+	// percent lands here.
+	CASC_ORIGIN_PERCENT_STACK
 };
 
 template <class TOwner, int Origin = CASC_ORIGIN_SINGLE>

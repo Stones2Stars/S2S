@@ -741,6 +741,7 @@ public:
 	// the whole point: as prose this rule was re-corrected more times than the owner cares to count.
 	const CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING>& getBuildingYields() const { return m_buildingYields; }
 	const CvCascadePackage<CvCity, CASC_ORIGIN_PLOT>& getPlotYields() const { return m_plotYields; }
+	const CvCascadePackage<CvCity, CASC_ORIGIN_PERCENT_STACK>& getCityPercents() const { return m_cityPercents; }
 	const CvCascadePackage<CvCity, CASC_ORIGIN_SPECIALIST>& getSpecialistYields() const { return m_specialistYields; }
 
 	// ---- THE ENABLER'S PER-CITY STATE (enabler.md §7.1) -- the "can I?" machine's host on this scope owner.
@@ -1572,6 +1573,7 @@ protected:
 	// A maintained sum, never serialized.
 	CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING> m_buildingYields;
 	CvCascadePackage<CvCity, CASC_ORIGIN_PLOT> m_plotYields;
+	CvCascadePackage<CvCity, CASC_ORIGIN_PERCENT_STACK> m_cityPercents;
 	CvCascadePackage<CvCity, CASC_ORIGIN_SPECIALIST> m_specialistYields;
 	int m_iHighestPopulation;
 	int m_iWorkingPopulation;

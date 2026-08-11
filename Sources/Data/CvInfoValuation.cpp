@@ -752,7 +752,7 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 		percentSum += owner.getCascadePackage().readPercent(iChannel);
 	}
 	cityFlatSum += city.getBuildingYields().readFlat(iChannel);
-	percentSum += city.getBuildingYields().readPercent(iChannel);
+	percentSum += city.getCityPercents().readPercent(iChannel);
 }
 
 void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& flatSum, int64_t& percentSum)
@@ -776,7 +776,7 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 		percentSum += owner.getCascadePackage().readPercent(iChannel);
 	}
 	flatSum += city.getBuildingYields().readFlat(iChannel);
-	percentSum += city.getBuildingYields().readPercent(iChannel);
+	percentSum += city.getCityPercents().readPercent(iChannel);
 }
 
 

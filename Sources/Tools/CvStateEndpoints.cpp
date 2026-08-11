@@ -455,7 +455,7 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 			// THE PERCENT STACK, SPLIT BY SCOPE. percentSum alone cannot say which LEVEL a modifier came from,
 			// and the three move for completely different reasons -- so a stack that looks too big is
 			// unattributable without this.
-			kTermsOut["percentCity"] = picojson::value((double)pLoopCity->getBuildingYields().readPercent(iChannel));
+			kTermsOut["percentCity"] = picojson::value((double)pLoopCity->getCityPercents().readPercent(iChannel));
 			kTermsOut["percentEmpire"] = picojson::value((double)kPlayer.getCascadePackage().readPercent(iChannel));
 			kTermsOut["percentTeam"] = picojson::value(
 				(double)GET_TEAM(kPlayer.getTeam()).getCascadePackage().readPercent(iChannel));

@@ -249,11 +249,6 @@
 
 ## Not built yet
 
-- **Give the PERCENT STACK its own package.** The city's three YIELD origins are separated and typed — plots,
-  specialists, buildings ([state-repositories.md](../../architecture/state-repositories.md) § THE ORIGIN RULE) —
-  but the percent stack still rides the building plane rather than being the distinct combine position it is.
-  ⚠ It is not a wrong number: percents combine into ONE additive stack, so there is no second origin to be
-  conflated with. It is the last position sharing a package with another.
 - **The unresolved-FK census reports the §3.1 CATCH-ALL TOKENS as unresolved ids.** `CITY`, `TEAM`,
   `POPULATION`, `ERA`, `SPECIALIST`, `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`, the slider rates
   (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), `CULTURE_PERCENTAGE`,

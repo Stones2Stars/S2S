@@ -435,8 +435,7 @@ namespace
 	// DIFFERENT TYPES ([DEC-hard-typing-or-rollerskate]): no runtime reference could hold either, which is the
 	// property that stops a specialist deposit ever reaching the building plane.
 	template <class TPkg>
-	void mc_applyEntryToPlane(const TPkg& kPackage, const CvModEntry* pEntry, int iChannel, bool bPercentSide,
-		int64_t iValue, int iMultiplicity)
+	void mc_applyValueToPlane(const TPkg& kPackage, int iChannel, bool bPercentSide, int64_t iValue)
 	{
 		if (bPercentSide)
 		{
@@ -446,14 +445,23 @@ namespace
 		{
 			kPackage.applyFlat(iChannel, iValue);
 		}
-		// THE BOOK: a conditioned entry plane A just applied is booked, so the ATOM route finds it already there
-		// and does not stack a second copy ([DEC-maintained-sum]). A withdrawal clears it.
-		if (pEntry->enabled != NULL || pEntry->disabled != NULL)
+	}
+
+	// ⛔ THE BOOK HAS ONE HOME, WHATEVER PLANE THE VALUE LANDS ON. It is a per-entry record keyed by entry
+	// pointer, not a yield slot -- and plane C (mc_rebookCity) looks it up to see what plane A already applied.
+	// Split the book across the planes and plane C stops finding plane A's entry and applies a SECOND copy,
+	// which is precisely the double-apply the booking exists to prevent ([DEC-maintained-sum]).
+	void mc_bookCityEntry(const CvCity& city, const CvModEntry* pEntry, int iChannel, bool bPercentSide,
+		int64_t iValue, int iMultiplicity)
+	{
+		if (pEntry->enabled == NULL && pEntry->disabled == NULL)
 		{
-			const typename TPkg::BookedDeposit kPrev = kPackage.bookedDeposit(pEntry);
-			kPackage.setBookedDeposit(pEntry, iChannel, bPercentSide,
-				(iMultiplicity > 0) ? (kPrev.iValue + iValue) : 0);
+			return;   // unconditioned: plane C never asks about it
 		}
+		const CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING>::BookedDeposit kPrev =
+			city.getBuildingYields().bookedDeposit(pEntry);
+		city.getBuildingYields().setBookedDeposit(pEntry, iChannel, bPercentSide,
+			(iMultiplicity > 0) ? (kPrev.iValue + iValue) : 0);
 	}
 
 	// ⛔ eOrigin decides WHICH yield plane these deposits join, and it is REQUIRED -- a new source kind must
@@ -501,14 +509,21 @@ namespace
 			// additive stack exactly like every other source's -- it is NOT confined to the specialist's own
 			// yields. ⚠ Do not confuse it with a percent TARGETING specialists, which is what scales the
 			// specialist term; that is a KEYED deposit and a different mechanism.
-			if (eOrigin == CASC_ORIGIN_SPECIALIST && !bPercentSide)
+			if (bPercentSide)
 			{
-				mc_applyEntryToPlane(city.getSpecialistYields(), pEntry, iChannel, bPercentSide, iValue, iMultiplicity);
+				// EVERY source's percent joins the ONE additive stack -- that is its combine position, and it
+				// has no origin to keep apart.
+				mc_applyValueToPlane(city.getCityPercents(), iChannel, bPercentSide, iValue);
+			}
+			else if (eOrigin == CASC_ORIGIN_SPECIALIST)
+			{
+				mc_applyValueToPlane(city.getSpecialistYields(), iChannel, bPercentSide, iValue);
 			}
 			else
 			{
-				mc_applyEntryToPlane(city.getBuildingYields(), pEntry, iChannel, bPercentSide, iValue, iMultiplicity);
+				mc_applyValueToPlane(city.getBuildingYields(), iChannel, bPercentSide, iValue);
 			}
+			mc_bookCityEntry(city, pEntry, iChannel, bPercentSide, iValue, iMultiplicity);
 			mc_noteChannelApplied(iChannel, (int)city.getOwner());
 			// The per-source ATTRIBUTION line (DIAGNOSTIC, level 3 -- free until asked for).
 			CascadeChannelRegistry::reportDepositApply(szSource, iChannel, CASC_SCOPE_CITY, bPercentSide,
@@ -1214,7 +1229,7 @@ namespace
 				if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, false,
 					iChannel, bPercentSide, iValue, ePerScaling))
 				{
-					if (bPercentSide) pCity->getBuildingYields().applyPercent(iChannel, (int)iValue);
+					if (bPercentSide) pCity->getCityPercents().applyPercent(iChannel, (int)iValue);
 					else              pCity->getBuildingYields().applyFlat(iChannel, iValue);
 					// Planes B and C attribute too -- a count or an atom crossing moving a deposit is exactly the
 					// class a total can never explain, so leaving it out would make the decomposition lie by omission.
@@ -1339,11 +1354,11 @@ namespace
 		}
 		if (kBooked.iValue != 0 && (kBooked.iChannel != iOwedChannel || kBooked.bPercent != bOwedPercent))
 		{
-			if (kBooked.bPercent) kCity.getBuildingYields().applyPercent(kBooked.iChannel, (int)-kBooked.iValue);
+			if (kBooked.bPercent) kCity.getCityPercents().applyPercent(kBooked.iChannel, (int)-kBooked.iValue);
 			else                  kCity.getBuildingYields().applyFlat(kBooked.iChannel, -kBooked.iValue);
 			if (iOwedValue != 0)
 			{
-				if (bOwedPercent) kCity.getBuildingYields().applyPercent(iOwedChannel, (int)iOwedValue);
+				if (bOwedPercent) kCity.getCityPercents().applyPercent(iOwedChannel, (int)iOwedValue);
 				else              kCity.getBuildingYields().applyFlat(iOwedChannel, iOwedValue);
 			}
 		}
@@ -1355,7 +1370,7 @@ namespace
 				const int iSlot = (iOwedChannel >= 0) ? iOwedChannel : kBooked.iChannel;
 				if (iSlot >= 0)
 				{
-					if (bOwedPercent || kBooked.bPercent) kCity.getBuildingYields().applyPercent(iSlot, (int)iDelta);
+					if (bOwedPercent || kBooked.bPercent) kCity.getCityPercents().applyPercent(iSlot, (int)iDelta);
 					else                                  kCity.getBuildingYields().applyFlat(iSlot, iDelta);
 				}
 			}
@@ -1863,7 +1878,7 @@ namespace
 			return false;
 		}
 		if (pByChannel != NULL) { pByChannel->applied[iChannel]++; }
-		if (bPercentSide) kCity.getBuildingYields().applyPercent(iChannel, (int)iValue);
+		if (bPercentSide) kCity.getCityPercents().applyPercent(iChannel, (int)iValue);
 		else              kCity.getBuildingYields().applyFlat(iChannel, iValue);
 		kCity.getBuildingYields().setBookedDeposit(kGated.deposit->entry, iChannel, bPercentSide, iValue);
 		CascadeChannelRegistry::reportDepositApply(
