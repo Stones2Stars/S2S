@@ -493,6 +493,16 @@ namespace
 			{
 				rp_landMember(subClasses[iClass], iUnit);
 			}
+
+			//	WHICH UNITS CAN PERFORM A BUILD is the inverse of the unit's own `builds` repertoire, and only
+			//	the BUILD can answer it. Landing it here is what stops a consumer sweeping every unit asking
+			//	`hasBuild` -- the whole-registry cross-link [DEC-one-reverse-view] bans ("a page walking a
+			//	DIFFERENT registry to find what needs me is a cross-link the reverse families already answer").
+			const std::vector<int>& aiBuilds = pUnit->getBuilds();
+			for (size_t iBuild = 0; iBuild < aiBuilds.size(); ++iBuild)
+			{
+				rp_landRelated(rp_infoForBucket(EDGEB_BUILDS, aiBuilds[iBuild]), EDGEB_UNITS, iUnit);
+			}
 		}
 	}
 

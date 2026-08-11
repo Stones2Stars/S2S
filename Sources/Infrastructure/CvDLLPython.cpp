@@ -20,6 +20,7 @@
 #include "Python/CyWorldInfo.h"
 #include "Python/CyImprovementInfo.h"
 #include "Python/CyUnitInfo.h"
+#include "Python/CyBuildInfo.h"
 #include "Python/CyGameSpeedInfo.h"
 #include "Python/CyEspionageMissionInfo.h"
 #include "Python/CyVictoryInfo.h"
@@ -125,6 +126,7 @@ DllExport void DLLPublishToPython()
 	CyWorldInfo::pythonPublish();
 	CyImprovementInfo::pythonPublish();
 	CyUnitInfo::pythonPublish();
+	CyBuildInfo::pythonPublish();
 	CyGameSpeedInfo::pythonPublish();
 	CyEspionageMissionInfo::pythonPublish();
 	CyVictoryInfo::pythonPublish();

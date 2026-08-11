@@ -3,6 +3,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDINFO = CyBuildInfo()
 TRNSLTR = CyTranslator()
 
 TEXT = CyGameTextMgr()
@@ -39,7 +40,6 @@ class PediaBuild:
 	def interfaceScreen(self, iTheBuild):
 		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheBuildInfo = GC.getBuildInfo(iTheBuild)
 		screen = self.main.screen()
 		CyPlayer = self.main.CyPlayer
 
@@ -68,16 +68,16 @@ class PediaBuild:
 		aName = self.main.getNextWidgetName
 
 		# Main Panel
-		screen.setText(aName(), "", uFontEdge + CvTheBuildInfo.getDescription(), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGen, 0, 0)
+		screen.setText(aName(), "", uFontEdge + INFO.getDescription("BUILD_", iTheBuild), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGen, 0, 0)
 		screen.addPanel(aName(), "", "", False, False, X_COL_1, Y_TOP_ROW_1 + 3, W_PEDIA_PAGE + 8, H_TOP_ROW, PanelStyles.PANEL_STYLE_MAIN)
-		screen.addDDSGFC(aName(), CvTheBuildInfo.getButton(), X_COL_1 - 2, Y_TOP_ROW_1 + 8, S_ICON, S_ICON, iWidGen, -1, -1)
+		screen.addDDSGFC(aName(), INFO.getButton("BUILD_", iTheBuild), X_COL_1 - 2, Y_TOP_ROW_1 + 8, S_ICON, S_ICON, iWidGen, -1, -1)
 		# Stats
 		szStats = ""
 		BULLET = unichr(8854)
-		if CvTheBuildInfo.isKill():
+		if BUILDINFO.isConsumesUnit(iTheBuild):
 			szStats += BULLET + " " + TRNSLTR.getText("TXT_KEY_PEDIA_CONSUMES_WORKER", ()) + "\n"
-		iCost = CvTheBuildInfo.getCost()
-		fTime = CvTheBuildInfo.getTime() / 100.0
+		iCost = BUILDINFO.getGoldCost(iTheBuild)
+		fTime = BUILDINFO.getTime(iTheBuild) / 100.0
 		if iCost or fTime:
 			szStats += BULLET
 			if iCost:
@@ -86,7 +86,11 @@ class PediaBuild:
 				if CyPlayer:
 					G = GC.getGame()
 					fGameSpeedMod = G.getHammerCostPercent() / 100.0
-					fEraMod = GC.getEraInfo(G.getStartEra()).getBuildPercent() / 100.0
+					# The start era's build-cost percent, off the era's own COSTS group. It is a PERCENT and is
+					# therefore NOT x100 ([DEC-fixedpoint-x100]: the scaling exists to carry decimals, and a
+					# percent has none) -- so this is the /100 that turns 100% into the 1.0 multiplier the
+					# display composes with, never a fixed-point reduce.
+					fEraMod = INFO.getCostKinds("C2C_ERA_", G.getStartEra(), CascScope.CASC_SCOPE_WORLD)[CostsKind.COSTS_BUILD] / 100.0
 				szTime = str(fTime) + "00"
 				index = szTime.find(".")
 				if szTime[index + 1] == "0" and szTime[index + 2] == "0":
@@ -128,9 +132,9 @@ class PediaBuild:
 		if szStats:
 			screen.addMultilineText(aName(), uFont3b + szStats, self.X_MAIN_L + 4, self.Y_MAIN_L, W_STATS - 8, self.H_MAIN_L, iWidGen, 0, 0, 1<<0)
 		# Construct & Requires
-		iImp = CvTheBuildInfo.getImprovement() + 1
-		iRou	= CvTheBuildInfo.getRoute() + 1
-		iTech = CvTheBuildInfo.getTechPrereq() + 1
+		iImp = BUILDINFO.getImprovement(iTheBuild) + 1
+		iRou	= BUILDINFO.getRoute(iTheBuild) + 1
+		iTech = BUILDINFO.getTechPrereq(iTheBuild) + 1
 		if iImp or iRou or iTech:
 			enumBS = GenericButtonSizes.BUTTON_SIZE_CUSTOM
 			Panel = aName()
@@ -156,13 +160,12 @@ class PediaBuild:
 				screen.attachPanel(Panel2, Panel3, "", "", False, True, iPanelEmpty)
 				screen.attachImageButton(Panel3, PF + "TECH" + str(iTech), INFO.getButton("TECH_", iTech), enumBS, iWidGen, 1, 1, False)
 		# Capable
+		# The units that can perform this build -- the build's own reverse edge family, landed once at load.
+		# The legacy form swept every unit asking hasBuild, which is the cross-link [DEC-one-reverse-view] bans:
+		# a page walking a DIFFERENT registry to find "what needs me" reads the reverse family instead.
 		aList = []
-		for i in range(GC.getNumUnitInfos()):
-			CvUnitInfo = GC.getUnitInfo(i)
-			bCapable = CvUnitInfo.hasBuild(BuildTypes(iTheBuild))
-			if bCapable:
-				BTN = CvUnitInfo.getButton()
-				aList.append((BTN, i))
+		for i in INFO.getEdgeIds("BUILD_", iTheBuild, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_UNITS):
+			aList.append((INFO.getButton("UNIT_", i), i))
 		if aList:
 			szChild = PF + "UNIT"
 			Panel = aName()
@@ -172,14 +175,11 @@ class PediaBuild:
 		else:
 			H_TOP_ROW_2 += H_BOT_ROW
 		# Feature table
+		# The build's OWN per-feature rows. The legacy form asked this build four questions about every feature
+		# id in the registry; the build already names the handful it acts on ([DEC-one-reverse-view]).
 		aList = []
-		for iFeature in range(GC.getNumFeatureInfos()):
-			iTech = CvTheBuildInfo.getFeatureTech(iFeature) + 1
-			iTime = CvTheBuildInfo.getFeatureTime(iFeature)
-			bRemove = CvTheBuildInfo.isFeatureRemove(iFeature)
-			iHammers = CvTheBuildInfo.getFeatureProduction(iFeature)
-			if iTech or iTime or bRemove or iHammers:
-				aList.append((iFeature, iTech, iTime, bRemove, iHammers))
+		for dRow in BUILDINFO.getFeatureRows(iTheBuild):
+			aList.append((dRow["feature"], dRow["tech"] + 1, dRow["time"], dRow["remove"], dRow["production"]))
 		if aList:
 			# Background panel
 			ScrollPanel = aName()
@@ -223,9 +223,8 @@ class PediaBuild:
 				Panel = "Feature" + str(iRow)
 				screen.attachPanelAt(ScrollPanel, Panel, "", "", True, False, iPanelStd, 0, y + 3, iOne4, dy, iWidGen, 0, 0)
 
-				CvFeatureInfo = GC.getFeatureInfo(iFeature)
-				screen.addDDSGFCAt(aName(), Panel, CvFeatureInfo.getButton(), 1, 1, sIcon, sIcon, iWidGen, 1, 1, False)
-				szText = "<color=230,230,0,255>" + uFont2b + CvFeatureInfo.getDescription()
+				screen.addDDSGFCAt(aName(), Panel, INFO.getButton("FEATURE_", iFeature), 1, 1, sIcon, sIcon, iWidGen, 1, 1, False)
+				szText = "<color=230,230,0,255>" + uFont2b + INFO.getDescription("FEATURE_", iFeature)
 				screen.setTextAt(szChild1 + str(iFeature), Panel, szText, 1<<0, sIcon + 4, 4, 0, iFontGame, iWidGen, 1, 1)
 				# Col 2 - Tech
 				Panel = "Tech" + str(iRow)
@@ -233,9 +232,8 @@ class PediaBuild:
 
 				if iTech:
 					iTech -= 1
-					CvTechInfo = GC.getTechInfo(iTech)
-					screen.addDDSGFCAt(aName(), Panel, CvTechInfo.getButton(), 1, 1, sIcon, sIcon, iWidGen, 1, 1, False)
-					szText = "<color=230,230,0,255>" + uFont2b + CvTechInfo.getDescription()
+					screen.addDDSGFCAt(aName(), Panel, INFO.getButton("TECH_", iTech), 1, 1, sIcon, sIcon, iWidGen, 1, 1, False)
+					szText = "<color=230,230,0,255>" + uFont2b + INFO.getDescription("TECH_", iTech)
 					szChild = szChild2 + str(iTech) + "|" + str(iRow)
 					screen.setTextAt(szChild, Panel, szText, 1<<0, sIcon + 4, 4, 0, iFontGame, iWidGen, 1, 1)
 				# Col 3 - Time
