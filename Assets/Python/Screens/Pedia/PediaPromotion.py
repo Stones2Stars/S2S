@@ -1,7 +1,6 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
-GC = CyGlobalContext()
 INFO = CyInfo()
 TRNSLTR = CyTranslator()
 
@@ -33,9 +32,7 @@ class PediaPromotion:
 		self.X_COL_2 = X_COL_1 + W_HALF_PP + 8
 
 	def interfaceScreen(self, iThePromotion):
-		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvThePromotionInfo = GC.getPromotionInfo(iThePromotion)
 		screen = self.main.screen()
 
 		iWidGen			= WidgetTypes.WIDGET_GENERAL
@@ -61,86 +58,32 @@ class PediaPromotion:
 		aName = self.main.getNextWidgetName
 
 		# Main Panel
-		screen.setText(aName(), "", uFontEdge + CvThePromotionInfo.getDescription(), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGen, 0, 0)
+		screen.setText(aName(), "", uFontEdge + INFO.getDescription("PROMOTION_", iThePromotion), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGen, 0, 0)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW + 2, W_HALF_PP + 8, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "ToolTip|PROMO" + str(iThePromotion)
-		screen.setImageButtonAt(Img, Pnl, CvThePromotionInfo.getButton(), 4, 6, S_ICON, S_ICON, iWidGen, 1, 1)
-		# Requires & Leads To
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("PROMOTION_", iThePromotion), 4, 6, S_ICON, S_ICON, iWidGen, 1, 1)
+		# Leads To -- the promotion's OWN forward edge. A ladder rung `enables` the rung above it
+		# ([json.md] par.9: a ladder is an enables edge), so this is a straight list fetch and nothing sweeps
+		# the promotion registry asking each rung whether it names this one (DEC-one-reverse-view).
+		#
+		# The REQUIRES icon strip is GONE. It decorated its icons with &/||/brackets, i.e. it reconstructed the
+		# condition tree's STRUCTURE -- and CvConditionQuery refuses to report how a tree combines, deliberately:
+		# its walk reaches noneOf and disabled too, so an id-list strip would advertise a FORBIDDEN entity as
+		# required. The requires are rendered instead by the promotion help below, DLL-side, where the and/or
+		# and the noneOf are all honoured ([pedia-read-map.md] finding 3: no boolean-expression API belongs on
+		# this surface).
 		PF = "ToolTip|JumpTo|"
-		szAnd	= uFont3 + "&#38"
-		szOr	= uFont2b + "||"
-		szBracketL = uFont4b + " {"
-		szBracketR = uFont4b + "} "
-		szLogic = ""
-		aList1 = [] # Requires
-		iType = CvThePromotionInfo.getTechPrereq()
-		if iType > -1:
-			aList1.append((INFO.getButton("TECH_", iType), "TECH" + str(iType), ""))
-			szLogic = szAnd
-		iType = CvThePromotionInfo.getStateReligionPrereq()
-		if iType > -1:
-			aList1.append((INFO.getButton("RELIGION_", iType), "RELIGION" + str(iType), szLogic))
-			szLogic = szAnd
-		iType = CvThePromotionInfo.getPrereqPromotion()
-		if iType > -1:
-			aList1.append((INFO.getButton("PROMOTION_", iType), "PROMO" + str(iType), szLogic))
-			szLogic = ""
-		iOr1 = CvThePromotionInfo.getPrereqOrPromotion1()
-		iOr2 = CvThePromotionInfo.getPrereqOrPromotion2()
-		if iOr1 > -1 and iOr2 > -1:
-			szLogic += szBracketL
-		if iOr1 > -1:
-			aList1.append((INFO.getButton("PROMOTION_", iOr1), "PROMO" + str(iOr1), szLogic))
-			szLogic = szOr
-		if iOr2 > -1:
-			aList1.append((INFO.getButton("PROMOTION_", iOr2), "PROMO" + str(iOr2), szLogic))
+		aList1 = []
 		aList2 = [] # Leads To
-		for iType in xrange(GC.getNumPromotionInfos()):
-			CvPromotionInfo = GC.getPromotionInfo(iType)
-			if iThePromotion in (CvPromotionInfo.getPrereqPromotion(), CvPromotionInfo.getPrereqOrPromotion1(), CvPromotionInfo.getPrereqOrPromotion2()):
-				aList2.append((CvPromotionInfo.getButton(), "PROMO" + str(iType)))
-		if aList1 or aList2:
-			iListLength1 = len(aList1)
-			iListLength2 = len(aList2)
-			if aList1 and aList2:
-				W_REQ = W_LTO = W_HALF_PP
-				X_LTO = X_COL_2
-				W_3RD_PP = self.W_3RD_PP
-				if iListLength1 < 4:
-					if iListLength2 > 4:
-						W_REQ = W_3RD_PP
-						W_LTO = W_PEDIA_PAGE - W_3RD_PP - 4
-						X_LTO = X_COL_1 + W_REQ + 4
-				elif iListLength2 < 4:
-					if iListLength1 > 4:
-						W_REQ = W_PEDIA_PAGE - W_3RD_PP - 4
-						W_LTO = W_3RD_PP
-						X_LTO = X_COL_1 + W_REQ + 4
-				RequirePanel = aName()
-				LeadsToPanel = aName()
-				screen.addPanel(RequirePanel, TRNSLTR.getText("TXT_KEY_PEDIA_REQUIRES", ()), "", False, True, X_COL_1, Y_BOT_ROW, W_REQ, H_BOT_ROW, iPanelBlue50)
-				screen.addPanel(LeadsToPanel, TRNSLTR.getText("TXT_KEY_PEDIA_LEADS_TO", ()), "", False, True, X_LTO, Y_BOT_ROW, W_LTO, H_BOT_ROW, iPanelBlue50)
-			elif aList1:
-				RequirePanel = aName()
-				screen.addPanel(RequirePanel, TRNSLTR.getText("TXT_KEY_PEDIA_REQUIRES", ()), "", False, True, X_COL_1, Y_BOT_ROW, W_PEDIA_PAGE, H_BOT_ROW, iPanelBlue50)
-			elif aList2:
-				LeadsToPanel = aName()
-				screen.addPanel(LeadsToPanel, TRNSLTR.getText("TXT_KEY_PEDIA_LEADS_TO", ()), "", False, True, X_COL_1, Y_BOT_ROW, W_PEDIA_PAGE, H_BOT_ROW, iPanelBlue50)
-			if aList1:
-				for i in xrange(iListLength1):
-					BTN, szChild, szLogic = aList1[i]
-					if i != 0 or szLogic:
-						screen.attachLabel(RequirePanel, "", szLogic)
-					screen.attachImageButton(RequirePanel, PF + szChild, BTN, enumGBS, iWidGen, 1, 1, False)
-				if iOr1 > -1 and iOr2 > -1:
-					screen.attachLabel(RequirePanel, "", szBracketR)
-				aList1 = []
-			if aList2:
-				for i in xrange(iListLength2):
-					BTN, szChild = aList2[i]
-					screen.attachImageButton(LeadsToPanel, PF + szChild, BTN, enumGBS, iWidGen, 1, 1, False)
-				aList2 = []
+		for iType in INFO.getEdgeIds("PROMOTION_", iThePromotion, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_PROMOTIONS):
+			aList2.append((INFO.getButton("PROMOTION_", iType), "PROMO" + str(iType)))
+		if aList2:
+			LeadsToPanel = aName()
+			screen.addPanel(LeadsToPanel, TRNSLTR.getText("TXT_KEY_PEDIA_LEADS_TO", ()), "", False, True, X_COL_1, Y_BOT_ROW, W_PEDIA_PAGE, H_BOT_ROW, iPanelBlue50)
+			for BTN, szChild in aList2:
+				screen.attachImageButton(LeadsToPanel, PF + szChild, BTN, enumGBS, iWidGen, 1, 1, False)
+			aList2 = []
 		else:
 			H_MID_LEFT += H_BOT_ROW
 			H_MID_RIGHT += H_BOT_ROW
@@ -151,12 +94,10 @@ class PediaPromotion:
 			screen.addPanel(aName(), "", "", True, False, X_COL_1, Y_MID_ROW, W_HALF_PP, H_MID_LEFT, iPanelBlue50)
 			screen.addMultilineText(aName(), szText, X_COL_1 + 4, Y_MID_ROW + 12, W_HALF_PP - 8, H_MID_LEFT - 20, iWidGen, 0, 0, 1<<0)
 
-		# Unit Combats
-		for i in xrange(CvThePromotionInfo.getNumQualifiedUnitCombatTypes()):
-			aList1.append(CvThePromotionInfo.getQualifiedUnitCombatType(i))
-
-		for i in xrange(CvThePromotionInfo.getNumDisqualifiedUnitCombatTypes()):
-			aList2.append(CvThePromotionInfo.getDisqualifiedUnitCombatType(i))
+		# Unit Combats -- the info's own post-load caches, already folded over this rung AND its line, so the
+		# page reads a computed answer instead of re-folding a ladder per render.
+		aList1 = INFO.getIdList("PROMOTION_", iThePromotion, IdListSlot.PYLIST_QUALIFIED_UNITCOMBATS)
+		aList2 = INFO.getIdList("PROMOTION_", iThePromotion, IdListSlot.PYLIST_DISQUALIFIED_UNITCOMBATS)
 
 		if aList1 or aList2:
 			szChild = PF + "COMBAT"
@@ -178,10 +119,9 @@ class PediaPromotion:
 				screen.setTextAt(aName(), ScrlPnl, uFont3b + TRNSLTR.getText("TXT_KEY_VALID_FOR", ()), 1<<0, 0, y, 0, iFontGame, iWidGen, 1, 2)
 				y += 4 + dy
 				for iType in aList1:
-					CvUnitCombatInfo = GC.getUnitCombatInfo(iType)
-					screen.addDDSGFCAt(szChild + str(iType) + "|" + str(n), ScrlPnl, CvUnitCombatInfo.getButton(), 0, y, sIcon, sIcon, iWidGen, 1, 2, False)
+					screen.addDDSGFCAt(szChild + str(iType) + "|" + str(n), ScrlPnl, INFO.getButton("UNITCOMBAT_", iType), 0, y, sIcon, sIcon, iWidGen, 1, 2, False)
 					n += 1
-					szText = "<color=230,230,0,255>" + uFont2b + CvUnitCombatInfo.getDescription()
+					szText = "<color=230,230,0,255>" + uFont2b + INFO.getDescription("UNITCOMBAT_", iType)
 					screen.setTextAt(szChild + str(iType) + "|" + str(n), ScrlPnl, szText, 1<<0, sIcon + 4, y+6, 0, iFontGame, iWidGen, 1, 2)
 					n += 1
 					y += dy
@@ -191,10 +131,9 @@ class PediaPromotion:
 				screen.setTextAt(aName(), ScrlPnl, uFont3b + TRNSLTR.getText("TXT_KEY_VALID_FOR_NOT", ()), 1<<0, 0, y, 0, iFontGame, iWidGen, 1, 2)
 				y += 4 + dy
 				for iType in aList2:
-					CvUnitCombatInfo = GC.getUnitCombatInfo(iType)
-					screen.addDDSGFCAt(szChild + str(iType) + "|" + str(n), ScrlPnl, CvUnitCombatInfo.getButton(), 0, y, sIcon, sIcon, iWidGen, 1, 2, False)
+					screen.addDDSGFCAt(szChild + str(iType) + "|" + str(n), ScrlPnl, INFO.getButton("UNITCOMBAT_", iType), 0, y, sIcon, sIcon, iWidGen, 1, 2, False)
 					n += 1
-					szText = "<color=255,80,80,255>" + uFont2b + CvUnitCombatInfo.getDescription()
+					szText = "<color=255,80,80,255>" + uFont2b + INFO.getDescription("UNITCOMBAT_", iType)
 					screen.setTextAt(szChild + str(iType) + "|" + str(n), ScrlPnl, szText, 1<<0, sIcon + 4, y+6, 0, iFontGame, iWidGen, 1, 2)
 					n += 1
 					y += dy

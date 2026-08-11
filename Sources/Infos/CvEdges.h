@@ -95,6 +95,10 @@ enum EnEdgeBucket
 	// its traits as a plain FK list and a trait never names a leader, so "which leaders hold this" exists only
 	// as the load-built inverse -- which is what this bucket carries. No authored block fills it.
 	EDGEB_LEADERS,
+	// ⚑ DERIVED-ONLY for the same reason one bucket up, in the other direction: a CIVILIZATION holds its
+	// playable leaders as a plain FK list and a leaderhead never names a civ, so "which civs may this leader
+	// lead" exists only as the load-built inverse. No authored block fills it.
+	EDGEB_CIVILIZATIONS,
 	NUM_EDGEB,
 	NO_EDGEB = -1
 };

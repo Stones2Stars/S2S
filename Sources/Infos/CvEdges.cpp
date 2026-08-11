@@ -18,7 +18,7 @@ static const char* EDGE_BUCKET_NAMES[NUM_EDGEB] =
 	"buildings", "units", "builds", "techs", "civics", "religions", "corporations", "projects", "processes",
 	"promotions", "promotionLines", "heritages", "specialBuildings", "specialBuildingsWaived", "improvements",
 	"bonuses", "routes", "routesAnd", "votes", "hurries", "traits", "traitsAnd", "traitsOr", "specialists",
-	"leaders"
+	"leaders", "civilizations"
 };
 
 EnEdgeFamily CvEdges::familyFromString(const std::string& szFamily)

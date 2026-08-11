@@ -741,6 +741,20 @@ python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSl
 			for (size_t i = 0; i < techs.size(); ++i) ids.append((int)techs[i]);
 		}
 		break;
+	case PYLIST_QUALIFIED_UNITCOMBATS:
+		{
+			if (szTypePrefix != "PROMOTION_" || iId >= GC.getNumPromotionInfos()) break;
+			const std::vector<int>& combats = GC.getPromotionInfo((PromotionTypes)iId).getQualifiedUnitCombats();
+			for (size_t i = 0; i < combats.size(); ++i) ids.append(combats[i]);
+		}
+		break;
+	case PYLIST_DISQUALIFIED_UNITCOMBATS:
+		{
+			if (szTypePrefix != "PROMOTION_" || iId >= GC.getNumPromotionInfos()) break;
+			const std::vector<int>& combats = GC.getPromotionInfo((PromotionTypes)iId).getDisqualifiedUnitCombats();
+			for (size_t i = 0; i < combats.size(); ++i) ids.append(combats[i]);
+		}
+		break;
 	case PYLIST_PREREQ_EVENTS:
 		{
 			if (szTypePrefix != "EVENTTRIGGER_" || iId >= GC.getNumEventTriggerInfos()) break;

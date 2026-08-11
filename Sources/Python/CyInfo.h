@@ -124,6 +124,12 @@ enum PyIdListSlot
 	                                   // OBSOLETING ones and drops the distinction ([enabler.md] §2), so a
 	                                   // consumer with ALL semantics -- a tech tree drawing prereq arrows --
 	                                   // cannot read it. These are the load-reconstructed forward views.
+	PYLIST_QUALIFIED_UNITCOMBATS,      // PROMOTION_ -> the combat classes it may be taken by
+	PYLIST_DISQUALIFIED_UNITCOMBATS,   // PROMOTION_ -> the classes it is barred from
+	                                   // ⚑ Both are the info's own POST-LOAD caches, folded once from this
+	                                   // promotion's own lists plus its LINE's ([CvPromotionInfo.h] names them
+	                                   // the pedia caches). So this publishes a computed answer rather than
+	                                   // asking Python to re-fold a rung against its ladder per render.
 	PYLIST_PREREQ_EVENTS,              // EVENTTRIGGER_ -> the events a trigger requires to have already fired.
 	                                   // ⚠ EVENT_ / EVENTTRIGGER_ are the #425 PERMANENT carve-out (events stay
 	                                   // Python and are due a ground-up rework), so this is a KEEP-WORKING read

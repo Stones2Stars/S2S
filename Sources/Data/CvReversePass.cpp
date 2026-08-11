@@ -38,6 +38,7 @@
 #include "CvTerrainInfo.h"
 #include "CvFeatureInfo.h"
 #include "CvLeaderHeadInfo.h"          // the trait FK lists the leaderhead inverse reads (not an InfoRepo kind)
+#include "CvCivilizationInfo.h"        // the leader roster the civilization inverse reads
 #include "CvUnitCombatInfo.h"          // the membership index's receiver (likewise reached through the globals)
 #include <cstring>
 #include <set>
@@ -135,6 +136,7 @@ namespace
 		// table every other bucket uses.
 		case EDGEB_LEADERS:                 return (iId < GC.getNumLeaderHeadInfos())
 		                                        ? &GC.getLeaderHeadInfo((LeaderHeadTypes)iId) : NULL;
+		case EDGEB_CIVILIZATIONS:           return const_cast<CvInfo*>(InfoRepo<CvCivilizationInfo>::get().get(iId));
 		default:                            return NULL;
 		}
 	}
@@ -426,6 +428,26 @@ namespace
 	// ⚑ The two sets need no option check and no active-set choice. They share no id, so a leader's simple
 	// entries land on simple traits and its complex entries on complex ones, and each trait ends up with exactly
 	// the leaders that named IT.
+	//	The CIVILIZATION -> LEADER roster, inverted. A civ names the leaders that may play it; a leaderhead names
+	//	no civ, so "which civs may this leader lead" is only answerable as the load-built inverse -- and without
+	//	it a consumer has to sweep every civilization asking each one, which is the own-data inversion
+	//	[DEC-one-reverse-view] bans.
+	void rp_relatedFromCivilizationLeaders()
+	{
+		const int iNumCivs = GC.getNumCivilizationInfos();
+		for (int iCiv = 0; iCiv < iNumCivs; ++iCiv)
+		{
+			const CvCivilizationInfo& kCiv = GC.getCivilizationInfo((CivilizationTypes)iCiv);
+			const std::vector<LeaderHeadTypes>& leaders = kCiv.getLeaders();
+			for (size_t i = 0; i < leaders.size(); ++i)
+			{
+				const int iLeader = (int)leaders[i];
+				if (iLeader < 0 || iLeader >= GC.getNumLeaderHeadInfos()) continue;
+				rp_landRelated(&GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader), EDGEB_CIVILIZATIONS, iCiv);
+			}
+		}
+	}
+
 	void rp_relatedFromLeaderTraits()
 	{
 		const int iNumLeaders = GC.getNumLeaderHeadInfos();
@@ -484,6 +506,7 @@ namespace
 		rp_relatedWalkKind<CvComplexTraitTag>(GC.getNumTraitInfos(), EDGEB_TRAITS);
 		rp_relatedFromBuildProduces();
 		rp_relatedFromLeaderTraits();
+		rp_relatedFromCivilizationLeaders();
 		rp_deriveUnitCombatMembers();
 	}
 

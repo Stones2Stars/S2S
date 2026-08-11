@@ -162,6 +162,8 @@ void CyEnums::pythonPublish()
 		.value("PYLIST_GRANTED_BUILDINGS", PYLIST_GRANTED_BUILDINGS)
 		.value("PYLIST_PREREQ_AND_TECHS", PYLIST_PREREQ_AND_TECHS)
 		.value("PYLIST_PREREQ_OR_TECHS",  PYLIST_PREREQ_OR_TECHS)
+		.value("PYLIST_QUALIFIED_UNITCOMBATS",    PYLIST_QUALIFIED_UNITCOMBATS)
+		.value("PYLIST_DISQUALIFIED_UNITCOMBATS", PYLIST_DISQUALIFIED_UNITCOMBATS)
 		.value("PYLIST_PREREQ_EVENTS",    PYLIST_PREREQ_EVENTS)
 	;
 
@@ -244,6 +246,10 @@ void CyEnums::pythonPublish()
 		.value("EDGEB_HURRIES",     EDGEB_HURRIES)
 		.value("EDGEB_TRAITS",      EDGEB_TRAITS)
 		.value("EDGEB_SPECIALISTS", EDGEB_SPECIALISTS)
+		//	The two DERIVED-ONLY buckets ([CvEdges.h]) -- the load-built inverses of a roster FK list, which is
+		//	the only way "which leaders hold this trait" / "which civs may this leader lead" is answerable.
+		.value("EDGEB_LEADERS",       EDGEB_LEADERS)
+		.value("EDGEB_CIVILIZATIONS", EDGEB_CIVILIZATIONS)
 		;
 
 	python::enum_<GameStateTypes>("GameStateTypes")
