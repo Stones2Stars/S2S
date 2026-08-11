@@ -1094,6 +1094,24 @@ state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
   player's whole group list emptied — then **repaint**, `colorRegion` from each still-uncolored plot. So the
   network is demolished and rebuilt whole, and anything the old groups held is gone unless the repaint knows
   how to find it again.
+  > **⛔ THE LEAVE IS SILENT AND THE JOIN IS ANNOUNCED — the two steps pass OPPOSITE flags, and that asymmetry
+  > is the whole mechanism of the loss.** `CvPlot::setPlotGroup`'s `bRecalculateEffect` is what makes a group
+  > change a real transition: it withdraws the plot's contributions from the old group, fires the per-bonus
+  > crossings (`onNetworkSupplyChanged`), announces `SEVT_CITY_NETWORK_REMOVED` / `_ADDED`, and deposits into
+  > the new one. **The demolition passes `false`** (so none of that happens — the plot is severed silently and
+  > the object deleted); **the repaint passes `true`** (so the join is fully announced).
+  > ⚑ **That is correct, not sloppy:** withdrawing from groups deleted three lines later is wasted work, and a
+  > removal fact naming a group id that is about to stop existing tells a consumer nothing. It is also what
+  > keeps the load free of double-counts — the counts restart from zero on new objects.
+  > ⚠ **But it is exactly why a supply the repaint cannot re-find vanishes WITHOUT A TRACE.** The demolition
+  > carries it off without announcing the loss, so no consumer hears it go and nothing re-derives it — a silent
+  > subtraction with no matching fact, which is why no total ever looks wrong.
+  > ⇒ **A re-push must therefore go through `CvPlotGroup::changeNumBonuses`**, which on a presence crossing
+  > emits `SEVT_PLOTGROUP_BONUS_ADDED` and fans `onNetworkBonusChanged` into every member city. That is the
+  > live entry point, and it is the fact that TELLS THE TRUTH about what happened — the network component's
+  > holdings moved (§ THREE FACTS, [event-spine.md](event-spine.md)) — so the supply arrives announced rather
+  > than seeded ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) bans a warm-up walk that
+  > leaves consumers deaf; this is not one).
   > **⛔ THE RE-COLOR RE-FOLDS THE TILE HALF ONLY, SO THE BUILDING-SUPPLIED HALF MUST BE RE-PUSHED BEHIND IT.**
   > `CvPlot::updatePlotGroupBonus` folds a plot's own extracted resource, a city's free bonuses and the capital's
   > import/export — and nothing else. Every resource an ACTIVE BUILDING supplies through `provides.bonuses`
