@@ -140,7 +140,7 @@ class PediaImprovement:
 		# Stats
 		szText = ""
 		szYield = ""
-		aFlatYields = INFO.getFlatYields("IMPROVEMENT_", iTheImprove)
+		aFlatYields = INFO.getFlatYields("IMPROVEMENT_", iTheImprove, CascScope.CASC_SCOPE_PLOT)
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
 			szChar = u'%c' % (TEXT.getSymbolChar("YIELD_", k))
 			iYieldChange = aFlatYields[k]
