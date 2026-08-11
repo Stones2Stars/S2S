@@ -7592,6 +7592,14 @@ void CvCityAI::AI_setEmphasize(EmphasizeTypes eIndex, bool bNewValue)
 			}
 		}
 
+		// ⛔ EMPHASIS CHANGES THE VALUATION FUNCTION, AND THE MEMO IS KEYED ONLY ON ITS INPUTS. `AI_yieldValue`
+		// matches on the yield/commerce vectors and the condition flags; every emphasis family the valuation
+		// reads -- yield, great-people, per-commerce -- is city state it never sees. So without this clear a
+		// toggle re-runs the assignment against entries computed under the PREVIOUS emphasis, and because the
+		// LRU holds only a handful, some survive and some do not: the result is a mixed valuation and a
+		// fraction of the plots left unworked, differing on every toggle.
+		ClearYieldValueCache();
+
 		AI_assignWorkingPlots();
 
 		//	If we're using AI govenors and not part way through a build reflect
@@ -7623,6 +7631,10 @@ void CvCityAI::AI_forceEmphasizeCulture(bool bNewValue)
 
 		m_aiEmphasizeCommerceCount[COMMERCE_CULTURE] += (bNewValue ? 1 : -1);
 		FASSERT_NOT_NEGATIVE(m_aiEmphasizeCommerceCount[COMMERCE_CULTURE]);
+
+		// The same count the valuation's per-commerce emphasis reads, so it invalidates the memo for the same
+		// reason the explicit toggle above does.
+		ClearYieldValueCache();
 	}
 }
 
@@ -9957,12 +9969,16 @@ PROFILE_EXTRA_FUNC();
 			}
 		}
 
+		// ⚠ `bWorkerOptimization` belongs in the match like every other flag: the valuation branches on it in
+		// several places, and the entry has always STORED it -- only the comparison omitted it, so two calls
+		// differing in nothing else collided and the second was served the first's answer.
 		if (bMatch &&
 			entry->bAvoidGrowth == bAvoidGrowth &&
 			entry->bRemove == bRemove &&
 			entry->bIgnoreFood == bIgnoreFood &&
 			entry->bIgnoreGrowth == bIgnoreGrowth &&
-			entry->bIgnoreStarvation == bIgnoreStarvation)
+			entry->bIgnoreStarvation == bIgnoreStarvation &&
+			entry->bWorkerOptimization == bWorkerOptimization)
 		{
 			entry->iLastUseCount = ++yieldValueCache.currentUseCounter;
 			yieldValueCacheHits++;
