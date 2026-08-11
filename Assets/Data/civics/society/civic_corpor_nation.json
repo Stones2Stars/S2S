@@ -57,16 +57,18 @@
  },
  "happiness": {
   "empire": {
-   "flat": [
-    {
-     "value": -15,
-     "per": {
-      "type": "POPULATION",
-      "each": 100,
-      "scope": "city"
+   "cities": {
+    "flat": [
+     {
+      "value": -15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
      }
-    }
-   ],
+    ]
+   },
    "buildings": {
     "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
      "flat": -5

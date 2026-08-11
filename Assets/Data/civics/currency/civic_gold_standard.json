@@ -87,17 +87,19 @@
  },
  "happiness": {
   "empire": {
-   "flat": [
-    1,
-    {
-     "value": 1,
-     "per": {
-      "type": "POPULATION",
-      "each": 100,
-      "scope": "city"
+   "flat": 1,
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "health": {

@@ -34,21 +34,21 @@
  "happiness": {
   "empire": {
    "cities": {
-    "flat": -1,
+    "flat": [
+     -1,
+     {
+      "value": -75,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     }
+    ],
     "max": "TARGET_NUM_CITIES",
     "orderedByDescending": "CITY_SIZE"
    },
-   "flat": [
-    -2,
-    {
-     "value": -75,
-     "per": {
-      "type": "POPULATION",
-      "each": 100,
-      "scope": "city"
-     }
-    }
-   ]
+   "flat": -2
   }
  },
  "growth": {

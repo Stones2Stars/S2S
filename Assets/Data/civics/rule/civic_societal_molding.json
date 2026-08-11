@@ -27,17 +27,19 @@
  },
  "happiness": {
   "empire": {
-   "flat": [
-    -4,
-    {
-     "value": -10,
-     "per": {
-      "type": "POPULATION",
-      "each": 100,
-      "scope": "city"
+   "flat": -4,
+   "cities": {
+    "flat": [
+     {
+      "value": -10,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
      }
-    }
-   ]
+    ]
+   }
   }
  },
  "capture": {

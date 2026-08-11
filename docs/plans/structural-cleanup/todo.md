@@ -113,15 +113,6 @@
   `strength.unit.flat` is a family read while an air unit's base sits in `identity`, so the two planes of ONE
   question are reached by two different kinds of read, and a consumer must know which before it can ask.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
-- Re-home the CIVIC per-population wellbeing deposits onto the `cities` target. They author a BARE
-  `happiness.empire` flat scaled `per: {type: POPULATION, each: 100, scope: city}` — an empire-scope deposit whose
-  count is per-CITY, which has no single answer at empire scope: the package is the owner's, and there is no city
-  bound to count the population of. The ruled shape is the one [modifier.md §2b](../../specs/modifier.md) already
-  states for the bonus case — `empire.cities`, which resolves PER CITY so the entry's own `per` scaler and
-  conditions resolve against THAT city and the value lands in its package.
-  ⚠ It is the same authored mistake the bonus ruling names, one family over, so it closes by applying that ruling
-  rather than deciding anything new. ⛔ Recurate and regenerate in the same change
-  ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
 - Bring `curate_trait`'s trade-route rows onto ruling 11, as `curate_building` already is: `iCoastalTradeRoutes`
   and `iForeignTradeRouteModifier` still emit `coastal` / `foreign` as MEMBERS, and neither has a kind in the
   vocabulary — so a trait authoring one emits an address that resolves to nothing and is dropped in silence.

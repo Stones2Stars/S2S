@@ -77,17 +77,19 @@
  },
  "happiness": {
   "empire": {
-   "flat": [
-    1,
-    {
-     "value": 5,
-     "per": {
-      "type": "POPULATION",
-      "each": 100,
-      "scope": "city"
+   "flat": 1,
+   "cities": {
+    "flat": [
+     {
+      "value": 5,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
      }
-    }
-   ],
+    ]
+   },
    "buildings": {
     "BUILDING_INDEPENDENCE_HALL": {
      "flat": 5

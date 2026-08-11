@@ -99,14 +99,6 @@
    "flat": [
     -2,
     {
-     "value": 20,
-     "per": {
-      "type": "POPULATION",
-      "each": 100,
-      "scope": "city"
-     }
-    },
-    {
      "value": 1,
      "enabled": "GAMEOPTION_MAP_PERSONALIZED"
     },
@@ -119,6 +111,18 @@
      }
     }
    ],
+   "cities": {
+    "flat": [
+     {
+      "value": 20,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     }
+    ]
+   },
    "buildings": {
     "BUILDING_BUNKER": {
      "flat": 1

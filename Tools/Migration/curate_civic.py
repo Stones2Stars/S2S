@@ -466,8 +466,15 @@ def curate(typ, rec, store):
         elif tag == "iCivicPercentAnger":
             v = _num(t)
             if v not in (None, 0, 0.0):   # V unhappiness per 100 CITY population (engine V×10×pop/1000) ->
-                _put_per(fam, "happiness", "empire", "flat", -v,   # a NEGATIVE happiness per-scaler (ruling 12);
-                         OrderedDict([("type", "POPULATION"), ("each", 100), ("scope", "city")]))  # count is city-local
+                # a NEGATIVE happiness per-scaler (ruling 12), on the `cities` TARGET because the count is
+                # CITY-LOCAL (owner). A bare empire flat cannot express it in either direction: the empire
+                # package has no city bound to count the population OF, and it rolls DOWN to every city, so one
+                # city's population would scale the happiness of all of them. `cities` resolves PER CITY, which
+                # is where both the count and the deposit belong -- the shape modifier.md §2b already rules for
+                # the bonus case.
+                _put_per(fam, "happiness", "empire", "flat", -v,
+                         OrderedDict([("type", "POPULATION"), ("each", 100), ("scope", "city")]),
+                         target="cities")
         elif tag == "iTaxRateUnhappiness":
             v = _num(t)
             if v not in (None, 0, 0.0):   # V unhappiness x goldRate/100 in every city (CvPlayer.cpp:26526

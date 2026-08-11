@@ -80,18 +80,16 @@
  },
  "happiness": {
   "empire": {
-   "flat": [
-    {
-     "value": 25,
-     "per": {
-      "type": "POPULATION",
-      "each": 100,
-      "scope": "city"
-     }
-    }
-   ],
    "cities": {
     "flat": [
+     {
+      "value": 25,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     },
      {
       "value": 1,
       "religion": "!IS_STATE_RELIGION"
