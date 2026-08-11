@@ -254,10 +254,11 @@
   ([state-repositories.md](../../architecture/state-repositories.md) § THE ORIGIN RULE) — but only the two flat
   planes are separate types today; the percent stack rides the building plane, and so does the worked-plot fold.
   ⚠ **Neither is a wrong number, and neither is the plot origin missing a package.** The plot base is the
-  `CvPlot` package PULLED, and the city-side fold is the cache that keeps the hottest read off an O(radius) walk
-  — that cache is required, not a defect. What is wrong is only that a plot-origin accumulation and the percent
-  stack both live inside a package TYPED for the building origin, which is the conflation the type split exists
-  to make unsayable.
+  `CvPlot` package, and the city-side plot-base slot is a MAINTAINED SUM like every other: the worked-plot fact
+  applies the moved plot's contribution as a delta ([DEC-maintained-sum]) — nothing is marked, nothing is
+  recomputed, and it is not a cache. What is wrong is only that a plot-origin accumulation and the percent stack
+  both live inside a package TYPED for the building origin, which is the conflation the type split exists to
+  make unsayable.
 - **The unresolved-FK census reports the §3.1 CATCH-ALL TOKENS as unresolved ids.** `CITY`, `TEAM`,
   `POPULATION`, `ERA`, `SPECIALIST`, `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`, the slider rates
   (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), `CULTURE_PERCENTAGE`,
