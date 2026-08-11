@@ -170,6 +170,8 @@ public:
 	std::wstring getCivilopedia(const std::string& szTypePrefix, int iId) const;
 	std::wstring getStrategy(const std::string& szTypePrefix, int iId) const;
 	std::wstring getHelp(const std::string& szTypePrefix, int iId) const;
+	// identity.quote -- the epigraph. Resolved text; empty for a type that authors none, so the read is total.
+	std::wstring getQuote(const std::string& szTypePrefix, int iId) const;
 	// The other two AUTHORED IDENTITY TEXTS ([json.md] §7: identity carries description, help, civilopedia,
 	// message, quote, strategy, ADJECTIVE and SHORT DESCRIPTION). They are genuinely distinct content, not a
 	// legacy per-field getter to collapse: a civilization carries a NAME, a SHORT name and an ADJECTIVE

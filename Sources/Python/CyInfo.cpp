@@ -231,6 +231,14 @@ std::wstring CyInfo::getStrategy(const std::string& szTypePrefix, int iId) const
 	return pInfo ? std::wstring(pInfo->getStrategy()) : std::wstring();
 }
 
+std::wstring CyInfo::getQuote(const std::string& szTypePrefix, int iId) const
+{
+	//	⚑ This one resolves through cyi_info (CvInfo) rather than cyi_infoBase: the quote virtual lives on the
+	//	DLL-derived class, because CvInfoBase's vtable is fixed by the closed .exe ([engine.md]).
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	return pInfo ? pInfo->getQuote() : std::wstring();
+}
+
 std::wstring CyInfo::getHelp(const std::string& szTypePrefix, int iId) const
 {
 	const CvInfoBase* pInfo = cyi_infoBase(szTypePrefix, iId);
@@ -950,6 +958,13 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getUnitInfo((UnitTypes)iId).getProductionCost();
 		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
 			return GC.getProjectInfo((ProjectTypes)iId).getProductionCost();
+		//	A tech's make-cost is its BEAKER cost (cost.research), the same plane-1 authored actual cost the
+		//	hammer registries carry ([json.md] the cost cluster: plane 1 is the entity's own self-data).
+		//	⚠ This is the INFO's base figure. What a team actually pays scales with gamespeed / era / handicap /
+		//	team size and is COMPUTED GAME STATE, so it is asked of CyState, never folded in here
+		//	([pedia-read-map.md] finding 5: a context read sits BESIDE the info payload).
+		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
+			return GC.getTechInfo((TechTypes)iId).getResearchCost();
 		break;
 
 	case PYINT_BONUS_CLASS:
@@ -1279,6 +1294,7 @@ void CyInfo::pythonPublish()
 		.def("getTextKey",     &CyInfo::getTextKey)
 		.def("getCivilopedia", &CyInfo::getCivilopedia)
 		.def("getStrategy",    &CyInfo::getStrategy)
+		.def("getQuote",       &CyInfo::getQuote)
 		.def("getHelp",        &CyInfo::getHelp)
 		.def("getAdjective",        &CyInfo::getAdjective)
 		.def("getShortDescription", &CyInfo::getShortDescription)

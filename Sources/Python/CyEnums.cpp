@@ -113,6 +113,10 @@ void CyEnums::pythonPublish()
 		.value("SCALAR_GROWTH", SCALAR_GROWTH)
 		.value("SCALAR_GREAT_PEOPLE_RATE", SCALAR_GREAT_PEOPLE_RATE)
 		.value("SCALAR_EVENT_CHANCE", SCALAR_EVENT_CHANCE)
+		//	A percent on how fast WORKERS build -- the tech page's own row (19 techs author
+		//	workRate.empire.percent). ⚠ The keyed BUILD_*/TERRAIN_* targets stay entry-list reads and are NOT
+		//	this slot ([CvInfoKinds.h]); this is the memberless scope-wide percent.
+		.value("SCALAR_WORK_RATE", SCALAR_WORK_RATE)
 		;
 
 	// The UNIT STATUS vocabulary -- what ACT.setUnitStatus is indexed by. An engine enum, so it IS the

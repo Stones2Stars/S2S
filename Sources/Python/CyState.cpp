@@ -19,6 +19,7 @@
 #include <ctime>  // getHeadSelectedCity/Unit -- the CURRENT SELECTION
 #include "AI/BetterBTSAI.h"   // PERF_SCOPE -- the ONE instrument, gated by gPerfLogLevel
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
+#include "AI/CvTeamAI.h"            // GET_TEAM -- the team-scope reads (a tech's realized research cost)
 #include "Infos/CvInfoKinds.h"      // the NUM_<FAMILY>_KINDS the groups are sized by
 #include "UI/CityOutputHistory.h"  // the city admin tab's recent-output rows
 #include "UI/CvBuildingFilters.h"   // BuildingFilterTypes -- the city screen's list VIEW state
@@ -1343,6 +1344,15 @@ int CyState::getPlayerTeam(int iPlayer) const
 	return pPlayer ? (int)pPlayer->getTeam() : -1;
 }
 
+int CyState::getTechResearchCost(int iTeam, int iTech) const
+{
+	if (iTeam < 0 || iTeam >= MAX_TEAMS || iTech < 0 || iTech >= GC.getNumTechInfos())
+	{
+		return -1;
+	}
+	return GET_TEAM((TeamTypes)iTeam).getResearchCost((TechTypes)iTech);
+}
+
 bool CyState::isFinalInitialized() const
 {
 	return GC.getGame().isFinalInitialized();
@@ -1544,6 +1554,7 @@ void CyState::pythonPublish()
 		.def("getGameTurn",              &CyState::getGameTurn)
 		.def("isPlayerAlive",            &CyState::isPlayerAlive)
 		.def("getPlayerTeam",            &CyState::getPlayerTeam)
+		.def("getTechResearchCost",      &CyState::getTechResearchCost)
 		.def("isFinalInitialized",       &CyState::isFinalInitialized)
 		.def("getMAX_PLAYERS",           &CyState::getMAX_PLAYERS)
 		.def("getMAX_PC_PLAYERS",        &CyState::getMAX_PC_PLAYERS)

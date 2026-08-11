@@ -97,7 +97,7 @@ public:
 	const char* getSoundMP() const { return m_szSoundMP.c_str(); }   // sound.soundMP
 	// identity.quote -- RESOLVES the TXT_KEY via gDLL->getText (the raw key showed "TXT_KEY_..._QUOTE" in the
 	// tech splash). std::wstring return: Boost.Python 1.32 has a std::wstring converter, none for CvWString.
-	std::wstring getQuote() const;
+	virtual std::wstring getQuote() const;
 
 	// --- the FORWARD prereq views walked from the composed requires.build tree (enabler.md §2: the tech case
 	// reconstructs from the child's RETAINED requires.build.all/.any) ---

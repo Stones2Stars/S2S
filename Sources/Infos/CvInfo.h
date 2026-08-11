@@ -101,6 +101,17 @@ public:
 	virtual const CvClassificationBlock* getCanTrade()     const { return NULL; }
 	virtual const CvClassificationBlock* getCanWorkOn()    const { return NULL; }
 
+	//	identity.quote -- the flavour epigraph a splash screen and the pedia render ([json.md] §7 lists `quote`
+	//	among the authored identity TEXTS). RESOLVED text, like every other bare text read.
+	//	⚑ It sits HERE rather than on CvInfoBase because that base is EXE-BOUND: the closed .exe fixes its
+	//	vtable, so a virtual added there is an ABI change ([engine.md]). CvInfo is the DLL-derived class, which
+	//	is the safe lane the same rule points every graft at ([patterns.md]).
+	//	⚠ Only TECH authors one today, and that is NOT a reason to file it as a per-type tail: an authored
+	//	identity TEXT is served on the generic plane by ruling ([patterns.md] -- "do not ration it, and do not
+	//	file one as per-type tail merely because it is absent from CvInfoBase"). A type that authors none
+	//	answers empty, so the read is total.
+	virtual std::wstring getQuote() const { return std::wstring(); }
+
 	// ⚖ THE PARAMETERIZED CLASSIFICATION READ -- ONE per domain, for every info ([patterns.md] § THE GETTER
 	// SETUP: "all these individual getters should be replaced with one parameterized read"). The id argument is
 	// a compile-time constant from the GENERATED CvClassificationIds.h, which the ClassificationRegistry seeds

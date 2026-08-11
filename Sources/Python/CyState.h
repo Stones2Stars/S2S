@@ -391,6 +391,12 @@ public:
 	// walks the player range, and neither belongs to a group -- they are lone facts about the slot itself.
 	bool isPlayerAlive(int iPlayer) const;
 	int getPlayerTeam(int iPlayer) const;
+	//	What THIS TEAM actually pays for a tech, in beakers. COMPUTED GAME STATE, not info data: the authored
+	//	base (CyInfo PYINT_COST) is scaled by gamespeed, the tech's era, the handicap and the team's member
+	//	count ([culture-religion-research.md] Tech cost). ⛔ It belongs here rather than on the info plane
+	//	precisely because an info never reads game state ([json.md] §9) -- the two sit side by side, and a
+	//	consumer showing "what will this cost ME" wants this one ([pedia-read-map.md] finding 5).
+	int getTechResearchCost(int iTeam, int iTech) const;
 	bool isFinalInitialized() const;   // is the game up enough to be asked / shown a message
 	// The closed CONSTANTS block (python-read-map: a small closed set, trivially served by the library).
 	// Compile-time engine limits, so they are bare reads with no owner and no scope.
