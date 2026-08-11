@@ -100,8 +100,14 @@ void CyEnums::pythonPublish()
 	// The straggler-scalar vocabulary (CyInfo::getScalar). ⚑ Entries are added AS CONSUMERS APPEAR -- the
 	// surface is meant to grow by an enum entry rather than by a method per value, and listing slots nothing
 	// reads yet would be vocabulary for nobody.
+	//	Grows one value per call site that asks -- the straggler scalars are a long tail and publishing the whole
+	//	tail ahead of demand is the pre-emptive surface [patterns.md] refuses.
+	//	⚑ STRENGTH and RANGE are the UNIT stat columns an enumeration screen renders: a unit fights with ONE of
+	//	them (a land unit's strength, an air unit's range beside its `identity.base.airCombat`), never both.
 	python::enum_<InfoScalar>("InfoScalar")
 		.value("SCALAR_SPEED", SCALAR_SPEED)
+		.value("SCALAR_STRENGTH", SCALAR_STRENGTH)
+		.value("SCALAR_RANGE", SCALAR_RANGE)
 		;
 
 	// The UNIT STATUS vocabulary -- what ACT.setUnitStatus is indexed by. An engine enum, so it IS the
@@ -118,6 +124,9 @@ void CyEnums::pythonPublish()
 		.value("CASC_SCOPE_EMPIRE", CASC_SCOPE_EMPIRE)
 		.value("CASC_SCOPE_CITY",   CASC_SCOPE_CITY)
 		.value("CASC_SCOPE_PLOT",   CASC_SCOPE_PLOT)
+		//	The UNIT plane is a self-accumulator ([modifier.md] par.6), so it is the scope a unit's own stat
+		//	deposits are authored at -- and therefore the one a stat column reads.
+		.value("CASC_SCOPE_UNIT",   CASC_SCOPE_UNIT)
 		;
 
 	python::enum_<CvCascUnit>("CascUnit")
@@ -531,6 +540,18 @@ void CyEnums::pythonPublish()
 		.value("REVOLUTION_VIOLENT", REVOLUTION_VIOLENT)
 		.value("REVOLUTION_LABOR_FREEDOM", REVOLUTION_LABOR_FREEDOM)
 		.value("NUM_REVOLUTION_KINDS", NUM_REVOLUTION_KINDS)
+	;
+
+	//	The MOVEMENT group enum -- the vocabulary CyInfo::getMovementKinds hands its list back in. An enumeration
+	//	screen renders a unit's moves column off it, so publishing it is what makes that read consumable at all
+	//	([patterns.md]: the enum indexes the RESULT, never the call).
+	//	⚑ MOVEMENT_MOVES is the MEMBERLESS kind -- a unit's base moves author `movement.unit.flat` with no member
+	//	spelling, so kind 0 is the one a stat column wants.
+	python::enum_<MovementKind>("MovementKind")
+		.value("MOVEMENT_MOVES", MOVEMENT_MOVES)
+		.value("MOVEMENT_MOVE_DISCOUNT", MOVEMENT_MOVE_DISCOUNT)
+		.value("MOVEMENT_DROP_RANGE", MOVEMENT_DROP_RANGE)
+		.value("NUM_MOVEMENT_KINDS", NUM_MOVEMENT_KINDS)
 	;
 
 	//	The kind enums that index CyState's raw-state city groups. They are the consumer's vocabulary for those

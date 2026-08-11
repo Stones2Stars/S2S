@@ -319,7 +319,21 @@ python::list CyInfo::getRevolution(const std::string& szTypePrefix, int iId, int
 	for (int iKind = 0; iKind < NUM_REVOLUTION_KINDS; ++iKind)
 	{
 		// An entity authoring none answers 0 across the group -- a total read, never an error.
-		values.append(pInfo ? pInfo->modifier(MODFAM_REVOLUTION, iKind, (CvCascScope)iScope, CASC_UNIT_FLAT) : 0);
+		values.append(pInfo ? pInfo->modifier(MODFAM_REVOLUTION, iKind, (CvCascScope)iScope,
+			infoKindUnit(MODFAM_REVOLUTION, iKind, (CvCascScope)iScope)) : 0);
+	}
+	return values;
+}
+
+python::list CyInfo::getMovementKinds(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iKind = 0; iKind < NUM_MOVEMENT_KINDS; ++iKind)
+	{
+		// An entity that authors none answers 0 across the group -- a total read, never an error.
+		values.append(pInfo ? pInfo->modifier(MODFAM_MOVEMENT, iKind, (CvCascScope)iScope,
+			infoKindUnit(MODFAM_MOVEMENT, iKind, (CvCascScope)iScope)) : 0);
 	}
 	return values;
 }
@@ -365,6 +379,11 @@ bool CyInfo::isSpy(int iUnitId) const
 bool CyInfo::isAnimal(int iUnitId) const
 {
 	return hasTag("UNIT_", iUnitId, CLS_TAG_ANIMAL);
+}
+int CyInfo::getUnitAirCombat(int iUnitId) const
+{
+	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
+	return pUnit ? pUnit->getAirCombat() : 0;
 }
 bool CyInfo::canSpreadReligion(int iUnitId) const
 {
@@ -1196,6 +1215,7 @@ void CyInfo::pythonPublish()
 		.def("getWellbeing",   &CyInfo::getWellbeing)
 		.def("getRevolution",  &CyInfo::getRevolution)
 		.def("getProductionToCommerce", &CyInfo::getProductionToCommerce)
+		.def("getMovementKinds", &CyInfo::getMovementKinds)
 		.def("hasSkill",           &CyInfo::hasSkill)
 		.def("hasTag",             &CyInfo::hasTag)
 		.def("hasAttribute",       &CyInfo::hasAttribute)
@@ -1213,6 +1233,7 @@ void CyInfo::pythonPublish()
 		.def("spreadsReligion",     &CyInfo::spreadsReligion)
 		.def("isWorldUnit",         &CyInfo::isWorldUnit)
 		.def("hasUnitInstanceCap",      &CyInfo::hasUnitInstanceCap)
+		.def("getUnitAirCombat",        &CyInfo::getUnitAirCombat)
 		.def("providesBonus",           &CyInfo::providesBonus)
 		.def("isGlobalTech",            &CyInfo::isGlobalTech)
 		.def("isStatusPromotion",       &CyInfo::isStatusPromotion)

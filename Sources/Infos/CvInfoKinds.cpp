@@ -827,6 +827,13 @@ CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind, CvCascScope eScope)
 	case MODFAM_AIR:
 		// intercept/evasion are percent modifiers; the range kinds are flat counts (census: trait air.range flat)
 		return (iKind == (int)AIR_RANGE || iKind == (int)AIR_NUKE_RANGE) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_MOVEMENT:
+		// Every SCOPE-WIDE movement authoring is flat (census: the memberless unit base 2073 and plot cost 211,
+		// plus moves 34 / moveDiscount 14 / dropRange 13). The family's percents are exclusively TARGET-KEYED
+		// (the terrain/feature half-cost promotions), and a keyed entry never folds into the scope-wide slot
+		// (modifier.md par.5) -- so the point plane is flat by construction rather than by coincidence. Stated
+		// explicitly rather than riding `default:`, the MODFAM_GREAT_PEOPLE_RATE precedent below.
+		return CASC_UNIT_FLAT;
 	case MODFAM_EXPERIENCE:
 		// the scope-wide amount is SCOPE-SPLIT (reconciliation item 1): unit = the PERCENT XP-gain modifier
 		// (42, promotions); city/empire = flat free XP (7 + 61). NB empire is DUAL (percent 43 -- the trait

@@ -114,7 +114,10 @@
   ([json.md §7](../../specs/json.md)): constraints → `requires`/`allowed`; `diploVoteType` → the top-level
   `voteSource` section (and rename the getter off the legacy XML tag); `tradeable` → the `canTrade` block;
   `advancedStart` → resolve the curator's parked
-  flag; `pillageGold` → drop.
+  flag; `pillageGold` → drop; `base.airCombat` → the `strength` family, where every other unit's base value
+  already lives. ⚠ The air one is the case that shows the cost of the mis-home rather than just its untidiness:
+  `strength.unit.flat` is a family read while an air unit's base sits in `identity`, so the two planes of ONE
+  question are reached by two different kinds of read, and a consumer must know which before it can ask.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
 - Bring `curate_trait`'s trade-route rows onto ruling 11, as `curate_building` already is: `iCoastalTradeRoutes`
   and `iForeignTradeRouteModifier` still emit `coastal` / `foreign` as MEMBERS, and neither has a kind in the
@@ -738,14 +741,6 @@
   list with ANY semantics and never for a consumer with ALL semantics — a panel that split mandatory from
   one-of loses that split, which is a stated display change and not a reason to hesitate
   ([patterns.md](../../architecture/patterns.md)).
-- Serve the unit STAT columns the enumeration screens render — the movement and air families have no group read,
-  so a screen listing units can show a name and a cost and nothing else. `strength` is reachable as a straggler
-  scalar, but `MOVEMENT_MOVES` and `AIR_AMOUNT`/`AIR_RANGE` are KINDS in their families, so they want the group
-  read per family that every other family already has ([patterns.md](../../architecture/patterns.md): one getter
-  per group, parameterized over the group's index), never a scalar row bolted on per value.
-  ⚠ The unit-combat page needs one more thing that is NOT this: its tech-grid column runs through a helper taking
-  an info OBJECT and calling the deleted condition walker, so that column rides the deliberately-dangling GOM
-  class and closes with the `requires` display, not with these reads.
 - **⛔ THE PYTHON READ SURFACE DOES NOT GO THROUGH THE CONTEXTS, and that is the whole point of them (owner):**
   *"it was kind of the point of the rework, to have these contexts, so we no longer had to loop infinitely
   everywhere, and then we have not actually wired the python to read from the contexts."* Every `CyState` read

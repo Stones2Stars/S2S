@@ -92,7 +92,7 @@ public:
 	int getCombatModifier(CombatKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_PERCENT); }
 	int getMovement(MovementKind eKind, CvCascScope eScope) const
-	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, infoKindUnit(MODFAM_MOVEMENT, eKind, eScope)); }
 	int getFlatCollateral(CollateralKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_COLLATERAL, eKind, eScope, CASC_UNIT_FLAT); }
 	int getCollateralModifier(CollateralKind eKind, CvCascScope eScope) const

@@ -210,6 +210,13 @@ public:
 	// the whole group in one read indexed by CommerceTypes ([patterns.md] THE TWO READ ROLES rule 1).
 	python::list getProductionToCommerce(const std::string& szTypePrefix, int iId, int iScope) const;
 
+	// The MOVEMENT group -- the whole kind-indexed group in one read, the getWellbeing shape ([patterns.md] THE
+	// TWO READ ROLES rule 1: the surface grows by GROUPS, never by channels). It is what an enumeration screen
+	// renders a unit's moves column from, and the family carries no straggler scalar, so nothing else reaches it.
+	// ⛔ Each kind is read at ITS OWN unit (`infoKindUnit`), never one pinned for the whole family
+	// ([fixed-point-and-scales.md] par.4d: ask the KIND's unit, never the family's).
+	python::list getMovementKinds(const std::string& szTypePrefix, int iId, int iScope) const;
+
 	// A CLASSIFICATION test -- O(1) bitset, the parameterized read.
 	//
 	// ⛔ THIS IS NOT THE PYTHON CONSUMER SURFACE -- A NAMED ENDPOINT IS (owner): "you can easily make a Cy wrapper
@@ -281,6 +288,11 @@ public:
 	// something an empire may field freely. ⚠ Read `>= 0` (a cap is AUTHORED), the same test isWorldUnit
 	// uses, so "capped" has ONE meaning across the surface.
 	bool hasUnitInstanceCap(int iUnitId) const;
+	// An AIR unit's base air strength. ⚠ It is NOT the `air` family -- that family authors no AMOUNT at all; the
+	// value sits at `identity.base.airCombat`, which is why it is a NAMED read rather than a kind of getAirKinds.
+	// ⛔ So a screen picks BETWEEN this and SCALAR_STRENGTH by what the unit actually fights with; summing them
+	// would double a plane the unit does not have.
+	int getUnitAirCombat(int iUnitId) const;
 	// Does this entity SUPPLY that bonus in its city while active (json §5a `provides.bonuses`)?
 	// ⛔ Not the merged EDGEF_RELATED bucket: that lands every reference together, so a building which
 	// merely REQUIRES the bonus would answer yes to a question about who PRODUCES it.
