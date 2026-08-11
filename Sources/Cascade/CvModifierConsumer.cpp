@@ -1214,11 +1214,21 @@ namespace
 				{
 					if (bPercentSide) team.getCascadePackage().applyPercent(iChannel, (int)iValue);
 					else              team.getCascadePackage().applyFlat(iChannel, iValue);
+					// ⛔ The census covers EVERY plane, and the two that did not report are exactly the two that
+					// hid a defect: an empire slot can be wrong by orders of magnitude with the whole deposit
+					// census reading clean, because nothing on it ever named this write ([DEC-obs-scale] -- an
+					// apply nobody can see is one nobody can attribute).
+					CascadeChannelRegistry::reportDepositApply(
+						(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_TEAM,
+						bPercentSide, iValue, (int)pPlayer->getID(), -1, "gated");
+					if (pTally != NULL) { pTally->iApplied++; }
 				}
+				else if (pTally != NULL) { pTally->iRefused++; }
 				continue;
 			}
 			if (!pPlayer->getCascadePackage().hasAppliedSource(kGated.sourceIndex))
 			{
+				if (pTally != NULL) { pTally->iNoSource++; }
 				continue;
 			}
 			if (MMKernel::resolveEntry(*kGated.deposit->entry, iDelta, eScope, evalCtx, NULL, false,
@@ -1226,7 +1236,12 @@ namespace
 			{
 				if (bPercentSide) pPlayer->getCascadePackage().applyPercent(iChannel, (int)iValue);
 				else              pPlayer->getCascadePackage().applyFlat(iChannel, iValue);
+				CascadeChannelRegistry::reportDepositApply(
+					(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_EMPIRE,
+					bPercentSide, iValue, (int)pPlayer->getID(), -1, "gated");
+				if (pTally != NULL) { pTally->iApplied++; }
 			}
+			else if (pTally != NULL) { pTally->iRefused++; }
 		}
 	}
 
@@ -2367,11 +2382,33 @@ namespace
 			case SEVT_CITY_POPULATION_ADDED:
 			case SEVT_CITY_POPULATION_REMOVED:
 			{
-				// Plane B, the COUNT route: the delta is the fact's MAGNITUDE with the sign of its id, which is
-				// exactly what mc_sourceDirection resolves -- the payload no longer carries a signed number.
+				// ⛔ RE-BOOKED, NEVER DELTA'D -- the ERA route beside this one is the same shape for the same
+				// reason ([modifier.md] §3 names POPULATION among the thresholds).
+				// ⚑ WHY a linear delta cannot serve it, which is the part that is not obvious from the fact: a
+				// `per` scaler resolves through MMKernel::perApply as `value × (count / each)` -- INTEGER division,
+				// so it is a STEP function. A count fact carries Δcount, and no multiple of Δ reproduces a step:
+				// with `each: 100` a city growing 0 → 20 owes NOTHING, while `value × Δ` applied 2500 × 20 per
+				// city and nothing ever withdrew it. Re-resolving and moving the DIFFERENCE handles both
+				// directions, lands the step exactly, and is idempotent if the fact is seen twice.
+				McGatedTally kPopTally;
+				const std::vector<DepositIndex::GatedDeposit>* pPopGated = DepositIndex::gatedByToken("POPULATION");
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
-				mc_applyGated(DepositIndex::gatedByToken("POPULATION"), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_SUPPRESSED,
-					pPlayer, pCity, NULL);
+				if (pPopGated != NULL)
+				{
+					// BOTH planes: the city's own per-population deposits, and the owner's -- a population move is
+					// a city fact whose count an empire-scope deposit may equally scale on.
+					if (pCity != NULL)
+					{
+						mc_bookGated(pPopGated, *pCity, &kPopTally);
+					}
+					if (pPlayer != NULL)
+					{
+						mc_bookGatedEmpire(pPopGated, *pPlayer, &kPopTally);
+					}
+					CascadeChannelRegistry::reportAtomRoute("POPULATION", (int)pPopGated->size(), kPopTally.iFound,
+						kPopTally.iNoSource, kPopTally.iRefused, kPopTally.iApplied,
+						(pPlayer != NULL) ? (int)pPlayer->getID() : -1, (pCity != NULL) ? pCity->getID() : -1);
+				}
 				break;
 			}
 			case SEVT_CITY_POWER_ADDED:
