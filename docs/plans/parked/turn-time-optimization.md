@@ -13,81 +13,30 @@ turns — what scales worse than "more cities"?
 
 ---
 
-## The measurement that located the cost (post PR #314)
+## CABV investigation (historical — the machinery it measured is gone)
 
-⛔ **These figures PREDATE the legacy-accumulator cut and describe a different machine — do not plan
-against them** ([DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf):
-numbers taken while a legacy calc still ran on a hot read path measure legacy's decache penalty). The shape
-has since inverted: the choose is now a small number of EXPENSIVE decisions rather than many cheap ones
-(~18 real chooses at ~1.4 s each on the standing save, against the ~47 ms × ~220 below), and
-`AI_scoreBuildingsFromListThreshold` is ~99.8% of it rather than ~91%. The live decomposition is the
-`[PERF/choose]` census itself — `cand` / `valued` / `compute` / `pass1skip` beside the ms — never this list.
+**`CalculateAllBuildingValues` and `AI_FlushBuildingValueCache` no longer exist in `Sources/`** —
+the building-value recompute machinery this whole investigation chased has since been replaced
+by the enabler cascade ([`enabler.md`](../../specs/enabler.md)) and the maintained-sum repository
+model ([`state-repositories.md`](../../architecture/state-repositories.md)). Everything that
+follows through "Three orthogonal optimization tracks" below (originally several sessions'
+worth of `[PERF]` measurement against that machinery — ranked levers, the CABV PreLoop
+root-cause hunt, the reverse-prereq-index false leads) is now pure history: do not plan against
+any of its file:line citations or ms figures.
 
-Clean instrumented FinalRelease sessions on the turn-1336 late-game save (`[PERF/choose]`
-decomposition + phase tree; per-turn, all AI players):
+**What is durable from it, if a future turn-time investigation revisits this class of problem:**
 
-- `CvPlayer::doTurn` **~20.6 s/turn** (was ~32.6 pre-#314 on the same save — the index banked ~11 s).
-- `doTurn.cities` ~13.8 → `city.doProduction` ~10 → `AI_chooseProduction` ~9.5 (~47 ms × ~220 calls).
-- **`AI_chooseBuilding` is ~96% of the choose**; inside it `AI_scoreBuildingsFromListThreshold`
-  is **~91% of the whole choose**, splitting ≈half CABV value recompute (~4.4 s/turn) and ≈half
-  the **pure scoring loop** over the (cached) values (~4.6 s/turn). The unit-tender family is ~1%
-  (the 55k/turn `AI_bestUnitAI` calls are cache-cheap noise).
-- **The scoring runs ~8.5× per choose**: the decision cascade calls `AI_chooseBuilding` once per
-  focus-flag rule, each re-gathering candidates and re-running per-building production math that
-  is focus-independent — pure repetition.
-- **Gate data (`head=`/`dirty=`):** 77% of chooses enter with an **empty order queue** (a build
-  completed — legitimate decisions, ~190/turn) and carry ~99.6% of the cost; `head=1` re-checks
-  on running constructions are free (keep-current early-outs work); **process cities are ~0**
-  (5/980 — S2S cities always have buildings available, so the vanilla "late-game cities run
-  wealth" assumption is dead here, and so is the process-gate lever).
-- Tail: `recalculateAllResourceConsumption` ~2.8 s/turn, `doTurnUnits` ~1.4, `pre.AI_doCivics`
-  ~1.2, `game.autoSave` ~1.1 (cosmetic).
-
-Ranked levers (the repository migration steps):
-
-1. **Building-value retention — SHIPPED + MEASURED (2026-06-10).** Staggered periodic refresh
-   (period 4, offset by city id) replacing the per-turn flush; `setHasBuilding` event flush
-   unchanged. Result over 6 clean turns: **0 `[CIT/spin]`** (no stale incidents),
-   `CvPlayer::doTurn` ~20.6 → **~18.6 s/turn**, CABV 4.4 → **2.7 s/turn** (−40%). Why not 4×:
-   ~190 cities/turn complete a building, so the `setHasBuilding` retain-flush legitimately
-   re-invalidates most cities before the period expires — the remaining CABV cost is
-   event-driven. Future refinement (phase c): on completion, rebuild only the candidate SET
-   (0.06 ms via the index) and let VALUES age out on the period instead of retain-flushing.
-2. **Scoring loop — FIXED + MEASURED (2026-06-10): a second legacy O(buildings²) enabler sweep.**
-   `AI_scoreBuildingsFromListThreshold`'s "enables other buildings" bonus
-   (`CvCityAI.cpp:~4431`) ran the full all-buildings `BoolExpr::evaluateChange` scan per
-   enabler-candidate — the same pattern #195/PR #314 killed in the PreLoop, surviving
-   un-migrated (it even carried a `// TODO OPT`). Migrated to `getBuildingsEnabledBy` with the
-   legacy trigger triple + confirm kept verbatim. Measured: `scoreBldgs` 5.05 → **1.84 ms/run**;
-   pure scoring ~4.55 → **~0.8 s/turn**; `AI_chooseProduction` ~8.1 → **~4.2 s/turn**; whole
-   `CvPlayer::doTurn` ~18.6 → **~14.6 s/turn**. 0 `[CIT/spin]`; building picks and order volume
-   match the prior session (no behaviour drift). The "score-once memo" is dropped — the work is
-   gone, nothing left worth caching there.
-3. **`city.doTurn` non-production — now the biggest un-attributed block (~3.7 s/turn).** The
-   known sub-scopes (`AI_doTurn`, `AI_updateBestBuild`, `AI_updateWorkersNeededHere`,
-   `doCheckProduction`, `doCulture`, …) measured small; ~3 s/turn is inline/un-scoped city-turn
-   work. Next instrumentation pass goes here.
-4. **`recalculateAllResourceConsumption` — DOUBLE-FIXED (2026-06-10).** (a) Its ONLY consumer
-   is the bonus-depletion odds scaling (`CvPlot::doBonusDepletion`), which is gated on
-   `MODDERGAMEOPTION_RESOURCE_DEPLETION` — the recompute now carries the same gate, so games
-   without depletion (the owner's) skip it entirely (~2 s/turn for a value nobody read).
-   (b) For depletion games, the recompute is loop-inverted (per-city pass over each building's
-   load-derived `getConsumptionRelevantBonuses()` list instead of an all-bonuses × all-cities
-   × all-buildings sweep) — byte-identical term math since this is SYNCED state (serialized,
-   feeds synced RNG odds), with a permanent `[PERF/rescons]` shadow-verify armed at
-   `gPerfLogLevel >= 2`. **Audit pattern worth hunting:** per-turn statistics maintained
-   unconditionally for consumers that are optional or rare — the repository's lazy getters are
-   the structural answer (an unread datum costs nothing). Sweep `CvPlayer::doTurn`'s other
-   unconditional recomputes next.
-5. **CABV residual (~2.6 s/turn) — invalidation granularity** (phase (c) of the pilot): on
-   completion rebuild only the candidate SET via the index; let VALUES age out on the period.
-6. *(behaviour call, owner's)* Deepen build queues so completions don't trigger ~190 full
-   re-chooses/turn — the per-item odds roll `break`s the queue-fill early.
-7. **Parallel read-side value pass** (north-star §4); `pre.AI_doCivics` ~1.1 s/turn also worth
-   a look once the above land.
-
-**Scoreboard (same turn-1336 save, CvPlayer::doTurn per turn):** pre-#314 ~32.6 s → enabler
-index ~20.6 → value retention ~18.6 → scoring-sweep fix **~14.6 s** (2026-06-10).
+- **Measure before refactoring.** Every "obvious" big-O hot loop bet in this investigation
+  (`.NotDeveloping`, `.Sea`, reverse-prereq indices) turned out to be ~0.4% of the actual cost;
+  the real hotspot (a redundant per-call rebuild of a set that barely changed turn-to-turn) was
+  invisible to a static code read and only found by per-dimension `[PERF]` instrumentation.
+- **A per-turn full rebuild of a set that changes rarely is the recurring waste pattern** —
+  the fix was retention/memoization across calls (cache the set, invalidate on the actual
+  triggering event), not a cheaper rebuild.
+- **The `[PERF]` stopwatch instrumentation itself is durable infrastructure** (`PERF_SCOPE`/
+  `PERF_ACCUM` in `BetterBTSAI.h`, gated by `gPlayerLogLevel`/`gPerfLogLevel`, logging to
+  `Performance.log`) — see "Measuring: `[PERF]` stopwatches" below, which is still the live
+  measurement method for any future turn-time work, independent of what it once measured.
 
 > **⚠ MEASUREMENT BLIND SPOT FOUND (2026-06-10, owner stopwatch):** the scoreboard above covers
 > the **doTurn tree only**. A stopwatch on the full end-turn → responsive span measured
@@ -177,9 +126,10 @@ per-slice Python `gameUpdate` (~5 ms), `updateScore`, `testAlive`; `plotPaging` 
   defense needs once per change; units consume the published number; no per-unit map
   searches). Demand side already improved by the fortify-bonus fix (garrisons now read at
   full strength, easing the over-stacking attractor and the conscription of non-fortifying
-  units). Tied plans: `derived-data-repository.md` §8, `unit-ai-valuation.md` (defender
+  units). Tied plans: [`state-repositories.md`](../../architecture/state-repositories.md), `unit-ai-valuation.md` (defender
   production glut), `ai-architecture-north-star.md` (per-UNITAI modules).
-- *STEP 1 SHIPPED (#384 — garrison tiers, see `../reference/CvUnitAI.md`):* garrisoning no
+- *STEP 1 SHIPPED (#384 — garrison tiers, see "City garrison tiers" in `AGENTS.md` and
+  `Sources/AI/CvUnitAI.cpp`):* garrisoning no
   longer retypes units to CITY_DEFENSE (the retype both corrupted the count-based demand
   gates — fake defenders suppressed real training — and fed mis-suited units into the
   expensive CITY_DEFENSE relocation cascade). Auxiliary members keep their own UNITAI and
@@ -628,32 +578,10 @@ The repo also ships a complete sampling profiler.
 
 ---
 
-## Suggested next steps (SUPERSEDED — see "Current state & next levers" at the top)
+## Unit AI loop hot-paths (structural; confirm with `[PERF]`/FProfiler)
 
-This section's ranking is done: step 1's *within-turn* form shipped (memoization, 3.6×), and
-step 2 — the static enabler reverse-index — shipped as #195 Phase 1 (PR #314, ~390× on the
-PreLoop) and turned out to be the decisive fix, not the fallback. The live lever ranking is
-maintained in **"Current state & next levers (post PR #314)"** at the top of this doc.
-
-## City & Unit AI loop hot-paths (structural; confirm with `[PERF]`/FProfiler)
-
-From a focused read of `CvCityAI`/`CvUnitAI` (structural claims; the *magnitudes* are unproven
-until measured — earlier agent "savings %" estimates were discarded as fabricated):
-
-**City AI**
-
-- Building-value cache is **flushed every turn unconditionally** — `CvCity::doTurn` calls
-  `AI_FlushBuildingValueCache(false)` (`CvCity.cpp:~1253`) and `AI_doTurn` clears
-  `m_buildValueCache` (`CvCityAI.cpp:~239`). A lazy/`bRetainValues=true` path exists but isn't
-  used here. Candidate: event-driven invalidation (tech/building/civic) instead of per-turn.
-- `AI_bestUnitAI` (`CvCityAI.cpp:4023`) loops **all** unit types calling `canTrain` +
-  `player.AI_unitValue` with **no pre-filter by the city's actual UNITAI need**; its
-  `m_bestUnits` cache is cleared each turn. Candidate: pre-gate candidates by need before the
-  value call (this directly intersects the dog/hunter glut in `unit-ai-valuation.md`).
-- `CalculateAllBuildingValues` (`CvCityAI.cpp:~12465`) has O(bonuses)/O(unitcombat) inner loops
-  per building per focus-flag; some are stable unless tech/bonus changes.
-
-**Unit AI** (aligns with the suspect-#3 cascade work above)
+From a focused read of `CvUnitAI` (structural claims; the *magnitudes* are unproven until
+measured — earlier agent "savings %" estimates were discarded as fabricated):
 
 - The attack cascade (`AI_attackMove`, `CvUnitAI.cpp:2401`) can construct **many**
   `CvReachablePlotSet` objects in one call (each `AI_anyAttack`/`AI_cityAttack`/`AI_pillageRange`
@@ -664,131 +592,11 @@ until measured — earlier agent "savings %" estimates were discarded as fabrica
 - This is exactly the "more granular gating earlier in the UnitAI process" lever — and the
   `CvHunterAI` → hunter+explorer vs dedicated army-module split is the structural home for it.
 
-## ROOT CAUSE FOUND (turn ~1260 data) — `CalculateAllBuildingValues` is ~87% of turn time
+## Remaining live lever: building-production thrashing
 
-Measured tree (comprehensive `[PERF]` split): `CvPlayer::doTurn` 170.8 s → `doTurn.cities` 155 s
-→ Σ `city.doProduction` 148 s → `AI_chooseProduction` 145 s → **`CalculateAllBuildingValues`
-134.7 s** (n=1353, ~100 ms each). Everything else is noise: `AI_bestUnitAI` called **71,642×**
-but only 921 ms total (well cached); `AI_updateBestBuild` 264 ms; visibility 80 ms; property
-442 ms; all `pre.*` AI economy < 4 s. **So the earlier suspects (visibility stickytape, broker,
-unit AI, AI_bestUnitAI pre-filter) are all dead — the cost is building-value recompute.**
-
-**Two compounding causes:**
-
-1. **Cache destroyed every turn** — `CvCity::doTurn:1256` calls `AI_FlushBuildingValueCache()`
-   with default `bRetainValues=false` → `SAFE_DELETE(cachedBuildingValues)` (`CvCityAI.cpp:12450`).
-   Only 3 callers total ⇒ **no event-driven invalidation**; the design brute-forces a full
-   recompute every turn.
-2. **`AI_chooseProduction` runs every city every turn** — `CvCity::doProduction:16479` gate
-   `!isProduction() || isProductionProcess() || AI_isChooseProductionDirty()`. Late-game cities
-   run a **process** (wealth/research) which never completes ⇒ re-decide every turn ⇒ full
-   recompute every turn even when nothing changed.
-
-**Fix (small surface):** the cache already supports retain mode (`bRetainValues=true` keeps
-values, marks `m_bIncomplete`).
-
-**Step 1 (retain every turn) — MEASURED: ~40%, not 5×.** `CvPlayer::doTurn` avg 3558→2135 ms;
-CABV per player-turn 2806→1532 ms; CABV calls/city 2.86→1.96. Why not more: `flush(true)` sets
-`m_bIncomplete=true` **every turn**, and the first per-building cache-miss then forces a full
-recompute of all cached flags (`AI_buildingValueThreshold` line 4794-4802). So we still pay ~1
-recompute/city/turn. (`GetValue` returns -1 only for an uncached building, line 4616.)
-
-**Step 2 (IN) — staggered periodic refresh.** Replaced the per-turn flush with a full refresh
-only every `iRefreshPeriod` turns (=4), staggered by city id `((turn + cityID) % period == 0)`,
-so ~1/period of cities recompute each turn and the rest hit the retained cache. Building changes
-still flush promptly via `setHasBuilding` (`CvCity.cpp:14354`); newly-teched buildings are picked
-up within ≤`iRefreshPeriod` turns. Bounded staleness; the Koshling comment at `doProduction`
-already notes the AI deliberately shouldn't churn production on tech. Tune `iRefreshPeriod`, or go
-fully event-driven (flush on tech-acquired / civic-change) if AI building adoption lags.
-
-Optional (B): gate `AI_chooseProduction` so process-running cities don't re-decide every turn.
-
-## Making each `CalculateAllBuildingValues` call cheaper (orthogonal to caching)
-
-Why a single call is ~80-100 ms: it re-derives **static prereq relationships by brute force**
-every call. Per building it scans all unit/building types:
-
-- `.NotDeveloping` (`CvCityAI.cpp:13061`) — **O(buildings × units)** + `BoolExpr::evaluateChange`
-  per match (13090, expensive) — which units the building enables (`isPrereqAndBuilding`).
-- `.Sea` (13229) — O(buildings × units) — sea-unit free-XP (`canTrain` + domain).
-- religious (13769) — O(buildings × units) — units this building is a prereq for.
-- "needed for other buildings" (13812) — **O(buildings²)** — `getBuildingPrereqBuilding`.
-
-~3-4M iterations/call in C2C (~1000 buildings × ~1000 units). The rest (`.Defense`/`.Happy`/…
-over bonuses/unit-combats/specialists) has much smaller constants, so these all-types loops are
-the bulk.
-
-**Measure-first (IN, Assert build OK):** added a `PERF_ACCUM(double&)` accumulating timer
-(`BetterBTSAI.h`) that sums a section's ms across the building loop and logs once per call via
-`[PERF/cabv] owner= flags= defense= notdev= sea= commerceYields= commerceVal=`
-(`CvCityAI.cpp` CalculateAllBuildingValues, 12467-13929). Wrapped the suspects: `.Defense`,
-`.NotDeveloping` (the O(B×U) BoolExpr loop), `.Sea`, `.CommerceYields` (holds the religious
-O(B×U) + the O(B²) at 13812), and the `getBuildingCommerceValue` helper (5×/building).
-**MEASURED (turns 1264-1266, 925 calls) — HYPOTHESIS WRONG.** The named sub-scopes I bet on are
-NEGLIGIBLE: of 80,311 ms total CABV, the instrumented five summed to only **1,374 ms (1.7%)** —
-commerceVal 883, sea 233, commerceYields 138, **notdev 106, defense 14**. So the O(B×U) loops
-(`.NotDeveloping` 106 ms, `.Sea` 233 ms) are **~0.4%** — the reverse-prereq-index plan would save
-almost nothing. **~98% of the cost is elsewhere**: the `PreLoop` (O(buildings²), once/call), the
-untagged dimensions (`.Happy`/`.Health`/`.Experience`/`.Maintenance`/`.Specialist`/`.Food`), and
-inline per-building code. Lesson: measure before refactoring — the "obvious" big-O loops weren't
-the cost.
-
-**Now fully decomposed (IN, 2nd build):** added PERF_ACCUM to PreLoop, the whole `.building` body,
-and every remaining named dimension. New line:
-`[PERF/cabv] owner= flags= preloop= building= defense= happy= health= exp= notdev= sea= maint=
-spec= commerceYields= commerceVal= food=`. `building` = per-building total (overlaps the named
-dims inside it); `preloop` = once/call setup. `preloop + building ≈ CABV total`; if the named
-dims sum << `building`, the cost is untagged inline per-building code → instrument those chunks
-next. Aggregate with the matching awk over all `preloop=|building=|…|food=` fields.
-
-**ROOT CAUSE CONFIRMED (full decomposition, turns 1264-1267, 1428 calls): the `PreLoop` is 94%.**
-`preloop = 114,208 ms` vs the whole per-building loop `building = 6,806 ms` (every dimension tiny:
-exp 545, commerceVal 1350, sea 360, happy 869, notdev 172, …). The PreLoop (`CvCityAI.cpp:12583-
-12630`) builds `buildingsToCalculate` — constructible buildings PLUS buildings that would become
-constructible if an "enabler" were built — via an **O(enablers × buildings)** sweep that runs
-`BoolExpr::evaluateChange(pObject, queries)` (construct condition + GOM override, 12621) per pair.
-~80 ms/call. **Crucially it does NOT depend on `iFocusFlags`, yet reruns in full on every CABV
-call** (multiple/city/turn) producing the identical set — pure redundant waste. NOT promotions
-(`exp`=545 ms), NOT the O(B×U) scans, NOT per-building. Three "obvious" structural bets were all
-wrong; only measurement found it.
-
-**Fix tiers (safest first):**
-
-1. **Memoize `buildingsToCalculate` on the per-city `BuildingValueCache`** — compute once per
-   cache-lifetime, not per CABV call. No new staleness (same rebuild schedule as today; flushed by
-   `setHasBuilding`), no loop risk (it's an input set, not a control-flow value). ~2-3× off PreLoop.
-   **IMPLEMENTED + MEASURED — 3.6× on CABV.** Added `m_buildingsToCalculate`/
-   `m_buildingsToCalculateValid` to `BuildingValueCache`; PreLoop runs only when invalid;
-   `AI_FlushBuildingValueCache(true)` (retain) also clears the flag (enabler-building changes rebuild
-   the set). Result (4-turn runs, before 1264-67 → after 1268-71): `preloop` 114,208 → **24,930 ms
-   (4.6×)**; `CalculateAllBuildingValues` ~121k → **33,319 ms (3.6×)**; per-call preloop 80 → **15.6
-   ms (5.1×)**; `CvPlayer::doTurn` avg/player ~3558 → **1337 ms**. Confirms the PreLoop was rerun ~5×
-   per cache redundantly. `preloop` is still ~75% of (the now-much-smaller) CABV — runs once per
-   cache-build (≈ once/city/turn). Further gains = Tier 2 (cross-turn retain, event-driven) or Tier 3
-   (prune BoolExpr evals).
-2. **Live-update repository (the owner's idea), first datum = the constructible set.** It changes
-   only on building-built / tech-acquired / bonus-gained → compute once, live-update on those
-   endpoints → PreLoop ~0 across turns. Safe (advisory input set, recomputable).
-3. **Prune the BoolExpr evals** via a static index of which buildings' construct conditions
-   reference building X / its free bonuses, so only relevant pairs are evaluated.
-
-**(Superseded) earlier idea — precompute static reverse-prereq indices** (kept for reference;
-measurement shows it's NOT the win): (load/first-use; same for all
-cities/players, whole game): `building → [units it's a prereq for]` (replaces 13061 & 13769),
-`building → [buildings it's a prereq for]` (replaces 13812), and a static `[sea unit types]`
-list (narrows 13229). Each loop then iterates the *few* related entries instead of all ~1000;
-dynamic checks (`canTrain`/`isHasTech`/`AI_totalAreaUnitAIs`) and the `evaluateChange` only run
-for relevant entries. O(B×U)/O(B²) → O(B × few). Confirm the split first with a `[PERF]` scope on
-those three blocks if desired.
-
-## Three orthogonal optimization tracks (they stack)
-
-- **(a) Call it less** — queue multiple buildings and only re-decide `AI_chooseProduction` on
-  events (owner's idea), plus the periodic cache refresh already shipped. Attacks frequency.
-- **(b) Make each call cheaper** — the reverse-prereq indices above. Attacks per-call cost.
-- **(c) Stop thrashing** — owner reports AI cities flip-flop half-finished buildings (wasted
-  hammers). Measurable now via `[CIT/cancel] progressLost` in CityAI.log. Own fix; improves AI
-  quality too.
+Owner reports AI cities flip-flop half-finished buildings (wasted hammers) — measurable via
+`[CIT/cancel] progressLost` in CityAI.log. Unrelated to the CABV history above (a production-choice
+quality issue, not a recompute-cost issue); own fix, and improves AI quality too.
 
 ## FPS during the HUMAN turn — the render-path DllExport audit (distinct from AI turn time)
 

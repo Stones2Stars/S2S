@@ -402,3 +402,12 @@
     inspectable answer — is already there: the plot group's `m_bonusCounts` IS the maintained store, the crossings
     are announced by `changeNumBonuses`, and the enumerating read (`CvCity::collectHeldBonuses`) shares the
     single-bonus read's gates by construction.
+35. **The legacy per-invisible-type TABLE PAIR** (`invisibilityIntensity{X}` / `visibilityIntensity{X}` /
+    `seeInvisible` / `negates`, 13 per-type tables across 14 invisible types, 477 authorings) *(dead, collapsed
+    deliberately — owner: "it's a TB mod after all, it's on drugs")* — killed because only **270 of 355** authoring
+    entities ever named more than one type: the 14×13 cross-product served a quarter of its own data. Replaced by
+    [vision.md §4](../specs/vision.md)'s `hideAndSeek` block: the method becomes a promotion-grantable
+    [skill](../specs/skills.md) (`camouflage`, `disguised`, …), the hider's `concealment` magnitude and the
+    seeker's `detection` list (qualified `{unit: HAS_<SKILL>}`) replace the per-type tables, and
+    `visibilityIntensityRange` + its substrate variants are gone outright — the contest rides vision's own reach.
+    **Don't reinstate a per-invisible-type table or a second range system for detection.**

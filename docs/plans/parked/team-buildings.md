@@ -8,7 +8,8 @@
 > repository approach was dropped for the #428/#430 top-down model (the three machines: tally / modifier /
 > enabler). In the current model the tier needs **no new machinery** — a "building" simply exists at empire/team
 > scope (the scope spine already has those tiers), authoring `enables` / `disables` / `requires` / modifier
-> families like any entity; see `enabler-cascade-spec.md` §5 (the EMPIRE/TEAM-WIDE PROJECTS/BUILDINGS tier).
+> families like any entity; see [`enabler.md`](../../specs/enabler.md) §2 ("Empire/team-scope constructables
+> need NO new machinery").
 > **Read this for the concept, the autobuild-replacement motivation, the shared-hammer-pool idea, and the
 > composition / acquisition-policy thoughts; treat the `CvCascadingModifierBundle` plumbing as historical.**
 
@@ -85,8 +86,9 @@ Three pieces:
    each become "look up my declared bundle, call `applyEffects` at my scope." The shared player ledger
    stays the storage; the four open-coded loops collapse to one.
 3. **A cascade reader** — `effective(channel, city) = city + player + team + game`, a single helper
-   instead of per-field copy-paste. Cache rolled-up per-(scope,channel) totals in the **derived-data
-   repository** (`derived-data-repository.md`, bounded staleness, invalidated on bundle change) so the
+   instead of per-field copy-paste. Cache rolled-up per-(scope,channel) totals in the read-side
+   repository (see [`state-repositories.md`](../../architecture/state-repositories.md) for the
+   current form of this pattern), bounded staleness, invalidated on bundle change, so the
    walk-up isn't repeated every query — this is the perf payoff that lets #421 delete N per-city
    building rows and their cache flushes.
 

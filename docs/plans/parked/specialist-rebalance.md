@@ -37,26 +37,12 @@ other found-disabled nerfs of the same vintage: the commented-out stronger empha
 `CvCityAI.cpp` ~10064–10110 and the "AI no longer uses emphasis" comment — these were balance
 retreats, not design.) Extended playtests will tune the numbers on top of parity.
 
-Specialist yields now receive the city yield modifier exactly like worked tiles. Mechanics:
-
-- New tagged array `CvCity::m_aiSpecialistYieldTotal` accumulates the specialist share that
-  previously sat inside `m_aiExtraYield`. Three writers redirected: per-assignment processing
-  (`processSpecialist`), the civic/trait per-specialist extras (`updateExtraSpecialistYield`),
-  and the incremental percent-change path (`CvPlayer::changeSpecialistYieldPercentChanges`).
-  The flat extra bucket keeps corporations, per-building `BuildingYieldChange`s, flat building
-  yields (`m_buildingExtraYield100`) and per-pop yields — multiplying THOSE is a separate,
-  deliberate decision nobody has made (it would be an economy-wide change).
-- `getYieldRate100` = `(base + specialistTotal) × modifier + flat extras`;
-  `getProductionPerTurn` folds the specialist share into its modified term; the city-screen
-  yield help moves the specialist lines into the multiplied base section; the three hurry/turns
-  helpers in `CvGameTextMgr` include the new term.
-- **Old saves:** the array is absent (loads 0) and specialists stay baked flat inside
-  `m_aiExtraYield`. There is no blanket recalculation to run
-  ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)) — the split must be derived
-  from source at load like every other derived value
-  ([state-repositories.md](../../architecture/state-repositories.md)).
-- AI: no valuation change needed — `AI_yieldValue` compares specialist and plot yields both
-  unmultiplied, and the modifier now applies to both equally at realization.
+Specialist yields now receive the city yield modifier exactly like worked tiles. This is now
+the standing cascade yield formula (`rate100 = (BASE + specialists) × modifier/100 + flat
+extras`) documented in [`modifier.md`](../../specs/modifier.md) — specialists sit inside the
+multiplied `BASE` term, not the flat extra bucket. The specific accumulator/getter names this
+plan originally described (`m_aiSpecialistYieldTotal`, `getYieldRate100`) predate the
+cascade migration; read `modifier.md` for the current mechanism rather than this paragraph.
 
 ## Step 2 — GPP rebalance (firm direction, numbers fluid)
 

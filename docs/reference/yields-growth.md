@@ -72,7 +72,8 @@
 - **Golden age** — full reference: **[golden-age.md](golden-age.md)**. Yield-relevant summary: it adds yield in
   **three** places, all in `base` (so all `× modifier`): the **per-plot** threshold bonus (`calculateYield` — tested on
   the **PRE-improvement/route** running yield), the **player** golden-age yield, and golden-age **commerce**. Plus
-  anarchy → 0, `+GOLDEN_AGE_GREAT_PEOPLE_MODIFIER` GP rate, less food for growth. `m_iGoldenAgeTurns` (−1/turn),
+  anarchy → 0, `+GOLDEN_AGE_GREAT_PEOPLE_MODIFIER` GP rate. Growth is UNAFFECTED by golden age (no food discount —
+  golden-age.md §2). `m_iGoldenAgeTurns` (−1/turn),
   length `max(1, GOLDEN_AGE_LENGTH·speedPercent·(1+goldenAgeModifier/100)/100)`.
 - **Era:** `m_eCurrentEra` advances **only** in `CvTeam::setHasTech` when `player era < tech.getEra()` (only
   increases) — so era advance is TECH-DRIVEN, and `setCurrentEra` is where the fact is announced

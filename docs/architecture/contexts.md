@@ -261,28 +261,27 @@ surface: the fold is the ONE reader of the grantor side
 > ⛔ **Where a STATUS gates delivery, the announced crossing is the GATED verdict's, not the store's** — for power,
 > `CvCity::isPowered` rather than the refcount ([state.md](../specs/state.md) § A STATUS IS MIDDLEWARE). The two
 > genuinely differ, so announcing the store would put the fact and every consumer's read on different values; the
-> status reaches this fold for that reason alone and never becomes a store entry or a cascade input. ⚠ Power is the one wired today; government
-> centre and fresh water still ride their own counters and migrate onto this crossing as they convert, which is
-> what turns the per-attribute facts into the ONE parameterized fact described below.
+> status reaches this fold for that reason alone and never becomes a store entry or a cascade input.
 > ⛔ The crossing is emitted by the FOLD, not by a mutation site: the fold IS the maintenance path, so an emit
 > anywhere else would be a second one.
 
-⚑ **The path is NOT missing — it is BUILT, three times over, BESPOKE. That is the actual defect.** The
-building→city→gate chain already runs end to end for a handful of attributes, each with its own hand-named
-`CvCity` counter, its own DOMAIN fact and its own predicate: **`governmentCenter`**
-(`changeGovernmentCenterCount` → `SEVT_CITY_GOVERNMENT_CENTER_ADDED / _REMOVED` → `CASC_PRED_IS_GOVERNMENT_CENTER`, evaluated
-as `cityContext->isGovernmentCenter()`), **`providesPower`** (`HAS_POWER`) and **fresh water**
-(`SEVT_CITY_FRESH_WATER_ADDED / _REMOVED`). ⇒ The generalization has a PROVEN shape and needs no new mechanism — what it
-needs is to be made generic over the attribute id.
+**Every boolean city attribute of this shape is generalized onto the ONE fold, not just power:**
+`governmentCenter`, `abolishedAnger`, `abolishedUnhealthFromPopulation` and `abolishedUnhealthFromBuildings` are
+all ordinary `CITY_HAS_AMENITY` keys (`CvCity::isGovernmentCenter` / `isNoUnhappiness` /
+`cityHasNoUnhealthyPopulation` / `cityHasBuildingOnlyHealthy`), so a NEW attribute of this shape costs no engine
+change — it is pure data, the open-registry promise ([DEC-classification-infos](decisions.md#dec-classification-infos))
+reaching the consumer side. ⛔ There is no surviving hand-named counter for any of them — no
+`changeGovernmentCenterCount` / `changeNoUnhappinessCount` / `changeNoUnhealthyPopulationCount` member on
+`CvCity` — the fold replaced them, exactly what
+[DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) asks for.
 
-⛔ **So what this retires is a real defect, not a tidy-up:** one hand-named counter per flag
-(`changeGovernmentCenterCount`, `changeNoUnhappinessCount`, `changeNoUnhealthyPopulationCount`,
-`changeBuildingOnlyHealthyCount`, …), each with its own maintenance path — exactly the hand-named scalar shape
-[DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) calls a DEFECT, and precisely why a NEW attribute
-costs an engine change today (a counter, a fact, a predicate) instead of being pure data. One id-keyed set plus
-one parameterized fact replaces the whole family, after which an authored attribute needs no engine work at all —
-which is the open-registry promise ([DEC-classification-infos](decisions.md#dec-classification-infos)) finally
-reaching the consumer side.
+⚠ **Two attributes that LOOK like the same family are deliberately NOT on this fold, and neither is a hole to
+close by routing it there.** `governmentCenterDistance()` is a separately STORED value (§ the sanctioned-recalc
+exemplar, above) because it answers a MIN over the player's centres — a different question from
+`isGovernmentCenter()`, which the amenity fold already answers. And `HAS_FRESHWATER` is a **`PlotContext`** bit,
+not a `CityContext` amenity, that deliberately keeps calling the live `CvPlot::isFreshWater` engine predicate
+rather than folding onto a dictionary (§ the adjacency callout, below —
+[DEC-single-implementation](decisions.md#dec-single-implementation)).
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
 values; a context is never a value copy — that is *why* it forwards rather than mirrors.
@@ -689,22 +688,16 @@ goal is that a unit no longer carries ALL the data (the ~247-field fat-unit prob
 its role needs. Working out that role-partitioning is *why* it waits, rather than wiring a fat unit context now.
 
 **⚖ IDENTIFIED MEMBER — the UPGRADE resolution belongs to the UNIT CONTEXT (owner).** *"Upgrade should live in the
-unit context."* Today `allUpgradesAvailable` (and its memo) hangs off **`CvCity`**, so a question about a UNIT is
-asked of whatever city was to hand — `pCapitalCity->allUpgradesAvailable(u)`, `pCoastalCity->…`, `pCapital->…`.
-
-**The DIRECTION is the ruling (owner): the UNIT asks.** *"When a unit asks if they can do their upgrade in a city
-somewhere, then the unit has to check if a city has whatever requirement it needs."* The unit drives and fans out
-to cities for the requirement; a city is a place the query LOOKS, never the owner of the question. It landed on
-the city because the resolution needs city-scoped trainability (can the target be built *there*) — but an input
-is not an owner.
+unit context."* **The DIRECTION is the ruling (owner): the UNIT asks.** *"When a unit asks if they can do their
+upgrade in a city somewhere, then the unit has to check if a city has whatever requirement it needs."* This is
+built: `CvUnit::getUpgradeCity` drives the search and fans out to `GET_PLAYER(...).cities()`, asking each
+candidate's own `getUnitAvailability(eUnit)` — a city is a place the query LOOKS, never the owner of the
+question.
 
 ⚑ **AND IT IS PURELY AN AI-LOOP CONCERN (owner)** — the AI deciding whether, and where, to send a unit to
-upgrade. That settles its cost class: the memo is **AI-heuristic caching**, the sanctioned residual
-([superseded-ideas #1](superseded-ideas.md)), NOT engine state and NOT a derived cache on the cascade plane. It
-carries no staleness protocol, answers to no invalidation contract, and belongs with the asking side.
-⚠ It also means the arbitrary-city calls above are an AI APPROXIMATION, not a rule violation: a cheap stand-in
-for "somewhere", which is a fair thing for a heuristic to do. Do not "fix" them as a correctness bug — they move
-with the unit context, when the unit is the one asking.
+upgrade. That settles its cost class: any caching this resolution earns is **AI-heuristic caching**, the
+sanctioned residual ([superseded-ideas #1](superseded-ideas.md)), NOT engine state and NOT a derived cache on
+the cascade plane — it would carry no staleness protocol and answer to no invalidation contract.
 
 ## The read — the per-GROUP valuation: `(CityContext, EmpireContext, CvPlotGroup)` → the group's values
 

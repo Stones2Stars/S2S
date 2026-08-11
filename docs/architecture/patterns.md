@@ -642,7 +642,7 @@ getters that hold the bare family name.
 > a genuine requirement gets DISCOVERED and moved — the cut converts an assumed dependency into a named one.
 > Re-adding the legacy binding is the fallback, never the default, or the cut has bought nothing.
 > ⚑ The cheapness is structural, not optimism: Python takes the surface with `from CvPythonExtensions import *`
-> — **169 files star-import it against 6 with an explicit list** — so NOTHING declares a dependency on any
+> — **169 files star-import it against 3 with an explicit list** — so NOTHING declares a dependency on any
 > single binding. A removed `.def` causes no import-time failure at all; it surfaces at the one call site that
 > used it. ⛔ So do NOT slow a cut down to protect a binding, and do not build a resolver to prove one is safe
 > first — the compiler names the dead ones for free, and being wrong costs one call site, not a regression.

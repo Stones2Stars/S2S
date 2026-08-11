@@ -161,9 +161,8 @@ lands on the scope object itself (the city — the common case). Full deposit sy
 > literal (`max: 5`) or a world **token** when it tracks an engine constant — the *largest-cities* case is
 > `max: "TARGET_NUM_CITIES"` (the world-size target city count; engine `getLargestCityHappiness` =
 > `findPopulationRank() ≤ TargetNumCities`, i.e. the empire's largest *cities*, plural — **not** the single largest).
-> Engine note: the cascade adds the sort/select step in **parsing**, one place for all ranking metrics; the
-> `TARGET_NUM_CITIES` token needs a state scalar not emitted today (batched engine add) — until then the
-> largest-cities selection is inert. *(Status + open impl items: [plans/parked/ranked-target-selection.md](../plans/parked/ranked-target-selection.md).)*
+> Engine note: the cascade adds the sort/select step in **parsing**, one place for all ranking metrics.
+> Implementation TODO: [plans/parked/ranked-target-selection.md](../plans/parked/ranked-target-selection.md).
 
 ### 3.4 Conditions — `all` / `any` / `noneOf`
 
@@ -664,20 +663,16 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 > - The OUTCOME plane already conforms — a mission's roll (`chance` + the per-promotion `odds` table) is the
 >   trigger, its verbs the action; nothing re-homes there.
 >
-> ⚖ **DIRECTION (owner, not yet specced): coin **`removes`** as the first-class MIRROR OF `grants`** — *"we can
-> coin 'removes'; it's needed for triggers."* Today the take-away side exists only as scattered partial verbs
-> (the `destroy` action verb here, `consumes` on the §8 outcome plane) while the give side has a whole named
-> vocabulary; a trigger that takes something away has no counterpart to `grants` to reach for.
-> ⛔ **It belongs on the PAYLOAD plane, NOT the enabler's — "it's different than the enabler loop" (owner), and
-> that distinction is the thing to get right.** The enabler's `disables` / `obsoletes` / `replaces` are
-> **availability RULES**: standing edges, evaluated continuously, governing whether a thing may be in the tree or
-> keep running ([enabler.md §2](enabler.md)) — repeal the law and the building comes back. `removes` is a
-> **one-shot PAYLOAD**: this action, now, takes this away, with no ongoing rule and nothing to re-evaluate —
-> exactly the way `grants` is a payload rather than an availability edge. Building it as an enabler edge would
-> make a momentary effect into a permanent rule.
-> ⚠ If it lands it is a data-model change: the curator + regen ride in the SAME work item
-> ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)), and the scattered
-> `destroy`/`consumes` verbs are the migration input.
+> ⚖ **DIRECTION (owner): a future `removes` verb, mirroring `grants`, belongs on the PAYLOAD plane, never the
+> enabler's.** The take-away side today exists only as scattered partial verbs (the `destroy` action verb here,
+> `consumes` on the §8 outcome plane) while the give side has a whole named vocabulary. The enabler's
+> `disables`/`obsoletes`/`replaces` are **availability RULES** — standing edges, evaluated continuously
+> ([enabler.md §2](enabler.md)), where repealing the law brings the building back — while `removes` would be a
+> **one-shot PAYLOAD**: this action, now, takes this away, with nothing to re-evaluate, exactly as `grants` is a
+> payload rather than an availability edge. Building it as an enabler edge would make a momentary effect into a
+> permanent rule. If it lands: curator + regen ride in the same work item
+> ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)), with the scattered
+> `destroy`/`consumes` verbs as migration input.
 
 > **`grants` is ONLY genuine provisions handed out on the considered action.** What does NOT belong here (and where it lives
 > instead): unit `buildings` (MISSION_CONSTRUCT) → the **`constructs`** outcome verb under `outcomes.actions[]` (§8,
@@ -752,8 +747,7 @@ declare the number. Enforcement reads the [tally](tally.md) count.
   "distance": 1 } }`. **Properties are first-class** (early design decision) — a property source is **never a
   parked raw block**; the action carries the `on`/`relation`/`distance` so the (#429) spatial distribution reads
   its target from here. A scaling (non-`CONSTANT`) source carries a `per` count-scaler in its `chance`/value; a
-  flat (`CONSTANT`) source is the bare amount. *(Curator migration from the legacy parked `properties` array —
-  `curate_improvement.py` et al. via the shared property-source cleaner — is pending; tracked as curator-to-spec.)*
+  flat (`CONSTANT`) source is the bare amount.
 
 ---
 
@@ -1006,8 +1000,8 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   - a **capability to trade / work / travel on something** is its own root block (`canTrade`, `canTradeOn`,
     `canWorkOn` — [capabilities.md](capabilities.md)).
 
-  ⚠ The shipped data does not yet fully obey this — an effect authored into `identity` is a data error, and the
-  re-home worklist lives in [todo.md](../plans/structural-cleanup/todo.md), never as a count here.
+  ⚠ An effect authored into `identity` is a data error; the re-home worklist lives in
+  [todo.md](../plans/structural-cleanup/todo.md).
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
   and `autoBuild` (the placing system is the engine's own auto-placement); `autoBuild ⊂ notConstructible`.
   ⛔ **A `notConstructible` entity carries NO `requires.build` — placement is UNCONDITIONAL and DORMANCY decides
@@ -1263,7 +1257,7 @@ restricts nothing and is one. The question is whose property it is, never who is
 - **`builds`** — the unit's per-type **`BUILD_*` repertoire** (which worker-builds it can perform), owned **per unit-type**
   (tech gates *which builds are unlocked* — via `enables.builds` / the BUILD's own prereq; `builds` is *which THIS unit
   can do*; NOT "all workers, tech-gated"), promotion-augmentable. Wired as an **intrinsic key** (the readJson base skips
-  it; `CvJsonUnitInfo` parses it). Same shared-vocabulary word as `enables.builds` — a `BUILD_*` list either way; the
+  it; `CvUnitInfo` parses it). Same shared-vocabulary word as `enables.builds` — a `BUILD_*` list either way; the
   enclosing section gives the relationship (`enables.builds` = "unlocks these," unit `builds` = "can perform these").
 - **`missions`** *(PERMANENT carve-out — missions/CvOutcome ground-up rework)* — the actions a unit **performs**, each
   producing an **outcome**; **a mission carries its `grants`** — the outcome (what lands) IS the mission's grant payload.

@@ -249,29 +249,29 @@
 
 ## Not built yet
 
-- **⛔ THE SPECIALIST YIELD HAS TWO MAINTENANCE SURFACES FEEDING ONE RATE, AND THEY DISAGREE — resolve which
-  one is the model before touching either.** The modifier consumer applies a specialist's deposits into the
-  CITY PACKAGE on the specialist fact (source = the specialist, scope = city, multiplicity = the count), which
-  the roll-up then reads as the city's own flats — TIER-2, OUTSIDE the percent stack. `InfoValuation::specialistTerm`
-  independently sums the same specialist's `city.flat` intrinsic — TIER-1, INSIDE it.
-  ⛔ **BOTH PLANES ARE LIVE AT ONCE, so wherever a specialist authors an output channel the city DOUBLE-COUNTS
-  it** — once inside the percent stack and once outside. That is worse than the disagreement this entry first
-  described, and it is what the `[MODIFIER] specialistRead` census shows: its per-type rows ARE the TIER-1
-  term, and those same specialists appear as `citySpecialistAdded` deposits feeding the TIER-2 side.
-  ⚠ The doubling is NOT uniform across channels — a channel no specialist authors is untouched — so a rate
-  that looks right on one yield says nothing about the others.
-  ⚑ [modifier.md §2a](../../specs/modifier.md) is unambiguous that specialists are a TIER-1 BASE term and that
-  TIER-2 EXTRA is BUILDINGS only, so the package application is the surface that looks wrong — but confirm
-  against the apply path rather than deleting on the strength of the spec alone, because the apply is what the
-  authored entries actually reach.
-  ⚠ Whichever survives owes the rest of §2a's row, none of which `specialistTerm` carries: the intrinsic's own
-  PERCENT layer, the per-type `empire.cities.flat`, the `perAll` bucket, and the TRAIT's specialist-keyed
-  governing-deliverer deposits. And its MULTIPLIER counts `getSpecialistCount` alone where the spec and the
-  engine both say `getSpecialistCount + getFreeSpecialistCount` — so the whole output of the `freeSpecialists`
-  family rides on whichever path is kept.
-  ⛔ Do NOT settle this by whether the resulting number moves toward a remembered figure
-  ([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)); settle it by
-  which surface the spec names and which entries each one actually reaches.
+- **ROUTE THE SPECIALIST FACT ONTO THE SPECIALIST YIELD PLANE, and read it as TIER 1.** The city now carries
+  two TYPED yield planes — `getSpecialistYields()` and `getBuildingYields()`, different types so the wrong
+  deposit cannot compile ([DEC-hard-typing-or-rollerskate](../../architecture/decisions.md#dec-hard-typing-or-rollerskate),
+  [state-repositories.md](../../architecture/state-repositories.md) § THE ORIGIN RULE) — but the specialist plane
+  is still EMPTY and nothing reads it. Three legs remain, and until all three land the city DOUBLE-COUNTS every
+  channel a specialist authors:
+  1. `mc_applySourceDeposits` takes the ORIGIN as a REQUIRED argument (never a default — a new source kind must
+     be forced to state its plane) and the `SEVT_CITY_SPECIALIST_ADDED / _REMOVED` case passes the specialist
+     origin, so a specialist's flats AND percents land on the specialist plane.
+  2. The combine reads it: the specialist plane resolves as `flat × (100 + its own percent)/100` and joins BASE
+     — §2a's SECOND percent stack, which is also what stops a specialist's own percent leaking into the
+     whole-city modifier.
+  3. `InfoValuation::specialistTerm` GOES. It is a read-time walk over every specialist id, which is the
+     O(what EXISTS) shape the maintained sum deletes; a maintained plane makes the read a bare fetch. ⚑ Its
+     three known gaps die with it rather than needing fixes: the `empire.cities.flat` leg, the `perAll` bucket,
+     and the multiplier counting `getSpecialistCount` alone where the engine says `+ getFreeSpecialistCount`
+     (a maintained plane cannot miss a free specialist — it receives the fact). Keep only its per-type census
+     ROWS, which the `[MODIFIER] specialistRead` line renders.
+- **Give the PLOT origin its own typed plane.** Worked-plot yields currently fold into a plot-base SEGMENT on
+  the BUILDING plane rather than a third typed package. They are not conflated (the segment is addressed
+  separately, `readPlotBaseFlat` vs `readFlat`), so this is a naming and structure mismatch rather than a wrong
+  number — but it leaves the plot origin living inside a package named for another origin, which is what the
+  type split exists to stop.
 
 - **The unresolved-FK census reports the §3.1 CATCH-ALL TOKENS as unresolved ids.** `CITY`, `TEAM`,
   `POPULATION`, `ERA`, `SPECIALIST`, `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`, the slider rates

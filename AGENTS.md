@@ -556,6 +556,23 @@ the total-observability bar below.)
 
 ### Design
 
+- **⛔ ANYTHING NOT ENFORCED BY HARD TYPING GETS ROLLERSKATED (owner, learned the hard way)**
+  ([DEC-hard-typing-or-rollerskate](docs/architecture/decisions.md#dec-hard-typing-or-rollerskate)). A rule written
+  in a doc or a comment binds only an agent who reads it, believes it, and still remembers it at the moment of
+  writing the code — which is exactly the population this file already says is systematically unreliable. **So a
+  design invariant that matters is expressed as a TYPE that makes the wrong move fail to COMPILE**, never as a
+  convention to be honoured.
+  **The ladder, best first:** a type that cannot express the error · a MISSING VERB, so the banned operation is
+  unsayable (`ContextDict` has no `set`, because a `set` overwrites a refcount) · a mechanical check
+  (`Tools/verify-*.py`, the family that already exists precisely because *"a rule has to be remembered; a check
+  does not"*) · and only last, prose.
+  ⚑ **The worked case, and it is why this is a rule rather than a preference:** *"specialists do NOT live in the
+  building package"* was true, documented, and re-corrected **more times than the owner cares to count** — until
+  the two yield origins became separate PACKAGE TYPES
+  ([state-repositories.md](docs/architecture/state-repositories.md) § THE ORIGIN RULE), after which the wrong
+  deposit simply does not build. ⚠ The corollary for review: when you catch yourself writing a comment that
+  tells the next agent not to do something, ask whether the type could refuse it instead — a comment is the
+  weakest rung on the ladder and the one that has already failed.
 - **Build the proper structure ONCE — no transitional tech debt**
   ([DEC-proper-once](docs/architecture/decisions.md#dec-proper-once)). Reject transitional shims that exist only to
   defer the real design; when the right design needs prerequisite work, do the prerequisite and build the real

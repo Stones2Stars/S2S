@@ -646,50 +646,21 @@ oracle diff, on one plane. The easier failure to find is the one to keep.
 > *"`CvDerivedCache` should be replaced by `ContextDict` virtually everywhere needed, and we just need to start
 > taking one cluster at a time with event wiring."*
 
-**The component and the dictionary are the two answers to one question, and the spine decides which is right.**
-`CvDerivedCache` is *mark → recompute from sources*; `ContextDict` is *apply the delta the fact carries*. The
-first is only ever necessary when the inputs arrive UNANNOUNCED — and under a saturated emit surface no input
-does ([DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil)). So the component's remaining niche is
-not small, it is EMPTY BY CONSTRUCTION, and every tenant of it is a store waiting to be re-expressed as a keyed
-accumulator ([DEC-keyed-accumulator](decisions.md#dec-keyed-accumulator)).
+**`CvDerivedCache` (`Sources/Infrastructure/CvDerivedCache.h`) no longer exists.** It was a templated
+mark→recompute value-holder — a `markDirty` that triggered a recompute over the owner's current state, exactly
+the calculation a fact was supposed to make unnecessary. Every tenant converted, one cluster (an entity's facts
+plus the store they feed) at a time: its events re-cut to name their happenings
+([event-spine.md](../specs/event-spine.md) § A FACT NAMES THE HAPPENING), its store re-expressed as a keyed
+accumulator ([DEC-keyed-accumulator](decisions.md#dec-keyed-accumulator)) or a channel slot in
+`CvCascadePackage` (§ THE MAINTAINED SUM, above), and its recompute deleted in the same change. The legacy
+`CvCity` hand-rolled staleness caches (`m_aiCommerceRate`, `m_aiBuildingCommerce100`, squirrelBanana) went the
+same way.
 
-⛔ **A surviving `CvDerivedCache` tenant is therefore a MISSING EMIT wearing a component**, exactly as a staleness
-flag is a missing emit wearing a flag. The disposition is never "keep the cache for this one": it is **name the
-fact, wire it, and let the dictionary hold the answer** — after which there is nothing left for a recompute to
-do.
-
-**⚖ THE METHOD IS ONE CLUSTER AT A TIME, AND THE SIZE OF THE WHOLE IS IRRELEVANT (owner): *"this is one of
-those times where how big it is is irrelevant — we have to start in a corner."*** A cluster is one entity's
-FACTS plus the STORE those facts feed, converted together: the events re-cut to name their happenings
-([event-spine.md](../specs/event-spine.md) § A FACT NAMES THE HAPPENING), the store converted from
-mark-and-recompute to `id → count` fed ±1, and the recompute deleted in the same change. ⛔ Do NOT convert a
-store's STORAGE without its MAINTENANCE or the reverse — a set-shaped store survives only while something
-recomputes it whole, so the two halves land together or not at all (§ THE SEMIBOOLEAN STATE).
-⚠ **Counting the remaining clusters is not a prerequisite for starting one**, and treating the total as a
-decision to be taken first is the hesitation this ruling exists to remove.
-
-⚑ **What is genuinely NOT a `ContextDict` — so "virtually everywhere" is not read as "everywhere".** The
-dictionary holds a keyed COUNT; a summed MAGNITUDE belongs in the channel-indexed package
-(§ EVERY DERIVED STORE IS ONE SHAPE — they share the maintenance rule and not the identity), and a genuine
-per-object scalar that no key indexes stays a plain member. The question is what the slot HOLDS, never which
-mechanism is fashionable.
-
-**The component being removed** is `Sources/Infrastructure/CvDerivedCache.h` — a templated value-holder with the
-recompute injected as a member-function-pointer, in three forms: the single-flag `CvDerivedCache<TOwner,T,N>`,
-the partial-mask `CvDerivedCacheSet<TOwner>` (the mask protocol the packages and the team capabilities still
-sit on), and the runtime-sized `CvDerivedCacheVec<TOwner,T>`. Recognise it by its shape: **a `markDirty` that
-triggers a recompute over the owner's CURRENT state.** That recompute IS the calculation the fact was supposed
-to make unnecessary.
-
-⛔ **It is not extended, not given new tenants, and not "converted" in place.** A tenant leaves by the cluster
-move above — its fact re-cut to name the happening, its state re-expressed as `id → count` or as a channel slot,
-its recompute deleted — and the component disappears when the last tenant does. ⛔ A hand-rolled staleness-flag pair
-beside it is not an improvement on it; it is the same defect without the shared type
-([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)).
-
-⚑ **The legacy `CvCity` hand-rolled staleness caches** (`m_aiCommerceRate`, `m_aiBuildingCommerce100`,
-squirrelBanana) are **demolition fodder rather than conversion targets** — they are cut when the channel that
-replaces them lands, never polished or re-homed onto the component on the way out.
+⛔ **It is not reintroduced, and not reached for "just this once."** A recompute is only ever necessary when
+inputs arrive UNANNOUNCED, which a saturated emit surface makes impossible
+([DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil)) — a surviving tenant would be a MISSING EMIT wearing a
+component, the same shape a staleness flag wears one level out. The boundary between the two replacements —
+keyed count vs summed magnitude — is § EVERY DERIVED STORE IS ONE SHAPE, above.
 
 ## ⚖ Refinements
 
@@ -724,9 +695,78 @@ replaces them lands, never polished or re-homed onto the component on the way ou
   [modifier.md §1](../specs/modifier.md), which forces downward invalidation fan-out).
   **⛔ THE ORIGIN RULE — THIS IS THE PURE CASCADE DESIGN (owner), not a constraint bolted onto it:**
   - **YIELDS come from exactly three sources: PLOT, SPECIALISTS, and BUILDINGS (city).** Nowhere else produces a
-    yield. So the flat/yield side of a package exists at **plot** and **city** only.
+    yield.
+  - **⛔ AND THOSE THREE ARE THREE SEPARATE PACKAGES, NOT ONE (owner): *"a city's yields are based on 3 packages,
+    the yields from plots, the yields from specialists, and yields from buildings, that is 3 separate
+    packages."*** The plot origin is the per-plot package summed over the city's worked plots; the SPECIALIST and
+    BUILDING origins are two distinct flat packages ON THE CITY.
+    ⚑ **This is forced, not stylistic.** [modifier.md §2a](../specs/modifier.md) puts specialists in TIER 1
+    (inside the percent stack) and buildings in TIER 2 (added after it), and § THE MAINTAINED SUM bans a
+    per-source decomposition — so once both origins land in ONE Σ slot the two tiers can never be separated
+    again. A single city flat package therefore cannot express the rate at all.
+    ⛔ **The failure it produces, which is the reason this is spelled out:** the specialist half gets recovered
+    by a hand-walk over the city's specialists at read time, and the SAME authored deposit is then counted twice —
+    once inside the stack and once outside it. That walk is also the O(what EXISTS) read-time shape this whole
+    document deletes; a maintained specialist package needs no walk at all.
+    ⛔ **ENFORCED BY TYPE, NEVER BY CONVENTION** ([DEC-hard-typing-or-rollerskate](decisions.md#dec-hard-typing-or-rollerskate)):
+    the two planes are DIFFERENT TYPES (the package template carries its ORIGIN), so a specialist deposit reaching
+    the building plane does not compile. A comment saying which package a source belongs in is exactly what has
+    been re-corrected repeatedly and does not hold.
   - **MODIFIERS come from everything BUT plot** — city, empire, team, world. So the percent side exists at
-    every scope except plot.
+    every scope except plot, and it is ONE dictionary: percents combine into a single additive stack
+    ([modifier.md §2a](../specs/modifier.md)), so they have no origin to keep apart.
+
+  **⛔ THE GENERAL FORM — PACKAGE IDENTITY IS `(scope × COMBINE POSITION × channel)`.** Origin is the yield
+  plane's instance of a wider law: within a scope, packages stay isolated **per combine position** and never
+  merge into one per-scope number. The city's yield positions are the two origins above; every channel family
+  defines its own positions (wellbeing's opposing channels, the scalar stacks), and a scope's packages follow
+  that channel's positions. ⛔ A per-scope blob is the defect — whatever is summed together can never be told
+  apart again, and the combine is what needs them apart.
+
+  **⛔ THE FOUR-PROVIDER LAW — only PLOTS, SPECIALISTS, BUILDINGS and TRADE ROUTES provide yield.** They are
+  what physically produces yield in game. Every other source kind — trait, civic, tech, religion, corporation —
+  only MODIFIES or CONDITIONS a provider's output, so **every yield deposit resolves onto a PROVIDER-KIND
+  package**: a trait's specialist boost lands on the SPECIALIST package, a civic's building-keyed percent on the
+  BUILDING percent stack. ⚑ This is what decides which package a deposit joins, and therefore which leg the
+  percent stack multiplies — the question the origin split exists to answer.
+  **⚖ FOUR PROVIDERS, THREE PACKAGES — the TRADE ROUTE is a provider that is NOT a package (owner): *"trade
+  route yields are always provided by the ENGINE; the trade route buffs happen BEFORE it arrives, as its
+  complete package."*** The engine owns the network calculation and applies the route's own buffs, so the
+  cascade receives a FINISHED value and folds it at the combine — it is the one live yield INPUT, never derived
+  ([modifier.md §2a](../specs/modifier.md)). ⛔ **So no trade-route package exists and none is to be built.**
+  Nothing deposits into it: a package with no depositors is an empty slot inviting a future deposit to be routed
+  somewhere the engine already answered, which would double the route's yield.
+  ⚑ **WHAT THE CASCADE OWNS IS THE COUNT, AND ONLY THE COUNT (owner): *"we only tell the engine how many trade
+  routes we can have."*** The `tradeRoutes` channel — how many routes a city may run — is cascade-computed like
+  any other modifier-influenced value; the YIELD those routes then produce is entirely the engine's.
+  ⛔ **Do not conflate them** ([modifier.md §2a](../specs/modifier.md) states this at length and is the
+  authority). ⚠ The trap is one-directional and worth naming: listing trade routes among the PROVIDERS reads as
+  licence to give them a package, because the other three have one. They are a provider of yield and a consumer
+  of a cascade COUNT — never a home for deposits.
+  ⚖ **The golden-age and free-city TRAIT FLATS need no provider home (owner):** they are plain flat bonuses
+  riding the flat yield packages outside the provider chain, joining BASE at the combine. Golden age is a core
+  engine mechanic and stays simple. ⚠ "free-city" is the trait yield accumulator, NOT the WLTKD celebration.
+
+  **⚖ THE CITY-REALIZATION LAW — a deposit whose CONDITION references the CITY is a city-realized join,
+  whatever its authored scope.** State-religion-in-city, a city building's presence, any city predicate:
+  evaluating such a deposit once at PLAYER scope resolves it against one city's context and mis-serves every
+  other city. So all conditioned percent stacks realize PER CITY, in the city's package, against that city's
+  own context; the player scope holds only the genuinely city-AGNOSTIC sums. ⚠ Measured, not theoretical: the
+  player-scope evaluation left persistent +18..+27 percent errors on every non-capital city.
+
+### ⚖ THE READ PATH — THE CASCADE PROVIDES, THE GAME OBJECT SUMS (owner, LOCKED)
+
+> This is where the misunderstanding that has cost repeated rebuilds lives: agents treat the cascade as the
+> thing that COMPUTES a yield and leave the game objects as passengers. It is the opposite.
+
+- **The cascade is the PACKAGE STORE, nothing more.** Per `(scope × channel × combine-position)` it holds one
+  standing sum — how a yield is influenced, and by how much, from every source. It answers *what influences
+  this*, and it **never computes a final number**.
+- **The GAME OBJECT sums.** The consuming object fetches the packages it sits under and applies its channel's
+  combine formula. That arithmetic is the object's, not the store's.
+- **ONE reporting surface, read identically by both consumers** — the game object summing, and the endpoints
+  decomposing — so the number a city computes and the breakdown an endpoint renders are the SAME bytes. Two
+  surfaces would be two derivations, and they would drift.
 
   Plot and the upper scopes are therefore mirror images (yield-only vs percent-only), and **CITY is the single
   scope carrying both**. That is why "whether a scope's packages are empty is irrelevant" is not hand-waving: the
@@ -736,8 +776,11 @@ replaces them lands, never polished or re-homed onto the component on the way ou
   — [modifier.md §1](../specs/modifier.md). ⛔ Consequence for any read-side roll-up: **the channel set is the
   gate, never a hand-written per-scope filter.**
 
-  **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape** — TWO DICTIONARIES per
-  scope object, one flats and one percents, each an int keyed by channel. The drift it replaces is the ~33
+  **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape** — one flats dictionary
+  per YIELD ORIGIN the scope carries plus one percents dictionary, each an int keyed by channel. Every scope but
+  CITY carries a single flats dictionary, because only the city has more than one yield origin (above). The
+  requirement is SAMENESS OF SHAPE, never a count of dictionaries: what is banned is a bespoke struct or a
+  hand-named field, not a second dictionary of the same uniform type distinguished by its origin. The drift it replaces is the ~33
   hand-named scalar fields (`scGpBaseBld`, `scDefense`, `scDefBombard`, `scMaintModCity`, `scTradeCity`,
   `brCityMilitary`, …): a hand-named field cannot be addressed uniformly, so it forces a bespoke invalidation
   path per field, which is how that many accumulated. A new scope or channel must be DATA, not a new struct.
@@ -748,8 +791,9 @@ replaces them lands, never polished or re-homed onto the component on the way ou
   Each scope carries ONLY the channels authored AT that scope, both the channel ids and the per-scope sets
   derived from the data at load (the `ClassificationRegistry` minting precedent), never hand-listed. Measured
   from `Assets/Data`: plot **13** · city **40** · empire **50** · team **3** · self 1 — the distinct non-unit
-  channels, with no object carrying more than 50. ⚠ city and empire exceed a 32-bit derived mask, so the
-  shared `CvDerivedCacheSet` mask widens to 64-bit (every existing user occupies few bits and is unaffected).
+  channels, with no object carrying more than 50. ⚠ city and empire exceed 32 channels, so the per-scope
+  channel mask (`CvCascadeChannelRegistry`) is a 64-bit budget, with a fixed top region reserved for receiver
+  sum bits (every existing user occupies few bits and is unaffected).
 
   **⛔ A SCOPE MUST BE UNAMBIGUOUSLY OWNABLE — WHICH IS WHY A LANDMASS IS NOT ONE (owner).** This is the test a
   candidate scope has to pass, and it explains the whole spine at once:

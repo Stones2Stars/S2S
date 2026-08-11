@@ -67,6 +67,18 @@ never a cascade INPUT. The trap is the CAMOUFLAGED case — a DERIVED value
 masquerading as raw state, above all a building's ACTIVE/DORMANT verdict, which is a pure function of
 `requires.operate` and must be COMPUTED, never read from the engine. **Home:** [validation.md](../specs/validation.md).
 
+### DEC-hard-typing-or-rollerskate
+
+**Anything not enforced by HARD TYPING gets rollerskated (owner, learned the hard way).** A rule stated in a
+doc or a comment constrains only an agent who reads it, believes it, and remembers it at the moment of writing
+the code — so a design invariant that MATTERS is expressed as a TYPE that makes the wrong move fail to compile,
+never as a convention. Prefer, in order: a type that cannot express the error · a missing verb (the banned
+operation is unsayable, as `ContextDict` has no `set`) · a mechanical check (`Tools/verify-*.py`) · and only
+last, prose. ⚑ The worked case: the city's SPECIALIST and BUILDING yield origins are separate PACKAGE TYPES
+([state-repositories.md](state-repositories.md) § THE ORIGIN RULE) because prose saying "specialists do not live
+in the building package" had to be re-corrected more times than the owner cares to count.
+**Home:** [AGENTS.md](../../AGENTS.md) Conventions §Design.
+
 ### DEC-kraken
 
 Skipping/assuming/guessing/shortcuts is the cardinal sin; maximal rigor by default until the owner explicitly relaxes
@@ -368,46 +380,24 @@ rate) is not this — that is an ordinary package read. **Home:** [state-reposit
 ### DEC-flag-is-fossil
 
 **A STALENESS FLAG is a CLAIM THAT WE DO NOT KNOW WHAT CHANGED, and a complete emit surface falsifies that claim
-by construction.** So every staleness bit, epoch counter and version number in the engine is exactly
-one of two things — a **MISSING EMIT wearing a flag** (wire the fact, [DEC-close-event-gaps-now](#dec-close-event-gaps-now),
-and the mechanism has nothing left to do) or **DEAD WEIGHT** (delete it) — and never a third thing kept because
-it works. The [DEC-no-self-heal](#dec-no-self-heal) fossil rule one level up: a self-heal fossilizes a missing
-EMIT, a staleness flag fossilizes an incomplete emit SURFACE. ⚠ It dissolves SILENTLY — a design whose premise goes
-away keeps returning correct numbers and merely does unnecessary work, so there is no symptom to notice and no
-build that will ever name one; this class closes only by being looked for. ⚠ And a flag found this way is a
-SUPERSEDED design, not evidence of a rollerskate ([superseded-ideas](superseded-ideas.md) #30) — do not go
-hunting a culprit. **Home:** [state-repositories.md](state-repositories.md) § A STALENESS FLAG IS THE FOSSIL OF AN
-INCOMPLETE EMIT SURFACE.
+by construction.** Every staleness bit, epoch counter and version number is therefore exactly one of two things —
+a **MISSING EMIT wearing a flag** (wire the fact, [DEC-close-event-gaps-now](#dec-close-event-gaps-now)) or
+**DEAD WEIGHT** (delete it) — never a third thing kept because it works. **Home:**
+[state-repositories.md](state-repositories.md) § A STALENESS FLAG IS THE FOSSIL OF AN INCOMPLETE EMIT SURFACE.
 
 ### DEC-no-staleness-vocabulary
 
-**"DIRTY" IS NOT A TERM WE USE, FULL STOP (owner) — the word is removed WITH the mechanism it names.** The ONLY
-survivor is **the one the closed EXE needs for GRAPHICS**: `InterfaceDirtyBits` and the repaint helpers over it
-(`setDirty(X_DIRTY_BIT)` / `setLayoutDirty` / `setFlagDirty` / `setInfoDirty`), which are EXE-bound AND resolved
-BY NAME from BUG config strings, i.e. a PUBLISHED vocabulary rather than ours
-([python-read-map.md](../reference/python-read-map.md)). **Every DERIVED-STATE use goes** — the mark/rebuild
-protocol, `markMaintenanceDirty`, `setCommerceDirty`, and the AI re-evaluation flags
-(`AI_setAssignWorkDirty` / `AI_makeAssignWorkDirty` / `AI_setChooseProductionDirty`) — **and blast radius is not
-a consideration** ([DEC-accumulator-cut-uniform](#dec-accumulator-cut-uniform): reach is the SIGNAL, never a
-brake). ⚑ It is not a rename: a term that outlives its mechanism is the evidence-of-the-abandoned-path that
-teaches the next agent to reach for it ([DEC-no-rollerskate-evidence](#dec-no-rollerskate-evidence)), and this
-one names a CLAIM the engine can no longer make ([DEC-flag-is-fossil](#dec-flag-is-fossil)). ⛔ A surviving
-derived-state use is therefore never given a SYNONYM either — the concept is deleted, so the site is named for
-the job it actually does. **Home:** [state-repositories.md](state-repositories.md) § A STALENESS FLAG IS THE
-FOSSIL OF AN INCOMPLETE EMIT SURFACE.
+**"DIRTY" IS NOT A TERM WE USE, FULL STOP (owner)** — removed WITH the mechanism it names. The only survivor is
+`InterfaceDirtyBits` (the EXE-bound GRAPHICS repaint vocabulary, published by name from BUG config strings, so it
+is not ours to retire). Every DERIVED-STATE use goes, blast radius included. **Home:**
+[state-repositories.md](state-repositories.md) § A STALENESS FLAG IS THE FOSSIL OF AN INCOMPLETE EMIT SURFACE.
 
 ### DEC-contexts-are-never-marked
 
-**A CONTEXT IS NEVER MARKED, RE-DERIVED OR REFRESHED — "we do not dirty contexts" (owner).** A context store
-carries no staleness mechanism of any kind: no flag, no stamp, no rebuild entry point, no `refresh*`. **The FACT
-SETS the bit it names and MOVES the count it names**, and that is the entire maintenance path. ⛔ Re-deriving a
-whole block because something in its vicinity happened is the LEGACY READ PATH RESCHEDULED from read-time to
-event-time, not deleted — the same error one plane over from
-[DEC-maintained-sum](#dec-maintained-sum), which is why both fall to one rule. ⚑ **A plot's predicates follow
-MEMBERSHIP, and OWNERSHIP is a membership fact (owner):** a plot gaining or losing a city's ownership adds or
-removes that plot's `CASC_PRED_*` bits from that city's dictionary through the ONE applier, exactly as entering
-or leaving the worked radius does — one applier, several membership facts. **Home:**
-[contexts.md](contexts.md).
+**A CONTEXT IS NEVER MARKED, RE-DERIVED OR REFRESHED — "we do not dirty contexts" (owner).** No staleness
+mechanism of any kind; the FACT sets the bit/count it names, and that is the entire maintenance path — the same
+error one plane over from [DEC-maintained-sum](#dec-maintained-sum). **Home:** [contexts.md](contexts.md) §
+Maintained EVENT-DRIVEN.
 
 ### DEC-facts-name-happenings
 
@@ -431,35 +421,21 @@ withdrawal must be announced while the old state still holds ([event-spine.md](.
 
 ### DEC-contextdict-replaces-derivedcache
 
-**`CvDerivedCache` is replaced by `ContextDict` virtually everywhere, one cluster at a time (owner).** The two are
-the answers to one question and the spine decides which is right: the component is *mark → recompute from
-sources*, the dictionary is *apply the delta the fact carries*. A recompute is only ever necessary when inputs
-arrive UNANNOUNCED, which a saturated emit surface makes impossible — so the component's niche is empty by
-construction and **a surviving tenant is a MISSING EMIT wearing a component**, the
-[DEC-flag-is-fossil](#dec-flag-is-fossil) shape one level out. The disposition is never "keep the
-cache for this one": name the fact, wire it, let the dictionary hold the answer.
-**⚖ THE METHOD: one CLUSTER — one entity's facts plus the store they feed — converted whole**, the events re-cut
-per [DEC-facts-name-happenings](#dec-facts-name-happenings), the store moved to `id → count` fed ±1, the
-recompute deleted in the same change; storage and maintenance land TOGETHER or not at all
-([DEC-keyed-accumulator](#dec-keyed-accumulator)). ⛔ **The size of the whole is irrelevant and counting the
-clusters is not a prerequisite for starting one** — *"we have to start in a corner."* ⚠ "Virtually everywhere"
-is bounded by what the slot HOLDS: a summed magnitude is a package channel, not a dictionary. **Home:**
-[state-repositories.md](state-repositories.md) § `CvDerivedCache` IS REPLACED BY `ContextDict`.
+**`CvDerivedCache` is replaced by `ContextDict` (or a channel-indexed package) EVERYWHERE — it no longer exists
+in `Sources/`.** A recompute is needed only when inputs arrive UNANNOUNCED, which a saturated emit surface makes
+impossible, so the component has no niche left; a surviving tenant would be a MISSING EMIT wearing a component
+([DEC-flag-is-fossil](#dec-flag-is-fossil) one level out). ⚠ Bounded by what the slot HOLDS: a summed magnitude
+is a package channel, not a dictionary. **Home:** [state-repositories.md](state-repositories.md) §
+`CvDerivedCache` IS REPLACED BY `ContextDict`.
 
 ### DEC-dict-is-a-consumer
 
-**A context dictionary IS a spine consumer that declares exactly the facts it looks for (owner)** — it registers
-itself and names its interest set, rather than being fed by a central switch fanning out to whichever store a
-case happens to mention. **The interest set IS the maintenance contract**, which is what makes a missing route
-visible AT the dictionary instead of hidden inside a router that looks complete, and what lets the RECEIVED line
-name the store that acted ([event-spine.md](../specs/event-spine.md) § THE RECEIVED LINE). It is the spine's own
-per-domain isolation applied to the stores: adding a dictionary touches only that dictionary. ⚠ Registration
-ORDER stays a contract — every dictionary registers inside the CONTEXTS band of
-`contexts → enabler → modifier → triggers`, since the enabler's gate pass evaluates through these stores; order
-is a property of the band, never of translation-unit init order. ⛔ It does not weaken
-[DEC-enabler-not-cascade](#dec-enabler-not-cascade)'s one-consumer-per-SYSTEM rule, which bans one consumer
-routing two MACHINES, not several dictionaries inside one machine's band. **Home:**
-[contexts.md](contexts.md) § THE DICTIONARY IS THE FINAL STOPPING PLACE.
+**A context dictionary IS a spine consumer that declares exactly the facts it looks for (owner)** —
+self-registering, never fed by a central switch, so a missing route is visible AT the dictionary. Registration
+ORDER stays a contract (`contexts → enabler → modifier → triggers`). Does not weaken
+[DEC-enabler-not-cascade](#dec-enabler-not-cascade)'s one-consumer-per-SYSTEM rule — several dictionaries inside
+one machine's band is still one system. **Home:** [contexts.md](contexts.md) § THE DICTIONARY IS THE FINAL
+STOPPING PLACE.
 
 ### DEC-keyed-accumulator
 
@@ -483,27 +459,13 @@ storage and maintenance convert together or not at all. **Home:**
 ### DEC-maintained-sum
 
 A cascade package is a **MAINTAINED SUM, never a marked-and-recalculated cache**: the DOMAIN fact names the
-SOURCE, the compiled deposit index names that source's deposits, and applying them IS the maintenance — so the
-slot is correct the instant the fact arrives, with nothing marked, deferred or batched. The staleness-flag /
-derived mask / mark-then-rebuild protocol and the planned turn-end batched rebuild are RETIRED
-([superseded-ideas](superseded-ideas.md) #30). **THREE PLANES, ONE SLOT, NOTHING RECOMPUTED** — the split is a
-ROUTE, never storage: **A CONSTANT** deposit is applied `±value` by the source fact; **B SCALED**
-(`value × count`) is applied `±value × Δcount` by the COUNT fact as well, which is what the context dictionaries
-buy and why a count fact is emitted at all; **C CONDITIONED** is applied `±value` by the ATOM's verdict
-crossing. ⛔ **B and C are COUPLED — deliver both or neither:** C is delta-able only because B guarantees no
-count ever moves unannounced, so the slot equals `Σ resolve(d, state_now)` at every instant and a withdrawal is
-always exact. **PULL-not-push still binds CROSS-SCOPE** (an upper
-scope never pushes into a lower one; a receiver total is the Σ of its members' realized values), and a deposit
-landing in its OWN scope's slot is not a push — the package is the only thing holding it. Not the banned legacy
-accumulator either: [DEC-accumulator-cut-uniform](#dec-accumulator-cut-uniform)'s three-part test begins with
-**serialized**, and nothing derived is, so a phantom from a missed emit lives at most one session and LOAD
-rebuilds from the reseed. ⚑ **The failure mode is the FORCING FUNCTION, not a cost tolerated against the rules:**
-a missed mark left a stale value that read plausible forever, while a missed emit leaves a loud compounding one —
-which is [DEC-no-self-heal](#dec-no-self-heal) preferring the failure that announces itself. ⇒ A saturated emit
-surface stops being a quality target and becomes a PRECONDITION of the cascade being correct, and the mark
-derivation — a second completeness census that was not answerable at any one site, moved with the authored data,
-and could not be made safe by over-inclusion — is deleted rather than finished. **Home:**
-[state-repositories.md](state-repositories.md) § THE MAINTAINED SUM.
+SOURCE, the compiled deposit index names its deposits, and applying them IS the maintenance — correct the instant
+the fact arrives, nothing marked, deferred or batched (RETIRED: the staleness-flag/mask/mark-then-rebuild
+protocol, [superseded-ideas](superseded-ideas.md) #30). Three routed planes land in the SAME slot — **A
+CONSTANT** (`±value`), **B SCALED** (`±value × Δcount`, the context dictionaries' half), **C CONDITIONED**
+(`±value` on a verdict crossing) — coupled so the slot equals `Σ resolve(d, state_now)` at every instant.
+PULL-not-push still binds CROSS-SCOPE. **Home:** [state-repositories.md](state-repositories.md) § THE
+MAINTAINED SUM.
 
 ### DEC-spine-reseed
 

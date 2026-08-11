@@ -979,9 +979,9 @@ over-offers: a BUILD's plot-validity half and a PROMOTION's per-unit applicabili
 decision points (§7.1). EMPIRE-capability reads are not here either: they are asked of the PLAYER's own keyed
 union ([capabilities.md](capabilities.md)), which no availability read duplicates.
 
-⛔ Still do not re-attach the machine ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists
-to avoid ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Moving CONSUMERS onto
-this surface is the remaining sweep.
+⛔ Do not re-attach the machine ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists
+to avoid ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Every consumer reads
+through this surface, never around it.
 
 ### The gate stages, by domain
 
@@ -1085,66 +1085,27 @@ state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
 
 - **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
   terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
-  re-colors membership from current state and folds the counts through the live entry points as each plot joins,
-  announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
-  ⚑ **RE-COLOR is the engine's own verb, and knowing the mechanism is what makes the gap below legible.**
-  `CvPlotGroup::colorRegion` is a FLOOD FILL — it starts on a plot, walks every trade-network-connected
-  neighbour, paints them into one group and merges into any adjacent group it meets. The `reInitialize` pass
-  (`CvPlayer::updatePlotGroups`) does it in two steps: **destroy** — every plot's group pointer nulled and the
-  player's whole group list emptied — then **repaint**, `colorRegion` from each still-uncolored plot. So the
-  network is demolished and rebuilt whole, and anything the old groups held is gone unless the repaint knows
-  how to find it again.
-  > **⛔ THIS IS THE LOAD PATH AND NOTHING ELSE — `reInitialize` HAS EXACTLY ONE CALLER (`CvGame::onFinalInitialized`),
-  > SO IT RUNS ONCE PER LOAD.** ⚠ Read the teardown as the ordinary shape and you conclude the trade network is
-  > deleted and rebuilt whenever a plot joins a group, which is wrong by orders of magnitude and invites
-  > "optimizing" a pass that does not exist.
-  > ⚑ **In PLAY the work is incremental and targeted:** every other `updatePlotGroups` takes the
-  > `reInitialize = false` branch — `CvPlotGroup::recalculatePlots` per group, which EARLY-OUTS when the same
-  > cities and bonuses are still connected — and a single plot joining, splitting or merging goes through
-  > `CvPlot::updatePlotGroup`, which touches only the affected region. Nothing is torn down.
-  > ⇒ **The demolition is the price of a LOAD, paid once**, which is what makes it the sanctioned full pass
-  > ([state-repositories.md](../architecture/state-repositories.md) CAPSTONE: LOAD is the only full build) rather
-  > than a blanket recompute.
-  > **⛔ THE LEAVE IS SILENT AND THE JOIN IS ANNOUNCED — the two steps pass OPPOSITE flags, and that asymmetry
-  > is the whole mechanism of the loss.** `CvPlot::setPlotGroup`'s `bRecalculateEffect` is what makes a group
-  > change a real transition: it withdraws the plot's contributions from the old group, fires the per-bonus
-  > crossings (`onNetworkSupplyChanged`), announces `SEVT_CITY_NETWORK_REMOVED` / `_ADDED`, and deposits into
-  > the new one. **The demolition passes `false`** (so none of that happens — the plot is severed silently and
-  > the object deleted); **the repaint passes `true`** (so the join is fully announced).
-  > ⚑ **That is correct, not sloppy:** withdrawing from groups deleted three lines later is wasted work, and a
-  > removal fact naming a group id that is about to stop existing tells a consumer nothing. It is also what
-  > keeps the load free of double-counts — the counts restart from zero on new objects.
-  > ⚑ **THE CITY STILL HEARS THE NET RESULT, and knowing that is what stops a phantom being blamed for a real
-  > loss.** `CvPlayer::updatePlotGroups` brackets the WHOLE teardown+repaint per city
-  > (`startDeferredBonusProcessing` snapshots every bonus's network count on entry;
-  > `endDeferredBonusProcessing` compares on exit and fires `processNumBonusChange`), so the two steps are
-  > ATOMIC to a consumer: a bonus that survives announces nothing (no double-add), and one that does not
-  > announces `SEVT_CITY_BONUS_REMOVED`. ⛔ So the traded store does NOT inflate across a load, and a re-push
-  > running AFTER the bracket closes takes each bonus 0 → 1 and announces its own crossing cleanly.
-  > ⚠ **What is genuinely untraced is the PLOT-GROUP level**: the destroyed group's counts are never
-  > decremented, the object is simply deleted, so no `SEVT_PLOTGROUP_BONUS_REMOVED` is ever emitted for it.
-  > ⇒ **The loss is therefore REPORTED but not REPAIRED** — the city correctly learns the supply is gone and
-  > nothing re-derives it, which is why the symptom is an empty list rather than a wrong number.
-  > ⇒ **A re-push must therefore go through `CvPlotGroup::changeNumBonuses`**, which on a presence crossing
-  > emits `SEVT_PLOTGROUP_BONUS_ADDED` and fans `onNetworkBonusChanged` into every member city. That is the
-  > live entry point, and it is the fact that TELLS THE TRUTH about what happened — the network component's
-  > holdings moved (§ THREE FACTS, [event-spine.md](event-spine.md)) — so the supply arrives announced rather
-  > than seeded ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) bans a warm-up walk that
-  > leaves consumers deaf; this is not one).
+  RE-COLORS membership from current state (`CvPlotGroup::colorRegion`, a flood fill from each plot) and folds
+  the counts through the live entry points as each plot joins, announcing every bonus fact as a genuine crossing
+  emit before the `GAME_LOAD_FINISHED` gate pass.
+  ⛔ **This full demolish-and-repaint is the LOAD PATH ONLY** (`reInitialize` has exactly one caller,
+  `CvGame::onFinalInitialized`) — every in-play group change is incremental (`recalculatePlots`'s early-out,
+  `CvPlot::updatePlotGroup`'s targeted join). Reading the load teardown as the ordinary shape invites
+  "optimizing" a full rebuild that does not run during play.
   > **⛔ THE RE-COLOR RE-FOLDS THE TILE HALF ONLY, SO THE BUILDING-SUPPLIED HALF MUST BE RE-PUSHED BEHIND IT.**
   > `CvPlot::updatePlotGroupBonus` folds a plot's own extracted resource, a city's free bonuses and the capital's
   > import/export — and nothing else. Every resource an ACTIVE BUILDING supplies through `provides.bonuses`
-  > (§5a) was pushed into the DESERIALIZED group as that building resolved its dormancy in-read, and the drain
-  > throws it away.
-  > ⛔ **Nothing re-derives it, and that is structural rather than a missed hook:** by then the operating set has
-  > CONVERGED, and a no-op write crosses nothing and announces nothing (§3.2) — so the `GAME_LOAD_FINISHED` gate
-  > pass re-confirms `provided` without emitting a single crossing, and the supply is simply gone.
-  > ⚑ It is the BAKED-CONSUMER RE-RUN below, one row up: state baked before the rebuild, whose result self-heals
-  > never. The re-push walks each city's converged `providedCount` into its NEW group, after the re-color.
-  > ⚠ **The failure is a whole CLASS of resource going invisible rather than a wrong number**, which is why no
-  > total looked wrong: a culture is supplied by its own world-unique building, so after the drain every city's
-  > traded store read ≤ 0 for it and the city screen's culture list — which asks exactly that store — was empty,
-  > while the tile-supplied resources beside it were unaffected.
+  > (§5a) was pushed into the DESERIALIZED group as that building resolved its dormancy in-read, and the
+  > demolish-and-repaint throws it away: by re-color time the operating set has already CONVERGED, so
+  > re-confirming a dormant/active verdict is a no-op that crosses and announces nothing (§3.2) — the
+  > `GAME_LOAD_FINISHED` gate pass re-confirms `provided` and the supply is simply gone. The signature is a whole
+  > CLASS of resource going invisible, never a wrong number: a resource supplied only by an active building reads
+  > ≤ 0 in every member city's traded store, while tile-supplied resources beside it are unaffected.
+  > ⇒ **The fix is a load-end re-push through `CvPlotGroup::changeNumBonuses`** (the same live entry point
+  > `provides.bonuses` normally uses) — walking each city's converged `providedCount` into its NEW group, after
+  > the re-color, so the crossing is announced as a genuine `SEVT_PLOTGROUP_BONUS_ADDED` rather than seeded
+  > ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) bans a warm-up walk that leaves consumers
+  > deaf; a real crossing emit is not one).
 - **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
   [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs

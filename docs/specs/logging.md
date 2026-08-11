@@ -45,8 +45,9 @@ Every observability hook is one of these — cheap, gated, **off by default**:
    depending on **no** log file or gate.
 
 The HTTP transport, its standing invariants, and the routes that exist today are
-[http-endpoints.md](http-endpoints.md). ⚠ There is **no route catalogue** — the route table was purged and is
-defined with the access surface, so shapes 1 and 3 have almost no live instances right now.
+[http-endpoints.md](http-endpoints.md). ⚠ There is **no route catalogue** — the route table was purged and a
+route is defined with the access surface it serves, so shapes 1 and 3 stay sparse by design rather than growing
+a registry of their own.
 
 ---
 

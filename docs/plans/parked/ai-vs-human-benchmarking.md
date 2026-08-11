@@ -24,8 +24,13 @@ binned: **competence** (a better decision existed) vs **balance** (no better dec
 
 Observation runs on shipping FinalRelease infrastructure (no FASSERT there — see `AGENTS.md`):
 
-- **`/units` HTTP census** (`CvHttpServer`, 127.0.0.1:7227) — per-unit owner/type/UNITAI/
-  missionAI/activity/damage/level, plus current turn. The live "what is every unit doing" view.
+- **HTTP census** (`CvHttpServer`, 127.0.0.1:7227). **The `/units`/`/players`/`/cities` routes this
+  section originally described no longer exist** — the live route table is the 4-endpoint
+  `/computed/*` census surface (`/computed/cascade/packages`, `/computed/enabler/operating`,
+  `/computed/city/yield`, `/computed/capabilities` — see `docs/specs/http-endpoints.md`). Any
+  future benchmarking run needs to re-derive its per-unit/per-player/per-city view from that
+  surface (or from the gated logs / `/events`, per `docs/reference/observability.md`), not from
+  the routes named below.
 - **Playtest identity:** both endpoint wrappers carry `gameId` = `CvGame::getGameId()` —
   the id stamped at game creation and persisted in every save of that game (pre-existing
   `m_gameId` field; generator reformatted 2026-06-11 to digits-only local yyMMddHHmm, e.g.
@@ -52,15 +57,13 @@ on for a stretch of turns — counts say *what* diverged, logs say *why*.
 
 ## Open metric gaps
 
-~~The census exposes units only.~~ **`/players` SHIPPED (2026-06-11):**
-per alive player score/era/techs/current research/cities/population/units/gold(+rate)/
-scienceRate/production via `CvHttpServer` (`?playerNumber=N` filter; picojson-rendered).
-This is the progression view that answers "ahead or behind" directly — the collector
-logs it per turn alongside the unit census. **`/cities` SHIPPED (same day):** per-city
-yields, production head, buildings, culture level, capital, and the crime/education/
-disease property values (owner ruling: those three carry real gameplay; flammability and
-pollution are dormant) — collector logs `cities_timeseries.csv`. Remaining gaps:
-diplomacy state, and per-decision *why* (Autolog channels).
+The `/units`/`/players`/`/cities` census endpoints this section originally tracked as shipped
+have since been removed from the route table (see Method, above) — the per-player
+progression view (score/era/techs/research/cities/population/units/gold/production) and the
+per-city view (yields, production head, buildings, culture, crime/education/disease) both
+need re-deriving from the current `/computed/*` surface or the gated logs before a benchmark
+run can rely on them again. Remaining gaps as originally noted: diplomacy state, and
+per-decision *why* (Autolog channels).
 
 ## Early findings (playthrough started 2026-06-11; prehistoric era, 15 civs, owner=England)
 

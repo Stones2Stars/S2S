@@ -1,36 +1,26 @@
 # Stub census — Sources/Infos constant-return getters (the hidden-debt inventory)
 
 > **Work-state snapshot** (plans-class doc): every getter in the JSON pocos whose body returns a constant where
-> legacy loaded/computed a real value, classified with named consumers. Produced by an exhaustive sweep of all
-> 90 files + an adversarial second pass; excludes the 13 getters already fixed (combatLimit family, routeYields,
-> maxLatitude/placementOrder/aiObjective, conquestProbability, popDestroys, trainReluctance, layerAnimationPath,
-> skills hot-cache). Keep CURRENT: delete rows as they are fixed.
+> legacy loaded/computed a real value, classified with named consumers. Keep CURRENT: delete rows as they are
+> fixed.
+>
+> ⚠ **Sections 1-2 below were verified against the tree and cleared** (2026-08-11): the Info headers
+> (`CvBuildingInfo.h`, `CvPromotionInfo.h`, `CvCivicInfo.h`, `CvUnitInfo.h`, `CvUnitCombatInfo.h`) were rebuilt
+> around the cascade-modifier surface since this census's original sweep, and every getter this doc named as a
+> constant-returning stub is now gone — either replaced by a real cascade-backed getter (`getCityLimit`,
+> `isNotShownInCity`) or removed outright with no surviving call site. **Sections 3-6 have NOT been re-verified**
+> against the current tree and may carry the same staleness; treat them as needing a fresh sweep before relying
+> on them.
 
 ## 1. BUG-CONSUMED (a live consumer reads wrong values) — priority order
 
-| # | getter | location | returns | data lost | live consumers |
-|---|---|---|---|---|---|
-| 1 | `getFreeBuilding` / `getFreeAreaBuilding` | CvBuildingInfo.h:287-288 | -1 | **404 + 3 authored** | CvPlayer.cpp:7391/7397 (processBuilding grant), CvCityAI.cpp:4685/4764, CvGameTextMgr.cpp:15838 — free-building chains (zFolklore ×134, GreatWonders ×67, …) silently never grant. Curator STORE_TAGS drops building-side with no emitting path. |
-| 2 | `getHappinessPercentPerPopulation` / `getHealthPercentPerPopulation` | CvBuildingInfo.h:281-282 | 0 | **51 / 93 authored** | CvCity.cpp:4941-4942 + per-turn accrual (:8582/8597/8722/9285/9432). Data IS in JSON (`happiness.city`/`health.city` perPopulation); the getter refuses pending the documented SCALE ruling (h:274-278). ⛔ OWNER RULING NEEDED. |
-| 3 | `getCelebrityHappy` (Promotion) | CvPromotionInfo.h:405 | 0 | 3 authored | CvUnit.cpp:18767 → CvCity.cpp:5794-5801/5943. Amount dropped for boolean `skills.celebrity`, but CvCity was never rewired to the skill — celebrity happiness dead, the skill emitted-but-unconsumed. |
-| 4 | S&D / SIZE_MATTERS / WITHOUT_WARNING **option-gate family** (stealth/unnerve/enclose/lunge/dynamicDefense/perSize/perVolume changes; promotion + unitcombat) | CvPromotionInfo.h:71-92, CvUnitCombatInfo.h:143-157 | values real — the legacy getters' GAME-OPTION gate is gone | — | CvUnit.cpp:18375-18455/18809-18935 accumulate ungated (archive getters returned 0 with the option off). lunge/dynamicDefense re-gated downstream (CvUnit.cpp:24845/24955); size/volume + stealth appear NOT — units bank bonuses with the options disabled. Needs a consumer-side gate audit. |
-| 5 | `getLocalSpecialistCommerceChange` | CvBuildingInfo.h:440 | 0 | 4 authored | CvCity.cpp:5005-5007 (per-turn). |
-| 6 | int*-array getters ×24 | CvBuildingInfo.h:395-418 | NULL | scalars real in JSON | CvGameTextMgr pedia only (NULL-guarded) — help lines suppressed. |
-| 7 | `getNotShowInCity` | CvBuildingInfo.h:121 | false | legacy derived from art | CvCity.cpp:19153 (3D display skip) — recomputable from the mapped art tag. |
-| 8 | `getCityLimit(ePlayer)` | CvCivicInfo.h:92 | 0 | 6 authored | pedia only (gameplay decoupled via CvGame::getCivicCityLimit — verified). |
-| 9 | `isQualifiedPromotionType` | CvUnitInfo.h:444 | false | derived post-load in legacy | Python pedia (CyInfoInterface1.cpp:273). |
-| 10 | `getSpecialistYieldChange` / `getSpecialistCommerceChange` | CvBuildingInfo.h:431-432 | 0 | 36 / 5 authored | CvCityAI.cpp:15695/15779 (AI specialist valuation). Claimed relocated to curate_specialist — NOT verified. |
+*(cleared 2026-08-11 — every row's getter is gone from the current Info headers; see the note above)*
 
 ## 2. UNCLEAR (verify / owner ruling)
 
-- **`CvCivicInfo::getTechPrereq`** (NO_TECH) — store-inverted to tech.enables.civics; but CvPlayer.cpp:8493
-  (canDoCivic) + CvGlobals.cpp:3791 still call the stub. If the enabler does not own the tech→civic gate
-  end-to-end, civics are selectable without tech.
-- **`CvCorporationInfo::getPrereqBuilding`** (-1) — 10 corps authored prereq-building COUNTS; the
-  CvUnit.cpp:8609/8611 corp-spread "own N buildings" gate is a silent no-op (the boolean enables-edge does not
-  reproduce the count semantic).
-- **CvJsonLeaderHeadInfo `ai` group** — curated (~90 AI params) but no poco getter surface; legacy
-  CvLeaderHeadInfo still serves the engine. Confirm where (if anywhere) the JSON group is read.
+*(cleared 2026-08-11 — `CvCivicInfo::getTechPrereq` no longer exists on that class; `CvCorporationInfo` has no
+`getPrereqBuilding`; `CvLeaderHeadInfo` is now a fully JSON-fed poco with real getters for its `ai` group, per its
+own header comment)*
 
 ## 3. DELIBERATE-DROP (ruling recorded; flags where the receiving side has not landed)
 
@@ -67,5 +57,6 @@ route zobrist comments (ctor-drawn, faithful) · CvBuildingInfo.h:294 curator ci
 
 ## Counts
 
-BUG-CONSUMED 11 rows (6 per-turn engine, 4 UI-pedia, 1 AI-rare) · UNCLEAR 3 · DELIBERATE-DROP 24 · MOOT 22 ·
-FAITHFUL ~46 rows (~190 getters) · stale annotations 9 · zero-stub classes 30/46.
+BUG-CONSUMED 0 (cleared) · UNCLEAR 0 (cleared) · DELIBERATE-DROP 24 · MOOT 22 · FAITHFUL ~46 rows (~190 getters) ·
+stale annotations 9 · zero-stub classes 30/46. *(The last four counts predate the Info-header rebuild and are
+unverified — see the note above §1.)*

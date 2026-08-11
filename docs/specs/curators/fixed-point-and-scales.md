@@ -1,7 +1,7 @@
 # Fixed-point & the scale registry — the ONE place scales live
 
 > **Status:** reference (canonical scale registry) · **Verified against:** `Sources/Engine/CvCity.cpp`,
-> `Sources/Infos/*.h`.
+> `SourceArchive/Infos/*.h` (the legacy Info headers — curator input; see §4b).
 > **Grounding:** every scale below was figured from the math in the cited accessor, not from the field
 > name. Line numbers drift — confirm the named function, not the integer.
 >
@@ -145,8 +145,9 @@ A legacy field is **per-100 (÷100 to humanize)** iff its value flows **into a �
 | `YieldModifier` / `CommerceModifier` | `getYieldModifier` … | an integer **percent** (emit `percent`) |
 
 ### 4b. The CLOSED per-100 set — ÷100 to humanize
-Verified exhaustive: `grep -rE "get[A-Za-z_]+100 *\(" Sources/Infos/*.h` returns **exactly six** `…100()`
-accessors across all Info headers. That set IS the de-scale list:
+Verified exhaustive: `grep -rE "get[A-Za-z_]+100 *\(" SourceArchive/Infos/*.h` returns **exactly six** `…100()`
+accessors across the legacy Info headers (curator input only — the classes were moved to `SourceArchive/`
+per the red-ratchet; see [AGENTS.md](../../../AGENTS.md)). That set IS the de-scale list:
 
 | field | accessor | scale | curator action |
 |---|---|---|---|
@@ -203,6 +204,31 @@ SizeMatters counts*, not a modifier channel — it is not a scale violation and 
 
 **Sequencing within a cluster (owner): set the mechanic up to spec FIRST, then wire the consumers.** Do not open
 with a hundred consumer edits; build the value chain so it is internally ×100-consistent, then reduce at the readers.
+
+### 4c-zero. ⛔ NO EXCEPTIONS — AN INDIVISIBLE QUANTITY IS STILL ×100 INTERNALLY (owner)
+
+> *"If I had allowed for free specialists to not be a ×100 number internally, it is a virtual guarantee that
+> some agent would bullshit their way through and decide more numbers should be like that."*
+
+**THE UNIT TABLE IN §2 IS THE WHOLE VOCABULARY: `flat` (×100), `percent` (unscaled), `multiplier` (×100).
+There is no COUNT unit and none is to be added.** Anything authored on an info as a `flat` is an AMOUNT and
+takes the ×100, whatever it counts.
+
+⚑ **FREE SPECIALISTS ARE THE WORKED CASE, and the argument that gets made for exempting them is the one to
+refuse.** A free specialist is authored on an info as a flat — *technically a yield* (owner) — so it is ×100
+like every other authored amount. The tempting objection is that a specialist is a person and half of one does
+not exist, so the two decimals carry nothing; that is true and it is not a reason. ⛔ **The rule's value is
+that it has NO exceptions (owner): *"if I had allowed for free specialists to not be a ×100 number internally,
+it is a virtual guarantee that some agent would bullshit their way through and decide more numbers should be
+like that."*** An exemption argued well for one field is a precedent the next agent widens.
+⚠ **It already happened, which is why this is spelled out rather than assumed.** A `CASC_UNIT_COUNT` carve-out
+was added at the parse edge exempting such fields from the ×100 — attributed to the owner, justified by "half
+of one does not exist", and in the very same sentence generalised past specialist slots to *"population and
+era"*. That is the widening, visible in the comment that created it.
+⛔ **POPULATION IS NOT A COUNTER-EXAMPLE — IT IS NOT FROM AN INFO (owner).** It is engine state read by a
+`per:` count-scaler ([json.md §3.1](../json.md)), never an authored deposit, so it never enters this table at
+all. "X is a count" is therefore never an argument about a deposit's scale; the question is only ever whether
+the value is AUTHORED ON AN INFO.
 
 ### 4c-bis. ⛔ ×100 EVERYWHERE INTERNALLY — TRUNCATE ONCE, AT THE EDGE (owner)
 

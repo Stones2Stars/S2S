@@ -19,9 +19,9 @@ Wiring (all verified live, no dead screens):
 - Every page-body widget jump rides `WidgetTypes.WIDGET_PEDIA_JUMP_TO_*` (17 widget families used by the index
   alone) — hover help on those widgets is served DLL-side (CvDLLWidgetData → the same CvGameTextMgr composers).
 - Helpers pulled in by the hub: `Assets/Python/Contrib/UnitUpgradesGraph.py` (619 lines — the building/unit/
-  promotion tree pages), `Assets/Python/Screens/Debug/HelperFunctions.py` (the `getGOMReqs` BoolExpr walker,
-  §3), `PythonToolTip` (the hub renders its OWN list-item tooltips through the text feeders, player-context
-  mode — `Pedia.py` handleInput).
+  promotion tree pages), `PythonToolTip` (the hub renders its OWN list-item tooltips through the text feeders,
+  player-context mode — `Pedia.py` handleInput). The old `getGOMReqs` BoolExpr walker is gone (§3) — requires
+  panels now read `INFO.getRequiresIdsInClause` directly.
 - Hub page anatomy: category list → sub-category list → item list (whole-DB scan + filter per category) →
   entity page rendered by the per-type screen class.
 
@@ -59,11 +59,11 @@ pulls and `getButton` art pulls). DB scans = `xrange(GC.getNum<T>Infos())` loops
 | Screen (lines) | Sites | DB scans | Heaviest need-classes |
 |---|---|---|---|
 | **Pedia.py hub** (1790) | 369 | 7 loops + per-category list generators over 20+ types | category/sort metadata (~60 sites: `getEra` 20, `getBonusClassType` 10, wonder/special/AI-type/cost/instance tests); identity/text (`getText` 67, `getDescription` 22, `getType` 11); 18 feeder tooltip calls; art/symbols |
-| **PediaBuilding** (602) | 124 | 3 (Civic, Terrain, Feature — own-requires inversions, §finding 2) | requires (~25 sites: and/or techs, religion, corp, bonuses, in-city/or-buildings, civics/terrain/feature tests, `getConstructCondition`+GOM walk); stats (~20: cost, yields/commerce changes+modifiers+perPop, happiness/health, GP, goldenAge); cross-links (replaced/replacement building lists); art (`getButton` 23) |
-| **PediaUnit** (528) | 113 | 3 (UnitCombat, Civic, Promotion) | requires (and/or techs/bonuses/buildings, civics test-loop, religion, `getTrainCondition`+GOM); cross-links (upgrades fwd list, qualified-promotion scan, subcombat scan, builds lists); stats (moves, cost, strength ×100, air range, workRate, conscription, capture); art 25 |
-| **PediaBonus** (379) | 98 | 3 (Building, Unit, Improvement) | cross-links = the whole page (who-needs-me: buildings by prereq/GOM/yield-mod/free-bonus, units by prereq/GOM, improvements by bonus-yield/trade); own requires (techReveal/cityTrade/obsolete, latitudes); stats (happiness/health, yield tables) |
+| **PediaBuilding** (451) | 57 | 3 (Civic, Terrain, Feature — own-requires inversions, §finding 2) | requires (and/or techs, religion, corp, bonuses, in-city/or-buildings, civics/terrain/feature tests, `INFO.getRequiresIdsInClause` reads per edge bucket — the old GOM walk is gone); stats (cost, flat/percent yields+commerces, happiness/health, GP, goldenAge); cross-links (replaced/replacement building lists); art (`getButton` 17) |
+| **PediaUnit** (397) | 46 | 3 (UnitCombat, Civic, Promotion) | requires (and/or techs/bonuses/buildings, civics test-loop, religion, `INFO.getRequiresIdsInClause` reads — the old GOM walk is gone); cross-links (upgrades fwd list, qualified-promotion scan, subcombat scan, builds lists); stats (moves, cost, strength ×100, air range, workRate, conscription, capture); art (`getButton` 9) |
+| **PediaBonus** (379) | 98 | 3 (Building, Unit, Improvement) | cross-links = the whole page (who-needs-me: buildings/units via `EDGEF_REQUIRED_BY`, related buildings/units via `EDGEF_RELATED`, improvements by bonus-yield/trade); own requires (techReveal/cityTrade/obsolete, latitudes); stats (happiness/health, yield tables) |
 | **PediaImprovement** (404) | 77 | 7 (Build, Tech, Civic, Bonus, Route, Terrain, Feature) | own keyed-container enumerations (yield changes by tech/civic/route/bonus, makesValid by terrain/feature, builds-that-create-me); validity flags; defense |
-| **PediaTech** (333) | 73 | 3 (Building, Project, Unit) | cross-links (who-unlocks-me: buildings via GOM walk of construct conditions, units via train conditions, projects by techPrereq; `leadsTo` fwd list); requires (and/or techs, prereq buildings w/ minima); stats (research cost — player-context OR info, happiness/health/tradeRoutes/workerSpeed); quote |
+| **PediaTech** (333) | 73 | 3 (Building, Project, Unit) | cross-links (who-unlocks-me: buildings/projects/units via `EDGEF_ENABLES`; `leadsTo` fwd list is the same edge family read forward); requires (and/or techs, prereq buildings w/ minima); stats (research cost — player-context OR info, happiness/health/tradeRoutes/workerSpeed); quote |
 | **SevoPediaRoute** (226) | 54 | 0 (iterates routes for compare table) | route-vs-route stats table, yield changes, prereq bonus/tech, builds |
 | **PediaBuild** (270) | 51 | 2 (Unit, Feature) | stats × game-state (cost/time × gamespeed/era percents); links (improvement/route made, units-with-build scan, feature-chop table) |
 | **PediaPromotion** (197) | 41 | 1 (Promotion) | requires (prereq + or1/or2, tech, state religion); cross-links (children scan, qualified/disqualified unitcombat lists) |
@@ -75,7 +75,7 @@ pulls and `getButton` art pulls). DB scans = `xrange(GC.getNum<T>Infos())` loops
 | **PediaProject** (111) | 22 | 0 | stats + tech prereq |
 | **PediaReligion** (159) | 22 | 2 (Building, Unit) | cross-link scans by prereqReligion; active player's state religion |
 | **PediaCivic** (92) | 19 | 0 | upkeep/civicOption intrinsics, tech prereq |
-| **PediaHeritage** (162) | 18 | 1 (Building) | building cross-link scan via GOM walk |
+| **PediaHeritage** (162) | 18 | 1 (Building) | building cross-link scan via `EDGEF_REQUIRED_BY` |
 | **PediaCivilization** (99) | 15 | 1 (LeaderHead) | leaders scan, city-name list |
 | **PediaTerrain** (105) | 13 | 1 (Building) | yields; building cross-link scan |
 | **PediaTrait** (97) | 11 | 1 (LeaderHead) | `parseTraits` body + who-has-me scan |
@@ -83,9 +83,9 @@ pulls and `getButton` art pulls). DB scans = `xrange(GC.getNum<T>Infos())` loops
 | **Index_Pedia** (198) | 2 distinct | 19 type-scans | identity + art ONLY (`getDescription` + `getButton` per entity, jump-widget payloads) |
 | **UnitUpgradesGraph** (619) | ~90 | 3 (Building, Unit, Promotion) | pure edges + identity/art: replacement chains, unit upgrades, promotion prereq trees → graph nodes/edges |
 
-**Totals: ~1,283 static call sites** across the 23 screen files (+ ~90 in UnitUpgradesGraph);
-**~42 whole-DB scan loops**; heaviest five screens: hub 369 · Building 124 · Unit 113 · Bonus 98 ·
-Improvement 77.
+**Totals: ~1,149 static call sites** across the 23 screen files (+ ~90 in UnitUpgradesGraph);
+**~42 whole-DB scan loops**; heaviest five screens: hub 369 · Bonus 98 · Improvement 77 · Tech 73 ·
+Building 57.
 
 ## 4. NEED → NEW-SURFACE mapping
 
@@ -93,8 +93,8 @@ Improvement 77.
 |---|---|---|
 | Identity/text (name, type key, civilopedia/strategy text, quote) | every page; ~200 sites | identity intrinsics — one identity block per entity |
 | Effect lines (the modifier body) | 1 feeder call/page, backed by the ~1,450-block composer census | **the per-entry renderer** (`CvEntryText`, patterns.md category 5) — rendered entry lines replace the composer body. Pedia wants MORE than a flat tooltip blob: pages hand-place SOME groups separately (yields/commerce tables, happiness/health, GP) → entries must arrive **tagged by family/kind so the page can group and lay out by family**, and must render in BOTH modes (full-page, player-context tooltip) |
-| Requires/prereqs display | ~70 sites + the GOM walks | **the `CvRequires` section object** rendered as a structured tree — kills the Python-side `getGOMReqs` BoolExpr recursion AND the keyed-container inversion loops (`isPrereqAndCivics(i)` over all civics etc.) |
-| Cross-links (who-unlocks-me / who-needs-me / who-replaces-me) | ~42 DB scans + fwd lists | **`EDGEF_RELATED` / `EDGEF_REQUIRED_BY` edge families** ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)) — the reverse pass already generalizes over requires trees, deposits, grants, provides, triggers, so the GOM-walking scans (tech page walking every building's construct condition) are exactly the `EDGEF_REQUIRED_BY` read. Forward chains (unit upgrades, tech leadsTo, building replacements, qualified unitcombats) are forward edge families |
+| Requires/prereqs display | ~70 sites | **the `CvRequires` section object** rendered as a structured tree — replaces the old Python-side `getGOMReqs` BoolExpr recursion AND the keyed-container inversion loops (`isPrereqAndCivics(i)` over all civics etc.) |
+| Cross-links (who-unlocks-me / who-needs-me / who-replaces-me) | ~42 DB scans + fwd lists | **`EDGEF_RELATED` / `EDGEF_REQUIRED_BY` edge families** ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)) — the reverse pass already generalizes over requires trees, deposits, grants, provides, triggers, so the former GOM-walking scans (tech page walking every building's construct condition) are now exactly the `EDGEF_REQUIRED_BY`/`EDGEF_ENABLES` reads. Forward chains (unit upgrades, tech leadsTo, building replacements, qualified unitcombats) are forward edge families |
 | Art/buttons | ~150 sites (`getButton`, chars/symbols, movies) | identity/art intrinsics; font-symbol chars stay engine reads |
 | Stats/costs | ~120 sites | point reads over compiled sums + intrinsics (cost, moves, base strength, upkeep, latitudes) — ×100 convention, format at the render boundary |
 | Category/sort metadata (the hub's grouping system) | ~60 sites | **NO clean answer yet** — see finding 4 |
@@ -127,10 +127,11 @@ A pedia page is served by a HANDFUL of coherent reads, replacing the hundreds of
    shape (building page looping every civic asking `isPrereqAndCivics(i)`; improvement page looping every
    tech/civic/route for its own yield-change tables). The first class dies to edge families; the second dies
    to sections/typed containers being served whole.
-3. **Requires display is Python-side condition-tree walking**: `HelperFunctions.getGOMReqs` recurses
-   `CyBoolExpr` trees from `getConstructCondition`/`getTrainCondition` to extract tech/bonus prereqs on 5+
-   pages. The structured `CvRequires`/condition objects (or the REQUIRED_BY inversion for the cross-link
-   direction) answer this; no boolean-expression API belongs on the new surface.
+3. **CLOSED — requires display now reads the structured `CvRequires` object, not a condition-tree walk.** The
+   old `HelperFunctions.getGOMReqs` walker (recursing `CyBoolExpr` trees from `getConstructCondition`/
+   `getTrainCondition`) is deleted; pages read `INFO.getRequiresIdsInClause` per edge bucket instead (the
+   REQUIRED_BY inversion still answers the cross-link direction) — confirming no boolean-expression API
+   belongs on the new surface.
 4. **CLOSED — the category home is `identity.pediaCategory`** ([json.md §7](../specs/json.md), owner). The
    taxonomy becomes AUTHORED DATA the curator derives once, so no consumer re-derives it; the era sub-category
    stays derived from the entity's own era. ⛔ The banned repair is publishing the legacy getters so the Python

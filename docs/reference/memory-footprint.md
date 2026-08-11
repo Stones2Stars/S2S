@@ -26,9 +26,8 @@
 > "the process is 2 GB" do **not** contradict — the bulk lives in surfaces static code analysis **cannot see**:
 > (1) the **EXE-side Gamebryo scene/graphics** (the biggest; grows as the map is revealed early→late — §5),
 > (2) the **Python 2.4 heap** (Revolution/events/UI — entirely uncounted here), (3) **save/serialization buffers**,
-> (4) **heap fragmentation**. Attributing the ~800 MB→2 GB early→late growth needs a **delta MEASUREMENT**
-> (working-set at an early-game state vs the late save, which needs the process gauge re-emitted), NOT more struct estimation —
-> that is the honest open question this static audit does not answer.
+> (4) **heap fragmentation**. Attributing the ~800 MB→2 GB early→late growth needs the delta measurement named
+> above (intro) — not more struct estimation; that is the honest open question this static audit does not answer.
 
 **Headline:** none of the big *DLL* structures is the per-turn climb. The three static clusters sum to **~126 MB
 (~5 % of the working set)** and are flat. The useful conclusion is the *inverse* of what it looks like: **DLL-side

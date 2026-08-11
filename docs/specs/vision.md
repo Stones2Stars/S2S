@@ -247,19 +247,9 @@ ever runs on a plot that budget already granted. That is what retires `visibilit
 range system running beside vision's, with nothing keeping the two in step. Negatives need no mechanism either:
 the block's entries sum, so counter-detection is a negative deposit.
 
-### What the collapse did, and what it cost
+### What survived the collapse
 
-⚖ **Owner ruling: collapse and rescale, marginal data loss accepted** — *"it's a TB mod after all, it's on
-drugs."* The 13 per-type tables (477 authorings across 14 types) are gone; what stands in their place:
-
-| was | is |
-|---|---|
-| `invisible: INVISIBLE_SUBMARINE` | the **`camouflage`-family SKILL** — the method, promotion-grantable |
-| `invisibilityIntensity{X: n}` | `hideAndSeek.concealment` + the method skill |
-| `visibilityIntensity{X: n}` · `seeInvisible` · `negates` | `hideAndSeek.detection`, each entry qualified `{unit: HAS_<SKILL>}` |
-| `visibilityIntensityRange` + its 3 substrate variants | **gone** — the contest rides §2's reach |
-| `visibilityIntensitySameTile`, the per-substrate conditional tables | **gone** — the marginal loss taken deliberately |
-
+The legacy per-invisible-type table pair is retired — [superseded-ideas.md #35](../architecture/superseded-ideas.md).
 **What survived is what the data used:** the 1:1 pairing, graduated strengths, and negatives as
 counter-detection (the entries sum, so a negative deposit just subtracts). A promotion carries **both** — the
 method skill it grants, and the magnitudes it adds — which is precisely what the tag reading could not express.

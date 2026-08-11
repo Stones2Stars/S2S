@@ -17,17 +17,20 @@
 > approved `properties` block, and `CvPropertyInfo` reads them into `CvPropertyPropagatorDiffuse` + the change-prop
 > table. (Plot-scope sources have "no real purpose at this time" but ride along — they cost nothing.)
 >
-> **Build order (owner "curator next"):** (1) the city-scope C++ bridge — building/unit flats + decay + population
-> baseline (already-curated data, DONE, compiling: increments 1+2). (2) curator emits `properties.diffuse[]` /
-> `changePropagation[]`. (3) `CvPropertyInfo` reads them. (4) the BoolExpr translator
-> (`Cascade/CvCascadePropertyBridge` — conditioned building/unit flats incl. the 78 tech-gated education entries,
-> the IS_OWNED diffuse gates, the per-POPULATION `each>1` IntExpr amounts, the changePropagation table; verified
-> live: ANCIENT_CUSTOMS = exactly its 3 authored sources, folklore = their 2 gated education sources).
-> (5) the all-cities gather (revived by the one-shot ruling below): `PROPERTY_X.empire.flat` → the building's
-> all-cities manipulator container → the load-built `GC.getAllCitiesManipBuildings` index → the count-scaled
-> `CvGameObjectCity::foreachManipulator` walk; observable at load via the yields payload's
-> `allCitiesManipBuildings` root map + per-building `propertyManipEmpire`. (6) validate — the turn-level pass
-> (per-turn `PROPERTY_*` deltas attributed, education/crime normalise) runs on the next played turns.
+> **Built and compiling:** the city-scope C++ bridge (building/unit flats + decay + population baseline); the
+> curator emitting `properties.diffuse[]` / `changePropagation[]`; `CvPropertyInfo` reading them; and the
+> JSON→legacy-`BoolExpr`/`IntExpr` translator (`Sources/Property/CvPropertyBridge.cpp`,
+> `CascadePropertyBridge::condToBoolExpr`) — verified live: ANCIENT_CUSTOMS = exactly its 3 authored sources,
+> folklore = their 2 gated education sources.
+>
+> **Still open — the all-cities gather:** `PROPERTY_X.empire.flat` sources are curated and the load-built
+> `GC.getAllCitiesManipBuildings()` index exists (`CvGlobals.h:400`), but `CvGameObjectCity::foreachManipulator`
+> (`CvGameObject.cpp:721`) does not yet walk it, so the 6 `<PropertiesAllCities>` entries (FLAMMABILITY) still do
+> not deliver in every city of the owner. No route emits this today — do not treat the yields payload as a live
+> verification surface for it until the gather and an emit both land.
+>
+> **Then validate** — the turn-level pass (per-turn `PROPERTY_*` deltas attributed, education/crime normalise) on
+> played turns.
 >
 > **⚖ THE ONE-SHOT RULING (owner 2026-07-16 — ruled earlier but never written down, twice, so it was "re-found"
 > a third time): the legacy one-shot `<Properties>`/`<PropertiesAllCities>` semantic is DEAD — EVERY such value
@@ -180,33 +183,6 @@ the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertyS
 `CvPropertySourceConstantLimited`, `CvPropertyPropagatorSpread`/`Gather`, all `CvPropertyInteraction`, and Corporation
 manipulators. `PropertyBuildings`/`PropertyPromotions` value-bands stay the separately-flagged curator-gap
 (`CvPropertyInfo.h:49-57`), not folded here.
-
-## Increment 4 — the JSON→legacy-`BoolExpr` / `IntExpr` translator (LOCKED design, next build)
-
-The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this increment lands them. Node types:
-`BoolExpr.h` (`BoolExprIs(TagTypes)`, `BoolExprHas(GOMTypes,id)`, `BoolExprAnd`/`Or`/`Not`, `BoolExprConstant`) and
-`IntExpr.h` (`IntExprConstant`, `IntExprAttribute(ATTRIBUTE_POPULATION)`, `IntExprMult`, `IntExprDiv`).
-
-1. **Gated diffuse** (`jsonBuildPropertyPropagators`, currently `if(enabled) defer`): the `enabled` is a bare
-   predicate STRING in the `properties.diffuse` entry. Map string→`TagTypes` → `BoolExprIs` → `pp->setActive(...)`:
-   `IS_OWNED→TAG_OWNED`, `HAS_PEAK→TAG_PEAK`, `IS_WATER→TAG_WATER`, `IS_CITY→TAG_CITY` (verify the `TagTypes` names +
-   how a tag string resolves — `BoolExprIs::read`/the tag registry). 4 tags, ~20 lines. (These strings do NOT parse
-   into `CvCondition` — `CASC_PRED_IS_OWNED`/`IS_CITY` aren't in the predicate enum — so translate the raw string.)
-2. **Tech-gated building flats** (~35 files, `jsonBuildPropertyManipulators` conditioned branch): the `enabled` IS a
-   `CvCondition*` (from the modifier-family parse). Write `cascadeJsonCondToBoolExpr(const CvCondition*)`:
-   - `CASC_COND_PRESENCE` `TECH_*` → `BoolExprHas(GOM_TECH, cond->id)` (confirm the `GOMTypes` for tech/bonus/building —
-     grep `GOM_`); `BONUS_*`/`BUILDING_*` likewise if any appear.
-   - `CASC_COND_PREDICATE` → `BoolExprIs`/other per the predKind (only if a building gate uses one).
-   - `CASC_COND_GROUP`: `all`→fold `BoolExprAnd`, `anyOf`→`BoolExprOr`, `noneOf`→`BoolExprNot(Or…)`.
-   - Then `src->setActive(expr)` on the `CvPropertySourceConstant`. Unknown/empty → skip the source (don't over-apply).
-3. **Per-population building flats** (~9 files, e.g. Foundling Hospital `each>1`): build the amount `IntExpr` —
-   `IntExprDiv(IntExprMult(IntExprConstant(value), IntExprAttribute(ATTRIBUTE_POPULATION)), IntExprConstant(each))` —
-   into `CvPropertySourceConstant(prop, thatExpr)`. (The `each==1` property-baseline already uses `AttributeConstant`.)
-4. **`changePropagation` table** (FLAMMABILITY only): add storage to `CvPropertyInfo` (a small `from×to→percent` map)
-   - a real `getChangePropagator(from,to)`; populate from the deferred `changePropagation[]`.
-5. **Empire-scope building props** (5 `FLAMMABILITY` files): the minimal gather touch in
-   `CvGameObjectCity::foreachManipulator` (`CvGameObject.cpp:662-672`) to also walk the owning player's `empire`-scope
-   building deposits — OR accept as out-of-scope (owner call at build time).
 
 ## Validate
 

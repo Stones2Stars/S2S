@@ -27,8 +27,9 @@
 - **Culture combats are NOT mapped — they were DROPPED** (owner 2026-07-19): the 344 `UNITCOMBAT_CULTURE_*` are
   redundant double-data of the culture BONUS (see [`unitcombat-merge-candidates.md`](unitcombat-merge-candidates.md)),
   removed entirely rather than distilled to a tag; the culture identity already lives on `BONUS_X.enables.units`.
-- `*` on a tag = **suggested NEW tag** not yet in the confirmed vocabulary (`tags.md`) — obvious identity, but needs
-  owner OK (`animal`, `hero`, `space`).
+- `*` on a tag below flags a tag that was newly-suggested when this pass was drafted. `hero`, `animal`, and `space`
+  are now owner-approved and curator-wired ([tags.md](../../specs/tags.md), `curate_common.py`'s
+  `TAG_BY_UNITCOMBAT`) — the `*` marks a since-resolved suggestion, not an open question.
 - Columns: `# units` = distinct units carrying the class (primary or sub); `(primN)` = of those, N carry it as
   PRIMARY `base.combatClass`.
 
@@ -99,7 +100,7 @@
 | UNITCOMBAT_BOMBERS | air | 4 (prim 4) | bomber |
 | UNITCOMBAT_EARLY_BOMBERS | air | 2 (prim 2) | bomber |
 | UNITCOMBAT_SUPERSONIC_PLANES | air | 2 (prim 2) | jet |
-| UNITCOMBAT_ORBITAL_AIRCRAFT | air + space* | 2 (prim 2) | orbital plane |
+| UNITCOMBAT_ORBITAL_AIRCRAFT | air + space | 2 (prim 2) | orbital plane |
 | UNITCOMBAT_AIR_RECON | air + recon | 3 (prim 3) | recon aircraft |
 
 ### Type / combat identity
@@ -133,20 +134,20 @@
 | UNITCOMBAT_SPY | spy | 5 (prim 5) | espionage |
 | UNITCOMBAT_COMBAT_WORKER | worker | 0 (promo) | combat engineer |
 
-### Suggested NEW tags (obvious identity, not yet in vocabulary — needs owner OK)
+### NEW tags added to the vocabulary (owner-approved, curator-wired)
 
 | UNITCOMBAT_X | tag(s) | # units | note |
 |---|---|---:|---|
-| UNITCOMBAT_HERO | hero* | 406 (prim 406) | hero-unit identity; not in vocab |
-| UNITCOMBAT_ANIMAL | animal* | 240 (prim 234) | animal identity; not in vocab |
-| UNITCOMBAT_SEA_ANIMAL | animal* | 24 (prim 24) | aquatic animal |
-| UNITCOMBAT_SEA_ANIMAL_TALE | animal* | 23 (prim 23) | aquatic animal |
-| UNITCOMBAT_SPACE_WORKER | worker + space* | 67 (prim 67) | space worker |
-| UNITCOMBAT_EARLY_SPACESHIP | space* | 48 | spacecraft |
-| UNITCOMBAT_WORMHOLE_SPACESHIP | space* | 13 | spacecraft |
-| UNITCOMBAT_SOLAR_SAIL_SPACESHIP | space* | 8 | spacecraft |
-| UNITCOMBAT_ANTIMATTER_SPACESHIP | space* | 4 | spacecraft |
-| UNITCOMBAT_NUCLEAR_SPACESHIP | space* | 4 | spacecraft |
+| UNITCOMBAT_HERO | hero | 406 (prim 406) | hero-unit identity |
+| UNITCOMBAT_ANIMAL | animal | 240 (prim 234) | animal identity |
+| UNITCOMBAT_SEA_ANIMAL | animal | 24 (prim 24) | aquatic animal |
+| UNITCOMBAT_SEA_ANIMAL_TALE | animal | 23 (prim 23) | aquatic animal |
+| UNITCOMBAT_SPACE_WORKER | worker + space | 67 (prim 67) | space worker |
+| UNITCOMBAT_EARLY_SPACESHIP | space | 48 | spacecraft |
+| UNITCOMBAT_WORMHOLE_SPACESHIP | space | 13 | spacecraft |
+| UNITCOMBAT_SOLAR_SAIL_SPACESHIP | space | 8 | spacecraft |
+| UNITCOMBAT_ANTIMATTER_SPACESHIP | space | 4 | spacecraft |
+| UNITCOMBAT_NUCLEAR_SPACESHIP | space | 4 | spacecraft |
 
 ---
 
@@ -179,7 +180,7 @@ These are the size/species/motility/weapon taxonomy the distillation plan (§3.A
 | `UNITCOMBAT_QUALITY_*` (11, e.g. `_STANDARD`, `_SUPERIOR`, `_EPIC`) | quality-rank taxonomy (sizeMatters) |
 | `UNITCOMBAT_GROUP_*` (10, e.g. `_SOLO`, `_PARTY`, `_BATTALION`) | group-size taxonomy (sizeMatters) |
 | `UNITCOMBAT_SIZE_*` (10, e.g. `_MEDIUM`, `_LARGE`, `_HUGE`) | physical-size taxonomy (sizeMatters) |
-| `UNITCOMBAT_MAMMAL_*` / `_BIRD_*` / `_REPTILE_*` / `_FISH_*` / `_INVERTEBRATE_*` / `_AMPHIBIAN_*` / `_ANIMAL_<class>` (54) | animal-species taxonomy — if `animal*` is adopted these are sub-species, likely sizeMatters/data not tags |
+| `UNITCOMBAT_MAMMAL_*` / `_BIRD_*` / `_REPTILE_*` / `_FISH_*` / `_INVERTEBRATE_*` / `_AMPHIBIAN_*` / `_ANIMAL_<class>` (54) | animal-species taxonomy — now that `animal` is adopted these are its sub-species, likely sizeMatters/data not tags |
 | `UNITCOMBAT_SPECIES_*` (4: `_HUMAN`, `_AI`, `_NEANDERTHAL`, `_ALIEN`) | species taxonomy |
 | `UNITCOMBAT_MOTILITY_*` residual (5: `_FOOT`, `_ANIMAL_DRAWN`, `_PILOTING`, `_UNMANNED`, `_HOVERING`) | motility taxonomy — the clear ones (`_RIDING`/`_NAVAL`/`_AERIAL`/`_DRIVING`) are MAPPED above; these are ambiguous |
 | `UNITCOMBAT_ARMOR_*` tiers (4: `_LIGHT`, `_MEDIUM`, `_HEAVY`, `_MODERN`) | personal-armour tier taxonomy (`_VEHICULAR`/`_NAVAL`/`_AIRCRAFT` are MAPPED as they name a domain) |

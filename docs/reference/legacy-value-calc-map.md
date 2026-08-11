@@ -197,10 +197,9 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > cannot be deterministically reproduced. (`extraSpecialistCommerce` = local+perType+all is a SEPARATE, clean cache —
 > 100%/185 cities; only this `specialistCommerce` pct term is affected.)
 >
-> **Balance-tweak history:** this whole "are specialist flat outputs part of the base that percentage
-> buffs act on" area was tweaked over the years — in the old days ALL flat outputs fed the % base → **too much production**,
-> which the tweaks curbed. So this is accreted balance cruft, not clean design. The YIELD side is settled (specialist is
-> INSIDE the ×modifier term, #317; yield specialist sweep 555/555 clean); only the COMMERCE pct sub-term is this mess.
+> **This area is accreted balance cruft, not clean design (owner)** — not all specialist flat outputs are treated
+> uniformly as base for percentage buffs. The YIELD side is settled (specialist is INSIDE the ×modifier term, #317;
+> yield specialist sweep 555/555 clean); only the COMMERCE pct sub-term below is unresolved.
 >
 > **OPEN DESIGN DECISION (cascade cannot mirror a non-deterministic buggy value):** what should the cascade compute?
 > Candidate clean/deterministic model = `Σ count×intrinsic×(100+pct)/100 + Σ count×pct/100` (current counts) — reproduces
@@ -300,12 +299,10 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   reads 150; the engine has the building free specialists on top). NB the *unattributed* array
 >   `m_paiFreeSpecialistCountUnattributed` (`:22461`, Python/GP-joined) is a DIFFERENT thing and IS folded into the
 >   per-type count — the building generic ones are not.
-> - **The wall:** `getBestSpecialist` (`CvCityAI.cpp:12355`) picks the slot via `AI_specialistValue` — an AI heuristic,
->   NOT a clean rule — so the *assignment* is not cleanly reproducible offline.
-> - **Correction: free specialists are NOT normal-specialist assignment.** The `getBestSpecialist`/
->   `AI_specialistValue` path is for assigning CITIZENS to specialist slots — a different mechanism. No AI valuation
->   enters the free amount.
-> - **⛔ Correction #2: they are NOT a `grant` — they are the REVERSIBLE `freeSpecialists` MODIFIER
+> - `getBestSpecialist` (`CvCityAI.cpp:12355`, `AI_specialistValue`) picks the slot for BOTH normal citizen
+>   assignment and free-specialist resolution — an AI heuristic the cascade reads as a state fact (§1.5), never
+>   reproduces.
+> - **⛔ NOT a `grant` — they are the REVERSIBLE `freeSpecialists` MODIFIER
 >   family.** "Free specialists from buildings go away if the building goes away" — so by [json](../specs/json.md) §5
 >   they are emphatically **not** `grants` (a `grant` PERSISTS — a granted unit survives its granter). They are a
 >   [modifier](../specs/modifier.md) deposit: re-evaluated every recompute, contributing **only while the source is
@@ -356,20 +353,14 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   The parser was extended for the count-leaf LIST shape (`ModifierFamilyParser`: an array under `any`/SPECIALIST →
 >   `count` magnitudes). Attribution needs the engine per-term decomposition (area/player/improvement/wonder + raw
 >   wonder counts) emitted on the spine — the route that carried it is gone.
-> - **OUTPUT — the generic free specialists' output IS the live OUTPUT-SEAM per [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield) (the foundational ASSIGNMENT-vs-OUTPUT split / the
->   [pollution guardrail](../specs/validation.md#-the-pollution-guardrail--structural-not-disciplinary), present from
->   the start — see §1.5).** Computing *which type* the engine assigned each generic free slot (`getBestSpecialist` =
->   `AI_specialistValue`, `CvCityAI.cpp:12355`) is read as a state INPUT, NOT reproduced. But the *actual output* those
->   specialists produce (yield/commerce) is squarely the cascade's OUTPUT to manifest: the engine folds it into
->   `getBaseCommerceRateFromBuilding100:12397` / `getBaseYieldRateFromBuilding:11073` (per-building `getFreeSpecialist`
->   loop), so it IS part of building output and thus total city output. The cascade reproduces it the SAME way it does
->   assigned+typed-free specialists — take the AI-resolved per-type counts as a READ input and compute output from
->   curated `SpecialistInfo`. ⚑ The generic free specialists must be counted **by their engine-resolved type** (the
->   engine runs its own `getBestSpecialist` — that is the engine's assignment, a stored fact we READ, not an AI calc
->   we reproduce); then the existing `SpecialistYieldTotal` covers them. **Attribution:** the engine books this output
->   under `buildingCommerce100` and the cascade books it under `specialistCommerce` — the two offset, so the realized
->   total matches. Acceptance is judged on realized commerce / total city output (the live manifestation), with the
->   building/specialist split treated as attribution.
+> - **OUTPUT — the §1.5 ASSIGNMENT-vs-OUTPUT split applies to generic free specialists too.** The engine folds
+>   their output into `getBaseCommerceRateFromBuilding100:12397` / `getBaseYieldRateFromBuilding:11073`
+>   (per-building `getFreeSpecialist` loop), so it is part of building output and thus total city output; the
+>   cascade must count them **by their engine-resolved type** (`getBestSpecialist` is a state-fact READ per §1.5,
+>   not an AI calc to reproduce) and run them through the existing `SpecialistYieldTotal`. **Attribution:** the
+>   engine books this output under `buildingCommerce100`, the cascade under `specialistCommerce` — the two offset,
+>   so the realized total matches; acceptance is judged on realized commerce / total city output, with the
+>   building/specialist split treated as attribution only.
 >
 > **⛔ OWNER RULING — a free specialist is a free specialist; the commerce diff is a FORCED, attributed divergence (the live OUTPUT-SEAM, [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)).** The
 > legacy building-fold (attributing a building's free specialists' output to the BUILDING via

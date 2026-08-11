@@ -44,7 +44,7 @@ Three kinds of game content, each with exactly one authoritative home. (Develope
 
 | Kind | Single source of truth | Surfaces it should feed (generated/rendered, never re-typed) |
 |---|---|---|
-| **Game-data entities** — units, buildings, techs, civics, traits, bonuses/resources, improvements, promotions, projects, eras, terrain, features, religions, specialists, … | the loaded `Cv*Info` tables, defined by `Assets/XML/**/CIV4*Infos.xml` and read via `CvInfoUtil`/`getDataMembers`. XML is the on-disk form; the loaded table is the in-memory truth. | the in-game Python pedia (queries the loaded tables); downstream, the website (via the converter, in `s2swebsite`). |
+| **Game-data entities** — units, buildings, techs, civics, traits, bonuses/resources, improvements, promotions, projects, eras, terrain, features, religions, specialists, … | the loaded `Cv*Info` tables, defined by `Assets/Data/**` JSON and read via the `CvJson<X>Info` poco model ([`json.md`](../../specs/json.md)). JSON is the on-disk form; the loaded table is the in-memory truth. | the in-game Python pedia (queries the loaded tables); downstream, the website (via the converter, in `s2swebsite`). |
 | **Display / help text** — names, pedia paragraphs, strategy, help | the GameText `TXT_KEY_*` catalog (`Assets/XML/GameText/*.xml`, multilingual). Entities hold only the *key*; resolution is `CyTranslator.getText`. | the in-game pedia (resolved at runtime); downstream, the website. |
 | **Game-mechanics prose** — "how X works" narrative not tied to one entity (active defense, conscription, power, combat odds, BUG options…) | the **`NewConceptInfo` Civilopedia text** (`TXT_KEY_CONCEPT_*_PEDIA`), declared in `Assets/XML/BasicInfos/CIV4NewConceptInfos.xml`. This is the ONE home. | the in-game pedia "Concepts/Strategy/Shortcuts" sections (already render concept text); the player docs under `docs/players/mechanics/` **link/transclude** it, they do not re-author it; downstream, the website. |
 
@@ -63,14 +63,12 @@ This is the heart of the game-side effort, and it is the prerequisite that makes
 *worth* anything (to the in-game pedia today, and to `s2swebsite` later). **Don't port garbage:**
 a clean, minimal, uniform model first; never bless the current haphazard XML as-is.
 
-- **Finish the `#196` declarative migration.** Hybrid/un-migrated classes (`CvBuildingInfo`,
-  `CvUnitInfo`, `CvPromotionInfo`, `CvTraitInfo`, `CvImprovementInfo`, `CvCivicInfo`) still carry
-  hand-written remnants alongside `getDataMembers`
-  (see [`json.md`](../../specs/json.md)). Every
-  field pulled into the declarative registry is one fewer hand-maintained agreement that can
-  drift — and one field that becomes uniformly loadable/inspectable. The "not yet supported"
-  wrappers (2D arrays, pair-vectors, delayed-resolution vectors, non-info enums) are the
-  remaining infra gap to close.
+- **The entity single-source problem is now solved by the JSON/cascade migration, not the `#196`
+  declarative-registry route this plan originally proposed.** `CvBuildingInfo`, `CvUnitInfo`,
+  `CvPromotionInfo`, `CvTraitInfo`, `CvImprovementInfo`, `CvCivicInfo` are rebuilt JSON pocos
+  fed from `Assets/Data/**` — see [`json.md`](../../specs/json.md) for the current model. That
+  supersedes the `getDataMembers`/`CvInfoUtil` convergence described below (§4); this document's
+  entity-content single-source goal is delivered for those classes.
 - **Run the dead-XML pass.** Orphan `<Type>` entries, dead schema tags, dead `TXT_KEY_*`
   (Tier 3). Dead data is drift waiting to
   happen and noise in every surface.
@@ -85,27 +83,18 @@ and no authored doc restates a value that lives in XML/concept text.
 
 ---
 
-## 4. Loading the XML into the game — `CvInfoUtil` / `getDataMembers`
+## 4. Loading the content into the game
 
-How the cleaned XML actually loads, and why the declarative registry is the linchpin (this is
-the mechanism the cleanup above feeds, and the reason the data becomes uniformly inspectable):
+For the entity classes covered above (§3), the loading mechanism *is*
+[`json.md`](../../specs/json.md)'s `CvJson<X>Info` poco model — one JSON-fed declaration per
+class drives read, validation and inspection uniformly, which is exactly the single-source win
+this section originally specified via a different (now superseded) mechanism. Read that spec for
+the current loading model rather than reconstructing it here.
 
-- `CvInfoUtil` builds, per info object, a `std::vector<WrappedVar*>` where each `WrappedVar`
-  holds the field's pointer + its XML `m_tag` (`Sources/CvInfoUtil.h` ~100–128). One declaration
-  in `getDataMembers` drives *all* of: XML read (`readXml`), checksum (`checkSum`), default-merge
-  (`copyNonDefaults`), and init — replacing the four hand-written methods that used to have to
-  agree field-for-field. That convergence is the single-source win at the loading layer.
-- **The registry is the runtime data-model catalog.** Because the wrapper list enumerates every
-  field's tag and type, the loaded model is introspectable — the basis for validation, the
-  `#196` parity checks, and (downstream, in `s2swebsite`) a schema descriptor the converter can
-  consume. *Note:* the wrapper has no serialization-to-JSON virtual today; emitting JSON is the
-  converter's job and lives in `s2swebsite`, not in the game — see that plan. The game-side
-  goal is only **full declarative coverage**, so the model is uniformly loaded and inspectable.
-- **In-game pedia stays table-backed.** The Python pedia already reads the loaded tables and
-  resolves `TXT_KEY` at runtime (`Assets/Python/Screens/Pedia/PediaBuilding.py:96` etc.) — it is
-  *already* a generated surface over the single source. It needs no change here; it is the
-  canonical **content-schema reference** (what a Tech/Building/Unit entry shows) for any other
-  renderer.
+**In-game pedia stays table-backed.** The Python pedia reads the loaded tables and resolves
+`TXT_KEY` at runtime — it is a generated surface over the single source already, and needs no
+change here; it is the canonical **content-schema reference** (what a Tech/Building/Unit entry
+shows) for any other renderer, including a future downstream one.
 
 ---
 

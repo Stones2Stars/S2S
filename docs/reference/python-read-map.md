@@ -357,9 +357,9 @@ per-entity payloads on the entity an event concerns, plus heavy live-state and m
 
 ### 3.5 `Screens/Debug/` — the diagnostic surface
 
-`HelperFunctions.py` hosts `getGOMReqs`, the condition-tree walker (§4.2), and is also a pedia helper.
-`TestCode.py` is GONE (§7), which is why this family is now the smallest rather than one of the largest — it
-carried the exhaustive per-field info dump and the 90 residue names of §2.4.
+`TestCode.py` and `HelperFunctions.py` are both GONE (§7, §4.2) — this family is now the smallest rather than
+one of the largest. `TestCode.py` carried the exhaustive per-field info dump and the 90 residue names of §2.4;
+`HelperFunctions.py` hosted the GOM condition-tree walker, replaced by `INFO.getRequiresIdsInClause` (§4.2).
 
 ### 3.6 `Screens/` (non-pedia) — the main UI
 
@@ -488,35 +488,28 @@ The concentration is informative: `Screens/` 655 · `Revolution/Gameready/` 329 
 `Screens/Advisors/` 292 · `EntryPoints/` 201 · `Screens/Pedia/` 190 · `PitBoss/` 153. TEXT is a **UI-layer**
 concern almost everywhere, which supports leaving it outside the data library.
 
-### 4.2 (a′) REQ — the condition trees are an INFO need, not an API
+### 4.2 (a′) REQ — the condition trees are an INFO need, answered by `CvRequires`, not a tree-walk API
 
-**⛔ THE WHOLE MECHANISM IS GONE, AND ITS CALLERS ARE DANGLING ON PURPOSE — that is the state to know before
-reading further.** All three legs are absent: the `BoolExpr` binding file no longer exists in
-`Sources/Python/`; the `GOMTypes` / `BoolExprTypes` enums are published nowhere (`CyEnums.cpp` carries
-neither, so naming one is a `NameError`, not an `AttributeError`); and **`def getGOMReqs` is defined in no
-Python file in the tree** — `Screens/Debug/HelperFunctions.py` deleted the walker and says so where it stood.
-⚑ **The dangling is DELIBERATE and must not be "repaired" by restoring a tree walk**
-([DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking)): the requirement lines stop
-rendering, which is the hole made visible rather than papered over. Reading the callers as an accident is the
-mistake to avoid — the in-code note at the deletion site is the authority.
+**⛔ THE WHOLE OLD MECHANISM IS GONE — deleted, not left dangling.** The `BoolExpr` binding file no longer
+exists in `Sources/Python/`; the `GOMTypes` / `BoolExprTypes` enums are published nowhere (`CyEnums.cpp`
+carries neither); and `Screens/Debug/HelperFunctions.py` (the `getGOMReqs` tree walker) is deleted along with
+its callers — `TestCode.py` and the pedia pages that reached it through `self.HF` (`PediaBonus`,
+`PediaBuilding`, `PediaHeritage`, `PediaTech`, `PediaUnit`).
 
-What still calls it: `HelperFunctions.py` itself, and the pedia pages that reach it through `self.HF`
-(`PediaBonus`, `PediaBuilding`, `PediaHeritage`, `PediaTech`, `PediaUnit`). Each is handed
-`getConstructCondition()` / `getTrainCondition()` plus a `GOMTypes` selector and expects a two-element list
-indexed `BOOLEXPR_AND` / `BOOLEXPR_OR` — i.e. the requirement tree FLATTENED into "all of these" vs "one of
-these", which is what let a pedia page render `&` runs and `{ … || … }` groups.
+**The replacement is `CyInfo::getRequiresIdsInClause(prefix, id, bucket, clause)`**, which walks the same
+`CvRequires` struct server-side and returns the flattened id list per `REQCLAUSE_ALL` / `REQCLAUSE_ANY` — the
+AND/OR split the Python walker used to compute — so a pedia page still renders `&` runs and `{ … || … }`
+groups, just off a structured server read instead of a tree walk. `PediaBuilding.py`'s requires panel is the
+live example.
 
 ⚠ **Neither edge family preserves that split** ([CvEdges.h](../../Sources/Infos/CvEdges.h)):
 `EDGEF_REQUIRED_BY` is the reverse direction and `EDGEF_ENABLED_BY` the forward one, and both are merged
-buckets. So restoring the display needs the `CvRequires` section object below — there is no edge read that
-answers it, and reading one as though it did would silently present an OR-group as a mandatory list.
+buckets — `getRequiresIdsInClause` is the read that keeps the AND/OR split, not either edge family.
 
-This is an **INFO-plane need answered by the `CvRequires` section object** rendered as a structured display
-tree — independently the same conclusion as [pedia-map.md finding 3](pedia-read-map.md): *"no boolean-expression API
-belongs on the new surface."* Confirmed here for the non-pedia consumers too: `TestCode.py` and
-`HelperFunctions.py` want *the list of required techs/buildings/bonuses*, never the tree. The
+This confirms independently the same conclusion as [pedia-map.md finding 3](pedia-read-map.md): *"no
+boolean-expression API belongs on the new surface."* The
 [DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view) edge families answer the inverse
-direction.
+direction (what requires me), never the forward requirement tree.
 
 ### 4.3 (d) MUTATION — out of scope for the library, but still needed
 
@@ -815,7 +808,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    largest INFO consumer after the pedia hub (1,488 INFO sites) and the sole consumer of 90 residue names /
    296 sites, all of which drop out of the library's obligations (**the appendix shrinks ~30%**). The whole
    feature chain went with it (`DebugBtn` → `showDebugScreen` → `DebugScreen` → `TestCode`, plus the dead
-   `pythonDebugToggle`); `HelperFunctions.py` stays (the pedia uses it), and the orphaned
+   `pythonDebugToggle`); `HelperFunctions.py` and its GOM walker are ALSO gone (§4.2), and the orphaned
    `INTERFACE_DEBUG_SCREEN_BUTTON` art STAYS untouched (art is hands-off — roadmap § Scope decisions).
    ⚑ Its 50 checks encoded real design invariants the JSON spec does not state (a requirement may not unlock
    after the thing requiring it; replacements are explicit, never implicit; a replacing entity must be better).

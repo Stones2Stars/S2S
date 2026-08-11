@@ -244,7 +244,7 @@ where it is. Read what the option is being ASKED, never match on the option name
 - **What a UnitCombat IS (owner):** a definition of a unit's **strengths and weaknesses** — the good/bad-against
   column (a shared vs-tag stat bundle), NOT a definition of the unit's TYPE (that is the [tag](../specs/skills.md))
   nor its ABILITIES (those are skills). Three concerns, three homes. This is what it originally was in BTS (a
-  vs-based combat grouping); the S2S distillation restores it ([unitcombat-distillation.md](engine.md)).
+  vs-based combat grouping); the S2S distillation below restores it.
 - Vanilla: a thin label. **S2S/C2C:** a fat `CvUnitCombatInfo` (~150 fields, near-mirror of `CvPromotionInfo` — a
   combat class ≈ a free promotion for every member), many-to-many membership, proliferated to **~981 classes (~77%
   attached to no unit — vestigial)**; ~96% of live classes are inert tags (size/species/motility taxonomies crammed

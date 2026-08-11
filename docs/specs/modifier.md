@@ -187,8 +187,8 @@ combined total (e.g. `defense`'s floor kind). Authors write signed values; the m
 ⛔ **`naturalDefense` is NOT one of these and never was a kind.** There is no natural-defense channel: BUILDINGS
 and CULTURE LEVELS author the SAME `defense.city.amount`, so the cascade holds one additive stack and the legacy
 `max(buildingDefense, naturalDefense)` has no counterpart — a data-led behaviour change, not a combiner to
-build. ⚠ A worst/best-across-sources mode is therefore **unimplemented and currently unneeded**; do not read
-this paragraph as licence to add one speculatively — mint it if and when a family's data actually needs it.
+build. ⚠ A worst/best-across-sources combiner is **not part of the model** — do not read this paragraph as
+licence to add one speculatively; mint it only if and when a family's data actually needs it.
 
 > **⚖ THE FREE-AMOUNT SIGN CONVENTION (owner) — one convention per kind, never a per-source flip.** The
 > `upkeep.freeMilitary` / `upkeep.freeCivilian` kinds carry **free-amount semantics throughout**: a POSITIVE entry
@@ -377,8 +377,8 @@ route table is rebuilt it wants one field per named engine term, so a divergence
   `featMember`) — because the legacy `getFeatureGoodHappiness` bundles feature + improvement happiness into ONE
   number. Structurally live end-to-end; **zero data carries it today** (schema-only civic field, no improvement
   authors `iHappiness`), so the verdict is unchanged — the path is future-proof for any modder data.
-  **Celebrity happiness** is currently an INPUT; the `skills.celebrity` unit-scan port (the CvCity scan,
-  todo.md) is PENDING migration work to finish it.
+  **Celebrity happiness** is an INPUT; the `skills.celebrity` unit-scan port (the CvCity scan) finishes it —
+  [plans/structural-cleanup/stub-census.md](../plans/structural-cleanup/stub-census.md).
 - **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger
   percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
   revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**
@@ -608,10 +608,9 @@ authored shape.
 > rung has a simple twin. The test is the rung's LINE, never the rung's own id.
 > **⚖ IT IS A TYPE RENAME, AND THE SAVELOAD MECHANISM TRANSLATES IT (owner).** A renamed Type is NOT a removed
 > one: the record still exists under a new id, so resolving the old name to `-1` and letting the allow-missing
-> class read drop the slot throws away a rung the player still holds. ⛔ The earlier ruling here — that the loss
-> was "accepted deliberately" — is SUPERSEDED: the old id is mapped to the new one in `Assets/savemigration.txt`
-> (a bare `INFOTYPE_NAME` key, which cannot collide with a `Class::field` rename) and applied at the ONE
-> stored-Type resolution point the class reads share.
+> class read drop the slot would throw away a rung the player still holds. The old id is mapped to the new one in
+> `Assets/savemigration.txt` (a bare `INFOTYPE_NAME` key, which cannot collide with a `Class::field` rename) and
+> applied at the ONE stored-Type resolution point the class reads share.
 > ⚠ The distinction generalizes beyond traits, and [save.md §7](save.md)'s three removal classes do not cover it:
 > that decision procedure asks what to do when a Type is GONE. Ask first whether it is gone or merely RENAMED —
 > only the first is a removal.
@@ -623,24 +622,17 @@ authored shape.
 > the simple names as base, because that is the base of the names").** `Store.complex_variant_id` is that one
 > derivation — the base's own stem under the `TRAIT_COMPLEX_` prefix — and both callers go through it: the
 > replacement variant keyed at load, and the re-key of a complex-ONLY record.
-> ⚑ **This is what MAKES the superset property true, rather than merely asserting it.** The authored id is
-> whatever stem the source felt like (`TRAIT_NOMAD` names `TRAIT_COMPLEX_NOMADIC`; `TRAIT_FANATICAL` names
-> `TRAIT_COMPLEX_ZEALOUS`), and it is **not even unique** — `TRAIT_EXCESSIVE` and `TRAIT_EXCESSIVE1` name the
-> SAME replacement, so keying on it sent two different rungs to one key and the store's record merge folded the
-> rung-1 payload into the base's. A whole rung left the complex set and nothing reported it.
-> ⚠ **None of that was visible while the engine hot-swapped these in memory** — the id was only ever FOLLOWED,
-> never read, so a duplicate name cost nothing. It costs a record the moment the sets are separated BY ID, which
-> is why this surfaced only here.
+> ⚑ **The authored `<ReplacementID>` is not even unique** — `TRAIT_EXCESSIVE` and `TRAIT_EXCESSIVE1` name the SAME
+> replacement, so keying on it folded a whole rung into the base with nothing reporting the loss. That was
+> invisible while the engine hot-swapped these in memory (the id was only ever FOLLOWED, never read); it costs a
+> record the moment the sets are separated BY ID.
 >
 > ⛔ **A LINE MEMBER'S `PromotionLine` / `bNegativeTrait` IS SOURCE DATA THAT CAN BE WRONG, AND BOTH FAIL
-> SILENTLY.** A rung tagged onto a NEIGHBOURING line leaves its own ladder with a hole — the members are ordered
-> within the tagged line, so the rung above it becomes permanently unreachable while the stray rung forks a line
-> it does not belong to. The fix is to RESTORE THE TAG, never to delete the rung or to teach the classifier
-> around it (the `TRAIT_TIMID1` precedent, below). ⚑ Both are found the same mechanical way: compare a record
-> against its LINE SIBLINGS — a member whose line disagrees with its stem's majority, or whose negativity
-> disagrees with its line's BASE. ⚠ Compare against the BASE, not against the arm: on a negative line whose
-> deeper rungs lost the flag, the untagged rungs outnumber the tagged ones and an arm-local majority endorses
-> the defect.
+> SILENTLY.** A rung tagged onto a NEIGHBOURING line leaves its own ladder with a hole; the fix is to RESTORE THE
+> TAG, never to delete the rung or teach the classifier around it (the `TRAIT_TIMID1` precedent, below). ⚑ Both
+> are found by comparing a record against its LINE SIBLINGS — a member whose line disagrees with its stem's
+> majority, or whose negativity disagrees with its line's BASE, never the local arm (a negative line whose deeper
+> rungs lost the flag can leave the untagged rungs outnumbering the tagged ones).
 > **⛔ EVERY RECORD IN THE COMPLEX SET CARRIES `TRAIT_COMPLEX_`, WITH NO EXCEPTIONS (owner).** *"If it was built
 > as complex, it's complex, no matter what."* The prefix STATES THE SET — it is not a marker for "is a variant of
 > a simple trait" — so a complex-ONLY line with no simple counterpart is `TRAIT_COMPLEX_` like every other record
@@ -659,27 +651,16 @@ authored shape.
 > **⚖ A SAVE IS RESOLVED INTO THE ACTIVE SET AT LOAD (owner): *"for savegames, if you see it is a complex trait
 > game, you make sure the trait is the complex version."*** A stored plain `TRAIT_X` in a game running
 > `GAMEOPTION_LEADER_COMPLEX_TRAITS` takes the prefix — EVERY held id, with BARBARIAN the one exception (the
-> base-filled record above). It needs no per-id table and no does-it-exist test: `complex/` is a SUPERSET of
-> `simple/`, so the prefixed id always exists. This is NOT the
-> `savemigration.txt` rename plane: a rename translates one id whose record moved, while this picks WHICH SET an
-> id belongs to and so depends on a live game option — it belongs at the ONE stored-Type resolution point
-> (`sm_resolveStoredType`), beside the rename lookup rather than inside it.
-> ⚑ **It is what makes the prefix rule TRUE OF A RUNNING GAME rather than only of the data.** Re-keying the
-> records alone leaves a loaded save holding simple rank-1 rungs beside complex rank-2/3 ones — the mix the rule
-> exists to make impossible, arriving through the save rather than through the data.
-> ⚠ **Leaderheads author NO traits (owner)** — they were dropped for the community to fill post-launch — so the
-> save is the only place a held id comes from, which is precisely why resolving it there is sufficient.
+> base-filled record above); `complex/` is a SUPERSET of `simple/`, so the prefixed id always exists, no per-id
+> table needed. This is distinct from the `savemigration.txt` rename plane (which id, not which SET), so it lives
+> at the ONE stored-Type resolution point (`sm_resolveStoredType`), beside the rename lookup rather than inside
+> it — otherwise a loaded save could hold simple rank-1 rungs beside complex rank-2/3 ones.
+> ⚠ **Leaderheads author NO traits (owner)** — dropped for the community to fill post-launch — so the save is
+> the only place a held id comes from, which is why resolving it there is sufficient.
 >
-> ⚑ **The reason is that the alternative makes a WRONG SET UNDETECTABLE (owner): *"otherwise it will be
-> impossible to truly distinguish between the simple and complex set."*** If a plain `TRAIT_` id were legal
-> inside the complex set, a held `TRAIT_EFFICIENT1` would be indistinguishable from a simple-set leak — no
-> consumer, log line or check could tell the two apart. With the prefix stating the set, any plain `TRAIT_` id in
-> a complex game is unambiguously wrong, and that is the property the ids exist to have.
 > ⚠ A record that does not obey this is a CURATOR defect, and fixing it rides the curator + regen in the same
 > work item ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)); the id change is
 > a TYPE RENAME the save layer translates via `Assets/savemigration.txt` (the rename rule below), never a removal.
-> ⚑ The one remaining shared id is **`TRAIT_BARBARIAN`**, the NPC trait base-filled into `complex/` so that set
-> stays self-complete (below) — the only simple trait with no complex variant.
 > (The enabler is unaffected either way: it reads trait *presence*; only the modifier cascade reads trait
 > *family values*.)
 >
@@ -718,20 +699,14 @@ authored shape.
 >
 >     > **⛔ §4-bis — A REPLACEMENT IS AN OVERLAY ON ITS BASE, AND THE LEGACY ENGINE'S FAILURE TO MERGE IS A BUG WE
 >     > DO NOT REPRODUCE (owner).** The variant is built BASE + the replacement's own tags on top, exactly as an
->     > ordinary module override is.
->     > ⚑ **The engine disagrees, and the two cases sit feet apart in one function**
->     > (`CvXMLLoadUtilitySet::SetGlobalClassInfo`): a plain module override runs
->     > `pClassInfo->copyNonDefaults(aInfos[uiExistPosition])` and inherits the base, while a record carrying a
->     > `<ReplacementID>` reaches `addReplacement` with a FRESH `new T()` read from its own XML alone. The
->     > `copyNonDefaults` in the replacement path stacks a SECOND replacement of the same id onto an earlier one —
->     > module-on-module, never replacement-on-base — so **rung 1 inherits nothing while every rung above it
->     > inherits**. That asymmetry is the tell, and `CvInfoReplacement::updateInfo`, the merge that would have
->     > closed it, sits commented out.
->     > ⚑ **THE DATA SETTLES IT AGAINST THE ENGINE, which is why this is a fix and not a divergence of taste:**
->     > **304 of 305** complex trait records carry NO `ShortDescription`, while **0 of 65** simple ones lack it —
->     > and the single exception is the base-FILLED `TRAIT_COMPLEX_BARBARIAN`. A mandatory field missing from 100%
->     > of the whole-swapped records and 0% of the base-filled ones cannot be an authoring choice; nobody writes a
->     > 54k-character redefinition and omits its name. The replacements were authored expecting the base underneath
+>     > ordinary module override is — unlike the legacy engine, where a plain module override runs
+>     > `copyNonDefaults` and inherits the base, while a `<ReplacementID>` record reaches `addReplacement` with a
+>     > FRESH `new T()` read from its own XML alone; `CvInfoReplacement::updateInfo`, the merge that would have
+>     > closed the gap, sits commented out.
+>     > ⚑ **The data settles it against the engine:** **304 of 305** complex trait records carry NO
+>     > `ShortDescription`, while **0 of 65** simple ones lack it (the sole exception is the base-filled
+>     > `TRAIT_COMPLEX_BARBARIAN`) — a mandatory field missing from every whole-swapped record and none of the
+>     > base-filled ones is not an authoring choice: the replacements were authored expecting the base underneath,
 >     > and the engine never supplied it.
 >     > ⚠ **A field the replacement DOES author still wins, including when it zeroes one** — that is the overlay
 >     > working, not a loss, and it is why a handful of families legitimately disappear from a variant.
@@ -741,25 +716,22 @@ authored shape.
 >     a SOURCE-data bug to fix (restore the tag), not a classifier change (the `TRAIT_TIMID1` case). The active set is
 >     chosen by the live option (callout above).
 >     **⛔ TRAITS ARE NOT CONTENT-LOCKED — THE CURATOR IS THE AUTHORITY AND THE FOLDERS ARE REGENERATED (owner).**
->     The lock made the two folders hand-maintained, which is precisely how they drifted: a hand edit could put an
->     edge in one set pointing at an entity only the other set has, and nothing regenerable existed to correct it.
->     So `curate_trait` reads the legacy XML like every other curator and `--write` rewrites both folders.
->     ⚑ **Its input is the ARCHIVED XML** (`SourceArchive/Assets/**`, searched by `store.py` alongside the live
->     roots): the trait XML was removed from `Assets/` once its JSON landed, and it is curator INPUT there and
->     nowhere else — never a game load path ([DEC-no-xml-into-game](../architecture/decisions.md#dec-no-xml-into-game)),
->     and unrelated to the red-ratchet ban on reviving a `CvXInfo` from `SourceArchive/Infos/`.
->     ⚠ Community-owned trait CONTENT still lands through `_additions/` like any other post-curation authoring
->     ([curators/README.md](curators/README.md)), which is what the lock was reaching for — a regenerable base with
->     an overlay, not a frozen folder.
+>     A hand-maintained lock let an edge in one set point at an entity only the other has, with nothing regenerable
+>     to correct it; `curate_trait` reads the legacy XML like every other curator and `--write` rewrites both
+>     folders. ⚑ **Its input is the ARCHIVED XML** (`SourceArchive/Assets/**`, searched by `store.py` alongside the
+>     live roots) — curator INPUT only, never a game load path
+>     ([DEC-no-xml-into-game](../architecture/decisions.md#dec-no-xml-into-game)), and unrelated to the red-ratchet
+>     ban on reviving a `CvXInfo` from `SourceArchive/Infos/`. ⚠ Community-owned trait CONTENT still lands through
+>     `_additions/` like any other post-curation authoring ([curators/README.md](curators/README.md)) — a
+>     regenerable base with an overlay, not a frozen folder.
 >   - **⛔ THE LADDER EDGE IS RESOLVED FROM LINE MEMBERSHIP, NEVER FROM THE ID SPELLING.** A rung `enables` the rung
 >     above it ([json.md §9](json.md): a ladder is an `enables` edge, not a section), and which rung that IS comes
 >     from the line's members ordered by `iLinePriority` — restricted to the FOLDER being emitted, so a chain simply
->     ends where that set ends (`simple/` tops out at rung 1) and never reaches into the other set.
->     ⚠ Deriving the successor by string arithmetic on the id (`TRAIT_X1` → `TRAIT_X2`) is WRONG and fails silently
->     in three ways the data actually contains: a line that RENAMES mid-chain (`TRAIT_NOMAD1` → `TRAIT_NOMADIC2`)
->     gets an edge to a fabricated id no record defines; a line whose ranks SKIP loses the link entirely; and a top
->     rung gets an edge to a rung above it that does not exist. The base rung is `iLinePriority` 0/absent, and the
->     two arms (`+1,+2,+3` and `-1,-2,-3`) each chain outward from it, so a line carrying both FORKS at the base.
+>     ends where that set ends (`simple/` tops out at rung 1) and never reaches into the other set. The base rung is
+>     `iLinePriority` 0/absent, and the two arms (`+1,+2,+3` and `-1,-2,-3`) each chain outward from it.
+>     ⚠ Deriving the successor by string arithmetic on the id (`TRAIT_X1` → `TRAIT_X2`) fails silently on a
+>     mid-chain RENAME (`TRAIT_NOMAD1` → `TRAIT_NOMADIC2`, a fabricated edge to an id no record defines), a rank
+>     SKIP (the link is lost entirely), or a top rung (an edge to a rung that does not exist).
 >   - **Developing line — do NOT auto-develop (engine-verified).** A `PromotionLine` is a chain of trait *levels*
 >     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech`+`TraitPrereq`), but
 >     **researching a level's `PrereqTech` does NOT advance the held trait**. The **held trait the engine reports IS
@@ -932,7 +904,7 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 > bare number and a tech-gated change is a conditioned entry beside it, in one slot.
 > ⚑ The distinction to hold: **the resolver reads the family and applies its own arithmetic** (min-override,
 > divisors, floor). What was wrong was parking the base value in `identity`, which carries no effects
-> ([json.md §7](json.md)) — a movement cost is plainly one. (Detail: the movement subsystem doc, pending.)
+> ([json.md §7](json.md)) — a movement cost is plainly one.
 
 ### Specialist counts
 

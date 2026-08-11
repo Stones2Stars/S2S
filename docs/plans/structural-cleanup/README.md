@@ -1,7 +1,8 @@
 # Structural cleanup — the #430 work tier
 
-> **Two docs carry this tier.** The DESIGN and the rulings are [roadmap.md](roadmap.md) (mandated session-start
-> reading); what is NOT done is [todo.md](todo.md). Nothing else here is a plan
+> **Three docs carry this tier.** The DESIGN and the rulings are [roadmap.md](roadmap.md) (mandated session-start
+> reading); what is NOT done is [todo.md](todo.md); the live defect register (verified bugs, each with evidence)
+> is [issues.md](issues.md). Nothing else here is a plan
 > ([DEC-spec-plus-todo](../../architecture/decisions.md#dec-spec-plus-todo)).
 >
 > ⛔ **No status lives in this tier.** No `LANDED`, no completion ledger, no "what exists" table: a finished item is
@@ -12,6 +13,8 @@
   wired outranks correct · design surface → contexts → THEN the AI calls), the demolition rule, and the open
   access-surface item.
 - **[todo.md](todo.md)** — everything left, as short bullets.
+- **[issues.md](issues.md)** — the live defect register: verified, evidence-bearing bugs (repro/root-cause/impact),
+  each closed by DELETING its entry once fixed — never ticked.
 
 ## The decision worklists
 

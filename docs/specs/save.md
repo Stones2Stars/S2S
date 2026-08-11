@@ -184,14 +184,14 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 > …`), i.e. a lost list reads as "everything is allowed" rather than as an error. It is also the same dependency
 > chain as terrain (categories hang off terrain), so removing a terrain takes both out at once.
 >
-> ⛔ **The four identity reads that are NOT yet allow-missing** — `EventTriggeredData::m_eTrigger`,
-> `VoteSelectionData::eVoteSource`, `VoteTriggeredData::eVoteSource`, `VoteTriggeredData::kVoteOption.eVote`
+> ⛔ **The three identity reads that are NOT yet allow-missing** — `VoteSelectionData::eVoteSource`,
+> `VoteTriggeredData::eVoteSource`, `VoteTriggeredData::kVoteOption.eVote`
 > (all in `Sources/Defines/CvStructs.cpp`). Each is the identity of an object owned by an
 > `FFreeListTrashArray`, whose `ReadStreamableFFreeListTrashArray` does `new T; pData->read(); flist.load(pData)`
 > — **the per-object `read()` has no way to drop its own record**, so flipping them alone would register a live
-> object pointing at nothing. Removing an `EVENT_TRIGGER`, `VOTE_SOURCE` or `VOTE` Type is therefore still HARD
-> until that drop exists (a two-phase read that can reject, or a post-load sweep). Every other class read in the
-> tree is allow-missing.
+> object pointing at nothing. Removing a `VOTE_SOURCE` or `VOTE` Type is therefore still HARD until that drop
+> exists (a two-phase read that can reject, or a post-load sweep). Every other class read in the tree is
+> allow-missing.
 
 ⛔ **A `@SAVEBREAK` comment is a CLAIM TO VERIFY, not a fact (owner).** Check it against the list below before
 believing it — several in-tree labels do not survive that check — and never park work behind an unverified one.

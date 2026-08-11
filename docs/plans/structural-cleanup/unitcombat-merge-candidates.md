@@ -104,32 +104,15 @@ Shared-payload taxonomy clusters. Listed so the owner can eyeball them; the inte
 
 ---
 
-## 3. DELETE candidates (obviously dead — unreferenced everywhere, no runtime attr)
+## 3. DELETE candidates — EXECUTED
 
-**Confirmed 0 references** across `Assets/Data/**` JSON, all module/legacy `*_CIV4UnitInfos.xml` and
-`*_CIV4PromotionInfos.xml`, `Assets/Python`, and `Sources` (beyond each class's own definition), **and** no
-`identity.era` / `religion` / `culture`. Safe to delete the JSON file (and drop from `_order.json`).
-
-Empty-payload taxonomy stubs (9):
-- [ ] `UNITCOMBAT_DISASSEMBLY` — empty; no ref anywhere.
-- [ ] `UNITCOMBAT_HOLOGRAPHIC_DIVERSIONS` — empty; no ref.
-- [ ] `UNITCOMBAT_IMPROVED_HOLOGRAPHIC_DIVERSIONS` — empty; no ref.
-- [ ] `UNITCOMBAT_MAMMAL_BAT` — empty; no ref (unused animal-family stub).
-- [ ] `UNITCOMBAT_MOUNT_MULE` — empty; no ref (unused mount stub).
-- [ ] `UNITCOMBAT_REPTILE_DINOSAUR` — empty; no ref.
-- [ ] `UNITCOMBAT_SEA_LARGE` — empty; no ref (Subdue-module size stub, no assignment).
-- [ ] `UNITCOMBAT_SEA_SMALL` — empty; no ref.
-- [ ] `UNITCOMBAT_WHALE` — empty; no ref.
-
-Payload classes that are still fully orphaned (6):
-- [ ] `UNITCOMBAT_AMPHIBIAN_SALAMANDER` — `vision.invisibilityIntensity CAMOUFLAGE:1`; no ref (orphan animal family).
-- [ ] `UNITCOMBAT_ANTIGRAV_CRAFT` — `capture + forMilitary + skills.fliesToMove`; no ref.
-- [ ] `UNITCOMBAT_CARRIER` — `forNavalMilitary + ocean terrainDoubleMove`; 0 ref, payload duplicated by referenced
-  `BATTLESHIP`/`CRUISER`.
-- [ ] `UNITCOMBAT_CORVETTE` — `forNavalMilitary + coast terrainDoubleMove`; 0 ref.
-- [ ] `UNITCOMBAT_CUTTER` — `forNavalMilitary + coast terrainDoubleMove`; 0 ref.
-- [ ] `UNITCOMBAT_SWARMSHIP` — `forNavalMilitary + naval-disguise 1`; 0 ref, payload duplicated by referenced
-  DIESEL/STEAM/NUCLEAR/JET/SHOCKWAVE ships.
+**DONE:** all 15 files below (9 empty-payload taxonomy stubs + 6 fully-orphaned payload classes, every one
+confirmed 0-referenced everywhere and carrying no `identity.era`/`religion`/`culture`) have been deleted from
+`Assets/Data/unitcombats/` and dropped from `_order.json` — `UNITCOMBAT_DISASSEMBLY`,
+`UNITCOMBAT_HOLOGRAPHIC_DIVERSIONS`, `UNITCOMBAT_IMPROVED_HOLOGRAPHIC_DIVERSIONS`, `UNITCOMBAT_MAMMAL_BAT`,
+`UNITCOMBAT_MOUNT_MULE`, `UNITCOMBAT_REPTILE_DINOSAUR`, `UNITCOMBAT_SEA_LARGE`, `UNITCOMBAT_SEA_SMALL`,
+`UNITCOMBAT_WHALE`, `UNITCOMBAT_AMPHIBIAN_SALAMANDER`, `UNITCOMBAT_ANTIGRAV_CRAFT`, `UNITCOMBAT_CARRIER`,
+`UNITCOMBAT_CORVETTE`, `UNITCOMBAT_CUTTER`, `UNITCOMBAT_SWARMSHIP`.
 
 ---
 
@@ -152,9 +135,9 @@ Payload classes that are still fully orphaned (6):
 ## Bottom line
 
 - **DONE: 344 culture unit-combats DROPPED** (owner 2026-07-19) — redundant double-data of the culture BONUS,
-  curator-filtered + files deleted, `unitcombats/_order.json` regenerated on actual output. 814 → **470** classes.
-- **Conservative purge = 15 more files** (§3: 9 empty stubs + 6 orphaned classes), all verified 0-reference
-  everywhere — still a CANDIDATE list awaiting owner tick.
+  curator-filtered + files deleted, `unitcombats/_order.json` regenerated on actual output. 814 → 470 classes.
+- **DONE: the 15 §3 DELETE candidates executed** (9 empty stubs + 6 orphaned classes) — 470 → **455** classes
+  (current tree count).
 - **0 merge/collapse sets** — the 18 shared-payload clusters are distinct taxonomy (tag-distillation input), not
   redundant aliases.
 - **42 unreferenced classes remain FLAG/KEEP** (14 era runtime-selected + 27 religion + 1 ExoticAnimals module) —

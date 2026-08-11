@@ -88,10 +88,9 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   `SFT_WSTR` name — the emit render is synchronous on the game thread, so the borrowed pointers outlive it). This is
   the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
   a rename is rare (four low-frequency choke points), not a hot-path firehose.
-- **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`).
-  The **DOMAIN emit surface = BUILT**: **127 call sites** at the genuine mutation choke points — `CvPlayer` (36) ·
-  `CvCity` (30) · `CvPlot` (20) · `CvUnit` (14) · `CvGame` (10) · `CvProperties` (7) · `CvTeam` (6) · `CvArea` (2) ·
-  `CvMap` (1) · `CvPlotGroup` (1). The PLOT substrate is
+- **The spine primitive, KIND firewall and `IEventConsumer` live in `Spine/CvEventSpine.{h,cpp}`.**
+  The **DOMAIN emit surface** sits at the genuine mutation choke points across `CvPlayer`, `CvCity`, `CvPlot`,
+  `CvUnit`, `CvGame`, `CvProperties`, `CvTeam`, `CvArea`, `CvMap`, `CvPlotGroup`. The PLOT substrate is
   complete: terrain / feature / improvement / route / bonus / owner / **type / river / irrigation / landmark /
   worked**, so the per-scope contexts are maintained purely by facts, with no choke point driving a derivation
   directly ([contexts.md](../architecture/contexts.md)).
@@ -150,7 +149,7 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   **load-lifecycle
   bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` is emitted (`CvGame::read` / end of
   `CvGame::onFinalInitialized`), so `spineGameLoadInProgress()` reports correctly and result-producers suppress
-  inside it. The **load reseed** = BUILT: the in-read emits fire from inside the save read (`CvPlayer::read` per
+  inside it. The **load reseed** fires the in-read emits from inside the save read (`CvPlayer::read` per
   held tech / project / civic / trait / heritage + era / golden-age / state-religion / nukes / commerce sliders,
   `CvCity::read` per building / religion + holy-city / corp / specialist / population / power / culture-level,
   `CvPlot::read`
@@ -159,20 +158,16 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   wrapped by the bracket. ⚠ The property block emits from its own read because a property value is DERIVED FROM
   NOTHING; nothing else could announce it. A stored 0 is skipped, for the same reason the setter suppresses a no-op (the owner's `reset()`
   emptied the bag, so 0 → 0 is not a change); the per-turn CHANGE ledger beside it is deliberately silent, being
-  an accumulation of deltas the value facts already carry. ⛔ **ONE SERIALIZED SLOT, ONE FACT — there is no slot a neighbour's fact covers for.** This spec used to claim
-  that a plot field deserializing with no emit of its own (type / river / irrigation / landmark / worked) needed
-  **none**, because *"a substrate fact re-derives the plot's WHOLE verdict block"* so every plot was already
-  covered. **That premise WAS event-as-command** — a consumer reaching back through the object to re-derive a
-  block from a fact that did not name it — and it went with the model. A fact now sets ONLY the bit it names
-  ([contexts.md](../architecture/contexts.md)), so a slot nothing announces is a slot nothing knows about.
-  ⚑ **The fix is structural, not five remembered emits:** the emit lives in the slot's INTERNAL SETTER, so a
-  newly serialized field cannot be added without going through the one body that announces it. That is what
-  closed these five, and it is why the answer was never a longer hand-maintained list in the read.
+  an accumulation of deltas the value facts already carry. ⛔ **ONE SERIALIZED SLOT, ONE FACT — there is no slot a
+  neighbour's fact covers for.** A consumer must never reach back through an object to re-derive a block from a
+  fact that did not name it — a fact sets ONLY the bit it names ([contexts.md](../architecture/contexts.md)), so
+  a slot nothing announces is a slot nothing knows about.
+  ⚑ **The fix is structural, not a hand-maintained emit list:** the emit lives in the slot's INTERNAL SETTER, so a
+  newly serialized field cannot be added without going through the one body that announces it.
   ⚠ **The WORKED set is the CITY's slot, so it reseeds from `CvCity::read`, not from the plot's.** The plot
   carries the `IS_WORKED` verdict but only the city can attribute it, so the array's in-read landing is where
   the fact comes from — and the cities stream AFTER the map, which is exactly what makes the plot available to
   carry the bit and puts the fact before the `GAME_LOAD_FINISHED` fold that reads each plot's FINAL block.
-  **THE TIER-1 HOLES ARE CLOSED** — the facts a named consumer read but nothing announced.
   ⚖ **`isPowered()` announces ONCE, and what it announces is the VERDICT — never a leg.** `CvCity::isPowered` is the
   ONE definition (a live grantor supplies power AND no blackout gates delivery), and its crossing is announced by
   the AMENITY FOLD as `SEVT_CITY_POWER_ADDED / _REMOVED` — the fact the modifier's plane-C route and the enabler's

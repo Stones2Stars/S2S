@@ -93,7 +93,7 @@ load-time seed, no incremental maintenance, no rebuild, and no shadow**:
 
 ---
 
-## 5. Status
+## 5. Domain coverage
 
 The standardized accessor reads **buildings + units + techs + specialists + unit-tags** at **empire / team /
 world**. Buildings/units read the player's own O(1) aggregate at empire and sum over alive players above it.
@@ -106,22 +106,19 @@ aggregate already existed on `CvGame` and the tally simply reads it — which is
 working, and why "the domain is not wired" is never the same statement as "no counter exists". ⛔ Check for the
 engine's own aggregate BEFORE concluding a domain needs building.
 
-The remaining count domains (civic / religion / bonus / project) are not yet wired — a `requires`/`per` atom over
-those reads 0 until its domain is added. *(Cross-scope RELIGION_X already answers from `countReligionLevels` at
-the evaluator, ahead of a tally domain of its own.)* Under the read-not-store model a **domain is now
-just: the object-side accessor it reads + its type-prefix routing + the roll-up** — **no** side-store, emit-driven
+**The tally READS the object-owned count; it never re-stores it.** Adding a domain is therefore only ever: the
+object-side accessor it reads + its type-prefix routing + the roll-up — **no** side-store, emit-driven
 maintenance, rebuild scan, or shadow id (those were the duplicate-store model's burden). Where an object lacks the
-aggregate, give the object the accessor (it "cares about itself"). City/plot reads go direct to the live object regardless.
+aggregate, give the OBJECT the accessor (it "cares about itself"); the tally never grows a side-store to
+compensate. City/plot reads go direct to the live object regardless. That read-not-store invariant is the design;
+it is **not** a licence to leave a count LOGIC bespoke — a bespoke engine count-loop a cascade/enabler consumer
+needs (`CvPlayer::countNumBuildings`'s cities-having ≤1/city semantic, `CvTeam::getHasReligionCount`/
+`getHasCorporationCount`) is an **unwired tally domain, not a keep**: it routes through the tally the same way
+([north-star.md](../architecture/north-star.md) EACH IS ITS OWN SYSTEM).
 
-**The tally READS the object-owned count; it never re-stores it.** The object already maintains its own count O(1)
-(`getBuildingCount`, `getUnitCount`, …), so the tally's job is to be the standardized accessor over that count and
-its roll-up — a second store would only risk drift. That read-not-store invariant is the design; it is **not** a
-licence to leave a count LOGIC bespoke. Counting is the tally's job ([north-star.md](../architecture/north-star.md)
-EACH IS ITS OWN SYSTEM), so a bespoke engine count-loop a cascade/enabler consumer needs — `CvPlayer::countNumBuildings`
-(the cities-having, ≤1/city semantic), `CvTeam::getHasReligionCount`/`getHasCorporationCount` — is an **UNWIRED
-TALLY DOMAIN (open), not a KEEP**: it goes through the tally, which reads the object's own count. Where the object
-lacks the aggregate the read needs, give the OBJECT the aggregate (it "cares about itself"); the tally never grows
-a side-store to compensate.
+⚠ **Civic / religion / bonus / project have no domain of their own yet** — a `requires`/`per` atom naming one
+reads 0 until it is added. *(Cross-scope `RELIGION_X` already answers from `countReligionLevels` at the
+evaluator, ahead of a tally domain of its own.)*
 
 The tally's `specialist` count domain (counting specialists, e.g. for `per:specialist` scaling) is DISTINCT from
 [modifier](modifier.md) §6's `freeSpecialists`/`allowedSpecialists` (which GRANT / CAP specialists — a deposit,
