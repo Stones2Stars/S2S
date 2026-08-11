@@ -111,6 +111,12 @@ void CyEnums::pythonPublish()
 		//	What SPEEDS UP building a specific thing -- the resource page's "units this makes cheaper" panel,
 		//	where the bonus is the entry's GATE rather than a key ([DEC-conditions-are-predicates]).
 		.value("MODFAM_BUILD_RATE", MODFAM_BUILD_RATE)
+		//	The three OUTPUT-producing yields ([modifier.md] §1 THE ORIGIN RULE). They are SPLIT families, one
+		//	per concept ([json.md] §6), so a consumer wanting "every yield" asks for the three -- there is no
+		//	single yield family to name, and inventing one here would contradict the split.
+		.value("MODFAM_FOOD", MODFAM_FOOD)
+		.value("MODFAM_PRODUCTION", MODFAM_PRODUCTION)
+		.value("MODFAM_COMMERCE", MODFAM_COMMERCE)
 		;
 
 	python::enum_<InfoScalar>("InfoScalar")

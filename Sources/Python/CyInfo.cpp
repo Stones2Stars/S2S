@@ -1247,6 +1247,23 @@ python::list CyInfo::getIndex(const std::string& szTypePrefix) const
 	return lEntries;
 }
 
+//	The PARAMETERIZED PREDICATE that names the same entity kind an edge BUCKET does -- the second spelling of
+//	one axis ([json.md] §3.4/§3.5: a HAVE-axis entity is a presence atom, and the same entity also has a
+//	`{HAS_X: ID}` predicate form). NO answer for a bucket with no predicate twin, which is most of them.
+//	⚑ A table rather than a chain of ifs at the call site, so adding the next pairing is one row and cannot be
+//	added to one branch and forgotten in the other -- which is the failure the callout below describes.
+static CvCascPredKind cyi_predicateForBucket(EnEdgeBucket eBucket)
+{
+	switch (eBucket)
+	{
+	case EDGEB_BONUSES:       return CASC_PRED_HAS_BONUS;
+	case EDGEB_RELIGIONS:     return CASC_PRED_HAS_RELIGION;
+	case EDGEB_CORPORATIONS:  return CASC_PRED_HAS_CORPORATION;
+	case EDGEB_IMPROVEMENTS:  return CASC_PRED_HAS_IMPROVEMENT;
+	default:                  return CASC_PRED_UNKNOWN;
+	}
+}
+
 python::list CyInfo::getConditionedEntries(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const
 {
 	python::list lEntries;
@@ -1280,8 +1297,20 @@ python::list CyInfo::getConditionedEntries(const std::string& szTypePrefix, int 
 			continue;
 		}
 
+		//	⛔ AN AXIS HAS TWO SPELLINGS AND BOTH MUST BE COLLECTED ([enabler.md] §8: "when you route an axis,
+		//	grep BOTH branches"). The same bonus is authored as a PRESENCE atom in one place
+		//	(`{type: BONUS_COPPER_WARES, min: 1}` -- the 271 unit buildRate entries) and as a PARAMETERIZED
+		//	PREDICATE in another (`{HAS_BONUS: BONUS_EXTRATERRESTRIAL_MICROBES}` -- 120 improvement yield
+		//	entries). They ride DIFFERENT query axes, and asking only one answers EMPTY for the other -- which
+		//	reads exactly like "nothing is gated on this bonus" and is how a whole population goes silently
+		//	missing ([CvConditionQuery.h]: a consumer asking the wrong axis gets an empty answer).
 		std::vector<int> aAtomIds;
 		CvConditionQuery::collectIds(pEntry->enabled, (EnEdgeBucket)iBucket, aAtomIds);
+		const CvCascPredKind ePredicate = cyi_predicateForBucket((EnEdgeBucket)iBucket);
+		if (ePredicate != CASC_PRED_UNKNOWN)
+		{
+			CvConditionQuery::collectPredicateIds(pEntry->enabled, ePredicate, aAtomIds);
+		}
 		if (aAtomIds.empty())
 		{
 			continue;   // gated on something else entirely -- not this caller's axis
