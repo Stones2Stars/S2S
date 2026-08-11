@@ -9718,15 +9718,20 @@ void CvCityAI::AI_juggleCitizens()
 }
 
 
+//	Can this tile carry the citizen who works it -- feed its own consumption, or bring enough else to be worth
+//	the mouth? Both callers hand it the x100 GROUP read, so the whole-number comparands lift to meet it
+//	([DEC-fixedpoint-x100]: a value is never reduced to meet a count). Unlifted, every tile carrying any food at
+//	all cleared a threshold of 4 hundredths and the test could only answer false for a tile yielding NOTHING --
+//	which is not a filter. The same lift is already spelled out for this define where the growth branch reads it.
 bool CvCityAI::AI_potentialPlot(const int* piYields) const
 {
-	const int iNetFood = piYields[YIELD_FOOD] - GC.getFOOD_CONSUMPTION_PER_POPULATION();
+	const int iNetFood = piYields[YIELD_FOOD] - 100 * GC.getFOOD_CONSUMPTION_PER_POPULATION();
 
 	if (iNetFood < 0)
 	{
 		if (piYields[YIELD_FOOD] == 0)
 		{
-			if (piYields[YIELD_PRODUCTION] + piYields[YIELD_COMMERCE] < 2)
+			if (piYields[YIELD_PRODUCTION] + piYields[YIELD_COMMERCE] < 200)
 			{
 				return false;
 			}
@@ -10131,7 +10136,8 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 				if (std::max(0, iExtraPopulationThatCanWork * aiYields[YIELD_FOOD]) >= -iFoodPerTurn)
 				{
 					// if this is high food, then we want to pick it first, this will allow us to pick some great non-food later
-					int iHighFoodThreshold = std::min(getBestYieldAvailable(YIELD_FOOD), iConsumptionByPopulation + 1);
+					//	the epsilon is ONE FOOD, so it lifts with the operands it is added to
+					int iHighFoodThreshold = std::min(getBestYieldAvailable(YIELD_FOOD), iConsumptionByPopulation + 100);
 					if (iFoodPerTurn <= (AI_isEmphasizeGreatPeople() ? 0 : -iHighFoodThreshold) && aiYields[YIELD_FOOD] >= iHighFoodThreshold)
 					{
 						// value all the food that will contribute to not starving
@@ -10141,7 +10147,13 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 					{
 						// give a huge boost to this plot, but not based on how much food it has
 						// ie, if working a bunch of 1f 7h plots will stop us from starving, then do not force working unimproved 2f plot
-						iValue += 2048;
+						//	⛔ A BARE ADDEND IS NOT SCALE-INVARIANT. Every term this score sums is x100, so a constant
+						//	that MULTIPLIES a yield carries the scale for free while one that is ADDED to the total does
+						//	not -- this is the whole of what "the calibration constants all multiply their yield" missed.
+						//	Unlifted, the clause that FORCES a starving city onto its moderate-food tiles was worth a few
+						//	percent of an ordinary plot instead of dwarfing it, so only tiles clearing the high-food
+						//	threshold above were ever forced and the rest were ranked on hammers while the city starved.
+						iValue += 100 * 2048;
 					}
 				}
 				else
@@ -10296,7 +10308,12 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 						//If we already grow somewhat fast, devalue further food
 						//Remember growth acceleration is not dependent on food eaten per
 						//pop, 4f twice as fast as 2f twice as fast as 1f...
-						int iHighGrowthThreshold = 2 + std::max(std::max(0, 5 - getPopulation()), (iPopToGrow + 1) / 2);
+						//	⛔ THE THRESHOLD IS A FOOD-PER-TURN RATE, so it LIFTS to meet iFoodPerTurn rather than
+						//	the rate being reduced to meet it. Built from POPULATION counts, it is whole by
+						//	construction, and against a x100 surplus the comparison below is true for any surplus
+						//	above a hundredth of a food -- so the damper saturated at x0.26 on every city that grows
+						//	at all, and the emphasis doubling that exists to hold it off was swamped with it.
+						int iHighGrowthThreshold = 100 * (2 + std::max(std::max(0, 5 - getPopulation()), (iPopToGrow + 1) / 2));
 						if (bEmphasizeFood)
 						{
 							iHighGrowthThreshold *= 2;
@@ -10327,7 +10344,8 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 				//Slavery Override
 				if (bCanPopRush && (iHappinessLevel > 0))
 				{
-					iSlaveryValue = 30 * 14 * std::max(0, aiYields[YIELD_FOOD] - ((iHealthLevel < 0) ? 1 : 0));
+					//	the unhealthy deduction is ONE FOOD, so it lifts to the plane of the yield it is taken from
+					iSlaveryValue = 30 * 14 * std::max(0, aiYields[YIELD_FOOD] - ((iHealthLevel < 0) ? 100 : 0));
 					iSlaveryValue /= std::max(10, growthThreshold() * (100 - getFoodKeptPercent()));
 
 					iSlaveryValue *= 100;
@@ -10381,7 +10399,9 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 				getYields(aiCityYields);
 				if (aiCityYields[YIELD_PRODUCTION] < (1 + getPopulation() / 3) * 100)
 				{
-					iValue += 128 + 8 * aiYields[YIELD_PRODUCTION];
+					//	the ADDEND lifts, the multiplied term already carries the scale (the same split as the
+					//	starvation clause above)
+					iValue += 100 * 128 + 8 * aiYields[YIELD_PRODUCTION];
 				}
 			}
 		}
@@ -10436,7 +10456,12 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		}
 	*/
 	//Slavery translation
-	if ((iSlaveryValue > 0) && (iSlaveryValue > iFoodValue))
+	//	⛔ EMPHASIZING FOOD REFUSES THE TRANSLATION OUTRIGHT -- the player has said GROW, and this branch is the one
+	//	that decides a tile's food is worth more whipped than eaten. It ran BEFORE the emphasis multipliers, so
+	//	emphasis could never reach the decision; worse, the food-emphasis block then scaled iSlaveryValue, which is
+	//	added to iProductionValue below -- so under Slavery, asking for food raised the value of working food AS
+	//	HAMMERS by 30% and left food itself zeroed. That is the inversion, not a weighting.
+	if ((iSlaveryValue > 0) && (iSlaveryValue > iFoodValue) && !bEmphasizeFood)
 	{
 		//treat the food component as production
 		iFoodValue = 0;
@@ -10481,59 +10506,54 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 /************************************************************************************************/
 	// Rounding can be a problem, particularly for small commerce amounts.  Added safe guards to make
 	// sure commerce is counted, even if just a tiny amount.
-	if (AI_isEmphasizeYield(YIELD_PRODUCTION))
-	{
-		iProductionValue *= 130;
-		iProductionValue /= 100;
+	//	⚖ EMPHASIS IS SYMMETRIC ACROSS THE THREE YIELDS (owner: emphasis is free to be more impactful).
+	//	An emphasis does TWO things -- promote what was asked for, and suppress what was not -- and the retired
+	//	form only ever spelled the second one out inside the PRODUCTION and COMMERCE blocks. Food promoted itself
+	//	and suppressed nothing, so asking for food shifted the food/hammer ratio by 1.30 while asking for hammers
+	//	shifted it by 1.30/0.75 = 1.73 the other way. That asymmetry is the standing "emphasis has never really
+	//	worked" complaint, and it is why food emphasis in particular read as inert.
+	//	⚑ The SUPPRESSION FACTORS are unchanged and are keyed on the channel being suppressed, not on who is
+	//	suppressing it -- so this changes WHICH channels an emphasis reaches, never by how much. Every combination
+	//	that already suppressed something suppresses exactly the same thing by exactly the same factor; what is new
+	//	is that FOOD now reaches the other two, which is what makes the three equally strong.
+	//	⚠ Each channel is suppressed AT MOST ONCE, which is what the retired "Don't supress twice" guard was for;
+	//	stating it as one pass per channel makes that structural instead of a comment to remember.
+	const bool bEmphProduction = AI_isEmphasizeYield(YIELD_PRODUCTION);
+	const bool bEmphCommerce = AI_isEmphasizeYield(YIELD_COMMERCE);
 
-		if (isFoodProduction())
+	if (bEmphProduction || bEmphasizeFood || bEmphCommerce)
+	{
+		if (bEmphProduction)
 		{
-			iFoodValue *= 130;
-			iFoodValue /= 100;
-		}
+			iProductionValue = iProductionValue * 130 / 100;
 
-		if (!AI_isEmphasizeYield(YIELD_COMMERCE) && iCommerceValue > 0)
-		{
-			iCommerceValue *= 60;
-			iCommerceValue /= 100;
-			iCommerceValue = std::max(1, iCommerceValue);
-		}
-		if (!AI_isEmphasizeYield(YIELD_FOOD) && iFoodValue > 0)
-		{
-			iFoodValue *= 75;
-			iFoodValue /= 100;
-			iFoodValue = std::max(1, iFoodValue);
-		}
-	}
-	if (AI_isEmphasizeYield(YIELD_FOOD))
-	{
-		if (!isFoodProduction())
-		{
-			iFoodValue *= 130;
-			iFoodValue /= 100;
-			iSlaveryValue *= 130;
-			iSlaveryValue /= 100;
-		}
-	}
-	if (AI_isEmphasizeYield(YIELD_COMMERCE))
-	{
-		iCommerceValue *= 130;
-		iCommerceValue /= 100;
-		if (!AI_isEmphasizeYield(YIELD_PRODUCTION) && iProductionValue > 0)
-		{
-			iProductionValue *= 75;
-			iProductionValue /= 100;
-			iProductionValue = std::max(1, iProductionValue);
-		}
-		if (!AI_isEmphasizeYield(YIELD_FOOD) && iFoodValue > 0)
-		{
-			//Don't supress twice.
-			if (!AI_isEmphasizeYield(YIELD_PRODUCTION))
+			if (bFoodIsProduction)
 			{
-				iFoodValue *= 80;
-				iFoodValue /= 100;
-				iFoodValue = std::max(1, iFoodValue);
+				iFoodValue = iFoodValue * 130 / 100;
 			}
+		}
+		if (bEmphasizeFood && !bFoodIsProduction)
+		{
+			iFoodValue = iFoodValue * 130 / 100;
+		}
+		if (bEmphCommerce)
+		{
+			iCommerceValue = iCommerceValue * 130 / 100;
+		}
+
+		if (!bEmphProduction && iProductionValue > 0)
+		{
+			iProductionValue = std::max(1, iProductionValue * 75 / 100);
+		}
+		if (!bEmphasizeFood && iFoodValue > 0)
+		{
+			//	the food factor differs by who is asking, exactly as it did before: production crowds food harder
+			//	than commerce does
+			iFoodValue = std::max(1, iFoodValue * (bEmphProduction ? 75 : 80) / 100);
+		}
+		if (!bEmphCommerce && iCommerceValue > 0)
+		{
+			iCommerceValue = std::max(1, iCommerceValue * 60 / 100);
 		}
 	}
 
@@ -10644,10 +10664,12 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 	{
 		aiPotentialYields[iPotential] = aiYields[iPotential];
 	}
-	// If we are not emphasizing food or use food for production)
-	if ((!AI_isEmphasizeYield(YIELD_FOOD) || isFoodProduction())
-	// and this plot is super bad (less than 2 food and less than combined 2 prod/commerce
-	&& !AI_potentialPlot(aiPotentialYields))
+	//	⛔ A TILE THAT CANNOT FEED ITS OWN WORKER IS NOT A FOOD TILE, so EMPHASIS DOES NOT EXEMPT IT. The carve-out
+	//	that used to stand here read "while emphasizing food, do not devalue a bad plot" -- but AI_potentialPlot
+	//	fails a tile precisely when working it costs more food than it returns, so the exemption asked a city that
+	//	wants to grow to seat citizens on net LOSSES. It was inert only because the test it guards could not answer
+	//	false; repairing that scale is what would have made it bite.
+	if (!AI_potentialPlot(aiPotentialYields))
 	{
 		// undervalue it even more!
 		iValue /= 16;
@@ -10665,14 +10687,17 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 				if (currentImprovement.getImprovementBonusDiscoverRand(GC.getMapBonus(iI)) > 0
 				&& team.isHasTech((TechTypes)GC.getBonusInfo(GC.getMapBonus(iI)).getTechReveal()))
 				{
-					iValue += 35;
+					iValue += 100 * 35;
 				}
 			}
 		}
 		if (GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementUpgrade() != NO_IMPROVEMENT)
 		{
-			iValue += 200;
-			iValue -= pPlot->getUpgradeTimeLeft(eCurrentImprovement, NO_PLAYER);
+			//	both terms are bare addends against a x100 score -- the bonus for an upgrade being available, and
+			//	the discount for how long it is still to wait. They lift TOGETHER so their ratio is preserved;
+			//	the wait is a turn COUNT, so it lifts for the same reason the constant does.
+			iValue += 100 * 200;
+			iValue -= 100 * pPlot->getUpgradeTimeLeft(eCurrentImprovement, NO_PLAYER);
 		}
 	}
 
@@ -11312,10 +11337,12 @@ int CvCityAI::AI_getPlotMagicValue(const CvPlot* pPlot, bool bHealthy, bool bWor
 			}
 		}
 	}
+	//	the x100 lift belongs on the WHOLE operand, INSIDE the min -- outside it the two arms are compared on
+	//	different planes, so per-population consumption wins every time and the clause that softens the reduction
+	//	for a genuinely poor tile can never be reached
 	const int iReductant = (
-		100 *
 		std::min(
-			getFoodConsumedPerPopulation(!bHealthy),
+			100 * getFoodConsumedPerPopulation(!bHealthy),
 			2 *
 			std::max(
 				std::max(

@@ -31,6 +31,39 @@ index:
 
 Both cursors move only forward, so a whole fill is `O(options)` rather than `O(citizens × options)`.
 
+## ⚖ EMPHASIS — an emphasis PROMOTES what was asked for and SUPPRESSES what was not (owner)
+
+**Both halves, or it does nothing.** An emphasis is a ratio shift between channels, so promoting one channel
+without suppressing its rivals moves the ranking only by the promotion — which is how food emphasis came to be
+roughly half the strength of the other two and read as inert (owner: *"emphasis has never really worked
+properly for the longest time"*).
+
+| emphasis | promotes | suppresses |
+|---|---|---|
+| production | production ×1.30 | food ×0.75 · commerce ×0.60 |
+| commerce | commerce ×1.30 | production ×0.75 · food ×0.80 |
+| **food** | food ×1.30 | production ×0.75 · commerce ×0.60 |
+
+⚑ **The suppression factor is keyed on the channel being SUPPRESSED, never on who is suppressing it** — which
+is what makes the table derivable rather than three hand-tuned sets, and what let food join it without
+inventing a magnitude. ⛔ **Each channel is suppressed AT MOST ONCE**, structurally: one pass per channel, not
+one pass per emphasizer.
+
+> **⛔ AN EMPHASIS MUST REACH THE DECISIONS TAKEN *BEFORE* THE MULTIPLIERS, NOT ONLY THE MULTIPLIERS.** The
+> SLAVERY TRANSLATION decides whether a tile's food counts as food or is re-booked as production (whip
+> fodder), and it ran ahead of the emphasis stack — so emphasis could never reach it, and the food-emphasis
+> block then scaled the slavery term, which is added to the production value. **Asking for food raised the
+> value of working food AS HAMMERS and left food itself zeroed.** Emphasizing food therefore REFUSES the
+> translation outright: the player has said grow.
+> ⚠ Read this as the general shape, not one quirk — an emphasis that is applied only as a final multiplier
+> cannot influence any branch that already ran, and the branches are where the ranking is actually decided.
+
+> **⛔ A TILE THAT CANNOT FEED ITS OWN WORKER IS NOT A FOOD TILE, SO EMPHASIS DOES NOT EXEMPT IT.** The ÷16
+> penalty on a plot failing `AI_potentialPlot` used to be waived while emphasizing food. That test fails a tile
+> precisely when working it costs more food than it returns, so the waiver asked a city that wants to grow to
+> seat citizens on net LOSSES. It was invisible only because the test it guards could not answer false; the
+> waiver is gone.
+
 ## What re-orders the list, and what does not
 
 - **The GROWTH GATES re-order it.** `AI_avoidGrowth()` / `AI_ignoreGrowth()` are what every score is conditioned
@@ -80,9 +113,29 @@ GPP / keyed-XP / wellbeing / underworld terms straight off the info. **Nothing r
 edge (Python / the `Cy` bindings).
 
 ⚑ **A score is only ever compared against another score, so its absolute scale CANCELS.** That is why no
-conversion is needed: `AI_yieldValue`'s calibration constants (`iBaseProductionValue`, `iBaseCommerceValue[]`,
-`iMaxFoodValue`) all MULTIPLY their yield and its only literal test is `> 0`, so the whole function is
-scale-invariant. Whether a weight multiplies 15 or 1500 ranks identically.
+conversion is needed: a calibration constant that MULTIPLIES its yield (`iBaseProductionValue`,
+`iBaseCommerceValue[]`, `iMaxFoodValue`) carries the scale for free, so whether a weight multiplies 15 or 1500
+ranks identically.
+
+> **⛔ SCALE-INVARIANCE IS A PROPERTY OF MULTIPLIED TERMS ONLY — AN ADDITIVE CONSTANT IS NOT INVARIANT, AND
+> NEITHER IS A COMPARISON.** *"The calibration constants all multiply their yield"* was the premise the ×100
+> conversion was made on, and it is FALSE for three shapes that sit in the same arithmetic:
+> - a **BARE ADDEND** (`iValue += 2048`) — it keeps its old magnitude while everything around it grew 100×, so
+>   it silently stops mattering;
+> - a **COMPARISON against a whole-number threshold** (`iFoodPerTurn > iHighGrowthThreshold`) — the test flips
+>   to always-true or always-false, and whatever it gated becomes unconditional;
+> - a **`min`/`max` whose arms are on different planes** — one arm wins every time and the other clause is
+>   unreachable.
+>
+> ⚑ **Each fails SILENTLY and in a different direction, which is why they need enumerating rather than
+> watching for.** The measured instances: the clause that FORCES a starving city onto its moderate-food tiles
+> became worth a few percent of an ordinary plot; the damper meant for cities *already* growing fast pinned at
+> its floor and took **×0.26 off every city's food growth value**; and the bad-plot filter
+> (`AI_potentialPlot`) could only answer false for a tile yielding literally nothing.
+> ⇒ **When converting a scoring function to ×100, the census is every ADDEND, every literal COMPARAND and every
+> mixed `min`/`max` — not the multipliers, which are the ones that need no attention.** A whole-number operand
+> LIFTS to meet the yields; the yields are never reduced to meet it
+> ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)).
 
 ⛔ **The one requirement is that every input shares ONE scale — and a partial conversion is worse than none.**
 The worked failure: five of the specialist's six info reads carried a `/100` while the keyed XP read did not,
