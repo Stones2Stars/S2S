@@ -64,6 +64,18 @@ one pass per emphasizer.
 > seat citizens on net LOSSES. It was invisible only because the test it guards could not answer false; the
 > waiver is gone.
 
+## ⚖ GROWTH BEATS ALMOST ANYTHING — THE STANDING WEIGHT OF THIS GAME (owner)
+
+**"The way this game works, growth > almost anything."** S2S is a very long game with an enormous build tree,
+so a citizen added early compounds for the rest of it — which makes FOOD the dominant term in a citizen
+decision by default, not merely a competitive one. ⛔ A valuation that ranks a food-rich tile below a
+specialist, or below a hammer tile, is wrong on this game's own terms however defensible its arithmetic looks.
+⚑ The weights already encode the intent — `iMaxFoodValue = 3 × iBaseProductionValue − 1`, i.e. food is worth
+~3× production per unit — so a defect here is almost never the RATIO. It is something CAPPING or ZEROING the
+food term before the ratio is ever applied, and both known instances did exactly that (below).
+⚠ **It governs the DEFAULT.** An explicit emphasis is the player overriding this, so suppressing food while
+production is emphasized is the model working — the ruling binds where nothing was asked for.
+
 ## ⚖ A BASE YIELD ALWAYS OUTWEIGHS A COMMERCE YIELD (owner)
 
 **Food and production are worth more than the commerce channels they compete with, in every citizen decision.**
