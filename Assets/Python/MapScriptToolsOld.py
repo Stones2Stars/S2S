@@ -3097,10 +3097,14 @@ class BonusBalancer:
 					iNumPossible += 1
 			iLandTiles += iNumPossible / BONUS.getTilesPer(iBonus)
 		iPlayers = GAME.countCivPlayersAlive() * BONUS.getPercentPerPlayer(iBonus) / 100
-		# ⛔ OPEN, NOT A TYPO: the rebuilt info carries a roll ceiling PER BAND (iRandApp1..4) where legacy had a
-		# single value, so which band -- or what combination -- reproduces the old number is a data question
-		# nobody has ruled on. Left calling with one argument so it RAISES rather than silently picking a band.
-		iBonusCount = BONUS.getRandAppearance(iBonus) * (iLandTiles + iPlayers) / 100
+		# ⚑ The bands are four DICE that are SUMMED, never alternatives to pick between: the appearance count is
+		# the constant plus one draw per band. Every band is drawn even when its ceiling is 0, because the draw
+		# still advances the shared map-RNG seed and the sequence is what the generated map is made of.
+		iRandAppearance = BONUS.getConstAppearance(iBonus)
+		mapRand = GAME.getMapRand()
+		for iBand in range( BONUS.getNumRandAppearanceBands() ):
+			iRandAppearance += mapRand.get( BONUS.getRandAppearance(iBonus, iBand), "random%d" % (iBand + 1) )
+		iBonusCount = iRandAppearance * (iLandTiles + iPlayers) / 100
 		return max( 1, iBonusCount )
 
 ##########################################################################

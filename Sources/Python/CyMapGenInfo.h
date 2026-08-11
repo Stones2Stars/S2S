@@ -33,10 +33,12 @@ public:
 	bool isFeature(int iBonus, int iFeature) const;
 	bool isFeatureTerrain(int iBonus, int iTerrain) const;
 
-	//	⚠ BANDED, unlike the legacy single value: the info was rebuilt to carry a roll CEILING per band, so a
-	//	caller names WHICH band. ⛔ The roll itself is the caller's -- an info never draws
-	//	([DEC-synced-rng-is-shared-state]: a getter that drew made the draw count depend on how often it was
-	//	called). `getNumRandAppearanceBands` is published so a caller can walk them rather than assume the count.
+	//	⚠ THE BANDS ARE FOUR DICE THAT ARE SUMMED, NEVER ALTERNATIVES TO PICK BETWEEN: the appearance count is
+	//	`getConstAppearance` plus ONE DRAW PER BAND, which is exactly what the legacy single-value getter
+	//	returned. This getter serves the band's roll CEILING; the DRAW is the caller's.
+	//	⛔ A band whose ceiling is 0 is still drawn -- the draw advances the shared map-RNG seed, and that
+	//	sequence is what the generated map is made of, so skipping one silently changes the map.
+	//	`getNumRandAppearanceBands` is published so a caller walks them rather than assuming the count.
 	int getRandAppearance(int iBonus, int iBand) const;
 	int getNumRandAppearanceBands() const;
 	int getConstAppearance(int iBonus) const;

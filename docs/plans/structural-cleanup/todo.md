@@ -705,25 +705,21 @@
 
 ## Stage 4 — the Python surface
 
-- ⛔ **MAP GENERATION CANNOT READ ITS DATA — a NEW GAME cannot be generated.** The map-gen registries
-  (climate · sea level · bonus · feature · terrain) have no published read, and `CvMapGeneratorUtil.py` is the
-  DLL's own fallback implementation ([engine.md](../../reference/engine.md): undefined callbacks fall back to
-  it), so this is not one screen failing — it is the generation path.
-  ⚠ **They are NOT outside the library — only their CALLBACK contract is separate**
+- ⛔ **NO MAP HAS BEEN GENERATED SINCE THE MAP-GEN READS MOVED ONTO THE LIBRARY.** `CvMapGeneratorUtil.py` is
+  the DLL's own fallback implementation ([engine.md](../../reference/engine.md): undefined callbacks fall back
+  to it), so a broken read there is not one screen failing — it is the whole generation path, and **nothing on
+  the standing save exercises it**. Only starting a NEW GAME can observe it
+  ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)).
+  ⚠ **Map scripts are NOT outside the library — only their CALLBACK contract is separate**
   ([python-read-map.md](../../reference/python-read-map.md) ruling 1). The old `GC.get<X>Info` endpoints are
-  not coming back, so the reads move onto the named surface like every other consumer's.
+  not coming back, so their reads live on the named surface like every other consumer's.
   ⚖ **What IS genuinely theirs is the ENUMERATION: a map script really does have to iterate every bonus,
   terrain and feature**, so the whole-registry loop is correct here and STAYS — the pedia's carve-out, second
   instance. ⛔ Do not convert a map-gen sweep to an edge read; only where each value comes from changes.
-  ⚑ The accessors are BUILT (climate · bonus · feature · terrain · sea level, the `CyWorldInfo` shape) and both
-  in-tree generator files read through them. ⛔ **What is NOT settled is the bonus RAND APPEARANCE**: the rebuilt
-  info carries a roll ceiling PER BAND where legacy had one value, so which band -- or what combination --
-  reproduces the old number is an owner question. The one call site is left RAISING rather than silently
-  picking a band ([DEC-no-guessing]: at a gap, verify or ask).
-  ⚑ It also gates VERIFICATION of everything that only fires at game start — the era/civ free techs, the
+  ⚑ The same run is the ONLY way to observe everything that fires at game start — the era/civ free techs, the
   starting units and gold, `freePopulation`, `FreeStartEra`
   ([legacy-grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §5): none is exercisable on the
-  standing save, so none can be observed while this stands.
+  standing save, so none can be observed until a new game is started.
 
 > Contract: [patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md). Read maps:
 > [pedia-read-map.md](../../reference/pedia-read-map.md) · [python-read-map.md](../../reference/python-read-map.md).
