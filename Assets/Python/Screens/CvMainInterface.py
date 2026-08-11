@@ -13,6 +13,7 @@ import RevInstances
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 STATE = CyState()
 
@@ -365,7 +366,7 @@ class CvMainInterface:
 				szName = INFO.getDescription("BUILDING_", iBuilding)
 				if INFO.getIntrinsic("BUILDING_", iBuilding, IntrinsicSlot.PYINT_COST) < 1:
 					aBuildingList2.append((szName, iBuilding))
-				elif INFO.getIntrinsic("BUILDING_", iBuilding, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
+				elif BUILDING.isLimitedWonder(iBuilding):
 					aBuildingList1.append((szName, iBuilding))
 				else:
 					aBuildingList0.append((szName, iBuilding))
@@ -3722,7 +3723,7 @@ class CvMainInterface:
 			i = 0
 			while i < iNumInGroup:
 				iType = aGroup0[i]
-				if INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
+				if BUILDING.isLimitedWonder(iType):
 					break
 				i += 1
 				BTN = INFO.getButton("BUILDING_", iType)
@@ -3755,15 +3756,15 @@ class CvMainInterface:
 			aList3 = []
 			for aGroup in STATE.getBuildingListGroups(iCityOwner, iCityID):
 				for iType in aGroup:
-					if not INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
+					if not BUILDING.isLimitedWonder(iType):
 						break
 					# RELOCATABLE (the palace, the culture buildings) -- rendered as their own band below.
-					if INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_IS_NO_INSTANCE_LIMIT):
+					if BUILDING.isRelocatable(iType):
 						aList0.append(iType)
 					else:
 						# The cap's SCOPE is the wonder category ([json.md] 4.4) -- there is no isNationalWonder
 						# mirror to ask, and never was one on this surface.
-						eScope = INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_WONDER_SCOPE)
+						eScope = BUILDING.getWonderScope(iType)
 						if eScope == AllowedCap.ALLOWEDCAP_EMPIRE:
 							aList1.append(iType)
 						elif eScope == AllowedCap.ALLOWEDCAP_TEAM:
@@ -5761,7 +5762,7 @@ class CvMainInterface:
 						elif TYPE == "BUILDING":
 							iOrder = OrderTypes.ORDER_CONSTRUCT
 							szTxt = INFO.getDescription("BUILDING_", iType)
-							iSpeci = INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_SPECIAL_BUILDING)
+							iSpeci = BUILDING.getSpecialBuilding(iType)
 							if iSpeci > -1:
 								self.bUpdateCityTab = self.iCityTab > CITYTAB_ADMIN
 							else:

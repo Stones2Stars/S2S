@@ -55,15 +55,12 @@ enum PyIntrinsicSlot
 	PYINT_IS_VISIBLE,          // is this specialist assignable on the city screen (identity.visible)
 	PYINT_COLOR_TYPE,          // COLOR_* FK for a yield
 	PYINT_ACTION_INFO_INDEX,   // the hotkey/action index a control maps to
-	PYINT_IS_LIMITED_WONDER,   // does this building carry a SELF-cap (world/team/empire) -- i.e. is it a wonder
 	PYINT_IS_PERMANENT,        // is this victory PERMANENT (never written into a scenario's victory list)
 	PYINT_IS_REPEAT,           // is this tech REPEATABLE (researchable more than once)
 	PYINT_IS_DISABLED,         // TECH_ is this tech switched OFF in the data (identity.disable) -- it exists
 	                           // in the registry and is never offered, so a LISTING must skip it
 	PYINT_DEFAULT_PLAYERS,     // a world size's default player count (the map-setup straggler)
-	PYINT_HEADQUARTERS_CORPORATION, // CORPORATION_* FK -- the corp this building is the HEADQUARTERS of (json §9)
-	PYINT_IS_SPACESHIP,
-	PYINT_WONDER_SCOPE,         // WHICH scope a building's self-cap sits at -- the wonder CATEGORY
+	PYINT_IS_SPACESHIP,        // PROJECT_ -- is this project a spaceship part (the build-progress readout)
 	PYINT_ERA,                  // TECH_ era FK (identity.era) -- the tech tree's era banding
 	PYINT_ADVISOR,              // TECH_ ADVISOR_* FK (ui.art.advisor) -- which advisor the tech is filed under
 	PYINT_TOTAL_TURNS,          // GAMESPEED_ the speed's total game length in turns (the end-turn estimate)
@@ -71,10 +68,6 @@ enum PyIntrinsicSlot
 	PYINT_GRID_Y,               // TECH_ tech-tree layout row
 	PYINT_TRADE_ROUTE_AMOUNT,   // the scope-wide flat trade-ROUTE COUNT this entity deposits (kind 0 IS the
 	                            // count -- TRADE_ROUTE_AMOUNT, CvInfoKinds.h)
-	PYINT_IS_NO_INSTANCE_LIMIT, // is this building RELOCATABLE -- it waives the empire (national-wonder)
-	                            // cap, so a palace / culture building can be rebuilt elsewhere (json identity)        // is this project a spaceship part (the build-progress readout)
-	PYINT_VOTE_SOURCE,          // BUILDING_ VOTESOURCE_* FK -- the diplomatic body this building CONVENES
-	                            // (json par.9 `voteSource`); -1 for the overwhelming majority
 	PYINT_IS_BUILD,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
 	PYINT_UNIT_COMBAT,          // UNIT_ UNITCOMBAT_* FK, NO_UNITCOMBAT when the unit has none
 	PYINT_HURRY_GOLD_PER_PRODUCTION,   // HURRY_ -- gold paid per hammer
@@ -84,7 +77,6 @@ enum PyIntrinsicSlot
 	PYINT_ESPIONAGE_TARGETS_CITY,
 	PYINT_ESPIONAGE_IS_PASSIVE,
 	PYINT_ESPIONAGE_TECH_PREREQ,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
-	PYINT_SPECIAL_BUILDING,     // BUILDING_ SPECIALBUILDING_* FK -- the shared-cap group, -1 when ungrouped
 	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.
 	                            // ⛔ It is a genuine INTRINSIC, never a tag read ([json.md] par.7, [tags.md]): a
 	                            // tag says what a unit IS, a domain says where it OPERATES, and answering the

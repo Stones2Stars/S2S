@@ -25,6 +25,7 @@ GC = CyGlobalContext()
 GAME = GC.getGame()
 MAP = GC.getMap()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 STATE = CyState()
 ACT = CyAct()
 ENABLER = CyEnabler()
@@ -1380,7 +1381,7 @@ class CvEventManager:
 		if not CyPlayer.isFeatAccomplished(FeatTypes.FEAT_NATIONAL_WONDER):
 			# A building's wonder CATEGORY is WHICH self-cap scope it authors ([json.md] 4.4) -- EMPIRE is the
 			# national wonder. There is no isNationalWonder mirror to ask, and never was one on this surface.
-			if INFO.getIntrinsic("BUILDING_", iBuilding, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_EMPIRE:
+			if BUILDING.getWonderScope(iBuilding) == AllowedCap.ALLOWEDCAP_EMPIRE:
 				CyPlayer.setFeatAccomplished(FeatTypes.FEAT_NATIONAL_WONDER, True)
 
 				if not self.bNetworkMP and GAME.getElapsedGameTurns() != 0 and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):

@@ -10,6 +10,7 @@ TRNSLTR = CyTranslator()
 # The one data-fetching library ([DEC-cy-not-fixed]): INFO = what an entity CARRIES,
 # ENABLER = "can I?" (its maintained verdict, never a re-derived prereq walk).
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 ENABLER = CyEnabler()
 
 TEXT = CyGameTextMgr()
@@ -122,7 +123,7 @@ class CityDemolish:
 			if CyCity.hasBuilding(iType) and not CyCity.isFreeBuilding(iType):
 				# A wonder's CATEGORY is WHICH self-cap scope it authors ([json.md] 4.4): WORLD and TEAM are the
 				# world and team wonders. There is no isWorldWonder mirror to ask, and never was one.
-				eScope = INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_WONDER_SCOPE)
+				eScope = BUILDING.getWonderScope(iType)
 				if eScope in (AllowedCap.ALLOWEDCAP_WORLD, AllowedCap.ALLOWEDCAP_TEAM):
 					continue
 				# Unique buildings are protected. Each is asked of the BUILDING because the question is what

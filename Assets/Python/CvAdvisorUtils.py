@@ -8,6 +8,7 @@ STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 TRNSLTR = CyTranslator()
 MAP = GC.getMap()
 
@@ -503,7 +504,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	IS the shared choice set, iterated instead of the entity database).
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iValue = INFO.expectedWellbeing("BUILDING_", iBuildingX, iPlayer, iCityID)[WellbeingChannel.WELLBEING_HEALTH]
 							if iValue > iBestValue:
@@ -538,7 +539,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	IS the shared choice set, iterated instead of the entity database).
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iValue = INFO.expectedWellbeing("BUILDING_", iBuildingX, iPlayer, iCityID)[WellbeingChannel.WELLBEING_HAPPINESS]
 							if iValue > iBestValue:
@@ -573,7 +574,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	IS the shared choice set, iterated instead of the entity database).
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iValue = INFO.expectedDefenseKinds("BUILDING_", iBuildingX, iPlayer, iCityID)[DefenseKind.DEFENSE_AMOUNT]
 							if iValue > iBestValue:
@@ -606,7 +607,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	frontier is already the constructible set, so the walk is the gate.
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iBestBuilding = iBuildingX
 							break
@@ -638,7 +639,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	IS the shared choice set, iterated instead of the entity database).
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iValue = INFO.expectedFlatCommerces("BUILDING_", iBuildingX, iPlayer, iCityID)[CommerceTypes.COMMERCE_CULTURE]
 							if iValue > iBestValue:
@@ -673,7 +674,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	IS the shared choice set, iterated instead of the entity database).
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iValue = INFO.expectedCommerceModifiers("BUILDING_", iBuildingX, iPlayer, iCityID)[CommerceTypes.COMMERCE_GOLD]
 							if iValue > iBestValue:
@@ -708,7 +709,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	IS the shared choice set, iterated instead of the entity database).
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iValue = INFO.expectedCommerceModifiers("BUILDING_", iBuildingX, iPlayer, iCityID)[CommerceTypes.COMMERCE_RESEARCH]
 							if iValue > iBestValue:
@@ -745,7 +746,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	(a terrain-keyed flat, and a predicate-gated plots entry). The what-if folds both.
 						for iBuildingX in ENABLER.getAvailableBuildings(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("BUILDING_", iBuildingX, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+							if BUILDING.isLimitedWonder(iBuildingX): continue
 
 							iValue = INFO.expectedPlotYields("BUILDING_", iBuildingX, iPlayer, iCityID)[YieldTypes.YIELD_FOOD]
 							if iValue > iBestValue:

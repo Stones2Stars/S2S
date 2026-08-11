@@ -16,6 +16,7 @@ import WorldBuilder
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 STATE = CyState()
 ACT = CyAct()
 ENABLER = CyEnabler()
@@ -148,7 +149,7 @@ class WBBuildingScreen:
 		for i in xrange(GC.getNumBuildingInfos()):
 			# The wonder CATEGORY is WHICH self-cap scope the building authors ([json.md] 4.4) -- EMPIRE is the
 			# national wonder, TEAM the team wonder, WORLD the world wonder. -1 means uncapped: an ordinary building.
-			eScope = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE)
+			eScope = BUILDING.getWonderScope(i)
 			if eScope == AllowedCap.ALLOWEDCAP_EMPIRE:
 				lNational.append([INFO.getDescription("BUILDING_", i), i])
 			elif eScope == AllowedCap.ALLOWEDCAP_TEAM:
@@ -380,7 +381,7 @@ class WBBuildingScreen:
 				iType = not pCity.hasBuilding(item)
 			self.doEffects(pCity, item, iType)
 		iFreeBuilding = info.getFreeBuilding()
-		if iFreeBuilding > -1 and bWonder != INFO.getIntrinsic("BUILDING_", iFreeBuilding, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
+		if iFreeBuilding > -1 and bWonder != BUILDING.isLimitedWonder(iFreeBuilding):
 			return True
 		return False
 

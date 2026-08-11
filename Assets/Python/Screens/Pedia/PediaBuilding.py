@@ -3,6 +3,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 TRNSLTR = CyTranslator()
 
 TEXT = CyGameTextMgr()
@@ -314,7 +315,7 @@ class PediaBuilding:
 		if nOr > 1:
 			screen.attachLabel(panelName, "", szBracketR)
 		# Corporation Bonus Req
-		iType = INFO.getIntrinsic("BUILDING_", iTheBuilding, IntrinsicSlot.PYINT_HEADQUARTERS_CORPORATION)
+		iType = BUILDING.getHeadquartersCorporation(iTheBuilding)
 		if iType != -1:
 			lPrereqBonuses = INFO.getIdList("CORPORATION_", iType, IdListSlot.PYLIST_CONSUMED_BONUSES)
 			nOr = len(lPrereqBonuses)

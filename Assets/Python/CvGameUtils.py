@@ -10,6 +10,7 @@ import CvUtil
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 GAME = GC.getGame()
 STATE = CyState()
 ENABLER = CyEnabler()
@@ -426,7 +427,7 @@ class CvGameUtils:
 					lWonders = []
 					for i in xrange(GC.getNumBuildingInfos()):
 						if pCity.hasBuilding(i):
-							if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER):
+							if BUILDING.isLimitedWonder(i):
 								lWonders.append(INFO.getDescription("BUILDING_", i))
 							else:
 								lBuildings.append(INFO.getDescription("BUILDING_", i))

@@ -18,6 +18,7 @@
 #include "Python/CyMessageControl.h"
 #include "Python/CyState.h"
 #include "Python/CyWorldInfo.h"
+#include "Python/CyBuildingInfo.h"
 #include "Python/CyImprovementInfo.h"
 #include "Python/CyUnitInfo.h"
 #include "Python/CyBuildInfo.h"
@@ -124,6 +125,7 @@ DllExport void DLLPublishToPython()
 	// The PER-INFO accessors, for what belongs to ONE type. A script binds these BY NAME, so its bindings list is
 	// its dependency list ([patterns.md]: explicit imports, always -- you see what is used).
 	CyWorldInfo::pythonPublish();
+	CyBuildingInfo::pythonPublish();
 	CyImprovementInfo::pythonPublish();
 	CyUnitInfo::pythonPublish();
 	CyBuildInfo::pythonPublish();

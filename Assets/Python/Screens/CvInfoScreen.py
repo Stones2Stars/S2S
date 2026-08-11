@@ -11,6 +11,7 @@ import math
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 GAME = GC.getGame()
 STATE = CyState()
@@ -986,7 +987,7 @@ class CvInfoScreen:
 		# Make a wonder list
 		for i in xrange(GC.getNumBuildingInfos()):
 			# The wonder CATEGORY is the self-cap's SCOPE ([json.md] 4.4) -- WORLD is the world wonder.
-			if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_WORLD:
+			if BUILDING.getWonderScope(i) == AllowedCap.ALLOWEDCAP_WORLD:
 				aWonderList.append(i)
 
 		aaiTopCitiesWonders = []
@@ -1110,7 +1111,7 @@ class CvInfoScreen:
 					for iBuildingLoop in xrange(GC.getNumBuildingInfos()):
 
 						# World Wonder Mode
-						if (self.szWonderDisplayMode == "WorldWonders" and INFO.getIntrinsic("BUILDING_", iBuildingLoop, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_WORLD):
+						if (self.szWonderDisplayMode == "WorldWonders" and BUILDING.getWonderScope(iBuildingLoop) == AllowedCap.ALLOWEDCAP_WORLD):
 							# Is this city building a wonder?
 							if (iBuildingProd == iBuildingLoop):
 								if (iTeamX == self.iTeam):
@@ -1131,7 +1132,7 @@ class CvInfoScreen:
 
 						# National/Team Wonder Mode
 						# The wonder CATEGORY is the self-cap's SCOPE ([json.md] 4.4): EMPIRE = national, TEAM = team.
-						elif self.szWonderDisplayMode == "NationalWonders" and INFO.getIntrinsic("BUILDING_", iBuildingLoop, IntrinsicSlot.PYINT_WONDER_SCOPE) in (AllowedCap.ALLOWEDCAP_EMPIRE, AllowedCap.ALLOWEDCAP_TEAM):
+						elif self.szWonderDisplayMode == "NationalWonders" and BUILDING.getWonderScope(iBuildingLoop) in (AllowedCap.ALLOWEDCAP_EMPIRE, AllowedCap.ALLOWEDCAP_TEAM):
 
 							# Is this city building a wonder?
 							if (iBuildingProd == iBuildingLoop):

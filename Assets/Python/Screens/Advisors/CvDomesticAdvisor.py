@@ -7,6 +7,7 @@ import cPickle
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -515,7 +516,7 @@ class CvDomesticAdvisor:
 
 		# add National Wonders
 		for i in xrange(GC.getNumBuildingInfos()):
-			if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_WONDER_SCOPE) == AllowedCap.ALLOWEDCAP_EMPIRE and CyCity.hasBuilding(i):
+			if BUILDING.getWonderScope(i) == AllowedCap.ALLOWEDCAP_EMPIRE and CyCity.hasBuilding(i):
 				# Use bullets as markers for National Wonders
 				szReturn += unichr(8854)
 
@@ -634,7 +635,7 @@ class CvDomesticAdvisor:
 				szIcon = self.yieldIcons[YieldTypes.YIELD_PRODUCTION]
 				if city.isProductionBuilding():
 					szColorKey = "WONDER"
-					iCapScope = INFO.getIntrinsic("BUILDING_", city.getProductionBuilding(), IntrinsicSlot.PYINT_WONDER_SCOPE)
+					iCapScope = BUILDING.getWonderScope(city.getProductionBuilding())
 					if iCapScope == AllowedCap.ALLOWEDCAP_WORLD:
 						szIcon = unichr(8858)
 					elif iCapScope in (AllowedCap.ALLOWEDCAP_TEAM, AllowedCap.ALLOWEDCAP_EMPIRE):

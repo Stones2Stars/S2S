@@ -7,6 +7,7 @@ import AttitudeUtil
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 VICTORY = CyVictoryInfo()   # the per-info accessor: the whole `condition` block in two grouped reads
 CULTURELEVEL = CyCultureLevelInfo()   # the culture threshold a city counts toward, per (level x gamespeed)
 GAME = GC.getGame()
@@ -264,7 +265,7 @@ class CvVictoryScreen:
 		# Vote
 		aiVoteBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			iVoteSource = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_VOTE_SOURCE)
+			iVoteSource = BUILDING.getVoteSource(i)
 			for j in xrange(GC.getNumVoteSourceInfos()):
 				if iVoteSource == j:
 					iUNTeam = -1
@@ -1031,7 +1032,7 @@ class CvVictoryScreen:
 
 		aiVoteBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			iVoteSource = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_VOTE_SOURCE)
+			iVoteSource = BUILDING.getVoteSource(i)
 			for j in xrange(GC.getNumVoteSourceInfos()):
 				if iVoteSource == j:
 					iUNTeam = -1
@@ -1596,7 +1597,7 @@ class CvVictoryScreen:
 
 	def getAP_UN_OwnerTeam(self):
 		for i in xrange(GC.getNumBuildingInfos()):
-			iVoteSource = INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_VOTE_SOURCE)
+			iVoteSource = BUILDING.getVoteSource(i)
 			for j in xrange(GC.getNumVoteSourceInfos()):
 				if iVoteSource == j:
 					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):

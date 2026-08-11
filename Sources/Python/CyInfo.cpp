@@ -187,34 +187,6 @@ namespace
 		return cyi_xmlOnlyInfo(szTypePrefix, iId);
 	}
 
-	// WHICH ownable scope a SELF-cap sits at, or -1 for none. The cap's scope IS the wonder category
-	// ([json.md] 4.4), so the category and the is-it-capped test read the SAME function -- two tests would be
-	// two meanings of "capped" that can drift.
-	// ⚠ The CATEGORY count-caps are a different axis and are not a self-cap.
-	int cyi_selfCapScope(const CvAllowed* pAllowed)
-	{
-		if (pAllowed == NULL) return -1;
-		if (pAllowed->cap(ALLOWEDCAP_WORLD)  >= 0) return ALLOWEDCAP_WORLD;
-		if (pAllowed->cap(ALLOWEDCAP_TEAM)   >= 0) return ALLOWEDCAP_TEAM;
-		if (pAllowed->cap(ALLOWEDCAP_EMPIRE) >= 0) return ALLOWEDCAP_EMPIRE;
-		return -1;
-	}
-
-	// The building's cap scope, following the SAME two routes the enabler does: its own `allowed`, else the
-	// SPECIALBUILDING GROUP that holds the cap for all its members.
-	int cyi_buildingCapScope(int iId)
-	{
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iId);
-		const int iOwn = cyi_selfCapScope(kBuilding.getAllowed());
-		if (iOwn >= 0) return iOwn;
-
-		const int iSpecialBuilding = kBuilding.getSpecialBuildingType();
-		if (iSpecialBuilding != NO_SPECIALBUILDING)
-		{
-			return cyi_selfCapScope(GC.getSpecialBuildingInfo((SpecialBuildingTypes)iSpecialBuilding).getAllowed());
-		}
-		return -1;
-	}
 }
 
 std::wstring CyInfo::getDescription(const std::string& szTypePrefix, int iId) const
@@ -1190,23 +1162,6 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getWorldInfo((WorldSizeTypes)iId).getDefaultPlayers();
 		break;
 
-	case PYINT_HEADQUARTERS_CORPORATION:
-		// ⚑ The FK lives on the BUILDING (json §9 `headquarters`: the relationship IS the data), so asking a
-		// building which corporation it heads is a straight member read. ⛔ It is NOT the inverse question --
-		// "which building founds corporation X" is a reverse lookup and belongs to the edge families
-		// ([DEC-one-reverse-view]), never to a scan of every building testing this slot.
-		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
-			return GC.getBuildingInfo((BuildingTypes)iId).getHeadquartersCorporation();
-		break;
-
-	//	⚠ The INFO-side getter is still named for the legacy XML tag (`getDiploVoteType`); the slot is named for
-	//	what the value IS, which is the direction the rename goes ([todo.md]: diploVoteType -> the `voteSource`
-	//	section). A consumer therefore never learns the legacy spelling.
-	case PYINT_VOTE_SOURCE:
-		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
-			return GC.getBuildingInfo((BuildingTypes)iId).getDiploVoteType();
-		break;
-
 	case PYINT_IS_SPACESHIP:
 		if (szTypePrefix == "PROJECT_" && iId < GC.getNumProjectInfos())
 			return GC.getProjectInfo((ProjectTypes)iId).isSpaceship() ? 1 : 0;
@@ -1267,11 +1222,6 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getMissionInfo((MissionTypes)iId).isBuild() ? 1 : 0;
 		break;
 
-	case PYINT_SPECIAL_BUILDING:
-		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
-			return GC.getBuildingInfo((BuildingTypes)iId).getSpecialBuildingType();
-		break;
-
 	case PYINT_DOMAIN:
 		if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
 			return GC.getUnitInfo((UnitTypes)iId).getDomain();
@@ -1303,46 +1253,12 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
 			return GC.getTechInfo((TechTypes)iId).getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY);
 		break;
-	case PYINT_WONDER_SCOPE:
-		//	WHICH scope the self-cap sits at -- an ALLOWEDCAP_* value, or -1 when the building is uncapped.
-		//	That scope IS the wonder category: WORLD -> world wonder, TEAM -> team wonder, EMPIRE -> national.
-		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
-			return cyi_buildingCapScope(iId);
-		break;
-
-	case PYINT_IS_NO_INSTANCE_LIMIT:
-		//	RELOCATABLE: the building waives the EMPIRE (national-wonder) cap, so it can be rebuilt elsewhere --
-		//	the palace and the culture buildings. The cap itself stays; only its empire enforcement is waived
-		//	(CvBuildingEnabler), which is why this is its own fact and not the absence of a cap.
-		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
-			return GC.getBuildingInfo((BuildingTypes)iId).isNoInstanceLimit() ? 1 : 0;
-		break;
-
 	case PYINT_ACTION_INFO_INDEX:
 		// CvControlInfo derives from CvHotkeyInfo, which owns the index -- the control registry is XML-only,
 		// so there is no InfoRepo route to it.
 		// Controls are a FIXED enum rather than a counted registry, so the bound is the enum terminator.
 		if (szTypePrefix == "CONTROL_" && iId < NUM_CONTROL_TYPES)
 			return GC.getControlInfo((ControlTypes)iId).getActionInfoIndex();
-		break;
-
-	case PYINT_IS_LIMITED_WONDER:
-		// ⚑ A building's wonder CATEGORY is derived from WHICH self-cap it authors ([json.md §4.4]: the cap's
-		// scope is what makes it a world / team / national wonder), never from an isWorldWonder mirror.
-		//
-		// ⛔ TWO WAYS TO BE CAPPED, and reading only the first is wrong. A building may carry its own self-cap,
-		// OR belong to a SPECIALBUILDING GROUP that holds the cap for all its members (json.md §4.4: the member
-		// authors identity.specialBuildingType, the GROUP entity holds `allowed`). A grouped wonder authors no
-		// cap of its own, so a self-cap-only test calls it unlimited -- silently, and only for the grouped ones.
-		// This mirrors the enabler's own gate (CvBuildingEnabler bd_groupCapOk / the group-capped re-gate), so
-		// there is ONE meaning of "capped" rather than two that can drift.
-		//
-		// ⚠ The CATEGORY count-caps (worldWonders/teamWonders/nationalWonders) are a DIFFERENT axis -- a per-city
-		// bound set by CultureLevel -- and deliberately do not make a building "limited".
-		if (szTypePrefix == "BUILDING_" && iId < GC.getNumBuildingInfos())
-		{
-			return cyi_buildingCapScope(iId) >= 0 ? 1 : 0;
-		}
 		break;
 
 	case PYINT_IS_REPEAT:

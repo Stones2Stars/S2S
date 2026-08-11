@@ -15,6 +15,7 @@ import WBInfoScreen
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -161,8 +162,8 @@ class WBCityDataScreen:
 		global lBuilding
 		lBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			if bWonder and not INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
-			if not bWonder and INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_IS_LIMITED_WONDER): continue
+			if bWonder and not BUILDING.isLimitedWonder(i): continue
+			if not bWonder and BUILDING.isLimitedWonder(i): continue
 			info = GC.getBuildingInfo(i)
 			if info.isGraphicalOnly(): continue
 			lBuilding.append([info.getDescription(), i])
