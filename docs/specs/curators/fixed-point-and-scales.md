@@ -221,10 +221,12 @@ not exist, so the two decimals carry nothing; that is true and it is not a reaso
 that it has NO exceptions (owner): *"if I had allowed for free specialists to not be a ×100 number internally,
 it is a virtual guarantee that some agent would bullshit their way through and decide more numbers should be
 like that."*** An exemption argued well for one field is a precedent the next agent widens.
-⚠ **It already happened, which is why this is spelled out rather than assumed.** A `CASC_UNIT_COUNT` carve-out
-was added at the parse edge exempting such fields from the ×100 — attributed to the owner, justified by "half
-of one does not exist", and in the very same sentence generalised past specialist slots to *"population and
-era"*. That is the widening, visible in the comment that created it.
+⚠ **THE COST IS MEASURED, not hypothetical, which is why the argument is spelled out rather than left to
+judgement.** A parse-edge carve-out exempting the count-by-type leaf from the ×100 left info-authored counts
+unscaled while the unattributed ledger was lifted to meet them — so every derivable slot floored to zero at the
+read edge and roughly **200 buildings authoring `freeSpecialists` granted nothing at all**. The carve-out's own
+justification generalised past specialist slots to "population and era" in the same sentence it was written,
+which is the widening in miniature: state and authored data reasoned about as one thing.
 ⛔ **POPULATION IS NOT A COUNTER-EXAMPLE — IT IS NOT FROM AN INFO (owner).** It is engine state read by a
 `per:` count-scaler ([json.md §3.1](../json.md)), never an authored deposit, so it never enters this table at
 all. "X is a count" is therefore never an argument about a deposit's scale; the question is only ever whether

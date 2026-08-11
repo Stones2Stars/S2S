@@ -249,24 +249,6 @@
 
 ## Not built yet
 
-- **ROUTE THE SPECIALIST FACT ONTO THE SPECIALIST YIELD PLANE, and read it as TIER 1.** The city now carries
-  two TYPED yield planes — `getSpecialistYields()` and `getBuildingYields()`, different types so the wrong
-  deposit cannot compile ([DEC-hard-typing-or-rollerskate](../../architecture/decisions.md#dec-hard-typing-or-rollerskate),
-  [state-repositories.md](../../architecture/state-repositories.md) § THE ORIGIN RULE) — but the specialist plane
-  is still EMPTY and nothing reads it. Three legs remain, and until all three land the city DOUBLE-COUNTS every
-  channel a specialist authors:
-  1. `mc_applySourceDeposits` takes the ORIGIN as a REQUIRED argument (never a default — a new source kind must
-     be forced to state its plane) and the `SEVT_CITY_SPECIALIST_ADDED / _REMOVED` case passes the specialist
-     origin, so a specialist's flats AND percents land on the specialist plane.
-  2. The combine reads it: the specialist plane resolves as `flat × (100 + its own percent)/100` and joins BASE
-     — §2a's SECOND percent stack, which is also what stops a specialist's own percent leaking into the
-     whole-city modifier.
-  3. `InfoValuation::specialistTerm` GOES. It is a read-time walk over every specialist id, which is the
-     O(what EXISTS) shape the maintained sum deletes; a maintained plane makes the read a bare fetch. ⚑ Its
-     three known gaps die with it rather than needing fixes: the `empire.cities.flat` leg, the `perAll` bucket,
-     and the multiplier counting `getSpecialistCount` alone where the engine says `+ getFreeSpecialistCount`
-     (a maintained plane cannot miss a free specialist — it receives the fact). Keep only its per-type census
-     ROWS, which the `[MODIFIER] specialistRead` line renders.
 - **Give the PLOT origin its own typed plane.** Worked-plot yields currently fold into a plot-base SEGMENT on
   the BUILDING plane rather than a third typed package. They are not conflated (the segment is addressed
   separately, `readPlotBaseFlat` vs `readFlat`), so this is a naming and structure mismatch rather than a wrong
@@ -635,7 +617,7 @@
   (`zoneOfControl`, `protectedCulture`, `adds3rdRing`).
   ⚑ POWER is converted and is the worked pattern to copy: the fold announces the 0 ⇄ non-zero CROSSING and the
   existing consumers route on it unchanged. ⛔ The generalization left is the FACT — one parameterized amenity
-  fact carrying the id, replacing the per-attribute ones (government centre, fresh water) as each converts. Do
+  fact carrying the id, replacing the per-attribute ones (the government centre) as each converts. Do
   not grow a second bespoke fact per key on the way.
   ⚠ Check each counter's FEEDERS first: power's had none left in the engine at all (only a dead `CyCity`
   binding wrote it), so the conversion was a read-swap rather than a migration — the others may not be.
