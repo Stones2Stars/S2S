@@ -9735,15 +9735,25 @@ void CvCityAI::AI_juggleCitizens()
 //	([DEC-fixedpoint-x100]: a value is never reduced to meet a count). Unlifted, every tile carrying any food at
 //	all cleared a threshold of 4 hundredths and the test could only answer false for a tile yielding NOTHING --
 //	which is not a filter. The same lift is already spelled out for this define where the growth branch reads it.
+// ⛔ THIS TEST IS KNOWINGLY INERT, AND LIFTING ITS OPERANDS TO ×100 IS A BALANCE CHANGE, NOT A REPAIR.
+// The comparands are deliberately left on the ×1 plane against ×100 yields, so a tile fails only by yielding
+// literally nothing. That is not an oversight to correct: at ×100 the test asks whether a tile feeds its own
+// worker against FOOD_CONSUMPTION_PER_POPULATION (4), which almost no unimproved tile does -- an ordinary
+// 2-food grassland fails -- and the `/16` penalty its caller applies then demotes that whole yield class below
+// every specialist, so those plots go unworked. Measured on the standing save: yieldPart 12864 -> finalVal 804.
+// ⚑ The penalty has therefore never once fired in this mod's life, and the game has been balanced around its
+// silence -- the golden-age growth-discount case exactly ([superseded-ideas](../../docs/architecture/superseded-ideas.md)).
+// ⛔ So do not "fix" the scale here. If the mechanic is ever wanted it is a deliberate balance decision, made
+// with the demotion factor chosen rather than inherited.
 bool CvCityAI::AI_potentialPlot(const int* piYields) const
 {
-	const int iNetFood = piYields[YIELD_FOOD] - 100 * GC.getFOOD_CONSUMPTION_PER_POPULATION();
+	const int iNetFood = piYields[YIELD_FOOD] - GC.getFOOD_CONSUMPTION_PER_POPULATION();
 
 	if (iNetFood < 0)
 	{
 		if (piYields[YIELD_FOOD] == 0)
 		{
-			if (piYields[YIELD_PRODUCTION] + piYields[YIELD_COMMERCE] < 200)
+			if (piYields[YIELD_PRODUCTION] + piYields[YIELD_COMMERCE] < 2)
 			{
 				return false;
 			}
