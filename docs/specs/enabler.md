@@ -772,6 +772,18 @@ never the home of that answer.
 > PLOT-RESIDENT source, so a plot-scope route with no named plot has no target by construction, and declining to
 > fan drops nothing.
 
+> **⛔ NO BONUS LIST IS SERIALIZED, ANYWHERE — the plot group's, `onSite`, any of them — and the plot group is
+> populated EXCLUSIVELY BY EVENTS ON LOAD (owner).** A resource list is DERIVED at every scope it appears at, so
+> it answers to [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted) with no
+> per-list judgement to make.
+> ⚖ **THE ONE EXCEPTION IS A TRADE, AND IT IS THE DEAL THAT PERSISTS, NEVER THE LIST (owner): *"bonuses traded
+> away needs to be serialized, otherwise the trade is lost — so that is the current trade DEAL itself being
+> serialized, not the list."*** An agreement between two players is genuine non-derivable state (the event-store
+> class, [save.md §5](save.md)); the per-bonus import/export COUNTS that follow from it are derived and are
+> re-derived from the held deals on load, exactly as the network is.
+> ⚑ **The test the exception gives you is general:** ask whether the thing is an AGREEMENT or a CONSEQUENCE of
+> one. The agreement is state; every count downstream of it is derived.
+
 **⛔ The `CvPlotGroup` is the ONLY authoritative list for trade resources, and NOTHING mirrors it.** Its content
 is placed by the member CITIES (and `actsAsCity` forts) — never by a plot, which only holds the resource — so the
 group is where the number is formed; every reader below it RELAYS. A `connection:"trade"` gate reads that list

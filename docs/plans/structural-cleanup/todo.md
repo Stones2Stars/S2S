@@ -282,6 +282,19 @@
   line had: the instrument does not know a vocabulary the parse path does. ⚠ Settle the `TAG_*` entries with it —
   those are classification ids minted at load, so whether they can resolve at FK time is the same question.
 
+- **De-serialize the TRADED-BONUS COUNTS — `CvPlayer::m_bonusExport` / `m_bonusImport` are serialized bonus
+  LISTS, which no bonus list may be (owner).** They write as `iBonusExportSize`/`Type`/`Count` and their import
+  twin, and `CvPlot::updatePlotGroupBonus` folds them into the plot group at the CAPITAL — so the network's own
+  counts inherit save history, the STORED-ACCUMULATOR DRIFT class
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)) landing on the one
+  list [enabler.md §8](../../specs/enabler.md) calls authoritative.
+  ⚖ **The DEAL stays serialized and the counts do not** (owner: *"that is the current trade deal itself being
+  serialized, not the list"*): re-derive both maps from the player's held deals on load, then let the ordinary
+  facts carry them. ⚠ The cut is the uniform soft-remove — delete member + read + write, name the tags in
+  `Assets/savemigration.txt`, no `WRAPPER_SKIP_ELEMENT` ([save.md §3](../../specs/save.md)).
+  ⚑ Its sibling half is the load path: the plot group is populated EXCLUSIVELY by events, so a re-derivation
+  feeds the FACTS rather than writing the counts.
+
 - **`CityContext::m_traded` consumes TWO of the three bonus facts, and only one of them may carry a value.**
   It takes the has-verdict crossing (`SEVT_CITY_BONUS_*`, ±1) AND the vicinity supply COUNT
   (`SEVT_CITY_VICINITY_BONUS_*`, ±count) — the double-consumption
