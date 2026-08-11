@@ -93,7 +93,7 @@ def applyBlessedSea2(argsList):
 
 	if -1 != data.eReligion:
 		for i in xrange(GC.getNumBuildingInfos()):
-			if GC.getBuildingInfo(i).getSpecialBuildingType() == GC.getInfoTypeForString("SPECIALBUILDING_TEMPLE"):
+			if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_SPECIAL_BUILDING) == GC.getInfoTypeForString("SPECIALBUILDING_TEMPLE"):
 				if GC.getBuildingInfo(i).getReligionType() == data.eReligion:
 					iBuilding = i
 					break
@@ -113,7 +113,7 @@ def canApplyBlessedSea2(argsList):
 	iBuilding = -1
 	if -1 != data.eReligion:
 		for i in xrange(GC.getNumBuildingInfos()):
-			if GC.getBuildingInfo(i).getSpecialBuildingType() == GC.getInfoTypeForString("SPECIALBUILDING_TEMPLE"):
+			if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_SPECIAL_BUILDING) == GC.getInfoTypeForString("SPECIALBUILDING_TEMPLE"):
 				if GC.getBuildingInfo(i).getReligionType() == data.eReligion:
 					iBuilding = i
 					break
@@ -138,9 +138,9 @@ def getHelpHolyMountain1(argsList):
 	if iReligion != -1:
 		iBuilding = -1
 		for i in xrange(GC.getNumBuildingInfos()):
-			if((GC.getBuildingInfo(i).getSpecialBuildingType() == GC.getInfoTypeForString("SPECIALBUILDING_CATHEDRAL")
-			or  GC.getBuildingInfo(i).getSpecialBuildingType() == GC.getInfoTypeForString("SPECIALBUILDING_CATHEDRAL_II")
-			or  GC.getBuildingInfo(i).getSpecialBuildingType() == GC.getInfoTypeForString("SPECIALBUILDING_PANTHEON")
+			if((INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_SPECIAL_BUILDING) == GC.getInfoTypeForString("SPECIALBUILDING_CATHEDRAL")
+			or  INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_SPECIAL_BUILDING) == GC.getInfoTypeForString("SPECIALBUILDING_CATHEDRAL_II")
+			or  INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_SPECIAL_BUILDING) == GC.getInfoTypeForString("SPECIALBUILDING_PANTHEON")
 			)
 			and GC.getBuildingInfo(i).getReligionType() == iReligion
 			):
