@@ -705,6 +705,21 @@
 
 ## Stage 4 — the Python surface
 
+- ⛔ **MAP GENERATION CANNOT READ ITS DATA — a NEW GAME cannot be generated.** The map-gen registries
+  (climate · sea level · bonus · feature · terrain) have no published read, and `CvMapGeneratorUtil.py` is the
+  DLL's own fallback implementation ([engine.md](../../reference/engine.md): undefined callbacks fall back to
+  it), so this is not one screen failing — it is the generation path.
+  ⚠ **"Map scripts are their own boundary" scopes them out of the LIBRARY, never out of being SERVED**
+  ([python-read-map.md](../../reference/python-read-map.md) ruling 1) — the callback contract is untouched by
+  the `Cy*` cut, the READS inside the callbacks are not. Reading that ruling as "not a gap" is the misreading
+  to avoid; it cost one pass already.
+  ⚑ The shape is settled by precedent, not open: a per-info accessor per map-gen type, the `CyWorldInfo` shape
+  (which already carries map-gen reads). `CyImprovementInfo` exists and takes the one improvement read.
+  ⚑ It also gates VERIFICATION of everything that only fires at game start — the era/civ free techs, the
+  starting units and gold, `freePopulation`, `FreeStartEra`
+  ([legacy-grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §5): none is exercisable on the
+  standing save, so none can be observed while this stands.
+
 > Contract: [patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md). Read maps:
 > [pedia-read-map.md](../../reference/pedia-read-map.md) · [python-read-map.md](../../reference/python-read-map.md).
 >
