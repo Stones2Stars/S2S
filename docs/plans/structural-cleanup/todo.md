@@ -715,8 +715,11 @@
   ⚖ **What IS genuinely theirs is the ENUMERATION: a map script really does have to iterate every bonus,
   terrain and feature**, so the whole-registry loop is correct here and STAYS — the pedia's carve-out, second
   instance. ⛔ Do not convert a map-gen sweep to an edge read; only where each value comes from changes.
-  ⚑ The shape is settled by precedent, not open: a per-info accessor per map-gen type, the `CyWorldInfo` shape
-  (which already carries map-gen reads). `CyImprovementInfo` exists and takes the one improvement read.
+  ⚑ The accessors are BUILT (climate · bonus · feature · terrain · sea level, the `CyWorldInfo` shape) and both
+  in-tree generator files read through them. ⛔ **What is NOT settled is the bonus RAND APPEARANCE**: the rebuilt
+  info carries a roll ceiling PER BAND where legacy had one value, so which band -- or what combination --
+  reproduces the old number is an owner question. The one call site is left RAISING rather than silently
+  picking a band ([DEC-no-guessing]: at a gap, verify or ask).
   ⚑ It also gates VERIFICATION of everything that only fires at game start — the era/civ free techs, the
   starting units and gold, `freePopulation`, `FreeStartEra`
   ([legacy-grant-apply-sites.md](../../reference/legacy-grant-apply-sites.md) §5): none is exercisable on the

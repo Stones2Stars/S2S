@@ -30,6 +30,14 @@
 #  -----
 
 from CvPythonExtensions import *
+
+# the map-gen accessors -- the bindings list IS this module's dependency list
+CLIMATE = CyClimateInfo()
+BONUS = CyBonusInfo()
+FEATURE = CyFeatureInfo()
+TERRAIN = CyTerrainInfo()
+IMPROVEMENT = CyImprovementInfo()
+
 import CvMapGeneratorUtil as MGU
 
 # The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
@@ -882,13 +890,12 @@ class MapPrettifier:
 			return
 		# read parameter
 		eTerrain, chPercent = targetTerTuple
-		bWater = GC.getTerrainInfo(eTerrain).isWaterTerrain()
 		srcTer = []
 		chTer = []
 		for i in range( len(sourceTerTuples) ):
 			srcTerrain, srcChance = sourceTerTuples[i]
 			# we don't change plots
-			if GC.getTerrainInfo(srcTerrain).isWaterTerrain() == bWater:
+			if TERRAIN.isWaterTerrain(srcTerrain) == bWater:
 				srcTer.append( srcTerrain )
 				chTer.append( srcChance )
 		# check seed terrain
@@ -1012,17 +1019,17 @@ class MarshMaker:
 		self.iMarshHotBottom   = max( self.iMarshHotBottom, 0 )
 
 		self.iMarshHotTop      = tMarshHotRange[1]
-		self.iMarshHotTop     += int( 90 * GC.getClimateInfo(MAP.getClimate()).getSnowLatitudeChange() )
+		self.iMarshHotTop     += int( 90 * CLIMATE.getSnowLatitudeChange(MAP.getClimate()) )
 		self.iMarshHotTop      = min( self.iMarshHotTop, 90 )
 		self.iMarshHotTop      = max( self.iMarshHotTop, 0 )
 
 		self.iMarshColdBottom  = tMarshColdRange[0]
-		self.iMarshColdBottom += int( 90 * GC.getClimateInfo(MAP.getClimate()).getDesertBottomLatitudeChange() )
+		self.iMarshColdBottom += int( 90 * CLIMATE.getDesertBottomLatitudeChange(MAP.getClimate()) )
 		self.iMarshColdBottom  = min( self.iMarshColdBottom, 90 )
 		self.iMarshColdBottom  = max( self.iMarshColdBottom, 0 )
 
 		self.iMarshColdTop     = tMarshColdRange[1]
-		self.iMarshColdTop    += int( 90 * GC.getClimateInfo(MAP.getClimate()).getDesertTopLatitudeChange() )
+		self.iMarshColdTop    += int( 90 * CLIMATE.getDesertTopLatitudeChange(MAP.getClimate()) )
 		self.iMarshColdTop     = min( self.iMarshColdTop, 90 )
 		self.iMarshColdTop     = max( self.iMarshColdTop, 0 )
 		sprint = "[MST] Marsh ranges for %s - Hot Swamp: [%r,%r], Cold Fen: [%r,%r] \n" % (sClimateType,self.iMarshHotBottom,self.iMarshHotTop,self.iMarshColdBottom,self.iMarshColdTop)
@@ -2130,7 +2137,6 @@ class MapRegions:
 				# work placed boni
 				if choose( chance, True, False ):
 					bonString = INFO.getType("BONUS_", bon)
-					bonTech = GC.getBonusInfo(bon).getTechCityTrade()
 					bonEra = 0
 					if bonTech > -1:
 						bonEra = INFO.getIntrinsic("TECH_", bonTech, IntrinsicSlot.PYINT_ERA)
@@ -2140,7 +2146,7 @@ class MapRegions:
 					# find possible improvements for boni
 					impList = [ (bonEra, imp) for imp in range(GC.getNumImprovementInfos())
 													  if pl.canHaveImprovement(imp, TeamTypes.NO_TEAM, True) and
-													     GC.getImprovementInfo(imp).isImprovementBonusMakesValid(bon) ]
+													     IMPROVEMENT.isValidOnBonus(imp, bon) ]
 					if len(impList) == 0:
 						sprint += "[MST] No improvement found for %s @ (%r,%r)\n" % (bonString,pl.getX(),pl.getY())
 						continue
@@ -2608,7 +2614,7 @@ class BonusBalancer:
 	def isBonusValid(self, eBonus, pPlot, bIgnoreUniqueRange, bIgnoreOneArea, bIgnoreAdjacent):
 		iX, iY = pPlot.getX(), pPlot.getY()
 
-		if not bIgnoreOneArea and GC.getBonusInfo(eBonus).isOneArea():
+		if not bIgnoreOneArea and BONUS.isOneArea(eBonus):
 			if MAP.getNumBonuses(eBonus) > 0:
 				if MAP.getArea(pPlot.getArea()).getNumBonuses(eBonus) == 0:
 					return False
@@ -2620,7 +2626,6 @@ class BonusBalancer:
 					return False
 
 		if not bIgnoreUniqueRange:
-			uniqueRange = GC.getBonusInfo(eBonus).getUniqueRange()
 			for iDX in range(-uniqueRange, uniqueRange+1):
 				for iDY in range(-uniqueRange, uniqueRange+1):
 					plotX = plotXY(iX, iY, iDX, iDY)
@@ -2841,15 +2846,15 @@ class BonusBalancer:
 							fp = MAP.plotByIndex( inx )
 							if bCreateTerrainFeature:
 								bIgnoreLatitude = False
-								if GC.getBonusInfo(iBonus).isFeature(efJungle) or GC.getBonusInfo(iBonus).isFeatureTerrain(efJungle):
+								if BONUS.isFeature(iBonus, efJungle) or BONUS.isFeatureTerrain(iBonus, efJungle):
 									if fp.getFeatureType()==efForest and evalLatitude(fp)<30:
 										iVar = self.transformForest2Jungle(fp)
 										bJTrans = True
-								elif GC.getBonusInfo(iBonus).isTerrain(etDesert) or GC.getBonusInfo(iBonus).isFeatureTerrain(etDesert):
+								elif BONUS.isTerrain(iBonus, etDesert) or BONUS.isFeatureTerrain(iBonus, etDesert):
 									if fp.getTerrainType()==etPlains and evalLatitude(fp)<45:
 										fp.setTerrainType( etDesert, True, True )
 										bDTrans = True
-								elif GC.getBonusInfo(iBonus).isTerrain(etTundra) or GC.getBonusInfo(iBonus).isFeatureTerrain(etTundra):
+								elif BONUS.isTerrain(iBonus, etTundra) or BONUS.isFeatureTerrain(iBonus, etTundra):
 									if (fp.getTerrainType()==etGrass or fp.getTerrainType()==etMarsh) and (evalLatitude(fp)>60):
 										fp.setTerrainType( etTundra, True, True )
 										bTTrans = True
@@ -2906,11 +2911,10 @@ class BonusBalancer:
 	def placeBonus(self, plot, iBonus):
 #		print "[MST] ======== BonusBalancer:placeBonus()"
 		eFeature = plot.getFeatureType()
-		bonusInfo = GC.getBonusInfo( iBonus )
 		# temp save feature and variety
 		featureVariety = -1
 		if eFeature>=0:
-			if GC.getFeatureInfo(eFeature).getNumVarieties()>1:
+			if FEATURE.getNumVarieties(eFeature)>1:
 				featureVariety = plot.getFeatureVariety()
 				plot.setFeatureType( FeatureTypes.NO_FEATURE, -1 )
 		#place bonus
@@ -2920,7 +2924,7 @@ class BonusBalancer:
 
 		#restore the feature if possible
 		if featureVariety>=0:
-			if (bonusInfo == None) or bonusInfo.isFeature(eFeature):
+			if (bonusInfo == None) or BONUS.isFeature(iBonus, eFeature):
 				plot.setFeatureType(eFeature,featureVariety)
 
 	# change Forest to Jungle; return variety
@@ -3080,21 +3084,23 @@ class BonusBalancer:
 	# calculate number of desired boni
 	# - like CvMapGenerator::calculateNumBonusesToAdd(BonusTypes eBonusType) in CvMapGenerator.cpp
 	def calcNumBoniToAdd(self, iBonus):
-		bonusInfo = GC.getBonusInfo(iBonus)
-		if bonusInfo.getPlacementOrder() < 0:
+		if BONUS.getPlacementOrder(iBonus) < 0:
 			return 0
 
 		bIgnoreLatitude = False
 		iLandTiles = 0
 		iNumPossible = 0
-		if bonusInfo.getTilesPer() > 0:
+		if BONUS.getTilesPer(iBonus) > 0:
 			for i in range( iNumPlotsX*iNumPlotsY ):
 				plot = MAP.plotByIndex(i)
 				if plot.canHaveBonus(iBonus, bIgnoreLatitude):
 					iNumPossible += 1
-			iLandTiles += iNumPossible / bonusInfo.getTilesPer()
-		iPlayers = GAME.countCivPlayersAlive() * bonusInfo.getPercentPerPlayer() / 100
-		iBonusCount = bonusInfo.getRandAppearance() * (iLandTiles + iPlayers) / 100
+			iLandTiles += iNumPossible / BONUS.getTilesPer(iBonus)
+		iPlayers = GAME.countCivPlayersAlive() * BONUS.getPercentPerPlayer(iBonus) / 100
+		# ⛔ OPEN, NOT A TYPO: the rebuilt info carries a roll ceiling PER BAND (iRandApp1..4) where legacy had a
+		# single value, so which band -- or what combination -- reproduces the old number is a data question
+		# nobody has ruled on. Left calling with one argument so it RAISES rather than silently picking a band.
+		iBonusCount = BONUS.getRandAppearance(iBonus) * (iLandTiles + iPlayers) / 100
 		return max( 1, iBonusCount )
 
 ##########################################################################

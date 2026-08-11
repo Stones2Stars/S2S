@@ -19,6 +19,8 @@
 #include "Python/CyState.h"
 #include "Python/CyWorldInfo.h"
 #include "Python/CyBuildingInfo.h"
+#include "Python/CyClimateInfo.h"
+#include "Python/CyMapGenInfo.h"
 #include "Python/CyImprovementInfo.h"
 #include "Python/CyUnitInfo.h"
 #include "Python/CyBuildInfo.h"
@@ -126,6 +128,12 @@ DllExport void DLLPublishToPython()
 	// its dependency list ([patterns.md]: explicit imports, always -- you see what is used).
 	CyWorldInfo::pythonPublish();
 	CyBuildingInfo::pythonPublish();
+	// map GENERATION -- served like every other consumer; only its callback contract is separate
+	CyClimateInfo::pythonPublish();
+	CyBonusInfo::pythonPublish();
+	CyFeatureInfo::pythonPublish();
+	CyTerrainInfo::pythonPublish();
+	CySeaLevelInfo::pythonPublish();
 	CyImprovementInfo::pythonPublish();
 	CyUnitInfo::pythonPublish();
 	CyBuildInfo::pythonPublish();
@@ -150,8 +158,8 @@ DllExport void DLLPublishToPython()
 	// not the read surface the library replaces. The get<X>Info accessors and Cy* handles stay gone.
 	CyGlobalContext::pythonPublish();
 
-	// The MAP-SCRIPT boundary: handles, not infos. Map scripts are their own boundary (patterns.md) and were
-	// never meant to be affected by the Cy* cut.
+	// The MAP-SCRIPT boundary: HANDLES, not infos. What is separate about a map script is its CALLBACK contract
+	// and its enumeration -- its map-gen READS go through the accessors above like every other consumer's.
 	// The game-object HANDLES. Not infos -- these are the wrappers the engine hands to Python callbacks, and
 	// GC.getPlayer/getTeam/getMap/getGame are the most-called names in the tree.
 	CyGame::pythonPublish();
