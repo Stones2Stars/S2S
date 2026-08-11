@@ -395,6 +395,34 @@ python::list CyInfo::getRequiresIds(const std::string& szTypePrefix, int iId, in
 	return lIds;
 }
 
+python::list CyInfo::getRequiresIdsInClause(const std::string& szTypePrefix, int iId, int iBucket,
+	int iClause) const
+{
+	python::list lIds;
+
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	if (pInfo == NULL) return lIds;
+
+	const CvRequires* pRequires = pInfo->getRequires();
+	if (pRequires == NULL) return lIds;
+
+	if (iBucket < 0 || iBucket >= NUM_EDGEB) return lIds;
+	if (iClause < 0 || iClause >= NUM_REQCLAUSE) return lIds;
+
+	//	BOTH timings, as the merged read does: `build` greys and `operate` also dorms, which is about WHEN the
+	//	gate is checked and not about whether the atom is needed or forbidden.
+	std::vector<int> aIds;
+	CvConditionQuery::collectIdsInClause(pRequires->build,   (EnEdgeBucket)iBucket, (EnRequiresClause)iClause, aIds);
+	CvConditionQuery::collectIdsInClause(pRequires->operate, (EnEdgeBucket)iBucket, (EnRequiresClause)iClause, aIds);
+
+	for (std::vector<int>::const_iterator it = aIds.begin(); it != aIds.end(); ++it)
+	{
+		lIds.append(*it);
+	}
+	return lIds;
+}
+
+
 python::list CyInfo::getRevolution(const std::string& szTypePrefix, int iId, int iScope) const
 {
 	python::list values;
@@ -1533,6 +1561,7 @@ void CyInfo::pythonPublish()
 		.def("getCount",       &CyInfo::getCount)
 		.def("getDormantTriggerIds", &CyInfo::getDormantTriggerIds)
 		.def("getRequiresIds",       &CyInfo::getRequiresIds)
+		.def("getRequiresIdsInClause", &CyInfo::getRequiresIdsInClause)
 		.def("isNotConstructible",   &CyInfo::isNotConstructible)
 		.def("getConditionedEntries", &CyInfo::getConditionedEntries)
 		.def("getWellbeing",   &CyInfo::getWellbeing)

@@ -207,6 +207,59 @@ void CvConditionQuery::collectIds(const CvCondition* pRoot, EnEdgeBucket eBucket
 }
 
 
+namespace
+{
+	//	The clause-aware walk. It is a SECOND recursion rather than a visitor on `cq_walk` because the clause is
+	//	a property of the PATH taken to a leaf, which a leaf-only visitor cannot see.
+	//	⚑ Negation is STICKY: once inside a `noneOf` or a `disabled` twin the subtree stays NONE. Double
+	//	negation is not un-negated -- nothing authors it, and resolving it wrongly toward "required" is the one
+	//	direction that misleads a player.
+	void cq_walkClause(const CvCondition* pCondition, EnRequiresClause eCurrent, EnEdgeBucket eBucket,
+		EnRequiresClause eWanted, std::vector<int>& aIdsOut)
+	{
+		if (pCondition == NULL)
+		{
+			return;
+		}
+		for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+		{
+			const EnRequiresClause eChild = (eCurrent == REQCLAUSE_NONE) ? REQCLAUSE_NONE : REQCLAUSE_ALL;
+			cq_walkClause(pCondition->all[iChild], eChild, eBucket, eWanted, aIdsOut);
+		}
+		for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+		{
+			const EnRequiresClause eChild = (eCurrent == REQCLAUSE_NONE) ? REQCLAUSE_NONE : REQCLAUSE_ANY;
+			cq_walkClause(pCondition->anyOf[iChild], eChild, eBucket, eWanted, aIdsOut);
+		}
+		for (size_t iChild = 0; iChild < pCondition->noneOf.size(); ++iChild)
+		{
+			cq_walkClause(pCondition->noneOf[iChild], REQCLAUSE_NONE, eBucket, eWanted, aIdsOut);
+		}
+		//	An `enabled` twin keeps the current clause; a `disabled` twin SUPPRESSES, so it reads as forbidden.
+		cq_walkClause(pCondition->enabled,  eCurrent,        eBucket, eWanted, aIdsOut);
+		cq_walkClause(pCondition->disabled, REQCLAUSE_NONE,  eBucket, eWanted, aIdsOut);
+
+		if (eCurrent == eWanted && pCondition->kind == CASC_COND_PRESENCE && pCondition->id >= 0
+			&& CvConditionQuery::bucketForType(pCondition->type) == eBucket)
+		{
+			aIdsOut.push_back(pCondition->id);
+		}
+	}
+}
+
+
+void CvConditionQuery::collectIdsInClause(const CvCondition* pRoot, EnEdgeBucket eBucket,
+	EnRequiresClause eClause, std::vector<int>& aIdsOut)
+{
+	if (eBucket == NO_EDGEB || eClause < 0 || eClause >= NUM_REQCLAUSE)
+	{
+		return;
+	}
+	//	A bare top-level atom is MANDATORY -- there is no enclosing combinator to say otherwise.
+	cq_walkClause(pRoot, REQCLAUSE_ALL, eBucket, eClause, aIdsOut);
+}
+
+
 bool CvConditionQuery::namesId(const CvCondition* pRoot, EnEdgeBucket eBucket, int iId)
 {
 	if (eBucket == NO_EDGEB || iId < 0)

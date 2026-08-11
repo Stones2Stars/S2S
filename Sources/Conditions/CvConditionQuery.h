@@ -34,10 +34,34 @@
 #include <vector>
 #include <string>
 
+//	WHICH COMBINATOR a named atom sits under. The reads above report an `all`, an `anyOf` and a `noneOf` alike,
+//	which is right for a FILTER and WRONG for a display: a `noneOf` names the very thing it forbids, so a
+//	consumer rendering the merged list shows a BARRED entity as a required one.
+//	⛔ This is NOT the boolean-expression API the header disclaims. It exposes no node, no nesting and no
+//	branch -- it answers "of the ids this tree names in this bucket, which are mandatory / one-of / forbidden",
+//	which is the discrimination a requires DISPLAY needs and nothing more.
+enum EnRequiresClause
+{
+	REQCLAUSE_ALL,    // every one must hold -- the mandatory run
+	REQCLAUSE_ANY,    // at least one must hold -- the one-of group
+	REQCLAUSE_NONE,   // none may hold -- the FORBIDDEN set, which must never render as a requirement
+	NUM_REQCLAUSE
+};
+
 class CvConditionQuery
 {
 public:
 	// --- the HAVE axis: PRESENCE atoms, keyed by edge bucket ---
+
+	// The ids of one bucket named under ONE combinator. The clause-discriminating twin of `collectIds`.
+	//
+	// ⚑ A leaf takes the NEAREST enclosing combinator, and negation WINS over nesting: anything under a
+	// `noneOf` (or inside a `disabled` twin) reports NONE however deeply it is nested. That direction is the
+	// fail-safe one -- an atom mis-reported as forbidden is omitted from a requirement list, while one
+	// mis-reported as mandatory is shown to the player as a thing to go and get when it would BAR the entity.
+	// ⚠ A top-level atom with no enclosing combinator is REQCLAUSE_ALL: a bare `requires` leaf is mandatory.
+	static void collectIdsInClause(const CvCondition* pRoot, EnEdgeBucket eBucket, EnRequiresClause eClause,
+		std::vector<int>& aIdsOut);
 
 	// Every FK-resolved presence-atom id of that bucket named anywhere in the tree. Appends; ids may repeat
 	// across branches, so a caller wanting a set de-duplicates (the trees are small and most name one atom).

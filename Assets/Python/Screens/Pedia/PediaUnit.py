@@ -192,12 +192,14 @@ class PediaUnit:
 		screen.addUnitGraphicGFC("Preview|Min", iTheUnit, X_COL_2 + W_COL_2 + 4, Y_TOP_ROW_1 + 8, s, s, eWidGen, iTheUnit, 0, -20, 30, 0.4, True)
 		self.main.aWidgetBucket.append("Preview|Min")
 
-		# Requires -- one BUCKET read per entity kind off the unit's own `requires` section.
-		# ⚠ The AND/OR bracket structure the legacy form drew is NOT reproduced, and that is deliberate:
-		# getRequiresIds has MENTION semantics (it reports all/anyOf/noneOf alike), so it is explicitly not the
-		# requires display. The requires BLOCK COMPOSER that would restore the structure is the text manager's
-		# job and is unbuilt ([patterns.md] THE DIVISION OF LABOUR) -- so this lists what is named, flat, rather
-		# than asserting a grouping the read cannot support.
+		# Requires
+		AND = ["TXT", "<font=4b>&#38", 1<<2, 10, 14]
+		OR = ["TXT", "<font=4b>||", 1<<2, 6, 10]
+		braL = ["TXT", "<font=4b> {", 1<<0, 0, 14]
+		braR = ["TXT", "<font=4b>} ", 1<<0, 0, 14]
+		# One read per (bucket, CLAUSE): the mandatory run, then the one-of group in brackets.
+		# ⛔ REQCLAUSE_NONE is deliberately never drawn. A `noneOf` names what BARS the unit, so listing it
+		# here would tell the player to go and get the very thing that refuses it.
 		aReqList = []
 		n = 0
 		for szPrefix, eBucket in (
@@ -208,9 +210,25 @@ class PediaUnit:
 			("BUILDING", EdgeBucket.EDGEB_BUILDINGS),
 		):
 			szChild = PF + szPrefix
-			for iType in INFO.getRequiresIds("UNIT_", iTheUnit, eBucket):
+			aAll = INFO.getRequiresIdsInClause("UNIT_", iTheUnit, eBucket, RequiresClause.REQCLAUSE_ALL)
+			aAny = INFO.getRequiresIdsInClause("UNIT_", iTheUnit, eBucket, RequiresClause.REQCLAUSE_ANY)
+			if not aAll and not aAny:
+				continue
+			if aReqList:
+				aReqList.append(AND)
+			for iType in aAll:
 				aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton(szPrefix + "_", iType)])
 				n += 1
+			if aAny:
+				if len(aAny) > 1:
+					aReqList.append(braL)
+				for i, iType in enumerate(aAny):
+					if i:
+						aReqList.append(OR)
+					aReqList.append([szChild + str(iType) + "|" + str(n), INFO.getButton(szPrefix + "_", iType)])
+					n += 1
+				if len(aAny) > 1:
+					aReqList.append(braR)
 
 		# Upgrades To -- the FORWARD successor set (a unit's direct upgrades are its dormant triggers,
 		# [enabler.md] par.3). The inverse ("what upgrades INTO me") is not asked here.

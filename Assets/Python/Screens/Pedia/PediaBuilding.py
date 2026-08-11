@@ -248,15 +248,23 @@ class PediaBuilding:
 		szBracketL = szfont4b + " {"
 		szBracketR = szfont4b + "} "
 		bPlus = False
-		# The requires tree, ONE read per kind. It reports what the tree MENTIONS, so the AND-vs-OR split the
-		# old per-field getters carried is not recoverable here -- composing that block is the text manager's.
-		aReqTechs = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_TECHS)
-		aReqReligions = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_RELIGIONS)
-		aReqCorps = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_CORPORATIONS)
-		aReqBonuses = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_BONUSES)
-		aReqBuildings = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_BUILDINGS)
-		aReqCivics = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_CIVICS)
-		aReqImprovements = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_IMPROVEMENTS)
+		# The requires tree, read PER CLAUSE so a needed entity is told apart from a barred one.
+		# ⛔ REQCLAUSE_NONE is never collected: a `noneOf` names what BLOCKS the building, and drawing it in a
+		# "Requires" panel tells the player to go and get the thing that refuses it.
+		# ⚠ The mandatory and one-of ids are concatenated rather than bracketed here -- this panel draws each
+		# kind as one flat run of buttons, so the {A || B} grouping PediaUnit now renders wants a layout change
+		# to go with it. The FORBIDDEN half is the correctness half and is fixed; the brackets are cosmetic.
+		def reqIds(eBucket):
+			aIds = list(INFO.getRequiresIdsInClause("BUILDING_", iTheBuilding, eBucket, RequiresClause.REQCLAUSE_ALL))
+			aIds.extend(INFO.getRequiresIdsInClause("BUILDING_", iTheBuilding, eBucket, RequiresClause.REQCLAUSE_ANY))
+			return aIds
+		aReqTechs = reqIds(EdgeBucket.EDGEB_TECHS)
+		aReqReligions = reqIds(EdgeBucket.EDGEB_RELIGIONS)
+		aReqCorps = reqIds(EdgeBucket.EDGEB_CORPORATIONS)
+		aReqBonuses = reqIds(EdgeBucket.EDGEB_BONUSES)
+		aReqBuildings = reqIds(EdgeBucket.EDGEB_BUILDINGS)
+		aReqCivics = reqIds(EdgeBucket.EDGEB_CIVICS)
+		aReqImprovements = reqIds(EdgeBucket.EDGEB_IMPROVEMENTS)
 		# Tech Req
 		szChild = PF + "TECH"
 		for iType in aReqTechs:

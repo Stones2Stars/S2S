@@ -27,6 +27,7 @@
 #include "Enabler/CvEnabler.h"   // EnablerDomain::State -- the availability tri-state
 #include "Infos/CvAllowed.h"    // EnAllowedCap -- the cap axes
 #include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
+#include "Conditions/CvConditionQuery.h" // EnRequiresClause -- mandatory / one-of / FORBIDDEN
 #include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
 #include "Infos/CvInfoKinds.h"  // WellbeingChannel -- the group enum getRealizedWellbeing is indexed by
 #include "Engine/CvStatus.h"    // UnitStatus -- the vocabulary ACT.setUnitStatus is indexed by
@@ -263,6 +264,15 @@ void CyEnums::pythonPublish()
 		.value("CLS_CAPABILITY_CAN_SET_SCIENCE_RATE",       CLS_CAPABILITY_CAN_SET_SCIENCE_RATE)
 		.value("CLS_CAPABILITY_CAN_SET_CULTURE_RATE",       CLS_CAPABILITY_CAN_SET_CULTURE_RATE)
 		.value("CLS_CAPABILITY_CAN_SET_ESPIONAGE_RATE",     CLS_CAPABILITY_CAN_SET_ESPIONAGE_RATE)
+		;
+
+	//	WHICH COMBINATOR a requires atom sits under -- the vocabulary CyInfo::getRequiresIdsInClause is asked in.
+	//	⛔ REQCLAUSE_NONE is the FORBIDDEN set: a `noneOf` names the thing it bars, so a display that renders it
+	//	as a requirement tells the player to go and get what would refuse the entity.
+	python::enum_<EnRequiresClause>("RequiresClause")
+		.value("REQCLAUSE_ALL",  REQCLAUSE_ALL)
+		.value("REQCLAUSE_ANY",  REQCLAUSE_ANY)
+		.value("REQCLAUSE_NONE", REQCLAUSE_NONE)
 		;
 
 	python::enum_<EnEdgeBucket>("EdgeBucket")

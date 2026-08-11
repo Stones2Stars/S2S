@@ -268,6 +268,12 @@ public:
 	// LABOUR), and rendering this list as "requirements" would present a FORBIDDEN entity as a required one.
 	python::list getRequiresIds(const std::string& szTypePrefix, int iId, int iBucket) const;
 
+	// The same ids DISCRIMINATED BY COMBINATOR -- mandatory (`all`), one-of (`anyOf`) or FORBIDDEN (`noneOf`).
+	// This is what a requires DISPLAY asks: the merged read above cannot tell a needed entity from a barred
+	// one, so rendering it as requirements shows the player a thing to go and get that would in fact bar the
+	// entity. A composer draws the ALL run, brackets the ANY group, and never lists the NONE set as needed.
+	python::list getRequiresIdsInClause(const std::string& szTypePrefix, int iId, int iBucket, int iClause) const;
+
 	// THE COMPILED CONDITIONED LIST -- the SECOND of the three reads every modifier group owes
 	// ([patterns.md] § THE GETTER SETUP category 3: the straight point read, the conditioned list, the what-if
 	// valuation). The point read answers the unconditioned sum and by construction CANNOT see a gated entry,
