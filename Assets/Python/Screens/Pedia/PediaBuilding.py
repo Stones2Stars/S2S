@@ -48,7 +48,6 @@ class PediaBuilding:
 		CyPlayer = self.main.CyPlayer
 		aName = self.main.getNextWidgetName
 
-		CvTheBuildingInfo = GC.getBuildingInfo(iTheBuilding)
 		bNotCulture = self.main.SECTION[1] != TRNSLTR.getText("TXT_KEY_PEDIA_CATEGORY_C2C_CULTURES", ())
 
 		eWidGen				= WidgetTypes.WIDGET_GENERAL
@@ -74,10 +73,10 @@ class PediaBuilding:
 		H_ROW_2 = H_TOP_ROW * 3 + H_BOT_ROW
 
 		# Main Panel
-		szBuildingName = CvTheBuildingInfo.getDescription()
-		iMaxGlobalInstances = CvTheBuildingInfo.getMaxGlobalInstances()
-		iMaxPlayerInstances = CvTheBuildingInfo.getMaxPlayerInstances()
-		iMaxTeamInstances = CvTheBuildingInfo.getMaxTeamInstances()
+		szBuildingName = INFO.getDescription("BUILDING_", iTheBuilding)
+		iMaxGlobalInstances = INFO.getAllowedCap("BUILDING_", iTheBuilding, AllowedCap.ALLOWEDCAP_WORLD)
+		iMaxPlayerInstances = INFO.getAllowedCap("BUILDING_", iTheBuilding, AllowedCap.ALLOWEDCAP_EMPIRE)
+		iMaxTeamInstances = INFO.getAllowedCap("BUILDING_", iTheBuilding, AllowedCap.ALLOWEDCAP_TEAM)
 		if iMaxGlobalInstances > 0:
 			szBuildingName += "<color=192,192,128,255> | " + TRNSLTR.getText("TXT_KEY_PEDIA_WORLD_WONDER",()) + " - Max. " + str(iMaxGlobalInstances)
 		elif iMaxPlayerInstances > 0:
@@ -90,28 +89,27 @@ class PediaBuilding:
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, W_COL_1 + 8, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "Preview|Movie|BUILDING|ToolTip" + str(iTheBuilding)
 		self.main.aWidgetBucket.append(Img)
-		screen.setImageButtonAt(Img, Pnl, CvTheBuildingInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("BUILDING_", iTheBuilding), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 		# Stats
 		panelName = aName()
 		screen.addListBoxGFC(panelName, "", self.X_STATS, self.Y_STATS, self.W_STATS, self.H_STATS, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(panelName, False)
-		iProductionCost = CvTheBuildingInfo.getProductionCost()
+		iProductionCost = INFO.getIntrinsic("BUILDING_", iTheBuilding, IntrinsicSlot.PYINT_COST)
 		if iProductionCost > 0:
 			if CyPlayer:
 				szCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", (CyPlayer.getBuildingProductionNeeded(iTheBuilding),))
 			else:
 				szCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", ((iProductionCost * GC.getDefineINT("BUILDING_PRODUCTION_PERCENT"))/100,))
 			screen.appendListBoxStringNoUpdate(panelName, szfont3b + szCost + u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION), eWidGen, 0, 0, 1<<0)
-		elif CvTheBuildingInfo.isAutoBuild():
+		elif INFO.isAutoBuild(iTheBuilding):
 			screen.appendListBoxStringNoUpdate(panelName, szfont3 + TRNSLTR.getText("TXT_KEY_PEDIA_AUTOBUILD",()) , eWidGen, 0, 0, 1<<0)
-		if CvTheBuildingInfo.isGoldenAge():
-			szText1 = unichr(8866) + "<color=255,200,0,255> Golden Age"
-			screen.appendListBoxStringNoUpdate(panelName, szfont3 + szText1, eWidGen, 0, 0, 1<<0)
 		szText1 = ""
 		szText2 = ""
+		aFlatYields = INFO.getFlatYields("BUILDING_", iTheBuilding, CascScope.CASC_SCOPE_CITY)
+		aPctYields = INFO.getPercentYields("BUILDING_", iTheBuilding, CascScope.CASC_SCOPE_CITY)
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
 			char = unichr(8483 + k)
-			iTemp = CvTheBuildingInfo.getYieldChange(k)
+			iTemp = aFlatYields[k] / 100
 			if iTemp:
 				if iTemp < 0:
 					szValue = " <color=255,0,0,255"
@@ -119,7 +117,7 @@ class PediaBuilding:
 					szValue = " <color=0,230,0,255"
 				szValue += ">%d" % iTemp + char
 				szText1 += szValue
-			iTemp = CvTheBuildingInfo.getYieldModifier(k)
+			iTemp = aPctYields[k]
 			if iTemp:
 				if iTemp < 0:
 					szValue = " <color=255,0,0,255>"
@@ -127,23 +125,17 @@ class PediaBuilding:
 					szValue = " <color=0,230,0,255>"
 				szValue += "%d%%" % iTemp + char
 				szText2 += szValue
-			iTemp = CvTheBuildingInfo.getYieldPerPopChange(k)
-			if iTemp:
-				if iTemp < 0:
-					szValue = " <color=255,0,0,255>"
-				else:
-					szValue = " <color=0,230,0,255>"
-				szValue += unichr(8873) + "*%.2f" % (iTemp/100.0) + char
-				screen.appendListBoxStringNoUpdate(panelName, szfont3 + szValue, eWidGen, 0, 0, 1<<0)
 		if szText1:
 			screen.appendListBoxStringNoUpdate(panelName, szfont3 + szText1, eWidGen, 0, 0, 1<<0)
 			szText1 = ""
 		if szText2:
 			screen.appendListBoxStringNoUpdate(panelName, szfont3 + szText2, eWidGen, 0, 0, 1<<0)
 			szText2 = ""
+		aFlatCommerces = INFO.getFlatCommerces("BUILDING_", iTheBuilding, CascScope.CASC_SCOPE_CITY)
+		aPctCommerces = INFO.getPercentCommerces("BUILDING_", iTheBuilding, CascScope.CASC_SCOPE_CITY)
 		for k in range(CommerceTypes.NUM_COMMERCE_TYPES):
 			char = unichr(8500 + k)
-			iTemp = CvTheBuildingInfo.getCommerceChange(k)
+			iTemp = aFlatCommerces[k] / 100
 			if iTemp:
 				if iTemp < 0:
 					szValue = " <color=255,0,0,255>"
@@ -151,7 +143,7 @@ class PediaBuilding:
 					szValue = " <color=0,230,0,255>"
 				szValue += "%d" % iTemp + char
 				szText1 += szValue
-			iTemp = CvTheBuildingInfo.getCommerceModifier(k)
+			iTemp = aPctCommerces[k]
 			if iTemp:
 				if iTemp < 0:
 					szValue = " <color=255,0,0,255>"
@@ -159,22 +151,15 @@ class PediaBuilding:
 					szValue = " <color=0,230,0,255>"
 				szValue += "%d%%" % iTemp + char
 				szText2 += szValue
-			iTemp = CvTheBuildingInfo.getCommercePerPopChange(k)
-			if iTemp:
-				if iTemp < 0:
-					szValue = " <color=255,0,0,255>"
-				else:
-					szValue = " <color=0,230,0,255>"
-				szValue += unichr(8873) + "*%.2f" % (iTemp/100.0) + char
-				screen.appendListBoxStringNoUpdate(panelName, szfont3 + szValue, eWidGen, 0, 0, 1<<0)
 		if szText1:
 			screen.appendListBoxStringNoUpdate(panelName, szfont3 + szText1, eWidGen, 0, 0, 1<<0)
 			szText1 = ""
 		if szText2:
 			screen.appendListBoxStringNoUpdate(panelName, szfont3 + szText2, eWidGen, 0, 0, 1<<0)
 			szText2 = ""
-		iHappiness = CvTheBuildingInfo.getHappiness()
-		iHealth = CvTheBuildingInfo.getHealth()
+		aWellbeing = INFO.getWellbeing("BUILDING_", iTheBuilding, CascScope.CASC_SCOPE_CITY)
+		iHappiness = (aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER]) / 100
+		iHealth = (aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]) / 100
 		if CyPlayer:
 			iHappiness += CyPlayer.getExtraBuildingHappiness(iTheBuilding)
 			iHealth += CyPlayer.getExtraBuildingHealth(iTheBuilding)
@@ -191,50 +176,13 @@ class PediaBuilding:
 		if szText1:
 			screen.appendListBoxStringNoUpdate(panelName, szfont3 + szText1, eWidGen, 0, 0, 1<<0)
 			szText1 = ""
-		iGreatPeopleRateChange = CvTheBuildingInfo.getGreatPeopleRateChange()
-		if iGreatPeopleRateChange:
-			szText1 += " "
-			if iGreatPeopleRateChange > 0:
-				szText1 += "<color=0,230,0,255>%d" %iGreatPeopleRateChange + unichr(8862)
-			else:
-				szText1 += "<color=255,0,0,255>%d" %iGreatPeopleRateChange + unichr(8862)
-			iGreatPeopleUnit = CvTheBuildingInfo.getGreatPeopleUnitType()
-			if iGreatPeopleUnit != -1:
-				szGreatPersonDesc = INFO.getDescription("UNIT_", iGreatPeopleUnit)
-				try:
-					szText1 += "</color> (" + szGreatPersonDesc.split(" ")[1] + ")"
-				except:
-					szText1 += "</color> (" + szGreatPersonDesc + ")"
-			screen.appendListBoxStringNoUpdate(panelName, szfont3 + szText1, eWidGen, 0, 0, 1<<0)
-			szText1 = ""
-		iGreatPeopleRateModifier = CvTheBuildingInfo.getGreatPeopleRateModifier()
-		if iGreatPeopleRateModifier:
-			if iGreatPeopleRateModifier < 0:
-				szText1 += " <color=255,0,0,255>"
-			else:
-				szText1 += " <color=0,230,0,255>"
-			szText1 += "%d%%" %iGreatPeopleRateModifier + unichr(8862)
-		iGreatGeneralRateModifier = CvTheBuildingInfo.getGreatGeneralRateModifier()
-		if iGreatGeneralRateModifier:
-			if iGreatGeneralRateModifier < 0:
-				szText1 += " <color=255,0,0,255>"
-			else:
-				szText1 += " <color=0,230,0,255>"
-			szText1 += "%d%%" %iGreatGeneralRateModifier + unichr(8874)
-		iGoldenAgeModifier = CvTheBuildingInfo.getGoldenAgeModifier()
-		if iGoldenAgeModifier:
-			if iGoldenAgeModifier < 0:
-				szText1 += " <color=255,0,0,255>"
-			else:
-				szText1 += " <color=0,230,0,255>"
-			szText1 += "%d%%" %iGoldenAgeModifier + unichr(8866)
 		if szText1:
 			screen.appendListBoxStringNoUpdate(panelName, szfont3b + szText1, eWidGen, 0, 0, 1<<0)
 		screen.updateListBox(panelName)
 		# Strategy
 		szStrategy = TRNSLTR.getText("TXT_KEY_PEDIA_STRATEGY", ())
 		screen.addPanel(aName(), szStrategy, "", False, False, X_COL_2, Y_TOP_ROW_1, W_COL_2 - 4, H_TOP_ROW, ePanelBlue50)
-		szStrategyText = szfont2 + CvTheBuildingInfo.getStrategy()
+		szStrategyText = szfont2 + INFO.getStrategy("BUILDING_", iTheBuilding)
 		screen.addMultilineText(aName(), szStrategyText, X_COL_2 + 4, Y_TOP_ROW_1 + 32, W_COL_2 - 4, H_TOP_ROW - 40, eWidGen, 0, 0, 1<<0)
 		# Graphic
 		s = H_TOP_ROW - 6
@@ -249,12 +197,9 @@ class PediaBuilding:
 		aList4 = []
 		aList5 = []
 		if bNotCulture:
-			for i in xrange(CvTheBuildingInfo.getNumReplacedBuilding()):
-				iReplaced = CvTheBuildingInfo.getReplacedBuilding(i)
-				aList1.append((GC.getBuildingInfo(iReplaced), iReplaced))
-			for i in xrange(CvTheBuildingInfo.getNumReplacementBuilding()):
-				iReplacement = CvTheBuildingInfo.getReplacementBuilding(i)
-				aList2.append((GC.getBuildingInfo(iReplacement), iReplacement))
+			for iReplacement in INFO.getDormantTriggerIds("BUILDING_", iTheBuilding):
+				if not INFO.isNotConstructible("BUILDING_", iReplacement):
+					aList2.append(iReplacement)
 			if aList1 or aList2:
 				if aList1 and aList2:
 					W_REP_1 = W_REP_2 = W_COL_3
@@ -282,12 +227,12 @@ class PediaBuilding:
 				if aList1:
 					for i in range(len(aList1)):
 						ID = aList1[i]
-						screen.attachImageButton(replaceFor, szChild + str(ID[1]), ID[0].getButton(), enumGBS, eWidGen, 1, 1, False)
+						screen.attachImageButton(replaceFor, szChild + str(ID), INFO.getButton("BUILDING_", ID), enumGBS, eWidGen, 1, 1, False)
 					aList1 = []
 				if aList2:
 					for i in range(len(aList2)):
 						ID = aList2[i]
-						screen.attachImageButton(replacedBy, szChild + str(ID[1]), ID[0].getButton(), enumGBS, eWidGen, 1, 1, False)
+						screen.attachImageButton(replacedBy, szChild + str(ID), INFO.getButton("BUILDING_", ID), enumGBS, eWidGen, 1, 1, False)
 					aList2 = []
 			else:
 				Y_BOT_ROW_2 = Y_BOT_ROW_1
@@ -303,22 +248,24 @@ class PediaBuilding:
 		szBracketL = szfont4b + " {"
 		szBracketR = szfont4b + "} "
 		bPlus = False
+		# The requires tree, ONE read per kind. It reports what the tree MENTIONS, so the AND-vs-OR split the
+		# old per-field getters carried is not recoverable here -- composing that block is the text manager's.
+		aReqTechs = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_TECHS)
+		aReqReligions = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_RELIGIONS)
+		aReqCorps = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_CORPORATIONS)
+		aReqBonuses = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_BONUSES)
+		aReqBuildings = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_BUILDINGS)
+		aReqCivics = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_CIVICS)
+		aReqImprovements = INFO.getRequiresIds("BUILDING_", iTheBuilding, EdgeBucket.EDGEB_IMPROVEMENTS)
 		# Tech Req
 		szChild = PF + "TECH"
-		iType = CvTheBuildingInfo.getPrereqAndTech()
-		if iType != -1:
+		for iType in aReqTechs:
 			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
 			bPlus = True
-		i = 0
-		for iType in CvTheBuildingInfo.getPrereqAndTechs():
-			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("TECH_", iType), enumGBS, eWidGen, 1, 1, False)
-			bPlus = True
-			i += 1
 
 		# Religion Req
 		szChild = PF + "RELIGION"
-		iType = CvTheBuildingInfo.getPrereqReligion()
-		if iType != -1:
+		for iType in aReqReligions:
 			if bPlus:
 				screen.attachLabel(panelName, "", szAnd)
 			else:
@@ -326,8 +273,7 @@ class PediaBuilding:
 			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("RELIGION_", iType), enumGBS, eWidGen, 1, 1, False)
 		# Corporation Req
 		szChild = PF + "CORP"
-		iType = CvTheBuildingInfo.getPrereqCorporation()
-		if iType != -1:
+		for iType in aReqCorps:
 			if bPlus:
 				screen.attachLabel(panelName, "", szAnd)
 			else:
@@ -335,9 +281,9 @@ class PediaBuilding:
 			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("CORPORATION_", iType), enumGBS, eWidGen, 1, 1, False)
 		# Bonus Req
 		szChild = PF + "BONUS"
-		iType = CvTheBuildingInfo.getPrereqAndBonus()
+		iType = -1
 		nOr = 0
-		for iCheck in CvTheBuildingInfo.getPrereqOrBonuses():
+		for iCheck in aReqBonuses:
 			aList1.append(iCheck)
 			nOr += 1
 		if bPlus:
@@ -360,10 +306,9 @@ class PediaBuilding:
 		if nOr > 1:
 			screen.attachLabel(panelName, "", szBracketR)
 		# Corporation Bonus Req
-		iType = CvTheBuildingInfo.getFoundsCorporation()
+		iType = INFO.getIntrinsic("BUILDING_", iTheBuilding, IntrinsicSlot.PYINT_HEADQUARTERS_CORPORATION)
 		if iType != -1:
-			CvCorporationInfo = GC.getCorporationInfo(iType)
-			lPrereqBonuses = CvCorporationInfo.getPrereqBonuses()
+			lPrereqBonuses = INFO.getIdList("CORPORATION_", iType, IdListSlot.PYLIST_CONSUMED_BONUSES)
 			nOr = len(lPrereqBonuses)
 			if bPlus:
 				if nOr:
@@ -383,20 +328,9 @@ class PediaBuilding:
 		szChild = PF + "BUILDING"
 		szChild1 = szChild + "|Own"
 		# And building requirements
-		for j in xrange(CvTheBuildingInfo.getNumPrereqInCityBuildings()):
-			aList1.append(CvTheBuildingInfo.getPrereqInCityBuilding(j))
+		for j in aReqBuildings:
+			aList1.append(j)
 
-		# Empire building requirements
-		for eBuildingX, iPrereqNumOfBuilding in CvTheBuildingInfo.getPrereqNumOfBuildings():
-			if iPrereqNumOfBuilding > 0:
-				if CyPlayer:
-					aList3.append((eBuildingX, CyPlayer.getBuildingPrereqBuilding(iTheBuilding, eBuildingX, 0)))
-				else:
-					aList3.append((eBuildingX, iPrereqNumOfBuilding))
-
-		# Or building requirements
-		for j in xrange(CvTheBuildingInfo.getNumPrereqOrBuilding()):
-			aList2.append(CvTheBuildingInfo.getPrereqOrBuilding(j))
 
 		if aList1 or aList2 or aList3 or aList4 or aList5:
 			if bPlus:
@@ -450,13 +384,8 @@ class PediaBuilding:
 
 		# Civic Req
 		szChild = PF + "CIVIC"
-		for j in range(GC.getNumCivicInfos()):
-			if CvTheBuildingInfo.isPrereqAndCivics(j):
-				iCivic = CivicTypes(j)
-				aList1.append(iCivic)
-			elif CvTheBuildingInfo.isPrereqOrCivics(j):
-				iCivic = CivicTypes(j)
-				aList2.append(iCivic)
+		for j in aReqCivics:
+			aList1.append(CivicTypes(j))
 		if aList1 or aList2:
 			if bPlus:
 				screen.attachLabel(panelName, "", szAnd)
@@ -476,41 +405,12 @@ class PediaBuilding:
 				if i != 0:
 					screen.attachLabel(panelName, "", szOr)
 				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("CIVIC_", ID), enumGBS, eWidGen, 1, 1, False)
-			if iListLength > 1:
-				screen.attachLabel(panelName, "", szBracketR)
-			aList2 = []
-		# Terrain Req
-		szChild = PF + "TERRAIN"
-		for i in range(GC.getNumTerrainInfos()):
-			if CvTheBuildingInfo.isPrereqAndTerrain(i):
-				aList1.append(i)
-			elif CvTheBuildingInfo.isPrereqOrTerrain(i):
-				aList2.append(i)
-		if aList1 or aList2:
-			if bPlus:
-				screen.attachLabel(panelName, "", szAnd)
-			else:
-				bPlus = True
-		if aList1:
-			for i in range(len(aList1)):
-				ID = aList1[i]
-				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("TERRAIN_", ID), enumGBS, eWidGen, 1, 1, False)
-			aList1 = []
-		if aList2:
-			iListLength = len(aList2)
-			if  iListLength > 1:
-				screen.attachLabel(panelName, "", szBracketL)
-			for i in range(iListLength):
-				ID = aList2[i]
-				if i != 0:
-					screen.attachLabel(panelName, "", szOr)
-				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("TERRAIN_", ID), enumGBS, eWidGen, 1, 1, False)
 			if iListLength > 1:
 				screen.attachLabel(panelName, "", szBracketR)
 			aList2 = []
 		# Improvement Req
 		szChild = PF + "IMP"
-		for iPrereqOrImprovement in CvTheBuildingInfo.getPrereqOrImprovements():
+		for iPrereqOrImprovement in aReqImprovements:
 			aList2.append(iPrereqOrImprovement)
 		if aList2:
 			if bPlus:
@@ -528,27 +428,6 @@ class PediaBuilding:
 			if iListLength > 1:
 				screen.attachLabel(panelName, "", szBracketR)
 			aList2 = []
-		# Feature Req
-		szChild = PF + "FEATURE"
-		for i in range(GC.getNumFeatureInfos()):
-			if CvTheBuildingInfo.isPrereqOrFeature(i):
-				aList2.append(i)
-		if aList2:
-			if bPlus:
-				screen.attachLabel(panelName, "", szAnd)
-			else:
-				bPlus = True
-			iListLength = len(aList2)
-			if  iListLength > 1:
-				screen.attachLabel(panelName, "", szBracketL)
-			for i in range(iListLength):
-				ID = aList2[i]
-				if i != 0:
-					screen.attachLabel(panelName, "", szOr)
-				screen.attachImageButton(panelName, szChild + str(ID), INFO.getButton("FEATURE_", ID), enumGBS, eWidGen, 1, 1, False)
-			if iListLength > 1:
-				screen.attachLabel(panelName, "", szBracketR)
-			aList2 = []
 		if not bPlus:
 			screen.deleteWidget(panelName)
 			H_ROW_2 += H_BOT_ROW
@@ -559,5 +438,5 @@ class PediaBuilding:
 		# History
 		szHistory = TRNSLTR.getText("TXT_KEY_PEDIA_HISTORY", ())
 		screen.addPanel(aName(), szHistory, "", True, False, X_COL_3, Y_TOP_ROW_2, W_COL_3, H_ROW_2, ePanelBlue50)
-		szHistoryText = szfont2 + CvTheBuildingInfo.getCivilopedia()
+		szHistoryText = szfont2 + INFO.getCivilopedia("BUILDING_", iTheBuilding)
 		screen.addMultilineText(aName(), szHistoryText, X_COL_3 + 4, Y_TOP_ROW_2 + 32, W_COL_3 - 8, H_ROW_2 - 40, eWidGen, 0, 0, 1<<0)

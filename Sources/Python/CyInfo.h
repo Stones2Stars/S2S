@@ -532,6 +532,13 @@ public:
 	// x100 like every amount ([DEC-fixedpoint-x100]); the reader divides at the point of use.
 	python::list getFlatYields(const std::string& szTypePrefix, int iId, int iScope) const;
 	python::list getFlatCommerces(const std::string& szTypePrefix, int iId, int iScope) const;
+
+	// The PERCENT side of the same two groups. Flats and percents are SEPARATE SLOTS -- the unit is part of the
+	// slot key ([modifier.md] par.2), so a percent is not reachable through the flat read and needs its own.
+	// ⚠ A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]: the x100 exists to carry two decimals on an AMOUNT, and
+	// a percent has none), so a reader that divides one by 100 destroys it.
+	python::list getPercentYields(const std::string& szTypePrefix, int iId, int iScope) const;
+	python::list getPercentCommerces(const std::string& szTypePrefix, int iId, int iScope) const;
 	// ---- THE WHAT-IF: what this CANDIDATE would ADD to that city, resolved against its live contexts ----
 	// ⚖ The valuation protocol ([patterns.md] § THE VALUATION PROTOCOL): the contexts go IN and the resolved
 	// DELTA comes out -- never the raw authored deposit and never the new total. The context IS the current

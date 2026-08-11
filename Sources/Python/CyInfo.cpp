@@ -925,6 +925,30 @@ python::list CyInfo::getFlatCommerces(const std::string& szTypePrefix, int iId, 
 	return values;
 }
 
+python::list CyInfo::getPercentYields(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		values.append(pInfo ? pInfo->modifier(infoYieldFamily((YieldTypes)iYield), CHANNEL_AMOUNT,
+			(CvCascScope)iScope, CASC_UNIT_PERCENT) : 0);
+	}
+	return values;
+}
+
+python::list CyInfo::getPercentCommerces(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		values.append(pInfo ? pInfo->modifier(infoCommerceFamily(iCommerce), CHANNEL_AMOUNT,
+			(CvCascScope)iScope, CASC_UNIT_PERCENT) : 0);
+	}
+	return values;
+}
+
 namespace
 {
 	// The what-if's three inputs, resolved from the (player, city) address every read on this surface takes.
@@ -1560,6 +1584,8 @@ void CyInfo::pythonPublish()
 		.def("getIntrinsic",   &CyInfo::getIntrinsic)
 		.def("getFlatYields", &CyInfo::getFlatYields)
 		.def("getFlatCommerces", &CyInfo::getFlatCommerces)
+		.def("getPercentYields", &CyInfo::getPercentYields)
+		.def("getPercentCommerces", &CyInfo::getPercentCommerces)
 		.def("expectedWellbeing", &CyInfo::expectedWellbeing)
 		.def("expectedFlatYields", &CyInfo::expectedFlatYields)
 		.def("expectedPlotYields", &CyInfo::expectedPlotYields)
