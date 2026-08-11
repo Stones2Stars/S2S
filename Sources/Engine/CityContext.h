@@ -312,17 +312,6 @@ private:
 	mutable ContextDict m_onSite;
 	// ⚖ THE TRADED STORE -- what this city holds OVER THE NETWORK, maintained from the city's own acquisition
 	// fact (SEVT_CITY_BONUS_ADDED/REMOVED, which CvCity::processBonus fires on a genuine 0<->non-zero crossing).
-	// ⛔ IT IS A STORE AND NOT A FORWARD, and that is the whole point: the traded half used to relay into
-	// CvCity::getNumBonuses, which walks the plot group and applies the engine's own tech-trade / minted /
-	// corporation adjustments. That is the ENGINE's answer, not the cascade's -- nothing about it is fed by a
-	// fact, so there was no maintained state to be right or wrong, and every deposit gate asking "does this city
-	// have this resource" was reaching past the cascade into legacy. A relay cannot be verified, cannot be
-	// diffed against an oracle, and cannot fail loud when an emit goes missing ([DEC-no-legacy-masking],
-	// [DEC-maintained-sum]).
-	// ⛔ ORTHOGONAL TO m_onSite, NEVER DERIVABLE FROM IT (owner): a resource can be held on site and not in the
-	// network -- having traded the only copy away -- and a bare `{type, scope:"city", min:1}` deposit gate asks
-	// THIS list alone. The two are never read together.
-	mutable ContextDict m_traded;
 	mutable int m_areaId;                      // the city's area ID (-1 = unassigned)
 	mutable int m_areaTileCount;               // that area's tile count -- AREA_SIZE served without dereferencing CvArea
 	// The largest ADJACENT water body, in tiles -- ONE int that answers isCoastal at EVERY threshold

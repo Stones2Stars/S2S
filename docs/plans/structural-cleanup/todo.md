@@ -295,15 +295,17 @@
   ⚑ Its sibling half is the load path: the plot group is populated EXCLUSIVELY by events, so a re-derivation
   feeds the FACTS rather than writing the counts.
 
-- **`CityContext::m_traded` consumes TWO of the three bonus facts, and only one of them may carry a value.**
-  It takes the has-verdict crossing (`SEVT_CITY_BONUS_*`, ±1) AND the vicinity supply COUNT
-  (`SEVT_CITY_VICINITY_BONUS_*`, ±count) — the double-consumption
-  [event-spine.md](../../specs/event-spine.md) bans outright, since the plot group ALREADY fans the has-verdict
-  to the providing city. A city that supplies a resource itself therefore counts its own holding twice.
-  ⚠ It is a COUNT defect, not a visibility one — the readers test `> 0`, so the lists are right and the numbers
-  they print are not; do not chase it expecting an empty list.
-  ⚑ Same shape as the wellbeing triple-count already cut on the modifier plane, one store over: decide which
-  fact carries the value (the has-verdict), and let the other move only the vicinity dictionaries.
+- **The DEFERRED BONUS-PROCESSING BRACKET is a fossil waiting on the `processBonus` cut.**
+  `CvCity::startDeferredBonusProcessing` / `endDeferredBonusProcessing` snapshot every bonus's network count
+  per city on entry and compare on exit, so a compound network change announces its NET crossing. It exists to
+  keep the legacy per-bonus apply (`processBonus`) off the intermediates of a merge or a load-time rebuild —
+  the only remaining reason, now that no consumer stores a copy of the count to protect.
+  ⚠ It is not free: `CvPlayer::updatePlotGroups` runs it for EVERY city unconditionally — including when
+  `possibleNewInAreaOnly` narrows the real work to one area — at `2 × numBonusInfos` relayed reads plus a
+  heap allocation per city, on a path reached from many call sites including every resource trade (`CvDeal`).
+  That is O(what EXISTS) guarding a change that is O(one plot).
+  ⛔ It goes with `processBonus`, not before it — cutting it while that apply is still live would run the
+  legacy fold on every intermediate of a rebuild.
 
 - **Cut the citizen valuation's WHIP term — the AI trades food away for a mechanic that is never worth taking
   (owner: *"with how whipping currently functions, it is never worth"*).** `iSlaveryValue` re-books a tile's food

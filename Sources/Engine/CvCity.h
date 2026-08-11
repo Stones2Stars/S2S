@@ -1059,6 +1059,9 @@ public:
 	int getNumBonusesFromBase(BonusTypes eIndex, int iBaseNum) const;
 
 	int getNumBonuses(BonusTypes eIndex) const;
+	// The enumerating twin of getNumBonuses -- WHICH bonuses this city holds, where that answers HOW MANY of one.
+	// Both resolve through the same gates, so a census and a gate can never disagree about what is held.
+	void collectHeldBonuses(std::vector<int>& kHeldOut) const;
 	bool hasBonus(BonusTypes eIndex) const;
 
 	// WHAT THE NETWORK SUPPLIES THIS CITY, read straight off the plot group.

@@ -9285,6 +9285,42 @@ int CvCity::getNumBonuses(BonusTypes eIndex) const
 	return getNumBonusesFromBase(eIndex, getNetworkBonusCount(eIndex)) + getCorpBonusProduction(eIndex);
 }
 
+// The HELD SET behind getNumBonuses. It walks the plot group's own sparse holdings -- never the bonus registry --
+// and puts each candidate through the SAME read the single-bonus question uses, so the two cannot answer
+// differently ([DEC-single-implementation]).
+// ⛔ The corporation pass is not belt-and-braces: a corporation PRODUCES a resource the network may not carry at
+// all, so it is absent from the group's map however the gate answers, and a walk of the group alone silently
+// drops that whole source class from any census built on it.
+void CvCity::collectHeldBonuses(std::vector<int>& kHeldOut) const
+{
+	PROFILE_EXTRA_FUNC();
+
+	kHeldOut.clear();
+
+	const CvPlotGroup* pPlotGroup = plotGroup(getOwner());
+	if (pPlotGroup != NULL)
+	{
+		for (std::map<int, int>::const_iterator itNetwork = pPlotGroup->getBonuses().begin();
+			itNetwork != pPlotGroup->getBonuses().end(); ++itNetwork)
+		{
+			if (getNumBonuses((BonusTypes)itNetwork->first) > 0)
+			{
+				kHeldOut.push_back(itNetwork->first);
+			}
+		}
+	}
+
+	for (std::vector< std::pair<BonusTypes, int> >::const_iterator itCorp = m_corpBonusProduction.begin();
+		itCorp != m_corpBonusProduction.end(); ++itCorp)
+	{
+		const int iBonus = (int)itCorp->first;
+		if (getNumBonuses(itCorp->first) > 0 && !algo::any_of_equal(kHeldOut, iBonus))
+		{
+			kHeldOut.push_back(iBonus);
+		}
+	}
+}
+
 
 bool CvCity::hasBonus(BonusTypes eIndex) const
 {

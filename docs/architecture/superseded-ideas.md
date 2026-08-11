@@ -382,3 +382,23 @@
     ⚑ Worked, same session: a trait's `maintenance` deposit read `-70` against an authored `-10%` — which looks
     like a 7x over-application until the third leg answers it, the spine showing exactly 7 owners holding that
     trait and the log's own apply count saying 7. Fully attributed, no oracle.
+34. **The PER-CITY TRADED-BONUS MIRROR** (`CityContext::m_traded` — an `id → count` store answering
+    `tradedBonusCount`, fed by the has-verdict crossing AND the vicinity supply count) *(dead)* — it replaced the
+    RELAY that [enabler.md §8](../specs/enabler.md) RESIDENCY specifies (*"the `CvPlotGroup` is the ONLY
+    authoritative list for trade resources, and NOTHING mirrors it"*), on the argument that a relay *"cannot be
+    verified, cannot be diffed against an oracle, and cannot fail loud when an emit goes missing"*.
+    ⛔ **Every leg of that argument was wrong, and the shape is what made it persuasive.** The ORACLE it wanted to
+    be diffed against is itself dead (#33). A relay depends on NO emit, so none can go missing — the fact surface it
+    was worried about maintains the plot group's count, which the relay reads. And it consumed TWO of the three
+    facts that describe one resource reaching one city, which [event-spine.md](../specs/event-spine.md) names as the
+    double-count outright: a city SUPPLYING a resource booked its own holding twice.
+    ⚑ **Decisively, it answered a DIFFERENT NUMBER than the engine.** `CvCity::getNumBonuses` applies three
+    genuinely per-asker adjustments — the bonus's `TechCityTrade` gate, the player's minted-percent suppression and
+    the city's corporation add-on — and the store carried none of them, so a resource whose trade tech was
+    unresearched read as HELD by every deposit gate asking the context.
+    ⚠ **The tell that it had drifted was visible in one screen and read past for months:** the doc comment directly
+    above the getter still said *"FORWARDED, never stored"* while the line below it returned the store.
+    ⛔ **Never re-add a per-city or per-context copy of the network count.** What the store reached for — a fact-fed,
+    inspectable answer — is already there: the plot group's `m_bonusCounts` IS the maintained store, the crossings
+    are announced by `changeNumBonuses`, and the enumerating read (`CvCity::collectHeldBonuses`) shares the
+    single-bonus read's gates by construction.

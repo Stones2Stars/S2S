@@ -69,7 +69,6 @@ void CityContext::clear() const
 	m_vicinityForeign.clear();
 	m_vicinityWorked.clear();
 	m_onSite.clear();
-	m_traded.clear();
 	m_areaId = -1;
 	m_areaTileCount = 0;
 	m_governmentCenterDistance = 0;
@@ -272,21 +271,23 @@ int  CityContext::tradedBonusCount(int eBonus) const
 	{
 		return 0;
 	}
-	// ⛔ THE STORE, not CvCity::getNumBonuses. The relay it replaced walked the plot group and applied the
-	// engine's tech-trade gate, minted-percent suppression and corporation add-on -- an ENGINE answer that no
-	// fact maintains, so a missing emit was invisible and nothing could be diffed against it. This reads what
-	// the city's own acquisition facts built ([DEC-maintained-sum]).
-	return m_traded.count(eBonus);
+	if (m_city == NULL)
+	{
+		return 0;
+	}
+	return m_city->getNumBonuses((BonusTypes)eBonus);
 }
 void CityContext::collectBonusStores(std::vector<int>& tradedOut, std::vector<int>& onSiteOut) const
 {
 	tradedOut.clear();
 	onSiteOut.clear();
-	std::map<int, int>::const_iterator it;
-	for (it = m_traded.m.begin(); it != m_traded.m.end(); ++it)
+	// The traded half comes from the city's own held-set enumeration, which resolves through the same gates the
+	// per-bonus read does -- so this list and tradedBonusCount answer the same question by construction.
+	if (m_city != NULL)
 	{
-		if (it->second > 0) { tradedOut.push_back(it->first); }
+		m_city->collectHeldBonuses(tradedOut);
 	}
+	std::map<int, int>::const_iterator it;
 	for (it = m_onSite.m.begin(); it != m_onSite.m.end(); ++it)
 	{
 		if (it->second > 0) { onSiteOut.push_back(it->first); }
@@ -299,10 +300,13 @@ void CityContext::reportBonusStoreCensus() const
 	{
 		return;
 	}
-	// TRADED is now a STORE, so it is sized like every other dictionary here. It used to be counted per resource
-	// through the legacy relay -- which is exactly why the census once reported 89 held while the cascade itself
-	// knew nothing.
-	const int iTraded = (int)m_traded.m.size();
+	// TRADED is the city's GATED held set -- the network list after the tech-trade / minted gates, plus what its
+	// corporations produce. It is reported beside the RAW network list below precisely because the two differ:
+	// a gap between them is a gate biting, which is a different failure from an empty group and is invisible
+	// unless both are shown.
+	std::vector<int> kHeld;
+	m_city->collectHeldBonuses(kHeld);
+	const int iTraded = (int)kHeld.size();
 	// ...and the NETWORK LIST beside it, so a city reading zero traded can be told apart from a plot group that
 	// holds nothing to begin with. Two different failures, one observable without this pair.
 	const CvPlotGroup* pPlotGroup = m_city->plotGroup(m_city->getOwner());
@@ -750,10 +754,6 @@ bool CityContext::wantsEvent(int iEventId)
 	// MEMBERSHIP: a plot entered or left this city's workable set -- fold its whole current block.
 	case SEVT_PLOT_WORKING_CITY_ADDED:
 	case SEVT_PLOT_WORKING_CITY_REMOVED:
-	// THE TRADED STORE -- this city's own network-supply crossing. CvCity::processBonus fires it only on a
-	// genuine 0 <-> non-zero flip, so the fact IS the presence change and never a magnitude.
-	case SEVT_CITY_BONUS_ADDED:
-	case SEVT_CITY_BONUS_REMOVED:
 	// ...and the SUPPLIED half: a resource an active building in this city PRODUCES (json §5a `provides.bonuses`
 	// -- an industrial farm supplying every livestock), or a free bonus the city carries.
 	case SEVT_CITY_VICINITY_BONUS_ADDED:
@@ -920,25 +920,10 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			const int iCount = (kEvent.iB != 0) ? kEvent.iB : 1;
 			const int iSign = (kEvent.iEventId == SEVT_CITY_VICINITY_BONUS_ADDED) ? +1 : -1;
 			pCity->getCityContext().applyVicinityBonus(kEvent.iType, CITYVIC_ONSITE, iSign * iCount);
-			pCity->getCityContext().m_traded.add(kEvent.iType, iSign * iCount);
 		}
 		break;
 	}
 
-	// THIS CITY obtained or lost a resource over the network. ⚑ It is the city's OWN fact, so it needs no plot,
-	// no radius walk and no fan: one delta into one dictionary, which is what makes the traded answer a
-	// maintained sum rather than a relay.
-	case SEVT_CITY_BONUS_ADDED:
-	case SEVT_CITY_BONUS_REMOVED:
-	{
-		CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
-		if (pCity != NULL && kEvent.iType >= 0)
-		{
-			pCity->getCityContext().m_traded.add(kEvent.iType,
-				(kEvent.iEventId == SEVT_CITY_BONUS_ADDED) ? +1 : -1);
-		}
-		break;
-	}
 
 	// The tile's SERVED-RESOURCE verdict crossed -- an improvement that trades the resource arrived or went, or the
 	// resource itself did. ⚠ The REMOVED half is emitted while the tile's OWNERSHIP still holds (the verdict moves
