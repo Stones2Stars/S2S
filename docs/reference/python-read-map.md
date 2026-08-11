@@ -25,9 +25,17 @@
 > nine `isRevealed`, four `getBuildingOriginalTime`, three `hasBuilding` and two `plot()` — all of which would
 > have thrown on the following click.)* ⇒ When you touch a file for ANY reason, clear its dead reads while you
 > are in it, and grep the file rather than trusting the traceback that sent you there.
-> ⚠ The exception that is NOT a licence to defer: a read whose replacement surface **does not exist yet** (the
-> vote / vote-source / victory-threshold family) is a SURFACE to build, not a call to re-point — build it, and
-> say so plainly rather than re-pointing onto something that answers a different question.
+> ⚠ The exception that is NOT a licence to defer: a read whose replacement surface **does not exist yet** is a
+> SURFACE to build, not a call to re-point — build it, and say so plainly rather than re-pointing onto something
+> that answers a different question. The families known to have NO read today, so nobody re-derives the list:
+> **the vote** (`isVoteSourceType` / `isSecretaryGeneral` — the rebuilt `CvVoteInfo` answers them as
+> `hasVoteSource()` and `getRole() == VOTE_ROLE_SECRETARY_GENERAL`, so the DATA is there and only the binding is
+> missing), **the vote source** (`VOTESOURCE_` is not a registered prefix at all — it needs its own accessor),
+> **the victory thresholds** (authored on the building/project, wanted per victory — a reverse view, so it lands
+> at load like the build's produces does, never a per-victory registry sweep), **the ERA** (no registered prefix;
+> ⚠ contrast `WORLD_`, which is NOT a JSON prefix either yet IS mapped explicitly in `CyInfo.cpp` — so absence
+> from the `readJson` X-macro list is not proof a prefix is unserved, CHECK the mapper), and the odd art read
+> (`getButtonDisabled`, the leader art-define / diplo-music tags).
 > The `Cy*` WRAPPER classes stay for the engine→Python direction, and each carries its **IDENTITY SET** — owner,
 > id, position, and nothing else ([patterns.md](../architecture/patterns.md) § THE IDENTITY SET). ⛔ The earlier
 > reading here — *"a wrapper with no binding is the correct end state"* — is SUPERSEDED: it was right about the
