@@ -387,6 +387,48 @@ python::list CyInfo::getImprovementBuilds(int iImprovement) const
 	return lBuilds;
 }
 
+bool CyInfo::isImprovementValidOnBonus(int iImprovement, int iBonus) const
+{
+	if (iImprovement < 0 || iImprovement >= GC.getNumImprovementInfos()) return false;
+	if (iBonus < 0 || iBonus >= GC.getNumBonusInfos()) return false;
+	return GC.getImprovementInfo((ImprovementTypes)iImprovement).isImprovementBonusMakesValid(iBonus);
+}
+
+bool CyInfo::isImprovementValidOnTerrain(int iImprovement, int iTerrain) const
+{
+	if (iImprovement < 0 || iImprovement >= GC.getNumImprovementInfos()) return false;
+	if (iTerrain < 0 || iTerrain >= GC.getNumTerrainInfos()) return false;
+	return GC.getImprovementInfo((ImprovementTypes)iImprovement).getTerrainMakesValid(iTerrain);
+}
+
+bool CyInfo::isImprovementValidOnFeature(int iImprovement, int iFeature) const
+{
+	if (iImprovement < 0 || iImprovement >= GC.getNumImprovementInfos()) return false;
+	if (iFeature < 0 || iFeature >= GC.getNumFeatureInfos()) return false;
+	return GC.getImprovementInfo((ImprovementTypes)iImprovement).getFeatureMakesValid(iFeature);
+}
+
+//	The remaining placement questions, each a bare read of the improvement's own authored member. They share one
+//	bounds guard, so it is spelled once here rather than per body.
+#define CYI_IMPROVEMENT_FLAG(cyName, infoName)                                             \
+	bool CyInfo::cyName(int iImprovement) const                                            \
+	{                                                                                      \
+		if (iImprovement < 0 || iImprovement >= GC.getNumImprovementInfos()) return false;  \
+		return GC.getImprovementInfo((ImprovementTypes)iImprovement).infoName();           \
+	}
+
+CYI_IMPROVEMENT_FLAG(isImprovementValidOnPeak,       isPeakMakesValid)
+CYI_IMPROVEMENT_FLAG(isImprovementValidOnHills,      isHillsMakesValid)
+CYI_IMPROVEMENT_FLAG(isImprovementWaterOnly,         isWaterImprovement)
+CYI_IMPROVEMENT_FLAG(isImprovementPeakOnly,          isPeakImprovement)
+CYI_IMPROVEMENT_FLAG(isImprovementFlatlandsOnly,     isRequiresFlatlands)
+CYI_IMPROVEMENT_FLAG(isImprovementRiverSideOnly,     isRequiresRiverSide)
+CYI_IMPROVEMENT_FLAG(isImprovementRequiresFeature,   isRequiresFeature)
+CYI_IMPROVEMENT_FLAG(isImprovementRequiresIrrigation, isRequiresIrrigation)
+CYI_IMPROVEMENT_FLAG(isImprovementNoFreshWater,      isNoFreshWater)
+
+#undef CYI_IMPROVEMENT_FLAG
+
 python::list CyInfo::getRequiresIds(const std::string& szTypePrefix, int iId, int iBucket) const
 {
 	python::list lIds;
@@ -1528,6 +1570,18 @@ void CyInfo::pythonPublish()
 		.def("getRequiresIds",       &CyInfo::getRequiresIds)
 		.def("isNotConstructible",   &CyInfo::isNotConstructible)
 		.def("getImprovementBuilds", &CyInfo::getImprovementBuilds)
+		.def("isImprovementValidOnBonus",   &CyInfo::isImprovementValidOnBonus)
+		.def("isImprovementValidOnTerrain", &CyInfo::isImprovementValidOnTerrain)
+		.def("isImprovementValidOnFeature", &CyInfo::isImprovementValidOnFeature)
+		.def("isImprovementValidOnPeak",    &CyInfo::isImprovementValidOnPeak)
+		.def("isImprovementValidOnHills",   &CyInfo::isImprovementValidOnHills)
+		.def("isImprovementWaterOnly",      &CyInfo::isImprovementWaterOnly)
+		.def("isImprovementPeakOnly",       &CyInfo::isImprovementPeakOnly)
+		.def("isImprovementFlatlandsOnly",  &CyInfo::isImprovementFlatlandsOnly)
+		.def("isImprovementRiverSideOnly",  &CyInfo::isImprovementRiverSideOnly)
+		.def("isImprovementRequiresFeature", &CyInfo::isImprovementRequiresFeature)
+		.def("isImprovementRequiresIrrigation", &CyInfo::isImprovementRequiresIrrigation)
+		.def("isImprovementNoFreshWater",   &CyInfo::isImprovementNoFreshWater)
 		.def("getConditionedEntries", &CyInfo::getConditionedEntries)
 		.def("getWellbeing",   &CyInfo::getWellbeing)
 		.def("getRevolution",  &CyInfo::getRevolution)
