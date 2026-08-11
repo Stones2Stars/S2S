@@ -740,6 +740,7 @@ public:
 	// SPECIALIST yields are tier 1 -- inside it. Handing one where the other belongs does not compile, which is
 	// the whole point: as prose this rule was re-corrected more times than the owner cares to count.
 	const CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING>& getBuildingYields() const { return m_buildingYields; }
+	const CvCascadePackage<CvCity, CASC_ORIGIN_PLOT>& getPlotYields() const { return m_plotYields; }
 	const CvCascadePackage<CvCity, CASC_ORIGIN_SPECIALIST>& getSpecialistYields() const { return m_specialistYields; }
 
 	// ---- THE ENABLER'S PER-CITY STATE (enabler.md §7.1) -- the "can I?" machine's host on this scope owner.
@@ -1570,6 +1571,7 @@ protected:
 	// stack lives on the building plane, since percents combine additively and have no origin to keep apart.
 	// A maintained sum, never serialized.
 	CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING> m_buildingYields;
+	CvCascadePackage<CvCity, CASC_ORIGIN_PLOT> m_plotYields;
 	CvCascadePackage<CvCity, CASC_ORIGIN_SPECIALIST> m_specialistYields;
 	int m_iHighestPopulation;
 	int m_iWorkingPopulation;

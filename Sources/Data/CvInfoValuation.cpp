@@ -951,7 +951,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	// every log silent, because a spin emits nothing.
 	// ⛑ The slot is maintained by two legs that are total together: the RESOLVE delta (foldPlotSegment in
 	// CvModifierConsumer) and the WORKED membership fact (applyWorkedPlot). See CvCascadePackage::plotBaseFlat.
-	int64_t iPlotBase = city.getBuildingYields().readPlotBaseFlat(iChannel);
+	int64_t iPlotBase = city.getPlotYields().readPlotBaseFlat(iChannel);
 	int64_t iPlotNature = 0;
 	int64_t iPlotImprovement = 0;
 	int64_t iPlotRest = 0;

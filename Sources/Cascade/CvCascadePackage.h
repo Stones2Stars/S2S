@@ -74,6 +74,7 @@
 enum CvCascOrigin
 {
 	CASC_ORIGIN_SINGLE = 0,     // every scope but CITY: one yield origin, so there is nothing to keep apart
+	CASC_ORIGIN_PLOT,           // CITY tier 1 -- the worked plots' own packages, folded in by the worked fact
 	CASC_ORIGIN_SPECIALIST,     // CITY tier 1 -- multiplied by the percent stack
 	CASC_ORIGIN_BUILDING        // CITY tier 2 -- added flat, AFTER the stack, never multiplied
 };

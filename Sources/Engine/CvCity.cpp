@@ -817,6 +817,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	// bind the CITY-scope yield planes, one per ORIGIN ([state-repositories.md] § THE ORIGIN RULE). Both start
 	// EMPTY and are filled ONLY by the facts ([DEC-maintained-sum]).
 	m_buildingYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
+	m_plotYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	m_specialistYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	// The enabler's per-city state starts EMPTY and UN-READY: the domains are init'd by their domain enabler at
 	// this city's lifecycle start and filled by DOMAIN events thereafter ([DEC-spine-reseed]) -- never from the

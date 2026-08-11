@@ -57,7 +57,7 @@ namespace
 		const CvCity* pWorkingCity = kPlot.getWorkingCity();
 		if (pWorkingCity != NULL)
 		{
-			pWorkingCity->getBuildingYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
+			pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
 		}
 	}
 }
@@ -2315,12 +2315,10 @@ namespace
 					const CvCity* pCity = GET_PLAYER((PlayerTypes)kEvent.iC).getCity(kEvent.iB);
 					if (pCity != NULL)
 					{
-						// The PLOT origin folds into its own PLOT-BASE SEGMENT, which is addressed separately from the
-					// building flats on this plane (readPlotBaseFlat vs readFlat) -- so plot yields were never
-					// the origins that got conflated. ⚠ It is a SEGMENT and not yet its own typed package, which
-					// is the remaining step to the three typed planes [state-repositories.md] § THE ORIGIN RULE
-					// describes.
-					pCity->getBuildingYields().applyWorkedPlot(
+						// The PLOT origin folds into the city's PLOT plane -- the third of the three
+					// ([state-repositories.md] § THE ORIGIN RULE), typed so it cannot share a slot with the
+					// specialist or building flats.
+					pCity->getPlotYields().applyWorkedPlot(
 							pWorkedPlot->getCascadePackage(),
 							(kEvent.iEventId == SEVT_PLOT_WORKED_ADDED) ? +1 : -1);
 					}

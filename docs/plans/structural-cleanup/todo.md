@@ -249,16 +249,11 @@
 
 ## Not built yet
 
-- **Give the PERCENT STACK its own package, and get the plot-base fold out of the building plane.** The city's
-  packages are specialist flats, building flats and the percent stack — three combine positions
-  ([state-repositories.md](../../architecture/state-repositories.md) § THE ORIGIN RULE) — but only the two flat
-  planes are separate types today; the percent stack rides the building plane, and so does the worked-plot fold.
-  ⚠ **Neither is a wrong number, and neither is the plot origin missing a package.** The plot base is the
-  `CvPlot` package, and the city-side plot-base slot is a MAINTAINED SUM like every other: the worked-plot fact
-  applies the moved plot's contribution as a delta ([DEC-maintained-sum]) — nothing is marked, nothing is
-  recomputed, and it is not a cache. What is wrong is only that a plot-origin accumulation and the percent stack
-  both live inside a package TYPED for the building origin, which is the conflation the type split exists to
-  make unsayable.
+- **Give the PERCENT STACK its own package.** The city's three YIELD origins are separated and typed — plots,
+  specialists, buildings ([state-repositories.md](../../architecture/state-repositories.md) § THE ORIGIN RULE) —
+  but the percent stack still rides the building plane rather than being the distinct combine position it is.
+  ⚠ It is not a wrong number: percents combine into ONE additive stack, so there is no second origin to be
+  conflated with. It is the last position sharing a package with another.
 - **The unresolved-FK census reports the §3.1 CATCH-ALL TOKENS as unresolved ids.** `CITY`, `TEAM`,
   `POPULATION`, `ERA`, `SPECIALIST`, `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`, the slider rates
   (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), `CULTURE_PERCENTAGE`,
