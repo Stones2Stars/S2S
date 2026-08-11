@@ -68,10 +68,6 @@
 					type="boolean" default="True"/>
 			<option id="BuildingAdditionalCommerce" key="Building Additional Commerce"
 					type="boolean" default="True"/>
-			<option id="BuildingAdditionalHealth" key="Building Additional Health"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalHappiness" key="Building Additional Happiness"
-					type="boolean" default="True"/>
 			<option id="BuildingAdditionalGreatPeople" key="Building Additional Great People"
 					type="boolean" default="True"/>
 			<option id="BuildingAdditionalDefense" key="Building Additional Defense"

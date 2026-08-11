@@ -348,6 +348,17 @@ group's natural index** — never N individual getters for a groupable set. This
      > ⚑ The practical test on any composer edit: if you are writing `getText` around a MAGNITUDE, you are
      > building a sub-block by hand and it is wrong; if you are writing `getText` for a HEADING or choosing
      > which sources belong together, that is the block and it is right.
+     >
+     > **⛔ A BREAKDOWN ITEMISES WHAT THE OBJECT HAS, AND NOTHING ELSE (owner).** A block that accounts for a
+     > realized value lists the sources DELIVERING it — never a candidate that WOULD deliver one. The two read
+     > identically once rendered, so a panel carrying both is not a richer breakdown, it is an unusable one: a
+     > reader cannot tell which lines explain the number at the bottom. ⚠ A separator does not rescue it, and
+     > neither does an option defaulting on.
+     > ⚑ **The discriminator is the ENABLER STATE the line was selected by:** a source the object HOLDS belongs in
+     > the breakdown; anything chosen off the frontier (`STATE_LISTED` — what could be built) is a WHAT-IF and
+     > belongs to the valuation surface that answers *"what do I gain from this?"*
+     > ([THE VALUATION PROTOCOL](#) — the same read the AI weighs and the build-list hover prints), never to the
+     > account of what a city already has.
      > ⛔ So a whole-entity "render every family at once" dump is NOT the shape — it flattens the composition
      > the blocks exist to express, which is why the surface is per-family.
      >

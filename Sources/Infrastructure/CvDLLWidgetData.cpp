@@ -5058,16 +5058,11 @@ void CvDLLWidgetData::parseHealthHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 	CvCity* pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
 	if (NULL != pHeadSelectedCity)
 	{
+		// ⛔ Held sources only -- the happiness hover's rule, and for the same reason (owner): a preview of what
+		// an UNBUILT building would contribute is not part of an account of what the city has.
 		GAMETEXT.setBadHealthHelp(szBuffer, *pHeadSelectedCity);
 		szBuffer.append(L"\n=======================\n");
 		GAMETEXT.setGoodHealthHelp(szBuffer, *pHeadSelectedCity);
-
-		// BUG - Building Additional Health - start
-		if (pHeadSelectedCity->getOwner() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHealth", true, "BUG_BUILDING_ADDITIONAL_HEALTH_HOVER"))
-		{
-			GAMETEXT.setBuildingAdditionalHealthHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
-		}
-		// BUG - Building Additional Health - end
 	}
 }
 

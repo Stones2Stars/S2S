@@ -110,11 +110,9 @@ public:
 	void setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProcess);
 	void setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	bool setBuildingAdditionalHealthHelp(CvWStringBuffer &szBuffer, CvCity& city, const CvWString& szStart, bool bStarted = false);
 	void parseHappinessHelp(CvWStringBuffer& szBuffer);
 	void setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city);
-	bool setBuildingAdditionalHappinessHelp(CvWStringBuffer &szBuffer, CvCity& city, const CvWString& szStart, bool bStarted = false);
 	void setYieldChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piYieldChange, bool bPercent = false, bool bNewLine = true);
 	void listCommerceChange(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szEnd, const int* aList, bool bPercent = false);
 	void setYieldPerPopChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piYieldChange, bool bPercent = false, bool bNewLine = true);

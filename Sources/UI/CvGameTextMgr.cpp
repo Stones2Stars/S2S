@@ -1172,7 +1172,6 @@ bool CvGameTextMgr::setMinimalCombatPlotHelp(CvWStringBuffer& szString, CvPlot* 
 }
 
 
-
 bool CvGameTextMgr::setAssassinatePlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, CvUnit* pAttacker, CvUnit* pDefender)
 {
 	PROFILE_FUNC();
@@ -2237,7 +2236,6 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 }
 
 
-
 void CvGameTextMgr::parseLeaderTraits(CvWStringBuffer &szHelpString, LeaderHeadTypes eLeader, CivilizationTypes eCivilization, bool bDawnOfMan, bool bCivilopediaText)
 {
 	PROFILE_FUNC();
@@ -2913,53 +2911,20 @@ void CvGameTextMgr::setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 }
 
 
-bool CvGameTextMgr::setBuildingAdditionalHealthHelp(CvWStringBuffer &szBuffer, CvCity& city, const CvWString& szStart, bool bStarted)
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iI);
-
-		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		{
-			int iGood = 0, iBad = 0, iSpoiledFood = 0, iStarvation = 0;
-			city.getAdditionalHealthByBuilding(eBuilding, iGood, iBad, iSpoiledFood, iStarvation);
-
-			if (iGood != 0 || iBad != 0)
-			{
-				if (!bStarted)
-				{
-					szBuffer.append(szStart);
-					bStarted = true;
-				}
-
-				CvWString szLabel;
-				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
-				const bool bStartedLine = setResumableGoodBadChangeHelp(szBuffer, szLabel, L": ", L"", iGood, gDLL->getSymbolID(HEALTHY_CHAR), iBad, gDLL->getSymbolID(UNHEALTHY_CHAR), false, true);
-				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iSpoiledFood, gDLL->getSymbolID(EATEN_FOOD_CHAR), false, true, bStartedLine);
-				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iStarvation, gDLL->getSymbolID(BAD_FOOD_CHAR), false, true, bStartedLine);
-			}
-		}
-	}
-
-	return bStarted;
-}
-
-
 void CvGameTextMgr::parseHappinessHelp(CvWStringBuffer &szBuffer)
 {
 	CvCity* pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
 
 	if (pHeadSelectedCity)
 	{
+		// ⛔ A BREAKDOWN ITEMISES WHAT THE CITY HAS, AND NOTHING ELSE (owner). What stood here appended a
+		// preview of every building at STATE_LISTED -- what each WOULD contribute if it were built -- so the
+		// hover mixed held sources with unbuilt candidates under one heading and a separator. A reader cannot
+		// tell the two apart, which makes the whole panel unusable as an account of the city's actual state:
+		// London itemised a Terrorists Compound it does not own.
 		setAngerHelp(szBuffer, *pHeadSelectedCity);
 		szBuffer.append(L"\n=======================\n");
 		setHappyHelp(szBuffer, *pHeadSelectedCity);
-
-		if (pHeadSelectedCity->getOwner() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHappiness", true, "BUG_BUILDING_ADDITIONAL_HAPPINESS_HOVER"))
-		{
-			setBuildingAdditionalHappinessHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
-		}
 	}
 }
 
@@ -3157,39 +3122,6 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	szBuffer.append(L"-----------------------\n");
 	szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_TOTAL_HAPPY", iTotalHappy));
 }
-
-// BUG - Building Additional Happiness - start
-bool CvGameTextMgr::setBuildingAdditionalHappinessHelp(CvWStringBuffer &szBuffer, CvCity& city, const CvWString& szStart, bool bStarted)
-{
-	PROFILE_EXTRA_FUNC();
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
-
-		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
-		{
-			int iGood = 0, iBad = 0, iAngryPop = 0;
-			city.getAdditionalHappinessByBuilding(eBuilding, iGood, iBad, iAngryPop);
-
-			if (iGood != 0 || iBad != 0)
-			{
-				if (!bStarted)
-				{
-					szBuffer.append(szStart);
-					bStarted = true;
-				}
-
-				CvWString szLabel;
-				szLabel.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), GC.getBuildingInfo(eBuilding).getDescription());
-				const bool bStartedLine = setResumableGoodBadChangeHelp(szBuffer, szLabel, L": ", L"", iGood, gDLL->getSymbolID(HAPPY_CHAR), iBad, gDLL->getSymbolID(UNHAPPY_CHAR), false, true);
-				setResumableValueChangeHelp(szBuffer, szLabel, L": ", L"", iAngryPop, gDLL->getSymbolID(ANGRY_POP_CHAR), false, true, bStartedLine);
-			}
-		}
-	}
-
-	return bStarted;
-}
-// BUG - Building Additional Happiness - end
 
 
 // BUG - Resumable Value Change Help - start
