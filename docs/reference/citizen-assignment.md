@@ -64,6 +64,28 @@ one pass per emphasizer.
 > seat citizens on net LOSSES. It was invisible only because the test it guards could not answer false; the
 > waiver is gone.
 
+## ⚖ A BASE YIELD ALWAYS OUTWEIGHS A COMMERCE YIELD (owner)
+
+**Food and production are worth more than the commerce channels they compete with, in every citizen decision.**
+A plot's worth is what it PRODUCES, and a tile carrying real food and hammers must not lose to an option whose
+output is gold or research — so no state of the city may drive a base-yield term below the commerce terms it is
+being ranked against.
+
+> **⛔ THE `min` ON FOOD IS THE SHAPE THAT BREAKS THIS.** `iFoodValue = min(iFoodGrowthValue, iMaxFoodValue ×
+> food)` makes food worth **the lesser** of its growth contribution and its own quantity, so the moment the city
+> stops wanting to grow — avoid-growth, the happy/health cap, the growth damper — food is worth approximately
+> NOTHING and the tile is valued on its hammers alone.
+> ⚑ **Measured:** a 7-food / 2-production / 3-commerce sea plot caps at 44 × 700 = 30,800 on the food leg, but
+> under a collapsed growth value scores ~3,000 (its production) + ~30 (its commerce) — against specialists at
+> ~5,400 in the same city. The best tile available goes unworked, and it is always the same tile class, because
+> the verdict is a pure function of the yields and the growth state.
+> ⇒ **Growth value is an ADDITION on top of food's intrinsic worth, never a CEILING over it.** The food a tile
+> yields does not stop existing when growth is unwanted: it offsets consumption and feeds the very specialists
+> that are out-scoring it.
+> ⚠ **Emphasis MASKS this rather than fixing it** — emphasizing food lifts the term back above the specialists,
+> which is why the defect reads as "emphasis is required to get sane assignment" instead of as a food-valuation
+> bug.
+
 ## What re-orders the list, and what does not
 
 - **The GROWTH GATES re-order it.** `AI_avoidGrowth()` / `AI_ignoreGrowth()` are what every score is conditioned
