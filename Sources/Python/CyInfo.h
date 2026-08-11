@@ -255,47 +255,6 @@ public:
 	// award -- and never built. Any other prefix answers false.
 	bool isNotConstructible(const std::string& szTypePrefix, int iId) const;
 
-	// The BUILDS that lay this improvement -- the reverse of a build's `produces.improvement` ([json.md] §2:
-	// `produces` is an auxiliary section, not an `enables` edge).
-	//
-	// ⛔ IT IS NOT AN EDGE READ, and reaching for one answers EMPTY. The reverse pass lands a build onto the
-	// TECHS its per-terrain / per-feature rows gate on (`rp_relatedFromBuildProduces`) and never onto the
-	// improvement, so `getEdgeIds("IMPROVEMENT_", id, EDGEF_RELATED, EDGEB_BUILDS)` is silent here. What DOES
-	// carry the answer is the improvement's own typed member, filled by the same pass (`addBuildType`) -- so
-	// this is the entity's own data handed out, never a registry sweep asking every build whose improvement it
-	// makes ([DEC-one-reverse-view]: the own-data inversion the pedia's build loop was).
-	//
-	// ⚑ It is NAMED rather than a slot on the generic id-list plane because it belongs to ONE registry
-	// ([patterns.md] THE PYTHON READ BOUNDARY: reserve the prefix-addressed plane for what is uniform across
-	// every registry; a value that belongs to one type is named). A prefix other than `IMPROVEMENT_` answers
-	// EMPTY.
-	python::list getImprovementBuilds(int iImprovement) const;
-
-	// The PLACEMENT-VALIDITY axes an improvement carries: the bonus / terrain / feature a plot must hold for it
-	// to be laid there. Each is the improvement's own authored member, and each is load-bearing for the ENGINE
-	// (`CvPlot::canHaveImprovement`), so it is carried by construction -- these publish it rather than derive it.
-	//
-	// ⚑ NAMED per axis rather than one parameterized test, because a call site must say WHICH question it asks
-	// ([patterns.md] THE PYTHON READ BOUNDARY: "you can easily make a Cy wrapper for a specific skill ... I want
-	// the Cy endpoints to be understandable -- minimal amount of endpoints is not the target here, properly
-	// organized is"). ⛔ They are NOT the `requires` DISPLAY: composing that block -- heading, ordering, the
-	// AND-vs-OR structure -- is the text manager's job, and these answer one axis each.
-	bool isImprovementValidOnBonus(int iImprovement, int iBonus) const;
-	bool isImprovementValidOnTerrain(int iImprovement, int iTerrain) const;
-	bool isImprovementValidOnFeature(int iImprovement, int iFeature) const;
-	bool isImprovementValidOnPeak(int iImprovement) const;
-	bool isImprovementValidOnHills(int iImprovement) const;
-
-	// The RELIEF / WATER / ADJACENCY restrictions on where an improvement may be laid -- the same placement
-	// plane as the three axes above, each its own named question.
-	bool isImprovementWaterOnly(int iImprovement) const;
-	bool isImprovementPeakOnly(int iImprovement) const;
-	bool isImprovementFlatlandsOnly(int iImprovement) const;
-	bool isImprovementRiverSideOnly(int iImprovement) const;
-	bool isImprovementRequiresFeature(int iImprovement) const;
-	bool isImprovementRequiresIrrigation(int iImprovement) const;
-	bool isImprovementNoFreshWater(int iImprovement) const;
-
 	// The ids this entity's `requires` NAMES in one bucket, across BOTH timings (`build` and `operate`) -- a
 	// caller asking "does this reference X" does not care which one greys and which one dorms.
 	//

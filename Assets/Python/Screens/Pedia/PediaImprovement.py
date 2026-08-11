@@ -3,6 +3,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
 INFO = CyInfo()
+IMPINFO = CyImprovementInfo()
 TRNSLTR = CyTranslator()
 
 TEXT = CyGameTextMgr()
@@ -160,7 +161,7 @@ class PediaImprovement:
 		# Builds
 		PF = "ToolTip|JumpTo|"
 		aList0 = []
-		for i in INFO.getImprovementBuilds(iTheImprove):
+		for i in IMPINFO.getBuilds(iTheImprove):
 			aList0.append((i, INFO.getButton("BUILD_", i)))
 
 		if aList0:
@@ -189,7 +190,7 @@ class PediaImprovement:
 		szChild = PF + "BONUS"
 		n = 0
 		for iType in range(GC.getNumBonusInfos()):
-			if INFO.isImprovementValidOnBonus(iTheImprove, iType):
+			if IMPINFO.isValidOnBonus(iTheImprove, iType):
 				aValidList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 				n += 1
 		if aList1 or aList2 or aList3:
@@ -236,43 +237,43 @@ class PediaImprovement:
 
 		# bNotOnAnyBonus is not exposed to python.
 
-		if INFO.isImprovementWaterOnly(iTheImprove):
+		if IMPINFO.isWaterOnly(iTheImprove):
 			aList0.append([PF + "CONCEPT_NEW" + str(GC.getInfoTypeForString("CONCEPT_WATER_TERRAINS")), "Art/Interface/Buttons/BaseTerrain/Ocean.dds"])
 
-		if INFO.isImprovementPeakOnly(iTheImprove):
+		if IMPINFO.isPeakOnly(iTheImprove):
 			aList0.append([PF + "TERRAIN" + str(GC.getInfoTypeForString("TERRAIN_PEAK")) + "|" + str(n), "Art/Interface/Buttons/BaseTerrain/Peak.dds"])
 			n += 1
-		elif not INFO.isImprovementValidOnPeak(iTheImprove):
+		elif not IMPINFO.isValidOnPeak(iTheImprove):
 			aList0.append([PF + "TERRAIN" + str(GC.getInfoTypeForString("TERRAIN_PEAK")) + "|" + str(n), "Art/Interface/Buttons/BaseTerrain/Peak.dds", "NOT"])
 			n += 1
 
-		if INFO.isImprovementFlatlandsOnly(iTheImprove):
+		if IMPINFO.isFlatlandsOnly(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_ONLY_BUILD_FLATLANDS1", "Art/Interface/Buttons/BaseTerrain/Grassland.dds"])
 
-		if INFO.isImprovementRiverSideOnly(iTheImprove):
+		if IMPINFO.isRiverSideOnly(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_REQUIRES_RIVER1", "Art/Interface/Buttons/WorldBuilder/River_Placement.dds"])
 
-		if INFO.isImprovementRequiresFeature(iTheImprove):
+		if IMPINFO.isRequiresFeature(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|Any_plot_feature1", "Art/bug/questionmark.dds"])
 
-		if INFO.isImprovementRequiresIrrigation(iTheImprove):
+		if IMPINFO.isRequiresIrrigation(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_REQUIRES_IRRIGATION1", "Art/Interface/Buttons/Buildings/Irrigation.dds"])
 
-		if INFO.isImprovementNoFreshWater(iTheImprove):
+		if IMPINFO.isNoFreshWater(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_NO_BUILD_FRESH_WATER1", "Art/bug/questionmark.dds"])
 
 		szChild = PF + "TERRAIN"
 		for i in range(nTerrains):
-			if INFO.isImprovementValidOnTerrain(iTheImprove, i):
+			if IMPINFO.isValidOnTerrain(iTheImprove, i):
 				aValidList.append((szChild + str(i) + "|" + str(n), INFO.getButton("TERRAIN_", i)))
 				n += 1
-		if INFO.isImprovementValidOnHills(iTheImprove):
+		if IMPINFO.isValidOnHills(iTheImprove):
 			aValidList.append((szChild + str(GC.getInfoTypeForString("TERRAIN_HILL")) + "|" + str(n), "Art/Interface/Buttons/BaseTerrain/Hill.dds"))
 			n += 1
 
 		szChild = PF + "FEATURE"
 		for i in range(GC.getNumFeatureInfos()):
-			if INFO.isImprovementValidOnFeature(iTheImprove, i):
+			if IMPINFO.isValidOnFeature(iTheImprove, i):
 				aValidList.append((szChild + str(i) + "|" + str(n), INFO.getButton("FEATURE_", i)))
 				n += 1
 
