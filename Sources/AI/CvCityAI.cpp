@@ -11337,12 +11337,13 @@ int CvCityAI::AI_getPlotMagicValue(const CvPlot* pPlot, bool bHealthy, bool bWor
 			}
 		}
 	}
-	//	the x100 lift belongs on the WHOLE operand, INSIDE the min -- outside it the two arms are compared on
-	//	different planes, so per-population consumption wins every time and the clause that softens the reduction
-	//	for a genuinely poor tile can never be reached
+	//	⚠ BOTH ARMS ARE ALREADY x100 -- getFoodConsumedPerPopulation returns 100 x the define, not the define --
+	//	so the min is a like-for-like compare and the outer x100 is what lifts the result onto the yield-x-weight
+	//	plane the sum below subtracts it from. Nothing here mixes scales; do not "repair" it.
 	const int iReductant = (
+		100 *
 		std::min(
-			100 * getFoodConsumedPerPopulation(!bHealthy),
+			getFoodConsumedPerPopulation(!bHealthy),
 			2 *
 			std::max(
 				std::max(

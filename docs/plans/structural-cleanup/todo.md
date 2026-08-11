@@ -282,15 +282,20 @@
   line had: the instrument does not know a vocabulary the parse path does. ⚠ Settle the `TAG_*` entries with it —
   those are classification ids minted at load, so whether they can resolve at FK time is the same question.
 
-- **Settle `AI_getPlotMagicValue`'s calibration against the `50` good-tile threshold — legacy had none to
-  restore.** Its result is `(food×125 + production×75 + commerce×50 − reductant) / 1000`, and the reductant is a
-  per-population food consumption. On the ×1 plane the numerator never cleared the divisor, so the function
-  returned ~0 for every tile and `AI_countGoodTiles(…, 50, …)` counted NOTHING — the clamp it feeds
-  (`iPopToGrow = min(iPopToGrow, iGoodTiles)`) was therefore pinned at zero for the life of the mod. On the ×100
-  plane it returns real numbers and the clamp starts working, which is a behaviour change nobody chose.
-  ⛔ So this is NOT a scale repair — there is no calibrated shape to return to, and picking one is a design call:
-  what counts as a good tile, and how hard should it cap growth. ⚠ Decide it against the `[CIT/assign]` census on
-  a real save, never against a remembered figure
+- **Watch the FIVE decisions `AI_countGoodTiles` feeds — the ×100 conversion turned a DEAD function on, and it
+  is the one place a scale change ADDED behaviour rather than removing it.** `AI_getPlotMagicValue` is
+  `(food×125 + production×75 + commerce×50 − 100×min(consumptionPerPop, 2×bestYield)) / 1000`, and on the ×1
+  plane the `min` always took the second arm, so the reductant exceeded the whole numerator: **every tile scored
+  0 or less and both thresholds (50, 100) were unreachable.** `AI_countGoodTiles` therefore returned 0 on every
+  call, for the life of the mod, and its five consumers were reading a constant: `bGrowMore` could never be
+  true; the whip gate `goodTiles <= pop − hurryPop + era` was always open; and the growth clamp
+  `iPopToGrow = min(iPopToGrow, iGoodTiles)` was pinned at zero.
+  ⚑ On the ×100 plane the `min` takes the consumption arm instead and the thresholds land where a reader would
+  want them — 50 ≈ a 5f/3h/2c tile, 100 ≈ 8f/5h/5c — so the function now measures what its name claims.
+  ⛔ **Nothing here is a scale defect to repair: both arms of that `min` are ×100 and always were**
+  (`getFoodConsumedPerPopulation` returns `100 ×` the define, not the define). What is owed is OBSERVATION —
+  five gates that were constants are now live, and whether that is wanted is a play question, not a code one.
+  ⚠ Judge it on the `[CIT/assign]` census on a real save, never against a remembered figure
   ([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)).
 
 - **Give citizen plot ASSIGNMENT the trade-route treatment — it is a poll, not a trigger.** The work is driven by
