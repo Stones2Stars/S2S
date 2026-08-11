@@ -10039,7 +10039,13 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 	int aiYields[NUM_YIELD_TYPES];
 	int aiCommerceYieldsTimes100[NUM_COMMERCE_TYPES];
 
-	bool bEmphasizeFood = AI_isEmphasizeYield(YIELD_FOOD);
+	//	⛔ EMPHASIS NEVER CARES ABOUT WHIPPING (owner). The three flags are read ONCE, here, because the whip
+	//	translation below needs them as much as the multipliers at the end do -- and reading them only at the
+	//	multipliers is what left that branch unreachable by the player's own instruction.
+	const bool bEmphasizeFood = AI_isEmphasizeYield(YIELD_FOOD);
+	const bool bEmphProduction = AI_isEmphasizeYield(YIELD_PRODUCTION);
+	const bool bEmphCommerce = AI_isEmphasizeYield(YIELD_COMMERCE);
+	const bool bAnyYieldEmphasis = bEmphasizeFood || bEmphProduction || bEmphCommerce;
 	bool bFoodIsProduction = isFoodProduction();
 	bool bCanPopRush = GET_PLAYER(getOwner()).canPopRush();
 
@@ -10456,12 +10462,14 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		}
 	*/
 	//Slavery translation
-	//	⛔ EMPHASIZING FOOD REFUSES THE TRANSLATION OUTRIGHT -- the player has said GROW, and this branch is the one
-	//	that decides a tile's food is worth more whipped than eaten. It ran BEFORE the emphasis multipliers, so
-	//	emphasis could never reach the decision; worse, the food-emphasis block then scaled iSlaveryValue, which is
-	//	added to iProductionValue below -- so under Slavery, asking for food raised the value of working food AS
-	//	HAMMERS by 30% and left food itself zeroed. That is the inversion, not a weighting.
-	if ((iSlaveryValue > 0) && (iSlaveryValue > iFoodValue) && !bEmphasizeFood)
+	//	⛔ ANY EMPHASIS REFUSES THE TRANSLATION OUTRIGHT (owner: emphasis should not care about whipping, EVER).
+	//	This branch decides a tile's food is worth more whipped than eaten, and it ran BEFORE the emphasis
+	//	multipliers -- so the player's own instruction could never reach the decision that overrides it. Worse, the
+	//	food-emphasis block then scaled iSlaveryValue, which is added to iProductionValue below: under Slavery,
+	//	asking for FOOD raised the value of working food AS HAMMERS by 30% and left food itself zeroed.
+	//	⚑ An emphasis is a statement about what this city is FOR, so a whip heuristic does not get to answer over
+	//	it -- for production and commerce exactly as much as for food.
+	if ((iSlaveryValue > 0) && (iSlaveryValue > iFoodValue) && !bAnyYieldEmphasis)
 	{
 		//treat the food component as production
 		iFoodValue = 0;
@@ -10518,10 +10526,7 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 	//	is that FOOD now reaches the other two, which is what makes the three equally strong.
 	//	⚠ Each channel is suppressed AT MOST ONCE, which is what the retired "Don't supress twice" guard was for;
 	//	stating it as one pass per channel makes that structural instead of a comment to remember.
-	const bool bEmphProduction = AI_isEmphasizeYield(YIELD_PRODUCTION);
-	const bool bEmphCommerce = AI_isEmphasizeYield(YIELD_COMMERCE);
-
-	if (bEmphProduction || bEmphasizeFood || bEmphCommerce)
+	if (bAnyYieldEmphasis)
 	{
 		if (bEmphProduction)
 		{

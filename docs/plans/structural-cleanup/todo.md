@@ -282,6 +282,18 @@
   line had: the instrument does not know a vocabulary the parse path does. ⚠ Settle the `TAG_*` entries with it —
   those are classification ids minted at load, so whether they can resolve at FK time is the same question.
 
+- **Cut the citizen valuation's WHIP term — the AI trades food away for a mechanic that is never worth taking
+  (owner: *"with how whipping currently functions, it is never worth"*).** `iSlaveryValue` re-books a tile's food
+  value as PRODUCTION whenever pop-rush is available and the city is happy, so citizen assignment is steered
+  toward whip fodder for an action a player will not use. Emphasis already refuses it outright (owner: emphasis
+  never cares about whipping); what is left is the unemphasized case.
+  ⚑ **WHY it is never worth it, which is also why the heuristic cannot be tuned into shape (owner): a whip costs
+  upwards of EIGHT population, and drafting the same — *"it harms production for eras going forward"*.** The term
+  is BTS-shaped, weighing a 1–2 pop whip against a food surplus; against an 8-pop cost the trade it models does
+  not exist, so no coefficient makes it right.
+  ⚠ The valuation is the tail, not the head: WHIPPING AND DRAFTING are what want revisiting, and this term goes
+  with whatever that decides — do not tune it in place.
+
 - **Watch the FIVE decisions `AI_countGoodTiles` feeds — the ×100 conversion turned a DEAD function on, and it
   is the one place a scale change ADDED behaviour rather than removing it.** `AI_getPlotMagicValue` is
   `(food×125 + production×75 + commerce×50 − 100×min(consumptionPerPop, 2×bestYield)) / 1000`, and on the ×1
