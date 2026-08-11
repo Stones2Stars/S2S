@@ -186,14 +186,13 @@ class WBBuildingScreen:
 			item = lBuilding[iCount]
 			iRow = iCount % nRows
 			iColumn = iCount / nRows
-			ItemInfo = GC.getBuildingInfo(item[1])
 
 			if pCity.hasBuilding(item[1]):
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			else:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 
-			screen.setTableText("WBBuilding", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
+			screen.setTableText("WBBuilding", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
 
 	def placeWonders(self):
 		screen = CyGInterfaceScreen( "WBBuildingScreen", CvScreenEnums.WB_BUILDING)
@@ -222,14 +221,13 @@ class WBBuildingScreen:
 			item = lWonders[iCount]
 			iRow = iCount % nRows
 			iColumn = iCount / nRows
-			ItemInfo = GC.getBuildingInfo(item[1])
 
 			if pCity.hasBuilding(item[1]):
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			else:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 
-			screen.setTableText("WBWonders", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
+			screen.setTableText("WBWonders", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBBuildingScreen", CvScreenEnums.WB_BUILDING)
