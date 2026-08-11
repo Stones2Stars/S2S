@@ -108,6 +108,11 @@ void CyEnums::pythonPublish()
 		.value("SCALAR_SPEED", SCALAR_SPEED)
 		.value("SCALAR_STRENGTH", SCALAR_STRENGTH)
 		.value("SCALAR_RANGE", SCALAR_RANGE)
+		//	The ERA pacing stragglers beside the cost/duration groups: growth and great-people are PERCENTS
+		//	against 100, event chance is a flat per-turn probability.
+		.value("SCALAR_GROWTH", SCALAR_GROWTH)
+		.value("SCALAR_GREAT_PEOPLE_RATE", SCALAR_GREAT_PEOPLE_RATE)
+		.value("SCALAR_EVENT_CHANCE", SCALAR_EVENT_CHANCE)
 		;
 
 	// The UNIT STATUS vocabulary -- what ACT.setUnitStatus is indexed by. An engine enum, so it IS the
@@ -191,6 +196,12 @@ void CyEnums::pythonPublish()
 		.value("PYINT_TRADE_ROUTE_AMOUNT", PYINT_TRADE_ROUTE_AMOUNT)
 		.value("PYINT_DOMAIN",           PYINT_DOMAIN)
 		.value("PYINT_PILLAGE_GOLD",     PYINT_PILLAGE_GOLD)
+		.value("PYINT_ERA_STARTING_GOLD",            PYINT_ERA_STARTING_GOLD)
+		.value("PYINT_ERA_STARTING_UNIT_MULTIPLIER", PYINT_ERA_STARTING_UNIT_MULTIPLIER)
+		.value("PYINT_ERA_STARTING_DEFENSE_UNITS",   PYINT_ERA_STARTING_DEFENSE_UNITS)
+		.value("PYINT_ERA_STARTING_WORKER_UNITS",    PYINT_ERA_STARTING_WORKER_UNITS)
+		.value("PYINT_ERA_STARTING_EXPLORE_UNITS",   PYINT_ERA_STARTING_EXPLORE_UNITS)
+		.value("PYINT_ERA_FREE_POPULATION",          PYINT_ERA_FREE_POPULATION)
 		.value("PYINT_FAVORITE_CIVIC",    PYINT_FAVORITE_CIVIC)
 		.value("PYINT_FAVORITE_RELIGION", PYINT_FAVORITE_RELIGION)
 		.value("PYINT_IS_BUILD", PYINT_IS_BUILD)
@@ -560,6 +571,30 @@ void CyEnums::pythonPublish()
 		.value("MOVEMENT_MOVE_DISCOUNT", MOVEMENT_MOVE_DISCOUNT)
 		.value("MOVEMENT_DROP_RANGE", MOVEMENT_DROP_RANGE)
 		.value("NUM_MOVEMENT_KINDS", NUM_MOVEMENT_KINDS)
+	;
+
+	//	The COSTS and DURATIONS group enums -- the era pacing dials. Every kind is a PERCENT against a 100
+	//	baseline, so a consumer presents the DIRECTION rather than the raw number.
+	python::enum_<CostsKind>("CostsKind")
+		.value("COSTS_AMOUNT", COSTS_AMOUNT)
+		.value("COSTS_TRAIN", COSTS_TRAIN)
+		.value("COSTS_CONSTRUCT", COSTS_CONSTRUCT)
+		.value("COSTS_CREATE", COSTS_CREATE)
+		.value("COSTS_BUILD", COSTS_BUILD)
+		.value("COSTS_RESEARCH", COSTS_RESEARCH)
+		.value("COSTS_IMPROVEMENT_UPGRADE", COSTS_IMPROVEMENT_UPGRADE)
+		.value("COSTS_RESEARCH_CUT_BELOW_ERA", COSTS_RESEARCH_CUT_BELOW_ERA)
+		.value("COSTS_HURRY", COSTS_HURRY)
+		.value("COSTS_UPGRADE", COSTS_UPGRADE)
+		.value("NUM_COSTS_KINDS", NUM_COSTS_KINDS)
+	;
+
+	python::enum_<DurationsKind>("DurationsKind")
+		.value("DURATIONS_AMOUNT", DURATIONS_AMOUNT)
+		.value("DURATIONS_CIVIC_ANARCHY", DURATIONS_CIVIC_ANARCHY)
+		.value("DURATIONS_RELIGIOUS_ANARCHY", DURATIONS_RELIGIOUS_ANARCHY)
+		.value("DURATIONS_ANGER", DURATIONS_ANGER)
+		.value("NUM_DURATIONS_KINDS", NUM_DURATIONS_KINDS)
 	;
 
 	//	The kind enums that index CyState's raw-state city groups. They are the consumer's vocabulary for those

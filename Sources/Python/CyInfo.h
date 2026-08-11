@@ -93,6 +93,16 @@ enum PyIntrinsicSlot
 	                            // there is deliberately no composition over them for this, so a consumer asking
 	                            // "which domain" asks HERE.
 	PYINT_PILLAGE_GOLD,         // IMPROVEMENT_ -- the gold a pillage of this improvement rolls against
+	// The ERA start grants (`grants.*`) -- what a player beginning in this era is handed. All six are authored
+	// (startingGold by every era), so they are live data, not headroom.
+	// ⚠ They are the counts START PACKAGES will carry once that lands ([triggers.md]); the slots read the
+	// authored value and model nothing, so the read moves with the data rather than having to be unpicked.
+	PYINT_ERA_STARTING_GOLD,
+	PYINT_ERA_STARTING_UNIT_MULTIPLIER,
+	PYINT_ERA_STARTING_DEFENSE_UNITS,
+	PYINT_ERA_STARTING_WORKER_UNITS,
+	PYINT_ERA_STARTING_EXPLORE_UNITS,
+	PYINT_ERA_FREE_POPULATION,
 	PYINT_FAVORITE_CIVIC,       // LEADER_ CIVIC_* FK -- the civic this leader favours, -1 when none
 	PYINT_FAVORITE_RELIGION,    // LEADER_ RELIGION_* FK -- likewise. Both are the leader's OWN datum, so this
 	                            // is a straight member read; ⛔ the inverse ("which leaders favour this civic")
@@ -227,6 +237,13 @@ public:
 	// ⛔ Each kind is read at ITS OWN unit (`infoKindUnit`), never one pinned for the whole family
 	// ([fixed-point-and-scales.md] par.4d: ask the KIND's unit, never the family's).
 	python::list getMovementKinds(const std::string& szTypePrefix, int iId, int iScope) const;
+
+	// The COSTS and DURATIONS groups, same shape. These are the ERA pacing dials -- what a given era does to
+	// the price of training, building, researching and to how long anarchy lasts -- and every one of them is a
+	// PERCENT where 100 is the baseline, which is exactly why they need presenting rather than printing: a bare
+	// "research 150" does not say whether the era is helping or hurting.
+	python::list getCostKinds(const std::string& szTypePrefix, int iId, int iScope) const;
+	python::list getDurationKinds(const std::string& szTypePrefix, int iId, int iScope) const;
 
 	// A CLASSIFICATION test -- O(1) bitset, the parameterized read.
 	//

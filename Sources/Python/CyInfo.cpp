@@ -325,6 +325,30 @@ python::list CyInfo::getRevolution(const std::string& szTypePrefix, int iId, int
 	return values;
 }
 
+python::list CyInfo::getCostKinds(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iKind = 0; iKind < NUM_COSTS_KINDS; ++iKind)
+	{
+		values.append(pInfo ? pInfo->modifier(MODFAM_COSTS, iKind, (CvCascScope)iScope,
+			infoKindUnit(MODFAM_COSTS, iKind, (CvCascScope)iScope)) : 0);
+	}
+	return values;
+}
+
+python::list CyInfo::getDurationKinds(const std::string& szTypePrefix, int iId, int iScope) const
+{
+	python::list values;
+	const CvInfo* pInfo = cyi_info(szTypePrefix, iId);
+	for (int iKind = 0; iKind < NUM_DURATIONS_KINDS; ++iKind)
+	{
+		values.append(pInfo ? pInfo->modifier(MODFAM_DURATIONS, iKind, (CvCascScope)iScope,
+			infoKindUnit(MODFAM_DURATIONS, iKind, (CvCascScope)iScope)) : 0);
+	}
+	return values;
+}
+
 python::list CyInfo::getMovementKinds(const std::string& szTypePrefix, int iId, int iScope) const
 {
 	python::list values;
@@ -952,6 +976,25 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 		if (szTypePrefix == "IMPROVEMENT_" && iId < GC.getNumImprovementInfos())
 			return GC.getImprovementInfo((ImprovementTypes)iId).getPillageGold();
 		break;
+	case PYINT_ERA_STARTING_GOLD:
+	case PYINT_ERA_STARTING_UNIT_MULTIPLIER:
+	case PYINT_ERA_STARTING_DEFENSE_UNITS:
+	case PYINT_ERA_STARTING_WORKER_UNITS:
+	case PYINT_ERA_STARTING_EXPLORE_UNITS:
+	case PYINT_ERA_FREE_POPULATION:
+		{
+			if (szTypePrefix != "C2C_ERA_" || iId >= GC.getNumEraInfos()) break;
+			const CvEraInfo& kEra = GC.getEraInfo((EraTypes)iId);
+			switch (iSlot)
+			{
+			case PYINT_ERA_STARTING_GOLD:             return kEra.getStartingGold();
+			case PYINT_ERA_STARTING_UNIT_MULTIPLIER:  return kEra.getStartingUnitMultiplier();
+			case PYINT_ERA_STARTING_DEFENSE_UNITS:    return kEra.getStartingDefenseUnits();
+			case PYINT_ERA_STARTING_WORKER_UNITS:     return kEra.getStartingWorkerUnits();
+			case PYINT_ERA_STARTING_EXPLORE_UNITS:    return kEra.getStartingExploreUnits();
+			default:                                  return kEra.getFreePopulation();
+			}
+		}
 	case PYINT_FAVORITE_CIVIC:
 		if (szTypePrefix == "LEADER_" && iId < GC.getNumLeaderHeadInfos())
 			return GC.getLeaderHeadInfo((LeaderHeadTypes)iId).getFavoriteCivic();
@@ -1249,6 +1292,8 @@ void CyInfo::pythonPublish()
 		.def("getRevolution",  &CyInfo::getRevolution)
 		.def("getProductionToCommerce", &CyInfo::getProductionToCommerce)
 		.def("getMovementKinds", &CyInfo::getMovementKinds)
+		.def("getCostKinds",     &CyInfo::getCostKinds)
+		.def("getDurationKinds", &CyInfo::getDurationKinds)
 		.def("hasSkill",           &CyInfo::hasSkill)
 		.def("hasTag",             &CyInfo::hasTag)
 		.def("hasAttribute",       &CyInfo::hasAttribute)
