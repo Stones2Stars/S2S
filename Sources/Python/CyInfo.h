@@ -255,6 +255,22 @@ public:
 	// award -- and never built. Any other prefix answers false.
 	bool isNotConstructible(const std::string& szTypePrefix, int iId) const;
 
+	// The BUILDS that lay this improvement -- the reverse of a build's `produces.improvement` ([json.md] §2:
+	// `produces` is an auxiliary section, not an `enables` edge).
+	//
+	// ⛔ IT IS NOT AN EDGE READ, and reaching for one answers EMPTY. The reverse pass lands a build onto the
+	// TECHS its per-terrain / per-feature rows gate on (`rp_relatedFromBuildProduces`) and never onto the
+	// improvement, so `getEdgeIds("IMPROVEMENT_", id, EDGEF_RELATED, EDGEB_BUILDS)` is silent here. What DOES
+	// carry the answer is the improvement's own typed member, filled by the same pass (`addBuildType`) -- so
+	// this is the entity's own data handed out, never a registry sweep asking every build whose improvement it
+	// makes ([DEC-one-reverse-view]: the own-data inversion the pedia's build loop was).
+	//
+	// ⚑ It is NAMED rather than a slot on the generic id-list plane because it belongs to ONE registry
+	// ([patterns.md] THE PYTHON READ BOUNDARY: reserve the prefix-addressed plane for what is uniform across
+	// every registry; a value that belongs to one type is named). A prefix other than `IMPROVEMENT_` answers
+	// EMPTY.
+	python::list getImprovementBuilds(int iImprovement) const;
+
 	// The ids this entity's `requires` NAMES in one bucket, across BOTH timings (`build` and `operate`) -- a
 	// caller asking "does this reference X" does not care which one greys and which one dorms.
 	//

@@ -370,6 +370,23 @@ bool CyInfo::isNotConstructible(const std::string& szTypePrefix, int iId) const
 	return GC.getBuildingInfo((BuildingTypes)iId).isNotConstructible();
 }
 
+python::list CyInfo::getImprovementBuilds(int iImprovement) const
+{
+	python::list lBuilds;
+
+	if (iImprovement < 0 || iImprovement >= GC.getNumImprovementInfos()) return lBuilds;
+
+	//	The improvement's OWN member, filled by the reverse pass from each build's `produces.improvement`. The
+	//	engine needs this relation to function at all (the plot build gate, the worker AI), so it is carried by
+	//	construction -- handing it out is publishing what is already there, never deriving it.
+	const std::vector<BuildTypes>& aeBuilds = GC.getImprovementInfo((ImprovementTypes)iImprovement).getBuildTypes();
+	for (size_t iBuild = 0; iBuild < aeBuilds.size(); ++iBuild)
+	{
+		lBuilds.append((int)aeBuilds[iBuild]);
+	}
+	return lBuilds;
+}
+
 python::list CyInfo::getRequiresIds(const std::string& szTypePrefix, int iId, int iBucket) const
 {
 	python::list lIds;
@@ -1510,6 +1527,7 @@ void CyInfo::pythonPublish()
 		.def("getDormantTriggerIds", &CyInfo::getDormantTriggerIds)
 		.def("getRequiresIds",       &CyInfo::getRequiresIds)
 		.def("isNotConstructible",   &CyInfo::isNotConstructible)
+		.def("getImprovementBuilds", &CyInfo::getImprovementBuilds)
 		.def("getConditionedEntries", &CyInfo::getConditionedEntries)
 		.def("getWellbeing",   &CyInfo::getWellbeing)
 		.def("getRevolution",  &CyInfo::getRevolution)
