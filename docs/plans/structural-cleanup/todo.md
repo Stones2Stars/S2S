@@ -395,27 +395,32 @@
   ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
   `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
   of that overload enumerated — a player asking it with no city still needs an empire answer.
-- Re-home SPACE production onto `military` + `IS_SPACE` and drop the `space` category
-  ([modifier.md](../../specs/modifier.md): there is no `space` category — spacecraft are not a unit class outside
-  the military one). Curator + regen lead, then the engine. What the re-home has to carry:
-  - the BUILDING authorings at both `city` and `empire` scope, and the EVENT authorings beside them
-    (`iSpaceProductionMod`, on the comet-fragment / free-enterprise / V'Ger chains);
-  - the open authoring question the ruling names: the engine gate is on a PROJECT (`isSpaceship`), the qualifier
-    names a UNIT domain — decide which side carries `IS_SPACE` rather than inferring it.
-  ⛔ The two accumulators (`CvPlayer::m_iSpaceProductionModifier` + its `CvCity` twin) are NOT a plain accumulator
-  cut, and both readings recorded here before were wrong. The player member has TWO writers — `processBuilding`
-  (a second maintenance surface duplicating what the building's own fact already deposits) and `applyEvent` (the
-  four events above, which no live source announces, so nothing can re-derive them). The city member's ONLY
-  writer is `applyEvent`. So the derivable half is cut and the event half stays its own serialized store
-  ([state-repositories.md](../../architecture/state-repositories.md) THE GUARD; the `extraHappiness` precedent,
-  [modifier.md §2b](../../specs/modifier.md)) — it does not all fold into the package.
-  ⚠ **The 9 city-scope authorings currently reach NOTHING** — no city-side push exists — so the cut has to serve
-  them, not merely preserve today's behaviour.
-  ⛔ **Do NOT mint a composed getter to keep the old call sites working.** `CvPlayerAI`'s event valuation and the
-  `canDoCometFragment` Python gate both read `CvPlayer::getSpaceProductionModifier`, and preserving that contract
-  so neither has to change is the half-migration tell, not a win
-  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — it was tried and reverted.
-  The group read (`getBuildRateKinds`) is the surface; the consumers move onto it.
+- Serve the PREDICATE-FILTERED `units` buildRate in the engine. The curator now emits the spec shape
+  (`buildRate.<scope>.units.percent`, entry `{value, enabled: IS_MILITARY | IS_SPACE}`), so the category
+  channels `BUILD_RATE_MILITARY` / `BUILD_RATE_SPACE` are authored by NOTHING and every read of them answers 0 --
+  data ahead of its consumer, which is the reported direction, but it is a live hole to close.
+  - the reads to move: the unit gate in `CvPlayer::getProductionModifier(UnitTypes)`, the project gate in
+    `CvPlayer`/`CvCity::getProductionModifier(ProjectTypes)`, and the AI valuations in `CvCityAI`;
+  - the shape: a plural-target entry is resolved against the CANDIDATE, so the read evaluates each entry's
+    predicate against the unit being built -- never a scope-package sum, which would hand every unit the
+    space rows ([modifier.md §5](../../specs/modifier.md): folding a keyed/filtered entry into the scope slot is
+    silently, plausibly wrong).
+  - the two category kinds retire with the last read; the three wonder tiers are untouched.
+  ⚠ The city-scope authorings reached NOTHING before this (no city-side push existed), so the engine side is
+  serving them for the first time -- not preserving today's behaviour.
+  ⛔ **Do NOT mint a composed getter to keep the old call sites working.** Preserving
+  `CvPlayer::getSpaceProductionModifier` so the AI valuation and the `canDoCometFragment` Python gate need no
+  edit is the half-migration tell, not a win
+  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) -- it was tried and reverted.
+- Cut the EVENT production boost. Events author YIELDS, not production modifiers, and that stays true (owner) --
+  `iSpaceProductionMod` is the only production field on an event and the comet-fragment / free-enterprise /
+  V'Ger chains are its whole population. Remove the authorings + the schema element, `CvEventInfo`'s member and
+  its `.add`/checksum, both `applyEvent` writes, the `canApplyEvent` gate that tests it, the AI event valuation
+  and the `CvGameTextMgr` help line.
+  ⚡ `CvCity::m_iSpaceProductionModifier`'s ONLY writer is that `applyEvent`, so it dies with the field -- a
+  plain accumulator cut ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)),
+  member + read + write + the tag named in `Assets/savemigration.txt`. Its `CvPlayer` twin keeps a
+  `processBuilding` writer and is the separate second-maintenance-surface cut.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
