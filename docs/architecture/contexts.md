@@ -187,21 +187,40 @@ mutates its set in place as the fixpoint ripples.
 > ⚠ It is NOT gated on the tile being WORKED: a fort cannot be worked by definition, and a fort is exactly how a
 > resource gets served (owner).
 >
-> **⛔ AND THE CODE MUST NOT SPELL `onSite` AS A BAND OF VICINITY — agents keep conflating the two, and the
-> SHAPE is what teaches it (owner: *"I have had enough with agents misunderstanding vicinity and onsite"*).**
-> The storage is right: `onSite` and `worked` have their own dictionaries and the bands have theirs. What
-> misleads is the ADDRESSING — `CvCascVicinity` carries BOTH axes in one enum (`NONE`/`OWNED`/`CROSSBORDER` are
-> nested ownership bands; `WORKED` and `ONSITE` are not bands at all), so a reader named for VICINITY answers the
-> far stricter ON-SITE verdict whenever it is handed that value, and the call site reads as though onSite were
-> simply a stricter vicinity. It is not: they are ORTHOGONAL (above).
+> **⛔ THE TWO ARE NOT PEERS, AND THAT IS THE WHOLE CONFUSION — VICINITY IS THE PLOTS, `onSite` IS A CONNECTION
+> THROUGH THEM (owner):** *"vicinity is the plots actually in vicinity; if a bonus is on site, it means it's
+> connected to a city via this vicinity band."* So a vicinity BAND selects WHICH PLOTS COUNT (the ownership
+> tiers, and `worked`), while `onSite` is a VERDICT ABOUT THE BONUS reached through that band — the resource is
+> available to this city because a tile in the band serves it, or an active building supplies it. One names a
+> plot set; the other names how a resource arrives.
+> ⚠ **The orthogonality is against the NETWORK, never against vicinity** — `onSite` and `connection:"trade"`
+> are the two independent routes a bonus takes to a city (above). Reading `onSite` as "orthogonal to vicinity",
+> or as merely a stricter band of it, are the two halves of the same mistake.
+>
+> **⛔⛔ AND HERE IS WHERE EVERY AGENT SCREWS UP, WHICH IS THE REASON THE BONUS LIST IS CALLED `onSite` AT ALL
+> (owner): A BONUS SUPPLIED BY A BUILDING IN THE CITY IS *ALSO* VICINITY.** *"Agents could not get that bonuses
+> given from buildings in a city is also vicinity, which is why it was changed to onSite for the bonuslist."*
+> The word "vicinity" reads as TILES, so agent after agent took the building-supplied half to be something else
+> — a different mechanism, a special case, or simply absent — and wrote reads that answer only the map half.
+> ⇒ **The name was changed to stop that**: `onSite` says *the resource is available here*, without implying by
+> what route, so the two halves sit under one word that cannot be misread as "on a tile".
+> ⛔ So a reader that answers only the map half is WRONG whatever it is called, and "it says vicinity, so it
+> means tiles" is the specific inference to refuse. The union is not an implementation detail of the read — it
+> IS the read ([json.md §5a](../specs/json.md): a herd BUILDING and an improved herd TILE are the same act).
+> ⛔ **So the code must not spell `onSite` as a band of vicinity, and the SHAPE is what teaches it.** The storage
+> is right — `onSite` and `worked` have their own dictionaries, the bands have theirs — but `CvCascVicinity`
+> carries the plot-set selectors and the connection verdict in ONE enum, so a reader named for VICINITY returns
+> the on-site verdict whenever it is handed that value, and the call site reads as though onSite were just a
+> stricter tier.
 > ⚑ **This has already bitten once and was patched with PROSE, which is exactly why it recurred** — a tier-less
 > `hasVicinityBonus` silently answered `CASC_VIC_ONSITE`, and the fix was a comment telling the next caller to
 > name its tier ([DEC-hard-typing-or-rollerskate](decisions.md#dec-hard-typing-or-rollerskate): prose is the
 > weakest rung, and it binds only an agent who reads it, believes it, and still remembers it).
 > ⇒ **So the rule binds the NAME, not just the argument: a function whose answer can be the on-site verdict does
-> not carry `vicinity` in its name.** ⛔ And do not add a second helper that unions the two halves for a caller
-> holding a `CvCity*` — one existed, had no caller, and could never have served the evaluator anyway (the eval
-> ctx is forbidden a game object, § THE EVAL CTX). The union has ONE home: the evaluator, over the ctx.
+> not carry `vicinity` in its name, and it takes NO tier** — `EnablerKernel::cityHasBonusOnSite` for a caller
+> holding a `CvCity*`, `ev_vicinityHas` for the evaluator, which must stay ctx-shaped because the eval ctx is
+> forbidden a game object (§ THE EVAL CTX). Two entry points because they reach different planes; ⛔ neither may
+> answer with one half.
 > ⚠ The durable fix is to SPLIT THE AXIS so the wrong call cannot be spelled at all; that reaches the authored
 > `vicinity:` key, the condition struct and the evaluator, so it is a structure call rather than a sweep.
 

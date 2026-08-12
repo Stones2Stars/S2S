@@ -5661,7 +5661,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 			{
 				++iTradedHeld;
 			}
-			if (city.getCityContext().hasVicinityBonusAt(iBonus, CASC_VIC_ONSITE))
+			if (EnablerKernel::cityHasBonusOnSite(&city, iBonus))
 			{
 				++iOnSiteHeld;
 			}

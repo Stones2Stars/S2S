@@ -289,6 +289,17 @@ public:
 	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
 	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);
 
+	// THE ON-SITE VERDICT for a bound city: is this bonus AVAILABLE here, however it got here?
+	// ⛔ IT IS NOT A TIER AND IT TAKES NONE. A vicinity BAND selects which PLOTS count; on-site is the verdict
+	// about the BONUS reached through that band, so there is nothing to parameterize
+	// ([contexts.md](../../docs/architecture/contexts.md) § THE VICINITY SPLIT).
+	// ⛔⛔ IT UNIONS TWO HALVES AND BOTH ARE MANDATORY -- a bonus supplied by an ACTIVE BUILDING in this city is
+	// ON SITE exactly as an improved radius tile is (owner; json §5a: a herd BUILDING and an improved herd TILE
+	// are the SAME act). Answering with the map half alone is the standing agent error this name exists to stop,
+	// and it fails SILENTLY -- the count simply comes out low.
+	// ⚑ The ctx-plane twin is the evaluator's ev_vicinityHas, which stays ctx-shaped because the eval ctx is
+	// forbidden a game object. Two entry points because they reach different planes; neither may drop a half.
+	static bool cityHasBonusOnSite(const CvCity* pCity, int eBonus);
 };
 
 #endif // CV_ENABLER_KERNEL_H

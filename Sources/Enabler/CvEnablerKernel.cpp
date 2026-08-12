@@ -1244,6 +1244,23 @@ void EnablerKernel::dormedByBuilding(const CvCity* pCity, int eCandidate, std::v
 	}
 }
 
+bool EnablerKernel::cityHasBonusOnSite(const CvCity* pCity, int eBonus)
+{
+	if (pCity == NULL)
+	{
+		return false;
+	}
+	// Half one -- the ENABLER's: an ACTIVE building here that `provides` this bonus makes it available on site
+	// (json §5a). Only the enabler can answer it, because an operating building's own operate clause may consume
+	// a bonus another operating building provides -- that is the least fixpoint this set already resolved.
+	if (operatingBuildings(pCity).provided.count(eBonus) != 0)
+	{
+		return true;
+	}
+	// Half two -- the CITY CONTEXT's: the MAP half, an owned radius tile whose improvement serves the resource.
+	return pCity->getCityContext().hasVicinityBonusAt(eBonus, CASC_VIC_ONSITE);
+}
+
 void EnablerKernel::wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec)
 {
 	const OperatingBuildings& f = operatingBuildings(pCity);
