@@ -519,8 +519,14 @@ the total-observability bar below.)
   state the RULE the script applies before running it, and **show `git diff` on the touched files immediately
   afterwards** so the result is on screen. A scripted edit whose diff is never displayed is not narrated, whatever
   the prose around it said.
-  ⚠ CRLF is not an excuse: the tree is `core.autocrlf=true`, the Edit tool handles it, and a literal that fails to
-  match is a signal to re-read the file, not to route around the tool.
+  ⛔ **"CRLF" IS NOT THE REASON, AND IT IS THE EXCUSE THIS BULLET EXISTS TO KILL (owner): *"git checks out CRLF and
+  commits LF"* — `core.autocrlf=true` plus `.gitattributes` `* text=auto`, which is deliberate and works.**
+  ⚑ MEASURED after a session of heavy scripted editing: `CvPlot.cpp` (script-edited repeatedly) held **13,243 CRLF
+  and 0 bare LF**, and `AGENTS.md` (Edit-tool only) **887 CRLF and 0 bare LF** — *both* tools preserve line endings
+  exactly, which is why those diffs came out pure deletions with no whole-file churn. ⇒ There is nothing to
+  configure and never was. **An `Edit` that fails to match is a CHARACTER mismatch in your `old_string`** (an `…`,
+  an em dash, a mis-transcribed run) — the tool says so, and the fix is to re-read the file and copy the text
+  exactly. Reaching for a script instead trades the owner's review surface for a problem that does not exist.
 - **Trust but verify — EVERY claim, including the owner's.** A doc line, an owner aside, your own recollection, a
   memory entry — all are hypotheses to CONFIRM against ground truth (the live code, the actual data, the running
   game) before you build on them. Say what you verified against.
