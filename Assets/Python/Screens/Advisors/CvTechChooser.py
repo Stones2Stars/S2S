@@ -50,6 +50,11 @@ FONT_COLOR_MAP = {
 	CIV_IS_TARGET: "<color=255,255,255,255>",
 }
 ICON = "ICON"
+#	Arrows are drawn into their OWN layer so they render UNDER the tech cells. Depth here is creation
+#	order within a parent, and the era backdrops share that parent -- so `moveToBack` on an arrow would
+#	put it behind the parallax artwork and make it vanish. A layer attached AFTER the backdrops and
+#	BEFORE the first cell is above the art and below every box, with no per-widget z-order calls.
+ARROW_LAYER = "TechArrowLayer"
 TECH_CHOICE = "WID|TECH|CHOICE"
 TECH_REQ = "WID|TECH|REQ"
 TECH_NAME = "TechName"
@@ -105,6 +110,7 @@ class CvTechChooser:
 		self.skipNextExitKey = True
 		self.demoMode = False
 		self.cacheBenefits()
+		self.cacheArrowEdges()
 
 	def screen(self):
 		return CyGInterfaceScreen("TechChooser", self.screenId)
@@ -210,6 +216,14 @@ class CvTechChooser:
 			screen.setHitTest(fgName, HitTestTypes.HITTEST_NOHIT)
 
 			lastPosX = posX
+
+		#	The arrow layer. Attached HERE and nowhere else: after the era backdrops (so arrows draw over the
+		#	parallax art) and before the first tech cell (so every cell draws over the arrows). Depth is
+		#	creation order within the parent, and cells are built lazily in scroll-distance order, so without
+		#	this an arrow sat above or below a given box depending on which happened to be paged in first --
+		#	which is why the overlap looked situational rather than following any rule.
+		screen.attachPanelAt(SCREEN_PANEL, ARROW_LAYER, "", "", False, False, PanelStyles.PANEL_STYLE_EMPTY, 0, 0, self.maxX + self.xCellDist, self.yRes, WidgetTypes.WIDGET_GENERAL, 0, 0)
+		screen.setHitTest(ARROW_LAYER, HitTestTypes.HITTEST_NOHIT)
 
 		# A panel to put the horizontal slider in so we can position it correctly
 		minimapWidth = self.xRes - SLIDER_BORDER * 2
@@ -415,7 +429,9 @@ class CvTechChooser:
 					# `requires` is only the GATE, so drawing from it draws the wrong relation. It also avoids
 					# the OR problem by construction: an OR-group means "any ONE of these", so an arrow per
 					# member would read as "all of these are required" -- the opposite of what it says.
-					for iTechX in INFO.getEdgeIds("TECH_", iTech, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS):
+					# The set is the TRANSITIVE REDUCTION of those edges (`cacheArrowEdges`): an edge another
+					# path already implies is not drawn.
+					for iTechX in self.techArrowFrom[iTech]:
 						x1 = INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_GRID_X)
 						y1 = INFO.getIntrinsic("TECH_", iTechX, IntrinsicSlot.PYINT_GRID_Y)
 						iX = x1 * self.xCellDist + self.wCell + CELL_BORDER_W * 2 - self.minX
@@ -425,15 +441,17 @@ class CvTechChooser:
 						yDiff = y0 - y1
 						xOff = xDiff * CELL_GAP + (xDiff - 1) * self.wCell - CELL_BORDER_W * 2
 
-						# Helper functions for drawing the tech dependency arrows
+						# Helper functions for drawing the tech dependency arrows.
+						# ⛔ The parent is ARROW_LAYER, never SCREEN_PANEL: that is the whole of what keeps an
+						# arrow UNDER the tech boxes (see the layer's attach site).
 						def add_arrow_head(x, y):
-							screen.addDDSGFCAt("", SCREEN_PANEL, ARROW_HEAD, x, y, ARROW_SIZE, ARROW_SIZE, eWidGen, 1, 2, False)
+							screen.addDDSGFCAt("", ARROW_LAYER, ARROW_HEAD, x, y, ARROW_SIZE, ARROW_SIZE, eWidGen, 1, 2, False)
 
 						def add_line_h(x, y, len):
-							screen.addDDSGFCAt("", SCREEN_PANEL, ARROW_X, x, y, len, ARROW_SIZE, eWidGen, 1, 2, False)
+							screen.addDDSGFCAt("", ARROW_LAYER, ARROW_X, x, y, len, ARROW_SIZE, eWidGen, 1, 2, False)
 
 						def add_line_v(x, y, len):
-							screen.addDDSGFCAt("", SCREEN_PANEL, ARROW_Y, x, y, ARROW_SIZE, len, eWidGen, 1, 2, False)
+							screen.addDDSGFCAt("", ARROW_LAYER, ARROW_Y, x, y, ARROW_SIZE, len, eWidGen, 1, 2, False)
 
 						if not yDiff:
 							add_line_h(iX, iY + yArrow0, xOff)
@@ -790,6 +808,107 @@ class CvTechChooser:
 		#	names specialBuildings. Their rows are absent rather than wrong ([DEC-no-legacy-masking]).
 		self.techBenefits = techBenefits
 
+	def cacheArrowEdges(self):
+		"""The TRANSITIVE REDUCTION of the tech graph -- which incoming edges the tree actually DRAWS.
+
+		`EDGEF_ENABLED_BY` is the inverted prereq view, so a tech's incoming edges are already its DIRECT
+		prerequisites. "Direct" still admits an edge another path already states, though: where Pottery
+		enables Writing, Writing enables Literacy AND Pottery enables Literacy, that third edge is implied
+		by the first two and draws a long line across the tree saying nothing the shorter path did not.
+		Dropping exactly those is the reduction, and it cannot orphan a tech -- an edge is only ever removed
+		because another edge into the same tech carries the relation.
+
+		⚑ Computed ONCE off the compiled edges: this is a property of the DATA, never of game state, so
+		nothing here re-runs as techs are researched and the drawn set cannot go stale.
+		"""
+		iNumTechs = self.iNumTechs
+
+		prereqs = []
+		successors = []
+		iPending = []
+		for iTech in xrange(iNumTechs):
+			prereqs.append(INFO.getEdgeIds("TECH_", iTech, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS))
+			successors.append([])
+			iPending.append(0)
+		for iTech in xrange(iNumTechs):
+			iPending[iTech] = len(prereqs[iTech])
+			for iPrereq in prereqs[iTech]:
+				successors[iPrereq].append(iTech)
+
+		#	Ancestors accumulate in TOPOLOGICAL order (Kahn), so a tech's prerequisites are always resolved
+		#	before it is reached. ⚠ A tech left unvisited is one caught in a prereq CYCLE; its mask stays
+		#	empty, which drops nothing -- bad data costs a redundant arrow, never a missing one.
+		aReady = []
+		for iTech in xrange(iNumTechs):
+			if not iPending[iTech]:
+				aReady.append(iTech)
+
+		#	Bit i set = tech i reaches this tech. A python long holds the whole ancestor set in ~118 bytes
+		#	against ~50 bytes PER ENTRY for a set of ids, which is worth having on the 32-bit heap.
+		aAncestors = [0] * iNumTechs
+		while aReady:
+			iTech = aReady.pop()
+			iMask = 0
+			for iPrereq in prereqs[iTech]:
+				iMask |= (1 << iPrereq) | aAncestors[iPrereq]
+			aAncestors[iTech] = iMask
+			for iSuccessor in successors[iTech]:
+				iPending[iSuccessor] -= 1
+				if not iPending[iSuccessor]:
+					aReady.append(iSuccessor)
+
+		#	Where every tech SITS, so an edge can be tested for passing over one.
+		aGridX = []
+		aGridY = []
+		occupied = {}
+		for iTech in xrange(iNumTechs):
+			iGridX = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_GRID_X)
+			iGridY = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_GRID_Y)
+			aGridX.append(iGridX)
+			aGridY.append(iGridY)
+			if iGridX > 0:
+				if iGridX not in occupied:
+					occupied[iGridX] = set()
+				occupied[iGridX].add(iGridY)
+
+		aArrowFrom = []
+		for iTech in xrange(iNumTechs):
+			#	An edge is implied iff its source ALSO reaches this tech through another of its prerequisites.
+			#	The union over every prerequisite's ancestors tests all of them at once: a tech is never its
+			#	own ancestor, so a prerequisite found in that union was reached via a sibling.
+			iReachedVia = 0
+			for iPrereq in prereqs[iTech]:
+				iReachedVia |= aAncestors[iPrereq]
+			iTargetX = aGridX[iTech]
+			iTargetY = aGridY[iTech]
+			aDrawn = []
+			for iPrereq in prereqs[iTech]:
+				if (iReachedVia >> iPrereq) & 1:
+					continue
+				#	⛔ An UNPLACED source has no cell to draw from. `TECH_GAME_START` is the standing case --
+				#	the synthetic root every player holds, deliberately never in the tree ([enabler.md] par.2)
+				#	-- and it enables every start-available tech, so each of those drew a line from grid 0 at
+				#	the far left of the screen.
+				if aGridX[iPrereq] < 1 or iTargetX < 1:
+					continue
+				#	⛔ NO ARROW PASSES OVER A TECH. A multi-column edge draws its long horizontal run at the
+				#	TARGET's row, so it crosses whatever sits in that row in the columns between -- which is
+				#	the whole of what makes the tree hard to read.
+				#	⚑ Dropping one loses NO information, and that is what makes this safe rather than a
+				#	trade: the relation is ALREADY shown as a prereq ICON inside the target's own cell (the
+				#	`Requires` row). That split is the pre-rework tree's own -- icons carried the AND
+				#	prerequisites and arrows were reserved for the rare OR alternatives, of which the curated
+				#	data now has none.
+				bCrosses = False
+				for iColumn in xrange(min(aGridX[iPrereq], iTargetX) + 1, max(aGridX[iPrereq], iTargetX)):
+					if iColumn in occupied and iTargetY in occupied[iColumn]:
+						bCrosses = True
+						break
+				if bCrosses:
+					continue
+				aDrawn.append(iPrereq)
+			aArrowFrom.append(aDrawn)
+		self.techArrowFrom = aArrowFrom
 
 	def update(self, fDelta):
 		# Only on the 2nd call to update can we update the scroll position correctly
@@ -812,11 +931,19 @@ class CvTechChooser:
 		if self.tooltip.bLockedTT:
 			self.tooltip.handle(self.screen())
 
+		# ⛔ The minimap drag polls the SYSTEM mouse -- `isLMB` is GetAsyncKeyState and `getCursorPos` maps the
+		# global cursor into client space -- so a click in ANY other application arrives here looking exactly
+		# like a click on the minimap. Both guards are load-bearing: FOCUS rejects the click the game never
+		# received, and the client-rect test rejects a cursor that is outside the window entirely (a taskbar
+		# click below the client area still satisfies the bottom-strip test, and its small x then scrolled the
+		# tree to offset 0 -- the view snapping back to the start of the tree).
 		mousePos = Win32.getCursorPos()
-		if self.scrolling:
+		if not Win32.isFocused():
+			self.scrolling = False
+		elif self.scrolling:
 			self.scrollTo(self.minimapToTreeX(mousePos.x - self.minimapLensWidth / 2))
 			self.scrolling = Win32.isLMB()
-		elif mousePos.y > self.yRes - SCREEN_PANEL_BOTTOM_BAR_H and Win32.isLMB():
+		elif mousePos.y > self.yRes - SCREEN_PANEL_BOTTOM_BAR_H and mousePos.y < self.yRes and mousePos.x >= 0 and mousePos.x < self.xRes and Win32.isLMB():
 			self.scrolling = True
 
 		if self.updates:

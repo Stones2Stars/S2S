@@ -173,41 +173,6 @@ the replacement library — serve what actually fires, in the order it fires
 interim state — it stays visible rather than being silenced ([roadmap.md](roadmap.md) § the mutating Python
 handlers).
 
-## 9. The tech tree draws too many connector links
-
-**Observed:** the tech-tree screen renders more connector arrows than wanted. ⚠ **Not blocking** — the tech
-advisor works: colours, queueing and links all render. This is the *which relation should the tree show*
-question, deliberately deferred (owner: *"I want the layer working, before nitpicking"*).
-
-**PROVEN — where the arrows come from now.** `CvTechChooser.interfaceScreen` draws from the **enables** edge:
-
-```python
-for iTechX in INFO.getEdgeIds("TECH_", iTech, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS):
-```
-
-That is the right RELATION: `enables` is the sole authority on tree membership
-([enabler.md](../../specs/enabler.md) §1/§2) while `requires` is only the GATE. It also disposes of the OR
-problem structurally — an OR-group means "any ONE of these", so an arrow per member would read as "all of these
-are required", the opposite of what the group says.
-
-**PROVEN — the data, so density is not mistaken for double-drawing.** 944 techs carry 1,915 prereq edges,
-mean 2.03 per tech, max 8 (277 techs with 1, 415 with 2, 197 with 3). The AND and OR lists do not overlap, so
-nothing is drawn twice.
-
-**RULED OUT — two earlier sources, so neither is re-tried.**
-- `PYLIST_PREREQ_OR_TECHS` alone (the original): 934 of 944 techs carry NO OR-group, so the whole tree drew
-  links for **five** techs. That is why the tree rendered with cells and no links at all.
-- AND + OR together: correct data, wrong relation, and visually dense.
-
-**NOT YET KNOWN — which SUBSET the visual tree wants.** Candidates, none decided: every `enables` edge (today);
-a transitive reduction (drop an edge implied by a longer path); or a primary/spine edge per tech with the rest
-shown only on the tech's own page. ⚑ This is a DISPLAY decision, not a data one — the edges are correct either
-way. Worth tracing what the pre-rework tree actually drew before choosing.
-
-⚑ Also mirrored as GitHub issue #454.
-
----
-
 ## 10. The finance advisor rebuilds the empire's commerce by walking every city and plot
 
 **Observed:** `CvFinanceAdvisor.drawBase` raises `AttributeError: 'CyCity' object has no attribute
