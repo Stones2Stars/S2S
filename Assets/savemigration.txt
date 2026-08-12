@@ -2065,3 +2065,24 @@ CvPlayer::iUnitProductionModCount        (decorated int, per entry)
 | Python caller anywhere in Assets/Python (a dead binding is an outlaw, [DEC-cy-not-fixed]) and CyCity's
 | carried no .def at all, so it was unreachable dead surface.
 CvPlayer::m_iMilitaryProductionModifier   (int)
+========================
+| The CITY military production modifier -- the second half of the pair, and a DIFFERENT defect from its empire
+| twin above: this one had a LIVE writer and no reader worth the name.
+| Its only writer was CvCity::applyCorporationModifiers, pushing the corporation's own
+| buildRate.city.military into the accumulator -- a SECOND MAINTENANCE SURFACE beside the fact the same path
+| already emits. setHasCorporationInternal commits and fires SEVT_CITY_CORPORATION_ADDED / _REMOVED, which the
+| modifier consumer routes through mc_applySource onto the corporation's compiled deposits, so the corp's rows
+| were already landing in the city's package. The push was the duplicate.
+| ⚑ It escaped being a live double-count only because nothing on the PRODUCTION path ever read the
+| accumulator: its three readers were all CvCityAI weighting heuristics, which is why the duplication stayed
+| quiet ([roadmap.md] LEGACY STILL BREATHING -- a mutation choke point maintaining a derived store beside the
+| fact it emits, its tell being a consumer that never routes on that fact).
+| REPLACEMENT: those three heuristics now read the BUILD_RATE_MILITARY category through getBuildRateKinds
+| (realizedAtCity = team + empire + city), so they see the whole picture instead of the corporation slice.
+| ⚠ STATED BEHAVIOUR CHANGE, and it is a repair: the AI's military-production weights previously saw ONLY
+| corporation contributions. Every building-authored city-scope row and every empire-scope civic row was
+| invisible to them.
+| ⚑ applyCorporationModifiers went with the push -- once the military line was gone its `bValue` parameter was
+| unused and the name described nothing it did; its two surviving headquarters/updateCorporation calls moved to
+| the one call site.
+CvCity::m_iMilitaryProductionModifier    (int)

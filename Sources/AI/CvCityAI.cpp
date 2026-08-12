@@ -1071,7 +1071,9 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		{
 			iValue += iExperience * 4;
 		}
-		iValue += ((getMilitaryProductionModifier() * iExperience * 10) / 100);
+		int aiBuildRate[NUM_BUILD_RATE_KINDS];
+		getBuildRateKinds(aiBuildRate);
+		iValue += ((aiBuildRate[BUILD_RATE_MILITARY] * iExperience * 10) / 100);
 	}
 
 	const int iXpPart = iValue - iYieldPart - iGppPart;
@@ -10769,7 +10771,9 @@ int CvCityAI::AI_buildUnitProb() const
 	}
 	else // more units from cities with military production bonuses
 	{
-		iProb += std::min(15, getMilitaryProductionModifier() / 4);
+		int aiBuildRate[NUM_BUILD_RATE_KINDS];
+		getBuildRateKinds(aiBuildRate);
+		iProb += std::min(15, aiBuildRate[BUILD_RATE_MILITARY] / 4);
 	}
 
 	if (GET_PLAYER(getOwner()).isRebel())
@@ -11573,7 +11577,9 @@ int CvCityAI::AI_yieldMultiplier(YieldTypes eYield) const
 
 	if (eYield == YIELD_PRODUCTION)
 	{
-		iMultiplier += (getMilitaryProductionModifier() / 2);
+		int aiBuildRate[NUM_BUILD_RATE_KINDS];
+		getBuildRateKinds(aiBuildRate);
+		iMultiplier += (aiBuildRate[BUILD_RATE_MILITARY] / 2);
 	}
 
 	if (eYield == YIELD_COMMERCE)

@@ -877,7 +877,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iFoodKept = 0;
 	m_iOverflowProduction = 0;
 	m_iFeatureProduction = 0;
-	m_iMilitaryProductionModifier = 0;
 	m_iSpaceProductionModifier = 0;
 	m_iCurrAirlift = 0;
 	m_iMaxAirlift = 0;
@@ -7286,18 +7285,6 @@ void CvCity::changeFeatureProduction(int iChange)
 }
 
 
-int CvCity::getMilitaryProductionModifier()	const
-{
-	return m_iMilitaryProductionModifier;
-}
-
-
-void CvCity::changeMilitaryProductionModifier(int iChange)
-{
-	m_iMilitaryProductionModifier = (m_iMilitaryProductionModifier + iChange);
-}
-
-
 int CvCity::getSpaceProductionModifier() const
 {
 	return m_iSpaceProductionModifier;
@@ -10835,22 +10822,6 @@ bool CvCity::isHasCorporation(CorporationTypes eIndex) const
 	return m_pabHasCorporation[eIndex];
 }
 
-void CvCity::applyCorporationModifiers(CorporationTypes eIndex, bool bValue)
-{
-	PROFILE_EXTRA_FUNC();
-	changeMilitaryProductionModifier(
-		GC.getCorporationInfo(eIndex).getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY) * (bValue ? 1 : -1));
-
-	CvCity* pHeadquarters = GC.getGame().getHeadquarters(eIndex);
-
-	if (NULL != pHeadquarters)
-	{
-		pHeadquarters->updateCorporation();
-	}
-
-	updateCorporation();
-}
-
 void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows)
 {
 	PROFILE_EXTRA_FUNC();
@@ -10886,7 +10857,12 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 
 		GET_PLAYER(getOwner()).changeHasCorporationCount(eIndex, ((isHasCorporation(eIndex)) ? 1 : -1));
 
-		applyCorporationModifiers(eIndex, bNewValue);
+		CvCity* pHeadquarters = GC.getGame().getHeadquarters(eIndex);
+		if (NULL != pHeadquarters)
+		{
+			pHeadquarters->updateCorporation();
+		}
+		updateCorporation();
 
 		AI_setAssignWorkDirty(true);
 
@@ -12579,7 +12555,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iFoodKept);
 	WRAPPER_READ(wrapper, "CvCity", &m_iOverflowProduction);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureProduction);
-	WRAPPER_READ(wrapper, "CvCity", &m_iMilitaryProductionModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iSpaceProductionModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iCurrAirlift);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMaxAirlift);
@@ -13235,7 +13210,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFoodKept);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iOverflowProduction);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureProduction);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iMilitaryProductionModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iSpaceProductionModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iCurrAirlift);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMaxAirlift);

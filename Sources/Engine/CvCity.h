@@ -662,8 +662,6 @@ public:
 	void setFeatureProduction(int iNewValue);
 	void changeFeatureProduction(int iChange);
 
-	int getMilitaryProductionModifier() const;
-	void changeMilitaryProductionModifier(int iChange);
 
 	int getSpaceProductionModifier() const;
 	void changeSpaceProductionModifier(int iChange);
@@ -1183,7 +1181,6 @@ public:
 
 	bool isHasCorporation(CorporationTypes eIndex) const;
 	void setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows = true);
-	void applyCorporationModifiers(CorporationTypes eIndex, bool bValue);
 
 	//	How many trade-route SLOTS actually exist. ⛔ Iterate THIS, never getMaxTradeRoutes(): the slot vector is
 	//	sized once when the routes are cleared, while getMaxTradeRoutes() RECOMPUTES from a cascade value, so the
@@ -1613,7 +1610,6 @@ protected:
 
 	std::map<BuildingTypes, BuiltBuildingData> m_buildingLedger;
 
-	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
