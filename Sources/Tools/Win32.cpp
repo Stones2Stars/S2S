@@ -82,14 +82,20 @@ HWND Win32::getToplevelWindow()
 	return args.handles[0];
 }
 
+//	Is the GAME the active application? The mouse readers below are system-wide (`isLMB` polls
+//	GetAsyncKeyState, `getCursorPos` maps the global cursor into client space), so a screen that drives
+//	anything off them needs this to tell its own clicks from clicks in another application.
+//	⚠ GetFOREGROUND, not GetFocus: GetFocus answers only for the CALLING THREAD's message queue and returns
+//	NULL when the focused window is a child or belongs to another thread, so it reports "not focused" while
+//	the game is plainly active. The foreground window carries no such caveat.
 bool Win32::isFocused()
 {
 	EnumWindowsCallbackArgs args(::GetCurrentProcessId());
 	if (::EnumWindows(&EnumWindowsCallback, (LPARAM)&args) == FALSE)
 	{
-		return NULL;
+		return false;
 	}
-	return algo::any_of_equal(args.handles, GetFocus());
+	return algo::any_of_equal(args.handles, ::GetForegroundWindow());
 }
 
 POINT Win32::getCursorPos()
@@ -167,6 +173,9 @@ void Win32::pythonPublish()
 		.staticmethod("getCursorPos")
 		.def("screenToClient", &Win32::screenToClient)
 		.staticmethod("screenToClient")
+
+		.def("isFocused", &Win32::isFocused)
+		.staticmethod("isFocused")
 
 		.def("isLMB", &Win32::isLMB)
 		.staticmethod("isLMB")
