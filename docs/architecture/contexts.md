@@ -610,6 +610,12 @@ CAPSTONE — LOAD is the only full build).
   the trait setter, so that fact is the only announcement they ever make.
   ⛔ It is deliberately **not** maintained from `CvPlayer::setCivics` / `setHasTrait`: a direct hook beside an event
   is a second maintenance surface for one fact, and the fact already exists.
+  ⚑ **`CvPlayer::processCivics`'s per-flag POLICY counters retire here** —
+  `changeFixedBordersCount`/`changeNoForeignTradeCount`/`changeNoCorporationsCount`/`changeStateReligionCount`/
+  `changeAllReligionsActiveCount` and the like are the SAME family as the amenity counters above, not a
+  modifier-channel push ([DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform)). Genuine
+  non-cascade state on that same class (the revolution index, `changeMaxConscript`,
+  `changeSpecialistValidCount`, hurry counts) is neither — it stays serialized as-is.
 - **The HELD-TRAIT set** ← the **same trait / player-init facts**, consumed by its own store beside the policy one
   (one dictionary per area of responsibility — the `TRAIT_` and `POLICY_` key spaces are disjoint registries).
   > **⚖ IT IS THE CASE WHERE ONE AXIS SPLITS ACROSS THE SCAN-vs-HOP TEST, and reading the FORWARD row as settling

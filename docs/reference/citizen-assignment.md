@@ -64,6 +64,15 @@ one pass per emphasizer.
 > seat citizens on net LOSSES. It was invisible only because the test it guards could not answer false; the
 > waiver is gone.
 
+## ⚖ THE WHIP TERM IS NEVER WORTH TAKING (owner)
+
+**"With how whipping currently functions, it is never worth it."** `iSlaveryValue` re-books a tile's food value
+as PRODUCTION whenever pop-rush is available and the city is happy, steering citizen assignment toward whip
+fodder for an action a rational player will not take. A whip costs upwards of eight population, and drafting the
+same — *"it harms production for eras going forward."* Against an 8-population cost the food/production trade
+the term models does not exist, so no coefficient tunes it into shape; the term is sized for a BTS-era 1–2
+population whip. ⚠ Emphasis already refuses it outright — emphasis never cares about whipping.
+
 ## ⚖ GROWTH BEATS ALMOST ANYTHING — THE STANDING WEIGHT OF THIS GAME (owner)
 
 **"The way this game works, growth > almost anything."** S2S is a very long game with an enormous build tree,
@@ -170,8 +179,13 @@ ranks identically.
 > ⚑ **Each fails SILENTLY and in a different direction, which is why they need enumerating rather than
 > watching for.** The measured instances: the clause that FORCES a starving city onto its moderate-food tiles
 > became worth a few percent of an ordinary plot; the damper meant for cities *already* growing fast pinned at
-> its floor and took **×0.26 off every city's food growth value**; and the bad-plot filter
-> (`AI_potentialPlot`) could only answer false for a tile yielding literally nothing.
+> its floor and took **×0.26 off every city's food growth value**; the bad-plot filter
+> (`AI_potentialPlot`) could only answer false for a tile yielding literally nothing; and
+> `AI_getPlotMagicValue`'s `min(consumptionPerPop, 2×bestYield)` reductant took the ×1 arm against a ×1
+> numerator and always exceeded it, so `AI_countGoodTiles` returned 0 on every call for the life of the mod —
+> and every one of its five consumers (the settler gate `bGrowMore`, `allowedShrinkRate`, the whip gate, the
+> food-emphasis auto-trigger, the growth clamp on `iPopToGrow`) was reading a constant — until the ×100
+> conversion put both arms on the same plane and made all five live for the first time.
 > ⇒ **When converting a scoring function to ×100, the census is every ADDEND, every literal COMPARAND and every
 > mixed `min`/`max` — not the multipliers, which are the ones that need no attention.** A whole-number operand
 > LIFTS to meet the yields; the yields are never reduced to meet it
@@ -201,6 +215,44 @@ flattening `1.5 → 1` and `0.4 → 0`.
 > must not be "fixed" by passing the ×100 value: doing so runs the loop a hundred times over and inflates every
 > wellbeing term by the same factor. ⚠ A fractional authored face is therefore floored HERE by design; the other
 > reader of the same data (`AI_countGoodSpecialists`) sums rather than loops, so it keeps the fraction.
+
+## Dirtying the assignment — the ruled trigger set (owner)
+
+`AI_setAssignWorkDirty` marks a city for a full `AI_updateAssignWork` re-run; today it is set from hand-wired
+call sites across the engine plus an unconditional per-turn sweep. The mechanism (a dirty mark drained by a
+re-run) is right and stays — the AI needs a way to be told the best plots may have moved.
+
+⚖ **It LISTENS TO THE EVENT SPINE; no AI loop ever touches it directly (owner).** This is a ROUTING job, never a
+judgement re-made per call site — the same shape the player-alert re-attach uses
+([event-spine.md](../specs/event-spine.md)).
+⚑ **Every trigger below is already a DOMAIN fact** — the plot substrate, the building/population/civic/trait
+facts, the culture-level fact and the working-city fact all announce today. No new emit is a prerequisite here.
+
+**The ruled set (owner):**
+- a PLOT CHANGED inside the city's WORKABLE SET — not an upgrade only; pillage, bonus depletion and a chop are
+  the same fact in the other direction, and the substrate already announces each per plot;
+- a BUILDING FINISHED that actually changes specialist slots or plot output — tested against the building's own
+  compiled entries, never fired on every completion (a building that authors neither changes nothing about
+  which plots are best);
+- POP ADDED (and symmetrically POP REMOVED);
+- a CIVIC change;
+- a TRAIT change;
+- symmetrically, a such-building DESTROYED, and golden age starting or ending (it moves per-plot yields through
+  the threshold bonus, [golden-age.md](golden-age.md)).
+
+⚑ **`CvCity::canWork`'s gates name what the set above does not reach:** the workable SET ITSELF moving (working-city
+reassignment; the radius growing with culture / `adds3rdRing`, adding tiles that were never candidates — no
+per-plot fact announces this) and the water-work TEAM capability.
+
+⛔ **Two gates are UNIT-MOVEMENT driven and must NOT ride this routing:** an enemy unit sieging a plot, and a
+naval blockade. Unit movement never dirties a cache
+([DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top)) — decide these
+deliberately rather than discovering the churn in a profile.
+
+⚑ **The instrument for finding today's live call sites is already built:** the setter emits the caller's
+module-relative return address on every false→true transition, resolvable offline against the PDB.
+⛔ Do NOT re-add an ungated flip to replace a cut maintainer's gated one — the legacy calls fire only when a
+value actually CHANGED, so an ungated stand-in adds to the very churn the instrument measures.
 
 ## Observability
 

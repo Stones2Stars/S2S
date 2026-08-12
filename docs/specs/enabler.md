@@ -228,6 +228,13 @@ toggled by its `requires.operate` threshold, which is what deletes the legacy pe
 the property system placing its own entities, and it stays exactly as it is. What does not follow is the
 generalization from it.
 
+⚠ **A pseudobuilding representing a CHOICE (an ordinance ENACTED, a culture HELD, a folklore requirement) is not
+merely PRESENT everywhere by the same `notConstructible` placement — it is ACTIVE everywhere too, and that is a
+second, separate defect.** Its `requires.operate` names only a tech and a map category, never the choice itself,
+so nothing stops it operating in every city regardless of what the player actually enacted or holds. Reading
+ACTIVE instead of PRESENT at the gate fixes nothing — both answers are already yes; what is missing is an
+authored condition that expresses the choice, which is open ([todo.md](../plans/structural-cleanup/todo.md)).
+
 ⛔ **A band bound is a SIGNED threshold, so "absent" can never be encoded as a negative.** A property value is
 legitimately negative (the low-education ladder is authored entirely in negative bands), so a `min`/`max` absent-test
 that asks `< 0` silently drops a real bound and the clause collapses to always-true. The absent marker has to live

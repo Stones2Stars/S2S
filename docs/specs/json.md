@@ -1375,6 +1375,10 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 - **`headquarters`** — the corp-HQ analog of `shrine`: the building is a corporation's HEADQUARTERS,
   `headquarters: CORPORATION_X` (the corporation FK). The per-commerce values live on the **corporation**, scaled
   per corporation presence. Same FK-relationship shape as `shrine`, one for religion and one for corporation.
+  ⚑ Two more corp-HQ shapes ride this FK and are not authored anywhere today: the HQ's FREE UNIT is an ordinary
+  `grants` payload keyed off the headquarters fact ([triggers.md](triggers.md)), never an info getter; corp-vs-corp
+  EXCLUSION is a same-tier `excludes` entry (above), not the consumed-bonus overlap competition currently answers
+  from alone.
 - **`spread`** (UNIT) — the unit's per-religion / per-corporation **spread strength** (a standing capability, NOT a
   timed handout): `spread.religion: { RELIGION_X: N }` / `spread.corporation: { CORPORATION_X: N }` — keyed magnitude
   maps (`N` = the legacy `iReligionSpread`/`iCorporationSpread`). Its **own** block on purpose (owner 2026-07-11):

@@ -313,6 +313,17 @@ not findings to re-discover.
   what-if at all. It does not: tech drives MEMBERSHIP via `enables` and never the gate
   ([enabler.md §2](docs/specs/enabler.md)), so once the edge names the unlock, only the per-city gate remains.
 
+### AI valuation of ROUTES — evaluate on move speed, never on yield
+
+- **⛔ THE AI DOES NOT WEIGH A ROUTE'S YIELD CONTRIBUTION TO AN IMPROVEMENT — IT EVALUATES ROUTES ON MOVE SPEED
+  (owner): *"ai does not need to factor in that it gets more yield from route for some improvements in some
+  cases, it should evaluate routes on movespeed."*** A per-route × per-improvement yield term must never be built
+  into an AI improvement/plot valuation.
+- **Two reasons, and why this does not get re-litigated.** (1) There is never a movespeed-vs-gold tradeoff — a
+  route is laid for movement, so nothing is being weighed against the yield. (2) The yield only happens ABOVE A
+  THRESHOLD, so it is incidental rather than a competing objective the AI could steer by. Modelling it buys no
+  better decision at per-(route × improvement) cost on a hot loop.
+
 ### The CONTRACT BROKER — matching is THREE STAGES, and distance never scores
 
 - **⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE (owner): *"I am in general very reticent
