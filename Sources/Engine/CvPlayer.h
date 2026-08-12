@@ -1398,9 +1398,6 @@ public:
 	int getBuildingCostModifier(const BuildingTypes eIndex) const;
 	void changeBuildingCostModifier(const BuildingTypes eIndex, const int iChange);
 
-	int getUnitProductionModifier(const UnitTypes eUnit) const;
-	void changeUnitProductionModifier(const UnitTypes eUnit, const int iChange);
-
 	bool isAutomatedCanBuild(BuildTypes eBuild) const;
 	void setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue);
 
@@ -2126,7 +2123,6 @@ private:
 	std::map<short, int> m_extraBuildingHealth;
 	std::map<short, int> m_buildingProductionMod;
 	std::map<short, int> m_buildingCostMod;
-	std::map<short, int> m_unitProductionMod;
 	std::map<short, int> m_greatPeopleRateforUnit;
 	std::map<short, char> m_goldenAgeOnBirthOfGreatPersonCount;
 

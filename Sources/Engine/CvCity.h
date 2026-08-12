@@ -1288,11 +1288,6 @@ public:
 	int getBuildingProductionModifier(const BuildingTypes eIndex) const;
 	void changeBuildingProductionModifier(const BuildingTypes eIndex, const int iChange);
 
-	int getUnitProductionModifier(const UnitTypes eIndex) const;
-	void changeUnitProductionModifier(const UnitTypes eIndex, const int iChange);
-
-
-
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
 	void clearLostProduction();
@@ -1615,7 +1610,6 @@ protected:
 	std::vector<BuildingTypes> m_hasBuildings;
 
 	std::map<short, int> m_buildingProductionMod;
-	std::map<short, int> m_unitProductionMod;
 
 	std::map<BuildingTypes, BuiltBuildingData> m_buildingLedger;
 

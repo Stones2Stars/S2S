@@ -2022,3 +2022,29 @@ CvCity::m_paiUnitCombatProductionModifier (int class array, per UNITCOMBAT)
 CvPlayer::iUnitCombatProductionModSize   (decorated short)
 CvPlayer::iUnitCombatProductionModType   (decorated short, per entry)
 CvPlayer::iUnitCombatProductionModCount  (decorated int, per entry)
+========================
+| The per-UNIT keyed production-modifier maps -- the `unit` entry in the same replaced-accumulator sentence
+| at CvCity::getProductionModifier, on both CvCity and CvPlayer.
+| ⚑ DEAD IN BOTH DIRECTIONS, which makes this a DIFFERENT diagnosis from the domain and unitCombat pairs
+| above and is why NO REPLACEMENT IS RECORDED: those two were writerless accumulators whose getters were
+| still READ, so consumers were served frozen save history. These have no writer AND no reader at all --
+| changeUnitProductionModifier was callerless on both classes and getUnitProductionModifier had zero
+| consumers anywhere (engine, AI, Cy binding or Python). Only the serialization kept them alive.
+| ⚠ The third leg was run against the MEMBER, not the getter ([state-repositories.md]): the union of
+| everything touching m_unitProductionMod on either class is clear() + the in-read insert + the write + the
+| two accessors. No third function iterates the map under a name that hides the stem.
+| ⛔ The value they would have carried is served where it always was: the per-unit keyed buildRate is read
+| as an entry-list over the city's OPERATING buildings via
+| InfoValuation::keyedTarget(MODFAM_BUILD_RATE, keyedTargetSegment("units"), ...) plus the empire share --
+| the same live path the domain and unitCombat cuts point at, and it never depended on these maps.
+| ⚑ Both halves are decorated variable-length blocks with per-element BRACKET-FREE tags, so all three tags
+| of each are named (the BuildingHappinessFromTech{Size,Type,Value} precedent).
+| ⚠ CvPlayer::m_buildingProductionMod is NOT dead by association and is deliberately absent here: it has two
+| live writers (processBuilding's keyed buildRate fan and the civic twin). Its CITY namesake is a separate
+| case with its own reader and wants its own pass.
+CvCity::UnitProductionModSize            (decorated short)
+CvCity::UnitProductionModType            (decorated short, per entry)
+CvCity::UnitProductionMod                (decorated int, per entry)
+CvPlayer::iUnitProductionModSize         (decorated short)
+CvPlayer::iUnitProductionModType         (decorated short, per entry)
+CvPlayer::iUnitProductionModCount        (decorated int, per entry)

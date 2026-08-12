@@ -631,7 +631,6 @@ void CvPlayer::uninit()
 	m_extraBuildingHealth.clear();
 	m_buildingProductionMod.clear();
 	m_buildingCostMod.clear();
-	m_unitProductionMod.clear();
 	m_researchQueue.clear();
 	m_cityNames.clear();
 	m_myHeritage.clear();
@@ -17977,19 +17976,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitProductionModSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iUnitProductionModType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iCount, "iUnitProductionModCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_UNITS, iType, true));
-
-				if (iType > -1)
-				{
-					m_unitProductionMod.insert(std::make_pair(iType, iCount));
-				}
-			}
 			// Unit counters
 			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "UnitCountSMSize");
@@ -18707,12 +18693,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			{
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iGreatPeopleRateforUnitType");
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iGreatPeopleRateforUnitCount");
-			}
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitProductionMod.size(), "iUnitProductionModSize");
-			for (std::map<short, int>::const_iterator it = m_unitProductionMod.begin(), itEnd = m_unitProductionMod.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iUnitProductionModType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iUnitProductionModCount");
 			}
 			// Unit counters
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitCountSM.size(), "UnitCountSMSize");
@@ -24563,37 +24543,6 @@ int CvPlayer::getBuildingCostModifier(const BuildingTypes eIndex) const
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
 	std::map<short, int>::const_iterator itr = m_buildingCostMod.find((short)eIndex);
 	return itr != m_buildingCostMod.end() ? itr->second : 0;
-}
-
-
-void CvPlayer::changeUnitProductionModifier(const UnitTypes eUnit, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
-	if (iChange == 0)
-	{
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_unitProductionMod.find((short)eUnit);
-
-	if (itr == m_unitProductionMod.end())
-	{
-		m_unitProductionMod.insert(std::make_pair((short)eUnit, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_unitProductionMod.erase(itr->first);
-	}
-	else // change unit mod
-	{
-		m_unitProductionMod[itr->first] += iChange;
-	}
-}
-
-int CvPlayer::getUnitProductionModifier(const UnitTypes eUnit) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
-	std::map<short, int>::const_iterator itr = m_unitProductionMod.find((short)eUnit);
-	return itr != m_unitProductionMod.end() ? itr->second : 0;
 }
 
 

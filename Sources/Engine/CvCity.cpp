@@ -986,7 +986,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_aBuildingHappyChange.clear();
 	m_aBuildingHealthChange.clear();
 	m_buildingProductionMod.clear();
-	m_unitProductionMod.clear();
 	m_Properties.clear();
 	m_progressOnBuilding.clear();
 	m_delayOnBuilding.clear();
@@ -13199,21 +13198,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 				m_buildingLedger.insert(std::make_pair(eType, data));
 			}
 		}
-
-		// Unit
-		iSize = 0;
-		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "UnitProductionModSize");
-		while (iSize-- > 0)
-		{
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "UnitProductionModType");
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iCount, "UnitProductionMod");
-			iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_UNITS, iType, true));
-
-			if (iType > -1)
-			{
-				m_unitProductionMod.insert(std::make_pair(iType, iCount));
-			}
-		}
 	}
 	WRAPPER_READ_OBJECT_END(wrapper);
 	//Example of how to skip an unneeded element
@@ -13511,14 +13495,6 @@ void CvCity::write(FDataStreamBase* pStream)
 			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", static_cast<short>(it->first), "BuildingLedgerType");
 			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->second.eBuiltBy, "BuildingLedgerBuiltBy");
 			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->second.iTimeBuilt, "BuildingLedgerTimeBuilt");
-		}
-
-		// Unit
-		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_unitProductionMod.size(), "UnitProductionModSize");
-		for (std::map<short, int>::const_iterator it = m_unitProductionMod.begin(), itEnd = m_unitProductionMod.end(); it != itEnd; ++it)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->first, "UnitProductionModType");
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->second, "UnitProductionMod");
 		}
 
 	}
@@ -15157,37 +15133,6 @@ void CvCity::setBuiltFoodProducedUnit(bool bNewValue)
 {
 	m_bBuiltFoodProducedUnit = bNewValue;
 }
-
-void CvCity::changeUnitProductionModifier(const UnitTypes eUnit, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
-	if (iChange == 0)
-	{
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_unitProductionMod.find((short)eUnit);
-
-	if (itr == m_unitProductionMod.end())
-	{
-		m_unitProductionMod.insert(std::make_pair((short)eUnit, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_unitProductionMod.erase(itr->first);
-	}
-	else // change unit mod
-	{
-		m_unitProductionMod[itr->first] += iChange;
-	}
-}
-
-int CvCity::getUnitProductionModifier(const UnitTypes eUnit) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
-	std::map<short, int>::const_iterator itr = m_unitProductionMod.find((short)eUnit);
-	return itr != m_unitProductionMod.end() ? itr->second : 0;
-}
-
 
 void CvCity::changeBuildingProductionModifier(const BuildingTypes eIndex, const int iChange)
 {
