@@ -395,6 +395,22 @@
   ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
   `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
   of that overload enumerated — a player asking it with no city still needs an empire answer.
+- Split the SPACE production accumulators, which carry a DERIVABLE and a NON-DERIVABLE half in one slot. Both
+  `CvPlayer::m_iSpaceProductionModifier` and its `CvCity` twin are written by `applyEvent` (genuine one-shot
+  event state, [save.md par.5](../../specs/save.md)) AND the player's is also pushed by `processBuilding` from a
+  building's empire-scope `buildRate.space` — which the building's own fact already deposits into the empire
+  package. So the derivable half is maintained twice and the production read takes the accumulator, not the
+  package.
+  ⛔ Cutting the push alone is WRONG and this is the trap to name: an existing save has both halves already
+  summed into the stored value, so removing the writer leaves the baked derivable contribution in place and the
+  package adds it again. Recomputing instead WIPES the event grant.
+  ⚑ This is the shape [state-repositories.md](../../architecture/state-repositories.md) names as what actually
+  poisoned delta-deriving — a one-shot grant baked into the same slot as the derivable deposits, maintainable by
+  neither mechanism. The prescribed resolution is the one the building-commerce event grant already uses: the
+  event half moves to its OWN persisted store, the derivable half is dropped and read from the package, and the
+  reader sums the two.
+  ⚠ The CITY twin is event-only, so it is the simpler half — but it must move together with the player's or the
+  read composes two different models.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
