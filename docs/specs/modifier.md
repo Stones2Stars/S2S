@@ -466,11 +466,10 @@ INCREMENTAL SERIALIZED accumulators (`m_iBonusGood/BadHappiness`, `m_iBuildingGo
 save history. **The old cache model folded event-type grants DIRECTLY into these caches** (there is no separate
 event-yield data — the per-building `m_aBuildingHappy/HealthChange` ledgers carry nothing on real saves), so a
 stored value that disagrees with its current-state recompute is **DRIFT (history pollution), never
-event state to preserve**. The oracle emits a `*Recomputed` twin beside each incremental accumulator
-(bonus/building/stateReligion, happiness + health; the `extraBuilding`/`feature`/`religion` city accumulators
-self-heal via the engine's `update*()` rebuilders and need no twin). Parity discipline: a verdict diff equal to
-`Σ(stored − recomputed)` is **engine-wrong / cascade-right** — attributed-accepted (the same class as the
-improvement-yield phantoms), repaired wholesale when the slots recompute from data.
+event state to preserve**. ⛔ The `*Recomputed` twin that once stood beside each incremental accumulator is
+GONE, and so is the comparison surface it fed ([superseded-ideas #17](../architecture/superseded-ideas.md): zero
+such symbols remain). A stored-vs-recompute divergence of this class is **engine-wrong / cascade-right** and is
+repaired by the slots recomputing from data — never by re-adding a twin to measure it with.
 
 ---
 

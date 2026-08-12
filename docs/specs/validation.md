@@ -40,7 +40,7 @@ GAME via an endpoint poll — never because "the code path exists" or "the data 
 does not show in-game even if it loads; the break is then downstream, in apply/display, and is found by the poll, not
 asserted. Acceptance is an endpoint-observable pass/fail on a real save, a real turn
 ([DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)). This observation is PROGRAMMATIC: the
-existing `/computed` oracle endpoints already expose the real engine values (yields, wellbeing, tally, unit skills,
+existing `/computed` decomposition censuses already expose the real engine values (yields, wellbeing, tally, unit skills,
 heal, unit promotions) as game-thread snapshots, so a manifestation check is a poll-and-assert against them — never
 eyeballing the screen. A value not yet on the surface (e.g. free-promotion grants, grants-applied) must be EMITTED
 first; emitting it is step one of that item's fix.

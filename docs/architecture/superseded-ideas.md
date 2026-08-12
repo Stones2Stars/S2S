@@ -381,7 +381,24 @@
     over-application, and JSON-vs-state alone never observes what landed.
     ⚑ Worked, same session: a trait's `maintenance` deposit read `-70` against an authored `-10%` — which looks
     like a 7x over-application until the third leg answers it, the spine showing exactly 7 owners holding that
-    trait and the log's own apply count saying 7. Fully attributed, no oracle.
+    trait and the log's own apply count saying 7. Fully attributed, without one.
+    **⛔ AND THE WORD GOES WITH THE MECHANISM — "ORACLE" IS NOT A TERM WE USE (owner).** *"Why do you insist on
+    calling it an oracle? We cannot rebuild the entire event machinery based on an endpoint call — that is a call
+    that would take more than a minute to complete."* ⚑ That is a SHARPER disqualification than the one above and
+    worth holding separately: even granting an endpoint could replay the chain, the replay is minutes of work, so
+    it could never be an endpoint's answer. The two reasons compose — it cannot be done, and if it could it would
+    not fit.
+    ⛔ **This is [DEC-no-staleness-vocabulary](decisions.md#dec-no-staleness-vocabulary) one plane over, and for
+    the identical reason**: a term that survives its mechanism is the evidence-of-the-abandoned-path that teaches
+    the next agent to reach for it. "Dirty" was removed WITH the thing it named; so is this.
+    ⚠ **It had spread into the load-bearing docs, which is HOW it kept teaching** — the decisions ledger,
+    `validation.md` and the scale registry each described the four LIVE `/computed` routes as "oracle endpoints",
+    directly contradicting [http-endpoints.md](../specs/http-endpoints.md) and
+    [observability.md](../reference/observability.md), which say there is no oracle side at all. Those four are
+    **STORED-side DECOMPOSITION CENSUSES** and are named that.
+    ⇒ **Keep the word ONLY where it names this dead idea AS dead** (this entry, and the http-endpoints section
+    that explains the ban). Anywhere it describes a live surface it is wrong on the facts, not merely stale —
+    delete it as you pass one ([DEC-docs-current-truth](decisions.md#dec-docs-current-truth)).
 34. **The PER-CITY TRADED-BONUS MIRROR** (`CityContext::m_traded` — an `id → count` store answering
     `tradedBonusCount`, fed by the has-verdict crossing AND the vicinity supply count) *(dead)* — it replaced the
     RELAY that [enabler.md §8](../specs/enabler.md) RESIDENCY specifies (*"the `CvPlotGroup` is the ONLY

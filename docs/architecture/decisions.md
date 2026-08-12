@@ -324,8 +324,9 @@ Done = the effect is observable in the RUNNING GAME via an endpoint poll — nev
 loads." "Straight up missing" means it does not show in-game even if it loads (the break is downstream, in
 apply/display). Every work item's acceptance is an endpoint-observable pass/fail on a real save, a real turn — the
 strict complement of [DEC-verify-in-game-not-reshadow](#dec-verify-in-game-not-reshadow). Programmatic already: the
-`/computed` oracle endpoints expose the real engine values as game-thread snapshots (a blind value is EMITTED first,
-step one of its fix).
+four `/computed` DECOMPOSITION CENSUSES serve what the events built, term by term, as game-thread snapshots (a
+blind value is EMITTED first, step one of its fix). ⛔ They are STORED-side and there is no `oracle` beside them
+([superseded-ideas #33](superseded-ideas.md)).
 ⚖ **AND IT IS A SNAPSHOT, NEVER A PROPERTY — AN EVALUATION PATH IS NEVER "DONE" (owner): *"I don't think any
 evaluation path can ever be called done."*** The reason is structural rather than cautious: the classification
 registries and the modifier families are OPEN BY DESIGN
