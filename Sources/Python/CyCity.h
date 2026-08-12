@@ -160,7 +160,6 @@ public:
 	int getNumGreatPeople() const;
 	int getBaseGreatPeopleRate() const;
 	int getGreatPeopleRate() const;
-	int getGreatPeopleRateModifier() const;
 	int getGreatPeopleProgress() const;
 	void changeGreatPeopleProgress(int iChange);
 	int getNumWorldWonders() const;
@@ -170,7 +169,6 @@ public:
 
 	int getMaintenance() const;
 	int getMaintenanceTimes100() const;
-	int getWarWearinessModifier() const;
 
 	int getEspionageHealthCounter() const;
 	void changeEspionageHealthCounter(int iChange);
@@ -216,11 +214,8 @@ public:
 	int getSpaceProductionModifier() const;
 	int getExtraTradeRoutes() const;
 	int getMaxTradeRoutes() const;
-	int getForeignTradeRouteModifier() const;
 	int getBuildingDefense() const;
 	int getMaxAirlift() const;
-	int getAirModifier() const;
-	int getNukeModifier() const;
 	bool isPowered() const;
 	int getDefenseDamage() const;
 	void changeDefenseDamage(int iChange);
@@ -340,8 +335,6 @@ public:
 	//void setFreeSpecialistCount(int /*SpecialistTypes*/ eIndex, int iNewValue);
 	void changeFreeSpecialistCount(int /*SpecialistTypes*/ eIndex, int iChange);
 	int getAddedFreeSpecialistCount(int /*SpecialistTypes*/ eIndex) const;
-	int getImprovementFreeSpecialists(int /*ImprovementTypes*/ iIndex) const;
-	void changeImprovementFreeSpecialists(int /*ImprovementTypes*/ iIndex, int iChange);
 	int getReligionInfluence(int /*ReligionTypes*/ iIndex) const;
 	void changeReligionInfluence(int /*ReligionTypes*/ iIndex, int iChange);
 

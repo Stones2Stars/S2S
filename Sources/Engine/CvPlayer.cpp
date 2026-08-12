@@ -179,7 +179,6 @@ m_pBuildLists(NULL),
 m_cachedBonusCount(NULL)
 {
 	PROFILE_EXTRA_FUNC();
-	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
@@ -213,10 +212,6 @@ m_cachedBonusCount(NULL)
 	m_paiResourceConsumption = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_ppiBuildingCommerceChange = NULL;
-	m_ppiSpecialistCommercePercentChanges = NULL;
-	m_ppiSpecialistYieldPercentChanges = NULL;
-	m_ppiBonusCommerceModifier = NULL;
-	m_aiLandmarkYield = new int[NUM_YIELD_TYPES];
 	m_aiModderOptions = new int[NUM_MODDEROPTION_TYPES];
 
 
@@ -288,7 +283,6 @@ CvPlayer::~CvPlayer()
 	PROFILE_EXTRA_FUNC();
 	uninit();
 
-	SAFE_DELETE_ARRAY(m_aiSeaPlotYield);
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiExtraYieldThreshold);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
@@ -298,7 +292,6 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_abFeatAccomplished);
 	SAFE_DELETE_ARRAY(m_abOptions);
 
-	SAFE_DELETE_ARRAY(m_aiLandmarkYield);
 	SAFE_DELETE_ARRAY(m_aiModderOptions);
 
 	//TB Traits begin
@@ -622,9 +615,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY2(m_ppaaiTerrainYieldChange, GC.getNumTerrainInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceChange, GC.getNumBuildingInfos());
-	SAFE_DELETE_ARRAY2(m_ppiBonusCommerceModifier, GC.getNumBonusInfos());
-	SAFE_DELETE_ARRAY2(m_ppiSpecialistCommercePercentChanges, GC.getNumSpecialistInfos());
-	SAFE_DELETE_ARRAY2(m_ppiSpecialistYieldPercentChanges, GC.getNumSpecialistInfos());
 
 
 	m_triggersFired.clear();
@@ -1231,8 +1221,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_ePledgedVote = NO_PLAYER_VOTE;
 	m_eSecretaryGeneralVote = NO_TEAM;
 	m_eGreatGeneralTypetoAssign = NO_UNIT;
-	m_iEnslavementChance = 0;
-	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
 
 	m_iFreeUnitUpkeepCivilianEvents = 0;
@@ -1246,7 +1234,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 
 	m_iHurryCostModifier = 0;
-	m_iHurryInflationModifier = 0;
 	m_iHurryCount = 0;
 
 	m_eBestRoute = NO_ROUTE;
@@ -1256,10 +1243,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_eDemandWarAgainstTeam = NO_TEAM;
 
 	m_iCorporationSpreadModifier = 0;
-	// @SAVEBREAK - delete
-	m_iCorporateTaxIncome = 0;
-	// !SAVEBREAK
-	m_iCorporateMaintenance = 0;
 
 	m_iCulture = 0;
 
@@ -1270,10 +1253,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		m_aiSeaPlotYield[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiExtraYieldThreshold[iI] = 0;
-		m_aiLandmarkYield[iI] = 0;
 
 		//TB Traits begin
 		m_aiLessYieldThreshold[iI] = 0;
@@ -1538,36 +1519,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 			{
 				m_ppiBuildingCommerceChange[iI][iJ] = 0;
-			}
-		}
-
-		FAssertMsg(m_ppiBonusCommerceModifier==NULL, "about to leak memory, CvPlayer::m_ppiBonusCommerceModifier");
-		m_ppiBonusCommerceModifier = new int*[GC.getNumBonusInfos()];
-		for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
-		{
-			m_ppiBonusCommerceModifier[iI] = new int[NUM_COMMERCE_TYPES];
-			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				m_ppiBonusCommerceModifier[iI][iJ] = 0;
-			}
-		}
-
-		FAssertMsg(m_ppiSpecialistCommercePercentChanges==NULL, "about to leak memory, CvPlayer::m_ppiSpecialistCommercePercentChanges");
-		FAssertMsg(m_ppiSpecialistYieldPercentChanges==NULL, "about to leak memory, CvPlayer::m_ppiSpecialistYieldPercentChanges");
-		m_ppiSpecialistCommercePercentChanges = new int*[GC.getNumSpecialistInfos()];
-		m_ppiSpecialistYieldPercentChanges = new int*[GC.getNumSpecialistInfos()];
-
-		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-		{
-			m_ppiSpecialistCommercePercentChanges[iI] = new int[NUM_COMMERCE_TYPES];
-			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				m_ppiSpecialistCommercePercentChanges[iI][iJ] = 0;
-			}
-			m_ppiSpecialistYieldPercentChanges[iI] = new int[NUM_YIELD_TYPES];
-			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				m_ppiSpecialistYieldPercentChanges[iI][iJ] = 0;
 			}
 		}
 
@@ -3943,10 +3894,6 @@ void CvPlayer::doTurn()
 		recalculateAllResourceConsumption();
 	}
 
-	if (GC.getGame().isOption(GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS))
-	{
-		updateCorporateMaintenance();
-	}
 	doAdvancedEconomy();
 
 	{
@@ -8624,7 +8571,7 @@ int CvPlayer::specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) co
 {
 	// ×100 NATIVE, like every other cascade read -- a getter never reduces ([DEC-fixedpoint-x100]); the
 	// consumer reduces at its own point of use, and an EVALUATION never scales at all.
-	return (GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) + getExtraSpecialistYield(eSpecialist, eYield) + getSpecialistYieldPercentChanges(eSpecialist, eYield));
+	return (GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) + getExtraSpecialistYield(eSpecialist, eYield));
 }
 
 
@@ -8641,8 +8588,6 @@ int CvPlayer::specialistCommerceTimes100(SpecialistTypes eSpecialist, CommerceTy
 	return
 	(
 		GC.getSpecialistInfo(eSpecialist).getFlatCommerce(eCommerce, CASC_SCOPE_CITY)
-		+
-		getSpecialistCommercePercentChanges(eSpecialist, eCommerce)
 	);
 }
 
@@ -11704,24 +11649,6 @@ int CvPlayer::getPlayerTextColorA() const
 	return ((int)(GC.getColorInfo((ColorTypes) GC.getPlayerColorInfo(getPlayerColor()).getTextColorType()).getColor().a * 255));
 }
 
-
-int CvPlayer::getSeaPlotYield(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiSeaPlotYield[eIndex];
-}
-
-
-void CvPlayer::changeSeaPlotYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiSeaPlotYield[eIndex] += iChange;
-
-	}
-}
 
 
 int CvPlayer::getYieldRateModifier(YieldTypes eIndex) const
@@ -17012,7 +16939,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		// The sliders deserialize WHOLESALE, so each is taken off the array, zeroed, and landed through the
@@ -17064,28 +16990,21 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UPKEEPS, GC.getNumUpkeepInfos(), m_paiUpkeepCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistValidCount);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iForeignTradeRouteModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTaxRateUnhappiness);
 
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iEnslavementChance);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCapitalUnhappiness);
 
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForceAllTradeRoutes);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryCostModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryInflationModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoLandmarkAngerCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLandmarkHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCorporationSpreadModifier);
-		// @SAVEBREAK - delete
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCorporateTaxIncome);
-		// !SAVEBREAK
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCityLimit);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCityOverLimitUnhappy);
 
@@ -17182,33 +17101,22 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_BONUSES); ++i)
 		{
-			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BONUSES, i, true);
-
-			if ( iI != -1 )
-			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBonusCommerceModifier[iI]);
-			}
-			else
-			{
-				//	Consume the values
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppiBonusCommerceModifier[iI], SAVE_VALUE_TYPE_INT_ARRAY);
-			}
+			//	A BRACKETED per-element tag can never be soft-removed through savemigration.txt (save.md §3) --
+			//	the normalized dictionary name differs from the source literal -- so an old save's bytes are
+			//	drained here instead, and the remap branch collapses because both arms only consume.
+			int aiDrainCommerce[NUM_COMMERCE_TYPES];
+			WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, aiDrainCommerce);
 		}
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
-			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
-
-			if ( iI != -1 )
-			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppiSpecialistYieldPercentChanges[iI]);
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiSpecialistCommercePercentChanges[iI]);
-			}
-			else
-			{
-				//	Consume the values
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppiSpecialistYieldPercentChanges[iI], SAVE_VALUE_TYPE_INT_ARRAY);
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppiSpecialistCommercePercentChanges[iI], SAVE_VALUE_TYPE_INT_ARRAY);
-			}
+			//	Both members are CUT -- a specialist's percent is an ordinary city modifier and lives in the
+			//	city's ONE additive percent stack. The tag is a BRACKETED per-element one, which cannot be
+			//	soft-removed through savemigration.txt (save.md §3), so this stays as a pure drain and the
+			//	remap branch collapses: both arms only ever consumed the element.
+			int aiDrainYield[NUM_YIELD_TYPES];
+			int aiDrainCommerce[NUM_COMMERCE_TYPES];
+			WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_YIELD_TYPES, aiDrainYield, "m_ppiSpecialistYieldPercentChanges[iI]");
+			WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, aiDrainCommerce, "m_ppiSpecialistCommercePercentChanges[iI]");
 		}
 
 		FAssertMsg((0 < GC.getNumTechInfos()), "GC.getNumTechInfos() is not greater than zero but it is expected to be in CvPlayer::read");
@@ -18206,11 +18114,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 		}
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCorporateMaintenance);
-		// @SAVEBREAK - delete
-		m_iCorporateMaintenance += m_iCorporateTaxIncome;
-		// !SAVEBREAK
-
 		//Example of how to skip element
 		//WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iPopulationgrowthratepercentage, SAVE_VALUE_ANY);
 	}
@@ -18369,7 +18272,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eParent);
 		//m_eTeamType not saved
 
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
@@ -18392,26 +18294,19 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UPKEEPS, GC.getNumUpkeepInfos(), m_paiUpkeepCount);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistValidCount);
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForeignTradeRouteModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTaxRateUnhappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iEnslavementChance);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCapitalUnhappiness);
 
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForceAllTradeRoutes);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryCostModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryInflationModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoLandmarkAngerCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLandmarkHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCorporationSpreadModifier);
-		// @SAVEBREAK - delete
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCorporateTaxIncome);
-		// !SAVEBREAK
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCityLimit);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCityOverLimitUnhappy);
 
@@ -18458,16 +18353,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceChange[i]);
 		}
-		for (int i = 0; i < GC.getNumBonusInfos(); ++i)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBonusCommerceModifier[i]);
-		}
-		for (int i = 0; i < GC.getNumSpecialistInfos(); ++i)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppiSpecialistYieldPercentChanges[i]);
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiSpecialistCommercePercentChanges[i]);
-		}
-
 		FAssertMsg((0 < GC.getNumTechInfos()), "GC.getNumTechInfos() is not greater than zero but it is expected to be in CvPlayer::write");
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabResearchingTech);
 
@@ -18910,7 +18795,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)plotX->getY(), "CommodoreFieldPlotY");
 			}
 		}
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCorporateMaintenance);
 	}
 	WRAPPER_WRITE_OBJECT_END(wrapper);
 }
@@ -24233,18 +24117,6 @@ bool CvPlayer::hasSpaceshipArrived() const
 	return false;
 }
 
-int CvPlayer::getEnslavementChance() const
-{
-	return m_iEnslavementChance;
-}
-
-void CvPlayer::changeEnslavementChance(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iEnslavementChance += iChange;
-	}
-}
 
 bool CvPlayer::isTradingMilitaryBonus(PlayerTypes ePlayer) const
 {
@@ -24836,21 +24708,6 @@ void CvPlayer::changeCivicHappiness(int iChange)
 	{
 
 		AI_makeAssignWorkDirty();
-	}
-}
-
-int CvPlayer::getForeignTradeRouteModifier() const
-{
-	return m_iForeignTradeRouteModifier;
-}
-
-void CvPlayer::changeForeignTradeRouteModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iForeignTradeRouteModifier = (m_iForeignTradeRouteModifier + iChange);
-
-		updateTradeRoutes();
 	}
 }
 
@@ -25481,16 +25338,6 @@ void CvPlayer::changeHurryCostModifier(int iChange)
 	m_iHurryCostModifier += iChange;
 }
 
-int CvPlayer::getHurryInflationModifier() const
-{
-	return m_iHurryInflationModifier;
-}
-
-void CvPlayer::changeHurryInflationModifier(int iChange)
-{
-	m_iHurryInflationModifier += iChange;
-}
-
 int CvPlayer::getHurriedCount() const
 {
 	return m_iHurryCount;
@@ -25570,45 +25417,6 @@ void CvPlayer::changeBuildingCommerceModifier(BuildingTypes eType, CommerceTypes
 		m_ppiBuildingCommerceModifier[eType][eCommerce] += iChange;
 	}
 }
-
-int CvPlayer::getBonusCommerceModifier(BonusTypes eIndex1, CommerceTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-	return m_ppiBonusCommerceModifier[eIndex1][eIndex2];
-}
-
-void CvPlayer::changeBonusCommerceModifier(BonusTypes eIndex1, CommerceTypes eIndex2, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		//int iOldValue = getBonusCommerceModifier(eIndex1, eIndex2);
-
-		m_ppiBonusCommerceModifier[eIndex1][eIndex2] += iChange;
-	}
-}
-
-int CvPlayer::getLandmarkYield(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiLandmarkYield[eIndex];
-}
-
-
-void CvPlayer::changeLandmarkYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiLandmarkYield[eIndex] += iChange;
-
-	}
-}
-
 
 void CvPlayer::setColor(PlayerColorTypes eColor)
 {
@@ -25718,19 +25526,15 @@ void CvPlayer::changeCorporationSpreadModifier(int iChange)
 
 int64_t CvPlayer::getCorporateMaintenance() const
 {
-	return m_iCorporateMaintenance;
-}
-
-void CvPlayer::updateCorporateMaintenance()
-{
 	PROFILE_FUNC();
 
-	m_iCorporateMaintenance = 0;
+	int64_t iTotal = 0;
 
-	foreach_(CvCity* cityX, cities())
+	foreach_(const CvCity* cityX, cities())
 	{
-		m_iCorporateMaintenance += cityX->calcCorporateMaintenance();
+		iTotal += cityX->calcCorporateMaintenance();
 	}
+	return iTotal;
 }
 
 int CvPlayer::getCorporationInfluence(CorporationTypes eIndex) const
@@ -25864,13 +25668,8 @@ void CvPlayer::doAdvancedEconomy()
 	if (getHurriedCount() > 0)
 	{
 		const int iTurnIncrement1000 = (
-			getModifiedIntValue(
-				(
-						GC.getHURRY_INFLATION_DECAY_RATE()
-					*	CvGameSpeedScale::speedPercent()
-				),
-				getHurryInflationModifier()
-			)
+				GC.getHURRY_INFLATION_DECAY_RATE()
+			*	CvGameSpeedScale::speedPercent()
 		);
 		if (GC.getGame().getElapsedGameTurns() % std::max(1, iTurnIncrement1000 / 1000) == 0)
 		{
@@ -25898,44 +25697,6 @@ int CvPlayer::getWonderConstructRand() const
 	iWonderConstructRand *= iNumModWonders;
 	iWonderConstructRand /= iNumBTSWonders;
 	return iWonderConstructRand;
-}
-
-int CvPlayer::getSpecialistCommercePercentChanges(SpecialistTypes eIndex1, CommerceTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-	return m_ppiSpecialistCommercePercentChanges[eIndex1][eIndex2];
-}
-
-void CvPlayer::changeSpecialistCommercePercentChanges(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_ppiSpecialistCommercePercentChanges[eIndex1][eIndex2] += iChange;
-	}
-}
-
-int CvPlayer::getSpecialistYieldPercentChanges(SpecialistTypes eIndex1, YieldTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_ppiSpecialistYieldPercentChanges[eIndex1][eIndex2];
-}
-
-void CvPlayer::changeSpecialistYieldPercentChanges(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_ppiSpecialistYieldPercentChanges[eIndex1][eIndex2] += iChange;
-	}
 }
 
 int CvPlayer::getFractionalCombatExperience() const

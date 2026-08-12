@@ -953,8 +953,6 @@ public:
 	DllExport int getPlayerTextColorB() const;
 	int getPlayerTextColorA() const;
 
-	int getSeaPlotYield(YieldTypes eIndex) const;
-	void changeSeaPlotYield(YieldTypes eIndex, int iChange);
 
 
 
@@ -1372,9 +1370,6 @@ public:
 	int getHurryCostModifier() const;
 	void changeHurryCostModifier(int iChange);
 
-	int getHurryInflationModifier() const;
-	void changeHurryInflationModifier(int iChange);
-
 	int getCityLimit() const { return m_iCityLimit; }
 	void changeCityLimit(int iChange);
 
@@ -1391,8 +1386,6 @@ public:
 
 	int getSevoWondersScore(int mode);
 
-	int getForeignTradeRouteModifier() const;
-	void changeForeignTradeRouteModifier(int iChange);
 	void changeCivicHappiness(int iChange);
 
 	bool hasEnemyDefenderUnit(const CvPlot* pPlot) const;
@@ -1426,8 +1419,6 @@ public:
 	DenialTypes AI_corporationTrade(CorporationTypes eCorporation, PlayerTypes ePlayer) const;
 	DenialTypes AI_pledgeVoteTrade(VoteTriggeredData* kData, PlayerVoteTypes ePlayerVote, PlayerTypes ePlayer) const;
 	DenialTypes AI_secretaryGeneralTrade(VoteSourceTypes eVoteSource, PlayerTypes ePlayer) const;
-	int getEnslavementChance() const;
-	void changeEnslavementChance(int iChange);
 
 	int doMultipleResearch(int iOverflow);
 
@@ -1462,11 +1453,7 @@ public:
 	int getBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType) const;
 	void changeBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType, int iChange);
 
-	int getBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex) const;
-	void changeBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex, int iChange);
 
-	int getLandmarkYield(YieldTypes eIndex) const;
-	void changeLandmarkYield(YieldTypes eIndex, int iChange);
 
 	int getNoLandmarkAngerCount() const;
 	bool isNoLandmarkAnger() const;
@@ -1490,7 +1477,6 @@ public:
 	void changeCorporationSpreadModifier(int iChange);
 
 	int64_t getCorporateMaintenance() const;
-	void updateCorporateMaintenance();
 
 	int getCorporationInfluence(CorporationTypes eIndex) const;
 	int getRevolutionFromCivics(RevolutionKind eKind) const;
@@ -1506,11 +1492,7 @@ public:
 
 	int getWonderConstructRand() const;
 
-	int getSpecialistCommercePercentChanges(SpecialistTypes eIndex1, CommerceTypes eIndex2) const;
-	void changeSpecialistCommercePercentChanges(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange);
 
-	int getSpecialistYieldPercentChanges(SpecialistTypes eIndex1, YieldTypes eIndex2) const;
-	void changeSpecialistYieldPercentChanges(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange);
 
 	int getFractionalCombatExperience() const;
 	void changeFractionalCombatExperience(int iChange, UnitTypes eGGType = NO_UNIT);
@@ -1563,21 +1545,15 @@ public:
 	inline void setTurnHadUIInteraction(bool newVal) { m_turnHadUIInteraction = newVal; }
 
 protected:
-	int** m_ppiSpecialistYieldPercentChanges;
-	int** m_ppiSpecialistCommercePercentChanges;
 	int** m_ppaaiTerrainYieldChange;
 	int** m_ppiBuildingCommerceModifier;
 	int** m_ppiBuildingCommerceChange;
-	int** m_ppiBonusCommerceModifier;
 	bool* m_pabAutomatedCanBuild;
 	int* m_paiResourceConsumption;
-	int* m_aiLandmarkYield;
 	int* m_aiModderOptions;
-	int m_iEnslavementChance;
 	PlayerVoteTypes m_ePledgedVote;
 	TeamTypes m_eSecretaryGeneralVote;
 	UnitTypes m_eGreatGeneralTypetoAssign;
-	int m_iForeignTradeRouteModifier;
 	int m_iNoLandmarkAngerCount;
 	int m_iLandmarkHappiness;
 	int m_iFreeUnitUpkeepCivilianEvents;   // event-granted free upkeep -- one-shot, persisted
@@ -1587,10 +1563,6 @@ protected:
 	int m_iNoCapitalUnhappiness;
 	int m_iForceAllTradeRoutes;
 	int m_iCorporationSpreadModifier;
-	// @SAVEBREAK - delete
-	int m_iCorporateTaxIncome;
-	// !SAVEBREAK
-	int64_t m_iCorporateMaintenance;
 	bool m_bShowLandmarks;
 	int m_iCityLimit;
 	int m_iCityOverLimitUnhappy;
@@ -1622,7 +1594,6 @@ protected:
 	bool m_bAssassinate;
 
 	int m_iHurryCostModifier;
-	int m_iHurryInflationModifier;
 	int m_iHurryCount;
 
 	int m_iFractionalCombatExperience;
@@ -1871,7 +1842,6 @@ protected:
 	int m_iUpgradeRoundCount;
 	int m_iSelectionRegroup;
 
-	int* m_aiSeaPlotYield;
 	int* m_aiYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
 	int* m_aiCommercePercent;

@@ -1530,7 +1530,6 @@ protected:
 	int m_iNoCaptureCount;
 	int m_iExtraNoDefensiveBonusCount;
 	int m_iExtraGatherHerdCount;
-	int m_iNumTimesTriggered;
 	int m_iHiddenNationalityCount;
 	bool m_bIsArmed;
 	// Within-frame ONLY, never serialized: the sea-pillage interceptor exchange makes this unit formally the
@@ -2095,8 +2094,6 @@ public:
 
 
 
-	int getNumTimesTriggered() const;
-	void changeNumTimesTriggered(int iChange);
 
 
 	bool hasTargetUnitCombat(UnitCombatTypes eUnitCombat) const;

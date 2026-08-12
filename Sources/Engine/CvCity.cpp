@@ -550,7 +550,6 @@ CvCity::CvCity()
 	m_ppaaiLocalSpecialistExtraYield = NULL;
 
 	m_paiSpecialistBannedCount = NULL;
-	m_paiHealUnitCombatTypeVolume = NULL;
 
 	m_bVisibilitySetup = false;
 
@@ -812,7 +811,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiUnitCombatDefenseAgainstModifier);
 	SAFE_DELETE_ARRAY(m_paiStartDeferredSectionNumBonuses);
 	SAFE_DELETE_ARRAY(m_paiSpecialistBannedCount);
-	SAFE_DELETE_ARRAY(m_paiHealUnitCombatTypeVolume);
 	SAFE_DELETE_ARRAY2(m_ppaaiLocalSpecialistExtraYield, GC.getNumSpecialistInfos());
 }
 
@@ -866,14 +864,11 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iWorkingPopulation = 0;
 	m_iSpecialistPopulation = 0;
 	m_iNumGreatPeople = 0;
-	m_iGreatPeopleRateModifier = 0;
 	m_iGreatPeopleProgress = 0;
 	m_iNumWorldWonders = 0;
 	m_iNumTeamWonders = 0;
 	m_iNumNationalWonders = 0;
 	m_iNumBuildings = 0;
-	m_iWarWearinessModifier = 0;
-	m_iHealRate = 0;
 	m_iEspionageHealthCounter = 0;
 	m_iEspionageHappinessCounter = 0;
 	m_iFreshWaterGoodHealth = 0;
@@ -892,19 +887,14 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iFeatureProduction = 0;
 	m_iMilitaryProductionModifier = 0;
 	m_iSpaceProductionModifier = 0;
-	m_iForeignTradeRouteModifier = 0;
 	m_iCurrAirlift = 0;
 	m_iMaxAirlift = 0;
-	m_iAirModifier = 0;
 	m_iAirUnitCapacity = 0;
-	m_iNukeModifier = 0;
 	m_iDefenseDamage = 0;
 	m_iLastDefenseDamage = 0;
 	m_iOccupationTimer = 0;
 	m_iCultureUpdateTimer = 0;
 	m_iCitySizeBoost = 0;
-	m_iSpecialistInsidiousness = 0;
-	m_iSpecialistInvestigation = 0;
 	m_icachedPropertyNeedsTurn = 0;
 	m_iCiv = NO_CIVILIZATION;
 	m_iLandmarkAngerTimer = 0;
@@ -915,7 +905,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iEventAnger = 0;
 	m_iMinimumDefenseLevel = 0;
 	m_iHealthPercentPerPopulation = 0;
-	m_iHappinessPercentPerPopulation = 0;
 	m_iQuarantinedCount = 0;
 	m_bNeverLost = true;
 	m_bPropertyControlBuildingQueued = false;
@@ -954,12 +943,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iReinforcementCounter = 0;
 
 	//TB Combat Mod (Buildings) begin
-	m_iExtraLocalCaptureProbabilityModifier = 0;
-	m_iExtraLocalCaptureResistanceModifier = 0;
 	m_iModifiedBuildingDefenseRecoverySpeedCap = 0;
 	m_iPrioritySpecialist = NO_SPECIALIST;
-	m_iSpecialistInsidiousness = 0;
-	m_iSpecialistInvestigation = 0;
 	m_icachedPropertyNeedsTurn = 0;
 	//TB Combat Mod (Buildings) end
 
@@ -1012,7 +997,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_aBuildingHealthChange.clear();
 	m_buildingProductionMod.clear();
 	m_unitProductionMod.clear();
-	m_bonusDefenseChanges.clear();
 	m_Properties.clear();
 	m_progressOnBuilding.clear();
 	m_delayOnBuilding.clear();
@@ -1115,14 +1099,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_paiUnitCombatExtraStrength = new int[GC.getNumUnitCombatInfos()];
 		m_paiUnitCombatProductionModifier = new int[GC.getNumUnitCombatInfos()];
 		m_paiUnitCombatDefenseAgainstModifier = new int[GC.getNumUnitCombatInfos()];
-		m_paiHealUnitCombatTypeVolume = new int[GC.getNumUnitCombatInfos()];
 
 		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 		{
 			m_paiUnitCombatExtraStrength[iI] = 0;
 			m_paiUnitCombatProductionModifier[iI] = 0;
 			m_paiUnitCombatDefenseAgainstModifier[iI] = 0;
-			m_paiHealUnitCombatTypeVolume[iI] = 0;
 		}
 
 		FAssertMsg((0 < GC.getNumPropertyInfos()), "GC.getNumPropertyInfos() is not greater than zero but an array is being allocated in CvCity::reset");
@@ -4127,9 +4109,12 @@ int CvCity::getWarWearinessPercentAnger() const
 {
 	int iAnger = GET_PLAYER(getOwner()).getWarWearinessPercentAnger();
 
+	// The CITY's own rolled scalar, which IS the roll-up over the chain this city sits under (team + empire +
+	// city, modifier.md §1) -- so the empire-scope deposits are already inside it and reading the player's
+	// scalars beside it would count them twice.
 	int aiScalars[NUM_INFO_SCALARS];
-	GET_PLAYER(getOwner()).getScalars(aiScalars);
-	iAnger *= std::max(0, (getWarWearinessModifier() + aiScalars[SCALAR_WAR_WEARINESS] + 100));
+	getScalars(aiScalars);
+	iAnger *= std::max(0, (aiScalars[SCALAR_WAR_WEARINESS] + 100));
 	iAnger /= 100;
 
 	iAnger *= std::max(0, (getWarWearinessTimer() + 100));
@@ -5880,11 +5865,13 @@ int CvCity::getTotalGreatPeopleRateModifier() const
 
 	int aiScalars[NUM_INFO_SCALARS];
 	owner.getScalars(aiScalars);
-	// ⛔ SCALAR_GREAT_PEOPLE_RATE is the greatPeopleRate AMOUNT channel -- the very value getBaseGreatPeopleRate
-	// returns as the BASE (realizedAtCity on the same channel). Adding it here injected a ×100 amount into a
-	// percentage identity AND counted the base a second time; the percent deposits are already inside the
-	// realized base via the combine. Only the modifier belongs in this stack.
-	int iModifier = 100 + getGreatPeopleRateModifier();
+	// ⛔ THE CHANNEL'S OWN DEPOSITS ARE ALREADY IN THE BASE, so nothing from greatPeopleRate belongs in this
+	// stack. getBaseGreatPeopleRate is realizedAtCity on the channel, i.e. the §2a combine -- both the flats
+	// and the percents resolve there. Re-adding either here injects a second application of a value the base
+	// already carries: the AMOUNT would put a ×100 magnitude into a percentage identity and count the base
+	// twice, and a percent would apply the same stack twice over.
+	// What legitimately remains are the two terms the channel does NOT carry, below.
+	int iModifier = 100;
 
 	if (owner.getStateReligion() != NO_RELIGION && isHasReligion(owner.getStateReligion()))
 	{
@@ -5902,16 +5889,6 @@ int CvCity::getTotalGreatPeopleRateModifier() const
 }
 
 
-int CvCity::getGreatPeopleRateModifier() const
-{
-	return m_iGreatPeopleRateModifier;
-}
-
-
-void CvCity::changeGreatPeopleRateModifier(int iChange)
-{
-	m_iGreatPeopleRateModifier += iChange;
-}
 
 
 int CvCity::getGreatPeopleProgress() const
@@ -6274,21 +6251,6 @@ int CvCity::maintenancePercentStack(int iKind) const
 	return (int)iPercentSum;
 }
 
-int CvCity::getWarWearinessModifier() const
-{
-	return m_iWarWearinessModifier;
-}
-
-
-void CvCity::changeWarWearinessModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iWarWearinessModifier += iChange;
-
-		AI_setAssignWorkDirty(true);
-	}
-}
 
 
 //	How much longer (or shorter) hurry anger lasts here, as a percent: the ONE roll-up over the chain this city
@@ -6309,30 +6271,29 @@ int CvCity::getHurryAngerModifier() const
 }
 
 
-int CvCity::getHealRate() const
-{
-	return m_iHealRate;
-}
-
-
-void CvCity::changeHealRate(int iChange)
-{
-	m_iHealRate += iChange;
-	FASSERT_NOT_NEGATIVE(getHealRate());
-}
-
+// The city-scope deposit of the heal family's unitCombat-keyed member, read as an entry-list over the live
+// sources rather than off a scope package -- a keyed deposit never folds into the scope slots.
 int CvCity::getHealUnitCombatTypeTotal(UnitCombatTypes eUnitCombat) const
 {
+	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
 
-	return m_paiHealUnitCombatTypeVolume[eUnitCombat];
-}
-
-void CvCity::changeHealUnitCombatTypeVolume(UnitCombatTypes eUnitCombat, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-
-	m_paiHealUnitCombatTypeVolume[eUnitCombat] += iChange;
+	int iTotal = 0;
+	std::vector<HealByUnitCombat> healRows;
+	const std::set<int>& kActive = m_operatingBuildings.active;
+	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
+	{
+		InfoValuation::collectHealByUnitCombat(
+			GC.getBuildingInfo((BuildingTypes)*it).getModifiers(), healRows);
+		for (size_t iRow = 0; iRow < healRows.size(); ++iRow)
+		{
+			if (healRows[iRow].iUnitCombat == (int)eUnitCombat)
+			{
+				iTotal += healRows[iRow].iHeal;
+			}
+		}
+	}
+	return iTotal / 100;
 }
 
 int CvCity::getEspionageHealthCounter() const
@@ -6825,8 +6786,8 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 
 		int iNewWarAngerPercent = GET_PLAYER(getOwner()).getWarWearinessPercentAnger();
 		int aiWarScalars[NUM_INFO_SCALARS];
-		GET_PLAYER(getOwner()).getScalars(aiWarScalars);
-		iNewWarAngerPercent *= std::max(0, (iWarWearinessModifier + getWarWearinessModifier() + aiWarScalars[SCALAR_WAR_WEARINESS] + 100));
+		getScalars(aiWarScalars);
+		iNewWarAngerPercent *= std::max(0, (iWarWearinessModifier + aiWarScalars[SCALAR_WAR_WEARINESS] + 100));
 		iNewWarAngerPercent /= 100;
 		int iNewAngerPercent = iBaseAngerPercent + iNewWarAngerPercent;
 		int iNewUnhappiness = iNewAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
@@ -7421,20 +7382,6 @@ int CvCity::getMaxTradeRoutes() const
 
 
 
-int CvCity::getForeignTradeRouteModifier() const
-{
-	return m_iForeignTradeRouteModifier;
-}
-
-void CvCity::changeForeignTradeRouteModifier(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iForeignTradeRouteModifier += iChange;
-
-		updateTradeRoutes();
-	}
-}
 
 
 // The BUILDINGS' share of the defense stack, computed from the operating set rather than accumulated. It exists
@@ -7508,16 +7455,6 @@ void CvCity::changeMaxAirlift(int iChange)
 	FASSERT_NOT_NEGATIVE(getMaxAirlift());
 }
 
-int CvCity::getAirModifier() const
-{
-	return m_iAirModifier;
-}
-
-void CvCity::changeAirModifier(int iChange)
-{
-	m_iAirModifier += iChange;
-}
-
 int CvCity::getSMAirUnitCapacity(TeamTypes eTeam) const
 {
 	int iCapacity = getAirUnitCapacity(eTeam);
@@ -7537,18 +7474,6 @@ void CvCity::changeAirUnitCapacity(int iChange)
 	m_iAirUnitCapacity += iChange;
 	FASSERT_NOT_NEGATIVE(getAirUnitCapacity(getTeam()));
 }
-
-int CvCity::getNukeModifier() const
-{
-	return m_iNukeModifier;
-}
-
-
-void CvCity::changeNukeModifier(int iChange)
-{
-	m_iNukeModifier += iChange;
-}
-
 
 int CvCity::getFreeSpecialist() const
 {
@@ -8256,7 +8181,6 @@ int CvCity::getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist)
 	return (
 		GC.getSpecialistInfo(eSpecialist).getFlatYield(eIndex, CASC_SCOPE_CITY) / 100
 		+ GET_PLAYER(getOwner()).getExtraSpecialistYield(eSpecialist, eIndex)
-		+ GET_PLAYER(getOwner()).getSpecialistYieldPercentChanges(eSpecialist, eIndex) / 100
 	);
 }
 
@@ -8410,9 +8334,6 @@ int CvCity::totalTradeModifier(const CvCity* pOtherCity) const
 
 		if (getTeam() != pOtherCity->getTeam())
 		{
-			iModifier += getForeignTradeRouteModifier();
-			iModifier += GET_PLAYER(getOwner()).getForeignTradeRouteModifier();
-
 			// ⚠ The SHARED-CIVIC route bonus is authored as a CONDITIONED `tradeRoutes.empire.modifier.percent`
 			// entry gated `all: [IS_FOREIGN, SHARES_CIVIC]` (curate_civic), and both predicates are evaluated
 			// against the ROUTE'S PARTNER ([json.md §3.5]) -- an axis CvCascadeEvalCtx carries no slot for, so
@@ -8674,8 +8595,6 @@ int CvCity::getAdditionalCommerceBySpecialist(CommerceTypes eIndex, SpecialistTy
 	{
 		return 0;
 	}
-	iExtraRate += GET_PLAYER(getOwner()).getSpecialistCommercePercentChanges(eSpecialist, eIndex);
-
 	return iExtraRate * getTotalCommerceRateModifier(eIndex);
 }
 
@@ -12750,14 +12669,11 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iWorkingPopulation);
 	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistPopulation);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumGreatPeople);
-	WRAPPER_READ(wrapper, "CvCity", &m_iGreatPeopleRateModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iGreatPeopleProgress);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumWorldWonders);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumTeamWonders);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumNationalWonders);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumBuildings);
-	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessModifier);
-	WRAPPER_READ(wrapper, "CvCity", &m_iHealRate);
 	WRAPPER_READ(wrapper, "CvCity", &m_iEspionageHealthCounter);
 	WRAPPER_READ(wrapper, "CvCity", &m_iEspionageHappinessCounter);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFreshWaterGoodHealth);
@@ -12778,12 +12694,9 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureProduction);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMilitaryProductionModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iSpaceProductionModifier);
-	WRAPPER_READ(wrapper, "CvCity", &m_iForeignTradeRouteModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iCurrAirlift);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMaxAirlift);
-	WRAPPER_READ(wrapper, "CvCity", &m_iAirModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iAirUnitCapacity);
-	WRAPPER_READ(wrapper, "CvCity", &m_iNukeModifier);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iDefenseDamage);
 	WRAPPER_READ(wrapper, "CvCity", &m_iLastDefenseDamage);
@@ -12972,7 +12885,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iMinimumDefenseLevel);
-	WRAPPER_READ(wrapper, "CvCity", &m_iHappinessPercentPerPopulation);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHealthPercentPerPopulation);
 
 	// Read all saved trade routes
@@ -13161,19 +13073,14 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 	}
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraLocalCaptureProbabilityModifier);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraLocalCaptureResistanceModifier);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iPrioritySpecialist);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistBannedCount);
 	WRAPPER_READ(wrapper, "CvCity", &m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatDefenseAgainstModifier);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiHealUnitCombatTypeVolume);
 	//TB Combat Mod (Buildings) end
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iZoCCount);
-	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistInsidiousness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistInvestigation);
 	iNumElts = 0;   // a post-cut save writes no count; pre-zero so a missing tag leaves the drain a no-op
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
 	// DRAIN the retired property-spawn store. The spawns are `triggers` entries now (json.md §5); the
@@ -13346,21 +13253,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		short iType = 0;
 		int iCount = 0;
 		uint16_t sCountU = 0;
-		// Bonus
-		iSize = 0;
-		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BonusDefenseChangesSize");
-		while (iSize-- > 0)
-		{
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "BonusDefenseChangesType");
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iCount, "BonusDefenseChanges");
-			iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BONUSES, iType, true));
-
-			if (iType > -1)
-			{
-				m_bonusDefenseChanges.insert(std::make_pair(iType, iCount));
-			}
-		}
-
 		// Building
 		iSize = 0;
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingProductionModSize");
@@ -13454,14 +13346,11 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWorkingPopulation);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistPopulation);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumGreatPeople);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iGreatPeopleRateModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iGreatPeopleProgress);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumWorldWonders);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumTeamWonders);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumNationalWonders);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumBuildings);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iWarWearinessModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iHealRate);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEspionageHealthCounter);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEspionageHappinessCounter);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFreshWaterGoodHealth);
@@ -13480,12 +13369,9 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureProduction);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMilitaryProductionModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iSpaceProductionModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iForeignTradeRouteModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iCurrAirlift);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMaxAirlift);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iAirModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iAirUnitCapacity);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iNukeModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iDefenseDamage);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLastDefenseDamage);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iOccupationTimer);
@@ -13557,7 +13443,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMinimumDefenseLevel);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iHappinessPercentPerPopulation);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHealthPercentPerPopulation);
 
 	const int iNumTradeRoutes = m_paTradeCities.size();
@@ -13625,18 +13510,13 @@ void CvCity::write(FDataStreamBase* pStream)
 	{
 		WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_ppaaiLocalSpecialistExtraYield[iI]);
 	}
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraLocalCaptureProbabilityModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraLocalCaptureResistanceModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iPrioritySpecialist);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistBannedCount);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatDefenseAgainstModifier);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiHealUnitCombatTypeVolume);
 	//TB Combat Mod (Buildings) end
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iZoCCount);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistInsidiousness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistInvestigation);
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
@@ -13720,14 +13600,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	}
 	// Toffer - Write Maps
 	{
-		// Bonus
-		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_bonusDefenseChanges.size(), "BonusDefenseChangesSize");
-		for (std::map<short, int>::const_iterator it = m_bonusDefenseChanges.begin(), itEnd = m_bonusDefenseChanges.end(); it != itEnd; ++it)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->first, "BonusDefenseChangesType");
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->second, "BonusDefenseChanges");
-		}
-
 		// Building
 		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_buildingProductionMod.size(), "BuildingProductionModSize");
 		for (std::map<short, int>::const_iterator it = m_buildingProductionMod.begin(), itEnd = m_buildingProductionMod.end(); it != itEnd; ++it)
@@ -15451,52 +15323,6 @@ int CvCity::getBuildingProductionModifier(const BuildingTypes eIndex) const
 }
 
 
-void CvCity::changeBonusDefenseChanges(const BonusTypes eBonus, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonus);
-
-	if (iChange == 0)
-	{
-		FErrorMsg("This is not a change!");
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_bonusDefenseChanges.find((short)eBonus);
-
-	if (itr == m_bonusDefenseChanges.end())
-	{
-		m_bonusDefenseChanges.insert(std::make_pair((short)eBonus, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_bonusDefenseChanges.erase(itr->first);
-	}
-	else // change defense
-	{
-		m_bonusDefenseChanges[itr->first] += iChange;
-	}
-}
-
-int CvCity::getBonusDefenseChanges(const BonusTypes eBonus) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonus);
-	std::map<short, int>::const_iterator itr = m_bonusDefenseChanges.find((short)eBonus);
-	return itr != m_bonusDefenseChanges.end() ? itr->second : 0;
-}
-
-int CvCity::calculateBonusDefense() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iBonusDefense = 0;
-
-	for (std::map<short, int>::const_iterator itr = m_bonusDefenseChanges.begin(); itr != m_bonusDefenseChanges.end(); ++itr)
-	{
-		if (hasBonus((BonusTypes)itr->first))
-		{
-			iBonusDefense += itr->second;
-		}
-	}
-	return iBonusDefense;
-}
 
 
 
@@ -15671,23 +15497,6 @@ BuildTypes CvCity::findChopBuild(FeatureTypes eFeature) const
 	return NO_BUILD;
 }
 
-
-int CvCity::calculateBonusCommerceRateModifier(CommerceTypes eIndex) const
-{
-	PROFILE_EXTRA_FUNC();
-	// The city-side bonus-keyed accumulator is gone with its maintainer; what remains is the PLAYER-level
-	// modifier, which is its own live aggregate.
-	int iMod = 0;
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMod += GET_PLAYER(getOwner()).getBonusCommerceModifier((BonusTypes)iI, eIndex);//from Player level
-		}
-	}
-	return iMod;
-}
 
 static bool bonusAvailableFromBuildings(BonusTypes eBonus)
 {
@@ -16303,20 +16112,6 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 	}
 }
 
-int CvCity::calculatePopulationHappiness() const
-{
-	return m_iHappinessPercentPerPopulation * getPopulation() / 100;
-}
-
-void CvCity::changeHappinessPercentPerPopulation(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iHappinessPercentPerPopulation += iChange;
-		AI_setAssignWorkDirty(true);
-	}
-}
-
 int CvCity::calculatePopulationHealth() const
 {
 	return m_iHealthPercentPerPopulation * getPopulation() / 100;
@@ -16677,38 +16472,10 @@ void CvCity::changeUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex,
 
 
 
-int CvCity::getExtraLocalCaptureProbabilityModifier() const
-{
-	return m_iExtraLocalCaptureProbabilityModifier;
-}
-
-void CvCity::setExtraLocalCaptureProbabilityModifier(int iValue)
-{
-	m_iExtraLocalCaptureProbabilityModifier = iValue;
-}
-
-void CvCity::changeExtraLocalCaptureProbabilityModifier(int iChange)
-{
-	m_iExtraLocalCaptureProbabilityModifier += iChange;
-}
-
-int CvCity::getExtraLocalCaptureResistanceModifier() const
-{
-	return m_iExtraLocalCaptureResistanceModifier;
-}
-void CvCity::setExtraLocalCaptureResistanceModifier(int iValue)
-{
-	m_iExtraLocalCaptureResistanceModifier = iValue;
-}
-void CvCity::changeExtraLocalCaptureResistanceModifier(int iChange)
-{
-	m_iExtraLocalCaptureResistanceModifier += iChange;
-}
 
 int CvCity::localCitizenCaptureResistance() const
 {
 	int iTotal = 0;
-	iTotal += getExtraLocalCaptureResistanceModifier();
 	int aiCapture[NUM_CAPTURE_KINDS];
 	GET_PLAYER(getOwner()).getCaptureKinds(aiCapture);
 	iTotal += aiCapture[CAPTURE_RESISTANCE];
@@ -16912,7 +16679,6 @@ int CvCity::getInvestigationTotal(bool bActual) const
 	iTotal += iFivePercentAssistance;
 	iTotal += iBestUnitInvestigation;
 	iTotal += getExtraInvestigation();
-	iTotal += getSpecialistInvestigation();
 
 	return iTotal;
 }
@@ -16923,25 +16689,6 @@ int CvCity::getInvestigationTotal(bool bActual) const
 // already reduces -- so they reduce here too ([DEC-fixedpoint-x100]). Raw, one building decides the contest.
 int CvCity::getExtraInsidiousness() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INSIDIOUSNESS) / 100; }
 int CvCity::getExtraInvestigation() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INVESTIGATION) / 100; }
-int CvCity::getSpecialistInsidiousness() const
-{
-	return m_iSpecialistInsidiousness;
-}
-void CvCity::changeSpecialistInsidiousness(int iChange)
-{
-	m_iSpecialistInsidiousness += iChange;
-	FASSERT_NOT_NEGATIVE(m_iSpecialistInsidiousness);
-}
-
-int CvCity::getSpecialistInvestigation() const
-{
-	return m_iSpecialistInvestigation;
-}
-void CvCity::changeSpecialistInvestigation(int iChange)
-{
-	m_iSpecialistInvestigation += iChange;
-	FASSERT_NOT_NEGATIVE(m_iSpecialistInvestigation);
-}
 
 int CvCity::getPropertyNeed(PropertyTypes eProperty) const
 {

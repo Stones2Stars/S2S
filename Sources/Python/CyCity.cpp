@@ -629,11 +629,6 @@ int CyCity::getGreatPeopleRate() const
 	return m_pCity->getGreatPeopleRate() / 100;
 }
 
-int CyCity::getGreatPeopleRateModifier() const
-{
-	return m_pCity->getGreatPeopleRateModifier();
-}
-
 int CyCity::getGreatPeopleProgress() const
 {
 	return m_pCity->getGreatPeopleProgress();
@@ -682,11 +677,6 @@ int CyCity::getMaintenance() const
 int CyCity::getMaintenanceTimes100() const
 {
 	return (int)m_pCity->getMaintenanceTimes100();
-}
-
-int CyCity::getWarWearinessModifier() const
-{
-	return m_pCity->getWarWearinessModifier();
 }
 
 int CyCity::getEspionageHealthCounter() const
@@ -879,11 +869,6 @@ int CyCity::getMaxTradeRoutes() const
 	return m_pCity->getMaxTradeRoutes();
 }
 
-int CyCity::getForeignTradeRouteModifier() const
-{
-	return m_pCity->getForeignTradeRouteModifier();
-}
-
 int CyCity::getBuildingDefense() const
 {
 	return m_pCity->getBuildingDefense();
@@ -894,15 +879,6 @@ int CyCity::getMaxAirlift() const
 	return m_pCity->getMaxAirlift();
 }
 
-int CyCity::getAirModifier() const
-{
-	return m_pCity->getAirModifier();
-}
-
-int CyCity::getNukeModifier() const
-{
-	return m_pCity->getNukeModifier();
-}
 
 bool CyCity::isPowered() const
 {
@@ -1298,11 +1274,6 @@ int CyCity::getForceSpecialistCount(int /*SpecialistTypes*/ eIndex) const
 	return m_pCity->getForceSpecialistCount((SpecialistTypes)eIndex);
 }
 
-int CyCity::getImprovementFreeSpecialists(int /*ImprovementTypes*/ iIndex) const
-{
-	return m_pCity->getImprovementFreeSpecialists((ImprovementTypes) iIndex);
-}
-
 int CyCity::getReligionInfluence(int /*ReligionTypes*/ iIndex) const
 {
 	return m_pCity->getReligionInfluence((ReligionTypes) iIndex);
@@ -1326,11 +1297,6 @@ void CyCity::changeFreeSpecialistCount(int /*SpecialistTypes*/ eIndex, int iChan
 int CyCity::getAddedFreeSpecialistCount(int /*SpecialistTypes*/ eIndex) const
 {
 	return m_pCity->getAddedFreeSpecialistCount((SpecialistTypes)eIndex);
-}
-
-void CyCity::changeImprovementFreeSpecialists(int /*ImprovementTypes*/ iIndex, int iChange)
-{
-	m_pCity->changeImprovementFreeSpecialists((ImprovementTypes) iIndex, iChange);
 }
 
 void CyCity::changeReligionInfluence(int /*ReligionTypes*/ iIndex, int iChange)

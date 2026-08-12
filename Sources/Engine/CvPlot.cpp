@@ -1690,7 +1690,9 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 				);
 				if (city)
 				{
-					iNukeDamage *= std::max(0, city->getNukeModifier() + 100);
+					int aiDefense[NUM_DEFENSE_KINDS];
+					city->getDefenseKinds(aiDefense);
+					iNukeDamage *= std::max(0, aiDefense[DEFENSE_NUKE] + 100);
 					iNukeDamage /= 100;
 				}
 
@@ -1730,9 +1732,11 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 					city->changeHasBuilding(eType, false);
 				}
 			}
+			int aiNukeDefense[NUM_DEFENSE_KINDS];
+			city->getDefenseKinds(aiNukeDefense);
 			const int iNukedPopulation =
 			(
-				iPop * std::max(0, city->getNukeModifier() + 100)
+				iPop * std::max(0, aiNukeDefense[DEFENSE_NUKE] + 100)
 				*
 				(
 					GC.getDefineINT("NUKE_POPULATION_DEATH_BASE")
@@ -10720,7 +10724,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 
 	m_aiCulture.clear();
 
-	int buffer[MAX_PLAYERS];
+	int64_t buffer[MAX_PLAYERS];
 	char cCount = 0;
 	WRAPPER_READ_DECORATED(wrapper, "CvPlot", &cCount, "cConditional");
 	if (cCount > 0)
@@ -10739,12 +10743,6 @@ void CvPlot::read(FDataStreamBase* pStream)
 	//	Force the capacity to the size() since we need to mto minimize memory usage
 	//	and adding cultures is rare
 	std::vector<std::pair<PlayerTypes,int64_t> >(m_aiCulture).swap(m_aiCulture);
-
-	SAFE_DELETE_ARRAY(m_aiFoundValue);
-	char cFoundValuesPresent;
-	WRAPPER_READ(wrapper, "CvPlot", &cFoundValuesPresent);
-	m_aiFoundValue = new unsigned int[cFoundValuesPresent];
-	WRAPPER_READ_ARRAY(wrapper, "CvPlot", cFoundValuesPresent, m_aiFoundValue);
 
 	SAFE_DELETE_ARRAY(m_aiPlayerCityRadiusCount);
 	cCount = 0;
@@ -11175,7 +11173,7 @@ void CvPlot::write(FDataStreamBase* pStream)
 	}
 	else
 	{
-		int	buffer[MAX_PLAYERS];
+		int64_t	buffer[MAX_PLAYERS];
 
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
@@ -11188,16 +11186,6 @@ void CvPlot::write(FDataStreamBase* pStream)
 		}
 		WRAPPER_WRITE_DECORATED(wrapper, "CvPlot", (char)MAX_PLAYERS, "cConditional");
 		WRAPPER_WRITE_ARRAY_DECORATED(wrapper, "CvPlot", MAX_PLAYERS, buffer, "m_aiCulture");
-	}
-
-	if (NULL == m_aiFoundValue)
-	{
-		WRAPPER_WRITE_DECORATED(wrapper, "CvPlot", (char)0, "cFoundValuesPresent");
-	}
-	else
-	{
-		WRAPPER_WRITE_DECORATED(wrapper, "CvPlot", (char)MAX_PLAYERS, "cFoundValuesPresent");
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlot", MAX_PLAYERS, m_aiFoundValue);
 	}
 
 	if (NULL == m_aiPlayerCityRadiusCount)

@@ -513,9 +513,6 @@ public:
 	int getGreatPeopleRate() const;
 	int getTotalGreatPeopleRateModifier() const;
 
-	int getGreatPeopleRateModifier() const;
-	void changeGreatPeopleRateModifier(int iChange);
-
 	CvProperties* getProperties();
 	const CvProperties* getPropertiesConst() const;
 
@@ -562,16 +559,10 @@ public:
 	int maintenancePercentStack(int iKind) const;
 	void maintenanceLegs(int iKind, int64_t& flatSum, int64_t& percentSum) const;
 
-	int getWarWearinessModifier() const;
-	void changeWarWearinessModifier(int iChange);
 
 	int getHurryAngerModifier() const;
 
-	int getHealRate() const;
-	void changeHealRate(int iChange);
-
 	int getHealUnitCombatTypeTotal(UnitCombatTypes eUnitCombat) const;
-	void changeHealUnitCombatTypeVolume(UnitCombatTypes eUnitCombat, int iChange);
 
 	int getEspionageHealthCounter() const;
 	void changeEspionageHealthCounter(int iChange);
@@ -684,8 +675,6 @@ public:
 	int getMaxTradeRoutes() const;
 
 
-	int getForeignTradeRouteModifier() const;
-	void changeForeignTradeRouteModifier(int iChange);
 
 	int getBuildingDefense() const;
 
@@ -700,15 +689,11 @@ public:
 	int getMaxAirlift() const;
 	void changeMaxAirlift(int iChange);
 
-	int getAirModifier() const;
-	void changeAirModifier(int iChange);
 
 	int getSMAirUnitCapacity(TeamTypes eTeam) const;
 	int getAirUnitCapacity(TeamTypes eTeam) const;
 	void changeAirUnitCapacity(int iChange);
 
-	int getNukeModifier() const;
-	void changeNukeModifier(int iChange);
 
 	int getFreeSpecialist() const;
 
@@ -1317,8 +1302,6 @@ public:
 	void changeUnitProductionModifier(const UnitTypes eIndex, const int iChange);
 
 
-	int getBonusDefenseChanges(const BonusTypes eIndex) const;
-	void changeBonusDefenseChanges(const BonusTypes eIndex, const int iChange);
 
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
@@ -1327,7 +1310,6 @@ public:
 	void updateYieldRate(BuildingTypes eType, YieldTypes eYield, int iChange);
 	//int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
 	//void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
-	int calculateBonusDefense() const;
 
 	void setCivilizationType(int iCiv);
 
@@ -1335,7 +1317,6 @@ public:
 	bool isInquisitionConditions() const;
 
 	BuildTypes findChopBuild(FeatureTypes eFeature) const;
-	int calculateBonusCommerceRateModifier(CommerceTypes eIndex) const;
 	int getLandmarkAngerTimer() const;
 	void changeLandmarkAngerTimer(int iChange);
 	int getLandmarkAnger() const;
@@ -1387,8 +1368,6 @@ public:
 
 	void changeHealthPercentPerPopulation(int iChange);
 	int calculatePopulationHealth() const;
-	void changeHappinessPercentPerPopulation(int iChange);
-	int calculatePopulationHappiness() const;
 
 	int getAssignedSpecialistCount() const;
 
@@ -1587,14 +1566,11 @@ protected:
 	int m_iWorkingPopulation;
 	int m_iSpecialistPopulation;
 	int m_iNumGreatPeople;
-	int m_iGreatPeopleRateModifier;
 	int m_iGreatPeopleProgress;
 	int m_iNumWorldWonders;
 	int m_iNumTeamWonders;
 	int m_iNumNationalWonders;
 	int m_iNumBuildings;
-	int m_iWarWearinessModifier;
-	int m_iHealRate;
 	int m_iEspionageHealthCounter;
 	int m_iEspionageHappinessCounter;
 	int m_iFreshWaterGoodHealth;
@@ -1624,7 +1600,6 @@ protected:
 	int m_iProtectedCultureCount;
 	int m_iWarWearinessTimer;
 	int m_iMinimumDefenseLevel;
-	int m_iHappinessPercentPerPopulation;
 	int m_iHealthPercentPerPopulation;
 
 	int m_iLostProduction;
@@ -1649,7 +1624,6 @@ protected:
 
 	std::vector<BuildingTypes> m_hasBuildings;
 
-	std::map<short, int> m_bonusDefenseChanges;
 	std::map<short, int> m_buildingProductionMod;
 	std::map<short, int> m_unitProductionMod;
 
@@ -1657,19 +1631,14 @@ protected:
 
 	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
-	int m_iForeignTradeRouteModifier;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
-	int m_iAirModifier;
 	int m_iAirUnitCapacity;
-	int m_iNukeModifier;
 	int m_iDefenseDamage;
 	int m_iLastDefenseDamage;
 	int m_iOccupationTimer;
 	int m_iCultureUpdateTimer;
 	int m_iCitySizeBoost;
-	int m_iSpecialistInsidiousness;
-	int m_iSpecialistInvestigation;
 	// Mutable as its used in caching
 	mutable int m_icachedPropertyNeedsTurn;
 
@@ -1709,14 +1678,11 @@ protected:
 	int* m_paiUnitCombatProductionModifier;
 	int* m_paiUnitCombatDefenseAgainstModifier;
 	//TB Building Tags
-	int m_iExtraLocalCaptureProbabilityModifier;
-	int m_iExtraLocalCaptureResistanceModifier;
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;
 
 	int** m_ppaaiLocalSpecialistExtraYield;
 	int m_iPrioritySpecialist;
 	int* m_paiSpecialistBannedCount;
-	int* m_paiHealUnitCombatTypeVolume;
 
 	int* m_aiYieldRateModifier;
 	int* m_aiPowerYieldRateModifier;
@@ -1817,12 +1783,6 @@ protected:
 
 
 	//TB Building tags
-	void setExtraLocalCaptureProbabilityModifier(int iValue);
-	void changeExtraLocalCaptureProbabilityModifier(int iChange);
-
-	void setExtraLocalCaptureResistanceModifier(int iValue);
-	void changeExtraLocalCaptureResistanceModifier(int iChange);
-
 	short m_iZoCCount;
 	void changeZoCCount(short iChange);
 
@@ -1867,8 +1827,6 @@ public:
 #endif
 
 public:
-	int getExtraLocalCaptureProbabilityModifier() const;
-	int getExtraLocalCaptureResistanceModifier() const;
 
 
 	int getExtraLocalDynamicDefense() const;
@@ -1893,10 +1851,6 @@ public:
 
 	int getExtraInvestigation() const;
 
-	int getSpecialistInsidiousness() const;
-	void changeSpecialistInsidiousness(int iChange);
-	int getSpecialistInvestigation() const;
-	void changeSpecialistInvestigation(int iChange);
 
 	int getPropertyNeed(PropertyTypes eProperty) const;
 

@@ -711,7 +711,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iOnlyDefensiveCount = 0;
 	m_iNoInvisibilityCount = 0;
 	m_iNoCaptureCount = 0;
-	m_iNumTimesTriggered = 0;
 	m_iExtraNoDefensiveBonusCount = 0;
 	m_iExtraGatherHerdCount = 0;
 	m_bIsArmed = false;
@@ -937,7 +936,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iOnlyDefensiveCount = other.m_iOnlyDefensiveCount;
 	m_iNoInvisibilityCount = other.m_iNoInvisibilityCount;
 	m_iNoCaptureCount = other.m_iNoCaptureCount;
-	m_iNumTimesTriggered = other.m_iNumTimesTriggered;
 	m_iExtraNoDefensiveBonusCount = other.m_iExtraNoDefensiveBonusCount;
 	m_iExtraGatherHerdCount = other.m_iExtraGatherHerdCount;
 	m_bIsArmed = other.m_bIsArmed;
@@ -6085,7 +6083,9 @@ int CvUnit::healRate(const CvPlot* pPlot, bool bHealCheck) const
 
 		if (pCity && !pCity->isOccupation())
 		{
-			iTotalHeal += pCity->getHealRate();
+			int aiHeals[NUM_HEAL_KINDS];
+			pCity->getHealKinds(aiHeals);
+			iTotalHeal += aiHeals[HEAL_RATE] / 100;
 		}
 	}
 	else if (!hasNoSelfHeal())
@@ -6191,7 +6191,9 @@ int CvUnit::getHealRateAsType(const CvPlot* pPlot, bool bHealCheck, UnitCombatTy
 
 		if (pCity && !pCity->isOccupation())
 		{
-			iTotalHeal += pCity->getHealRate() + pCity->getHealUnitCombatTypeTotal(eHealAsType);
+			int aiHeals[NUM_HEAL_KINDS];
+			pCity->getHealKinds(aiHeals);
+			iTotalHeal += (aiHeals[HEAL_RATE] / 100) + pCity->getHealUnitCombatTypeTotal(eHealAsType);
 		}
 	}
 	else if (!hasNoSelfHeal())
@@ -12189,16 +12191,6 @@ int CvUnit::airCombatDamage(const CvUnit* pDefender) const
 
 	const int iStrengthFactor = (iOurStrength + iTheirStrength + 1) / 2;
 
-	if (pPlot->getPlotCity())
-	{
-		return (
-			std::max(1, GC.getDefineINT("AIR_COMBAT_DAMAGE") * (iOurStrength + iStrengthFactor) / (iTheirStrength + iStrengthFactor))
-			*
-			std::max(0, 100 + pPlot->getPlotCity()->getAirModifier())
-			/
-			100
-		);
-	}
 	return std::max(1, GC.getDefineINT("AIR_COMBAT_DAMAGE") * (iOurStrength + iStrengthFactor) / (iTheirStrength + iStrengthFactor));
 }
 
@@ -18649,8 +18641,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 		}
 	} while(iI != -1);
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_bHasAnyInvisibility);
-
 	int iType1 = 0;
 	int iType2 = 0;
 	int iType3 = 0;
@@ -18833,7 +18823,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_bRevealed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnlyDefensiveCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNoInvisibilityCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iNumTimesTriggered);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsArmed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHiddenNationalityCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNoCaptureCount);
@@ -18989,6 +18978,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	{
 		setSMValues(true);
 	}
+	setHasAnyInvisibility();
 	establishBuildups();
 	if (bKill)
 	{
@@ -19272,7 +19262,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 			WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", m_aiExtraVisibilityIntensitySameTile[iI], "extraVisibilityIntensitySameTile");
 		}
 	}
-	WRAPPER_WRITE(wrapper, "CvUnit", m_bHasAnyInvisibility);
 
 	int iType1 = 0;
 	int iType2 = 0;
@@ -19421,7 +19410,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bRevealed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnlyDefensiveCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoInvisibilityCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iNumTimesTriggered);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsArmed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iHiddenNationalityCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoCaptureCount);
@@ -19590,12 +19578,6 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 			iCollateralDamage -= std::min(100, std::max(0, pBestUnit->getCollateralDamageProtection())) * iCollateralDamage / 100;
 			iCollateralDamage = std::max(0, iCollateralDamage);
 			//TB Combat Mods end
-
-			if (pCity != NULL)
-			{
-				iCollateralDamage *= 100 + pCity->getAirModifier();
-				iCollateralDamage /= 100;
-			}
 
 			iCollateralDamage /= 100;
 
@@ -23282,10 +23264,6 @@ int CvUnit::captureProbabilityTotal() const
 	GET_PLAYER(getOwner()).getCaptureKinds(aiCapture);
 	iData += aiCapture[CAPTURE_PROBABILITY];
 
-	if (plot()->isCity(false, getTeam()))
-	{
-		iData += plot()->getPlotCity()->getExtraLocalCaptureProbabilityModifier();
-	}
 	return std::max(0, iData);
 }
 
@@ -23298,10 +23276,6 @@ int CvUnit::captureResistanceTotal() const
 	GET_PLAYER(getOwner()).getCaptureKinds(aiCapture);
 	iData += aiCapture[CAPTURE_RESISTANCE];
 
-	if (plot()->isCity(false, getTeam()))
-	{
-		iData += plot()->getPlotCity()->getExtraLocalCaptureResistanceModifier();
-	}
 	return std::max(0, iData);
 }
 
@@ -26060,7 +26034,6 @@ int CvUnit::getInsidiousnessTotal(bool bCriminalCheck) const
 			if (pCity != NULL)
 			{
 				iTotal += pCity->getExtraInsidiousness();
-				iTotal += pCity->getSpecialistInsidiousness();
 			}
 		}
 	}
@@ -26608,15 +26581,6 @@ void CvUnit::doSetDefaultStatuses()
 
 
 
-int CvUnit::getNumTimesTriggered() const
-{
-	return m_iNumTimesTriggered;
-}
-
-void CvUnit::changeNumTimesTriggered(int iChange)
-{
-	m_iNumTimesTriggered += iChange;
-}
 
 
 
