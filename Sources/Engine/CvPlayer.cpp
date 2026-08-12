@@ -9548,19 +9548,23 @@ void CvPlayer::changeNumOutsideUnits(int iChange)
 // rounding is not chased -- the shape is additive linear.
 int CvPlayer::getFreeUnitUpkeepCivilian() const
 {
-	// FLAT, so the x100 reduces here. The >= 0 floor is the GROUP floor, deliberately distinct from and
-	// applied before the consumption site's own max(0, upkeep - SUMfree) ([modifier.md par.2]).
-	// + the EVENT grant, which is genuine one-shot state and therefore a separately persisted store rather
-	// than a cascade deposit ([state-repositories.md]: a recompute cache would wipe it).
-	return std::max(0, static_cast<int>(InfoValuation::realizedAtEmpire(*this,
-		CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_FREE_CIVILIAN, -1)) / 100)
-		+ m_iFreeUnitUpkeepCivilianEvents);
+	// The GROUP floor is family-combine metadata applied at the ONE seam that owns it; it is deliberately
+	// distinct from, and applied before, the consumption site's own net floor ([modifier.md par.2]).
+	// The EVENT grant is genuine one-shot state and therefore a separately persisted store rather than a
+	// cascade deposit ([state-repositories.md]: a recompute cache would wipe it), so it joins AFTER the group
+	// floor -- it is not one of the group's entries. FLAT, so the x100 reduces here.
+	const int64_t iFloored = InfoValuation::combinedGroupSum(MODFAM_UPKEEP, (int)UPKEEP_FREE_CIVILIAN,
+		InfoValuation::realizedAtEmpire(*this,
+			CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_FREE_CIVILIAN, -1)));
+	return static_cast<int>(iFloored / 100) + m_iFreeUnitUpkeepCivilianEvents;
 }
 
 int CvPlayer::getFreeUnitUpkeepMilitary() const
 {
-	return std::max(0, static_cast<int>(InfoValuation::realizedAtEmpire(*this,
-		CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_FREE_MILITARY, -1)) / 100));
+	const int64_t iFloored = InfoValuation::combinedGroupSum(MODFAM_UPKEEP, (int)UPKEEP_FREE_MILITARY,
+		InfoValuation::realizedAtEmpire(*this,
+			CascadeChannelRegistry::channelLookup(MODFAM_UPKEEP, (int)UPKEEP_FREE_MILITARY, -1)));
+	return static_cast<int>(iFloored / 100);
 }
 
 // PERCENT kinds -- an additive stack, never x100 scaled ([DEC-fixedpoint-x100]).
@@ -9633,7 +9637,7 @@ int64_t CvPlayer::getUnitUpkeepCivilian() const
 
 int64_t CvPlayer::getUnitUpkeepCivilianNet() const
 {
-	return std::max<int64_t>(0, getUnitUpkeepCivilian() - getFreeUnitUpkeepCivilian());
+	return InfoValuation::netUpkeepAfterFree(getUnitUpkeepCivilian(), getFreeUnitUpkeepCivilian());
 }
 
 int64_t CvPlayer::getUnitUpkeepMilitary() const
@@ -9643,7 +9647,7 @@ int64_t CvPlayer::getUnitUpkeepMilitary() const
 
 int64_t CvPlayer::getUnitUpkeepMilitaryNet() const
 {
-	return std::max<int64_t>(0, getUnitUpkeepMilitary() - getFreeUnitUpkeepMilitary());
+	return InfoValuation::netUpkeepAfterFree(getUnitUpkeepMilitary(), getFreeUnitUpkeepMilitary());
 }
 
 int64_t CvPlayer::getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep) const
@@ -9680,8 +9684,8 @@ int64_t CvPlayer::calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitar
 	}
 	int64_t iCalc = 0;
 
-	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iCivilian100, getCivilianUnitUpkeepMod()) - getFreeUnitUpkeepCivilian());
-	iCalc += std::max<int64_t>(0, applyUnitUpkeepModifier(iMilitary100, getMilitaryUnitUpkeepMod()) - getFreeUnitUpkeepMilitary());
+	iCalc += InfoValuation::netUpkeepAfterFree(applyUnitUpkeepModifier(iCivilian100, getCivilianUnitUpkeepMod()), getFreeUnitUpkeepCivilian());
+	iCalc += InfoValuation::netUpkeepAfterFree(applyUnitUpkeepModifier(iMilitary100, getMilitaryUnitUpkeepMod()), getFreeUnitUpkeepMilitary());
 
 	if (iCalc > 0)
 	{

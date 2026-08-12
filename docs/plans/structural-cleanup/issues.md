@@ -579,11 +579,6 @@ scan bugs rather than fix them.
 - **Consult `EnablerKernel::cityHasVicinityBonus` instead of re-deriving it.** Its header names it the ONE home
   for "is this bonus in vicinity here?"; it has no caller, and the evaluator re-implements the same two-half union
   inline. Behaviour agrees today — the divergence risk is structural.
-- **Wire the `InfoValuation` fold seams or delete them**: `tradeRouteChannelYield`, `combinedGroupSum` and
-  `netUpkeepAfterFree` are the declared canonical math "so the package rebuild and the `expected*` endpoints call
-  the SAME math", and all three have no caller while the arithmetic is hand-written at the consumers. ⚑ Knock-on:
-  the combine-floor metadata table is reachable ONLY from the dead `combinedGroupSum`, so adding a floored
-  (family, kind) row today would have zero effect, silently.
 - **Wire `DepositIndex::segIdFor*`** — a five-entry string-elimination optimizer whose header says it "kills all
   string handling in the per-plot keyed walks". It has no caller and the per-read `lookupSegment(std::string(...))`
   it was built to remove is still on the per-plot turn path.

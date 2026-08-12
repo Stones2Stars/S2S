@@ -594,13 +594,6 @@ public:
 	// ---- the §2a fold seams (their canonical calc functions live HERE so the future package rebuild and the
 	// ---- expected* endpoints call the SAME math -- pure statics: inputs in, ×100 out).
 
-	// THE PER-CHANNEL tradeRoutes.modifier FOLD (modifier.md §2a "trade-route yield" BASE input; ruling 27):
-	// realized channel trade yield = routeYield × (channelBase% + Σ tradeRoutes.modifier.<channel>) / 100.
-	// channelBase% is the channel's engine identity (CvYieldInfo::getTradeModifier -- commerce 100,
-	// food/production 0); the modifier sum is the per-channel TRADE_ROUTE_MODIFIER_FOOD+eYield kind, summed over
-	// the player's live sources. Engine transcription: CvCity::calculateTradeYield (profit × mod[ch] / 100).
-	static int64_t tradeRouteChannelYield(int64_t routeYield, int iChannelBasePercent, int iChannelModifierPercentSum);
-
 	// THE FAMILY-COMBINE FLOOR (modifier.md §2 "a `min` member that floors the combined total" -- declared as
 	// FAMILY metadata, never per-deposit): apply the (family, kind) slot's ruled combine floor to a summed group
 	// total. Consumes infoCombineFloorAtZero (ruling 28: upkeep.freeMilitary/freeCivilian -- Σfree floored at 0

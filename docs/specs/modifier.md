@@ -242,6 +242,13 @@ order is load-bearing (it decides what the percent stack scales and what it does
 > that rule bans papering over a MISSED invalidation, and this one exists because a genuine INPUT advances every
 > turn — `getPeaceTradeModifier` scales with the at-peace counter, so a foreign route's profit legitimately
 > differs turn to turn until it saturates. There is no fact to route it to; the turn IS the fact.
+> ⛔ **AND THE CASCADE NEVER TRANSCRIBES THE PER-CHANNEL FORMULA EITHER — it folds `getTradeYield`, full stop.**
+> The engine's `CvCity::calculateTradeYield` (profit × the player's per-yield trade modifier) is the ONE
+> implementation, and it is engine-owned by the same KEEP ruling that puts the network there
+> ([north-star.md](../architecture/north-star.md)). ⚠ A copy of that arithmetic on the CALC SURFACE reads like
+> the canonical home — it sits beside the genuine `§2a` seams and looks like the one they all point at — and it
+> is the opposite: a second implementation of a calculation this spec says the cascade must not own. One was
+> built and never called; it is deleted rather than wired, because there was no consumer to wire it TO.
 > ⚠ **City POPULATION deliberately gets NO route, and that is a cadence ruling rather than an omission.** It
 > feeds the profit on both sides (`getBaseTradeProfit` reads the PARTNER's population, `getPopulationTradeModifier`
 > the city's own), so a route would have to rebuild the owner AND every player trading with it — and it would

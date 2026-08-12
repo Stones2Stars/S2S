@@ -1782,31 +1782,6 @@ int InfoValuation::expectedKeyedTarget(const CvModifiers* modifiers, ModifierFam
 
 // ---- the §2a fold seams (see the header docs; pure statics, inputs in / ×100 out) ----
 
-int64_t InfoValuation::tradeRouteChannelYield(int64_t routeYield, int iChannelBasePercent, int iChannelModifierPercentSum)
-{
-	// modifier.md §2a (the tradeYield BASE input fold), ruling 27: the per-channel modifier rides ON TOP of the
-	// engine's incoming route yield -- profit × (base% + Σmod) / 100, the channel identity on the base percent
-	// (commerce 100, food/production 0 -- CvYieldInfo::getTradeModifier; engine CvCity::calculateTradeYield).
-	//
-	// ⛔ THIS FUNCTION IS AN EDGE, which is why the two scales differ here and why the conversion belongs HERE.
-	// tradeYield is the ONE sanctioned live-yield INPUT (modifier.md §2a): the cascade cannot re-derive the
-	// trade NETWORK, so that calculation stays engine-owned (north-star.md KEEP -- it is none of the four
-	// systems' job) and its value is FOLDED IN rather than computed. So one operand arrives from OUTSIDE the
-	// cascade on the engine's PLAIN scale (iChannelBasePercent = CvYieldInfo::getTradeModifier, 100 / 0) and the
-	// other from INSIDE it on the stored ×100 scale (iChannelModifierPercentSum = getTradeRouteYieldModifier).
-	// An EDGE CONVERTS -- the standing rule, not a local one: readJson converts at the IN boundary, a reader ÷100s
-	// at the OUT boundary, and ×100 is native everywhere between ([DEC-fixedpoint-x100]). So the base is lifted to
-	// ×100 and one ÷10000 takes both back down. Converting at the edge means a caller passes what it HAS and
-	// cannot get the scale wrong; pushing it outward would put a scale contract on every consumer of the fold,
-	// which is how a +50% modifier becomes +5000%.
-	// Both are PERCENTS and a percent is NOT scaled ([DEC-fixedpoint-x100]), so they combine directly against
-	// the ordinary 100 identity. ⛔ The old shape lifted the base to ×100 and reduced by 10000, applying every
-	// authored modifier at a hundredth of its value -- the second identity constant fixed-point-and-scales.md §1
-	// says must never appear. cityRate, in this same file, is the correct reference.
-	const int64_t iCombinedPercent = (int64_t)iChannelBasePercent + (int64_t)iChannelModifierPercentSum;
-	return routeYield * iCombinedPercent / 100;
-}
-
 int64_t InfoValuation::combinedGroupSum(ModifierFamily eFamily, int iKind, int64_t sum)
 {
 	// modifier.md §2: non-additive combine modes are FAMILY metadata -- the ruled floor rows live beside the
