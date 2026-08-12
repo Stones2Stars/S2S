@@ -221,13 +221,20 @@ bool BuildingFilterIsMilitary::isFilteredBuilding(const CvPlayer *pPlayer, CvCit
 {
 	PROFILE_EXTRA_FUNC();
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-	// The military BUILD RATE is the one scope-wide point read (buildRate.<scope>.military). The keyed buildRate
-	// targets are deliberately NOT read: a unit- or domain-keyed build rate names UNIT_TRADE_CARAVAN as readily
-	// as a soldier, so it says nothing about military without resolving the target's own nature.
-	if (kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY) != 0
-		|| kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_EMPIRE) != 0)
+	// The military BUILD RATE is the tag-filtered `units` read ([modifier.md] §4: military is a PREDICATE on the
+	// units target, not a category). The KEYED buildRate targets are still deliberately NOT read: a unit- or
+	// domain-keyed build rate names UNIT_TRADE_CARAVAN as readily as a soldier, so it says nothing about military
+	// without resolving the target's own nature -- whereas the tag filter names the military class outright.
 	{
-		return true;
+		const int iUnitsSeg = InfoValuation::keyedTargetSegment("units");
+		const int iMilitaryTag = GC.getInfoTypeForString("TAG_MILITARY", true);
+		if (InfoValuation::taggedTargetSum(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+				CASC_SCOPE_CITY, CASC_UNIT_PERCENT, iUnitsSeg, iMilitaryTag) != 0
+			|| InfoValuation::taggedTargetSum(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+				CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT, iUnitsSeg, iMilitaryTag) != 0)
+		{
+			return true;
+		}
 	}
 	// Unit EXPERIENCE and COMBAT are military whole-family -- every kind either one authors is about the units
 	// the city produces -- so membership answers the filter, and it covers the keyed unitCombat/domain targets

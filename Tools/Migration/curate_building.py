@@ -124,10 +124,9 @@ SCALAR_FAMILIES = {
     # -> the ONE costs family, kind hurry.
     "iGlobalHurryModifier": ("costs", "empire", "hurry", "percent"),
     "iHurryAngerModifier": ("hurryAnger", "city", None, "percent"),
-    # production specials
-    "iMilitaryProductionModifier": ("buildRate", "city", "military", "percent"),
-    "iSpaceProductionModifier": ("buildRate", "city", "space", "percent"),
-    "iGlobalSpaceProductionModifier": ("buildRate", "empire", "space", "percent"),
+    # production specials: the military/space PRODUCTION modifiers are NOT here -- they are predicate-filtered
+    # `units`-target deposits, emitted explicitly in curate() (modifier.md §4: military and space are not
+    # categories, `units` is the base target and they are predicates on it).
     "iWorkerSpeedModifier": ("workRate", "empire", None, "percent"),
     # trade routes -- ONE family with conditions (ruling 11): the route COUNT is the MEMBERLESS scope-wide
     # amount (kind 0 IS the count -- the reconciliation micro-fix; the transient `routes` member collided with
@@ -1627,6 +1626,20 @@ def curate(typ, rec, store):
     ftr = _int(rec, "iForeignTradeRouteModifier")
     if ftr:
         _inject_cond(fams, "tradeRoutes", "city", "percent", ftr, "IS_FOREIGN", "modifier")
+    # The military/space build-rate modifiers answer WHICH UNITS build faster, so they author the ordinary
+    # plural `units` target with a tag predicate -- never a category member per legacy tag name
+    # (modifier.md §4; [DEC-conditions-are-predicates]). IS_MILITARY / IS_SPACE mean the unit carries the
+    # `military` / `space` tag, nothing more.
+    mpm = _int(rec, "iMilitaryProductionModifier")
+    if mpm:
+        _inject_cond(fams, "buildRate", "city", "percent", mpm, "IS_MILITARY", "units")
+    spm = _int(rec, "iSpaceProductionModifier")
+    if spm:
+        _inject_cond(fams, "buildRate", "city", "percent", spm, "IS_SPACE", "units")
+    gspm = _int(rec, "iGlobalSpaceProductionModifier")
+    if gspm:
+        # empire scope only on a CAPPED building, exactly as the scalar emit path resolves it.
+        _inject_cond(fams, "buildRate", _deposit_scope(rec, "empire"), "percent", gspm, "IS_SPACE", "units")
 
     # --- enables / obsoletes / replaces (store-derived; COPIED so pass2 can extend FoundsCorporation/ObsoletesToBuilding) ---
     enables = OrderedDict((k, list(v)) for k, v in (store.enabled_by(typ) or {}).items())
@@ -1878,7 +1891,10 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | se
               "SpecialistExtraCommerces", "iOtherAreaMaintenanceModifier",
               # ruling 11/18 explicit routings in curate(): conditioned tradeRoutes variants + the per-entity
               # hurry-cost modifier (cost.hurryModifier).
-              "iCoastalTradeRoutes", "iForeignTradeRouteModifier", "iHurryCostModifier"})
+              "iCoastalTradeRoutes", "iForeignTradeRouteModifier", "iHurryCostModifier",
+              # the predicate-filtered buildRate `units` deposits (modifier.md §4), emitted in curate().
+              "iMilitaryProductionModifier", "iSpaceProductionModifier",
+              "iGlobalSpaceProductionModifier"})
 
 
 # ============================ PROPERTY-BAND REALIGNMENT (owner 2026-06-23) ============================

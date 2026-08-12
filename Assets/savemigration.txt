@@ -2106,8 +2106,19 @@ CvCity::BuildingProductionModSize        (decorated short)
 CvCity::BuildingProductionModType        (decorated short, per entry)
 CvCity::BuildingProductionMod            (decorated int, per entry)
 
-| ── The EVENT space-production boost is cut (owner): events author YIELDS, never production modifiers,
-| and if that is ever wanted it is done properly rather than in this roundabout fashion. `iSpaceProductionMod`
-| was the only production field on an event; with it gone the city accumulator has no writer left at all --
-| its ONLY one was applyEvent. The CvPlayer twin keeps a live processBuilding writer and is NOT cut here.
+| ── The space-production boost is cut on BOTH scopes, for two different reasons.
+| EVENTS author YIELDS, never production modifiers (owner), and if that is ever wanted it is done properly
+| rather than in this roundabout fashion. `iSpaceProductionMod` was the only production field on an event;
+| with it gone the CITY accumulator had no writer left at all -- its ONLY one was applyEvent.
+| The PLAYER twin was fed by processBuilding off the BUILD_RATE_SPACE category kind, and that kind is itself
+| retired: military and space are PREDICATES on the `units` target, never categories of their own
+| ([modifier.md] §4). Its consumer was getProductionModifier(ProjectTypes) gated on isSpaceship(), which the
+| same ruling says DOES NOT APPLY -- those are vanilla Civ's space-VICTORY parts, not the space UNITS the
+| boost describes.
+| REPLACEMENT: the authored deposit is now `buildRate.<scope>.units.percent {enabled: IS_SPACE}`, served by
+| InfoValuation::candidateTaggedTargetSum off the candidate unit's own tag bitset. ⚠ The CITY-scope rows are
+| served (CvCity::getProductionModifier(UnitTypes)); the EMPIRE-scope rows a capped wonder authors are NOT yet
+| -- a conditioned deposit cannot ride the empire package, and no player-side read walks the owner's buildings
+| for one. That leg is named in the todo; it owes 2 authored rows.
 CvCity::m_iSpaceProductionModifier
+CvPlayer::m_iSpaceProductionModifier

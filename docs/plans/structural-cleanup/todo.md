@@ -395,31 +395,19 @@
   ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
   `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
   of that overload enumerated — a player asking it with no city still needs an empire answer.
-- DELETE the `BUILD_RATE_MILITARY` / `BUILD_RATE_SPACE` kinds and serve the predicate-filtered `units` target.
-  ⛔ They are a ROLLERSKATE, not channels waiting for data (owner): nothing should ever author them, so the
-  enumerators in `CvInfoKinds.h` and their name rows in `CvInfoKinds.cpp` GO rather than standing to be
-  re-authored. ⛔ **The curator change and the READ land TOGETHER, in one work item.** Re-curating first was
-  tried and REVERTED: it moved a WORKING military boost onto a shape nothing reads, so every barracks-class
-  building silently stopped boosting. Data-leads sequences a work item, it does not license shipping live
-  data to a consumer that does not exist.
-  ⚑ **`IS_MILITARY` means the candidate HAS THE TAG `military`; `IS_SPACE` means it has the tag `space`** —
-  nothing more. The tag test is already at the call site (`GC.getUnitInfo(eUnit).hasTag(CLS_TAG_MILITARY)`), so
-  the candidate answers it off its OWN info: no eval ctx, no `CvUnit*`, no valuation machinery.
-  ⛔ Routing this through the generic condition evaluator is the over-engineering to refuse — it was proposed
-  once, on the grounds that `CvModifiers::pluralTargetSum` takes unqualified entries only and
-  `CASC_PRED_IS_TAG` needs a live unit. Both are true and neither applies: what is wanted is the sum of the
-  `units`-target entries whose qualifier names a tag the CANDIDATE carries.
-  ⛔ **Do NOT mint a composed getter to keep the old call sites working** -- preserving
-  `CvPlayer::getSpaceProductionModifier` so the AI and the `canDoCometFragment` Python gate need no edit is the
-  half-migration tell, not a win
-  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)); it was tried and reverted.
-  ⚡ **The SPACE half carries a stranded serialized accumulator on `CvPlayer` that dies WITH the kind, and the
-  MILITARY half does not** — military reads the kind live, while space is pushed into a hand-named player member
-  from `processBuilding`. That is the second maintenance surface, so it is part of THIS item and not a separate
-  one: the kind cannot go while a writer still names it. Cut it by the uniform mechanism
-  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)) — member,
-  maintainers, read + write, the tag named in `Assets/savemigration.txt` — and re-point its consumers, the
-  `canDoCometFragment` Python gate among them, onto the filtered `units` read rather than a preserved getter.
+- Serve the EMPIRE-scope `buildRate.<scope>.units` rows a capped WONDER authors (`{enabled: IS_SPACE}`). The
+  city-scope rows are served off the city's operating buildings, but an empire row means faster in EVERY city of
+  the owner, so it is answered PLAYER-side ([modifier.md](../../specs/modifier.md) §5) — and no player-side read
+  walks the owner's buildings for one. A CONDITIONED deposit cannot ride the empire package
+  ([modifier.md](../../specs/modifier.md) §5: anything qualified is the valuation's), so the package is not the
+  answer either; what is missing is the read.
+  ⛔ Do NOT re-scope the data to city — a wonder boosting only its own city is a different mechanic.
+  ⛔ Do NOT walk every city's operating buildings per call: that is `O(cities × buildings)` inside a production
+  decision, the O(what EXISTS) shape the maintained sum exists to delete
+  ([state-repositories.md](../../architecture/state-repositories.md)).
+  ⚠ Its old consumer was `getProductionModifier(ProjectTypes)` gated on `isSpaceship()`, which
+  [modifier.md](../../specs/modifier.md) §4 rules DOES NOT APPLY (vanilla space-VICTORY parts, not space units),
+  so this is a mechanic to SERVE correctly for the first time, never a regression to restore.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).

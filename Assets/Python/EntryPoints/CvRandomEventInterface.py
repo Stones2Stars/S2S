@@ -2960,9 +2960,9 @@ def getHelpGreatBeast3(argsList):
 ####### Comet Fragment ########
 
 def canDoCometFragment(argsList):
-	data = argsList[0]
-	if GC.getPlayer(data.ePlayer).getSpaceProductionModifier() > 10:
-		return False
+	# The old gate refused this event to a player already holding >10 empire space production, so its own space
+	# boost would not stack. Events author YIELDS and never production modifiers, so that award is gone -- and
+	# with it the empire accumulator the gate measured. Nothing is left to stack against.
 	return True
 
 ####### Immigrants ########

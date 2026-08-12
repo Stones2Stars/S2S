@@ -28,6 +28,7 @@
 #include "Defines/CvEnums.h"              // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES -- the group out-array extents
 
 class CvModifiers;
+class CvInfo;                   // the tagged-target reads take the CANDIDATE's info (its tag bitset is the filter)
 class CvTraitInfo;
 class CityContext;
 class EmpireContext;
@@ -334,6 +335,27 @@ public:
 	//	so the node's `id` is -1 and the param is what identifies it.
 	static int64_t unitQualifiedRate(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		const char* szUnitTagType, const CvCascadeEvalCtx& evalCtx);
+
+	///<summary>The PLURAL-TARGET sum of one source's entries whose per-target FILTER names a classification tag
+	/// the CANDIDATE carries -- `buildRate.&lt;scope&gt;.units.percent` entries gated `{enabled: IS_MILITARY}`
+	/// ([modifier.md] §4: military and space are PREDICATES on the `units` target, never categories of their
+	/// own).</summary>
+	//	⚑ It takes the candidate's INFO and nothing else. A buildRate filter asks what the unit being built IS, so
+	//	it is answered off that unit's own tag bitset -- there is no live CvUnit to hand the evaluator, and the
+	//	generic condition path is deliberately not involved.
+	//	⚠ The SIBLING to pick between: `unitQualifiedRate` matches a §3.7 `{unit: IS_X}` COUNTED-KIND qualifier and
+	//	returns a per-unit RATE the caller multiplies by a live count; this matches the entry's own `enabled` FILTER
+	//	on a plural target and returns the sum that APPLIES to one candidate. Two shapes, two mechanics.
+	static int64_t candidateTaggedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		CvCascScope eScope, CvCascUnit eUnit, int iTargetSegment, const CvInfo& kCandidate);
+
+	///<summary>The same plural-target sum keyed by ONE NAMED tag -- "what does this source give MILITARY units"
+	/// rather than "what does it give THIS unit". The AI-valuation and build-list-filter form, where there is a
+	/// tag in hand and no candidate.</summary>
+	//	⚑ It shares candidateTaggedTargetSum's single walk ([DEC-single-implementation]); the two differ only in
+	//	which matcher runs, so they can never disagree about what an entry means.
+	static int64_t taggedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		CvCascScope eScope, CvCascUnit eUnit, int iTargetSegment, int iTagId);
 
 	// The ctx-taking core the endpoints share (fill the ctx ONCE per endpoint, fold each channel through this):
 	// Σ over the folded scopes of the compiled unconditioned sums (audience-resolved) + the family's conditioned

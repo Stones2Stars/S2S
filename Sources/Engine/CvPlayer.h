@@ -520,9 +520,6 @@ public:
 
 	int getWorkRate(BuildTypes eBuild) const;
 
-	int getSpaceProductionModifier() const;
-	void changeSpaceProductionModifier(int iChange);
-
 
 	bool isNonStateReligionCommerce() const;
 	void changeNonStateReligionCommerce(int iNewValue);
@@ -1701,7 +1698,6 @@ protected:
 	int m_iGreatPeopleThresholdModifier;
 	int m_iGreatGeneralsThresholdModifier;
 	int m_iFeatureProductionModifier;
-	int m_iSpaceProductionModifier;
 
 	int m_iNonStateReligionCommerceCount;
 	int m_iUpgradeAnywhereCount;

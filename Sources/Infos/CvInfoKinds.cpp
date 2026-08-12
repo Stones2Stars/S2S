@@ -394,8 +394,6 @@ namespace
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_BUILD_RATE[] = {
-		{ "military", BUILD_RATE_MILITARY },
-		{ "space", BUILD_RATE_SPACE },
 		{ "worldWonder", BUILD_RATE_WORLD_WONDER },
 		{ "teamWonder", BUILD_RATE_TEAM_WONDER },
 		{ "nationalWonder", BUILD_RATE_NATIONAL_WONDER },

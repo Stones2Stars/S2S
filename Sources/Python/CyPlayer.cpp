@@ -762,11 +762,6 @@ int CyPlayer::getFeatureProductionModifier() const
 	return m_pPlayer->getFeatureProductionModifier();
 }
 
-int CyPlayer::getSpaceProductionModifier() const
-{
-	return m_pPlayer->getSpaceProductionModifier();
-}
-
 int CyPlayer::getBestUnitType(int /*UnitAITypes*/ eUnitAI) const
 {
 	return (int) m_pPlayer->getBestUnitType(UnitAITypes(eUnitAI));

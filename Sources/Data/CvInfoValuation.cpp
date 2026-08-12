@@ -124,6 +124,43 @@ namespace
 		}
 		return iTotal;
 	}
+
+	// val_filterTagId's two non-id answers, kept out of the tag id space (a minted id is always >= 0).
+	const int VAL_FILTER_NOT_A_TAG     = -1;   // not a bare IS_TAG filter at all -- decline the entry
+	const int VAL_FILTER_UNMINTED_TAG  = -2;   // a bare IS_TAG naming a tag nothing minted -- unknown => IGNORED
+
+	// The `units`-target twin of val_plotPredicateCount: which TAG does this entry's per-unit FILTER name?
+	// A plural-target entry's `enabled` is the filter rather than a gate (json §6.1, as above), and on the units
+	// plane the filter names a classification TAG -- so the candidate answers it off its OWN info and no live
+	// CvUnit, eval ctx or condition evaluator is involved ([modifier.md] §4).
+	//
+	// ⚠ The tag id resolves LAZILY exactly as the evaluator's own IS_TAG case does: the TAG_* infotypes mint
+	// after condition parse, so the node's `id` is -1 and `param` carries the TAG_<SUFFIX> name. An UNMINTED tag
+	// is an unknown predicate and is IGNORED -- true, json §3.5 -- which is the evaluator's semantic and is
+	// deliberately not second-guessed here ([DEC-single-implementation]: one meaning for one predicate).
+	// ⛔ Anything that is not a BARE IS_TAG predicate answers NOT_A_TAG. A combinator, a negation or a
+	// parameterized predicate is a filter this read cannot honour, and declining is the fail-safe direction: the
+	// deposit goes unserved and visibly missing, never applied to a unit that does not match.
+	int val_filterTagId(const CvCondition* pFilter)
+	{
+		if (pFilter == NULL)
+		{
+			return VAL_FILTER_NOT_A_TAG;   // an unfiltered units deposit applies to EVERY unit -- not this population
+		}
+		if (pFilter->kind == CASC_COND_GROUP && pFilter->all.size() == 1
+			&& pFilter->anyOf.empty() && pFilter->noneOf.empty())
+		{
+			return val_filterTagId(pFilter->all[0]);
+		}
+		if (pFilter->kind != CASC_COND_PREDICATE || pFilter->predKind != CASC_PRED_IS_TAG)
+		{
+			return VAL_FILTER_NOT_A_TAG;
+		}
+		const int iTagId = pFilter->id >= 0
+			? pFilter->id
+			: GC.getInfoTypeForString(pFilter->param.c_str(), /*bHideAssert*/true);
+		return iTagId < 0 ? VAL_FILTER_UNMINTED_TAG : iTagId;
+	}
 }
 
 
@@ -1706,6 +1743,65 @@ int64_t InfoValuation::keyedTargetSum(const CvModifiers* modifiers, ModifierFami
 		iTotal += MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
 	}
 	return iTotal;
+}
+
+//	The ONE walk both tagged-target reads share ([DEC-single-implementation]). Exactly one matcher is active:
+//	iTagId >= 0 matches the entries naming THAT tag; a non-NULL candidate matches the entries naming ANY tag it
+//	carries. Two public names because the two questions are genuinely different -- "what does this source give
+//	military units" vs "what does this source give THIS unit" -- and a caller must not have to pick a mode.
+static int64_t val_taggedTargetWalk(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	CvCascScope eScope, CvCascUnit eUnit, int iTargetSegment, int iTagId, const CvInfo* pCandidate)
+{
+	if (modifiers == NULL || iTargetSegment == (int)InfoValuation::TARGET_SEGMENT_NONE)
+	{
+		return 0;
+	}
+	//	A conditioned entry never enters the unconditioned fold, so the conditioned list is the whole population --
+	//	the same range unitQualifiedRate walks, matched on the ENTRY'S OWN gate rather than on a `unit:` qualifier.
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	modifiers->conditionedRange(eFamily, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& conditioned = modifiers->conditioned();
+	int64_t iTotal = 0;
+	for (size_t i = iBegin; i < iEnd; ++i)
+	{
+		const CvModEntry* pEntry = conditioned[i];
+		if (pEntry->scope != eScope || pEntry->unit != eUnit) continue;
+		if (pEntry->targetSeg != iTargetSegment) continue;
+		//	The FK-LESS half: a resolved FK is the NAMED-target plane and keyedTarget owns it.
+		if (pEntry->targetFk >= 0) continue;
+		if (iKind >= 0 && pEntry->kind != iKind) continue;
+		//	⛔ FAIL CLOSED on anything this read cannot honour. A `disabled` twin, a `per` scaler or a `unit:`
+		//	qualifier each make the value conditional on state a candidate-only read has none of, so folding one
+		//	would be the plausible-wrong case [modifier.md] §5 names -- decline it rather than half-apply it.
+		if (pEntry->disabled != NULL || pEntry->unitQual != NULL || pEntry->religionQual != NULL || pEntry->hasPer) continue;
+		const int iEntryTag = val_filterTagId(pEntry->enabled);
+		if (iEntryTag == VAL_FILTER_NOT_A_TAG) continue;
+		//	An UNMINTED tag is an unknown predicate and is IGNORED -- true, json §3.5 -- which is the evaluator's
+		//	own IS_TAG semantic and is deliberately not second-guessed here.
+		if (iEntryTag != VAL_FILTER_UNMINTED_TAG)
+		{
+			if (pCandidate != NULL ? !pCandidate->hasTag(iEntryTag) : iEntryTag != iTagId) continue;
+		}
+		iTotal += pEntry->value;
+	}
+	return iTotal;
+}
+
+int64_t InfoValuation::candidateTaggedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	CvCascScope eScope, CvCascUnit eUnit, int iTargetSegment, const CvInfo& kCandidate)
+{
+	return val_taggedTargetWalk(modifiers, eFamily, iKind, eScope, eUnit, iTargetSegment, -1, &kCandidate);
+}
+
+int64_t InfoValuation::taggedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	CvCascScope eScope, CvCascUnit eUnit, int iTargetSegment, int iTagId)
+{
+	if (iTagId < 0)
+	{
+		return 0;
+	}
+	return val_taggedTargetWalk(modifiers, eFamily, iKind, eScope, eUnit, iTargetSegment, iTagId, NULL);
 }
 
 int64_t InfoValuation::unitQualifiedRate(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,

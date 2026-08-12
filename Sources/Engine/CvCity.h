@@ -835,6 +835,9 @@ public:
 	void getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const;
 	void getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const;
 	void getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const;
+	///<summary>The city's build-rate percent for units carrying ONE tag (`buildRate.city.units` entries gated
+	/// `{enabled: IS_&lt;TAG&gt;}`) -- the read that replaces the retired military/space CATEGORY kinds.</summary>
+	int taggedBuildRate(int iTagId) const;
 	void getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const;
 	void getExperienceKinds(int (&experiences)[NUM_EXPERIENCE_KINDS]) const;
 	void getRevolutionKinds(int (&revolutions)[NUM_REVOLUTION_KINDS]) const;

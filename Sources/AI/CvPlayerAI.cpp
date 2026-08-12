@@ -12624,7 +12624,9 @@ int CvPlayerAI::AI_corporationValue(CorporationTypes eCorporation, const CvCity*
 	// was the same authored deposit read twice.
 	iBonusValue += (kCorp.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100) * 15000;
 	iBonusValue += (kCorp.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_CITY) / 100) * 25000;
-	iBonusValue += kCorp.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY) * 3500;
+	iBonusValue += (int)InfoValuation::taggedTargetSum(kCorp.getModifiers(), MODFAM_BUILD_RATE, -1,
+		CASC_SCOPE_CITY, CASC_UNIT_PERCENT, InfoValuation::keyedTargetSegment("units"),
+		GC.getInfoTypeForString("TAG_MILITARY", true)) * 3500;
 	iBonusValue += (kCorp.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_CITY) / 100) * 15000;
 	/* Afforess						 END															*/
 	/************************************************************************************************/
@@ -13375,7 +13377,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	iTempValue = ((kCivic.getScalar(SCALAR_IMPROVEMENT_UPGRADE_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * getNumCities()) / 50);
 	
 	iValue += iTempValue;
-	iTempValue = (kCivic.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_EMPIRE) * getNumCities() * iWarmongerPercent) / (bWarPlan ? 300 : 500);
+	iTempValue = ((int)InfoValuation::taggedTargetSum(kCivic.getModifiers(), MODFAM_BUILD_RATE, -1,
+		CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT, InfoValuation::keyedTargetSegment("units"),
+		GC.getInfoTypeForString("TAG_MILITARY", true)) * getNumCities() * iWarmongerPercent) / (bWarPlan ? 300 : 500);
 	
 	iValue += iTempValue;
 	// FLAT slots, so they reduce here. ⛔ The legacy PopPercent twins are NOT a second read: a pop-scaled source

@@ -279,6 +279,31 @@ void CvCity::getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const
 	}
 }
 
+//	The city's build-rate stack for ONE unit TAG -- what "military units build faster here" is worth, now that
+//	military and space are PREDICATES on the `units` target rather than categories with a channel of their own
+//	([modifier.md] §4). A filtered entry is CONDITIONED, so it never folds into the package and cannot be a
+//	channel read: it is the ordinary entry-list read over the live sources ([modifier.md] §5), which at city
+//	scope is the OPERATING buildings -- a dormant one deposits nothing.
+//	⚠ EMPIRE-scope rows are NOT included: a capped wonder's empire row reaches every city of the owner, so it is
+//	answered player-side, and no such read exists yet (named in the todo).
+int CvCity::taggedBuildRate(int iTagId) const
+{
+	PROFILE_EXTRA_FUNC();
+	if (iTagId < 0)
+	{
+		return 0;
+	}
+	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
+	int iRate = 0;
+	const std::set<int>& kActive = m_operatingBuildings.active;
+	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
+	{
+		iRate += (int)InfoValuation::taggedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
+			MODFAM_BUILD_RATE, -1, CASC_SCOPE_CITY, CASC_UNIT_PERCENT, iUnitsSegment, iTagId);
+	}
+	return iRate;
+}
+
 void CvCity::getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const
 {
 	for (int iKind = 0; iKind < NUM_COMBAT_KINDS; ++iKind)
@@ -3174,6 +3199,12 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 		{
 			continue;   // the unit opts out of every non-TYPE production modifier (the `noNonTypeProdMods` skill)
 		}
+		//	The predicate-filtered half of the same `units` target: `buildRate.city.units.percent` entries gated
+		//	`{enabled: IS_MILITARY|IS_SPACE}` -- which is what "military units build faster HERE" IS, now that
+		//	military and space are PREDICATES rather than categories of their own ([modifier.md] §4). The
+		//	candidate answers the filter off its own tag bitset, so this needs no eval ctx and no live unit.
+		iMultiplier += (int)InfoValuation::candidateTaggedTargetSum(
+			pModifiers, MODFAM_BUILD_RATE, -1, CASC_SCOPE_CITY, CASC_UNIT_PERCENT, iUnitsSegment, kUnit);
 		iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iDomainsSegment, (int)kUnit.getDomain());
 		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
 		{

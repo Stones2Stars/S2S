@@ -280,7 +280,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("changeGreatGeneralsThresholdModifier", &CyPlayer::changeGreatGeneralsThresholdModifier, "void (int iChange)")
 
 		.def("getFeatureProductionModifier", &CyPlayer::getFeatureProductionModifier, "int ()")
-		.def("getSpaceProductionModifier", &CyPlayer::getSpaceProductionModifier, "int ()")
 
 		.def("getRevIdxNational", &CyPlayer::getRevIdxNational, "int ()")
 		.def("getRevIdxDistanceModifier", &CyPlayer::getRevIdxDistanceModifier, "int ()")

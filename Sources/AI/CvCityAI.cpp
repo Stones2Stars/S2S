@@ -1071,9 +1071,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		{
 			iValue += iExperience * 4;
 		}
-		int aiBuildRate[NUM_BUILD_RATE_KINDS];
-		getBuildRateKinds(aiBuildRate);
-		iValue += ((aiBuildRate[BUILD_RATE_MILITARY] * iExperience * 10) / 100);
+		iValue += ((taggedBuildRate(GC.getInfoTypeForString("TAG_MILITARY", true)) * iExperience * 10) / 100);
 	}
 
 	const int iXpPart = iValue - iYieldPart - iGppPart;
@@ -5984,7 +5982,11 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += (kBuilding.getFreeSpecialistsAny(CASC_SCOPE_EMPIRE) / 100) * iNumCities * 12;
 				iValue += kBuilding.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * kOwner.AI_getNumAIUnits(UNITAI_WORKER) / 10;
 
-				int iMilitaryProductionModifier = kBuilding.getBuildRateModifier(BUILD_RATE_MILITARY, CASC_SCOPE_CITY);
+				//	"How much does this building speed MILITARY units here" -- the tag-filtered `units` rows, since
+				//	military is a PREDICATE on that target rather than a category of its own ([modifier.md] §4).
+				int iMilitaryProductionModifier = (int)InfoValuation::taggedTargetSum(
+					kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1, CASC_SCOPE_CITY, CASC_UNIT_PERCENT,
+					InfoValuation::keyedTargetSegment("units"), GC.getInfoTypeForString("TAG_MILITARY", true));
 
 				// The unit-combat-keyed buildRate deposits, read as the ENTRY-LIST over what this building
 				// AUTHORED (modifier.md §5). A percent comes back unscaled ([DEC-fixedpoint-x100]).
@@ -6026,8 +6028,14 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 						iValue -= (iMilitaryProductionModifier * aiYieldRank[YIELD_PRODUCTION]) / 5;
 					}
 				}
-				iValue += kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_CITY) / 5;
-				iValue += kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_EMPIRE) * iNumCities / 20;
+				{
+					const int iUnitsSeg = InfoValuation::keyedTargetSegment("units");
+					const int iSpaceTag = GC.getInfoTypeForString("TAG_SPACE", true);
+					iValue += (int)InfoValuation::taggedTargetSum(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+						CASC_SCOPE_CITY, CASC_UNIT_PERCENT, iUnitsSeg, iSpaceTag) / 5;
+					iValue += (int)InfoValuation::taggedTargetSum(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
+						CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT, iUnitsSeg, iSpaceTag) * iNumCities / 20;
+				}
 
 				if (kBuilding.getGreatPeopleUnitType() != NO_UNIT)
 				{
@@ -10771,9 +10779,7 @@ int CvCityAI::AI_buildUnitProb() const
 	}
 	else // more units from cities with military production bonuses
 	{
-		int aiBuildRate[NUM_BUILD_RATE_KINDS];
-		getBuildRateKinds(aiBuildRate);
-		iProb += std::min(15, aiBuildRate[BUILD_RATE_MILITARY] / 4);
+		iProb += std::min(15, taggedBuildRate(GC.getInfoTypeForString("TAG_MILITARY", true)) / 4);
 	}
 
 	if (GET_PLAYER(getOwner()).isRebel())
@@ -11577,9 +11583,7 @@ int CvCityAI::AI_yieldMultiplier(YieldTypes eYield) const
 
 	if (eYield == YIELD_PRODUCTION)
 	{
-		int aiBuildRate[NUM_BUILD_RATE_KINDS];
-		getBuildRateKinds(aiBuildRate);
-		iMultiplier += (aiBuildRate[BUILD_RATE_MILITARY] / 2);
+		iMultiplier += (taggedBuildRate(GC.getInfoTypeForString("TAG_MILITARY", true)) / 2);
 	}
 
 	if (eYield == YIELD_COMMERCE)

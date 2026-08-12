@@ -1077,7 +1077,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iGreatPeopleThresholdModifier = 0;
 	m_iGreatGeneralsThresholdModifier = 0;
 	m_iFeatureProductionModifier = 0;
-	m_iSpaceProductionModifier = 0;
 
 	m_iNonStateReligionCommerceCount = 0;
 	m_iUpgradeAnywhereCount = 0;
@@ -6685,12 +6684,6 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = 0;
 
-	if (!GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_NO_NON_TYPE_PROD_MODS) && GC.getUnitInfo(eUnit).hasTag(CLS_TAG_MILITARY))
-	{
-		int aiBuildRate[NUM_BUILD_RATE_KINDS];
-		getBuildRateKinds(aiBuildRate);
-		iMultiplier += aiBuildRate[BUILD_RATE_MILITARY];
-	}
 	// Resolved ONCE per call rather than per trait: the interner is only populated after load, so a file-scope
 	// static would latch -1 forever.
 	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
@@ -6788,13 +6781,7 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 
 int CvPlayer::getProductionModifier(ProjectTypes eProject) const
 {
-	int iMultiplier = 0;
-
-	if (GC.getProjectInfo(eProject).isSpaceship())
-	{
-		iMultiplier += getSpaceProductionModifier();
-	}
-	return iMultiplier;
+	return 0;
 }
 
 
@@ -6827,8 +6814,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	updateTradeRoutes();
 
 	changeForceAllTradeRoutes(kBuilding.providesAmenity(CLS_AMENITY_FORCE_ALL_TRADE_ROUTES) * iChange);
-
-	changeSpaceProductionModifier(kBuilding.getBuildRateModifier(BUILD_RATE_SPACE, CASC_SCOPE_EMPIRE) * iChange);
 
 	// `national` is a revolution KIND, not a scope fragment -- the data authors `revolution.city.national`, so the
 	// read is the kind at CITY scope. (Its sibling `local` is the same shape and carries the bulk of the data.)
@@ -9217,18 +9202,6 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 	return iRate;
 }
 // BUG - Partial Builds - end
-
-
-int CvPlayer::getSpaceProductionModifier() const
-{
-	return m_iSpaceProductionModifier;
-}
-
-
-void CvPlayer::changeSpaceProductionModifier(int iChange)
-{
-	m_iSpaceProductionModifier += iChange;
-}
 
 
 bool CvPlayer::isNonStateReligionCommerce() const
@@ -16753,7 +16726,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFeatureProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iSpaceProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionCommerceCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpgradeAnywhereCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxLocal);
@@ -18134,7 +18106,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFeatureProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSpaceProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionCommerceCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpgradeAnywhereCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxLocal);
