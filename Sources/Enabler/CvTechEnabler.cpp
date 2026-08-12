@@ -141,16 +141,3 @@ void TechEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 // (disables/obsoletes/replaces) over HAVE, minus already-held, minus identity.disable. Deliberately
 // OVER-INCLUSIVE (the requires gate + allowed cap are later stages). Diff the maintained vector against this
 // to catch a missed or mis-ordered delta.
-void TechEnabler::available(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail)
-{
-	EnBucketSets cand;
-	EnablerKernel::generate(kPlayer, NULL, cand);   // union(enables) - removals over HAVE (start node + held techs + civics)
-	const std::set<int>& techs = cand[EDGEB_TECHS];
-	for (std::set<int>::const_iterator it = techs.begin(); it != techs.end(); ++it)
-	{
-		const int t = *it;
-		if (kTeam.isHasTech((TechTypes)t)) continue;              // already held -> not a CAN GET candidate
-		if (GC.getTechInfo((TechTypes)t).isDisable()) continue;   // the static never-researchable class
-		avail.insert(t);
-	}
-}

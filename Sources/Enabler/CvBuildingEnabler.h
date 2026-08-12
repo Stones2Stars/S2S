@@ -90,12 +90,11 @@ public:
 	static void onCityCultureLevelChanged(const CvCity& kCity, int iLevel, int iCrossing);
 	static void onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic);
 
-	// NB there is NO read accessor here (enabler.md par.7: a static is a PURE CALCULATOR -- seed/delta/oracle;
+	// NB there is NO read accessor here (enabler.md par.7: a static is a PURE CALCULATOR -- seed + delta only;
 	// a read is the owner's BARE member lookup, canConstruct reads m_enabler.buildings.listed directly).
-
-	// THE ORACLE: fresh-seed a local domain from current state and diff it against the maintained one (0 = the
-	// event maintenance is exact). Returns the mismatch count; sDiff carries up to a few named mismatches.
-	static int verifyCity(const CvCity& kCity, std::string& sDiff);
+	// ⛔ And no fresh-seed-and-diff either: a recompute served beside the maintained set answers a number that
+	// was never comparable ([superseded-ideas #33](../../docs/architecture/superseded-ideas.md)). A wrong verdict
+	// is caught by the THREE-LEG check, and DECOMPOSED for a reader by /computed/enabler/buildings + /verdict.
 };
 
 #endif // CV_BUILDING_ENABLER_H

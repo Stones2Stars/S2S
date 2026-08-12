@@ -282,6 +282,10 @@ namespace
 			{
 				return StateEndpoints::enablerBuildings(iPlayer, iCity);
 			}
+			if (strcmp(szAction, "enablerUnits") == 0)
+			{
+				return StateEndpoints::enablerUnits(iPlayer, iCity, szType);
+			}
 			if (strcmp(szAction, "enablerVerdict") == 0)
 			{
 				return StateEndpoints::enablerVerdict(iPlayer, iCity, szType);
@@ -404,6 +408,7 @@ namespace
 			{ "/computed/enabler/operating", "enablerOperating", "the per-city operating set the targeted propagation maintains: active/obsolete/provided + provider counts. ?player=N[&city=M]" },
 			{ "/computed/enabler/buildings", "enablerBuildings", "the VISIBLE tri-state per city: listed[] (may start now) + greyed[] with the REASON that refused each, and greyedByReason counts. ?player=N[&city=M]" },
 			{ "/computed/enabler/verdict",   "enablerVerdict",   "ONE building's verdict in every city -- state (HIDDEN/GREYED/LISTED), the gate REASON, and whether the city already has it. ?type=BUILDING_X&player=N[&city=M]" },
+			{ "/computed/enabler/units",     "enablerUnits",     "ONE unit's verdict in every city, DECOMPOSED into the named gate legs: spawnOnly/obsoleteTech/capped/entityGateFail/requiresFail/upgradeDormant/superseded(+By). ?type=UNIT_X&player=N[&city=M]" },
 			{ "/computed/city/yield",               "cityYield",              "the yield TOOLTIP's own census, served: every term of the §2a combine per yield, the refused deposits with the atom that refused them, and the city's traded/onSite bonus lists read LIVE. ?player=N[&city=M]" },
 			{ "/computed/capabilities",      "capabilities",     "the empire ability union as the grantor facts built it: capabilities/canTrade/canWorkOn/canTradeOn. ?player=N" },
 		};

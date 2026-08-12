@@ -629,13 +629,15 @@ load by the **reseed events** (the in-read emits stream through the same applier
 [DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) — never a warm-up walk beside the event
 stream) and **updated in place on events** (a tech researched adds its `enables` / removes its
 obsoletes; a building built leaves `buildable`; …). Every read is a **pure O(1) lookup that NEVER calls a
-calculator.** The static calculators (`TechEnabler::available` / `BuildingEnabler::verifyCity`'s fresh-build +
-`EnablerKernel::gateSet`) are the **validation oracle ONLY — never the read path and never a load build**; the
-enabler consumes ONLY events precisely so a missed emit surfaces as a visibly wrong enabler. ⛔ The
-oracle-vs-maintained ENDPOINT DIFF that once claimed to catch that is DEAD
+calculator**, and the enabler consumes ONLY events precisely so a missed emit surfaces as a visibly wrong
+enabler. ⛔ **There is no from-source recompute to diff that against, and none comes back** — the
+fresh-seed-and-diff statics that once served one are DELETED
 ([superseded-ideas #33](../architecture/superseded-ideas.md)): an endpoint cannot replay the event chain, so its
-recompute side was never comparable. `/computed/enabler/operating` serves the MAINTAINED set alone, and a wrong
-verdict is caught by the three-leg check ([http-endpoints.md](http-endpoints.md)). The `requires` gate re-runs **incrementally over only the affected candidates** (via the reverse
+recompute side was never comparable, and the replay it would need is minutes of work — disqualifying for an
+endpoint call twice over. A wrong verdict is caught by the THREE-LEG check
+([http-endpoints.md](http-endpoints.md)), and DECOMPOSED for a reader by the enabler's own stored-side censuses
+(`/computed/enabler/operating` · `/buildings` · `/verdict` · `/units`), which serve the maintained verdict term
+by term and never recompute it. The `requires` gate re-runs **incrementally over only the affected candidates** (via the reverse
 index), and the operating-building set (§3.2) is maintained the same way — this is
 [state-repositories](../architecture/state-repositories.md)' targeted propagation applied to the availability
 machine. The representation is deliberately primitive: **the HAS list, and the enabler list built from HAS, are

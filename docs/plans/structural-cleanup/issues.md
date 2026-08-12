@@ -571,11 +571,6 @@ scan bugs rather than fix them.
   (obsolete-check → `requires` → `allowed` cap) now lives in six independent bodies free to drift apart
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). This is the
   reinvented-machine signature at the centre of the enabler.
-- **The enabler's validation-oracle surface is unrunnable** — `BuildingEnabler::verifyCity`, `TechEnabler::available`
-  and `UnitEnabler::explain` all have zero callers, and no route reaches them. ⛔ This is the load-bearing one:
-  `CvTechEnabler`'s header states the design contract that the enabler consumes ONLY events *precisely so* a
-  missed emit surfaces as a visibly wrong enabler, with the oracle diff as the tripwire. **The event-only design
-  is resting on a tripwire nothing pulls.**
 - **Split the vicinity BAND axis from the `worked`/`onSite` predicates** so a vicinity-named read cannot answer
   the on-site verdict ([contexts.md](../../architecture/contexts.md) § THE VICINITY SPLIT — the storage is
   already right, the ADDRESSING is what conflates them). ⚠ Reaches the authored `vicinity:` key, `CvCondition`

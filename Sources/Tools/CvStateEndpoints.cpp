@@ -7,7 +7,8 @@
 #include "CvStateEndpoints.h"
 #include "Cascade/CvCascadeSlotValues.h"    // the served shape both sides answer in
 #include "Cascade/CvCascadeChannelRegistry.h"
-#include "Enabler/CvEnablerKernel.h"        // the operating set: the standing read + the from-source recompute
+#include "Enabler/CvEnablerKernel.h"        // the operating set -- the standing read the censuses decompose
+#include "Enabler/CvUnitEnabler.h"          // UnitEnabler::Explain -- the per-unit gate-leg decomposition
 #include "Engine/CapabilityContext.h"        // the empire ability union the grantor facts built
 #include "Infos/CvClassificationRegistry.h"  // id -> authored key, so a served ability names itself
 #include "Engine/CvCity.h"
@@ -499,6 +500,87 @@ CvString StateEndpoints::enablerVerdict(int iPlayer, int iCity, const char* szBu
 	picojson::value::object kRoot;
 	kRoot["player"] = picojson::value((double)ePlayer);
 	kRoot["building"] = picojson::value(std::string(szBuilding));
+	kRoot["cities"] = picojson::value(kCities);
+	return oe_serialize(kRoot);
+}
+
+// The UNIT twin of enablerVerdict, and deliberately RICHER: the unit gate has legs a state + one reason cannot
+// express (spawn-only, obsoleted, capped, the upgrade-dormancy closure, supersession by a buildable successor),
+// so UnitEnabler::Explain names each and this serves them side by side. ⛔ It is a DECOMPOSITION of the
+// MAINTAINED verdict, never a recompute of it -- the enabler's tri-state stays the answer and these legs say
+// WHY it reads as it does ([DEC-no-guessing]: a greyed entry must hand the asker an answer, not a question).
+CvString StateEndpoints::enablerUnits(int iPlayer, int iCity, const char* szUnit)
+{
+	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
+	if (ePlayer == NO_PLAYER)
+	{
+		return oe_error("no player");
+	}
+	if (szUnit == NULL || szUnit[0] == '\0')
+	{
+		return oe_error("no unit -- pass ?type=UNIT_X");
+	}
+	int iUnit = -1;
+	for (int i = 0; i < GC.getNumUnitInfos(); ++i)
+	{
+		const char* szType = GC.getUnitInfo((UnitTypes)i).getType();
+		if (szType != NULL && strcmp(szType, szUnit) == 0)
+		{
+			iUnit = i;
+			break;
+		}
+	}
+	if (iUnit < 0)
+	{
+		return oe_error("unknown unit type");
+	}
+
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	picojson::value::array kCities;
+	for (CvPlayer::city_iterator cityIterator = kPlayer.beginCities(); cityIterator != kPlayer.endCities(); ++cityIterator)
+	{
+		const CvCity* pLoopCity = *cityIterator;
+		if (pLoopCity == NULL)
+		{
+			continue;
+		}
+		if (iCity >= 0 && pLoopCity->getID() != iCity)
+		{
+			continue;
+		}
+		UnitEnabler::Explain kExplain;
+		UnitEnabler::explain(*pLoopCity, iUnit, kExplain);
+
+		picojson::value::object kRow;
+		kRow["owner"] = picojson::value((double)pLoopCity->getOwner());
+		kRow["id"] = picojson::value((double)pLoopCity->getID());
+		kRow["globalId"] = picojson::value(std::string(
+			CvString::format("%02d-%d", (int)pLoopCity->getOwner(), pLoopCity->getID()).c_str()));
+		kRow["name"] = picojson::value(std::string(CvString(pLoopCity->getName()).c_str()));
+		// The maintained verdict FIRST -- the legs below explain this, they do not replace it.
+		kRow["state"] = picojson::value(std::string(EnablerDomain::stateName(
+			(unsigned char)pLoopCity->getUnitAvailability((UnitTypes)iUnit))));
+		kRow["inTree"] = picojson::value(kExplain.bInTree);
+		kRow["listed"] = picojson::value(kExplain.bListed);
+		// The named legs, each a reason a unit is NOT offered.
+		kRow["spawnOnly"] = picojson::value(kExplain.bSpawnOnly);
+		kRow["obsoleteTech"] = picojson::value(kExplain.bObsoleteTech);
+		kRow["capped"] = picojson::value(kExplain.bCapped);
+		kRow["entityGateFail"] = picojson::value(kExplain.bEntityGateFail);
+		kRow["requiresFail"] = picojson::value(kExplain.bRequiresFail);
+		kRow["upgradeDormant"] = picojson::value(kExplain.bUpgradeDormant);
+		kRow["superseded"] = picojson::value(kExplain.bSuperseded);
+		if (kExplain.iSupersededBy >= 0)
+		{
+			const char* szBy = GC.getUnitInfo((UnitTypes)kExplain.iSupersededBy).getType();
+			kRow["supersededBy"] = picojson::value(std::string(szBy != NULL ? szBy : ""));
+		}
+		kCities.push_back(picojson::value(kRow));
+	}
+
+	picojson::value::object kRoot;
+	kRoot["player"] = picojson::value((double)ePlayer);
+	kRoot["unit"] = picojson::value(std::string(szUnit));
 	kRoot["cities"] = picojson::value(kCities);
 	return oe_serialize(kRoot);
 }

@@ -116,44 +116,6 @@ static bool bd_barredByCivilization(const CvBuildingInfo* jb, const CvPlayer& kP
 	return true;
 }
 
-// THE ORACLE CORE (never a lifecycle path): the pure full build from current state -- replay the +1 appliers
-// over the object-owned has-lists into the TARGET struct. verifyCity fresh-seeds a local oracle domain and
-// diffs it against the event-maintained vector; that diff is the missed-emit tripwire (the enabler consumes
-// ONLY events precisely so a missed emit surfaces as a visibly wrong enabler).
-static void bd_seedInto(CityEnabler& en, const CvCity& kCity)
-{
-	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
-	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-	EnablerDomain& d = en.buildings;
-	d.init(GC.getNumBuildingInfos());
-	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
-	{
-		const CvBuildingInfo* jb = (const CvBuildingInfo*)InfoRepo<CvBuildingInfo>::get().get(b);
-		if (jb != NULL && (jb->isNotConstructible() || bd_barredByCivilization(jb, kPlayer))) d.setStaticExcluded(b, true);
-		if (kCity.hasBuilding((BuildingTypes)b))
-		{
-			d.setHeld(b, true);
-			// a tech-obsoleted PRESENT building stays held but does not enable (the obsoletion flip)
-			if (!EnablerKernel::obsoletedByHeldTech(jb, kTeam)) bd_applyAxis(d, BuildingEnabler::AX_BUILDING, b, +1);
-		}
-	}
-	// the TECH_GAME_START root IS a held engine tech (the load backfill guarantees it) -- covered by this loop
-	for (int t = 0; t < GC.getNumTechInfos(); ++t)
-		if (kTeam.isHasTech((TechTypes)t)) bd_applyAxis(d, BuildingEnabler::AX_TECH, t, +1);
-	for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
-	{
-		const CivicTypes c = kPlayer.getCivics((CivicOptionTypes)co);
-		if (c != NO_CIVIC) bd_applyAxis(d, BuildingEnabler::AX_CIVIC, (int)c, +1);
-	}
-	for (int r = 0; r < GC.getNumReligionInfos(); ++r)
-		if (kCity.isHasReligion((ReligionTypes)r)) bd_applyAxis(d, BuildingEnabler::AX_RELIGION, r, +1);
-	for (int c = 0; c < GC.getNumCorporationInfos(); ++c)
-		if (kCity.isHasCorporation((CorporationTypes)c)) bd_applyAxis(d, BuildingEnabler::AX_CORP, c, +1);
-	// no bonus axis: a plot-group-carried bonus is GATE-ONLY, never membership (owner ruling 2026-07-15)
-	if (kCity.getCultureLevel() != NO_CULTURELEVEL)
-		bd_applyAxis(d, BuildingEnabler::AX_CULTURE, (int)kCity.getCultureLevel(), +1);
-}
-
 // The CITY-CREATED applier (founding init + the load read's start, BEFORE the city's own in-read emits): init
 // the domain (size + the notConstructible static exclusions) and fold ONLY the cross-scope HAVE that predates
 // the city -- team techs + player civics (no events can carry 400 pre-existing techs to a new city). The
@@ -822,28 +784,3 @@ void BuildingEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, 
 	}
 }
 
-int BuildingEnabler::verifyCity(const CvCity& kCity, std::string& sDiff)
-{
-	CityEnabler& en = kCity.m_enabler;
-	if (!en.buildings.isSeeded())   // an uninitialized domain is itself the finding -- never quietly built here
-	{
-		sDiff += "domain not initialized; ";
-		return GC.getNumBuildingInfos();
-	}
-	CityEnabler fresh;
-	bd_seedInto(fresh, kCity);
-	int iMismatch = 0;
-	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
-	{
-		// MEMBERSHIP compare (inTree), not state: the fresh oracle is enable-side only (no gate flags), so the
-		// maintained GREYED/LISTED split is the gate's -- the diff verifies the event maintenance, the tripwire.
-		if (en.buildings.inTree(b) == fresh.buildings.inTree(b)) continue;
-		++iMismatch;
-		if (iMismatch <= 8)
-		{
-			sDiff += CvString::format("%s maintainedInTree=%d freshInTree=%d; ", GC.getBuildingInfo((BuildingTypes)b).getType(),
-				(int)en.buildings.inTree(b), (int)fresh.buildings.inTree(b)).GetCString();
-		}
-	}
-	return iMismatch;
-}

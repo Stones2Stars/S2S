@@ -10,10 +10,12 @@
 //	O(delta) applier the spine consumer routes (play emits + the reseed's per-held-tech emits alike); the read
 //	is the owner's bare member lookup (CvPlayer::getTechAvailability reads m_enabler.techs directly).
 //
-//	available() is the PURE FUNCTION -- the VALIDATION ORACLE ONLY, never the read path (enabler.md par.7:
-//	a static is a pure calculator; the read path never calls one). Its diff against the maintained vector is
-//	the missed-emit tripwire: the enabler consumes ONLY events precisely so a missed emit surfaces as a
-//	visibly wrong enabler.
+//	⛔ There is deliberately NO from-source recompute here to diff the maintained vector against. The enabler
+//	consumes ONLY events so that a missed emit surfaces as a visibly WRONG enabler, and what catches one is the
+//	THREE-LEG check -- the logs, the JSON info, and what state expects
+//	([http-endpoints.md](../../docs/specs/http-endpoints.md)). A recompute served beside the maintained set
+//	answers a number that was never comparable, and the replay it would need is minutes of work
+//	([superseded-ideas #33](../../docs/architecture/superseded-ideas.md)).
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state
 //	(the maintained state lives on the OWNER -- CvPlayer::m_enabler).
@@ -35,10 +37,6 @@ public:
 	// initialized player of eTeam. Idempotent per player (the held flag guards re-emits).
 	static void onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
 
-	// THE VALIDATION ORACLE (the pure function, enable-side): CAN GET = union(enables.techs) - removals over
-	// HAVE, minus held/disabled. Never the read path -- diff the maintained vector against this to catch a
-	// missed/mis-ordered delta.
-	static void available(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail);
 };
 
 #endif // CV_TECH_ENABLER_H

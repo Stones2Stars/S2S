@@ -104,6 +104,11 @@ GREYED tier ("go get copper") could be seen on a screen and nowhere else, which 
 - **`/computed/enabler/verdict?type=BUILDING_X`** — ONE building's verdict in every city: `state`
   (HIDDEN / GREYED / LISTED), the gate `reason`, and whether the city already `has` it. This is the
   *"why can I not build this, and where"* read.
+- **`/computed/enabler/units?type=UNIT_X`** — the UNIT twin, and deliberately RICHER, because the unit gate has
+  legs a single reason cannot carry: `spawnOnly` · `obsoleteTech` · `capped` · `entityGateFail` ·
+  `requiresFail` · `upgradeDormant` · `superseded` (+ `supersededBy`), each served beside the maintained
+  `state`/`inTree`/`listed`. ⛔ It DECOMPOSES the maintained verdict and never recomputes it — the legs say why
+  the tri-state reads as it does, they are not a second opinion about it.
 
 ⛔ **A verdict is served with its REASON, never as a bare state** ([enabler.md §6](enabler.md): the gate yields the
 reason precisely so a greyed entry hands the asker an answer instead of a question). ⚠ The names are the enum's own

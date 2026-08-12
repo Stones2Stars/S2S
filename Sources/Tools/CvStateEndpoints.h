@@ -38,6 +38,10 @@ public:
 	static CvString enablerBuildings(int iPlayer, int iCity);
 	// ONE named building's verdict across the player's cities -- "why can I not build this, and where".
 	static CvString enablerVerdict(int iPlayer, int iCity, const char* szBuilding);
+	// ONE unit's verdict per city, DECOMPOSED into the named gate legs (UnitEnabler::Explain) rather than served
+	// as a bare state -- a route that answers one number answers nothing when that number is wrong
+	// ([http-endpoints.md](../../docs/specs/http-endpoints.md)).
+	static CvString enablerUnits(int iPlayer, int iCity, const char* szUnit);
 
 	// THE CITY YIELD CENSUS -- the same decomposition the yield TOOLTIP renders, served.
 	// ⚖ A tooltip IS a census (owner), so the two must be the same document or they are two answers to one
