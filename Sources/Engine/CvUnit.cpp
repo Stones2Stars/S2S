@@ -55,7 +55,6 @@ static bool		 g_bUseDummyEntities = false;
 
 //	static buffers allocated once and used during read and write only
 int*	CvUnit::g_paiTempPromotionFreeCount = NULL;
-int*	CvUnit::g_paiTempTargetUnitCombatCount = NULL;
 int*	CvUnit::g_paiTempPromotionFromTraitCount = NULL;
 bool*	CvUnit::g_pabTempValidBuildUp = NULL;
 int*	CvUnit::g_paiTempExtraUnitCombatModifier = NULL;
@@ -134,7 +133,6 @@ m_Properties(this)
 	{
 		//	Allocate static buffers to be used during read and write
 		g_paiTempPromotionFreeCount = new int[GC.getNumPromotionInfos()];
-		g_paiTempTargetUnitCombatCount = new int[GC.getNumUnitCombatInfos()]();
 		g_paiTempPromotionFromTraitCount = new int [GC.getNumPromotionInfos()];
 		g_pabTempValidBuildUp = new bool[GC.getNumPromotionLineInfos()];
 		g_paiTempExtraUnitCombatModifier = new int[GC.getNumUnitCombatInfos()];
@@ -18862,17 +18860,14 @@ void CvUnit::read(FDataStreamBase* pStream)
 	{
 		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempHealUnitCombatTypeVolume[iI], "healUnitCombatTypeVolume");
 		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempHealUnitCombatTypeAdjacentVolume[iI], "healUnitCombatTypeAdjacentVolume");
-		WRAPPER_READ_DECORATED(wrapper, "CvUnit", &g_paiTempTargetUnitCombatCount[iI], "targetUnitCombatCount");
 
 		if (g_paiTempHealUnitCombatTypeVolume[iI] != 0
-		||  g_paiTempHealUnitCombatTypeAdjacentVolume[iI] != 0
-		||  g_paiTempTargetUnitCombatCount[iI] != 0)
+		||  g_paiTempHealUnitCombatTypeAdjacentVolume[iI] != 0)
 		{
 			UnitCombatKeyedInfo* info = findOrCreateUnitCombatKeyedInfo((UnitCombatTypes)iI);
 
 			info->m_iHealUnitCombatTypeVolume = g_paiTempHealUnitCombatTypeVolume[iI];
 			info->m_iHealUnitCombatTypeAdjacentVolume = g_paiTempHealUnitCombatTypeAdjacentVolume[iI];
-			info->m_iTargetUnitCombatCount = g_paiTempTargetUnitCombatCount[iI];
 		}
 	}
 	{
@@ -19441,7 +19436,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iHealUnitCombatTypeVolume : 0, "healUnitCombatTypeVolume");
 		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iHealUnitCombatTypeAdjacentVolume : 0, "healUnitCombatTypeAdjacentVolume");
-		WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", info ? info->m_iTargetUnitCombatCount : 0, "targetUnitCombatCount");
 	}
 
 	WRAPPER_WRITE_DECORATED(wrapper, "CvUnit", isCommander(), "m_bCommander");
@@ -20266,9 +20260,8 @@ bool CvUnit::isTargetOf(const CvUnit& attacker) const
 	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
 	{
 		if (it->second.m_bHasUnitCombat
-		&& (InfoValuation::keyedTarget(attackerInfo.getModifiers(), MODFAM_COMBAT, -1,
-				InfoValuation::keyedTargetSegment("targets"), it->first) != 0
-			|| attacker.hasTargetUnitCombat(it->first)))
+		&& InfoValuation::keyedTarget(attackerInfo.getModifiers(), MODFAM_COMBAT, -1,
+				InfoValuation::keyedTargetSegment("targets"), it->first) != 0)
 		{
 			return true;
 		}
@@ -26592,23 +26585,6 @@ void CvUnit::doSetDefaultStatuses()
 
 
 
-bool CvUnit::hasTargetUnitCombat(UnitCombatTypes eUnitCombat) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-
-	const UnitCombatKeyedInfo* info = findUnitCombatKeyedInfo(eUnitCombat);
-	return (info ? info->m_iTargetUnitCombatCount > 0 : false);
-}
-
-void CvUnit::changeTargetUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eUnitCombat);
-
-	if (iChange != 0)
-	{
-		findOrCreateUnitCombatKeyedInfo(eUnitCombat)->m_iTargetUnitCombatCount += iChange;
-	}
-}
 
 
 

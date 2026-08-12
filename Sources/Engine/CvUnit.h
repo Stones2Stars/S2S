@@ -274,8 +274,7 @@ public:
 								m_iExtraFlankingStrengthbyUnitCombatType(0),
 								m_iHealUnitCombatTypeVolume(0),
 								m_iHealUnitCombatTypeAdjacentVolume(0),
-								m_iHealAsDamage(0),
-								m_iTargetUnitCombatCount(0)
+								m_iHealAsDamage(0)
 	{}
 
 	bool Empty() const
@@ -285,8 +284,7 @@ public:
 			m_iExtraFlankingStrengthbyUnitCombatType == 0 &&
 			m_iHealUnitCombatTypeVolume == 0 &&
 			m_iHealUnitCombatTypeAdjacentVolume == 0 &&
-			m_iHealAsDamage == 0 &&
-			m_iTargetUnitCombatCount == 0);
+			m_iHealAsDamage == 0);
 	}
 
 	bool m_bHasUnitCombat;
@@ -295,7 +293,6 @@ public:
 	int m_iHealUnitCombatTypeVolume;
 	int m_iHealUnitCombatTypeAdjacentVolume;
 	int m_iHealAsDamage;
-	int	m_iTargetUnitCombatCount;
 };
 // SAVEBREAK@
 
@@ -2096,8 +2093,6 @@ public:
 
 
 
-	bool hasTargetUnitCombat(UnitCombatTypes eUnitCombat) const;
-	void changeTargetUnitCombatCount(UnitCombatTypes eUnitCombat, int iChange);
 
 
 	bool isArmed() const;
@@ -2128,7 +2123,6 @@ public:
 private:
 	//	static buffers allocated once and used during read and write only
 	static int*	g_paiTempPromotionFreeCount;
-	static int*	g_paiTempTargetUnitCombatCount;
 	static int* g_paiTempPromotionFromTraitCount;
 	static bool*	g_pabTempValidBuildUp;
 	static int*	g_paiTempExtraUnitCombatModifier;

@@ -1891,3 +1891,13 @@ CvCity::m_paiImprovementFreeSpecialists  (class int array, IMPROVEMENTS)
 | ⚠ The changer's rider (AI_makeAssignWorkDirty on the unlimited path) needs no new home: a CIVIC change and a
 | TRAIT change are already ruled dirty triggers (citizen-assignment.md), and those are this value's only sources.
 CvPlayer::m_iHappyPerMilitaryUnit        (int)
+========================
+| The per-unitcombat TARGETING count on CvUnit's keyed info: "this unit preferentially targets that class".
+| Stranded on all three legs -- changeTargetUnitCombatCount had NO caller, the decorated tag kept
+| deserializing, and its one reader (hasTargetUnitCombat) was OR'd into the combat targeting test.
+| REPLACEMENT: already wired and sitting in the SAME expression -- the cascade read of
+| `combat.<scope>.targets.{UNITCOMBAT_X}` via InfoValuation::keyedTarget, which is where skills.md §1 re-homed
+| the legacy per-type `targets` table. The accumulator leg was an OR against a frozen zero.
+| ⚑ A BRACKET-FREE decorated sub-tag, so save.md §3 allows the soft-remove; the tag drains by name.
+| ⚠ Do not confuse it with CvUnitInfo::hasTargetUnitCombat -- the INFO-side authored read, which is live.
+CvUnit::targetUnitCombatCount            (decorated int, per UNITCOMBAT)
