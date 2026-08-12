@@ -111,6 +111,18 @@ void CvCity::getAvailableBuildings(std::vector<int>& buildings) const
 	m_enabler.buildings.listedIds(buildings);
 }
 
+// The VISIBLE tri-state -- LISTED plus GREYED, i.e. everything in the tree whether or not its gate holds.
+// Distinct from getAvailableBuildings, which is the OFFER: what may be started right now.
+void CvCity::getInTreeBuildings(std::vector<int>& buildings) const
+{
+	m_enabler.buildings.inTreeIds(buildings);
+}
+
+void CvCity::getInTreeUnits(std::vector<int>& units) const
+{
+	m_enabler.units.inTreeIds(units);
+}
+
 void CvCity::getAvailableUnits(std::vector<int>& units) const
 {
 	m_enabler.units.listedIds(units);

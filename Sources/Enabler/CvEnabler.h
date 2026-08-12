@@ -134,6 +134,58 @@ public:
 		return eReason >= (unsigned char)GATEREASON_REQUIRES && eReason <= (unsigned char)GATEREASON_REQUIRES_LAST;
 	}
 
+	// The DIAGNOSTIC spelling of a verdict, for the observability surface. ⛔ Not player text: these are the
+	// enum's own names, so an endpoint reader sees exactly the value the enabler stored and no translation sits
+	// between them. Player-facing wording is the text manager's, off the same reason.
+	// ⚑ ONE home, beside the enum it names ([DEC-single-implementation]) -- a second table in a consumer would
+	// drift the moment a reason is added, and silently, since a missing arm just prints the number.
+	static const char* stateName(unsigned char eState)
+	{
+		switch (eState)
+		{
+		case STATE_HIDDEN: return "HIDDEN";
+		case STATE_GREYED: return "GREYED";
+		case STATE_LISTED: return "LISTED";
+		default:           return "?";
+		}
+	}
+
+	static const char* reasonName(unsigned char eReason)
+	{
+		switch (eReason)
+		{
+		case GATEREASON_NONE:                  return "NONE";
+		case GATEREASON_DORMANT:               return "DORMANT";
+		case GATEREASON_REPLACED:              return "REPLACED";
+		case GATEREASON_OPTION:                return "OPTION";
+		case GATEREASON_CAP_SELF:              return "CAP_SELF";
+		case GATEREASON_CAP_GROUP:             return "CAP_GROUP";
+		case GATEREASON_CAP_CATEGORY:          return "CAP_CATEGORY";
+		case GATEREASON_REQUIRES:              return "REQUIRES";
+		case GATEREASON_REQUIRES_TECH:         return "REQUIRES_TECH";
+		case GATEREASON_REQUIRES_BUILDING:     return "REQUIRES_BUILDING";
+		case GATEREASON_REQUIRES_BONUS:        return "REQUIRES_BONUS";
+		case GATEREASON_REQUIRES_CIVIC:        return "REQUIRES_CIVIC";
+		case GATEREASON_REQUIRES_RELIGION:     return "REQUIRES_RELIGION";
+		case GATEREASON_REQUIRES_CORPORATION:  return "REQUIRES_CORPORATION";
+		case GATEREASON_REQUIRES_HERITAGE:     return "REQUIRES_HERITAGE";
+		case GATEREASON_REQUIRES_UNIT:         return "REQUIRES_UNIT";
+		case GATEREASON_REQUIRES_PROMOTION:    return "REQUIRES_PROMOTION";
+		case GATEREASON_REQUIRES_POPULATION:   return "REQUIRES_POPULATION";
+		case GATEREASON_REQUIRES_CITY_COUNT:   return "REQUIRES_CITY_COUNT";
+		case GATEREASON_REQUIRES_PROPERTY:     return "REQUIRES_PROPERTY";
+		case GATEREASON_REQUIRES_CULTURELEVEL: return "REQUIRES_CULTURELEVEL";
+		case GATEREASON_REQUIRES_VICTORY:      return "REQUIRES_VICTORY";
+		case GATEREASON_REQUIRES_TERRAIN:      return "REQUIRES_TERRAIN";
+		case GATEREASON_REQUIRES_FEATURE:      return "REQUIRES_FEATURE";
+		case GATEREASON_REQUIRES_IMPROVEMENT:  return "REQUIRES_IMPROVEMENT";
+		case GATEREASON_REQUIRES_ROUTE:        return "REQUIRES_ROUTE";
+		case GATEREASON_REQUIRES_MAPCATEGORY:  return "REQUIRES_MAPCATEGORY";
+		case GATEREASON_REQUIRES_PLOT:         return "REQUIRES_PLOT";
+		default:                               return "?";
+		}
+	}
+
 	EnablerDomain() : m_bSeeded(false) {}
 
 	// The lifecycle: init() sizes + zeroes and marks the domain ready (isSeeded) -- the DOMAIN events then build

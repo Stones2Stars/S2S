@@ -34,6 +34,10 @@ public:
 
 	// The ENABLER's per-city operating set: active / obsolete / provided + the provider ref-count.
 	static CvString enablerOperating(int iPlayer, int iCity);
+	// The VISIBLE tri-state (LISTED + GREYED) per city, every greyed row carrying the reason that refused it.
+	static CvString enablerBuildings(int iPlayer, int iCity);
+	// ONE named building's verdict across the player's cities -- "why can I not build this, and where".
+	static CvString enablerVerdict(int iPlayer, int iCity, const char* szBuilding);
 
 	// THE CITY YIELD CENSUS -- the same decomposition the yield TOOLTIP renders, served.
 	// ⚖ A tooltip IS a census (owner), so the two must be the same document or they are two answers to one

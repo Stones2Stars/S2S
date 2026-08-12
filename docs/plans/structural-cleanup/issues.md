@@ -571,9 +571,6 @@ scan bugs rather than fix them.
   (obsolete-check → `requires` → `allowed` cap) now lives in six independent bodies free to drift apart
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). This is the
   reinvented-machine signature at the centre of the enabler.
-- **Nothing can enumerate the GREYED tier.** `EnablerDomain::inTreeIds` (LISTED + GREYED — the visible tri-state)
-  has no caller, while its sibling `listedIds` has many. The "go get copper / adopt this civic" greyed build-list
-  entries that [enabler.md §6](../../specs/enabler.md) specifies cannot be rendered by anyone.
 - **The enabler's validation-oracle surface is unrunnable** — `BuildingEnabler::verifyCity`, `TechEnabler::available`
   and `UnitEnabler::explain` all have zero callers, and no route reaches them. ⛔ This is the load-bearing one:
   `CvTechEnabler`'s header states the design contract that the enabler consumes ONLY events *precisely so* a
@@ -1010,6 +1007,15 @@ efficiency defect to reject in review"*).
 
 **OBSERVED (owner, in play):** the greyed-out (`canConstruct`-failing but shown) portion of the build list
 includes buildings that are **not yet enabled by tech**.
+
+⚑ **FIXED at the reason SELECTION, and now machine-checkable — but confirm it on screen before deleting this
+entry.** `requiresGateReason` took the FIRST failing clause, so `all: [BONUS_COPPER, TECH_X]` with both unmet
+stored the BONUS reason and greyed while the unmet TECH beside it hides; hide-wins over grey now, weighed across
+every top-level clause of both timings (owner: *"hide wins"*). The instrument is
+`/computed/enabler/buildings` — its `greyedByReason` histogram must contain **no `REQUIRES_TECH`**, since that
+reason is in `reasonHides`. A live read of London on the standing save: 618 in tree, 168 listed, 450 greyed,
+reasons `BONUS 229 · BUILDING 113 · CIVIC 42 · RELIGION 37 · CORPORATION 20 · FEATURE 6 · IMPROVEMENT 1 ·
+HERITAGE 1 · REQUIRES 1` — every one actionable, zero tech.
 
 ⚑ **Why this is an ENABLER question and not a display one:** the greyed tier is meant to be *"things this city
 cannot build YET"*, which is a different set from *"things that do not exist for this player yet"*. A building

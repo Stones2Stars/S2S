@@ -86,7 +86,32 @@ one thing it must never do.
   **18 seconds**; a second concurrent data request — or one whose answer does not arrive in time — gets
   **`503 … retry`**.
 - The route table in `CvHttpServer.cpp::handleRequest` is the one place any endpoint is declared; the `/state` and
-  `/computed` index pages are generated from it (`/state`'s list is empty today).
+  `/computed` index pages are generated from it (`/state`'s list is empty today). ⚑ The table carries each route's
+  own one-line doc, so it — not this page — is the census; what this page states is the SHAPE a route must have.
+- **Query parameters are `?player=N`, `?city=M`, `?unit=K` and `?type=<INFOTYPE_NAME>`**, parsed once and threaded
+  to the mailbox. ⚠ A route wanting a named entity uses `type=`; it does not mint a parameter of its own.
+
+### ⚖ THE ENABLER'S TWO HALVES ARE TWO ROUTES — what a city HAS RUNNING vs what it is OFFERED
+
+`/computed/enabler/operating` answers the first: the active / obsolete / provided set the targeted propagation
+maintains. **That is only half the machine**, and for a long time the other half had no route at all — so the
+GREYED tier ("go get copper") could be seen on a screen and nowhere else, which is precisely what the
+[observability bar](../reference/observability.md) forbids.
+
+- **`/computed/enabler/buildings`** — the VISIBLE tri-state per city: `listed[]` (may be started now) and
+  `greyed[]`, **every greyed row carrying the REASON that refused it**, plus a `greyedByReason` histogram. It reads
+  `EnablerDomain::inTreeIds` (LISTED + GREYED), which is what makes the greyed tier enumerable at all.
+- **`/computed/enabler/verdict?type=BUILDING_X`** — ONE building's verdict in every city: `state`
+  (HIDDEN / GREYED / LISTED), the gate `reason`, and whether the city already `has` it. This is the
+  *"why can I not build this, and where"* read.
+
+⛔ **A verdict is served with its REASON, never as a bare state** ([enabler.md §6](enabler.md): the gate yields the
+reason precisely so a greyed entry hands the asker an answer instead of a question). ⚠ The names are the enum's own
+spellings from `EnablerDomain::stateName`/`reasonName` — diagnostic, not player text, so the reader sees exactly the
+byte the enabler stored with no translation in between.
+⚑ **The histogram is the useful read, and it is a correctness instrument rather than a listing:** a reason that
+should HIDE appearing in the greyed set is a defect in the reason SELECTION, which is how hide-vs-grey is checked
+without opening the game.
 
 ## The two standing invariants
 

@@ -10,8 +10,6 @@
 #include "Data/CvReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
 #include "Tally/CvTally.h"          // /computed/tally TAG_ routing -> countUnitsWithTag (the per-tag unit count)
 #include "CvClassificationBlock.h"        // /state/info classification exposure: the loaded tags/skills held-key sets
-#include "Enabler/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain census
-#include "Enabler/CvUnitEnabler.h"           // /computed/enabler/units: the per-unit verdict decomposition
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -268,7 +266,7 @@ namespace
 	// routing table and nothing else, because a renderer written here is how the previous surface accreted
 	// ~4,250 lines of per-feature bodies reaching into engine internals ("the server SERVES state; it does
 	// not ACCUMULATE it", observability.md). An unknown action answers with an error, never a guess.
-	CvString evaluateAction(const char* szAction, const char* /*szType*/, int iPlayer, int iCity, int /*iUnit*/)
+	CvString evaluateAction(const char* szAction, const char* szType, int iPlayer, int iCity, int /*iUnit*/)
 	{
 		if (szAction != NULL)
 		{
@@ -279,6 +277,14 @@ namespace
 			if (strcmp(szAction, "enablerOperating") == 0)
 			{
 				return StateEndpoints::enablerOperating(iPlayer, iCity);
+			}
+			if (strcmp(szAction, "enablerBuildings") == 0)
+			{
+				return StateEndpoints::enablerBuildings(iPlayer, iCity);
+			}
+			if (strcmp(szAction, "enablerVerdict") == 0)
+			{
+				return StateEndpoints::enablerVerdict(iPlayer, iCity, szType);
 			}
 			if (strcmp(szAction, "cityYield") == 0)
 			{
@@ -396,6 +402,8 @@ namespace
 		{
 			{ "/computed/cascade/packages",  "cascadePackages",  "cascade packages as the events built them: per-scope flat/percent slots + receiver sums, by channel name. ?player=N[&city=M]; a city selector adds its workable plots" },
 			{ "/computed/enabler/operating", "enablerOperating", "the per-city operating set the targeted propagation maintains: active/obsolete/provided + provider counts. ?player=N[&city=M]" },
+			{ "/computed/enabler/buildings", "enablerBuildings", "the VISIBLE tri-state per city: listed[] (may start now) + greyed[] with the REASON that refused each, and greyedByReason counts. ?player=N[&city=M]" },
+			{ "/computed/enabler/verdict",   "enablerVerdict",   "ONE building's verdict in every city -- state (HIDDEN/GREYED/LISTED), the gate REASON, and whether the city already has it. ?type=BUILDING_X&player=N[&city=M]" },
 			{ "/computed/city/yield",               "cityYield",              "the yield TOOLTIP's own census, served: every term of the §2a combine per yield, the refused deposits with the atom that refused them, and the city's traded/onSite bonus lists read LIVE. ?player=N[&city=M]" },
 			{ "/computed/capabilities",      "capabilities",     "the empire ability union as the grantor facts built it: capabilities/canTrade/canWorkOn/canTradeOn. ?player=N" },
 		};

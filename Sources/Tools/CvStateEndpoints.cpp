@@ -360,6 +360,149 @@ CvString StateEndpoints::enablerOperating(int iPlayer, int iCity)
 	return oe_serialize(kRoot);
 }
 
+// THE VISIBLE TRI-STATE, DECOMPOSED. The operating endpoint above answers what a city HAS running; this answers
+// what the enabler OFFERS it and what it refuses, which is the other half of the machine and had no route at all
+// -- so the greyed tier ("go get copper") could not be inspected out of process, only looked at on a screen.
+// ⚑ Every row carries its REASON, because a bare verdict hands the reader a question instead of an answer
+// ([enabler.md] par.6: the gate yields the reason, never a bare bool).
+CvString StateEndpoints::enablerBuildings(int iPlayer, int iCity)
+{
+	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
+	if (ePlayer == NO_PLAYER)
+	{
+		return oe_error("no player");
+	}
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	picojson::value::array kCities;
+	std::vector<int> kInTree;
+
+	for (CvPlayer::city_iterator cityIterator = kPlayer.beginCities(); cityIterator != kPlayer.endCities(); ++cityIterator)
+	{
+		const CvCity* pLoopCity = *cityIterator;
+		if (pLoopCity == NULL)
+		{
+			continue;
+		}
+		if (iCity >= 0 && pLoopCity->getID() != iCity)
+		{
+			continue;
+		}
+		kInTree.clear();
+		pLoopCity->getInTreeBuildings(kInTree);
+
+		picojson::value::array kListed;
+		picojson::value::array kGreyed;
+		std::map<std::string, int> kGreyedByReason;
+
+		for (std::vector<int>::const_iterator it = kInTree.begin(); it != kInTree.end(); ++it)
+		{
+			const BuildingTypes eBuilding = (BuildingTypes)*it;
+			const char* szType = (*it >= 0 && *it < GC.getNumBuildingInfos())
+				? GC.getBuildingInfo(eBuilding).getType() : "?";
+			if (pLoopCity->getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
+			{
+				kListed.push_back(picojson::value(std::string(szType)));
+				continue;
+			}
+			const unsigned char eReason = pLoopCity->getBuildingGateReason(eBuilding);
+			const char* szReason = EnablerDomain::reasonName(eReason);
+			picojson::value::object kRow;
+			kRow["type"] = picojson::value(std::string(szType));
+			kRow["reason"] = picojson::value(std::string(szReason));
+			kGreyed.push_back(picojson::value(kRow));
+			kGreyedByReason[std::string(szReason)] += 1;
+		}
+
+		picojson::value::object kCounts;
+		for (std::map<std::string, int>::const_iterator it = kGreyedByReason.begin(); it != kGreyedByReason.end(); ++it)
+		{
+			kCounts[it->first] = picojson::value((double)it->second);
+		}
+
+		picojson::value::object kRow;
+		kRow["owner"] = picojson::value((double)pLoopCity->getOwner());
+		kRow["id"] = picojson::value((double)pLoopCity->getID());
+		kRow["globalId"] = picojson::value(std::string(
+			CvString::format("%02d-%d", (int)pLoopCity->getOwner(), pLoopCity->getID()).c_str()));
+		kRow["inTree"] = picojson::value((double)kInTree.size());
+		kRow["listed"] = picojson::value(kListed);
+		kRow["greyed"] = picojson::value(kGreyed);
+		kRow["greyedByReason"] = picojson::value(kCounts);
+		kCities.push_back(picojson::value(kRow));
+	}
+
+	picojson::value::object kRoot;
+	kRoot["player"] = picojson::value((double)ePlayer);
+	kRoot["cities"] = picojson::value(kCities);
+	return oe_serialize(kRoot);
+}
+
+// ONE named building, its verdict in every city of the player -- "why can I not build this, and where".
+// The type is matched by its INFOTYPE id string (BUILDING_FORGE), which is what every other surface names it by.
+CvString StateEndpoints::enablerVerdict(int iPlayer, int iCity, const char* szBuilding)
+{
+	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
+	if (ePlayer == NO_PLAYER)
+	{
+		return oe_error("no player");
+	}
+	if (szBuilding == NULL || szBuilding[0] == '\0')
+	{
+		return oe_error("no building -- pass ?type=BUILDING_X");
+	}
+	int iBuilding = -1;
+	for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
+	{
+		const char* szType = GC.getBuildingInfo((BuildingTypes)i).getType();
+		if (szType != NULL && strcmp(szType, szBuilding) == 0)
+		{
+			iBuilding = i;
+			break;
+		}
+	}
+	if (iBuilding < 0)
+	{
+		return oe_error("unknown building type");
+	}
+	const BuildingTypes eBuilding = (BuildingTypes)iBuilding;
+
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	picojson::value::array kCities;
+	for (CvPlayer::city_iterator cityIterator = kPlayer.beginCities(); cityIterator != kPlayer.endCities(); ++cityIterator)
+	{
+		const CvCity* pLoopCity = *cityIterator;
+		if (pLoopCity == NULL)
+		{
+			continue;
+		}
+		if (iCity >= 0 && pLoopCity->getID() != iCity)
+		{
+			continue;
+		}
+		const unsigned char eState = (unsigned char)pLoopCity->getBuildingAvailability(eBuilding);
+		const unsigned char eReason = pLoopCity->getBuildingGateReason(eBuilding);
+
+		picojson::value::object kRow;
+		kRow["owner"] = picojson::value((double)pLoopCity->getOwner());
+		kRow["id"] = picojson::value((double)pLoopCity->getID());
+		kRow["globalId"] = picojson::value(std::string(
+			CvString::format("%02d-%d", (int)pLoopCity->getOwner(), pLoopCity->getID()).c_str()));
+		kRow["name"] = picojson::value(std::string(CvString(pLoopCity->getName()).c_str()));
+		kRow["state"] = picojson::value(std::string(EnablerDomain::stateName(eState)));
+		kRow["reason"] = picojson::value(std::string(EnablerDomain::reasonName(eReason)));
+		// The two facts that explain a HIDDEN verdict a reason cannot: the city already holds it, or it is
+		// simply not in the tree here.
+		kRow["has"] = picojson::value(pLoopCity->hasBuilding(eBuilding));
+		kCities.push_back(picojson::value(kRow));
+	}
+
+	picojson::value::object kRoot;
+	kRoot["player"] = picojson::value((double)ePlayer);
+	kRoot["building"] = picojson::value(std::string(szBuilding));
+	kRoot["cities"] = picojson::value(kCities);
+	return oe_serialize(kRoot);
+}
+
 CvString StateEndpoints::teamCapabilities(int iPlayer)
 {
 	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);

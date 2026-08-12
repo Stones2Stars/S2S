@@ -797,6 +797,12 @@ public:
 	void getAvailableBuildings(std::vector<int>& buildings) const;
 	void getAvailableUnits(std::vector<int>& units) const;
 
+	// THE VISIBLE TRI-STATE -- LISTED **plus** GREYED: everything in the tree, gate held or not. Distinct from
+	// the OFFER above, which is what may be started right now. This is what a build list showing "go get copper"
+	// rows iterates, and what the enabler endpoints decompose ([enabler.md] par.6).
+	void getInTreeBuildings(std::vector<int>& buildings) const;
+	void getInTreeUnits(std::vector<int>& units) const;
+
 	// THE CONTINUE VERDICT -- "may this in-progress build carry on?", reading PAST the queued overlay. It is its
 	// own question, not a flag on the offer: a building in the queue IS queued by definition, so asking the fresh
 	// offer about it would cancel every in-progress build on the production-check sweep.
