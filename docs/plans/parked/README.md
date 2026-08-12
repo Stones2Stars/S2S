@@ -31,7 +31,7 @@ open remainder is the live item.
   system kept for reimplementation), `ranked-target-selection` (design locked in `json.md` §3.3, implementation
   pending).
 - **Performance / other** — `turn-time-optimization`, `codebase-bug-hunt`, `worker-stranded-tiles-reachability`,
-  `surround-destroy-removal-map`, `multimap-zone-rework`, `unified-civilopedia`.
+  `surround-destroy-removal-map`, `multimap-zone-rework`, `unified-civilopedia`, `doc-comment-form`.
 - **Modules** — `module-system-rework` (the inherited C2C module mechanism is not the future one; also records
   why the curator's module exclusions are an intentional boundary, so the dangling refs they leave are not
   chased as curator gaps).

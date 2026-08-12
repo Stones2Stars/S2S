@@ -732,6 +732,9 @@ the total-observability bar below.)
   against the cost of touching the file. Where a whole mechanism went, sweeping its comments out is sanctioned
   work in its own right. ⛔ A blanket regex purge is still the wrong instrument: it eats the comments carrying
   the EDGE reasoning, which is what a comment is still FOR.
+  ⚠ **The FORM a comment takes is a SEPARATE, PARKED question** — real `///<summary>` doc comments are wanted
+  and are *"a separate pass and branch"* (owner), [doc-comment-form.md](docs/plans/parked/doc-comment-form.md).
+  ⛔ Do not convert one while you are in a file, and do not read plain prose on a declaration as a defect.
 
 - **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change.** A stale spec is worse than
   none — the next agent trusts it and builds on the wrong shape. The proactive twin of fix-docs-now.
