@@ -395,21 +395,27 @@
   ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
   `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
   of that overload enumerated — a player asking it with no city still needs an empire answer.
-- Cut the SPACE production accumulators — `CvPlayer::m_iSpaceProductionModifier` and its `CvCity` twin. An
-  ORDINARY `buildRate` cut (owner: *"it's build rate like anything else"*): drop the `processBuilding` push,
-  since the building's own fact already deposits `buildRate.space` into the empire package, delete both members
-  and the dead `applyEvent` writes, and read the package.
-  ⚠ **The `applyEvent` writer makes this LOOK like a derivable/one-shot split, and it is not — NO event authors
-  space production.** The only authorings anywhere are on BUILDINGS, so that path never carries a value. An
-  apply SITE is not an authoring; check the DATA before concluding a slot holds non-derivable state.
-  ⚑ The PROJECT read is the one category that fixes WITHOUT the composition problem the `military` entry hits:
-  `CvPlayer::getProductionModifier(ProjectTypes)` has exactly ONE caller — the city — so the city can read
-  `realizedAtCity` and serve the city-scope rows too, and the player overload goes.
-  ⛔ One live Python consumer gates the binding half: an event-trigger condition reads
-  `CyPlayer::getSpaceProductionModifier`. Re-pointing it at the already-published `CyState::getBuildRateKinds`
-  first needs the `BuildRateKinds` enum published to `CyEnums` — CONSTANTS rather than a `.def` read surface, so
-  permitted ([patterns.md](../../architecture/patterns.md)); without it the call site indexes a magic integer,
-  which is the opaque-slot shape that ruling rejects.
+- Re-home SPACE production onto `military` + `IS_SPACE` and drop the `space` category
+  ([modifier.md](../../specs/modifier.md): there is no `space` category — spacecraft are not a unit class outside
+  the military one). Curator + regen lead, then the engine. What the re-home has to carry:
+  - the BUILDING authorings at both `city` and `empire` scope, and the EVENT authorings beside them
+    (`iSpaceProductionMod`, on the comet-fragment / free-enterprise / V'Ger chains);
+  - the open authoring question the ruling names: the engine gate is on a PROJECT (`isSpaceship`), the qualifier
+    names a UNIT domain — decide which side carries `IS_SPACE` rather than inferring it.
+  ⛔ The two accumulators (`CvPlayer::m_iSpaceProductionModifier` + its `CvCity` twin) are NOT a plain accumulator
+  cut, and both readings recorded here before were wrong. The player member has TWO writers — `processBuilding`
+  (a second maintenance surface duplicating what the building's own fact already deposits) and `applyEvent` (the
+  four events above, which no live source announces, so nothing can re-derive them). The city member's ONLY
+  writer is `applyEvent`. So the derivable half is cut and the event half stays its own serialized store
+  ([state-repositories.md](../../architecture/state-repositories.md) THE GUARD; the `extraHappiness` precedent,
+  [modifier.md §2b](../../specs/modifier.md)) — it does not all fold into the package.
+  ⚠ **The 9 city-scope authorings currently reach NOTHING** — no city-side push exists — so the cut has to serve
+  them, not merely preserve today's behaviour.
+  ⛔ **Do NOT mint a composed getter to keep the old call sites working.** `CvPlayerAI`'s event valuation and the
+  `canDoCometFragment` Python gate both read `CvPlayer::getSpaceProductionModifier`, and preserving that contract
+  so neither has to change is the half-migration tell, not a win
+  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — it was tried and reverted.
+  The group read (`getBuildRateKinds`) is the surface; the consumers move onto it.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).

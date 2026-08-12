@@ -784,9 +784,23 @@ authored shape.
 **`production` vs `buildRate`.** `production` = `getYieldRate100(PRODUCTION)` (total city output — scales every
 build every turn; a flat ADD or city-wide percent). `buildRate` = `getProductionModifier(eItem)` (shrinks the
 COST of a SPECIFIC item, never a per-turn yield), sub-shapes `buildRate.self` /
-`.<scope>.{units|buildings|domains|unitCombats}.{TARGET}` (keyed) / `.<scope>.{military|space|worldWonder|teamWonder|nationalWonder}`
-(category). `militaryProduction`/`spaceProduction` fold into the `buildRate` categories. (The "Versailles bug" =
+`.<scope>.{units|buildings|domains|unitCombats}.{TARGET}` (keyed) / `.<scope>.{military|worldWonder|teamWonder|nationalWonder}`
+(category). `militaryProduction` folds into the `buildRate` categories. (The "Versailles bug" =
 filing an item discount under `production.city`.)
+
+> **⛔ THERE IS NO `space` CATEGORY — SPACE IS `military` QUALIFIED BY `IS_SPACE` (owner).** Spacecraft are not a
+> unit class sitting outside the military one, so a space production boost is the ORDINARY military buildRate with
+> the space domain as its qualifier — never a category of its own. A separate `space` slot is the
+> condition-as-member shape ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates))
+> wearing a kind's name, and it is an invention rather than a legacy shape to preserve.
+> ⚠ **The category mechanism itself is LEGIT and is NOT under review (owner): *"buildRate is a legit mechanic, we
+> do not kill them all."*** `military` and the three wonder tiers stay exactly as they are — this ruling narrows
+> ONE member, and reading it as licence to dissolve the category axis is the over-reach to refuse.
+> ⚑ **What still has to be settled before the re-home lands:** the engine gate is on a PROJECT
+> (`CvProjectInfo::isSpaceship`, the spaceship PARTS) while the qualifier names a UNIT domain, so which side
+> carries `IS_SPACE` — and whether the project plane needs its own qualifier — is an open authoring question, not
+> something to infer. Landing it is a curator + regen change in the same work item
+> ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)).
 
 ---
 
