@@ -569,8 +569,8 @@ void CyEnums::pythonPublish()
 	;
 
 	//	The REVOLUTION group's kinds. Revolutions is Python-authoritative and due its own rework, so this
-	//	vocabulary only carries the authored data faithfully ([legacy-value-calc-map]: revolution is parsed,
-	//	never modelled). ⛔ LOCAL and NATIONAL are DISTINCT MECHANICS, not scope variants -- never collapse
+	//	vocabulary only carries the authored data faithfully -- revolution is parsed, never modelled.
+	//	⛔ LOCAL and NATIONAL are DISTINCT MECHANICS, not scope variants -- never collapse
 	//	them onto the scope axis (CvInfoKinds.h).
 	python::enum_<RevolutionKind>("RevolutionKind")
 		.value("REVOLUTION_AMOUNT", REVOLUTION_AMOUNT)

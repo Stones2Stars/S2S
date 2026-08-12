@@ -166,9 +166,9 @@ slot does pure integer math and never sees the human boundary.
 >
 > **A plot's yield is ONE base package, resolved in isolation BEFORE the city modifiers.**
 > All output from a single plot is computed in **complete isolation** as one base-yield package — `CvPlot::calculateYield`
-> per plot ([calc-map](../reference/legacy-value-calc-map.md) §10.1: `calculateNatureYield`(`getBaseYield`=
-> terrain+feature+river+hills/peak + bonus) + improvement (floored at `-nature`) + route + the keyed/plots flats,
-> `max(0,·)`) — and that result is passed **up the chain**: the city SUMS its worked-plot packages into the §1 `base`.
+> per plot (nature = terrain+feature+river+hills/peak + bonus; + improvement, floored at `-nature`; + route + the
+> keyed/plots flats, `max(0,·)`) — and that result is passed **up the chain**: the city SUMS its worked-plot
+> packages into the §1 `base`.
 > **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or
 > plot component* resolves **inside** this per-plot package, **before** the city-level `(100+Σpercent)` stack ever runs.
 > Today every component-specific buff is **flat** (so the package is a pure sum); should a per-improvement *percentage*
@@ -367,8 +367,8 @@ table is rebuilt it wants one field per named engine term, so a divergence local
   package and rolls DOWN to every city, while the engine applies it on the per-city presence fact, so one
   connected luxury is counted once per holding city and the product handed back to every city. The `cities`
   target lands it in the HOLDING city's package, which is what a luxury means — the cities that HAVE it are
-  happier. The specialist precedent one entity over,
-  [legacy-value-calc-map.md §1.5](../reference/legacy-value-calc-map.md)), **specialists** (city flats; the fractional values are the
+  happier — the same precedent the specialist `cities`-target deposit sets one entity
+  over), **specialists** (city flats; the fractional values are the
   curator's ÷100 de-scale of the legacy latent-×100 — the engine `…/100` at use), **corporations**
   (`HAS_CORPORATION`-conditioned city flats), **techs**/**projects** (empire — projects also the lone `world`
   scope)/**handicaps** (empire flats), and **military units** (`happiness.empire.cities.{unit: IS_MILITARY}`

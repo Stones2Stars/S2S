@@ -101,7 +101,7 @@ enum PyIntrinsicSlot
 	                            // is a reverse lookup and belongs to the edge families, never to a scan of
 	                            // every leader testing this slot ([DEC-one-reverse-view]).
 	                            // (identity.pillageGold). ⚠ NOT the building field of the same name, which is
-	                            // orphaned and unwired ([legacy-value-calc-map.md] par.10.3); this one is live and
+	                            // orphaned and unwired; this one is live and
 	                            // is the improvement's own value.
 	// BONUS_ -- the three TECH gates that bracket a resource's usable life: when it becomes VISIBLE on the map,
 	// when it becomes TRADEABLE by a city, and when it stops counting. -1 for any the bonus does not gate.

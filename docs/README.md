@@ -66,8 +66,7 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/memory-footprint.md](reference/memory-footprint.md)** — where the RAM goes under the 32-bit ceiling: the static clusters (info classes, per-object arrays, cascade caches) vs the per-turn churn; textures/icons are loaded once (shared).
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
 - **The LEGACY censuses** — how the legacy behaves today, so the cascade can replace it:
-  **[legacy-value-calc-map](reference/legacy-value-calc-map.md)** (which getter computes each per-turn value, and
-  from what) · **[legacy-grant-apply-sites](reference/legacy-grant-apply-sites.md)** (where provisions are handed
+  **[legacy-grant-apply-sites](reference/legacy-grant-apply-sites.md)** (where provisions are handed
   over) · **[pedia-read-map](reference/pedia-read-map.md)** +
   **[python-read-map](reference/python-read-map.md)** (what the Python surface consumes).
 - **[reference/python-load-sequence.md](reference/python-load-sequence.md)** — the C++/Python boundary MECHANISM

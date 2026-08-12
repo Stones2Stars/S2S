@@ -389,6 +389,4 @@ difficulty. The decision log would have shown that branch never taken; the code 
 ## See also
 - [decisions ledger](../../architecture/decisions.md) — `DEC-fixedpoint-x100`, `DEC-curator-owns-descale` index
   this doc as their home.
-- [legacy-value-calc-map.md](../../reference/legacy-value-calc-map.md) — the full per-calc
-  DESTROY-pass map this scale work feeds.
 - [modifier.md](../modifier.md) — the §2 arithmetic that consumes ×100 values.

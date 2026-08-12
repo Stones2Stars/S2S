@@ -558,7 +558,7 @@ void InfoValuation::plotBaseYields(const CvModifiers* terrainModifiers, const Cv
 	const CvModifiers* bonusModifiers, const CvModifiers* improvementModifiers, const CvModifiers* routeModifiers,
 	const CvCascadeEvalCtx& evalCtx, int (&plotYields)[NUM_YIELD_TYPES], int (*pNatureYields)[NUM_YIELD_TYPES])
 {
-	// THE ISOLATED PLOT-AS-BASE CALC (modifier.md §2 plot note; legacy decomposition calc-map §10.1): per
+	// THE ISOLATED PLOT-AS-BASE CALC (modifier.md §2 plot note): per
 	// channel -- nature = max(0, terrain + feature + bonus own-output); the improvement floored at −nature
 	// (an improvement can consume the nature yield, never drive the pre-route base negative); + route; the
 	// whole package floored at 0. Every term is the substrate's own untargeted plot-scope output

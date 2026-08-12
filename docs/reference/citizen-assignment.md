@@ -1,8 +1,8 @@
 # Citizen assignment — how a city seats its population
 
 > How `CvCityAI` decides which citizen works which plot and which becomes a specialist. Behaviour as it is
-> today. The VALUATION the decision reads is [legacy-value-calc-map](legacy-value-calc-map.md) §1; this page is
-> the ASSIGNMENT machine on top of it.
+> today. This page is the ASSIGNMENT machine; the valuation it reads is `AI_yieldValue` and its two callers,
+> decomposed under "The valuation the walk reads" below.
 
 ## The one idea — ONE priority list, values calculated once
 
@@ -267,7 +267,6 @@ All are level 3 (the per-candidate tier, [observability.md](observability.md)), 
 for.
 
 ## See also
-- [legacy-value-calc-map.md](legacy-value-calc-map.md) §1 — the yield/commerce valuation these scores read.
 - [yields-growth.md](yields-growth.md) — the food/growth mechanics the growth gates test.
 - [../specs/modifier.md](../specs/modifier.md) §6 — `freeSpecialists` / `allowedSpecialists`, the deposits that
   set the caps this walk re-checks.

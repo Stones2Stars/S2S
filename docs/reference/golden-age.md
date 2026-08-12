@@ -39,7 +39,7 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
 1. **Per-plot yield bonus** — `CvPlot::calculateYield:8403`. **It is NOT a flat "+1 on every worked plot."** It is
    **threshold-gated**: a worked plot gets `+CvYieldInfo.getGoldenAgeYield(y)` **only if** its yield clears
    `CvYieldInfo.getGoldenAgeYieldThreshold(y)`; a plot below the threshold gets nothing. This addend is part of
-   `basePlotYield` ([calc-map](legacy-value-calc-map.md) §10.1).
+   `basePlotYield` — the per-plot isolated base package ([modifier.md §2a](../specs/modifier.md)).
    - **⚠ The threshold IGNORES the plot's improvement & route (counter-intuitive, and load-bearing for faithful reproduction):**
      the test runs on the **PRE-improvement, PRE-route** running yield — `nature + extra + [centre] + playerTerrain +
      seaPlot + getYieldChangeAt + landmark + extra/less-threshold`. The improvement (`:8430`) and route (`:8435`) are
@@ -50,7 +50,7 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
      which no surface currently emits per tile.
 2. **Player base golden-age yield** — `CvCity.cpp:22902`. `getBaseYieldRate` adds `player.getGoldenAgeYield(y)`,
    a flat player-wide per-yield bonus, fed by traits' `getGoldenAgeYieldChanges[]` (`CvTraitInfo.cpp:2263`).
-   Part of `base` (calc-map §1.1) — distinct from the per-plot bonus above.
+   Part of TIER-1 `base` ([modifier.md §2a](../specs/modifier.md)) — distinct from the per-plot bonus above.
 3. **Golden-age commerce** — `CvCity.cpp:11937`. Base commerce adds `100 × player.getGoldenAgeCommerce(c)`, fed by
    traits' `getGoldenAgeCommerceChanges[]` (`CvTraitInfo.cpp:2317`).
 

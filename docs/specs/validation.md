@@ -121,8 +121,7 @@ banned shortcut — 99% of the time the value DOES reconcile once the missing so
 > writer read, the value reproduced and shown to be genuinely non-deterministic (history/order-dependent, demonstrated
 > across MANY instances, with the engine code proving why) — may "streamline the legacy to be deterministic" even be
 > *proposed*, and it then requires explicit owner authorization for that specific case. It is NOT a general licence to
-> change numbers, and this exception must never be cited to skip the mapping work. (The one sanctioned instance + its
-> evidence: [legacy-value-calc-map §1.5](../reference/legacy-value-calc-map.md).)
+> change numbers, and this exception must never be cited to skip the mapping work.
 
 ## ⛔ A GATE THAT IS NOT HONOURED MAKES EVERY DATA CHECK MEANINGLESS (owner)
 

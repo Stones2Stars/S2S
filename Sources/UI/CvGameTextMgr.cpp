@@ -3491,7 +3491,7 @@ void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes
 	}
 	// Everything the religion deposits at the city plane, through the ONE block renderer -- so a religion that
 	// gains a channel needs no edit here. Its SHRINE commerce is authored on the religion too
-	// ([legacy-value-calc-map.md] par.2) and rides these same families.
+	// and rides these same families.
 	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies,
 		sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
@@ -5809,7 +5809,7 @@ void CvGameTextMgr::parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city
 		return;
 	}
 	// The GP rate is the same TWO-TIER shape as a yield rate -- a base the stack multiplies, then the stack
-	// ([legacy-value-calc-map.md] par.9.5) -- so it decomposes the same way. The rate alone cannot say whether a low
+	// -- so it decomposes the same way. The rate alone cannot say whether a low
 	// number is a thin base or a missing modifier, and those move for completely different reasons.
 	const int iBase = city.getBaseGreatPeopleRate();
 	const int iModifier = city.getTotalGreatPeopleRateModifier();
