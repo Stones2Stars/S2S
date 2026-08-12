@@ -395,22 +395,21 @@
   ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
   `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
   of that overload enumerated — a player asking it with no city still needs an empire answer.
-- Split the SPACE production accumulators, which carry a DERIVABLE and a NON-DERIVABLE half in one slot. Both
-  `CvPlayer::m_iSpaceProductionModifier` and its `CvCity` twin are written by `applyEvent` (genuine one-shot
-  event state, [save.md par.5](../../specs/save.md)) AND the player's is also pushed by `processBuilding` from a
-  building's empire-scope `buildRate.space` — which the building's own fact already deposits into the empire
-  package. So the derivable half is maintained twice and the production read takes the accumulator, not the
-  package.
-  ⛔ Cutting the push alone is WRONG and this is the trap to name: an existing save has both halves already
-  summed into the stored value, so removing the writer leaves the baked derivable contribution in place and the
-  package adds it again. Recomputing instead WIPES the event grant.
-  ⚑ This is the shape [state-repositories.md](../../architecture/state-repositories.md) names as what actually
-  poisoned delta-deriving — a one-shot grant baked into the same slot as the derivable deposits, maintainable by
-  neither mechanism. The prescribed resolution is the one the building-commerce event grant already uses: the
-  event half moves to its OWN persisted store, the derivable half is dropped and read from the package, and the
-  reader sums the two.
-  ⚠ The CITY twin is event-only, so it is the simpler half — but it must move together with the player's or the
-  read composes two different models.
+- Cut the SPACE production accumulators — `CvPlayer::m_iSpaceProductionModifier` and its `CvCity` twin. An
+  ORDINARY `buildRate` cut (owner: *"it's build rate like anything else"*): drop the `processBuilding` push,
+  since the building's own fact already deposits `buildRate.space` into the empire package, delete both members
+  and the dead `applyEvent` writes, and read the package.
+  ⚠ **The `applyEvent` writer makes this LOOK like a derivable/one-shot split, and it is not — NO event authors
+  space production.** The only authorings anywhere are on BUILDINGS, so that path never carries a value. An
+  apply SITE is not an authoring; check the DATA before concluding a slot holds non-derivable state.
+  ⚑ The PROJECT read is the one category that fixes WITHOUT the composition problem the `military` entry hits:
+  `CvPlayer::getProductionModifier(ProjectTypes)` has exactly ONE caller — the city — so the city can read
+  `realizedAtCity` and serve the city-scope rows too, and the player overload goes.
+  ⛔ One live Python consumer gates the binding half: an event-trigger condition reads
+  `CyPlayer::getSpaceProductionModifier`. Re-pointing it at the already-published `CyState::getBuildRateKinds`
+  first needs the `BuildRateKinds` enum published to `CyEnums` — CONSTANTS rather than a `.def` read surface, so
+  permitted ([patterns.md](../../architecture/patterns.md)); without it the call site indexes a magic integer,
+  which is the opaque-slot shape that ruling rejects.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
