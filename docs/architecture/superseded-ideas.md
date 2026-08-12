@@ -411,3 +411,18 @@
     seeker's `detection` list (qualified `{unit: HAS_<SKILL>}`) replace the per-type tables, and
     `visibilityIntensityRange` + its substrate variants are gone outright — the contest rides vision's own reach.
     **Don't reinstate a per-invisible-type table or a second range system for detection.**
+
+36. **NOMADIC START** — a founding restriction behind `#define NOMADIC_START`: a unit could not `MISSION_FOUND`
+    until its team held `TECH_SEDENTARY_LIFESTYLE` *(dead, owner: "it does not work, and never has … I have
+    serious doubts we can actually make it a compelling game mechanic")*. Two guarded blocks in
+    `CvSelectionGroup`, plus the commented-out `#define`; deleted whole.
+    ⛔ **So do not "re-enable nomadic start."** There is no working implementation to switch on and the concept
+    is not wanted. If a start-condition of this kind is ever built, it is a `GAMEOPTION_*` evaluated live
+    ([DEC-entity-gate](decisions.md#dec-entity-gate)), never a compile switch.
+    ⚠ **WHY it never worked is NOT established, and the investigation is a trap worth naming.** The obvious
+    reading — that the `TECH_SEDENTARY_LIFESTYLE` global-define binding is unbound, so the gate resolved to
+    `NO_TECH`, which `CvTeam::isHasTech` answers TRUE for — does not survive its own control: `TECH_TRIBALISM`,
+    the other `TechTypes` entry in the same `DO_FOR_EACH_ENUM_GLOBAL_DEFINE` table, is equally absent from the
+    XML defines. ⇒ Reasoning about a tech binding from `GlobalDefines.xml` says nothing here; the tech itself is
+    real and is the first era-gate tech. The cause is unknown and does not need to be known — the mechanic is
+    gone.
