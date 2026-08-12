@@ -395,23 +395,22 @@
   ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
   `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
   of that overload enumerated — a player asking it with no city still needs an empire answer.
-- Serve the PREDICATE-FILTERED `units` buildRate in the engine. The curator now emits the spec shape
-  (`buildRate.<scope>.units.percent`, entry `{value, enabled: IS_MILITARY | IS_SPACE}`), so the category
-  channels `BUILD_RATE_MILITARY` / `BUILD_RATE_SPACE` are authored by NOTHING and every read of them answers 0 --
-  data ahead of its consumer, which is the reported direction, but it is a live hole to close.
+- DELETE the `BUILD_RATE_MILITARY` / `BUILD_RATE_SPACE` kinds and move their reads onto the predicate-filtered
+  `units` target. ⛔ They are a ROLLERSKATE, not channels waiting for data (owner): nothing should ever author
+  them, so the vocabulary entries go — the enumerators in `CvInfoKinds.h` and their name rows in
+  `CvInfoKinds.cpp` — and are not left standing to be re-authored.
   - the reads to move: the unit gate in `CvPlayer::getProductionModifier(UnitTypes)`, the project gate in
-    `CvPlayer`/`CvCity::getProductionModifier(ProjectTypes)`, and the AI valuations in `CvCityAI`;
-  - the shape: a plural-target entry is resolved against the CANDIDATE, so the read evaluates each entry's
-    predicate against the unit being built -- never a scope-package sum, which would hand every unit the
-    space rows ([modifier.md §5](../../specs/modifier.md): folding a keyed/filtered entry into the scope slot is
-    silently, plausibly wrong).
-  - the two category kinds retire with the last read; the three wonder tiers are untouched.
-  ⚠ The city-scope authorings reached NOTHING before this (no city-side push existed), so the engine side is
-  serving them for the first time -- not preserving today's behaviour.
+    `CvPlayer`/`CvCity::getProductionModifier(ProjectTypes)`, and the `CvCityAI` building valuations;
+  - the shape: a plural-target entry resolves against the CANDIDATE, so the read evaluates each entry's
+    predicate against the unit being built — never a scope-package sum, which would hand every unit the space
+    rows ([modifier.md §5](../../specs/modifier.md): folding a filtered entry into the scope slot is silently,
+    plausibly wrong).
+  ⚠ The city-scope authorings reached NOTHING before the re-curation (no city-side push existed), so the engine
+  side is serving them for the first time rather than preserving today's behaviour.
   ⛔ **Do NOT mint a composed getter to keep the old call sites working.** Preserving
   `CvPlayer::getSpaceProductionModifier` so the AI valuation and the `canDoCometFragment` Python gate need no
   edit is the half-migration tell, not a win
-  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) -- it was tried and reverted.
+  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — it was tried and reverted.
 - Cut the EVENT production boost. Events author YIELDS, not production modifiers, and that stays true (owner) --
   `iSpaceProductionMod` is the only production field on an event and the comet-fragment / free-enterprise /
   V'Ger chains are its whole population. Remove the authorings + the schema element, `CvEventInfo`'s member and
