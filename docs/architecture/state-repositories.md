@@ -217,6 +217,19 @@ game the same member is simply frozen at zero — the two failure modes look com
 censuses cannot see it (the value is not in a package at all). ⛔ So it is not found by reading code around a bug — it is
 found by running the detector over the whole class.
 
+> **⛔ RUN THE THIRD LEG AGAINST THE MEMBER, NEVER ONLY AGAINST THE GETTER — a reader is often named for the
+> ANSWER it computes rather than for the member it reads.** The leg asks whether the value is still consumed,
+> and a getter-name grep answers a narrower question: it finds the readers that spell the member's stem and
+> misses every one that does not. ⚑ Worked, and it changed the disposition rather than merely the count: a
+> bonus-keyed city map showed a callerless changer and a callerless getter — apparently a plain two-way
+> deletion — while a THIRD function iterated the map directly and carried none of the stem in its name. It too
+> turned out to have no callers, so the cut stood; had it had one, the member would have been live and the
+> "dead both ways" reading would have deleted a consumed value.
+> ⇒ **Grep the MEMBER, take the union of what touches it, and only then ask which legs are dead.** ⚠ This is the
+> same class as the two blind spots already known on the getter side (an INLINE header getter, and a getter
+> whose name does not contain the member stem) — three faces of one mistake: trusting a NAME to enumerate a
+> READ. A fourth face is the Python/`Cy` consumer, which no engine-side grep sees at all.
+
 ⚑ **THE DATA SIDE OF THE SAME DEFECT IS THE `unkinded-member` CENSUS**, and the two should be read together: a
 family member the parser cannot kind is an authored deposit dropped at load, and the dead accumulator beside it is
 the legacy carrier that used to hold that very value. Where they pair, the quantity is missing END TO END — the
@@ -645,8 +658,8 @@ class that rule does not reach, and the reason is structural rather than an exem
 
 ⇒ **So a pathfinding cache is WANTED, and deleting one is a regression.** `PATHFINDING_CACHE` /
 `PATHFINDING_VALIDITY_CACHE` are legitimate; so is `CvPlot`'s path-validity memo and the culture-distance
-cache ([legacy-value-calc-map.md](../reference/legacy-value-calc-map.md) already classes `cultureDistance`,
-culture spread and the property propagators as SPATIAL permanent carve-outs, for exactly this reason).
+cache — `cultureDistance`, culture spread and the property propagators are all SPATIAL permanent carve-outs,
+for exactly this reason.
 
 ⛔ **What the carve-out does NOT license.** It is scoped to results that are genuinely spatial:
 - **not** an ordinary derived value that merely feels expensive — if a fact can name what moved it, it is a

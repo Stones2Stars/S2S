@@ -66,9 +66,8 @@ cache each turn because many things can change distance."*
 | `CvCity::readBody` (`CvCity.cpp:13099`) | the load |
 
 **RULED OUT — it is not deletable, and not delta-maintainable like a package.** A shortest path moves
-NON-LOCALLY when terrain or a route changes, so it is not a sum and the maintained-sum shape does not reach it;
-[legacy-value-calc-map.md](../../reference/legacy-value-calc-map.md) already classifies `cultureDistance` as
-**SPATIAL (#429-adjacent)**, a permanent carve-out. The mechanic stays.
+NON-LOCALLY when terrain or a route changes, so it is not a sum and the maintained-sum shape does not reach it.
+`cultureDistance` is **SPATIAL**, a permanent carve-out. The mechanic stays.
 
 **NOT YET KNOWN — the designed fix.** The obvious direction is to move the recompute OFF the read and onto the
 invalidation (rebuild where it is cleared, so the read becomes the bare fetch it is specified to be) — but that
@@ -841,7 +840,7 @@ scan bugs rather than fix them.
   Plot and specialist yields are compared against each other in the citizen-assignment decision, so a scale
   mismatch on ONE side does not merely mis-tune it — it makes one option dominate absolutely.
   ⚑ Why the suspicion is well-founded rather than a guess: a specialist's yield carries its OWN percent layer
-  before it joins BASE and takes the city modifier ([legacy-value-calc-map] §1.5 — two distinct percent stacks),
+  before it joins BASE and takes the city modifier ([modifier.md §2a](../../specs/modifier.md) — two distinct percent stacks),
   and the per-specialist "all" source is EMPIRE-wide, so the two sides of this comparison genuinely travel
   different paths to the same unit.
   ⚠ The failure signature to look for is [fixed-point-and-scales] §5's: a decision that never varies, or one
@@ -971,6 +970,39 @@ fabricated number.
 was not re-bound — it now reads `CyState::getCityYieldTerms`, the SAME decomposition the `/computed` census
 renders, because a tooltip IS a census and two computations of one number drift.
 
+
+## THE `CyCity` WRAPPER STILL DECLARES ~297 UNPUBLISHED METHODS — the C++ half of the same disconnect
+
+**PROVEN — measured.** `CyCity.h` declares **~301** methods; `CyCity::pythonPublish` emits exactly **FOUR**
+`.def`s — `getOwner` / `getID` / `getX` / `getY`, the IDENTITY SET
+([patterns.md](../../architecture/patterns.md)). Everything else is an **unbound outlaw**: it compiles, it
+forwards to a live `CvCity` method, and no script can ever reach it.
+
+⚠ **This is the OTHER half of the entry above and must not be conflated with it.** That one counts dead PYTHON
+call sites; this counts dead C++ WRAPPER methods. Clearing either leaves the other standing, and a clean grep
+for one says nothing about the other.
+
+⛔ **The disposition is settled and needs no ruling: DELETE.** *"A dead legacy Python getter is an OUTLAW, shot
+on sight"*, and for a `Cy` binding the ONLY fix is deletion — never re-pointing or widening
+([roadmap.md](roadmap.md); [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+
+**⛔ WHAT MUST SURVIVE THE CUT, verified — deleting the file wholesale would break the KEPT direction.**
+- **The `class_<CyCity>` registration itself**, carrying its four defs. It is the type IDENTITY that lets a city
+  cross the boundary at all; the marshaller throws at runtime without a registered converter
+  ([patterns.md](../../architecture/patterns.md)).
+- **The constructor and the underlying-pointer accessor.** `CyCity` is CONSTRUCTED in six engine/wrapper sites —
+  `CvGameObject::createPythonWrapper`, `CyGame::getHolyCity`/`getHeadquarters`, `CyPlayer::initCity`/`getCity`/
+  `getCapitalCity`/`firstCity`/`nextCity`, `CyPlot::getPlotCity`/`getWorkingCity`, `cyGetCity` — and several
+  wrappers take a `CyCity*` PARAMETER and unwrap it (`CyPlayer::acquireCity`,
+  `CyPlayer::getAdvancedStart*Cost`, `CyPlot::isConnectedTo`, `CyGame::cityPushOrder`,
+  `cyPlotCityXYFromCity`). Those callers are the KEPT engine→Python direction.
+⇒ **So the cut is "everything but the identity set, the ctor and the unwrap accessor", not the file.**
+
+⚑ **Two were already taken as a worked precedent** (`getImprovementFreeSpecialists` /
+`changeImprovementFreeSpecialists`) — no `.def`, so unbound; their one Python caller sits in
+`WorldBuilder.copyCityStats`, which raises today and is covered by §12's block. Nothing that worked stopped
+working.
+⚠ **`CyUnit` is the same shape and wants the same census** before either is called done.
 
 ## Engine→Python IDENTITY conversion left 46+ handlers dereferencing a tuple
 
@@ -1140,6 +1172,48 @@ outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
 ⚠ **`Revolution/RevEvents.onBuildingBuilt` is broken and is deliberately NOT on this list.** Nothing registers
 it — `RevolutionInit` imports the module and binds only `kbdEvent` / `GameStart` / `OnLoad` — so it cannot fire,
 and Revolution is a carve-out owed its own rework. ⛔ Do not "fix" it into the live set.
+
+## MILITARY HAPPINESS IS SERVED FROM A FROZEN SAVE VALUE, AND ITS REPLACEMENT READ DOES NOT EXIST
+
+**PROVEN — the three-leg detector fires.** `CvPlayer::m_iHappyPerMilitaryUnit` is serialized
+(`WRAPPER_READ`/`WRITE` in `CvPlayer::read`/`write`), its changer `changeHappyPerMilitaryUnit` has **no caller
+left anywhere in the tree**, and its getter is still read — so every game scales military happiness by whatever
+history a save carries, and a NEW game by zero.
+
+**PROVEN — the data authors the replacement, and it is the ruled shape.** **17 entities** author
+`happiness.empire.cities.{unit: IS_MILITARY, value: N}` — all CIVICS and TRAITS (`civic_survival`,
+`civic_despotism`, `civic_green` at −1, and the `charismatic` / `cowardly` / `imperialist` trait ladders). That
+is exactly [modifier.md §2b](../../specs/modifier.md)'s *"epoch-stable per-unit multiplier, e.g. a civic's
+per-military-unit VALUE"*, and `CvCity::getMilitaryHappiness` already has the ruled fold shape:
+`getMilitaryHappinessUnits() * <perUnit>` — `perUnit × liveCount`, unit-carried value riding live ON TOP
+([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)).
+
+**PROVEN — the read is missing, not merely unwired.** Every entry carrying a `unitQual` is deliberately SKIPPED
+by both the gather and the valuation (`CvInfoValuation.cpp`, several sites, commented *"unit-carried values ride
+ON TOP live"*). `CvModEntry::unitQual` compiles and `CvDepositIndex` carries it; nothing sums it. So the quantity
+is missing END TO END — the data lands nowhere, the carrier is fed by nothing, and the consumers read save
+history ([state-repositories.md](../../architecture/state-repositories.md) names this pairing exactly).
+
+**⛔ NOT TAKEN, because both directions are a STRUCTURE call rather than a mechanical cut**
+([DEC-WF-surface-sprawl](../../architecture/decisions.md#dec-wf-surface-sprawl)):
+- **Building the read** needs a way to match an entry's compiled `unitQual` CONDITION TREE against a named
+  predicate. The per-entity helpers are the right shape (a keyed deposit is an entry-list read over the live
+  sources, [modifier.md §5](../../specs/modifier.md)) and the CALLER walking civics + traits is the established
+  pattern — but ⛔ [todo.md](todo.md) bans folding this into `keyedTargetSum`, which answers a NAMED target id
+  while this filters on a PREDICATE. Where that matcher lives, and whether it generalizes past `IS_MILITARY`,
+  is undecided.
+- **Cutting the accumulator** is not one-line either: the getter has **9 consumer sites** across `CvCityAI`
+  (×6), `CvPlayerAI` (×2) and `CvCity::getMilitaryHappiness`, several of which GATE AI behaviour on whether the
+  player gets military happiness at all — so a bare deletion rewrites AI decisions, not just a number.
+
+⚠ **Do not confuse the two `getHappyPerMilitaryUnit`s.** `CvPlayerAI` also calls
+`kCivic.getHappyPerMilitaryUnit()` — the INFO getter, i.e. the civic's own AUTHORED value, which is live and
+correct. Only the PLAYER accumulator is frozen.
+
+⚑ Whichever direction is taken, the accumulator's cut is the uniform one
+([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)) and its changer
+body carries a rider to audit — an `AI_makeAssignWorkDirty()` on the unlimited path
+([save.md §6](../../specs/save.md)).
 
 ## THE FREE-SPECIALIST READ REBUILDS AN EVAL CTX AND WALKS THE EMPIRE, ~40x PER CITIZEN
 

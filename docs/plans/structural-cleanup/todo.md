@@ -142,8 +142,9 @@
   `changeMaxConscript`, `changeSpecialistValidCount`, hurry counts) stays.
 - Sweep the WRITERLESS SERIALIZED ACCUMULATORS — run the detector in
   [state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md) over
-  `CvCity`/`CvPlayer`. Known instances to start from: `CvCity::getBonusDefenseChanges` and
-  `CvPlayer::getBonusCommerceModifier`.
+  `CvCity`/`CvPlayer`. Known instances to start from: `CvPlayer::changeHappyPerMilitaryUnit` and
+  `CvCity::changeImprovementFreeSpecialists` — both callerless changers whose getters still have real
+  consumers, so each needs its read re-pointed or dropped, never a plain deletion.
 - Serve the UNIT-QUALIFIED entry sum. `CvModEntry::unitQual` compiles the qualifier and both the gather and the
   valuation deliberately skip it
   ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top) — a unit-carried value
@@ -617,13 +618,6 @@
   [AGENTS.md](../../../AGENTS.md) Conventions §Design.
 - Run the dead-code / dead-XML pass — tooling generates CANDIDATES only; every removal verified against
   source/data and test-loaded, one subsystem at a time.
-- Delete the `#ifdef` ATTICS — a guarded block whose symbol is defined nowhere AND has no commented-out
-  `#define` either ([AGENTS.md](../../../AGENTS.md) Conventions §Design — the test, the off-switch exception,
-  and the predefine exclusions are stated there in full).
-  ⚠ `GLOBAL_WARMING` carries a commented-out `#define` and is nonetheless owner-ruled DEAD
-  ([economy.md](../../reference/economy.md)), so it goes WITH the attics — the switch marks a candidate, never a
-  verdict. Its nuke counter (`getNukesExploded` and its changer) is live outside the feature and STAYS; only the
-  warming machinery and the orphaned `GLOBAL_WARMING_*` defines go.
 ## Green-up (after the structure, never ahead of it)
 
 - Engine-repair debt: the bare Engine includes · the property-manipulator helpers · `CvCity.h`'s functor row.
