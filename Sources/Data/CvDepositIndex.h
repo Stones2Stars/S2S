@@ -245,14 +245,6 @@ public:
 	// unit-segment source, shared with the [READJSON] census sample lines.
 	static const char* unitSegment(CvCascUnit u);
 
-	// Lazily-cached SEGMENT ids for per-info-type key strings (TYPE string -> segment id) -- kills all string
-	// handling in the per-plot keyed walks. -1 = that TYPE was never authored as a deposit key (nothing matches).
-	// Hits cache forever; misses re-lookup (append-only interner, see the header note).
-	static int segIdForTerrain(int i);
-	static int segIdForFeature(int i);
-	static int segIdForBonus(int i);
-	static int segIdForImprovement(int i);
-	static int segIdForBuilding(int i);
 };
 
 #endif // CV_CASCADE_DEPOSIT_INDEX_H

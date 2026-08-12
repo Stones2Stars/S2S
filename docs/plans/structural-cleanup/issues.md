@@ -580,9 +580,6 @@ scan bugs rather than fix them.
   the on-site verdict ([contexts.md](../../architecture/contexts.md) § THE VICINITY SPLIT — the storage is
   already right, the ADDRESSING is what conflates them). ⚠ Reaches the authored `vicinity:` key, `CvCondition`
   and the evaluator, so it is a STRUCTURE call, not a sweep — owner input first.
-- **Wire `DepositIndex::segIdFor*`** — a five-entry string-elimination optimizer whose header says it "kills all
-  string handling in the per-plot keyed walks". It has no caller and the per-read `lookupSegment(std::string(...))`
-  it was built to remove is still on the per-plot turn path.
 - **Give `ev_countCore` a `TAG_` branch** so `CvCascadeTally::countUnitsWithTag` is reachable. The count-atom
   dispatcher branches on specialist/building/tech/unit only, so an authored `{TAG_X, min:N}` count silently falls
   through to presence and answers 0/1. ⚠ Latent — no data authors one yet.
