@@ -404,16 +404,19 @@ table is rebuilt it wants one field per named engine term, so a divergence local
   DERIVABLE trait+tech, which the calc NETS OUT (− engine trait/tech + the cascade nets), keeping only the
   event/unattributed residual. Wiring these as proper cascade event grants is **event-rework scope** (#425 events
   stay Python / the F3 grants apply-loop), NOT a modifier-cut ride-in to fix here.
-- **GATE FLAGS** — `isNoUnhappiness` / `isNoCapitalUnhappiness` / `isNoUnhealthyPopulation` /
-  `isBuildingOnlyHealthy` zero their side wholesale. They are **HARD OFF-SWITCHES, never modifiers (owner)**:
-  while such a building is present *"unhappiness does not exist in the city"* — the side ceases to exist rather
-  than being reduced. The building half lives in `attributes` (json §8) as a held city-scope intrinsic, read by
-  `CvBuildingInfo::isNoUnhappiness()` and its siblings and counted city-side (`changeNoUnhappinessCount`).
-  ⛔ **ZERO buildings author one, and that is DELIBERATE, not a data gap — the mechanic is "wildly overpowered"
-  (owner).** So the chain is wired and every read answers false: it is live-but-inert HEADROOM (the
-  corporation-obsolete class, [culture-religion-research.md](../reference/culture-religion-research.md)).
-  Finding a wired chain with no authorings is therefore never licence to author one, and equally never a reason
-  to purge the flag as unused.
+- **GATE FLAGS** — the `abolished<Channel>` amenity family ([json.md §8](json.md)) zeroes its side wholesale.
+  They are **HARD OFF-SWITCHES, never modifiers (owner)**: while a live grantor confers one *"unhappiness does
+  not exist in the city"* — the side ceases to exist rather than being reduced, so the combine drops the whole
+  channel instead of subtracting from it.
+  ⛔ **The gate asks the CITY, never a grantor** — `CvCity::isNoUnhappiness` /
+  `cityHasNoUnhealthyPopulation` / `cityHasBuildingOnlyHealthy` are folds over the city's `amenities`
+  ([contexts.md](../architecture/contexts.md)), so a WHERE rides the grant's own `enabled` condition and is
+  evaluated per receiver at fold time. There is no hand-named counter and no per-key grantor read to reach for.
+  ⚑ **No BUILDING authors one, and that is DELIBERATE — the mechanic is "wildly overpowered" (owner)** — so
+  finding the building side unauthored is never licence to author one, and equally never a reason to purge the
+  key as unused. ⚠ The CHANNEL is nonetheless LIVE: a civic confers `abolishedAnger` gated `IS_CAPITAL`, which
+  is what retired the legacy key that baked the capital into its name
+  ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates)).
 - **`unhealthyPopulation`** (= `max(0, pop − angryPop)` unless flagged) enters the BAD side as the engine's
   population term — a state-derived input (it reads the happiness verdict; the calc computes it from its own
   happiness result, never reads the engine's).

@@ -140,25 +140,32 @@
   per-flag POLICY counters retire onto `EmpireContext.policies` instead
   ([contexts.md](../../architecture/contexts.md)); genuine non-cascade state (the revolution index,
   `changeMaxConscript`, `changeSpecialistValidCount`, hurry counts) stays.
-- Sweep the WRITERLESS SERIALIZED ACCUMULATORS — run the detector in
-  [state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md) over
-  `CvCity`/`CvPlayer`. Known instance to start from: `CvPlayer::changeHappyPerMilitaryUnit` — a callerless
-  changer whose getter still has real consumers, so its reads need re-pointing or dropping, never a plain
-  deletion. ⚠ Its military-happiness read is a structure call and is recorded in [issues.md](issues.md).
+- Sweep the WRITERLESS SERIALIZED ACCUMULATORS over `CvCity`/`CvPlayer` and cut every hit with the uniform
+  mechanism ([state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md)).
+  Run the detector's THIRD LEG against the MEMBER, never only the getter — a reader is often named for the
+  ANSWER it computes rather than for the member it reads. Work it together with the unkinded-member census
+  below: a matched pair is the data and carrier sides of ONE missing quantity.
+  ⚠ A genuine one-shot event-state writer (`applyEvent`) correctly stays serialized
+  ([save.md §3](../../specs/save.md)); every other hit re-points.
+  ⛔ A hit is never a plain deletion until the third leg says so — where the getter still has consumers, the
+  read is re-pointed at the cascade or dropped, and the REPLACEMENT is named in `savemigration.txt`.
 - Serve the PER-SCALER RATE for a given count-key — "how much does this source deposit per unit of
-  `per: {type: X}`", the count-axis sibling of the unit-qualified sum below. ⛔ Not `keyedTargetSum`: that
-  matches a NAMED TARGET, this filters on the `per` key and wants the value UNSCALED (the rate, not
-  rate × current count). The live demand is an AI valuation — "what would one more plot of this improvement
-  give me" — which the presence-pinning `CvCascadeHypothetical` cannot express either.
-- Serve the UNIT-QUALIFIED entry sum. `CvModEntry::unitQual` compiles the qualifier and both the gather and the
-  valuation deliberately skip it
-  ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top) — a unit-carried value
-  rides live, never cached); what's missing is the read that sums entries matching a unit predicate over the
-  live sources, so those deposits reach nobody today.
-  ⚑ The live case: `happiness.empire.cities.{unit: IS_MILITARY}` ([modifier.md §6](../../specs/modifier.md)) —
-  the consumer wants the epoch-stable per-unit value, folded by the city as `perUnit × liveCount`.
-  ⛔ Not `keyedTargetSum` with a wider signature — that answers a NAMED target id, this filters on a PREDICATE
-  per candidate unit; a different axis, don't fold them.
+  `per: {type: X}`". ⛔ Not `keyedTargetSum`: that matches a NAMED TARGET, this filters on the `per` key and
+  wants the value UNSCALED (the rate, not rate × current count). The live demand is an AI valuation — "what
+  would one more plot of this improvement give me" — which the presence-pinning `CvCascadeHypothetical` cannot
+  express either.
+- Serve the ATOM-CROSSING WHAT-IF — "what would this scope's already-held deposits deliver if predicate X
+  became true" — the atom-axis sibling of the per-scaler rate above. The apply side is built and live
+  (`DepositIndex::gatedByPredicate` → `mc_applyGated`, plane C); what is missing is the VALUATION read over
+  the same index, resolving each gated entry as-if-held for the sources the scope actually holds
+  (`hasAppliedSource` is the O(1) liveness test the apply walk already uses).
+  ⚑ The live demand is a candidate that flips a STATE rather than depositing: pricing a power plant is
+  "what do this city's `HAS_POWER`-gated deposits pay once it is powered". Its accumulator is cut, so the
+  term is currently absent rather than wrong.
+  ⛔ `CvCascadeHypothetical` cannot express it — it pins entity ids per edge bucket, and a bare predicate is
+  not an entity ([contexts.md](../../architecture/contexts.md) § THE EVAL CTX). Widening it to carry
+  predicates is a STRUCTURE call, not a sweep: settle the shape before building either read, since the two
+  differ only in which index they walk.
 - Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
@@ -220,12 +227,6 @@
   summed answer is wrong by construction. Their only callers are the Python bindings; the live feed uses
   `updateExtraYieldThreshold`'s min selection instead.
 
-- **Run the LEGACY-ACCUMULATOR CUT detector over `CvCity` and `CvPlayer`** and cut every hit with the uniform
-  mechanism ([state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md)).
-  Work it together with the unkinded-member census below — a matched pair is the data and carrier sides of one
-  missing quantity. ⚠ A genuine one-shot event-state writer (`applyEvent`) correctly stays serialized
-  ([save.md §3](../../specs/save.md)); every other hit re-points. (`CvPlayer::m_bonusExport` / `m_bonusImport` is a
-  confirmed live hit: still fully serialized with no re-derivation from held deals on load.)
 - **Land the UNKINDED MEMBERS — authored deposits `readJson` drops.** ⛔ Read the `[READJSON] unkinded-member
   <family>.<member>` census before anything else on this — it is the authoritative worklist, one grep of the
   load log. Each one resolves to exactly one disposition:

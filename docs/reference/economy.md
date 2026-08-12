@@ -121,7 +121,8 @@ supply + corporate maintenance.
 ## Happiness + health (city)
 
 - **Net happiness** = `happyLevel − unhappyLevel`; negative → `angryPopulation`. Bypass: `isNoUnhappiness` zeroes
-  unhappy entirely; `isCapital && isNoCapitalUnhappiness` too.
+  unhappy entirely — the city's `abolishedAnger` fold, so a capital-only grant is the grantor's own `IS_CAPITAL`
+  condition resolving at fold time rather than a second test beside it ([modifier.md §2b](../specs/modifier.md)).
 - **Percent-anger** (scale with pop via `angerPct·pop / PERCENT_ANGER_DIVISOR(1000)`): overcrowding, no-military,
   foreign-culture, enemy-religion-war, hurry/conscript/defy/rev timers, war-weariness, rev-index (only when > 325),
   civic. **Flat anger** (additive): buildings, features, bonuses, religion, commerce, area/player buildings, extra,

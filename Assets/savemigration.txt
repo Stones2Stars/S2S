@@ -1917,3 +1917,24 @@ CvUnit::targetUnitCombatCount            (decorated int, per UNITCOMBAT)
 | ⚠ The changer's riders (AI_setAssignWorkDirty + setInfoDirty on the capital) need no new home: the fold
 | announces its own crossings and a CIVIC change is already a ruled dirty trigger.
 CvPlayer::m_iNoCapitalUnhappiness        (int)
+========================
+| The city's POWER-GATED yield modifier -- the legacy carrier for "this much more yield while the city is
+| powered".
+| Stranded on all three legs -- changePowerYieldRateModifier had NO caller, the array kept deserializing, and
+| an AI building valuation read it to price a power plant.
+| REPLACEMENT: already built AND authored. The value is an ordinary CONDITIONED percent deposit --
+| `<yield>.city.percent` gated `enabled: "HAS_POWER"` (16 authorings today: Manufacturing Plant +40%
+| production while powered, and its kin) -- held in the city's own percent package. Plane C applies and
+| withdraws it on the power crossing: SEVT_CITY_POWER_ADDED / _REMOVED routes
+| DepositIndex::gatedByPredicate(CASC_PRED_HAS_POWER) through mc_applyGated, so the slot is correct at the
+| instant power moves and the accumulator was a frozen twin of it.
+| ⚑ The predicate index is the atom sibling of gatedByType/gatedByToken -- keyed by CvCascPredKind, so a bare
+| predicate gates its deposits exactly as a named type does.
+| ⚠ ONE stated behaviour change, and it removes a garbage input rather than a real one: the AI's building
+| valuation no longer adds a power-unlock term when scoring a power plant. With the writer long dead that term
+| read 0 on every game started since, and stale save history on older ones.
+| ⛔ The honest gap it leaves is the WHAT-IF, not the value: "what would this city's already-held power-gated
+| deposits deliver if power flipped on" has no read on the valuation surface -- CvCascadeHypothetical pins
+| entity ids by edge bucket and a bare predicate is not an entity. Recorded in the todo as the atom-crossing
+| sibling of the per-scaler rate read; do NOT answer it by reviving an accumulator.
+CvCity::m_aiPowerYieldRateModifier       (int array, NUM_YIELD_TYPES)

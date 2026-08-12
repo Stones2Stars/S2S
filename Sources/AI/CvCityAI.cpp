@@ -6644,14 +6644,8 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 		kBuilding.expectedYieldModifiers(
 			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aYieldModifiers);
 
-		int iMod = aYieldModifiers[eYield] / 100;
+		const int iMod = aYieldModifiers[eYield] / 100;
 
-		// The candidate would switch the city's POWER on, which is not its own deposit but a state flip that
-		// lets the city's power-gated modifier apply. `providesPower` is the authored attribute (json §8).
-		if (!isPowered() && kBuilding.providesAmenity(CLS_AMENITY_PROVIDES_POWER))
-		{
-			iMod += getPowerYieldRateModifier(eYield);
-		}
 		iValue += iBaseRate * iMod / 12;
 	}
 	return iValue;

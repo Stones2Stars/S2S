@@ -970,9 +970,6 @@ public:
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
 
-	int getPowerYieldRateModifier(YieldTypes eIndex) const;
-	void changePowerYieldRateModifier(YieldTypes eIndex, int iChange);
-
 
 	int getTradeYield(YieldTypes eIndex) const;
 	int totalTradeModifier(const CvCity* pOtherCity = NULL) const;
@@ -1682,7 +1679,6 @@ protected:
 	int* m_paiSpecialistBannedCount;
 
 	int* m_aiYieldRateModifier;
-	int* m_aiPowerYieldRateModifier;
 	int* m_aiTradeYield;
 	int* m_aiProductionToCommerceModifier;
 	int* m_aiDomainProductionModifier;

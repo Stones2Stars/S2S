@@ -507,7 +507,6 @@ CvCity::CvCity()
 	m_outputHistory()
 {
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
-	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
@@ -586,7 +585,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_abCommerceRankValid);
 
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
-	SAFE_DELETE_ARRAY(m_aiPowerYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
@@ -951,7 +949,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		m_aiYieldRateModifier[iI] = 0;
-		m_aiPowerYieldRateModifier[iI] = 0;
 		m_aiTradeYield[iI] = 0;
 		m_abBaseYieldRankValid[iI] = false;
 		m_abYieldRankValid[iI] = false;
@@ -8231,42 +8228,6 @@ void CvCity::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 }
 
 
-int CvCity::getPowerYieldRateModifier(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiPowerYieldRateModifier[eIndex];
-}
-
-
-void CvCity::changePowerYieldRateModifier(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiPowerYieldRateModifier[eIndex] += iChange;
-		{
-			int aiRealizedYields[NUM_YIELD_TYPES];
-			getYields(aiRealizedYields);
-			FASSERT_NOT_NEGATIVE(aiRealizedYields[eIndex]);
-		}
-
-		GET_PLAYER(getOwner()).invalidateYieldRankCache(eIndex);
-
-		if (eIndex == YIELD_COMMERCE)
-		{
-		}
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-
 void CvCity::setTradeYield(YieldTypes eIndex, int iNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
@@ -12707,7 +12668,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iReinforcementCounter);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 	// Widening a member is SOFT: the reader absorbs the narrower stored form (save.md §8), so this keeps
@@ -13368,7 +13328,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReinforcementCounter);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 
