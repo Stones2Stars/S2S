@@ -828,6 +828,20 @@ A deposit lands in one of three ways ([json](json.md) §6.1):
 > substrate keys resolve there, §2 plot-as-base; the `empires` fan is the one target whose fold IS the deposit). So
 > a consumer answering *"how much does this source give THIS target"* asks each live source what IT deposits onto
 > that key — the city's OPERATING buildings, its assigned specialists × count, the empire's held traits — and sums.
+>
+> **⚖ A KEYED ROW'S REACH IS ITS AUTHORED SCOPE, AND BOTH SCOPES ARE REAL ON A BUILDING (owner).** A building is
+> a per-city source, so a CITY-scope keyed row means faster HERE — *"units are scoped on the city the building is
+> in"* — and the read over the city's own OPERATING buildings is exactly that semantic. An EMPIRE-scope keyed row
+> on the same building means faster in EVERY city of the owner, and is answered player-side.
+> ⛔ **So the two halves are read at DIFFERENT SCOPES and must each filter to their own**, or the city holding the
+> source claims the empire rows a second time on top of the player's answer. This is the live case the
+> `collectKeyedTarget` scope filter exists for, and the reason the point form needs it too.
+> ⚠ **Neither half is mis-authored data, and re-scoping one to "simplify" the read is a BALANCE CHANGE wearing a
+> cleanup.** The empire half is the classic wonder effect (a wonder cheapening a building across the empire) and
+> it is populated; the city half is the local one. A cut that collapses them would silently delete whichever
+> mechanic it did not keep.
+> ⚑ CIVIC- and TRAIT-authored keyed rows are empire-scope by nature — those sources have no city — so the
+> player-side walk is the only thing that could serve them, and it does.
 > ⚑ **Why it is a rule and not a detail: folding a keyed entry into the scope slot is silently, plausibly WRONG.**
 > A building's `experience.city.unitCombats.{UNITCOMBAT_MELEE}` folded scope-wide would hand EVERY unit trained
 > there the melee-only experience — a number that looks reasonable, breaks no invariant, and nothing catches. The

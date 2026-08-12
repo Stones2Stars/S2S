@@ -2086,3 +2086,22 @@ CvPlayer::m_iMilitaryProductionModifier   (int)
 | unused and the name described nothing it did; its two surviving headquarters/updateCorporation calls moved to
 | the one call site.
 CvCity::m_iMilitaryProductionModifier    (int)
+========================
+| The CITY building-keyed production modifier map -- read at CvCity::getProductionModifier(BuildingTypes) with
+| no writer left, so the value applied was save history. Unlike the pairs above this was also a HOLE: the
+| city-scope `buildRate.city.buildings.{B}` rows authored on buildings had nowhere to land, so they reached
+| production through nothing at all.
+| REPLACEMENT: the keyed entry-list read over the city's OPERATING buildings ([modifier.md] par.5), filtered to
+| CASC_SCOPE_CITY.
+| ⚑ THE SCOPE FILTER IS LOAD-BEARING, not tidiness. The same address is authored at BOTH scopes on a building,
+| and the EMPIRE half is a live, correct, separate path (processBuilding collects those rows scope-filtered to
+| empire and pushes them to the player, which every city reads). An unfiltered city walk would claim them a
+| second time in the city holding the source. The point-form keyedTarget gained the iScope its collecting twin
+| already carried, for exactly this.
+| ⚠ BOTH scopes are REAL on a building and neither is mis-authored (owner): a city row means "that builds
+| faster HERE", an empire row is the classic wonder effect reaching every city. Collapsing them would silently
+| delete whichever mechanic was not kept.
+| ⛔ CvPlayer::m_buildingProductionMod is NOT this and stays: it is the empire half's live store.
+CvCity::BuildingProductionModSize        (decorated short)
+CvCity::BuildingProductionModType        (decorated short, per entry)
+CvCity::BuildingProductionMod            (decorated int, per entry)

@@ -25,6 +25,23 @@
 > ⚠ **A dangling AI call site is a WORKLIST ENTRY like any other** (the compiler is the census). What genuinely
 > waits is only a read whose REPLACEMENT MACHINE does not exist yet — name the missing machine when you leave
 > one, never the file it lives in.
+>
+> **⚖ AN AI *WEIGHT* IS NOT A CORRECTNESS GATE — THE AI HAS TO FUNCTION, AND BALANCE COMES AFTER (owner):**
+> *"AI weights we will figure out down the line; AI needs to function, then we balance it later."*
+> ⛔ **This is the one place "wired outranks correct" does NOT lapse at green.**
+> [DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate) scopes that
+> sequencing to a RED tree and says it lapses the moment the tree builds, when correctness becomes testable and
+> therefore owed — so an agent applying it literally concludes that AI weights must now be right, and stalls a
+> conversion on tuning. They must not.
+> ⚑ **The line is WIRING vs MAGNITUDE, and only the first is owed now:**
+> - a read pointed at the WRONG SURFACE — legacy, a frozen accumulator, a value nothing maintains — is a defect,
+>   fixed on sight like any other consumer;
+> - the resulting COEFFICIENT being well-tuned is the balance pass, and is nobody's business during a cut.
+> ⇒ So converting an AI read is DONE when it reads the right thing. State the behaviour change plainly
+> ([validation.md](../../specs/validation.md)) and move on; do not re-tune the surrounding arithmetic to keep a
+> number where it used to sit, which is
+> [DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test) in AI clothing.
+> ⚠ It does NOT license leaving an AI read on legacy because "the weight is wrong anyway" — that inverts it.
 
 ## Context — why this rebuild exists
 

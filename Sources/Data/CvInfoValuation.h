@@ -131,8 +131,11 @@ public:
 	//	folds in as though its condition held ([patterns.md] THE GETTER SETUP: the compiled sum, the conditioned
 	//	list and the `expected*` what-if are three distinct reads). Summing the tail here applies every
 	//	tech-gated and age-gated deposit from turn 0.
+	//	iScope filters to entries AUTHORED at one scope (-1 = any), the same axis and spelling its collect twin
+	//	carries below, and for the same reason: the same family+target is authored at two scopes with two
+	//	different consumers, so an unfiltered read hands each consumer the other's rows.
 	static int keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
-		int iTargetSegment, int iTargetFk);
+		int iTargetSegment, int iTargetFk, int iScope = -1);
 
 	//	The COLLECT form of the general keyed read -- every (targetFk, value) this entity authored on one
 	//	family+segment(+kind), for a consumer that iterates WHAT IS THERE rather than asking about one target.

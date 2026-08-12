@@ -262,7 +262,7 @@ void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFam
 }
 
 int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
-	int iTargetSegment, int iTargetFk)
+	int iTargetSegment, int iTargetFk, int iScope)
 {
 	if (modifiers == NULL || iTargetFk < 0 || iTargetSegment == TARGET_SEGMENT_NONE)
 	{
@@ -280,6 +280,7 @@ int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFam
 		if (kEntry.targetSeg == iTargetSegment
 		&&  kEntry.targetFk == iTargetFk
 		&& (iKind < 0 || kEntry.kind == iKind)
+		&& (iScope < 0 || (int)kEntry.scope == iScope)
 		&&  kEntry.enabled == NULL && kEntry.disabled == NULL)   // ungated only, as its collect twin
 		{
 			iTotal += kEntry.value;

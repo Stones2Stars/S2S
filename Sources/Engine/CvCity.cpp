@@ -984,7 +984,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_aBuildingCommerceChange.clear();
 	m_aBuildingHappyChange.clear();
 	m_aBuildingHealthChange.clear();
-	m_buildingProductionMod.clear();
 	m_Properties.clear();
 	m_progressOnBuilding.clear();
 	m_delayOnBuilding.clear();
@@ -3202,7 +3201,20 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eBuilding);
 
-	iMultiplier += getBuildingProductionModifier(eBuilding);
+	// The CITY-scope rows the city's own OPERATING buildings author against this target -- "while I operate,
+	// that builds faster HERE". Scope-filtered, because the EMPIRE-scope rows on those same buildings are the
+	// player's answer below and would otherwise be claimed twice in the city holding the source.
+	const int iBuildingsSegment = InfoValuation::keyedTargetSegment("buildings");
+	const std::set<int>& kActive = m_operatingBuildings.active;
+	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
+	{
+		const CvModifiers* pModifiers = GC.getBuildingInfo((BuildingTypes)*it).getModifiers();
+		if (pModifiers != NULL)
+		{
+			iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1,
+				iBuildingsSegment, (int)eBuilding, (int)CASC_SCOPE_CITY);
+		}
+	}
 
 	iMultiplier += GET_PLAYER(getOwner()).getBuildingProductionModifier(eBuilding);
 
@@ -13111,21 +13123,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		short iType = 0;
 		int iCount = 0;
 		uint16_t sCountU = 0;
-		// Building
-		iSize = 0;
-		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingProductionModSize");
-		while (iSize-- > 0)
-		{
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "BuildingProductionModType");
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iCount, "BuildingProductionMod");
-			iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BUILDINGS, iType, true));
-
-			if (iType > -1)
-			{
-				m_buildingProductionMod.insert(std::make_pair(iType, iCount));
-			}
-		}
-
 		{
 		}
 
@@ -13438,14 +13435,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	}
 	// Toffer - Write Maps
 	{
-		// Building
-		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_buildingProductionMod.size(), "BuildingProductionModSize");
-		for (std::map<short, int>::const_iterator it = m_buildingProductionMod.begin(), itEnd = m_buildingProductionMod.end(); it != itEnd; ++it)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->first, "BuildingProductionModType");
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", it->second, "BuildingProductionMod");
-		}
-
 		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_buildingLedger.size(), "BuildingLedgerSize");
 		for (std::map<BuildingTypes, BuiltBuildingData>::const_iterator it = m_buildingLedger.begin(), itEnd = m_buildingLedger.end(); it != itEnd; ++it)
 		{
@@ -15091,35 +15080,6 @@ void CvCity::setBuiltFoodProducedUnit(bool bNewValue)
 	m_bBuiltFoodProducedUnit = bNewValue;
 }
 
-void CvCity::changeBuildingProductionModifier(const BuildingTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	if (iChange == 0)
-	{
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_buildingProductionMod.find((short)eIndex);
-
-	if (itr == m_buildingProductionMod.end())
-	{
-		m_buildingProductionMod.insert(std::make_pair((short)eIndex, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_buildingProductionMod.erase(itr->first);
-	}
-	else // change building mod
-	{
-		m_buildingProductionMod[itr->first] += iChange;
-	}
-}
-
-int CvCity::getBuildingProductionModifier(const BuildingTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	std::map<short, int>::const_iterator itr = m_buildingProductionMod.find((short)eIndex);
-	return itr != m_buildingProductionMod.end() ? itr->second : 0;
-}
 
 
 

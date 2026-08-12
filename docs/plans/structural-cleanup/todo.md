@@ -377,27 +377,24 @@
 - The endpoint route table, beyond the four decomposition censuses. It routes through the ACCESS SURFACE, which
   does not exist yet; building it is the actual work item here
   ([roadmap.md § THE OPEN ITEM — the ACCESS surface](roadmap.md#-the-open-item--the-access-surface)).
-- Give the ctx-taking KEYED SUM (`keyedTargetSum`) **and the POINT form (`keyedTarget`)** the scope filter their
-  collecting twin (`collectKeyedTarget`) already has. `collectKeyedTarget` takes an `iScope` (-1 = any) because
-  the same family+target is authored at two scopes with two different consumers; the other two take none, so a
-  caller that must pin a leg to one scope either falls back to the unconditioned collect and silently loses
-  every gated row, or reads BOTH scopes' rows as one number.
-  ⚑ Live cases: the free-specialist split authors BOTH a city-scope row and an empire-scope row on the same
-  building, so the empire read must pin the scope or the two legs double-count; and every keyed `buildRate`
-  segment is authored at both scopes, so the city-side production reads take the empire rows too.
-  ⛔ Not a second read — one parameter on each existing one, matching the collect's spelling.
-- Serve the CITY-scope `buildRate` rows — both the building-KEYED ones and the `military` CATEGORY. Neither
-  reaches production. The keyed map that would carry the first has no writer, so a city gets whatever its save
-  holds; the category accumulator has a live writer (the corporation apply) but the city production read never
-  asks it, so it feeds AI heuristics alone. The EMPIRE half of each is served, which is what makes both
-  absences invisible.
-  ⛔ Pointing the city read at its own scope is NOT the whole fix, and doing it first makes things worse in two
-  distinct ways. For the KEYED segments: the unit and domain rows are authored on buildings at empire scope and
-  NOTHING pins them, so the unfiltered city read is currently the only thing applying them — once per city
-  rather than once — and filtering would drop them entirely. For the CATEGORY: the city read already sums the
-  player's, and a `realizedAtCity` roll includes the empire tier, so adding one on top double-counts it.
-  ⇒ Decide how the city and empire halves compose — where a building-authored empire-scope row is served, and
-  which tier each read owns — then wire both halves to it.
+- Give the ctx-taking KEYED SUM (`keyedTargetSum`) the scope filter its collecting twin (`collectKeyedTarget`)
+  and the point form (`keyedTarget`) both carry. `collectKeyedTarget` takes an `iScope` (-1 = any) because the
+  same family+target is authored at two scopes with two different consumers; `keyedTargetSum` — the one serving
+  the CONDITIONED tail through the ONE evaluator — takes none, so a caller that must pin a leg to one scope
+  falls back to the unconditioned collect and silently loses every gated row.
+  ⚑ Live case: the free-specialist split authors BOTH a city-scope row and an empire-scope row on the same
+  building, so the empire read must pin the scope or the two legs double-count.
+  ⛔ Not a second read — one parameter on the existing one, matching the other two's spelling.
+- Serve the CITY-scope `buildRate` CATEGORY rows (`military`, `space`) in the PRODUCTION path. They reach the AI
+  weights, which read the whole stack at the city, and nothing else — the city production read answers the
+  category by chaining the player's, which is the empire tier only, so a building saying "military trains faster
+  HERE" changes no build.
+  ⛔ It does NOT fix the same way the keyed half did, and the difference is the unit. A category is a PERCENT, and
+  percents combine as ONE additive stack, so there is deliberately no city-only percent read to add beside the
+  player's — `rolledLegsAtCity` splits the FLATS and hands back one `percentSum` for the whole chain.
+  ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
+  `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
+  of that overload enumerated — a player asking it with no city still needs an empire answer.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
