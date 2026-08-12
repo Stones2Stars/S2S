@@ -2130,13 +2130,8 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 			CvCity* pMissionCity = pMissionPlot->getPlotCity();
 
 			// BUG - Sentry Actions - start
-#ifdef _MOD_SENTRY
 			if (GC.getActionInfo(widgetDataStruct.m_iData1).getMissionType() == MISSION_HEAL ||
 				GC.getActionInfo(widgetDataStruct.m_iData1).getMissionType() == MISSION_SENTRY_WHILE_HEAL)
-#else
-			if (GC.getActionInfo(widgetDataStruct.m_iData1).getMissionType() == MISSION_HEAL ||
-				GC.getActionInfo(widgetDataStruct.m_iData1).getMissionType() == MISSION_HEAL_BUILDUP)
-#endif
 			// BUG - Sentry Actions - end
 			{
 				int iTurns = 0;

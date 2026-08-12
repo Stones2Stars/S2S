@@ -2735,12 +2735,13 @@ void CvGameTextMgr::buildRequiresClauses(CvWStringBuffer& szBuffer, const CvCond
 	CvCascadeEvalFlags gateFlags;
 	gateFlags.strictStateReligionForBuild = true;
 
-	// An `all` root is a LIST of clauses; anything else is ONE clause and renders whole.
-	const bool bClauseList = (pRoot->kind == CASC_COND_GROUP && !pRoot->all.empty());
-	const int iClauses = bClauseList ? (int)pRoot->all.size() : 1;
-	for (int iClause = 0; iClause < iClauses; ++iClause)
+	// The clause decomposition is the SHARED one -- the enabler weighs hide-vs-grey over the same list
+	// ([DEC-single-implementation]); a private copy here would let the two disagree about what a clause is.
+	std::vector<const CvCondition*> kClauses;
+	cascadeTopLevelClauses(pRoot, kClauses);
+	for (size_t iClause = 0; iClause < kClauses.size(); ++iClause)
 	{
-		const CvCondition* pClause = bClauseList ? pRoot->all[iClause] : pRoot;
+		const CvCondition* pClause = kClauses[iClause];
 		const CvWString szPhrase = entryConditionText(pClause);
 		if (szPhrase.empty())
 		{

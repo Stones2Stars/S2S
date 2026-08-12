@@ -247,6 +247,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   symbols long deleted. **A rule has to be remembered; a check does not** — the same move that made the
   duplicated skill reads unsayable rather than forbidden. ⛔ Run it after editing either doc, and if it fires,
   DELETE the state or move the durable ruling into its owning spec — never widen the tool to accept it.
+- **Feature `#ifdef`s: `python Tools/verify-ifdef-attics.py`** — feature guards are BANNED (Conventions §Design);
+  the only legitimate one VARIES BY BUILD CONFIG (`FASSERT_ENABLE`, `_DEBUG`) or is a platform predefine. The
+  check reports the rest in two classes, and **the difference between them is the whole reason this is a check**:
+  - **TU-INDEPENDENT** — no real `#define` anywhere (OFF in every translation unit), or defined by fbuild's `/D`
+    (ON in every one). One arm is dead everywhere, so collapsing is mechanical and safe.
+  - **⛔ TU-LOCAL** — `#define`d in a `Sources/` file, so it holds only where that definition is VISIBLE: the
+    SAME guard is ON in some translation units and OFF in others, and there is no single arm to keep. **Resolve
+    these per SITE, never with a sweep.** ⚠ Measured: a blanket collapse turned the save wrapper's
+    `DEBUG_TRACE` from `;` into a live `OutputDebugString` on every tagged read — its `#define` lives in
+    `CvGameCoreDLL.cpp`, which the wrapper never includes. Load time tripled and the game crashed at `eip=0`.
+  ⚠ The check does NOT do include-graph analysis, so it flags a cross-file site as *check this*, never as OFF.
+  ⛔ If it fires, fix the code; never widen the tool.
 
 ### Adding a new source subdirectory
 
@@ -592,42 +604,12 @@ the total-observability bar below.)
 - **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH — and an `#ifdef` ATTIC IS THAT EVIDENCE (owner)**
   ([DEC-no-rollerskate-evidence](docs/architecture/decisions.md#dec-no-rollerskate-evidence)). Dead and
   commented-out code, superseded dual surfaces, transitional shims and `was X` / `(formerly …)` trails are all
-  REMOVED, in code as well as docs. **A `#ifdef`-guarded block whose symbol is DEFINED NOWHERE is the same
-  thing wearing a preprocessor costume: *"ifdef sections come from a time when people did not understand
-  git"* (owner)** — an old implementation parked beside the live one so it could be switched back, which is
-  what version control is for. ⚑ **The first test is mechanical: is the guard symbol defined anywhere in
-  `Sources/` or `fbuild.bff`?** If not, the block never compiles — but that only makes it a CANDIDATE.
-  **⛔ THE CANDIDATE SET IS TWO DIFFERENT POPULATIONS AND THEY GET OPPOSITE TREATMENT — collapsing them is
-  how a sweep deletes a wanted feature.** The discriminator is mechanical too: **does a COMMENTED-OUT
-  `#define` of the guard exist?**
-  - **A commented-out `#define` ⇒ a deliberate OFF-SWITCH** — a feature or a diagnostic somebody can flip on,
-    switched off for a REASON. It is un-killed forward intent and it STAYS
-    ([DEC-keep-unkilled-ideas](docs/architecture/decisions.md#dec-keep-unkilled-ideas)); the disposition is the
-    OWNER's. ⚠ And the reason it is off is exactly what stops the NEXT sweep eating it, so record that reason
-    in the subsystem's reference doc in the same pass — the worked case is `ENABLE_FOGWAR_DECAY`
-    ([special-systems.md](docs/reference/special-systems.md)), a recent feature that is off because it broke
-    HOTSEAT, and which the mechanical test flags identically to an abandoned alternate.
-  - **No `#define` anywhere, not even commented ⇒ no switch ever existed** ⇒ an abandoned alternate parked
-    beside the live one. THAT is the attic, and it is deleted — git is the archaeology.
-  - **⛔ AND THE INVERSE IS EQUALLY DEAD, AND WORSE: a guard defined UNCONDITIONALLY.** A `/D` in
-    `fbuild.bff`'s common defines that no config ever omits means the `#else` half has never compiled — the
-    same attic, wearing the opposite costume, and the mechanical test above sails straight past it because the
-    symbol *is* defined. ⚑ **It is worse because the surviving branch keeps a companion that JUSTIFIES ITS
-    SHAPE:** the live arm reads as one mode of a switch rather than as plain code, so whatever it does looks
-    deliberate and nobody audits it. *(Measured: `_MOD_FRACTRADE` was on for fifteen years; the `÷100` inside
-    its live arm read as "the fractional mode" and was actually a scale reduce sitting inside an aggregation,
-    flooring every city's trade yield to a whole unit before the percent stack multiplied it —
-    [fixed-point-and-scales.md §4c-bis](docs/specs/curators/fixed-point-and-scales.md).)*
-    ⇒ **The test is whether the guard can VARY, not whether it is defined.** If no config turns it off, delete
-    the guard and both `#else` halves, then re-read the survivor as the plain arithmetic it is.
-    ⚠ **The FALSE POSITIVE the test has is a guard something ELSE defines**, and it is
-  the exception to know: **`__INTELLISENSE__` is defined by VS Code's IntelliSense parser** (`CvGameCoreDLL.h`),
-  so being absent from `Sources/`+`fbuild.bff` is its NORMAL state and says nothing about it — it stays. Same
-  for the compiler's own target predefines (`_M_IX86`, `WIN32`, `_DEBUG`), the resource editor's
-  (`APSTUDIO_INVOKED`) and anything inside a vendored third-party file. ⇒ Read the test as *"defined by
-  NOBODY"*, not *"defined by not-us"*. ⛔ The cost of leaving one is the usual one: it holds the NAMES of things that were removed, so the
-  next agent finds them and re-treads the very thing that was killed — and being preprocessor-skipped, it is
-  invisible to the compiler census that would otherwise name it.
+  REMOVED, in code as well as docs.
+  **⛔ A FEATURE `#ifdef` IS BANNED OUTRIGHT (owner): *"we will never use them in the code, they are an
+  anachronism from when source control was not really a thing"* / *"ifdef sections come from a time when people
+  did not understand git."*** The ONLY legitimate guard is one that VARIES BY BUILD CONFIG (`FASSERT_ENABLE`,
+  `_DEBUG`) or a platform predefine — there is no off-switch population to curate, because a block worth keeping
+  is a block git is already keeping. `python Tools/verify-ifdef-attics.py` enforces it.
 - **ARCHITECTURAL NORTH-STAR — Clean Architecture + interface-based contracts.** Dependency inversion, isolated
   layers, composition over the inherited Civ4 god-classes. The full compass is
   [north-star.md](docs/architecture/north-star.md); the concrete C++03 shape (pure-virtual interfaces, MI as

@@ -36,116 +36,6 @@ namespace { int sm_resolveStoredType(RemappedClassType classType, const char* sz
 #define DEBUG_TRACE4(w,x,y,z)	;
 #endif
 
-#ifdef TEMP_DEBUGGING_SUPPORT
-class StreamWrapper : public FDataStreamBase
-{
-public:
-	StreamWrapper(FDataStreamBase* wrapped)
-	{
-		m_wrapped = wrapped;
-		m_lenRead = 0;
-	}
-
-	virtual void	Rewind() { m_wrapped->Rewind(); }
-	virtual bool	AtEnd() { return m_wrapped->AtEnd(); }
-	virtual void	FastFwd() { m_wrapped->FastFwd(); }
-	virtual uint32_t  GetPosition() const { return m_lenRead; }
-	virtual void    SetPosition(uint32_t position) { m_wrapped->SetPosition(position); }
-	virtual void    Truncate() { m_wrapped->Truncate(); }
-	virtual void	Flush() { m_wrapped->Flush(); }
-	virtual uint32_t	GetEOF() const { return m_wrapped->GetEOF(); }
-	virtual uint32_t			GetSizeLeft() const { return m_wrapped->GetSizeLeft(); }
-	virtual void	CopyToMem(void* mem) { m_wrapped->CopyToMem(mem); }
-
-	virtual uint32_t	WriteString(const wchar_t* szName) { return m_wrapped->WriteString(szName); }
-	virtual uint32_t	WriteString(const char* szName) { return m_wrapped->WriteString(szName); }
-	virtual uint32_t	WriteString(const std::string& szName) { return m_wrapped->WriteString(szName); }
-	virtual uint32_t	WriteString(const std::wstring& szName) { return m_wrapped->WriteString(szName); }
-	virtual uint32_t	WriteString(int count, std::string values[]) { return m_wrapped->WriteString(count,values); }
-	virtual uint32_t	WriteString(int count, std::wstring values[]) { return m_wrapped->WriteString(count,values); }
-
-	virtual uint32_t	ReadString(char* szName){ return m_wrapped->ReadString(szName); m_lenRead += strlen(szName); }
-	virtual uint32_t	ReadString(wchar_t* szName) { return m_wrapped->ReadString(szName); m_lenRead += wcslen(szName); }
-	virtual uint32_t	ReadString(std::string& szName) { return m_wrapped->ReadString(szName); m_lenRead += szName.length(); }
-	virtual uint32_t	ReadString(std::wstring& szName) { return m_wrapped->ReadString(szName); m_lenRead += 2*szName.length(); }
-	virtual uint32_t	ReadString(int count, std::string values[]) { return m_wrapped->ReadString(count,values); m_lenRead += count*values[0].length(); }
-	virtual uint32_t	ReadString(int count, std::wstring values[]) { return m_wrapped->ReadString(count,values); m_lenRead += 2*count*values[0].length(); }
-
-	virtual char*		ReadString() { char* result = m_wrapped->ReadString(); m_lenRead += (result == NULL ? 0 : strlen(result)); return result; }
-	virtual wchar_t*	ReadWideString() { wchar_t* result = m_wrapped->ReadWideString(); m_lenRead += (result == NULL ? 0 : 2*wcslen(result)); return result; }
-	virtual void		Read(char *arg) { m_wrapped->Read(arg); m_lenRead++;}
-	virtual void		Read(byte *arg) { m_wrapped->Read(arg); m_lenRead++;}
-	virtual void		Read(int count, char values[]){ m_wrapped->Read(count, values); m_lenRead += count;}
-	virtual void		Read(int count, byte values[]) { m_wrapped->Read(count, values); m_lenRead += count;}
-	virtual void		Read(bool *arg) { m_wrapped->Read(arg); m_lenRead++;}
-	virtual void		Read(int count, bool values[]) { m_wrapped->Read(count, values); m_lenRead += count;}
-	virtual void		Read(short* s) { m_wrapped->Read(s); m_lenRead += 2;}
-	virtual void		Read(uint16_t* s)  { m_wrapped->Read(s); m_lenRead += 2;}
-	virtual void		Read(int count, short values[]){ m_wrapped->Read(count, values); m_lenRead += count*2;}
-	virtual void		Read(int count, uint16_t values[]) { m_wrapped->Read(count, values); m_lenRead += count*2;}
-	virtual void		Read(int* i){ m_wrapped->Read(i); m_lenRead += 4;}
-	virtual void		Read(uint32_t* i) { m_wrapped->Read(i); m_lenRead += 4;}
-	virtual void 		Read(int count, int values[]) { m_wrapped->Read(count, values); m_lenRead += 4*count;}
-	virtual void 		Read(int count, uint32_t values[]) { m_wrapped->Read(count, values); m_lenRead += 4*count; }
-
-	virtual void		Read(long* l) { m_wrapped->Read(l); m_lenRead += 4;}
-	virtual void		Read(unsigned long* l)  { m_wrapped->Read(l); m_lenRead += 4;}
-	virtual void 		Read(int count, long values[]) { m_wrapped->Read(count, values); m_lenRead += 4*count;}
-	virtual void 		Read(int count, unsigned long values[])  { m_wrapped->Read(count, values); m_lenRead += 4*count;}
-
-	virtual void		Read(int64_t* ll) { m_wrapped->Read(ll); m_lenRead += 4; }
-	virtual void		Read(uint64_t* ll) { m_wrapped->Read(ll); m_lenRead += 4; }
-	virtual void 		Read(int count, int64_t values[]) { m_wrapped->Read(count, values); m_lenRead += 4 * count; }
-	virtual void 		Read(int count, uint64_t values[]) { m_wrapped->Read(count, values); m_lenRead += 4 * count; }
-
-	virtual void		Read(float* value) { m_wrapped->Read(value); m_lenRead += sizeof(float);}
-	virtual void		Read(int count, float values[]) { m_wrapped->Read(count, values); m_lenRead += count*sizeof(float);}
-
-	virtual void		Read(double* value) { m_wrapped->Read(value); m_lenRead += sizeof(double);}
-	virtual void		Read(int count, double values[]) { m_wrapped->Read(count, values); m_lenRead += count*sizeof(double);}
-
-	virtual void		Write( char value) { m_wrapped->Write(value); }
-	virtual void		Write(byte value) { m_wrapped->Write(value); }
-	virtual void		Write(int count, const  char values[]) { m_wrapped->Write(count, values); }
-	virtual void		Write(int count, const  byte values[]) { m_wrapped->Write(count, values); }
-
-	virtual void		Write(bool value) { m_wrapped->Write(value); }
-	virtual void		Write(int count, const bool values[]) { m_wrapped->Write(count, values); }
-
-	virtual void		Write(short value) { m_wrapped->Write(value); }
-	virtual void		Write(uint16_t value){ m_wrapped->Write(value); }
-	virtual void		Write(int count, const short values[]) { m_wrapped->Write(count, values); }
-	virtual void		Write(int count, const uint16_t values[]) { m_wrapped->Write(count, values); }
-
-	virtual void		Write(int value) { m_wrapped->Write(value); }
-	virtual void		Write(uint32_t value) { m_wrapped->Write(value); }
-	virtual void 		Write(int count, const int values[]) { m_wrapped->Write(count, values); }
-	virtual void		Write(int count, const uint32_t values[])  { m_wrapped->Write(count, values); }
-
-	virtual void		Write(long value) { m_wrapped->Write(value); }
-	virtual void		Write(unsigned long  value) { m_wrapped->Write(value); }
-	virtual void 		Write(int count, const long values[]) { m_wrapped->Write(count, values); }
-	virtual void		Write(int count, const unsigned long values[]) { m_wrapped->Write(count, values); }
-
-	virtual void		Write(int64_t value) { m_wrapped->Write(value); }
-	virtual void		Write(uint64_t value) { m_wrapped->Write(value); }
-	virtual void 		Write(int count, const int64_t values[]) { m_wrapped->Write(count, values); }
-	virtual void		Write(int count, const uint64_t values[]) { m_wrapped->Write(count, values); }
-
-	virtual void		Write(float value) { m_wrapped->Write(value); }
-	virtual void		Write(int count, const float values[]) { m_wrapped->Write(count, values); }
-
-	virtual void		Write(double value) { m_wrapped->Write(value); }
-	virtual void		Write(int count, const double values[]) { m_wrapped->Write(count, values); }
-
-	FDataStreamBase* m_wrapped;
-	int m_lenRead;
-
-	static StreamWrapper* g_last;
-};
-
-StreamWrapper*	StreamWrapper::g_last = NULL;
-#endif
 
 static CvTaggedSaveFormatWrapper* pSingleton = NULL;
 static int usageSeq = 0;
@@ -576,20 +466,7 @@ CvTaggedSaveFormatWrapper::getSaveFormatWrapper()
 void
 CvTaggedSaveFormatWrapper::AttachToStream(FDataStreamBase* pStream)
 {
-#ifdef TEMP_DEBUGGING_SUPPORT
-	if ( StreamWrapper::g_last != NULL )
-	{
-		m_stream = StreamWrapper::g_last;
-		StreamWrapper::g_last->m_wrapped = pStream;
-	}
-	else
-	{
-		StreamWrapper::g_last = new StreamWrapper(pStream);;
-		m_stream = StreamWrapper::g_last;
-	}
-#else
 	m_stream = pStream;
-#endif
 }
 
 void
@@ -4031,12 +3908,6 @@ CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type, SaveValu
 {
 	PROFILE_FUNC();
 
-#ifdef TEMP_DEBUGGING_SUPPORT
-	char buffer[200];
-
-	sprintf(buffer, "Stream read offset %u, expecting %s\n", m_stream->GetPosition(), name);
-	OutputDebugString(buffer);
-#endif
 	while ( !m_bReadNextElementHeader )
 	{
 		m_stream->Read(&m_iNextElementNameId);
@@ -4423,11 +4294,6 @@ CvTaggedSaveFormatWrapper::ReadDictionaryElement()
 	m_stream->Read(newEntry.nameLen, (uint8_t*)&newEntry.name);
 	newEntry.name[newEntry.nameLen] = '\0';
 
-#ifdef TEMP_DEBUGGING_SUPPORT
-	char buffer[300];
-	sprintf(buffer, "Read dictionary entry with id %d: %s\n", newEntry.id, newEntry.name);
-	OutputDebugString(buffer);
-#endif
 	//	Re-normalize the name from the dictionary element so as to be compatible (in most cases) across
 	//	fixes to name normalization!
 	//int id = getId(NormalizeName(newEntry.name),newEntry.type, false);

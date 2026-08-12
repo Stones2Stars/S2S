@@ -4,7 +4,6 @@
 #define CvGameCoreDLL_h__
 
 // todo fix for hotseat
-//#define ENABLE_FOGWAR_DECAY
 
 //
 // includes (pch) for gamecore dll files
@@ -118,11 +117,9 @@ namespace python = boost::python;
 #include <MMSystem.h>
 
 //#if defined _DEBUG && !defined USE_MEMMANAGER
-//#define USE_MEMMANAGER
 //#include <crtdbg.h>
 //#endif
 //#if !defined USE_MEMMANAGER
-//#define USE_MEMMANAGER
 //#endif
 
 //
@@ -229,9 +226,6 @@ int DECLARE_FLAGS(ECacheAccess::flags);
 //
 // Feature macros
 //
-// #define GLOBAL_WARMING
-// #define THE_GREAT_WALL
-// #define NOMADIC_START
 
 //
 // Cache feature macros

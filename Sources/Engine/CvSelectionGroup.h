@@ -14,9 +14,6 @@ class CvPlot;
 class CvPath;
 class CvUnit;
 class CvUnitSelectionCriteria;
-#ifdef USE_OLD_PATH_GENERATOR
-class FAStarNode;
-#endif
 
 struct CachedEdgeCosts
 {
@@ -222,9 +219,6 @@ public:
 	bool isAutomated() const;
 	void setAutomateType(AutomateTypes eNewValue);
 
-#ifdef USE_OLD_PATH_GENERATOR
-	FAStarNode* getPathLastNode() const;
-#endif
 	CvPlot* getPathFirstPlot() const;
 	CvPlot* getPathEndTurnPlot() const;
 	const CvPath& getPath() const;
@@ -410,9 +404,7 @@ protected:
 
 
 // BUG - Sentry Actions - start
-#ifdef _MOD_SENTRY
 	bool sentryAlertSameDomainType() const;
-#endif
 // BUG - Sentry Actions - end
 
 //	KOSHLING Mod - add path validity results cache

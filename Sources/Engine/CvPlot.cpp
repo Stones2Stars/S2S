@@ -223,9 +223,6 @@ CvPlot::CvPlot()
 	m_iImprovementUpgradeHash = 0;
 	m_iCurrentRoundofUpgradeCache = -1;
 	// ! Toffer
-#ifdef ENABLE_FOGWAR_DECAY
-	m_iVisibilityDecay = MAX_DECAY;
-#endif
 	m_iImprovementCurrentValue = 0;
 
 	m_szScriptData = NULL;
@@ -274,9 +271,6 @@ void CvPlot::init(int iX, int iY)
 	m_aPlotTeamVisibilityIntensity.clear();
 	//--------------------------------
 	// Init non-saved data
-#ifdef ENABLE_FOGWAR_DECAY
-	m_iVisibilityDecay = MAX_DECAY;
-#endif
 	//--------------------------------
 	// Init other game data
 }
@@ -1275,51 +1269,11 @@ void CvPlot::updateFog(const bool bApplyDecay)
 				)
 		)
 		{
-#ifdef ENABLE_FOGWAR_DECAY
-			if (bIsHuman && (bApplyDecay || !bOptionDecay))
-			{
-				bool bSeaPlot = isWater() && !isCoastal();
-				m_iVisibilityDecay = GET_TEAM(team).getVisibilityDecay(bSeaPlot);
-				if (m_iVisibilityDecay != NO_DECAY)
-				{
-					m_iVisibilityDecay += getVisibilityDecayBonus(bSeaPlot);
-				}
-			}
-#endif
 			gDLL->getEngineIFace()->LightenVisibility(getFOWIndex());
 		}
 		else
 		{
-#ifdef ENABLE_FOGWAR_DECAY
-			if (!bIsHuman || m_iVisibilityDecay == NO_DECAY || !bOptionDecay)
-			{
-#endif
 				gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
-#ifdef ENABLE_FOGWAR_DECAY
-			}
-			else
-			{
-				if (m_iVisibilityDecay > 0)
-				{
-					gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
-
-
-
-					if (bApplyDecay && GC.getGame().getSorenRandNum(12, "Map decay") > 8)
-						m_iVisibilityDecay--;
-				}
-				else if (m_iVisibilityDecay > REMOVE_PLOT_DECAY)
-				{
-					gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
-					m_iVisibilityDecay--;
-				}
-				else
-				{
-					gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
-					setRevealed(team, false, false, NO_TEAM, false,false);
-				}
-			}
-#endif
 		}
 
 	} else gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
@@ -1348,70 +1302,6 @@ void CvPlot::updateVisibility()
 	}
 }
 
-#ifdef ENABLE_FOGWAR_DECAY
-void CvPlot::InitFogDecay(const bool pWithRandom)
-{
-	const TeamTypes& team = GC.getGame().getActiveTeam();
-	if (team != NO_TEAM)
-	{
-		m_iVisibilityDecay = GET_TEAM(team).getVisibilityDecay();
-	}
-	if (m_iVisibilityDecay <= 0)
-	{
-		m_iVisibilityDecay = 6;
-	}
-	m_iVisibilityDecay += getVisibilityDecayBonus();
-	if (pWithRandom)
-	{
-		m_iVisibilityDecay = GC.getGame().getSorenRandNum((std::max(m_iVisibilityDecay * 2 / 3, 2)), "InitFog Decay") + m_iVisibilityDecay / 3;
-	}
-}
-
-short CvPlot::getVisibilityDecayBonus(const bool pSeaPlot)
-{
-	const FeatureTypes eFeature = getFeatureType();
-	const BonusTypes eBonusType = getBonusType();
-	int iVisibilityDecay = 0;
-	if (eFeature != NO_FEATURE)
-	{
-		const CvFeatureInfo& kFeatureInfo = GC.getFeatureInfo(eFeature);
-		const CvString featureString = kFeatureInfo.getType();
-		if (featureString == "FEATURE_OASIS" || featureString == "FEATURE_CAVES" || featureString == "FEATURE_CITY_RUINS")
-		{
-			iVisibilityDecay += 3;
-		}
-		if (featureString == "FEATURE_REEF_LIGHTHOUSE")
-		{
-			iVisibilityDecay += 9;
-		}
-		if (featureString.find("FEATURE_PLATY_") != std::string::npos)
-		{
-			iVisibilityDecay += 40;
-		}
-	}
-	if (eBonusType != NO_BONUS)
-	{
-		iVisibilityDecay += 3;
-	}
-	if (getOwner() != NO_PLAYER)
-	{
-		iVisibilityDecay += 1;
-	}
-	if (isCityRadius())
-	{
-		iVisibilityDecay += 2;
-	}
-	if (isCity())
-	{
-		iVisibilityDecay += 6;
-	}
-	if (isFreshWater())
-	{
-		iVisibilityDecay += 3;
-	}
-	return iVisibilityDecay;
-}
-#endif
 
 
 void CvPlot::updateSymbolDisplay()
@@ -3136,15 +3026,6 @@ bool CvPlot::hasCachedCanBuildEntry(int iX, int iY, BuildTypes eBuild, PlayerTyp
 		{
 			entry->iLastUseCount = ++g_canBuildCache.currentUseCounter;
 			canBuildCacheHits++;
-#ifdef VERIFY_CAN_BUILD_CACHE_RESULTS
-			long lRealValue = canBuildFromPythonInternal(eBuild, ePlayer);
-
-			if ( lRealValue != entry->lResult )
-			{
-				OutputDebugString(CvString::format("Cache entry %08lx verification failed, turn is %d\n", entry, GC.getGame().getGameTurn()).c_str());
-				FErrorMsg("Can build value cache verification failure");
-			}
-#endif
 			return true;
 		}
 		else if ( entry->iLastUseCount < worstLRU )
@@ -3166,7 +3047,6 @@ long CvPlot::canBuildFromPython(BuildTypes eBuild, PlayerTypes ePlayer) const
 #ifdef CAN_BUILD_VALUE_CACHING
 #ifdef _DEBUG
 //	Uncomment this to perform functional verification
-//#define VERIFY_CAN_BUILD_CACHE_RESULTS
 #endif
 
 	//	If this player does not own, and cannot build a unit that can perform this build
@@ -6884,16 +6764,6 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 			// !SAVEBREAK
 			TerrainTypes eTerrain = (TerrainTypes)GC.getDefineINT("LAND_TERRAIN");
 
-#ifdef EXPERIMENTAL_FEATURE_ON_PEAK
-			if (eNewValue == PLOT_PEAK)
-			{
-				const TerrainTypes eTerrainPeak = GC.getTERRAIN_PEAK();
-				if (eTerrainPeak != -1)
-				{
-					eTerrain = eTerrainPeak;
-				}
-			}
-#endif
 			setTerrainType(eTerrain, bRecalculate, bRebuildGraphics);
 		}
 		else
@@ -7124,16 +6994,6 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 
 TerrainTypes CvPlot::getTerrainTypeExternal() const
 {
-#ifdef EXTREME_PAGING
-	if (!shouldHaveFullGraphics())
-	{
-		if (isWater())
-		{
-			return (TerrainTypes)GC.getInfoTypeForString("TERRAIN_OCEAN");
-		}
-		return (TerrainTypes)GC.getInfoTypeForString("TERRAIN_GRASSLAND");
-	}
-#endif
 	if (!GC.viewportsEnabled() || isRevealed(GC.getGame().getActiveTeam(), true))
 	{
 		return getTerrainType();

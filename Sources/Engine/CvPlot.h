@@ -223,10 +223,6 @@ public:
 
 	void updateFog(const bool bApplyDecay = false);
 	void updateVisibility();
-#ifdef ENABLE_FOGWAR_DECAY
-	void InitFogDecay(const bool pWithRandom = false);
-	short getVisibilityDecayBonus(const bool pSeaPlot = false);
-#endif
 
 	void updateSymbolDisplay();
 	void updateSymbolVisibility();
@@ -1103,9 +1099,6 @@ protected:
 
 	short* m_aiLastSeenTurn;
 
-#ifdef ENABLE_FOGWAR_DECAY
-	short m_iVisibilityDecay;
-#endif
 
 	//	This array will be sparsely populated on most plots so not worth
 	//	an indirection, but look to find a way to use the sparseness to reduce memory usage

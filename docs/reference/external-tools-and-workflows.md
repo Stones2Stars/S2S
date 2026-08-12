@@ -49,6 +49,11 @@ Use the Store WinDbg's bundled console debugger (`cdb`), **offline**. Civ4 is **
 C:\Program Files\WindowsApps\Microsoft.WinDbg_*_x64__8wekyb3d8bbwe\x86\cdb.exe
 ```
 
+⛔ **`WindowsApps` IS ONLY ENUMERABLE FROM POWERSHELL — the glob above does not resolve from bash/Git-Bash**, which
+reports the path as missing and reads exactly like "WinDbg is not installed". Find it with
+`Get-ChildItem 'C:\Program Files\WindowsApps' -Filter cdb.exe -Recurse -ErrorAction SilentlyContinue`, and run
+`cdb` from PowerShell too.
+
 Point `-y` at the **local PDB dirs only** (no `srv*` — keeps it offline and fast). The DLL PDB lives at
 `Assets\CvGameCoreDLL.pdb` and `Build\<Config>\CvGameCoreDLL.pdb`; `cdb` matches by signature, so list all
 configs. EXE frames stay unresolved (no Firaxis symbols) — that's expected; our DLL frames resolve.

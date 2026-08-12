@@ -22,9 +22,6 @@ class CvSelectionGroup;
 class CvArtInfoUnit;
 class CvUnitInfo;
 class CvUnitSelectionCriteria;
-#ifdef USE_OLD_PATH_GENERATOR
-class FAStarNode;
-#endif
 
 enum UnitValueFlags
 {
@@ -443,11 +440,7 @@ public:
 	bool canDoCommand(CommandTypes eCommand, int iData1, int iData2, bool bTestVisible = false, bool bTestBusy = true) const;
 	void doCommand(CommandTypes eCommand, int iData1, int iData2);
 
-#ifdef USE_OLD_PATH_GENERATOR
-	FAStarNode* getPathLastNode() const;
-#else
 	int getPathMovementRemaining() const;
-#endif
 	CvPlot* getPathEndTurnPlot() const;
 	bool generatePath(const CvPlot* pToPlot, int iFlags = 0, bool bReuse = false, int* piPathTurns = NULL, int iMaxTurns = MAX_INT, int iOptimizationLimit = -1) const;
 

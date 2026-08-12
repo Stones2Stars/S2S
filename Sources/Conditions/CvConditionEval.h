@@ -183,6 +183,17 @@ bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, con
 const CvCondition* cascadeFailingAtom(const CvCondition* c, const CvCascadeEvalCtx& ctx,
 	const CvCascadeEvalFlags& flags);
 
+// The TOP-LEVEL CLAUSE decomposition of a requires tree -- what a reader means by "the clauses" of a
+// requirement. An `all` root is a LIST of independent clauses; anything else is ONE clause standing whole.
+// [DEC-single-implementation]: two consumers need the same decomposition for OPPOSITE reasons and each had
+// grown its own -- the tooltip renderer walks the clauses to colour each by its own verdict, and the enabler
+// walks them to weigh hide-vs-grey across ALL the failures. While both walks were private, one stopped at the
+// first failure and the other did not, so clause ORDER decided what the player saw in one place and nothing
+// in the other.
+// Only the `all` arm yields separate clauses; an `anyOf`/`noneOf` root is ONE clause, because "any of these"
+// is a single requirement and naming one member of it would misreport what refused.
+void cascadeTopLevelClauses(const CvCondition* pRoot, std::vector<const CvCondition*>& kClausesOut);
+
 // The §3.7 counted-kind RELIGION filter's count leg (ruling 23): how many of ec.cityContext's present religions match
 // `filter` (each religion tested with ctx.religion set -- the IS_STATE_RELIGION predicate's input). A NULL
 // filter counts every present religion; no city -> 0. The ONE religion-count implementation -- the `religion:`

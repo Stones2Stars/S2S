@@ -3759,7 +3759,6 @@ int CvPlayerAI::AI_getPlotDanger(const CvPlot* pPlot, int iRange, bool bTestMove
 #ifdef PLOT_DANGER_CACHING
 #ifdef _DEBUG
 	//	Uncomment this to perform functional verification
-	//#define VERIFY_PLOT_DANGER_CACHE_RESULTS
 #endif
 
 	//	Check cache first
@@ -3787,14 +3786,6 @@ int CvPlayerAI::AI_getPlotDanger(const CvPlot* pPlot, int iRange, bool bTestMove
 		{
 			entry->iLastUseCount = ++plotDangerCache.currentUseCounter;
 			plotDangerCacheHits++;
-#ifdef VERIFY_PLOT_DANGER_CACHE_RESULTS
-			int realValue = AI_getPlotDangerInternal(pPlot, iRange, bTestMoves);
-
-			if (realValue != entry->iResult)
-			{
-				FErrorMsg("Plot danger cache verification failure");
-			}
-#endif
 			return entry->iResult;
 		}
 		else if (entry->iLastUseCount < worstLRU)
@@ -4278,10 +4269,6 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 		}
 	}
 
-#ifdef DEBUG_TECH_CHOICES
-	CvWString szPlayerName = getName();
-	DEBUGLOG("AI_bestTech:%S\n", szPlayerName.GetCString());
-#endif
 
 	bool beeLine = false;
 	int beeLineThreshold;
@@ -5732,18 +5719,6 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 	PROFILE_FUNC();
 
 	
-#ifdef USE_BOTH_TECHBUILDING_EVALUATIONS
-	bool bCapitalAlone = (GC.getGame().getElapsedGameTurns() > 0) ? AI_isCapitalAreaAlone() : false;
-	bool bFinancialTrouble = AI_isFinancialTrouble();
-	int iTeamCityCount = GET_TEAM(getTeam()).getNumCities();
-	int iCoastalCities = countNumCoastalCities();
-	int iCityCount = getNumCities();
-
-	int iTempValue = 0;
-
-	int iBestLandBuildingValue = 0;
-	bool bIsCultureBuilding = false;
-#endif
 	int iValue = 0;
 	int iExistingCultureBuildingCount = 0;
 
@@ -5781,152 +5756,6 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 					}
 				}
 
-#ifdef USE_BOTH_TECHBUILDING_EVALUATIONS
-				int iBuildingValue = 0;
-
-				if (kLoopBuilding.getSpecialBuildingType() != NO_SPECIALBUILDING)
-				{
-					iBuildingValue += ((bCapitalAlone) ? 100 : 25);
-				}
-				else
-				{
-					iBuildingValue += ((bCapitalAlone) ? 200 : 50);
-				}
-
-				//the granary effect is SO powerful it deserves special code
-				if (kLoopBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) > 0)
-				{
-					iBuildingValue += (15 * kLoopBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT));
-				}
-
-				if (kLoopBuilding.getAirlift() > 0)
-				{
-					iValue += 300;
-				}
-
-				if (kLoopBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) < 0)
-				{
-					int iCount = 0;
-					iTempValue = 0;
-					foreach_(const CvCity * pLoopCity, cities())
-					{
-						iTempValue += (int)pLoopCity->getMaintenanceTimes100();
-						iCount++;
-						if (iCount > 4)
-						{
-							break;
-						}
-					}
-					iTempValue /= std::max(1, iCount);
-					iTempValue *= -kLoopBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY);
-					iTempValue /= 10 * 100;
-
-					iValue += iTempValue;
-				}
-
-				iBuildingValue += 100;
-
-				//	If the building has an AI weight assume that's for a good reason and factor it in here, discounting
-				//	it somwhat if its a special build
-				iBuildingValue += kLoopBuilding.getAIWeight() / (kLoopBuilding.getCost() == -1 ? 5 : 1);
-
-				if (!isLimitedWonder(eLoopBuilding) && (kLoopBuilding.getFlatCommerce((CommerceTypes)COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100) > 0)
-				{
-					bIsCultureBuilding = true;
-				}
-
-				if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
-				{
-					const int iMultiplier = (isLimitedWonder(eLoopBuilding) ? 1 : 3);
-					iBuildingValue += 150 * (kLoopBuilding.getFlatCommerce((CommerceTypes)COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100) * iMultiplier;
-					iBuildingValue += kLoopBuilding.getCommerceModifier((CommerceTypes)COMMERCE_CULTURE, CASC_SCOPE_CITY) * 4 * iMultiplier;
-				}
-
-				if (bFinancialTrouble)
-				{
-					iBuildingValue -= kLoopBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) * 15;
-					iBuildingValue += kLoopBuilding.getYieldModifier(YIELD_COMMERCE) * 8;
-					iBuildingValue += kLoopBuilding.getCommerceModifier((CommerceTypes)COMMERCE_GOLD, CASC_SCOPE_CITY) * 15;
-				}
-
-				// if this is a religious building, its not as useful
-				const ReligionTypes eReligion = (ReligionTypes)kLoopBuilding.getReligion();
-				if (eReligion != NO_RELIGION)
-				{
-
-					// reduce by a factor based on how many cities we have with that relgion
-					if (iTeamCityCount > 0)
-					{
-						const int iCitiesWithReligion = GET_TEAM(getTeam()).getHasReligionCount(eReligion);
-
-						iBuildingValue *= (4 + iCitiesWithReligion);
-						iBuildingValue /= (4 + iTeamCityCount);
-					}
-
-					// if this building requires a religion, then only count it as 1/7th as much
-					// or in other words, only count things like temples once, not 7 times
-					// doing it this way in case some mods give buildings to only one religion
-					iBuildingValue /= std::max(1, GC.getNumReligionInfos());
-				}
-
-				// if we're close to pop domination, we love medicine!
-				// don't adjust for negative modifiers to prevent ignoring assembly line, etc.
-				const int iOwnHealth = kLoopBuilding.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100;
-				if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && iOwnHealth > 0)
-				{
-					iBuildingValue += iOwnHealth * 150;
-				}
-
-				// The loop is driven by eTech's own `enables.buildings`, so "is eTech this building's prereq"
-				// asked what the driver already guarantees -- and asked it through a getter the rebuilt info
-				// does not carry. Membership in the edge set IS the answer.
-				if (iPathLength <= 1
-				&& getTotalPopulation() > 5 && isWorldWonder(eLoopBuilding)
-				&& !GC.getGame().isBuildingMaxedOut(eLoopBuilding))
-				{
-					bEnablesWonder = true;
-
-					if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1)
-					&&
-						(
-							(kLoopBuilding.getFlatCommerce((CommerceTypes)COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100) >= 3
-							||
-							kLoopBuilding.getCommerceModifier((CommerceTypes)COMMERCE_CULTURE, CASC_SCOPE_CITY) >= 10
-							)
-					) iValue += 400;
-
-					if (bCapitalAlone)
-					{
-						iBuildingValue += 400;
-					}
-				}
-
-				if (AI_isDoVictoryStrategy(AI_VICTORY_DIPLOMACY1))
-				{
-					if (kLoopBuilding.getDiploVoteType() >= 0)
-					{
-						iValue += 400;
-					}
-				}
-
-				if (iBuildingValue > iBestLandBuildingValue)
-				{
-					iBestLandBuildingValue = iBuildingValue;
-				}
-
-				// if water building, weight by coastal cities
-				if (kLoopBuilding.isWater())
-				{
-					iBuildingValue *= iCoastalCities;
-					iBuildingValue /= std::max(1, iCityCount / 2);
-				}
-				// if land building, is it the best?
-				else if (iBuildingValue > iBestLandBuildingValue)
-				{
-					iBestLandBuildingValue = iBuildingValue;
-				}
-
-#endif
 				//	Now recalculate the new way
 				int iBuildingValue = 0;
 				int iEconomyFlags =

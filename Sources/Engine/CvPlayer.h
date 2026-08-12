@@ -2221,8 +2221,7 @@ private:
 
 protected:
 	void constructTechPathSet(TechTypes eTech, std::vector<techPath*>& pathSet, techPath& rootPath) const;
-	void clearCanConstructCache(BuildingTypes building, bool bIncludeCities = false) const;
-	void clearCanConstructCacheForGroup(SpecialBuildingTypes eSpecialBuilding, bool bIncludeCities = false) const;
+	void invalidateBuildingLists() const;
 
 public:
 	virtual void AI_invalidateAttitudeCache(PlayerTypes ePlayer) = 0;

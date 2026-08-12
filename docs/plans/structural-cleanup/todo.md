@@ -617,13 +617,6 @@
   [AGENTS.md](../../../AGENTS.md) Conventions §Design.
 - Run the dead-code / dead-XML pass — tooling generates CANDIDATES only; every removal verified against
   source/data and test-loaded, one subsystem at a time.
-- Delete the `#ifdef` ATTICS — a guarded block whose symbol is defined nowhere AND has no commented-out
-  `#define` either ([AGENTS.md](../../../AGENTS.md) Conventions §Design — the test, the off-switch exception,
-  and the predefine exclusions are stated there in full).
-  ⚠ `GLOBAL_WARMING` carries a commented-out `#define` and is nonetheless owner-ruled DEAD
-  ([economy.md](../../reference/economy.md)), so it goes WITH the attics — the switch marks a candidate, never a
-  verdict. Its nuke counter (`getNukesExploded` and its changer) is live outside the feature and STAYS; only the
-  warming machinery and the orphaned `GLOBAL_WARMING_*` defines go.
 ## Green-up (after the structure, never ahead of it)
 
 - Engine-repair debt: the bare Engine includes · the property-manipulator helpers · `CvCity.h`'s functor row.

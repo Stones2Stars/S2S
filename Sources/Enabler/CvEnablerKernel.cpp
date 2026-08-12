@@ -334,6 +334,50 @@ static unsigned char ek_reasonForAtom(const CvCondition* pAtom)
 	return (unsigned char)EnablerDomain::GATEREASON_REQUIRES;
 }
 
+// HIDE WINS OVER GREY WHEN SEVERAL CLAUSES FAIL (owner). A clause the asker cannot act on makes the whole
+// entity unactionable, so a greyed row for it advertises an action that does not exist -- which the player
+// sees as "the build list is offering me buildings whose tech I have not researched".
+// The defect this replaces was not the disposition table but the SELECTION: only one reason is stored, and it
+// used to be whichever clause failed FIRST -- so `all: [BONUS_COPPER, TECH_X]` with both unmet stored the BONUS
+// reason and greyed, while the unmet TECH beside it hides. Clause ORDER decided what the player saw.
+static unsigned char ek_reasonOverClauses(const CvCondition* pRoot, const CvCascadeEvalCtx& ec,
+	const CvCascadeEvalFlags& flags)
+{
+	if (pRoot == NULL || cascadeEvalCondition(pRoot, ec, flags))
+	{
+		return (unsigned char)EnablerDomain::GATEREASON_NONE;
+	}
+
+	std::vector<const CvCondition*> kClauses;
+	cascadeTopLevelClauses(pRoot, kClauses);
+
+	unsigned char eFirstFailing = (unsigned char)EnablerDomain::GATEREASON_NONE;
+	for (size_t iClause = 0; iClause < kClauses.size(); ++iClause)
+	{
+		const CvCondition* pFailing = cascadeFailingAtom(kClauses[iClause], ec, flags);
+		if (pFailing == NULL)
+		{
+			continue;                                          // this clause holds; it explains nothing
+		}
+		const unsigned char eReason = ek_reasonForAtom(pFailing);
+		if (EnablerDomain::reasonHides(eReason))
+		{
+			return eReason;                                    // nothing a later clause says can outrank a HIDE
+		}
+		if (eFirstFailing == (unsigned char)EnablerDomain::GATEREASON_NONE)
+		{
+			eFirstFailing = eReason;
+		}
+	}
+	if (eFirstFailing != (unsigned char)EnablerDomain::GATEREASON_NONE)
+	{
+		return eFirstFailing;
+	}
+	// The tree refused but no top-level clause did, so the refusal lives in an anyOf/noneOf arm of the root
+	// group -- one requirement rather than a list, which the whole-tree walk resolves.
+	return ek_reasonForAtom(cascadeFailingAtom(pRoot, ec, flags));
+}
+
 unsigned char EnablerKernel::requiresGateReason(const CvInfo* j, const CvCascadeEvalCtx& ec)
 {
 	if (j == NULL)
@@ -347,16 +391,19 @@ unsigned char EnablerKernel::requiresGateReason(const CvInfo* j, const CvCascade
 	CvCascadeEvalFlags flags;
 	flags.strictStateReligionForBuild = true;
 
-	const CvCondition* pAtom = cascadeFailingAtom(j->requiresBuild(), gateEc, flags);
-	if (pAtom == NULL)
+	// Both timings are weighed together, because a HIDE in either makes the entity unactionable -- taking
+	// build's answer first would let a greying build clause mask a hiding operate one.
+	const unsigned char eBuildReason = ek_reasonOverClauses(j->requiresBuild(), gateEc, flags);
+	if (EnablerDomain::reasonHides(eBuildReason))
 	{
-		pAtom = cascadeFailingAtom(j->requiresOperate(), gateEc, flags);
+		return eBuildReason;
 	}
-	if (pAtom == NULL)
+	const unsigned char eOperateReason = ek_reasonOverClauses(j->requiresOperate(), gateEc, flags);
+	if (EnablerDomain::reasonHides(eOperateReason))
 	{
-		return (unsigned char)EnablerDomain::GATEREASON_NONE;
+		return eOperateReason;
 	}
-	return ek_reasonForAtom(pAtom);
+	return (eBuildReason != (unsigned char)EnablerDomain::GATEREASON_NONE) ? eBuildReason : eOperateReason;
 }
 
 // The system-placement gate (see the header for the role it plays and why it is not the availability read).

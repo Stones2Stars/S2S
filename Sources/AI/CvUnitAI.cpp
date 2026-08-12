@@ -36,9 +36,6 @@
 #include "Infrastructure/CvDLLFAStarIFaceBase.h"
 #include "BetterBTSAI.h"
 #include "Repos/BuildsRepo.h"
-#ifdef USE_OLD_PATH_GENERATOR
-#include "Infrastructure/FAStarNode.h"
-#endif
 #include "CvWorkerAI.h"
 #include "Spine/CvEventSpine.h" // #430 logging consolidation: route UNT/COM/FND lines through the event spine (shadow)
 
@@ -15518,54 +15515,6 @@ namespace scoring {
 	}
 
 	// Scoring helper function to attenuate score by distance, with optional boost for current plot
-	int applyDistanceScoringFactor(int score, const CvPlot* sourcePlot, const CvPlot* targetPlot, const int currentPlotBoost)
-	{
-		FAssert(sourcePlot != NULL);
-		FAssert(targetPlot != NULL);
-
-		if (score > 0)
-		{
-			if (sourcePlot != targetPlot)
-			{
-				// Has to be > 0 because we aren't on the same plot...
-				PlayerTypes Refplayer = sourcePlot->getOwner();
-				int dist_break = 8;
-
-				//if plot isn't owned, grab the first player (to get current era)
-				if (Refplayer == NO_PLAYER)
-				{
-					for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-					{
-						if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
-						{
-							Refplayer = (PlayerTypes)iPlayer;
-							break;
-						}
-					}
-				}
-				dist_break += (int)GET_PLAYER(Refplayer).getCurrentEra();  //Calvitix TODO : dynamic, depending on map size ?
-				const int dist = stepDistance(sourcePlot->getX(), sourcePlot->getY(), targetPlot->getX(), targetPlot->getY());
-				//score = (int) (static_cast<float>(score) / sqrt(dist));// dist * dist;
-				float d0 = 5.0f;
-				float p = 0.4f;
-				float expfact = 1.5f;
-				if (dist <= dist_break)
-				{
-					score = static_cast<int>(score * pow(d0 / (d0 + dist), p));
-				}
-				else
-				{
-					float extra_dist = static_cast<float>(dist - dist_break);
-					score = static_cast<int>(score * pow(d0 / (d0 + dist), p) * std::exp(-0.1 * pow(extra_dist, expfact)));
-				}
-			}
-			else
-			{
-				score *= currentPlotBoost;
-			}
-		}
-		return score;
-	}
 }
 
 	namespace {
@@ -18320,53 +18269,6 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 		}
 	}
 
-#ifdef VALIDITY_CHECK_NEW_ATTACK_SEARCH
-	{
-		CvPlot* pNewAlgorithmBestPlot = pBestPlot;
-		int iNewAlgorithmBestValue = iBestValue;
-		int iDX, iDY;
-
-		iBestValue = 0;
-		pBestPlot = NULL;
-
-		for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-		{
-			for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-			{
-				CvPlot* plotX = plotXY(getX(), getY(), iDX, iDY);
-
-				if (plotX
-				&& AI_plotValid(plotX)
-				&& (bAllowCities || !plotX->isCity(false))
-				&& (plotX->isVisibleEnemyUnit(this) || plotX->isCity() && AI_potentialEnemy(plotX->getTeam()))
-				&& plotX->getNumVisiblePotentialEnemyDefenders(this) >= iMinStack)
-				{
-					PROFILE("CvUnitAI::AI_anyAttack.FoundTarget");
-					const int iValue = getGroup()->AI_attackOdds(plotX, true);
-
-					if (iValue > iBestValue && iValue >= AI_finalOddsThreshold(plotX, iOddsThreshold))
-					{
-						PROFILE("CvUnitAI::AI_anyAttack.SearchPath");
-						if (!atPlot(plotX) && (bFollow ? getGroup()->canEnterPlot(plotX, true) : (generatePath(plotX, 0, true, &iPathTurns))))
-						{
-							PROFILE("CvUnitAI::AI_anyAttack.SuccessfulPath");
-							if (iPathTurns <= iRange)
-							{
-								PROFILE("CvUnitAI::AI_anyAttack.SuccessfulPath.InRange");
-
-								iBestValue = iValue;
-								pBestPlot = (bFollow ? plotX : getPathEndTurnPlot());
-								FAssert(!atPlot(pBestPlot));
-							}
-						}
-					}
-				}
-			}
-		}
-		FAssert((pNewAlgorithmBestPlot == NULL) == (pBestPlot == NULL) || getDomainType() != DOMAIN_SEA);
-		FAssert(iNewAlgorithmBestValue == iBestValue || getDomainType() != DOMAIN_SEA);
-	}
-#endif
 
 	if (pBestPlot)
 	{
@@ -19328,79 +19230,6 @@ bool CvUnitAI::AI_pillageRange(int iRange, int iBonusValueThreshold)
 		}
 	}
 
-#ifdef VALIDITY_CHECK_NEW_ATTACK_SEARCH
-	CvPlot* pNewAlgorithmBestPlot = pBestPlot;
-	int iNewAlgorithmBestValue = iBestValue;
-	int iDX, iDY;
-
-	iBestValue = 0;
-	pBestPlot = NULL;
-
-	for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-	{
-		for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-		{
-			pLoopPlot = plotXY(getX(), getY(), iDX, iDY);
-
-			if (pLoopPlot != NULL)
-			{
-				if (AI_plotValid(pLoopPlot) && (!(pLoopPlot->isNPC()) || !GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_AUTO_PILLAGE_AVOID_BARBARIAN_CITIES)))
-				{
-					if (potentialWarAction(pLoopPlot))
-					{
-						CvCity* pWorkingCity = pLoopPlot->getWorkingCity();
-
-						if (pWorkingCity != NULL)
-						{
-							if (!(pWorkingCity == area()->getTargetCity(getOwner())) && canPillage(pLoopPlot))
-							{
-								if (!pLoopPlot->isVisibleEnemyUnit(this))
-								{
-									if (GET_PLAYER(getOwner()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_PILLAGE, getGroup()) == 0)
-									{
-										if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-										{
-											if (getPathLastNode()->m_iData1 == 0)
-											{
-												iPathTurns++;
-											}
-
-											if (iPathTurns <= iRange)
-											{
-												iValue = AI_pillageValue(pLoopPlot, iBonusValueThreshold);
-
-												iValue *= 1000;
-
-												iValue /= (iPathTurns + 1);
-
-												// if not at war with this plot owner, then devalue plot if we already inside this owner's borders
-												// (because declaring war will pop us some unknown distance away)
-												if (!isEnemy(pLoopPlot->getTeam()) && plot()->getTeam() == pLoopPlot->getTeam())
-												{
-													iValue /= 10;
-												}
-
-												if (iValue > iBestValue)
-												{
-													iBestValue = iValue;
-													pBestPlot = getPathEndTurnPlot();
-													pBestPillagePlot = pLoopPlot;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	FAssert((pNewAlgorithmBestPlot == NULL) == (pBestPlot == NULL) || getDomainType() != DOMAIN_SEA);
-	FAssert(iNewAlgorithmBestValue == iBestValue || getDomainType() != DOMAIN_SEA);
-#endif
 
 	if (pBestPlot != NULL && pBestPillagePlot != NULL)
 	{
@@ -28825,7 +28654,7 @@ int CvUnitAI::scoreCityHealerNeed(const UnitCombatTypes eUnitCombat, const Domai
 	}
 	// Scale up (fairly arbitrarily) so that the distance factor that is applied will have the
 	// appropriate effect (not overwhelming the base score, nor having no effect)
-	return scoring::applyDistanceScoringFactor(score * 10, plot(), targetPlot, 2);
+	return applyDistanceScoringFactor(score * 10, plot(), targetPlot, 2);
 }
 
 bool CvUnitAI::AI_fulfillCityHealerNeed(const CvPlot* pPlot)
@@ -28942,7 +28771,7 @@ namespace {
 				maxScore = std::max(maxScore, iValue);
 			}
 		}
-		int maxFinalScore = maxScore + (scoring::applyDistanceScoringFactor(maxScore, unit->plot(), city->plot(), 1) / 10);  //Calvitix Test Remove x2 the currentSpotBoost
+		int maxFinalScore = maxScore + (applyDistanceScoringFactor(maxScore, unit->plot(), city->plot(), 1) / 10);  //Calvitix Test Remove x2 the currentSpotBoost
 		maxFinalScore = std::min(std::max(maxFinalScore, -1000000), 1000000);
 		return maxFinalScore;
 	}

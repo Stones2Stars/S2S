@@ -788,6 +788,23 @@ const CvCondition* cascadeFailingAtom(const CvCondition* c, const CvCascadeEvalC
 	return ev_offendingAtom(c, ctx, flags, true);
 }
 
+void cascadeTopLevelClauses(const CvCondition* pRoot, std::vector<const CvCondition*>& kClausesOut)
+{
+	if (pRoot == NULL)
+	{
+		return;
+	}
+	if (pRoot->kind == CASC_COND_GROUP && !pRoot->all.empty())
+	{
+		for (size_t iClause = 0; iClause < pRoot->all.size(); ++iClause)
+		{
+			kClausesOut.push_back(pRoot->all[iClause]);
+		}
+		return;
+	}
+	kClausesOut.push_back(pRoot);
+}
+
 // The ENTITY-LEVEL applicability gate (json.md §2 Applicability; owner 2026-07-08 -- the loadPrune replacement):
 // the entity applies only while `enabled` holds (NULL = always-on) and `disabled` does not (§3.9 order: enabled
 // first, disabled overrides). Same evaluator as every other condition -- a GAMEOPTION_X leaf reads the live options.

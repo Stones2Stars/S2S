@@ -75,3 +75,22 @@ set; when an XML-only infotype is ported it follows the same `INFOTYPE_NAME` rul
 
 The catch-all engine tokens that are **not** infotype ids (`TURN`, `POPULATION`, `MILITARY`, `AREA_SIZE`,
 `UNIT_LEVEL`, `SELF`, …) live in the [json spec](json.md) §3.1, not here.
+
+---
+
+## ⛔ THE VERB SAYS WHICH ENTITY — `build` is an IMPROVEMENT, `construct` is a BUILDING (owner)
+
+**In Civ4 vocabulary `build` means a WORKER BUILD** — the `BUILD_` infotype above, a plot improvement action
+(`BuildTypes`, `CvPlot::canBuild`, `MISSION_BUILD`). **A BUILDING is CONSTRUCTED** (`BuildingTypes`,
+`canConstruct`). The two are different registries with different gates, so a name that says `build` while
+meaning a building points the reader at the wrong entity and the wrong machine.
+
+⚠ **The trap is that the shortened form reads fine.** `buildList` looks like an unremarkable abbreviation of
+`buildingList` and is a different concept; the same goes for `buildValue`, `canBuildX`, `buildCost` on anything
+building-shaped. ⇒ Never shorten `building` to `build` in a name YOU write — spell it, or use the CONSTRUCT
+verb (`Sources/AGENTS.md`: names are spelled out in full, because an unreadable name is where a wrong structure
+survives review).
+
+⛔ **The INHERITED offenders are NOT a rename backlog (owner): *"that the naming is ass is unfortunately not
+something we can do a lot with."*** The C2C-era UI classes (`BuildingFilterCanBuild`, `CvBuildingList`, …) carry
+this confusion throughout and a sweep to fix it buys nothing. The rule binds what you NAME, not what you find.

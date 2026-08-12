@@ -44,13 +44,6 @@
 #include "Python/CyPlot.h"
 #include "Python/CyUnit.h"
 #include "Infrastructure/CvDLLButtonPopup.h"
-#ifdef USE_OLD_PATH_GENERATOR
-#include "Infrastructure/FAStarNode.h"
-
-// The json.md §8 SKILL reads this file makes. The consumer holds the memoized generated-id
-// (the CvUnitFilters precedent): the info exposes only the parameterized group read getSkills(),
-// never a named getter per key (patterns.md -- a per-key boolean getter is the shape the rebuild deletes).
-#endif
 
 static CvEntity* g_dummyEntity = NULL;
 static CvUnit*	 g_dummyUnit = NULL;
@@ -3710,11 +3703,7 @@ bool CvUnit::isActionRecommended(int iAction) const
 			return true;
 		}
 	}
-#ifdef _MOD_SENTRY
 	else if (GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL || GC.getActionInfo(iAction).getMissionType() == MISSION_SENTRY_WHILE_HEAL)
-#else
-	else if(GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL || GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL_BUILDUP)
-#endif
 	{
 		if (isHurt() && !hasMoved() && (pPlot->getTeam() == getTeam() || healTurns(pPlot) > 0))
 		{
@@ -4348,17 +4337,10 @@ void CvUnit::doCommand(CommandTypes eCommand, int iData1, int iData2)
 }
 
 
-#ifdef USE_OLD_PATH_GENERATOR
-FAStarNode* CvUnit::getPathLastNode() const
-{
-	return getGroup()->getPathLastNode();
-}
-#else
 int CvUnit::getPathMovementRemaining() const
 {
 	return getGroup()->getPath().movementRemaining();
 }
-#endif
 
 
 CvPlot* CvUnit::getPathEndTurnPlot() const
@@ -10653,9 +10635,7 @@ BuildTypes CvUnit::getBuildType() const
 		{
 		case MISSION_MOVE_TO:
 // BUG - Sentry Actions - start
-#ifdef _MOD_SENTRY
 		case MISSION_MOVE_TO_SENTRY:
-#endif
 // BUG - Sentry Actions - end
 			break;
 
@@ -10679,11 +10659,9 @@ BuildTypes CvUnit::getBuildType() const
 		case MISSION_HEAL:
 		case MISSION_SENTRY:
 // BUG - Sentry Actions - start
-#ifdef _MOD_SENTRY
 		case MISSION_SENTRY_WHILE_HEAL:
 		case MISSION_SENTRY_NAVAL_UNITS:
 		case MISSION_SENTRY_LAND_UNITS:
-#endif
 // BUG - Sentry Actions - end
 		case MISSION_AIRLIFT:
 		case MISSION_NUKE:

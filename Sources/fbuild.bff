@@ -26,9 +26,7 @@ Settings
                     + ' /DXERCES_STATIC_LIBRARY'
 
 // ### C2C defines ###
-.C2CDefines         = ' /D_MOD_SENTRY'
-                    + ' /D_MOD_GOVWORKERS'
-                    + ' /DLOG_AI'
+.C2CDefines         = ' /DLOG_AI'
 
 #if exists(C2C_VERSION)
     #import C2C_VERSION

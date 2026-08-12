@@ -1653,3 +1653,23 @@ CvCity::m_iFreshWater                    (int)
 | counter, its spine fact pair and its CyArea bindings were residue from before that and had no authored data
 | feeding them at all. REPLACEMENT: CityContext.amenities[CLS_AMENITY_PROVIDES_POWER].
 CvArea::m_aiCleanPowerCount              (int array, MAX_TEAMS)
+
+| THE TRAP MECHANIC -- killed whole, and NONE of its eleven serialized tags was listed. That is the one hard
+| case save.md par.3 names: an unlisted deleted-read orphan is not drained, so every following tag reads the
+| previous one's slot and the desync runs to the end of the object. Four of them sat INSIDE the per-UNITCOMBAT
+| loop beside healUnitCombatTypeVolume / healUnitCombatTypeAdjacentVolume / targetUnitCombatCount, so a mature
+| save desynced once per (unit x combat class) -- thousands of [SAVEREAD] mismatch lines and an ACCESS_VIOLATION
+| reading a garbled unit list.
+| ⚠ The DECORATED tags are listed in their BARE normalized form (Class::decoration) -- a bracketed entry can
+| never match the normalized tag and silently fails to drain.
+CvUnit::trapImmunityUnitCombatCount        (int, decorated, per UnitCombat)
+CvUnit::extraTrapDisableUnitCombatType     (int, decorated, per UnitCombat)
+CvUnit::extraTrapAvoidanceUnitCombatType   (int, decorated, per UnitCombat)
+CvUnit::extraTrapTriggerUnitCombatType     (int, decorated, per UnitCombat)
+CvUnit::trapSetWithPromotionType           (int, decorated)
+CvUnit::m_iExtraPeaksWorkPercent           (int, decorated)
+CvUnit::m_iExtraTrapDamageMin              (int)
+CvUnit::m_iExtraTrapDamageMax              (int)
+CvUnit::m_iExtraTrapComplexity             (int)
+CvUnit::m_iExtraPoisonProbabilityModifier  (int)
+CvUnit::m_iTriggerBeforeAttackCount        (int)

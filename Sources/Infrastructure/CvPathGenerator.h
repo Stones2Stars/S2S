@@ -5,7 +5,6 @@
 
 #include "Tools/FProfiler.h"
 
-//#define	DYNAMIC_PATH_STRUCTURE_VALIDATION
 
 class CvMap;
 class CvPlot;
@@ -87,9 +86,6 @@ private:
 	public:
 		AllocationType() {}
 
-#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
-		int	m_seq;
-#endif
 		T	m_data;
 	};
 
@@ -97,9 +93,6 @@ public:
 	CvAllocationPool()
 	{
 		m_nextBucketToAllocate = 0;
-#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
-		m_iSeq = 0;
-#endif
 		reset();
 	}
 	~CvAllocationPool()
@@ -145,9 +138,6 @@ public:
 
 		AllocationType& allocated = (*m_pool[m_nextBucketIndex-1])[m_nextIndex++];
 
-#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
-		allocated.m_seq = m_iSeq;
-#endif
 		return &allocated.m_data;
 	}
 
@@ -155,30 +145,16 @@ public:
 	{
 		m_nextIndex = 0;
 		m_nextBucketIndex = 0;
-#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
-		m_iSeq++;
-#endif
 
 		//	No point freeing the allocated pools - we'll just need them again
 		//	for another use
 	}
 
-#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
-	bool	isAllocated(T* data) const
-	{
-		AllocationType*	alloc = (AllocationType*)(((int*)data) - 1);
-
-		return (m_iSeq == alloc->m_seq);
-	}
-#endif
 
 private:
 	int											m_nextBucketIndex;
 	int											m_nextIndex;
 	int											m_nextBucketToAllocate;
-#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
-	int											m_iSeq;
-#endif
 	std::vector<std::vector<AllocationType>*>	m_pool;
 };
 
@@ -263,10 +239,6 @@ private:
 		 int			iEdgeCost,
 		 int			iMovementRemaining) const;
 
-#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
-	bool ValidateTreeInternal(CvPathNode* root, int& iValidationSeq, CvPathNode* unreferencedNode, CvPathNode* referencedNode, int& iQueuedCount);
-	void ValidateTree(CvPathNode* root, CvPathNode* unreferencedNode, CvPathNode* referencedNode);
-#endif
 
 private:
 	CvMap*								m_map;
