@@ -47,6 +47,35 @@ spec — **[../specs/save.md](../specs/save.md)** (home of [DEC-save-remove-is-s
 matter for engine work: field removal is a soft `savemigration.txt` drain (**never** a `WRAPPER_SKIP_ELEMENT`, never a
 save-break); derived data serializes nothing; deleting a changer means auditing its whole body for riders.
 
+## ⛔ NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE (owner)
+
+**Home of [DEC-no-float-in-sync](../architecture/decisions.md#dec-no-float-in-sync).**
+
+> *"Using float in any calc that is used in any kind of multiplayer scenario sounds like a gigantic no."*
+
+Civ4 multiplayer is deterministic lockstep: every client runs the same turn and must reach the same state.
+CPU-dependent float math (`pow`, `exp`, x87-vs-SSE intermediates, compiler reassociation) can differ in the last
+bits, and a **truncation to int turns that into a different answer** — which is an OOS, not a rounding wobble.
+
+**⚖ THE DISCRIMINATOR IS SYNCHRONIZED STATE, NOT "GAMEPLAY" (owner): *"gameplay path does not always mean
+multiplayer."*** The test is whether the value can reach state every client must agree on:
+
+- **BANNED** — anything feeding a STATE MUTATION or a DECISION every client computes. **An AI decision counts**:
+  the AI runs on all clients, so a divergent score picks a different target on one of them.
+- **FINE** — anything that dies at the screen: symbol offsets, animation times, health-bar widths, map pixel
+  dimensions, and the `*Float` combat-strength reads behind the odds display. ⚠ Display float is already ruled a
+  non-OOS ([patterns.md](../architecture/patterns.md) § the DLL does not convert for display) — that is a
+  statement about *where the value ends*, never a licence to compute gameplay in float and print it.
+
+⚑ **THE CONVERSION SHAPE, worked on `applyDistanceScoringFactor`** (an AI target-attractiveness decay that ran
+`pow`/`exp` per call): a curve that factorizes into terms each depending on ONE input becomes **compile-time
+integer tables in ×10000 fixed point**, multiplied in `int64_t` and reduced once. Two lookups and a multiply
+replace two transcendental calls, and the result is bit-identical on every CPU.
+⚠ **Acceptance is the ORDERING, not bit-equality with the float version** — the float answer was never
+well-defined across clients, so it is not the baseline. Measured there: 87% of cases identical, worst absolute
+difference 66 on a score of 1,000,000, and every ranking change confined to candidates whose scores differed by
+≤ 1. A near-tie resolving differently is not a behaviour change; it is the tie being resolved *reproducibly*.
+
 ## ⛔ THE SYNCHRONIZED RNG IS SHARED SAVE STATE — do not touch the draws (owner)
 
 **Home of [DEC-synced-rng-is-shared-state](../architecture/decisions.md#dec-synced-rng-is-shared-state).**

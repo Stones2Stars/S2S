@@ -119,6 +119,20 @@ so **no `WRAPPER_SKIP_ELEMENT`** (a lingering skip still names the dead member �
 save-break-flush** (save-breaking is obsolete; the old two-stage model is retired). The one hard case: an UNLISTED
 deleted-read orphan desyncs the whole downstream read. **Home:** [save.md](../specs/save.md).
 
+### DEC-no-float-in-sync
+
+**No FLOAT where it can reach SYNCHRONIZED state (owner):** *"using float in any calc that is used in any kind of
+multiplayer scenario sounds like a gigantic no."* Civ4 is deterministic lockstep, CPU-dependent float differs in
+the last bits, and truncating that to an int turns it into a different answer — an OOS. ⚖ **The discriminator is
+synchronized state, not "gameplay"** (owner: *"gameplay path does not always mean multiplayer"*): a STATE
+MUTATION or a DECISION every client computes is banned — **an AI decision counts**, because the AI runs on all
+clients — while a value that dies at the screen (symbol offsets, animation times, the `*Float` combat reads
+behind the odds display) is fine. ⚑ The conversion shape: a curve that factorizes into terms each depending on
+ONE input becomes compile-time integer tables in ×100xx fixed point, multiplied in `int64_t` and reduced once.
+⚠ Acceptance is the ORDERING, never bit-equality with the float version — that version had no well-defined answer
+across clients, so it is not a baseline. **Home:**
+[engine.md § NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE](../reference/engine.md).
+
 ### DEC-synced-rng-is-shared-state
 
 ⛔ **Do not touch the synchronized RNG's draws (owner).** `CvGame`'s `m_sorenRand` seed is SERIALIZED into the save

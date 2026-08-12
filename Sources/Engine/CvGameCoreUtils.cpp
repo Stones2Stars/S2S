@@ -3155,6 +3155,47 @@ void makeValueString(CvWString& szValue, const int iValue, const bool bWholeNumb
 // ! Toffer
 
 	// Scoring helper function to attenuate score by distance, with optional boost for current plot
+// ⛔ INTEGER, because this feeds an AI DECISION and every client runs it. Float math is CPU-dependent and Civ4
+// multiplayer is deterministic lockstep, so a divergent truncation here is an OOS -- the ban is not about the
+// gameplay path, it is about anything that can reach SYNCHRONIZED state.
+//
+// The curve is unchanged, only its arithmetic: it factorizes into two terms that each depend on ONE input, so
+// both are compile-time tables in ×10000 fixed point ([DEC-fixedpoint-x100]) instead of a per-call pow/exp.
+//   FALLOFF[d]     = (5 / (5 + d)) ^ 0.4          -- the gentle near-field decay, indexed by step distance
+//   CUTOFF[extra]  = exp(-0.1 × extra ^ 1.5)      -- the far-field cliff, indexed by distance past dist_break
+// CUTOFF[0] is unity, so the two multiply unconditionally and the old if/else disappears.
+static const int DISTANCE_SCORING_ONE = 10000;
+
+static const int DISTANCE_SCORING_FALLOFF[] =
+{
+	10000,  9297,  8741,  8286,  7905,  7579,  7295,  7046,
+	 6824,  6624,  6444,  6280,  6129,  5991,  5863,  5743,
+	 5632,  5529,  5431,  5340,  5253,  5171,  5094,  5020,
+	 4950,  4884,  4820,  4759,  4701,  4645,  4592,  4540,
+	 4491,  4443,  4397,  4353,  4310,  4269,  4229,  4190,
+	 4152,  4116,  4081,  4047,  4013,  3981,  3950,  3919,
+	 3889,  3860,  3832,  3805,  3778,  3752,  3726,  3701,
+	 3677,  3653,  3630,  3607,  3584,  3563,  3541,  3520,
+	 3500,  3480,  3460,  3441,  3422,  3403,  3385,  3367,
+	 3350,  3332,  3315,  3299,  3282,  3266,  3251,  3235,
+	 3220,  3205,  3190,  3175,  3161,  3147,  3133,  3119,
+	 3106,  3093,  3080,  3067,  3054,  3042,  3029,  3017,
+	 3005,  2993,  2982,  2970,  2959,  2948,  2937,  2926,
+	 2915,  2904,  2894,  2883,  2873,  2863,  2853,  2843,
+	 2833,  2824,  2814,  2805,  2796,  2786,  2777,  2768,
+	 2759,  2751,  2742,  2733,  2725,  2717,  2708,  2700,
+};
+static const int DISTANCE_SCORING_FALLOFF_SIZE =
+	sizeof(DISTANCE_SCORING_FALLOFF) / sizeof(DISTANCE_SCORING_FALLOFF[0]);
+
+static const int DISTANCE_SCORING_CUTOFF[] =
+{
+	10000,  9048,  7536,  5947,  4493,  3269,  2300,  1569,  1041,   672,   423,
+	  260,   157,    92,    53,    30,    17,     9,     5,     3,     1,     1,
+};
+static const int DISTANCE_SCORING_CUTOFF_SIZE =
+	sizeof(DISTANCE_SCORING_CUTOFF) / sizeof(DISTANCE_SCORING_CUTOFF[0]);
+
 int applyDistanceScoringFactor(int score, const CvPlot* sourcePlot, const CvPlot* targetPlot, const int currentPlotBoost)
 {
 	FAssert(sourcePlot != NULL);
@@ -3183,18 +3224,21 @@ int applyDistanceScoringFactor(int score, const CvPlot* sourcePlot, const CvPlot
 			dist_break += (int)GET_PLAYER(Refplayer).getCurrentEra();  //Calvitix TODO : dynamic, depending on map size ?
 
 			const int dist = stepDistance(sourcePlot->getX(), sourcePlot->getY(), targetPlot->getX(), targetPlot->getY());
-			float d0 = 5.0f;
-			float p = 0.4f;
-			float expfact = 1.5f;
-			if (dist <= dist_break)
+			const int iExtra = std::max(0, dist - dist_break);
+
+			// Past the last CUTOFF row the multiplier has already rounded to nothing, so the target is simply
+			// out of consideration -- and this is also what bounds the FALLOFF table, since no larger distance
+			// can survive it.
+			if (iExtra >= DISTANCE_SCORING_CUTOFF_SIZE)
 			{
-				score = static_cast<int>(score * pow(d0 / (d0 + dist), p));
+				return 0;
 			}
-			else
-			{
-				float extra_dist = static_cast<float>(dist - dist_break);
-				score = static_cast<int>(score * pow(d0 / (d0 + dist), p) * std::exp(-0.1 * pow(extra_dist, expfact)));
-			}
+			const int iFalloff = DISTANCE_SCORING_FALLOFF[std::min(dist, DISTANCE_SCORING_FALLOFF_SIZE - 1)];
+			const int iCutoff = DISTANCE_SCORING_CUTOFF[iExtra];
+
+			// int64 because score x 10^4 x 10^4 overflows a 32-bit int on any realistic score.
+			score = static_cast<int>(
+				(static_cast<int64_t>(score) * iFalloff * iCutoff) / (DISTANCE_SCORING_ONE * DISTANCE_SCORING_ONE));
 		}
 		else
 		{

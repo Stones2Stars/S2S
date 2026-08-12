@@ -1067,26 +1067,6 @@ fabricated number.
 was not re-bound — it now reads `CyState::getCityYieldTerms`, the SAME decomposition the `/computed` census
 renders, because a tooltip IS a census and two computations of one number drift.
 
-## `applyDistanceScoringFactor` computes in FLOAT on a lockstep AI path
-
-**PROVEN — it computes in FLOAT on a lockstep path.** `applyDistanceScoringFactor`
-(`Sources/Engine/CvGameCoreUtils.cpp`, declared in `CvGameCoreUtils.h`) uses `float d0 = 5.0f; float p = 0.4f;`
-with `pow`/`exp`, truncated to int, and is reached from four `CvUnitAI` decision sites that run on every client
-in lockstep. Civ4 multiplayer is deterministic lockstep and CPU-dependent float math desyncs
-([engine.md](../../reference/engine.md); [modifier.md §2](../../specs/modifier.md): *"All integer, ×100
-fixed-point, no float"*).
-
-⚑ **The DUPLICATE half is fixed** — a second, functionally identical copy lived in `namespace scoring` inside
-`CvUnitAI.cpp` with two of the four callers on it. It is deleted and all four callers read the one
-header-declared definition ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation);
-a namespace is separately the wrong shape for a shared calc — VC7.1/Boost/EXE-ABI mangling).
-
-**RULED OUT.** The contract broker is no longer a caller — its matching does not score on distance at all any
-more, so that call site is gone rather than pending. The four sites above are `CvUnitAI`'s own.
-
-**NOT YET KNOWN.** Whether the float falloff actually yields a divergent int after truncation across the CPUs
-the mod runs on — i.e. whether this is a live desync or a latent one. That decides urgency, not whether the
-shape is wrong.
 
 ## Engine→Python IDENTITY conversion left 46+ handlers dereferencing a tuple
 
