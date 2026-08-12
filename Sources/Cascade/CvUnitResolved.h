@@ -202,8 +202,8 @@ public:
 	//	inversion ([DEC-one-reverse-view]) and the per-read scan the event-built state exists to delete.
 	bool isPromotionOverridden(int iPromotion) const;
 
-	// The gathers, exposed so an endpoint can recompute FROM SOURCE into a caller-owned buffer without ever being
-	// handed the stored values -- the oracle shape that makes "never repairs" structural, not a discipline.
+	// The gathers, exposed so a caller can recompute FROM SOURCE into its own buffer without ever being handed
+	// the stored values -- which is what makes "never repairs" structural rather than a discipline.
 	static void gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS]);
 	static void gatherHideAndSeekInto(const CvUnit& kUnit, UnitResolvedHideAndSeek& kOut);
 	static void gatherHealInto(const CvUnit& kUnit, UnitResolvedHeal& kOut);

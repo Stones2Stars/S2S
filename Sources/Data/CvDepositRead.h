@@ -40,12 +40,10 @@ public:
 	// `plots` filter, the PURE_TRAITS sign filter, the `ai` audience gate, the §3.9 enabled/disabled gate, and
 	// the ONE §3.7 `per` scaler × the source's live multiplicity.
 	//
-	// ⛔ THIS EXISTS BECAUSE TWO SINKS CONSUME IT AND MUST NEVER DIVERGE ([DEC-single-implementation]): the
-	// maintained sum APPLIES the resolved value into the package slot as its fact arrives, and the endpoint
-	// ORACLE folds the same value into its own scratch document. Those two are diffed against each other
-	// (state-repositories.md § THE RECOMPUTE IS AN ENDPOINT ORACLE), so a second copy of this resolve would make
-	// the tripwire compare two derivations instead of one derivation against two builds — it could disagree for
-	// reasons that are not a missed emit, which is exactly the flaw that killed the old comparison twin.
+	// ⛔ EVERY CONSUMER FOLDS THROUGH THIS ONE RESOLVE ([DEC-single-implementation]): the maintained sum applies
+	// the resolved value into the package slot as its fact arrives, and every reader of that value reaches the
+	// same function. A second copy would be a second derivation, free to disagree for reasons that are not a
+	// missed emit.
 	// ⚑ What legitimately differs between the two is ONLY the sink, which is why nothing about a slot, a mask or
 	// a package appears in this signature.
 	//

@@ -2819,8 +2819,7 @@ void CvGameTextMgr::setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProc
 // render): a block is "different sources put together" and choosing/heading them is the text manager's job,
 // while the per-source render inside it is never hand-built. So each renders ONE line for the cascade CHANNEL
 // (every authored deposit -- buildings, civics, traits, features, bonuses, specialists, corporations, techs)
-// and one line per RAW-STATE input the city can still be asked for directly. Per-SOURCE attribution is the
-// ORACLE endpoint's job, never the read surface's.
+// and one line per RAW-STATE input the city can still be asked for directly.
 // > Nothing here re-derives a term: the deposits come from the group read and the raw-state inputs from their
 // own accessors, so the lines sum toward the realized total by construction rather than by a maintained tally.
 void CvGameTextMgr::setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)

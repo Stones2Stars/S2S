@@ -79,8 +79,8 @@ bool MMKernel::isRateFamily(ModifierFamily eFamily)
 }
 
 // THE ONE PER-ENTRY RESOLVE (see the header): what this entry deposits at this scope, and nothing about where
-// the answer goes. The apply path and the endpoint oracle both fold through it, so the tripwire they feed
-// compares one derivation against two builds rather than two derivations ([DEC-single-implementation]).
+// the answer goes. Every consumer folds through it, so there is exactly one derivation
+// ([DEC-single-implementation]).
 bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascScope eScope,
 	const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, bool bSkipRateChannels,
 	int& iChannelOut, bool& bPercentSideOut, int64_t& iValueOut, PerScaling ePerScaling)

@@ -615,8 +615,7 @@ static const std::vector<int>* ek_provides(int b)
 }
 
 // The ONE per-building classification for a PRESENT building b, under the supply `ecOp.vicinityProvidedBonuses`
-// points at -- shared by the full seed recompute (recomputeOperatingBuildingsInto) and the targeted ripple
-// (ek_recheckActiveSet), so the two can never diverge in per-building logic. ORDER (enabler.md §3.2: obsolete is
+// points at. ORDER (enabler.md §3.2: obsolete is
 // the third outcome, checked before operate): obsolescence is INDEPENDENT of operate/dormancy -- a present
 // building whose obsoletedBy tech is held is obsolete regardless of operate, so it is checked FIRST.
 //
@@ -657,100 +656,11 @@ static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCasca
 
 } // namespace
 
-// COMPUTE the two per-city operating buildings in ONE pass. `activeOut` = the ACTIVE buildings for pCity (present ∧
-// operate-holds ∧ ¬dormant-trigger). DORMANCY is DERIVED from `requires.operate` + its dormant triggers (the successor
-// buildings whose presence dorms this) -- NEVER the engine active-building/`/state` read (DEC-calc-zero-ride-in; owner:
-// dormancy is 100% governed by operate enablers). Present is the raw input hasBuilding (the un-dormancy-gated presence).
-// `providedOut` = every ACTIVE building's `provides.bonuses` unioned -- the in-vicinity bonus supply (json §5a),
-// computed from JSON, not the engine. `ecOp` = a COPY of ec with activeBuildings=NULL so a BUILDING_ predicate INSIDE an
-// operate condition resolves via raw presence -- this breaks any recursion (operate conditions reference resources/
-// civics in practice, not building-active).
-void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut, std::set<int>& obsoleteOut)
-{
-	// The PURE fixpoint recompute: the LOAD SEED and the validation ORACLE, never the read path. It FULLY defines
-	// its output every call, so a caller never sees a partially-filled set.
-	activeOut.clear();
-	providedOut.clear();
-	obsoleteOut.clear();
-	if (pCity == NULL) return;
-	const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
-	CvCascadeEvalCtx ecOp;
-	pCity->getCityContext().fillEvalCtx(ecOp);      // city+plot -- the contexts fill the eval state (contexts.md)
-	kOwner.getEmpireContext().fillEvalCtx(ecOp);    // player+team
-	ecOp.activeBuildings = NULL;   // break recursion: operate's own BUILDING_ atoms resolve via raw presence
-	CvCascadeEvalFlags flags;      // default flags
-	// enabler-frontier-perf.md Part D (safe subset): iterate the city's PRESENT buildings, not a 0..NumBuildingInfos
-	// scan (~9400 hasBuilding probes × the fixpoint iterations, per recompute, at recompute frequency). m_hasBuildings
-	// is maintained in lockstep with hasBuilding()/m_bHasBuildings (CvCity::alterBuildingLedger), so this is the SAME
-	// present set -- and the fixpoint is order-independent (each building's active status reads the PRIOR iteration's
-	// `prov`; provNext is a set union), so the active/provided output is bit-identical. (The deeper affected-subset
-	// recompute + the conditional operating buildings-skip are left as full-dirty: a completed building always joins the active set,
-	// and the mutually-dependent fixpoint resists a correct partial recompute -- rule 3; A-C already collapse the
-	// recompute FREQUENCY, which is where the ceFacts win comes from.)
-	const std::vector<BuildingTypes> aHas = pCity->getHasBuildings();
-	// ⛔ FIXPOINT (2026-07-02, the Athens −15 stack find): the active set and the vicinity supply are MUTUALLY
-	// dependent — an operate condition may consume a bonus another ACTIVE building `provides` (json §5a), so a
-	// single pass evaluates those consumers against an incomplete supply and dorms them wrongly (per-building
-	// dry-calc proved the data exact; the whole bC under-count was ~14 buildings dormed by a NULL/partial provB).
-	// StoneBase never faced this: its AugmentState reads the ENGINE's dormant set (the "StoneBase cheated on
-	// dormancy" the owner flagged); the self-contained enabler must solve the fixpoint itself. LEAST fixpoint:
-	// start with an EMPTY supply, iterate active→provides until stable (bounded; provides only ever ADD, so
-	// convergence is fast — typically 2 scans).
-	// ⛔ THE BOUND IS A RUNAWAY GUARD, NOT A TIER BUDGET. A manufactured chain lights TIER BY TIER (grain -> flour
-	// -> bread -> deli, enabler.md § Load-end reconciliation), so each iteration admits exactly one more tier and a
-	// low cap silently truncates the deep end of the chain -- every consumer above it dorms, and nothing re-derives
-	// it ([DEC-no-self-heal]). The supply only ever GROWS (provides never retract inside the least fixpoint), so the
-	// loop converges in at most one iteration per providing building; the bound only has to exceed the longest
-	// possible chain. It mirrors the targeted ripple's own guard in this file, ASSERT included -- a truncated
-	// fixpoint leaves the operating set WRONG and is a defect to fix at its cause, never a state to accept.
-	// ⚠ THE FIXPOINT NOW HAS TWO COUPLED UNKNOWNS, NOT ONE -- the supply AND the active set. A dormant trigger
-	// tests the successor's ACTIVE state (ek_classifyBuilding), so a ladder settles from the top down over
-	// successive iterations WITHOUT the supply moving at all: iteration 1 activates every rung whose operate
-	// holds (nothing is active yet, so nothing dorms anything), iteration 2 dorms the rungs beneath an active
-	// one, and so on. ⛔ Terminating on the SUPPLY alone would therefore stop after the first pass and freeze
-	// the ladder with every rung active -- the mirror image of the all-dormant bug, and just as silent. Both
-	// sets must be stable.
-	const int iFixpointGuard = GC.getNumBuildingInfos() + 8;
-	int iIterations = 0;
-	std::set<int> prov;
-	std::set<int> activePrev;
-	ecOp.vicinityProvidedBonuses = &prov;
-	for (; iIterations < iFixpointGuard; ++iIterations)
-	{
-		activePrev.swap(activeOut);
-		activeOut.clear();
-		obsoleteOut.clear();   // fully redefined per iteration, like the other two -- never accumulated across passes
-		std::set<int> provNext;
-		for (size_t iB = 0; iB < aHas.size(); ++iB)
-		{
-			const int b = (int)aHas[iB];   // a PRESENT building (raw input -- the un-dormancy-gated presence)
-			// The ONE shared verdict (ek_classifyBuilding) -- the SAME classification the targeted ripple applies,
-			// so the seed and the ripple can never diverge. Obsolescence is checked FIRST (enabler.md §3.2: obsolete
-			// is the THIRD outcome, checked before operate -- a present building whose obsoletedBy tech is held is
-			// neither active nor dormant regardless of operate; excluded from active, provides nothing). The #430
-			// obsoletion flip landed: an obsolete building STAYS present, and its whenObsolete tree deposits off
-			// this set (json §4.2, modifier-side).
-			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags, activePrev);
-			if (v == EK_OBSOLETE) { obsoleteOut.insert(b); continue; }   // -> the parallel obsolete set (json §4.2)
-			if (v != EK_ACTIVE) continue;                                // dormant (operate fails / successor active)
-			activeOut.insert(b);   // active (under the CURRENT supply estimate)
-			// This ACTIVE building's `provides.bonuses` supply those bonuses IN-VICINITY (json §5a).
-			const std::vector<int>* pv = ek_provides(b);
-			if (pv != NULL)
-				for (size_t i = 0; i < pv->size(); ++i) provNext.insert((*pv)[i]);
-		}
-		if (provNext == prov && activeOut == activePrev) break;   // BOTH stable -> this is the fixpoint
-		prov.swap(provNext);
-	}
-	FAssertMsg(iIterations < iFixpointGuard, "the operate/provides fixpoint hit its runaway guard -- the operating set is left incomplete");
-	providedOut = prov;
-}
-
 // ============================ the ACTIVE-SET targeted maintenance ==========================================
 // The per-city active-building set (m_operatingBuildings.active/provided) is maintained by TARGETED
 // PROPAGATION, not blanket-recomputed on every event: a HAVE-change ripples ONLY the affected buildings into the
-// AUTHORITATIVE set (the recompute above stays the LOAD seed + the validation oracle). Mirrors the frontier's
-// s_bc*/recheckHave (CvBuildingEnabler.cpp), extended to the operate<->provides fixpoint. enabler.md §7.
+// AUTHORITATIVE set. Mirrors the frontier's s_bc*/recheckHave (CvBuildingEnabler.cpp), extended to the
+// operate<->provides fixpoint. enabler.md §7.
 namespace {
 
 static bool s_operateIndexBuilt = false;

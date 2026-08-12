@@ -20,7 +20,7 @@
 //                         present, plots + contents/state, specialists, ...). NO yields,
 //                         NO computed verdicts -- the INPUT to a calculation.
 //   GET /computed/*    -> the engine's OWN computed answers (yield rates + per-source
-//                         decomposition, gate verdicts, availability oracles, counts,
+//                         decomposition, gate verdicts, availability verdicts, counts,
 //                         victory state) -- the verification ground-truth an external
 //                         reader diffs against, the engine never comparing or repairing.
 // Anything but GET gets 405 (Allow: GET); unknown paths get 404. /state and /computed

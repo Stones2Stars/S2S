@@ -13207,8 +13207,8 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	}
 
 	// The corp-HQ clamp below weighs its gold estimate against what this city already earns on the channel.
-	// That is the city's REALIZED commerce -- the group read ([DEC-new-getter-surface]); per-source attribution
-	// is the oracle's job, so there is no building-only slice to ask for.
+	// That is the city's REALIZED commerce -- the group read ([DEC-new-getter-surface]); nothing stores a
+	// per-source breakdown, so there is no building-only slice to ask for.
 	int aiRealizedCommerce[NUM_COMMERCE_TYPES];
 	getCommerces(aiRealizedCommerce);
 

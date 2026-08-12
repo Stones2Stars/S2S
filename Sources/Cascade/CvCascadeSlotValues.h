@@ -9,9 +9,9 @@
 //	(scope, channel, owner). Nothing here compares, reports or repairs anything -- a divergence has no in-DLL
 //	representation at all.
 //
-//	⛔ NOT a cache and NOT storage: a caller-owned buffer, copyable by value, holding no owner pointer. Handing
-//	the oracle one of these instead of the stored package is what makes "the oracle never repairs" STRUCTURAL
-//	rather than a discipline ([DEC-no-self-heal]).
+//	⛔ NOT a cache and NOT storage: a caller-owned buffer, copyable by value, holding no owner pointer. Anything
+//	that computes into one of these instead of into the stored package structurally cannot repair the package
+//	([DEC-no-self-heal]).
 //
 //	THE IDENTITY is TWO ints INTERPRETED PER SCOPE, exactly as the spine's DOMAIN ints are interpreted per
 //	event (the scope owners share no common id accessor, so identity is passed IN at bind):
@@ -41,8 +41,7 @@ struct CvCascadeSlotValues
 	CvCascadeSlotValues() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
 	// Read one CHANNEL's value out of this document (the local slot index is the scope's own; a channel this
-	// scope never carries answers 0, exactly as a package read would). The oracle's combine reads its
-	// cross-scope inputs this way -- off freshly recomputed documents, never off a stored package.
+	// scope never carries answers 0, exactly as a package read would).
 	int64_t flatForChannel(int iChannel) const
 	{
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);

@@ -252,17 +252,11 @@ public:
 	// a THIRD outcome collected in the SAME pass -- excluded from active/provides, it deposits its `whenObsolete` tree.
 	// Consumers never call it directly; they read the STANDING set via operatingBuildings()/
 	// wireOperatingBuildings() below. It is reached through the load seed().
-	static void recomputeOperatingBuildingsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut, std::set<int>& obsoleteOut);
-
-	// The WHOLE set (the three fixpoint sets + the provider ref-count) recomputed from source into a
-	// CALLER-OWNED buffer -- the seed points it at the city's storage, the ENDPOINT ORACLE at its own scratch.
-	// Never given the maintained set, so serving the oracle structurally cannot repair it.
-
 	// --- ACTIVE-SET targeted maintenance (state-repositories.md: the active-building set is maintained by
 	// targeted PROPAGATION, not blanket-recomputed). buildActiveIndex() inverts every building's `requires.operate`
 	// into an operate-only reverse index at LOAD; the on*Active hooks ripple ONLY the affected buildings into the
-	// AUTHORITATIVE m_operatingBuildings (active/provided/providedCount) in place -- the recompute above stays the load
-	// SEED + the validation oracle. Mirrors the frontier's s_bc*/recheckHave, extended to the operate/provides fixpoint.
+	// AUTHORITATIVE m_operatingBuildings (active/provided/providedCount) in place. Mirrors the frontier's
+	// s_bc*/recheckHave, extended to the operate/provides fixpoint.
 	static void buildActiveIndex();
 	static void onBuildingChangedActive(const CvCity* pCity, int eBuilding);   // a building built/lost in pCity
 	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power/bonus-whole-set (CASC_HAVE_*)
@@ -273,9 +267,9 @@ public:
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
 
 	// The STANDING per-city operating buildings (CvCity::m_operatingBuildings, CvOperatingBuildings.h) -- a BARE
-	// FETCH, unconditionally. Nothing is recomputed on this path: the set is seeded once and kept current in
-	// place by the targeted on*Active hooks above, so a missed propagation stays visibly wrong
-	// ([DEC-no-self-heal]) until an external reader diffs this set against the endpoint oracle's recompute.
+	// FETCH, unconditionally. Nothing is recomputed on this path: the set is built by the facts and kept current
+	// in place by the targeted on*Active hooks above, so a missed propagation stays visibly wrong
+	// ([DEC-no-self-heal]).
 	static const OperatingBuildings& operatingBuildings(const CvCity* pCity);
 
 	// "If eCandidate stood here, which of this city's ACTIVE buildings would it send DORMANT?" -- the WHAT half

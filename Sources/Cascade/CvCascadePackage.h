@@ -162,10 +162,10 @@ struct CvCascadePackage
 
 	CvCascadePackage() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
-	// Wire the owner's IDENTITY -- what every SERVED value carries, so a divergence an external reader observes
-	// between the stored and oracle documents names WHICH object drifted (city 5-8192, plot 12/30) rather than
-	// "some city's production flats". The owner types differ per scope (they expose no common id accessor), so
-	// identity is passed IN rather than read back off TOwner; either axis may be -1 where the scope has none.
+	// Wire the owner's IDENTITY -- what every SERVED value carries, so a reader can name WHICH object a value
+	// belongs to (city 5-8192, plot 12/30) rather than "some city's production flats". The owner types differ
+	// per scope (they expose no common id accessor), so identity is passed IN rather than read back off
+	// TOwner; either axis may be -1 where the scope has none.
 	// ⛔ THERE IS NO REFRESH DELEGATE, BECAUSE THERE IS NO REBUILD TO DELEGATE TO. A package starts EMPTY and is
 	// filled ONLY by the apply verbs below, from the facts ([DEC-maintained-sum]). A channel no fact ever reached
 	// reads ZERO -- loudly and permanently -- which IS the missed-emit tripwire ([DEC-no-self-heal]); the load
@@ -345,9 +345,8 @@ struct CvCascadePackage
 	// combine already lives, and is gated there by the WLTKD/disorder participation test
 	// (state-repositories.md § THE CROSS-SCOPE RECEIVER; economy.md).
 
-	// The ENDPOINT-FACING STORED read: this package's slots as they stand, copied into a caller-owned document
-	// -- the same shape the oracle's fresh recompute fills, so an external consumer diffs the two field by
-	// field. A slot the storage has never been sized for answers 0, exactly as a consumer read would.
+	// The ENDPOINT-FACING read: this package's slots as they stand, copied into a caller-owned document. A slot
+	// the storage has never been sized for answers 0, exactly as a consumer read would.
 	void readValuesInto(CvCascadeSlotValues& kValues) const
 	{
 		kValues.reset(scope, identityFirst, identitySecond);

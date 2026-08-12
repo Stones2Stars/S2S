@@ -7420,7 +7420,7 @@ int CvPlayer::getInflationMod10000() const
 	iInflationPerTurnTimes10000 /= 100;
 
 	//	The four hand-named per-SOURCE accumulators collapsed into the ONE empire-scope inflation channel --
-	//	per-source attribution is the oracle's job, never a getter's. The EVENT-granted modifier stays: it is
+	//	nothing stores a per-source breakdown, and a getter never grows one. The EVENT-granted modifier stays: it is
 	//	genuine one-shot persisted state, not a derivable deposit.
 	int aiScalars[NUM_INFO_SCALARS];
 	getScalars(aiScalars);

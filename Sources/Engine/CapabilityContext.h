@@ -75,11 +75,6 @@ public:
 	// Zeroing at owner reset -- a delta store is correct only from a known zero.
 	void clear();
 
-	// --- THE ORACLE half of the missed-emit tripwire -----------------------------------------------------------
-	// Recompute the whole union FROM SOURCE into a caller-owned store, with no gate -- what an endpoint serves
-	// beside the union the facts built, for an EXTERNAL consumer to diff. It is never handed the stored union, so
-	// serving it cannot repair anything ([state-repositories.md] § THE RECOMPUTE IS AN ENDPOINT ORACLE).
-
 	// The served ENUMERATION -- the four dictionaries, so a renderer names what it holds rather than probing
 	// every minted id. Read-only; the maintenance verb is the fold below.
 	const ContextDict& capabilityDict() const { return m_capabilities; }

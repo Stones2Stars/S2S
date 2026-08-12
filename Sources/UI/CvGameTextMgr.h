@@ -235,7 +235,7 @@ public:
 	// improvement) from the unified prerequisite model, replacing the per-type hand-rolled
 	// loops in buildBuildingRequiresString.
 	// #195 Phase 2: status-aware renderer for a model requirement. Filters by what the city
-	// already has (via CvGameObject::hasGOM, the same oracle the construct-condition uses) and
+	// already has (via CvGameObject::hasGOM, the same read the construct-condition uses) and
 	// renders the unmet items as a "Requires: <links>" list (AND for REQUIRE_ALL, OR otherwise).
 	// szRequiresKey selects the leading label so callers can distinguish build-time gates from
 	// operating gates (e.g. TXT_KEY_REQUIRES_TO_OPERATE for prereq bonuses -- see #325).

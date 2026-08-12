@@ -68,8 +68,8 @@ namespace
 	// Resolve a `plots`-target deposit's predicate to a cityContext.plotAttrs COUNT (contexts.md: "how many,
 	// not which" -- the count IS the aggregate, keyed on the CASC_PRED_* id). A bare single predicate reads its
 	// key directly; a one-child `all` group collapses onto its child. A compound/parameterized/presence
-	// predicate has no counted key in the aggregate yet -- it answers 0 (fail-visible through the oracle, never
-	// a guessed engine walk; the plotAttrs key set is OPEN and grows with the contexts, contexts.md).
+	// predicate has no counted key in the aggregate yet -- it answers 0 (visibly wrong, never a guessed engine
+	// walk; the plotAttrs key set is OPEN and grows with the contexts, contexts.md).
 	int val_plotPredicateCount(const CvCondition* pPredicate, const CityContext& cityContext)
 	{
 		if (pPredicate == NULL)
@@ -805,7 +805,7 @@ namespace
 	//	here; a percent authored on this address later would need the unit split before this could stay.
 }
 
-// THE SPECIALIST TERM (see the header): the ONE fold both the oracle and the stored read use.
+// THE SPECIALIST TERM (see the header): the ONE fold every reader of it uses.
 int64_t InfoValuation::specialistTerm(const CvCity& city, int iChannel, const CvCascadeEvalCtx& evalCtx,
 	std::vector<SpecialistTermRow>* pRowsOut, const std::vector<TraitContext::HeldTrait>* pHeldTraits)
 {

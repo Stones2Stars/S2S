@@ -1,6 +1,6 @@
 //
 //	TechEnabler -- the TECH domain on the standardized enabler component (see the header): the maintained
-//	researchable vector (seed + O(delta) event updates + bare reads), with the pure function kept as the oracle.
+//	researchable vector (seed + O(delta) event updates + bare reads).
 //
 
 #include "CvGameCoreDLL.h"
@@ -13,7 +13,7 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "Enabler/CvEnablerKernel.h"           // EnablerKernel::generate/requiresMet -- the oracle GENERATE + the ONE gate evaluator
+#include "Enabler/CvEnablerKernel.h"           // EnablerKernel::generate/requiresMet -- the GENERATE pass + the ONE gate evaluator
 #include "Conditions/CvConditionEval.h"    // CvCascadeEvalCtx -- the gate evaluation's context
 #include "CvTechInfo.h"                // cascadeStartNode -- the synthetic TECH_GAME_START root (off the InfoRepo)
 
@@ -135,9 +135,3 @@ void TechEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 		}
 	}
 }
-
-
-// --- THE ORACLE (never the read path): the enable-side pure function. CAN GET = union(enables.techs) -
-// (disables/obsoletes/replaces) over HAVE, minus already-held, minus identity.disable. Deliberately
-// OVER-INCLUSIVE (the requires gate + allowed cap are later stages). Diff the maintained vector against this
-// to catch a missed or mis-ordered delta.

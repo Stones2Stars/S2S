@@ -2,7 +2,7 @@
 //	CvModifierConsumer -- the modifier cascade's own spine consumer (see the header). The switch below names
 //	only the event's SEMANTICS (which repo its iType indexes; which state a stateful event embodies); what a
 //	source DEPOSITS is never decided here -- it comes from that source's own compiled entries, resolved through
-//	the ONE per-entry resolve (MMKernel::resolveEntry) this consumer shares with the endpoint oracle.
+//	the ONE per-entry resolve (MMKernel::resolveEntry).
 //
 //	⚖ A FACT APPLIES; NOTHING IS MARKED AND NOTHING IS REBUILT ([DEC-maintained-sum]). The DOMAIN fact names the
 //	SOURCE and carries the DIRECTION as a signed multiplicity (+1 arriving, -1 leaving, ±N for a count), the
@@ -26,7 +26,7 @@
 #include "CvCascadePackage.h"
 #include "CvCascadeChannelRegistry.h"
 #include "Data/CvDepositIndex.h"        // routeFor + the dependency routes -- the ONE mark derivation
-#include "Data/CvDepositRead.h"         // MMKernel::resolveEntry -- the ONE per-entry resolve, shared with the oracle
+#include "Data/CvDepositRead.h"         // MMKernel::resolveEntry -- the ONE per-entry resolve
 #include "Data/CvInfoValuation.h"       // the eval-ctx fill seam (the contexts ARE the eval state)
 #include "Enabler/CvEnablerKernel.h"    // wireOperatingBuildings -- the THIRD leg of the eval state
 #include "Spine/CvEventSpine.h"
@@ -477,19 +477,16 @@ namespace
 		// condition asking an active-building or vicinity-provides question evaluates against nothing and
 		// quietly answers false").
 		// ⚑ It is the APPLY path, so the loss is permanent rather than momentary — the deposit is never added to
-		// the package at all, and nothing re-derives it ([DEC-no-self-heal]). The gather (the oracle) wires both,
-		// which is exactly why the two sides disagreed.
-		// ⚠ This wiring is an ALIGNMENT with the gather, not a measured fix for any particular channel: the
-		// gather wires both legs and this path did not, so the two sides could disagree by construction.
-		// Adding it moved no observed rate -- do NOT read it as the cause of a channel's divergence.
+		// the package at all, and nothing re-derives it ([DEC-no-self-heal]). BOTH legs are wired here for that
+		// reason, not as a fix for any particular channel: adding the second moved no observed rate, so do NOT
+		// read it as the cause of a divergence.
 		InfoValuation::fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(),
 			city.plotGroup(city.getOwner()), evalCtx);
 		EnablerKernel::wireOperatingBuildings(&city, evalCtx);
 		// THE CARRIER SLOT. A source-relative predicate (`existedFor` -- how long has THIS building stood) can only
 		// be answered by the walk that knows the depositing entity's id, and it answers FALSE when nothing set it
-		// ([contexts.md] § THE SOURCE SLOTS). It was set on the GATHER's per-building fold and nowhere on the apply
-		// path, so every age-gated deposit resolved false on the stored plane while the oracle resolved it properly
-		// -- the two sides disagreeing by construction on the whole class.
+		// ([contexts.md] § THE SOURCE SLOTS). Every walk that resolves a building's entries must therefore set
+		// it: unset here, every age-gated deposit in the class silently resolves false.
 		evalCtx.sourceBuilding = iSourceBuilding;
 		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
 		{
@@ -564,7 +561,7 @@ namespace
 	// plot stands -- the identical buffer-then-fold CityContext uses for its own membership facts, for the same
 	// reason. ⛔ It is NOT a deferred recompute: what is banked is the FACT (its source + signed multiplicity), and
 	// the drain applies exactly the deposits that fact names ([DEC-maintained-sum]). Nothing is re-derived from
-	// live state, so the oracle's recompute-from-source stays the only thing that does that.
+	// live state.
 	struct PlotsFanFact
 	{
 		const CvInfo* pSource;

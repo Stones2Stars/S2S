@@ -455,9 +455,8 @@ public:
 	// iChannel < 0 (never authored anywhere) answers 0.
 	static int realizedAtPlot(const CvPlot& plot, int iChannel);
 	// ⚖ THE SPECIALIST TERM of the §2a rate -- each assigned specialist's own output at CITY scope, times how
-	// many are assigned. Exposed because BOTH sides of the tripwire need it and neither may own it: the ORACLE
-	// folds it from fresh documents, the STORED read folds it beside the stored packages, and a second copy
-	// would make the two disagree for reasons that are not a missed emit ([DEC-single-implementation]).
+	// many are assigned. Exposed rather than inlined because several readers need it and none may own it: a
+	// second copy would be a second derivation ([DEC-single-implementation]).
 	//
 	// ⚖ ONE ROW PER SPECIALIST TYPE -- the DECOMPOSITION of that Σ ([http-endpoints.md]: a term that is itself a
 	// Σ decomposes again). `specialists` reaches the rate census as ONE int over every held type, so a rate that

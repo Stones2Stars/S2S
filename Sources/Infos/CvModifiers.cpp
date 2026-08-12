@@ -754,7 +754,7 @@ void CvModifiers::landReverseEntry(CvModEntry* pEntry)
 //	positives and negatives are already added together -- and every entry-walking consumer honours it through
 //	the ONE MMKernel::applies they all already call. No parameter is threaded to any call site.
 //	⚠ This is the ONLY place the rule is applied. No consumer filters by alignment, and none may: a private
-//	filter in the oracle would be a rule the stored-vs-oracle diff could never report on.
+//	filter at a consumer would be a second, invisible copy of the rule.
 void CvModifiers::applyPureTraitGate(bool bNegativeTrait)
 {
 	bool bChanged = false;
