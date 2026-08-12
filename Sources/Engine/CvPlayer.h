@@ -597,8 +597,6 @@ public:
 
 	int getHappyPerMilitaryUnit() const;
 
-	void changeHappyPerMilitaryUnit(int iChange, bool bLimited = false);
-
 	int getMilitaryFoodProductionCount() const;
 	bool isMilitaryFoodProduction() const;
 
@@ -1743,7 +1741,6 @@ protected:
 	mutable bool m_bUnitUpkeepDirty;
 
 	int m_iNumMilitaryUnits;
-	int m_iHappyPerMilitaryUnit;
 	int m_iMilitaryFoodProductionCount;
 	int m_iConscriptCount;
 	int m_iMaxConscript;

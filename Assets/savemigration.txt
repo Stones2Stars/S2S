@@ -1876,3 +1876,18 @@ CvCity::BonusDefenseChanges              (int)
 | count-key, which does not exist on the calc surface -- the same missing-read class as the unit-qualified
 | entry sum in todo.md, and a valuation improvement rather than a migration obligation.
 CvCity::m_paiImprovementFreeSpecialists  (class int array, IMPROVEMENTS)
+========================
+| The military-happiness RATE: how much happiness one stationed military unit is worth, empire-wide.
+| A stranded accumulator on all three legs -- changeHappyPerMilitaryUnit had NO caller left, the int kept
+| deserializing, and nine consumers read it (CvCityAI x6, CvPlayerAI x2, CvCity::getMilitaryHappiness), so
+| every save scaled military happiness by whatever history it carried and every NEW game by zero.
+| REPLACEMENT: CvPlayer::getHappyPerMilitaryUnit now SUMS the `unit:`-qualified entries over the player's live
+| sources (adopted civics + held traits) -- `happiness.empire.cities.{unit: IS_MILITARY}`, 18 authored entries
+| -- through InfoValuation::unitQualifiedRate. The city then folds `perUnit x liveCount` on top, outside every
+| percentage, which CvCity::getMilitaryHappiness already did ([DEC-unit-modifiers-on-top], modifier.md §2b/§6).
+| ⚑ The RATE read is what every other walk on the calc surface deliberately skips, and is why they skip it: a
+| unit-carried value must never enter a cached sum, so it is summed here instead. Until it existed the deposits
+| reached nobody and the qualifier was compiled, cloned and rendered but never read.
+| ⚠ The changer's rider (AI_makeAssignWorkDirty on the unlimited path) needs no new home: a CIVIC change and a
+| TRAIT change are already ruled dirty triggers (citizen-assignment.md), and those are this value's only sources.
+CvPlayer::m_iHappyPerMilitaryUnit        (int)

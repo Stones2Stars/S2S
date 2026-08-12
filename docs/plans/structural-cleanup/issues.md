@@ -1173,48 +1173,6 @@ outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
 it — `RevolutionInit` imports the module and binds only `kbdEvent` / `GameStart` / `OnLoad` — so it cannot fire,
 and Revolution is a carve-out owed its own rework. ⛔ Do not "fix" it into the live set.
 
-## MILITARY HAPPINESS IS SERVED FROM A FROZEN SAVE VALUE, AND ITS REPLACEMENT READ DOES NOT EXIST
-
-**PROVEN — the three-leg detector fires.** `CvPlayer::m_iHappyPerMilitaryUnit` is serialized
-(`WRAPPER_READ`/`WRITE` in `CvPlayer::read`/`write`), its changer `changeHappyPerMilitaryUnit` has **no caller
-left anywhere in the tree**, and its getter is still read — so every game scales military happiness by whatever
-history a save carries, and a NEW game by zero.
-
-**PROVEN — the data authors the replacement, and it is the ruled shape.** **17 entities** author
-`happiness.empire.cities.{unit: IS_MILITARY, value: N}` — all CIVICS and TRAITS (`civic_survival`,
-`civic_despotism`, `civic_green` at −1, and the `charismatic` / `cowardly` / `imperialist` trait ladders). That
-is exactly [modifier.md §2b](../../specs/modifier.md)'s *"epoch-stable per-unit multiplier, e.g. a civic's
-per-military-unit VALUE"*, and `CvCity::getMilitaryHappiness` already has the ruled fold shape:
-`getMilitaryHappinessUnits() * <perUnit>` — `perUnit × liveCount`, unit-carried value riding live ON TOP
-([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)).
-
-**PROVEN — the read is missing, not merely unwired.** Every entry carrying a `unitQual` is deliberately SKIPPED
-by both the gather and the valuation (`CvInfoValuation.cpp`, several sites, commented *"unit-carried values ride
-ON TOP live"*). `CvModEntry::unitQual` compiles and `CvDepositIndex` carries it; nothing sums it. So the quantity
-is missing END TO END — the data lands nowhere, the carrier is fed by nothing, and the consumers read save
-history ([state-repositories.md](../../architecture/state-repositories.md) names this pairing exactly).
-
-**⛔ NOT TAKEN, because both directions are a STRUCTURE call rather than a mechanical cut**
-([DEC-WF-surface-sprawl](../../architecture/decisions.md#dec-wf-surface-sprawl)):
-- **Building the read** needs a way to match an entry's compiled `unitQual` CONDITION TREE against a named
-  predicate. The per-entity helpers are the right shape (a keyed deposit is an entry-list read over the live
-  sources, [modifier.md §5](../../specs/modifier.md)) and the CALLER walking civics + traits is the established
-  pattern — but ⛔ [todo.md](todo.md) bans folding this into `keyedTargetSum`, which answers a NAMED target id
-  while this filters on a PREDICATE. Where that matcher lives, and whether it generalizes past `IS_MILITARY`,
-  is undecided.
-- **Cutting the accumulator** is not one-line either: the getter has **9 consumer sites** across `CvCityAI`
-  (×6), `CvPlayerAI` (×2) and `CvCity::getMilitaryHappiness`, several of which GATE AI behaviour on whether the
-  player gets military happiness at all — so a bare deletion rewrites AI decisions, not just a number.
-
-⚠ **Do not confuse the two `getHappyPerMilitaryUnit`s.** `CvPlayerAI` also calls
-`kCivic.getHappyPerMilitaryUnit()` — the INFO getter, i.e. the civic's own AUTHORED value, which is live and
-correct. Only the PLAYER accumulator is frozen.
-
-⚑ Whichever direction is taken, the accumulator's cut is the uniform one
-([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)) and its changer
-body carries a rider to audit — an `AI_makeAssignWorkDirty()` on the unlimited path
-([save.md §6](../../specs/save.md)).
-
 ## THE FREE-SPECIALIST READ REBUILDS AN EVAL CTX AND WALKS THE EMPIRE, ~40x PER CITIZEN
 
 The hoisted segment lookup was the frame the sampler caught, not the cost. The shape underneath it:

@@ -448,7 +448,7 @@ int64_t InfoValuation::groupSum(const CvModifiers* modifiers, ModifierFamily eFa
 		}
 		if (pEntry->unitQual != NULL)
 		{
-			continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top]), never inside a valuation
+			continue;
 		}
 		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
 		{
@@ -489,7 +489,7 @@ int64_t InfoValuation::groupSumAt(const CvModifiers* modifiers, ModifierFamily e
 		}
 		if (pEntry->unitQual != NULL)
 		{
-			continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top])
+			continue;
 		}
 		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
 		{
@@ -535,7 +535,7 @@ int64_t InfoValuation::plotOwnYield(const CvModifiers* modifiers, ModifierFamily
 		}
 		if (pEntry->unitQual != NULL)
 		{
-			continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top])
+			continue;
 		}
 		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
 		{
@@ -1081,7 +1081,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 					||  kEntry.targetSeg != iImprovementsSegment
 					||  kEntry.targetFk < 0
 					|| (iImprovementKind >= 0 && kEntry.kind != iImprovementKind)
-					||  kEntry.unitQual != NULL          // unit-carried values ride ON TOP live
+					||  kEntry.unitQual != NULL
 					|| !val_scopeFolds(kEntry.scope))    // the experienced-here fold set, as the point form
 					{
 						continue;
@@ -1692,7 +1692,56 @@ int64_t InfoValuation::keyedTargetSum(const CvModifiers* modifiers, ModifierFami
 		}
 		if (pEntry->unitQual != NULL)
 		{
-			continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top])
+			continue;
+		}
+		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
+		{
+			continue;
+		}
+		if (!MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
+		{
+			continue;
+		}
+		iTotal += MMKernel::perScale(*pEntry, evalCtx, pEntry->value);
+	}
+	return iTotal;
+}
+
+int64_t InfoValuation::unitQualifiedRate(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	const char* szUnitTagType, const CvCascadeEvalCtx& evalCtx)
+{
+	if (modifiers == NULL || szUnitTagType == NULL)
+	{
+		return 0;
+	}
+	// A qualified entry is never in the unconditioned fold (CvModifiers skips it there), so the conditioned
+	// list is the whole population -- the same range keyedTargetSum walks, with the qualifier MATCHED instead
+	// of skipped.
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	modifiers->conditionedRange(eFamily, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& conditioned = modifiers->conditioned();
+	int64_t iTotal = 0;
+	for (size_t i = iBegin; i < iEnd; ++i)
+	{
+		const CvModEntry* pEntry = conditioned[i];
+		if (pEntry->unitQual == NULL)
+		{
+			continue;
+		}
+		if (pEntry->unitQual->kind != CASC_COND_PREDICATE
+		||  pEntry->unitQual->predKind != CASC_PRED_IS_TAG
+		||  pEntry->unitQual->param != szUnitTagType)
+		{
+			continue;
+		}
+		if (iKind >= 0 && pEntry->kind != iKind)
+		{
+			continue;
+		}
+		if (!val_scopeFolds(pEntry->scope))
+		{
+			continue;
 		}
 		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
 		{
@@ -1755,7 +1804,7 @@ void InfoValuation::collectKeyedTargetSums(const CvModifiers* modifiers, Modifie
 		}
 		if (pEntry->unitQual != NULL)
 		{
-			continue;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top])
+			continue;
 		}
 		if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
 		{

@@ -320,6 +320,18 @@ public:
 	static void collectKeyedTargetSums(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, const CvCascadeEvalCtx& evalCtx, std::vector<int64_t>& targetTotals);
 
+	///<summary>The PER-UNIT rate carried by this source's `unit:`-qualified entries of a family
+	/// (`happiness.empire.cities.{unit: IS_MILITARY}` -- [modifier.md] §6). Returns the rate ALONE; the caller
+	/// multiplies by its own live count of matching units and adds the product ON TOP, outside every percentage
+	/// ([DEC-unit-modifiers-on-top]).</summary>
+	//	⚑ This is the read every other walk on this surface deliberately SKIPS, and it is why they skip it: a
+	//	unit-carried value must not enter a cached sum, so it has to be summed somewhere else -- here.
+	//	⚠ It matches the qualifier's TAG param, because a bare `IS_<X>` that names no built-in predicate parses to
+	//	CASC_PRED_IS_TAG carrying `TAG_<X>` ([CvJsonConditionParse]); the tag infotypes mint after condition parse,
+	//	so the node's `id` is -1 and the param is what identifies it.
+	static int64_t unitQualifiedRate(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		const char* szUnitTagType, const CvCascadeEvalCtx& evalCtx);
+
 	// The ctx-taking core the endpoints share (fill the ctx ONCE per endpoint, fold each channel through this):
 	// Σ over the folded scopes of the compiled unconditioned sums (audience-resolved) + the family's conditioned
 	// tail (kind/unit-matched, untargeted, gated via the ONE evaluator, per-resolved via the ONE §3.7 resolver).

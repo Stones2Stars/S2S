@@ -128,7 +128,7 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 	}
 	if (kEntry.unitQual != NULL)
 	{
-		return false;   // unit-carried values ride ON TOP live ([DEC-unit-modifiers-on-top]) -- never stored
+		return false;
 	}
 	const bool bPercentSide = unitIsPercentSide(kEntry.unit);
 	if (!bPercentSide && !unitIsFlatSide(kEntry.unit))

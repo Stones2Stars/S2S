@@ -4371,10 +4371,6 @@ int CvCity::totalFreeSpecialists() const
 	{
 		return 0;
 	}
-	// The WHOLE amount comes from the ONE roll-up: every leg is an ordinary deposit in it, the per-improvement
-	// slots included -- those author `freeSpecialists.city.any` with `per: {type: IMPROVEMENT_X, scope: city}`,
-	// which resolves against the city's improved-plot count like any other count scaler. Summing a second leg
-	// here would count whichever one it names twice.
 	// Toffer - Negative free specialist effectively reduce pop of city...
 	//	That's not an intended effect of the free specialist feature.
 	return std::max(0, getFreeSpecialist());

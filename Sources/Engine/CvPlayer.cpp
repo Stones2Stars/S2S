@@ -1104,7 +1104,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iFinalUnitUpkeep = 0;
 
 	m_iNumMilitaryUnits = 0;
-	m_iHappyPerMilitaryUnit = 0;
 	m_iMilitaryFoodProductionCount = 0;
 	m_iConscriptCount = 0;
 	m_iMaxConscript = 0;
@@ -9713,21 +9712,30 @@ void CvPlayer::changeNumMilitaryUnits(int iChange)
 
 int CvPlayer::getHappyPerMilitaryUnit() const
 {
-	return m_iHappyPerMilitaryUnit;
-}
-
-
-void CvPlayer::changeHappyPerMilitaryUnit(int iChange, bool bLimited)
-{
-	if (iChange != 0)
+	// The RATE only -- how much happiness ONE stationed military unit is worth. The city multiplies it by its
+	// own live count and adds the product on top, outside the percent stack (CvCity::getMilitaryHappiness).
+	// The sources are the ones that author the qualified entry: adopted civics and held traits.
+	CvCascadeEvalCtx evalCtx;
+	getEmpireContext().fillEvalCtx(evalCtx);
+	int64_t iRate = 0;
+	for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); ++iOption)
 	{
-		m_iHappyPerMilitaryUnit += iChange;
-
-		if (!bLimited)
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)iOption);
+		if (eCivic != NO_CIVIC)
 		{
-			AI_makeAssignWorkDirty();
+			iRate += InfoValuation::unitQualifiedRate(GC.getCivicInfo(eCivic).getModifiers(),
+				MODFAM_HAPPINESS, CHANNEL_AMOUNT, "TAG_MILITARY", evalCtx);
 		}
 	}
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+	{
+		if (hasTrait((TraitTypes)iTrait))
+		{
+			iRate += InfoValuation::unitQualifiedRate(GC.getTraitInfo((TraitTypes)iTrait).getModifiers(),
+				MODFAM_HAPPINESS, CHANNEL_AMOUNT, "TAG_MILITARY", evalCtx);
+		}
+	}
+	return (int)(iRate / 100);   // the READ EDGE -- whole happy faces for a whole-count consumer
 }
 
 
@@ -16789,7 +16797,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumNukeUnits);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumOutsideUnits);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumMilitaryUnits);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iHappyPerMilitaryUnit);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryFoodProductionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConscriptCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxConscript);
@@ -18207,7 +18214,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumNukeUnits);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumOutsideUnits);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumMilitaryUnits);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHappyPerMilitaryUnit);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryFoodProductionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConscriptCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxConscript);
