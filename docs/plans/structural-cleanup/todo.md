@@ -395,22 +395,29 @@
   ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
   `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
   of that overload enumerated — a player asking it with no city still needs an empire answer.
-- DELETE the `BUILD_RATE_MILITARY` / `BUILD_RATE_SPACE` kinds and move their reads onto the predicate-filtered
-  `units` target. ⛔ They are a ROLLERSKATE, not channels waiting for data (owner): nothing should ever author
-  them, so the vocabulary entries go — the enumerators in `CvInfoKinds.h` and their name rows in
-  `CvInfoKinds.cpp` — and are not left standing to be re-authored.
-  - the reads to move: the unit gate in `CvPlayer::getProductionModifier(UnitTypes)`, the project gate in
-    `CvPlayer`/`CvCity::getProductionModifier(ProjectTypes)`, and the `CvCityAI` building valuations;
-  - the shape: a plural-target entry resolves against the CANDIDATE, so the read evaluates each entry's
-    predicate against the unit being built — never a scope-package sum, which would hand every unit the space
-    rows ([modifier.md §5](../../specs/modifier.md): folding a filtered entry into the scope slot is silently,
-    plausibly wrong).
-  ⚠ The city-scope authorings reached NOTHING before the re-curation (no city-side push existed), so the engine
-  side is serving them for the first time rather than preserving today's behaviour.
-  ⛔ **Do NOT mint a composed getter to keep the old call sites working.** Preserving
-  `CvPlayer::getSpaceProductionModifier` so the AI valuation and the `canDoCometFragment` Python gate need no
-  edit is the half-migration tell, not a win
-  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) — it was tried and reverted.
+- DELETE the `BUILD_RATE_MILITARY` / `BUILD_RATE_SPACE` kinds and serve the predicate-filtered `units` target.
+  ⛔ They are a ROLLERSKATE, not channels waiting for data (owner): nothing should ever author them, so the
+  enumerators in `CvInfoKinds.h` and their name rows in `CvInfoKinds.cpp` GO rather than standing to be
+  re-authored. The curator already emits the spec shape (`buildRate.<scope>.units.percent`, entry
+  `{value, enabled: IS_MILITARY | IS_SPACE}`), so until the read lands both boosts read 0.
+  ⚠ **It is NOT a re-point — the read does not exist, and that is BY DESIGN.** `CvModifiers::pluralTargetSum`
+  is the plural-target read and is deliberately UNQUALIFIED-ENTRIES-ONLY: an entry carrying a predicate on its
+  plural target is the VALUATION's, because summing it scope-wide is the silently-plausible-wrong fold
+  ([modifier.md §5](../../specs/modifier.md)) -- "+1 food per water plot" is not "+1 food". So a scope-package
+  sum would hand EVERY unit the space rows.
+  ⛔ **And the candidate is a `UnitTypes`, not a `CvUnit*`.** `CASC_PRED_IS_TAG` reads `ctx.unit->getUnitInfo()`
+  and answers FALSE when the slot is empty, so a build candidate resolves nothing today. The tags themselves are
+  fine -- both are authored, so neither fails open through the unminted-tag branch.
+  ⇒ What the work actually is: a candidate slot on `CvCascadeEvalCtx` that a unit TYPE can fill (the
+  [contexts.md](../../architecture/contexts.md) SOURCE-SLOT shape, set by the walk that knows the id), the
+  `IS_TAG` leg reading it, and ONE valuation read that resolves a qualified plural-target entry against a
+  candidate -- then the call sites move onto it: the unit gate in
+  `CvPlayer::getProductionModifier(UnitTypes)`, the project gates in `CvPlayer`/`CvCity`, and the `CvCityAI`
+  building valuations.
+  ⛔ **Do NOT mint a composed getter to keep the old call sites working** -- preserving
+  `CvPlayer::getSpaceProductionModifier` so the AI and the `canDoCometFragment` Python gate need no edit is the
+  half-migration tell, not a win
+  ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)); it was tried and reverted.
 - Cut the EVENT production boost. Events author YIELDS, not production modifiers, and that stays true (owner) --
   `iSpaceProductionMod` is the only production field on an event and the comet-fragment / free-enterprise /
   V'Ger chains are its whole population. Remove the authorings + the schema element, `CvEventInfo`'s member and
