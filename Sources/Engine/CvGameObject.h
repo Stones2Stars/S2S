@@ -54,8 +54,6 @@ public:
 	typedef bst::function<void (const CvPropertyManipulators*)> ManipCallbackFn;
 	virtual void foreachManipulator(ManipCallbackFn func) const = 0;
 
-	virtual void eventPropertyChanged(PropertyTypes eProperty, int iNewValue);
-
 	virtual bool isTag(TagTypes eTag) const;
 	virtual int getAttribute(AttributeTypes eAttribute) const;
 	virtual bool hasGOM(GOMTypes eType, int iID) const = 0;
@@ -212,8 +210,6 @@ public:
 	virtual void foreach(GameObjectTypes eType, bst::function<void (const CvGameObject*)> func) const;
 
 	virtual void foreachManipulator(ManipCallbackFn func) const;
-
-	virtual void eventPropertyChanged(PropertyTypes eProperty, int iNewValue);
 
 	virtual bool isTag(TagTypes eTag) const;
 	virtual bool hasGOM(GOMTypes eType, int iID) const;

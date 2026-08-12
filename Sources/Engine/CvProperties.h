@@ -23,20 +23,6 @@ class CvTeam;
 class CvUnit;
 class CvXMLLoadUtility;
 
-struct PropertyBuilding
-{
-	int iMinValue;
-	int iMaxValue;
-	BuildingTypes eBuilding;
-};
-
-struct PropertyPromotion
-{
-	int iMinValue;
-	int iMaxValue;
-	PromotionTypes ePromotion;
-};
-
 class CvProperties
 {
 public:

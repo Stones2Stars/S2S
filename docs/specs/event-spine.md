@@ -140,9 +140,8 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   `requires.operate` property BAND ([enabler.md](enabler.md) §3) and by every threshold-conditioned deposit, and
   the value is synced save-carried state that folds into the OOS checksum — so DOMAIN. The fact names the object
   KIND beside the object id, because a city id and a plot id are otherwise the same int.
-  ⛔ It is emitted at the `CvProperties` sites and **never** in `CvGameObject::eventPropertyChanged`:
-  `CvGameObjectUnit` OVERRIDES that hook without chaining to the base, so an emit placed there is silently
-  skipped for every unit. ⚠ The solver's change PROPAGATION fans one change onto OTHER objects, each of which
+  It is emitted at the three `CvProperties` mutation choke points, which every owner scope funnels through.
+  ⚠ The solver's change PROPAGATION fans one change onto OTHER objects, each of which
   re-enters the mutation path — distinct objects' facts, so each emits. The object RESET path
   (`CvProperties::clear`) deliberately announces nothing (it runs before there is an id or an owner to name —
   `CvCity::read` / `CvUnit::read` call `reset()` as their first act). The

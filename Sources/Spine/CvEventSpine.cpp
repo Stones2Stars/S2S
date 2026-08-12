@@ -1686,8 +1686,7 @@ void emitGameHandicapRemoved(int iHandicap)
 	eventSpine().emit(e);
 }
 
-// iAmount = HOW MUCH the value moved, unsigned. Emitted at the CvProperties sites and NEVER in
-// CvGameObject::eventPropertyChanged (CvGameObjectUnit overrides it without chaining to the base).
+// iAmount = HOW MUCH the value moved, unsigned. Emitted at the three CvProperties mutation choke points.
 void emitPropertyAdded(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROPERTY_ADDED, iProperty, iAmount, iObjectKind, iOwner, iObjectId);

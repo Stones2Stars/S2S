@@ -8,14 +8,12 @@
 //	`grants` (the granted effect-building LIST) + its modifier families (the decay/constant per-turn change), both
 //	served by the CvInfo base dispatch. mapFrom adds the TYPED scalars that live outside those sections: the AI
 //	value-normalization band (ai.weight / ai.operationalRange / ai.trainReluctance), targetLevel (+ its per-era
-//	byEra overrides), and the identity.sourceDrain flag. Three legacy getters remain CURATOR-GAPs (getChar runtime
-//	glyph, PropertyPromotions unmigrated, PropertyBuilding bands split to the Building pass) -- flagged at each getter.
+//	byEra overrides), and the identity.sourceDrain flag. getChar is the one non-authored member: a runtime GameFont
+//	glyph the CvGameTextMgr symbol pass assigns through setChar.
 //
 
 #include "CvInfo.h"
-#include "Engine/CvProperties.h"              // PropertyPromotion / PropertyBuilding
 #include "Engine/CvPropertyManipulators.h"    // CvPropertyManipulators
-#include <vector>
 #include <map>
 
 class CvPropertyInfo : public CvInfo
@@ -53,15 +51,6 @@ public:
 	bool isTargetLevelbyEraType(int iIndex) const   // targetLevel.byEra membership
 	{ return m_aTargetLevelbyEraTypes.find(iIndex) != m_aTargetLevelbyEraTypes.end(); }
 
-	// CURATOR-GAP: PropertyPromotions is not migrated -- curate_property.py emits NOTHING for the XML PropertyPromotions
-	// block (no `promotions` field anywhere in the property JSON). Empty until the curator carries it.
-	const std::vector<PropertyPromotion>& getPropertyPromotions() const { return m_aPropertyPromotions; }
-	// CURATOR-GAP: the PropertyBuilding value-BANDS {iMinValue,iMaxValue} are not emitted on the property -- the curator
-	// deliberately splits them off to the Building pass (building.requires value-band); only the grant LIST survives at
-	// grants.buildings (reachable via consideredGrants()->list("buildings")). The {min,max,building} triple this getter's
-	// consumers need (CvCity auto-build range test) is unreconstructable here, so it stays empty (0/0 bands would be a
-	// silent placeholder). Resolves when the auto-build/requires-band wiring lands (curator second pass / #430).
-	const std::vector<PropertyBuilding>&  getPropertyBuildings()  const { return m_aPropertyBuildings; }
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }       // DEFERRED SYSTEM (property engine; XML-era manip data, owner: post-migration rework)
 
 	virtual void mapFrom(const picojson::value& entity);
@@ -88,8 +77,6 @@ private:
 	std::map<int,int> m_aTargetLevelbyEraTypes;            // eraId -> level (targetLevel.byEra)
 	CvWString m_szPrereqMinDisplayText;                    // identity.text.prereqMin
 	CvWString m_szPrereqMaxDisplayText;                    // identity.text.prereqMax
-	std::vector<PropertyPromotion> m_aPropertyPromotions;   // CURATOR-GAP (not migrated) -- see getter
-	std::vector<PropertyBuilding>  m_aPropertyBuildings;    // CURATOR-GAP (bands at Building pass) -- see getter
 	CvPropertyManipulators m_PropertyManipulators;          // the property's own sources/propagators (fed from JSON in mapFrom)
 	std::map<int,int> m_changePropagation;                  // (from x NUM_GAMEOBJECTS + to) -> percent (properties.changePropagation[])
 };

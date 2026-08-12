@@ -699,8 +699,7 @@ enum SpineDomainEvent
 	// game/team/player/city/unit/plot). DOMAIN: a property value is synced, deterministic, save-carried state that
 	// folds into the OOS checksum, and PROPERTY_* is one cascade channel per property info, read by
 	// CityContext::propertyValue, every requires.operate property BAND and every threshold-conditioned deposit.
-	// ⛔ Emitted at the CvProperties sites and NEVER in CvGameObject::eventPropertyChanged: CvGameObjectUnit
-	// OVERRIDES that hook without chaining to the base, so an emit placed there is silently skipped for every unit.
+	// Emitted at the three CvProperties mutation choke points, which every owner scope funnels through.
 	// ⚠ The solver's change PROPAGATION fans one change onto OTHER objects, each of which re-enters the mutation
 	// path -- distinct objects' facts, so each emits.
 	// iType = PropertyTypes, iA = HOW MANY the value moved (unsigned), iB = the object KIND (GameObjectTypes -- a
@@ -959,7 +958,7 @@ void emitGameGlobalDefineAdded(const char* szName, int eKind, int iValue, float 
 void emitGameGlobalDefineRemoved(const char* szName, int eKind, int iValue, float fValue, const char* szValue);
 // ===== PROPERTY (any owner scope) =====
 // A game object's property value moved. Call AFTER the value is written, from the CvProperties mutation choke
-// points -- never from CvGameObject::eventPropertyChanged (the unit override does not chain to the base).
+// points.
 // iObjectKind = GameObjectTypes (what iObjectId identifies); iOwner = NO_PLAYER (-1) where the object has none.
 // iAmount = HOW MUCH the value moved, unsigned.
 void emitPropertyAdded(int iObjectKind, int iObjectId, int iOwner, int iProperty, int iAmount);

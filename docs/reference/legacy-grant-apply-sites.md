@@ -199,11 +199,7 @@ buildings (`:2443`, the only *live* settle-time seed), settler population (`:245
      the **CHOSEN** religion sets the free-unit **TYPE**. Slot = reward size, chosen religion = its flavour.
    ⚑ To MOVE this grant the emit must carry what the apply needs: the chosen religion, the slot religion, `bAward`,
    and the target city (`pBestCity`) — `emitReligionFounded` carries only player + religion today.
-6. **Both property-band members are dead storage** — `m_aPropertyBuildings` / `m_aPropertyPromotions` are never
-   written, and nothing reads them any more either: the per-turn band sweep that did was deleted. Bands are live
-   instead as `requires.operate` PROPERTY clauses over buildings placed once by `CvCity::placeSystemBuildings`, a
-   different semantic (operating, not presence).
-7. **Legacy-that-stopped:** `getFreeBuilding`/`getFreeAreaBuilding` → `-1` (404 authorings, chain + save fields
+6. **Legacy-that-stopped:** `getFreeBuilding`/`getFreeAreaBuilding` → `-1` (404 authorings, chain + save fields
    intact); `isApplyFreePromotionOnMove` → `false`, making `CvCity::doPromotion` unreachable so a unit that walks
    into a city never gains the building's promotions.
 

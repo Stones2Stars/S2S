@@ -151,8 +151,6 @@ void CvProperties::changeChangeByProperty(PropertyTypes eProp, int iChange)
 // notification hook -- which is also what keeps the INFO-side bags silent: CvOutcome / CvEventInfo /
 // CvEventTriggerInfo hold CvProperties as authored DATA, built through the default constructor, so their
 // m_pGameObject is NULL and an XML/JSON parse announces nothing.
-// ⛔ The emit lives HERE and not in CvGameObject::eventPropertyChanged: CvGameObjectUnit overrides that hook
-// without chaining to the base, so an emit placed there is silently skipped for every unit.
 static void emitPropertyFact(const CvGameObject* pObject, PropertyTypes eProperty, int iNewValue, int iOldValue)
 {
 	// The event is the operator: which way the value moved is the FACT, and the payload carries only HOW MUCH.
@@ -216,10 +214,7 @@ void CvProperties::setValue(int index, int iVal)
 		m_aiProperty[index].value = iVal;
 		if (m_pGameObject)
 		{
-			// The fact is announced BEFORE the band hook, so the cause precedes the consequences the hook
-			// applies (banded promotions on a unit, and the property-building placement downstream).
 			emitPropertyFact(m_pGameObject, m_aiProperty[index].prop, iVal, iOldVal);
-			m_pGameObject->eventPropertyChanged(m_aiProperty[index].prop, iVal);
 		}
 	}
 }
@@ -248,7 +243,6 @@ void CvProperties::setValueByProperty(PropertyTypes eProp, int iVal)
 		{
 			// A property absent from the bag reads as 0 (getValueByProperty), so 0 IS the old value here.
 			emitPropertyFact(m_pGameObject, eProp, iVal, 0);
-			m_pGameObject->eventPropertyChanged(eProp, iVal);
 		}
 	}
 }
@@ -287,7 +281,6 @@ void CvProperties::changeValueByProperty(PropertyTypes eProp, int iChange)
 			// which re-enters this path and announces its own -- distinct facts, never duplicates of this one.
 			emitPropertyFact(m_pGameObject, eProp, iChange, 0);
 			propagateChange(eProp, iChange);
-			m_pGameObject->eventPropertyChanged(eProp, iChange);
 		}
 	}
 	else changeValue(index, iChange);

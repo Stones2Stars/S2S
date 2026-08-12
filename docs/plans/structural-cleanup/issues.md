@@ -596,9 +596,6 @@ scan bugs rather than fix them.
 - **Fix the stale comment pointing at `CvPlot::setWorkingCity`** on the working-city event — no such method
   exists (only the override variant), and naming a dead site is the bait
   ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
-- **Delete `CvPropertyInfo::getPropertyBuildings`, `m_aPropertyBuildings` and their CURATOR-GAP comment.** Nothing
-  reads the getter, and the comment promises a resolution the band model supersedes
-  ([enabler.md](../../specs/enabler.md) §3).
 - **Re-route `governmentCenterDistance` and delete the fact pair nobody emits.** Its interest set names the
   government-centre crossing, whose emitters have no callers at all — the counter that raised them became the
   amenity fold and the interest set did not follow, so the distance is frozen at whatever founding or load

@@ -181,8 +181,8 @@ the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertyS
 ### D. Explicitly SKIP (dead legacy surface — 0 real data; not phantom gaps)
 
 `CvPropertySourceConstantLimited`, `CvPropertyPropagatorSpread`/`Gather`, all `CvPropertyInteraction`, and Corporation
-manipulators. `PropertyBuildings`/`PropertyPromotions` value-bands stay the separately-flagged curator-gap
-(`CvPropertyInfo.h:49-57`), not folded here.
+manipulators. The `PropertyBuildings` value-bands are not folded here either — they are the BUILDING's
+`requires.operate` clause ([enabler.md §3](../../specs/enabler.md)), never a property-side member.
 
 ## Validate
 

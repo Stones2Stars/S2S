@@ -412,7 +412,25 @@
     `visibilityIntensityRange` + its substrate variants are gone outright — the contest rides vision's own reach.
     **Don't reinstate a per-invisible-type table or a second range system for detection.**
 
-36. **NOMADIC START** — a founding restriction behind `#define NOMADIC_START`: a unit could not `MISSION_FOUND`
+36. **THE PROPERTY→PROMOTION BAND** (`PropertyPromotions` → `CvPropertyInfo::getPropertyPromotions` →
+    `CvGameObjectUnit::eventPropertyChanged`, which placed and removed a promotion as a property value entered
+    and left a `{iMinValue, iMaxValue}` band) *(dead)* — the UNIT-side twin of the building band.
+    ⚑ **It never had data, and the shape of the absence is what settles it:** `<PropertyPromotions>` appears in
+    the SCHEMA and in **no record anywhere in the repo** — not in `Assets/XML`, not in `Assets/Modules`, not in
+    `SourceArchive/Assets` — so the curator emits nothing, the vector was never filled, and the override looped
+    an empty container on every property change of every unit. The BUILDING half beside it
+    (`PropertyBuildings`, 188 authored entries) is genuinely live and simply lives elsewhere: the curator splits
+    the bands onto the building's own `requires.operate` clause ([enabler.md §3](../specs/enabler.md)).
+    ⛔ The whole hook went with it — base, override and the three `CvProperties` call sites — because the
+    override was its only tenant. ⚑ That also retires a documented FOOTGUN: `CvGameObjectUnit` overrode the hook
+    WITHOUT chaining to the base, so three separate spine comments had to warn that an emit placed there is
+    silently skipped for every unit. With no hook there is nothing to warn about.
+    ⛔ **If the mechanic is ever wanted it authors on the TRIGGER plane**, never by restoring a property-side
+    member: the happening already exists (`SEVT_CITY_PROPERTY_BAND_ADDED / _REMOVED`) and so does the verb
+    (`action.promote`, [json.md §5](../specs/json.md)) — which is what makes this cheaper to author fresh than
+    to revive. ⚠ **The revival risk is the surviving SCHEMA tag**, exactly as in #29: it reads like an
+    unmigrated field, and it is not one.
+37. **NOMADIC START** — a founding restriction behind `#define NOMADIC_START`: a unit could not `MISSION_FOUND`
     until its team held `TECH_SEDENTARY_LIFESTYLE` *(dead, owner: "it does not work, and never has … I have
     serious doubts we can actually make it a compelling game mechanic")*. Two guarded blocks in
     `CvSelectionGroup`, plus the commented-out `#define`; deleted whole.

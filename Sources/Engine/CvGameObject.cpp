@@ -809,53 +809,6 @@ void CvGameObjectPlot::foreachManipulator(ManipCallbackFn func) const
 	}
 }
 
-// The per-object-type reaction to a property crossing a band (the unit override below places/removes the banded
-// promotions). ⛔ The PROPERTY DOMAIN fact does NOT belong here and must never be moved here: CvGameObjectUnit
-// overrides this hook WITHOUT chaining to the base, so an emit placed in the base is silently skipped for every
-// unit. The fact is emitted at the genuine mutation choke point instead -- the three CvProperties sites that call
-// this hook (CvProperties.cpp) -- which covers every object type regardless of what an override does.
-void CvGameObject::eventPropertyChanged(PropertyTypes eProperty, int iNewValue)
-{
-}
-
-void CvGameObjectUnit::eventPropertyChanged(PropertyTypes eProperty, int iNewValue)
-{
-	PROFILE_FUNC();
-
-	foreach_(const PropertyPromotion& kPromotion, GC.getPropertyInfo(eProperty).getPropertyPromotions())
-	{
-		const bool bHasPromotion = m_pUnit->isHasPromotion(kPromotion.ePromotion);
-		const bool bInRange = (iNewValue >= kPromotion.iMinValue) && (iNewValue <= kPromotion.iMaxValue);
-		if (!bInRange)
-		{
-			if (bHasPromotion)
-			{
-				m_pUnit->setHasPromotion(kPromotion.ePromotion, false);
-			}
-		}
-		else
-		{
-			//TB Combat Mods begin
-			PromotionRequirements::flags promoFlags = PromotionRequirements::IgnoreHas | PromotionRequirements::Promote;
-			if (m_pUnit->canAcquirePromotion(kPromotion.ePromotion, promoFlags))
-			//TB Combat Mods end
-			{
-				if (!bHasPromotion)
-				{
-					m_pUnit->setHasPromotion(kPromotion.ePromotion, true);
-				}
-			}
-			else
-			{
-				if (bHasPromotion)
-				{
-					m_pUnit->setHasPromotion(kPromotion.ePromotion, false);
-				}
-			}
-		}
-	}
-}
-
 bool CvGameObject::isTag(TagTypes eTag) const
 {
 	return false;
