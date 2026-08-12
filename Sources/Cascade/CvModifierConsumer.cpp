@@ -2284,6 +2284,46 @@ namespace
 							mc_bookGatedPlot(pBonusGated, kSegments, *pPlot, NULL);
 						}
 					}
+					// ⚑ THE COUNT INDEX IS A SECOND KEY SPACE, and the type-atom measurement above does not reach
+					// it. That census counted deposits CONDITIONED on HOLDING a substrate (the atom index,
+					// gatedByType); these are deposits SCALED BY HOW MANY plots carry one --
+					// `per: {type: IMPROVEMENT_X, scope: city}`, which cascadeCountOf answers through
+					// CityContext::improvedPlotCount. Both index by a plain string, so asking the atom index about
+					// an improvement answers EMPTY and reads exactly like "nothing is keyed on this"
+					// ([modifier.md] §3: the two indices are keyed alike and are NOT interchangeable).
+					if (kEvent.iEventId == SEVT_PLOT_IMPROVEMENT_ADDED || kEvent.iEventId == SEVT_PLOT_IMPROVEMENT_REMOVED)
+					{
+						// _ADDED names what arrived and _REMOVED what left, so either way iType names the token
+						// whose count just moved. The re-book resolves against the count as it stands NOW and moves
+						// the DIFFERENCE -- which is what lets ONE call serve both directions, and is required
+						// rather than tidy: perApply divides by `each`, so it is a STEP function and no multiple of
+						// a delta reproduces a step (the POPULATION route beside this one is the same shape).
+						const std::vector<DepositIndex::GatedDeposit>* pImprovementGated =
+							(pSubstrate != NULL) ? DepositIndex::gatedByToken(pSubstrate->getType()) : NULL;
+						if (pImprovementGated != NULL && !pImprovementGated->empty())
+						{
+							McGatedTally kImprovementTally;
+							// The cities come from the plot's OWN workableBy list -- the same set
+							// improvedPlotCount walks -- so a tile no city can work re-books nobody, and at load
+							// the map streams before the players so the fan reaches nobody by construction.
+							const std::vector<IDInfo>& kWorkableByCities = pPlot->workableByCities();
+							for (size_t iWorkable = 0; iWorkable < kWorkableByCities.size(); ++iWorkable)
+							{
+								const CvCity* pWorkableCity =
+									GET_PLAYER((PlayerTypes)kWorkableByCities[iWorkable].eOwner)
+										.getCity(kWorkableByCities[iWorkable].iID);
+								if (pWorkableCity != NULL)
+								{
+									mc_bookGated(pImprovementGated, *pWorkableCity, &kImprovementTally);
+								}
+							}
+							CascadeChannelRegistry::reportAtomRoute(pSubstrate->getType(),
+								(int)pImprovementGated->size(), kImprovementTally.iFound,
+								kImprovementTally.iNoSource, kImprovementTally.iRefused,
+								kImprovementTally.iApplied,
+								(pPlayer != NULL) ? (int)pPlayer->getID() : -1, -1);
+						}
+					}
 				}
 				break;
 			}

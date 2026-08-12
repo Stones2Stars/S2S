@@ -529,7 +529,6 @@ CvCity::CvCity()
 	m_paiSpecialistCount = NULL;
 	m_paiForceSpecialistCount = NULL;
 	m_paiFreeSpecialistCountUnattributed = NULL;
-	m_paiImprovementFreeSpecialists = NULL;
 	m_paiReligionInfluence = NULL;
 	m_bPropertyControlBuildingQueued = false;
 
@@ -794,7 +793,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiForceSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCountUnattributed);
-	SAFE_DELETE_ARRAY(m_paiImprovementFreeSpecialists);
 	SAFE_DELETE_ARRAY(m_paiReligionInfluence);
 	SAFE_DELETE_ARRAY(m_cachedPropertyNeeds);
 	SAFE_DELETE_ARRAY(m_paiFreeBonus);
@@ -1072,13 +1070,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 			m_paiSpecialistCount[iI] = 0;
 			m_paiForceSpecialistCount[iI] = 0;
 			m_paiFreeSpecialistCountUnattributed[iI] = 0;
-		}
-
-		FAssertMsg((0 < GC.getNumImprovementInfos()), "GC.getNumImprovementInfos() is not greater than zero but an array is being allocated in CvCity::reset");
-		m_paiImprovementFreeSpecialists = new int[GC.getNumImprovementInfos()];
-		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-		{
-			m_paiImprovementFreeSpecialists[iI] = 0;
 		}
 
 		m_paiReligionInfluence = new int[GC.getNumReligionInfos()];
@@ -4380,19 +4371,13 @@ int CvCity::totalFreeSpecialists() const
 	{
 		return 0;
 	}
-	int iCount = getFreeSpecialist();   // the roll-up already carries the empire leg -- adding it again doubles it
-
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); ++iI)
-	{
-		const int iNumSpecialistsPerImprovement = getImprovementFreeSpecialists((ImprovementTypes)iI);
-		if (iNumSpecialistsPerImprovement != 0)
-		{
-			iCount += iNumSpecialistsPerImprovement * countNumImprovedPlots((ImprovementTypes)iI);
-		}
-	}
+	// The WHOLE amount comes from the ONE roll-up: every leg is an ordinary deposit in it, the per-improvement
+	// slots included -- those author `freeSpecialists.city.any` with `per: {type: IMPROVEMENT_X, scope: city}`,
+	// which resolves against the city's improved-plot count like any other count scaler. Summing a second leg
+	// here would count whichever one it names twice.
 	// Toffer - Negative free specialist effectively reduce pop of city...
 	//	That's not an intended effect of the free specialist feature.
-	return std::max(0, iCount);
+	return std::max(0, getFreeSpecialist());
 }
 
 
@@ -10177,19 +10162,6 @@ void CvCity::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool
 	}
 }
 
-int CvCity::getImprovementFreeSpecialists(ImprovementTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex);
-	return m_paiImprovementFreeSpecialists[eIndex];
-}
-
-void CvCity::changeImprovementFreeSpecialists(ImprovementTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex);
-
-	m_paiImprovementFreeSpecialists[eIndex] += iChange;
-}
-
 uint32_t CvCity::getReligionInfluence(ReligionTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
@@ -12762,7 +12734,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionInfluence);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_CITY_PLOTS, m_pabWorkingPlot);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_pabHasReligion);
@@ -13423,7 +13394,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionInfluence);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_CITY_PLOTS, m_pabWorkingPlot);

@@ -1154,9 +1154,6 @@ public:
 	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool bUnattributed = false);
 	int getAddedFreeSpecialistCount(SpecialistTypes eIndex) const;
 
-	int getImprovementFreeSpecialists(ImprovementTypes eIndex) const;
-	void changeImprovementFreeSpecialists(ImprovementTypes eIndex, int iChange);
-
 	uint32_t getReligionInfluence(ReligionTypes eIndex) const;
 	void changeReligionInfluence(ReligionTypes eIndex, int iChange);
 
@@ -1713,7 +1710,6 @@ protected:
 	int* m_paiSpecialistCount;
 	int* m_paiForceSpecialistCount;
 	int* m_paiFreeSpecialistCountUnattributed;
-	int* m_paiImprovementFreeSpecialists;
 	int* m_paiReligionInfluence;
 
 	bool* m_pabWorkingPlot;

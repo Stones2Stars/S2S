@@ -1859,3 +1859,20 @@ CvPlayer::m_iHurryInflationModifier      (int)
 CvCity::BonusDefenseChangesSize          (short)
 CvCity::BonusDefenseChangesType          (short)
 CvCity::BonusDefenseChanges              (int)
+========================
+| The per-improvement free-specialist accumulator: n free specialists per city plot carrying IMPROVEMENT_X.
+| A stranded accumulator by all three legs -- changeImprovementFreeSpecialists had NO caller left, the array
+| kept deserializing, and four consumers read it: totalFreeSpecialists (which re-walked every improvement and
+| added the frozen value on top of the roll-up), the CvPlot improvement-change gate, and two CvCityAI terms.
+| REPLACEMENT: the ordinary cascade deposit the curator already emits -- `freeSpecialists.city.any` carrying
+| `per: {type: IMPROVEMENT_X, scope: city}` (curate_building.py, from the legacy ImprovementFreeSpecialists
+| table), resolved through cascadeCountOf -> CityContext::improvedPlotCount and served by
+| CvCity::getFreeSpecialist. 14 authored deposits across 10 improvement keys.
+| ⚑ The COUNT ROUTE was missing and is wired with this cut (CvModifierConsumer, the improvement leg beside the
+| bonus one): the deposits sit in the COUNT index (gatedByToken), not the atom index, so the "no substrate
+| type-atom route" measurement beside it did not reach them and the count moved with nothing re-resolving it.
+| ⚠ The two CvCityAI terms are DROPPED, not re-pointed: both read the writerless array, so both returned 0 on
+| any new game and contributed nothing. Restoring an AI term wants a read of the per-scaler RATE for a given
+| count-key, which does not exist on the calc surface -- the same missing-read class as the unit-qualified
+| entry sum in todo.md, and a valuation improvement rather than a migration obligation.
+CvCity::m_paiImprovementFreeSpecialists  (class int array, IMPROVEMENTS)

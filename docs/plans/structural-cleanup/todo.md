@@ -142,9 +142,14 @@
   `changeMaxConscript`, `changeSpecialistValidCount`, hurry counts) stays.
 - Sweep the WRITERLESS SERIALIZED ACCUMULATORS — run the detector in
   [state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md) over
-  `CvCity`/`CvPlayer`. Known instances to start from: `CvPlayer::changeHappyPerMilitaryUnit` and
-  `CvCity::changeImprovementFreeSpecialists` — both callerless changers whose getters still have real
-  consumers, so each needs its read re-pointed or dropped, never a plain deletion.
+  `CvCity`/`CvPlayer`. Known instance to start from: `CvPlayer::changeHappyPerMilitaryUnit` — a callerless
+  changer whose getter still has real consumers, so its reads need re-pointing or dropping, never a plain
+  deletion. ⚠ Its military-happiness read is a structure call and is recorded in [issues.md](issues.md).
+- Serve the PER-SCALER RATE for a given count-key — "how much does this source deposit per unit of
+  `per: {type: X}`", the count-axis sibling of the unit-qualified sum below. ⛔ Not `keyedTargetSum`: that
+  matches a NAMED TARGET, this filters on the `per` key and wants the value UNSCALED (the rate, not
+  rate × current count). The live demand is an AI valuation — "what would one more plot of this improvement
+  give me" — which the presence-pinning `CvCascadeHypothetical` cannot express either.
 - Serve the UNIT-QUALIFIED entry sum. `CvModEntry::unitQual` compiles the qualifier and both the gather and the
   valuation deliberately skip it
   ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top) — a unit-carried value

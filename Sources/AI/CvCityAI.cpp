@@ -8373,8 +8373,6 @@ int CvCityAI::AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImpr
 		iValue /= 200;
 	}
 
-	iValue += 100 * getImprovementFreeSpecialists(eImprovement);
-
 	if (!isHuman())
 	{
 		iValue *= std::max(0, GC.getLeaderHeadInfo(getPersonalityType()).getImprovementWeightModifier(eFinalUpgrade) + 200);
@@ -12075,8 +12073,6 @@ void CvCityAI::AI_updateWorkersNeededHere()
 	int iWorkedUnimprovableCount = 0;
 	int iImprovedUnworkedPlotCount = 0;
 
-	int iSpecialCount = 0;
-
 	int iWorstWorkedPlotValue = MAX_INT;
 	int iBestUnworkedPlotValue = 0;
 
@@ -12156,12 +12152,6 @@ void CvCityAI::AI_updateWorkersNeededHere()
 				}
 
 				const int iPlotValue = AI_yieldValue(aiYields, NULL, false, false, false, false, true, true);
-				const ImprovementTypes eBestImp = GC.getBuildInfo(AI_getBestBuild(iI)).getImprovement();
-				if (eBestImp != NO_IMPROVEMENT
-					&& getImprovementFreeSpecialists(eBestImp) > 0)
-				{
-					iSpecialCount++;
-				}
 				iBestPotentialPlotValue = std::max(iBestPotentialPlotValue, iPlotValue);
 			}
 		}
@@ -12214,8 +12204,6 @@ void CvCityAI::AI_updateWorkersNeededHere()
 		iWorkersNeeded++;
 		iWorkersNeeded /= 2;
 	}
-
-	iWorkersNeeded += (iSpecialCount + 1) / 2;
 
 	iWorkersNeeded = std::max((iUnimprovedWorkedPlotCount + 1) / 2, iWorkersNeeded);
 

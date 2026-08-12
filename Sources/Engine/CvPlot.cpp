@@ -7544,11 +7544,12 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 		CvCity* pWorkingCity = getWorkingCity();
 		if (NULL != pWorkingCity)
 		{
-			if(NO_IMPROVEMENT != eNewImprovement && pWorkingCity->getImprovementFreeSpecialists(eNewImprovement) > 0
-			|| NO_IMPROVEMENT != eOldImprovement && pWorkingCity->getImprovementFreeSpecialists(eOldImprovement) > 0)
-			{
-				pWorkingCity->AI_setAssignWorkDirty(true);
-			}
+			// A worked plot's improvement changing moves that plot's yields, which is the ruled trigger on its
+			// own ([citizen-assignment.md] § the ruled trigger set: a PLOT CHANGED inside the city's workable
+			// set). The mark is therefore not narrowed to one consequence of the change.
+			// ⚠ Still gated on a genuine change -- this whole branch runs only because the improvement moved --
+			// so it is not the ungated stand-in that ruling warns against.
+			pWorkingCity->AI_setAssignWorkDirty(true);
 		}
 		setImprovementCurrentValue();
 		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
