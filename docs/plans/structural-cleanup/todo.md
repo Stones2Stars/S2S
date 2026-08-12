@@ -413,15 +413,13 @@
   `CvPlayer::getSpaceProductionModifier` so the AI and the `canDoCometFragment` Python gate need no edit is the
   half-migration tell, not a win
   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)); it was tried and reverted.
-- Cut the EVENT production boost. Events author YIELDS, not production modifiers, and that stays true (owner) --
-  `iSpaceProductionMod` is the only production field on an event and the comet-fragment / free-enterprise /
-  V'Ger chains are its whole population. Remove the authorings + the schema element, `CvEventInfo`'s member and
-  its `.add`/checksum, both `applyEvent` writes, the `canApplyEvent` gate that tests it, the AI event valuation
-  and the `CvGameTextMgr` help line.
-  ⚡ `CvCity::m_iSpaceProductionModifier`'s ONLY writer is that `applyEvent`, so it dies with the field -- a
-  plain accumulator cut ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)),
-  member + read + write + the tag named in `Assets/savemigration.txt`. Its `CvPlayer` twin keeps a
-  `processBuilding` writer and is the separate second-maintenance-surface cut.
+  ⚡ **The SPACE half carries a stranded serialized accumulator on `CvPlayer` that dies WITH the kind, and the
+  MILITARY half does not** — military reads the kind live, while space is pushed into a hand-named player member
+  from `processBuilding`. That is the second maintenance surface, so it is part of THIS item and not a separate
+  one: the kind cannot go while a writer still names it. Cut it by the uniform mechanism
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)) — member,
+  maintainers, read + write, the tag named in `Assets/savemigration.txt` — and re-point its consumers, the
+  `canDoCometFragment` Python gate among them, onto the filtered `units` read rather than a preserved getter.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).

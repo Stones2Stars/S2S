@@ -788,6 +788,19 @@ COST of a SPECIFIC item, never a per-turn yield), sub-shapes `buildRate.self` /
 (the §5 plural target) / `.<scope>.{worldWonder|teamWonder|nationalWonder}` (category). (The "Versailles bug" =
 filing an item discount under `production.city`.)
 
+> **⛔ AN EVENT AUTHORS YIELDS, NEVER A PRODUCTION MODIFIER — WE DO NOT DO `buildRate` ON EVENTS (owner).** An
+> event's payload is the ordinary yield vocabulary; it does not reach this family at all, at any scope.
+> ⚑ **The reason is the SHAPE, not the size of the effect.** A `buildRate` deposit is alive-while-its-source-is
+> — the continuous-deposit model this whole doc describes — while an event is a one-shot happening with no
+> surviving source to withdraw against, so a slot fed by one can be maintained by neither mechanism
+> ([state-repositories.md](../architecture/state-repositories.md) § WHY DELTA-DERIVING FAILED BEFORE: a baked-in
+> one-shot grant is precisely what makes an accumulator unrecoverable).
+> ⛔ **And if it is ever wanted, it is built PROPERLY — not in a roundabout fashion (owner).** The legacy shape
+> reached it by pushing into a hand-named per-player accumulator behind an `applyEvent` write, which is the
+> STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform));
+> reviving that is the banned move, and a genuine event-driven build discount would author on the trigger plane
+> ([triggers.md](triggers.md)) like every other happening-fired effect.
+
 > **⛔ `military` AND `space` ARE NOT CATEGORIES — `units` IS THE BASE TARGET AND THEY ARE PREDICATES ON IT
 > (owner): *"military is not a base category, units is."*** Both legacy tags answer WHICH UNITS build faster, so
 > both author the ordinary plural target with a filter — `buildRate.<scope>.units.percent`, entry
