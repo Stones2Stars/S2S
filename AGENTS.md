@@ -732,9 +732,16 @@ the total-observability bar below.)
   against the cost of touching the file. Where a whole mechanism went, sweeping its comments out is sanctioned
   work in its own right. ⛔ A blanket regex purge is still the wrong instrument: it eats the comments carrying
   the EDGE reasoning, which is what a comment is still FOR.
-  ⚠ **The FORM a comment takes is a SEPARATE, PARKED question** — real `///<summary>` doc comments are wanted
-  and are *"a separate pass and branch"* (owner), [doc-comment-form.md](docs/plans/parked/doc-comment-form.md).
-  ⛔ Do not convert one while you are in a file, and do not read plain prose on a declaration as a defect.
+  ⚖ **THE FORM IS `///<summary>`, AND IT STARTS NOW — BUT IT IS NOT A REPO TRAVERSAL (owner).** A declaration
+  you ADD, or one you are already changing, takes the structured form; ⛔ do NOT go looking for others to
+  convert, and do not read plain prose on an untouched declaration as a defect. The outstanding issues/todos
+  and a working game load come first.
+  ⚑ **The reason is the forcing function, not the formatting (owner): it *"would have forced a real considered
+  approach, instead of the many many word salads we see at the moment."*** A `<summary>` is a slot with a
+  shape — it asks what the thing IS, once — so filling it requires deciding what the declaration actually
+  does, where free prose asks nothing, accepts any length, and gets filled with whatever was in the writer's
+  head. ⇒ It is [DEC-hard-typing-or-rollerskate](docs/architecture/decisions.md#dec-hard-typing-or-rollerskate)
+  applied to prose: a structure in which the sprawling version is awkward, never a rule to remember.
 
 - **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change.** A stale spec is worse than
   none — the next agent trusts it and builds on the wrong shape. The proactive twin of fix-docs-now.
