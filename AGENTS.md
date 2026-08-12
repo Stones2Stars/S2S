@@ -204,7 +204,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 
 ### Validation
 
-- XML: `Tools/XmlValidator.exe -a`.
+- **XML: `../Tools/XmlValidator.exe -a`, run FROM `Assets/`, FROM POWERSHELL.** Both halves are load-bearing and
+  each fails in a way that reads as something else:
+  - ⛔ **Run anywhere else and it validates NOTHING while reporting success** — from the repo root it prints
+    `Validation of 0 files complete without error(s)!`, which is a clean pass over an empty set. Check the FILE
+    COUNT, never the "without error(s)" (a real run is in the hundreds).
+  - ⛔ **Run it from the Bash tool and it dies** in `Console.SetWindowSize` (`Positive number required … width`)
+    — it wants a real console, so it reads as a broken tool rather than the wrong shell.
 - Python callbacks: `Tools/XMLTools/verify-python-callbacks.py`.
 - **Save migration: `python Tools/verify-savemigration.py`** — checks `Assets/savemigration.txt` against the
   tree, for the three failures [save.md §3](docs/specs/save.md) describes and nothing was running: a LISTED tag
