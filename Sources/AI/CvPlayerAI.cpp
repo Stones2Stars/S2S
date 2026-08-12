@@ -20776,11 +20776,6 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 		iValue -= static_cast<int>(20 * kEvent.getInflationModifier() * calculatePreInflatedCosts() * iGameSpeedPercent / 100);
 	}
 
-	if (kEvent.getSpaceProductionModifier() != 0)
-	{
-		iValue += ((20 + iNumCities) * getSpaceProductionModifier() * iGameSpeedPercent) / 100;
-	}
-
 	int iOtherPlayerAttitudeWeight = 0;
 	if (kTriggeredData.m_eOtherPlayer != NO_PLAYER)
 	{

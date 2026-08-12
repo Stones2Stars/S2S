@@ -663,8 +663,6 @@ public:
 	void changeFeatureProduction(int iChange);
 
 
-	int getSpaceProductionModifier() const;
-	void changeSpaceProductionModifier(int iChange);
 
 	int getExtraTradeRoutes() const;
 
@@ -1607,7 +1605,6 @@ protected:
 
 	std::map<BuildingTypes, BuiltBuildingData> m_buildingLedger;
 
-	int m_iSpaceProductionModifier;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
 	int m_iAirUnitCapacity;

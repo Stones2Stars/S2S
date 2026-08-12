@@ -370,12 +370,6 @@ int CvEventInfo::getInflationModifier() const
 }
 
 
-int CvEventInfo::getSpaceProductionModifier() const
-{
-	return m_iSpaceProductionModifier;
-}
-
-
 int CvEventInfo::getAIValue() const
 {
 	return m_iAIValue;
@@ -734,7 +728,6 @@ void CvEventInfo::getDataMembers(CvInfoUtil& util)
 		.add(m_iMaxPillage, L"iMaxPillage")
 		.add(m_iFreeUnitSupport, L"iFreeUnitSupport")
 		.add(m_iInflationModifier, L"iInflationMod")
-		.add(m_iSpaceProductionModifier, L"iSpaceProductionMod")
 		.add(m_iAIValue, L"iAIValue")
 		.addEnumAsInt(m_iPrereqGameOption, L"PrereqGameOption")
 		.add(m_iRevolutionIndexChange, L"iRevolutionIndexChange")
@@ -813,7 +806,6 @@ void CvEventInfo::getCheckSum(uint32_t& iSum) const
 	CheckSum(iSum, m_iMaxPillage);
 	CheckSum(iSum, m_iFreeUnitSupport);
 	CheckSum(iSum, m_iInflationModifier);
-	CheckSum(iSum, m_iSpaceProductionModifier);
 	CheckSum(iSum, m_iAIValue);
 
 	CheckSumI(iSum, GC.getNumFlavorTypes(), m_piTechFlavorValue);

@@ -19601,31 +19601,6 @@ bool CvPlayer::canDoEvent(EventTypes eEvent, const EventTriggeredData& kTriggere
 		}
 	}
 
-	if (0 != kEvent.getSpaceProductionModifier())
-	{
-		bool bValid = false;
-		for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
-		{
-			const CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
-			if (kProject.isSpaceship())
-			{
-				if (kProject.getLaunchesVictory() != NO_VICTORY)
-				{
-					if (GC.getGame().isVictoryValid((VictoryTypes)(kProject.getLaunchesVictory())))
-					{
-						bValid = true;
-						break;
-					}
-				}
-			}
-		}
-
-		if (!bValid)
-		{
-			return false;
-		}
-	}
-
 	if (NO_PLAYER != kTriggeredData.m_eOtherPlayer)
 	{
 		if (kEvent.getEspionagePoints() + GET_TEAM(getTeam()).getEspionagePointsAgainstTeam(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()) < 0)
@@ -20385,11 +20360,6 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 	if (0 != kEvent.getInflationModifier())
 	{
 		m_iInflationModifier += kEvent.getInflationModifier();
-	}
-
-	if (0 != kEvent.getSpaceProductionModifier())
-	{
-		changeSpaceProductionModifier(kEvent.getSpaceProductionModifier());
 	}
 
 	if (0 != kEvent.getFreeUnitSupport())

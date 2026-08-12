@@ -2105,3 +2105,9 @@ CvCity::m_iMilitaryProductionModifier    (int)
 CvCity::BuildingProductionModSize        (decorated short)
 CvCity::BuildingProductionModType        (decorated short, per entry)
 CvCity::BuildingProductionMod            (decorated int, per entry)
+
+| ── The EVENT space-production boost is cut (owner): events author YIELDS, never production modifiers,
+| and if that is ever wanted it is done properly rather than in this roundabout fashion. `iSpaceProductionMod`
+| was the only production field on an event; with it gone the city accumulator has no writer left at all --
+| its ONLY one was applyEvent. The CvPlayer twin keeps a live processBuilding writer and is NOT cut here.
+CvCity::m_iSpaceProductionModifier

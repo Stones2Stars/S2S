@@ -877,7 +877,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iFoodKept = 0;
 	m_iOverflowProduction = 0;
 	m_iFeatureProduction = 0;
-	m_iSpaceProductionModifier = 0;
 	m_iCurrAirlift = 0;
 	m_iMaxAirlift = 0;
 	m_iAirUnitCapacity = 0;
@@ -3242,11 +3241,6 @@ int CvCity::getProductionModifier(ProjectTypes eProject) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eProject);
-
-	if (GC.getProjectInfo(eProject).isSpaceship())
-	{
-		iMultiplier += getSpaceProductionModifier();
-	}
 
 	// The project's own bonus-conditioned `buildRate.self.percent`, resolved by the ONE evaluator -- the same
 	// shape as the building twin above.
@@ -7294,18 +7288,6 @@ void CvCity::setFeatureProduction(int iNewValue)
 void CvCity::changeFeatureProduction(int iChange)
 {
 	setFeatureProduction(getFeatureProduction() + iChange);
-}
-
-
-int CvCity::getSpaceProductionModifier() const
-{
-	return m_iSpaceProductionModifier;
-}
-
-
-void CvCity::changeSpaceProductionModifier(int iChange)
-{
-	m_iSpaceProductionModifier = (m_iSpaceProductionModifier + iChange);
 }
 
 
@@ -12567,7 +12549,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iFoodKept);
 	WRAPPER_READ(wrapper, "CvCity", &m_iOverflowProduction);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureProduction);
-	WRAPPER_READ(wrapper, "CvCity", &m_iSpaceProductionModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iCurrAirlift);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMaxAirlift);
 	WRAPPER_READ(wrapper, "CvCity", &m_iAirUnitCapacity);
@@ -13207,7 +13188,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFoodKept);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iOverflowProduction);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureProduction);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iSpaceProductionModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iCurrAirlift);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMaxAirlift);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iAirUnitCapacity);
@@ -14101,11 +14081,6 @@ void CvCity::applyEvent(EventTypes eEvent, const EventTriggeredData* pTriggeredD
 		{
 			changeCultureUpdateTimer(kEvent.getRevoltTurns());
 			changeOccupationTimer(kEvent.getRevoltTurns());
-		}
-
-		if (0 != kEvent.getSpaceProductionModifier())
-		{
-			changeSpaceProductionModifier(kEvent.getSpaceProductionModifier());
 		}
 
 		if (kEvent.getMaxPillage() > 0 && !adjustModifiersOnly)

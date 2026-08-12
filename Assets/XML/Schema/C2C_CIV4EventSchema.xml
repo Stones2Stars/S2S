@@ -143,7 +143,6 @@
 	<ElementType name="iCityFoodWeight" content="textOnly" dt:type="int"/>
 	<ElementType name="iFreeUnitSupport" content="textOnly" dt:type="int"/>
 	<ElementType name="iInflationMod" content="textOnly" dt:type="int"/>
-	<ElementType name="iSpaceProductionMod" content="textOnly" dt:type="int"/>
 	<ElementType name="bGoldenAge" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPickReligion" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bStateReligion" content="textOnly" dt:type="boolean"/>
@@ -475,7 +474,6 @@
 		<element type="bGoldenAge" minOccurs="0"/>
 		<element type="iFreeUnitSupport" minOccurs="0"/>
 		<element type="iInflationMod" minOccurs="0"/>
-		<element type="iSpaceProductionMod" minOccurs="0"/>
 		<element type="Tech" minOccurs="0"/>
 		<element type="TechFlavors" minOccurs="0"/>
 		<element type="iTechPercent" minOccurs="0"/>

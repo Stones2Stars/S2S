@@ -3039,7 +3039,6 @@
 		<EventInfo>
 			<Type>EVENT_COMET_FRAGMENT_1</Type>
 			<Description>TXT_KEY_EVENT_COMET_FRAGMENT_1</Description>
-			<iSpaceProductionMod>5</iSpaceProductionMod>
 			<BuildingExtraCommerces>
 				<BuildingExtraCommerce>
 					<Building>BUILDING_LABORATORY</Building>
@@ -6650,7 +6649,6 @@
 			</WorldNewsTexts>
 			<iGold>-2500</iGold>
 			<bGameSpeedScale>1</bGameSpeedScale>
-			<iSpaceProductionMod>5</iSpaceProductionMod>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>
 		</EventInfo>
@@ -7257,7 +7255,6 @@
 			</WorldNewsTexts>
 			<iGold>-7000</iGold>
 			<bGameSpeedScale>1</bGameSpeedScale>
-			<iSpaceProductionMod>1</iSpaceProductionMod>
 			<BuildingExtraCommerces>
 				<BuildingExtraCommerce>
 					<Building>BUILDING_OBSERVATORY</Building>
@@ -7306,7 +7303,6 @@
 			</WorldNewsTexts>
 			<iGold>2250</iGold>
 			<bGameSpeedScale>1</bGameSpeedScale>
-			<iSpaceProductionMod>-4</iSpaceProductionMod>
 			<iHappy>10</iHappy>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>

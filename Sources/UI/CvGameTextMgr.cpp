@@ -6408,19 +6408,6 @@ void CvGameTextMgr::setEventHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, i
 		}
 	}
 
-	if (0 != kEvent.getSpaceProductionModifier())
-	{
-		if (kEvent.isCityEffect() || kEvent.isOtherPlayerCityEffect())
-		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_EVENT_SPACE_PRODUCTION_CITY", kEvent.getSpaceProductionModifier(), szCity.GetCString()));
-		}
-		else
-		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_SPACESHIP_MOD_ALL_CITIES", kEvent.getSpaceProductionModifier()));
-		}
-	}
 
 	if (kEvent.getMaxPillage() > 0)
 	{

@@ -849,11 +849,6 @@ void CyCity::setFeatureProduction(int iNewValue)
 	m_pCity->setFeatureProduction(iNewValue);
 }
 
-int CyCity::getSpaceProductionModifier() const
-{
-	return m_pCity->getSpaceProductionModifier();
-}
-
 int CyCity::getExtraTradeRoutes() const
 {
 	return m_pCity->getExtraTradeRoutes();

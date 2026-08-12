@@ -77,7 +77,6 @@ public:
 	int getMaxPillage() const;
 	int getFreeUnitSupport() const;
 	int getInflationModifier() const;
-	int getSpaceProductionModifier() const;
 	int getAIValue() const;
 
 	int getAdditionalEventChance(int i) const;
@@ -229,7 +228,6 @@ private:
 	int m_iUnitPromotion;
 	int m_iFreeUnitSupport;
 	int m_iInflationModifier;
-	int m_iSpaceProductionModifier;
 	int m_iAIValue;
 
 	CvProperties m_Properties;
