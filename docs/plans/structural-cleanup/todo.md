@@ -35,23 +35,17 @@
   ⛔ Do NOT invent an ordinance-enactment mechanism to close it; the ruling is what the missing condition should BE.
   ⚠ A data-model answer triggers the curator + regen in the same work item
   ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
-- Decide the ENABLER's load-gating policy: `CvEnablerConsumer`'s header declares the consumer LOAD-ACTIVE with no
-  `spineGameLoadInProgress()` suppression, while `CvBuildingEnabler`/`CvUnitEnabler` suppress on it. One of the
-  two is wrong.
-  ⛔ Not a delete-the-guards sweep — [enabler.md §7.1](../../specs/enabler.md) sanctions both policies; only the
-  MIX is the bug, so removing the guards SWITCHES policy rather than tidying it.
-  ⚑ Deliverable: the ruling, plus making the header comment and the guards agree.
-- Rule on the operating-set seed's ANNOUNCE suppression in `CvEnablerKernel`, which silences the emit while the
-  save streams. Suppressing an EMIT to fix a CONSUMER is banned outright ([event-spine.md](../../specs/event-spine.md)),
-  and the reason given is real rather than lazy: the set is idempotent but the DEPOSITS are not, so an in-read
-  announce double-applies into the modifier packages — and the enabler's own stored-vs-oracle tripwire is blind
-  to it, because the damage lands on the other plane. ⇒ The fix belongs on the CONSUMER side (the modifier
-  declining an in-read activation it will fold at the drain), never on the emit; which shape it takes is the
-  ruling.
-- Make the `savemigration.txt` parser honour its documented `CUT:` / `RENAME:` prefixes. It changes save-load
-  behaviour, so it is an owner call ([save.md §3](../../specs/save.md)).
-- Decide whether the `…Times100` on AI unit counts and plot strength is swept with the scale conversion — same
-  shape, different nature (fractional SizeMatters counts, not a modifier channel).
+- Make the `savemigration.txt` reader and its own header comment agree on format. The header (lines 15–17)
+  documents literal `CUT:` / `RENAME:` line prefixes, but the parser (`sm_ensureLoaded`/`sm_token`,
+  `CvTaggedSaveFormatWrapper.cpp`) never checks for that text — it distinguishes a rename from a cut purely by
+  whether the line contains `->`, and takes the first whitespace-delimited `Class::field`-shaped token. A line
+  actually written in the documented `CUT: ClassName::m_field` form is silently dropped (the leading `CUT:`
+  token has no `::`, so `sm_token` returns empty and nothing is registered) — every live entry in the file
+  already avoids this by omitting the prefix, so nothing is desyncing today, but the file's own documented
+  format is a footgun for the next entry written to match it ([save.md §3](../../specs/save.md), which documents
+  the bare-token form the parser actually implements). Settle which side is authoritative — extend the parser to
+  strip an optional `CUT:`/`RENAME:` prefix, or correct the header comment to the bare-token format — and make
+  the two agree.
 - Rule on the river-attack term for a CITY defender (`CvUnit::getDefenderCombatValues`). Its two branches
   disagree: attacking across a river hands an ordinary defender `-RIVER_ATTACK_MODIFIER`, while the city branch
   is `min(0, riverDefensePenalty - RIVER_ATTACK_MODIFIER)` — capped at zero, so a city defender can never
@@ -82,8 +76,8 @@
 - Re-home the remaining `identity` EFFECT keys to the block that already exists for each
   ([json.md §7](../../specs/json.md)): constraints → `requires`/`allowed`; `diploVoteType` → the top-level
   `voteSource` section (and rename the getter off the legacy XML tag); `tradeable` → the `canTrade` block;
-  `advancedStart` → resolve the curator's parked flag; `pillageGold` → drop; `base.airCombat` → the `strength`
-  family, where every other unit's base value already lives.
+  `advancedStart` → resolve the curator's parked flag; `base.airCombat` → the `strength` family, where every
+  other unit's base value already lives.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
 - Author the leader→trait assignments. The chain is wired and the slots are authorable; the CONTENT is
   community-owned, so this closes by AUTHORING and never by reconstructing the tables the curator dropped.
@@ -97,10 +91,6 @@
   ⛔ Do not assume the bombard cut reached it.
 - Rename the `dcmFighterEngage` skill and the `DCM_FIGHTER_ENGAGE` global off the mod-provenance prefix
   ([skills.md](../../specs/skills.md)) — the mechanic stays, only the name changes.
-- Move corp-HQ revenue (`HeadquarterCommerces`) with the corporation rework, and with it the two corp shapes no
-  corporation currently authors: the HQ free unit and corp-vs-corp exclusion
-  ([json.md § `headquarters`](../../specs/json.md)).
-  ⛔ Neither is machinery to build ahead of data authoring it.
 - Retire `DOMAIN_IMMOBILE` — immobile is not a domain ([json.md §7](../../specs/json.md)), a domain is the medium
   a unit operates in.
   ⚠ Units still author it, so re-author the data FIRST; only then cut the consumers: the enum entry, ~21
@@ -224,31 +214,25 @@
   summed answer is wrong by construction. Their only callers are the Python bindings; the live feed uses
   `updateExtraYieldThreshold`'s min selection instead.
 
-- **Make the curator emit `tradeRoutes` as the base section the spec declares** ([json.md §2](../../specs/json.md))
-  — move the count/cap rows and `TradeYieldModifiers` (currently emitted as `<channel>.<scope>.tradeRoute`) into
-  it, with `coastal`/`foreign`/`sharedCivic` re-authored as predicates, not members. Both currently land as
-  `unkinded-member` and produce nothing.
-  ⛔ Recurate and regenerate in the same change ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
 - **Run the LEGACY-ACCUMULATOR CUT detector over `CvCity` and `CvPlayer`** and cut every hit with the uniform
   mechanism ([state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md)).
   Work it together with the unkinded-member census below — a matched pair is the data and carrier sides of one
   missing quantity. ⚠ A genuine one-shot event-state writer (`applyEvent`) correctly stays serialized
-  ([save.md §3](../../specs/save.md)); every other hit re-points.
+  ([save.md §3](../../specs/save.md)); every other hit re-points. (`CvPlayer::m_bonusExport` / `m_bonusImport` is a
+  confirmed live hit: still fully serialized with no re-derivation from held deals on load.)
 - **Land the UNKINDED MEMBERS — authored deposits `readJson` drops.** ⛔ Read the `[READJSON] unkinded-member
   <family>.<member>` census before anything else on this — it is the authoritative worklist, one grep of the
   load log. Each one resolves to exactly one disposition:
-  - **a genuine KIND to mint** — the combat defensive/capture members, `gold.headquarters` /
-    `culture.headquarters` (riding the corporation rework);
-    ⚠ check the address before minting — `upkeep.upgradePrice` is a COST, not upkeep (→ `costs.empire.upgrade`);
+  - **a genuine KIND to mint** — `gold.headquarters` / `culture.headquarters` (riding the corporation rework):
+    still authored in `Assets/Data/corporations/**` but no `"headquarters"` member is registered in any
+    `CvInfoKinds.cpp` member table, so `CvCorporationInfo::mapFrom`'s scan of `m_modifiers.entries()` for the HQ
+    revenue plane finds nothing — every corporation's HQ commerce reads zero;
     `happiness.nonStateReligion` is the §3.7 counted-kind filter `{religion: "!IS_STATE_RELIGION"}`
-    ([json.md §3.7](../../specs/json.md)); `cityCapture.resistance` is trigger-plane, deliberately unkinded
-    ([triggers.md](../../specs/triggers.md)) — minting a row for any of the three carves the rollerskate in;
-  - **`tradeRoutes.foreign` / `.coastal`** become CONDITIONS, never kinds — same work item as the `tradeRoutes`
-    base-section bullet above ([json.md §2](../../specs/json.md));
+    ([json.md §3.7](../../specs/json.md)), still authored (e.g. every `trait_complex_anti_clerical*.json`) and
+    still unregistered; `cityCapture.resistance` is trigger-plane, deliberately unkinded
+    ([triggers.md](../../specs/triggers.md)) — minting a row for it carves the rollerskate in;
   - **the trigger-plane set** (`combat.subdueAnimal`, `combat.nukeInterception`, …) stays deliberately unkinded
     ([triggers.md](../../specs/triggers.md)); minting a kind for one is the banned move.
-  ⚑ `<channel>.tradeRoute` needs the route count wired as a count-key first, then lands as the channel's
-  ordinary deposit scaled by it — never a member of the channel.
 
 - **Route the remaining `per` COUNT scalers.** Deposits scale on the commerce-slider rates
   (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), on the wonder counts
@@ -276,12 +260,6 @@
   sweeps every bonus id per render ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
   ⛔ Serve through the NEW Python surface, never a revived `Cy` binding
   ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
-
-- Model the `MAPCATEGORY_` gate — `cascadeEvalCondition` returns TRUE for every `MAPCATEGORY_` atom unevaluated,
-  the most-authored plot atom in the data.
-  ⚠ Impact is currently latent (owner) — no off-world content is reachable yet, so nothing gates wrong today.
-  ⛔ The re-gate route is already wired (a terrain fact seeds the atom, [enabler.md §8](../../specs/enabler.md))
-  — give the predicate a body; do not touch the enabler or build a plot-side store.
 
 - Convert the PLOT-YIELD AI CALLERS, the residue of that plane's cut. `calculateNatureYield` still has AI
   callers reading legacy `nature + calculateImprovementYieldChange` math (improvement valuations, feature/hill-
@@ -392,10 +370,6 @@
 - The endpoint route table, beyond the stored-vs-oracle documents. It routes through the ACCESS SURFACE, which
   does not exist yet; building it is the actual work item here
   ([roadmap.md § THE OPEN ITEM — the ACCESS surface](roadmap.md#-the-open-item--the-access-surface)).
-- The `requires` BLOCK COMPOSER — deciding heading, ordering and which clauses compose one block, the text
-  manager's own job ([patterns.md](../../architecture/patterns.md) THE DIVISION OF LABOUR).
-  ⚠ The CONDITION renderer it calls already exists and takes exactly what `CvRequires` holds — this is a
-  composer to write, not a renderer to build.
 - Give the ctx-taking KEYED SUM (`keyedTargetSum`) the scope filter its collecting twin (`collectKeyedTarget`)
   already has. `collectKeyedTarget` takes an `iScope` (-1 = any) because the same family+target is authored at
   two scopes with two different consumers; `keyedTargetSum` — the one serving the CONDITIONED tail through the
@@ -404,13 +378,6 @@
   ⚑ Live case: the free-specialist split authors BOTH a city-scope row and an empire-scope row on the same
   building, so the empire read must pin the scope or the two legs double-count.
   ⛔ Not a second read — one parameter on the existing one, matching the collect's spelling.
-- Move the pedia hub's CATEGORY CLASSIFIER onto `identity.pediaCategory`. The home is settled and the read is
-  published ([pedia-read-map.md](../../reference/pedia-read-map.md) finding 4); the hub still derives groupings
-  from legacy per-field getters — era banding, cost tests, instance-cap tests, promotion-line flags — and for
-  three buckets, a SUBSTRING MATCH ON THE LOCALIZED DISPLAY NAME (silently wrong in non-English).
-  ⛔ Do NOT publish those legacy getters so the classifier resolves — that preserves the name-matched buckets
-  while reading as migrated ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
-  ⚠ The era SUB-category stays derived from the entity's own era, not a second authored field.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
@@ -421,33 +388,20 @@
 > ⛔ The unit of work is the CLASS of read, never the individual getter — many collapse as the rebuilt infos
 > wire through ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
 
-- Move the IMPROVEMENT tech-yield reads onto the keyed what-if twin. One of them asks a THIRD question the twin
-  does not answer: the `bOptimal` branch wants "assume every condition holds", which is neither the live
-  evaluation nor a hypothetical over one named id. Decide whether that is a MODE of the same read or an
-  entry-list sum before converting it — ⛔ never a second evaluator beside the one the twin already uses
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
-- Watch civic-choice STABILITY now that the cross-category half-value damper is gone (owner: drop it; if the
-  problem shows, add it back properly). ⚠ It existed because civic valuations are linearly combined across
-  categories, so a building gated by civics in two options could be counted at full value from both. If choices
-  start oscillating, the principled fix is a `civics` id set on `CascadeCondDeps` — which is what the removed
-  whole-civic-database sweep was reconstructing by hand — never restoring that sweep.
-- ⛔ Neither is a VALUATION question, and filing them as one is what sent a reader looking for a magnitude
-  machine that was never the dependency: both ask AVAILABILITY under a hypothetical HAVE, which is the
-  enabler's ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
-- Re-express the specialist EXPERIENCE reads as the ENTRY-LIST read over the specialist's own authored entries.
-  ⛔ Not an arity fix — folding a keyed entry scope-wide is the silently-plausible-wrong case
-  ([modifier.md §5](../../specs/modifier.md)).
-- Give the CityContext its id-keyed RADIUS DICTIONARIES, then move the improvement count onto them. The count
-  domain is wired but walks the city's radius per call; it runs at rebuild/per-decision cadence rather than on a
-  read path, so it is not the banned read-time scan, but the dictionary is the standing target
-  ([contexts.md](../../architecture/contexts.md)) and this read is the one that wants it.
-- Fold the city's TYPED-FREE specialists into the specialist count — the count answers the ASSIGNED population
-  alone today, and the legacy multiplier counted both. ⚠ Depends on giving the typed-free ledger a home first;
-  that is the prerequisite work.
+- Give the CityContext its id-keyed RADIUS DICTIONARIES, then move the improvement count onto them.
+  `CityContext::improvedPlotCount` still walks `CvCity::countNumImprovedPlots` per call (`CityContext.cpp`); the
+  dictionary is the standing target ([contexts.md](../../architecture/contexts.md)) and this read is the one
+  that wants it.
+- Fold the city's TYPED-FREE specialists into `CityContext::specialistCount` — it still answers the ASSIGNED
+  population alone (`m_city->getSpecialistPopulation()`), and the legacy multiplier counted both. The
+  prerequisite is done: `CvCity::getFreeSpecialistCount` is now the typed-free ledger's home (derivable +
+  one-shot halves); the fold itself has not been made.
   ⚑ The shape is already ruled ([tally.md](../../specs/tally.md)): give the OBJECT the aggregate and forward it
-  through `CityContext`, never a tally side-store. ⚠ The legacy count is assigned + typed-free specialists, so
-  the city's assigned-only counter is NOT the number — forwarding it as-is would under-count silently.
+  through `CityContext`, never a tally side-store.
 - Make the empire GREAT-GENERAL rate a RECEIVER SUM over the player's cities, not an empire-package read.
+  `CvPlayer::getScalars`/`InfoValuation::realizedAtEmpire` reads only the empire-scope package, while the
+  building deposit (`SCALAR_GREAT_GENERAL_RATE_DOMESTIC`) is authored at CASC_SCOPE_CITY — a city-scope deposit
+  that never rolls up (magnitudes flow DOWN the scope spine, [modifier.md](../../specs/modifier.md)).
   ⚑ Great general is NOT great people (owner): great PEOPLE accrue per city, while great general points sum from
   cities plus battlefield experience into the player's own counter — the cross-scope receiver shape
   ([state-repositories.md](../../architecture/state-repositories.md)).
@@ -455,38 +409,10 @@
   site.
   ⛔ Do NOT re-scope the building data to empire (the city authoring is correct) and do not touch great people's
   own city/empire split — it is right as it stands and out of scope.
-- Move the realized-value reads onto the existing group reads (a consumer move, no new surface).
-- Delete the per-SOURCE decomposition accumulators: member, `change*`/`get*`, read + write, and the tag named in
-  `savemigration.txt` ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
-  ⚠ Audit each `change*` BODY for side-effect riders first ([save.md §6](../../specs/save.md)).
-  ⛔ They do NOT each earn a replacement getter — the group read answers the TOTAL, and per-source attribution is
-  the ORACLE's job. Their last maintainers (`processBonus`, `processSpecialist`) go with them.
-- Design the genuine residue that needs NEW surface: the slider math, the espionage counters, the live combat
-  state, and `getHappinessTimer`.
-- Hoist the per-commerce valuation in `getBuildingCommerceValue` — it runs once per (candidate × channel) where
-  the caller already threads other per-candidate arrays for exactly this reason.
-
-### How to work the compiler census
-
-> Method, not a count to drive to zero. Regenerate it, never trust a stale number:
-> `Assert build` from `Sources/`, then `grep -o "error C2039: '[^']*' : is not a member of '[^']*'" <log> | sort -u`.
-
-- ⛔ **The census UNDER-REPORTS by an order of magnitude** — MSVC stops at 100 errors per TU (`C1003`), several
-  TUs truncate, and a symbol can be broken with NO diagnostic at all. `grep -rn` over `Sources/` is the authority
-  for whether a symbol is gone; never conclude a file is clean from its absence.
-- ⛔ **A DROP in the count is not progress either** — the unity batches share the error budget, so deleting code
-  anywhere changes WHICH files get to report. Count distinct `(member, class)` pairs, and treat a pair as cleared
-  only when `grep` says the symbol is gone.
-- **The disposition test, in order:** (1) grep the owning info's header for a RENAMED successor — the rebuilt
-  infos are named for the JSON, so a "missing member" is most often a re-point; (2) if none, check whether the
-  DATA is still authored — if it is, the INFO is missing a member and that is the defect, not the call site;
-  (3) only then is the term dead — DELETE it, never comment it out.
-- ⛔ **A blanket rename across `Sources/` is the trap** — info getter names are also live methods on game objects
-  (some `DllExport`, i.e. EXE-bound), and the same name can be dead on one info and live on another.
-  Distinguishing them is SEMANTIC (what is the receiver?), never textual: leave those and let the compiler name
-  the sites individually.
-- ⛔ A dangling site whose replacement MACHINE is unbuilt stays dangling — that is the census working. Name the
-  missing machine, never the folder.
+- Hoist the per-commerce valuation in `getBuildingCommerceValue` — it runs once per (candidate × channel): both
+  `kBuilding.expectedYieldModifiers(...)` and `getYields(aiRealizedYields)` inside it depend only on the
+  candidate and the city, not on the channel `iI`, yet the caller (`AI_getBuildingCommerceValue`) invokes it once
+  per commerce channel (up to 5×), recomputing the same result each time.
 
 ## Stage 4 — the Python surface
 
@@ -549,14 +475,6 @@
   the fully-composed value (base + promotion/unit-combat delta + SizeMatters) — they are not inverses. The new
   surface needs a base-in/base-out pair, or an explicit set-to-absolute.
 
-- **Restore the engine→Python callback direction — currently DOWN.** Gated on the INFO plane, not the
-  callbacks themselves: the import chain (`CvEventInterface` → `BugEventManager` → `CvEventManager` →
-  `CvScreensInterface`, [python-load-sequence.md](../../reference/python-load-sequence.md)) is INFO-dominated
-  at module scope, so it cannot come back until `CyInfo` serves the info plane, one module at a time.
-  ⛔ Not closed by publishing the legacy god object
-  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)) or a per-module shim
-  ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) — a module comes off it only
-  by having its reads served.
 - **Serve the INFO-OBJECT accessor plane's per-type tail** (`getEra`, `getGridX/Y`, `getWorldSize`,
   `getPrereqAndTech`, `isVisible`, `getColorType`, `getActionInfoIndex`, …) — `GC.get<X>Info(id).<method>()` is
   the dominant remaining unserved read; `CyInfo` already answers the generic identity reads by prefix.
@@ -578,31 +496,32 @@
 - Bind the XML-named callbacks that resolve to no `def` in the module the DLL names, and the DLL-named
   game-utils callbacks with no Python definition at all
   ([python-load-sequence.md](../../reference/python-load-sequence.md) — a name resolves only in the module the
-  DLL names).
+  DLL names). ⚑ Unconfirmed either way: `Tools/XMLTools/verify-python-callbacks.py` is the tool that answers
+  this, but it needs a Python-2-compatible `ast` (it fails immediately under the Python 3 on this machine on a
+  `print` statement in `CvDiplomacy.py`). Settle by running it under Python 2, or by hand-diffing the
+  `<PythonCallback>`/event-trigger callback names in `Assets/XML/Events/` against `Assets/Python` `def`s.
 - Add the missing `CvEventManager` handlers for the DOMAIN events the reporter emits and nothing handles. They
-  drop silently through the dispatch-map miss path.
-- Shoot the dead `Cy*` bindings on sight as the compiler names them. ⚠ Distinguish DEAD from UNREGISTERED
-  first: a wrapper the engine still hands across is not dead, it is missing its registration (above).
-- **Serve the UPGRADE-AWARE building count** the random-event surface reads — its binding is already
-  unpublished. ⛔ It does not come back as the legacy count: "including upgrades" resolves through a building's
-  dormant triggers ([enabler.md §2](../../specs/enabler.md)), which merges successors with unrelated dormancy
-  sources (e.g. a pollution band dorming an observatory). Summing the bucket counts the band as an upgrade —
-  plausibly, silently, wrong. Decide what the read MEANS before serving it.
-- **REBUILD the emptied `CvGameTextMgr` composers** on `appendEntryLines` + the requires block composer — their
-  bodies were CUT, not migrated, so this is written fresh, never restored to what they used to say. Acceptance
-  test: reads NO legacy getter, never "reads nicely"
-  ([patterns.md § THE DIVISION OF LABOUR](../../architecture/patterns.md)) — and per the ruling there, every
-  family the entity carries must render, not a converted subset.
-  ⛔ The disabled-citizen tooltip's "which building opens this slot" list is a REVERSE cross-link — read the
-  specialist's own `EDGEF_RELATED`, never a whole-building scan.
-  ⛔ The four WELLBEING composers are BLOCKS, not `appendEntryLines` targets (a realized per-scope aggregate has
-  no entry list). A bonus's "what needs me" block reads its own `EDGEF_RELATED`; a promotion's per-unit lines
-  read `CvPromotionAccrual::sum`, never a re-rolled rung loop.
-  ⚠ They currently mislabel the whole wellbeing deposit total "from buildings" — every source (civics, traits,
-  bonuses, corporations, specialists, features, techs, projects) deposits into it. ⛔ Do not fix this by
-  pointing the city source-walker at it (that walker is buildings/civics/traits/culture-level only, partial for
-  wellbeing) — either widen the walker to wellbeing's full source set, or relabel the lump for what it is.
-- Re-point the unit power-value plane's readers.
+  drop silently through the dispatch-map miss path. ⚑ Concretely: `BugEventManager.__init__` registers
+  `unitCaptured` / `combatWithdrawal` / `combatRetreat` / `combatLogCollateral` / `combatLogFlanking` via
+  `addEvent()` (an empty handler list), and the only `on*` handlers for them live in the module's own
+  triple-quoted "Sample Event Handlers" block — never executed, never wired via `addEventHandler`. Each fires
+  from `CvEventReporter`/`CvDllPythonEvents` into a zero-length list and is silently dropped.
+- **Serve the disabled-citizen tooltip's "which building opens this slot" list** — a REVERSE cross-link: read
+  the specialist's own `EDGEF_RELATED`, never a whole-building scan. Also **wire a bonus's "what needs me"
+  block onto its own `EDGEF_RELATED`** (`setBonusHelp`/`setBonusTradeHelp` render only the city-plane families
+  via `appendEntityBlocks`, which deliberately skips `EDGEF_RELATED`/`EDGEF_REQUIRED_BY`) and **wire a
+  promotion's per-unit accrual lines onto `CvPromotionAccrual::sum`** — that function has zero callers anywhere
+  in the tree, and `parsePromotionHelpInternal` ignores its own `bAccrueLines` parameter and calls only
+  `appendEntityBlocks`.
+  ⚠ The rest of this composer rebuild is done: `appendEntryLines`/`appendEntryLinesFiltered` are implemented and
+  called throughout, the requires-block composer (`buildRequiresClauses`) renders `requiresBuild`/`requiresOperate`
+  with a live-city verdict, the four WELLBEING composers already render as BLOCKS
+  (`setBadHealthHelp`/`setGoodHealthHelp`/`setAngerHelp`/`setHappyHelp`), and the wellbeing deposit total is no
+  longer mislabelled "from buildings" — its composer comment now states the full source set (buildings, civics,
+  traits, features, bonuses, specialists, corporations, techs).
+- Re-point the unit power-value plane's readers. `Assets/Python/Screens/Advisors/CvDomesticAdvisor.py` still
+  carries the comment "`getPowerValue` has no published read yet; ranks on cost alone until one exists" —
+  `CvUnit::getPowerValue`/`CvUnit.h` has no `CyUnit`/`CyUnitInfo` counterpart.
 
 ## Triggers / grants
 
@@ -654,35 +573,41 @@
   overlay or the gate twin instead ([enabler.md](../../specs/enabler.md)).
 - Move `AI_baseBonusVal`'s per-kind loops off the whole-database driver onto the frontier, and off the dead
   prereq getters onto the bonus's own `EDGEF_REQUIRED_BY` ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)).
-  ⚠ Its "would this bonus UNLOCK this" half needs the AS-IF-HELD overlay (above) built first; the rest does not
-  depend on it.
-  ⛔ The two halves are separable — treating the whole loop as blocked parks convertible work behind a
-  dependency only part of it has.
-- Restore the members `AI_techValue`'s remaining sweeps read, then drive them from the tech's own edges.
-- Retire the active-set work-list ripple: the fact that justified it is now emitted, so the parallel propagation
-  machine goes ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
-  ⚠ `emit()` dispatches SYNCHRONOUSLY, so an event chain recurses on the call stack where the work-list iterated
-  — design for that; it is not a reason to keep the machine.
-  ⛔ Its runaway cap claims to "self-heal at the slice boundary"; that rebuild was REMOVED and nothing heals it.
+  **Partly done:** the Unit/Building/Project Value sections (`CvPlayerAI.cpp`) already walk `EDGEF_RELATED`/
+  `EDGEF_REQUIRED_BY` and value through the with/without hypothetical. **Still a whole-database driver:** the
+  Route Value section still does `for (iI = 0; iI < GC.getNumBuildInfos(); iI++)` and reads
+  `getPrereqBonus()`/`getPrereqOrBonuses()` directly instead of the bonus's own `EDGEF_REQUIRED_BY`.
+- `AI_techValue` (`CvPlayerAI.cpp`) still has whole-registry loops over specialists, terrains (×2), features
+  (×2), bonuses, improvements, and religions (`for (iI = 0; iI < GC.getNum*Infos(); iI++)`) — restore the
+  members these sweeps read, then drive them from the tech's own edges.
+- The active-set work-list ripple (`ek_recheckActiveSet`, `CvEnablerKernel.cpp`) still exists and still runs its
+  own fixpoint before announcing crossings. ⚠ Its current code comment argues FOR keeping this shape (announcing
+  mid-loop would hand consumers a half-settled `provided` set) — read that reasoning before retiring it; this is
+  not a straightforward "delete the machine" any more. The one item that WAS fixed: the runaway cap's comment no
+  longer claims to self-heal — it now correctly states the fixpoint is left WRONG and must be fixed at its cause
+  ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
 - Converge the enabler's bespoke per-id reverse indices onto `EDGEF_REQUIRED_BY`
   ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) — a side index is banned
   "especially not inside an enabler"). There are **five**, in two files, all rebuilt by re-scanning every info at
   load: `s_operateBonusConsumers`, `s_operateBuildingDependents`, `s_operateDormantTriggeredBy`
-  (`CvEnablerKernel.cpp`) and `s_udUnitDeps`, `s_udUpgradePred` (`CvUnitEnabler.cpp`).
+  (`CvEnablerKernel.cpp`) and `s_udUnitDeps`, `s_udUpgradePred` (`CvUnitEnabler.cpp`) — all five confirmed still
+  present and still populated at load.
   ⚑ The canonical reverse pass already inverts both `requires.build`/`requires.operate` and `dormantTriggers()`,
   so the answer these five recompute is already on the info — the only delta is they are operate-only while the
   canonical edge merges build+operate, which is safe per over-inclusion ([enabler.md §5](../../specs/enabler.md)).
   ⛔ Read [enabler.md §8](../../specs/enabler.md) "The reverse index, and what is deliberately NOT one" first —
   the axis-flag lists, `s_operatePropertyBandConsumers`, and `s_specialBuildingMembers` are explicitly NOT
   convergence targets. Sweeping those together with the five is the documented mistake.
-- Delete the hand-rolled condition walks in `CvImprovementInfo` and route them through `CvConditionQuery`
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). `ii_collectPredicateIds`
-  duplicates the canonical leaf test **verbatim** while the canonical `collectPredicateIds` sits at ZERO callers —
-  and `namesId` / `bucketForType` are equally unused. ⚠ The private walk covers only `all`+`anyOf`; the canonical
-  also walks `noneOf`/`enabled`/`disabled`, so the duplicate is not merely redundant, it is NARROWER.
+- Delete the hand-rolled condition walks and route them through `CvConditionQuery`
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)): `ii_collectPredicateIds`
+  (`CvImprovementInfo.cpp`) still duplicates the canonical leaf test verbatim, covering only `all`+`anyOf` where
+  the canonical `collectPredicateIds` also walks `noneOf`/`enabled`/`disabled` — the duplicate is not merely
+  redundant, it is NARROWER. (`collectPredicateIds`/`namesId`/`bucketForType` now each have real callers
+  elsewhere — CyInfo.cpp, CvGameTextMgr.cpp, CvEnablerKernel.cpp — so they are no longer zero-caller; what has
+  NOT happened is routing the three duplicates below through them.)
   ⚑ Same family: the three-way copy of the bonus/building presence-id collector in `CvImprovementInfo`,
   `CvBuildInfo` (`collectPrereqBonuses`) and `CvCorporationInfo` (`corpCollectSpreadBuildings`) — each re-testing
-  an inline `compare(0,N,"PREFIX_")` that the zero-caller `bucketForType` exists to answer. The corp variant also
+  an inline `compare(0,N,"PREFIX_")` that `bucketForType` exists to answer. The corp variant also
   needs the clause's `min`, which the shared surface does not yet return: LIFT that onto the shared surface, never
   keep the private copy for it. ⛔ `CvTechInfo`'s walk is NOT in this family — it reconstructs AND-vs-OR structure,
   which `CvConditionQuery` deliberately refuses to expose.

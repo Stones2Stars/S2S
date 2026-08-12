@@ -1041,6 +1041,15 @@ must not be swept into one: the reverse pass deliberately excludes engine tokens
 "operate index" is exactly the mistake the spelled-out naming rule exists to prevent
 ([Sources/AGENTS.md](../../Sources/AGENTS.md) § Code Style).
 
+⚑ **`civicAny` is coarse by the same logic, and that coarseness is a known gap for AI VALUATION, not just
+re-gating.** `CascadeCondDeps::civicAny` unions every `requires civic` clause into one bool — enough to re-gate,
+but not enough to answer "which civic gates this candidate." `CvPlayerAI::AI_civicValue`'s civic-choice building
+valuation dropped its cross-category half-value damper (owner: civic valuations are linearly combined across
+categories, so a building gated by civics in two options could be counted at full value from both, risking
+oscillating choices) without replacing it with per-civic precision. If choices start oscillating, the principled
+fix is an id-keyed `civics` set on `CascadeCondDeps` — never reviving the whole-civic-database sweep that such a
+set would replace.
+
 ⛔ **THE PLOT PLANE CARRIES NO `EDGEF_REQUIRED_BY` AT ALL, AND ITS COARSE LIST IS THE `(kind, id)` PLOT-ATOM
 INDEX.** `CvReversePass::rp_requiredByRefInfo` routes nine infotype prefixes and returns NULL for every other,
 so **no terrain / feature / improvement / route / mapcategory info ever gains a REQUIRED_BY edge.** The coarse

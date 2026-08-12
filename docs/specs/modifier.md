@@ -381,7 +381,9 @@ route table is rebuilt it wants one field per named engine term, so a divergence
   [plans/structural-cleanup/stub-census.md](../plans/structural-cleanup/stub-census.md).
 - **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger
   percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
-  revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**
+  revRequest timers, war-weariness, revIndex, civic anger%), the **happiness timer** (`getHappinessTimer` —
+  the same countdown shape as the anger timers above, folded on the happiness side: `GC.getTEMP_HAPPY()` while
+  the timer runs), the **espionage counters**, **event anger**
   (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated —
   ⚖ KEEP through the migration: the existing engine implementation stays, *"straight up state derived from the
   plot in question"*; the landmark data pass is a sanctioned separate data pass (#448); the engine impl KEEPS),
