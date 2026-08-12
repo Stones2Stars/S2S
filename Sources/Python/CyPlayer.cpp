@@ -762,11 +762,6 @@ int CyPlayer::getFeatureProductionModifier() const
 	return m_pPlayer->getFeatureProductionModifier();
 }
 
-int CyPlayer::getMilitaryProductionModifier() const
-{
-	return m_pPlayer->getMilitaryProductionModifier();
-}
-
 int CyPlayer::getSpaceProductionModifier() const
 {
 	return m_pPlayer->getSpaceProductionModifier();

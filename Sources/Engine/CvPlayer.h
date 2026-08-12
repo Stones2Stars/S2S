@@ -520,9 +520,6 @@ public:
 
 	int getWorkRate(BuildTypes eBuild) const;
 
-	int getMilitaryProductionModifier() const;
-	void changeMilitaryProductionModifier(int iChange);
-
 	int getSpaceProductionModifier() const;
 	void changeSpaceProductionModifier(int iChange);
 
@@ -1704,7 +1701,6 @@ protected:
 	int m_iGreatPeopleThresholdModifier;
 	int m_iGreatGeneralsThresholdModifier;
 	int m_iFeatureProductionModifier;
-	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
 
 	int m_iNonStateReligionCommerceCount;

@@ -849,11 +849,6 @@ void CyCity::setFeatureProduction(int iNewValue)
 	m_pCity->setFeatureProduction(iNewValue);
 }
 
-int CyCity::getMilitaryProductionModifier() const
-{
-	return m_pCity->getMilitaryProductionModifier();
-}
-
 int CyCity::getSpaceProductionModifier() const
 {
 	return m_pCity->getSpaceProductionModifier();

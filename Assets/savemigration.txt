@@ -2048,3 +2048,20 @@ CvCity::UnitProductionMod                (decorated int, per entry)
 CvPlayer::iUnitProductionModSize         (decorated short)
 CvPlayer::iUnitProductionModType         (decorated short, per entry)
 CvPlayer::iUnitProductionModCount        (decorated int, per entry)
+========================
+| The EMPIRE military production modifier -- CvPlayer's half of the pair, stranded on all three legs:
+| changeMilitaryProductionModifier had NO caller, the member kept deserializing, and
+| CvPlayer::getProductionModifier(UnitTypes) read it for every military unit.
+| REPLACEMENT: the BUILD_RATE_MILITARY category channel, read as realizedAtEmpire through getBuildRateKinds --
+| the same read the building twin beside it already uses for the wonder categories. `militaryProduction` folds
+| into the buildRate categories ([modifier.md] par.4).
+| ⚑ This RESTORES a value rather than merely re-pointing one: the empire-scope `buildRate.empire.military`
+| rows (overwhelmingly civics) reached production through NOTHING, because the accumulator they would have
+| landed in had no writer. The read answered save history in their place.
+| ⚠ The CITY twin is NOT cut and is NOT dead: CvCity::changeMilitaryProductionModifier is fed live by
+| applyCorporationModifiers (a corporation's city-scope buildRate.city.military, applied +/-1 with the corp),
+| and CvCityAI reads the city getter in three heuristics.
+| ⛔ Two Cy wrappers went with it and neither was a binding to preserve: CyPlayer's was PUBLISHED with no
+| Python caller anywhere in Assets/Python (a dead binding is an outlaw, [DEC-cy-not-fixed]) and CyCity's
+| carried no .def at all, so it was unreachable dead surface.
+CvPlayer::m_iMilitaryProductionModifier   (int)

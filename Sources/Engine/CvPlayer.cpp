@@ -1077,7 +1077,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iGreatPeopleThresholdModifier = 0;
 	m_iGreatGeneralsThresholdModifier = 0;
 	m_iFeatureProductionModifier = 0;
-	m_iMilitaryProductionModifier = 0;
 	m_iSpaceProductionModifier = 0;
 
 	m_iNonStateReligionCommerceCount = 0;
@@ -6688,7 +6687,9 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 
 	if (!GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_NO_NON_TYPE_PROD_MODS) && GC.getUnitInfo(eUnit).hasTag(CLS_TAG_MILITARY))
 	{
-		iMultiplier += getMilitaryProductionModifier();
+		int aiBuildRate[NUM_BUILD_RATE_KINDS];
+		getBuildRateKinds(aiBuildRate);
+		iMultiplier += aiBuildRate[BUILD_RATE_MILITARY];
 	}
 	// Resolved ONCE per call rather than per trait: the interner is only populated after load, so a file-scope
 	// static would latch -1 forever.
@@ -9216,18 +9217,6 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 	return iRate;
 }
 // BUG - Partial Builds - end
-
-
-int CvPlayer::getMilitaryProductionModifier() const
-{
-	return m_iMilitaryProductionModifier;
-}
-
-
-void CvPlayer::changeMilitaryProductionModifier(int iChange)
-{
-	m_iMilitaryProductionModifier += iChange;
-}
 
 
 int CvPlayer::getSpaceProductionModifier() const
@@ -16764,7 +16753,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFeatureProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSpaceProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionCommerceCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpgradeAnywhereCount);
@@ -18146,7 +18134,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFeatureProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSpaceProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionCommerceCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpgradeAnywhereCount);

@@ -210,7 +210,6 @@ public:
 	void setOverflowProduction(int iNewValue);
 	int getFeatureProduction() const;
 	void setFeatureProduction(int iNewValue);
-	int getMilitaryProductionModifier() const;
 	int getSpaceProductionModifier() const;
 	int getExtraTradeRoutes() const;
 	int getMaxTradeRoutes() const;

@@ -198,7 +198,6 @@ public:
 	void changeGreatGeneralsThresholdModifier(int iChange);
 
 	int getFeatureProductionModifier() const;
-	int getMilitaryProductionModifier() const;
 	int getSpaceProductionModifier() const;
 
 	int getBestUnitType(int /*UnitAITypes*/ eUnitAI) const;
