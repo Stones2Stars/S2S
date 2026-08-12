@@ -2487,18 +2487,7 @@ void CvCity::collectUnitCombatExperience(std::vector<std::pair<int, int> >& rows
 }
 
 
-// The experience a unit trained here starts with — ×100 like every amount ([DEC-fixedpoint-x100]), which is why
-// the apply site feeds `changeExperience100` and converts nothing.
-//
-// ⚖ ONE rolled read replaces the EIGHT hand-named accumulators the city and the player kept between them (free /
-// specialist / per-domain / per-unitcombat on each, plus the state-religion one and the three XP percent members).
-// They were a split of ONE associative sum, and the cross-scope roll-up already sums the city and empire halves
-// of it; only the KEYED axes stay entry-list reads, for the reason `keyedExperience` states.
-//
-// ⚑ The percent tier came back FOR FREE, and that is the point. The three gates that used to wrap a hand-named
-// modifier — capital, state-religion holy city, non-state holy city — are precisely how the DATA authors it:
-// `experience.empire.percent` carrying `enabled: "IS_CAPITAL"` and the composed holy-city pair, evaluated at the
-// package fold ([DEC-conditions-are-predicates]). So no gate survives here, and a new condition is data.
+// The experience a unit trained here starts with.
 int CvCity::getProductionExperience(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -3163,12 +3152,6 @@ int CvCity::getProductionModifier() const
 // The CITY's share of an item's buildRate. The empire share is CvPlayer::getProductionModifier (already the
 // keyed cascade read over the player's live sources); this is its city twin, over the city's OPERATING buildings
 // -- a DORMANT building speeds nothing (enabler.md §3.2).
-//
-// ⚖ ONE keyed read replaces the per-axis accumulators the city used to keep (unit / domain / unitCombat /
-// military / stateReligion / bonus), each its own array with its own maintenance. The compiled entries carry
-// their own axis: `buildRate.<scope>.units.{UNIT_X}` / `.domains.{DOMAIN}` / `.unitCombats.{UC}` are the SAME
-// family on different keys, so the read asks each source what it deposits onto this item and sums.
-// ⛔ Never a walk of a keyed container the info no longer holds (pedia-read-map finding 2).
 int CvCity::getProductionModifier(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();
