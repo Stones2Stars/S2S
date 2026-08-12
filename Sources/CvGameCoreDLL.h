@@ -229,7 +229,6 @@ int DECLARE_FLAGS(ECacheAccess::flags);
 //
 // Feature macros
 //
-// #define GLOBAL_WARMING
 // #define THE_GREAT_WALL
 
 //
