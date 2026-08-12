@@ -79,6 +79,14 @@ last, prose. ⚑ The worked case: the city's SPECIALIST and BUILDING yield origi
 in the building package" had to be re-corrected more times than the owner cares to count.
 **Home:** [AGENTS.md](../../AGENTS.md) Conventions §Design.
 
+### DEC-it-already-exists
+
+**EVERYTHING HAS ALREADY BEEN FIXED, SPECCED AND SOLVED — if you think something is MISSING, you are most
+probably WRONG (owner).** A perceived gap is a READING failure first and a real gap almost never, so the move is
+to go FIND the existing mechanism, never to invent a parallel one. It is the constructive half of
+[DEC-no-guessing](#dec-no-guessing): that rule says do not fill a gap with inference; this one says the gap is
+usually not there. **Home:** [AGENTS.md](../../AGENTS.md) Conventions §Conduct.
+
 ### DEC-kraken
 
 Skipping/assuming/guessing/shortcuts is the cardinal sin; maximal rigor by default until the owner explicitly relaxes

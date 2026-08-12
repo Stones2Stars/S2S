@@ -533,6 +533,22 @@ the total-observability bar below.)
   configure and never was. **An `Edit` that fails to match is a CHARACTER mismatch in your `old_string`** (an `…`,
   an em dash, a mis-transcribed run) — the tool says so, and the fix is to re-read the file and copy the text
   exactly. Reaching for a script instead trades the owner's review surface for a problem that does not exist.
+- **⛔ EVERYTHING HAS ALREADY BEEN FIXED, SPECCED AND SOLVED — IF YOU THINK SOMETHING IS MISSING, YOU ARE MOST
+  PROBABLY WRONG (owner)** ([DEC-it-already-exists](docs/architecture/decisions.md#dec-it-already-exists)). This
+  is the rule of thumb to hold above your own judgement: a gap you perceive is a READING failure first, and a
+  genuine hole almost never. ⇒ **The move is to go FIND the thing that already does this** — grep the specs, the
+  sibling curator, the calc surface, the call site itself — never to build a parallel mechanism beside it.
+  ⚑ **The tell is the moment you catch yourself DESIGNING**, and it is worth naming because it does not feel like
+  rollerskating; it feels like diligence. A new table, a new getter, a new read, a new slot "because the existing
+  one does not quite fit" is the shape — and *"does not quite fit"* is nearly always *"I did not find the right
+  one"*.
+  ⚠ **MEASURED, in one task:** three inventions, each with the answer already in front of it — a composed getter
+  when the group read existed; a new curator table when `SCALAR_COND` + `_put_cond` already mapped a scalar tag
+  onto a conditioned deposit; and a proposed eval-ctx slot plus a new valuation read when the candidate's tag test
+  (`GC.getUnitInfo(eUnit).hasTag(...)`) was already on the very line being edited. Every one compiled, and every
+  one was a second way of doing something the tree already did.
+  ⛔ It is the constructive half of [DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing): that rule
+  says never fill a gap with inference; this one says **the gap is probably not there**.
 - **Trust but verify — EVERY claim, including the owner's.** A doc line, an owner aside, your own recollection, a
   memory entry — all are hypotheses to CONFIRM against ground truth (the live code, the actual data, the running
   game) before you build on them. Say what you verified against.
