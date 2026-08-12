@@ -1970,3 +1970,29 @@ CvPlayer::m_iFixedBordersCount           (int)
 CvPlayer::m_iCitiesStartwithStateReligionCount (int)
 CvPlayer::m_iDraftsOnCityCaptureCount    (int)
 CvPlayer::m_iExtraGoodyCount             (int)
+========================
+| The DOMAIN production-modifier accumulators, both halves of one composed read: the city's per-domain array
+| and the player's NATIONAL twin (CvCity::getDomainProductionModifier summed the two).
+| Stranded on all three legs -- changeDomainProductionModifier had NO caller, the player's changer reached its
+| setter and nothing reached the changer, both arrays kept deserializing, and two AI ranking heuristics read
+| the composed getter.
+| REPLACEMENT: already built and already the LIVE production path. CvCity::getProductionModifier(UnitTypes)
+| resolves the item's domain through the ONE keyed cascade read --
+| InfoValuation::keyedTarget(MODFAM_BUILD_RATE, keyedTargetSegment("domains"), unit's domain) over the city's
+| OPERATING buildings, plus the empire share from CvPlayer::getProductionModifier. The data authors it:
+| 15 city-scope and 7 empire-scope `buildRate.<scope>.domains.{DOMAIN}` deposits.
+| ⚑ The code says so at the replacement itself (CvCity.cpp, getProductionModifier): "ONE keyed read replaces
+| the per-axis accumulators the city used to keep (unit / domain / unitCombat / military / stateReligion /
+| bonus), each its own array with its own maintenance." These two are that sentence's `domain` entry -- the
+| accumulators outlived the cut that replaced them.
+| ⚠ ONE stated behaviour change, and it removes a frozen input rather than a live one: the two military
+| production-rank heuristics (AI_getMilitaryProductionRateRank and its naval twin) drop their per-domain term.
+| With no writer since the keyed read landed, that term contributed 0 on every game started since and stale
+| save history on older ones; the live getDomainExperience term beside it is untouched.
+| ⛔ The remaining per-axis members from that same sentence are NOT cut here and must not be assumed dead by
+| association: CvCity::m_paiUnitCombatProductionModifier and CvPlayer::m_unitCombatProductionMod are the
+| unitCombat entry, equally writerless, and want their own pass with their own AI read dispositions.
+| ⚑ CyCity::getDomainProductionModifier went with it -- an UNBOUND wrapper method (no .def, no Python caller),
+| so it was dead surface rather than a binding to preserve ([DEC-cy-not-fixed]).
+CvCity::m_aiDomainProductionModifier     (int array, NUM_DOMAIN_TYPES)
+CvPlayer::m_paiNationalDomainProductionModifier (int array, NUM_DOMAIN_TYPES)

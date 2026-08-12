@@ -1003,8 +1003,6 @@ public:
 
 
 
-	int getDomainProductionModifier(DomainTypes eIndex) const;
-	void changeDomainProductionModifier(DomainTypes eIndex, int iChange);
 
 	int64_t getCulture(PlayerTypes eIndex) const;
 	int64_t getCultureTimes100(PlayerTypes eIndex) const;
@@ -1681,7 +1679,6 @@ protected:
 	int* m_aiYieldRateModifier;
 	int* m_aiTradeYield;
 	int* m_aiProductionToCommerceModifier;
-	int* m_aiDomainProductionModifier;
 	int64_t* m_aiCulture;   // per-player culture, x100 and NEVER decaying -- an AMOUNT, so 64-bit
 	int* m_aiNumRevolts;
 

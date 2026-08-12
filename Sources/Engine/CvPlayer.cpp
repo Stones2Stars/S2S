@@ -220,7 +220,6 @@ m_cachedBonusCount(NULL)
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
 
-	m_paiNationalDomainProductionModifier = NULL;
 	m_paiNationalTechResearchModifier = NULL;
 
 
@@ -610,7 +609,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY(m_paiResourceConsumption);
 	SAFE_DELETE_ARRAY(m_paiBuildWorkerSpeedModifierSpecific);
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
-	SAFE_DELETE_ARRAY(m_paiNationalDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_paiNationalTechResearchModifier);
 	SAFE_DELETE_ARRAY2(m_ppaaiTerrainYieldChange, GC.getNumTerrainInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
@@ -1449,10 +1447,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		//TB Traits end
 
 		STATIC_ASSERT(NUM_DOMAIN_TYPES > 0, value_should_be_greater_than_zero);
-		m_paiNationalDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 		for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 		{
-			m_paiNationalDomainProductionModifier[iI] = 0;
 		}
 
 		FAssertMsg((0 < GC.getNumTechInfos()),  "GC.getNumTechInfos() is not greater than zero but an array is being allocated in CvCity::reset");
@@ -17757,7 +17753,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iInquisitionCount);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCompatCheckCount);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 
 
@@ -18617,7 +18612,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iInquisitionCount);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCompatCheckCount);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 
 
@@ -26540,24 +26534,6 @@ int CvPlayer::getNationalGreatPeopleUnitRate(const UnitTypes eUnit) const
 	return itr != m_greatPeopleRateforUnit.end() ? itr->second : 0;
 }
 
-
-int CvPlayer::getNationalDomainProductionModifier(DomainTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eIndex);
-	return m_paiNationalDomainProductionModifier[eIndex];
-}
-
-void CvPlayer::setNationalDomainProductionModifier(DomainTypes eIndex, int iValue)
-{
-	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eIndex);
-
-	m_paiNationalDomainProductionModifier[eIndex] = iValue;
-}
-
-void CvPlayer::changeNationalDomainProductionModifier(DomainTypes eIndex, int iChange)
-{
-	setNationalDomainProductionModifier(eIndex, (getNationalDomainProductionModifier(eIndex) + iChange));
-}
 
 int CvPlayer::getNationalTechResearchModifier(TechTypes eIndex) const
 {

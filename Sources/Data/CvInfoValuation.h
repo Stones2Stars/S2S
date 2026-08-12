@@ -168,8 +168,8 @@ public:
 	//	keyed-by-unitcombat -- and still misses every shape nobody thought to add a getter for.
 	//	⚑ This walks the handful the entity AUTHORED, so it is the own-data inversion's cure
 	//	(pedia-read-map finding 2): a "for every domain, does this deposit?" loop over the whole target registry
-	//	becomes one read. It also SUBSUMES the sentinel probe (`getDomainProductionModifier(NO_DOMAIN)`) -- asking
-	//	a keyed getter with a NO_* key to mean "any" is a read of a slot that cannot exist.
+	//	becomes one read. It also SUBSUMES the sentinel probe -- asking a keyed getter with a NO_* key to mean
+	//	"any" is a read of a slot that cannot exist.
 	//	⚠ SIGN IS PRESERVED ON PURPOSE. The probes it replaces test `> 0` / `< 0`, and a building whose only
 	//	production entry is NEGATIVE is not a production building; collapsing to a bare "authors anything" would
 	//	quietly change which buildings the AI offers. iSign is +1 (any positive) or -1 (any negative).

@@ -509,7 +509,6 @@ CvCity::CvCity()
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
-	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 
 	m_aiCulture = new int64_t[MAX_PLAYERS];
 	m_aiNumRevolts = new int[MAX_PLAYERS];
@@ -588,7 +587,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
-	SAFE_DELETE_ARRAY(m_aiDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_aiCulture);
 	SAFE_DELETE_ARRAY(m_aiNumRevolts);
 	SAFE_DELETE_ARRAY(m_abEverOwned);
@@ -965,7 +963,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
-		m_aiDomainProductionModifier[iI] = 0;
 	}
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -8680,23 +8677,6 @@ void CvCity::recordCommerceRateModifierGrant(EventTypes eEvent, CommerceTypes eI
 }
 
 
-int CvCity::getDomainProductionModifier(DomainTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eIndex);
-	int iTotalDomainProductionModifier = m_aiDomainProductionModifier[eIndex];
-	iTotalDomainProductionModifier += GET_PLAYER(getOwner()).getNationalDomainProductionModifier(eIndex);
-
-	return std::max(0, iTotalDomainProductionModifier);
-}
-
-
-void CvCity::changeDomainProductionModifier(DomainTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_DOMAIN_TYPES, eIndex);
-	m_aiDomainProductionModifier[eIndex] += iChange;
-}
-
-
 // ⚑ The `< 0 ? MAX_INT` saturating guards these two getters used to carry were the FOSSIL of a live 32-bit
 // overflow: city culture accumulates the realized culture commerce every turn and NEVER decays, so on a
 // long game it wrapped negative and the guards detected the wrap and clamped. That silently corrupted every
@@ -12669,7 +12649,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 	// Widening a member is SOFT: the reader absorbs the narrower stored form (save.md §8), so this keeps
 	// its own tag and an old save's 32-bit culture is read and widened in place.
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
@@ -13329,7 +13308,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiNumRevolts);

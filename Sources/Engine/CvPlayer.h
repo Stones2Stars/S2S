@@ -1567,7 +1567,6 @@ protected:
 	int m_iLeaderHeadLevel;
 	int m_iInquisitionCount;
 	int m_iCompatCheckCount;
-	int* m_paiNationalDomainProductionModifier;
 	int* m_paiNationalTechResearchModifier;
 
 	int m_iNationalAirUnitCapacity;
@@ -2008,9 +2007,6 @@ public:
 
 
 
-	int getNationalDomainProductionModifier(DomainTypes eIndex) const;
-	void setNationalDomainProductionModifier(DomainTypes eIndex, int iNewValue);
-	void changeNationalDomainProductionModifier(DomainTypes eIndex, int iChange);
 
 	int getNationalTechResearchModifier(TechTypes eIndex) const;
 	void setNationalTechResearchModifier(TechTypes eIndex, int iNewValue);

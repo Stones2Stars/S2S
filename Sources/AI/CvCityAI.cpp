@@ -12561,7 +12561,6 @@ int CvCityAI::AI_getMilitaryProductionRateRank() const
 	{
 		if ((DomainTypes)iI != DOMAIN_SEA)
 		{
-			iRate += getDomainProductionModifier((DomainTypes)iI) / 10;
 			iRate += getDomainExperience((DomainTypes)iI) / 100;
 		}
 	}
@@ -12627,7 +12626,6 @@ int CvCityAI::AI_getNavalMilitaryProductionRateRank() const
 	getYields(aiCityYields);
 	int iRate = getPopulation() + aiCityYields[YIELD_PRODUCTION] / 100 - aiCityYields[YIELD_COMMERCE] / 100;
 
-	iRate += getDomainProductionModifier(DOMAIN_SEA) / 10;
 	iRate += getDomainExperience(DOMAIN_SEA) / 100;
 
 	iRate += getProductionModifier() / 10;

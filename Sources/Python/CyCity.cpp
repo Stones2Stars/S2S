@@ -1063,11 +1063,6 @@ int CyCity::getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const
 }
 
 
-int CyCity::getDomainProductionModifier(int /*DomainTypes*/ eIndex) const
-{
-	return m_pCity->getDomainProductionModifier((DomainTypes)eIndex);
-}
-
 int CyCity::getCulture(int /*PlayerTypes*/ eIndex) const
 {
 	return m_pCity->getCulture((PlayerTypes)eIndex);

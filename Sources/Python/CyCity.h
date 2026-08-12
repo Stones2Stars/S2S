@@ -256,7 +256,6 @@ public:
 
 	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
-	int getDomainProductionModifier(int /*DomainTypes*/ eIndex) const;
 
 
 	int getArea() const;
