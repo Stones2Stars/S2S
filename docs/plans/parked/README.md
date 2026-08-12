@@ -29,9 +29,10 @@ open remainder is the live item.
   `global-warming-mod` (the #436 vestige-removal scope), `post-migration-content-purge` (content reclassification
   deferred until after the #428/#430 migration completes), `astrological-ancient-way-traits` (a cut trait/wonder
   system kept for reimplementation), `ranked-target-selection` (design locked in `json.md` §3.3, implementation
-  pending).
+  pending), `inflation-remodel` (inflation is not used in the game and #430 does not remodel it; when it returns
+  it is a cascade channel driven by ACTUAL EXPENDITURE, and that plan does not exist yet).
 - **Performance / other** — `turn-time-optimization`, `codebase-bug-hunt`, `worker-stranded-tiles-reachability`,
-  `surround-destroy-removal-map`, `multimap-zone-rework`, `unified-civilopedia`, `doc-comment-form`.
+  `surround-destroy-removal-map`, `multimap-zone-rework`, `unified-civilopedia`.
 - **Modules** — `module-system-rework` (the inherited C2C module mechanism is not the future one; also records
   why the curator's module exclusions are an intentional boundary, so the dangling refs they leave are not
   chased as curator gaps).

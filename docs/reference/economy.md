@@ -65,8 +65,34 @@ supply + corporate maintenance.
   effects ([json.md §7](../specs/json.md)).
 - **Civic upkeep** = `max(0,(pop+offset)·popPct/100) + max(0,(cities+offset)·cityPct/100)`, handicap-scaled.
 - **Inflation** = `100 · hurriedCount · handicapInflationPct/100`, × civic/tech/building/event/rebel chain; decays per `HURRY_INFLATION_DECAY_RATE`.
+  > **⛔ INFLATION IS NOT ACTUALLY USED IN THE GAME, AND #430 DOES NOT REMODEL IT — IT IS A CONSCIOUS DECISION
+  > TO CUT AND LIVE WITH THE CONSEQUENCES (owner).** The mechanic above is what the engine still COMPUTES; it is
+  > not a model anyone is standing behind. ⇒ A gap found in it is **not** a defect to repair and **not** a
+  > wiring job: the correct action is the ordinary cut, and the consequence is accepted.
+  > **⚖ WHEN IT RETURNS IT IS A CASCADE CHANNEL DRIVEN BY ACTUAL EXPENDITURE (owner)** — *"we need to have a
+  > real plan for how it is to be modelled based on actual expenditure."* That is the whole of the forward
+  > direction, and it is the part that does not exist yet: today's formula keys on **`hurriedCount`** — how often
+  > you RUSHED — which is a proxy for spending rather than spending, so no amount of re-wiring the present shape
+  > reaches the intended one.
+  > ⛔ **So do NOT re-point an inflation read onto a cascade kind to "finish" it.** Wiring a live read onto a
+  > mechanic that is being replaced whole is the half-migration
+  > ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)), and the plan the replacement
+  > needs is a DESIGN decision the owner has not taken — inventing one is the rollerskate
+  > ([DEC-no-guessing](../architecture/decisions.md#dec-no-guessing)).
+  > ⚠ **THREE UNRELATED ADDRESSES SHARE THE WORD, and that is worth knowing before touching any of them** — a
+  > reader who checks one concludes the wrong thing about the others:
+  >
+  > | authored address | kind | what it actually is |
+  > |---|---|---|
+  > | `inflation.<scope>.percent` | `SCALAR_INFLATION` (memberless, empire) | the modifier CHAIN on the expense — live, read by `getInflationMod10000` |
+  > | `upkeep.empire.inflation.percent` | `UPKEEP_INFLATION` | the handicap's inflation leg — live, read by the same function |
+  > | `hurry.empire.inflation.percent` | `SCALAR_HURRY_INFLATION` | the modifier on the hurried-count DECAY rate — **now read by NOBODY** |
+  >
+  > ⚑ The third lost its only consumer when the stranded `hurryInflationModifier` accumulator was cut
+  > ([DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform)); its kind and its
+  > two civic authorings STAY, inert, because purging them is the remodel's call and not a tidy-up.
 - **Per-turn order:** `verifyGoldCommercePercent` (silently raises the gold slider on deficit) → `doGold` (strike +
-  forced-disband when gold < 0) → `doAdvancedEconomy` (inflation decay).
+  forced-disband when gold < 0) → `doAdvancedEconomy` (inflation decay, unmodified).
 - **⚑ Cascade fold:** negative-gold buildings route to **`maintenance.city.flat`** (NOT `gold.flat`) — this brought
   the maintenance divergence to 0. (Gap to close: crime/ordinance pseudobuildings — classify as maintenance vs negative commerce.)
 
@@ -126,13 +152,23 @@ supply + corporate maintenance.
 
 ## Pollution (live) — Global Warming (dead)
 
-- **Global Warming is compiled OUT** (`// #define GLOBAL_WARMING`) — `doGlobalWarming`, `getWarmingDefense` and
-  the `GLOBAL_WARMING_*` defines are **dead vestiges** (the Pedia even shows a zero-effect stat). Removal is
-  tracked (the old global-warming-mod plan).
-  ⚠ **The NUKE COUNTER is NOT one of them.** `CvGame::getNukesExploded`/`changeNukesExploded` is raised by a real
-  detonation (`CvPlot`), is serialized and is published to Python; it merely happened to be READ by the warming
-  calc. Owner-ruled KEEP even with no C++ consumer — *"it's worth having"* — so a removal that follows the name
-  rather than the writer zeroes a live counter.
+- **The C++ Global Warming machinery is GONE** — the `GLOBAL_WARMING` feature macro, `CvGame::doGlobalWarming`
+  and its `doTurn` call, and the five orphaned `GLOBAL_WARMING_*` global defines are all removed. The feature
+  member it read (`iWarmingDefense`) was already an owner-ruled curator DROP, so nothing authored fed it.
+  ⚠ **The NUKE COUNTER is NOT one of them and STAYS.** `CvGame::getNukesExploded`/`changeNukesExploded` is raised
+  by a real detonation (`CvPlot`), is serialized and is published to Python; it merely happened to be READ by the
+  warming calc. Owner-ruled KEEP even with no C++ consumer — *"it's worth having"* — so a removal that follows
+  the NAME rather than the WRITER zeroes a live counter.
+  > **⛔ THE PYTHON GLOBAL WARMING IS NOT ALIVE EITHER — "it just pretends to be" (owner).**
+  > `CvRandomEventInterface.doGlobalWarming`, its `TXT_KEY_EVENT_GLOBAL_WARMING*` text, the
+  > `BUILDING_POLLUTION_*_GLOBAL_WARMING` pseudo-buildings and the event trigger that requires one are all still
+  > in the tree and all still reachable — which is exactly why it reads as a live mechanic on inspection.
+  > ⚑ **It shares NOTHING with the C++ half**: it reads none of the removed defines (its weights are hardcoded
+  > 100 / 10000 / 1000000) and never called `doGlobalWarming` in the DLL. That independence is what made the C++
+  > removal safe, and it is the fact to re-check rather than re-derive.
+  > ⛔ It is NOT removed here: events are Python-authoritative and out of #430
+  > ([roadmap.md](../plans/structural-cleanup/roadmap.md) scope decision 4). ⚠ So do not read its survival as
+  > evidence the mechanic works, and do not "restore" a C++ leg to serve it.
 - **Pollution is LIVE** via the [property solver](engine.md#properties--the-generic-attribute-bag--its-legacy-auto-placement) (propagators → interactions → sources).
   Rates (`CIV4PropertyInfos.xml`): city decay ~6%/turn + 1/pop/turn; city→plot ~5%, plot→city ~12%, plot→plot ~4%;
   target 0. **24 band buildings** (12 air, `POLLUTION_LIGHT_SMOG`@≥400 … `BLACKENED_SKIES`@≥1950; 12 water …
