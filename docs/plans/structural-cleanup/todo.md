@@ -377,14 +377,23 @@
 - The endpoint route table, beyond the four decomposition censuses. It routes through the ACCESS SURFACE, which
   does not exist yet; building it is the actual work item here
   ([roadmap.md § THE OPEN ITEM — the ACCESS surface](roadmap.md#-the-open-item--the-access-surface)).
-- Give the ctx-taking KEYED SUM (`keyedTargetSum`) the scope filter its collecting twin (`collectKeyedTarget`)
-  already has. `collectKeyedTarget` takes an `iScope` (-1 = any) because the same family+target is authored at
-  two scopes with two different consumers; `keyedTargetSum` — the one serving the CONDITIONED tail through the
-  ONE evaluator — takes none, so a caller that must pin a leg to one scope falls back to the unconditioned
-  collect and silently loses every gated row.
-  ⚑ Live case: the free-specialist split authors BOTH a city-scope row and an empire-scope row on the same
-  building, so the empire read must pin the scope or the two legs double-count.
-  ⛔ Not a second read — one parameter on the existing one, matching the collect's spelling.
+- Give the ctx-taking KEYED SUM (`keyedTargetSum`) **and the POINT form (`keyedTarget`)** the scope filter their
+  collecting twin (`collectKeyedTarget`) already has. `collectKeyedTarget` takes an `iScope` (-1 = any) because
+  the same family+target is authored at two scopes with two different consumers; the other two take none, so a
+  caller that must pin a leg to one scope either falls back to the unconditioned collect and silently loses
+  every gated row, or reads BOTH scopes' rows as one number.
+  ⚑ Live cases: the free-specialist split authors BOTH a city-scope row and an empire-scope row on the same
+  building, so the empire read must pin the scope or the two legs double-count; and every keyed `buildRate`
+  segment is authored at both scopes, so the city-side production reads take the empire rows too.
+  ⛔ Not a second read — one parameter on each existing one, matching the collect's spelling.
+- Serve the CITY-scope building-keyed `buildRate` rows authored on BUILDINGS. Nothing reads them: the city map
+  that would have carried them has no writer, so the value a city gets is whatever its save happens to hold.
+  The empire half of the same address IS served (the per-building fan pins the empire scope and pushes into the
+  player's own store), which is what makes the city half's absence invisible.
+  ⛔ Scope-filtering the city reads is NOT the whole fix on its own: the unit and domain segments are authored
+  on buildings at empire scope too and NOTHING pins them, so the unfiltered city read is currently the only
+  thing applying them — once per city rather than once. Decide where a building-authored EMPIRE-scope keyed row
+  is served, then filter; filtering first turns a wrong number into a missing one.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
