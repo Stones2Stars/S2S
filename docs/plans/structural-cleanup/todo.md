@@ -386,14 +386,18 @@
   building, so the empire read must pin the scope or the two legs double-count; and every keyed `buildRate`
   segment is authored at both scopes, so the city-side production reads take the empire rows too.
   ⛔ Not a second read — one parameter on each existing one, matching the collect's spelling.
-- Serve the CITY-scope building-keyed `buildRate` rows authored on BUILDINGS. Nothing reads them: the city map
-  that would have carried them has no writer, so the value a city gets is whatever its save happens to hold.
-  The empire half of the same address IS served (the per-building fan pins the empire scope and pushes into the
-  player's own store), which is what makes the city half's absence invisible.
-  ⛔ Scope-filtering the city reads is NOT the whole fix on its own: the unit and domain segments are authored
-  on buildings at empire scope too and NOTHING pins them, so the unfiltered city read is currently the only
-  thing applying them — once per city rather than once. Decide where a building-authored EMPIRE-scope keyed row
-  is served, then filter; filtering first turns a wrong number into a missing one.
+- Serve the CITY-scope `buildRate` rows — both the building-KEYED ones and the `military` CATEGORY. Neither
+  reaches production. The keyed map that would carry the first has no writer, so a city gets whatever its save
+  holds; the category accumulator has a live writer (the corporation apply) but the city production read never
+  asks it, so it feeds AI heuristics alone. The EMPIRE half of each is served, which is what makes both
+  absences invisible.
+  ⛔ Pointing the city read at its own scope is NOT the whole fix, and doing it first makes things worse in two
+  distinct ways. For the KEYED segments: the unit and domain rows are authored on buildings at empire scope and
+  NOTHING pins them, so the unfiltered city read is currently the only thing applying them — once per city
+  rather than once — and filtering would drop them entirely. For the CATEGORY: the city read already sums the
+  player's, and a `realizedAtCity` roll includes the empire tier, so adding one on top double-counts it.
+  ⇒ Decide how the city and empire halves compose — where a building-authored empire-scope row is served, and
+  which tier each read owns — then wire both halves to it.
 - Ranked-target-selection EVALUATION ([parked/ranked-target-selection.md](../parked/ranked-target-selection.md))
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
