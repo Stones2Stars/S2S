@@ -1244,23 +1244,6 @@ void EnablerKernel::dormedByBuilding(const CvCity* pCity, int eCandidate, std::v
 	}
 }
 
-bool EnablerKernel::cityHasVicinityBonus(const CvCity* pCity, int eBonus, CvCascVicinity eTier)
-{
-	if (pCity == NULL)
-	{
-		return false;
-	}
-	// Half one -- the ENABLER's: an ACTIVE building here that `provides` this bonus supplies it in-vicinity
-	// (json §5a). Only the enabler can answer it, because an operating building's own operate clause may consume
-	// a bonus another operating building provides -- that is the least fixpoint this set already resolved.
-	if (operatingBuildings(pCity).provided.count(eBonus) != 0)
-	{
-		return true;
-	}
-	// Half two -- the CITY CONTEXT's: the MAP providers over the workable radius, at the asked ownership tier.
-	return pCity->getCityContext().hasVicinityBonusAt(eBonus, eTier);
-}
-
 void EnablerKernel::wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec)
 {
 	const OperatingBuildings& f = operatingBuildings(pCity);

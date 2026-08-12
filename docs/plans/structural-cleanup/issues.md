@@ -576,9 +576,10 @@ scan bugs rather than fix them.
   `CvTechEnabler`'s header states the design contract that the enabler consumes ONLY events *precisely so* a
   missed emit surfaces as a visibly wrong enabler, with the oracle diff as the tripwire. **The event-only design
   is resting on a tripwire nothing pulls.**
-- **Consult `EnablerKernel::cityHasVicinityBonus` instead of re-deriving it.** Its header names it the ONE home
-  for "is this bonus in vicinity here?"; it has no caller, and the evaluator re-implements the same two-half union
-  inline. Behaviour agrees today — the divergence risk is structural.
+- **Split the vicinity BAND axis from the `worked`/`onSite` predicates** so a vicinity-named read cannot answer
+  the on-site verdict ([contexts.md](../../architecture/contexts.md) § THE VICINITY SPLIT — the storage is
+  already right, the ADDRESSING is what conflates them). ⚠ Reaches the authored `vicinity:` key, `CvCondition`
+  and the evaluator, so it is a STRUCTURE call, not a sweep — owner input first.
 - **Wire `DepositIndex::segIdFor*`** — a five-entry string-elimination optimizer whose header says it "kills all
   string handling in the per-plot keyed walks". It has no caller and the per-read `lookupSegment(std::string(...))`
   it was built to remove is still on the per-plot turn path.

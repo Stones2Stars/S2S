@@ -186,6 +186,24 @@ mutates its set in place as the fixpoint ripples.
 > owner is known — no per-plot verdict can answer it for every city that may work the tile.
 > ⚠ It is NOT gated on the tile being WORKED: a fort cannot be worked by definition, and a fort is exactly how a
 > resource gets served (owner).
+>
+> **⛔ AND THE CODE MUST NOT SPELL `onSite` AS A BAND OF VICINITY — agents keep conflating the two, and the
+> SHAPE is what teaches it (owner: *"I have had enough with agents misunderstanding vicinity and onsite"*).**
+> The storage is right: `onSite` and `worked` have their own dictionaries and the bands have theirs. What
+> misleads is the ADDRESSING — `CvCascVicinity` carries BOTH axes in one enum (`NONE`/`OWNED`/`CROSSBORDER` are
+> nested ownership bands; `WORKED` and `ONSITE` are not bands at all), so a reader named for VICINITY answers the
+> far stricter ON-SITE verdict whenever it is handed that value, and the call site reads as though onSite were
+> simply a stricter vicinity. It is not: they are ORTHOGONAL (above).
+> ⚑ **This has already bitten once and was patched with PROSE, which is exactly why it recurred** — a tier-less
+> `hasVicinityBonus` silently answered `CASC_VIC_ONSITE`, and the fix was a comment telling the next caller to
+> name its tier ([DEC-hard-typing-or-rollerskate](decisions.md#dec-hard-typing-or-rollerskate): prose is the
+> weakest rung, and it binds only an agent who reads it, believes it, and still remembers it).
+> ⇒ **So the rule binds the NAME, not just the argument: a function whose answer can be the on-site verdict does
+> not carry `vicinity` in its name.** ⛔ And do not add a second helper that unions the two halves for a caller
+> holding a `CvCity*` — one existed, had no caller, and could never have served the evaluator anyway (the eval
+> ctx is forbidden a game object, § THE EVAL CTX). The union has ONE home: the evaluator, over the ctx.
+> ⚠ The durable fix is to SPLIT THE AXIS so the wrong call cannot be spelled at all; that reaches the authored
+> `vicinity:` key, the condition struct and the evaluator, so it is a structure call rather than a sweep.
 
 ⚖ **`CityContext.amenities` — THE CITY'S OWN FEATURE LIST, AND THE CITY IS WHAT GETS CHECKED (owner).** A
 grantor's `amenities` block ([json.md §8](../specs/json.md)) is static info data; what a consumer actually asks

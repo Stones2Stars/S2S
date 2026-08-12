@@ -289,14 +289,6 @@ public:
 	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
 	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);
 
-	// THE §5a VICINITY UNION for a bound city -- the ONE home for "is this bonus in vicinity here?"
-	// ([DEC-single-implementation]). The supply has two independently-owned halves and a reader must union both
-	// (contexts.md § THE VICINITY SPLIT): the ENABLER owns the active-building `provides` half (the operate/
-	// provides least fixpoint, which only it can resolve), the CITY CONTEXT owns the MAP half (the tiered
-	// radius presence). Both are stored, event-maintained sets, so this is two O(1) fetches and never a scan.
-	// ⚠ Consult it INSTEAD of the engine's own vicinity getter, which re-derives both halves per call -- a
-	// radius walk plus a sweep of every building testing isActiveBuilding.
-	static bool cityHasVicinityBonus(const CvCity* pCity, int eBonus, CvCascVicinity eTier);
 };
 
 #endif // CV_ENABLER_KERNEL_H
