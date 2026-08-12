@@ -125,9 +125,6 @@ SCALAR_FAMILIES = {
     "iGlobalHurryModifier": ("costs", "empire", "hurry", "percent"),
     "iHurryAngerModifier": ("hurryAnger", "city", None, "percent"),
     # production specials
-    "iMilitaryProductionModifier": ("buildRate", "city", "military", "percent"),
-    "iSpaceProductionModifier": ("buildRate", "city", "space", "percent"),
-    "iGlobalSpaceProductionModifier": ("buildRate", "empire", "space", "percent"),
     "iWorkerSpeedModifier": ("workRate", "empire", None, "percent"),
     # trade routes -- ONE family with conditions (ruling 11): the route COUNT is the MEMBERLESS scope-wide
     # amount (kind 0 IS the count -- the reconciliation micro-fix; the transient `routes` member collided with
@@ -283,6 +280,21 @@ ID_LIST = {"MapCategoryTypes": "mapCategories", "UnitCombatRetrainTypes": "unitC
 # cost (intrinsic base + the C2C real-cost scaling members). tag -> key.
 COST = {"iCost": "production", "iCostSizeModifier": "sizeModifier", "iCostCountModifier": "countModifier",
         "iCostMaterialsModifier": "materialsModifier", "iCostComplexityModifier": "complexityModifier"}
+
+# ⛔ SPACE IS NOT A CATEGORY -- it is the `units` TARGET filtered by IS_SPACE (owner). Spacecraft are not a unit
+# class sitting outside the military one, so the legacy tag lands on the ordinary plural-target form
+# (json.md §6.1, the `units {IS_WATER}` exemplar) and NOT on a `space` category member, which was this curator
+# minting a kind off a legacy tag NAME -- condition-as-member wearing a kind's name
+# ([DEC-conditions-are-predicates]). The legacy consumer gated vanilla SPACESHIP PARTS (the space-victory
+# projects); the boost now reaches the space UNITS it was always describing.
+# ⛔ AND `military` IS NOT A BASE CATEGORY EITHER -- `units` IS (owner). Both legacy tags describe WHICH UNITS
+# build faster, so both are the same plural target under a different predicate; a category per adjective is how
+# that table grew a member off every legacy tag name in the first place.
+SCALAR_TARGET_FILTERED = {
+    "iMilitaryProductionModifier":    ("buildRate", "city",   "units", "percent", "IS_MILITARY"),
+    "iSpaceProductionModifier":       ("buildRate", "city",   "units", "percent", "IS_SPACE"),
+    "iGlobalSpaceProductionModifier": ("buildRate", "empire", "units", "percent", "IS_SPACE"),
+}
 
 # ---- DROP / DEFER tables ----
 # DEAD (§8-i, confirmed zero consumers) + meltdown (excluded-module-only data, not emitted).
@@ -1586,6 +1598,15 @@ def curate(typ, rec, store):
                 _inject_per(fams, family, scope, "flat", v, per_100_pop)
             else:
                 _set_fam(fams, family, scope, member, unit, v)
+    # --- plural-target families, predicate-filtered (json §6.1: the target says WHAT KIND, the predicate WHICH) ---
+    for tag, (family, scope, target, unit, predicate) in SCALAR_TARGET_FILTERED.items():
+        v = _int(rec, tag)
+        if v:
+            node = fams.setdefault(family, OrderedDict()).setdefault(
+                _deposit_scope(rec, scope), OrderedDict()).setdefault(target, OrderedDict())
+            entry = OrderedDict([("value", v), ("enabled", predicate)])
+            cur = node.get(unit)
+            node[unit] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])
     # --- yield/commerce split families ---
     for tag, spec in YIELD_FAMILIES.items():
         node = rec.find(tag)
@@ -1867,7 +1888,8 @@ def _generic_list(rec, tag):
     return g if isinstance(g, list) else ([g] if g else [])
 
 
-HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | set(CAP_IDENTITY) | set(ID_SCALAR)
+HANDLED = (set(SCALAR_FAMILIES) | set(SCALAR_TARGET_FILTERED)
+           | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | set(CAP_IDENTITY) | set(ID_SCALAR)
            | set(ID_LIST) | set(COST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS | DROP_DEAD | DROP_MODULE
            | PASS2_TAGS | {"Type", "Flavors", "iAIWeight"}
            # consciously routed/dropped, not in a bool table: noHolyCity -> requires.build.disabled;
