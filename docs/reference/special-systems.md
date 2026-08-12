@@ -63,25 +63,36 @@
   `…StolenVisibilityCount`, `…InvisibleVisibilityCount`. `isVisible = visibilityCount>0 || stolenVisibilityCount>0`.
 - **Sight range** = `1 + plot.getTerrainElevation() + getExtraVisibilityRange() + improvement.getVisibilityChange()`,
   cap `MAX_UNIT_VISIBILITY_RANGE` (elevation 0/1/2 = flat/hills/peak; air sees all).
-> **⚖ FOG DECAY IS A REAL, RECENT FEATURE — WANTED, AND NOT IN THE TREE (owner).** It gives a **map that goes
-> fully dark again where you have not been for a while**: the revealed-but-unseen tier decays instead of being
-> remembered forever, riding the per-plot `…LastSeenTurn` above plus its own `m_iVisibilityDecay` /
-> `m_iDefaultDecay` and the `m_bPermanentMapLand` / `m_bPermanentMapSea` opt-outs. **It is off because it BROKE
-> HOTSEAT**, never because it was abandoned.
-> ⛔ **It lived behind an `ENABLE_FOGWAR_DECAY` guard, and feature `#ifdef`s are banned outright** (owner:
-> *"an anachronism from when source control was not really a thing"* — [AGENTS.md](../../AGENTS.md)
-> Conventions §Design), so the guard and its arms are gone from `Sources/`. **Git is the archive: the last
-> commit carrying the implementation is `624803b16`** — `git show 624303b16 -- Sources/Engine/CvPlot.cpp` and
-> its siblings recover it in full.
-> ⚑ **Reviving it means writing it as ORDINARY CODE, not restoring the switch** — the hotseat break is the
-> thing to solve, and a guard would only hide it again. This entry exists so the intent survives the guard
-> ([DEC-keep-unkilled-ideas](../architecture/decisions.md#dec-keep-unkilled-ideas) is about the IDEA, which is
-> kept here; it never required the dead branch to sit in the tree).
+> **⚖ FOG DECAY IS A REAL, RECENT FEATURE THAT IS SWITCHED OFF — NOT DEAD CODE (owner).** `ENABLE_FOGWAR_DECAY`
+> (the commented `#define` at `CvGameCoreDLL.h`) gates a **map that goes fully dark again where you have not
+> been for a while**: the revealed-but-unseen tier decays instead of being remembered forever, riding the
+> per-plot `…LastSeenTurn` above plus its own `m_iVisibilityDecay` / `m_iDefaultDecay` and the
+> `m_bPermanentMapLand` / `m_bPermanentMapSea` opt-outs. **It is OFF because it BROKE HOTSEAT**, not because it
+> was abandoned.
+> ⛔ So it is un-killed forward intent ([DEC-keep-unkilled-ideas](../architecture/decisions.md#dec-keep-unkilled-ideas))
+> and its code STAYS. ⚠ It is the standing exhibit for why the `#ifdef`-attic sweep
+> ([AGENTS.md](../../AGENTS.md) Conventions §Design) is not a blanket delete: the guard is defined nowhere and
+> every member it names appears nowhere else, so the mechanical test flags it exactly like an abandoned
+> alternate — and deleting it would silently discard a wanted feature. **What separates them is whether a
+> commented-out `#define` exists**; this one has one.
 - **Per-turn full scratch rebuild** (`doTurn`, `CvGame.cpp:6002`) zeroes ALL counts then replays every sight source —
   only the post-rebuild state is authoritative ("a stickytape"). **Invisibility:** `alwaysInvisible = info.isInvisible()
   || alwaysInvisibleCount>0`; without Hide-and-Seek, invisible if `invisibleType != NONE && !spotterInSight`; with
   `COMBAT_HIDE_SEEK`, intensity-based. Stolen visibility = `stolenVisibilityTimer > 0`. Gotcha: `/units` exposes ALL
   units with no per-viewer invisibility filter.
+
+## The GREAT WALL render — compiled out on purpose
+
+⛔ **`THE_GREAT_WALL` is a DELIBERATE OFF-SWITCH, not an attic (owner): rendering the great wall *"has literally
+broken the game in the past"* — it was a source of a lot of CTDs in the older days.** The guard sits on the
+viewport-transform refresh calls (`CvMap::beforeSwitch` / `afterSwitch` → `CvGame::processGreatWall`), while the
+MECHANIC itself is live and unguarded (`CvCity::processGreatWall`, called from `CvGame`), so the switch controls
+the RENDER path alone.
+⚠ **This entry exists so a sweep does not eat it.** The guard has a commented-out `#define`, which the mechanical
+test flags exactly like an abandoned alternate — and deleting it would re-introduce a crash class nobody
+remembers ([AGENTS.md](../../AGENTS.md) Conventions §Design: what is behind the guard decides, and the recorded
+REASON is what protects a legitimate off-switch).
+⚑ WHY the render breaks is unestablished and deliberately NOT investigated — out of scope.
 
 ## Trade routes (city)
 

@@ -124,19 +124,15 @@ supply + corporate maintenance.
   City final = `player.WWanger × max(0,cityMod+playerMod+100)/100 × max(0,cityTimer+100)/100`.
 - Espionage WW is a separate channel (city timer only, −20/turn). Alliance averages WW; vassal max-propagates.
 
-## Pollution (live) — Global Warming (removed)
+## Pollution (live) — Global Warming (dead)
 
-- **Global Warming is GONE** — the machinery (`doGlobalWarming` and its `doTurn` call), the `GLOBAL_WARMING_*`
-  global defines and the feature's `iWarmingDefense` input are all removed; the curator drops `iWarmingDefense`
-  so no JSON carries it.
-  ⚖ **THE NUKE COUNTER STAYS — deliberately, and it is owner-ruled: *"even if it does not have a real active
-  purpose, it's worth having."*** `CvGame::getNukesExploded`/`changeNukesExploded` is raised by a real detonation
-  (`CvPlot::nukeExplosion`), is serialized, and is published to Python; it merely happened to be READ by the
-  warming calc, which is why the name looked like part of the feature.
-  ⛔ **It has NO C++ consumer, and that is not a defect to sweep.** It is a genuine recorded game FACT kept for
-  Python and for a future consumer — so it fails neither the writerless-accumulator detector
-  ([state-repositories.md](../architecture/state-repositories.md), which needs a mutator with no CALLER: this one
-  has one) nor the dead-member test. A sweep that follows the missing C++ read takes out a live counter.
+- **Global Warming is compiled OUT** (`// #define GLOBAL_WARMING`) — `doGlobalWarming`, `getWarmingDefense` and
+  the `GLOBAL_WARMING_*` defines are **dead vestiges** (the Pedia even shows a zero-effect stat). Removal is
+  tracked (the old global-warming-mod plan).
+  ⚠ **The NUKE COUNTER is NOT one of them.** `CvGame::getNukesExploded`/`changeNukesExploded` is raised by a real
+  detonation (`CvPlot`), is serialized and is published to Python; it merely happened to be READ by the warming
+  calc. Owner-ruled KEEP even with no C++ consumer — *"it's worth having"* — so a removal that follows the name
+  rather than the writer zeroes a live counter.
 - **Pollution is LIVE** via the [property solver](engine.md#properties--the-generic-attribute-bag--its-legacy-auto-placement) (propagators → interactions → sources).
   Rates (`CIV4PropertyInfos.xml`): city decay ~6%/turn + 1/pop/turn; city→plot ~5%, plot→city ~12%, plot→plot ~4%;
   target 0. **24 band buildings** (12 air, `POLLUTION_LIGHT_SMOG`@≥400 … `BLACKENED_SKIES`@≥1950; 12 water …

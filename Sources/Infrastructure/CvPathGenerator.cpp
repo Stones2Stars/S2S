@@ -9,7 +9,11 @@
 #include "AI/CvPlayerAI.h"
 #include "Tools/CheckSum.h"
 
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+#define	VALIDATE_TREE(x,y,z)	ValidateTree(x,y,z);
+#else
 #define	VALIDATE_TREE(x,y,z)	;
+#endif
 
 #define SIGNIFICANT_PATHING_FLAGS	(~(MOVE_DIRECT_ATTACK | MOVE_MAX_MOVES | MOVE_RECONSIDER_ON_LEAVING_OWNED | MOVE_AVOID_ENEMY_UNITS | MOVE_WITH_CAUTION | MOVE_HEAL_AS_NEEDED25))
 
@@ -49,6 +53,10 @@ public:
 		, m_iLowestDequeueCost(0)
 		, m_iRecalcThreshold(0)
 		, m_bIsKnownRoute(false)
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+		, m_iValidationSeq(0)
+		, m_bIsQueued(false)
+#endif
 	{
 	}
 
@@ -74,6 +82,10 @@ public:
 	int			m_iLowestDequeueCost;
 	int			m_iRecalcThreshold;
 	bool		m_bIsKnownRoute;
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+	int			m_iValidationSeq;
+	bool		m_bIsQueued;
+#endif
 };
 
 CvPath::const_iterator::const_iterator(CvPathNode* cursorNode)
@@ -385,6 +397,56 @@ void CvPathGenerator::Initialize(HeuristicCost HeuristicFunc, EdgeCost CostFunc,
 	m_TurnEndValidCheckNeeded	= TurnEndValidCheckNeeded;
 }
 
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+bool CvPathGenerator::ValidateTreeInternal(CvPathNode* root, int& iValidationSeq, CvPathNode* unreferencedNode, CvPathNode* referencedNode, int& iQueuedCount)
+{
+	PROFILE_EXTRA_FUNC();
+	bool bResult = (!referencedNode || root == referencedNode);
+	int	iStartSeq = iValidationSeq;
+
+	if (root)
+	{
+		CvPathNode*	child;
+
+		FAssert(m_nodeAllocationPool->isAllocated(root));
+		FAssert(root != unreferencedNode);
+
+		if (root->m_bIsQueued)
+		{
+			iQueuedCount++;
+		}
+
+		for (child = root->m_firstChild; child; child = child->m_nextSibling)
+		{
+			FAssert(child->m_iValidationSeq == 0 || iStartSeq - child->m_iValidationSeq >= 0);	//	Couched this way to allow for seq wrapping
+			FAssert(child->m_parent == root);
+
+			if (child->m_prevSibling)
+			{
+				FAssert(child == child->m_prevSibling->m_nextSibling);
+			}
+			else
+			{
+				FAssert(child == root->m_firstChild);
+			}
+
+			child->m_iValidationSeq = ++iValidationSeq;
+
+			bResult |= ValidateTreeInternal(child, iValidationSeq, unreferencedNode, referencedNode, iQueuedCount);
+		}
+	}
+	return bResult;
+}
+
+void CvPathGenerator::ValidateTree(CvPathNode* root, CvPathNode* unreferencedNode, CvPathNode* referencedNode)
+{
+	static int iSeq = 0;
+	int iQueuedCount = 0;
+
+	FAssert(ValidateTreeInternal(root, iSeq, unreferencedNode, referencedNode, iQueuedCount));
+	//FAssert(iQueuedCount == m_priorityQueue.size());
+}
+#endif
 
 //	Link a node into a specified parent
 void CvPathGenerator::LinkNode(CvPathNode* node, CvPathNode* parent)
@@ -429,6 +491,10 @@ CvPathNode*	CvPathGenerator::allocatePathNode()
 	node->m_iLowestDequeueCost = MAX_INT;
 	node->m_iRecalcThreshold = MAX_INT;
 	node->m_bIsKnownRoute = false;
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+	node->m_iValidationSeq = 0;
+	node->m_bIsQueued = false;
+#endif
 
 	return node;
 }
@@ -682,6 +748,72 @@ const CvPlot* CvPathGenerator::getTerminalPlot() const
 	return m_pTerminalPlot;
 }
 
+//#define LIGHT_VALIDATION
+#ifdef LIGHT_VALIDATION
+static void ValidatePathNode(CvPathNode* node)
+{
+	bool bResult = true;
+
+	if (node->m_parent)
+	{
+		if (node->m_prevSibling)
+		{
+			if (node->m_prevSibling->m_nextSibling != node)
+			{
+				OutputDebugString("node->m_prevSibling->m_nextSibling != node\n");
+				bResult = false;
+			}
+
+			if (!node->m_parent->m_firstChild || node->m_parent->m_firstChild == node)
+			{
+				OutputDebugString("!node->m_parent->m_firstChild || node->m_parent->m_firstChild == node\n");
+				bResult = false;
+			}
+		}
+		else if (node->m_parent->m_firstChild != node)
+		{
+			OutputDebugString("node->m_parent->m_firstChild != node\n");
+			bResult = false;
+		}
+
+		if (node->m_nextSibling && node->m_nextSibling->m_prevSibling != node)
+		{
+			OutputDebugString("node->m_nextSibling->m_prevSibling != node\n");
+			bResult = false;
+		}
+
+		if (node->m_iPathTurns != node->m_parent->m_iPathTurns && node->m_parent->m_iMovementRemaining != 0)
+		{
+			OutputDebugString("node->m_iPathTurns != node->m_parent->m_iPathTurns && node->m_parent->m_iMovementRemaining != 0\n");
+			bResult = false;
+		}
+	}
+	else if (node->m_prevSibling || node->m_nextSibling)
+	{
+		OutputDebugString("node->m_prevSibling || node->m_nextSibling\n");
+		bResult = false;
+	}
+
+	if (node->m_firstChild)
+	{
+		if (node->m_firstChild->m_parent != node)
+		{
+			OutputDebugString("node->m_firstChild->m_parent != node\n");
+			bResult = false;
+		}
+		if (node->m_firstChild->m_prevSibling)
+		{
+			OutputDebugString("node->m_firstChild->m_prevSibling != NULL\n");
+			bResult = false;
+		}
+	}
+
+	if (!bResult)
+	{
+		OutputDebugString("Node validation failure\n");
+	}
+}
+#endif
 
 
 bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSelectionGroup* pGroup, int iFlags, int iMaxTurns, int iOptimizationLimit)
@@ -692,6 +824,9 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 
 	CvPathNode* root;
 	bool bResult;
+#ifdef LIGHT_VALIDATION
+	bool bValidate = true;
+#endif
 
 	// Only consider flags that effect the calculated path
 	iFlags &= SIGNIFICANT_PATHING_FLAGS;
@@ -850,6 +985,12 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 
 						VALIDATE_TREE(root, m_pBestTerminalNode, replacedTerminalNode);
 
+#ifdef LIGHT_VALIDATION
+						if (bValidate && replacedTerminalNode)
+						{
+							ValidatePathNode(replacedTerminalNode);
+						}
+#endif
 					}
 					m_pBestTerminalNode = NULL;
 					m_pReplacedNonTerminalNode = NULL;
@@ -923,6 +1064,12 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 
 					//DeleteChildTree(m_pReplacedNonTerminalNode,true);
 					//m_pReplacedNonTerminalNode = NULL;
+#ifdef LIGHT_VALIDATION
+					if (bValidate)
+					{
+						ValidatePathNode(m_pBestTerminalNode);
+					}
+#endif
 				}
 
 				//GC.getGame().logOOSSpecial(56, pFrom->getX(), pFrom->getY(), iFlags);
@@ -954,9 +1101,23 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 						entry.iQueuedCost = 0;
 
 						m_priorityQueue.push(entry);
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+						root->m_bIsQueued = true;
+#endif
 					}
 					else if (m_pBestTerminalNode->m_iMovementRemaining != 0)
 					{
+#ifdef LIGHT_VALIDATION
+						if (bValidate)
+						{
+							OutputDebugString("Validate initial best path...\n");
+							for (CvPathNode* node = m_pBestTerminalNode; node; node = node->m_parent)
+							{
+								OutputDebugString(CvString::format("Validate %08lx (%d,%d)\n", node, node->m_plot->getX(), node->m_plot->getY()).c_str());
+								ValidatePathNode(node);
+							}
+						}
+#endif
 						// Re-evaluate which adjacent plot to come at this plot from if the known node is not turn ending
 						for (int iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
 						{
@@ -995,7 +1156,29 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 										m_pBestTerminalNode->m_iCostTo = pAdjacentPlotInfo->pNode->m_iCostTo + iEdgeCost;
 										m_pBestTerminalNode->m_iMovementRemaining = iMovementRemaining;
 										m_pBestTerminalNode->m_iPathTurns = pAdjacentPlotInfo->pNode->m_iPathTurns + (pAdjacentPlotInfo->pNode->m_iMovementRemaining == 0 ? 1 : 0);
+#ifdef LIGHT_VALIDATION
+										if (bValidate)
+										{
+											OutputDebugString("Validate path to new better parent...\n");
+											for (CvPathNode* node = pAdjacentPlotInfo->pNode; node; node = node->m_parent)
+											{
+												OutputDebugString(CvString::format("Validate %08lx (%d,%d)\n", node, node->m_plot->getX(), node->m_plot->getY()).c_str());
+												ValidatePathNode(node);
+											}
+										}
+#endif
 										RelinkNode(m_pBestTerminalNode, pAdjacentPlotInfo->pNode);
+#ifdef LIGHT_VALIDATION
+										if (bValidate)
+										{
+											OutputDebugString("Validate relinked best path...\n");
+											for (CvPathNode* node = m_pBestTerminalNode; node; node = node->m_parent)
+											{
+												OutputDebugString(CvString::format("Validate %08lx (%d,%d)\n", node, node->m_plot->getX(), node->m_plot->getY()).c_str());
+												ValidatePathNode(node);
+											}
+										}
+#endif
 									}
 								}
 							}
@@ -1056,6 +1239,9 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 						priorityQueueEntry entry = m_priorityQueue.top();
 						m_priorityQueue.pop();
 						node = entry.node;
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+						node->m_bIsQueued = false;
+#endif
 						if (TRACE_PATHING)
 						{
 							OutputDebugString(CvString::format("Dequeue (%d,%d): %d\n", node->m_plot->getX(), node->m_plot->getY(), node->m_iCostTo).c_str());
@@ -1087,6 +1273,12 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 					if (node->m_iPathTurns <= iMaxTurns)
 					{
 						//PROFILE("CvPathGenerator::generatePath.processNode");
+#ifdef LIGHT_VALIDATION
+						if (bValidate)
+						{
+							ValidatePathNode(node);
+						}
+#endif
 						if (m_pBestTerminalNode
 						&& node->m_iCostTo + node->m_iLowestPossibleCostFrom + m_iTerminalNodeCost >= m_pBestTerminalNode->m_iCostTo)
 						{
@@ -1398,6 +1590,12 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 											{
 												OutputDebugString(CvString::format("Adjust costTo (%d,%d): %d\n", pAdjacentPlot->getX(), pAdjacentPlot->getY(), newNode->m_iCostTo).c_str());
 											}
+#ifdef LIGHT_VALIDATION
+											if (bValidate)
+											{
+												ValidatePathNode(newNode);
+											}
+#endif
 
 											ValidatePlotInfo(pAdjacentPlotInfo);
 
@@ -1477,6 +1675,9 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 												{
 													OutputDebugString(CvString::format("\tQueue (%d,%d): %d\n", pAdjacentPlot->getX(), pAdjacentPlot->getY(), newNode->m_iCostTo).c_str());
 												}
+#ifdef DYNAMIC_PATH_STRUCTURE_VALIDATION
+												newNode->m_bIsQueued = true;
+#endif
 												newNode->m_iPathSeq = m_iSeq;
 
 												priorityQueueEntry entry;
@@ -1523,8 +1724,24 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 
 				FAssert(m_pBestTerminalNode->m_bProcessedAsTerminus);
 
+#ifdef LIGHT_VALIDATION
 				for (node = m_pBestTerminalNode; node; node = node->m_parent)
 				{
+					if (bValidate)
+					{
+						OutputDebugString(CvString::format("Validate %08lx (%d,%d)\n", node, node->m_plot->getX(), node->m_plot->getY()).c_str());
+						ValidatePathNode(node);
+					}
+				}
+#endif
+				for (node = m_pBestTerminalNode; node; node = node->m_parent)
+				{
+#ifdef LIGHT_VALIDATION
+					if (bValidate)
+					{
+						ValidatePathNode(node);
+					}
+#endif
 					if (descendantNode && descendantNode != node->m_firstChild)
 					{
 						FAssert(descendantNode->m_prevSibling);
@@ -1536,6 +1753,12 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 					node->m_bIsKnownRoute = true;
 					descendantNode = node;
 					//GC.getGame().logOOSSpecial(63, node->m_plot->getX(), node->m_plot->getY(), node->m_iPathTurns);
+#ifdef LIGHT_VALIDATION
+					if (bValidate)
+					{
+						ValidatePathNode(node);
+					}
+#endif
 				}
 				FAssert(descendantNode && descendantNode == root);
 

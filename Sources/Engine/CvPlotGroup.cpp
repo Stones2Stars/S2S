@@ -11,6 +11,7 @@
 #include "Infrastructure/CvDLLFAStarIFaceBase.h"
 #include "Spine/CvEventSpine.h"   // emitPlotGroupBonusChanged -- the network (plot-group) resource-presence DOMAIN fact
 
+//#define VALIDATION_FOR_PLOT_GROUPS
 
 int CvPlotGroup::m_allocationSeqForSession = 0;
 
@@ -444,6 +445,17 @@ void CvPlotGroup::recalculatePlots()
 		}
 	}
 
+#ifdef VALIDATION_FOR_PLOT_GROUPS
+	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+	{
+		CvPlot* pLoopPlot = GC.getMap().plotByIndex(iI);
+
+		if ( pLoopPlot->getPlotGroupId(m_eOwner) != -1 && pLoopPlot->getPlotGroup(m_eOwner) == NULL )
+		{
+			::MessageBox(NULL, "Invalid plot group id found after recalc of specific plot group!", "CvGameCoreDLL", MB_OK);
+		}
+	}
+#endif
 }
 
 int CvPlotGroup::getID() const

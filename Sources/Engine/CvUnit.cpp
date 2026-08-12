@@ -3703,7 +3703,11 @@ bool CvUnit::isActionRecommended(int iAction) const
 			return true;
 		}
 	}
+#ifdef _MOD_SENTRY
 	else if (GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL || GC.getActionInfo(iAction).getMissionType() == MISSION_SENTRY_WHILE_HEAL)
+#else
+	else if(GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL || GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL_BUILDUP)
+#endif
 	{
 		if (isHurt() && !hasMoved() && (pPlot->getTeam() == getTeam() || healTurns(pPlot) > 0))
 		{
@@ -10635,7 +10639,9 @@ BuildTypes CvUnit::getBuildType() const
 		{
 		case MISSION_MOVE_TO:
 // BUG - Sentry Actions - start
+#ifdef _MOD_SENTRY
 		case MISSION_MOVE_TO_SENTRY:
+#endif
 // BUG - Sentry Actions - end
 			break;
 
@@ -10659,9 +10665,11 @@ BuildTypes CvUnit::getBuildType() const
 		case MISSION_HEAL:
 		case MISSION_SENTRY:
 // BUG - Sentry Actions - start
+#ifdef _MOD_SENTRY
 		case MISSION_SENTRY_WHILE_HEAL:
 		case MISSION_SENTRY_NAVAL_UNITS:
 		case MISSION_SENTRY_LAND_UNITS:
+#endif
 // BUG - Sentry Actions - end
 		case MISSION_AIRLIFT:
 		case MISSION_NUKE:

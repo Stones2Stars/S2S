@@ -69,6 +69,7 @@
 //	Koshling - save flag indicating this player has no data in the save as they have never been alive
 #define	PLAYER_UI_FLAG_OMITTED 2
 
+//#define VALIDATION_FOR_PLOT_GROUPS
 
 //	Helper class used to efficiently cache unit upgrade paths for this player
 class CvUpgradeCache
@@ -3819,6 +3820,17 @@ void CvPlayer::doTurn()
 	// Only decrement the GA counter at the end of this function if GA started before this point, i.e last turn.
 	const bool bWasGoldenAgeLastTurn = getGoldenAgeTurns() > 0; 
 
+#ifdef VALIDATION_FOR_PLOT_GROUPS
+	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+	{
+		const CvPlot* pLoopPlot = GC.getMap().plotByIndex(iI);
+
+		if ( pLoopPlot->getPlotGroupId(getID()) != -1 && pLoopPlot->getPlotGroup(getID()) == NULL )
+		{
+			::MessageBox(NULL, "Invalid plot group id found!", "CvGameCoreDLL", MB_OK);
+		}
+	}
+#endif
 
 	//	Each turn flush the movement cost cache for each player to avoid it getting too large
 	CvPlot::flushMovementCostCache();
@@ -3977,6 +3989,15 @@ void CvPlayer::doTurn()
 	{
 		doEvents();
 
+#ifdef ENABLE_FOGWAR_DECAY
+		//Calvitix, Modmod FOGWAR PlotDecay
+		if (isHumanPlayer() || GC.getGame().getAIAutoPlay(getID()) > 0 || gDLL->GetAutorun())
+		{
+			CvGame& GAME = GC.getGame();
+			if (GAME.isModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY) && GET_TEAM(getTeam()).getVisibilityDecay() != NO_DECAY)
+				GC.getMap().updateFog(true); //Calvitix, to applyPlotDecay
+		}
+#endif
 	}
 
 	recordHistory();
@@ -4002,6 +4023,15 @@ void CvPlayer::doTurn()
 
 void CvPlayer::doMultiMapTurn()
 {
+#ifdef VALIDATION_FOR_PLOT_GROUPS
+	foreach_(const CvPlot* pLoopPlot, GC.getMap().plots())
+	{
+		if ( pLoopPlot->getPlotGroupId(getID()) != -1 && pLoopPlot->getPlotGroup(getID()) == NULL )
+		{
+			::MessageBox(NULL, "Invalid plot group id found!", "CvGameCoreDLL", MB_OK);
+		}
+	}
+#endif
 
 	//	Each turn flush the movement cost cache for each player to avoid it getting too large
 	CvPlot::flushMovementCostCache();
@@ -4229,6 +4259,17 @@ void CvPlayer::updatePlotGroups(const CvArea* possibleNewInAreaOnly, bool reInit
 		}
 	}
 
+#ifdef VALIDATION_FOR_PLOT_GROUPS
+	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+	{
+		const CvPlot* pLoopPlot = GC.getMap().plotByIndex(iI);
+
+		if ( pLoopPlot->getPlotGroupId(getID()) != -1 && pLoopPlot->getPlotGroup(getID()) == NULL )
+		{
+			::MessageBox(NULL, "Invalid plot group id found after recalc!", "CvGameCoreDLL", MB_OK);
+		}
+	}
+#endif
 
 	algo::for_each(cities(), CvCity::fn::endDeferredBonusProcessing());
 
@@ -6081,6 +6122,9 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 				if (GC.getGame().getSorenRandNum(100, "Goody Map") < GC.getGoodyInfo(eGoody).getMapProb())
 				{
 					pLoopPlot->setRevealed(getTeam(), true, false, NO_TEAM, true);
+#ifdef ENABLE_FOGWAR_DECAY
+					pLoopPlot->InitFogDecay(false);
+#endif
 				}
 			}
 		}
@@ -13583,6 +13627,17 @@ CvPlotGroup* CvPlayer::addPlotGroup()
 void CvPlayer::deletePlotGroup(int iID)
 {
 	PROFILE_EXTRA_FUNC();
+#ifdef VALIDATION_FOR_PLOT_GROUPS
+	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+	{
+		const CvPlot* pLoopPlot = GC.getMap().plotByIndex(iI);
+
+		if ( pLoopPlot->getPlotGroup(getID()) && pLoopPlot->getPlotGroup(getID())->getID() == iID )
+		{
+			::MessageBox(NULL, "Deleting in-use plot group!", "CvGameCoreDLL", MB_OK);
+		}
+	}
+#endif
 	m_plotGroups[CURRENT_MAP]->removeAt(iID);
 }
 
@@ -21898,6 +21953,9 @@ bool CvPlayer::assimilatePlayer(PlayerTypes ePlayer)
 		if (pLoopPlot->isRevealed(kTeam.getID(), false))
 		{
 			pLoopPlot->setRevealed(getTeam(), true, false, kTeam.getID(), false);
+#ifdef ENABLE_FOGWAR_DECAY
+			pLoopPlot->InitFogDecay(false);
+#endif
 		}
 	}
 

@@ -1,4 +1,5 @@
 // game.cpp
+//#define NO_RANDOM
 
 
 #include "Tools/FProfiler.h"
@@ -45,6 +46,9 @@
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvUnitFilters.h"
 
+#ifdef NO_RANDOM
+	int iNumAlea;
+#endif
 
 
 //	Koshling - save game compatibility between (most) builds
@@ -4765,7 +4769,13 @@ void CvGame::setActivePlayer(PlayerTypes eNewValue, bool bForceHotSeat)
 
 		if (GC.IsGraphicsInitialized())
 		{
+#ifdef ENABLE_FOGWAR_DECAY
+			GC.getMap().InitFogDecay(true);
+			if (GC.getGame().isModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY))
+				GC.getMap().updateFog(true);
+#else
 			GC.getMap().updateFog();
+#endif
 			GC.getMap().updateVisibility();
 			GC.getMap().updateSymbols();
 			GC.getMap().updateMinimapColor();
@@ -6117,6 +6127,9 @@ void CvGame::doTurn()
 			}
 		}
 	}
+#ifdef GLOBAL_WARMING
+	{ PERF_SCOPE("game.doGlobalWarming", -1); doGlobalWarming(); }
+#endif
 
 	{ PERF_SCOPE("game.doHeadquarters", -1); doHeadquarters(); }
 
@@ -6707,6 +6720,267 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 	}
 }
 
+#ifdef GLOBAL_WARMING
+void CvGame::doGlobalWarming()
+{
+	PROFILE_EXTRA_FUNC();
+	// Loop to look for environmentalism written by EmperorFool
+	bool abTreeHugger[MAX_PC_PLAYERS];
+	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
+	{
+		abTreeHugger[iI] = false;
+		const CvPlayer& player = GET_PLAYER((PlayerTypes) iI);
+		if (player.isAlive())
+		{
+			for (int iJ = 0; iJ < GC.getNumCivicOptionInfos(); iJ++)
+			{
+				const CivicTypes eCivic = player.getCivics((CivicOptionTypes)iJ);
+
+				if (eCivic != NO_CIVIC && GC.getCivicInfo(eCivic).getExtraHealth() != 0)
+				{
+					abTreeHugger[iI] = true;
+					break;
+				}
+			}
+		}
+	}
+	const int iNumPlots = GC.getMap().numPlots();
+
+	const TerrainTypes eFrozenTerrain = (TerrainTypes)GC.getDefineINT("FROZEN_TERRAIN");
+	const TerrainTypes eColdTerrain = (TerrainTypes)GC.getDefineINT("COLD_TERRAIN");
+	const FeatureTypes eColdFeature = (FeatureTypes)GC.getDefineINT("COLD_FEATURE");
+	const FeatureTypes eFalloutFeature = (FeatureTypes)GC.getDefineINT("NUKE_FEATURE");
+
+	//Global Warming
+	const int iUnhealthWeight = GC.getDefineINT("GLOBAL_WARMING_UNHEALTH_WEIGHT");
+	const int iBonusWeight = GC.getDefineINT("GLOBAL_WARMING_BONUS_WEIGHT");
+	int iGlobalWarmingValue = 0;
+	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
+	{
+		const CvPlayer& player = GET_PLAYER((PlayerTypes) iI);
+		if (player.isAlive())
+		{
+			foreach_(const CvCity* pCity, player.cities())
+			{
+				iGlobalWarmingValue -= pCity->totalBadBuildingHealth() * iUnhealthWeight;
+			}
+		}
+	}
+	iGlobalWarmingValue /= iNumPlots;
+
+	if (iGlobalWarmingValue > 0)
+	{
+		const TerrainTypes eMarshTerrain = (TerrainTypes)GC.getDefineINT("MARSH_TERRAIN");
+		const TerrainTypes eTemperateTerrain = (TerrainTypes)GC.getDefineINT("TEMPERATE_TERRAIN");
+		const TerrainTypes eDryTerrain = (TerrainTypes)GC.getDefineINT("DRY_TERRAIN");
+		const TerrainTypes eBarrenTerrain = (TerrainTypes)GC.getDefineINT("BARREN_TERRAIN");
+		const TerrainTypes eShallowsTerrain = (TerrainTypes)GC.getDefineINT("WATER_TERRAIN_COAST");
+		const FeatureTypes eTemperateFeature = (FeatureTypes)GC.getDefineINT("TEMPERATE_FEATURE");
+		const FeatureTypes eWarmFeature = (FeatureTypes)GC.getDefineINT("WARM_FEATURE");
+
+		const int iTreeHuggerDefenseBonus = GC.getDefineINT("TREEHUGGER_DEFENSE_BONUS");
+		int iGlobalWarmingDefense = 0;
+		for (int i = 0; i < iNumPlots; ++i)
+		{
+			const CvPlot* pPlot = GC.getMap().plotByIndex(i);
+			if (pPlot->getFeatureType() != NO_FEATURE)
+			{
+				const int iFeatureWarmingDefense = GC.getFeatureInfo(pPlot->getFeatureType()).getWarmingDefense();
+				if (iFeatureWarmingDefense > 0)
+				{
+					PlayerTypes eCulturalOwner = pPlot->getOwner();
+					if (eCulturalOwner != NO_PLAYER)
+					{
+						if (abTreeHugger[eCulturalOwner])
+						{
+							iGlobalWarmingDefense += iFeatureWarmingDefense * iTreeHuggerDefenseBonus;
+						}
+						else iGlobalWarmingDefense += iFeatureWarmingDefense;
+					}
+					else iGlobalWarmingDefense += iFeatureWarmingDefense;
+				}
+			}
+		}
+		iGlobalWarmingDefense *= GC.getDefineINT("GLOBAL_WARMING_FOREST");
+		iGlobalWarmingDefense /= std::max(1, GC.getMap().getLandPlots());
+
+		int iGlobalWarmingProb =
+		(
+			100 * (GC.getDefineINT("GLOBAL_WARMING_PROB") - iGlobalWarmingDefense)
+			/ CvGameSpeedScale::speedPercent()
+		);
+
+		for (int iI = 0; iI < iGlobalWarmingValue; iI++)
+		{
+			if (getSorenRandNum(100, "Global Warming") >= iGlobalWarmingProb)
+			{
+				continue;
+			}
+			// Toffer - Multimap note - Need to make this whole thing specific to which map global warming is happening on.
+			// For now we could restrict these effects to earth mapcategory terrains by adding a RANDPLOT_NOT_SPACE flag for syncRandPlot (ToDo).
+			CvPlot* pPlot = GC.getMap().syncRandPlot(RANDPLOT_NOT_CITY); // GWMod removed check for water tile M.A.
+
+			if (pPlot == NULL)
+			{
+				continue;
+			}
+			bool bChanged = false;
+
+			if (pPlot->getFeatureType() != NO_FEATURE)
+			{
+				if (pPlot->getFeatureType() != eFalloutFeature)
+				{
+					// Feature change first
+					if (pPlot->getFeatureType() == eColdFeature)
+					{
+						pPlot->setFeatureType(NO_FEATURE);
+						bChanged = true;
+					}
+					else if (pPlot->calculateBestNatureYield(YIELD_FOOD, NO_TEAM) > 1 && pPlot->getFeatureType() == eTemperateFeature)
+					{
+						pPlot->setFeatureType(eWarmFeature);
+						bChanged = true;
+					}
+					else if (pPlot->getTerrainType() == eColdTerrain)
+					{
+						pPlot->setTerrainType(eTemperateTerrain);
+						bChanged = true;
+					}
+					else if (pPlot->getTerrainType() == eFrozenTerrain)
+					{
+						pPlot->setTerrainType(eColdTerrain);
+						bChanged = true;
+					}
+					else if (pPlot->getTerrainType() == eMarshTerrain)
+					{
+						pPlot->setTerrainType(eTemperateTerrain);
+						bChanged = true;
+					}
+					else
+					{
+						pPlot->setFeatureType(NO_FEATURE);
+						bChanged = true;
+					}
+				}
+			}
+			else if (!pPlot->isWater())
+			{
+				if (pPlot->getTerrainType() == eBarrenTerrain)
+				{
+					if (GC.getDefineINT("GW_MOD_ENABLED") && pPlot->isCoastalLand()
+					&& !pPlot->isHills() && !pPlot->isAsPeak())
+					{
+						pPlot->setTerrainType(eShallowsTerrain);
+						bChanged = true;
+					}
+				}
+				else if (pPlot->getTerrainType() == eDryTerrain)
+				{
+					pPlot->setTerrainType(eBarrenTerrain);
+					bChanged = true;
+				}
+				else if (pPlot->getTerrainType() == eTemperateTerrain)
+				{
+					pPlot->setTerrainType(eDryTerrain);
+					bChanged = true;
+				}
+				else if (pPlot->getTerrainType() == eColdTerrain)
+				{
+					pPlot->setTerrainType(eTemperateTerrain);
+					bChanged = true;
+				}
+				else if (pPlot->getTerrainType() == eMarshTerrain)
+				{
+					pPlot->setTerrainType(eTemperateTerrain);
+					bChanged = true;
+				}
+				else if (pPlot->getTerrainType() == eFrozenTerrain)
+				{
+					pPlot->setTerrainType(eColdTerrain);
+					bChanged = true;
+				}
+			}
+			if (bChanged)
+			{
+				pPlot->setImprovementType(NO_IMPROVEMENT);
+				const CvCity* pCity = GC.getMap().findCity(pPlot->getX(), pPlot->getY());
+
+				if (pCity != NULL && pPlot->isVisible(pCity->getTeam(), false))
+				{
+					AddDLLMessage(
+						pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
+						gDLL->getText("TXT_KEY_MISC_GLOBAL_WARMING_NEAR_CITY", pCity->getNameKey()),
+						"AS2D_GLOBALWARMING", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(),
+						pPlot->getX(), pPlot->getY(), true, true
+					);
+				}
+			}
+		}
+	}
+	//Nuclear Winter
+	const int iNuclearWinterValue = getNukesExploded() * GC.getDefineINT("GLOBAL_WARMING_NUKE_WEIGHT") / 100;
+	if (iNuclearWinterValue > 0)
+	{
+		const int iNuclearWinterProb = GC.getDefineINT("NUCLEAR_WINTER_PROB") * 100 / CvGameSpeedScale::speedPercent();
+
+		for (int iI = 0; iI < iNuclearWinterValue; iI++)
+		{
+			if (getSorenRandNum(100, "Nuclear Fallout") >= iNuclearWinterProb)
+			{
+				continue;
+			}
+			// Toffer - Multimap note - Need to make this whole thing specific to which map the nukes were used on.
+			// For now we could restrict these effects to earth mapcategory terrains by adding a RANDPLOT_NOT_SPACE flag for syncRandPlot (ToDo).
+			CvPlot* pPlot = GC.getMap().syncRandPlot(RANDPLOT_LAND | RANDPLOT_NOT_CITY);
+
+			if (pPlot == NULL)
+			{
+				continue;
+			}
+			bool bChanged = false;
+			if (pPlot->getFeatureType() == NO_FEATURE)
+			{
+				pPlot->setFeatureType(eFalloutFeature);
+				bChanged = true;
+			}
+			else if (pPlot->getFeatureType() != eFalloutFeature && pPlot->getFeatureType() != eColdFeature)
+			{
+				pPlot->setFeatureType(NO_FEATURE);
+				bChanged = true;
+			}
+
+			if (getSorenRandNum(100, "Nuclear Winter") < iNuclearWinterProb)
+			{
+				if (pPlot->getTerrainType() == eColdTerrain)
+				{
+					pPlot->setTerrainType(eFrozenTerrain);
+					bChanged = true;
+				}
+				if (pPlot->calculateTotalBestNatureYield(NO_TEAM) > 1)
+				{
+					pPlot->setTerrainType(eColdTerrain);
+					bChanged = true;
+				}
+			}
+			if (bChanged)
+			{
+				pPlot->setImprovementType(NO_IMPROVEMENT);
+				const CvCity* pCity = GC.getMap().findCity(pPlot->getX(), pPlot->getY());
+
+				if (pCity != NULL && pPlot->isVisible(pCity->getTeam(), false))
+				{
+					AddDLLMessage(
+						pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
+						gDLL->getText("TXT_KEY_MISC_NUCLEAR_WINTER_NEAR_CITY", pCity->getNameKey()),
+						"AS2D_GLOBALWARMING", MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED(),
+						pPlot->getX(), pPlot->getY(), true, true
+					);
+				}
+			}
+		}
+	}
+}
+#endif // GLOBAL_WARMING
 
 
 void CvGame::doHeadquarters()
@@ -7982,7 +8256,16 @@ int CvGame::getSorenRandNum(int iNum, const char* pszLog)
 		iScale++;
 	}
 
+#ifdef NO_RANDOM
+	iNumAlea += 1;
+	if (iNumAlea < 1 || iNumAlea >= 10)
+	{
+		iNumAlea = 1;
+	}
+	int Result = iNum * iNumAlea / 10;
+#else
 	int Result = m_sorenRand.get(iNum, pszLog);
+#endif
 
 
 	while(iScale-- > 0)
@@ -11434,6 +11717,23 @@ void CvGame::setCurrentMap(MapTypes eNewMap)
 void CvGame::processGreatWall(bool bIn, bool bForce, bool bSeeded) const
 {
 	PROFILE_EXTRA_FUNC();
+#ifdef THE_GREAT_WALL
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		const CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+		if (kLoopPlayer.isAlive())
+		{
+			foreach_(CvCity* pLoopCity, kLoopPlayer.cities())
+			{
+				if (pLoopCity->processGreatWall(bIn, bForce, bSeeded))
+				{
+					//	There can be only one!
+					return;
+				}
+			}
+		}
+	}
+#endif // THE_GREAT_WALL
 }
 /*******************************/
 /***** Parallel Maps - End *****/

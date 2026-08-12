@@ -49,7 +49,7 @@ Use the Store WinDbg's bundled console debugger (`cdb`), **offline**. Civ4 is **
 C:\Program Files\WindowsApps\Microsoft.WinDbg_*_x64__8wekyb3d8bbwe\x86\cdb.exe
 ```
 
-⛔ **`WindowsApps` IS ONLY ENUMERABLE FROM POWERSHELL — the glob above does not resolve from bash/Git-Bash**, which
+⛔ **`WindowsApps` IS ONLY ENUMERABLE FROM POWERSHELL — that glob does not resolve from bash/Git-Bash**, which
 reports the path as missing and reads exactly like "WinDbg is not installed". Find it with
 `Get-ChildItem 'C:\Program Files\WindowsApps' -Filter cdb.exe -Recurse -ErrorAction SilentlyContinue`, and run
 `cdb` from PowerShell too.

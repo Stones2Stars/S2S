@@ -9925,6 +9925,7 @@ PROFILE_EXTRA_FUNC();
 #ifdef YIELD_VALUE_CACHING
 #ifdef _DEBUG
 	//	Uncomment this to perform functional verification
+	//#define VERIFY_YIELD_CACHE_RESULTS
 #endif
 
 	//	Check cache first
@@ -9994,6 +9995,16 @@ PROFILE_EXTRA_FUNC();
 		{
 			entry->iLastUseCount = ++yieldValueCache.currentUseCounter;
 			yieldValueCacheHits++;
+#ifdef VERIFY_YIELD_CACHE_RESULTS
+			int realValue = AI_yieldValueInternal(piYields, piCommerceYields, bAvoidGrowth, bRemove, bIgnoreFood, bIgnoreGrowth, bIgnoreStarvation, bWorkerOptimization);
+
+			if (realValue != entry->iResult)
+			{
+				OutputDebugString(CvString::format("Cache entry %08lx verification failed, turn is %d\n", entry, GC.getGame().getGameTurn()).c_str());
+				FErrorMsg("Yield value cache verification failure");
+				CHECK_YIELD_VALUE_CACHE("Validation");
+			}
+#endif
 			return entry->iResult;
 		}
 		else if (entry->iLastUseCount < worstLRU)
@@ -11183,7 +11194,9 @@ void CvCityAI::AI_buildGovernorChooseProduction()
 		AI_assignWorkingPlots();
 	}
 
+#ifdef _MOD_GOVWORKERS
 	if (!isHuman() || GET_PLAYER(getOwner()).isOption(PLAYEROPTION_MODDER_1))
+#endif
 	{
 		//workboat
 		if (pWaterArea != NULL
@@ -11257,7 +11270,9 @@ void CvCityAI::AI_buildGovernorChooseProduction()
 		return;
 	}
 
+#ifdef _MOD_GOVWORKERS
 	if (!isHuman() || GET_PLAYER(getOwner()).isOption(PLAYEROPTION_MODDER_1))
+#endif
 	{
 		if (!AI_isDanger()
 		&& (

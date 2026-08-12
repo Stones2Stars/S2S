@@ -1,29 +1,47 @@
 #!/usr/bin/env python
-"""verify-ifdef-attics.py -- FEATURE `#ifdef`s are banned outright (owner).
+"""verify-ifdef-attics.py -- find `#ifdef` blocks NOTHING can ever switch on.
 
-  "We will never use them in the code, they are an anachronism from when source
-   control was not really a thing."  /  "ifdef sections come from a time when people
-   did not understand git."
+⛔ WHAT IS WRONG IS *WHAT IS BEHIND THE GUARD*, NOT THE GUARD (owner). Some `#ifdef`s
+are useful and stay. What is wrong is hiding **CACHING** or **GAME MECHANICS** behind
+one instead of expressing them properly:
 
-So there is no off-switch population to curate and no attic to triage: a block parked
-behind a feature guard is a block git should be holding instead. Deleting one loses
-nothing -- `git log` is the archive -- while keeping one costs something real, because
-it holds the NAMES of removed things and is invisible to the compiler census that
-would otherwise name them.
+  CACHING behind a guard      -> wrong. A cache is either the design or it is not; a
+                                 switchable one means nobody decided.
+  A GAME MECHANIC behind one  -> wrong. That is a GAMEOPTION_* -- the entity-level
+                                 enabled/disabled gate ([DEC-entity-gate]) -- evaluated
+                                 live, visible to the player, and authored in data.
+  DIAGNOSTICS / TOOLING       -> LEGITIMATE. `MINIDUMP`, `MEMTRACK` and their kin stay.
+  A DELIBERATE OFF-SWITCH     -> LEGITIMATE, and the reason belongs in the subsystem's
+                                 reference doc. `THE_GREAT_WALL` is off because
+                                 rendering it has caused CTDs; a sweep that eats it
+                                 re-introduces a crash nobody remembers.
 
-THE ONE LEGITIMATE GUARD IS A BUILD-CONFIGURATION ONE -- a symbol that genuinely
-VARIES between configs (`FASSERT_ENABLE` is Assert/Debug/Testing only; `_DEBUG`,
-`NDEBUG`, `FINAL_RELEASE`), plus the platform/toolchain predefines somebody else
-defines. Everything else fails:
+⇒ NONE of that is decidable from the preprocessor. So this tool deliberately fails on
+ONE thing only, the single mechanical verdict available:
 
-  defined by NO config, no `#define` anywhere  -> a parked block. DELETE it.
-  defined by EVERY config (never omitted)      -> the `#else` half has never compiled,
-                                                  and the live arm reads as one mode of
-                                                  a switch, so nobody audits it. Collapse
-                                                  the guard and re-read the survivor as
-                                                  the plain code it is.
+  a guard with NO `#define` ANYWHERE -- not in Sources/, not in fbuild.bff, not even a
+  commented-out one -- can never be turned on by anybody. It is an abandoned alternate
+  parked beside the live code, which is what version control is for, and it costs
+  something real: it holds the NAMES of removed things, so the next agent finds them and
+  re-treads what was killed, and being preprocessor-skipped it is invisible to the
+  compiler census that would otherwise name it.
 
-Exit 0 = clean. Exit 1 = at least one banned guard.
+Everything else is REPORTED for a human verdict and never failed on.
+
+⛔ TWO TRAPS THIS TOOL EXISTS TO STOP, both measured:
+
+ 1. **A `#define` in Sources/ is TU-LOCAL.** It holds only where that definition is
+    VISIBLE, so the SAME guard is ON in some translation units and OFF in others and
+    there is no single arm to keep. A blanket collapse turned the save wrapper's
+    `DEBUG_TRACE` from `;` into a live `OutputDebugString` on every tagged read --
+    `DETAILED_TRACE` is defined in `CvGameCoreDLL.cpp`, which the wrapper never
+    includes. Load time tripled and the game crashed at `eip=0`.
+ 2. **A guard defined by EVERY config cannot vary**, so its `#else` half has never
+    compiled and the live arm reads as one deliberate mode of a switch that nobody
+    audits. (`_MOD_FRACTRADE` hid a scale reduce inside an aggregation for fifteen
+    years.)
+
+Exit 0 = no abandoned alternates. Exit 1 = at least one.
 
 Usage:  python Tools/verify-ifdef-attics.py [--quiet]
 """
@@ -36,9 +54,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCES = os.path.join(REPO, "Sources")
 BFF = os.path.join(SOURCES, "fbuild.bff")
 
-# Guards defined by somebody who is not us. Absence from Sources/ + fbuild.bff is
-# their NORMAL state and says nothing about them -- read the test as "defined by
-# NOBODY", never "defined by not-us".
+# Guards defined by somebody who is not us. Absence from Sources/ + fbuild.bff is their
+# NORMAL state and says nothing -- read the test as "defined by NOBODY", not "by not-us".
 EXTERNAL = set("""
 __INTELLISENSE__ __cplusplus _MSC_VER _M_IX86 _M_X64 _WIN32 _WIN64 WIN32 WIN64
 _WINDOWS _DEBUG NDEBUG APSTUDIO_INVOKED APSTUDIO_READONLY_SYMBOLS RC_INVOKED
@@ -46,11 +63,8 @@ _AFXDLL __GNUC__ __clang__ _INC_WINDOWS _CONSOLE _USRDLL _LIB __FILE__ __LINE__
 _M_AMD64 _M_ARM __BORLANDC__ __WATCOMC__ __MWERKS__ _MT _DLL
 """.split())
 
-# Vendored third-party trees: their guards are their own business.
 SKIP_DIRS = ("include", "lib", ".vs", ".vscode", "nbproject")
-
-# Vendored third-party FILES sitting inside our own tree. Their guards belong to
-# their upstream author, so absence from Sources/ says nothing about them.
+# Vendored third-party FILES inside our tree: their guards belong to their upstream author.
 SKIP_FILES = ("StackWalker.h", "StackWalker.cpp")
 
 GUARD_RE = re.compile(r"^\s*#\s*(ifdef|ifndef)\s+([A-Za-z_][A-Za-z0-9_]*)")
@@ -78,15 +92,13 @@ def read(path):
 
 
 def bff_defines():
-    """Return (always, sometimes) guard-name sets from fbuild.bff.
+    """(always, sometimes) guard names from fbuild.bff.
 
-    A `/DNAME` inside .CommonDefines or .C2CDefines lands in every config; one inside
-    a per-config block varies. Comment lines are skipped -- the bff carries whole
-    historical command lines in comments, and counting those would report a retired
-    define as live.
+    `/DNAME` in .CommonDefines / .C2CDefines lands in every config; one in a per-config
+    block varies. Comment lines are skipped -- the bff carries whole historical command
+    lines in comments, and counting those reports a retired define as live.
     """
-    always = set()
-    sometimes = set()
+    always, sometimes = set(), set()
     if not os.path.exists(BFF):
         return always, sometimes
     bucket = None
@@ -96,13 +108,7 @@ def bff_defines():
             continue
         header = re.match(r"^\.(\w+)\s*=", stripped)
         if header:
-            name = header.group(1)
-            if name in ("CommonDefines", "C2CDefines"):
-                bucket = always
-            elif name.startswith("Config") or name.startswith("C2CDefines"):
-                bucket = sometimes
-            else:
-                bucket = sometimes
+            bucket = always if header.group(1) in ("CommonDefines", "C2CDefines") else sometimes
         for match in re.finditer(r"/D([A-Za-z_][A-Za-z0-9_]*)", stripped):
             (bucket if bucket is not None else sometimes).add(match.group(1))
     return always, sometimes
@@ -111,8 +117,7 @@ def bff_defines():
 def main():
     quiet = "--quiet" in sys.argv
 
-    defined = set()
-    source_defined = {}          # guard -> the Sources/ files that #define it (TU-locality)
+    source_defined = {}      # guard -> Sources/ files that #define it (TU-locality)
     commented = set()
     used = {}
 
@@ -120,10 +125,8 @@ def main():
         rel = os.path.relpath(path, REPO).replace("\\", "/")
         lines = read(path)
         for index, line in enumerate(lines):
-            number = index + 1
             match = DEFINE_RE.match(line)
             if match:
-                defined.add(match.group(1))
                 source_defined.setdefault(match.group(1), set()).add(rel)
             match = COMMENTED_DEFINE_RE.match(line)
             if match:
@@ -134,7 +137,6 @@ def main():
             if match:
                 guard = match.group(2)
                 # An include guard is `#ifndef X` immediately followed by `#define X`.
-                # It is not a switch and never an attic.
                 if match.group(1) == "ifndef":
                     following = lines[index + 1] if index + 1 < len(lines) else ""
                     nxt = DEFINE_RE.match(following)
@@ -145,61 +147,61 @@ def main():
                 if match:
                     guard = match.group(1)
             if guard:
-                used.setdefault(guard, []).append((rel, number))
+                used.setdefault(guard, []).append((rel, index + 1))
 
     always, sometimes = bff_defines()
-    defined |= always | sometimes
 
-    banned = []
-    unsafe = []
+    abandoned, tu_local, unconditional, switches = [], [], [], []
     for guard in sorted(used):
         if guard in EXTERNAL or guard.startswith("__"):
             continue
         if guard in sometimes and guard not in always:
-            continue  # a genuine build-configuration guard: it VARIES
+            continue                                   # a real build-config guard: it VARIES
         if guard in source_defined:
-            # ⛔ TU-LOCAL. A `#define` in Sources/ is in effect only where that definition is VISIBLE, so this
-            # guard is ON in some translation units and OFF in others. Collapsing it needs a per-TU verdict.
-            unsafe.append((guard, used[guard], sorted(source_defined[guard])))
+            tu_local.append((guard, used[guard], sorted(source_defined[guard])))
         elif guard in always:
-            banned.append((guard, used[guard], "defined by EVERY config -- the #else half has never compiled"))
+            unconditional.append((guard, used[guard]))
         elif guard in commented:
-            banned.append((guard, used[guard], "a commented-out #define -- a parked feature; git is the archive"))
+            switches.append((guard, used[guard]))
         else:
-            banned.append((guard, used[guard], "defined NOWHERE -- the block never compiles"))
+            abandoned.append((guard, used[guard]))
 
-    if unsafe:
-        print("TU-LOCAL FEATURE GUARDS -- banned, but NEVER collapse these mechanically:")
-        for guard, sites, wheres in unsafe:
-            print("  %s  (#define'd in %s)" % (guard, ", ".join(wheres)))
-            for rel, number in sites:
-                same = any(rel == w for w in wheres)
-                # NOT an include-graph analysis: a site in another file MAY still see the define through a
-                # header chain. Flagged as "check", never asserted as OFF.
-                print("      %s:%d%s" % (rel, number, "" if same else "   <-- other TU: check whether it includes the definer"))
-        print("")
-        print("  A `#define` in Sources/ holds only where it is VISIBLE. A use site that does not see it")
-        print("  compiles the OTHER arm -- so one guard is simultaneously ON in some TUs and OFF in others,")
-        print("  and there is no single arm to keep. Resolve each SITE against what that TU actually sees.")
-        print("  Measured: a blanket collapse turned the save wrapper's DEBUG_TRACE from `;` into a live")
-        print("  OutputDebugString on every tagged read -- the define lives in CvGameCoreDLL.cpp, which the")
-        print("  wrapper never sees. Load time tripled and the game crashed.")
+    def show(title, rows, note):
+        if not rows or quiet:
+            return
+        print(title)
+        for row in rows:
+            guard, sites = row[0], row[1]
+            extra = ("  (#define'd in %s)" % ", ".join(row[2])) if len(row) > 2 else ""
+            print("  %-38s %d site(s)%s" % (guard, len(sites), extra))
+        print("  %s" % note)
         print("")
 
-    if not banned and not unsafe:
+    show("OFF-SWITCHES (a commented-out #define exists) -- REVIEW, do not sweep:", switches,
+         "Legitimate if it guards DIAGNOSTICS or is a deliberate off-switch; wrong if it hides\n"
+         "  CACHING or a GAME MECHANIC (that is a GAMEOPTION_*). Record WHY it is off in the\n"
+         "  subsystem's reference doc -- that reason is all that protects it from the next sweep.")
+    show("TU-LOCAL (#define'd in a Sources/ file) -- NEVER collapse mechanically:", tu_local,
+         "The define holds only where it is VISIBLE, so this guard is ON in some translation\n"
+         "  units and OFF in others and there is no single arm to keep. Resolve per SITE.\n"
+         "  (No include-graph analysis here -- a cross-file site is 'check', never 'OFF'.)")
+    show("UNCONDITIONAL (defined by every config) -- the #else half has never compiled:", unconditional,
+         "The guard cannot vary, so the live arm is plain code wearing a switch. Collapsing is\n"
+         "  safe; then RE-READ the survivor, which nobody has audited as ordinary code.")
+
+    if not abandoned:
         if not quiet:
-            print("verify-ifdef-attics: clean (%d guards checked)" % len(used))
+            print("verify-ifdef-attics: clean -- no abandoned alternates (%d guards checked)" % len(used))
         return 0
 
-    if not banned:
-        return 1
-    print("BANNED FEATURE GUARDS -- delete the block; git is the archive:")
-    for guard, sites, why in banned:
-        print("  %s -- %s" % (guard, why))
+    print("ABANDONED ALTERNATES -- no #define ANYWHERE, not even commented. Nobody can ever")
+    print("switch these on, so they are dead code. Delete the block; git is the archive:")
+    for guard, sites in abandoned:
+        print("  %s" % guard)
         for rel, number in sites:
             print("      %s:%d" % (rel, number))
     print("")
-    print("%d banned guard(s). Only a guard that VARIES BY BUILD CONFIG is legitimate." % len(banned))
+    print("%d abandoned guard(s). See AGENTS.md Conventions §Design." % len(abandoned))
     return 1
 
 

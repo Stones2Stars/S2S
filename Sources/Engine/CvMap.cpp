@@ -538,6 +538,15 @@ void CvMap::updateFog(const bool bApplyDecay)
 	}
 }
 
+#ifdef ENABLE_FOGWAR_DECAY
+void CvMap::InitFogDecay(const bool pWithRandom)
+{
+	for (int iI = 0; iI < numPlots(); iI++)
+	{
+		plotByIndex(iI)->InitFogDecay(pWithRandom);
+	}
+}
+#endif
 
 
 void CvMap::updateVisibility()
@@ -1355,6 +1364,9 @@ void CvMap::read(FDataStreamBase* pStream)
 
 	OutputDebugString("Reading Map: End\n");
 
+#ifdef ENABLE_FOGWAR_DECAY
+	InitFogDecay(true);
+#endif
 
 }
 
@@ -1403,6 +1415,12 @@ void CvMap::beforeSwitch()
 
 	m_bSwitchInProgress = true;
 
+#ifdef THE_GREAT_WALL
+	if (getCurrentViewport()->getTransformType() == VIEWPORT_TRANSFORM_TYPE_WINDOW)
+	{
+		GC.getGame().processGreatWall(false);
+	}
+#endif // THE_GREAT_WALL
 
 	gDLL->getEngineIFace()->setResourceLayer(false);
 
@@ -1535,6 +1553,12 @@ void CvMap::afterSwitch()
 
 	GC.reprocessSigns();
 
+#ifdef THE_GREAT_WALL
+	if (getCurrentViewport()->getTransformType() == VIEWPORT_TRANSFORM_TYPE_WINDOW)
+	{
+		GC.getGame().processGreatWall(true);
+	}
+#endif // THE_GREAT_WALL
 
 	gDLL->getEngineIFace()->setResourceLayer(GC.getResourceLayer());
 

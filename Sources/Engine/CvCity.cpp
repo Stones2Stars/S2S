@@ -44,6 +44,9 @@
 #include "CvCascadeChannelRegistry.h"   // channelLookup -- the realized-yield group read's channel identity
 #include "CvInfoKinds.h"                // infoYieldFamily / CHANNEL_AMOUNT -- the YieldTypes -> channel family axis
 #include "Data/CvInfoValuation.h"       // realizedAtCity -- the ONE cross-scope roll-up the group reads fold through
+#ifdef THE_GREAT_WALL
+#include "Infrastructure/CvDLLEngineIFaceBase.h"
+#endif
 #include "UI/CityOutputHistory.h"
 #include "Infos/CvClassificationBlock.h"   // CLSD_TAG + the memoized id bit test
 
@@ -10678,6 +10681,35 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 			}
 		}
 	}
+#ifdef THE_GREAT_WALL
+	//great wall
+	if (bFirst) // Not city copy on owner change, actually built or destroyed.
+	{
+		if (kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE))
+		{
+			bool bHas = false;
+			foreach_(const BuildingTypes eTypeX, getHasBuildings())
+			{
+				if (eType != eTypeX && GC.getBuildingInfo(eTypeX).providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) && !isDormantBuilding(eTypeX))
+				{
+					bHas = true;
+					break;
+				}
+			}
+			if (bNewValue)
+			{
+				if (!bHas)
+				{
+					processGreatWall(true, true);
+				}
+			}
+			else if (bHas)
+			{
+				processGreatWall(true, true);
+			}
+		}
+	}
+#endif // THE_GREAT_WALL
 }
 
 bool CvCity::processGreatWall(bool bIn, bool bForce, bool bSeeded)
@@ -10692,6 +10724,106 @@ bool CvCity::processGreatWall(bool bIn, bool bForce, bool bSeeded)
 	See https://github.com/caveman2cosmos/Caveman2Cosmos/issues/44
 	*/
 
+#ifdef THE_GREAT_WALL
+	if (!bForce && !GC.getENABLE_VIEWPORTS() && !GC.getDefineBOOL("DYNAMIC_GREAT_WALL"))
+	{
+		return true;
+	}
+
+	bool bHasGreatWall = false;
+	if (bIn || !bSeeded)
+	{
+		foreach_(const BuildingTypes eTypeX, getHasBuildings())
+		{
+			if (GC.getBuildingInfo(eTypeX).providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) && !isDormantBuilding(eTypeX))
+			{
+				bHasGreatWall = true;
+				break;
+			}
+		}
+	}
+	else bHasGreatWall = m_bIsGreatWallSeed;
+
+
+	if (bHasGreatWall)
+	{
+		CvCity* pUseCity = NULL;
+
+		if (isInViewport())
+		{
+			pUseCity = this;
+		}
+		else
+		{
+			//	Need to find a culturally connected city that IS in the current viewport
+			int iDummyVal;
+			CvUnitSelectionCriteria	noGrowthCriteria;
+
+			noGrowthCriteria.m_bIgnoreGrowth = true;
+
+			UnitTypes eDummyUnit = AI_bestUnitAI(UNITAI_ATTACK, iDummyVal, true, true, &noGrowthCriteria);
+
+			if (eDummyUnit == NO_UNIT)
+			{
+				eDummyUnit = AI_bestUnitAI(UNITAI_CITY_DEFENSE, iDummyVal, true, true, &noGrowthCriteria);
+
+				FAssert(eDummyUnit != NO_UNIT);
+			}
+			if (eDummyUnit != NO_UNIT)
+			{
+				CvUnit* pTempUnit = GET_PLAYER(getOwner()).getTempUnit(eDummyUnit, getX(), getY());
+				CvReachablePlotSet	plotSet(pTempUnit->getGroup(), MOVE_OUR_TERRITORY, MAX_INT);
+
+				for (CvReachablePlotSet::const_iterator itr = plotSet.begin(); itr != plotSet.end(); ++itr)
+				{
+					const CvCity* pCity = itr.plot()->getPlotCity();
+
+					if (pCity != NULL && pCity->isInViewport())
+					{
+						pUseCity = pCity;
+						break;
+					}
+				}
+				GET_PLAYER(getOwner()).releaseTempUnit();
+			}
+		}
+
+		//	If no suitable city is within the viewport we'll have to move the viewport
+		bool bViewportMoved = false;
+		int iOldViewportXOffset = 0;
+		int iOldViewportYOffset = 0;
+
+		if (pUseCity == NULL && !bSeeded)
+		{
+			pUseCity = this;
+			bViewportMoved = true;
+
+			GC.getCurrentViewport()->getMapOffset(iOldViewportXOffset, iOldViewportYOffset);
+			GC.getCurrentViewport()->setOffsetToShow(getX(), getY());
+		}
+		//	remove or re-add
+		if (pUseCity != NULL)
+		{
+			if (bIn)
+			{
+				pUseCity->m_bIsGreatWallSeed = true;
+				gDLL->getEngineIFace()->AddGreatWall(pUseCity);
+			}
+			else
+			{
+				pUseCity->m_bIsGreatWallSeed = false;
+				gDLL->getEngineIFace()->RemoveGreatWall(pUseCity);
+			}
+		}
+
+		if (bViewportMoved)
+		{
+			GC.getCurrentViewport()->setMapOffset(iOldViewportXOffset, iOldViewportYOffset);
+		}
+
+		return true;
+	}
+#endif // THE_GREAT_WALL
 	return false;
 }
 

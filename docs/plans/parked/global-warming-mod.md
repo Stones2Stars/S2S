@@ -18,21 +18,27 @@ property/pollution system (it requires finesse — a quality this codebase has h
 
 ## Why it's inert today
 
-- **The mechanic is GONE from the engine.** `CvGame::doGlobalWarming`, its turn-loop call, the declaration, the
-  five `GLOBAL_WARMING_*` global defines and the feature-side `getWarmingDefense` input are all removed; the
-  curator drops `iWarmingDefense`, so no JSON carries it. Recover the implementation from git if it is ever
-  wanted again.
-- ⚖ **The NUKE COUNTER is not part of it and stays** — `CvGame::getNukesExploded`/`changeNukesExploded` is raised
-  by a real detonation and is owner-ruled worth keeping even with no consumer
-  ([economy.md](../../reference/economy.md)).
+- The whole system is gated on `#define GLOBAL_WARMING`, and that define is **commented out**:
+  `Sources/CvGameCoreDLL.h:232` → `// #define GLOBAL_WARMING`.
+- So `CvGame::doGlobalWarming()` (`CvGame.cpp:6556-6819`), its turn-loop call (`CvGame.cpp:5959-5960`), and the
+  declaration (`CvGame.h:513-514`) are **never compiled**. The mechanic does not run.
+- But the data + a few always-compiled hooks remain, so a value that drives **nothing** is still authored and
+  **shown to the player** (the classic "dead but on display" signature).
 
-## What still references global warming
+## Vestige inventory (for the removal issue)
 
-- **XML curator INPUT only:** `<iWarmingDefense>` on 6 features (`Assets/XML/Terrain/CIV4FeatureInfos.xml`) + the
-  schema entry. The curator DROPS the field, and the legacy XML is never read into the game
-  ([DEC-no-xml-into-game](../../architecture/decisions.md#dec-no-xml-into-game)), so these are inert by design.
-- **GameText** `TXT_KEY_MISC_GLOBAL_WARMING_NEAR_CITY` (`Global_CIV4GameText.xml`) — TXT is an unmigrated system
-  boundary; an unreferenced key is inert.
+**Dead C++ (inside `#ifdef GLOBAL_WARMING`, compiled out):** `CvGame::doGlobalWarming` + call site + decl
+(`CvGame.cpp` 5959-5960 / 6556-6819, `CvGame.h` 513-514).
+
+**Orphaned-but-LIVE traces (always compiled — these are the real cleanup risk):**
+
+- `CvFeatureInfo` `m_iWarmingDefense` + `getWarmingDefense()` (`CvFeatureInfo.h/.cpp`) — read only by the dead pass.
+- Python binding `getWarmingDefense` (`CyInfoInterface2.cpp:249`) — exposes the getter to a non-existent mechanic.
+- Pedia display (`Assets/Python/Screens/Pedia/PediaFeature.py:156`) — renders the inert value to players.
+- XML field `<iWarmingDefense>` on 6 features (`Assets/XML/Terrain/CIV4FeatureInfos.xml`) + the schema entry
+  (`C2C_CIV4TerrainSchema.xml`). **(#428 already DROPS this field from the curated Feature JSON — category-i dead.)**
+- `GlobalDefines.xml`: `GLOBAL_WARMING_UNHEALTH_WEIGHT` / `_BONUS_WEIGHT` / `_FOREST` / `_PROB` / `_NUKE_WEIGHT`.
+- GameText `TXT_KEY_MISC_GLOBAL_WARMING_NEAR_CITY` (+ any other `*GLOBAL_WARMING*` keys).
 
 **FOOTPRINT TO AUDIT (interconnected — finesse required, do NOT blind-delete):** the grep hits ~27 files, and
 several are NOT pure dead code — they tie into still-live systems and need per-reference judgement:
@@ -46,11 +52,11 @@ several are NOT pure dead code — they tie into still-live systems and need per
 
 ## Recommendation
 
-1. **Audit then prune** the interconnected footprint (events/property/buildings/audio) carefully — keep anything
+1. **Remove** the dead C++ + the orphaned getter/binding/pedia/define/schema/field vestiges (low risk).
+2. **Audit then prune** the interconnected footprint (events/property/buildings/audio) carefully — keep anything
    the live pollution system still uses.
-2. **Re-implement later, properly**, if wanted: a tuned pollution→warming feedback wired into the first-class
-   property system (#428/#429), never a bolted-on guard (feature `#ifdef`s are banned —
-   [AGENTS.md](../../../AGENTS.md) Conventions §Design). Capture the design before it's lost (this note).
+3. **Re-implement later, properly**, if wanted: a tuned pollution→warming feedback wired into the first-class
+   property system (#428/#429), not a bolted-on `#ifdef`. Capture the design before it's lost (this note).
    - **Owner direction (2026-06-16): a re-implemented Global Warming gets its OWN base object/entity** for
      global-warming-specific data — e.g. `WarmingDefense` would live on that entity, NOT as a field on
      `CvFeatureInfo`. Accordingly, **#428 DROPS `iWarmingDefense` from the curated Feature JSON** (we don't need

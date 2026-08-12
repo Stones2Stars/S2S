@@ -162,6 +162,7 @@ bool CvSelectionGroup::sentryAlert() const
 }
 
 
+#ifdef _MOD_SENTRY
 /*
  * Similar to sentryAlert() except only checks water/land plots based on the domain type of the head unit.
  */
@@ -214,6 +215,7 @@ bool CvSelectionGroup::sentryAlertSameDomainType() const
 	}
 	return false;
 }
+#endif
 
 
 // A queued human mission used to be cleared by ANY danger within range -- but a plot
@@ -290,12 +292,14 @@ void CvSelectionGroup::doTurn()
 
 		if (isHuman())
 		{
+#ifdef _MOD_SENTRY
 			if (((eActivityType == ACTIVITY_SENTRY_NAVAL_UNITS) && (sentryAlertSameDomainType())) ||
 				((eActivityType == ACTIVITY_SENTRY_LAND_UNITS) && (sentryAlertSameDomainType())) ||
 				((eActivityType == ACTIVITY_SENTRY_WHILE_HEAL) && (sentryAlertSameDomainType() || AI_isControlled() || !bHurt)))
 			{
 				setActivityType(ACTIVITY_AWAKE);
 			}
+#endif
 
 			if (isAutomated() && getAutomateType() == AUTOMATE_EXPLORE && getBugOptionBOOL("Actions__SentryHealing", true, "BUG_SENTRY_HEALING") && sentryAlert())
 			{
@@ -305,6 +309,15 @@ void CvSelectionGroup::doTurn()
 				}
 			}
 // AIAndy: This is pointless when there is the separate sentry while heal button
+#ifndef _MOD_SENTRY
+			if (eActivityType == ACTIVITY_HEAL && getBugOptionBOOL("Actions__SentryHealing", true, "BUG_SENTRY_HEALING") && sentryAlert())
+			{
+				if (!(getBugOptionBOOL("Actions__SentryHealingOnlyNeutral", true, "BUG_SENTRY_HEALING_ONLY_NEUTRAL") && plot()->isOwned()))
+				{
+					setActivityType(ACTIVITY_AWAKE);
+				}
+			}
+#endif
 		}
 
 		// with improvements to launching air patrols, now can wake every turn
@@ -685,7 +698,9 @@ CvPlot* CvSelectionGroup::lastMissionPlot() const
 		switch (pMissionNode->m_data.eMissionType)
 		{
 			case MISSION_MOVE_TO:
+#ifdef _MOD_SENTRY
 			case MISSION_MOVE_TO_SENTRY:
+#endif
 			case MISSION_ROUTE_TO:
 			{
 				return GC.getMap().plot(pMissionNode->m_data.iData1, pMissionNode->m_data.iData2);
@@ -720,10 +735,14 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 	{
 		pPlot = plot();
 	}
+#ifdef NOMADIC_START
+	const TechTypes sedentaryLifestyle = GC.getTECH_SEDENTARY_LIFESTYLE();
+#endif
 	foreach_(CvUnit* unitX, units())
 	{
 		switch (iMission)
 		{
+#ifdef _MOD_SENTRY
 			case MISSION_MOVE_TO_SENTRY:
 			{
 				if (!unitX->canSentry(NULL))
@@ -732,6 +751,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 				}
 				// fall through to next case
 			}
+#endif
 			case MISSION_MOVE_TO:
 			{
 				return !pPlot->at(iData1, iData2);
@@ -826,6 +846,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 				}
 				break;
 			}
+#ifdef _MOD_SENTRY
 			case MISSION_SENTRY_WHILE_HEAL:
 			{
 				if ((unitX->canSentry(pPlot)) && (unitX->canHeal(pPlot)))
@@ -850,6 +871,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 				}
 				break;
 			}
+#endif
 			case MISSION_AIRLIFT:
 			{
 				if (unitX->canAirliftAt(pPlot, iData1, iData2))
@@ -948,6 +970,12 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 			}
 			case MISSION_FOUND:
 			{
+#ifdef NOMADIC_START
+				if (!GET_TEAM(unitX->getTeam()).isHasTech(sedentaryLifestyle))
+				{
+					return false;
+				}
+#endif
 				if (unitX->canFound(pPlot, bTestVisible))
 				{
 					return true;
@@ -1271,7 +1299,9 @@ bool CvSelectionGroup::startMission()
 		switch (headMissionQueueNode()->m_data.eMissionType)
 		{
 			case MISSION_MOVE_TO:
+#ifdef _MOD_SENTRY
 			case MISSION_MOVE_TO_SENTRY:
+#endif
 			{
 				// if player is human, save the visibility and reveal state of the last plot of the move path from the initial plot
 				if (isHuman())
@@ -1356,6 +1386,7 @@ bool CvSelectionGroup::startMission()
 				bDelete = true;
 				break;
 			}
+#ifdef _MOD_SENTRY
 			case MISSION_SENTRY_WHILE_HEAL:
 			{
 				setActivityType(ACTIVITY_SENTRY_WHILE_HEAL);
@@ -1377,6 +1408,7 @@ bool CvSelectionGroup::startMission()
 				bDelete = true;
 				break;
 			}
+#endif
 			case MISSION_AMBUSH:
 			case MISSION_ASSASSINATE:
 			{
@@ -1512,10 +1544,12 @@ bool CvSelectionGroup::startMission()
 						case MISSION_HEAL:
 						case MISSION_SENTRY:
 						case MISSION_BUILD:
+#ifdef _MOD_SENTRY
 						case MISSION_MOVE_TO_SENTRY:
 						case MISSION_SENTRY_WHILE_HEAL:
 						case MISSION_SENTRY_NAVAL_UNITS:
 						case MISSION_SENTRY_LAND_UNITS:
+#endif
 						{
 							break;
 						}
@@ -1990,7 +2024,9 @@ bool CvSelectionGroup::continueMission(int iSteps)
 		switch (missionNode->m_data.eMissionType)
 		{
 			case MISSION_MOVE_TO:
+#ifdef _MOD_SENTRY
 			case MISSION_MOVE_TO_SENTRY:
+#endif
 			{
 				// if player is human, save the visibility and reveal state of the last plot of the move path from the initial plot
 				// if it hasn't been saved already to handle units in motion when loading a game
@@ -2155,9 +2191,11 @@ bool CvSelectionGroup::continueMission(int iSteps)
 			case MISSION_SEAPATROL:
 			case MISSION_HEAL:
 			case MISSION_SENTRY:
+#ifdef _MOD_SENTRY
 			case MISSION_SENTRY_WHILE_HEAL:
 			case MISSION_SENTRY_NAVAL_UNITS:
 			case MISSION_SENTRY_LAND_UNITS:
+#endif
 			{
 				FErrorMsg("error");
 				break;
@@ -2186,7 +2224,9 @@ bool CvSelectionGroup::continueMission(int iSteps)
 			switch (missionNode->m_data.eMissionType)
 			{
 				case MISSION_MOVE_TO:
+#ifdef _MOD_SENTRY
 				case MISSION_MOVE_TO_SENTRY:
+#endif
 				{
 					if (at(missionNode->m_data.iData1, missionNode->m_data.iData2))
 					{
@@ -2224,9 +2264,11 @@ bool CvSelectionGroup::continueMission(int iSteps)
 				case MISSION_SEAPATROL:
 				case MISSION_HEAL:
 				case MISSION_SENTRY:
+#ifdef _MOD_SENTRY
 				case MISSION_SENTRY_WHILE_HEAL:
 				case MISSION_SENTRY_NAVAL_UNITS:
 				case MISSION_SENTRY_LAND_UNITS:
+#endif
 				{
 					FErrorMsg("error");
 					break;
@@ -2413,6 +2455,7 @@ bool CvSelectionGroup::canDoInterfaceMode(InterfaceModeTypes eInterfaceMode)
 	{
 		switch (eInterfaceMode)
 		{
+#ifdef _MOD_SENTRY
 			case INTERFACEMODE_GO_TO_SENTRY:
 			{
 				if (sentryAlertSameDomainType())
@@ -2421,6 +2464,7 @@ bool CvSelectionGroup::canDoInterfaceMode(InterfaceModeTypes eInterfaceMode)
 				}
 				// fall through to next case
 			}
+#endif
 			case INTERFACEMODE_GO_TO:
 			{
 				if (getDomainType() != DOMAIN_AIR && getDomainType() != DOMAIN_IMMOBILE)
@@ -2684,9 +2728,11 @@ bool CvSelectionGroup::isWaiting() const
 			  (getActivityType() == ACTIVITY_SLEEP) ||
 					(getActivityType() == ACTIVITY_HEAL) ||
 					(getActivityType() == ACTIVITY_SENTRY) ||
+#ifdef _MOD_SENTRY
 					(getActivityType() == ACTIVITY_SENTRY_WHILE_HEAL) ||
 					(getActivityType() == ACTIVITY_SENTRY_NAVAL_UNITS) ||
 					(getActivityType() == ACTIVITY_SENTRY_LAND_UNITS) ||
+#endif
 					(getActivityType() == ACTIVITY_PATROL) ||
 					(getActivityType() == ACTIVITY_PLUNDER) ||
 					(getActivityType() == ACTIVITY_INTERCEPT));
@@ -2858,7 +2904,10 @@ bool CvSelectionGroup::canMoveThrough(const CvPlot* pPlot, bool bDeclareWar) con
 			}
 		}
 
+//#define TEST_NEW_ALGORITHM_VALIDITY
+#ifndef TEST_NEW_ALGORITHM_VALIDITY
 		if ( iI == numUniqueUnitCategories )
+#endif
 		{
 			if (!(pLoopUnit->canMoveThrough(pPlot, bDeclareWar)))
 			{
@@ -2866,6 +2915,9 @@ bool CvSelectionGroup::canMoveThrough(const CvPlot* pPlot, bool bDeclareWar) con
 				return false;
 			}
 
+#ifdef TEST_NEW_ALGORITHM_VALIDITY
+			if ( iI == numUniqueUnitCategories )
+#endif
 			if ( numUniqueUnitCategories < MAX_UNIQUE_UNIT_CATEGORIES_CONSIDERED )
 			{
 				unitCharacteristics[numUniqueUnitCategories++] = unitMovementCharacteristics;
@@ -3528,6 +3580,7 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 		//	Would check if the whole group can move into the plot first. This warrants more study before acting on this.
 		if (unitX == pCombatUnit
 		|| unitX->canMove()
+#ifdef _MOD_SENTRY
 		&& (
 				!isHuman()
 				||
@@ -3537,6 +3590,7 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 				||
 				!sentryAlertSameDomainType()
 			)
+#endif
 		&& (bCombat ? unitX->canEnterOrAttackPlot(pPlot) : unitX->canEnterPlot(pPlot)))
 		{
 			unitX->move(pPlot, true);
@@ -5369,7 +5423,9 @@ bool CvSelectionGroup::isMoveMission(CLLNode<MissionData>* node) const
 		{
 			case MISSION_MOVE_TO:
 			case MISSION_MOVE_TO_UNIT:
+#ifdef _MOD_SENTRY
 			case MISSION_MOVE_TO_SENTRY:
+#endif
 			case MISSION_ROUTE_TO:
 			{
 				return true;

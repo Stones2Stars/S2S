@@ -3759,6 +3759,7 @@ int CvPlayerAI::AI_getPlotDanger(const CvPlot* pPlot, int iRange, bool bTestMove
 #ifdef PLOT_DANGER_CACHING
 #ifdef _DEBUG
 	//	Uncomment this to perform functional verification
+	//#define VERIFY_PLOT_DANGER_CACHE_RESULTS
 #endif
 
 	//	Check cache first
@@ -3786,6 +3787,14 @@ int CvPlayerAI::AI_getPlotDanger(const CvPlot* pPlot, int iRange, bool bTestMove
 		{
 			entry->iLastUseCount = ++plotDangerCache.currentUseCounter;
 			plotDangerCacheHits++;
+#ifdef VERIFY_PLOT_DANGER_CACHE_RESULTS
+			int realValue = AI_getPlotDangerInternal(pPlot, iRange, bTestMoves);
+
+			if (realValue != entry->iResult)
+			{
+				FErrorMsg("Plot danger cache verification failure");
+			}
+#endif
 			return entry->iResult;
 		}
 		else if (entry->iLastUseCount < worstLRU)

@@ -747,6 +747,8 @@ scan bugs rather than fix them.
 - **Kill the `getX`/`getX100` pairs** — the maintenance getter reduces `Times100` internally, which is the exact
   pair [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100) forbids, plus the saved-maintenance
   and unit-upkeep twins.
+- **Rename or delete `clearCanConstructCache`** — both overloads ignore their parameters, have identical bodies,
+  and say in their own text that there is no cache to clear. A name advertising a dead cache is the bait.
 - **Spell out the bare single-letter identifiers** in the enabler/capability code (`j` for the info, `c`, `r`,
   `s`, `sb`, `jg`, `a`, `mem`, `wcap`). Per Sources/AGENTS.md this is a review-blocker on sight, and it is NOT
   the sanctioned exception — that covers a file-anchored PREFIX, never a bare parameter name.
@@ -839,6 +841,22 @@ scan bugs rather than fix them.
 > of dead things, which is what sends the next agent re-treading them — and being preprocessor-skipped or
 > commented, none of it is visible to the compiler census.
 
+- **Delete the `#ifdef` attic.** Each guard below is defined NOWHERE — not in `Sources/`, not in `fbuild.bff`, and
+  not even as a commented-out `#define` — so no switch ever existed and the block is an abandoned alternate:
+  `USE_BOTH_TECHBUILDING_EVALUATIONS` (a whole second, older tech-building valuation parked inside
+  `AI_techBuildingValue` — the very function the enablement-valuation ruling governs), `USE_OLD_PATH_GENERATOR`
+  (the old pathfinder, across `CvUnitAI`/`CvGameCoreUtils`/`CvSelectionGroup`/`CvUnit`, with live `#else`
+  branches), `VALIDITY_CHECK_NEW_ATTACK_SEARCH` (a migration-era harness that re-runs the old brute-force search
+  and diffs it), `TEMP_DEBUGGING_SUPPORT` (a parked `StreamWrapper : FDataStreamBase`), `EXTREME_PAGING`,
+  `EXPERIMENTAL_FEATURE_ON_PEAK`, `DEBUG_TECH_CHOICES`.
+  ⛔ **Do NOT sweep the OFF-SWITCHES with them.** A guard that HAS a commented-out `#define` is un-killed forward
+  intent and the disposition is the owner's ([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas)):
+  `ENABLE_FOGWAR_DECAY`, `USE_MEMMANAGER`, `GLOBAL_WARMING`, `THE_GREAT_WALL`, `USE_INTERNAL_PROFILER`,
+  `NO_RANDOM`, `VALIDATION_FOR_PLOT_GROUPS`, `VERIFY_CAN_BUILD_CACHE_RESULTS`, `VERIFY_PLOT_DANGER_CACHE_RESULTS`,
+  `VERIFY_YIELD_CACHE_RESULTS`, `DYNAMIC_PATH_STRUCTURE_VALIDATION`, `LIGHT_VALIDATION`. The mechanical test is
+  the commented `#define`, never the guard's name.
+- **Record WHY each off-switch is off, in its subsystem's reference doc.** Only `ENABLE_FOGWAR_DECAY` has its
+  reason written down; the rest do not, and an unexplained off-switch is what the next sweep eats.
 - **Strip the comment trails that name a DEAD symbol.** Keep the forward statement, delete the dead name — naming
   it is the bait. Worst offenders: `CvCity`
   (narrates a removed generic-citizen loop AND spells out how to revive it), `CvUnitAI` (`AI_bestCityBuild`
@@ -1004,42 +1022,18 @@ cannot build YET"*, which is a different set from *"things that do not exist for
 whose `PrereqTech` is unresearched is not on the frontier at all — it should not be a candidate. So the suspect
 is the CANDIDATE SET the list iterates, not the greying.
 
-**PROVEN — the cause is FIRST-FAILING-ATOM, not the iteration and not a missing tech axis.** Both earlier
-hypotheses are answered and neither is it:
-- the tri-state axis is present and correct — `GATEREASON_REQUIRES_TECH` is in `reasonHides`' HIDE list
-  (`CvEnabler.h`), whose own comment states the intent: *"an unresearched TECH is not something the asker can go
-  and fetch"*;
-- the screen DOES sweep the whole database (`CvBuildingList::doFilter` walks `GC.getNumBuildingInfos()`), but the
-  per-entry test is `pCity->getBuildingAvailability(eBuilding)` — the enabler's maintained tri-state, O(1). So
-  the sweep is a SHAPE defect ([enabler.md §6](../../specs/enabler.md)), not the source of this symptom.
+⚠ **NOT YET KNOWN — establish which of these before touching anything:**
+- does the screen iterate the enabler's maintained domain vector, or the whole building database and then ask a
+  gate per entry? The second is the shape [enabler.md §6](../../specs/enabler.md) exists to delete (the frontier
+  IS the shared choice set), and it would show exactly this symptom;
+- or is the tech axis genuinely missing from the tri-state the greyed tier reads?
 
-**The mechanism:** only ONE reason is stored per entity, and it is the FIRST failing clause.
-`EnablerKernel::requiresGateReason` → `cascadeFailingAtom` → `ev_offendingAtom`, whose `all`-arm returns on
-*"the first clause that fails"*. So a building requiring `all: [BONUS_COPPER, TECH_X]` with BOTH unmet stores
-`GATEREASON_REQUIRES_BONUS` and GREYS, while the unmet `TECH_X` beside it is a HIDE reason that never gets
-consulted. Clause ORDER decides what the player sees.
-
-**⚠ THE DISPOSITION IS AN OWNER CALL, because the code carries an explicit argument for the current
-behaviour.** `reasonHides`' default comment reasons that *"staying VISIBLE is the safe direction … an extra
-greyed row costs a line, a wrong HIDE costs the asker the answer entirely"* — i.e. GREY-wins is deliberate. The
-observed symptom says the opposite is wanted for this case. The two candidate rules:
-- **HIDE-wins** — if ANY unmet clause is unactionable, the entity is unactionable, so hiding is honest. Costs:
-  a building gated on a far tech AND a fetchable bonus stops advertising the bonus.
-- **GREY-wins (today)** — always show what CAN be acted on. Costs: exactly this symptom.
-
-⛔ Do NOT "fix" it by adding a tech test at the display site. That papers over the reason selection and puts an
-availability rule in a screen — the enabler owns the verdict
+⛔ Do NOT "fix" it by adding a tech test at the display site. That papers over whichever of the two it is, and
+puts an availability rule in a screen — the enabler owns the verdict
 ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
 
-⛔ **AND DO NOT BUILD A "COLLECT THE FAILING ATOMS" WALK — ONE ALREADY EXISTS (owner).** The tooltip work built
-it: `CvGameTextMgr::buildRequiresClauses` walks EVERY clause of an `all` root and gives each its own verdict
-(`cascadeEvalCondition` per clause, rendered positive/warning). So the tree is already enumerated clause by
-clause with per-clause answers — what the kernel does differently is STOP AT THE FIRST failure.
-⇒ **That is the real defect: two walks over one `all` list with different stopping rules, in two places**
-([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)) — and the one that
-enumerates lives in the TEXT MANAGER, which is the wrong home for a verdict the enabler owns. Lift the
-per-clause walk onto the shared condition surface and have BOTH consumers read it: the renderer for its colours,
-`requiresGateReason` for the strongest disposition among the failures.
+⚑ Cheap first read: the enabler's own served set (`/computed/enabler/operating?player=N`) beside what the list
+renders — the three-leg check ([superseded-ideas #33](../../architecture/superseded-ideas.md)), state leg first.
 
 
 ## THE PYTHON HALF OF THE Cy DISCONNECT IS NOT DONE — ~2000 DEAD CALL SITES

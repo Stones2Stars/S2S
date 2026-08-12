@@ -404,7 +404,9 @@ protected:
 
 
 // BUG - Sentry Actions - start
+#ifdef _MOD_SENTRY
 	bool sentryAlertSameDomainType() const;
+#endif
 // BUG - Sentry Actions - end
 
 //	KOSHLING Mod - add path validity results cache

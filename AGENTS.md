@@ -247,18 +247,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   symbols long deleted. **A rule has to be remembered; a check does not** — the same move that made the
   duplicated skill reads unsayable rather than forbidden. ⛔ Run it after editing either doc, and if it fires,
   DELETE the state or move the durable ruling into its owning spec — never widen the tool to accept it.
-- **Feature `#ifdef`s: `python Tools/verify-ifdef-attics.py`** — feature guards are BANNED (Conventions §Design);
-  the only legitimate one VARIES BY BUILD CONFIG (`FASSERT_ENABLE`, `_DEBUG`) or is a platform predefine. The
-  check reports the rest in two classes, and **the difference between them is the whole reason this is a check**:
-  - **TU-INDEPENDENT** — no real `#define` anywhere (OFF in every translation unit), or defined by fbuild's `/D`
-    (ON in every one). One arm is dead everywhere, so collapsing is mechanical and safe.
-  - **⛔ TU-LOCAL** — `#define`d in a `Sources/` file, so it holds only where that definition is VISIBLE: the
-    SAME guard is ON in some translation units and OFF in others, and there is no single arm to keep. **Resolve
-    these per SITE, never with a sweep.** ⚠ Measured: a blanket collapse turned the save wrapper's
-    `DEBUG_TRACE` from `;` into a live `OutputDebugString` on every tagged read — its `#define` lives in
-    `CvGameCoreDLL.cpp`, which the wrapper never includes. Load time tripled and the game crashed at `eip=0`.
-  ⚠ The check does NOT do include-graph analysis, so it flags a cross-file site as *check this*, never as OFF.
-  ⛔ If it fires, fix the code; never widen the tool.
+- **Abandoned `#ifdef` alternates: `python Tools/verify-ifdef-attics.py`** — fails on a guard with NO `#define`
+  anywhere (not in `Sources/`, not in `fbuild.bff`, not even commented): nobody can ever switch it on, so the
+  block is dead code. ⚑ **That is the ONLY verdict a tool can reach**, because what makes an `#ifdef` wrong is
+  WHAT IS BEHIND IT (Conventions §Design) — diagnostics and deliberate off-switches are legitimate, caching and
+  game mechanics are not, and the preprocessor cannot tell you which. The check REPORTS those three classes for
+  a human verdict and never fails on them. ⛔ It also flags TU-LOCAL guards (`#define`d in a `Sources/` file, so
+  ON in some translation units and OFF in others) as never-collapse-mechanically.
 
 ### Adding a new source subdirectory
 
@@ -601,15 +596,33 @@ the total-observability bar below.)
   defer the real design; when the right design needs prerequisite work, do the prerequisite and build the real
   thing. **Corollary — ISOLATE COMPONENTS:** prefer clean, interface-bounded components with isolated surfaces so
   each can be built and reasoned about once, properly.
-- **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH — and an `#ifdef` ATTIC IS THAT EVIDENCE (owner)**
+- **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH (owner)**
   ([DEC-no-rollerskate-evidence](docs/architecture/decisions.md#dec-no-rollerskate-evidence)). Dead and
   commented-out code, superseded dual surfaces, transitional shims and `was X` / `(formerly …)` trails are all
   REMOVED, in code as well as docs.
-  **⛔ A FEATURE `#ifdef` IS BANNED OUTRIGHT (owner): *"we will never use them in the code, they are an
-  anachronism from when source control was not really a thing"* / *"ifdef sections come from a time when people
-  did not understand git."*** The ONLY legitimate guard is one that VARIES BY BUILD CONFIG (`FASSERT_ENABLE`,
-  `_DEBUG`) or a platform predefine — there is no off-switch population to curate, because a block worth keeping
-  is a block git is already keeping. `python Tools/verify-ifdef-attics.py` enforces it.
+  **⚖ FOR AN `#ifdef` THE QUESTION IS WHAT IS BEHIND IT, NEVER THE GUARD (owner): *"some ifdefs are useful, but
+  if caching, or game mechanics are hidden behind ifdefs, instead of legitimate game options, that is what is
+  wrong."*** Four dispositions, and only the last is mechanical:
+  - **DIAGNOSTICS / TOOLING stay** — `MINIDUMP`, `MEMTRACK` and their kin are legitimate uses.
+  - **A DELIBERATE OFF-SWITCH stays, and its REASON is the thing that protects it.** `THE_GREAT_WALL` is off
+    because rendering the great wall *"has literally broken the game in the past"* — a CTD source in the older
+    days. ⚠ Record that reason in the subsystem's reference doc: a sweep that eats an unexplained switch
+    re-introduces a crash nobody remembers ([DEC-keep-unkilled-ideas](docs/architecture/decisions.md#dec-keep-unkilled-ideas)).
+  - **CACHING or a GAME MECHANIC behind a guard is WRONG** — a cache is either the design or it is not, and a
+    mechanic belongs in a `GAMEOPTION_*`, evaluated live and visible to the player
+    ([DEC-entity-gate](docs/architecture/decisions.md#dec-entity-gate)). ⛔ The fix is to CONVERT it, never to
+    delete the mechanic.
+  - **No `#define` ANYWHERE, not even commented ⇒ nobody can ever switch it on** ⇒ an abandoned alternate, and
+    that is dead code: delete it, git is the archive. This is the ONE verdict a tool can reach, and
+    `python Tools/verify-ifdef-attics.py` is the tool; it REPORTS the other three for a human verdict.
+  ⛔ **NEVER collapse a guard mechanically when its `#define` lives in a `Sources/` file.** It holds only where
+  that definition is VISIBLE, so the same guard is ON in some translation units and OFF in others and there is
+  no single arm to keep. *(Measured: a blanket collapse turned the save wrapper's `DEBUG_TRACE` from `;` into a
+  live `OutputDebugString` on every tagged read — `DETAILED_TRACE` is defined in `CvGameCoreDLL.cpp`, which the
+  wrapper never includes. Load time tripled and the game crashed at `eip=0`.)*
+  ⚑ Why an abandoned alternate is deleted rather than left alone: it holds the NAMES of removed things, so the
+  next agent finds them and re-treads what was killed — and being preprocessor-skipped, it is invisible to the
+  compiler census that would otherwise name it.
 - **ARCHITECTURAL NORTH-STAR — Clean Architecture + interface-based contracts.** Dependency inversion, isolated
   layers, composition over the inherited Civ4 god-classes. The full compass is
   [north-star.md](docs/architecture/north-star.md); the concrete C++03 shape (pure-virtual interfaces, MI as
