@@ -80,6 +80,9 @@ public:
 	//	⚠ It is TOTAL: a type whose data authors no gate answers "never barred", so a newly-authored gate lights
 	//	up as pure DATA with no engine change.
 	bool isEverAvailable(int /*EnEdgeBucket*/ eBucket, int iId) const;
+	// CAN-I-EVER for a TECH. ⛔ NOT served by isEverAvailable: a tech's permanent bar is a COMPOSITION, not an
+	// entity gate (enabler.md par.8), so this delegates to the picking logic's own single implementation.
+	bool canEverResearch(int iPlayer, int iTech) const;
 
 	// Publishes this surface + the three tri-state constants a script compares against
 	// (ENABLER_HIDDEN / ENABLER_GREYED / ENABLER_LISTED). Called from DLLPublishToPython.

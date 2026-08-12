@@ -967,6 +967,13 @@ invented once by one player in a game"*) and the limited-religion hoarding guard
 ⚠ **Do not re-derive it on the availability surface.** A second "ever" predicate reading only the membership
 planes silently drops those bars — it would call a religion tech already invented elsewhere a legitimate queue
 target ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+⚑ **It is published to Python as `CyEnabler::canEverResearch`, and the tech-tree browser MUST use it** — the
+plane is `CyEnabler` because the QUESTION is availability, while the answer delegates to the picking logic;
+the binding is not the enabler machine answering "ever".
+⛔ **A consumer that reads HIDDEN as "never" is the failure this exists to prevent, and it is not hypothetical:**
+the browser did exactly that, so every tech past the immediate frontier rendered permanently barred AND refused
+its queue click — one state driving both the colour and the gate. A tech further along is HIDDEN for the
+ordinary reason that nothing held enables it YET, which is precisely the difference a queue asks about.
 The split, stated once: **the enabler answers CAN-I-NOW (the tri-state); the picking logic answers CAN-I-EVER and
 BY WHAT PATH.** The two membership bars that ARE the enabler's — `identity.disable` and a civilization's own
 never-researchable list — are static for a player's life and sit on the static-exclusion plane at `initDomain`.

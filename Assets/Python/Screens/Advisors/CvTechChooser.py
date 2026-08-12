@@ -39,6 +39,10 @@ CIV_TECH_AVAILABLE = 1
 CIV_IS_QUEUED = 2
 CIV_IS_RESEARCHING = 3
 CIV_IS_TARGET = 4
+# "further along" -- in the tree eventually, just not reachable in one step. It is a SEPARATE state from
+# CIV_NO_RESEARCH ("never obtainable") on purpose: one state cannot mean both, and while it did, every tech
+# past the immediate frontier rendered as permanently barred and refused the queue click.
+CIV_TECH_FUTURE = 5
 
 FONT_COLOR_MAP = {
 	CIV_IS_QUEUED: "<color=255,255,255,255>",
@@ -108,16 +112,21 @@ class CvTechChooser:
 	def getTechState(self, iTech):
 		if self.CyTeam.isHasTech(iTech):
 			return CIV_HAS_TECH
-		# Availability is the ENABLER's own maintained verdict, never a re-derived gate ([DEC-enabler-not-cascade]).
-		# The tri-state is read WHOLE, and only HIDDEN means "never": HIDDEN is "not in the tree at all", while
-		# GREYED is "in the tree, requirements not yet met" -- an ordinary future tech. Collapsing GREYED into
-		# NO_RESEARCH painted everything beyond the frontier as permanently unavailable AND refused the queue
-		# click, because this one state drives both. Queueing further than the frontier is the picking logic's
-		# job, not the enabler's ([enabler.md] par.8: the enabler answers CAN-I-NOW and stops there).
-		if ENABLER.getTechAvailability(self.iPlayer, iTech) == ENABLER_HIDDEN:
+		# ⛔ NEVER-obtainable and NOT-YET-obtainable are two different questions and must not share a state.
+		# The ENABLER answers CAN-I-NOW only, and its HIDDEN conflates "nothing enables it YET" with "it can
+		# never be offered" -- a tech three steps out has no held source enabling it, so it is HIDDEN exactly
+		# like a barred one. Reading HIDDEN as "no research" therefore painted every future tech permanently
+		# barred AND refused its queue click, because this one state drives both.
+		# CAN-I-EVER is the PICKING logic's question and has its own read ([enabler.md] par.8): a tech's
+		# permanent bar is a composition (NO_FUTURE, era, isRepeat, the world-unique religion rule), which the
+		# tri-state does not carry.
+		if not ENABLER.canEverResearch(self.iPlayer, iTech):
 			return CIV_NO_RESEARCH
 		if not self.CyPlayer.isResearchingTech(iTech):
-			return CIV_TECH_AVAILABLE
+			# LISTED = researchable right now; anything else legal is simply further along the tree.
+			if ENABLER.getTechAvailability(self.iPlayer, iTech) == ENABLER_LISTED:
+				return CIV_TECH_AVAILABLE
+			return CIV_TECH_FUTURE
 		queuePos = self.CyPlayer.getQueuePosition(iTech)
 		if queuePos == 1:
 			return CIV_IS_RESEARCHING
@@ -630,9 +639,18 @@ class CvTechChooser:
 				else:
 					self.currentTechState[iTech] = CIV_IS_QUEUED
 				changed.append((iX, iTech))
-			elif bForce or self.currentTechState[iTech] != CIV_TECH_AVAILABLE:
-				self.currentTechState[iTech] = CIV_TECH_AVAILABLE
-				changed.append((iX, iTech))
+			else:
+				# ⛔ Recompute WHICH of the two un-queued states this is -- it cannot be assumed AVAILABLE.
+				# A tech further along becomes researchable as its prerequisites land, so the LISTED test has
+				# to be re-asked here; assuming AVAILABLE would relabel the entire future tree as researchable
+				# now, which is the same one-state-for-two-questions error one level down.
+				if ENABLER.getTechAvailability(self.iPlayer, iTech) == ENABLER_LISTED:
+					newState = CIV_TECH_AVAILABLE
+				else:
+					newState = CIV_TECH_FUTURE
+				if bForce or self.currentTechState[iTech] != newState:
+					self.currentTechState[iTech] = newState
+					changed.append((iX, iTech))
 
 		for _, iTech in changed:
 			iTechStr = str(iTech)
@@ -915,9 +933,21 @@ class CvTechChooser:
 							if CASE[0] == "CURRENT":
 								CyMessageControl().sendResearch(-1, bShift)
 								self.updateTechRecords(False)
-							elif CASE[0] == "CHOICE" and (self.currentTechState[iType] == CIV_TECH_AVAILABLE or not bShift and (self.currentTechState[iType] == CIV_IS_RESEARCHING or self.currentTechState[iType] == CIV_IS_QUEUED)):
-								CyMessageControl().sendResearch(iType, bShift)
-								self.updateTechRecords(False)
+							elif CASE[0] == "CHOICE":
+								# ⛔ A tech FURTHER ALONG is a legal queue target, and refusing it here is what
+								# made chain picking impossible: sendResearch -> CvPlayer::pushResearch walks
+								# the target's prerequisite chain (shortest branch per OR-group) and queues the
+								# whole path, so the click is exactly how a distant tech is chosen. The gate was
+								# the same state that painted the tree red, so one defect produced both symptoms.
+								bLegalTarget = (self.currentTechState[iType] == CIV_TECH_AVAILABLE
+									or self.currentTechState[iType] == CIV_TECH_FUTURE)
+								# Re-clicking something already on the queue re-targets it (plain click only).
+								bOnQueue = (not bShift
+									and (self.currentTechState[iType] == CIV_IS_RESEARCHING
+										or self.currentTechState[iType] == CIV_IS_QUEUED))
+								if bLegalTarget or bOnQueue:
+									CyMessageControl().sendResearch(iType, bShift)
+									self.updateTechRecords(False)
 					elif TYPE == "ERAIM" or TYPE == "ERATEXT":
 						self.scrollTo(self.minEraXPos[ID] - self.minX)
 			elif NAME == "AddTechButton":
@@ -1028,6 +1058,8 @@ class CvTechChooser:
 			CIV_IS_QUEUED: [192, 192, 0],
 			CIV_IS_TARGET: [255, 128, 0],
 			CIV_TECH_AVAILABLE: [32, 32, 64],
+			# Further along is not a refusal, so it does not get the refusal colour.
+			CIV_TECH_FUTURE: [32, 32, 64],
 			CIV_NO_RESEARCH: [128, 0, 0],
 		}.get(state, [128, 0, 0])
 
@@ -1049,7 +1081,10 @@ class CvTechChooser:
 				12: "Button_TechHas_12_Style",
 				13: "Button_TechHas_13_Style",
 			}.get(era, "Button_TechHas_Style")
-		elif state == CIV_TECH_AVAILABLE:
+		elif state == CIV_TECH_AVAILABLE or state == CIV_TECH_FUTURE:
+			# ⛔ Both take the ERA styling. A tech further along the tree is an ordinary future tech, so it wears
+			# its era exactly as a researchable one does; only a PERMANENTLY barred tech falls through to the
+			# refusal style below. (Button_TechNo_Style for "not yet" is what painted the tree red.)
 			if era > self.iCurrentEra:
 				return "Button_TechNeo_Style"
 			elif era < self.iCurrentEra:

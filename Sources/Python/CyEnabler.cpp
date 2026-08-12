@@ -191,6 +191,23 @@ bool CyEnabler::isEverAvailable(int eBucket, int iId) const
 	return EnablerKernel::everAvailable((EnEdgeBucket)eBucket, iId);
 }
 
+// ⛔ TECHS ARE NOT SERVED BY isEverAvailable ABOVE, AND THAT IS THE SPEC'S SPLIT, NOT AN OMISSION
+// (enabler.md par.8): a tech's permanent bar is a COMPOSITION over game state + authored data -- NO_FUTURE
+// against the tech's own era, isRepeat, the world-unique religion-tech rule, the limited-religion hoarding
+// guard -- which no entity gate carries and an info structurally cannot answer. So this delegates to the
+// PICKING LOGIC's single implementation and never re-derives one
+// ([DEC-single-implementation]: a second "ever" predicate over the membership planes alone would silently
+// drop those bars and call an already-invented religion tech a legal queue target).
+// ⚑ Why the read exists at all: the enabler's tri-state answers CAN-I-NOW, and HIDDEN conflates "nothing
+// enables it YET" with "it can never be offered". A research QUEUE asks precisely that difference, so a
+// consumer that has only the tri-state is forced to read every future tech as permanently barred.
+bool CyEnabler::canEverResearch(int iPlayer, int iTech) const
+{
+	const CvPlayer* p = cye_player(iPlayer);
+	if (p == NULL || iTech < 0 || iTech >= GC.getNumTechInfos()) return false;
+	return p->canEverResearch((TechTypes)iTech);
+}
+
 // The publication. ONE class, id-based, no CyCity/CyPlayer anywhere in the signature -- so the legacy
 // wrappers can be cut away without touching this ([DEC-cy-not-fixed]: the replacement is a NEW surface,
 // never a widened binding).
@@ -221,6 +238,8 @@ void CyEnabler::pythonPublish()
 		.def("getBuildingAvailabilityAnywhere", &CyEnabler::getBuildingAvailabilityAnywhere)
 		// CAN-I-EVER -- the whole-game entity gate, keyed by edge BUCKET (not a per-city verdict)
 		.def("isEverAvailable",                 &CyEnabler::isEverAvailable)
+		// CAN-I-EVER for TECHS, which the bucket gate above deliberately does not answer (see the body)
+		.def("canEverResearch",                 &CyEnabler::canEverResearch)
 		;
 
 	// The tri-state, exposed as constants rather than left as bare ints: the verdict is returned WHOLE, so a
