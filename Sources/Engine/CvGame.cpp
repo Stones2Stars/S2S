@@ -930,9 +930,6 @@ void CvGame::uninit()
 	m_mapVoteSourceReligions.clear();
 	m_aeInactiveTriggers.clear();
 
-#ifdef CAN_BUILD_VALUE_CACHING
-	CvPlot::ClearCanBuildCache();
-#endif
 
 	if ( CvPlayerAI::areStaticsInitialized() )
 	{

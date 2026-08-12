@@ -64,39 +64,6 @@ struct StrengthFlags
 };
 DECLARE_FLAGS(StrengthFlags::flags);
 
-//	Koshling - add caching to canBuild calculations
-#define CAN_BUILD_VALUE_CACHING
-#ifdef CAN_BUILD_VALUE_CACHING
-struct canBuildCacheEntry
-{
-	canBuildCacheEntry()
-		: iPlotX(-1)
-		, iPlotY(-1)
-		, eBuild(NO_BUILD)
-		, ePlayer(NO_PLAYER)
-		, lResult(-1)
-		, iLastUseCount(0)
-	{}
-
-	int iPlotX;
-	int iPlotY;
-	BuildTypes eBuild;
-	PlayerTypes ePlayer;
-	long lResult;
-	int iLastUseCount;
-};
-
-#define CAN_BUILD_CACHE_SIZE 64
-
-class canBuildCache
-{
-public:
-	canBuildCache() : currentUseCounter(0) {}
-
-	struct canBuildCacheEntry entries[CAN_BUILD_CACHE_SIZE];
-	int currentUseCounter;
-};
-#endif
 
 // Enum representing the graphical various components of a plot
 struct ECvPlotGraphics
@@ -297,9 +264,7 @@ public:
 	bool canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam = NO_TEAM, bool bPotential = false, bool bUpgradeCheck = false) const;
 
 	bool canBuild(BuildTypes eBuild, PlayerTypes ePlayer = NO_PLAYER, bool bTestVisible = false, bool bIncludePythonOverrides = true) const;
-	static bool hasCachedCanBuildEntry(int iX, int iY, BuildTypes eBuild, PlayerTypes ePlayer, struct canBuildCacheEntry*& entry);
 	long canBuildFromPython(BuildTypes eBuild, PlayerTypes ePlayer) const;
-	long canBuildFromPythonInternal(BuildTypes eBuild, PlayerTypes ePlayer) const;
 	int getBuildTime(BuildTypes eBuild) const;
 	int getBuildTurnsLeft(BuildTypes eBuild, PlayerTypes ePlayer) const;
 	int getBuildTurnsLeft(BuildTypes eBuild, int iNowExtra, int iThenExtra, bool bIncludeUnits = true) const;
@@ -1165,15 +1130,6 @@ public:
 	bool inCommandField(const PlayerTypes ePlayer) const;
 	bool inCommandCommodoreField(const PlayerTypes ePlayer) const;
 
-#ifdef CAN_BUILD_VALUE_CACHING
-public:
-	static void ClearCanBuildCache();
-
-private:
-	static canBuildCache g_canBuildCache;
-	static int canBuildCacheHits;
-	static int canBuildCacheReads;
-#endif
 
 	//	Koshling - add Zobrist hashing of plotGroups to reduce recalculation.
 	//	Each plot has a contribution value to any hash it is included in

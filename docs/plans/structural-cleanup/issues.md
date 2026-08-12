@@ -747,8 +747,6 @@ scan bugs rather than fix them.
 - **Kill the `getX`/`getX100` pairs** — the maintenance getter reduces `Times100` internally, which is the exact
   pair [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100) forbids, plus the saved-maintenance
   and unit-upkeep twins.
-- **Rename or delete `clearCanConstructCache`** — both overloads ignore their parameters, have identical bodies,
-  and say in their own text that there is no cache to clear. A name advertising a dead cache is the bait.
 - **Spell out the bare single-letter identifiers** in the enabler/capability code (`j` for the info, `c`, `r`,
   `s`, `sb`, `jg`, `a`, `mem`, `wcap`). Per Sources/AGENTS.md this is a review-blocker on sight, and it is NOT
   the sanctioned exception — that covers a file-anchored PREFIX, never a bare parameter name.
@@ -841,22 +839,17 @@ scan bugs rather than fix them.
 > of dead things, which is what sends the next agent re-treading them — and being preprocessor-skipped or
 > commented, none of it is visible to the compiler census.
 
-- **Delete the `#ifdef` attic.** Each guard below is defined NOWHERE — not in `Sources/`, not in `fbuild.bff`, and
-  not even as a commented-out `#define` — so no switch ever existed and the block is an abandoned alternate:
-  `USE_BOTH_TECHBUILDING_EVALUATIONS` (a whole second, older tech-building valuation parked inside
-  `AI_techBuildingValue` — the very function the enablement-valuation ruling governs), `USE_OLD_PATH_GENERATOR`
-  (the old pathfinder, across `CvUnitAI`/`CvGameCoreUtils`/`CvSelectionGroup`/`CvUnit`, with live `#else`
-  branches), `VALIDITY_CHECK_NEW_ATTACK_SEARCH` (a migration-era harness that re-runs the old brute-force search
-  and diffs it), `TEMP_DEBUGGING_SUPPORT` (a parked `StreamWrapper : FDataStreamBase`), `EXTREME_PAGING`,
-  `EXPERIMENTAL_FEATURE_ON_PEAK`, `DEBUG_TECH_CHOICES`.
-  ⛔ **Do NOT sweep the OFF-SWITCHES with them.** A guard that HAS a commented-out `#define` is un-killed forward
-  intent and the disposition is the owner's ([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas)):
-  `ENABLE_FOGWAR_DECAY`, `USE_MEMMANAGER`, `GLOBAL_WARMING`, `THE_GREAT_WALL`, `USE_INTERNAL_PROFILER`,
-  `NO_RANDOM`, `VALIDATION_FOR_PLOT_GROUPS`, `VERIFY_CAN_BUILD_CACHE_RESULTS`, `VERIFY_PLOT_DANGER_CACHE_RESULTS`,
-  `VERIFY_YIELD_CACHE_RESULTS`, `DYNAMIC_PATH_STRUCTURE_VALIDATION`, `LIGHT_VALIDATION`. The mechanical test is
-  the commented `#define`, never the guard's name.
-- **Record WHY each off-switch is off, in its subsystem's reference doc.** Only `ENABLE_FOGWAR_DECAY` has its
-  reason written down; the rest do not, and an unexplained off-switch is what the next sweep eats.
+- **Record WHY each surviving `#ifdef` off-switch is off, in its subsystem's reference doc.** The abandoned
+  alternates are gone; what is left are legitimate switches, and an UNEXPLAINED one is what the next sweep eats
+  — the mechanical test cannot tell a deliberate off-switch from dead code ([AGENTS.md](../../../AGENTS.md)
+  Conventions §Design: what is BEHIND the guard decides). Two are written down —
+  `ENABLE_FOGWAR_DECAY` (broke hotseat) and `THE_GREAT_WALL` (rendering it caused CTDs), both in
+  [special-systems.md](../../reference/special-systems.md). The rest are not.
+  ⛔ Separately: `PLOT_DANGER_CACHING`, `PATHFINDING_CACHE`, `PATHFINDING_VALIDITY_CACHE` and
+  `YIELD_VALUE_CACHING` are CACHES behind a guard, and `NOMADIC_START` is a GAME MECHANIC behind one — both are
+  the wrong shape (a mechanic is a `GAMEOPTION_*`). ⚠ They are TU-LOCAL, so each converts per SITE, never by a
+  sweep. `python Tools/verify-ifdef-attics.py` lists them.
+
 - **Strip the comment trails that name a DEAD symbol.** Keep the forward statement, delete the dead name — naming
   it is the bait. Worst offenders: `CvCity`
   (narrates a removed generic-citizen loop AND spells out how to revive it), `CvUnitAI` (`AI_bestCityBuild`
@@ -1073,34 +1066,26 @@ fabricated number.
 was not re-bound — it now reads `CyState::getCityYieldTerms`, the SAME decomposition the `/computed` census
 renders, because a tooltip IS a census and two computations of one number drift.
 
-## `applyDistanceScoringFactor` exists TWICE, and both copies compute in FLOAT
+## `applyDistanceScoringFactor` computes in FLOAT on a lockstep AI path
 
-**OBSERVED.** Two definitions of one function, and both are live:
+**PROVEN — it computes in FLOAT on a lockstep path.** `applyDistanceScoringFactor`
+(`Sources/Engine/CvGameCoreUtils.cpp`, declared in `CvGameCoreUtils.h`) uses `float d0 = 5.0f; float p = 0.4f;`
+with `pow`/`exp`, truncated to int, and is reached from four `CvUnitAI` decision sites that run on every client
+in lockstep. Civ4 multiplayer is deterministic lockstep and CPU-dependent float math desyncs
+([engine.md](../../reference/engine.md); [modifier.md §2](../../specs/modifier.md): *"All integer, ×100
+fixed-point, no float"*).
 
-| definition | reached by |
-|---|---|
-| `Sources/Engine/CvGameCoreUtils.cpp:3727` (global, declared in `CvGameCoreUtils.h:419`) | `CvUnitAI.cpp:3981` · `CvUnitAI.cpp:17517` — unqualified, both OUTSIDE `namespace scoring` |
-| `Sources/AI/CvUnitAI.cpp:15521`, inside `namespace scoring` (opens `:15393`) | `CvUnitAI.cpp:28828` · `CvUnitAI.cpp:28945` — explicitly `scoring::`-qualified |
-
-**PROVEN.**
-
-- The two bodies are **functionally identical** — a line-by-line diff of both 48-line bodies differs only by
-  one blank line and one commented-out formula (`//score = (int)(static_cast<float>(score)/sqrt(dist));`)
-  carried by the `CvUnitAI` copy. So this is a straight duplicate of one calculation
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), and the copy also
-  carries dead commented-out code ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
-- **Both compute in FLOAT** (`float d0 = 5.0f; float p = 0.4f;`) and are reached from AI decision paths that
-  run on every client in lockstep. Civ4 multiplayer is deterministic lockstep and CPU-dependent float math
-  desyncs ([engine.md](../../reference/engine.md); [modifier.md §2](../../specs/modifier.md): *"All integer,
-  ×100 fixed-point, no float"*).
+⚑ **The DUPLICATE half is fixed** — a second, functionally identical copy lived in `namespace scoring` inside
+`CvUnitAI.cpp` with two of the four callers on it. It is deleted and all four callers read the one
+header-declared definition ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation);
+a namespace is separately the wrong shape for a shared calc — VC7.1/Boost/EXE-ABI mangling).
 
 **RULED OUT.** The contract broker is no longer a caller — its matching does not score on distance at all any
 more, so that call site is gone rather than pending. The four sites above are `CvUnitAI`'s own.
 
 **NOT YET KNOWN.** Whether the float falloff actually yields a divergent int after truncation across the CPUs
 the mod runs on — i.e. whether this is a live desync or a latent one. That decides urgency, not whether the
-shape is wrong. Also unknown: whether the duplicate was a copy taken deliberately (to add the `scoring::`
-grouping) or by accident; nothing in either file says.
+shape is wrong.
 
 ## Engine→Python IDENTITY conversion left 46+ handlers dereferencing a tuple
 

@@ -3085,89 +3085,10 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 }
 
 
-#ifdef CAN_BUILD_VALUE_CACHING
-
-canBuildCache CvPlot::g_canBuildCache;
-int CvPlot::canBuildCacheHits = 0;
-int CvPlot::canBuildCacheReads = 0;
-
-void CvPlot::ClearCanBuildCache()
-{
-	PROFILE_EXTRA_FUNC();
-	if ( g_canBuildCache.currentUseCounter > 0 )
-	{
-		OutputDebugString(CvString::format("Clear can build cache  - usage: %d reads with %d hits\n",canBuildCacheReads,canBuildCacheHits).c_str());
-
-		g_canBuildCache.currentUseCounter = 0;
-
-		for(int i = 0; i < CAN_BUILD_CACHE_SIZE; i++)
-		{
-			g_canBuildCache.entries[i].iLastUseCount = 0;
-		}
-	}
-}
-#endif
-
-bool CvPlot::hasCachedCanBuildEntry(int iX, int iY, BuildTypes eBuild, PlayerTypes ePlayer, struct canBuildCacheEntry*& entry)
-{
-	PROFILE_EXTRA_FUNC();
-	//	Check cache first
-	int worstLRU = 0x7FFFFFFF;
-
-	struct canBuildCacheEntry* worstLRUEntry = NULL;
-	canBuildCacheReads++;
-
-	//OutputDebugString(CvString::format("AI_yieldValue (%d,%d,%d) at seq %d\n", piYields[0], piYields[1], piYields[2], yieldValueCacheReads).c_str());
-	//PROFILE_STACK_DUMP
-
-	for(int i = 0; i < CAN_BUILD_CACHE_SIZE; i++)
-	{
-		entry = &g_canBuildCache.entries[i];
-		if ( entry->iLastUseCount == 0 )
-		{
-			worstLRUEntry = entry;
-			break;
-		}
-
-		if ( entry->iPlotX == iX &&
-			 entry->iPlotY == iY &&
-			 entry->eBuild == eBuild &&
-			 entry->ePlayer == ePlayer )
-		{
-			entry->iLastUseCount = ++g_canBuildCache.currentUseCounter;
-			canBuildCacheHits++;
-#ifdef VERIFY_CAN_BUILD_CACHE_RESULTS
-			long lRealValue = canBuildFromPythonInternal(eBuild, ePlayer);
-
-			if ( lRealValue != entry->lResult )
-			{
-				OutputDebugString(CvString::format("Cache entry %08lx verification failed, turn is %d\n", entry, GC.getGame().getGameTurn()).c_str());
-				FErrorMsg("Can build value cache verification failure");
-			}
-#endif
-			return true;
-		}
-		else if ( entry->iLastUseCount < worstLRU )
-		{
-			worstLRU = entry->iLastUseCount;
-			worstLRUEntry = entry;
-		}
-	}
-
-	entry = worstLRUEntry;
-
-	return false;
-}
 
 long CvPlot::canBuildFromPython(BuildTypes eBuild, PlayerTypes ePlayer) const
 {
 	PROFILE_FUNC();
-
-#ifdef CAN_BUILD_VALUE_CACHING
-#ifdef _DEBUG
-//	Uncomment this to perform functional verification
-//#define VERIFY_CAN_BUILD_CACHE_RESULTS
-#endif
 
 	//	If this player does not own, and cannot build a unit that can perform this build
 	//	no need to check with the Python.
@@ -3175,38 +3096,6 @@ long CvPlot::canBuildFromPython(BuildTypes eBuild, PlayerTypes ePlayer) const
 	{
 		return 0L;
 	}
-
-	struct canBuildCacheEntry* entry;
-
-	if ( hasCachedCanBuildEntry(getX(), getY(), eBuild, ePlayer, entry) )
-	{
-		return entry->lResult;
-	}
-	else
-	{
-		int lResult = canBuildFromPythonInternal(eBuild, ePlayer);
-
-		FAssertMsg(entry != NULL, "No can build cache entry found to replace");
-		if ( entry != NULL )
-		{
-			entry->iPlotX = getX();
-			entry->iPlotY = getY();
-			entry->eBuild = eBuild;
-			entry->ePlayer = ePlayer;
-			entry->lResult = lResult;
-			entry->iLastUseCount = ++g_canBuildCache.currentUseCounter;
-		}
-
-		return lResult;
-	}
-#else
-	return canBuildFromPythonInternal(eBuild, ePlayer);
-#endif
-}
-
-long CvPlot::canBuildFromPythonInternal(BuildTypes eBuild, PlayerTypes ePlayer) const
-{
-	PROFILE_FUNC();
 
 	return Cy::call<long>(PYGameModule, "canBuild", Cy::Args()
 		<< getX()

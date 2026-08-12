@@ -3891,9 +3891,6 @@ void CvPlayer::doTurn()
 	//	Reset cache of best route type to build
 	m_eBestRoute = NO_ROUTE;
 
-#ifdef CAN_BUILD_VALUE_CACHING
-	CvPlot::ClearCanBuildCache();
-#endif
 
 	if (!isNPC())
 	{
@@ -4044,9 +4041,6 @@ void CvPlayer::doMultiMapTurn()
 
 	setBuildingListInvalid();
 
-#ifdef CAN_BUILD_VALUE_CACHING
-	CvPlot::ClearCanBuildCache();
-#endif
 
 	doUpdateCacheOnTurn();
 
