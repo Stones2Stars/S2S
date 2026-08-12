@@ -505,6 +505,22 @@ the total-observability bar below.)
 - **Narrate your work verbosely.** Before each search/read/build step, state the question the step answers, what you
   expect, and what the result actually told you. The owner follows along in real time; terse status lines hide the
   reasoning.
+- **⛔ EDIT WITH THE EDIT TOOL — A CHANGE BURIED IN A SCRIPT IS UNREVIEWABLE (owner): *"it is fantastically hard for
+  me to see what you are doing when you are hiding all edits inside python scripts."*** An `Edit` shows the owner the
+  exact before/after as it happens; a `python - <<'PY'` heredoc shows them `removed 159 lines` and nothing else, so
+  the change lands unseen and the review surface is gone.
+  ⚑ **This is the ANTI-CONCEALMENT rule again, one level up** (`Sources/AGENTS.md`: an abbreviated identifier is a
+  review-blocker because *"agents hide poor implementation behind abbreviated variables, that I don't immediately
+  catch"*). A scripted edit hides the whole change rather than one name — same failure, larger blast radius, and it
+  is reached for exactly when an agent finds the Edit tool inconvenient. Convenience for the writer is not a reason
+  to cost the reviewer their only view.
+  ⚖ **A script IS the right tool for a genuinely MECHANICAL bulk pass** — the same transform over dozens of sites,
+  where the rule is the reviewable artifact and the diff is too large to read anyway. ⛔ Two obligations when you do:
+  state the RULE the script applies before running it, and **show `git diff` on the touched files immediately
+  afterwards** so the result is on screen. A scripted edit whose diff is never displayed is not narrated, whatever
+  the prose around it said.
+  ⚠ CRLF is not an excuse: the tree is `core.autocrlf=true`, the Edit tool handles it, and a literal that fails to
+  match is a signal to re-read the file, not to route around the tool.
 - **Trust but verify — EVERY claim, including the owner's.** A doc line, an owner aside, your own recollection, a
   memory entry — all are hypotheses to CONFIRM against ground truth (the live code, the actual data, the running
   game) before you build on them. Say what you verified against.
