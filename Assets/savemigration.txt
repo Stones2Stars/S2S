@@ -1938,3 +1938,35 @@ CvPlayer::m_iNoCapitalUnhappiness        (int)
 | entity ids by edge bucket and a bare predicate is not an entity. Recorded in the todo as the atom-crossing
 | sibling of the per-scaler rate read; do NOT answer it by reviving an accumulator.
 CvCity::m_aiPowerYieldRateModifier       (int array, NUM_YIELD_TYPES)
+========================
+| The five RIDER-FREE per-flag POLICY counters on CvPlayer. Each was a hand-named int that
+| processCivics / processTrait pushed the grantor's OWN authored `policies` block into
+| (`kCivic.providesPolicy(CLS_POLICY_X) ? iChange : 0`).
+| NOT a writerless accumulator -- the changers were live. This is the SECOND MAINTENANCE SURFACE shape the
+| roadmap removes on sight: PolicyContext already folds those same blocks off the same civic / trait facts,
+| so one fact maintained two stores.
+| REPLACEMENT: EmpireContext.policies -- the id->COUNT ContextDict the PLAYER owns (Engine/PolicyContext.h),
+| a self-registering spine consumer in the contexts band, read O(1) as policies().has(CLS_POLICY_X). Every
+| key is authored today: fixedBorders 6, citiesStartWithStateReligion 6, draftsOnCityCapture 4,
+| allReligionsActive 4, extraGoody 2. The boolean reads keep their names and re-body onto the fold -- the
+| POWER-as-amenity precedent exactly ([contexts.md]).
+| ⚑ ONE BUG FIXED, not merely re-homed: m_iAllReligionsActiveCount held TWO policies in one SIGNED int
+| (allReligionsActive positive, bansNonStateReligions negative), so a player holding one grantor of each
+| netted to zero and BOTH hasAllReligionsActive() and hasBannedNonStateReligions() answered FALSE. The data
+| authors the two keys independently and the fold answers them independently.
+| ⚑ The AI's multi-grantor damper (the cross-category half-value guard against oscillating civic choices)
+| asked getAllReligionsActiveCount() > 1 -- a genuine refcount question, so it reads
+| policies().count(CLS_POLICY_ALL_RELIGIONS_ACTIVE) > 1, the one sanctioned reader of the int.
+| ⚠ hasFixedBorders keeps its NPC guard and its GAMEOPTION_CULTURE_FIXED_BORDERS composition: an option
+| composition belongs at the CONSUMING system ([engine.md] § Consuming-system calcs), so only the inner
+| count read moved.
+| ⚠ The FixedBorders push site's AI_makeAssignWorkDirty() was a SEPARATE statement, not a changer rider, and
+| is left standing.
+| ⛔ The other NINE counters in this family are NOT cut here and must not be swept in with them: their
+| changers carry real side-effect riders (GC.getGame().updateTradeRoutes() and kin, gated by the bLimited
+| parameter), so each needs its rider re-homed first ([save.md §6]).
+CvPlayer::m_iAllReligionsActiveCount     (int)
+CvPlayer::m_iFixedBordersCount           (int)
+CvPlayer::m_iCitiesStartwithStateReligionCount (int)
+CvPlayer::m_iDraftsOnCityCaptureCount    (int)
+CvPlayer::m_iExtraGoodyCount             (int)

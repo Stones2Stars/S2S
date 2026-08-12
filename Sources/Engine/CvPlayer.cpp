@@ -1158,14 +1158,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	//TB Traits begin
 	m_iLeaderHeadLevel = 0;
 	m_iInquisitionCount = 0;
-	m_iFixedBordersCount = 0;
 
 	m_iNationalAirUnitCapacity = 0;
-	m_iCitiesStartwithStateReligionCount = 0;
-	m_iDraftsOnCityCaptureCount = 0;
-	m_iExtraGoodyCount = 0;
 
-	m_iAllReligionsActiveCount = 0;
 
 
 	//TB Traits end
@@ -16646,7 +16641,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 			}
 		}
 
-		changeFixedBordersCount(kCivic.providesPolicy(CLS_POLICY_FIXED_BORDERS) ? iChange : 0);
 		AI_makeAssignWorkDirty();
 
 		if (iChange == -1)
@@ -16689,10 +16683,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	// CITY_LIMIT per.above deposits, never here) -- its consumers test ==0 / >0, exactly the presence question.
 	changeCityLimit(InfoValuation::resolvedCityLimit(kCivic.getCityLimit()) * iChange);
 	changeCityOverLimitUnhappy((kCivic.hasCityOverLimitAnger() ? 1 : 0) * iChange);
-
-	//TB Civics Tags
-	changeAllReligionsActiveCount((kCivic.providesPolicy(CLS_POLICY_ALL_RELIGIONS_ACTIVE))? iChange : 0);
-	changeAllReligionsActiveCount((kCivic.providesPolicy(CLS_POLICY_BANS_NON_STATE_RELIGIONS))? -iChange : 0);
 
 	// Both are the civic's OWN authored edge lists, walked directly rather than asked per registry id.
 	const std::vector<int>* pHurries = kCivic.getEdges()->find(EDGEF_ENABLES, EDGEB_HURRIES);
@@ -17769,15 +17759,10 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCompatCheckCount);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFixedBordersCount);
 
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iAllReligionsActiveCount);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCitiesStartwithStateReligionCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iDraftsOnCityCaptureCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
 
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseMergeSelection);
@@ -18634,15 +18619,10 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCompatCheckCount);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFixedBordersCount);
 
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAllReligionsActiveCount);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalAirUnitCapacity);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCitiesStartwithStateReligionCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDraftsOnCityCaptureCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
 
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseMergeSelection);
@@ -25797,11 +25777,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeUpgradeAnywhere(kTrait.providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE) ? iChange : 0);
 	changeMilitaryFoodProductionCount(kTrait.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION) ? iChange : 0);
 	changeInquisitionCount(kTrait.providesPolicy(CLS_POLICY_ALLOW_INQUISITIONS) ? iChange : 0);
-	changeCitiesStartwithStateReligionCount(kTrait.providesPolicy(CLS_POLICY_CITIES_START_WITH_STATE_RELIGION) ? iChange : 0);
-	changeDraftsOnCityCaptureCount(kTrait.providesPolicy(CLS_POLICY_DRAFTS_ON_CITY_CAPTURE) ? iChange : 0);
-	changeExtraGoodyCount(kTrait.providesPolicy(CLS_POLICY_EXTRA_GOODY) ? iChange : 0);
-	changeAllReligionsActiveCount(kTrait.providesPolicy(CLS_POLICY_ALL_RELIGIONS_ACTIVE) ? iChange : 0);
-	changeAllReligionsActiveCount(kTrait.providesPolicy(CLS_POLICY_BANS_NON_STATE_RELIGIONS) ? -iChange : 0);
 
 	//	The anarchy CLAMPS are intrinsic bounds on a duration, not a channel that accumulates.
 	if (kTrait.getMaxAnarchy() > -1)
@@ -26695,73 +26670,34 @@ void CvPlayer::changeNationalAirUnitCapacity(int iChange)
 
 bool CvPlayer::hasCitiesStartwithStateReligion() const
 {
-	return (m_iCitiesStartwithStateReligionCount > 0);
+	return policies().has(CLS_POLICY_CITIES_START_WITH_STATE_RELIGION);
 }
 
-void CvPlayer::setCitiesStartwithStateReligionCount(int iValue)
-{
-	m_iCitiesStartwithStateReligionCount = iValue;
-}
-
-void CvPlayer::changeCitiesStartwithStateReligionCount(int iChange)
-{
-	m_iCitiesStartwithStateReligionCount += iChange;
-}
 
 bool CvPlayer::hasDraftsOnCityCapture() const
 {
-	return (m_iDraftsOnCityCaptureCount > 0);
+	return policies().has(CLS_POLICY_DRAFTS_ON_CITY_CAPTURE);
 }
 
-void CvPlayer::setDraftsOnCityCaptureCount(int iValue)
-{
-	m_iDraftsOnCityCaptureCount = iValue;
-}
-
-void CvPlayer::changeDraftsOnCityCaptureCount(int iChange)
-{
-	m_iDraftsOnCityCaptureCount += iChange;
-}
 
 bool CvPlayer::hasExtraGoody() const
 {
-	return (m_iExtraGoodyCount > 0);
+	return policies().has(CLS_POLICY_EXTRA_GOODY);
 }
 
-void CvPlayer::setExtraGoodyCount(int iValue)
-{
-	m_iExtraGoodyCount = iValue;
-}
-
-void CvPlayer::changeExtraGoodyCount(int iChange)
-{
-	m_iExtraGoodyCount += iChange;
-}
 
 	//Team Project (5)
+// ⚑ Two DISTINCT policies, asked separately. The counter these replaced held both in ONE SIGNED int
+// (`allReligionsActive` positive, `bansNonStateReligions` negative), so a player holding one grantor of each
+// netted to zero and BOTH reads answered false -- and the data authors both keys independently.
 bool CvPlayer::hasBannedNonStateReligions() const
 {
-	return (m_iAllReligionsActiveCount < 0);
+	return policies().has(CLS_POLICY_BANS_NON_STATE_RELIGIONS);
 }
 
 bool CvPlayer::hasAllReligionsActive() const
 {
-	return (m_iAllReligionsActiveCount > 0);
-}
-
-int CvPlayer::getAllReligionsActiveCount() const
-{
-	return m_iAllReligionsActiveCount;
-}
-
-void CvPlayer::setAllReligionsActiveCount(int iValue)
-{
-	m_iAllReligionsActiveCount = iValue;
-}
-
-void CvPlayer::changeAllReligionsActiveCount(int iChange)
-{
-	m_iAllReligionsActiveCount += iChange;
+	return policies().has(CLS_POLICY_ALL_RELIGIONS_ACTIVE);
 }
 
 void CvPlayer::startDeferredPlotGroupBonusCalculation()
@@ -26782,20 +26718,10 @@ bool CvPlayer::hasFixedBorders() const
 {
 	if (!isNPC() && GC.getGame().isOption(GAMEOPTION_CULTURE_FIXED_BORDERS) )
 	{
-		return (m_iFixedBordersCount > 0);
+		return policies().has(CLS_POLICY_FIXED_BORDERS);
 	}
 
 	return false;
-}
-
-void CvPlayer::setFixedBordersCount(int iValue)
-{
-	m_iFixedBordersCount = iValue;
-}
-
-void CvPlayer::changeFixedBordersCount(int iChange)
-{
-	m_iFixedBordersCount += iChange;
 }
 
 //Team Project (3)

@@ -13843,7 +13843,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			{
 				ReligionTypes eCurrentReligion = getStateReligion();
 				bool bHasEnablingCivic = (hasAllReligionsActive());
-				bool bHasMultipleEnablingCivicCategories = (getAllReligionsActiveCount() > 1);
+				bool bHasMultipleEnablingCivicCategories = (policies().count(CLS_POLICY_ALL_RELIGIONS_ACTIVE) > 1);
 
 				// Iterate what the empire HOLDS, not the whole building database. This was a ~5,200-id scan
 				// whose only real gate was `count > 0` -- a HAVE question the object now answers directly
@@ -13872,7 +13872,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			{
 				const ReligionTypes eCurrentReligion = getStateReligion();
 				const bool bHasEnablingCivic = hasAllReligionsActive();
-				const bool bHasMultipleEnablingCivicCategories = getAllReligionsActiveCount() > 1;
+				const bool bHasMultipleEnablingCivicCategories = policies().count(CLS_POLICY_ALL_RELIGIONS_ACTIVE) > 1;
 
 				if (bHasEnablingCivic || bHasMultipleEnablingCivicCategories)
 				{

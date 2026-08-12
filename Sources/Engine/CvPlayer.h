@@ -1569,14 +1569,9 @@ protected:
 	int m_iCompatCheckCount;
 	int* m_paiNationalDomainProductionModifier;
 	int* m_paiNationalTechResearchModifier;
-	int m_iFixedBordersCount;
 
 	int m_iNationalAirUnitCapacity;
-	int m_iCitiesStartwithStateReligionCount;
-	int m_iDraftsOnCityCaptureCount;
-	int m_iExtraGoodyCount;
 
-	int m_iAllReligionsActiveCount;
 
 
 	//TB Traits
@@ -2041,25 +2036,16 @@ public:
 
 
 	bool hasCitiesStartwithStateReligion() const;
-	void setCitiesStartwithStateReligionCount(int iValue);
-	void changeCitiesStartwithStateReligionCount(int iChange);
 
 	bool hasDraftsOnCityCapture() const;
-	void setDraftsOnCityCaptureCount(int iValue);
-	void changeDraftsOnCityCaptureCount(int iChange);
 
 
 
 
 	bool hasExtraGoody() const;
-	void setExtraGoodyCount(int iValue);
-	void changeExtraGoodyCount(int iChange);
 
 	bool hasBannedNonStateReligions() const;
 	bool hasAllReligionsActive() const;
-	int getAllReligionsActiveCount() const;
-	void setAllReligionsActiveCount(int iValue);
-	void changeAllReligionsActiveCount(int iChange);
 
 
 
@@ -2071,8 +2057,6 @@ public:
 	void endDeferredPlotGroupBonusCalculation();
 
 	bool hasFixedBorders() const;
-	void setFixedBordersCount(int iValue);
-	void changeFixedBordersCount(int iChange);
 
 	int getBaseMergeSelectionUnit() const;
 	void setBaseMergeSelectionUnit(int iNewValue);
