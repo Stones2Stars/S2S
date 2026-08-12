@@ -650,6 +650,34 @@ oracle diff, on one plane. The easier failure to find is the one to keep.
 - **An oracle run ANNOUNCES nothing.** It emits no `[CASCADE] rebuilt` line: nothing was rebuilt, and a
   verification sweep must not move the numbers that describe real work.
 
+## ⚖ THE SPATIAL CARVE-OUT — a PATH is not a maintained sum, so it is a LEGITIMATE cache (owner)
+
+> *"We should have some pathfinding cache, because it is the most expensive, and at the same time
+> unmaintainable thing we can do — it has to scan plots by its very definition."*
+
+Everything above says derived state is a MAINTAINED SUM and a cache is a defect. **SPATIAL results are the one
+class that rule does not reach, and the reason is structural rather than an exemption granted to them:**
+
+- **A path is not a Σ over sources, so there is no delta to apply.** It moves NON-LOCALLY — one terrain change
+  or one new route re-routes paths that do not touch the changed plot at all — so no fact can name the set of
+  results it invalidated. [DEC-maintained-sum](decisions.md#dec-maintained-sum) needs `Δ(v × c) = v × Δc`; a
+  shortest path has no such identity.
+- **And it is the most expensive thing the engine does**, because computing one *requires* scanning plots. That
+  is the definition of the operation, not an implementation that could be improved into a fetch.
+
+⇒ **So a pathfinding cache is WANTED, and deleting one is a regression.** `PATHFINDING_CACHE` /
+`PATHFINDING_VALIDITY_CACHE` are legitimate; so is `CvPlot`'s path-validity memo and the culture-distance
+cache ([legacy-value-calc-map.md](../reference/legacy-value-calc-map.md) already classes `cultureDistance`,
+culture spread and the property propagators as SPATIAL permanent carve-outs, for exactly this reason).
+
+⛔ **What the carve-out does NOT license.** It is scoped to results that are genuinely spatial:
+- **not** an ordinary derived value that merely feels expensive — if a fact can name what moved it, it is a
+  maintained sum and the cache is the defect ([DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil));
+- **not** a read-side `ensure()` — a spatial cache is filled at its own INVALIDATION point, never lazily on a
+  read that is specified as a bare fetch (the tombstoned protocol, [superseded-ideas](superseded-ideas.md) #14);
+- **not** freedom from invalidation. Being unmaintainable-by-delta means it is CLEARED, wholesale, by the
+  events that can move it (terrain, route, ownership) — a spatial cache still has to be wrong for nobody.
+
 ## ⛔ `CvDerivedCache` IS REPLACED BY `ContextDict` — VIRTUALLY EVERYWHERE (owner)
 
 > *"`CvDerivedCache` should be replaced by `ContextDict` virtually everywhere needed, and we just need to start

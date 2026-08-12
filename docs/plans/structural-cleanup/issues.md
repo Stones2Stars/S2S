@@ -845,10 +845,15 @@ scan bugs rather than fix them.
   Conventions §Design: what is BEHIND the guard decides). Two are written down —
   `ENABLE_FOGWAR_DECAY` (broke hotseat) and `THE_GREAT_WALL` (rendering it caused CTDs), both in
   [special-systems.md](../../reference/special-systems.md). The rest are not.
-  ⛔ Separately: `PLOT_DANGER_CACHING`, `PATHFINDING_CACHE`, `PATHFINDING_VALIDITY_CACHE` and
-  `YIELD_VALUE_CACHING` are CACHES behind a guard, and `NOMADIC_START` is a GAME MECHANIC behind one — both are
-  the wrong shape (a mechanic is a `GAMEOPTION_*`). ⚠ They are TU-LOCAL, so each converts per SITE, never by a
-  sweep. `python Tools/verify-ifdef-attics.py` lists them.
+  ⛔ Separately, `NOMADIC_START` is a GAME MECHANIC behind a guard (no `MISSION_FOUND` before
+  `TECH_SEDENTARY_LIFESTYLE`) — that is a `GAMEOPTION_*`, evaluated live and visible to the player
+  ([DEC-entity-gate](../../architecture/decisions.md#dec-entity-gate)), not a compile switch. ⚠ It is TU-LOCAL,
+  so it converts per SITE, never by a sweep.
+  ⚖ **The PATHFINDING caches are NOT in that class and are wanted (owner)** — a path is the most expensive
+  thing the engine does and is unmaintainable as derived state, *"it has to scan plots by its very
+  definition"*. See [state-repositories.md](../../architecture/state-repositories.md) § THE SPATIAL CARVE-OUT.
+  What is still worth asking of `PLOT_DANGER_CACHING` and `YIELD_VALUE_CACHING` is only whether a compile
+  SWITCH belongs on them at all, not whether the cache should exist.
 
 - **Strip the comment trails that name a DEAD symbol.** Keep the forward statement, delete the dead name — naming
   it is the bait. Worst offenders: `CvCity`

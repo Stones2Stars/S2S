@@ -456,6 +456,18 @@ removal-wins is structurally absent. ⚠ A set-shaped store survives only while 
 storage and maintenance convert together or not at all. **Home:**
 [state-repositories.md](state-repositories.md) § EVERY DERIVED STORE IS ONE SHAPE.
 
+### DEC-spatial-is-cached
+
+**A SPATIAL result is the ONE carve-out from the maintained sum, and its cache is WANTED (owner):** *"we should
+have some pathfinding cache, because it is the most expensive, and at the same time unmaintainable thing we can
+do — it has to scan plots by its very definition."* A path is not a Σ over sources, so there is no delta to
+apply, and it moves NON-LOCALLY (one terrain or route change re-routes paths that never touch the changed plot),
+so no fact can name what it invalidated. ⛔ Deleting a pathfinding / culture-distance / propagator cache as
+"a cache is a defect" is therefore a REGRESSION, not cleanup. ⚠ Scoped: it does not cover an ordinary derived
+value that merely feels expensive, does not license a read-side `ensure()`, and does not excuse invalidation —
+a spatial cache is CLEARED wholesale by the events that can move it. **Home:**
+[state-repositories.md](state-repositories.md) § THE SPATIAL CARVE-OUT.
+
 ### DEC-maintained-sum
 
 A cascade package is a **MAINTAINED SUM, never a marked-and-recalculated cache**: the DOMAIN fact names the
