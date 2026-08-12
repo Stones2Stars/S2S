@@ -34,13 +34,8 @@
  },
  "buildRate": {
   "empire": {
-   "units": {
-    "percent": [
-     {
-      "value": 25,
-      "enabled": "IS_SPACE"
-     }
-    ]
+   "space": {
+    "percent": 25
    },
    "buildings": {
     "BUILDING_CISLUNAR_FACTORY": {

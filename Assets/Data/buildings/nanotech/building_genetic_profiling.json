@@ -24,13 +24,8 @@
  },
  "buildRate": {
   "city": {
-   "units": {
-    "percent": [
-     {
-      "value": 35,
-      "enabled": "IS_MILITARY"
-     }
-    ]
+   "military": {
+    "percent": 35
    }
   }
  },

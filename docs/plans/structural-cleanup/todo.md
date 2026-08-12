@@ -398,22 +398,17 @@
 - DELETE the `BUILD_RATE_MILITARY` / `BUILD_RATE_SPACE` kinds and serve the predicate-filtered `units` target.
   ⛔ They are a ROLLERSKATE, not channels waiting for data (owner): nothing should ever author them, so the
   enumerators in `CvInfoKinds.h` and their name rows in `CvInfoKinds.cpp` GO rather than standing to be
-  re-authored. The curator already emits the spec shape (`buildRate.<scope>.units.percent`, entry
-  `{value, enabled: IS_MILITARY | IS_SPACE}`), so until the read lands both boosts read 0.
-  ⚠ **It is NOT a re-point — the read does not exist, and that is BY DESIGN.** `CvModifiers::pluralTargetSum`
-  is the plural-target read and is deliberately UNQUALIFIED-ENTRIES-ONLY: an entry carrying a predicate on its
-  plural target is the VALUATION's, because summing it scope-wide is the silently-plausible-wrong fold
-  ([modifier.md §5](../../specs/modifier.md)) -- "+1 food per water plot" is not "+1 food". So a scope-package
-  sum would hand EVERY unit the space rows.
-  ⛔ **And the candidate is a `UnitTypes`, not a `CvUnit*`.** `CASC_PRED_IS_TAG` reads `ctx.unit->getUnitInfo()`
-  and answers FALSE when the slot is empty, so a build candidate resolves nothing today. The tags themselves are
-  fine -- both are authored, so neither fails open through the unminted-tag branch.
-  ⇒ What the work actually is: a candidate slot on `CvCascadeEvalCtx` that a unit TYPE can fill (the
-  [contexts.md](../../architecture/contexts.md) SOURCE-SLOT shape, set by the walk that knows the id), the
-  `IS_TAG` leg reading it, and ONE valuation read that resolves a qualified plural-target entry against a
-  candidate -- then the call sites move onto it: the unit gate in
-  `CvPlayer::getProductionModifier(UnitTypes)`, the project gates in `CvPlayer`/`CvCity`, and the `CvCityAI`
-  building valuations.
+  re-authored. ⛔ **The curator change and the READ land TOGETHER, in one work item.** Re-curating first was
+  tried and REVERTED: it moved a WORKING military boost onto a shape nothing reads, so every barracks-class
+  building silently stopped boosting. Data-leads sequences a work item, it does not license shipping live
+  data to a consumer that does not exist.
+  ⚑ **`IS_MILITARY` means the candidate HAS THE TAG `military`; `IS_SPACE` means it has the tag `space`** —
+  nothing more. The tag test is already at the call site (`GC.getUnitInfo(eUnit).hasTag(CLS_TAG_MILITARY)`), so
+  the candidate answers it off its OWN info: no eval ctx, no `CvUnit*`, no valuation machinery.
+  ⛔ Routing this through the generic condition evaluator is the over-engineering to refuse — it was proposed
+  once, on the grounds that `CvModifiers::pluralTargetSum` takes unqualified entries only and
+  `CASC_PRED_IS_TAG` needs a live unit. Both are true and neither applies: what is wanted is the sum of the
+  `units`-target entries whose qualifier names a tag the CANDIDATE carries.
   ⛔ **Do NOT mint a composed getter to keep the old call sites working** -- preserving
   `CvPlayer::getSpaceProductionModifier` so the AI and the `canDoCometFragment` Python gate need no edit is the
   half-migration tell, not a win

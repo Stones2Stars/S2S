@@ -56,13 +56,8 @@
  },
  "buildRate": {
   "city": {
-   "units": {
-    "percent": [
-     {
-      "value": 20,
-      "enabled": "IS_SPACE"
-     }
-    ]
+   "space": {
+    "percent": 20
    }
   }
  },
