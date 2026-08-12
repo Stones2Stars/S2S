@@ -289,6 +289,23 @@ universally; delete one you pass. A comment may carry what the spec cannot know 
 never the rule. The CODE application of [DEC-docs-current-truth](#dec-docs-current-truth). **Home:**
 [AGENTS.md](../../AGENTS.md) Conventions §Docs.
 
+### DEC-comments-only-when-settled
+
+**There are WAY too many comments and they end up contradicting things, so one is written ONLY where the design
+is HARD SETTLED AND FINALIZED (owner).** VOLUME is half of what this governs: a comment is by construction a
+second copy, so the more there are the more are wrong at any moment — and a wrong one AUTHORIZES the next agent
+to act against the design while believing they conform. ⚑ Not a ban: most of the model is settled now (the
+final stretch), so the bar is usually MET. What it refuses is the comment written while a shape is still
+MOVING, which is guaranteed to contradict something later and is how the current population accumulated.
+⚖ **AND WHEN A COMMENT AND THE SPEC DISAGREE, THE COMMENT IS WRONG — pretty much always (owner).** It is never
+evidence that the spec has gone stale; resolving it the other way is how a drifted call-site copy gets promoted
+into the model. ⛔ **A CONTRADICTING COMMENT IS NUKED ON SIGHT** — never noted, never left for the next editor —
+and sweeping out the comments of a mechanism that DIED is sanctioned work in its own right. ⛔ Still not by blanket regex:
+that eats the EDGE reasoning a comment exists to carry. Sharpens
+[DEC-no-spec-restating-comments](#dec-no-spec-restating-comments); the code face of
+[DEC-no-rollerskate-evidence](#dec-no-rollerskate-evidence). **Home:** [AGENTS.md](../../AGENTS.md)
+Conventions §Docs.
+
 ### DEC-no-rollerskate-evidence
 
 Leave NO evidence of a previous rollerskate — dead / commented-out old code, superseded dual surfaces, transitional

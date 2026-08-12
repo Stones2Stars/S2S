@@ -716,18 +716,22 @@ the total-observability bar below.)
   ⇒ **So: do not annotate scales, and DELETE a scale annotation you pass.** What a comment may still carry is
   the thing the spec cannot know — WHY this site is an edge, or why a value is genuinely exceptional — never a
   restatement of the rule itself.
-  ⚖ **THE SURVIVING ONES ARE NOT A BACKLOG, AND THE RULE IS WHAT MAKES THAT SAFE (owner): *"we now have the
-  rule in place that overrules comments that contradict spec, that should do; we clean out dumb comments as we
-  go along."*** The rule OUTRANKS them, so a contradicting comment carries no authority to act on and its
-  presence costs nothing on its own — what cost something was having no rule to overrule it with. ⛔ Therefore
-  do NOT plan, size or schedule a sweep, and do not record a count of them as a worklist entry: they are
-  deleted opportunistically, by whoever is already editing that code.
-  ⚑ Same disposition as the legacy logging surface ([observability.md](docs/reference/observability.md): *"not
-  a cleanup backlog — a surface you must not RELY on"*), and for the same reason — the danger was ever only in
-  TRUSTING it, which the rule now forecloses. ⚠ [DEC-no-deferred](docs/architecture/decisions.md#dec-no-deferred)
-  does not reach this: nothing is being parked, the defect is closed by the rule and the residue is cosmetic.
-  ⛔ A blanket regex purge is the wrong instrument anyway — it eats the comments that carry the EDGE reasoning,
-  which is exactly what a comment is still FOR.
+  ⚖ **THERE ARE WAY TOO MANY COMMENTS AND THEY END UP CONTRADICTING THINGS, SO ONE IS WRITTEN ONLY WHERE THE
+  DESIGN IS HARD SETTLED AND FINALIZED (owner)** ([DEC-comments-only-when-settled](docs/architecture/decisions.md#dec-comments-only-when-settled)).
+  That is the whole bar, and VOLUME is half of what it governs: a comment is by construction a second copy of
+  something, so the more of them there are the more are wrong at any given moment — and a wrong one does not
+  merely mislead, it AUTHORIZES the next agent to act against the design while believing they conform.
+  ⚑ **It is not a ban, and most of the model IS settled now — we are on the final stretch (owner) — so the bar
+  is usually MET.** What it refuses is the comment written while a shape is still MOVING: that one is
+  guaranteed to contradict something later, which is exactly how the existing population got here.
+  ⚖ **AND WHEN A COMMENT AND THE SPEC DISAGREE, THE COMMENT IS THE THING THAT IS WRONG — pretty much always
+  (owner).** It is never evidence that the spec has gone stale, and resolving it the other way is how a drifted
+  call-site copy gets promoted into the model.
+  ⇒ **⛔ A CONTRADICTING COMMENT IS NUKED ON SIGHT (owner)** — one describing a design that has moved or DIED is
+  deleted the moment it is seen, never noted, never left for whoever next edits the file, and never weighed
+  against the cost of touching the file. Where a whole mechanism went, sweeping its comments out is sanctioned
+  work in its own right. ⛔ A blanket regex purge is still the wrong instrument: it eats the comments carrying
+  the EDGE reasoning, which is what a comment is still FOR.
 
 - **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change.** A stale spec is worse than
   none — the next agent trusts it and builds on the wrong shape. The proactive twin of fix-docs-now.
