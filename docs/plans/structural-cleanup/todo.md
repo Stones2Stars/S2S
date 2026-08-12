@@ -113,16 +113,6 @@
   `strength.unit.flat` is a family read while an air unit's base sits in `identity`, so the two planes of ONE
   question are reached by two different kinds of read, and a consumer must know which before it can ask.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
-- Bring `curate_trait`'s trade-route rows onto ruling 11, as `curate_building` already is: `iCoastalTradeRoutes`
-  and `iForeignTradeRouteModifier` still emit `coastal` / `foreign` as MEMBERS, and neither has a kind in the
-  vocabulary — so a trait authoring one emits an address that resolves to nothing and is dropped in silence.
-  The ruled shape is the conditioned deposit (the memberless route count gated `HAS_COAST`; the modifier kind
-  gated `IS_FOREIGN`) — a WHERE-member is the condition-as-member rollerskate
-  ([DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates)).
-  ⛔ This is LIVE data loss, not latent: traits DO author both tags, and every one of those deposits resolves to
-  nothing and is dropped in silence. It closes by fixing the mapping and REGENERATING (`curate_trait.py --write`)
-  — traits are no longer content-locked ([modifier.md §4](../../specs/modifier.md)).
-
 - Author the leader→trait assignments. The chain is wired and the slots are authorable; the CONTENT is
   community-owned, so this closes by AUTHORING and never by reconstructing the tables the curator dropped.
 - Author per-leader `ai.personality.researchSearchDepth` ([enabler.md §8](../../specs/enabler.md)). Same shape as
@@ -152,8 +142,6 @@
   — which matters because `DomainTypes` crosses the ABI through `DllExport CvUnit::getDomainType()`.
   ⚠ Several sites treat it as a live case rather than a dead one (`isDomain`-style switches, an `FAssert` that
   ACCEPTS it beside `DOMAIN_LAND`), so this is a per-site read, never a delete-the-case sweep.
-- Map the flagged unitcombat remainder — map the obvious, flag the unsure, never blunt-purge
-  ([unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)).
 - Decide what an EMPIRE-scope `range` deposit would mean, if one is ever authored. ⚠ None exists today — every
   authored `range` is unit-scope, and no trait carries a `range` block at all. ⚑ On the aerial line it looks like a duplicate of the
   `air.empire.range` beside it; elsewhere it does not, which is why this is a DATA question and not a reader
@@ -839,20 +827,6 @@
   than rediscovering: the cut is meant to be one-way, and until this closes it is not.
   ⛔ It is NOT closed by publishing the legacy god object ([DEC-cy-not-fixed]) and NOT by a per-module shim
   ([DEC-no-legacy-masking]) — a module comes off it by having its reads served, one module at a time.
-- Restore the `class_<>` TYPE REGISTRATIONS the binding purge took along with the `.def` surfaces. A registration
-  carrying zero `.def`s is not a read surface — it is what lets the engine hand an object ACROSS
-  ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY). Without it the kept engine→Python
-  direction raises at conversion instead of running. ⛔ Register the bare type; do NOT re-add getters with it.
-  ⚠ The same hole reaches any published accessor whose RETURN type is an object — the art-info classes behind the
-  art manager, and any info-object handle still published. A def that resolves and then raises reads as a mystery
-  rather than as a missing binding, which is why this class hid.
-  ⚑ **The PLAIN VALUE STRUCTS are in this set and take their FIELDS with them** — the purge deleted the struct
-  registrar whole, and for a coordinate pair or an RGBA quadruple the members ARE the value rather than a getter
-  over game state, so "do NOT re-add getters" does not bite there
-  ([patterns.md](../../architecture/patterns.md) THE PYTHON READ BOUNDARY). Restore on demand, named by the call
-  site that wanted it.
-  ⚑ The test is mechanical: a type needs registration iff some engine call site passes or returns it. A wrapper
-  whose `DECLARE_PY_WRAPPER` has no call site genuinely needs none.
 - Serve the INFO-OBJECT accessor plane. `GC.get<X>Info(id).<method>()` is the dominant remaining Python read, and
   the global context hands out no info objects by design ([DEC-cy-not-fixed]) — so every one of them is an
   AttributeError at FIRST USE, not at import. `CyInfo` answers the generic reads by infotype prefix
@@ -881,13 +855,6 @@
   `CyMapGenerator` at all** — it is `CvMapGenerator::eraseGoodies`, and the Python-reachable route to it is
   `CyMap`, not this wrapper. So the goody-erase would have failed on the missing METHOD even with the binding
   restored, which is why "re-register the wrapper" was never the fix.
-- Widen `CyInfo` to the per-type INDEX shape the whole-registry screens need — the text key and the button
-  reference beside the description and type key it already serves. That shape is what every enumeration screen
-  renders, across every registered category, and the prefix dispatch already reaches them all.
-- Serve the reverse EDGE families through the info surface. The pedia derives "what needs me" / "what unlocks me"
-  by scanning whole registries and asking a per-id predicate; the load-time reverse pass already lands those
-  families on the info ([DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)). It is a
-  served answer to an unserved question — the scans go when the read exists.
 - Bind the XML-named callbacks that resolve to no `def` in the module the DLL names, and the DLL-named game-utils
   callbacks with no Python definition at all. ⚠ A name defined in ANOTHER module does not resolve, however
   reachable it looks from Python — the module the DLL names is the only one consulted.
@@ -1022,9 +989,6 @@
   needs the clause's `min`, which the shared surface does not yet return: LIFT that onto the shared surface, never
   keep the private copy for it. ⛔ `CvTechInfo`'s walk is NOT in this family — it reconstructs AND-vs-OR structure,
   which `CvConditionQuery` deliberately refuses to expose.
-- Build out [enabler.md §8](../../specs/enabler.md) "Load-end reconciliation": plot-group membership derived
-  rather than trusted from the save, the load-end dormancy fixpoint, and the dynamic operate axes on their events.
-
 ## Tree / include hygiene
 
 - Retire the `CvInfos.h` umbrella — a hand-careful pass; the lessons and hard bans are in
@@ -1044,8 +1008,6 @@
   somebody, just not by us.
   ⛔ Why it is worth doing: these blocks are invisible to the compiler census (the preprocessor skips them),
   so they hold the names of cut members indefinitely and no build will ever name one.
-- Route the `[CTB/work/intransit]` block onto the same gate as every other CTB line so it reaches `/events`.
-
 ## Green-up (after the structure, never ahead of it)
 
 - Engine-repair debt: the bare Engine includes · the property-manipulator helpers · `CvCity.h`'s functor row.

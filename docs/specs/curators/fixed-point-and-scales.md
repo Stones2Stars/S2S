@@ -205,6 +205,12 @@ SizeMatters counts*, not a modifier channel — it is not a scale violation and 
 **Sequencing within a cluster (owner): set the mechanic up to spec FIRST, then wire the consumers.** Do not open
 with a hundred consumer edits; build the value chain so it is internally ×100-consistent, then reduce at the readers.
 
+### 4c-unit. ⛔ ASK THE KIND'S UNIT, NEVER THE FAMILY'S
+
+`mod_valueForUnit` returns a `CASC_UNIT_PERCENT` as a PLAIN HUMAN PERCENT; a FLAT is ×100 and reduces at its
+point of use. ⚠ **A family-wide blanket on a per-kind-split family produced every defect in that cluster** — the
+unit belongs to the KIND, so reading it off the family is how a percent gets scaled or a flat does not.
+
 ### 4c-zero. ⛔ NO EXCEPTIONS — AN INDIVISIBLE QUANTITY IS STILL ×100 INTERNALLY (owner)
 
 > *"If I had allowed for free specialists to not be a ×100 number internally, it is a virtual guarantee that

@@ -4,23 +4,9 @@
 > legacy loaded/computed a real value, classified with named consumers. Keep CURRENT: delete rows as they are
 > fixed.
 >
-> ⚠ **Sections 1-2 below were verified against the tree and cleared** (2026-08-11): the Info headers
-> (`CvBuildingInfo.h`, `CvPromotionInfo.h`, `CvCivicInfo.h`, `CvUnitInfo.h`, `CvUnitCombatInfo.h`) were rebuilt
-> around the cascade-modifier surface since this census's original sweep, and every getter this doc named as a
-> constant-returning stub is now gone — either replaced by a real cascade-backed getter (`getCityLimit`,
-> `isNotShownInCity`) or removed outright with no surviving call site. **Sections 3-6 have NOT been re-verified**
-> against the current tree and may carry the same staleness; treat them as needing a fresh sweep before relying
-> on them.
-
-## 1. BUG-CONSUMED (a live consumer reads wrong values) — priority order
-
-*(cleared 2026-08-11 — every row's getter is gone from the current Info headers; see the note above)*
-
-## 2. UNCLEAR (verify / owner ruling)
-
-*(cleared 2026-08-11 — `CvCivicInfo::getTechPrereq` no longer exists on that class; `CvCorporationInfo` has no
-`getPrereqBuilding`; `CvLeaderHeadInfo` is now a fully JSON-fed poco with real getters for its `ai` group, per its
-own header comment)*
+> ⚠ **Sections 3-6 have NOT been swept against the current tree.** The Info headers were rebuilt around the
+> cascade-modifier surface after this census was taken, so a row here may name a getter that no longer exists.
+> Verify before relying on one.
 
 ## 3. DELIBERATE-DROP (ruling recorded; flags where the receiving side has not landed)
 

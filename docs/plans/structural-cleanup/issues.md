@@ -32,23 +32,6 @@
 
 ---
 
-## 3. `MoreCiv4lerts` dies on a cut binding
-
-`PythonErr.log`, every active-player turn:
-
-```
-File "MoreCiv4lerts", line 357, in buildBonusString
-AttributeError: 'CyGlobalContext' object has no attribute 'getBonusInfo'
-```
-
-A stage-4 casualty: the read was cut and this consumer was not moved. Belongs to the **Python-visuals barrier**,
-not the events one. ⛔ The fix is to serve the read on the new library, never to restore the binding
-([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
-⚠ The handler RAISING is the intended state meanwhile — it stays visible rather than being silenced
-([roadmap.md](roadmap.md) § the mutating Python handlers).
-
----
-
 ## 5. Culture distance RECOMPUTES ON READ — the tombstoned ensure protocol, still live
 
 **⚠ PRIORITY / DISPOSITION (owner): it has to be fixed, but it needs PROPER PLANNING — and it WORKS.** *"I have
@@ -257,40 +240,6 @@ a read that was cut, it never existed as a stored quantity. Either it collapses 
 defined decomposition read against the §2a terms.
 ⚑ [patterns.md](../../architecture/patterns.md) makes display shape DEMAND-DRIVEN and END-STAGE, which is the
 argument for collapsing it and letting a real request bring it back.
-
----
-
-## 11. The pedia hub is built on ACCESSOR FUNCTIONS, so it cannot be re-pointed call-site by call-site
-
-**Observed:** `AttributeError: 'CyGlobalContext' object has no attribute 'getHeritageInfo'` /
-`getUnitInfo` / `getPromotionInfo` / `getBuildingInfo` / `getTechInfo`, from `Pedia.placeHeritage`,
-`Pedia.getBuildingList`, `Index_Pedia.interfaceScreen` and `UnitUpgradesGraph.getGraphEdges`.
-
-**PROVEN — they are not reads, they are FUNCTION REFERENCES.** The hub's generic machinery is parameterized
-over the accessor itself: `self.getSortedList(GC.getNumHeritageInfos, GC.getHeritageInfo)` and
-`self.placeItems(widget, GC.getHeritageInfo)`; `Index_Pedia` holds a 19-row table of
-`(countFn, accessorFn, widget)`. So there is no per-call re-point to make — the SHAPE is the accessor,
-and every category flows through it.
-
-⚑ **The replacement shape already exists and is one crossing:** `INFO.getIndex(prefix)` returns the whole
-registry's identity block, which is exactly what these render. The table becomes `(prefix, widget)`.
-⚠ **But it is a hub refactor, not a sweep** — the helpers, the sort, the sub-category mapping and the
-jump-widget payloads all thread the accessor.
-
-**One leg needed a DATA decision, and it has one: `identity.pediaCategory`** ([json.md §7](../../specs/json.md),
-owner). `Pedia.getBuildingList` classified in Python from seven legacy getters plus a substring match on the
-localized DISPLAY NAME; the category is now authored data the curator derives once, so the classifier goes
-rather than being re-pointed. ⛔ Publishing those getters so it resolves is the banned repair — it preserves
-the name-matched buckets while reading as migrated.
-
-⚠ **The REST of this issue was never blocked, and reading it that way is the misreading to avoid** — it is a
-hub refactor, not a sweep. The precedent now exists: `Screens/Forgetful.py` was the same
-`(label, accessorFn, count)` → `(label, prefix)` + `INFO.getIndex` conversion over 51 registries, and
-`Index_Pedia`'s 19-row table is that table, smaller.
-
-⚖ **The full-registry SCAN itself is NOT the defect here** ([patterns.md](../../architecture/patterns.md)):
-enumerating every entity IS the pedia's job and those loops STAY. What changes is the COST — one crossing
-per registry instead of one per entity.
 
 ---
 
@@ -630,10 +579,6 @@ scan bugs rather than fix them.
   `CvTechEnabler`'s header states the design contract that the enabler consumes ONLY events *precisely so* a
   missed emit surfaces as a visibly wrong enabler, with the oracle diff as the tripwire. **The event-only design
   is resting on a tripwire nothing pulls.**
-- **Emit the load-pipeline diagnostic.** `emitLoadPipeline` is the ONE spine endpoint with no emitter anywhere —
-  the kind, the renderer and the field decode are all built. So load-stage timings, fixpoint pass/flip/converge
-  counts and the verify-catch count reach neither the log nor `/events`, and load time is the currency that pays
-  for turn time ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).
 - **Consult `EnablerKernel::cityHasVicinityBonus` instead of re-deriving it.** Its header names it the ONE home
   for "is this bonus in vicinity here?"; it has no caller, and the evaluator re-implements the same two-half union
   inline. Behaviour agrees today — the divergence risk is structural.
@@ -654,39 +599,9 @@ scan bugs rather than fix them.
 - **Fix the stale comment pointing at `CvPlot::setWorkingCity`** on the working-city event — no such method
   exists (only the override variant), and naming a dead site is the bait
   ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
-- **Wire the operating-building seed and its maintenance hooks.** `EnablerKernel::seedOperatingBuildings` has no
-  caller, and the caller its own comment names — `CvCity::refreshOperatingBuildings` — does not exist. The six
-  `on*Active` hooks are equally unreached. `operatingBuildings()` is a bare fetch by ruling, so nothing rescues
-  it: the set is empty for every city, so every building reads DORMANT, `wireOperatingBuildings` fills the eval
-  ctx with empty active/provided sets, `cityHasVicinityBonus` answers false, and the trigger plane grants
-  nothing. ⚑ Confirm by fetching `/computed/enabler/operating` — an every-city-empty `active` set IS the symptom,
-  read directly. ⛔ Not by diffing an `oracle` twin: that pair is dead
-  ([superseded-ideas #33](../../architecture/superseded-ideas.md)).
-- **⛔ Stop reading a NEGATIVE band bound as "no bound" — this is the landmine directly behind the item above.**
-  `CvJsonConditionParse` defaults an unauthored `min`/`max` to **-1**, and the PROPERTY band atom in
-  `CvConditionEval` then treats *any* negative as absent (`a->min < 0 || …`). Its own comment four lines up says a
-  `PROPERTY_*` value can be legitimately negative, so the parse sentinel and the atom contradict each other. Every
-  `PROPERTY_EDUCATION` low-education tier is authored with a negative min **and** max, so BOTH bounds are dropped
-  and the band clause is unconditionally true; the positive-side bands are unaffected, which is exactly why it
-  reads as working. Those tiers are `notConstructible`, so `CvCity::placeSystemBuildings` puts them in every city
-  at founding, and the `dormant` successor ladder then leaves the DEEPEST tier — the one with no successors —
-  permanently active regardless of the city's real education. ⚑ The seed item above is what hides it — deposits
-  only flow for buildings in the operating set. **Fix both in the same change, or wiring the seed lights up a
-  crippling city-wide penalty and takes the blame for it.** The fix is a real absent-sentinel (a has-bound flag,
-  or `INT_MIN`/`INT_MAX`), never a `< 0` test — see [enabler.md](../../specs/enabler.md) §3.
 - **Delete `CvPropertyInfo::getPropertyBuildings`, `m_aPropertyBuildings` and their CURATOR-GAP comment.** Nothing
   reads the getter, and the comment promises a resolution the band model supersedes
   ([enabler.md](../../specs/enabler.md) §3).
-- **Give `CityContext::amenities` a load path and a working removal.** Its feeder is the operate crossing, which
-  the dead seed above is what fires on load — so the fold is empty after every load and `isGovernmentCenter`,
-  `getPowerCount`, `isNoUnhappiness` and the health flags all read false. The removal leg is gated on the same
-  empty operating set, so amenities never decrement while additions fire: the dictionary grows monotonically for
-  the life of a game.
-  ⛔ **The building leg RIDES THE ENABLER'S CROSSING, and that is correct — do not "fix" it by moving the leg onto
-  a fact the city emits from its own read.** The enabler is a SOURCE OF FACTS, never the home of this answer, and
-  the dictionary is the final stopping place ([contexts.md](../../architecture/contexts.md)). The ordering ban
-  applies to a store that RE-DERIVES by reading another system's built set; a store that CONSUMES a delta has no
-  such dependency and builds identically whenever the facts arrive.
 - **Re-route `governmentCenterDistance` and delete the fact pair nobody emits.** Its interest set names the
   government-centre crossing, whose emitters have no callers at all — the counter that raised them became the
   amenity fold and the interest set did not follow, so the distance is frozen at whatever founding or load
@@ -753,8 +668,6 @@ scan bugs rather than fix them.
   ⚠ No data authors one today — this lands WITH that data, never speculatively.
 - **Collapse the per-dictionary plumbing into one mechanism** — owner resolution, dispatch, consumer class and
   registration are hand-written per family.
-- **Retire `CvDerivedCache` by emptying it, one tenant at a time**
-  ([DEC-contextdict-replaces-derivedcache](../../architecture/decisions.md#dec-contextdict-replaces-derivedcache)).
 - **Emit the RECEIVED line** so the whole event flow is auditable live off `/events`
   ([event-spine.md](../../specs/event-spine.md) § THE RECEIVED LINE): a consumer announces that it ACTED on a
   fact, and a DOMAIN fact with no matching received line names a missing consumer route — the one gap form with
@@ -774,9 +687,6 @@ scan bugs rather than fix them.
   `FAssertMsg` compiles out of `Release`/`FinalRelease` (`FASSERT_ENABLE` is Assert/Debug/Testing only) and
   neither changer clamps, so in a shipping build an over-release leaves the enable count negative and the next
   legitimate acquisition lands at zero — silently absenting the candidate.
-- **Delete `CvCity::doVicinityBonus`** — a per-turn blanket clear plus lazy recompute-on-read beside the
-  event-built vicinity store ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). Nothing is
-  missing behind it: the maintained store already exists, and this cache's own comment claims a reader that has none.
 - **Repair the `savemigration.txt` obligations naming `CascadeWellbeing`** — that class lives only in
   `SourceArchive/`, so those cut fields have no source at all ([save.md §3](../../specs/save.md)).
 - **Sweep the writerless serialized accumulators** by the two-grep test: serialized and read, with no caller on
@@ -799,17 +709,6 @@ scan bugs rather than fix them.
 > the data — is severed at four points at once. Fix them together; any one alone leaves it dead, and fixing the
 > seed alone lights up the negative-band defect (below) as a crippling city-wide penalty.
 
-- **`SEVT_PROPERTY_ADDED / _REMOVED` is emitted into the void.** The fact fires from the `CvProperties` mutation choke
-  points, but repo-wide the id exists ONLY as an enum entry, a log spelling, and the emitter — **no consumer
-  carries a case for it**. So a property value moving never re-checks the bands it crosses.
-- **The receiving machine is built and has zero callers**: `EnablerKernel::onPropertyBandHitActive` and
-  `propertyBandThresholds` (the threshold union the watermark was to read) are reached by nobody, and the
-  `s_operateNeedsLiveState` bucket that would otherwise catch these is a DEAD STORE — pushed to at load, never
-  read. The kernel opted out of the dynamic path in a comment promising "the watermark emits a targeted band-hit
-  on a threshold crossing". The watermark does not exist.
-  ⚑ **The un-announced fact is: "property P crossed one of its registered band boundaries in city C."** The
-  threshold table is already built; emit the crossing and route it — do not add a per-turn re-scan
-  ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
 - ⚠ **It fails INVISIBLY, not cleanly.** The re-check re-evaluates the WHOLE operate condition for whatever
   buildings some other event happens to seed — so a crime building that also requires a tech gets its crime band
   re-read incidentally the next time any tech lands. The verdict is right at unpredictable moments and wrong in
@@ -836,23 +735,6 @@ scan bugs rather than fix them.
   [DEC-scope-is-an-axis](../../architecture/decisions.md#dec-scope-is-an-axis) failing as a live behavioural
   defect, not a naming preference. Re-cut as `cap(ALLOWEDCAP_SELF, <scope>)` — the tally already takes a scope, so
   all four hand-written kind→scope ladders delete.
-- **⛔ Delete `CvDerivedData` — it is a REVIVED KILLED IDEA.** `superseded-ideas.md` #1 records the derived-data
-  repository (`TLazy`/version/staleness aggregation) as killed with an explicit *"don't revive the repository"*, and
-  the file is back: four empty repositories, members on four game objects, zero tenants, and doc-comments
-  teaching ensure-on-read plus a "bounded staleness" periodic rebuild as the sanctioned architecture. It also
-  cites a plan doc that does not exist. ⚑ It executes nothing, which is exactly why it is dangerous — it is what
-  the next agent reads when asking how derived caches work here.
-- **The city's vicinity fact is derived THREE times.** `CityContext` stores it properly, while `CvCity` keeps a
-  hand-rolled ensure-on-read memo gated on a multiplayer option AND a per-turn blanket wipe over every bonus in
-  every city — under a comment claiming no stored context copy exists, which the live `CityContext` dictionaries
-  refute. ⚠ The `had*VicinityBonus` arrays it feeds are SERIALIZED derived state
-  ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)) and have **zero**
-  readers in the whole tree — a per-turn radius scan and a save payload feeding nothing.
-- **Give `capabilities` its generated classification ids.** The team caps carry three runtime
-  `std::set<std::string>` rebuilt by heap-copying strings per team per mark, to serve three accessors with zero
-  call sites — while the string-keyed source getters ARE called ~80 times from AI diplomacy with string literals.
-  [DEC-classification-infos](../../architecture/decisions.md#dec-classification-infos) makes the union a bitset OR
-  and deletes the key table, the three sets and the flag mirror together.
 - **Materialize the remaining per-call string reads in info getters** — the hide-and-seek detection row resolving
   an infotype by string at read time (on every visibility check), the deposit-address `lookupSegment` built fresh
   at its call site (the DEC's own worked example, reconstructed literally), and the trigger-promotion scans
@@ -876,10 +758,6 @@ scan bugs rather than fix them.
 > The highest-signal rollerskate: the right intent written down, something else implemented, and the comment
 > reassuring every subsequent reader. ⚑ Two cite a `DEC-*` id that does not exist in the ledger at all.
 
-- **A phantom `DEC-json-not-cascade` is cited in seven places and defined nowhere.** A second citation invokes
-  `DEC-mirror-then-redesign`, which is not a ruling either — it is in `superseded-ideas.md` as DEAD, under
-  "never re-argue that a shape must be preserved because it is what the engine does today". Both are load-bearing
-  justifications resting on authority that does not exist.
 - **A false "verified" claim, refuted 35 lines below it in the same file** — the reverse pass asserts no
   corporation headquarters registry exists and nothing asks for one; the registry, its feeder and four consumers
   are all there. ⛔ The word "verified" is what pre-empts the check, so an agent trusting it builds a second
@@ -887,18 +765,12 @@ scan bugs rather than fix them.
 - **A cached-read contract on an uncached read** — the city maintenance getter's header promises "a BARE FETCH of
   the derived cache — never a gate test, never a recompute", while the body gates and loops every kind through
   the cross-scope legs, and concedes in its own text that nothing is cached. It misdirects the turn-time hunt.
-- **A live enum documented as dead** — the GREYED tri-state is marked "unused until it lands" while it is
-  assigned and wired across eight domains, with the same stale claim repeated on two sibling headers.
 - **A component and a hook that never existed** — the enabler header attributes trait maintenance to a
   `TraitEnabler` with an `onTraitChanged` hook; neither has ever existed in the tree. Every sibling line around it
   resolves, which is what makes it invisible.
 - **The evaluator is described as a class in three files**; it is a free function. And the promotion
   negative-effects derivation is blocked by a comment saying it "waits on the firstStrike.chance vocabulary row"
   — that row is live and already read elsewhere. Only the comment blocks it.
-- **The likely SEED of the ×100 cluster**: the JSON parse header claims "a BLANKET ×100 at every magnitude leaf".
-  It is not blanket — percent leaves are skipped. Fix this one first; it is what the next agent reads before
-  writing another divide.
-
 ## ⛔ SELF-HEAL FOSSILS — each one is a missing emit wearing a per-turn sweep
 
 - **A negative empire commerce total is rewritten to ~2 billion.** A legacy wrapped-int "false accumulate"
@@ -918,26 +790,12 @@ scan bugs rather than fix them.
   Wire the mark that a member city's realized commerce moved to also mark the empire's receiver slot. ⚠ Its
   sibling total-yield read has NO cache at all and re-walks every city per call, inside a players×yields double
   loop.
-- **Delete `CvDerivedData` — a rival cache framework with zero tenants.** `TLazy<>` is declared on four owners and
-  `reset()` on all four, and not one datum has ever been declared in it. ⛔ It is a rollerskate GENERATOR: it is
-  what the next agent finds when asking how derived caches work here, and it documents recompute-on-read plus a
-  "bounded staleness" periodic rebuild as the sanctioned architecture — exactly what
-  [DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) and
-  [DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape) refuse. It also points twice
-  at a plan doc that does not exist.
 - **The per-turn victory-city recount** wipes and refills two hand-named scalars whose only inputs are victory
   validity and immutable info data. Cheap, same shape, same missing emit.
 - **Owner call needed on the AI turn-scoped memo clears** (tech values, mission targets, civic values, build
   values, unit counts, trade routes, resource consumption). They memoize AI *valuations* rather than derived game
   state, so whether the no-self-heal rule binds them is a ruling, not an agent's call. ⚑ Start with the mission
   target cache — its own comment says it is force-recalculated "for reliabilty reasons (more robust to bugs)".
-
-## ⛔ VALUE CORRUPTION — the ×100 cluster's REMAINDER
-
-> ⚑ The contract, so it is never re-guessed: `mod_valueForUnit` returns a `CASC_UNIT_PERCENT` read as a PLAIN
-> HUMAN PERCENT; a FLAT is ×100 and reduces at its point of use. **Ask the KIND's unit, never the family's** — a
-> family-wide blanket on a per-kind-split family produced every defect in this cluster
-> ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)).
 
 ## ⛔ DOUBLE-COUNTED VALUES — the cascade folds it, then legacy adds it again
 
@@ -956,9 +814,6 @@ scan bugs rather than fix them.
   the cascade fold of the same entries. ⛔ The comment calling these "genuine one-shot event state" is TRUE of the
   random-event feeders (the owner-ruled carve-out) and FALSE since `processTech` started writing the same member.
   Cut the `processTech` lines; keep the member for the event grants.
-- **Trade routes — counted twice, and one leg is at the wrong scope.** `m_iTradeRoutes` is fed from building
-  deposits at empire scope AND from tech deposits read at CITY scope into an empire accumulator, while the city
-  read already rolls team+empire+city. Serve from the cascade read alone and soft-remove the member.
 - **Building-keyed happiness — the reverse pass lands it, then `processBuilding` lands it again.** The keyed
   happiness deposit is reverse-landed onto the TARGET building and folded with that building's own output; the
   player-side keyed accumulator adds it a second time. ⛔ **Do NOT cut the neighbouring
@@ -979,10 +834,6 @@ scan bugs rather than fix them.
   unverified: the space-production modifier, the team enemy-war-weariness modifier (whose own comment concedes it
   is "what the legacy accumulator held"), the city production-to-commerce modifier, and the building commerce
   change.
-- **Rule on the revolution mirror.** It is plausibly the sanctioned Python-authoritative mirror, but one leg
-  reads CITY scope into an empire accumulator and, unlike every sibling, applies no `/100`. Even if the mirror
-  stays, that leg is wrong.
-
 ## Rollerskates — the abandoned path, still in the tree
 
 > Evidence of a path someone tried and left behind
@@ -1097,28 +948,6 @@ scan bugs rather than fix them.
   converter is now registered. Whether any end-turn throw SURVIVES it is unestablished; the breadcrumb above is
   consistent with either, so do not assume this entry is separate until a fight-free end turn still crashes.
 
-## ⛔ THE ENGINE→PYTHON CALLBACK PAYLOAD IS HANDING OVER TUPLES WHERE HANDLERS EXPECT OBJECTS
-
-**This is the KEPT direction breaking, which is what makes it different in kind from a missing read.** The
-`Cy*` cut was DIRECTIONAL — engine→Python CALLBACKS are required functionality and stay
-([patterns.md](../../architecture/patterns.md) § THE CUT IS DIRECTIONAL) — so a callback whose payload no longer
-matches its handlers is not migration residue, it is the surviving half broken.
-
-The signature is uniform and spans unrelated files, which is what says it is the PAYLOAD rather than four bugs:
-
-- `CvEventManager.onUnitKilled` / `onCombatResult` — `'tuple' object has no attribute 'getOwner'`
-- `DancingHoskuld/CaptureSlaves.onCombatResult` — `'tuple' object has no attribute 'isMadeAttack'`
-- `DancingHoskuld/Partisan.onCombatResult` — `'tuple' object has no attribute 'getUnitType'`
-
-⚑ **The argument is now the (owner, id) ADDRESS the identity set prescribes, and the handlers were never moved
-onto it.** That is the right destination — a handler resolves data through `CyState`/`CyInfo` BY that address
-([patterns.md](../../architecture/patterns.md) § THE IDENTITY SET) — so the fix is to finish the conversion at
-the handlers, never to re-widen the payload back into a data-carrying wrapper.
-⚠ Combat is a per-kill, per-battle path, so every one of these raises repeatedly during a turn; a raise costs a
-traceback and the handler's whole body. **Consider it a suspect for the turn-time signal above**, not merely a
-correctness one.
-
-
 ## ⛔ THE MAINTENANCE RECEIVER — its participation gate is missing a side
 
 `InfoValuation::realizedAtEmpire`'s receiver Σ gates participation on `isDisorder()` alone. That is correct for
@@ -1181,70 +1010,6 @@ anything. Establish the CALL COUNT before optimising any single pass.
 the per-read-scan class this most likely belongs to is [contexts.md](../../architecture/contexts.md)
 (*"every evaluator predicate is an O(1) CONTEXT fetch -- a predicate that walks plots/units per call is the
 efficiency defect to reject in review"*).
-
-
-## ⛔ THE OPERATING SET IS NOT RESEEDED BY EVENTS — IT IS BUILT BY A LOAD-END RECOMPUTE
-
-**PROVEN — measured on a real save, from the spine log's own timestamps:**
-
-```
-gameLoadStarted   452.453      gameLoadFinished 507.750   (~55s of save read, ONE bracket)
-
-fact                     in-read     after
-cityBuildingAdded        165,862         0
-cityBuildingProcessed     32,309         0
-cityBuildingActivated          0   101,894    <- every operating verdict, after the bracket
-depositApply                   0     9,575    <- so every cascade deposit lands there too
-```
-⚑ The INPUT facts are all present in-read. Nothing is missing from the emit side — the building's presence is
-announced 165,862 times while the stream runs.
-
-**Not one** operating verdict is announced during the save read. All ~102k `cityBuildingActivated` facts fire
-after `gameLoadFinished`, emitted by `EnablerKernel::seedOperatingBuildings` — a FULL per-city recompute called
-once per city from `BuildingEnabler::onLoadFinished`. The enabler's operating domain therefore has exactly one
-builder, and it is not the event stream.
-
-**PROVEN — the spec says this is the wrong shape**, in its own decision table
-([event-spine.md](../../specs/event-spine.md) § what does acting on this fact PRODUCE):
-
-| the handler | verdict |
-|---|---|
-| BUILDS derived state (a context store, **an enabler domain**, a package) | **no guard — this is the reseed's whole job** |
-| needs an object the stream has not delivered yet | **not a guard — a BUFFER with a load-end DRAIN** |
-
-The operating set is an enabler domain. The sanctioned answer to its ordering problem is buffer-and-drain — the
-shape `CityContext` already uses for the membership fold — not a recompute.
-⛔ **Owner: *"the entire system is set up to be event driven from start to end"*, and *"recomputing would
-literally break the fold chain."***
-
-**⛔ THE BOTTOM LINE (owner): CASCADE AND ENABLER MUST BUILD ON THE SAME SEEDS.** They do not. The enabler's
-consumer is LOAD-ACTIVE and maintains its domains from the in-read facts; the cascade never sees an operating
-verdict until the load-end recompute announces 102k of them at once. One machine is event-built and the other is
-recompute-built, off the same save.
-
-⚠ **ORDER IS NOT THE HAZARD, and framing it that way sends the fix the wrong way (owner):** *"everything in the
-individual packages is always additive in some capacity, so it should not matter which order they enter."* A
-package is Σflat / Σpercent, so arrival sequence is irrelevant by construction. What matters is that each fact
-arrives **EXACTLY ONCE**. ⇒ The danger of a recompute beside an event-built set is therefore DOUBLE APPLICATION
-(or a silent withdrawal that never happens), never a race — which is also why it cannot be fixed by ordering the
-consumers, and why [DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed) says such a recompute
-"may never survive beside the setters".
-
-⚠ **RULED OUT — this is NOT the "two-pass load".** [engine.md](../../reference/engine.md)'s two-pass rule is the
-JSON INFO registration (register every type→id, then `mapFrom`, so same-category forward FK refs resolve). It is
-static data and has nothing to do with the save read or with events. The two get conflated because both are
-"load" and both are "two passes"; they are unrelated mechanisms.
-
-⚠ **NOT YET KNOWN — and this is the reason the recompute has survived:** the operating set is a FIXPOINT (an
-`operate` condition may consume a bonus another active building provides), so it is not obviously a plain delta.
-Establish whether the ripple hooks (`on*Active`, targeted propagation) reach the fixpoint from a buffered drain
-of the in-read building facts before removing the recompute. **Do not delete the seed until they demonstrably
-do — dropping a fact you needed is a permanent hole.**
-
-⛔ **A DOC MUST MOVE WITH THE FIX:** [enabler.md §3.2](../../specs/enabler.md) currently SANCTIONS this recompute
-as *"the load seed and the validation oracle"*. Half of that phrase died with the oracle
-([superseded-ideas #33](../../architecture/superseded-ideas.md)) and the other half contradicts event-spine.md's
-table above — so an agent reading enabler.md today is told the current shape is correct.
 
 
 ## THE GREYED-OUT BUILD LIST OFFERS BUILDINGS WHOSE TECH IS NOT RESEARCHED
