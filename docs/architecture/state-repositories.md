@@ -20,9 +20,8 @@ uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat (�
 receiver sums) is a data member on team / player / city / plot; the per-scope channel sets are minted from the
 compiled deposits at load (`CvCascadeChannelRegistry`, the ClassificationRegistry precedent); the package carries
 **apply verbs and no other writer**, so the modifier's own spine consumer (`CvModifierConsumer`, load-active)
-applies a moved source's deposits directly into the slots they feed; the gather (`CvCascadeGather`) is the
-INDEPENDENT endpoint ORACLE and never writes a stored slot (§ THE RECOMPUTE IS AN ENDPOINT ORACLE); and the
-combine lives on the calc surface (`InfoValuation::cityRate` / `groupSumAt`).
+applies a moved source's deposits directly into the slots they feed; and the combine lives on the calc surface
+(`InfoValuation::cityRate` / `groupSumAt`).
 
 ## The problem: no unified `dataChanged` trigger
 
@@ -214,8 +213,8 @@ whatever history the save carries; and the getter still has consumers, so that h
 game the same member is simply frozen at zero — the two failure modes look completely different and are one defect.
 
 ⚠ **It is invisible from every direction that normally catches things.** It compiles (the getter exists), it runs
-(the value is plausible), the compiler census says nothing (no symbol was deleted), and a stored-vs-oracle diff
-cannot see it (the value is not in a package at all). ⛔ So it is not found by reading code around a bug — it is
+(the value is plausible), the compiler census says nothing (no symbol was deleted), and the decomposition
+censuses cannot see it (the value is not in a package at all). ⛔ So it is not found by reading code around a bug — it is
 found by running the detector over the whole class.
 
 ⚑ **THE DATA SIDE OF THE SAME DEFECT IS THE `unkinded-member` CENSUS**, and the two should be read together: a
@@ -252,9 +251,9 @@ derivable** — *"having events just be stored in the cache is lunacy"* (a recom
 in their own serialized field (`CvCity::m_aBuildingCommerceChangeEvents`), outside the recompute path; the reader
 sums `player-recompute (empire) + city event/vote (persisted)`.
 
-## ⛔ THE READ IS A BARE FETCH — AND THE ENDPOINT ORACLE THAT ONCE STOOD BESIDE IT IS DEAD (owner)
+## ⛔ THE READ IS A BARE FETCH — AND WHAT ONCE STOOD BESIDE IT IS DEAD (owner)
 
-> ⛔ **The stored-vs-oracle endpoint pair is RETIRED** ([superseded-ideas #33](superseded-ideas.md)) — an endpoint
+> ⛔ **The recompute-and-diff endpoint pair is RETIRED** ([superseded-ideas #33](superseded-ideas.md)) — an endpoint
 > cannot rebuild the event chain, so its recompute side was never comparable. **What replaces it is the THREE-LEG
 > check: the LOGS (what landed), the JSON INFO (what the source is authored to deposit), and WHAT STATE EXPECTS
 > (who holds it, which gates hold, what the counts are) — all three agreeing, attributed to a named source with
@@ -268,37 +267,26 @@ sums `player-recompute (empire) + city event/vote (persisted)`.
 an ensure-per-read protocol on AI-hot paths ground unit automation. A read is a **BARE FETCH, unconditionally** —
 there is no gate test on it, because there is nothing on the read path to gate.
 
-**The ruling (owner): keep the recompute, but it is called ONLY BY AN ENDPOINT, and the COMPARISON HAPPENS
-EXTERNALLY.** Two endpoints, one external diff:
-
-- **the STORED endpoint** serves what the EVENTS built — the live package/set values, read exactly as a consumer
-  reads them;
-- **the ORACLE endpoint** runs the recompute FROM SOURCE **into SCRATCH** and serves that;
-- **an external consumer diffs the two.** A disagreement is a **missed emit**, named by scope + channel + owner.
+**⛔ THE RULING THAT OUTLIVES THE MECHANISM — A DIVERGENCE HAS NO IN-DLL REPRESENTATION AT ALL.** Whatever
+finds one, the DLL neither compares nor reports it: a divergence is not a happening, it is an OBSERVATION a
+reader makes about what was served.
 
 ⛔ **NEVER emit a divergence as a spine event — that is a GUARANTEED LICENSE TO BUILD SELF-HEALING (owner), and
 it is the reason this is a hard rule rather than a preference.** An event is an **invitation to a consumer**.
 Put a divergence on the spine and the next agent writes the consumer that handles it — and "handling" a value
 known to be wrong means CORRECTING it. Self-heal then arrives because the SHAPE invited it, not because anyone
 decided to add it, and it arrives wearing the authority of the event spine
-([DEC-no-self-heal](decisions.md#dec-no-self-heal)). **A PULL (an endpoint someone asks) cannot grow that
-consumer; a PUSH (an event fanned to whoever registers) grows it by default.** So the DLL neither compares nor
-reports: a divergence is not a happening, it is an OBSERVATION an external reader makes about two served
-numbers, and it has no in-DLL representation at all — no diff, no log line, no event, no field.
+([DEC-no-self-heal](decisions.md#dec-no-self-heal)). **A PULL (something a reader asks for) cannot grow that
+consumer; a PUSH (an event fanned to whoever registers) grows it by default.** So there is no diff, no log
+line, no event and no field for one.
+
+⚠ **And anything that RECOMPUTES in order to check must not be able to write back what it computed** — a
+verifier that repairs is self-heal wearing a different hat
+([DEC-no-self-heal](decisions.md#dec-no-self-heal)). That is a property to get from the STRUCTURE (compute into
+scratch the caller owns) rather than from a discipline anyone has to remember.
 
 ⛔ **Frame this as REBUILD. Shadow is dead and cutover is dead (owner) — neither is a lens for any remaining
-work.** Do not describe this oracle as "shadowing" the cascade, do not reach for cutover staging, and do not
-revive either vocabulary to justify a comparison: the sanctioned shape is simply *two served surfaces, diffed
-outside* ([http-endpoints.md](../specs/http-endpoints.md)).
-
-⚑ **Serving into SCRATCH is what makes "never repairs" STRUCTURAL.** The oracle cannot write the stored slots
-because it is not given them — no snapshot, no restore, no discipline to remember and no window in which a
-half-finished recompute could leave a repaired value behind. A verifier that repairs is self-heal wearing a
-different hat ([DEC-no-self-heal](decisions.md#dec-no-self-heal)); this one structurally cannot.
-
-⚑ **What makes this comparison REAL:** it pits **event-built state against a fresh recompute-from-source** — two
-genuinely different derivations of the same number, which agree only while every mutation emitted. A comparison
-whose two sides share a derivation can never turn red and verifies nothing; this one can, and that is its job.
+work.** Do not reach for cutover staging, and do not revive either vocabulary to justify a comparison.
 
 **The identity a divergence needs to be actionable:** "some city's production flats are wrong" across 185 cities
 identifies nothing, so every served value carries its owner, **interpreted per scope** as the spine's DOMAIN ints
@@ -507,8 +495,7 @@ buys. Four consequences:
   property it was written for.
   ⚠ **What legitimately still walks, so the claim is not overstated:** the CONDITIONED tail evaluates when its
   dependency moves (bounded by the reverse index, never by the scope); the cross-scope roll-up at read sums the
-  ~5 packages the object sits under, which IS the design ([modifier.md §1](../specs/modifier.md)); and the
-  ORACLE remains a deliberate full recompute that is never trimmed (§ THE RECOMPUTE IS AN ENDPOINT ORACLE).
+  ~5 packages the object sits under, which IS the design ([modifier.md §1](../specs/modifier.md)).
 - **⚑ PLANES B AND C ARE WHAT THE SOURCE FACT CANNOT ANSWER, and together they are the whole of the residue.** A
   Forge's `+1 happiness while powered` moves when the POWER moves though the Forge did nothing, so it rides the
   ATOM's route (plane C); a `per: {POPULATION}` deposit moves when the population moves, so it rides the COUNT's
@@ -588,8 +575,8 @@ on this model, not enthusiasm.
 ⚠ **The bound on the damage, so the trade is stated honestly: a phantom lives at most ONE SESSION.** Nothing
 derived is serialized, so LOAD rebuilds every slot from the reseed's own facts — the history pollution that makes
 a legacy serialized accumulator unrecoverable ([DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform))
-cannot accrue here. The missed-emit tripwire (the stored-vs-oracle endpoint pair, below) is what NAMES it inside
-that session.
+cannot accrue here. What NAMES it inside that session is the THREE-LEG check — the logs, the JSON info and what
+state expects ([http-endpoints.md](../specs/http-endpoints.md)).
 
 ### ⚖ AND IT IS THE EASIER CORRECTNESS PROBLEM — the deciding argument (owner)
 
@@ -619,8 +606,8 @@ depend on the emit surface being complete. The mark derivation was a SECOND cens
 correctness nothing else in the engine was ever checking.
 
 ⚑ **And a missing EMIT is multiply-observable** — a wrong availability verdict, an empty context store, a silent
-`/events` frame, a missing log line — while a missing MARK is observable in exactly one package, through one
-oracle diff, on one plane. The easier failure to find is the one to keep.
+`/events` frame, a missing log line — while a missing MARK is observable in exactly one package, on one plane,
+and only by someone already looking at it. The easier failure to find is the one to keep.
 - **ONE read surface, and it is a bare fetch.** `CvCascadePackage::readFlat/readPercent` is the whole of
   it: a package has no second, rebuild-triggering read to reach for, so a cross-scope input needs no ordering
   guarantee and the load bracket has nothing to drain. **THERE IS NO GATE ON A READ** — nothing is tested on it,
@@ -629,26 +616,17 @@ oracle diff, on one plane. The easier failure to find is the one to keep.
   each serves what the events built, DECOMPOSED term by term (`CvCascadePackage::readValuesInto`,
   `EnablerKernel::operatingBuildings`, `CascadeCapabilities::storedUnion`, and the yield census), rendered in
   `Sources/Tools/CvStateEndpoints.cpp`, never in the server file.
-- ⛔ **THE `oracle` TWIN IS DEAD AND DOES NOT COME BACK** ([superseded-ideas #33](superseded-ideas.md)): an
-  endpoint cannot replay the event chain, so a from-source recompute served beside the stored value is not a
-  second derivation of the same quantity — it answers a number that was never comparable, and diffing it
-  produces confident nonsense at scale. The paragraphs that follow describe what that twin WOULD have had to
-  be, and are kept only because their rulings bind any future verification shape:
-- **An oracle run is a FULL RECALC, by design (owner) — it reads NOTHING off the stored surface.** Every input,
-  including every cross-scope one, is recomputed from source. ⛔ The tempting alternative — recompute only the
-  asked-about object and read its cross-scope inputs off the stored packages — is **WRONG, and wrong in the
-  specific way that killed the old twin surface**: an oracle that consumes stored values is partly built on the
-  very state it exists to check, so a wrong input is silently INHERITED and the two sides quietly share a
-  derivation again. **Independence is the entire value of the oracle**; nothing may be traded for it.
-  *(Attribution is not lost by going full: a drifted low scope diverges on its OWN row too, so the external
-  differ walks from the lowest diverging scope up to find the root cause — and attribution is the EXTERNAL
-  reader's job anyway, which is the whole point of taking the comparison out of the DLL.)*
-- **⛔ An oracle run's COST IS IRRELEVANT — "correct is correct" (owner).** It is invoked deliberately, by a
-  human or a tool asking a question, never on a turn path. So it is never trimmed, sampled, memoized, or made
-  incremental to look cheap: a full recompute that takes as long as it takes IS the deliverable. Do not optimize
-  it, and never let a performance argument reshape it — that is how an oracle stops being independent.
-- **An oracle run ANNOUNCES nothing.** It emits no `[CASCADE] rebuilt` line: nothing was rebuilt, and a
-  verification sweep must not move the numbers that describe real work.
+- ⛔ **THERE IS NO RECOMPUTE-FROM-SOURCE TWIN BESIDE THEM, AND NONE COMES BACK**
+  ([superseded-ideas #33](superseded-ideas.md)): an endpoint cannot replay the event chain, so a from-source
+  recompute served beside the stored value is not a second derivation of the same quantity — it answers a number
+  that was never comparable, and diffing it produces confident nonsense at scale. **Correctness is the THREE-LEG
+  check instead** ([http-endpoints.md](../specs/http-endpoints.md)).
+  ⚑ Three rulings from that dead shape are kept, because they bind ANY future verification and not just the one
+  that died: a check must be **INDEPENDENT** (one that consumes the stored values is partly built on the very
+  state it exists to check, so a wrong input is silently inherited and the two sides quietly share a derivation
+  again); its **COST IS IRRELEVANT** — *"correct is correct"* (owner) — since it is invoked deliberately and
+  never on a turn path, so it is never trimmed, sampled or memoized to look cheap; and it **ANNOUNCES NOTHING**,
+  emitting no `[CASCADE] rebuilt` line, because a verification must not move the numbers that describe real work.
 
 ## ⚖ THE SPATIAL CARVE-OUT — a PATH is not a maintained sum, so it is a LEGITIMATE cache (owner)
 
@@ -1005,8 +983,7 @@ keyed count vs summed magnitude — is § EVERY DERIVED STORE IS ONE SHAPE, abov
     beside total maintenance, so the city total SKIPS that kind. Its deposit is a city-scope FLAT and therefore
     sits in the city's package like any other: a read that folded every maintenance kind would charge the same
     corporate gold twice in one expense total, plausibly and silently. So the Σ asks the CITY for its realized value —
-    which is what "the Σ of its members' REALIZED values" already says — and the oracle recomputes both halves
-    from source rather than reading either off the stored surface.
+    which is what "the Σ of its members' REALIZED values" already says.
     ⚠ **A receiver read is therefore NOT interchangeable with a rolled-legs read on the same channel.** The
     cross-scope roll-up answers a receiver channel with its maintained SUM, so a consumer that wants the
     channel's percent STACK at that scope must read the legs directly — asking the roll-up would hand back the

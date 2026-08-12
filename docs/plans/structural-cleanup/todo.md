@@ -367,7 +367,7 @@
 - Decide whether `CvTraitInfo` / `CvTechInfo` carry `m_amenities` and its fold leg. ⚑ Answerable NOW: readJson
   reports an entity authoring a block its type cannot hold, so the tree already says whether any does — read it,
   then either wire the leg or record that the block does not belong on those types.
-- The endpoint route table, beyond the stored-vs-oracle documents. It routes through the ACCESS SURFACE, which
+- The endpoint route table, beyond the four decomposition censuses. It routes through the ACCESS SURFACE, which
   does not exist yet; building it is the actual work item here
   ([roadmap.md § THE OPEN ITEM — the ACCESS surface](roadmap.md#-the-open-item--the-access-surface)).
 - Give the ctx-taking KEYED SUM (`keyedTargetSum`) the scope filter its collecting twin (`collectKeyedTarget`)

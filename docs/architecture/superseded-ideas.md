@@ -25,8 +25,9 @@
    individual calcs from the game itself, and a dry calculator that judges the spec while drifting from it
    corrupts the loop it is meant to close. Verification is LIVE — done-is-observable endpoint polls
    ([DEC-done-is-observable](decisions.md#dec-done-is-observable)) and turn time
-   ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)), and for the cascade the stored-vs-oracle endpoint
-   pair diffed OUTSIDE the DLL ([state-repositories.md](state-repositories.md)); the zero-ride-in principle still
+   ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)), and for the cascade the THREE-LEG check — the
+   LOGS, the JSON INFO, and what STATE expects, all three agreeing
+   ([http-endpoints.md](../specs/http-endpoints.md)); the zero-ride-in principle still
    holds ([DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)). **Never build a fifth dry calculator** —
    StoneBase was the fourth, and the approach is what died, not any one implementation. *(StoneBase itself lives
    on in other roles — it is the dry-calculator/verification job that is over.)*
@@ -117,9 +118,10 @@
     `ensure()` reincarnated as a diagnostic. Killed on both halves: it put a gate test back on a read that must be
     a bare fetch, and it made a divergence an in-DLL HAPPENING — an event is an invitation to a consumer, and the
     next agent's consumer "handles" a value known to be wrong by CORRECTING it, so the shape itself licenses
-    self-heal ([DEC-no-self-heal](decisions.md#dec-no-self-heal)). Replaced by the endpoint oracle: two routes per
-    plane, recompute into a caller-owned buffer, diff OUTSIDE the DLL
-    ([state-repositories.md](state-repositories.md)). **A divergence has NO in-DLL representation — never re-add a
+    self-heal ([DEC-no-self-heal](decisions.md#dec-no-self-heal)). ⚠ What this entry once named as its
+    replacement — a recompute-from-source served on a second route and diffed outside the DLL — is itself dead
+    (#33), so nothing here nominates one: a divergence is found by the THREE-LEG check
+    ([http-endpoints.md](../specs/http-endpoints.md)). **A divergence has NO in-DLL representation — never re-add a
     diff, a log line, an event, or a field for one, and never snapshot-and-restore a stored slot.**
 20. **The per-turn `(scope,channel)` CALC-COUNT GATE** (every calculation counting itself by scope and channel; the
     per-turn total a standing acceptance gate + regression tripwire, ~50k the breach line, the histogram naming the
@@ -312,8 +314,7 @@
     count is genuinely re-resolved when its DEPENDENCY moves, routed by the condition-atom reverse index — that
     is the one evaluation moment the model keeps, and reading its survival as licence to restore the mask is the
     misreading this entry exists to prevent.
-    ⚠ Also NOT this: `CvDerivedCache`'s use for a genuine leaf recompute elsewhere, and the ENDPOINT ORACLE's
-    full recompute-from-source, which is deliberately independent and stays.
+    ⚠ Also NOT this: `CvDerivedCache`'s use for a genuine leaf recompute elsewhere.
 31. **THE GOLDEN-AGE FOOD-FOR-GROWTH DISCOUNT** (`GOLDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH`, applied in
     `CvPlayer::getGrowthThreshold` to the completed threshold) *(dead — owner: "if growth reduction for golden
     age has never worked, we won't introduce it now, game has been balanced around not having it")*.

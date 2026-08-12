@@ -2713,10 +2713,10 @@ namespace
 
 	private:
 		// A whole PLAYER's deposit basis moved -- every package it owns re-derives (its cities' channels + sums and
-		// its own empire channels + sums). The two callers are the facts that move a source the gather folds at
-		// EVERY scope rather than at a deposit-addressed one:
-		//   - a DIFFICULTY change: the gather folds the handicap's own modifier families into this player's
-		//     packages (CvCascadeGather), so flexible difficulty moving the handicap moves that whole basis;
+		// its own empire channels + sums). The two callers are the facts that move a source felt at EVERY scope
+		// rather than at a deposit-addressed one:
+		//   - a DIFFICULTY change: the handicap's own modifier families feed this player's packages, so
+		//     flexible difficulty moving the handicap moves that whole basis;
 		//   - a GAME OPTION flip, per player (below).
 		// ⚠ This IS a whole-scope blanket, and it is the SANCTIONED kind: the fact is not deposit-addressed, so no
 		// union of per-source routes can express it -- exactly the SEVT_AREAS_RECALCULATED shape. It is NOT the

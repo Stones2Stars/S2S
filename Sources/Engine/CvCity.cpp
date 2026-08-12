@@ -40,7 +40,7 @@
 #include "Enabler/CvUnitEnabler.h"
 #include "Enabler/CvEnablerKernel.h"     // EnablerKernel:: -- the operate/gate surface (only fwd-declared above)
 #include "Repos/InfoRepo.h"              // InfoRepo<> -- the per-type registry the id reads go through
-#include "Conditions/CvConditionEval.h"  // the CvCascadeEvalCtx DEFINITION (CvCascadeGather only forward-declares)
+#include "Conditions/CvConditionEval.h"  // the CvCascadeEvalCtx DEFINITION, not just a forward declaration
 #include "CvCascadeChannelRegistry.h"   // channelLookup -- the realized-yield group read's channel identity
 #include "CvInfoKinds.h"                // infoYieldFamily / CHANNEL_AMOUNT -- the YieldTypes -> channel family axis
 #include "Data/CvInfoValuation.h"       // realizedAtCity -- the ONE cross-scope roll-up the group reads fold through

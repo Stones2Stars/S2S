@@ -205,6 +205,6 @@ files are READABLE WHILE THE GAME RUNS (the held-open pain applies only to the n
 ## See also
 
 - [../specs/logging.md](../specs/logging.md) — the observability bar + hook-shape *design*.
-  [../specs/http-endpoints.md](../specs/http-endpoints.md) — the transport, its standing invariants, and the
-  stored-vs-oracle cache documents.
+  [../specs/http-endpoints.md](../specs/http-endpoints.md) — the transport, its standing invariants, and why the
+  recompute-and-diff routes are dead.
   [../specs/validation.md](../specs/validation.md) — the live acceptance discipline this surface serves.

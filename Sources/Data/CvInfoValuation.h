@@ -372,8 +372,8 @@ public:
 	// BASE = the worked-plot Σ + the upper-scope flats rolled down at the combine; the specialist term carries
 	// its OWN percent layer before joining BASE; EXTRA is the building-flat tier, truncated to whole units
 	// before re-scaling (the engine's documented integer-truncation order, mirrored verbatim). The receiver
-	// sum rebuild (CascadeGather) and every realized-rate consumer call THIS one function -- the combine
-	// exists once, on the calc surface.
+	// sum rebuild and every realized-rate consumer call THIS one function -- the combine exists once, on the
+	// calc surface.
 	static int64_t cityRate(int64_t base, int64_t specialists, int iPercentSum, int64_t extra);
 
 	// THE PER-COMMERCE SPLIT (modifier.md §2a's commerce paragraph -- the §2a two-tier shape carried by the

@@ -349,8 +349,8 @@ end-state values are the clamps over them, and are a final-state CALCULATION, ne
 ([patterns.md](../architecture/patterns.md) rule 6): `healthRate = min(0, health − unhealth)`;
 `angryPopulation = clamp(anger − happiness, 0, pop)`.
 
-⚠ The wellbeing channel oracle went with the route-table purge ([http-endpoints](http-endpoints.md)); when the
-route table is rebuilt it wants one field per named engine term, so a divergence localises to a single source.
+⚠ The wellbeing channel has no decomposition census yet ([http-endpoints](http-endpoints.md)); when the route
+table is rebuilt it wants one field per named engine term, so a divergence localises to a single source.
 
 **The TARGET/INPUT split (the tradeYield precedent, [validation](validation.md) input rules):**
 
@@ -376,7 +376,7 @@ route table is rebuilt it wants one field per named engine term, so a divergence
   state/non-state religion terms derive from CIVIC/TRAIT/BUILDING configs × religion presence.
   ⚖ **Improvement health is a BALANCE-CUT (curator ruling, `curate_improvement.py`):** legacy `iHealthPercent`
   is deliberately dropped from the data, so the engine's `improvementGood/Bad` term is an **intentional
-  divergence** — attributed via the oracle's `improvementGood100/Bad100` fields, shown, never chased
+  divergence** — attributed by the engine's own `improvementGood100/Bad100` terms, shown, never chased
   ([validation](validation.md) intentional-model-change class); the term dies at the channel's legacy cut.
   ⚖ **Improvement HAPPINESS, by contrast, IS represented** (owner ruling — no gaps): the intrinsic per-radius
   improvement happiness (`happiness.plot.flat` on the improvement) and the civic per-improvement happiness
@@ -566,9 +566,9 @@ walk of the scope's deposits asking each whether it cares, and never a sweep of 
   > the DEPOSITING entity, so it reads `sourceBuilding` off the eval ctx and answers FALSE when nothing set it
   > ([contexts.md](../architecture/contexts.md) § THE SOURCE SLOTS — deliberately, since resolving it against
   > whichever entity a walk reached last is worse than declining). Every walk that resolves a building's entries
-  > therefore sets it: the plane-A city apply, the re-book routes, and the gather alike. ⚠ Setting it in the
-  > GATHER alone puts the oracle and the stored plane on different answers for this whole class — the two sides
-  > then disagree by construction, which is a divergence no missed emit explains.
+  > therefore sets it: the plane-A city apply and the re-book routes alike. ⚠ A walk that resolves a building's
+  > entries WITHOUT setting it silently answers FALSE for this whole class, so every deposit gated on
+  > `existedFor` goes missing — a divergence no missed emit explains.
 
 ---
 

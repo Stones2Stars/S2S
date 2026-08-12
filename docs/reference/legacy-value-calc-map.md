@@ -193,7 +193,7 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 >
 > **It is STALE + non-deterministic:** path 2 freezes the `specialistCount` AT THE MOMENT the civic was adopted; later
 > assignment changes are never reflected (save/load preserves it; an in-game recalc did NOT fix it — city 49164: 9 priests
-> now but only ~2 priests' worth cached). So the oracle's `getSpecialistCommerce` depends on civic/assignment HISTORY and
+> now but only ~2 priests' worth cached). So the engine's `getSpecialistCommerce` depends on civic/assignment HISTORY and
 > cannot be deterministically reproduced. (`extraSpecialistCommerce` = local+perType+all is a SEPARATE, clean cache —
 > 100%/185 cities; only this `specialistCommerce` pct term is affected.)
 >
@@ -204,7 +204,7 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > **OPEN DESIGN DECISION (cascade cannot mirror a non-deterministic buggy value):** what should the cascade compute?
 > Candidate clean/deterministic model = `Σ count×intrinsic×(100+pct)/100 + Σ count×pct/100` (current counts) — reproduces
 > the engine's INTENT (priests do gain culture from FREE_CHURCH) deterministically; e.g. p0 c8192 culture → 10 + 14 = 24
-> (oracle 25, the +1 = stale drift). Sub-questions for the owner: (a) mirror the flat-`pct/100`-per-specialist behavior, or
+> (the engine reads 25, the +1 = stale drift). Sub-questions for the owner: (a) mirror the flat-`pct/100`-per-specialist behavior, or
 > read the "+%" as a true percent OF the base (→ 0 for zero-base specs)? (b) for a spec with both intrinsic & pct, mirror
 > the engine's double-apply or apply once? This awaits an owner design call; until decided, the cascade's
 > specialist-commerce pct term is an unresolved failure-to-close (not shipped — [DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)); the rest of §2 is deterministic and proceeds. *(Also open: 6 gold cities
@@ -341,7 +341,7 @@ to the holding building via `getBaseCommerceRateFromBuilding100`), both modelled
 >   get the free AMOUNT right FIRST.
 > - **`FreeSpecialistAmountCascade`** sums the
 >   `freeSpecialists.any` count-leaf over active buildings (city/area/empire) + civics + active-set traits + the improvement
->   `per`-scaler + the per-wonder term, matching the engine `totalFreeSpecialists` oracle. Two cross-cutting facts the sweep
+>   `per`-scaler + the per-wonder term, matching the engine's own `totalFreeSpecialists`. Two cross-cutting facts the sweep
 >   surfaced (both fixed):
 >   - **The legacy AREA term is EMPIRE-scope now:** `iAreaFreeSpecialist` (Gateway Arch / Statue of Liberty) = engine
 >     `area()->getFreeSpecialist(owner)`, which shared the value across the landmass. A landmass is not an ownable scope,

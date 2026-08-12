@@ -314,8 +314,8 @@ fit. ⚠ This is a rule about HOW, not a gate on WHEN: the `CvCity`/`CvPlayer`/`
 
 Unchanged in principle, but note the surface it depends on is currently purged:
 
-1. **Manifestation polls** — PROGRAMMATIC against the `/computed` oracle endpoints, never eyeballing the screen. A
-   blind value is EMITTED first; emitting it is step one of that item's fix.
+1. **Manifestation polls** — PROGRAMMATIC against the `/computed` DECOMPOSITION CENSUSES, never eyeballing the
+   screen. A blind value is EMITTED first; emitting it is step one of that item's fix.
 2. **Turn time** — the whole performance signal, on the wall clock; the target and its sequencing are in
    §Verification targets below. The process-memory gauge rides beside it, once re-emitted.
 3. **Parity and shadow are CLOSED** and are NOT re-run, re-invoked, or used to frame remaining work

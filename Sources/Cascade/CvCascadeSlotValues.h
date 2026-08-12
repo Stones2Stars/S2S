@@ -4,11 +4,10 @@
 
 //
 //	CvCascadeSlotValues -- ONE scoped object's cascade slot values as a PLAIN DOCUMENT, the shape BOTH
-//	endpoint-facing reads answer in: the STORED values the events
-//	built (CvCascadePackage::readValuesInto) and the ORACLE's fresh from-source recompute
-//	(CascadeGather::gather*Into). Same fields in the same order, so an external consumer diffs the two
-//	documents slot by slot and attributes a disagreement to a NAMED (scope, channel, owner) -- the comparison
-//	happens OUTSIDE the DLL, which is why nothing here compares, reports or repairs anything.
+//	endpoint-facing reads answer in: the STORED values the events built
+//	(CvCascadePackage::readValuesInto), DECOMPOSED term by term so a reader can attribute a value to a NAMED
+//	(scope, channel, owner). Nothing here compares, reports or repairs anything -- a divergence has no in-DLL
+//	representation at all.
 //
 //	⛔ NOT a cache and NOT storage: a caller-owned buffer, copyable by value, holding no owner pointer. Handing
 //	the oracle one of these instead of the stored package is what makes "the oracle never repairs" STRUCTURAL

@@ -489,8 +489,8 @@ candidates** via the `EDGEF_REQUIRED_BY` reverse index (§7.1), never over the w
 the WHOLE correctness mechanism: every HAVE-change re-gates exactly its dependents, and nothing blanket-rebuilds
 behind it absorbing misses. ⚑ The asymmetry to hold onto: **over-inclusion in the reverse index is SAFE** (a few
 harmless extra re-checks), while a **MISS is a bug to close, never an accepted one-slice lag** — it must surface as
-a live divergence (a wrong `can*` verdict, or a stored-vs-oracle diff on the operating-set routes), and that
-divergence is the signal to fix the reverse-index hole.
+a live divergence (a wrong `can*` verdict, or the operating-set census disagreeing with what state expects), and
+that divergence is the signal to fix the reverse-index hole.
 
 ---
 
@@ -1091,7 +1091,7 @@ their kin name no entity, so they index by their `CASC_PRED_*` id and re-gate of
 ([event-spine.md](event-spine.md): one says what the tile CARRIES, the other what it MEANS).
 ⚠ **Reading the empty reverse edge instead FAILS SILENTLY, which is why this is spelled out**: the walk
 succeeds, finds nothing, and re-gates nobody — indistinguishable from "no candidate needed re-gating" at every
-observation point, including a stored-vs-oracle diff taken when nothing has changed since load. The index
+observation point, including a census read taken when nothing has changed since load. The index
 therefore reports its own size at load (`[ENABLER/plotatoms] atomKeys=… atomEntries=…`), so an index that
 compiled EMPTY says so.
 

@@ -52,7 +52,7 @@
 #include "Repos/BuildingsRepo.h"
 #include "CvTraitInfo.h"
 #include "Data/CvInfoValuation.h"   // resolvedCityLimit + realizedAtEmpire -- the ONE cross-scope roll-up
-#include "Conditions/CvConditionEval.h"   // the CvCascadeEvalCtx DEFINITION (CvCascadeGather only forward-declares)
+#include "Conditions/CvConditionEval.h"   // the CvCascadeEvalCtx DEFINITION, not just a forward declaration
 #include "Conditions/CvConditionQuery.h"  // the ONE structural read over a compiled entry's condition tree
 #include "Infos/CvModEntry.h"             // the compiled entry the conditioned walk reads its trees off
 #include "Enabler/CvTechEnabler.h"        // initDomain x6 -- the per-player domain lifecycle start (enabler.md 7.1)

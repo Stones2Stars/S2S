@@ -89,13 +89,13 @@ resources** ([enabler.md §8](../../specs/enabler.md) RESIDENCY) — every `requ
 `connection:"trade"` atom and `CvCity::getNumBonuses` relay through it. A wrong cut does not move a number; it
 silently changes what is BUILDABLE, in every city, with no loud symptom.
 
-**⛔ THE STORED-vs-ORACLE TRIPWIRE CANNOT CATCH A REGRESSION HERE.** The pair works only because its two sides are
-independent derivations. The plot group is an **INPUT to both**: the oracle's operate fixpoint resolves `requires`
-through `getNumBonuses`, which relays to the same group the stored side read. So a wrong network is INHERITED by
-both sides and the diff stays GREEN — the same-derivation failure
+**⛔ NO COMPARISON CAN CATCH A REGRESSION HERE, WHICH IS WHY THIS ONE NEEDS ITS OWN VERIFICATION.** The plot group
+is an **INPUT to everything that could be compared**: the operate fixpoint resolves `requires` through
+`getNumBonuses`, which relays to the same group every other reader saw. So a wrong network is INHERITED
+uniformly and every surface agrees — the same-derivation failure
 ([superseded-ideas #17](../../architecture/superseded-ideas.md)) arriving through the input rather than the
-comparison. ⇒ **Any change here needs verification built for it FIRST.** "Cut it and let the tripwire catch it"
-does not apply and must not be assumed.
+comparison, and the reason the THREE-LEG check's third leg (what STATE expects) is the only one with any
+purchase here. ⇒ **Any change here needs verification built for it FIRST**, never assumed.
 
 **PROVEN — what it actually does.** It computes the answer in order to decide whether it needed to:
 1. Runs a full `FAStar` pathfind over the connected region to build two **Zobrist hashes** (all nodes, resource
@@ -192,11 +192,11 @@ trade route × every specialist type, per draw. `getPlotYield` is named in
 [state-repositories.md](../../architecture/state-repositories.md) as **a DELETION, not a value to re-home**,
 measured there at *913M plot reads in one turn* for exactly this per-read walk.
 
-**RULED OUT — it is NOT the per-source decomposition the oracle owns.** That rule governs
+**RULED OUT — it is NOT the banned per-source decomposition.** That rule governs
 `(scope × channel × SOURCE)` accumulators — per building, per bonus. These five buckets are the
 [modifier.md §2a](../../specs/modifier.md) BASE TERMS (plot yield · `tradeYield` · specialists · corporation ·
 building flats), which is a different and legitimate question. ⛔ Do not close this by reviving per-source
-getters, and do not cite the oracle rule to park it.
+getters, and do not cite the per-source rule to park it.
 
 **NOT YET KNOWN — whether the five-way split survives at all.** The empire TOTAL is already served
 (`calculateTotalYield`; `STATE.getCommerces(iPlayer, -1)`, which this same screen's income line already
@@ -490,7 +490,6 @@ scan bugs rather than fix them.
   whole-registry sweep (it asks every building / tech / civic / trait / bonus / religion / corporation whether the
   owner has it, per mark), which contradicts the spec, so it is cut EARLY and the packages bind CLEAN. Every
   deposit without a route then reads **ZERO, visibly**, and that census is what drives the rest of this item.
-  `gather*Into` survives as the ORACLE and nothing else.
   1. **`CvCascadePackage::apply(channel, unit, ±value)`** — a pure add. Today the only writer into a slot is the
      gather's zero-then-refold; `sourceFlat`/`sourcePercent`/`sourceSum` are rebuild-path READS, not writers.
   2. **Plane A — the SOURCE route.** `±value` on the source arriving or leaving. ⚑ There is no withdrawal input to
@@ -589,8 +588,8 @@ scan bugs rather than fix them.
   no owning player, so the capability union, the enabler and the modifier consumer all drop them alike. The fact
   identifies the TEAM's acquisition; the consumers key on a player.
 - **Make the repeat-tech emit symmetric.** Play announces on every count increment while the read announces once
-  per held tech, so a counted tech's folded state differs across a save/load round-trip AND from the oracle's
-  from-source walk — which makes the missed-emit tripwire report a divergence that is not one.
+  per held tech, so a counted tech's folded state differs across a save/load round-trip — a divergence that is
+  an artefact of the asymmetric emit rather than a missed one.
 - **Give the vicinity store its `CASC_PRED_*`-keyed twin** — the vicinity counterpart of `plotAttrs` (river / coast
   / hills / peak / fresh water over the radius tiles), beside the `BONUS_*`-keyed one that now exists
   ([contexts.md](../../architecture/contexts.md), owner). ⛔ The two are NOT merged: the key spaces are disjoint
