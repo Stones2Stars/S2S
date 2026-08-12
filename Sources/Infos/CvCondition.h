@@ -10,7 +10,7 @@
 //
 //	C++03 form (StoneBase's own note): the C# abstract-base + sealed-derived discriminated union becomes ONE tagged
 //	struct dispatched by a `kind` switch (no virtual visitor, no RTTI). The parser fills it ONCE from the curated JSON
-//	(the only human->data boundary); the evaluator ([CvCascadeConditionEval]) then pattern-matches typed nodes and
+//	(the only human->data boundary); the evaluator (`cascadeEvalCondition`) then pattern-matches typed nodes and
 //	NEVER re-reads JSON. Owns its children (freed in the dtor); noncopyable.
 //
 

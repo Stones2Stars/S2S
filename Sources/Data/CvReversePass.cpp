@@ -1185,8 +1185,8 @@ namespace
 	// (addShrineBuilding had ZERO callers), so feed the registry here from the compiled FK. Idempotent by
 	// CLEARING FIRST, like every sibling sub-pass -- this pass runs in both load phases, and relying on the
 	// repos to hand back a fresh vector would make correctness hinge on whether a re-map reuses the poco.
-	// (No corporation analog exists: no HQ-building registry lives on CvCorporationInfo and no consumer
-	// asks for one -- the corp HQ CITY is CvGame state; verified, nothing to feed.)
+	// The corporation analog is rp_feedHeadquartersBuildings below, fed the same way from the building's own
+	// `headquarters` FK.
 	void rp_feedShrineBuildings()
 	{
 		const int iNumReligions = GC.getNumReligionInfos();

@@ -193,10 +193,10 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 	// --- the derived verdicts, materialized over the promotion's own data (string-plane skill reads are
 	// load-time only; the getters are bare member reads; move-through-plots is the ONE shared derivation) ---
 	m_bChangesMoveThroughPlots = deriveChangesMoveThroughPlots(m_skills, m_aiTerrainDoubleMove, m_aiFeatureDoubleMove);
-	// The archived negative-effects test mapped onto the surviving planes (the endurance leg is dead --
-	// unauthored; the chance-first-strikes leg waits on the firstStrike.chance vocabulary row -- reported).
+	// The archived negative-effects test mapped onto the surviving planes (the endurance leg is dead -- unauthored).
 	m_bNegativeEffects = getCombatModifier(COMBAT_LUNGE, CASC_SCOPE_UNIT) < 0
 		|| getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) < 0
+		|| getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) < 0
 		|| getCombatModifier(COMBAT_VS_BARBS, CASC_SCOPE_UNIT) < 0
 		|| getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT) < 0
 		|| getCombatModifier(COMBAT_ATTACK, CASC_SCOPE_UNIT) < 0

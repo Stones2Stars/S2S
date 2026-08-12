@@ -748,24 +748,6 @@ scan bugs rather than fix them.
   `s`, `sb`, `jg`, `a`, `mem`, `wcap`). Per Sources/AGENTS.md this is a review-blocker on sight, and it is NOT
   the sanctioned exception — that covers a file-anchored PREFIX, never a bare parameter name.
 
-## ⛔ COMMENTS THAT CONTRADICT THEIR OWN CODE
-
-> The highest-signal rollerskate: the right intent written down, something else implemented, and the comment
-> reassuring every subsequent reader. ⚑ Two cite a `DEC-*` id that does not exist in the ledger at all.
-
-- **A false "verified" claim, refuted 35 lines below it in the same file** — the reverse pass asserts no
-  corporation headquarters registry exists and nothing asks for one; the registry, its feeder and four consumers
-  are all there. ⛔ The word "verified" is what pre-empts the check, so an agent trusting it builds a second
-  registry.
-- **A cached-read contract on an uncached read** — the city maintenance getter's header promises "a BARE FETCH of
-  the derived cache — never a gate test, never a recompute", while the body gates and loops every kind through
-  the cross-scope legs, and concedes in its own text that nothing is cached. It misdirects the turn-time hunt.
-- **A component and a hook that never existed** — the enabler header attributes trait maintenance to a
-  `TraitEnabler` with an `onTraitChanged` hook; neither has ever existed in the tree. Every sibling line around it
-  resolves, which is what makes it invisible.
-- **The evaluator is described as a class in three files**; it is a free function. And the promotion
-  negative-effects derivation is blocked by a comment saying it "waits on the firstStrike.chance vocabulary row"
-  — that row is live and already read elsewhere. Only the comment blocks it.
 ## ⛔ SELF-HEAL FOSSILS — each one is a missing emit wearing a per-turn sweep
 
 - **A negative empire commerce total is rewritten to ~2 billion.** A legacy wrapped-int "false accumulate"

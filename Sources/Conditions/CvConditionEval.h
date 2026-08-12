@@ -3,7 +3,9 @@
 #define CV_CASCADE_CONDITION_EVAL_H
 
 //
-//	CvCascadeConditionEval -- the PORT of StoneBase `CascadingEnabler/ConditionEvaluator.cs`. Walks a typed
+//	cascadeEvalCondition -- the PORT of StoneBase `CascadingEnabler/ConditionEvaluator.cs`. A FREE FUNCTION, not a
+//	class: it holds no state, so there is nothing to instantiate ([patterns.md] DRY -- a calculator takes its
+//	inputs and returns a value). Walks a typed
 //	[CvCondition] tree and returns whether it holds, reading the per-scope live-state CONTEXTS (CityContext /
 //	EmpireContext / PlotContext) wherever the C# reads its `EvalState`/`PlotContext` snapshot. The LOGIC is a faithful transcription
 //	(StoneBase is the validated reference; owner ruling 2026-06-30) -- only the state reads differ. A NULL condition

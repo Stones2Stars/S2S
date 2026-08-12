@@ -546,8 +546,10 @@ public:
 	int getSavedMaintenanceByBuilding(BuildingTypes eType) const;
 	int getSavedMaintenanceTimes100ByBuilding(BuildingTypes eType) const;
 
-	// ⛔ A BARE FETCH of the derived cache -- never a gate test, never a recompute on the read path (the
-	// `ensure()`-on-read protocol is tombstoned BY NAME, [superseded-ideas #14]). The MARK is what rebuilds:
+	// The city's realized maintenance. ⛔ NOTHING IS CACHED HERE, deliberately: the downward roll is realized AT
+	// READ ([modifier.md] §1), so a city storing its owner's sums would force downward invalidation fan-out. The
+	// read composes the component KINDS against their own modifiers, takes the `amount` stack over the total,
+	// and declines wholesale under WLTKD or disorder -- a participation gate, not a term ([economy.md]).
 	int64_t getMaintenance() const;
 	int64_t getMaintenanceTimes100() const;
 	// The realized value of ONE maintenance KIND -- the per-component breakdown read.

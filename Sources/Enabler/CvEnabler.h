@@ -299,9 +299,11 @@ struct PlayerEnabler
 	EnablerDomain projects;  // the creatable list -- maintained by ProjectEnabler (init + tech/project deltas)
 	EnablerDomain processes; // the maintainable list -- maintained by ProcessEnabler (init + onTechChanged)
 	EnablerDomain builds;    // the unlocked worker-builds set (par.7.1) -- maintained by BuildEnabler (init + onTechChanged)
-	EnablerDomain traits;    // the learnable list -- maintained by TraitEnabler (init + onTraitChanged); the
-	                         // ladder is the trait's own `enables.traits` edge, so a rung lists when the one
-	                         // beneath it is held -- no authored rank, no gate beside it
+	EnablerDomain traits;    // the learnable list -- sized by CvPlayer::init and maintained straight off the
+	                         // SEVT_EMPIRE_TRAIT_ADDED/_REMOVED pair through EnablerKernel::applyPlayerHave (it
+	                         // needs no per-domain static: there is no gate to run). The ladder is the trait's
+	                         // own `enables.traits` edge, so a rung lists when the one beneath it is held --
+	                         // no authored rank, no gate beside it
 	EnablerDomain promotions; // the unlocked-promotions set (par.7.1) -- maintained by PromotionEnabler (init + onTechChanged); the per-unit gate overlays its planes at level-up
 
 	void reset() { techs.reset(); civics.reset(); projects.reset(); processes.reset(); builds.reset(); promotions.reset(); traits.reset(); }

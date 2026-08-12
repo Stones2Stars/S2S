@@ -1,5 +1,5 @@
 //
-//	CvCascadeConditionEval -- the PORT of StoneBase CascadingEnabler/ConditionEvaluator.cs (see the header). The walk
+//	cascadeEvalCondition -- the PORT of StoneBase CascadingEnabler/ConditionEvaluator.cs (see the header). The walk
 //	+ every predicate's semantics is a faithful transcription of the parity-proven C#; only the state reads differ
 //	(the live engine here, EvalState/PlotContext there). Section headers below name the C# method ported.
 //
