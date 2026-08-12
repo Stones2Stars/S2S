@@ -632,7 +632,6 @@ void CvPlayer::uninit()
 	m_buildingProductionMod.clear();
 	m_buildingCostMod.clear();
 	m_unitProductionMod.clear();
-	m_unitCombatProductionMod.clear();
 	m_researchQueue.clear();
 	m_cityNames.clear();
 	m_myHeritage.clear();
@@ -17991,21 +17990,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 					m_unitProductionMod.insert(std::make_pair(iType, iCount));
 				}
 			}
-			// Unit-Combat counters
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitCombatProductionModSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iUnitCombatProductionModType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iCount, "iUnitCombatProductionModCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_COMBATINFOS, iType, true));
-
-				if (iType > -1)
-				{
-					m_unitCombatProductionMod.insert(std::make_pair(iType, iCount));
-				}
-			}
-
 			// Unit counters
 			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "UnitCountSMSize");
@@ -18729,13 +18713,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			{
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iUnitProductionModType");
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iUnitProductionModCount");
-			}
-			// Unit-Combat counters
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitCombatProductionMod.size(), "iUnitCombatProductionModSize");
-			for (std::map<short, int>::const_iterator it = m_unitCombatProductionMod.begin(), itEnd = m_unitCombatProductionMod.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iUnitCombatProductionModType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iUnitCombatProductionModCount");
 			}
 			// Unit counters
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitCountSM.size(), "UnitCountSMSize");
@@ -24617,37 +24594,6 @@ int CvPlayer::getUnitProductionModifier(const UnitTypes eUnit) const
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
 	std::map<short, int>::const_iterator itr = m_unitProductionMod.find((short)eUnit);
 	return itr != m_unitProductionMod.end() ? itr->second : 0;
-}
-
-
-void CvPlayer::changeUnitCombatProductionModifier(const UnitCombatTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-	if (iChange == 0)
-	{
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_unitCombatProductionMod.find((short)eIndex);
-
-	if (itr == m_unitCombatProductionMod.end())
-	{
-		m_unitCombatProductionMod.insert(std::make_pair((short)eIndex, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_unitCombatProductionMod.erase(itr->first);
-	}
-	else // change mod
-	{
-		m_unitCombatProductionMod[itr->first] += iChange;
-	}
-}
-
-int CvPlayer::getUnitCombatProductionModifier(const UnitCombatTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-	std::map<short, int>::const_iterator itr = m_unitCombatProductionMod.find((short)eIndex);
-	return itr != m_unitCombatProductionMod.end() ? itr->second : 0;
 }
 
 

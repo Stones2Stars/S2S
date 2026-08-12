@@ -11574,10 +11574,6 @@ int CvCityAI::AI_yieldMultiplier(YieldTypes eYield) const
 	if (eYield == YIELD_PRODUCTION)
 	{
 		iMultiplier += (getMilitaryProductionModifier() / 2);
-		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-		{
-			iMultiplier += getUnitCombatProductionModifier((UnitCombatTypes)iI) / 4;
-		}
 	}
 
 	if (eYield == YIELD_COMMERCE)
@@ -12578,13 +12574,6 @@ int CvCityAI::AI_getMilitaryProductionRateRank() const
 			iRate += unitCombatExperience[iRow].second / 100;
 		}
 	}
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-	{
-		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isForMilitary())
-		{
-			iRate += getUnitCombatProductionModifier((UnitCombatTypes)iI) / 10;
-		}
-	}
 	int iRank = 1;
 
 	foreach_(const CvCity * pLoopCity, GET_PLAYER(getOwner()).cities())
@@ -12638,13 +12627,6 @@ int CvCityAI::AI_getNavalMilitaryProductionRateRank() const
 		if (GC.getUnitCombatInfo((UnitCombatTypes)unitCombatExperience[iRow].first).isForNavalMilitary())
 		{
 			iRate += unitCombatExperience[iRow].second / 100;
-		}
-	}
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-	{
-		if (GC.getUnitCombatInfo((UnitCombatTypes)iI).isForNavalMilitary())
-		{
-			iRate += getUnitCombatProductionModifier((UnitCombatTypes)iI) / 10;
 		}
 	}
 	int iRank = 1;

@@ -1400,8 +1400,6 @@ public:
 
 	int getUnitProductionModifier(const UnitTypes eUnit) const;
 	void changeUnitProductionModifier(const UnitTypes eUnit, const int iChange);
-	int getUnitCombatProductionModifier(const UnitCombatTypes eIndex) const;
-	void changeUnitCombatProductionModifier(const UnitCombatTypes eIndex, const int iChange);
 
 	bool isAutomatedCanBuild(BuildTypes eBuild) const;
 	void setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue);
@@ -2129,7 +2127,6 @@ private:
 	std::map<short, int> m_buildingProductionMod;
 	std::map<short, int> m_buildingCostMod;
 	std::map<short, int> m_unitProductionMod;
-	std::map<short, int> m_unitCombatProductionMod;
 	std::map<short, int> m_greatPeopleRateforUnit;
 	std::map<short, char> m_goldenAgeOnBirthOfGreatPersonCount;
 

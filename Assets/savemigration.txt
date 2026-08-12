@@ -1996,3 +1996,29 @@ CvPlayer::m_iExtraGoodyCount             (int)
 | so it was dead surface rather than a binding to preserve ([DEC-cy-not-fixed]).
 CvCity::m_aiDomainProductionModifier     (int array, NUM_DOMAIN_TYPES)
 CvPlayer::m_paiNationalDomainProductionModifier (int array, NUM_DOMAIN_TYPES)
+========================
+| The UNITCOMBAT production-modifier accumulators -- the sibling axis of the domain pair above, and the
+| `unitCombat` entry in the same replaced-accumulator sentence at CvCity::getProductionModifier.
+| Stranded on all three legs: changeUnitCombatProductionModifier had NO caller on EITHER class, both stores
+| kept deserializing, and three AI reads consumed them.
+| REPLACEMENT: the LIVE production path, exactly as for domains -- CvCity::getProductionModifier(UnitTypes)
+| resolves the unit's primary combat class AND every sub-class through
+| InfoValuation::keyedTarget(MODFAM_BUILD_RATE, keyedTargetSegment("unitCombats"), ...) over the city's
+| OPERATING buildings, plus the empire share.
+| ⚑ Cutting the reads also removes THREE WHOLE-REGISTRY SWEEPS over GC.getNumUnitCombatInfos() -- the
+| own-data inversion the enabler worklist wants gone independently. Each asked the registry a question the
+| entity's own compiled entries answer ([modifier.md §5]).
+| ⚠ ONE stated behaviour change, removing a frozen input: the production-multiplier estimate and the two
+| military production-rank heuristics drop their per-unitcombat term. With no writer it contributed 0 on
+| every game started since the keyed read landed. The unitcombat EXPERIENCE reads beside them (collected
+| once via collectUnitCombatExperience) are live and untouched.
+| ⚑ THE PLAYER HALF IS A DECORATED VARIABLE-LENGTH BLOCK, drained by naming all THREE of its tags -- the
+| CvCity::BuildingHappinessFromTech{Size,Type,Value} precedent above. Every element carries its OWN unique
+| BRACKET-FREE decorated tag, which save.md §3 permits; consecutive orphans of a named field all drain.
+| ⛔ It is NOT the m_aPropertySpawns shape, which is unremovable for the opposite reason: a count tag named
+| `iNumElts` SHARED by 23 blocks, followed by raw UNTAGGED records. Check which shape a block is before
+| assuming either outcome.
+CvCity::m_paiUnitCombatProductionModifier (int class array, per UNITCOMBAT)
+CvPlayer::iUnitCombatProductionModSize   (decorated short)
+CvPlayer::iUnitCombatProductionModType   (decorated short, per entry)
+CvPlayer::iUnitCombatProductionModCount  (decorated int, per entry)

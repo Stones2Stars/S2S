@@ -416,8 +416,6 @@ public:
 	int getCorporationCount() const;
 
 
-	int getUnitCombatProductionModifier(UnitCombatTypes eIndex) const;
-	void changeUnitCombatProductionModifier(UnitCombatTypes eIndex, int iChange);
 	int getUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex) const;
 	void changeUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex, int iChange);
 
@@ -1667,7 +1665,6 @@ protected:
 	//TB Combat Mod (Buildings)
 	int* m_paiAidRate;
 	int** m_ppaaiExtraBonusAidModifier;
-	int* m_paiUnitCombatProductionModifier;
 	int* m_paiUnitCombatDefenseAgainstModifier;
 	//TB Building Tags
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;

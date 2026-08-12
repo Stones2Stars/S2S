@@ -542,7 +542,6 @@ CvCity::CvCity()
 	m_pabAutomatedCanBuild = NULL;
 	m_paiAidRate = NULL;
 	m_ppaaiExtraBonusAidModifier = NULL;
-	m_paiUnitCombatProductionModifier = NULL;
 	m_paiUnitCombatDefenseAgainstModifier = NULL;
 	m_ppaaiLocalSpecialistExtraYield = NULL;
 
@@ -801,7 +800,6 @@ void CvCity::uninit()
 
 	SAFE_DELETE_ARRAY(m_paiAidRate);
 	SAFE_DELETE_ARRAY2(m_ppaaiExtraBonusAidModifier, GC.getNumBonusInfos());
-	SAFE_DELETE_ARRAY(m_paiUnitCombatProductionModifier);
 	SAFE_DELETE_ARRAY(m_paiUnitCombatDefenseAgainstModifier);
 	SAFE_DELETE_ARRAY(m_paiStartDeferredSectionNumBonuses);
 	SAFE_DELETE_ARRAY(m_paiSpecialistBannedCount);
@@ -1082,13 +1080,11 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 		FAssertMsg((0 < GC.getNumUnitCombatInfos()), "GC.getNumUnitCombatInfos() is not greater than zero but an array is being allocated in CvCity::reset");
 		m_paiUnitCombatExtraStrength = new int[GC.getNumUnitCombatInfos()];
-		m_paiUnitCombatProductionModifier = new int[GC.getNumUnitCombatInfos()];
 		m_paiUnitCombatDefenseAgainstModifier = new int[GC.getNumUnitCombatInfos()];
 
 		for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 		{
 			m_paiUnitCombatExtraStrength[iI] = 0;
-			m_paiUnitCombatProductionModifier[iI] = 0;
 			m_paiUnitCombatDefenseAgainstModifier[iI] = 0;
 		}
 
@@ -12962,7 +12958,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	clearCultureDistanceCache();
 
 	//TB Combat Mod (Buildings) begin
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatProductionModifier);
 
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 	{
@@ -13407,7 +13402,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	}
 
 	//TB Combat Mod (Buildings) begin
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatProductionModifier);
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
@@ -16345,17 +16339,6 @@ int CvCity::getGlobalSourcedProperty(PropertyTypes eProperty) const
 }
 
 
-int CvCity::getUnitCombatProductionModifier(UnitCombatTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-	return m_paiUnitCombatProductionModifier[eIndex];
-}
-
-void CvCity::changeUnitCombatProductionModifier(UnitCombatTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), eIndex);
-	m_paiUnitCombatProductionModifier[eIndex] += iChange;
-}
 
 
 int CvCity::getUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex) const
