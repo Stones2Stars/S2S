@@ -1003,39 +1003,6 @@ the per-read-scan class this most likely belongs to is [contexts.md](../../archi
 efficiency defect to reject in review"*).
 
 
-## THE GREYED-OUT BUILD LIST OFFERS BUILDINGS WHOSE TECH IS NOT RESEARCHED
-
-**OBSERVED (owner, in play):** the greyed-out (`canConstruct`-failing but shown) portion of the build list
-includes buildings that are **not yet enabled by tech**.
-
-⚑ **FIXED at the reason SELECTION, and now machine-checkable — but confirm it on screen before deleting this
-entry.** `requiresGateReason` took the FIRST failing clause, so `all: [BONUS_COPPER, TECH_X]` with both unmet
-stored the BONUS reason and greyed while the unmet TECH beside it hides; hide-wins over grey now, weighed across
-every top-level clause of both timings (owner: *"hide wins"*). The instrument is
-`/computed/enabler/buildings` — its `greyedByReason` histogram must contain **no `REQUIRES_TECH`**, since that
-reason is in `reasonHides`. A live read of London on the standing save: 618 in tree, 168 listed, 450 greyed,
-reasons `BONUS 229 · BUILDING 113 · CIVIC 42 · RELIGION 37 · CORPORATION 20 · FEATURE 6 · IMPROVEMENT 1 ·
-HERITAGE 1 · REQUIRES 1` — every one actionable, zero tech.
-
-⚑ **Why this is an ENABLER question and not a display one:** the greyed tier is meant to be *"things this city
-cannot build YET"*, which is a different set from *"things that do not exist for this player yet"*. A building
-whose `PrereqTech` is unresearched is not on the frontier at all — it should not be a candidate. So the suspect
-is the CANDIDATE SET the list iterates, not the greying.
-
-⚠ **NOT YET KNOWN — establish which of these before touching anything:**
-- does the screen iterate the enabler's maintained domain vector, or the whole building database and then ask a
-  gate per entry? The second is the shape [enabler.md §6](../../specs/enabler.md) exists to delete (the frontier
-  IS the shared choice set), and it would show exactly this symptom;
-- or is the tech axis genuinely missing from the tri-state the greyed tier reads?
-
-⛔ Do NOT "fix" it by adding a tech test at the display site. That papers over whichever of the two it is, and
-puts an availability rule in a screen — the enabler owns the verdict
-([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)).
-
-⚑ Cheap first read: the enabler's own served set (`/computed/enabler/operating?player=N`) beside what the list
-renders — the three-leg check ([superseded-ideas #33](../../architecture/superseded-ideas.md)), state leg first.
-
-
 ## THE PYTHON HALF OF THE Cy DISCONNECT IS NOT DONE — ~2000 DEAD CALL SITES
 
 **PROVEN — measured, not estimated:**

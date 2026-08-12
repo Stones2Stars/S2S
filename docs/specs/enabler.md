@@ -569,6 +569,23 @@ Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resou
 > ⚠ **Changing a kind's disposition moves entries between HIDDEN and GREYED and NOTHING ELSE.** LISTED is the
 > gate-passed state and membership is its own stored plane (§7.1), so no buildability verdict rides on this
 > mapping — which is exactly what makes collapsing a kind later the cheap edit the ruling says it is.
+>
+> **⛔ AND WHEN SEVERAL CLAUSES FAIL, HIDE WINS (owner).** Only ONE reason is stored, so the disposition table
+> above is only half the rule — the other half is WHICH failing clause it is read from. A clause the asker
+> cannot act on makes the whole entity unactionable, so listing it greyed advertises an action that does not
+> exist. The verdict is therefore weighed over **every top-level clause of BOTH timings** (`requires.build` and
+> `requires.operate`): any hiding reason wins outright, and only if none hides does the first greying one stand.
+> ⚑ **The defect this replaces is the reason the rule is written down.** The gate took the FIRST failing clause,
+> so `all: [BONUS_COPPER, TECH_X]` with both unmet stored the BONUS reason and GREYED — while the unmet TECH
+> beside it hides. **Clause ORDER decided what the player saw**, and the symptom was a greyed build list
+> offering buildings whose tech was not researched.
+> ⚑ **It is machine-checkable, so it does not depend on anyone remembering it:**
+> `/computed/enabler/buildings`'s `greyedByReason` histogram must contain **no reason that `reasonHides`
+> returns true for** ([http-endpoints.md](http-endpoints.md)). A hiding reason in the greyed set is a selection
+> defect, visible without opening the game.
+> ⚠ The clause decomposition is SHARED with the tooltip renderer, which walks the same list to colour each
+> clause by its own verdict — one `all`-walk, not two with different stopping rules
+> ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
 
 **The frontier is one shared choice set — UI *and* AI.** It is computed once per recompute; the UI greys from
 it, and the AI's production decision iterates **only this small frontier** instead of scoring the whole entity
