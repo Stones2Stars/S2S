@@ -25641,7 +25641,7 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 		//Integration
 		int iTempValue = ((100 * iHappyThen - 10 * iHappyThen * iHappyThen) - (100 * iHappyNow - 10 * iHappyNow * iHappyNow));
 
-		if (pLoopCity->isCapital() && isNoCapitalUnhappiness())
+		if (pLoopCity->isNoUnhappiness())
 		{
 			iTempValue /= 3;
 		}

@@ -1345,8 +1345,6 @@ public:
 	void changeForceAllTradeRoutes(int iChange);
 
 
-	inline bool isNoCapitalUnhappiness() const { return m_iNoCapitalUnhappiness > 0; }
-	void changeNoCapitalUnhappiness(int iChange);
 
 
 	int getTaxRateUnhappiness() const;
@@ -1558,7 +1556,6 @@ protected:
 	int m_iDistantUnitSupportCostModifier;
 	int m_iReligionSpreadRate;
 	int m_iTaxRateUnhappiness;
-	int m_iNoCapitalUnhappiness;
 	int m_iForceAllTradeRoutes;
 	int m_iCorporationSpreadModifier;
 	bool m_bShowLandmarks;

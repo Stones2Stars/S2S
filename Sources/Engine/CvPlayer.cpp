@@ -1227,7 +1227,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iReligionSpreadRate = 0;
 
 	m_iForceAllTradeRoutes = 0;
-	m_iNoCapitalUnhappiness = 0;
 
 	m_bShowLandmarks = true;
 
@@ -17003,7 +17002,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCapitalUnhappiness);
 
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForceAllTradeRoutes);
@@ -18304,7 +18302,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCapitalUnhappiness);
 
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForceAllTradeRoutes);
@@ -24833,31 +24830,6 @@ void CvPlayer::changeForceAllTradeRoutes(int iChange)
 		m_iForceAllTradeRoutes += iChange;
 
 		updateTradeRoutes();
-	}
-}
-
-void CvPlayer::changeNoCapitalUnhappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		const bool bWasTrue = isNoCapitalUnhappiness();
-
-		m_iNoCapitalUnhappiness += iChange;
-
-		if (bWasTrue != isNoCapitalUnhappiness())
-		{
-			CvCity* pCapitalCity = getCapitalCity();
-
-			if (pCapitalCity)
-			{
-				pCapitalCity->AI_setAssignWorkDirty(true);
-
-				if (pCapitalCity->getTeam() == GC.getGame().getActiveTeam())
-				{
-					pCapitalCity->setInfoDirty(true);
-				}
-			}
-		}
 	}
 }
 

@@ -1901,3 +1901,19 @@ CvPlayer::m_iHappyPerMilitaryUnit        (int)
 | ⚑ A BRACKET-FREE decorated sub-tag, so save.md §3 allows the soft-remove; the tag drains by name.
 | ⚠ Do not confuse it with CvUnitInfo::hasTargetUnitCombat -- the INFO-side authored read, which is live.
 CvUnit::targetUnitCombatCount            (decorated int, per UNITCOMBAT)
+========================
+| The player-side "no unhappiness in the capital" gate count.
+| Stranded on all three legs -- changeNoCapitalUnhappiness had NO caller, the int kept deserializing, and two
+| consumers read it (the city's anger-abolish gate and an AI civic valuation).
+| REPLACEMENT: already built end to end. json.md §8 retires the key itself -- it baked the WHERE into its name
+| (the condition-as-member shape) -- so it is ONE key, `abolishedAnger`, gated `IS_CAPITAL`. curate_civic maps
+| bNoCapitalUnhappiness to exactly that pair, civic_cosmic_enlightening authors it, the city holds it in the
+| AMENITY fold (CvCity::isNoUnhappiness == CITY_HAS_AMENITY "abolishedAnger"), and the fold evaluates an
+| entry's condition PER RECEIVER at fold time -- so in a capital the fold already answers true.
+| ⚑ The two legs of `isNoUnhappiness() || isCapital() && owner.isNoCapitalUnhappiness()` were the SAME
+| question: the left already migrated, the right left reading a frozen int beside it.
+| ⚠ ONE stated behaviour change: the AI valuation now discounts happiness in ANY city whose anger is
+| abolished, not only a capital -- the same question asked of the city that actually holds the verdict.
+| ⚠ The changer's riders (AI_setAssignWorkDirty + setInfoDirty on the capital) need no new home: the fold
+| announces its own crossings and a CIVIC change is already a ruled dirty trigger.
+CvPlayer::m_iNoCapitalUnhappiness        (int)

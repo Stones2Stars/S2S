@@ -4263,7 +4263,7 @@ void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBE
 
 	// (3) The ANGER side. The abolish gates zero it WHOLESALE -- they are hard off-switches, not modifiers
 	// (§2b), so the side ceases to exist rather than being reduced.
-	if (isNoUnhappiness() || isCapital() && owner.isNoCapitalUnhappiness())
+	if (isNoUnhappiness())
 	{
 		wellbeing[WELLBEING_ANGER] = 0;
 	}
