@@ -251,26 +251,6 @@
   They fire from the `CvProperties` choke points and the band registry into a consumer set that carries no case
   for either, so a threshold-conditioned deposit on a property never moves
   ([event-spine.md](../../specs/event-spine.md) § THE RECEIVED LINE names this as the worked instance).
-- **Re-key the per-deposit ATOM BANK so it stops banking the negative space.** It banks an entry per
-  (gated deposit × city) whenever the city does not hold the source, but inside the load bracket *"the source has
-  not streamed yet"* and *"this city will never hold it"* are indistinguishable — so it stores the cities that can
-  never apply and the drain re-tests every one of them, on a heap under the 32-bit ceiling
-  ([memory-footprint.md](../../reference/memory-footprint.md)).
-  ⚑ **NEITHER THING IT STORES NEEDS STORING, which is the whole of the size problem.** The deposit list comes
-  back from the reverse index at drain (`DepositIndex::gatedByType` / `gatedByPredicate` / `gatedByToken` — that
-  is what the index is FOR), and the cities are enumerable from the owner. What cannot be recovered afterwards is
-  only THAT THE CROSSING HAPPENED inside the bracket, so that is the sole thing worth keeping: the key is
-  `(atom, owner)` — the shape `s_bankedAtomFans` twenty lines above it already uses.
-  ⚑ **AND THE DRAIN MAY RE-DERIVE FREELY, because the GATED-DEPOSIT BOOK already makes the planes idempotent.**
-  `CvCascadePackage::bookedGated` records what a package currently holds for each conditioned deposit, so a
-  deposit reached twice — once by plane A as its source arrives, once by plane C as the atom crosses — is booked
-  by whichever notices first and the second finds it booked and does nothing. So there is no applier set to keep
-  and no complement to carry: the re-key is the whole of the fix.
-  ⚑ The drain's own reason split (`noSource` against `booked` on `<atomDrain>`) is what names the share, so this
-  closes against the instrument rather than against a guess.
-  ⛔ It is NOT redundant the way the fan bank's city half was — it applies deposits nothing else reaches (the
-  conditioned tail, the one thing the load bracket genuinely exists for,
-  [state-repositories.md](../../architecture/state-repositories.md)), so this is a re-key and never a deletion.
 
 - Serve a city's OFFERED RESOURCES, and give the city screen a VICINITY tab showing them (owner) — no readable
   list exists today for what a city's plot group supplies.

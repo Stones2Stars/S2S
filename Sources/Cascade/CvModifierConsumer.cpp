@@ -1119,20 +1119,25 @@ namespace
 	// source activated, and is not knowable afterwards. Pinning the wrong one either over-withdraws or
 	// double-applies. A skipped deposit has no such ambiguity: it was never booked, so the drain owes it exactly
 	// one arrival and nothing else ([state-repositories.md] § THE INVARIANT).
-	// ⚑ Deduped on (deposit, owner, city): one deposit skipped 30 times is still one missing application.
-	struct BankedAtomDeposit
+	// ⚑ WHAT IS BANKED IS THE CROSSING, NEVER ITS MISSES -- and neither thing a per-miss entry held needs holding.
+	// The deposit list comes back from the reverse index at the drain (`DepositIndex::gatedBy*`, which is what the
+	// index is FOR) and the cities are enumerable from the owner; only that the crossing HAPPENED inside the
+	// bracket cannot be recovered afterwards. So the key is (atom's compiled list, owner) -- the shape
+	// s_bankedAtomFans beside it already uses -- and the size stops tracking (deposits x cities that skipped them).
+	// ⛔ Re-deriving at the drain CANNOT double-apply, which is what lets the misses go unrecorded: the
+	// GATED-DEPOSIT BOOK (CvCascadePackage::bookedGated) holds what each package already carries per conditioned
+	// deposit, so a deposit plane A booked as its source arrived is found booked here and moves nothing.
+	struct BankedAtomCrossing
 	{
-		const DepositIndex::GatedDeposit* pGated;
+		const std::vector<DepositIndex::GatedDeposit>* pList;
 		int iOwner;
-		int iCityId;
-		bool operator<(const BankedAtomDeposit& kOther) const
+		bool operator<(const BankedAtomCrossing& kOther) const
 		{
-			if (pGated != kOther.pGated) return pGated < kOther.pGated;
-			if (iOwner != kOther.iOwner) return iOwner < kOther.iOwner;
-			return iCityId < kOther.iCityId;
+			if (pList != kOther.pList) return pList < kOther.pList;
+			return iOwner < kOther.iOwner;
 		}
 	};
-	std::set<BankedAtomDeposit> s_bankedAtomDeposits;
+	std::set<BankedAtomCrossing> s_bankedAtomCrossings;
 
 	// ⛔ THE FAN'S OWN BANK, and what it is FOR is the PLOT plane. An EMPIRE-level crossing (a tech, a civic) is
 	// announced from CvPlayer::read, which streams before the map's plot packages can take it, and no per-deposit
@@ -1209,11 +1214,10 @@ namespace
 						// source genuinely is not here and there is nothing to move.
 						if (iDelta > 0 && spineGameLoadInProgress())
 						{
-							BankedAtomDeposit kBanked;
-							kBanked.pGated = &kGated;
+							BankedAtomCrossing kBanked;
+							kBanked.pList = pGated;
 							kBanked.iOwner = (int)pCity->getOwner();
-							kBanked.iCityId = pCity->getID();
-							s_bankedAtomDeposits.insert(kBanked);
+							s_bankedAtomCrossings.insert(kBanked);
 						}
 					}
 					continue;
@@ -1427,11 +1431,10 @@ namespace
 				if (pTally != NULL) { pTally->iNoSource++; }
 				if (spineGameLoadInProgress())
 				{
-					BankedAtomDeposit kBanked;
-					kBanked.pGated = &kGated;
+					BankedAtomCrossing kBanked;
+					kBanked.pList = pGated;
 					kBanked.iOwner = (int)kCity.getOwner();
-					kBanked.iCityId = kCity.getID();
-					s_bankedAtomDeposits.insert(kBanked);
+					s_bankedAtomCrossings.insert(kBanked);
 				}
 				continue;
 			}
@@ -1959,46 +1962,58 @@ namespace
 		s_bankedAtomFans.clear();
 	}
 
-	void mc_drainBankedAtomDeposits()
+	void mc_drainBankedAtomCrossings()
 	{
 		int iApplied = 0;
+		int iFound = 0;
 		McDrainByChannel kByChannel;
 		McDrainReasons kReasons;
-		int iCityGone = 0;
-		for (std::set<BankedAtomDeposit>::const_iterator it = s_bankedAtomDeposits.begin();
-			it != s_bankedAtomDeposits.end(); ++it)
+		for (std::set<BankedAtomCrossing>::const_iterator it = s_bankedAtomCrossings.begin();
+			it != s_bankedAtomCrossings.end(); ++it)
 		{
-			const DepositIndex::GatedDeposit* pGated = it->pGated;
-			if (pGated == NULL || pGated->deposit == NULL || pGated->deposit->entry == NULL
-				|| it->iOwner < 0 || it->iOwner >= MAX_PLAYERS)
+			const std::vector<DepositIndex::GatedDeposit>* pList = it->pList;
+			if (pList == NULL || it->iOwner < 0 || it->iOwner >= MAX_PLAYERS)
 			{
 				continue;
 			}
 			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)it->iOwner);
-			const CvCity* pCity = kOwner.getCity(it->iCityId);
-			if (pCity == NULL)
+			// The owner's cities are walked LIVE, so a city that has since gone is simply absent and a city
+			// founded after the crossing is included -- neither needs a stored id to chase.
+			foreach_(const CvCity* pCity, kOwner.cities())
 			{
-				++iCityGone;   // the city went -- not this drain's to fix
-				continue;
-			}
-			// The source test is mc_drainApplyOne's, not repeated here: duplicating it made the refusal
-			// unattributable, since the pre-filter consumed the case before the reason could be counted.
-			if (mc_drainApplyOne(*pGated, kOwner, *pCity, &kByChannel, &kReasons))
-			{
-				++iApplied;
+				if (pCity == NULL)
+				{
+					continue;
+				}
+				for (size_t iGated = 0; iGated < pList->size(); ++iGated)
+				{
+					const DepositIndex::GatedDeposit& kGated = (*pList)[iGated];
+					if (kGated.deposit == NULL || kGated.deposit->entry == NULL)
+					{
+						continue;
+					}
+					++iFound;
+					// The source and book tests are mc_drainApplyOne's, not repeated here: duplicating one made
+					// the refusal unattributable, since the pre-filter consumed the case before the reason could
+					// be counted.
+					if (mc_drainApplyOne(kGated, kOwner, *pCity, &kByChannel, &kReasons))
+					{
+						++iApplied;
+					}
+				}
 			}
 		}
-		// ⚑ noSource is the BANK'S OWN WASTE: a deposit banked because the city did not hold its source, drained
-		// against a city that STILL does not hold it. Inside the load bracket the two cases -- the source has not
-		// streamed YET, and this city will never hold it at all -- are indistinguishable, so the bank stores the
-		// negative space and the drain re-tests it. A noSource share near the total is that, not an ordering miss.
-		const int iBanked = (int)s_bankedAtomDeposits.size();
-		CascadeChannelRegistry::reportAtomRoute("<atomDrain>", iBanked, iBanked, kReasons.iNoSource,
-			kReasons.iBooked + kReasons.iResolveRefused + iCityGone, iApplied, -1, -1);
+		// ⚑ noSource is now the honest COST of re-deriving rather than the bank's own waste: the drain offers every
+		// (deposit x city) pair the crossing could reach and the source test declines the ones this city does not
+		// hold. It is paid in tests, not in resident memory -- which is the whole of the re-key.
+		const int iBanked = (int)s_bankedAtomCrossings.size();
+		CascadeChannelRegistry::reportAtomRoute("<atomDrain>", iBanked, iFound, kReasons.iNoSource,
+			kReasons.iBooked + kReasons.iResolveRefused, iApplied, -1, -1);
 		CascadeChannelRegistry::reportAtomRoute("<atomDrainBooked>", kReasons.iBooked, kReasons.iBooked,
-			iCityGone, kReasons.iResolveRefused, kReasons.iBooked, -1, -1);
+			0, kReasons.iResolveRefused, kReasons.iBooked, -1, -1);
 		mc_reportDrainByChannel("depDrain", kByChannel);
-		s_bankedAtomDeposits.clear();
+		s_bankedAtomCrossings.clear();
+		std::set<BankedAtomCrossing>().swap(s_bankedAtomCrossings);   // load-time scratch, not resident state
 	}
 
 	const CvPlayer* mc_player(int iPlayer)
@@ -2743,7 +2758,7 @@ namespace
 				// its owner held a single trait, so the step was computed against an empty player. Re-resolve now,
 				// against final state, for every alive owner.
 				mc_markAllThresholdOwners();
-				mc_drainBankedAtomDeposits();
+				mc_drainBankedAtomCrossings();
 				mc_drainBankedAtomFanPlots();
 				mc_reportGrowthCensus();
 				CascadeChannelRegistry::reportChannelCensus();
