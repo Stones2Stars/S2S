@@ -3672,8 +3672,6 @@ def normalizeAddExtras():
 		if size >= maxSize:
 			print "WARNING: size limit exceeded!"
 
-		for index in range(cgc.getNumBonusInfos()):
-
 		featIce = cgc.getInfoTypeForString("FEATURE_ICE")
 		featOasis = cgc.getInfoTypeForString("FEATURE_OASIS")
 
