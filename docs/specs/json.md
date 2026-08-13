@@ -1369,9 +1369,23 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 - **`condition`** (Victory) · **`effect`** (Vote) · **`outcomes`** (mission results) · **`mapGeneration`**
   (placement/spawn config). *(**`vision`** is NOT here — it is an ordinary modifier family with its own machine,
   [vision.md](vision.md): a sight budget spent walking outward, exactly as movement works.)*
-- **`shrine`** — the building is a religion's SHRINE: `shrine: RELIGION_X` (the religion FK). The per-commerce
-  VALUES live on the **religion** (`religion.shrine`), scaled per city holding the religion; the building declares
-  only the relationship. A top-level section, not an `identity` marker — the shrine relationship IS the data.
+- **`shrine`** — the building is a religion's SHRINE: `shrine: RELIGION_X` (the religion FK). A top-level
+  section, not an `identity` marker — the shrine relationship IS the data.
+  ⚖ **THE COMMERCE LANDS ON THE SHRINE BUILDING, IN THE CITY THE SHRINE STANDS IN (owner)** — an ordinary
+  `<commerce>.city.flat` entry on the BUILDING, `per`-scaled by the count of cities holding the religion
+  (`{type: RELIGION_X, scope: "world"}`, which resolves through the same count legacy scaled by). It needs no
+  condition: a building deposits only where it stands and only while active, so its presence IS the gate — the
+  [DEC-deliveryguy](../architecture/decisions.md#dec-deliveryguy) rule read straight, since the shrine building
+  is what brings the commerce to the table.
+  ⛔ **The values do NOT live on the religion**, and a `shrine` block holding per-commerce magnitudes is not a
+  home for them — that is a bespoke section carrying a MAGNITUDE, outside the one machine
+  ([DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)).
+  ⚠ **Do NOT gate it on `IS_HOLY_CITY` instead.** The tempting symmetry with the corp HQ fails here: a
+  headquarters building is PLACED by `setHeadquarters`, while a shrine must be BUILT — so a holy city that has
+  not built its shrine would start collecting.
+  ⚑ **Its AI valuation reads the `expected*` what-if, never the compiled sum (owner)** — the scaler is what
+  makes a shrine worth building, so an unscaled read prices it at a single point of commerce and the AI
+  "downprioritizes building a shrine over taking tech."
 - **`headquarters`** — the corp-HQ analog of `shrine`: the building is a corporation's HEADQUARTERS,
   `headquarters: CORPORATION_X` (the corporation FK). The per-commerce values live on the **corporation**, scaled
   per corporation presence. Same FK-relationship shape as `shrine`, one for religion and one for corporation.
