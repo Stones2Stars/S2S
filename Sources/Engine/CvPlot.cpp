@@ -8056,7 +8056,7 @@ PlayerTypes CvPlot::findHighestCulturePlayer(const bool bCountLegacyCulture, con
 {
 	PROFILE_EXTRA_FUNC();
 	PlayerTypes eBestPlayer = NO_PLAYER;
-	int iBestValue = 0;
+	int64_t iBestValue = 0;
 
 	for (int iI = 0; iI < MAX_PLAYERS; ++iI)
 	{
@@ -8070,7 +8070,7 @@ PlayerTypes CvPlot::findHighestCulturePlayer(const bool bCountLegacyCulture, con
 			|| (getCultureRateThisTurn(ePlayerX) > 0 || GC.getGame().isOption(GAMEOPTION_CULTURE_EQUILIBRIUM))
 			|| bCountLastTurn && (getCultureRateLastTurn(ePlayerX) > 0 || GC.getGame().isOption(GAMEOPTION_CULTURE_EQUILIBRIUM)))
 			{
-				const int iValue = getCulture(ePlayerX);
+				const int64_t iValue = getCulture(ePlayerX);
 				if (iValue > 0)
 				{
 					if (iValue > iBestValue)
@@ -8099,7 +8099,9 @@ int CvPlot::calculateCulturePercent(PlayerTypes eIndex, int iExtraDigits) const
 
 	if (iTotalCulture > 0)
 	{
-		return intPow(10, iExtraDigits) * 100 * getCulture(eIndex) / iTotalCulture;
+		// A PERCENT (x10^iExtraDigits), so it is bounded by construction and reduces here -- the culture it is
+		// derived from is not, which is why the whole expression resolves in 64 bits first.
+		return static_cast<int>(intPow(10, iExtraDigits) * 100 * getCulture(eIndex) / iTotalCulture);
 	}
 	return 0;
 }
@@ -8141,7 +8143,7 @@ void CvPlot::setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bUpdate, boo
 		// Many things apply 1 culture to tile to mark as claimed; setting to 2 instead ensures claim for at least a full turn on EQ setting
 		if (GC.getGame().isOption(GAMEOPTION_CULTURE_EQUILIBRIUM) && getCulture(eIndex) == 0 && iNewValue == 1) iNewValue = 2;
 
-		const int iChange = iNewValue - getCulture(eIndex);
+		const int64_t iChange = iNewValue - getCulture(eIndex);
 
 		if (bDecay || iChange > 0) // ignore influence driven war reductions
 		{
@@ -8156,13 +8158,15 @@ void CvPlot::setCulture(PlayerTypes eIndex, int64_t iNewValue, bool bUpdate, boo
 					}
 					else
 					{
-						(*it).second += iChange;
+						// A per-turn RATE, not an accumulation -- the vector is cleared every turn and is serialized
+						// as int, so the 64-bit culture delta reduces here, at the point it becomes a rate.
+						(*it).second += static_cast<int>(iChange);
 					}
 					bFirst = false;
 					break;
 				}
 			}
-			if (bFirst) m_cultureRatesThisTurn.push_back(std::make_pair(eIndex, iChange));
+			if (bFirst) m_cultureRatesThisTurn.push_back(std::make_pair(eIndex, static_cast<int>(iChange)));
 		}
 		std::vector<std::pair<PlayerTypes, int64_t> >::iterator itr;
 
@@ -12227,10 +12231,10 @@ bool CvPlot::checkLateEra() const
 	{
 		//find largest culture in this plot
 		ePlayer = GC.getGame().getActivePlayer();
-		int maxCulture = getCulture(ePlayer);
+		int64_t maxCulture = getCulture(ePlayer);
 		for (int i = 0; i < MAX_PLAYERS; i++)
 		{
-			int newCulture = getCulture((PlayerTypes) i);
+			const int64_t newCulture = getCulture((PlayerTypes) i);
 			if (newCulture > maxCulture)
 			{
 				maxCulture = newCulture;

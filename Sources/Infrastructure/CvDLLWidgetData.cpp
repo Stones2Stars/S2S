@@ -5154,7 +5154,7 @@ void CvDLLWidgetData::parseCultureHelp(CvWidgetDataStruct &widgetDataStruct, CvW
 		return;
 	}
 	const int iThreshold = pHeadSelectedCity->getCultureThreshold();
-	const int iCultureTimes100 = pHeadSelectedCity->getCultureTimes100(pHeadSelectedCity->getOwner());
+	const int64_t iCultureTimes100 = pHeadSelectedCity->getCultureTimes100(pHeadSelectedCity->getOwner());
 
 	if (iThreshold > 0)
 	{
@@ -5172,11 +5172,12 @@ void CvDLLWidgetData::parseCultureHelp(CvWidgetDataStruct &widgetDataStruct, CvW
 		int iCultureRateTimes100 = aiCityCommerces[COMMERCE_CULTURE];
 		if (iCultureRateTimes100 > 0)
 		{
-			int iCultureLeftTimes100 = 100 * iThreshold - iCultureTimes100;
+			const int64_t iCultureLeftTimes100 = 100 * iThreshold - iCultureTimes100;
 
 			if (iCultureLeftTimes100 > 0)
 			{
-				int iTurnsLeft = (iCultureLeftTimes100  + iCultureRateTimes100 - 1) / iCultureRateTimes100;
+				// TURNS, so it is bounded and reduces here -- the culture it is derived from is not.
+				const int iTurnsLeft = static_cast<int>((iCultureLeftTimes100 + iCultureRateTimes100 - 1) / iCultureRateTimes100);
 
 				szBuffer.append(L' ');
 				szBuffer.append(gDLL->getText("INTERFACE_CITY_TURNS", std::max(1, iTurnsLeft)));

@@ -15639,7 +15639,7 @@ bool CvUnitAI::AI_greatWork()
 
 	CvPlot* pBestPlot = NULL;
 	{
-		int iBestValue = 0;
+		int64_t iBestValue = 0;
 		foreach_(const CvCity * cityX, GET_PLAYER(getOwner()).cities())
 		{
 			if (cityX->area() == area()
@@ -15648,7 +15648,7 @@ bool CvUnitAI::AI_greatWork()
 			&& GET_PLAYER(getOwner()).AI_plotTargetMissionAIs(cityX->plot(), MISSIONAI_GREAT_WORK, getGroup()) == 0
 			&& generateIgnoreDangerPath(cityX->plot()))
 			{
-				const int iValue =
+				const int64_t iValue =
 					(
 						cityX->AI_calculateCulturePressure(true)
 						-

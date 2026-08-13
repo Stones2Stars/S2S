@@ -1953,8 +1953,9 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 			if (iCultureRate > 0)
 			{
 				// all values are *100
-				const int iCultureLeft = 100 * iThreshold - pCity->getCultureTimes100(pCity->getOwner());
-				const int iCultureTurns = (iCultureLeft + iCultureRate - 1) / iCultureRate;
+				const int64_t iCultureLeft = 100 * iThreshold - pCity->getCultureTimes100(pCity->getOwner());
+				// TURNS, so it is bounded and reduces here -- the culture it is derived from is not.
+				const int iCultureTurns = static_cast<int>((iCultureLeft + iCultureRate - 1) / iCultureRate);
 				szString.append(L" ");
 				szString.append(gDLL->getText("INTERFACE_CITY_TURNS", iCultureTurns));
 			}

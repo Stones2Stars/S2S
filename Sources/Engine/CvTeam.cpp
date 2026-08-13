@@ -3340,13 +3340,14 @@ void CvTeam::changeWarWearinessTimes100(TeamTypes eOtherTeam, const CvPlot& kPlo
 {
 	PROFILE_FUNC();
 
-	const int iOurCulture = kPlot.countFriendlyCulture(getID());
-	const int iTheirCulture = kPlot.countFriendlyCulture(eOtherTeam);
+	const int64_t iOurCulture = kPlot.countFriendlyCulture(getID());
+	const int64_t iTheirCulture = kPlot.countFriendlyCulture(eOtherTeam);
 
 	int iRatio = 100;
 	if (0 != iOurCulture + iTheirCulture)
 	{
-		iRatio = 100 * iTheirCulture / (iOurCulture + iTheirCulture);
+		// A RATIO, bounded 0..100 -- the cultures it divides are not, so it resolves in 64 bits and reduces here.
+		iRatio = static_cast<int>(100 * iTheirCulture / (iOurCulture + iTheirCulture));
 	}
 	// Rebels don't feel as if they are fighting on foreign soil
 	if (isRebelAgainst(eOtherTeam))

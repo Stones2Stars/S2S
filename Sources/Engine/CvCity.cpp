@@ -4001,41 +4001,34 @@ int CvCity::getNoMilitaryPercentAnger() const
 int CvCity::getCulturePercentAnger() const
 {
 	PROFILE_EXTRA_FUNC();
-	const int iTotalCulture = plot()->countTotalCulture();
+	const int64_t iTotalCulture = plot()->countTotalCulture();
 
 	if (iTotalCulture == 0)
 	{
 		return 0;
 	}
-	int iAngryCulture = 0;
+	int64_t iAngryCulture = 0;
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam(), false))
 		{
-			int iCulture = plot()->getCulture((PlayerTypes)iI);
+			int64_t iCulture = plot()->getCulture((PlayerTypes)iI);
 
 			if (iCulture > 0)
 			{
 				if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()))
 				{
-					if (iCulture > MAX_INT / 1000)
-					{
-						iCulture /= 100;
-						iCulture *= std::max(0, (GC.getAT_WAR_CULTURE_ANGER_MODIFIER() + 100));
-						iCulture *= 100;
-					}
-					else
-					{
-						iCulture *= std::max(0, (GC.getAT_WAR_CULTURE_ANGER_MODIFIER() + 100));
-						iCulture /= 100;
-					}
+					iCulture *= std::max(0, (GC.getAT_WAR_CULTURE_ANGER_MODIFIER() + 100));
+					iCulture /= 100;
 				}
 				iAngryCulture += iCulture;
 			}
 		}
 	}
-	return GC.getCULTURE_PERCENT_ANGER() * iAngryCulture / iTotalCulture;
+	// The result is a PERCENT-anger term, bounded by the modifier -- it is the ratio that is returned, never
+	// the culture, so the reduce belongs here at the point of use ([DEC-fixedpoint-x100]).
+	return static_cast<int>(GC.getCULTURE_PERCENT_ANGER() * iAngryCulture / iTotalCulture);
 }
 
 
@@ -8784,7 +8777,8 @@ void CvCity::setCultureTimes100(PlayerTypes eIndex, int64_t iNewValue, bool bPlo
 		}
 		if (bPlots && iNewValue > iOldCulture)
 		{
-			doPlotCulture(eIndex, (iNewValue - iOldCulture) / 100);
+			// A per-turn RATE, not an accumulation -- so it stays int and reduces here, at the point of use.
+			doPlotCulture(eIndex, static_cast<int>((iNewValue - iOldCulture) / 100));
 		}
 	}
 
@@ -8811,16 +8805,16 @@ void CvCity::changeCultureTimes100(PlayerTypes eIndex, int64_t iChange, bool bPl
 		GET_PLAYER(getOwner()).changeCulture(iChange / 100);
 	}
 
-	int iNew;
+	int64_t iNew;
 	if (iChange < 0)
 	{
 		iNew = std::max<int64_t>(0, iOld + iChange);
 	}
-	else if (MAX_INT - iChange > iOld)
+	else if (LLONG_MAX - iChange > iOld)
 	{
 		iNew = iOld + iChange;
 	}
-	else iNew = MAX_INT;
+	else iNew = LLONG_MAX;
 
 	setCultureTimes100(eIndex, iNew, bPlots, bUpdatePlotGroups, true);
 }

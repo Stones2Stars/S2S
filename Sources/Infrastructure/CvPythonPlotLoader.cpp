@@ -117,8 +117,8 @@ void CvPythonPlotLoader::CyPlotPythonInterface1(boost::python::class_<CyPlot>& i
 		.def("calculateImprovementYieldChange", &CyPlot::calculateImprovementYieldChange, "int (int (ImprovementTypes) eImprovement, int (YieldTypes) eYield, int (PlayerTypes) ePlayer, bool bOptimal)")
 		.def("hasYield", &CyPlot::hasYield, "bool ()")
 
-		.def("getCulture", &CyPlot::getCulture, "int (int /*PlayerTypes*/ eIndex)")
-		.def("countTotalCulture", &CyPlot::countTotalCulture, "int ()")
+		.def("getCulture", &CyPlot::getCulture, "int64 (int /*PlayerTypes*/ eIndex)")
+		.def("countTotalCulture", &CyPlot::countTotalCulture, "int64 ()")
 
 		.def("calculateCulturePercent", &CyPlot::calculateCulturePercent, "int (int /*PlayerTypes*/ eIndex)")
 		.def("setCulture", &CyPlot::setCulture, "void (int /*PlayerTypes*/ eIndex, int iNewValue, bool bUpdate)")

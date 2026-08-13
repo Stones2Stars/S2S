@@ -20884,7 +20884,7 @@ int CvUnit::doVictoryInfluence(CvUnit* pLoserUnit, bool bAttacking, bool bWithdr
 
 	const CvPlot* pDefenderPlot = bAttacking ? pLoserPlot : pWinnerPlot;
 	bool bFieldCombat = true;
-	const int iWinnerCultureBefore = pDefenderPlot->getCulture(getOwner()); //used later for influence %
+	const int64_t iWinnerCultureBefore = pDefenderPlot->getCulture(getOwner()); //used later for influence %
 
 	// Multipliers are percents, stored as *100. E.g., 1 = 0.1%, 100 = 1%, 10,000 = 100%
 	int iWinnerPlotMultiplier = 100 * GC.getIDW_WINNER_PLOT_MULTIPLIER();
@@ -20961,11 +20961,13 @@ int CvUnit::doVictoryInfluence(CvUnit* pLoserUnit, bool bAttacking, bool bWithdr
 	}
 
 	// calculate influence % in defended plot (to be displayed in game log)
-	const int iTotalCulture = pDefenderPlot->countTotalCulture();
+	const int64_t iTotalCulture = pDefenderPlot->countTotalCulture();
 
 	if (iTotalCulture > 0)
 	{
-		return (pDefenderPlot->getCulture(getOwner()) - iWinnerCultureBefore) * 1000 / iTotalCulture;
+		// A per-mille INFLUENCE ratio, bounded by construction -- the culture it derives from is not, so the
+		// whole expression resolves in 64 bits and reduces here, at the point of use.
+		return static_cast<int>((pDefenderPlot->getCulture(getOwner()) - iWinnerCultureBefore) * 1000 / iTotalCulture);
 	}
     return 0;
 }
@@ -21005,7 +21007,7 @@ void CvUnit::influencePlots(CvPlot* pCentralPlot, const PlayerTypes eTargetPlaye
 
 				if (pLoopPlot != NULL)
 				{
-					const int iTargetCulture = pLoopPlot->getCulture(eTargetPlayer);
+					const int64_t iTargetCulture = pLoopPlot->getCulture(eTargetPlayer);
 					if (iTargetCulture < 1) continue;
 
 					int iMult = iMultiplier;
@@ -21029,7 +21031,7 @@ void CvUnit::influencePlots(CvPlot* pCentralPlot, const PlayerTypes eTargetPlaye
 					if (iMult < 1) continue;
 
 					// Removing a total of 1e6
-					int iCultureTransfer = iMult * iDistanceMultiplier / 100 * iTargetCulture / 10000;
+					int64_t iCultureTransfer = iMult * iDistanceMultiplier / 100 * iTargetCulture / 10000;
 
 					// Catch potential unlikely overflows?
 					if (iCultureTransfer < 0) iCultureTransfer = 0;
@@ -21088,13 +21090,13 @@ int CvUnit::doPillageInfluence()
 	}
 
 	const PlayerTypes eTargetPlayer = pPlot->getOwner();
-	const int iTargetCulture = pPlot->getCulture(eTargetPlayer);
+	const int64_t iTargetCulture = pPlot->getCulture(eTargetPlayer);
 	if (iTargetCulture < 1)
 	{
 		FErrorMsg("iTargetCulture < 1; should not happen");
 		return 0;
 	}
-	int iCultureTransfer = GC.getIDW_BASE_PILLAGE_INFLUENCE() * iTargetCulture / 100;
+	int64_t iCultureTransfer = GC.getIDW_BASE_PILLAGE_INFLUENCE() * iTargetCulture / 100;
 	if (iCultureTransfer < 1)
 		iCultureTransfer = 1;
 	// cannot transfer more culture than remaining target culure
@@ -21105,13 +21107,14 @@ int CvUnit::doPillageInfluence()
 
 	if (iCultureTransfer > 0)
 	{
-		const int iOurCultureBefore = pPlot->getCulture(getOwner()); //used later for influence %
+		const int64_t iOurCultureBefore = pPlot->getCulture(getOwner()); //used later for influence %
 
 		pPlot->changeCulture(eTargetPlayer, -iCultureTransfer, false);
 		pPlot->changeCulture(getOwner(), iCultureTransfer, true);
 
 		// calculate 10x influence % in pillaged plot (to be displayed in game log)
-		return (pPlot->getCulture(getOwner()) - iOurCultureBefore) * 1000 / pPlot->countTotalCulture();
+		// A per-mille INFLUENCE ratio, bounded by construction (see doVictoryInfluence).
+		return static_cast<int>((pPlot->getCulture(getOwner()) - iOurCultureBefore) * 1000 / pPlot->countTotalCulture());
 	}
 	return 0;
 }

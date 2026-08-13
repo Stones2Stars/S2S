@@ -2623,7 +2623,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		{
 			int iTempValue = 0;
 
-			int iCultureMultiplier;
+			int64_t iCultureMultiplier;
 			if (!pLoopPlot->isOwned() || (pLoopPlot->getOwner() == getID()))
 			{
 				iCultureMultiplier = 100;
@@ -2636,7 +2636,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				iCultureMultiplier = 100 * pLoopPlot->getCulture(getID()) + iClaimThreshold;
 				iCultureMultiplier /= (100 * iOtherCulture + iClaimThreshold) / 100;
 
-				iCultureMultiplier = std::min(100, iCultureMultiplier);
+				iCultureMultiplier = std::min<int64_t>(100, iCultureMultiplier);
 				//The multiplier is basically normalized...
 				//100% means we own (or rightfully own) the tile.
 				//50% means the hostile culture is fairly firmly entrenched.
@@ -2741,7 +2741,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			iTempValue *= iGreed; // (note: see comments about iGreed higher in the code)
 			iTempValue /= 100;
 
-			iTempValue *= iCultureMultiplier;
+			iTempValue *= static_cast<int>(iCultureMultiplier); // clamped to 100 above, so the reduce is exact
 			iTempValue /= 100;
 
 			iValue += iTempValue;
@@ -15848,18 +15848,8 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 		{
 			if (pCity->getOwner() != getID())
 			{
-				int iPlotCulture = pPlot->getCulture(getID());
-				int iScale = 1;
-
-				if (iPlotCulture > MAX_INT / 1000)
-				{
-					iPlotCulture /= 1000;
-					iScale = 1000;
-				}
-
-				int iCultureAmount = GC.getEspionageMissionInfo(eMission).getCityInsertCultureAmountFactor() * pPlot->getCulture(getID());
+				int64_t iCultureAmount = GC.getEspionageMissionInfo(eMission).getCityInsertCultureAmountFactor() * pPlot->getCulture(getID());
 				iCultureAmount /= 100;
-				iCultureAmount *= iScale;
 				if (pCity->calculateCulturePercent(getID()) > 40)
 				{
 					iValue += iCultureAmount * 3;

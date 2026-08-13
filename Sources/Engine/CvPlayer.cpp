@@ -14938,20 +14938,10 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 
 				const int64_t iCultureAmount = std::max<int64_t>(1, kMission.getCityInsertCultureAmountFactor() * pCity->countTotalCultureTimes100() / 10000);
 
-				int iPlotCulture = pCity->plot()->countTotalCulture();
-				int iPlotCultureAmount;
-
-				if (iPlotCulture > MAX_INT / 10000)
-				{
-					iPlotCulture /= 100;
-					iPlotCultureAmount = kMission.getCityInsertCultureAmountFactor() * iPlotCulture;
-				}
-				else
-				{
-					iPlotCultureAmount = kMission.getCityInsertCultureAmountFactor() * iPlotCulture * 100;
-					iPlotCultureAmount /= 10000;
-				}
-				iPlotCultureAmount = std::max(1, iPlotCultureAmount);
+				const int64_t iPlotCulture = pCity->plot()->countTotalCulture();
+				int64_t iPlotCultureAmount = kMission.getCityInsertCultureAmountFactor() * iPlotCulture * 100;
+				iPlotCultureAmount /= 10000;
+				iPlotCultureAmount = std::max<int64_t>(1, iPlotCultureAmount);
 
 				const int iNumTurnsApplied = GC.getDefineINT("GREAT_WORKS_CULTURE_TURNS") * CvGameSpeedScale::speedPercent() / 100;
 
@@ -16066,7 +16056,9 @@ int CvPlayer::getAdvancedStartCultureCost(bool bAdd, const CvCity* pCity) const
 		return -1;
 	}
 
-	int iCost = GC.getDefineINT("ADVANCED_START_CULTURE_COST");
+	// 64-bit because the multiply below is by a CULTURE DIFFERENCE, which is not bounded by 32 bits -- the
+	// COST that comes back out of the /100 is, and reduces at the return.
+	int64_t iCost = GC.getDefineINT("ADVANCED_START_CULTURE_COST");
 	if (iCost < 0)
 	{
 		return -1;
@@ -16094,7 +16086,7 @@ int CvPlayer::getAdvancedStartCultureCost(bool bAdd, const CvCity* pCity) const
 		}
 		iCost /= 100;
 	}
-	return iCost;
+	return static_cast<int>(iCost);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -23882,12 +23874,12 @@ void CvPlayer::getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector
 	aIndicators.clear();
 
 	// find maximum total culture
-	int iMaxTotalCulture = INT_MIN;
-	int iMinTotalCulture = INT_MAX;
+	int64_t iMaxTotalCulture = LLONG_MIN;
+	int64_t iMinTotalCulture = LLONG_MAX;
 	for (int iI = 0; iI < GC.getCurrentViewport()->numPlots(); iI++)
 	{
 		CvPlot* pLoopPlot = GC.getCurrentViewport()->plotByIndex(iI);
-		int iTotalCulture = pLoopPlot->countTotalCulture();
+		const int64_t iTotalCulture = pLoopPlot->countTotalCulture();
 		if (iTotalCulture > iMaxTotalCulture)
 		{
 			iMaxTotalCulture = iTotalCulture;
@@ -23906,17 +23898,17 @@ void CvPlayer::getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector
 		//PlayerTypes eOwner = pLoopPlot->getRevealedOwner(getTeam(), true);
 
 		// how many people own this plot?
-		std::vector < std::pair<int,int> > plot_owners;
+		std::vector < std::pair<int64_t,int> > plot_owners;
 		int iNumNonzeroOwners = 0;
 		for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; iPlayer++)
 		{
 			if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
 			{
-				int iCurCultureAmount = pLoopPlot->getCulture((PlayerTypes)iPlayer);
+				const int64_t iCurCultureAmount = pLoopPlot->getCulture((PlayerTypes)iPlayer);
 				if (iCurCultureAmount != 0)
 				{
 					iNumNonzeroOwners ++;
-					plot_owners.push_back(std::pair<int,int>(iCurCultureAmount, iPlayer));
+					plot_owners.push_back(std::pair<int64_t,int>(iCurCultureAmount, iPlayer));
 				}
 			}
 		}
@@ -23928,7 +23920,7 @@ void CvPlayer::getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector
 			{
 				int iCurOwnerIdx = i % plot_owners.size();
 				PlayerTypes eCurOwnerID = (PlayerTypes) plot_owners[iCurOwnerIdx].second;
-				int iCurCulture = plot_owners[iCurOwnerIdx].first;
+				const int64_t iCurCulture = plot_owners[iCurOwnerIdx].first;
 				const NiColorA& kCurColor = GC.getColorInfo((ColorTypes) GC.getPlayerColorInfo(GET_PLAYER(eCurOwnerID).getPlayerColor()).getColorTypePrimary()).getColor();
 
 				// damp the color by the value...

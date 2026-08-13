@@ -484,12 +484,12 @@ bool CyPlot::hasYield() const
 	return m_pPlot ? m_pPlot->hasYield() : false;
 }
 
-int CyPlot::getCulture(int /*PlayerTypes*/ eIndex) const
+int64_t CyPlot::getCulture(int /*PlayerTypes*/ eIndex) const
 {
 	return m_pPlot ? m_pPlot->getCulture((PlayerTypes)eIndex) : -1;
 }
 
-int CyPlot::countTotalCulture() const
+int64_t CyPlot::countTotalCulture() const
 {
 	return m_pPlot ? m_pPlot->countTotalCulture() : -1;
 }

@@ -139,8 +139,11 @@ public:
 	int calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield) const;
 	bool hasYield() const;
 
-	int getCulture(int /*PlayerTypes*/ eIndex) const;
-	int countTotalCulture() const;
+	// 64-bit, like the engine getters they relay: culture accumulates the x100 rate every turn and never
+	// decays, which is why it was widened in the first place ([culture-religion-research.md]). Narrowing it
+	// here would hand script the saturated value the widening exists to prevent.
+	int64_t getCulture(int /*PlayerTypes*/ eIndex) const;
+	int64_t countTotalCulture() const;
 
 	int calculateCulturePercent(int /*PlayerTypes*/ eIndex) const;
 	void setCulture(int /*PlayerTypes*/ eIndex, int iNewValue, bool bUpdate);
