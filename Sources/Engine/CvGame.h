@@ -540,7 +540,7 @@ protected:
 
 	CvPlot* normalizeFindLakePlot(PlayerTypes ePlayer);
 
-	void doUpdateCacheOnTurn();
+	void deriveCulturalVictoryTarget();
 
 	// AIAndy: Properties
 	CvProperties m_Properties;

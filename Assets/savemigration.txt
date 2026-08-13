@@ -2122,3 +2122,10 @@ CvCity::BuildingProductionMod            (decorated int, per entry)
 | for one. That leg is named in the todo; it owes 2 authored rows.
 CvCity::m_iSpaceProductionModifier
 CvPlayer::m_iSpaceProductionModifier
+
+| ── The cultural-victory TARGET is DERIVED, so it stops riding the save. The pair is a MAX over the victory
+| set's validity x authored info data -- rebuilt by CvGame::deriveCulturalVictoryTarget at load, at new-game
+| init, and at setVictoryValid (the ONE validity mutator). The per-turn wipe-and-refill that used to stand in
+| for those triggers is deleted with the serialization.
+CvGame::m_iNumCultureVictoryCities       (int)
+CvGame::m_eCultureVictoryCultureLevel    (int)

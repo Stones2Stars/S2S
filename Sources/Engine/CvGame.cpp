@@ -453,7 +453,7 @@ void CvGame::init(HandicapTypes eHandicap)
 	}
 	AI_init();
 
-	doUpdateCacheOnTurn();
+	deriveCulturalVictoryTarget();
 }
 
 
@@ -478,6 +478,9 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		// Loading multiplayer games can change human status of players.
 		//	so as good a place as any to refresh game handicap here.
 		averageHandicaps();
+
+		// Derived, never serialized -- the load builds it from victory validity + authored data.
+		deriveCulturalVictoryTarget();
 	}
 
 	for (int iI = 0; iI < MAX_TEAMS; iI++)
@@ -5551,6 +5554,7 @@ void CvGame::setVictoryValid(VictoryTypes eIndex, bool bValid)
 {
 	FASSERT_BOUNDS(0, GC.getNumVictoryInfos(), eIndex);
 	GC.getInitCore().setVictory(eIndex, bValid);
+	deriveCulturalVictoryTarget();
 }
 
 
@@ -6060,7 +6064,6 @@ void CvGame::doTurn()
 	// END OF TURN
 	{ PERF_SCOPE("game.py.beginGameTurn", -1); CvEventReporter::getInstance().beginGameTurn( getGameTurn() ); }
 
-	{ PERF_SCOPE("game.doUpdateCacheOnTurn", -1); doUpdateCacheOnTurn(); }
 
 	{ PERF_SCOPE("game.updateScore", -1); updateScore(); }
 
@@ -8064,11 +8067,13 @@ int CvGame::calculateSyncChecksum()
 					iMultiplier += (GET_PLAYER((PlayerTypes)iI).calculateTotalYield((YieldTypes)iJ));
 				}
 
-				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 				{
 					int aiPlayerCommerces[NUM_COMMERCE_TYPES];
 					GET_PLAYER((PlayerTypes)iI).getCommerces(aiPlayerCommerces);
-					iMultiplier += (aiPlayerCommerces[(CommerceTypes)iJ] / 100);
+					for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+					{
+						iMultiplier += (aiPlayerCommerces[(CommerceTypes)iJ] / 100);
+					}
 				}
 
 				foreach_(const CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
@@ -8638,9 +8643,6 @@ void CvGame::read(FDataStreamBase* pStream)
 		m_sorenRand.reseed(timeGetTime());
 	}
 
-	WRAPPER_READ(wrapper,"CvGame",&m_iNumCultureVictoryCities);
-	WRAPPER_READ(wrapper,"CvGame",&m_eCultureVictoryCultureLevel);
-
 	m_Properties.readWrapper(pStream);
 
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
@@ -8832,9 +8834,6 @@ void CvGame::write(FDataStreamBase* pStream)
 	{
 		WRAPPER_WRITE_CLASS_ENUM_DECORATED(wrapper, "CvGame", REMAPPED_CLASS_TYPE_EVENT_TRIGGERS, eTrigger, "InactiveTrigger");
 	}
-
-	WRAPPER_WRITE(wrapper, "CvGame", m_iNumCultureVictoryCities);
-	WRAPPER_WRITE(wrapper, "CvGame", m_eCultureVictoryCultureLevel);
 
 	m_Properties.writeWrapper(pStream);
 
@@ -9173,11 +9172,16 @@ int CvGame::getCultureThreshold(CultureLevelTypes eLevel) const
 	return GC.getCultureLevelInfo(eLevel).getSpeedThreshold(getGameSpeedType());
 }
 
-void CvGame::doUpdateCacheOnTurn()
+// The cultural-victory TARGET -- the strictest valid culture victory's city count and level, a MAX over the
+// victory set. Derived from victory VALIDITY x authored info data, so it moves only where validity does:
+// setVictoryValid (the one mutator) re-derives, and load/new-game build it once. The sanctioned
+// event-triggered-recalc shape ([contexts.md]): a genuine fact triggers it, the consequence is a max the fact
+// cannot name, and no finer route exists.
+void CvGame::deriveCulturalVictoryTarget()
 {
 	PROFILE_EXTRA_FUNC();
-	// reset cultural victories
 	m_iNumCultureVictoryCities = 0;
+	m_eCultureVictoryCultureLevel = NO_CULTURELEVEL;
 	for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
 	{
 		if (isVictoryValid((VictoryTypes) iI))
