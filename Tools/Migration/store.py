@@ -363,6 +363,31 @@ class Store:
                 # (Only TraitInfo populates this today; the handling is generic for Building/Unit later.)
                 rid_node = rec.find("ReplacementID")
                 rid = engine.text(rid_node) if rid_node is not None else ""
+                if rid and rid != "NONE" and not typ.startswith("TRAIT_"):
+                    # ⛔ A NON-TRAIT replacement keeps its AUTHORED ReplacementID as its own Type -- the
+                    # CULTURELEVEL_ALT_POOR shape json.md §9 specs (`replacedBy`, the conditional whole-entity
+                    # swap), and what the committed data carries. The trait re-key below must not reach it:
+                    # `complex_variant_id` answers a NON-trait id UNCHANGED, so falling through MERGED the gated
+                    # variant into its base and silently dropped the gate (measured: a module's complex
+                    # PROMOTION_AGGRESSIVE variant landed +20 attack unconditionally on the base promotion).
+                    # Only TRAITS were ruled into derived-id folders; everything else stays authored-id.
+                    repl[typ] = {"replacement": rid, "condition": rec.find("ReplacementCondition")}
+                    for t in ("ReplacementID", "ReplacementCondition"):
+                        e = rec.find(t)
+                        if e is not None:
+                            rec.remove(e)
+                    tn = rec.find("Type")
+                    if tn is not None:
+                        tn.text = rid
+                    key = rid
+                    if key in table:
+                        _merge(table[key], rec)
+                    else:
+                        table[key] = rec
+                        if is_module:
+                            modadd.add(key)
+                    prov.setdefault(key, []).append(rel)
+                    continue
                 if rid and rid != "NONE":
                     # ⛔ THE VARIANT'S ID IS DERIVED FROM THE BASE IT REPLACES, NEVER FROM THE AUTHORED
                     # <ReplacementID> (owner: use the simple names as base -- "that is the base of the names").

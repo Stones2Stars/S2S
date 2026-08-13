@@ -2,11 +2,22 @@
  "type": "PROMOTION_COMPLEX_AGGRESSIVE",
  "combat": {
   "unit": {
+   "percent": 10,
    "attack": {
     "percent": 20
    },
    "defense": {
     "percent": -5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -10
+   },
+   "resistance": {
+    "flat": 10
    }
   }
  },

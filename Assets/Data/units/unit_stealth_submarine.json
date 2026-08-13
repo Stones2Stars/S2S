@@ -139,6 +139,7 @@
   "UNITCOMBAT_HEALS_AS_NAVAL"
  ],
  "hideAndSeek": {
+  "method": "submarine",
   "concealment": {
    "flat": 100
   }

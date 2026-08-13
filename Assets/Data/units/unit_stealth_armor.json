@@ -100,6 +100,7 @@
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
  "hideAndSeek": {
+  "method": "camouflage",
   "concealment": {
    "flat": 100
   }

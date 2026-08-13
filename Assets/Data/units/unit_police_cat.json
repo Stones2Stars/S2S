@@ -163,6 +163,7 @@
   "UNITCOMBAT_HEALS_AS_ANIMALS"
  ],
  "hideAndSeek": {
+  "method": "camouflage",
   "concealment": {
    "flat": 600
   }

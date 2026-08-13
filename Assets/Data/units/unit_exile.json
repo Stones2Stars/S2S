@@ -110,6 +110,7 @@
   "UNITCOMBAT_EXILE"
  ],
  "hideAndSeek": {
+  "method": "camouflage",
   "concealment": {
    "flat": 200
   }

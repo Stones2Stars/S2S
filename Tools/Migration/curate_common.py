@@ -627,15 +627,25 @@ def collapse_hide_and_seek(out, vision):
     same-tile bonus and the per-substrate conditional tables go with it. What survives is what the data actually
     uses: the pairing, and graduated strengths including the negatives (the entries sum, so counter-detection is
     just a negative deposit).
+
+    ⛔ THE CLASSIC METHOD IS ITS OWN DATUM -- `hideAndSeek.method`, from the single `<Invisible>` tag ALONE.
+    Legacy carries TWO invisibility planes: the single tag is what the CLASSIC system (hide-and-seek OFF) reads,
+    and the intensity tables exist only for the contest. Folding both into one `skills` union erased that line,
+    and the engine's classic branch then derived a method from the union -- so every intensity-only hider (the
+    robber class, which authors NO single tag) became classically invisible for the first time ever, and border
+    patrols stopped killing criminals. The union stays (the contest needs membership); `method` is what the
+    classic branch reads, and ABSENT means classically never-invisible, exactly as the missing tag always meant.
     """
     skills = []
     conceal = 0
     detect = []
+    classic_method = None
 
     # the hider: its method, and how well it hides by it
     method = vision.pop("invisible", None)
     if isinstance(method, str) and method.startswith("INVISIBLE_"):
-        skills.append(hide_method_skill(method))
+        classic_method = hide_method_skill(method)
+        skills.append(classic_method)
         conceal = max(conceal, HIDE_SEE_BASELINE)
     for typ, val in (vision.pop("invisibilityIntensity", None) or {}).items():
         if typ.startswith("INVISIBLE_") and isinstance(val, int):
@@ -663,8 +673,10 @@ def collapse_hide_and_seek(out, vision):
                  "visibleImprovementRange", "visibleImprovement"):
         vision.pop(dead, None)
 
-    if conceal or detect:
+    if classic_method or conceal or detect:
         node = out.setdefault("hideAndSeek", OrderedDict())
+        if classic_method:
+            node["method"] = classic_method
         if conceal:
             node["concealment"] = OrderedDict([("flat", conceal * VISION_PLOT)])
         if detect:

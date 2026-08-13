@@ -148,6 +148,7 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
  "hideAndSeek": {
+  "method": "camouflage",
   "concealment": {
    "flat": 600
   },

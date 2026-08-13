@@ -122,6 +122,7 @@
   "UNITCOMBAT_HEALS_TECH"
  ],
  "hideAndSeek": {
+  "method": "stealth",
   "concealment": {
    "flat": 100
   }
