@@ -1372,6 +1372,28 @@ int CvTeamAI::AI_getBarbarianCivWarVal(TeamTypes eTeam, int iMaxDistance) const
 }
 
 
+// ⛔ NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE ([DEC-no-float-in-sync]). A tech-trade value is an AI
+// DECISION every client computes, so a CPU-dependent `exp` differing in its last bits picks a different trade on
+// one machine and desyncs it. The squash is `3 x sigma(boost)^2 + 0.25` over a boost the ratio below BOUNDS to
+// [-1, 1], so it depends on ONE input and becomes a compile-time table in x10000 fixed point, interpolated and
+// reduced once ([engine.md] § THE CONVERSION SHAPE).
+// ⚑ Acceptance is the ORDERING, never bit-equality with the float form -- that answer was never well-defined
+// across clients, so it is not a baseline. Sampled against the true curve the table's worst error is under one
+// part in twenty thousand, which no ranking can see.
+static const int TECH_TRADE_SQUASH_STEPS = 64;
+static const int aiTechTradeSquash[TECH_TRADE_SQUASH_STEPS + 1] =
+{
+	 4670,  4771,  4876,  4984,  5097,  5213,  5334,  5459,
+	 5588,  5721,  5859,  6000,  6147,  6297,  6452,  6612,
+	 6776,  6945,  7118,  7295,  7478,  7664,  7855,  8051,
+	 8251,  8455,  8663,  8876,  9093,  9314,  9539,  9767,
+	10000, 10236, 10476, 10719, 10966, 11215, 11468, 11723,
+	11981, 12242, 12505, 12770, 13038, 13307, 13578, 13850,
+	14124, 14398, 14674, 14951, 15228, 15505, 15783, 16061,
+	16339, 16616, 16893, 17169, 17444, 17718, 17991, 18263,
+	18533,
+};
+
 int CvTeamAI::AI_techTradeVal(TechTypes eTech, TeamTypes eTeam)
 {
 	PROFILE_FUNC();
@@ -1397,15 +1419,36 @@ int CvTeamAI::AI_techTradeVal(TechTypes eTech, TeamTypes eTeam)
 
 		const bool bAsync = (teamLeader.isHumanPlayer() || GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).isHumanPlayer());
 
-		const float iOurActualTechValue = (float)teamLeader.AI_TechValueCached(eTech, bAsync, true);
-		const float iAverageTechValue = (float)teamLeader.AI_averageCurrentTechValue(eTech, bAsync);
+		const int iOurActualTechValue = teamLeader.AI_TechValueCached(eTech, bAsync, true);
+		const int iAverageTechValue = teamLeader.AI_averageCurrentTechValue(eTech, bAsync);
 
-		// Multiply the base cost by a squashing function of relative goodness of the proposed tech and an average one from what we can currently research
-		const float boost = (iOurActualTechValue - iAverageTechValue) / (iOurActualTechValue + iAverageTechValue);
-		const float sigma = 1.0f / (1.0f + exp(-boost));
+		// Multiply the base cost by a squashing function of relative goodness of the proposed tech and an average
+		// one from what we can currently research.
+		// ⚠ The two values are non-negative, so their sum is zero only when BOTH are -- and the float form divided
+		// by it, making the squash NaN and the cost below whatever the truncation happened to yield. A zero sum
+		// expresses no relative goodness at all, so it takes the curve's midpoint.
+		const int64_t iTechValueSum = (int64_t)iOurActualTechValue + (int64_t)iAverageTechValue;
+		int64_t iBoost = 0;
+		if (iTechValueSum > 0)
+		{
+			iBoost = ((int64_t)iOurActualTechValue - (int64_t)iAverageTechValue) * 10000 / iTechValueSum;
+		}
+		if (iBoost < -10000) { iBoost = -10000; }
+		if (iBoost > 10000) { iBoost = 10000; }
+
+		const int64_t iSquashPosition = (iBoost + 10000) * TECH_TRADE_SQUASH_STEPS;
+		int iSquashStep = (int)(iSquashPosition / 20000);
+		if (iSquashStep >= TECH_TRADE_SQUASH_STEPS)
+		{
+			iSquashStep = TECH_TRADE_SQUASH_STEPS - 1;
+		}
+		const int64_t iSquashFraction = iSquashPosition - (int64_t)iSquashStep * 20000;
+		const int64_t iSquash = (int64_t)aiTechTradeSquash[iSquashStep]
+			+ ((int64_t)aiTechTradeSquash[iSquashStep + 1] - aiTechTradeSquash[iSquashStep])
+				* iSquashFraction / 20000;
 
 		int iCost = std::max(1, getResearchCost(eTech) - getResearchProgress(eTech));
-		iCost = (int)(iCost * (sigma * sigma * 3 + 0.25f));
+		iCost = (int)(((int64_t)iCost * iSquash) / 10000);
 
 		int iValue = iCost * 3/2;
 
