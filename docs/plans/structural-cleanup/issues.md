@@ -294,9 +294,6 @@ scan bugs rather than fix them.
 - **Wire the `EnablerOverlay` DELTA reads** (`unlocks` / `unlockedIds`) or delete them. The overlay's `addHave`
   half is live in the civic what-if; the delta half — the header's "deliberately the primitive rather than
   something each caller re-derives" — has no consumer because the tech-picking one does not exist yet.
-- **Fix the stale comment pointing at `CvPlot::setWorkingCity`** on the working-city event — no such method
-  exists (only the override variant), and naming a dead site is the bait
-  ([DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).
 - **Re-route `governmentCenterDistance` and delete the fact pair nobody emits.** Its interest set names the
   government-centre crossing, whose emitters have no callers at all — the counter that raised them became the
   amenity fold and the interest set did not follow, so the distance is frozen at whatever founding or load
@@ -350,12 +347,6 @@ scan bugs rather than fix them.
   per-city `[CIT/assign/dirty]` line, and a whole-scope fan names its own caller on `[CIT/assign/fan]`. Both land
   in **`CityAI.log`** — the `[CIT]` domain's file, NOT `Cascade.log`. Resolve an RVA against the PDB
   (`ln CvGameCoreDLL+<callerRva>`), and the histogram of those values IS the worklist, ranked by cost.
-- **Give `NO_PLAYER`-attributed tech grants a consumer route.** The game's own free/start-era techs announce with
-  no owning player, so the capability union, the enabler and the modifier consumer all drop them alike. The fact
-  identifies the TEAM's acquisition; the consumers key on a player.
-- **Make the repeat-tech emit symmetric.** Play announces on every count increment while the read announces once
-  per held tech, so a counted tech's folded state differs across a save/load round-trip — a divergence that is
-  an artefact of the asymmetric emit rather than a missed one.
 - **Give the vicinity store its `CASC_PRED_*`-keyed twin** — the vicinity counterpart of `plotAttrs` (river / coast
   / hills / peak / fresh water over the radius tiles), beside the `BONUS_*`-keyed one that now exists
   ([contexts.md](../../architecture/contexts.md), owner). ⛔ The two are NOT merged: the key spaces are disjoint
@@ -367,14 +358,6 @@ scan bugs rather than fix them.
   [DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation) carve-out: the one row
   that calls a live engine predicate instead of reading stored bits has to transcribe its dependency set BY HAND,
   and a hand-transcribed set can silently under-declare. Any future row of that kind carries the same hazard.
-- **Consume the withdrawal halves the unit plane already announces.** The unit-killed and left-city facts reach
-  no consumer while their created / entered-city twins do, so whatever folds on the arrival never retires it —
-  a compounding magnitude, not a stale gate ([state-repositories.md](../../architecture/state-repositories.md)).
-  ⛔ Acting on one half of an ADDED/REMOVED pair is the defect; find the folds, not just the facts.
-- **Emit the global-define WITHDRAWAL.** The removal helper exists with no caller while the addition fires, so a
-  live-option slot REPLACEMENT is announced half-open and the old value is never taken back
-  ([DEC-facts-name-happenings]: a slot replacement is two facts, and the withdrawal must be announced while the
-  old state still holds).
 - **Route the BUILDING grantor into the ability union when data authors one.** The building info already carries
   the block and the union folds only the tech leg, so a building-authored capability would be silently dropped.
   ⚠ No data authors one today — this lands WITH that data, never speculatively.
@@ -483,18 +466,25 @@ scan bugs rather than fix them.
   fix: an unpaired visibility increment/decrement leaves the per-plot counter outside its stated 0–1 invariant.
   Find the unpaired mutation; the sweep then deletes itself. Until then it costs a full-map clear plus a whole-map
   re-sight per turn ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).
-- **The empire commerce total is an `ensure()`-on-read behind a `MAX_INT` sentinel, cleared by a per-turn
-  blanket** — the tombstoned read-side rebuild, a hand-named scalar array, and a blanket standing in for the
-  missing mark, all on one value, with the comment citing `state-repositories.md` while implementing what it bans.
-  Wire the mark that a member city's realized commerce moved to also mark the empire's receiver slot. ⚠ Its
-  sibling total-yield read has NO cache at all and re-walks every city per call, inside a players×yields double
-  loop.
-- **The per-turn victory-city recount** wipes and refills two hand-named scalars whose only inputs are victory
-  validity and immutable info data. Cheap, same shape, same missing emit.
-- **Owner call needed on the AI turn-scoped memo clears** (tech values, mission targets, civic values, build
-  values, unit counts, trade routes, resource consumption). They memoize AI *valuations* rather than derived game
-  state, so whether the no-self-heal rule binds them is a ruling, not an agent's call. ⚑ Start with the mission
-  target cache — its own comment says it is force-recalculated "for reliabilty reasons (more robust to bugs)".
+  **PROVEN — the unpaired mutations, mapped by the bracket census** (every sight add/remove goes through
+  `changeAdjacentSight`; a skew needs a sight INPUT moving outside a remove/re-add bracket). Two are FIXED:
+  `setTerrainType` carried no bracket while terrain authors elevation/obstruction (hill/peak — its three sibling
+  setters all bracket; it now does), and a promotion moving `URS_VISION` on a STANDING unit re-brackets around
+  the `setHasPromotion` commit (the lost BTS `changeExtraVisibilityRange` shape restored at the new commit
+  point; the gate also covers a promotion providing/removing a vision-authoring combat class —
+  RECON/EXPLORER/AIR_RECON author `vision.unit`).
+  **⚖ RULED — THE SWEEP IS A KEEP; THE VISIBILITY ENGINE IS NOT REBUILT IN #430 (owner: "I am concerned about
+  rebuilding the entire visibility engine").** The per-turn rebuild stays as the visibility engine's wholesale
+  maintainer — it is LOAD-BEARING today, not just tape: it is the only thing applying the 29 vision-authoring
+  buildings' city sight (the city's brackets exist only at init / kill / capital-move, so an activation never
+  re-brackets in place). The CITY leg therefore stays unwired behind it, and no sight-record structure (the
+  per-team sight-as-added exactness record the pairing fix would want) is built in this rework. A proper
+  visibility pass is its own deliberate future work item — it naturally rides the vision / hide-and-seek ground.
+  ⚠ The two landed brackets stay: they mirror existing sibling shapes, fix real immediacy bugs (a vision
+  promotion / terraform now applies at once instead of at end of turn), and the sweep rebuilds over them
+  harmlessly.
+  ⚠ `doSetUnitCombats` (the era attach) reaches `setHasUnitCombat` outside the promotion funnel and is
+  unbracketed by shape — inert today (no era class authors vision), covered by the sweep regardless.
 
 ## ⛔ A LEGACY PLANE ALIVE ONLY FOR PYTHON — and a value silently lost
 
