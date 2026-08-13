@@ -43,7 +43,7 @@ int jsonResolveId(const std::string& id);
 // capabilities / civic policies, json.md §8/§9). Only true entries are inserted; false/non-bool are ignored.
 void jsonBoolSet(const picojson::value& v, std::set<std::string>& out);
 
-// A `{channel:value}` commerce map (building stateReligionCommerce; religion shrine). Values are
+// A `{channel:value}` commerce map (the building's stateReligionCommerce marker). Values are
 // read as-is (already-authored ints; NOT ×100 -- these are engine-native counts, matching the former reader).
 void jsonCommerceMap(const picojson::value& v, std::map<std::string, int>& out);
 

@@ -1179,8 +1179,8 @@ namespace
 	}
 
 	// SHRINE-BUILDING REGISTRY FEED. The building authors the relationship as its §9 `shrine` FK
-	// (CvBuildingInfo::getShrineReligion -- json.md §9: the building declares only the FK; the per-commerce
-	// values live on the RELIGION); the consumers (CvCityAI:958 / CvCity:19016 foreach getShrineBuildings)
+	// (CvBuildingInfo::getShrineReligion), and carries the shrine's per-commerce deposit itself (json.md §9);
+	// the consumers (CvCityAI:958 / CvCity:19016 foreach getShrineBuildings)
 	// ask the RELIGION for its shrine buildings. The legacy buildings-self-register path died in the cutover
 	// (addShrineBuilding had ZERO callers), so feed the registry here from the compiled FK. Idempotent by
 	// CLEARING FIRST, like every sibling sub-pass -- this pass runs in both load phases, and relying on the
