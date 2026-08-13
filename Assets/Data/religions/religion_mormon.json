@@ -28,10 +28,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 2,
-  "research": 1
- },
  "ai": {
   "flavours": [
    {

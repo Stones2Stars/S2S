@@ -60,10 +60,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1,
-  "culture": 1
- },
  "grants": {
   "freeUnit": "UNIT_CONFUCIAN_MISSIONARY",
   "numFreeUnits": 1

@@ -40,9 +40,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 2
- },
  "grants": {
   "freeUnit": "UNIT_SCIENTOLOGY_MISSIONARY",
   "numFreeUnits": 2

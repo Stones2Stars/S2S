@@ -46,9 +46,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1
- },
  "grants": {
   "freeUnit": "UNIT_CHRISTIAN_MISSIONARY",
   "numFreeUnits": 1

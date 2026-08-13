@@ -28,9 +28,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1
- },
  "grants": {
   "freeUnit": "UNIT_JAINISM_MISSIONARY",
   "numFreeUnits": 1

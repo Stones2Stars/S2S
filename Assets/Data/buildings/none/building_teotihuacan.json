@@ -13,6 +13,19 @@
    ]
   }
  },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_NAGHUALISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [
@@ -23,6 +36,13 @@
       "existedFor": {
        "min": 1000
       }
+     }
+    },
+    {
+     "value": 2,
+     "per": {
+      "type": "RELIGION_NAGHUALISM",
+      "scope": "world"
      }
     }
    ]

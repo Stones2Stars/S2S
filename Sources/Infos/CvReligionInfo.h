@@ -40,7 +40,6 @@ public:
 	// The §9 SHRINE value plane (bare ×100 member read, materialized once at mapFrom from the `shrine` block):
 	// the per-commerce shrine revenue, scaled per city holding the religion by the consumer (the shrine
 	// BUILDING carries only the FK -- CvBuildingInfo::getShrineReligion).
-	int getShrineCommerce(CommerceTypes eCommerce) const { return m_aiShrineCommerce[(int)eCommerce]; }
 
 	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
 	int getSpreadFactor() const { return m_iSpreadFactor; }                              // identity.spreadFactor
@@ -97,7 +96,6 @@ private:
 	CvModifiers m_modifiers;
 
 	// --- the materialized §9 shrine plane + the intrinsic identity members ---
-	int m_aiShrineCommerce[NUM_COMMERCE_TYPES];
 	int m_iSpreadFactor;
 	int m_iTGAIndex;
 	int m_iFreeUnit;

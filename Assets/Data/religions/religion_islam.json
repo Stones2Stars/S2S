@@ -63,9 +63,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1
- },
  "grants": {
   "freeUnit": "UNIT_ISLAMIC_MISSIONARY",
   "numFreeUnits": 1

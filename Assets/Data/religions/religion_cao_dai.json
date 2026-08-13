@@ -52,10 +52,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1,
-  "culture": 3
- },
  "ui": {
   "art": {
    "tgaIndex": 24,

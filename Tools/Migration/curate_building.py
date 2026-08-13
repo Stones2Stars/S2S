@@ -13,7 +13,9 @@ OWNER RULINGS folded in (handover #6):
   `enabled`; Improvement/Terrain/Plot yields target-keyed (food.city.improvements.{IMP}.flat). Tech ones PROVISIONAL (Phase F).
 - top-level `triggers[]` (json.md §5, ruling 8): PropertySpawn (onTurn, chance via `per`) + iNumUnitFullHeal/
   HealUnitCombat (onTurn heal actions) + FreePromoTypes (onUnitEnteredCity promote-present).
-- shrine (GlobalReligionCommerce, a RELIGION FK) -> the TOP-LEVEL `shrine` bespoke section (values live on the religion);
+- shrine (GlobalReligionCommerce, a RELIGION FK) -> the TOP-LEVEL `shrine` bespoke section, PLUS that religion's
+  GlobalReligionCommerces as this building's own <commerce>.city.flat, per-scaled {type: RELIGION_X, scope: world}
+  (json.md §9, owner: the commerce lands in the city the shrine stands in);
   headquarters (GlobalCorporationCommerce, a CORPORATION FK) -> the TOP-LEVEL `headquarters` bespoke section (json §9,
   owner 2026-07-01, un-nested from identity).
 - CommerceChangeDoubleTimes -> 2nd age-gated deposit `enabled:{existedFor:{min:N}}`.
@@ -493,6 +495,28 @@ def _inject_cond(fams, family, scope, unit, value, enabled, member=None):
         node[unit] = [cur, entry]
 
 
+def _shrine_commerce(fams, religion, store):
+    """The shrine's own per-commerce revenue, on the BUILDING that carries it (json.md S9, owner ruling).
+
+    Legacy split it across two records -- the FK on the building, GlobalReligionCommerces on the religion -- and
+    assembled `value x countReligionLevels` at the consumer. The values move HERE because the building is what
+    brings them to the table, so its presence is the whole gate: a building deposits only where it stands and
+    only while active, which is why the entry carries no `enabled` at all.
+
+    S The scaler MUST say scope "world". ev_countCore reads a cross-scope RELIGION_X as the world religion-level
+    count (the same countReligionLevels legacy used) and a CITY-scope one as a bare PRESENCE check, so a missing
+    scope would scale every shrine by 1 -- silently, and looking merely underpowered rather than broken."""
+    rel = store.get("ReligionInfo", religion)
+    if rel is None:
+        return
+    node = rel.find("GlobalReligionCommerces")
+    if node is None:
+        return
+    for commerce, v in engine.named_array(node, engine.COMMERCES).items():
+        _inject_per(fams, commerce, "city", "flat", v,
+                    OrderedDict([("type", religion), ("scope", "world")]))
+
+
 def _inject_per(fams, family, scope, unit, value, per, target=None):
     """Like _inject_cond but the deposit carries a `per` count-scaler (json.md S3.7) instead of an `enabled` gate:
     effect = value * (count(per.type)/per.each). List-aware so it coexists with a plain count on the same leaf.
@@ -636,9 +660,10 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
     # predicate and §10's Versailles is this exact mechanic: `culture.city.flat: [10, {value:10, enabled:{existedFor:
     # {min:1000}}}]`). A doubling is an ADDED equal deposit, never a post-sum multiply and never a timer/stage marker.
     # The doubled amount is the building's OWN authored base for that channel -- its CommerceChanges value, i.e. the
-    # very number the yield/commerce loop deposited as <commerce>.city.flat. Shrine commerce belongs to the RELIGION
-    # (religion.shrine.{commerce}) and headquarters commerce to the CORPORATION, so neither is part of the building's
-    # base here. A channel with a double-time but NO authored base doubles nothing and emits nothing. ---
+    # very number the yield/commerce loop deposited as <commerce>.city.flat. ⚠ The SHRINE deposit now lands on this
+    # building too and shares that leaf, but it is NOT part of this base: it is the RELIGION's authored value, not
+    # the building's CommerceChanges, so a double-time doubles the building's own number alone. Headquarters
+    # commerce stays the CORPORATION's. A channel with a double-time but NO authored base doubles nothing. ---
     cdt = rec.find("CommerceChangeDoubleTimes")
     if cdt is not None:
         base_node = rec.find("CommerceChanges")
@@ -660,16 +685,14 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
             if v:
                 _inject_per(fams, "happiness", "city", "flat", v,
                             OrderedDict([("type", member.upper() + "_RATE"), ("each", 100)]))
-    # --- shrine (GlobalReligionCommerce = a single RELIGION FK, addEnumAsInt): the building is the SHRINE for that
-    # religion. The per-commerce VALUES live on the Religion (ReligionInfo::getGlobalReligionCommerce, parked
-    # religion.shrine #15); the full modifier = religion.shrine.{commerce} x countReligionLevels(religion) is
-    # assembled at #430 (CvCity.cpp:12378-12384). The building declares only the shrine RELATIONSHIP (the FK) ->
-    # the TOP-LEVEL `shrine` bespoke section (json §9), un-nested from identity (owner 2026-07-01: the shrine
-    # relationship IS the data). ⚑ NB the FK is the building's ONLY shrine data — the commerce {culture:...} lives
-    # on the religion, NOT the building (verified addEnumAsInt + CvCity.cpp:12275-12284). ---
+    # --- shrine (GlobalReligionCommerce = a single RELIGION FK, addEnumAsInt): the building is the SHRINE for
+    # that religion. The FK stays as the TOP-LEVEL `shrine` bespoke section (json §9) -- the reverse pass builds
+    # ReligionInfo's shrine-building registry from it -- and the per-commerce VALUES land on THIS BUILDING
+    # beside it (owner: "it should be on the shrine building, so the city where the shrine building is in"). ---
     shrine = _txt(rec, "GlobalReligionCommerce")
     if shrine:
         bespoke["shrine"] = shrine
+        _shrine_commerce(fams, shrine, store)
 
     # --- CvProperties: Properties (city) / PropertiesAllCities (empire) -> per-PROPERTY family deposits ---
     for tag, scope in (("Properties", "city"), ("PropertiesAllCities", "empire")):

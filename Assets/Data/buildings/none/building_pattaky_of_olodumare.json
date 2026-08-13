@@ -15,7 +15,16 @@
  },
  "gold": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_YORUBA",
+      "scope": "world"
+     }
+    }
+   ]
   }
  },
  "culture": {

@@ -15,7 +15,16 @@
  },
  "gold": {
   "city": {
-   "flat": 4
+   "flat": [
+    4,
+    {
+     "value": 2,
+     "per": {
+      "type": "RELIGION_SCIENTOLOGY",
+      "scope": "world"
+     }
+    }
+   ]
   }
  },
  "culture": {

@@ -24,6 +24,13 @@
        "min": 1000
       }
      }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_KEMETISM",
+      "scope": "world"
+     }
     }
    ]
   },

@@ -30,10 +30,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1,
-  "culture": 1
- },
  "grants": {
   "freeUnit": "UNIT_SHINTO_MISSIONARY",
   "numFreeUnits": 1

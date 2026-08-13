@@ -33,9 +33,6 @@
    ]
   }
  },
- "shrine": {
-  "research": 1
- },
  "grants": {
   "freeUnit": "UNIT_HELLENIC_MISSIONARY",
   "numFreeUnits": 1

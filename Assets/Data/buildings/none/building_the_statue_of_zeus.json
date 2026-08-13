@@ -13,6 +13,19 @@
    ]
   }
  },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_HELLENISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

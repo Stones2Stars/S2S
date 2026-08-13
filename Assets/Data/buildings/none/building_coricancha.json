@@ -15,7 +15,16 @@
  },
  "gold": {
   "city": {
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_ANDEANISM",
+      "scope": "world"
+     }
+    }
+   ]
   }
  },
  "research": {
@@ -33,6 +42,13 @@
       "existedFor": {
        "min": 1000
       }
+     }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_ANDEANISM",
+      "scope": "world"
      }
     }
    ]

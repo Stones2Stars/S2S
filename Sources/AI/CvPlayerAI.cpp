@@ -15209,11 +15209,22 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 				{
 					continue;
 				}
-				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+				if (GC.getBuildingInfo(eTypeX).getShrineReligion() == eReligion)
 				{
-					if (GC.getBuildingInfo(eTypeX).getShrineReligion() == eReligion)
+					// The shrine's commerce is the BUILDING's own deposit (json.md §9), so it is read through
+					// the valuation that resolves its per-religion-count scaler -- the compiled sum cannot,
+					// and would price the shrine at a single point of commerce.
+					// ⚠ The contexts are the HOLY CITY'S OWNER'S, not ours -- this walks another civ's holy city
+					// as often as our own (the bOurHolyCity test below), and a city paired with a foreign
+					// empire context resolves every conditioned entry beside the shrine against the wrong player.
+					const CvPlayer& kHolyOwner = GET_PLAYER(pHolyCity->getOwner());
+					int aiShrineCommerce[NUM_COMMERCE_TYPES];
+					GC.getBuildingInfo(eTypeX).expectedFlatCommerce(
+						pHolyCity->getCityContext(), kHolyOwner.getEmpireContext(),
+						pHolyCity->plotGroup(pHolyCity->getOwner()), aiShrineCommerce);
+					for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 					{
-						iCommerceCount += GC.getReligionInfo(eReligion).getShrineCommerce((CommerceTypes)iJ);
+						iCommerceCount += aiShrineCommerce[iJ];
 					}
 				}
 			}

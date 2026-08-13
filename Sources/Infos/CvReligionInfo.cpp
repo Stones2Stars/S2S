@@ -19,10 +19,6 @@ CvReligionInfo::CvReligionInfo()
 	, m_iChar(-1)
 	, m_iHolyCityChar(-1)
 {
-	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
-	{
-		m_aiShrineCommerce[iCommerce] = 0;
-	}
 }
 
 int CvReligionInfo::getFlavorValue(int iFlavor) const
@@ -53,10 +49,6 @@ void CvReligionInfo::mapFrom(const picojson::value& entity)
 
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
 	// (the reverse-pass-fed tech FK + the runtime glyph/registry members are NOT reset here)
-	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
-	{
-		m_aiShrineCommerce[iCommerce] = 0;
-	}
 	m_flavours.clear();
 	m_iSpreadFactor = 0;
 	m_iTGAIndex = -1;
@@ -77,25 +69,6 @@ void CvReligionInfo::mapFrom(const picojson::value& entity)
 		return;
 	}
 	const picojson::object& entityObj = entity.get<picojson::object>();
-
-	// --- the §9 `shrine` block: {<channel word>: N} -- the per-commerce shrine values, a MAGNITUDE plane
-	// (×100). The channel word resolves through the ONE vocabulary (infoFamilyFromKey -> infoFamilyCommerce),
-	// never a local table. ---
-	if (const picojson::object* pShrine = jsonChildObj(entityObj, "shrine"))
-	{
-		for (picojson::object::const_iterator shrineIt = pShrine->begin(); shrineIt != pShrine->end(); ++shrineIt)
-		{
-			if (!shrineIt->second.is<double>())
-			{
-				continue;
-			}
-			const int iCommerce = infoFamilyCommerce(infoFamilyFromKey(shrineIt->first));
-			if (iCommerce >= 0 && iCommerce < NUM_COMMERCE_TYPES)
-			{
-				m_aiShrineCommerce[iCommerce] = jsonX100(shrineIt->second.get<double>());
-			}
-		}
-	}
 
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{

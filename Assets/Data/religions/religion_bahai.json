@@ -28,9 +28,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1
- },
  "grants": {
   "freeUnit": "UNIT_BAHAI_MISSIONARY",
   "numFreeUnits": 1

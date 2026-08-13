@@ -28,9 +28,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1
- },
  "grants": {
   "freeUnit": "UNIT_RODNOVERY_MISSIONARY",
   "numFreeUnits": 1

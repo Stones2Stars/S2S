@@ -13,6 +13,32 @@
    ]
   }
  },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_CAO_DAI",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "per": {
+      "type": "RELIGION_CAO_DAI",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
  "health": {
   "city": {
    "flat": 1

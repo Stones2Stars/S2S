@@ -79,22 +79,6 @@
   `advancedStart` → resolve the curator's parked flag; `base.airCombat` → the `strength` family, where every
   other unit's base value already lives.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
-- Move the SHRINE commerce onto the shrine BUILDING ([json.md §9](../../specs/json.md) carries the ruled shape).
-  It is authored nowhere that reaches a deposit today: the religion parks the per-commerce values in a bespoke
-  `shrine` block that only two AI valuations read, so the AI prices a shrine the city never receives.
-  ⛔ It lands as ONE piece — curator, info and both AI reads together. Steps 1-2 alone leave `getShrineCommerce`
-  answering zero with live readers, which is a silent AI regression rather than a partial improvement.
-  1. `curate_building.py` — beside the `shrine:` FK it already emits from `GlobalReligionCommerce`, emit
-     `<commerce>.city.flat {value, per: {type: RELIGION_X, scope: world}}`, reading the values off that
-     religion's record (`store.get("ReligionInfo", …)`, `engine.named_array(node, engine.COMMERCES)`); the
-     append idiom is `curate_religion`'s own `COMMERCE_PREDICATE` branch. Keep the FK — the reverse pass builds
-     `getShrineBuildings` from it.
-  2. `curate_religion.py` — stop emitting the parked `shrine` block.
-  3. `CvReligionInfo` — drop `m_aiShrineCommerce`, `getShrineCommerce` and the block reader.
-  4. The two AI readers (`CvCityAI`'s per-commerce building valuation and `CvPlayerAI`'s holy-city walk) read
-     the building's `expected*` valuation. ⚑ Both already START from the building
-     (`kBuilding.getShrineReligion()`) and hop to the religion for values, so this is a re-point rather than a
-     redesign.
 - Author the leader→trait assignments. The chain is wired and the slots are authorable; the CONTENT is
   community-owned, so this closes by AUTHORING and never by reconstructing the tables the curator dropped.
 - Author per-leader `ai.personality.researchSearchDepth` ([enabler.md §8](../../specs/enabler.md)). Same shape as

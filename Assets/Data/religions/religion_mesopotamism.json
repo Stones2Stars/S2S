@@ -38,10 +38,6 @@
    ]
   }
  },
- "shrine": {
-  "gold": 1,
-  "culture": 1
- },
  "ai": {
   "flavours": [
    {

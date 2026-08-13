@@ -7,10 +7,10 @@ classify-light-batch workflow):
 - StateReligionCommerces -> member `stateReligion`: deposits in EVERY city that has this religion present
   (CvCity.cpp:12503, isHasReligion).
 - HolyCityCommerces      -> member `holyCity`: deposits only in this religion's holy city (CvCity.cpp:12507).
-- GlobalReligionCommerces-> member `shrine`: the religion's SHRINE contribution — consumed in whichever city
-  holds a building whose getGlobalReligionCommerce() points at this religion (CvCity.cpp:12185/12288), the
-  per-commerce value world-scaled by countReligionLevels. The world-scaling is intrinsic to the `shrine`
-  concept (a consumer rule), not encoded in the data. (Mapping's "player" scope was wrong on all three.)
+- GlobalReligionCommerces-> DROPPED HERE, emitted by curate_building: the SHRINE's contribution lands on the
+  shrine BUILDING, in the city it stands in (json.md §9, owner), as <commerce>.city.flat per-scaled by
+  {type: RELIGION_X, scope: world} -- the countReligionLevels the consumer used to apply, now authored. The
+  building already declares the FK, so it is the one record that knows both halves.
 
 All three are raw per-commerce ints multiplied into the x100 commerce paths downstream; carried faithfully (#432).
 
@@ -47,9 +47,9 @@ from store import Store, REPO
 # predicate + the specific religion as the single conditional; the engine owns the compound logic (for
 # STATE_RELIGION the C++ relaxes to "present AND (is-state-religion OR no-state-religion OR non-state-commerce)").
 COMMERCE_PREDICATE = {"StateReligionCommerces": "STATE_RELIGION", "HolyCityCommerces": "IS_HOLY_CITY"}
-# GlobalReligionCommerce is NOT a city gate — it's value x countReligionLevels(religion) (WORLD-scaled) consumed
-# through a shrine building. PARKED to the Building pass (the religion<->shrine-building routing + the world
-# religion-levels count token live there); the raw per-commerce values are kept faithfully in a `shrine` section.
+# GlobalReligionCommerce is NOT a city gate — it is value x countReligionLevels(religion) consumed through a
+# shrine BUILDING, so both halves are emitted there (curate_building._shrine_commerce) and this record drops it.
+# Consumed-and-dropped rather than unhandled: an unclassified tag would report as a leftover.
 SHRINE_TABLE = "GlobalReligionCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Adjective": "adjective"}
 # art tags this entity carries — routed to ui/world/sound via the canonical curate_common.ART_BLOCK.
@@ -78,7 +78,6 @@ def _properties(node, props):
 
 def curate(typ, rec, store, boosts):
     text, fam, props, grants, art_blocks, identity, ai, leftover = {}, {}, {}, {}, {}, {}, {}, []
-    shrine = OrderedDict()
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -91,9 +90,8 @@ def curate(typ, rec, store, boosts):
             for commerce, v in engine.named_array(c, engine.COMMERCES).items():   # commerce IS the family (split)
                 entry = OrderedDict([("value", v), ("enabled", OrderedDict([(predicate, typ)]))])
                 fam.setdefault(commerce, {}).setdefault("city", {}).setdefault("flat", []).append(entry)
-        elif tag == SHRINE_TABLE:                              # GlobalReligionCommerce -> parked `shrine` values
-            for commerce, v in engine.named_array(c, engine.COMMERCES).items():   # (Building wires world-scaling)
-                shrine[commerce] = v
+        elif tag == SHRINE_TABLE:                              # consumed here, EMITTED on the shrine building
+            pass
         elif tag == "PropertyManipulators":
             _properties(c, props)
         elif tag == "Flavors":
@@ -142,8 +140,6 @@ def curate(typ, rec, store, boosts):
             out[family] = fam[family]
     for prop in sorted(props):
         out[prop] = props[prop]
-    if shrine:                                                 # parked GlobalReligionCommerce values (Building pass
-        out["shrine"] = shrine                                 # wires the world-scaling + shrine-building routing)
     if grants:
         out["grants"] = grants
     if ai:

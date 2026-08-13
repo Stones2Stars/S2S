@@ -13,6 +13,19 @@
    ]
   }
  },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_HINDUISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
  "culture": {
   "city": {
    "flat": [

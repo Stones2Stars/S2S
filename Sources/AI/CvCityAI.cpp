@@ -13146,10 +13146,9 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 
 		if (eReligionGlobalCommerce != NO_RELIGION)
 		{
-			// The shrine's own per-commerce value, scaled by how many cities hold the religion -- the shrine
-			// relationship is the building's (`shrine: RELIGION_X`) while the VALUES live on the religion.
-			iResult += GC.getReligionInfo(eReligionGlobalCommerce).getShrineCommerce((CommerceTypes)iI) * GC.getGame().countReligionLevels(eReligionGlobalCommerce) * 2;
-
+			// ⛔ NO shrine commerce term here. The values are the BUILDING's own deposit now (json.md §9), so
+			// iBaseCommerceChange above already carries them -- expectedFlatCommerce resolves the entry AND its
+			// per-religion-count scaler. Adding a second term would count the shrine twice.
 			if (eStateReligion == eReligionGlobalCommerce)
 			{
 				iResult += 10;
