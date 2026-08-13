@@ -17054,7 +17054,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			//	the normalized dictionary name differs from the source literal -- so an old save's bytes are
 			//	drained here instead, and the remap branch collapses because both arms only consume.
 			int aiDrainCommerce[NUM_COMMERCE_TYPES];
-			WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, aiDrainCommerce);
+			WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, aiDrainCommerce, "m_ppiBonusCommerceModifier[iI]");
 		}
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{

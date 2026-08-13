@@ -97,6 +97,18 @@ A `WRAPPER_SKIP_ELEMENT` in the tree is **two different things** — do not conf
 **The test:** does the `if (iI != -1)` branch read a live member? ⇒ case (b), leave it. Do *both* branches merely
 drain / read-to-throwaway? ⇒ the member is dead ⇒ case (a), convert per §3.
 
+- **⛔ A DRAIN THAT READS INTO A LOCAL MUST NAME THE ORIGINAL TAG — the UNDECORATED macro takes the tag from the
+  LOCAL'S OWN NAME.** `WRAPPER_READ_ARRAY(w, cls, n, name)` expands to `w.Read(cls "::" #name, …)`, so draining a
+  dead member through a scratch local (`int aiDrainCommerce[…]`) asks the stream for `Class::aiDrainCommerce` — a
+  tag NO save has ever contained. Nothing matches, nothing is consumed, and the dead member's elements stay in the
+  stream as UNLISTED ORPHANS: the §3 hard failure, with the load gutted from that point on. **Use the
+  `_DECORATED` form and pass the member's real bracketed literal** (`"m_ppiBonusCommerceModifier[iI]"`), which
+  `NormalizeName` reduces to the same `[]` form the stream stored.
+  ⚠ **It fails LOUDLY in `SaveRead.log` and silently everywhere else**: the giveaway is a run of
+  `[SAVEREAD] mismatch expected=<later tag> got=<the dead member>[]` — the reader walking forward while one tag
+  sits unconsumed. ⚑ The neighbouring drains in the same function already carry the decorated form; a new one
+  written from the undecorated macro's shorter signature is how the two diverge.
+
 ## 5. Derived data serializes NOTHING ⭐
 
 > [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted) — this is its authoritative home.
