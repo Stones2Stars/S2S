@@ -55,11 +55,6 @@ void CvSpecialistInfo::mapFrom(const picojson::value& entity)
 	}
 	m_szTexture.clear();
 
-	// PROPERTY_* per-turn SOURCES: a specialist's <PROPERTY_X>.city.flat (the doctor's disease cut, the
-	// law-keeper crime cuts) deposits in ITS city, once per assigned specialist (the city gather count-scales)
-	// -- RELATION_SAME_PLOT mirrors the legacy CITY+SAME_PLOT shape. The ONE shared walk over the compiled entries.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
-
 	if (!entity.is<picojson::object>())
 	{
 		return;

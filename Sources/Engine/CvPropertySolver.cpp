@@ -9,11 +9,17 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvPropertyManipulators.h"
+#include "Cascade/CvCascadeChannelRegistry.h"   // channelLookup -- the PROPERTY_* channel per property info
+#include "Data/CvInfoValuation.h"               // realizedAtCity / realizedAtPlot -- the cross-scope roll-up
 #include "Tools/FProfiler.h"
 #include "AI/BetterBTSAI.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvInfos.h"
+#include "AI/CvPlayerAI.h"   // GET_PLAYER + the city walk the cascade source pass folds over
+#include "CvCity.h"
+#include "CvPlot.h"
+#include "CvMap.h"
 
 PropertySourceContext::PropertySourceContext(CvPropertySource* pSource, const CvGameObject* pObject) : m_pSource(pSource), m_pObject(pObject), m_iData1(0), m_iData2(0)
 {
@@ -319,9 +325,61 @@ void CvPropertySolver::gatherActiveManipulators()
 	}
 }
 
+void CvPropertySolver::addCascadeSources()
+{
+	PROFILE_EXTRA_FUNC();
+	for (int iProperty = 0; iProperty < GC.getNumPropertyInfos(); ++iProperty)
+	{
+		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_PROPERTY, 0, iProperty);
+		if (iChannel < 0)
+		{
+			continue;   // no source anywhere authors this property -- nothing was ever minted for it
+		}
+		const PropertyTypes eProperty = (PropertyTypes)iProperty;
+
+		// CITY: the roll-up over the chain the city sits under (team + empire + city), so an EMPIRE-scope
+		// property deposit reaches every city of its owner by rolling DOWN like any other deposit -- which is
+		// the whole of what the legacy <PropertiesAllCities> fan did, with no per-city gather to build.
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive())
+			{
+				continue;
+			}
+			foreach_(const CvCity* pCity, kPlayer.cities())
+			{
+				const int iRate = InfoValuation::realizedAtCity(*pCity, iChannel) / 100;
+				if (iRate != 0)
+				{
+					addChange(pCity->getGameObject(), eProperty, iRate);
+				}
+			}
+		}
+
+		// PLOT: resolved in isolation -- a plot-scope deposit is authored only by a PLOT-RESIDENT source, so
+		// there is no upper chain to fold ([modifier.md] par.1, the origin rule).
+		const int iNumPlots = GC.getMap().numPlots();
+		for (int iPlot = 0; iPlot < iNumPlots; ++iPlot)
+		{
+			const CvPlot* pPlot = GC.getMap().plotByIndex(iPlot);
+			if (pPlot == NULL)
+			{
+				continue;
+			}
+			const int iRate = InfoValuation::realizedAtPlot(*pPlot, iChannel) / 100;
+			if (iRate != 0)
+			{
+				addChange(pPlot->getGameObject(), eProperty, iRate);
+			}
+		}
+	}
+}
+
 void CvPropertySolver::predictSources()
 {
 	PROFILE_EXTRA_FUNC();
+	addCascadeSources();
 	foreach_(PropertySourceContext& context, m_aSourceContexts)
 	{
 		context.doPredict(this);
@@ -331,6 +389,7 @@ void CvPropertySolver::predictSources()
 void CvPropertySolver::correctSources()
 {
 	PROFILE_EXTRA_FUNC();
+	addCascadeSources();
 	foreach_(PropertySourceContext& context, m_aSourceContexts)
 	{
 		context.doCorrect(this);

@@ -75,10 +75,4 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	// would otherwise be bridged ungated and deposit for the whole game.
 	m_modifiers.applyPureTraitGate(m_bNegativeTrait);
 
-	// PROPERTY_* per-turn SOURCES: a trait's <PROPERTY_X>.city.flat deposits in EVERY owner city while the trait
-	// is held -- RELATION_ASSOCIATED, the player-gathered fan the legacy trait manipulators used. The ONE shared
-	// walk over the compiled entries; it clears the container first, per the mapFrom idempotency contract.
-	// ⚠ Unconditional, on every path: it is what CLEARS the container, so skipping it for an entity that authored
-	// nothing would leave a re-mapped trait holding the previous map's manipulators.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
 }

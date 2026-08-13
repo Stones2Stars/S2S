@@ -35,11 +35,6 @@ void CvCivicInfo::mapFrom(const picojson::value& entity)
 	m_bCityOverLimitAnger = false;
 	m_szWeLoveTheKingKey.clear();
 
-	// PROPERTY_* per-turn SOURCES: an adopted civic's <PROPERTY_X>.city.flat deposits in EVERY owner city --
-	// RELATION_ASSOCIATED, the player-gathered fan the legacy civic manipulators used. The ONE shared walk over
-	// the compiled entries; it clears the container first, per the mapFrom idempotency contract.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
-
 	if (!entity.is<picojson::object>())
 	{
 		return;

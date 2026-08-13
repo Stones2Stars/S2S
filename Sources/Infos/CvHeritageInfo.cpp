@@ -109,11 +109,6 @@ void CvHeritageInfo::mapFrom(const picojson::value& entity)
 	// materializeCrossEntity(), which the reader runs after this pass.
 	m_bNeedsLanguage = false;
 
-	// PROPERTY_* per-turn SOURCES: a heritage's <PROPERTY_X>.city.flat (the tech-gated folklore education)
-	// deposits in EVERY owner city while held -- RELATION_ASSOCIATED fans each source to every owner city per
-	// the curated `city` scope. The ONE shared walk over the compiled entries.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
-
 	if (!entity.is<picojson::object>())
 	{
 		return;

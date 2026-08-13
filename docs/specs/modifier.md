@@ -68,6 +68,11 @@ each matching worked plot (§5). The target reads a combined value — it never 
 > percents), and the property engine is **self-contained by design** — what happens inside it stays inside it
 > ([engine.md](../reference/engine.md)), so no classification of it needs to leak outward. ⛔ Do not force
 > properties to one side to make the taxonomy tidy; the in-between is the accurate answer.
+> ⚠ **"Self-contained" scopes the engine's MATH, never its INPUTS.** Each property is a CHANNEL in this machine
+> and the cascade owns which sources apply and what they sum to; the engine owns integrating that rate — decay,
+> diffusion, the ordered solver passes ([property-audit.md](../plans/structural-cleanup/property-audit.md), the
+> governing model). Reading this paragraph as "property sources are the engine's too" is what leaves the source
+> side re-derived per turn.
 >
 > ⚠ **The word "yield" carries TWO senses, and conflating them is what makes this look like a contradiction.**
 > [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)'s *"every modifiable number is a

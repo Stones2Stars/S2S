@@ -479,61 +479,32 @@ scan bugs rather than fix them.
 > compiles, runs, and produces a plausible wrong answer, which is why none of them surfaced on its own.
 > ⛔ Symbols, never line numbers — a symbol survives an edit and a line number does not.
 
-- **⛔ CONVERT THE PACKAGES TO THE MAINTAINED SUM — the THREE PLANES**
-  ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum);
-  [state-repositories.md](../../architecture/state-repositories.md) § THE MAINTAINED SUM; the retired protocol is
-  [superseded-ideas](../../architecture/superseded-ideas.md) #30). The addressing half already exists —
-  `DepositIndex::depositsFor` IS "the fact names the source, the index names its deposits" — so what is missing is
-  the WRITER and two of the three ROUTES.
-  **⛔ CUT FIRST, THEN FILL — do NOT build to keep the current numbers alive.** `CascadeGather::refresh*` is a
-  whole-registry sweep (it asks every building / tech / civic / trait / bonus / religion / corporation whether the
-  owner has it, per mark), which contradicts the spec, so it is cut EARLY and the packages bind CLEAN. Every
-  deposit without a route then reads **ZERO, visibly**, and that census is what drives the rest of this item.
-  1. **`CvCascadePackage::apply(channel, unit, ±value)`** — a pure add. Today the only writer into a slot is the
-     gather's zero-then-refold; `sourceFlat`/`sourcePercent`/`sourceSum` are rebuild-path READS, not writers.
-  2. **Plane A — the SOURCE route.** `±value` on the source arriving or leaving. ⚑ There is no withdrawal input to
-     audit any more: every fact's direction IS its id, so the route is picked by which event arrived and the payload
-     is read only for HOW MANY ([DEC-facts-name-happenings](../../architecture/decisions.md#dec-facts-name-happenings);
-     [event-spine.md](../../specs/event-spine.md)). ⛔ So a consumer must never re-derive a direction from a payload
-     sign, an old-vs-new id pair or a presence bool — those conventions are gone from the surface, and reintroducing
-     one at a consumer rebuilds the branch the split deleted.
-  3. **Plane B — the COUNT route.** A `count-key → the deposits it scales` reverse index off the compiled deposit
-     index, so a `ContextDict::add(id, ±1)` applies `±value × Δcount` to every deposit scaled on it whose SOURCE is
-     live at that owner (an O(1) `has()` test — this is what keeps the two arrival orders convergent).
-  4. **Plane C — the ATOM route.** `±value` on a condition atom's verdict crossing, over the deposits that atom
-     gates. ⛔ **B and C land TOGETHER or neither** — C is delta-able only because B guarantees no count moves
-     unannounced ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum)).
-  5. **Retire the staleness protocol** — the mask derivation, the banked-marks bracket, and `CvCascadePackage`'s
-     `CvDerivedCacheSet` member.
-  ⚠ **THE RIDER THE CUT DROPPED, owed by the apply path.** The four `refreshCascadePackage` delegates carried a
-  side effect past their one-line delegation: a MAINTENANCE channel moving at city / empire / team scope also
-  moved the empire's maintenance TOTAL. That obligation is real ([save.md §6](../../specs/save.md): audit a
-  deleted body for riders) and it is exactly "ONE EVENT REACHES BOTH LEVELS" — an apply into a maintenance
-  channel must also apply to the empire's maintenance RECEIVER SUM. ⛔ It does NOT come back as a hand-named
-  cache: the empire total is a receiver SLOT in the player's own package
-  ([state-repositories.md](../../architecture/state-repositories.md) § THE CROSS-SCOPE RECEIVER), which is also
-  what retires `markMaintenanceDirty` and its banned spelling.
-  ⛔ **Build NO per-source decomposition plane and NO upward push** — the receiver re-sums its participating
-  members, and the summing is trivial enough that avoiding it costs more than it saves
-  ([state-repositories.md](../../architecture/state-repositories.md) § THE CROSS-SCOPE RECEIVER). ⚠ That is a
-  measurement question if it ever reopens, never an argument: a turn-time cost on the standing save, attributed
-  to the summing.
-  ⚑ **Start in the corner that is the PLOT package**: the smallest channel set, no percent side (the origin rule),
-  five sources that all announce with old values, no receiver sums, and it exercises the `substrateFlat` segment.
-  Then city, then empire/team.
 - **⛔ SWEEP THE BANNED TERM OUT OF THE CODE** ([DEC-no-staleness-vocabulary](../../architecture/decisions.md#dec-no-staleness-vocabulary)).
   KEEP only the graphics/interface repaint vocabulary the closed EXE needs and BUG resolves by name
   (`InterfaceDirtyBits` and the `setDirty`/`setLayoutDirty`/`setFlagDirty`/`setInfoDirty` helpers over it).
-  Everything derived-state goes with its mechanism: `CvDerivedCacheSet`'s `markDirty`/`isDirty`/`markAllDirty`,
-  `markMaintenanceDirty`, `setCommerceDirty`, and the AI re-evaluation flags `AI_setAssignWorkDirty` /
-  `AI_makeAssignWorkDirty` / `AI_setChooseProductionDirty`. ⛔ A surviving derived-state site gets NO synonym —
-  name it for the job it does, or delete it with the mechanism.
-- **⛔ Route every domain through `EnablerKernel::gateSet` — the declared GENERATE→GATE primitive has ZERO
-  callers while SIX file-static copies of it exist**, one per domain (`bd_`/`bl_`/`ce_`/`pc_`/`pj_`/`ud_gateSet`).
-  The kernel's own header calls these "the single-implementation enabler primitives"; the gate ORDER
-  (obsolete-check → `requires` → `allowed` cap) now lives in six independent bodies free to drift apart
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). This is the
-  reinvented-machine signature at the centre of the enabler.
+  What is left on the derived-state side is the AI re-evaluation flags — `AI_setAssignWorkDirty` /
+  `AI_makeAssignWorkDirty` / `AI_setChooseProductionDirty` — and `CvDerivedCacheSet`'s own
+  `markDirty`/`isDirty`, whose one remaining tenant is the UNIT RESOLVED plane (`CvUnitResolved`,
+  `CvUnit::markResolvedValuesDirty`). ⛔ A surviving derived-state site gets NO synonym — name it for the job it
+  does, or delete it with the mechanism.
+- **⛔ DELETE `EnablerKernel::gateSet` — a superseded shape with zero callers, and the WRONG one to converge on.**
+  ⚠ **The earlier reading here was backwards and is retracted:** it called the six `*_gateSet` file-statics
+  "copies" of this primitive and asked for every domain to be routed THROUGH it. They are not copies, and doing
+  that would be a regression.
+  **PROVEN — they are different functions.** `EnablerKernel::gateSet` builds a FRESH `std::set<int>` of available
+  ids from a candidate bucket (the pre-maintained-frontier shape). The six domain statics re-gate ids IN PLACE on
+  the maintained tri-state (`if (d.inTree(id)) X_gate(id)`), and `X_gate` delegates every clause to
+  **`EnablerKernel::standardGateReason`** — so the gate order already lives in exactly ONE body
+  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), not six.
+  **PROVEN — and `gateSet` is the one that disagrees with it**, three ways: it never evaluates the entity-level
+  option gate (`cascadeGateOk`), so a `GAMEOPTION_`-barred entity passes; it runs `requires` BEFORE the cap,
+  which `standardGateReason`'s own header states is deliberately the other way round (a consumed cap is decisive
+  and cheap, a condition tree is expensive and actionable); and it calls `requiresMet` rather than
+  `requiresGateReason`, so it yields NO reason — the thing [enabler.md §6](../../specs/enabler.md) says the gate
+  exists to carry.
+  ⇒ It is dead code that would silently drop the option gate and the stored reason if anything were pointed at
+  it. Delete it; the six three-line iteration idioms are per-domain by receiver (`CvPlayer&`+`EnablerDomain&` vs
+  `CvCity&`) and are not the duplication.
 - **Split the vicinity BAND axis from the `worked`/`onSite` predicates** so a vicinity-named read cannot answer
   the on-site verdict ([contexts.md](../../architecture/contexts.md) § THE VICINITY SPLIT — the storage is
   already right, the ADDRESSING is what conflates them). ⚠ Reaches the authored `vicinity:` key, `CvCondition`
@@ -553,20 +524,32 @@ scan bugs rather than fix them.
   computed while `DISTANCE_TO_GOVERNMENT_CENTER` is read live. ⚠ It also re-derives by reading the amenity fold,
   which is the ordering dependency [contexts.md](../../architecture/contexts.md) bans — settle the registration
   order in the same change, and correct contexts.md, which still documents the retired counter as live.
-- **Derive the plane-C dependency routing instead of hand-listing it.** A conditioned deposit is withdrawn by its
-  ATOM's verdict crossing ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum)), and the
-  modifier consumer wires those crossings as a hand-written `case SEVT_X → gatedByPredicate(CASC_PRED_Y)` switch.
-  Most `CASC_PRED_*` values have no case at all, so a deposit gated on one is applied when its SOURCE arrives and
-  never re-resolved — the phantom contribution nothing clears, compounding exactly as
-  [state-repositories.md](../../architecture/state-repositories.md) predicts. ⚑ **The PLOT plane already shows the
-  answer**: `SEVT_PLOT_PREDICATE_ADDED / _REMOVED` carries the predicate id in its payload, so ONE route covers
-  every plot bit and a new bit needs no new case. The city/empire predicates want the same treatment — a per-
-  predicate declaration of the facts that feed it, never a switch arm someone has to remember
+- **Route the CORPORATION predicates on plane C.** A conditioned deposit is withdrawn by its ATOM's verdict
+  crossing ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum)); the modifier consumer wires
+  those crossings as a hand-written `case SEVT_X → gatedByPredicate(CASC_PRED_Y)` switch, and two AUTHORED
+  predicates have no arm in it.
+  **PROVEN:** `HAS_CORPORATION` carries **93** authored deposit conditions and `IS_HEADQUARTERS` **24**, all
+  `enabled` on `flat` entries under `Assets/Data/corporations/`; neither appears in the consumer's routed set.
+  So the deposits apply when the corporation ARRIVES (plane A) and are never re-resolved.
+  ⚠ **NOT YET KNOWN — whether that is a live phantom.** The gate is the corp's own `{HAS_CORPORATION: SELF}`, and
+  a corp going DORMANT is engine-driven spread state with no source change
+  ([culture-religion-research.md](../../reference/culture-religion-research.md)), so the question is whether an
+  active↔dormant flip announces at all. Establish that before building a route.
+  ⚑ **The PLOT plane is the shape to copy**: `SEVT_PLOT_PREDICATE_ADDED / _REMOVED` carries the predicate id, so
+  ONE route covers every plot bit and a new bit needs no case
   ([contexts.md](../../architecture/contexts.md): derive the routing, never hand-write it).
-  ⚠ Two named instances to close with it: **`HAS_POWER` has THREE legs and only one is routed** — the power count
-  re-gates, while the blackout status and the area clean-power flag announce and nothing re-resolves, so a
-  blacked-out city keeps every powered deposit and keeps power-gated buildings operating; and **`IS_ANARCHY`'s
-  fact reaches no consumer at all**.
+  ⛔ **RULED OUT — do not re-tread these.** `HAS_POWER` is correctly served by ONE route: the amenity fold
+  announces the VERDICT (`AmenityContext::announcePowerCrossing` → `CvCity::isPowered`, grantor ∧ no blackout),
+  and the blackout status routes INTO that fold, exactly as [event-spine.md](../../specs/event-spine.md)
+  requires — there is no "three legs" and no clean-power flag in the tree. `IS_ANARCHY` gates no deposit at all
+  (its 17 authored uses are `outcomes` gates on the captive units); the empire-status gap it really points at is
+  recorded in [state.md](../../specs/state.md). `HAS_RELIGION` and `IS_TAG` have ZERO authored uses — latent, not
+  defects.
+- **Fill or delete the empty departed-owner branch** in the modifier consumer's `SEVT_PLOT_OWNER_ADDED /
+  _REMOVED` case. Its own comment states the obligation — a plot's yield has just left the OLD empire, whose
+  plot-fed receiver sums go stale "marked here or never" — and the `if (kEvent.iA >= 0 && kEvent.iA != NO_PLAYER)`
+  body is **empty**. Either the delta is applied for the departed owner or the branch and its comment go; an
+  empty guard reads as handled.
 - **Route the wellbeing sign-split in the APPLY path.** `modifier.md` §2b routes a negative deposit to the
   opposing channel AT FILL, and only the VALUATION fill does it — so the event-built side never populates `anger`
   or `unhealth` and folds every negative into `happiness`/`health` instead. ⚠ The two fills also disagree on
@@ -634,9 +617,6 @@ scan bugs rather than fix them.
   legitimate acquisition lands at zero — silently absenting the candidate.
 - **Repair the `savemigration.txt` obligations naming `CascadeWellbeing`** — that class lives only in
   `SourceArchive/`, so those cut fields have no source at all ([save.md §3](../../specs/save.md)).
-- **Sweep the writerless serialized accumulators** by the two-grep test: serialized and read, with no caller on
-  the changer. Beyond the two already named, `CvPlayer::changeHappyPerMilitaryUnit` and
-  `CvCity::changeImprovementFreeSpecialists` are the same shape.
 - **Stop handing `CvPlot*` out of `CityContext`** (`cityPlot`, `radiusPlot`) — the evaluator uses that hole to
   reach a second context, while the eval ctx already carries one. The isolation is meant to be structural.
 - **De-instantiate `CvCascadeTally`** — a calculator is a static-methods holder, never an instance
@@ -644,9 +624,21 @@ scan bugs rather than fix them.
 - **Reset the enabler's build-once latches**, or make them re-entrant: `rj_clearAllRepos` re-maps every info on
   the postmenu pass while `buildActiveIndex`, `bd_buildGateClasses`, `ud_buildClasses`, `bd_sbMembers` and
   `bd_cappedBuildings` latch permanently. `di_ensureDependencies` is a literal ensure-on-read behind four reads.
-- **Collapse the second condition-evaluation surface.** `CvPropertyBridge` translates the cascade's own
-  `CvCondition` trees back into `BoolExpr` for the legacy solver to evaluate, with different semantics — count
-  thresholds and connections drop silently.
+- **Announce the property bridge's fail-closed SKIPS.** ⚠ **The earlier disposition here — "collapse the second
+  condition-evaluation surface" — is RETRACTED: it contradicts the LOCKED property spec**, which APPROVES this
+  translator explicitly (owner-decisions #1/#2, [property-audit.md](property-audit.md): a small scoped
+  `CvCondition` → legacy `BoolExpr` bridge, because the KEEP-legacy solver evaluates `BoolExpr` and the engine
+  math is not to be rewritten). Collapsing it would be remodelling the property engine, which is banned.
+  **PROVEN — and the fail-closed half is CORRECT, not the defect.** `condToBoolExpr` refuses what it cannot
+  faithfully translate — a count threshold (`min > 1` / `max`), a `connection` qualifier, an unmapped predicate —
+  returning NULL rather than applying the source under a wrong condition, and `entryActiveExpr` raises an
+  explicit `bUntranslatable`.
+  **PROVEN — what IS the defect is that the caller then drops it in SILENCE:** `bridgeFamilies` does
+  `if (bUntranslatable) continue;` with no report, and the same for a non-`POPULATION` `per`. That is exactly
+  what [triggers.md](../../specs/triggers.md) rules out — *"being fail-closed is right; being fail-closed AND
+  silent is not: authored data that loads, never applies, and reports nothing is invisible on both axes at
+  once"* — so each skip belongs on the ONE load-time census beside readJson's coverage counts, never a second
+  reporting path.
 
 ## ⛔ THE PROPERTY-BAND ECOSYSTEM IS BROKEN FOUR INDEPENDENT WAYS
 
@@ -665,15 +657,19 @@ scan bugs rather than fix them.
 
 ## ⛔ SHAPE VIOLATIONS — the bespoke thing forcing bespoke machinery
 
-- **⛔ The ONE condition evaluator dispatches on RUNTIME STRINGS.** `CvCondition` keeps `type`/`param` as
-  `std::string` into the runtime, and the evaluator routes every atom through prefix compares — dozens of them in
-  one file, on both the package-rebuild path and the per-decision `expected*` read.
-  ⚑ **This project already MEASURED this exact defect and fixed it elsewhere**: `CvCapabilities` records that a
-  per-call `std::string` construction on the pathfinder "4x'd the turn", and precomputes flags for it. The same
-  shape survives in the evaluator. `CvCondition` already carries the FK-resolved `id` and a `predKind` — route on
-  an interned kind, and let no string survive load
+- **⛔ `CvCondition` still carries RUNTIME STRINGS.** `type` and `param` survive as `std::string` MEMBERS into the
+  runtime, read on both the apply path and the per-decision `expected*` read
   ([DEC-materialize-at-mapfrom](../../architecture/decisions.md#dec-materialize-at-mapfrom),
-  [DEC-one-json-reader](../../architecture/decisions.md#dec-one-json-reader)).
+  [DEC-one-json-reader](../../architecture/decisions.md#dec-one-json-reader): nothing string-shaped survives load).
+  The condition already carries the FK-resolved `id` and a `predKind` beside them, so the members are the residue,
+  not the addressing.
+  ⚠ **The earlier claim that "the evaluator routes every atom through prefix compares — dozens of them in one
+  file" is RETRACTED — the PREDICATE dispatch is already interned:** the evaluator switches on `predKind` across
+  **39** `case CASC_PRED_*` arms and carries exactly **ONE** `compare(0, …)`, in a single `en_starts` helper. So
+  what is left is the string members and that one helper, never a per-atom string walk.
+  ⚑ Why it is still worth closing: `CvCapabilities` records that a per-call `std::string` construction on the
+  pathfinder *"4x'd the turn"*, and a string member on a structure read at decision cadence is the same shape
+  waiting to be constructed.
 - **⛔ `EnAllowedCap` fuses KIND × SCOPE into one enum, and it has already produced a WRONG GATE.** Two ladders
   collapse the team and empire arms into one branch, so a project's `empire:N` cap is enforced against a TEAM
   count while a tech's `team:N` cap is enforced against an EMPIRE count. That is
@@ -1042,6 +1038,10 @@ slice, so the next one that opens the victory screen, runs WorldBuilder or gener
 batch. **424 `GC.get*Info(` call sites survive across the tree** — every one an `AttributeError` when its path
 runs ([python-read-map.md](../../reference/python-read-map.md) is the standing census). Treat log-clean as a
 checkpoint that is reachable and verifiable, never as completion.
+⚑ **Re-measured since: 215 sites / 35 distinct accessors / 39 files** (`grep -rhoi '\bgc\.get[A-Za-z]*Info(' Assets/Python`,
+counting BOTH the `GC.` and `gc.` spellings). Roughly half the population above has already gone, which is the
+work landing — ⛔ but re-run the grep rather than quoting either number, exactly as
+[python-read-map.md §1.1](../../reference/python-read-map.md) says of its own totals.
 
 **⚠ THERE ARE TWO ERROR CLASSES IN THOSE LOGS AND THEY NEED DIFFERENT FIXES — reading them as one is why a
 first pass under-scopes.** The tuple deref above is one; the other is a read the new surface does not publish

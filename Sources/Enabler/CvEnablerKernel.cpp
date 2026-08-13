@@ -580,19 +580,6 @@ bool EnablerKernel::canFoundReligion(const CvPlayer& kPlayer)
 	return true;
 }
 
-// GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy).
-void EnablerKernel::gateSet(EnEdgeBucket eBucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
-	const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail, bool bVisible)
-{
-	const std::set<int>& b = cand[eBucket];
-	for (std::set<int>::const_iterator it = b.begin(); it != b.end(); ++it)
-	{
-		const CvInfo* j = infoFor(eBucket, *it);
-		if (obsoletedByHeldTech(j, kTeam)) continue;
-		if (requiresMet(j, ec, bVisible) && allowedOk(j, *it, kPlayer, bUnit, eBucket)) avail.insert(*it);
-	}
-}
-
 // ============================ the ONE per-building verdict ================================================
 namespace {
 

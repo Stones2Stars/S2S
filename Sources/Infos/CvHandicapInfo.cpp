@@ -209,10 +209,4 @@ void CvHandicapInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
-	// PROPERTY_* per-turn SOURCES (per-handicap crime/education): the player gather walks the handicap alongside
-	// civics/traits/heritage (CvGameObjectPlayer::foreachManipulator) -> RELATION_ASSOCIATED fans each source to
-	// every owner city. #429 KNOWN GAP: the curator emits PROPERTY_*.city.flat as a SCALAR {value, per} shape, not
-	// the gated-list shape bridgeFamilies expects, so this legitimately yields EMPTY today -- an ACCEPTED fail-loud
-	// gap (the manipulators stay empty; NOT faked). Wired the ONE shared way so it lights up once #429 reconciles.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
 }

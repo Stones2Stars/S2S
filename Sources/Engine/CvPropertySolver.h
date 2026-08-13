@@ -109,6 +109,17 @@ public:
 	void predictSources();
 	void correctSources();
 
+	// The CASCADE's per-turn contribution, per (object, property): the roll-up of that object's PROPERTY_*
+	// channel, reduced to whole property points at this point of use ([DEC-fixedpoint-x100]). It replaces the
+	// carrier-authored CONSTANT sources -- a building/unit/civic per-turn adder is a maintained package slot,
+	// not something to re-discover by walking every object's manipulators each turn (property-audit.md, the
+	// governing model: the cascade owns WHICH SOURCES APPLY, the engine owns integrating the rate).
+	// ⚑ It runs in BOTH phases because that is exactly what a CvPropertySourceConstant does: predict and correct
+	// both return the amount, only the correct pass is applied (computePredictValues clears the change map), and
+	// the predict pass exists so DECAY sees a correct predicted value. Contributing in one phase only would
+	// either lose the amount or mis-predict the decay.
+	void addCascadeSources();
+
 	void predictInteractions();
 	void correctInteractions();
 

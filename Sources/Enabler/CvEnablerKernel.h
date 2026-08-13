@@ -230,11 +230,6 @@ public:
 	// canFoundReligion -- a PLAYER-WIDE state predicate reproduced from game state (CvPlayer::canFoundReligion).
 	static bool canFoundReligion(const CvPlayer& kPlayer);
 
-	// GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy). bVisible=true yields the
-	// VISIBLE frontier (greyable clauses relaxed, enabler.md §6) for the build-list (bTestVisible) read.
-	static void gateSet(EnEdgeBucket eBucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
-		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail, bool bVisible = false);
-
 	// The ONE requires-tree HAVE-atom scanner (recursing GROUP children + enabled/disabled): classifies PRESENCE
 	// atoms by type prefix/token and PREDICATEs by predKind into `d`. The two legs that differ between the three
 	// reverse-index builders are parameters: bTrackUnits collects UNIT_ presence atoms (the unit index's

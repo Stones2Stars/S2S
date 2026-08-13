@@ -1,5 +1,30 @@
 # Property source-data migration — LOCKED SPEC (owner-approved 2026-07-11)
 
+> **⚖ THE GOVERNING MODEL — EACH PROPERTY IS A CHANNEL IN THE CASCADE, AND THE CASCADE FEEDS WHEREVER THE
+> PROPERTIES ARE SUPPOSED TO GO (owner).** That is not a new axis: it is
+> [DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield) applied to the plane it already
+> names — every number game mechanics modify is a channel in the ONE machine — and
+> [state-repositories.md](../../architecture/state-repositories.md) already carries `PROPERTY_*` as one channel
+> per property info in the minted channel sets.
+> ⇒ **The line falls where the WORK differs, and both halves keep their owner:**
+> - **the CASCADE owns WHICH SOURCES APPLY and their summed per-turn contribution** — a maintained sum like any
+>   other channel, correct the instant a fact arrives, never re-derived;
+> - **the PROPERTY ENGINE owns INTEGRATING that rate** — decay, spatial diffusion, the solver's ordered
+>   predict/compute/correct/apply. Untouched, owner-locked, exactly as the mandate below says.
+> ⚑ **This IS "feed the engine, do not remodel it"** — the engine keeps every piece of math it owns and stops
+> re-discovering its inputs. ⛔ So it is NOT licence to touch the solver, the decay curve or the propagators.
+> ⚠ **What it supersedes is the per-turn REDISCOVERY, not the bridge's job.** `CvPropertySolver::doTurn` today
+> clears its whole context set, walks EVERY game object of every kind (game · players · cities · units · plots)
+> through `CvGameObjectCity::foreachManipulator` and its siblings, instantiates a `PropertySourceContext` per
+> source, solves, and discards the lot — `O(what EXISTS)` per turn, over the whole world, which is precisely the
+> shape the maintained sum deletes. ⚑ `foreachManipulator` itself is honestly named and is not the defect: it is
+> an object reporting its OWN inventory. The rebuild is its caller (`gatherActiveManipulators`), whose mild name
+> is what let a full-world per-turn re-derivation read as an aggregation step.
+> ⇒ **Consequence for the EMPIRE-SCOPE FAN below: do NOT patch it into `foreachManipulator`.** Under the channel
+> model an empire-scope property deposit rolls DOWN like any other deposit and dormancy is already the enabler's
+> verdict, so the fan falls out for free — while the five-line version would add work to the rebuild being
+> removed AND need a player-scope active count built only to be thrown away.
+>
 > **Mandate:** the property *engine* (decay math, spatial-diffusion math, the turn-solver `CvPropertySolver`) is
 > intact and **must NOT be rewritten** (owner, standing). The bug: the property **SOURCE DATA** was wrongly stubbed
 > empty in every JSON poco (a prior agent conflated "defer the engine rework" with "defer the data migration" — the
@@ -23,11 +48,37 @@
 > `CascadePropertyBridge::condToBoolExpr`) — verified live: ANCIENT_CUSTOMS = exactly its 3 authored sources,
 > folklore = their 2 gated education sources.
 >
-> **Still open — the all-cities gather:** `PROPERTY_X.empire.flat` sources are curated and the load-built
-> `GC.getAllCitiesManipBuildings()` index exists (`CvGlobals.h:400`), but `CvGameObjectCity::foreachManipulator`
-> (`CvGameObject.cpp:721`) does not yet walk it, so the 6 `<PropertiesAllCities>` entries (FLAMMABILITY) still do
-> not deliver in every city of the owner. No route emits this today — do not treat the yields payload as a live
-> verification surface for it until the gather and an emit both land.
+> **Still open — the EMPIRE-SCOPE PROPERTY FAN** (called "the all-cities gather" here until the name was found to
+> read backwards — see the callout below). Three of its four links are built and the fourth is absent:
+> the 5 capped buildings authoring `PROPERTY_FLAMMABILITY.empire.flat` (`asteroid_deflection_system` −20 ·
+> `department_of_water` −8 · `national_fire_service` −5 · `sentinel` −10 · `solar_weather_monitor` −10, every one
+> `allowed:{empire:1}`); the bridge routing those entries into `m_PropertyManipulatorsAllCities`
+> (`CvBuildingInfo.h:305`); and the load-built `GC.getAllCitiesManipBuildings()` index (`CvGlobals.h:400`) —
+> but **that index has ZERO consumers**: `CvGameObjectCity::foreachManipulator` (`CvGameObject.cpp:721`) walks the
+> city's OWN buildings only.
+> ⛔ **So those five deliver NOWHERE — not empire-wide, and not even locally**, because the empire-scope entries
+> are routed OUT of the ordinary container into the all-cities one. The visible consequence is that the national
+> fire-service class reduces flammability in no city at all, which is worth holding beside the rebalance above:
+> its complaint was that *"every reducer arrived late"*, and these reducers do not arrive.
+> ⚠ The 6th legacy `<PropertiesAllCities>` block is NOT missing — it sits on an uncapped ORDINANCE, which
+> `_deposit_scope` correctly emits at city scope (an ordinance is placed in every city already, so city scope is
+> the same delivery). Do not "fix" that one to empire.
+>
+> > **⛔ TWO DIFFERENT MECHANISMS SHARE THE WORDS "ALL CITIES", AND CONFLATING THEM IS WHY THIS ENTRY READ AS A
+> > MISSING GATHER (owner).** Get the DIRECTION right and they separate instantly:
+> > - **the RECEIVER Σ — many cities → one empire total.** The empire's gold / research / culture / espionage
+> >   (and maintenance) summed from its cities' realized values at the read
+> >   ([state-repositories.md](../../architecture/state-repositories.md) § A CROSS-SCOPE RECEIVER). It is REQUIRED
+> >   and it is BUILT (`InfoValuation::realizedAtEmpire`, gated on `!isDisorder()`) — *"otherwise research would
+> >   have failed"* (owner).
+> > - **the PROPERTY FAN — one source → many cities.** A single building's property source applying in every city
+> >   of its owner. That is the item above, and it is a FAN, never a gather.
+> > ⛔ Nothing gathers properties FROM cities today, and this entry never asked for one.
+> > ⚖ **Doing so is WANTED but only as STATS (owner): *"there is nothing stopping us to gather it all, just for
+> > shits and giggles, stats more than anything else."*** So an empire-wide per-property total is un-killed
+> > forward intent for the demographics/observability surface
+> > ([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas)) — ⛔ never a cascade input
+> > and never a thing the solver reads, or it becomes a second maintenance surface for values the cities own.
 >
 > **Then validate** — the turn-level pass (per-turn `PROPERTY_*` deltas attributed, education/crime normalise) on
 > played turns.
