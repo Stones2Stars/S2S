@@ -233,15 +233,6 @@
   - **a genuine KIND to mint** — `happiness.nonStateReligion` is the §3.7 counted-kind filter
     `{religion: "!IS_STATE_RELIGION"}` ([json.md §3.7](../../specs/json.md)), still authored and still
     unregistered;
-  - **⛔ a CONDITION-AS-MEMBER ROLLERSKATE — `gold.headquarters` / `culture.headquarters` (owner).** The member
-    answers WHERE, which §6's member-triage test rules is never a kind, and the entry ALREADY carries the
-    predicate that says the same thing (`enabled: {IS_HEADQUARTERS: CORPORATION_X}`, the corp-HQ revenue
-    condition [json.md §3.5](../../specs/json.md) defines for exactly this). So the fix is SUBTRACTIVE at the
-    curator: drop the member segment, keep `enabled` and `per`.
-    ⛔ Do NOT mint the kind — that carves the rollerskate in, and the HQ commerce reading zero is what makes it
-    look like a missing registration ([DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates)).
-    ⚠ It lands an `empire`-scope deposit gated on a CITY predicate, so it needs the per-city gate at the combine
-    — an item already on this list, not new work;
   - **the trigger-plane set** — `cityCapture.resistance` is trigger-plane and deliberately unkinded
     ([triggers.md](../../specs/triggers.md)) — minting a row for it carves the rollerskate in;
   - **the trigger-plane set** (`combat.subdueAnimal`, `combat.nukeInterception`, …) stays deliberately unkinded

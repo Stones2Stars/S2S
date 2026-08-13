@@ -27,16 +27,16 @@
   }
  },
  "gold": {
-  "empire": {
-   "headquarters": {
-    "flat": {
+  "city": {
+   "flat": [
+    {
      "value": 4,
      "enabled": {
       "IS_HEADQUARTERS": "CORPORATION_1"
      },
      "per": "CORPORATION_LEVEL"
     }
-   }
+   ]
   }
  },
  "maintenance": {

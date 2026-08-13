@@ -9,9 +9,11 @@ FOUR distinct commerce/yield families that must NOT merge (the first-pass mappin
 - CommercesProduced / YieldsProduced -> the SAME split families, CITY scope, member `produced`, unit
   `perBonus`: scaled by getNumBonuses(prereqBonus) x world CorporationMaintenancePercent (a per-owned-resource
   output), distinct from the flat add.
-- HeadquarterCommerces -> split commerce families, EMPIRE scope, member `headquarters`, flat with
-  `per:"CORPORATION_LEVEL"` (ruling 4, §3.7 per-scaler): the HQ-revenue lever (feeds corp maintenance, corp
-  tax, and a HQ building's globalCorporationCommerce x countCorporationLevels) — empire-wide, not a per-city add.
+- HeadquarterCommerces -> split commerce families, CITY scope, MEMBERLESS flat, gated
+  `{IS_HEADQUARTERS: <own corp>}` and scaled `per:"CORPORATION_LEVEL"` (§3.7 per-scaler): the HQ-revenue lever
+  (feeds corp maintenance, corp tax, and a HQ building's globalCorporationCommerce x countCorporationLevels).
+  WHERE it lands is the CONDITION — the revenue accrues in the HQ city alone — so it carries neither a
+  `headquarters` member nor empire scope, which said the same thing the predicate already says.
 
 Other modifiers (all city scope unless noted): iMaintenance -> maintenance.city.corporation.perBonus (per-owned
 -bonus maintenance rate); iHealth/iHappiness -> health/happiness flat; iFreeXP -> experience flat;
@@ -72,10 +74,10 @@ FAMILIES = {
     "CommercesProduced":          (None,          "city",   None,           "flat",    engine.COMMERCES, True),
     "YieldsProduced":             (None,          "city",   None,           "flat",    engine.YIELDS,    True),
 }
-# HQ revenue, scaled by countCorporationLevels: a §3.7 per-scaler (ruling 4, info-rebuild.md) --
-# <c>.empire.headquarters.flat = {value, per:"CORPORATION_LEVEL"} (the minted §3.1 count token, bare-string
-# sugar). NB the engine count is the WORLD-wide corporation-level tally (CvCity.cpp countCorporationLevels);
-# the `headquarters` member itself is still on the ruling-4 triage (suspected corp-HQ FK value plane).
+# HQ revenue, scaled by countCorporationLevels: a §3.7 per-scaler --
+# <c>.city.flat = {value, enabled:{IS_HEADQUARTERS:<corp>}, per:"CORPORATION_LEVEL"} (the minted §3.1 count
+# token, bare-string sugar). NB the engine count is the WORLD-wide corporation-level tally
+# (CvCity.cpp countCorporationLevels).
 HQ_COMMERCE = "HeadquarterCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
 # art tags -> ui/world/sound via the canonical curate_common.ART_BLOCK.
@@ -175,15 +177,18 @@ def curate(typ, rec, store):
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
             _apply_family(fam, FAMILIES[tag], c, typ, per_bonus)
-        elif tag == HQ_COMMERCE:                               # HQ revenue -> conditioned per-scaler (rulings 4+10)
+        elif tag == HQ_COMMERCE:                               # HQ revenue -> conditioned per-scaler
             # WHERE it lands is a condition, not a member semantic: the revenue accrues in the corporation's
             # HQ CITY only (the HQ building carries it, CvCity.cpp:12386-12391) -> the parameterized
             # {IS_HEADQUARTERS: <own corp>} predicate (the {IS_HOLY_CITY: RELIGION_X} pattern, json.md §3.5).
+            # So it is CITY scope and memberless: the condition is the only thing that says where.
+            # `_put_entry`, not `_put`: city.flat is SHARED with CommerceChanges, and §3.9's leaf is a LIST of
+            # entries -- assigning would clobber whichever source the record happens to name second.
             for ident, v in engine.named_array(c, engine.COMMERCES).items():
-                _put(fam, ident, "empire", "headquarters", "flat",
-                     OrderedDict([("value", v),
-                                  ("enabled", OrderedDict([("IS_HEADQUARTERS", typ)])),
-                                  ("per", "CORPORATION_LEVEL")]))
+                _put_entry(fam, ident, "city", None, "flat",
+                           OrderedDict([("value", v),
+                                        ("enabled", OrderedDict([("IS_HEADQUARTERS", typ)])),
+                                        ("per", "CORPORATION_LEVEL")]))
         elif tag == "iSpreadCost":
             if engine.is_int(t) and int(t) != 0:
                 cost["spread"] = int(t)

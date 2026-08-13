@@ -6,32 +6,28 @@
   ]
  },
  "gold": {
-  "empire": {
-   "headquarters": {
-    "flat": {
+  "city": {
+   "flat": [
+    {
      "value": 2,
      "enabled": {
       "IS_HEADQUARTERS": "CORPORATION_EWTRADE"
      },
      "per": "CORPORATION_LEVEL"
     }
-   }
+   ]
   }
  },
  "culture": {
-  "empire": {
-   "headquarters": {
-    "flat": {
+  "city": {
+   "flat": [
+    {
      "value": 2,
      "enabled": {
       "IS_HEADQUARTERS": "CORPORATION_EWTRADE"
      },
      "per": "CORPORATION_LEVEL"
-    }
-   }
-  },
-  "city": {
-   "flat": [
+    },
     {
      "value": 2,
      "enabled": {

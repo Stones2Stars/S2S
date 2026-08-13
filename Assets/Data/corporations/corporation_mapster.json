@@ -1,19 +1,15 @@
 {
  "type": "CORPORATION_MAPSTER",
  "gold": {
-  "empire": {
-   "headquarters": {
-    "flat": {
+  "city": {
+   "flat": [
+    {
      "value": 4,
      "enabled": {
       "IS_HEADQUARTERS": "CORPORATION_MAPSTER"
      },
      "per": "CORPORATION_LEVEL"
-    }
-   }
-  },
-  "city": {
-   "flat": [
+    },
     {
      "value": 0.75,
      "enabled": {
