@@ -1134,14 +1134,16 @@ namespace
 	};
 	std::set<BankedAtomDeposit> s_bankedAtomDeposits;
 
-	// ⛔ THE FAN'S OWN BANK, and it needs one because the deposit-level bank CANNOT catch this case. An
-	// EMPIRE-level crossing (a tech, a civic) is announced from CvPlayer::read, which streams BEFORE the cities
-	// deserialize -- so the city fan iterates an EMPTY list, mc_applyGated's city branch never runs, and there is
-	// no per-deposit skip to record. MEASURED: 68,782 tech/civic deposits found and ZERO applied, with a
-	// noSource count of zero -- the tell that the loop never executed rather than that it declined.
-	// ⚑ Only the HELD side is worth banking: nothing reached a city, so nothing was booked, and a crossing that
-	// ends the load un-held owes no withdrawal. The drain therefore replays an ARRIVAL and never a swap, which is
-	// the same reason the deposit bank does ([state-repositories.md] § THE INVARIANT).
+	// ⛔ THE FAN'S OWN BANK, and what it is FOR is the PLOT plane. An EMPIRE-level crossing (a tech, a civic) is
+	// announced from CvPlayer::read, which streams before the map's plot packages can take it, and no per-deposit
+	// skip is recorded because mc_applyTypeAtom's empire branch returns at the load guard above its plot call --
+	// so without this bank the crossing reaches the plot plane through nothing at all.
+	// ⛔ It does NOT owe the CITY plane anything: a city that starts existing folds the city-scope deposits of
+	// every source its owner already holds ([modifier.md] §5, the two-leg fold), so the city half is served
+	// before this drain runs. Do not re-add a city replay here -- it applied NOTHING while it existed, against
+	// 420,990 considerations, because plane A and the fold had already booked every one of them.
+	// ⚑ Only the HELD side is worth banking: a crossing that ends the load un-held owes no withdrawal, so the
+	// drain replays an ARRIVAL and never a swap ([state-repositories.md] § THE INVARIANT).
 	// ⚑ Keyed on (atom, owner) so a civic swapped several times during one load drains once, at its FINAL verdict.
 	std::map<std::pair<std::string, int>, bool> s_bankedAtomFans;
 
@@ -1814,6 +1816,21 @@ namespace
 		std::map<int, int> applied;
 	};
 
+	// ⛔ WHY it refused, not only how many -- the same argument as the per-channel split above, on the other axis.
+	// mc_drainApplyOne declines for three unrelated reasons and the route line summed them into one number, which
+	// cannot tell a bank storing NEGATIVE SPACE (the city simply never holds that source) from a bank duplicating
+	// plane A (the deposit is already booked). Those two have OPPOSITE fixes -- shrink what is banked, versus
+	// delete the bank -- so collapsing them makes the number unactionable ([DEC-no-guessing]: at a gap, EMIT the
+	// decomposition; a bare total supports neither VERIFY nor ASK).
+	struct McDrainReasons
+	{
+		int iNoSource;
+		int iBooked;
+		int iResolveRefused;
+		int iApplied;
+		McDrainReasons() : iNoSource(0), iBooked(0), iResolveRefused(0), iApplied(0) {}
+	};
+
 	void mc_reportDrainByChannel(const char* szWhich, const McDrainByChannel& kTally)
 	{
 		std::map<int, int> keys;
@@ -1841,11 +1858,15 @@ namespace
 	}
 
 	bool mc_drainApplyOne(const DepositIndex::GatedDeposit& kGated, const CvPlayer& kOwner, const CvCity& kCity,
-		McDrainByChannel* pByChannel)
+		McDrainByChannel* pByChannel, McDrainReasons* pReasons)
 	{
-		if (kGated.deposit == NULL || kGated.deposit->entry == NULL
-			|| !kCity.getBuildingYields().hasAppliedSource(kGated.sourceIndex))
+		if (kGated.deposit == NULL || kGated.deposit->entry == NULL)
 		{
+			return false;
+		}
+		if (!kCity.getBuildingYields().hasAppliedSource(kGated.sourceIndex))
+		{
+			if (pReasons != NULL) { pReasons->iNoSource++; }
 			return false;
 		}
 		// The drain owes an arrival ONLY for a deposit that is not already booked -- otherwise it stacks on top of
@@ -1853,6 +1874,7 @@ namespace
 		// exists to stop.
 		if (kCity.getBuildingYields().isGatedBooked(kGated.deposit->entry))
 		{
+			if (pReasons != NULL) { pReasons->iBooked++; }
 			return false;
 		}
 		CvCascadeEvalCtx evalCtx;
@@ -1872,8 +1894,10 @@ namespace
 				const int iEntryChannel = mc_channelOfEntry(*kGated.deposit->entry);
 				if (iEntryChannel >= 0) { pByChannel->refused[iEntryChannel]++; }
 			}
+			if (pReasons != NULL) { pReasons->iResolveRefused++; }
 			return false;
 		}
+		if (pReasons != NULL) { pReasons->iApplied++; }
 		if (pByChannel != NULL) { pByChannel->applied[iChannel]++; }
 		if (bPercentSide) kCity.getCityPercents().applyPercent(iChannel, (int)iValue);
 		else              kCity.getBuildingYields().applyFlat(iChannel, iValue);
@@ -1884,13 +1908,13 @@ namespace
 		return true;
 	}
 
-	// The FAN drain: every empire-level crossing whose city half could not run, replayed over the cities that
-	// now exist. Arrival only -- nothing was booked, so nothing is withdrawn.
-	void mc_drainBankedAtomFans()
+	// The FAN drain, and it is the PLOT PLANE ONLY. An empire-level crossing's plot half is the one thing no other
+	// route reaches during a save read; its CITY half is served by the two-leg fold -- a city that starts existing
+	// folds the city-scope deposits of every source its owner already holds ([modifier.md] §5) -- so replaying the
+	// crossing over the owner's cities here would be a second maintenance surface for work another route already
+	// does ([roadmap.md]: a wrong wiring is removed on sight).
+	void mc_drainBankedAtomFanPlots()
 	{
-		int iApplied = 0;
-		int iConsidered = 0;
-		McDrainByChannel kByChannel;
 		for (std::map<std::pair<std::string, int>, bool>::const_iterator it = s_bankedAtomFans.begin();
 			it != s_bankedAtomFans.end(); ++it)
 		{
@@ -1909,22 +1933,6 @@ namespace
 				continue;
 			}
 			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)iOwner);
-			for (CvPlayer::city_iterator cityIterator = kOwner.beginCities();
-				cityIterator != kOwner.endCities(); ++cityIterator)
-			{
-				if (*cityIterator == NULL)
-				{
-					continue;
-				}
-				for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
-				{
-					++iConsidered;
-					if (mc_drainApplyOne((*pGated)[iGated], kOwner, **cityIterator, &kByChannel))
-					{
-						++iApplied;
-					}
-				}
-			}
 			// ⛔ THE PLOT HALF OF THE SAME CROSSING, AND ITS ABSENCE WAS THE LARGEST HOLE ON THE YIELD PLANE.
 			// mc_applyTypeAtom's empire branch returns at the load guard ABOVE its mc_bookGatedOwnerPlots call, so
 			// during a save read an empire-level atom reached the plot plane through nothing at all -- while the
@@ -1937,9 +1945,8 @@ namespace
 			// ⚑ NO PIN, for the same reason the city drain needs none: the atom ended the load HELD (the un-held
 			// ones are skipped above), so the live verdict IS the one in force and mc_bookGatedPlot's own value
 			// difference makes the apply idempotent against whatever plane A already booked.
-			// ⚠ It carries its OWN tally and reports separately. Folding it into the city drain's counters would
-			// bury it: the city half refuses essentially everything (plane A booked it already), so a plot pass
-			// that applied thousands and a plot pass that applied nothing would produce the same summary line.
+			// ⚠ It reports PER OWNER rather than as one total: a pass that applied thousands for one player and
+			// nothing for the next is a finding, and a single summed line cannot express it.
 			McGatedTally kPlotTally;
 			mc_bookGatedOwnerPlots(pGated, kOwner, &kPlotTally);
 			if (kPlotTally.iFound > 0)
@@ -1949,9 +1956,6 @@ namespace
 					iOwner, -1);
 			}
 		}
-		CascadeChannelRegistry::reportAtomRoute("<atomFanDrain>", iConsidered, iConsidered, 0,
-			iConsidered - iApplied, iApplied, -1, -1);
-		mc_reportDrainByChannel("fanDrain", kByChannel);
 		s_bankedAtomFans.clear();
 	}
 
@@ -1959,6 +1963,8 @@ namespace
 	{
 		int iApplied = 0;
 		McDrainByChannel kByChannel;
+		McDrainReasons kReasons;
+		int iCityGone = 0;
 		for (std::set<BankedAtomDeposit>::const_iterator it = s_bankedAtomDeposits.begin();
 			it != s_bankedAtomDeposits.end(); ++it)
 		{
@@ -1970,17 +1976,27 @@ namespace
 			}
 			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)it->iOwner);
 			const CvCity* pCity = kOwner.getCity(it->iCityId);
-			if (pCity == NULL || !pCity->getBuildingYields().hasAppliedSource(pGated->sourceIndex))
+			if (pCity == NULL)
 			{
-				continue;   // the city went, or its source never arrived at all -- neither is this drain's to fix
+				++iCityGone;   // the city went -- not this drain's to fix
+				continue;
 			}
-			if (mc_drainApplyOne(*pGated, kOwner, *pCity, &kByChannel))
+			// The source test is mc_drainApplyOne's, not repeated here: duplicating it made the refusal
+			// unattributable, since the pre-filter consumed the case before the reason could be counted.
+			if (mc_drainApplyOne(*pGated, kOwner, *pCity, &kByChannel, &kReasons))
 			{
 				++iApplied;
 			}
 		}
-		CascadeChannelRegistry::reportAtomRoute("<atomDrain>", (int)s_bankedAtomDeposits.size(),
-			(int)s_bankedAtomDeposits.size(), 0, (int)s_bankedAtomDeposits.size() - iApplied, iApplied, -1, -1);
+		// ⚑ noSource is the BANK'S OWN WASTE: a deposit banked because the city did not hold its source, drained
+		// against a city that STILL does not hold it. Inside the load bracket the two cases -- the source has not
+		// streamed YET, and this city will never hold it at all -- are indistinguishable, so the bank stores the
+		// negative space and the drain re-tests it. A noSource share near the total is that, not an ordering miss.
+		const int iBanked = (int)s_bankedAtomDeposits.size();
+		CascadeChannelRegistry::reportAtomRoute("<atomDrain>", iBanked, iBanked, kReasons.iNoSource,
+			kReasons.iBooked + kReasons.iResolveRefused + iCityGone, iApplied, -1, -1);
+		CascadeChannelRegistry::reportAtomRoute("<atomDrainBooked>", kReasons.iBooked, kReasons.iBooked,
+			iCityGone, kReasons.iResolveRefused, kReasons.iBooked, -1, -1);
 		mc_reportDrainByChannel("depDrain", kByChannel);
 		s_bankedAtomDeposits.clear();
 	}
@@ -2728,7 +2744,7 @@ namespace
 				// against final state, for every alive owner.
 				mc_markAllThresholdOwners();
 				mc_drainBankedAtomDeposits();
-				mc_drainBankedAtomFans();
+				mc_drainBankedAtomFanPlots();
 				mc_reportGrowthCensus();
 				CascadeChannelRegistry::reportChannelCensus();
 				// The per-SOURCE decomposition of what the reseed actually applied -- who deposited into each

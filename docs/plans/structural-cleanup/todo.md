@@ -251,11 +251,17 @@
   They fire from the `CvProperties` choke points and the band registry into a consumer set that carries no case
   for either, so a threshold-conditioned deposit on a property never moves
   ([event-spine.md](../../specs/event-spine.md) § THE RECEIVED LINE names this as the worked instance).
-- **Delete the atom-fan BANK on the city plane.** The load-bracket bank replays an empire-level crossing's city
-  half at `GAME_LOAD_FINISHED`, but plane A already applies the conditioned deposit when its SOURCE arrives — so
-  the bank is a second maintenance surface for work another plane already does
-  ([roadmap.md](roadmap.md): a wrong wiring is removed on sight). ⚠ Its PLOT half is NOT redundant and must
-  survive the cut — it is the only route reaching plot-scope deposits gated by an empire-level atom.
+- **Re-key the per-deposit ATOM BANK so it stops banking the negative space.** It banks an entry per
+  (gated deposit × city) whenever the city does not hold the source, but inside the load bracket *"the source has
+  not streamed yet"* and *"this city will never hold it"* are indistinguishable — so it stores the cities that can
+  never apply and the drain re-tests every one of them, on a heap under the 32-bit ceiling
+  ([memory-footprint.md](../../reference/memory-footprint.md)). Bank the ATOM and let the drain derive the cities
+  that hold the source, instead of storing the complement.
+  ⚑ The drain's own reason split (`noSource` against `booked` on `<atomDrain>`) is what names the share, so this
+  closes against the instrument rather than against a guess.
+  ⛔ It is NOT redundant the way the fan bank's city half was — it applies deposits nothing else reaches (the
+  conditioned tail, the one thing the load bracket genuinely exists for,
+  [state-repositories.md](../../architecture/state-repositories.md)), so this is a re-key and never a deletion.
 
 - Serve a city's OFFERED RESOURCES, and give the city screen a VICINITY tab showing them (owner) — no readable
   list exists today for what a city's plot group supplies.

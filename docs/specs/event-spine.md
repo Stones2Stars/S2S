@@ -638,6 +638,41 @@ derived state the object owns, and announces the fact.
 > payload existed to serve (an old value beside a new one, so a consumer could drive the mutation). **The stream
 > is authoritative for base state; the fact is TESTIMONY about a completed act, in the past tense.**
 >
+> **⚖ THE PRINCIPLE, AND WHY THE OTHER ORDER COLLAPSES (owner): state is set DIRECTLY, in one request, and the
+> event fires as a RESULT of that state having been set.** *"That is the core principle I violated… if you try to
+> set state with events, you start getting real concurrency issues, and you have to start responding to state
+> setting with more events, and the clownfiesta gets real."*
+>
+> **⛔ AND THE LINE IS BASE STATE vs DERIVED — THIS IS THE SPLIT THE CASCADE AND THE ENABLER ARE BUILT ON
+> (owner).** The two halves take OPPOSITE rules, and collapsing them in either direction breaks the model:
+>
+> | | set by | the event is |
+> |---|---|---|
+> | **BASE state** — a building actually placed, population, research progress | its own SETTER, directly | TESTIMONY, after the fact |
+> | **DERIVED state** — the cascade packages, the enabler's sets, the context stores | **the events themselves** | the MAINTENANCE path |
+>
+> ⇒ *"The derivation can be set from events; the actual base state cannot."* So
+> [DEC-maintained-sum](../architecture/decisions.md#dec-maintained-sum) is not an exception to the principle above
+> — it is the principle's other half. A package slot moving because a fact arrived is the design; a BUILDING
+> existing because a fact arrived is the retired order.
+> ⚠ **The misreading to avoid in each direction:** reading "events do not set state" as reaching the derived
+> plane would ban the maintained sum outright; reading "events build the state" as reaching base state restores
+> the collapse this callout describes. The save stream is authoritative for the first, the fact stream for the
+> second, and neither is authoritative for the other's half.
+> ⚑ **The failure is COMPOUNDING, not local, which is what makes it worth stating as a principle rather than a
+> preference.** An event that SETS state is a mutation whose ordering is now a scheduling question, so every
+> consumer that needs the result must be told — with another event — and each of those is another mutation
+> needing its own announcement. The surface grows events to service events, and the ordering hazards multiply
+> with it.
+> ⇒ Under commit-then-announce there is nothing to schedule: the state is already correct at the instant the
+> fact fires, so a consumer DERIVES from settled state and announces nothing back. That is what makes
+> order-independence structural (§ the maintained sum's operands all converge regardless of arrival order) rather
+> than something the load has to compensate for.
+> ⚠ **The compensation is recognisable in the tree, so this is a thing to FIND and not only to avoid:** a
+> load-time BANK that replays facts later exists because a fact was once expected to do the work, and it survives
+> as pure cost once the setters announce instead. Read one as evidence of the retired order, never as a mechanism
+> to extend.
+>
 > ⇒ **An INTERNAL setter is commit + maintain + announce, and NOTHING else.** The public setter is its guard,
 > then the internal one, then its EFFECTS (plot groups, areas, sight, graphics, cascading type changes). The read
 > calls the internal one directly — which is exactly what lets it: no effect gets to decide any part of the state
