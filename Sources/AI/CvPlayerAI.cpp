@@ -13971,8 +13971,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			{//Who cares about vassals?
 				iPlayerValue /= 5;
 			}
-			float fPowerRatio = ((float)iTheirPower) / ((float)iOurPower);
-			iTempValue += (int)((float)iPlayerValue * fPowerRatio);
+			// The same civic DECISION the rev-effect term below feeds, so it may not be reached through float
+			// either ([DEC-no-float-in-sync]). iOurPower is max(1, ..) above, so the divide is safe -- and
+			// multiplying BEFORE dividing is strictly more precise than the ratio-first form this replaces.
+			iTempValue += static_cast<int>(static_cast<int64_t>(iPlayerValue) * iTheirPower / iOurPower);
 		}
 	}
 	if (GC.getGame().isOption(GAMEOPTION_AI_AGGRESSIVE))
@@ -14968,6 +14970,20 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 }
 
 
+namespace
+{
+	// Integer division that rounds toward NEGATIVE INFINITY, which is what floor() did on the float this
+	// replaces -- C++ integer division truncates toward zero instead, and the two differ for every negative
+	// numerator. The scores here go negative routinely, so the distinction is the behaviour, not a nicety.
+	int rev_floorDiv(int64_t iNumerator, int64_t iDenominator)
+	{
+		const int64_t iQuotient = iNumerator / iDenominator;
+		const bool bRoundDown = iNumerator % iDenominator != 0
+			&& (iNumerator < 0) != (iDenominator < 0);
+		return static_cast<int>(bRoundDown ? iQuotient - 1 : iQuotient);
+	}
+}
+
 int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -14984,8 +15000,10 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 	{
 		int iRelScore = 0;
 
-		float fRelGoodMod = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE);
-		float fRelBadMod = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE);
+		// A PERCENT kind, so it arrives unscaled and whole ([DEC-fixedpoint-x100]) -- it was never a fraction
+		// at runtime, which is why reading it as one bought nothing and cost the determinism below.
+		const int iRelGoodMod = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE);
+		const int iRelBadMod = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE);
 		int iHolyCityGood = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_HOLY_CITY_GOOD, CASC_SCOPE_EMPIRE);
 		int iHolyCityBad = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_HOLY_CITY_BAD, CASC_SCOPE_EMPIRE);
 
@@ -15008,24 +15026,26 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 
 		foreach_(const CvCity * pLoopCity, cities())
 		{
-			float fCityStateReligion = 0;
-			float fCityNonStateReligion = 0;
+			// x2 FIXED POINT. The only fractional term in this whole accumulation is the 2.5 below, so a
+			// HALVES scale carries every value exactly and the score resolves in integers end to end.
+			int iCityStateReligionX2 = 0;
+			int iCityNonStateReligionX2 = 0;
 
 			if (pLoopCity->isHasReligion(eStateReligion))
 			{
-				fCityStateReligion += 4;
+				iCityStateReligionX2 += 8;
 			}
 			for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 			{
 				if ((pLoopCity->isHasReligion((ReligionTypes)iI)) && !(eStateReligion == iI))
 				{
-					if (fCityNonStateReligion <= 4)
+					if (iCityNonStateReligionX2 <= 8)
 					{
-						fCityNonStateReligion += 2.5;
+						iCityNonStateReligionX2 += 5;
 					}
 					else
 					{
-						fCityNonStateReligion += 1;
+						iCityNonStateReligionX2 += 2;
 					}
 				}
 			}
@@ -15033,11 +15053,11 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 			{
 				if (pLoopCity->isHolyCity(eStateReligion))
 				{
-					fCityStateReligion += 5;
+					iCityStateReligionX2 += 10;
 				}
 				else
 				{
-					fCityNonStateReligion += 4;
+					iCityNonStateReligionX2 += 8;
 				}
 			}
 			int iLiberalism = GC.getInfoTypeForString("TECH_LIBERALISM");
@@ -15050,7 +15070,7 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 					PlayerTypes eHolyCityOwnerID = pHolyCity->getOwner();
 					if (getID() == eHolyCityOwnerID)
 					{
-						fCityStateReligion += iHolyCityGood;
+						iCityStateReligionX2 += 2 * iHolyCityGood;
 					}
 					else
 					{
@@ -15062,12 +15082,14 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 				}
 			}
 
-			int iRelBadEffect = (int)floor((fCityNonStateReligion * (1 + fRelBadMod)) + .5);
-			int iRelGoodEffect = (int)floor((fCityStateReligion * (1 + fRelGoodMod)) + .5);
+			// floor(value + 0.5) over the halves scale is floor((valueX2 * mult + 1) / 2).
+			int iRelBadEffect = rev_floorDiv(static_cast<int64_t>(iCityNonStateReligionX2) * (1 + iRelBadMod) + 1, 2);
+			int iRelGoodEffect = rev_floorDiv(static_cast<int64_t>(iCityStateReligionX2) * (1 + iRelGoodMod) + 1, 2);
 
 			if (GET_TEAM(getTeam()).isAtWar())
 			{
-				iRelGoodEffect = (int)floor((iRelGoodEffect * 1.5) + .5);
+				// x1.5 under the same rounding: floor((value * 3 + 1) / 2).
+				iRelGoodEffect = rev_floorDiv(static_cast<int64_t>(iRelGoodEffect) * 3 + 1, 2);
 			}
 
 			int iNetCivicRelEffect = iRelBadEffect - iRelGoodEffect;
@@ -15086,33 +15108,13 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 			}
 			int iRevIdx = pLoopCity->getRevolutionIndex();
 			iRevIdx = std::max(iRevIdx - 300, 100);
-			float fCityReligionScore = iNetCivicRelEffect * (((float)iRevIdx) / 600);
-			iRelScore += (int)(floor(fCityReligionScore));
+			iRelScore += rev_floorDiv(static_cast<int64_t>(iNetCivicRelEffect) * iRevIdx, 600);
 		}//end of each city loop
 
 		iRelScore *= 3;
 		iTotalScore -= iRelScore;
 	}//end of if eCivic isStateRel
 
-	if (0 > 0)
-	{
-		int iCivicScore = 0;
-
-		foreach_(const CvCity * pLoopCity, cities())
-		{
-			int iCityScore = 0 * pLoopCity->getReligionCount();
-
-			int iRevIdx = pLoopCity->getRevolutionIndex();
-			iRevIdx = std::max(iRevIdx - 300, 100);
-
-			iCityScore *= iRevIdx;
-			iCityScore /= (pLoopCity->angryPopulation() > 0) ? 500 : 700;
-
-			iCivicScore += iCityScore;
-		}
-
-		iTotalScore += iCivicScore;
-	}
 
 	return iTotalScore;
 }
