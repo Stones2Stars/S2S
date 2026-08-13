@@ -261,13 +261,11 @@
   is what the index is FOR), and the cities are enumerable from the owner. What cannot be recovered afterwards is
   only THAT THE CROSSING HAPPENED inside the bracket, so that is the sole thing worth keeping: the key is
   `(atom, owner)` — the shape `s_bankedAtomFans` twenty lines above it already uses.
-  ⛔ **But re-keying ALONE is a silent DOUBLE-APPLY, so the storage inverts as well.** The per-city route applies
-  immediately where the city already holds the source and banks only where it does not, so a drain that re-derives
-  every holder reaches the cities that already applied and books them a second time
-  ([state-repositories.md](../../architecture/state-repositories.md) § THE INVARIANT). Nothing records the
-  application per deposit, so the drain cannot tell them apart after the fact.
-  ⇒ Keep `(atom, owner)` PLUS the cities that DID apply, and have the drain walk the holders and skip those. The
-  appliers are a small fraction of the skips, so the complement is what was oversized — never the keying alone.
+  ⚑ **AND THE DRAIN MAY RE-DERIVE FREELY, because the GATED-DEPOSIT BOOK already makes the planes idempotent.**
+  `CvCascadePackage::bookedGated` records what a package currently holds for each conditioned deposit, so a
+  deposit reached twice — once by plane A as its source arrives, once by plane C as the atom crosses — is booked
+  by whichever notices first and the second finds it booked and does nothing. So there is no applier set to keep
+  and no complement to carry: the re-key is the whole of the fix.
   ⚑ The drain's own reason split (`noSource` against `booked` on `<atomDrain>`) is what names the share, so this
   closes against the instrument rather than against a guess.
   ⛔ It is NOT redundant the way the fan bank's city half was — it applies deposits nothing else reaches (the
