@@ -7174,10 +7174,7 @@ int CvPlayer::calculateTotalYield(YieldTypes eYield) const
 		pLoopCity->getYields(aiRealizedYields);
 		iTotal100 += aiRealizedYields[eYield];
 	}
-	int TotalYield = (int)(iTotal100 / 100);
-	if (TotalYield < MIN_TOL_FALSE_ACCUMULATE)
-		return MAX_COMMERCE_RATE_VALUE;
-	return TotalYield;
+	return (int)(iTotal100 / 100);
 }
 
 
@@ -7607,9 +7604,7 @@ int CvPlayer::calculateBaseNetResearch(TechTypes eTech) const
 		GC.getDefineINT("BASE_RESEARCH_RATE") + aiEmpireCommerces[COMMERCE_RESEARCH] / 100,
 		getNationalTechResearchModifier(eTech) + calculateResearchModifier(eTech)
 	);
-	if (iCalcResearch < MIN_TOL_FALSE_RESEARCH)
-		return MAX_RESEARCH_RATE_VALUE;
-	return std::min(MAX_RESEARCH_RATE_VALUE,iCalcResearch);
+	return std::min(MAX_RESEARCH_RATE_VALUE, iCalcResearch);
 }
 
 
@@ -11818,8 +11813,6 @@ int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
 			iTotal += aiLoopCommerces[eIndex];
 		}
 		m_cachedTotalCityBaseCommerceRate[eIndex] = (int)(iTotal / 100);
-		if (m_cachedTotalCityBaseCommerceRate[eIndex] < MIN_TOL_FALSE_ACCUMULATE)
-			m_cachedTotalCityBaseCommerceRate[eIndex] = MAX_COMMERCE_RATE_VALUE;
 	}
 	return m_cachedTotalCityBaseCommerceRate[eIndex];
 }
