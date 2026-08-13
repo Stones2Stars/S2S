@@ -2683,9 +2683,18 @@ const char* cvInternalGlobals::getDefineSTRING(const char* szName, const char* s
 // message instead of writing, and CvGlobalDefineUpdate::Execute calls straight back in with bUpdate=false -- so
 // announcing on both paths would double-emit one change on the initiating machine (the spine's ONE bar is
 // duplicates). The emit follows cacheGlobals() so a consumer reading a cached accessor sees the NEW value.
+// A live-option SET is a slot REPLACEMENT, so it is TWO facts: the withdrawal names the value being taken
+// back -- carried in its payload, since by emit time the store already holds the new one -- then the arrival
+// names the new ([DEC-facts-name-happenings]). A define set for the FIRST time withdraws nothing.
 void cvInternalGlobals::setDefineINT(const char* szName, int iValue, bool bUpdate)
 {
-	if (getDefineINT(szName) != iValue)
+	int iOldValue = 0;
+	const bool bExisted = m_VarSystem->GetValue(szName, iOldValue);
+	if (!bExisted)
+	{
+		iOldValue = 0;
+	}
+	if (iOldValue != iValue)
 	{
 		if (bUpdate)
 		{
@@ -2698,6 +2707,10 @@ void cvInternalGlobals::setDefineINT(const char* szName, int iValue, bool bUpdat
 
 		if (!bUpdate)
 		{
+			if (bExisted)
+			{
+				emitGameGlobalDefineRemoved(szName, GLOBALDEFINE_INT, iOldValue, 0.0f, NULL);
+			}
 			emitGameGlobalDefineAdded(szName, GLOBALDEFINE_INT, iValue, 0.0f, NULL);
 		}
 	}
@@ -2705,7 +2718,13 @@ void cvInternalGlobals::setDefineINT(const char* szName, int iValue, bool bUpdat
 
 void cvInternalGlobals::setDefineFLOAT(const char* szName, float fValue, bool bUpdate)
 {
-	if (getDefineFLOAT(szName) != fValue)
+	float fOldValue = 0.0f;
+	const bool bExisted = m_VarSystem->GetValue(szName, fOldValue);
+	if (!bExisted)
+	{
+		fOldValue = 0.0f;
+	}
+	if (fOldValue != fValue)
 	{
 		if (bUpdate)
 		{
@@ -2717,6 +2736,10 @@ void cvInternalGlobals::setDefineFLOAT(const char* szName, float fValue, bool bU
 
 		if (!bUpdate)
 		{
+			if (bExisted)
+			{
+				emitGameGlobalDefineRemoved(szName, GLOBALDEFINE_FLOAT, 0, fOldValue, NULL);
+			}
 			emitGameGlobalDefineAdded(szName, GLOBALDEFINE_FLOAT, 0, fValue, NULL);
 		}
 	}
@@ -2724,7 +2747,13 @@ void cvInternalGlobals::setDefineFLOAT(const char* szName, float fValue, bool bU
 
 void cvInternalGlobals::setDefineSTRING(const char* szName, const char* szValue, bool bUpdate)
 {
-	if (getDefineSTRING(szName) != szValue)
+	// The stored pointer is only valid until SetValue, so the old value is COPIED out for the withdrawal --
+	// and compared by CONTENT: the pointer compare this replaces was always-true, so every set announced a
+	// "change" whether or not one happened.
+	const char* szStored = NULL;
+	const bool bExisted = m_VarSystem->GetValue(szName, szStored) && szStored != NULL;
+	const CvString szOldValue(bExisted ? szStored : "");
+	if (!bExisted || szOldValue != szValue)
 	{
 		if (bUpdate)
 		{
@@ -2736,6 +2765,10 @@ void cvInternalGlobals::setDefineSTRING(const char* szName, const char* szValue,
 
 		if (!bUpdate)
 		{
+			if (bExisted)
+			{
+				emitGameGlobalDefineRemoved(szName, GLOBALDEFINE_STRING, 0, 0.0f, szOldValue.c_str());
+			}
 			emitGameGlobalDefineAdded(szName, GLOBALDEFINE_STRING, 0, 0.0f, szValue);
 		}
 	}
