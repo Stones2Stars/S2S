@@ -356,157 +356,162 @@ enum SpineDomainField
 	SPF_FLIPS, SPF_CONVERGED, SPF_VERIFY_CATCH, SPF_MS_FIX_ENSURE, SPF_MS_FIX_PROCESS
 };
 
-// The constant line PREFIX for each spine DOMAIN eventId ("[SPINE] <eventName>"). The variable fields follow as
-// name=value (spineRenderEventLine).
+// The constant line PREFIX for each spine DOMAIN eventId ("[SPINE/<SCOPE>] <eventName>"). The variable fields
+// follow as name=value (spineRenderEventLine).
+// ⛔ THE TAG CARRIES THE FACT'S OWN SCOPE, and it is the filtering axis: the reseed announces every fact the save
+// contains, so on a large save the spine is the overwhelming majority of the log and one flat [SPINE] tag cannot
+// be narrowed to the plane under investigation. The scope is taken from the event's own name (cityBuildingAdded
+// is CITY, plotTerrainAdded is PLOT), so a new event inherits its tag by being named for its subject.
+// ⚠ An id with no mapping keeps the bare [SPINE] rather than being filed under a scope it does not have.
 static const char* spineDomainPrefix(int iEventId)
 {
 	switch (iEventId)
 	{
-	case SEVT_GAME_LOAD_STARTED:                return "[SPINE] gameLoadStarted";
-	case SEVT_GAME_LOAD_FINISHED:               return "[SPINE] gameLoadFinished";
-	case SEVT_TURN_STARTED:                     return "[SPINE] turnStarted";
-	case SEVT_TURN_ENDED:                       return "[SPINE] turnEnded";
-	case SEVT_GAME_OPTION_ADDED:                return "[SPINE] gameOptionAdded";
-	case SEVT_GAME_OPTION_REMOVED:              return "[SPINE] gameOptionRemoved";
-	case SEVT_GAME_HANDICAP_ADDED:              return "[SPINE] gameHandicapAdded";
-	case SEVT_GAME_HANDICAP_REMOVED:            return "[SPINE] gameHandicapRemoved";
-	case SEVT_GAME_GLOBAL_DEFINE_ADDED:         return "[SPINE] gameGlobalDefineAdded";
-	case SEVT_GAME_GLOBAL_DEFINE_REMOVED:       return "[SPINE] gameGlobalDefineRemoved";
-	case SEVT_WORLD_NUKES_BANNED_ADDED:         return "[SPINE] worldNukesBannedAdded";
-	case SEVT_WORLD_NUKES_BANNED_REMOVED:       return "[SPINE] worldNukesBannedRemoved";
-	case SEVT_WORLD_UNIT_CREATED_COUNT_ADDED:   return "[SPINE] worldUnitCreatedCountAdded";
-	case SEVT_AREAS_RECALCULATED:               return "[SPINE] areasRecalculated";
-	case SEVT_TEAM_MEMBER_ADDED:                return "[SPINE] teamMemberAdded";
-	case SEVT_TEAM_MEMBER_REMOVED:              return "[SPINE] teamMemberRemoved";
-	case SEVT_EMPIRE_TECH_ADDED:                return "[SPINE] empireTechAdded";
-	case SEVT_EMPIRE_TECH_REMOVED:              return "[SPINE] empireTechRemoved";
-	case SEVT_EMPIRE_TRAIT_ADDED:               return "[SPINE] empireTraitAdded";
-	case SEVT_EMPIRE_TRAIT_REMOVED:             return "[SPINE] empireTraitRemoved";
-	case SEVT_EMPIRE_PROJECT_ADDED:             return "[SPINE] empireProjectAdded";
-	case SEVT_EMPIRE_PROJECT_REMOVED:           return "[SPINE] empireProjectRemoved";
-	case SEVT_EMPIRE_HERITAGE_ADDED:            return "[SPINE] empireHeritageAdded";
-	case SEVT_EMPIRE_HERITAGE_REMOVED:          return "[SPINE] empireHeritageRemoved";
-	case SEVT_EMPIRE_STATE_RELIGION_ADDED:      return "[SPINE] empireStateReligionAdded";
-	case SEVT_EMPIRE_STATE_RELIGION_REMOVED:    return "[SPINE] empireStateReligionRemoved";
-	case SEVT_EMPIRE_GOLDEN_AGE_ADDED:          return "[SPINE] empireGoldenAgeAdded";
-	case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:        return "[SPINE] empireGoldenAgeRemoved";
-	case SEVT_EMPIRE_ANARCHY_ADDED:             return "[SPINE] empireAnarchyAdded";
-	case SEVT_EMPIRE_ANARCHY_REMOVED:           return "[SPINE] empireAnarchyRemoved";
-	case SEVT_EMPIRE_REBEL_ADDED:               return "[SPINE] empireRebelAdded";
-	case SEVT_EMPIRE_REBEL_REMOVED:             return "[SPINE] empireRebelRemoved";
-	case SEVT_EMPIRE_ERA_ADDED:                 return "[SPINE] empireEraAdded";
-	case SEVT_EMPIRE_ERA_REMOVED:               return "[SPINE] empireEraRemoved";
-	case SEVT_EMPIRE_HANDICAP_ADDED:            return "[SPINE] empireHandicapAdded";
-	case SEVT_EMPIRE_HANDICAP_REMOVED:          return "[SPINE] empireHandicapRemoved";
-	case SEVT_EMPIRE_NUKES_ENABLED_ADDED:       return "[SPINE] empireNukesEnabledAdded";
-	case SEVT_EMPIRE_NUKES_ENABLED_REMOVED:     return "[SPINE] empireNukesEnabledRemoved";
-	case SEVT_EMPIRE_COMMERCE_PERCENT_ADDED:    return "[SPINE] empireCommercePercentAdded";
-	case SEVT_EMPIRE_COMMERCE_PERCENT_REMOVED:  return "[SPINE] empireCommercePercentRemoved";
-	case SEVT_EMPIRE_CAPITAL_ADDED:             return "[SPINE] empireCapitalAdded";
-	case SEVT_EMPIRE_CAPITAL_REMOVED:           return "[SPINE] empireCapitalRemoved";
-	case SEVT_EMPIRE_BUILDING_COUNT_ADDED:      return "[SPINE] empireBuildingCountAdded";
-	case SEVT_EMPIRE_BUILDING_COUNT_REMOVED:    return "[SPINE] empireBuildingCountRemoved";
-	case SEVT_EMPIRE_UNIT_COUNT_ADDED:          return "[SPINE] empireUnitCountAdded";
-	case SEVT_EMPIRE_UNIT_COUNT_REMOVED:        return "[SPINE] empireUnitCountRemoved";
-	case SEVT_CITY_BUILDING_ADDED:              return "[SPINE] cityBuildingAdded";
-	case SEVT_CITY_BUILDING_REMOVED:            return "[SPINE] cityBuildingRemoved";
-	case SEVT_CITY_BUILDING_ACTIVATED:          return "[SPINE] cityBuildingActivated";
-	case SEVT_CITY_BUILDING_DORMANTED:          return "[SPINE] cityBuildingDormanted";
-	case SEVT_CITY_BUILDING_OBSOLETED_ADDED:    return "[SPINE] cityBuildingObsoletedAdded";
-	case SEVT_CITY_BUILDING_OBSOLETED_REMOVED:  return "[SPINE] cityBuildingObsoletedRemoved";
-	case SEVT_CITY_RELIGION_ADDED:              return "[SPINE] cityReligionAdded";
-	case SEVT_CITY_RELIGION_REMOVED:            return "[SPINE] cityReligionRemoved";
-	case SEVT_CITY_CORPORATION_ADDED:           return "[SPINE] cityCorporationAdded";
-	case SEVT_CITY_CORPORATION_REMOVED:         return "[SPINE] cityCorporationRemoved";
-	case SEVT_CITY_BONUS_ADDED:                 return "[SPINE] cityBonusAdded";
-	case SEVT_CITY_BONUS_REMOVED:               return "[SPINE] cityBonusRemoved";
-	case SEVT_CITY_VICINITY_BONUS_ADDED:        return "[SPINE] cityVicinityBonusAdded";
-	case SEVT_CITY_VICINITY_BONUS_REMOVED:      return "[SPINE] cityVicinityBonusRemoved";
-	case SEVT_CITY_POPULATION_ADDED:            return "[SPINE] cityPopulationAdded";
-	case SEVT_CITY_POPULATION_REMOVED:          return "[SPINE] cityPopulationRemoved";
-	case SEVT_CITY_SPECIALIST_ADDED:            return "[SPINE] citySpecialistAdded";
-	case SEVT_CITY_SPECIALIST_REMOVED:          return "[SPINE] citySpecialistRemoved";
-	case SEVT_CITY_POWER_ADDED:                 return "[SPINE] cityPowerAdded";
-	case SEVT_CITY_POWER_REMOVED:               return "[SPINE] cityPowerRemoved";
-	case SEVT_CITY_STATUS_ADDED:                return "[SPINE] cityStatusAdded";
-	case SEVT_CITY_STATUS_REMOVED:              return "[SPINE] cityStatusRemoved";
-	case SEVT_UNIT_STATUS_ADDED:                return "[SPINE] unitStatusAdded";
-	case SEVT_UNIT_STATUS_REMOVED:              return "[SPINE] unitStatusRemoved";
-	case SEVT_CITY_FRESH_WATER_ADDED:           return "[SPINE] cityFreshWaterAdded";
-	case SEVT_CITY_FRESH_WATER_REMOVED:         return "[SPINE] cityFreshWaterRemoved";
-	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:     return "[SPINE] cityGovernmentCenterAdded";
-	case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:   return "[SPINE] cityGovernmentCenterRemoved";
-	case SEVT_CITY_HOLY_CITY_ADDED:             return "[SPINE] cityHolyCityAdded";
-	case SEVT_CITY_HOLY_CITY_REMOVED:           return "[SPINE] cityHolyCityRemoved";
-	case SEVT_CITY_HEADQUARTERS_ADDED:          return "[SPINE] cityHeadquartersAdded";
-	case SEVT_CITY_HEADQUARTERS_REMOVED:        return "[SPINE] cityHeadquartersRemoved";
-	case SEVT_CITY_CULTURE_LEVEL_ADDED:         return "[SPINE] cityCultureLevelAdded";
-	case SEVT_CITY_CULTURE_LEVEL_REMOVED:       return "[SPINE] cityCultureLevelRemoved";
-	case SEVT_CITY_OWNER_ADDED:                 return "[SPINE] cityOwnerAdded";
-	case SEVT_CITY_OWNER_REMOVED:               return "[SPINE] cityOwnerRemoved";
-	case SEVT_CITY_NETWORK_ADDED:               return "[SPINE] cityNetworkAdded";
-	case SEVT_CITY_NETWORK_REMOVED:             return "[SPINE] cityNetworkRemoved";
-	case SEVT_CITY_ORDER_ADDED:                 return "[SPINE] cityOrderAdded";
-	case SEVT_CITY_ORDER_REMOVED:               return "[SPINE] cityOrderRemoved";
-	case SEVT_CITY_FOUNDED:                     return "[SPINE] cityFounded";
-	case SEVT_PLOT_TERRAIN_ADDED:               return "[SPINE] plotTerrainAdded";
-	case SEVT_PLOT_TERRAIN_REMOVED:             return "[SPINE] plotTerrainRemoved";
-	case SEVT_PLOT_FEATURE_ADDED:               return "[SPINE] plotFeatureAdded";
-	case SEVT_PLOT_FEATURE_REMOVED:             return "[SPINE] plotFeatureRemoved";
-	case SEVT_PLOT_IMPROVEMENT_ADDED:           return "[SPINE] plotImprovementAdded";
-	case SEVT_PLOT_IMPROVEMENT_REMOVED:         return "[SPINE] plotImprovementRemoved";
-	case SEVT_PLOT_ROUTE_ADDED:                 return "[SPINE] plotRouteAdded";
-	case SEVT_PLOT_ROUTE_REMOVED:               return "[SPINE] plotRouteRemoved";
-	case SEVT_PLOT_BONUS_ADDED:                 return "[SPINE] plotBonusAdded";
-	case SEVT_PLOT_BONUS_REMOVED:               return "[SPINE] plotBonusRemoved";
-	case SEVT_PLOT_TYPE_ADDED:                  return "[SPINE] plotTypeAdded";
-	case SEVT_PLOT_TYPE_REMOVED:                return "[SPINE] plotTypeRemoved";
-	case SEVT_PLOT_LANDMARK_ADDED:              return "[SPINE] plotLandmarkAdded";
-	case SEVT_PLOT_LANDMARK_REMOVED:            return "[SPINE] plotLandmarkRemoved";
-	case SEVT_PLOT_RIVER_ADDED:                 return "[SPINE] plotRiverAdded";
-	case SEVT_PLOT_RIVER_REMOVED:               return "[SPINE] plotRiverRemoved";
-	case SEVT_PLOT_IRRIGATION_ADDED:            return "[SPINE] plotIrrigationAdded";
-	case SEVT_PLOT_IRRIGATION_REMOVED:          return "[SPINE] plotIrrigationRemoved";
-	case SEVT_PLOT_OWNER_ADDED:                 return "[SPINE] plotOwnerAdded";
-	case SEVT_PLOT_OWNER_REMOVED:               return "[SPINE] plotOwnerRemoved";
-	case SEVT_PLOT_WORKING_CITY_ADDED:          return "[SPINE] plotWorkingCityAdded";
-	case SEVT_PLOT_WORKING_CITY_REMOVED:        return "[SPINE] plotWorkingCityRemoved";
-	case SEVT_PLOT_WORKED_ADDED:                return "[SPINE] plotWorkedAdded";
-	case SEVT_PLOT_WORKED_REMOVED:              return "[SPINE] plotWorkedRemoved";
-	case SEVT_PLOT_CITY_ADDED:                  return "[SPINE] plotCityAdded";
-	case SEVT_PLOT_CITY_REMOVED:                return "[SPINE] plotCityRemoved";
-	case SEVT_PLOT_PREDICATE_ADDED:             return "[SPINE] plotPredicateAdded";
-	case SEVT_PLOT_PREDICATE_REMOVED:           return "[SPINE] plotPredicateRemoved";
-	case SEVT_PLOT_SERVED_BONUS_ADDED:          return "[SPINE] plotServedBonusAdded";
-	case SEVT_PLOT_SERVED_BONUS_REMOVED:        return "[SPINE] plotServedBonusRemoved";
-	case SEVT_PLOT_WORKABLE_BY_ADDED:           return "[SPINE] plotWorkableByAdded";
-	case SEVT_PLOT_WORKABLE_BY_REMOVED:         return "[SPINE] plotWorkableByRemoved";
-	case SEVT_PLOTGROUP_BONUS_ADDED:            return "[SPINE] plotgroupBonusAdded";
-	case SEVT_PLOTGROUP_BONUS_REMOVED:          return "[SPINE] plotgroupBonusRemoved";
-	case SEVT_AREA_TILE_ADDED:                  return "[SPINE] areaTileAdded";
-	case SEVT_AREA_TILE_REMOVED:                return "[SPINE] areaTileRemoved";
-	case SEVT_UNIT_CREATED:                     return "[SPINE] unitCreated";
-	case SEVT_UNIT_KILLED:                      return "[SPINE] unitKilled";
-	case SEVT_UNIT_DEATH_SCHEDULE_ADDED:        return "[SPINE] unitDeathScheduleAdded";
-	case SEVT_UNIT_DEATH_SCHEDULE_REMOVED:      return "[SPINE] unitDeathScheduleRemoved";
-	case SEVT_UNIT_ENTERED_CITY:                return "[SPINE] unitEnteredCity";
-	case SEVT_UNIT_LEFT_CITY:                   return "[SPINE] unitLeftCity";
-	case SEVT_COMBAT_RESULT:                    return "[SPINE] combatResult";
-	case SEVT_UNIT_PROMOTION_ADDED:             return "[SPINE] unitPromotionAdded";
-	case SEVT_UNIT_PROMOTION_REMOVED:           return "[SPINE] unitPromotionRemoved";
-	case SEVT_UNIT_COMBAT_ADDED:                return "[SPINE] unitCombatAdded";
-	case SEVT_UNIT_COMBAT_REMOVED:              return "[SPINE] unitCombatRemoved";
-	case SEVT_PROPERTY_ADDED:                   return "[SPINE] propertyAdded";
-	case SEVT_PROPERTY_REMOVED:                 return "[SPINE] propertyRemoved";
-	case SEVT_CITY_PROPERTY_BAND_ADDED:         return "[SPINE] cityPropertyBandAdded";
-	case SEVT_CITY_PROPERTY_BAND_REMOVED:       return "[SPINE] cityPropertyBandRemoved";
-	case SEVT_TECH_ACQUIRED:                    return "[SPINE] techAcquired";
-	case SEVT_RELIGION_FOUNDED:                 return "[SPINE] religionFounded";
-	case SEVT_CIVIC_ADOPTED:                    return "[SPINE] civicAdopted";
-	case SEVT_PLAYER_INIT:                      return "[SPINE] playerInit";
-	case SEVT_NAME_CHANGE:                      return "[SPINE] nameChange";
-	case SEVT_CITY_BUILDING_PROCESSED:          return "[SPINE] cityBuildingProcessed";
-	case SEVT_LOAD_PIPELINE:                    return "[SPINE] loadPipeline";
+	case SEVT_GAME_LOAD_STARTED:                return "[SPINE/GAME] gameLoadStarted";
+	case SEVT_GAME_LOAD_FINISHED:               return "[SPINE/GAME] gameLoadFinished";
+	case SEVT_TURN_STARTED:                     return "[SPINE/GAME] turnStarted";
+	case SEVT_TURN_ENDED:                       return "[SPINE/GAME] turnEnded";
+	case SEVT_GAME_OPTION_ADDED:                return "[SPINE/GAME] gameOptionAdded";
+	case SEVT_GAME_OPTION_REMOVED:              return "[SPINE/GAME] gameOptionRemoved";
+	case SEVT_GAME_HANDICAP_ADDED:              return "[SPINE/GAME] gameHandicapAdded";
+	case SEVT_GAME_HANDICAP_REMOVED:            return "[SPINE/GAME] gameHandicapRemoved";
+	case SEVT_GAME_GLOBAL_DEFINE_ADDED:         return "[SPINE/GAME] gameGlobalDefineAdded";
+	case SEVT_GAME_GLOBAL_DEFINE_REMOVED:       return "[SPINE/GAME] gameGlobalDefineRemoved";
+	case SEVT_WORLD_NUKES_BANNED_ADDED:         return "[SPINE/WORLD] worldNukesBannedAdded";
+	case SEVT_WORLD_NUKES_BANNED_REMOVED:       return "[SPINE/WORLD] worldNukesBannedRemoved";
+	case SEVT_WORLD_UNIT_CREATED_COUNT_ADDED:   return "[SPINE/WORLD] worldUnitCreatedCountAdded";
+	case SEVT_AREAS_RECALCULATED:               return "[SPINE/WORLD] areasRecalculated";
+	case SEVT_TEAM_MEMBER_ADDED:                return "[SPINE/TEAM] teamMemberAdded";
+	case SEVT_TEAM_MEMBER_REMOVED:              return "[SPINE/TEAM] teamMemberRemoved";
+	case SEVT_EMPIRE_TECH_ADDED:                return "[SPINE/EMPIRE] empireTechAdded";
+	case SEVT_EMPIRE_TECH_REMOVED:              return "[SPINE/EMPIRE] empireTechRemoved";
+	case SEVT_EMPIRE_TRAIT_ADDED:               return "[SPINE/EMPIRE] empireTraitAdded";
+	case SEVT_EMPIRE_TRAIT_REMOVED:             return "[SPINE/EMPIRE] empireTraitRemoved";
+	case SEVT_EMPIRE_PROJECT_ADDED:             return "[SPINE/EMPIRE] empireProjectAdded";
+	case SEVT_EMPIRE_PROJECT_REMOVED:           return "[SPINE/EMPIRE] empireProjectRemoved";
+	case SEVT_EMPIRE_HERITAGE_ADDED:            return "[SPINE/EMPIRE] empireHeritageAdded";
+	case SEVT_EMPIRE_HERITAGE_REMOVED:          return "[SPINE/EMPIRE] empireHeritageRemoved";
+	case SEVT_EMPIRE_STATE_RELIGION_ADDED:      return "[SPINE/EMPIRE] empireStateReligionAdded";
+	case SEVT_EMPIRE_STATE_RELIGION_REMOVED:    return "[SPINE/EMPIRE] empireStateReligionRemoved";
+	case SEVT_EMPIRE_GOLDEN_AGE_ADDED:          return "[SPINE/EMPIRE] empireGoldenAgeAdded";
+	case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:        return "[SPINE/EMPIRE] empireGoldenAgeRemoved";
+	case SEVT_EMPIRE_ANARCHY_ADDED:             return "[SPINE/EMPIRE] empireAnarchyAdded";
+	case SEVT_EMPIRE_ANARCHY_REMOVED:           return "[SPINE/EMPIRE] empireAnarchyRemoved";
+	case SEVT_EMPIRE_REBEL_ADDED:               return "[SPINE/EMPIRE] empireRebelAdded";
+	case SEVT_EMPIRE_REBEL_REMOVED:             return "[SPINE/EMPIRE] empireRebelRemoved";
+	case SEVT_EMPIRE_ERA_ADDED:                 return "[SPINE/EMPIRE] empireEraAdded";
+	case SEVT_EMPIRE_ERA_REMOVED:               return "[SPINE/EMPIRE] empireEraRemoved";
+	case SEVT_EMPIRE_HANDICAP_ADDED:            return "[SPINE/EMPIRE] empireHandicapAdded";
+	case SEVT_EMPIRE_HANDICAP_REMOVED:          return "[SPINE/EMPIRE] empireHandicapRemoved";
+	case SEVT_EMPIRE_NUKES_ENABLED_ADDED:       return "[SPINE/EMPIRE] empireNukesEnabledAdded";
+	case SEVT_EMPIRE_NUKES_ENABLED_REMOVED:     return "[SPINE/EMPIRE] empireNukesEnabledRemoved";
+	case SEVT_EMPIRE_COMMERCE_PERCENT_ADDED:    return "[SPINE/EMPIRE] empireCommercePercentAdded";
+	case SEVT_EMPIRE_COMMERCE_PERCENT_REMOVED:  return "[SPINE/EMPIRE] empireCommercePercentRemoved";
+	case SEVT_EMPIRE_CAPITAL_ADDED:             return "[SPINE/EMPIRE] empireCapitalAdded";
+	case SEVT_EMPIRE_CAPITAL_REMOVED:           return "[SPINE/EMPIRE] empireCapitalRemoved";
+	case SEVT_EMPIRE_BUILDING_COUNT_ADDED:      return "[SPINE/EMPIRE] empireBuildingCountAdded";
+	case SEVT_EMPIRE_BUILDING_COUNT_REMOVED:    return "[SPINE/EMPIRE] empireBuildingCountRemoved";
+	case SEVT_EMPIRE_UNIT_COUNT_ADDED:          return "[SPINE/EMPIRE] empireUnitCountAdded";
+	case SEVT_EMPIRE_UNIT_COUNT_REMOVED:        return "[SPINE/EMPIRE] empireUnitCountRemoved";
+	case SEVT_CITY_BUILDING_ADDED:              return "[SPINE/CITY] cityBuildingAdded";
+	case SEVT_CITY_BUILDING_REMOVED:            return "[SPINE/CITY] cityBuildingRemoved";
+	case SEVT_CITY_BUILDING_ACTIVATED:          return "[SPINE/CITY] cityBuildingActivated";
+	case SEVT_CITY_BUILDING_DORMANTED:          return "[SPINE/CITY] cityBuildingDormanted";
+	case SEVT_CITY_BUILDING_OBSOLETED_ADDED:    return "[SPINE/CITY] cityBuildingObsoletedAdded";
+	case SEVT_CITY_BUILDING_OBSOLETED_REMOVED:  return "[SPINE/CITY] cityBuildingObsoletedRemoved";
+	case SEVT_CITY_RELIGION_ADDED:              return "[SPINE/CITY] cityReligionAdded";
+	case SEVT_CITY_RELIGION_REMOVED:            return "[SPINE/CITY] cityReligionRemoved";
+	case SEVT_CITY_CORPORATION_ADDED:           return "[SPINE/CITY] cityCorporationAdded";
+	case SEVT_CITY_CORPORATION_REMOVED:         return "[SPINE/CITY] cityCorporationRemoved";
+	case SEVT_CITY_BONUS_ADDED:                 return "[SPINE/CITY] cityBonusAdded";
+	case SEVT_CITY_BONUS_REMOVED:               return "[SPINE/CITY] cityBonusRemoved";
+	case SEVT_CITY_VICINITY_BONUS_ADDED:        return "[SPINE/CITY] cityVicinityBonusAdded";
+	case SEVT_CITY_VICINITY_BONUS_REMOVED:      return "[SPINE/CITY] cityVicinityBonusRemoved";
+	case SEVT_CITY_POPULATION_ADDED:            return "[SPINE/CITY] cityPopulationAdded";
+	case SEVT_CITY_POPULATION_REMOVED:          return "[SPINE/CITY] cityPopulationRemoved";
+	case SEVT_CITY_SPECIALIST_ADDED:            return "[SPINE/CITY] citySpecialistAdded";
+	case SEVT_CITY_SPECIALIST_REMOVED:          return "[SPINE/CITY] citySpecialistRemoved";
+	case SEVT_CITY_POWER_ADDED:                 return "[SPINE/CITY] cityPowerAdded";
+	case SEVT_CITY_POWER_REMOVED:               return "[SPINE/CITY] cityPowerRemoved";
+	case SEVT_CITY_STATUS_ADDED:                return "[SPINE/CITY] cityStatusAdded";
+	case SEVT_CITY_STATUS_REMOVED:              return "[SPINE/CITY] cityStatusRemoved";
+	case SEVT_UNIT_STATUS_ADDED:                return "[SPINE/UNIT] unitStatusAdded";
+	case SEVT_UNIT_STATUS_REMOVED:              return "[SPINE/UNIT] unitStatusRemoved";
+	case SEVT_CITY_FRESH_WATER_ADDED:           return "[SPINE/CITY] cityFreshWaterAdded";
+	case SEVT_CITY_FRESH_WATER_REMOVED:         return "[SPINE/CITY] cityFreshWaterRemoved";
+	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:     return "[SPINE/CITY] cityGovernmentCenterAdded";
+	case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:   return "[SPINE/CITY] cityGovernmentCenterRemoved";
+	case SEVT_CITY_HOLY_CITY_ADDED:             return "[SPINE/CITY] cityHolyCityAdded";
+	case SEVT_CITY_HOLY_CITY_REMOVED:           return "[SPINE/CITY] cityHolyCityRemoved";
+	case SEVT_CITY_HEADQUARTERS_ADDED:          return "[SPINE/CITY] cityHeadquartersAdded";
+	case SEVT_CITY_HEADQUARTERS_REMOVED:        return "[SPINE/CITY] cityHeadquartersRemoved";
+	case SEVT_CITY_CULTURE_LEVEL_ADDED:         return "[SPINE/CITY] cityCultureLevelAdded";
+	case SEVT_CITY_CULTURE_LEVEL_REMOVED:       return "[SPINE/CITY] cityCultureLevelRemoved";
+	case SEVT_CITY_OWNER_ADDED:                 return "[SPINE/CITY] cityOwnerAdded";
+	case SEVT_CITY_OWNER_REMOVED:               return "[SPINE/CITY] cityOwnerRemoved";
+	case SEVT_CITY_NETWORK_ADDED:               return "[SPINE/CITY] cityNetworkAdded";
+	case SEVT_CITY_NETWORK_REMOVED:             return "[SPINE/CITY] cityNetworkRemoved";
+	case SEVT_CITY_ORDER_ADDED:                 return "[SPINE/CITY] cityOrderAdded";
+	case SEVT_CITY_ORDER_REMOVED:               return "[SPINE/CITY] cityOrderRemoved";
+	case SEVT_CITY_FOUNDED:                     return "[SPINE/CITY] cityFounded";
+	case SEVT_PLOT_TERRAIN_ADDED:               return "[SPINE/PLOT] plotTerrainAdded";
+	case SEVT_PLOT_TERRAIN_REMOVED:             return "[SPINE/PLOT] plotTerrainRemoved";
+	case SEVT_PLOT_FEATURE_ADDED:               return "[SPINE/PLOT] plotFeatureAdded";
+	case SEVT_PLOT_FEATURE_REMOVED:             return "[SPINE/PLOT] plotFeatureRemoved";
+	case SEVT_PLOT_IMPROVEMENT_ADDED:           return "[SPINE/PLOT] plotImprovementAdded";
+	case SEVT_PLOT_IMPROVEMENT_REMOVED:         return "[SPINE/PLOT] plotImprovementRemoved";
+	case SEVT_PLOT_ROUTE_ADDED:                 return "[SPINE/PLOT] plotRouteAdded";
+	case SEVT_PLOT_ROUTE_REMOVED:               return "[SPINE/PLOT] plotRouteRemoved";
+	case SEVT_PLOT_BONUS_ADDED:                 return "[SPINE/PLOT] plotBonusAdded";
+	case SEVT_PLOT_BONUS_REMOVED:               return "[SPINE/PLOT] plotBonusRemoved";
+	case SEVT_PLOT_TYPE_ADDED:                  return "[SPINE/PLOT] plotTypeAdded";
+	case SEVT_PLOT_TYPE_REMOVED:                return "[SPINE/PLOT] plotTypeRemoved";
+	case SEVT_PLOT_LANDMARK_ADDED:              return "[SPINE/PLOT] plotLandmarkAdded";
+	case SEVT_PLOT_LANDMARK_REMOVED:            return "[SPINE/PLOT] plotLandmarkRemoved";
+	case SEVT_PLOT_RIVER_ADDED:                 return "[SPINE/PLOT] plotRiverAdded";
+	case SEVT_PLOT_RIVER_REMOVED:               return "[SPINE/PLOT] plotRiverRemoved";
+	case SEVT_PLOT_IRRIGATION_ADDED:            return "[SPINE/PLOT] plotIrrigationAdded";
+	case SEVT_PLOT_IRRIGATION_REMOVED:          return "[SPINE/PLOT] plotIrrigationRemoved";
+	case SEVT_PLOT_OWNER_ADDED:                 return "[SPINE/PLOT] plotOwnerAdded";
+	case SEVT_PLOT_OWNER_REMOVED:               return "[SPINE/PLOT] plotOwnerRemoved";
+	case SEVT_PLOT_WORKING_CITY_ADDED:          return "[SPINE/PLOT] plotWorkingCityAdded";
+	case SEVT_PLOT_WORKING_CITY_REMOVED:        return "[SPINE/PLOT] plotWorkingCityRemoved";
+	case SEVT_PLOT_WORKED_ADDED:                return "[SPINE/PLOT] plotWorkedAdded";
+	case SEVT_PLOT_WORKED_REMOVED:              return "[SPINE/PLOT] plotWorkedRemoved";
+	case SEVT_PLOT_CITY_ADDED:                  return "[SPINE/PLOT] plotCityAdded";
+	case SEVT_PLOT_CITY_REMOVED:                return "[SPINE/PLOT] plotCityRemoved";
+	case SEVT_PLOT_PREDICATE_ADDED:             return "[SPINE/PLOT] plotPredicateAdded";
+	case SEVT_PLOT_PREDICATE_REMOVED:           return "[SPINE/PLOT] plotPredicateRemoved";
+	case SEVT_PLOT_SERVED_BONUS_ADDED:          return "[SPINE/PLOT] plotServedBonusAdded";
+	case SEVT_PLOT_SERVED_BONUS_REMOVED:        return "[SPINE/PLOT] plotServedBonusRemoved";
+	case SEVT_PLOT_WORKABLE_BY_ADDED:           return "[SPINE/PLOT] plotWorkableByAdded";
+	case SEVT_PLOT_WORKABLE_BY_REMOVED:         return "[SPINE/PLOT] plotWorkableByRemoved";
+	case SEVT_PLOTGROUP_BONUS_ADDED:            return "[SPINE/PLOTGROUP] plotgroupBonusAdded";
+	case SEVT_PLOTGROUP_BONUS_REMOVED:          return "[SPINE/PLOTGROUP] plotgroupBonusRemoved";
+	case SEVT_AREA_TILE_ADDED:                  return "[SPINE/WORLD] areaTileAdded";
+	case SEVT_AREA_TILE_REMOVED:                return "[SPINE/WORLD] areaTileRemoved";
+	case SEVT_UNIT_CREATED:                     return "[SPINE/UNIT] unitCreated";
+	case SEVT_UNIT_KILLED:                      return "[SPINE/UNIT] unitKilled";
+	case SEVT_UNIT_DEATH_SCHEDULE_ADDED:        return "[SPINE/UNIT] unitDeathScheduleAdded";
+	case SEVT_UNIT_DEATH_SCHEDULE_REMOVED:      return "[SPINE/UNIT] unitDeathScheduleRemoved";
+	case SEVT_UNIT_ENTERED_CITY:                return "[SPINE/UNIT] unitEnteredCity";
+	case SEVT_UNIT_LEFT_CITY:                   return "[SPINE/UNIT] unitLeftCity";
+	case SEVT_COMBAT_RESULT:                    return "[SPINE/UNIT] combatResult";
+	case SEVT_UNIT_PROMOTION_ADDED:             return "[SPINE/UNIT] unitPromotionAdded";
+	case SEVT_UNIT_PROMOTION_REMOVED:           return "[SPINE/UNIT] unitPromotionRemoved";
+	case SEVT_UNIT_COMBAT_ADDED:                return "[SPINE/UNIT] unitCombatAdded";
+	case SEVT_UNIT_COMBAT_REMOVED:              return "[SPINE/UNIT] unitCombatRemoved";
+	case SEVT_PROPERTY_ADDED:                   return "[SPINE/PROPERTY] propertyAdded";
+	case SEVT_PROPERTY_REMOVED:                 return "[SPINE/PROPERTY] propertyRemoved";
+	case SEVT_CITY_PROPERTY_BAND_ADDED:         return "[SPINE/CITY] cityPropertyBandAdded";
+	case SEVT_CITY_PROPERTY_BAND_REMOVED:       return "[SPINE/CITY] cityPropertyBandRemoved";
+	case SEVT_TECH_ACQUIRED:                    return "[SPINE/EMPIRE] techAcquired";
+	case SEVT_RELIGION_FOUNDED:                 return "[SPINE/EMPIRE] religionFounded";
+	case SEVT_CIVIC_ADOPTED:                    return "[SPINE/EMPIRE] civicAdopted";
+	case SEVT_PLAYER_INIT:                      return "[SPINE/EMPIRE] playerInit";
+	case SEVT_NAME_CHANGE:                      return "[SPINE/GAME] nameChange";
+	case SEVT_CITY_BUILDING_PROCESSED:          return "[SPINE/CITY] cityBuildingProcessed";
+	case SEVT_LOAD_PIPELINE:                    return "[SPINE/GAME] loadPipeline";
 	default:                                 return "[SPINE] ?";
 	}
 }
@@ -587,11 +592,19 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	}
 }
 
-// The short name of a spine event id (strips the "[SPINE] " render prefix) -- the invalidate observability's `src`.
+// The short name of a spine event id (strips the "[SPINE/<SCOPE>] " render prefix) -- the invalidate
+// observability's `src`.
+// ⛔ The strip is GENERIC, not a fixed width: the prefix carries the fact's own scope ([SPINE/CITY],
+// [SPINE/PLOT], ...), so a `szPrefix + 8` would return the tail of the tag rather than the event name, and the
+// `src` field would silently render as garbage for every scope whose tag is not exactly eight characters.
 const char* spineEventName(int iEventId)
 {
 	const char* szPrefix = spineDomainPrefix(iEventId);
-	if (szPrefix != NULL && strncmp(szPrefix, "[SPINE] ", 8) == 0) return szPrefix + 8;
+	if (szPrefix != NULL && szPrefix[0] == '[')
+	{
+		const char* szClose = strchr(szPrefix, ']');
+		if (szClose != NULL && szClose[1] == ' ') return szClose + 2;
+	}
 	return (szPrefix != NULL) ? szPrefix : "?";
 }
 
