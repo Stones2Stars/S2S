@@ -1427,18 +1427,19 @@ int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
 		for (CvPlayer::city_iterator cityIterator = player.beginCities(); cityIterator != player.endCities(); ++cityIterator)
 		{
 			const CvCity* pCity = *cityIterator;
-			if (pCity != NULL && !pCity->isDisorder())
+			if (pCity == NULL || pCity->isDisorder())
 			{
-				if (iCommerceIndex >= 0)
-				{
-					int aiCityCommerces[NUM_COMMERCE_TYPES];
-					pCity->getCommerces(aiCityCommerces);
-					iTotal += aiCityCommerces[iCommerceIndex];
-				}
-				else
-				{
-					iTotal += cityReceiverRate(*pCity, iChannel);
-				}
+				continue;
+			}
+			if (iCommerceIndex >= 0)
+			{
+				int aiCityCommerces[NUM_COMMERCE_TYPES];
+				pCity->getCommerces(aiCityCommerces);
+				iTotal += aiCityCommerces[iCommerceIndex];
+			}
+			else if (!pCity->isWeLoveTheKingDay())
+			{
+				iTotal += cityReceiverRate(*pCity, iChannel);
 			}
 		}
 		return (int)iTotal;
