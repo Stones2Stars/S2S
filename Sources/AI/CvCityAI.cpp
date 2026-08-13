@@ -6909,7 +6909,6 @@ int CvCityAI::AI_neededSeaWorkers() const
 	{
 		return 0;
 	}
-	#define	NB_MAX_SEA_WORKERS 5.0
 	int iNeededSeaWorkers = GET_PLAYER(getOwner()).countUnimprovedBonuses(pWaterArea);
 
 	// Check if second water area city can reach was any unimproved bonuses
@@ -6921,10 +6920,15 @@ int CvCityAI::AI_neededSeaWorkers() const
 	/************************************************************************************************/
 	/* BETTER_BTS_AI_MOD                       END                                                  */
 	/************************************************************************************************/
-	//Calvitix, limit the amount of Sea Workers
-	WorldSizeTypes eWorldSize = GC.getMap().getWorldSize();
-	int iWorldSize = (int)eWorldSize;
-	int iMaxSeaWorkers = 4 + int(NB_MAX_SEA_WORKERS * pow((iWorldSize + 1) / 6.0, 0.8));
+	// Limit the amount of Sea Workers: a cap that grows with the map.
+	// ⛔ NO FLOAT ON A SYNCED AI PATH ([DEC-no-float-in-sync]) -- this was a `pow` curve, and an AI decision every
+	// client computes cannot rest on one. ⚑ The curve was also measuring against a hardcoded SIX world sizes while
+	// the registry authors eight, so its divisor had already stopped describing the data. A cap that grows with
+	// the map is what a linear ramp across the AUTHORED sizes says directly: same endpoints, no transcendental,
+	// and it follows the data if a size is ever added or removed.
+	const int iWorldSize = (int)GC.getMap().getWorldSize();
+	const int iWorldSizeSpan = std::max(1, GC.getNumWorldInfos() - 1);
+	const int iMaxSeaWorkers = 5 + (iWorldSize * 5) / iWorldSizeSpan;
 	return std::min(iNeededSeaWorkers, iMaxSeaWorkers);
 }
 
