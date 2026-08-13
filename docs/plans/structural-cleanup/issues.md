@@ -147,71 +147,12 @@ every city × every bonus to build a consumption vector, and its ONLY consumer i
 
 ---
 
-## 8. The LIVE Python failures — what actually fires, as opposed to what the census counts
-
-**Method (reproducible):** load the standing save with the game up and read
-`Documents/My Games/Beyond the Sword/Logs/PythonErr.log`. ⚑ **This is a FLOOR, never a census.** The log records
-only what has RUN, so a load with no turns played and no screens opened exercises almost nothing — the per-turn
-handlers, advisors, pedia and city screen are all still unmeasured. Play turns and open screens to grow it.
-⚑ **Why it beats the static count:** [python-read-map.md](../../reference/python-read-map.md) measures 2,070
-unserved names / 21,279 call sites but states plainly that REACHABILITY is not provable from the Python tree (XML
-callbacks and BUG config decide what executes). The log is the only thing that says which of them run.
-
-| failing read | path | note |
-|---|---|---|
-| `CyCity.getName` (and `getPopulation` / `getFood` behind it) | `CvWBInterface.writeDesc` → `CvWBDesc.write` | WORLDBUILDER. ⛔ **NOT accepted breakage** — scope decision 1b is about sequencing and about what may constrain a cut, and the owner has ruled plainly: *"we cannot accept actually breaking worldbuilder stuff, we fix things we see."* ⚠ NOT one method: `CyCity` publishes only the IDENTITY SET (`getID`/`getOwner`/`getX`/`getY`), so the whole city writer goes onto `CyState` reads by ADDRESS |
-| `CyGlobalContext.getBonusInfo` | `MoreCiv4lerts.buildBonusString` | the same defect as entry 3 |
-
-**PROVEN — the shape of the demand is narrow.** Every live failure is one of two kinds: an **info-registry read**
-(`getBuildingInfo` / `getBonusInfo`) or **basic object state** (`getOwner`). That is the demand-driven seed for
-the replacement library — serve what actually fires, in the order it fires
-([observability.md](../../reference/observability.md): the investigation names the read, not a sweep).
-
-⛔ **The fix is to SERVE the read on the new surface, never to restore the binding**
-([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)). ⚠ A handler RAISING is the intended
-interim state — it stays visible rather than being silenced ([roadmap.md](roadmap.md) § the mutating Python
-handlers).
-
-## 10. The finance advisor rebuilds the empire's commerce by walking every city and plot
-
-**Observed:** `CvFinanceAdvisor.drawBase` raises `AttributeError: 'CyCity' object has no attribute
-'getCityIndexPlot'`, and behind it `isWorkingPlot` / `getTradeRoutes` / `getTradeCity` /
-`calculateTradeYield` / `getCorporationYield` — all on `CyCity`, which carries only the IDENTITY SET.
-⚠ Its two `yCommerceSlider` errors are DOWNSTREAM of this: `interfaceScreen` aborts before the attribute is
-set, so `update`/`onClose` then fail on it. They are not a second defect and should clear with this one.
-
-**PROVEN — the walk computes nothing.** The panel takes the real total in ONE call
-(`CyPlayer.calculateTotalYield(YIELD_COMMERCE)`) and the entire loop exists only to ATTRIBUTE that total
-across five labels — worked tiles, domestic trade, foreign trade, corporations, specialists — with the sixth,
-buildings, taken as the RESIDUAL (`iBuildings = iTotalCommerce - iCommerce`). No bucket is a number the
-machine does not already hold.
-
-**PROVEN — it is the cost class the model exists to delete.** The shape is every city × 21 plots × every
-trade route × every specialist type, per draw. `getPlotYield` is named in
-[state-repositories.md](../../architecture/state-repositories.md) as **a DELETION, not a value to re-home**,
-measured there at *913M plot reads in one turn* for exactly this per-read walk.
-
-**RULED OUT — it is NOT the banned per-source decomposition.** That rule governs
-`(scope × channel × SOURCE)` accumulators — per building, per bonus. These five buckets are the
-[modifier.md §2a](../../specs/modifier.md) BASE TERMS (plot yield · `tradeYield` · specialists · corporation ·
-building flats), which is a different and legitimate question. ⛔ Do not close this by reviving per-source
-getters, and do not cite the per-source rule to park it.
-
-**NOT YET KNOWN — whether the five-way split survives at all.** The empire TOTAL is already served
-(`calculateTotalYield`; `STATE.getCommerces(iPlayer, -1)`, which this same screen's income line already
-uses). The SPLIT is stored nowhere — a package holds Σflat/Σpercent per channel, not per term — so it is not
-a read that was cut, it never existed as a stored quantity. Either it collapses to the total, or it earns a
-defined decomposition read against the §2a terms.
-⚑ [patterns.md](../../architecture/patterns.md) makes display shape DEMAND-DRIVEN and END-STAGE, which is the
-argument for collapsing it and letting a real request bring it back.
-
----
-
 ## 12. The WorldBuilder SCREENS mutate through the city handle, which now carries the identity set only
 
-**Observed:** every `pCity.<mutator>` call under `Screens/Worldbuilder/` is dead. `CyCity` publishes exactly
-four defs — `getOwner` / `getID` / `getX` / `getY` ([patterns.md](../../architecture/patterns.md) THE IDENTITY
-SET) — so each of these raises `AttributeError` the moment its handler fires.
+**Observed:** every `pCity.<mutator>` call under `Screens/Worldbuilder/` is dead. `CyCity`'s published surface
+is READS only — the identity set plus the coherent group reads — and carries **no mutator at all**, so each of
+these raises `AttributeError` the moment its handler fires.
+⚠ The read half has grown since this was written; the WRITE half has not, which is what this entry is about.
 
 **PROVEN — it is a BLOCK, not a set of call sites.** `WBCityEditScreen.handleInput` is one `elif` chain of
 ~20 structurally identical handlers (`CityFoodPlus/Minus`, `CityDefensePlus/Minus`,
@@ -240,10 +181,8 @@ given a setter ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-
 breaking worldbuilder stuff, we fix things we see"* — and it is deferred here only on the ground that ruling
 allows: the replacement MACHINE (the verb set) does not exist yet, and it is NAMED.
 
----
 
 ---
-
 # Migrated from the todo
 
 > Everything below was the defect half of `todo.md` and is moved VERBATIM — the wording, the evidence and the
@@ -255,96 +194,6 @@ allows: the replacement MACHINE (the verb set) does not exist yet, and it is NAM
 > symbols that may have moved ([docs README](../../README.md): the cheap check is to grep one or two of the
 > symbols an entry is anchored on).
 
-## 13a. The INVISIBILITY MEMBERSHIP TEST never asked whether the unit hides that way
-
-**⛔ THE EARLIER HEADLINE HERE WAS WRONG AND IS RETRACTED.** It read *"`getBestDefender` returns NULL
-everywhere — 64,485 of 64,485"*, on the argument that `defenderValue` cannot return 0 without an attacker, so a
-zero score could only come from the three early returns. **`getDefenderScore` opens `int iValue = 0` and assigns
-only INSIDE its gate**, so a zero needs no early return at all — and `getPreferredCenterUnit` calls
-`getBestDefender` FIVE times, four of which return NULL in ordinary situations (call 1 tests `canMove()`, calls
-3–5 exclude the active player's own units via `unitX->getOwner() != eAttackingPlayer`). The `[GFX] defenderScan`
-emit fires exactly when a scan found nothing, so *"every emitted scan has `scoredPositive=0`"* is what CORRECT
-code produces on the fall-through. **The measurement was not diagnostic; no defender defect is established.**
-
-⚑ **What settles it is the reject histogram, not another scan count** — `[GFX] defenderReject` names which of
-the three early returns fired, and `reason=ownerMismatch` is the normal case:
-`grep -a defenderReject Graphics.log | grep -ao "reason=[a-zA-Z]*" | sort | uniq -c`.
-`AI_getPredictedHitPoints()` resets to **-1**, not 0, so the predicted-dead clause is not a universal killer.
-
-**⛔ WHAT WAS ACTUALLY FOUND, AND IS FIXED.** `CvUnit::hasInvisibilityType` was a pure NEGATION filter —
-`!isNegatesInvisible(e) && !hasSkill(NO_INVISIBILITY) && getNoInvisibilityCount() < 1` — and never asked whether
-the unit hides by that method at all, so it answered TRUE for all 14 methods on nearly every unit. `isInvisible`'s
-hide-and-seek branch then returns invisible on the FIRST method no seer has registered against, before the contest
-is reached. ⚠ **Byte-identical to `main`**, where the per-method `invisibilityIntensityTotal(eType)` supplied the
-discrimination the collapse to a method-agnostic `concealment()` removed — so this is inherited breakage the
-collapse exposed, not a branch regression, and it explains why `COMBAT_HIDE_SEEK` is unusable.
-⇒ The method is a SKILL ([vision.md §4](../../specs/vision.md)), so holding it IS the membership question;
-`hasInvisibilityType` now asks it and `setHasAnyInvisibility` asks the same one.
-
-Fixed with it, same plane:
-- **`getInvisibleType` lost `main`'s negation suppression** (`main:CvUnit.cpp:10733`) — the CLASSIC path, i.e.
-  the live one with hide-and-seek off. A unit whose cover is stripped (the `WANTED` line) still reported a hiding
-  method and read invisible to any team with no spotter for it. The suppression is restored.
-- **Detection was filed under the wrong key** (`CvPlot::changeAdjacentSight`) — `detectionAgainst(eInvisible)`
-  passed an `InvisibleTypes` INDEX into a parameter keyed by SKILL id. Every other call site passes
-  `GC.getMethodSkill()`, including one thirty lines above in the same function.
-
-**⛔ STILL OPEN — a promotion-granted method does not register.** Both reads above ask `getUnitInfo().hasSkill()`,
-so a method granted by a PROMOTION or a unit-combat class is invisible to them — and **73 promotions author one**
-([vision.md §4](../../specs/vision.md)). The fix is a resolved per-unit skill plane dirtied on promotion change
-(the shape `UnitResolvedHideAndSeek` already uses for detection), never a per-read walk of every promotion inside
-`isInvisible`, which is one of the hottest reads in the engine.
-
----
-
-## 13b. IF a defender query does return NULL, this is the blast radius
-
-⚠ **Conditional on 13a, whose premise is now RETRACTED — this is a verified CALLER inventory, not evidence that
-any of it is happening.** Kept because the inventory is real work already done: if a defender query is ever found
-returning NULL wrongly, these are the consequences to expect, and the crash rows are worth guarding regardless.
-
-| site | what NULL does |
-|---|---|
-| `CvUnit.cpp` `updateCombat` | attacks resolve as MOVES — clears the attack plot and calls `groupMove` |
-| `CvUnitAI.cpp` `AI_attackOddsAtPlot` | returns **100** on NULL ⇒ every AI attack evaluation reports certain victory |
-| `CvUnit.cpp` `canEnterPlot` | the `!canAttack(*pDefender) → return false` legality veto never runs |
-| `CvPlayerAI.cpp` `AI_convertUnitAITypesForCrush` | the don't-strip-the-defender veto never fires |
-| `CvUnit.cpp` air strike | `canAirStrike` false ⇒ the air-attack subsystem is dead |
-| `CvUnitAI.cpp` `AI_assaultSeaTransport` | `bCanCargoAllUnload=false` ⇒ amphibious invasions refused |
-| **CRASHES — unguarded NULL deref** | `CvSelectionGroup.cpp:2089`, `CvUnitAI.cpp:26027`, `CvUnitAI.cpp:26195` |
-
-`CvGameCoreDLL.def:44` aliases the EXE's `CvPlot::getBestDefender` onto `getBestDefenderExternal`, so the closed
-EXE sees whatever the DLL does. ⚠ `getBestDefenderExternal`'s viewport / dummy-entity filter is **byte-identical
-to `main`** — it is the EXE's drawable-unit query by design, not a branch regression.
-
----
-
-## 13d. Graphics paging — the hypothesis is FALSIFIED, and most of the coupling list was too
-
-**Owner hypothesis tested:** *"turning graphics paging off harms everything, because code expects paging on."*
-
-⛔ **FALSIFIED AS STATED.** `CvPlot::isGraphicsVisible` is
-`IsGraphicsInitialized() && (!isGraphicalPaging() || (m_visibleGraphics & graphics)) && isInViewport()` — with
-paging **OFF the middle term short-circuits TRUE**, so every gate is *more* permissive, never less. Paging is a
-BUG option (`MainInterface__EnableGraphicalPaging`, default True) read at three sites; nothing outside the
-graphics layer reads its members, none is serialized, no RNG, so no OOS channel. **The paging surface is
-byte-identical to `main`.**
-
-⛔ **AND TWO ROWS OF THE ORIGINAL COUPLING TABLE WERE FALSE FINDINGS — retracted:**
-- **`updateAirStrike`'s turn timer is NOT graphics-gated.** The gate is `pPlot->isVisibleToWatchingHuman()`,
-  which is FOG-OF-WAR (`isVisible(team, false)`), not `isGraphicsVisible`. `incrementTurnTimer` extends the
-  multiplayer timer to accommodate an ANIMATION; with nobody watching there is no animation to accommodate, and
-  the strike itself has already resolved in `airStrike()`. It is the same `bQuick` idiom the combat path uses.
-- **`getBestDefenderExternal` returning NULL on a dummy entity** is `main`'s design (13b).
-
-**The one genuine paging-OFF defect, presentational and narrow:** `m_requiredVisibleGraphics` has a single writer
-in the paging-off world — the one-shot sweep at `CvPlotPaging.cpp:291-299`, latched by
-`g_bWasGraphicsPagingEnabled` over `GC.getMap()` only. Plots created after the latch flips — a second map under
-Parallel Maps — keep `NONE` forever, so `showRequiredGraphics` computes nothing and features/rivers/routes never
-appear on that map.
-
----
-
 ## 13h. THE CITY LAYOUT HAS FEWER SLOTS THAN A CITY HAS BUILDINGS (art data, not the DLL)
 
 **MEASURED from `LSystem.log`** ([observability.md](../../reference/observability.md)): **1,684**
@@ -353,12 +202,12 @@ appear on that map.
 model — `ASSEMBLY_PLANT`, `FACTORY`, `COLOSSEUM`, `HOSPITAL`, `COURTHOUSE` — so this is the layout engine
 running out of room, never a missing-art gap.
 
-⛔ **DISTINCT from the art-less flood (§13), and the two must not be conflated.** That one was the city offering
-the engine buildings with NO model (`is not associated with a CvCityLSystem node`), and it is fixed by
-`world.art.notShownInCity`. This one is the opposite condition: a real model with nowhere to put it. Checked
+⛔ **DISTINCT from the art-less flood, and the two must not be conflated.** That one was the city offering
+the engine buildings with NO model (`is not associated with a CvCityLSystem node`), and it is fixed and landed
+(`world.art.notShownInCity`). This one is the opposite condition: a real model with nowhere to put it. Checked
 rather than assumed — **0 of the 174 are flagged `notShownInCity`**.
 
-⚠ **Whether the §13 fix moves this number at all is UNKNOWN and is one measurement away.** It turns on whether
+⚠ **Whether that fix moves this number at all is UNKNOWN and is one measurement away.** It turns on whether
 the art-less buildings consumed layout slots before being rejected or never reached placement — the
 *"not associated with a node"* wording suggests the latter, in which case removing them frees nothing and the
 1,684 stand. `LSystem.log` is rewritten per session, so re-counting after a run on the new DLL answers it.
@@ -392,57 +241,6 @@ that predates the rebuild and is a separate, inherited bug.
 
 ---
 
-## 13. Unit graphics do not follow a moving unit, and units render stacked
-
-**OBSERVED (owner):** moving a unit leaves its graphics behind — the walk animation plays **in place, on the
-original tile** — units **render on top of each other**, animations never end, and **re-selecting the unit or
-splitting the group fixes it**. Beside it: an FPS drop after end turn that **completely disappears** under bare
-map (no fog of war, no city billboard bars, no units shown).
-
-**⛔ THE MOVEMENT/STACKING HALF IS EXPLAINED AND FIXED — entity churn orphaned the queued move.**
-`CvUnit::reloadEntity` destroyed any real entity unconditionally, and `CvSelectionGroup::groupMove` routes that
-destroy into the worst possible window: inhibit centre-unit recalc on both plots → `setXY` **`QueueMove` pushes
-onto entity E1** → the inhibit **nulls `m_pCenterUnit`** → lifting the inhibit makes
-`newCenterUnit != m_pCenterUnit` **guaranteed true** → `reloadEntity(true)` → **E1 destroyed with the queued move
-on it** → E2 created → `ExecuteMove` runs against E2, whose queue is empty. The DLL concedes the entity owns
-mission state: `reloadEntity` calls `RemoveUnitFromBattle` — *"remove this unit from any active mission"* —
-immediately before destroying, and the interface is pointer-keyed with no re-bind. `if (!IsSelected())` is why
-re-selecting fixed it. `setupGraphical`'s own `ExecuteMove(0, false)` — commented *"forces multi-unit graphics to
-update; if it isn't done then only 1 unit shows up"* — is the stacking half, spent on the empty queue.
-**Fixed:** an entity that is already the kind the unit wants is KEPT; `rebuildEntityArt()` serves the one case
-that genuinely needs a new scene node (a warlord attaching swaps the model).
-
-⛔ **RULED OUT — the rendering CODE is not what changed. Do not re-tread any of this.** All 16 `CvPlot` render
-functions, `CvUnit`'s entity management and dummy gating, `setXY`'s graphics half, `move`, `updateCenterUnit`
-(body and all 27 call sites), `m_bInhibitCenterUnitCalculation`, `CvSelectionGroup`, `CvDLLEntity`,
-`CvPlotPaging`, `CvMapExternal`, `CvViewport` and the `.def` export table are **identical to `main`** (the one
-difference is where `updateSymbolsInternal` gets its yield-icon numbers, which cannot produce these symptoms).
-⚠ A false lead, recorded so it is not re-derived: `setInfoDirty` drops from 51 call sites to 33. That is **not** a
-repaint purge — all 17 host functions were deleted whole by the sanctioned accumulator cut
-([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), and restoring them
-would revive the legacy accumulators.
-
-**THE END-TURN FPS DROP IS THE ART GAP, ON TWO PLANES — the render engine hunting for graphics that are not
-there.** Resolved art stays cached until turn end and is dropped there, so the re-search is what the player feels
-AFTER ending a turn, and bare map removes it by rendering neither plane:
-
-- **UNITS** — a collapsed mesh-group grid answered **0 group definitions**, so the EXE had no formation to lay a
-  unit out from. This is the larger half, which is why bare map OFF (units drawn) lagged hardest.
-- **BUILDINGS** — `CvCity::getVisibleBuildings` lost its skip, so a city offered the engine **every** building it
-  holds, including the **4,674 of 5,180 (90%)** whose art define is scaled to nothing. `LSystem.log` measures the
-  result directly: **26,273** `is not associated with a CvCityLSystem node` warnings over **260** distinct
-  buildings, plus **4,168** `Art/Empty.nif ... SHADOW` complaints and **369** placement/layout failures. The
-  restored skip catches **258 of those 260**.
-
-⚠ The **2 it does not catch** (`BUILDING_PALACE`, `BUILDING_SNOWCASTLE_OF_KEMI`) carry real art at real scale and
-are simply absent from `CIV4CityLSystem.xml` — an ART-XML gap ([roadmap.md](roadmap.md) scope decision 3), which
-legacy warned about identically. Not a DLL defect.
-
-⚑ **`LSystem.log` is the instrument for this whole class** ([observability.md](../../reference/observability.md))
-— the EXE writes it itself, so it reports what the render engine did with what the DLL handed it.
-
----
-
 ## 14. Vision: `updateSight` scans most of the map, and detection no longer works
 
 **OBSERVED (owner):** *"more than 1 bug, where `updateSight` virtually scans the entire map, when a unit checks
@@ -458,16 +256,15 @@ work than `main`'s flat radius test. `updateSight`'s city leg is the one that ch
 `VISION_OPEN_GROUND_COST` itself, and the owned-territory leg converts `1` → `VISION_OPEN_GROUND_COST`
 correctly.
 
-**On dogs vs criminals — ⛔ the earlier reading here was wrong twice and is retracted.** It said the contest
-*"is not yet evaluated by the engine"*, quoting a [vision.md §4](../../specs/vision.md) line that was itself
-false: the contest is INHERITED FROM `main` AND RUNNING. Two live defects on that path are now fixed (13a) — the
-detection registration was filed under an `InvisibleTypes` index instead of a SKILL id, and the membership test
-never asked whether a unit hides by the method being contested.
-⚠ **What remains for the dogs specifically is the promotion-granted-method gap (13a):** the reads ask the unit's
-INFO, so a method a promotion grants does not register. The War Dog's detection role is
-`SeeInvisible INVISIBLE_CAMOUFLAGE`, so confirm against a live run before assuming either fix reached it.
+**On dogs vs criminals.** The contest is inherited from `main` and RUNNING; two live defects on that path are
+fixed and landed (the detection registration was filed under an `InvisibleTypes` index instead of a SKILL id,
+and the membership test never asked whether a unit hides by the method being contested).
+⚠ **What remains is the promotion-granted-method gap:** `hasInvisibilityType` and `getInvisibleType` both ask
+`getUnitInfo().hasSkill(...)`, so a method a PROMOTION grants does not register — and 73 promotions author one
+([vision.md §4](../../specs/vision.md)). Wants a resolved per-unit skill plane, never a per-read promotion walk
+inside `isInvisible`. The War Dog's role is `SeeInvisible INVISIBLE_CAMOUFLAGE`; confirm on a live run.
 
-⚠ **The whole-map-scan half is untouched and is the same work item issue 13's remaining FPS drop points at** —
+⚠ **The whole-map-scan half is untouched** —
 the owner's ruling is that `updateSight` is **reviewed, not reverted**, because reverting it would bury the
 scan bugs rather than fix them.
 
@@ -487,24 +284,6 @@ scan bugs rather than fix them.
   `markDirty`/`isDirty`, whose one remaining tenant is the UNIT RESOLVED plane (`CvUnitResolved`,
   `CvUnit::markResolvedValuesDirty`). ⛔ A surviving derived-state site gets NO synonym — name it for the job it
   does, or delete it with the mechanism.
-- **⛔ DELETE `EnablerKernel::gateSet` — a superseded shape with zero callers, and the WRONG one to converge on.**
-  ⚠ **The earlier reading here was backwards and is retracted:** it called the six `*_gateSet` file-statics
-  "copies" of this primitive and asked for every domain to be routed THROUGH it. They are not copies, and doing
-  that would be a regression.
-  **PROVEN — they are different functions.** `EnablerKernel::gateSet` builds a FRESH `std::set<int>` of available
-  ids from a candidate bucket (the pre-maintained-frontier shape). The six domain statics re-gate ids IN PLACE on
-  the maintained tri-state (`if (d.inTree(id)) X_gate(id)`), and `X_gate` delegates every clause to
-  **`EnablerKernel::standardGateReason`** — so the gate order already lives in exactly ONE body
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)), not six.
-  **PROVEN — and `gateSet` is the one that disagrees with it**, three ways: it never evaluates the entity-level
-  option gate (`cascadeGateOk`), so a `GAMEOPTION_`-barred entity passes; it runs `requires` BEFORE the cap,
-  which `standardGateReason`'s own header states is deliberately the other way round (a consumed cap is decisive
-  and cheap, a condition tree is expensive and actionable); and it calls `requiresMet` rather than
-  `requiresGateReason`, so it yields NO reason — the thing [enabler.md §6](../../specs/enabler.md) says the gate
-  exists to carry.
-  ⇒ It is dead code that would silently drop the option gate and the stored reason if anything were pointed at
-  it. Delete it; the six three-line iteration idioms are per-domain by receiver (`CvPlayer&`+`EnablerDomain&` vs
-  `CvCity&`) and are not the duplication.
 - **Split the vicinity BAND axis from the `worked`/`onSite` predicates** so a vicinity-named read cannot answer
   the on-site verdict ([contexts.md](../../architecture/contexts.md) § THE VICINITY SPLIT — the storage is
   already right, the ADDRESSING is what conflates them). ⚠ Reaches the authored `vicinity:` key, `CvCondition`
@@ -699,12 +478,6 @@ scan bugs rather than fix them.
 
 ## ⛔ SELF-HEAL FOSSILS — each one is a missing emit wearing a per-turn sweep
 
-- **A negative empire commerce total is rewritten to ~2 billion.** A legacy wrapped-int "false accumulate"
-  detector (`< -9999` → `MAX_COMMERCE_RATE_VALUE`) survives on sums that are now accumulated in `int64_t` and
-  cannot wrap — so the only thing it still discriminates is a GENUINELY negative total, which the realized city
-  rate can legitimately produce (neither `cityRate` nor `commerceSplit` floors the flat/deposit legs). When it
-  fires, the AI's production and tech weighting, the demographics history, and the Python surface all read
-  positive two billion. Delete the detector; it can no longer detect what it was for.
 - **The whole map's visibility is wiped and re-applied EVERY TURN** in `CvGame::doTurn`, under a comment that
   says outright it is "a stickytape - can't find where it's skewing visibility counts". ⚑ The comment names the
   fix: an unpaired visibility increment/decrement leaves the per-plot counter outside its stated 0–1 invariant.
@@ -723,42 +496,25 @@ scan bugs rather than fix them.
   state, so whether the no-self-heal rule binds them is a ruling, not an agent's call. ⚑ Start with the mission
   target cache — its own comment says it is force-recalculated "for reliabilty reasons (more robust to bugs)".
 
-## ⛔ DOUBLE-COUNTED VALUES — the cascade folds it, then legacy adds it again
-
-> One shape: a `process*` function reads a rebuilt info's compiled deposits and pushes them into the legacy
-> accumulator the cascade replaced — while the gather folds the SAME entries into the scope package, and one
-> consumer sums both. An in-tree comment asserting the legacy leg is sanctioned is what let this class survive
-> ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
-
-- **City over-limit anger — counted twice, the magnitude disagrees, and the legacy leg ignores its game option.**
-  The ruling is written FIVE LINES ABOVE the feeder: the over-limit member is a PRESENCE COUNT and "the anger
-  MAGNITUDE now lives in the cascade's CITY_LIMIT `per.above` deposits, never here." `CvPlayer::read` obeys it
-  (`hasCityOverLimitAnger() ? 1 : 0`), and so does every other consumer (`==0` / `>0` / `<1`).
-  **PROVEN — the wellbeing verdict still multiplies that presence as a magnitude:** `CvCity.cpp`'s realized
-  wellbeing adds `100 * getCityOverLimitUnhappy() * iOverLimitCities`, i.e. 1 anger per over-limit city, on top
-  of the cascade's own deposit — as does the UI attribution.
-  **PROVEN — six civics author the cascade side** (anarchism · chiefdom · despotism · monarchy · republic ·
-  theocracy) as `happiness.empire.flat {value: -3…-6, per: {CITY, above: CITY_LIMIT}}`, so the two legs are not
-  even the same size: the data says 3–6 anger per over-limit city and the legacy leg adds 1 more.
-  ⛔ **And the legs disagree on APPLICABILITY, which is the sharper half:** every authored entry is gated
-  `enabled: "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"` and the legacy fold consults no option at all — so with the
-  option OFF the engine still charges over-expansion anger the data says should not exist.
-  ⇒ Serve it from the wellbeing read alone.
-
 ## ⛔ A LEGACY PLANE ALIVE ONLY FOR PYTHON — and a value silently lost
 
-- **Random-event yield modifiers reach nothing.** `CvCity`'s `m_aiYieldRateModifier` is written ONLY by random
-  events and read ONLY by the `Cy*` binding — `getBaseYieldRateModifier` is a pure cascade read that never
-  consults it. So event yield modifiers are stored, serialized, shown to Python, and have ZERO gameplay effect.
-  This is legacy-left-breathing masking a real functional loss, not merely a duplicate.
+- **An event's yield modifier is stored and LOST — it is event-granted persisted state that nothing folds.**
+  `CvCity::m_aiYieldRateModifier` has exactly ONE writer, `applyEvent` (`CvCity.cpp`), and is serialized;
+  `getBaseYieldRateModifier` is a pure cascade read (`rolledLegsAtCity`) and does not consult it; its only
+  reader, `CyCity::getYieldRateModifier`, is declared but unpublished. So the value reaches nobody.
+  ⛔ **NOT a legacy plane to cut, and not a package channel either** — a one-shot event grant has no live source
+  to withdraw against, which is exactly what makes an accumulator unmaintainable
+  ([state-repositories.md](../../architecture/state-repositories.md) § WHY DELTA-DERIVING FAILED BEFORE). It is
+  the class [modifier.md §2b](../../specs/modifier.md) already sanctions for `extraHappiness`/`extraHealth`:
+  serialized event state that the REALIZED read folds on top. The fold is what is missing.
 - **The player twin is a serialized plane maintained solely to feed a binding.** `CvPlayer`'s
   `m_aiYieldRateModifier` is fed from building deposits and has no engine consumer at all — its only reader is
   `CyPlayer`. Exactly the shape [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) and
   [DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) ban.
 - **Cascade computes it, legacy is what consumers read** — the cascade slot beside each is dead and therefore
-  unverified: the space-production modifier, the team enemy-war-weariness modifier (whose own comment concedes it
-  is "what the legacy accumulator held"), the city production-to-commerce modifier, and the building commerce
-  change.
+  unverified: `CvTeam::m_iEnemyWarWearinessModifier`, `CvCity::m_aiProductionToCommerceModifier` (fed from the
+  rebuilt process info by a legacy push) and `CvCity::m_aBuildingCommerceChange` (fed from
+  `CvPlayer::getBuildingCommerceChange`). Each is a `change*` push beside a live cascade read.
 ## Rollerskates — the abandoned path, still in the tree
 
 > Evidence of a path someone tried and left behind
@@ -791,24 +547,6 @@ scan bugs rather than fix them.
   the wellbeing surface just cut, so it is the segment most likely to send someone after a getter that is gone.
   Two entire commented-out `AI_Potential*` functions kept "just in case" are the other exemplar. Most of the bulk
   is inherited C2C rot rather than #430 residue, so it is its own pass.
-
-## Whole-database scans where the forward edge already answers
-
-> [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view) + [enabler.md §6](../../specs/enabler.md):
-> ask the edge or the maintained frontier, never the registry. These are RESIDUE — in every case the same file
-> already does it right somewhere else, which is the tell that the conversion stopped short rather than skipped.
-
-- **`CvUnit::canAcquirePromotionAny` sweeps every promotion, on the hottest path there is.** `testPromotionReady`
-  calls it TWICE (the second is redundant once the first sets the flag), and it fires on every XP change, every
-  unit produced, and from a dozen other sites. ⚑ `CvUnitAI::AI_promote` sitting beside it already iterates the
-  player's maintained UNLOCKED-promotion set and says so in its own comment — then its entry guard
-  `isPromotionReady` sweeps the database anyway. Convert the guard onto `getUnlockedPromotions`.
-- **`CvTeam::processTech` asks four questions BACKWARDS** — `ObsoletePromotions` and `ObsoleteCorporations` scan
-  every promotion/corporation testing `getObsoleteTech()`, and two more scans test every build's `getTechPrereq`
-  and every improvement's `getPrereqTech`. All four answers are compiled onto the TECH
-  (`EDGEF_OBSOLETES`/`EDGEF_ENABLES`/`EDGEF_RELATED`) and are already read forward from `CvPlayerAI`.
-  ⚑ The tell: the SAME function already reads `enables.specialBuildings` off the tech's own edge a few lines
-  below, citing the ruling.
 
 ## ⛔ FOUND IN PLAY — the rendered surface, once the screens came back up
 
@@ -847,23 +585,6 @@ scan bugs rather than fix them.
   fight involving a human — the player attacking, and the AI attacking the player during its end-turn. That
   converter is now registered. Whether any end-turn throw SURVIVES it is unestablished; the breadcrumb above is
   consistent with either, so do not assume this entry is separate until a fight-free end turn still crashes.
-
-## ⛔ THE MAINTENANCE RECEIVER — its participation gate is missing a side
-
-`InfoValuation::realizedAtEmpire`'s receiver Σ gates participation on `isDisorder()` alone. That is correct for
-the four COMMERCE channels, whose per-city rate is already 0 under disorder. It is **incomplete for
-MAINTENANCE**, the one non-commerce receiver: [economy.md](../../reference/economy.md) states a city emits 0
-instead of its maintenance package under **WE LOVE THE KING DAY as well as disorder**, and WLTKD is the sole
-gameplay effect that status has. So an empire currently pays maintenance for every celebrating city.
-⚑ The gate belongs at the Σ and nowhere else — WLTKD is a duration-1 status re-applied every turn, so a
-maintained membership delta would flip a member in and out every turn over a number that never moved.
-
-⚠ **UNVERIFIED, and deliberately not asserted here:** whether `cityReceiverRate` is the right MEMBER quantity for
-maintenance at all. economy.md composes a city's realized maintenance from the three component KINDS, each
-against its own modifiers, with the `amount` stack over the total and `MAINTENANCE_CORPORATION` skipped — which
-is not what a single-channel receiver read answers. Establish that before changing it; do not infer the
-component set from the enum.
-
 
 ## AUTOMATED POPULATION PLACEMENT IS SLOW -- ~200ms PER CITY
 
@@ -912,19 +633,24 @@ the per-read-scan class this most likely belongs to is [contexts.md](../../archi
 efficiency defect to reject in review"*).
 
 
-## THE PYTHON HALF OF THE Cy DISCONNECT IS NOT DONE — ~2000 DEAD CALL SITES
+## THE PYTHON HALF OF THE Cy DISCONNECT IS NOT DONE
 
-**PROVEN — measured, not estimated:**
+**PROVEN — measured:** `GC.get*Info` accessors — **215** call sites, **30** distinct accessors, **39** files
+(`grep -rhoi '\bgc\.get[A-Za-z]*Info(' Assets/Python`, counting both the `GC.` and `gc.` spellings).
 
-| dead surface | call sites | spread |
-|---|--:|---|
-| `CyCity` methods | **1,586** | 43 files |
-| `GC.get*Info` accessors | **~450** | 44 distinct accessors |
+⛔ **The `CyCity` call-site figure this entry used to carry is WITHDRAWN, not updated — it cannot be measured
+that way at all.** It came from matching `CyCity` METHOD NAMES across the Python tree, and those names collide
+with other receivers: the top hits are `getPlayer`, `getTeam`, `getCity`, `plot` and `area`, which are
+`CyGlobalContext` / `CyPlayer` / `CyPlot` reads far more often than city ones. A name match therefore returns
+thousands of sites that are not city calls, which is precisely what
+[python-read-map.md §1.1](../../reference/python-read-map.md) says of its own method — *receiver-name heuristics
+are useless here*. ⇒ Re-derive with `python Tools/census-python-boundary.py`, never by grepping a method name.
 
-`CyCity` retains **four** defs — `getID`, `getOwner`, `getX`, `getY`. Everything else a screen asks a city
-(`happyLevel`, `getYieldRate`, `canConstruct`, `isProductionUnit`, `getCultureThreshold`, …) raises
-`AttributeError`. Worst files: `Revolution.py` 478, `RevEvents.py` 141, `CvRandomEventInterface.py` 124,
-`WBCityEditScreen.py` 121, `CvEventManager.py` 117, `CvDomesticAdvisor.py` 108.
+⚠ **`CyCity` publishes far more than the identity set, and an entry naming a read as dead is stale on sight.**
+Beside `getOwner`/`getID`/`getX`/`getY` it carries the coherent GROUP reads (`getYields`, `getCommerces`,
+`getWellbeing`, `getYieldTerms`, …) and a run of named concepts (`getName`, `getPopulation`, `getTradeRoutes`,
+`isProductionUnit`). ⛔ Check the published surface — **and the LOADERS, not just `CyCity.cpp`** — before
+working any row that calls a named city read dead.
 
 ⛔ **THE FAILURE MODE IS WHAT MAKES THIS DANGEROUS TO ESTIMATE FROM SYMPTOMS.** Python takes the surface with
 `from CvPythonExtensions import *` — 169 files star-import it against 6 with an explicit list — so **nothing
@@ -950,12 +676,13 @@ was not re-bound — it now reads `CyState::getCityYieldTerms`, the SAME decompo
 renders, because a tooltip IS a census and two computations of one number drift.
 
 
-## THE `CyCity` WRAPPER STILL DECLARES ~297 UNPUBLISHED METHODS — the C++ half of the same disconnect
+## THE `CyCity` WRAPPER STILL DECLARES ~280 UNPUBLISHED METHODS — the C++ half of the same disconnect
 
-**PROVEN — measured.** `CyCity.h` declares **~301** methods; `CyCity::pythonPublish` emits exactly **FOUR**
-`.def`s — `getOwner` / `getID` / `getX` / `getY`, the IDENTITY SET
-([patterns.md](../../architecture/patterns.md)). Everything else is an **unbound outlaw**: it compiles, it
-forwards to a live `CvCity` method, and no script can ever reach it.
+**PROVEN — measured.** `CyCity.h` declares **372** methods; `CyCity::pythonPublish` emits **90** `.def`s — the
+identity set plus the coherent group reads and named concepts. The remaining **~282** are **unbound outlaws**:
+each compiles, forwards to a live `CvCity` method, and no script can ever reach it.
+⚑ The published half has grown substantially as reads were re-pointed; the DECLARED half has not shrunk with
+it, which is the whole of this entry. ⛔ Re-count both before quoting either — the gap closes from one side.
 
 ⚠ **This is the OTHER half of the entry above and must not be conflated with it.** That one counts dead PYTHON
 call sites; this counts dead C++ WRAPPER methods. Clearing either leaves the other standing, and a clean grep
@@ -1137,8 +864,13 @@ not find it ([roadmap.md](roadmap.md) § scope decision 6: half-converting RELOC
 
 ### The remaining worklist, by handler
 
-The receivers below are city/unit HANDLES (identity set only) or pushed IDENTITIES; every method named is
-outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
+The receivers below are city/unit HANDLES or pushed IDENTITIES.
+
+⚠ **The rows are STALE ON THE CITY SIDE and must be re-checked per method, not trusted.** They were written when
+`CyCity` carried the identity set alone; it now publishes 90 reads, so several names here — `getName`,
+`getPopulation` among them — ARE served, while the mutators (`change*`/`set*`) and the unit-side reads are not
+(`CyUnit` still publishes exactly four). ⇒ Check each method against the published surface before working a
+row; a row is not a worklist entry merely because it is written down.
 
 | file · handler | dead calls |
 |---|---|

@@ -442,7 +442,13 @@
 ## Stage 4 — the Python surface
 
 - **Re-home the UNIT / BUILDING / PLAYER reads onto their own accessors, and finish dissolving the flat state
-  class** ([DEC-accessor-homing](../../architecture/decisions.md#dec-accessor-homing)). A game object's data is
+  class** ([DEC-accessor-homing](../../architecture/decisions.md#dec-accessor-homing)).
+  ⚖ **OWNER-RULED ORDERING: this comes AFTER things work.** *"That some getters live on CyState or whatever is
+  less of a priority than things working; re-pointing that is a trivial job for after we are done."* Which
+  accessor a served read sits on is homing, and homing is corrected wholesale in the scheduled pass
+  ([patterns.md § THE ORGANIZING PASS IS SCHEDULED](../../architecture/patterns.md)). ⛔ It does NOT license
+  leaving a read UNSERVED — serving a call site that raises is the functional work and is never this item.
+  A game object's data is
   read from its OWN accessor; a method whose name carries another object's noun is homed wrong by construction,
   and the flat address-keyed class reproduces the getter spaghetti and unreadable provenance the boundary exists
   to end ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)). The CITY pass is the worked
