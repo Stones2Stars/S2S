@@ -1387,8 +1387,15 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   makes a shrine worth building, so an unscaled read prices it at a single point of commerce and the AI
   "downprioritizes building a shrine over taking tech."
 - **`headquarters`** — the corp-HQ analog of `shrine`: the building is a corporation's HEADQUARTERS,
-  `headquarters: CORPORATION_X` (the corporation FK). The per-commerce values live on the **corporation**, scaled
-  per corporation presence. Same FK-relationship shape as `shrine`, one for religion and one for corporation.
+  `headquarters: CORPORATION_X` (the corporation FK). Same FK shape as `shrine`, one for religion and one for
+  corporation.
+  ⚖ **But the VALUES live elsewhere than the shrine's, and the difference is the mechanic, not an inconsistency.**
+  The HQ's per-commerce revenue stays on the **corporation** as `<commerce>.city.flat` gated
+  `{IS_HEADQUARTERS: CORPORATION_X}`, because the HQ is a DESIGNATION the engine places and announces
+  (`SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED`), so the predicate has a crossing to ride. A shrine has no such
+  designation — only a building somebody BUILT — so its values live on that building, whose presence is the gate.
+  ⇒ Both land in the one city that holds the thing; what differs is whether a maintainable predicate exists to
+  express it. ⛔ Do not "unify" them by moving either: each is on the only carrier its own mechanic supports.
   ⚑ Two more corp-HQ shapes ride this FK and are not authored anywhere today: the HQ's FREE UNIT is an ordinary
   `grants` payload keyed off the headquarters fact ([triggers.md](triggers.md)), never an info getter; corp-vs-corp
   EXCLUSION is a same-tier `excludes` entry (above), not the consumed-bonus overlap competition currently answers
