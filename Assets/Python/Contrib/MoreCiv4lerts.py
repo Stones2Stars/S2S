@@ -94,16 +94,16 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 				self.CheckForAlerts(iOwner, False)
 		if self.options.isShowCityFoundedAlert():
 			if iOwner != iPlayer:
-				bRevealed = STATE.isCityRevealed(iOwner, cityId[1], STATE.getPlayerTeam(iPlayer))
+				bRevealed = GC.getPlayer(iOwner).getCity(cityId[1]).isRevealedTo(STATE.getPlayerTeam(iPlayer))
 				CyPlayer = GC.getPlayer(iOwner)
 				if bRevealed or canSeeCityList(CyPlayer):
 					iColor = ENUMS.getInfoType("COLOR_MAGENTA")
-					szCity = STATE.getCityName(iOwner, cityId[1])
+					szCity = GC.getPlayer(iOwner).getCity(cityId[1]).getName()
 					szOwner = STATE.getPlayerName(iOwner)
 					if bRevealed:
 						msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_FOUNDED", (szOwner, szCity))
 						icon = "Art/Interface/Buttons/Actions/foundcity.dds"
-						aPos = STATE.getCityPosition(iOwner, cityId[1])
+						aPos = GC.getPlayer(iOwner).getCity(cityId[1]).getPosition()
 						CvUtil.sendMessage(msg, iPlayer, EVENT_MESSAGE_TIME_LONG, icon, ColorTypes(iColor), aPos[0], aPos[1], True, True)
 					else:
 						msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_FOUNDED_UNSEEN", (szOwner, szCity))
@@ -137,24 +137,24 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 			for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
 				if not STATE.isPlayerAlive(iPlayerX) or STATE.getPlayerTeam(iPlayerX) != iActiveTeam:
 					continue
-				for iCityX in STATE.getCityIds(iPlayerX):
-					aGrowth = STATE.getGrowth(iPlayerX, iCityX)
+				for iCityX in GC.getPlayer(iPlayerX).getCityIds():
+					aGrowth = GC.getPlayer(iPlayerX).getCity(iCityX).getGrowth()
 					if (aGrowth[CityGrowthRead.GROWTH_READ_TURNS_LEFT] == 1
 							and not aGrowth[CityGrowthRead.GROWTH_READ_IS_FOOD_PRODUCTION]
-							and not STATE.isEmphasize(iPlayerX, iCityX, iAvoidGrowth)):
+							and not GC.getPlayer(iPlayerX).getCity(iCityX).isEmphasizing(iAvoidGrowth)):
 						iGrowthCount += 1
 					if bCheck2:
-						aCulture = STATE.getCulture(iPlayerX, iCityX)
+						aCulture = GC.getPlayer(iPlayerX).getCity(iCityX).getCultureReads()
 						iThreshold = aCulture[CityCultureRead.CULTURE_READ_THRESHOLD]
 						if iThreshold > 0:
-							iCultureRate = STATE.getCommerces(iPlayerX, iCityX)[CommerceTypes.COMMERCE_CULTURE]
+							iCultureRate = GC.getPlayer(iPlayerX).getCity(iCityX).getCommerces()[CommerceTypes.COMMERCE_CULTURE]
 							if aCulture[CityCultureRead.CULTURE_READ_OWNER_AMOUNT] + iCultureRate >= iThreshold:
-								szCityX = STATE.getCityName(iPlayerX, iCityX)
+								szCityX = GC.getPlayer(iPlayerX).getCity(iCityX).getName()
 								if GAME.isOption(GameOptionTypes.GAMEOPTION_CULTURE_REALISTIC_SPREAD):
 									msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_TO_EXPAND_RCS",(szCityX,))
 								else:
 									msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_TO_EXPAND",(szCityX,))
-								aPos = STATE.getCityPosition(iPlayerX, iCityX)
+								aPos = GC.getPlayer(iPlayerX).getCity(iCityX).getPosition()
 								CvUtil.sendMessage(msg, iPlayer, EVENT_MESSAGE_TIME_LONG, icon, -1, aPos[0], aPos[1], True, True)
 
 		# Check Domination Limit

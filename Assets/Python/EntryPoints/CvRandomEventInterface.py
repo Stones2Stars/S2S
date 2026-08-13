@@ -531,7 +531,7 @@ def canTriggerHurricaneCity(argsList):
 	if CyCity is None:
 		return False
 
-	if not STATE.isCityCoastal(CyCity.getOwner(), CyCity.getID(), WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
+	if not CyCity.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
 		return False
 
 	iLat = CyCity.plot().getLatitude()
@@ -594,7 +594,7 @@ def canTriggerCycloneCity(argsList):
 	if CyCity is None:
 		return False
 
-	if not STATE.isCityCoastal(CyCity.getOwner(), CyCity.getID(), WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
+	if not CyCity.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
 		return False
 
 	iLat = CyCity.plot().getLatitude()
@@ -609,7 +609,7 @@ def canTriggerTsunamiCity(argsList):
   ePlayer = argsList[1]
   iCity = argsList[2]
   city = GC.getPlayer(ePlayer).getCity(iCity)
-  if city is None or not STATE.isCityCoastal(city.getOwner(), city.getID(), WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
+  if city is None or not city.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
     return False
   return True
 
@@ -664,7 +664,7 @@ def canTriggerMonsoonCity(argsList):
 
   city = GC.getPlayer(ePlayer).getCity(iCity)
 
-  if city is None or STATE.isCityCoastal(city.getOwner(), city.getID(), WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
+  if city is None or city.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
     return False
 
   iJungleType = GC.getFEATURE_JUNGLE()
@@ -833,7 +833,7 @@ def getHelpChampion(argsList):
 def canTriggerElectricCompany(argsList):
 	data = argsList[0]
 	for loopCity in GC.getPlayer(data.ePlayer).cities():
-		if STATE.getAngryPopulation(data.ePlayer, loopCity.getID(), 0) > 0:
+		if loopCity.getAngryPopulation(0) > 0:
 			return False
 	return True
 
@@ -2979,13 +2979,13 @@ def canTriggerImmigrantCity(argsList):
 
   #  angryPopulation/healthRate are FINAL-STATE calculations over the four channels, so the surplus is read
   #  off the channels themselves ([patterns.md] THE TWO READ ROLES rule 6). x100 native, compared x100.
-  aWellbeing = STATE.getRealizedWellbeing(ePlayer, iCity, 0)
+  aWellbeing = GC.getPlayer(ePlayer).getCity(iCity).getRealizedWellbeing(0)
   if aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER] < 100:
     return False
   if aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH] < 100:
     return False
 
-  if STATE.getCommerces(ePlayer, iCity)[CommerceTypes.COMMERCE_CULTURE] < 5500:
+  if GC.getPlayer(ePlayer).getCity(iCity).getCommerces()[CommerceTypes.COMMERCE_CULTURE] < 5500:
     return False
 
   return True
@@ -3454,7 +3454,7 @@ def canTriggerSyntheticFuels(argsList):
 	return True
 
 def canTriggerCitySyntheticFuels(argsList):
-	return not STATE.getCityFlags(argsList[1], argsList[2])[CityFlagKind.CITY_FLAG_GOVERNMENT_CENTER]
+	return not GC.getPlayer(argsList[1]).getCity(argsList[2]).getFlags()[CityFlagKind.CITY_FLAG_GOVERNMENT_CENTER]
 
 def getHelpSyntheticFuels1(argsList):
 	data = argsList[1]
@@ -3547,7 +3547,7 @@ def canTriggerIndustrialAction(argsList):
 	return not GC.getPlayer(argsList[0].ePlayer).hasBuilding(GC.getInfoTypeForString("BUILDING_WORLDVIEW_SLAVERY_ACTIVE"))
 
 def canDoTriggerCityIndustrialAction(argsList):
-	return not STATE.getCityFlags(argsList[1], argsList[2])[CityFlagKind.CITY_FLAG_GOVERNMENT_CENTER]
+	return not GC.getPlayer(argsList[1]).getCity(argsList[2]).getFlags()[CityFlagKind.CITY_FLAG_GOVERNMENT_CENTER]
 
 def canDoIndustrialAction2(argsList):
 	data = argsList[1]
@@ -4740,7 +4740,7 @@ def canTriggerSailingFounded(argsList):
   if city is None:
     return False
 
-  if not STATE.isCityCoastal(city.getOwner(), city.getID(), WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
+  if not city.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
     return False
 
   if city.plot().getLatitude() <= 0:

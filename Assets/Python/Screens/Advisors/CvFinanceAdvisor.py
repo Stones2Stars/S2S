@@ -137,21 +137,20 @@ class CvFinanceAdvisor:
 		############
 		iCommerce = iTiles = iYield0 = iYield1 = iYield2 = iYield3 = iYield4 = 0
 		iTeam = CyPlayer.getTeam()
-		iPlayerID = CyPlayer.getID()
 		for CyCity in CyPlayer.cities():
-			if not STATE.getCityFlags(iPlayerID, CyCity.getID())[CityFlagKind.CITY_FLAG_DISORDER]:
+			if not CyCity.getFlags()[CityFlagKind.CITY_FLAG_DISORDER]:
 				#  The city's own yield CENSUS answers the worked-plot total and the tile count together, so this
 				#  panel reads the SAME document the tooltip does instead of re-deriving it a plot at a time
-				#  ([CyState.h]: a panel that recomputes its own breakdown is a second answer that drifts).
+				#  ([CyCity.h]: a panel that recomputes its own breakdown is a second answer that drifts).
 				#  x100 like every amount; the reduce happens once, at the display below.
-				aTerms = STATE.getCityYieldTerms(iPlayerID, CyCity.getID(), YieldTypes.YIELD_COMMERCE)
+				aTerms = CyCity.getYieldTerms(YieldTypes.YIELD_COMMERCE)
 				iYield0 += int(aTerms[CityYieldTerm.YIELD_TERM_PLOT_BASE])
 				iTiles += int(aTerms[CityYieldTerm.YIELD_TERM_WORKED_PLOTS])
 				# Trade -- the per-route yields sum on the x100 plane; iYield1/iYield2 reduce once at display below
-				for iPartnerOwner, iPartnerCity, iProfitTimes100 in STATE.getTradeRoutes(iPlayerID, CyCity.getID()):
+				for iPartnerOwner, iPartnerCity, iProfitTimes100 in CyCity.getTradeRoutes():
 					if iPartnerOwner < 0: continue
 
-					trade = STATE.getTradeYield(iPlayerID, CyCity.getID(), YieldTypes.YIELD_COMMERCE, iProfitTimes100)
+					trade = CyCity.getTradeYield(YieldTypes.YIELD_COMMERCE, iProfitTimes100)
 					if STATE.getPlayerTeam(iPartnerOwner) == iTeam:
 						iYield1 += trade
 					else: # Foreign Trade
@@ -327,7 +326,7 @@ class CvFinanceAdvisor:
 		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2, uFont1b, uFont1 = self.aFontList
 		iconCommerceList = self.iconCommerceList
 		CyPlayer = self.CyPlayer
-		iIncome = STATE.getCommerces(CyPlayer.getID(), -1)[eComGold] / 100
+		iIncome = GC.getPlayer(CyPlayer.getID()).getCommerces()[eComGold] / 100
 
 		# Treasury footer
 		szTxt = self.szTreasury
@@ -441,9 +440,8 @@ class CvFinanceAdvisor:
 		iWealthCount = 0
 		fWealth = 0.0
 		eWealth = GC.getInfoTypeForString("PROCESS_WEALTH")
-		iPlayerID = CyPlayer.getID()
 		for CyCity in CyPlayer.cities():
-			if not STATE.getCityFlags(iPlayerID, CyCity.getID())[CityFlagKind.CITY_FLAG_DISORDER]:
+			if not CyCity.getFlags()[CityFlagKind.CITY_FLAG_DISORDER]:
 				fCityTaxes = CyCity.getYieldRate(YieldTypes.YIELD_COMMERCE) * iTaxRate / 100.0
 				fTaxes += fCityTaxes
 

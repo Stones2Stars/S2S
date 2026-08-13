@@ -115,7 +115,7 @@ def onCityRazed(argsList):
 	bHuman = CyPlayer.isHuman()
 
 	iCityID = CyCity.getID()
-	sCityName = STATE.getCityName(iPlayer, iCityID)
+	sCityName = GC.getPlayer(iPlayer).getCity(iCityID).getName()
 	X = CyCity.getX()
 	Y = CyCity.getY()
 
@@ -196,14 +196,14 @@ def onCityRazed(argsList):
 	iUnitMerCaravan = GC.getInfoTypeForString("UNIT_EARLY_MERCHANT_C2C")
 	iUnitHealth = GC.getInfoTypeForString("UNIT_HEALER")
 
-	iCountSettled = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveSettled)
-	iCountFood = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveFood)
-	iCountProd = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveProd)
-	iCountCom = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveCom)
-	iCountHealth = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveHealth)
-	iCountEntertain = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveEntertain)
-	iCountTutor = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveTutor)
-	iCountMilitary = STATE.getAddedFreeSpecialists(iPlayer, iCityID, iSlaveMilitary)
+	iCountSettled = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveSettled)
+	iCountFood = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveFood)
+	iCountProd = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveProd)
+	iCountCom = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveCom)
+	iCountHealth = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveHealth)
+	iCountEntertain = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveEntertain)
+	iCountTutor = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveTutor)
+	iCountMilitary = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveMilitary)
 
 	## Process those that can become population or immagrants
 	##	where 3 slaves = 1 pop or immigrant
@@ -268,7 +268,7 @@ def onCityRazed(argsList):
 	## Convert population to captives
 	iUnit = GC.getInfoTypeForString('UNIT_CAPTIVE_CIVILIAN')
 	iCount = 0
-	iPop = STATE.getCityPopulation(iPlayer, iCityID)
+	iPop = GC.getPlayer(iPlayer).getCity(iCityID).getPopulation()
 	if iPop == 1:
 		if GAME.getSorenRandNum(100, "Slave") < 66:
 			CyPlayer.initUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)

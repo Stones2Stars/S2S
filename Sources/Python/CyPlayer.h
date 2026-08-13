@@ -341,6 +341,42 @@ public:
 	int getNumCities() const;
 	CyCity* getCity(int iID) const;
 
+	///<summary>The ids of the cities this empire holds, for a caller that walks them by id.</summary>
+	// A sibling of cities() rather than a replacement: that one hands back HANDLES, which is what a caller
+	// wanting to ask a city something should take. This answers the callers that only ever needed the id --
+	// an address to key their own table on, or to compare against an id an event payload handed them.
+	python::list getCityIds() const;
+
+	// ---- THE EMPIRE-SCOPE GROUP READS ----
+	// The empire half of the game-object read role ([patterns.md] § THE TWO READ ROLES): what this player HAS
+	// right now, per channel, rolled up over the scope chain the empire sits under.
+	// ⛔ SCOPE IS THE RECEIVER, NEVER AN ARGUMENT ([DEC-accessor-homing]). The city half of each group below is
+	// the identically-named read on CyCity; which one a call site means is decided by WHAT IT ASKED, so neither
+	// carries a scope selector and neither can be handed the wrong one.
+	// The grammar is the surface's, unchanged: one read per GROUP, the group's own enum indexes the RESULT, the
+	// whole group crosses in one call, and every AMOUNT is x100 native while a PERCENT is not scaled
+	// ([DEC-fixedpoint-x100]) -- so a reader divides at its own point of use and no read here reduces.
+	python::list getYields() const;
+	python::list getCommerces() const;
+	python::list getWellbeing() const;
+	python::list getDefenseKinds() const;
+	python::list getMaintenanceKinds() const;
+	python::list getBuildRateKinds() const;
+	python::list getCombatKinds() const;
+	python::list getExperienceKinds() const;
+	python::list getRevolutionKinds() const;
+	python::list getTradeRouteKinds() const;
+	python::list getScalars() const;
+	// The groups only the EMPIRE carries -- no city half exists, so there is no CyCity twin to confuse them with.
+	python::list getUpkeepKinds() const;
+	python::list getCostKinds() const;
+	python::list getStateReligionKinds() const;
+	python::list getDiplomacyKinds() const;
+	python::list getDurationKinds() const;
+	python::list getAirKinds() const;
+	python::list getCaptureKinds() const;
+	python::list getCargoKinds() const;
+
 	python::list units() const;
 	python::tuple firstUnit(bool bRev) const; // returns tuple of (CyUnit, iterOut)
 	python::tuple nextUnit(int iterIn, bool bRev) const; // returns tuple of (CyUnit, iterOut)

@@ -7,12 +7,11 @@ import HandleInputUtil
 import math
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 AFM = CyArtFileMgr()
@@ -218,7 +217,7 @@ class CvForeignAdvisor:
 			#	ONE crossing per city. Each row is [partnerOwner, partnerCityId, profitTimes100] and empty
 			#	slots are already dropped engine-side -- which is why the old None-slot warning is gone
 			#	rather than silenced: a missing partner can no longer reach this list.
-			liCity = STATE.getTradeRoutes(CyCity.getOwner(), CyCity.getID())
+			liCity = CyCity.getTradeRoutes()
 			if liCity:
 				tuCity.append([CyCity, liCity])
 
@@ -1001,7 +1000,7 @@ class CvForeignAdvisor:
 					#	NOT re-derived per partner -- the yield read is paired with it by design.
 					for kRoute in liCity:
 						if iPlayerX == kRoute[0]:
-							fProfit = STATE.getTradeYield(CyCityX.getOwner(), CyCityX.getID(), YieldTypes.YIELD_COMMERCE, kRoute[2])
+							fProfit = CyCityX.getTradeYield(YieldTypes.YIELD_COMMERCE, kRoute[2])
 							iTradeCommerce += fProfit
 							iTradeRoutes += 1
 

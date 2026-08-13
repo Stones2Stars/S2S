@@ -3,12 +3,11 @@ import HandleInputUtil
 import cPickle
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 AFM = CyArtFileMgr()
@@ -447,7 +446,7 @@ class CvDomesticAdvisor:
 		else:
 			bCanLiberate = False
 			for CyCity in CyPlayer.cities():
-				if STATE.getLiberationPlayer(CyCity.getOwner(), CyCity.getID()) != -1:
+				if CyCity.getLiberationPlayer() != -1:
 					bCanLiberate = True
 					break
 
@@ -576,12 +575,12 @@ class CvDomesticAdvisor:
 		iCityID = CyCity.getID()
 		nTotalTradeProfit = 0
 
-		for iPartnerOwner, iPartnerCity, iProfitTimes100 in STATE.getTradeRoutes(iOwner, iCityID):
+		for iPartnerOwner, iPartnerCity, iProfitTimes100 in GC.getPlayer(iOwner).getCity(iCityID).getTradeRoutes():
 			if iPartnerOwner < 0:
 				continue
 			bForeign = iOwner != iPartnerOwner
 			if not arg or ((arg == "F" and bForeign) or (arg == "D" and not bForeign)):
-				nTotalTradeProfit += STATE.getTradeYield(iOwner, iCityID, YieldTypes.YIELD_COMMERCE, iProfitTimes100)
+				nTotalTradeProfit += GC.getPlayer(iOwner).getCity(iCityID).getTradeYield(YieldTypes.YIELD_COMMERCE, iProfitTimes100)
 
 		# the ONE reduce: the per-route yields summed on the x100 plane and come down once, here
 		return "%d" % (nTotalTradeProfit // 100)
@@ -1281,7 +1280,7 @@ class CvDomesticAdvisor:
 				screen.appendTableRow(PAGE)
 				iCityID = cityList[i].getID()
 				screen.setTableText(PAGE, 0, i, "", zoomArt, WidgetTypes.WIDGET_ZOOM_CITY, iPlayer, iCityID, 1<<0)
-				screen.setTableText(PAGE, 1, i, STATE.getCityName(iPlayer, iCityID), "", eWidGen, 1, 1, 1<<0)
+				screen.setTableText(PAGE, 1, i, GC.getPlayer(iPlayer).getCity(iCityID).getName(), "", eWidGen, 1, 1, 1<<0)
 
 			# Order the columns
 			columns = []

@@ -651,6 +651,24 @@ Four words carry the whole requirement:
 
 - **ONE SURFACE.** A single library IS the Python-facing read boundary — not the per-type `Cy*` interfaces it
   replaces, not a widened binding, never two live surfaces for one read.
+  > **⛔ "ONE SURFACE" MEANS ONE LIBRARY, NOT ONE CLASS — AND READING IT AS ONE CLASS IS WHAT PRODUCED THE
+  > MISHOMED STATE SURFACE (owner).** *"CyState comes from an agent being overzealous in the interpretation of
+  > the reworked and one-surface rulings."* The word bans a SECOND live answer for the same read; it says
+  > nothing about how many accessors the one library is composed of, and the per-type accessor ruling below
+  > says plainly that it is composed of several. ⇒ A flat class accumulating every type's reads behind an
+  > `(owner, id)` address satisfies the word and violates the design — which is exactly the failure
+  > [DEC-accessor-homing](decisions.md#dec-accessor-homing) now makes mechanically checkable.
+  > ⚠ Read "one surface" as ONE LIBRARY, COHERENTLY HOMED. A game object's data lives on that object's
+  > accessor, and the library is one because there is no second place to ask — never because there is one class.
+  >
+  > **⛔ SO THE FLAT STATE CLASS IS BEING DISSOLVED, NOT TRIMMED (owner): *"the more I see the use of it, the
+  > more I realize it will contribute to the exact getter spaghetti and lack of understanding of where things
+  > come from that I want to avoid."*** An address-keyed flat class makes every call site say WHICH object it
+  > means and never WHAT KIND OF THING it is asking, so it reproduces the two failures this boundary exists to
+  > end — spaghetti, and unreadable provenance — while looking organized because the endpoints are named.
+  > ⇒ **Each type's re-home is one pass of that dissolution**, and what is left behind after a pass is NOT a
+  > sanctioned residue: it is the next pass. ⛔ Do not add a read to the flat class because a neighbour is still
+  > there; add it to the accessor for the type it addresses, which is where it will live anyway.
 - **COMPLETE.** The END STATE is that every read Python performs has an answer here, so no gap forces a
   reach-around into legacy — that reach-around IS the second live surface the ruling forbids, the half-migration
   re-created at the last seam.
@@ -860,10 +878,60 @@ of them:
   > only want to refactor the python I have to, otherwise we **never** will be done."* A legacy consumer holding
   > a handle must be able to say WHICH object it holds; re-pointing every such site onto the read planes is
   > refactoring that buys nothing and does not converge.
-  > ⛔ **It is an IDENTITY set, not a read surface, and it never grows.** Owner, id, position — the axes that
-  > ADDRESS the object. [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed)'s ban on the info/state GETTER contract
-  > is untouched: a consumer wanting DATA asks `CyInfo` / `CyState` / `CyEnabler` **by that address**. Anything
-  > beyond the address added to a handle is the escape hatch reopening, and is the thing to refuse.
+  > ⛔ **It is the ADDRESS, and it is what a legacy consumer needs to name its object.** Owner, id, position.
+  > [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed)'s ban on the legacy info/state GETTER contract is untouched:
+  > what a handle must never become is the old per-field surface restored wholesale.
+  >
+  > **⛔ BUT A GAME OBJECT'S OWN DATA IS READ FROM ITS OWN ACCESSOR — `CyCity`, NEVER A STATE CLASS KEYED BY
+  > ADDRESS (owner).** *"That CyState holds city data is wrong — that should stay on CyCity."* A city's
+  > population, name, maintenance and food are the CITY's data, so they are asked of the city.
+  > ⛔ **THE TEST IS THE METHOD NAME, and it is mechanical: *"the moment you have `getAnotherObjectSomething`, we
+  > have failed"* (owner).** A method whose name carries a DIFFERENT object's noun is homed wrong by
+  > construction — `CyState::getCityPopulation(owner, id)` is `get<ANOTHER OBJECT><Something>`, while
+  > `CyCity::getPopulation()` names only what the receiver already is. ⚑ The prefix is the tell precisely because
+  > it exists to disambiguate a receiver that should never have been holding the read: an accessor that owns its
+  > subject needs no noun in its verbs.
+  > ⇒ So the per-type accessor ruling above is not a preference about tidiness — it is the SAME rule stated from
+  > the naming side, and the two are checkable against each other: if the name needs the noun, the endpoint is on
+  > the wrong class.
+  > ⚖ **THE HANDLE CHAIN IS THE POINT, NOT A COST — IT SHOWS THE HIERARCHY (owner).** A caller resolves the
+  > object and then asks it (`PLAYER.getCity(id).getPopulation()`), and that chain STATES where the value comes
+  > from: a city read is reached THROUGH the player that owns it, so containment is visible at the call site
+  > instead of being flattened into an `(owner, id)` argument pair. ⛔ So the resolve step is not a two-hop to
+  > optimize away — it is the provenance the flat address-keyed class destroyed, and it is what makes a script
+  > readable by someone who did not write it.
+  > ⚑ **Consequence: publishing the ADDRESS→HANDLE path is part of homing the reads, never a separate favour.**
+  > An accessor nobody can obtain serves nothing, and an event payload hands over the identity PAIR rather than a
+  > handle — so the resolver is what makes the kept callback direction usable against the read surface at all.
+  > **⛔ AND A LEGACY DECLARATION IS KILL-ON-SIGHT — THE `.def` IS NOT THE ONLY OUTLAW (owner).** An unpublished
+  > legacy method on a wrapper is not harmless dead weight: it is the per-field contract still written down, so
+  > the next agent reads it as the surface, a re-homed read COLLIDES with it, and "just publish what is already
+  > declared" looks like the cheap fix at exactly the moment the new surface arrives. ⇒ The declaration AND its
+  > body go, the moment they are seen — not scheduled as a later tidy-up
+  > ([DEC-no-rollerskate-evidence](decisions.md#dec-no-rollerskate-evidence): leftover evidence of the abandoned
+  > path is what the next agent rollerskates off).
+  > ⚑ **So a re-home does not have a collision PROBLEM — the collision is the work.** The legacy name dies as the
+  > coherent read takes its place, and the wrapper converges on exactly the identity set plus the new surface.
+  >
+  > **⚖ AND THE COUNTERWEIGHT, WITHOUT WHICH KILL-ON-SIGHT UNDER-SERVES: WE MAKE SURE THE DECLARATIONS WE HAVE
+  > ARE WHAT WE NEED, AND WE ARE NOT STINGY (owner) — we simply do not follow the legacy declarations because
+  > they are "already used somewhere", which MOST OF THEM NO LONGER ARE.** The surface is designed from DEMAND
+  > and freely given where a consumer genuinely needs a read
+  > (§ endpoint COUNT is explicitly not the target — properly organized is); what it is never derived from is the
+  > legacy list.
+  > ⇒ **The two rules are one move, and each fails alone:** killing without serving pushes the next consumer
+  > back onto legacy ([DEC-no-legacy-masking](decisions.md#dec-no-legacy-masking)), and serving by preserving
+  > the legacy set re-creates the per-field contract
+  > ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface): a DELETION list *plus a COVERAGE checklist*).
+  > ⛔ So "something might still call it" is NOT a reason to keep a declaration — verify the demand, and where a
+  > read is genuinely wanted, ADD it as the coherent read rather than sparing the legacy one.
+  > ⚠ **What is NOT killed with them:** the `class_<>` REGISTRATION and the identity set (the kept engine→Python
+  > direction depends on both), and anything the ENGINE itself calls on the wrapper — the compiler names those,
+  > and a compile error there is a worklist entry like any other.
+  > ⚠ **What this does NOT license** is reviving the legacy `.def` field-by-field contract on the handle
+  > ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)): the reads a game-object accessor carries are
+  > the coherent GROUP reads and named concepts of the new surface, homed on their own object — never the ~300
+  > per-legacy-field getters re-registered because a screen once called them.
   > ⚑ **Each publish lives in the file named for its type** (`CyCity::pythonPublish`, the `CyInfo` pattern), never
   > piled into the composition root — the numbered-bucket shape (`CyGameCoreInterface1/2/3`) is the disorganization
   > this avoids (owner: *"when it's called CyPythonLoad1-4 or whatever, that's when it's silly, and

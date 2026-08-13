@@ -578,7 +578,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			aCity, iBuildingType = argsList
 			iOwner, iCity = aCity
 			if iOwner == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_BUILDING", (STATE.getCityName(iOwner, iCity), INFO.getDescription("BUILDING_", iBuildingType)))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_BUILDING", (GC.getPlayer(iOwner).getCity(iCity).getName(), INFO.getDescription("BUILDING_", iBuildingType)))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onProjectBuilt(self, argsList):
@@ -586,7 +586,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			aCity, iProjectType = argsList
 			iOwner, iCity = aCity
 			if iOwner == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_PROJECT", (STATE.getCityName(iOwner, iCity), INFO.getDescription("PROJECT_", iProjectType)))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_PROJECT", (GC.getPlayer(iOwner).getCity(iCity).getName(), INFO.getDescription("PROJECT_", iProjectType)))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onUnitBuilt(self, argsList):
@@ -597,7 +597,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			iUnitOwner, iUnitID = unit
 			if iCityOwner == GAME.getActivePlayer():
 				aUnit = STATE.getUnitRead(iUnitOwner, iUnitID)
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (STATE.getCityName(iCityOwner, iCityID), INFO.getDescription("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (GC.getPlayer(iCityOwner).getCity(iCityID).getName(), INFO.getDescription("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onUnitPromoted(self, argsList):
@@ -753,7 +753,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			# Both the unit and the city arrive as their (owner, id) IDENTITY.
 			aUnit, iPlayer, aCity = argsList
 			if iPlayer == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_GP_BORN", (STATE.getUnitName(aUnit[0], aUnit[1]), STATE.getCityName(aCity[0], aCity[1])))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_GP_BORN", (STATE.getUnitName(aUnit[0], aUnit[1]), GC.getPlayer(aCity[0]).getCity(aCity[1]).getName()))
 				Logger.writeLog(message, vColor="Brown")
 
 	def onTechAcquired(self, argsList):
@@ -960,7 +960,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		if (AutologOpt.isLogCityOwner()):
 			iOwner, iCity = argsList[0]
 			if iOwner == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_LOST", (STATE.getCityName(iOwner, iCity), ))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_LOST", (GC.getPlayer(iOwner).getCity(iCity).getName(), ))
 				Logger.writeLog(message, vColor="RoyalBlue")
 
 	def onCultureExpansion(self, argsList):
@@ -968,7 +968,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			iOwner, iCity = argsList[0]
 			iPlayer = argsList[1]
 			if iOwner == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_EXPANDED", (STATE.getCityName(iOwner, iCity), ))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_EXPANDED", (GC.getPlayer(iOwner).getCity(iCity).getName(), ))
 				Logger.writeLog(message, vColor="RoyalBlue")
 
 	def onCityBuildingUnit(self, argsList):
@@ -977,8 +977,8 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			iUnitType = argsList[1]
 			if iOwner == GAME.getActivePlayer():
 				# The ORDER names which registry the type indexes; 1 is the item's position in the build queue.
-				zTurns = STATE.getProductionTurnsLeft(iOwner, iCity, OrderTypes.ORDER_TRAIN, iUnitType, 1)
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_UNIT", (STATE.getCityName(iOwner, iCity),INFO.getDescription("UNIT_", iUnitType), zTurns))
+				zTurns = GC.getPlayer(iOwner).getCity(iCity).getProductionTurnsLeftFor(OrderTypes.ORDER_TRAIN, iUnitType, 1)
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_UNIT", (GC.getPlayer(iOwner).getCity(iCity).getName(),INFO.getDescription("UNIT_", iUnitType), zTurns))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onCityBuildingBuilding(self, argsList):
@@ -986,8 +986,8 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			iOwner, iCity = argsList[0]
 			iBuildingType = argsList[1]
 			if iOwner == GAME.getActivePlayer():
-				zTurns = STATE.getProductionTurnsLeft(iOwner, iCity, OrderTypes.ORDER_CONSTRUCT, iBuildingType, 1)
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_BUILDING", (STATE.getCityName(iOwner, iCity),INFO.getDescription("BUILDING_", iBuildingType), zTurns))
+				zTurns = GC.getPlayer(iOwner).getCity(iCity).getProductionTurnsLeftFor(OrderTypes.ORDER_CONSTRUCT, iBuildingType, 1)
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_BUILDING", (GC.getPlayer(iOwner).getCity(iCity).getName(),INFO.getDescription("BUILDING_", iBuildingType), zTurns))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onImprovementBuilt(self, argsList):

@@ -81,11 +81,10 @@
 from CvPythonExtensions import *
 import BugUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
-STATE = CyState()
 INFO = CyInfo()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -529,7 +528,7 @@ def getTradeCity(player, trade):
 	pPlayer = getPlayer(player)
 	if pPlayer is None:
 		return u""
-	return STATE.getCityName(pPlayer.getID(), trade.iData)
+	return GC.getPlayer(pPlayer.getID()).getCity(trade.iData).getName()
 
 def getTradeCivic(player, trade):
 	return INFO.getDescription("CIVIC_", trade.iData)

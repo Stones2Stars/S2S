@@ -11,12 +11,11 @@ import BugCore
 AdvisorOpt = BugCore.game.Advisors
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
@@ -265,11 +264,11 @@ class CvReligionScreen:
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				#	The handle carries the ADDRESS (owner + id) and nothing else, so the fog verdict and the
 				#	name are both asked of CyState by that address ([patterns.md] THE IDENTITY SET).
-				elif not STATE.isCityRevealed(pHolyCity.getOwner(), pHolyCity.getID(), GC.getPlayer(self.iActivePlayer).getTeam()):
+				elif not pHolyCity.isRevealedTo(GC.getPlayer(self.iActivePlayer).getTeam()):
 					szFounded = localText.getText("TXT_KEY_UNKNOWN", ())
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				else:
-					szFounded = STATE.getCityName(pHolyCity.getOwner(), pHolyCity.getID())
+					szFounded = pHolyCity.getName()
 					screen.setLabelAt("", szArea, u"(%s)" % GC.getPlayer(pHolyCity.getOwner()).getCivilizationAdjective(0), 1<<2, xLoop, self.Y_HOLY_CITY+8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY-8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			xLoop += self.DX_RELIGION
@@ -299,7 +298,7 @@ class CvReligionScreen:
 
 				#	ONE crossing per city for the religions it HAS, then filter -- instead of asking the
 				#	city once per religion. The rows are [religionId, bIsHolyCity].
-				for kReligion in STATE.getCityReligions(cityX.getOwner(), cityX.getID()):
+				for kReligion in cityX.getReligions():
 					# count the number of cities
 					if kReligion[0] in self.RELIGIONS:
 						iCities[kReligion[0]] += 1
@@ -457,13 +456,13 @@ class CvReligionScreen:
 
 				screen.appendTableRow(self.TABLE_ID)
 				screen.setTableText(self.TABLE_ID, self.COL_ZOOM_CITY, i, "" , self.zoomArt, WidgetTypes.WIDGET_ZOOM_CITY, cityX.getOwner(), cityX.getID(), 1<<0)
-				screen.setTableText(self.TABLE_ID, self.COL_CITY_NAME, i, STATE.getCityName(cityX.getOwner(), cityX.getID()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
+				screen.setTableText(self.TABLE_ID, self.COL_CITY_NAME, i, cityX.getName(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
 				#	ONE crossing answers BOTH questions below: the rows are [religionId, bIsHolyCity] over
 				#	exactly the religions this city HAS, so neither is asked per religion.
 				lReligions = []
 				lHolyCity = []
-				for kReligion in STATE.getCityReligions(cityX.getOwner(), cityX.getID()):
+				for kReligion in cityX.getReligions():
 					lReligions.append(kReligion[0])
 					if kReligion[1]:
 						lHolyCity.append(kReligion[0])

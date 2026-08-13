@@ -11,10 +11,9 @@ from CvPythonExtensions import *
 
 ## Globals
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -40,9 +39,9 @@ def willGrowThisTurn(cityId):
 
 	Emphasize No Growth must be off for the city, and its food rate plus storage must reach the growth threshold.
 	"""
-	if STATE.isEmphasize(cityId[0], cityId[1], _avoidGrowth()):
+	if GC.getPlayer(cityId[0]).getCity(cityId[1]).isEmphasizing(_avoidGrowth()):
 		return False
-	aGrowth = STATE.getGrowth(cityId[0], cityId[1])
+	aGrowth = GC.getPlayer(cityId[0]).getCity(cityId[1]).getGrowth()
 	return (aGrowth[CityGrowthRead.GROWTH_READ_FOOD_STORED]
 	        + aGrowth[CityGrowthRead.GROWTH_READ_FOOD_PER_TURN]
 	        >= aGrowth[CityGrowthRead.GROWTH_READ_THRESHOLD])
@@ -53,8 +52,8 @@ def willShrinkThisTurn(cityId):
 
 	It must have at least two population, and its food rate plus storage must be negative.
 	"""
-	if STATE.getCityPopulation(cityId[0], cityId[1]) <= 1:
+	if GC.getPlayer(cityId[0]).getCity(cityId[1]).getPopulation() <= 1:
 		return False
-	aGrowth = STATE.getGrowth(cityId[0], cityId[1])
+	aGrowth = GC.getPlayer(cityId[0]).getCity(cityId[1]).getGrowth()
 	return (aGrowth[CityGrowthRead.GROWTH_READ_FOOD_STORED]
 	        + aGrowth[CityGrowthRead.GROWTH_READ_FOOD_PER_TURN] < 0)

@@ -10,10 +10,9 @@
 from CvPythonExtensions import *
 TRNSLTR = CyTranslator()
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -124,7 +123,7 @@ class Tracker:
 		"""
 		self.terms = {}
 		for eYield in YIELDS:
-			self.terms[eYield] = STATE.getCityYieldTerms(iPlayer, iCityID, eYield)
+			self.terms[eYield] = GC.getPlayer(iPlayer).getCity(iCityID).getYieldTerms(eYield)
 
 	def term(self, eYield, iTerm):
 		# x100 amounts come back as whole game numbers here; percentSum / workedPlots are already whole

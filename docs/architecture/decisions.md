@@ -377,6 +377,19 @@ and the replacement library's COMPLETENESS is its END STATE, never a permission 
 inverts the ruling into a shield for the surface being removed.
 **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
 
+### DEC-accessor-homing
+
+**A GAME OBJECT'S OWN DATA IS READ FROM ITS OWN ACCESSOR — `CyCity`, never a state class keyed by address
+(owner): *"that CyState holds city data is wrong — that should stay on CyCity."*** The test is MECHANICAL and
+lives in the method NAME: *"the moment you have `getAnotherObjectSomething`, we have failed"* — a method whose
+name carries a DIFFERENT object's noun is homed wrong by construction (`CyState::getCityPopulation(owner, id)`
+vs `CyCity::getPopulation()`), because an accessor that owns its subject needs no noun in its verbs. It is the
+per-type-accessor ruling stated from the naming side, so the two check each other: if the name needs the noun,
+the endpoint is on the wrong class. ⚠ It does NOT license reviving the legacy per-field `.def` contract on a
+handle ([DEC-new-getter-surface](#dec-new-getter-surface)) — what a game-object accessor carries is the new
+surface's coherent group reads and named concepts, homed on their own object. **Home:**
+[patterns.md § THE PYTHON READ BOUNDARY](patterns.md).
+
 ### DEC-new-getter-surface
 
 **REUSING A LEGACY GETTER IS THE MECHANISM THAT PRODUCES THE HALF-MIGRATED STATE** (owner) — not a shortcut that

@@ -18,6 +18,23 @@
 #include "CyPlot.h"
 #include "CySelectionGroup.h"
 #include "CyUnit.h"
+#include "Infos/CvInfoKinds.h"   // the NUM_<FAMILY>_KINDS the empire group reads are sized by
+
+namespace
+{
+	// The whole group out, in one call. N is deduced from the array the group read filled, so a family that
+	// grows a channel needs no edit here.
+	template <int N>
+	python::list cyp_toList(const int (&values)[N])
+	{
+		python::list list = python::list();
+		for (int i = 0; i < N; ++i)
+		{
+			list.append(values[i]);
+		}
+		return list;
+	}
+}
 
 //
 // Python wrapper class for CvPlayer
@@ -1335,6 +1352,153 @@ CyCity* CyPlayer::getCity(int iID) const
 {
 	CvCity* city = m_pPlayer->getCity(iID);
 	return city ? new CyCity(city) : NULL;
+}
+
+python::list CyPlayer::getCityIds() const
+{
+	PROFILE_EXTRA_FUNC();
+	python::list list = python::list();
+
+	foreach_(const CvCity* city, m_pPlayer->cities())
+	{
+		list.append(city->getID());
+	}
+	return list;
+}
+
+// ---- THE EMPIRE-SCOPE GROUP READS (see the header for the grammar and the homing rule) ----
+
+python::list CyPlayer::getYields() const
+{
+	int values[NUM_YIELD_TYPES] = { 0 };
+	m_pPlayer->getYields(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getCommerces() const
+{
+	int values[NUM_COMMERCE_TYPES] = { 0 };
+	m_pPlayer->getCommerces(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getWellbeing() const
+{
+	int values[NUM_WELLBEING_CHANNELS] = { 0 };
+	m_pPlayer->getWellbeing(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getDefenseKinds() const
+{
+	int values[NUM_DEFENSE_KINDS] = { 0 };
+	m_pPlayer->getDefenseKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getMaintenanceKinds() const
+{
+	int values[NUM_MAINTENANCE_KINDS] = { 0 };
+	m_pPlayer->getMaintenanceKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getBuildRateKinds() const
+{
+	int values[NUM_BUILD_RATE_KINDS] = { 0 };
+	m_pPlayer->getBuildRateKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getCombatKinds() const
+{
+	int values[NUM_COMBAT_KINDS] = { 0 };
+	m_pPlayer->getCombatKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getExperienceKinds() const
+{
+	int values[NUM_EXPERIENCE_KINDS] = { 0 };
+	m_pPlayer->getExperienceKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getRevolutionKinds() const
+{
+	int values[NUM_REVOLUTION_KINDS] = { 0 };
+	m_pPlayer->getRevolutionKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getTradeRouteKinds() const
+{
+	int values[NUM_TRADE_ROUTE_KINDS] = { 0 };
+	m_pPlayer->getTradeRouteKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getScalars() const
+{
+	int values[NUM_INFO_SCALARS] = { 0 };
+	m_pPlayer->getScalars(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getUpkeepKinds() const
+{
+	int values[NUM_UPKEEP_KINDS] = { 0 };
+	m_pPlayer->getUpkeepKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getCostKinds() const
+{
+	int values[NUM_COSTS_KINDS] = { 0 };
+	m_pPlayer->getCostKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getStateReligionKinds() const
+{
+	int values[NUM_STATE_RELIGION_KINDS] = { 0 };
+	m_pPlayer->getStateReligionKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getDiplomacyKinds() const
+{
+	int values[NUM_DIPLOMACY_KINDS] = { 0 };
+	m_pPlayer->getDiplomacyKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getDurationKinds() const
+{
+	int values[NUM_DURATIONS_KINDS] = { 0 };
+	m_pPlayer->getDurationKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getAirKinds() const
+{
+	int values[NUM_AIR_KINDS] = { 0 };
+	m_pPlayer->getAirKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getCaptureKinds() const
+{
+	int values[NUM_CAPTURE_KINDS] = { 0 };
+	m_pPlayer->getCaptureKinds(values);
+	return cyp_toList(values);
+}
+
+python::list CyPlayer::getCargoKinds() const
+{
+	int values[NUM_CARGO_KINDS] = { 0 };
+	m_pPlayer->getCargoKinds(values);
+	return cyp_toList(values);
 }
 
 python::list CyPlayer::units() const

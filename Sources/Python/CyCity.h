@@ -22,6 +22,126 @@ public:
 
 	CvCity* getCity() const { return m_pCity; }	// Call from C++
 
+	//	==== THE CITY READ SURFACE ====
+	//
+	//	The "what do I HAVE, right now?" half of the GAME-OBJECT read role, homed on the object it describes
+	//	([DEC-accessor-homing]). A city's data is asked OF THE CITY: a caller resolves the object and then asks it
+	//	(GC.getPlayer(i).getCity(id).getYields()), and that chain STATES the containment instead of flattening it
+	//	into an (owner, id) argument pair.
+	//
+	//	THE GRAMMAR (patterns.md § THE TWO READ ROLES), unchanged:
+	//	  - ONE READ PER GROUP, and the getter IS the group -- there is NO scalar getter per channel; a script
+	//	    wanting one value indexes the returned list. The surface grows by GROUPS, never by channels.
+	//	  - THE EXISTING ENGINE ENUM INDEXES THE RESULT, never the call: getYields()[YieldTypes.YIELD_FOOD]. A
+	//	    family with no engine enum is indexed by its own kind enum, and the name says so (get<Family>Kinds).
+	//	  - EVERY AMOUNT IS x100 NATIVE ([DEC-fixedpoint-x100]) -- no `100` in any name, no scale variant, and no
+	//	    read reduces. A PERCENT is not scaled, so a percent-unit channel is already the number you want.
+	//	  - EVERY READ IS A BARE FETCH: nothing here gates, ensures or recomputes, so a missed invalidation shows
+	//	    up in script as a visibly wrong number rather than being repaired at the boundary ([DEC-no-self-heal]).
+	//
+	//	⛔ NO METHOD HERE CARRIES ANOTHER OBJECT'S NOUN. The receiver already IS the city, so `getPopulation()`,
+	//	never `getCityPopulation()` -- a noun in the name is the mechanical tell that a read is homed on the wrong
+	//	class ([DEC-accessor-homing]).
+
+	python::list getYields() const;
+	python::list getCommerces() const;
+	python::list getWellbeing() const;
+	python::list getDefenseKinds() const;
+	python::list getMaintenanceKinds() const;
+	python::list getBuildRateKinds() const;
+	python::list getCombatKinds() const;
+	python::list getExperienceKinds() const;
+	python::list getRevolutionKinds() const;
+	python::list getTradeRouteKinds() const;
+	python::list getScalars() const;
+	python::list getHealKinds() const;
+	python::list getUnderworldKinds() const;
+	python::list getVisionKinds() const;
+
+	//	The REALIZED wellbeing: the deposits above PLUS the raw-state inputs no deposit produces (modifier.md
+	//	§2b). Distinct from getWellbeing on purpose; a script that adds the two double-counts. iExtraPopulation
+	//	projects onto a population the city is ABOUT to reach -- the anger terms are non-linear in population, so
+	//	it cannot be derived from the 0 answer.
+	python::list getRealizedWellbeing(int iExtraPopulation) const;
+	//	The two FINAL-STATE values DOWNSTREAM of that group -- calculations over the four channels, never slots in
+	//	them (patterns.md rule 6), published so a script does not become a second implementation of the rule.
+	int getHealthRate(int iExtraPopulation) const;
+	int getAngryPopulation(int iExtraPopulation) const;
+	python::list getYieldModifiers() const;
+	//	THE CITY YIELD CENSUS for ONE channel -- the same decomposition the /computed census renders, so a tooltip
+	//	reads the SAME DOCUMENT rather than recomputing its own breakdown. Indexed by CityYieldTerm.
+	python::list getYieldTerms(int iYield) const;
+	int getSight() const;
+	int getLiberationPlayer() const;
+	int64_t getRealizedMaintenance() const;
+
+	//	Where this city places among its OWNER'S cities for each channel. The engine enum indexes the RESULT, so
+	//	the whole group comes back and no channel is ever named in the call. A rank is an ORDINAL, never x100.
+	python::list getYieldRateRanks() const;
+	python::list getBaseYieldRateRanks() const;
+	python::list getCommerceRateRanks() const;
+
+	python::list getPosition() const;
+	python::list getPlots() const;
+	int getImprovedPlotCount() const;
+	int getWaterPlotCount() const;
+
+	//	The AI's OWN HEURISTIC SCORES -- advice, never a fact about the city (superseded-ideas par.1).
+	int getAiValue() const;
+	int getAiBestBuildCount() const;
+
+	python::list getCountdowns() const;
+	python::list getGrowth() const;
+	python::list getCounts() const;
+	python::list getGrantedExtras() const;
+	python::list getOutputHistory() const;
+
+	python::list getBuildingReads(int iBuilding) const;
+	python::list getUnitReads(int iUnit) const;
+	python::list getSpecialistReads(int iSpecialist) const;
+	python::list getBuildingGrantedWellbeing(int iBuilding) const;
+	python::list getBuildingGrantedYields(int iBuilding) const;
+	python::list getBuildingGrantedCommerces(int iBuilding) const;
+	int getBuildingBuiltTime(int iBuilding) const;
+	int getAddedFreeSpecialists(int iSpecialist) const;
+	int getGreatPeopleUnitProgress(int iUnitType) const;
+
+	python::list getUnitListGroups() const;
+	python::list getBuildingListGroups() const;
+	bool isUnitQueued(int iUnitType) const;
+
+	int getBestUnit() const;
+	int getBestUnitForRole(int iUnitAI) const;
+	int getProductionTurnsLeftFor(int iOrder, int iType, int iNum) const;
+
+	python::list getOrder() const;
+	int getBuildingListSorting() const;
+	int getUnitListGrouping() const;
+	int getUnitListSorting() const;
+
+	python::list getFlags() const;
+	python::list getProperties() const;
+	python::list getReligions() const;
+	python::list getCorporations() const;
+	python::list getCultureReads() const;
+	//	Rows of [partnerOwner, partnerCity, profitTimes100]. Routes are live STATE, so they are walked rather
+	//	than looked up -- nothing authors a route.
+	python::list getTradeRoutes() const;
+	python::list getHurryQuote(int iHurry) const;
+	int getDateFounded(bool bHistoricalCalendar) const;
+	int64_t getCultureForPlayer(int iForPlayer) const;
+	int getCulturePercent(int iForPlayer) const;
+	int getTradeYield(int iYield, int iProfitTimes100) const;
+	//	The MAINTAINED traded count, not the engine relay -- a reader answering from a different source than the
+	//	deposits do is a second truth, not a second opinion ([DEC-single-implementation]).
+	int getNumBonusesAvailable(int iBonus) const;
+	bool hasCorporationPresent(int iCorporation) const;
+	int getProjectProductionFor(int iProject) const;
+	int getHandicapLevel() const;
+	bool isRevealedTo(int iTeam) const;
+	bool isCoastalTo(int iMinWaterSize) const;
+	bool isEmphasizing(int iEmphasize) const;
+
 	void kill();
 
 	int getRevolutionIndex() const;
@@ -319,7 +439,6 @@ public:
 
 	int getProjectProduction(int /*ProjectTypes*/ iIndex) const;
 
-	int getGreatPeopleUnitProgress(int /*UnitTypes*/ iIndex) const;
 	void setGreatPeopleUnitProgress(int /*UnitTypes*/ iIndex, int iNewValue);
 	void changeGreatPeopleUnitProgress(int /*UnitTypes*/ iIndex, int iChange);
 	int getSpecialistCount(int /*SpecialistTypes*/ eIndex) const;
@@ -345,7 +464,6 @@ public:
 	void setHasCorporation(int /*CorporationTypes*/ iIndex, bool bNewValue, bool bAnnounce, bool bArrows);
 	bool isActiveCorporation(int /*CorporationTypes*/ eCorporation) const;
 	CyCity* getTradeCity(int iIndex) const;
-	int getTradeRoutes() const;
 
 	void clearOrderQueue();
 	void pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bool bPop, bool bAppend, bool bForce);
@@ -362,21 +480,18 @@ public:
 	int getBuildingHealthChange(int /*BuildingTypes*/ eBuilding) const;
 	void setBuildingHealthChange(int /*BuildingTypes*/ eBuilding, int iChange);
 
-	int getLiberationPlayer(bool bConquest) const;
 
 	bool AI_isEmphasizeSpecialist(int /*SpecialistTypes*/ iIndex) const;
 	bool AI_isEmphasize(int iEmphasizeType) const;
 	int AI_countBestBuilds(const CyArea& kArea) const;
 	int AI_cityValue() const;
 
-	CvProperties* getProperties() const;
 	const CityOutputHistory* getCityOutputHistory() const;
 
 	bool getBuildingListFilterActive(int /*BuildingFilterTypes*/ eFilter);
 	void setBuildingListFilterActive(int /*BuildingFilterTypes*/ eFilter, bool bActive);
 	int /*BuildingGroupingTypes*/ getBuildingListGrouping();
 	void setBuildingListGrouping(int /*BuildingGroupingTypes*/ eGrouping);
-	int /*BuildingSortTypes*/ getBuildingListSorting();
 	void setBuildingListSorting(int /*BuildingSortTypes*/ eSorting);
 	int getBuildingListGroupNum();
 	int getBuildingListNumInGroup(int iGroup);
@@ -385,9 +500,7 @@ public:
 	void setUnitListInvalid();
 	bool getUnitListFilterActive(int /*UnitFilterTypes*/ eFilter);
 	void setUnitListFilterActive(int /*UnitFilterTypes*/ eFilter, bool bActive);
-	int /*UnitGroupingTypes*/ getUnitListGrouping();
 	void setUnitListGrouping(int /*UnitGroupingTypes*/ eGrouping);
-	int /*UnitSortTypes*/ getUnitListSorting();
 	void setUnitListSorting(int /*UnitSortTypes*/ eSorting);
 	int getUnitListGroupNum();
 	int getUnitListNumInGroup(int iGroup);

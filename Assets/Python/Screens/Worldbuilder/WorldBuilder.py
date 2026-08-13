@@ -16,14 +16,13 @@ import WBPlayerUnits
 import WBInfoScreen
 import WBTradeScreen
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
 ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -1277,7 +1276,7 @@ class WorldBuilder:
 
 			if GC.getBuildingInfo(iBuilding).isCapital() and not bMove:
 				continue
-			bHadBuilding = STATE.getBuildingInCity(pOldCity.getOwner(), pOldCity.getID(), iBuilding)[CityBuildingRead.CITY_BUILDING_HAS]
+			bHadBuilding = pOldCity.getBuildingReads(iBuilding)[CityBuildingRead.CITY_BUILDING_HAS]
 			ACT.setCityBuilding(pNewCity.getOwner(), pNewCity.getID(), iBuilding, bHadBuilding)
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):

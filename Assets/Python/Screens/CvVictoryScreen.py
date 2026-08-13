@@ -3,7 +3,7 @@ from CvPythonExtensions import *
 import AttitudeUtil
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
@@ -11,7 +11,6 @@ BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 VICTORY = CyVictoryInfo()   # the per-info accessor: the whole `condition` block in two grouped reads
 CULTURELEVEL = CyCultureLevelInfo()   # the culture threshold a city counts toward, per (level x gamespeed)
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -1444,11 +1443,11 @@ class CvVictoryScreen:
 				aList = []
 
 				for CyCity in CyPlayer.cities():
-					iRate = STATE.getCommerces(iPlayer, CyCity.getID())[CommerceTypes.COMMERCE_CULTURE]
+					iRate = CyCity.getCommerces()[CommerceTypes.COMMERCE_CULTURE]
 					if not iRate:
 						iTurns = -1
 					else:
-						iCultureLeftTimes100 = 100 * iThreshold - STATE.getCultureForPlayer(iPlayer, CyCity.getID(), iPlayer)
+						iCultureLeftTimes100 = 100 * iThreshold - CyCity.getCultureForPlayer(iPlayer)
 						iTurns = int((iCultureLeftTimes100 + iRate - 1) / iRate)
 					aList.append((CyCity.getCulture(iPlayer), CyCity, iTurns))
 

@@ -897,9 +897,9 @@ class CvInfoScreen:
 
 			#	The id enumeration, not a handle loop: a CyCity carries only its identity, so every read below
 			#	is addressed by the (owner, id) pair this surface takes.
-			for iCityX in STATE.getCityIds(i):
+			for iCityX in GC.getPlayer(i).getCityIds():
 
-				iPop = STATE.getCityPopulation(i, iCityX)
+				iPop = GC.getPlayer(i).getCity(iCityX).getPopulation()
 				# Filter out small cities, after the first 5, as an optimization.
 				if topCities[4] and iPop < iMedianPop:
 					continue
@@ -908,9 +908,9 @@ class CvInfoScreen:
 				# City Value, could expand this one...
 				#	ONE crossing for the whole yield group, indexed by the engine enum. The amounts are x100
 				#	native, so they reduce here where they are weighed against whole game counts.
-				aiYields = STATE.getYields(i, iCityX)
+				aiYields = GC.getPlayer(i).getCity(iCityX).getYields()
 				iTotalCityValue = (
-					6 * iPop + STATE.getCultureForPlayer(i, iCityX, i) / 30
+					6 * iPop + GC.getPlayer(i).getCity(iCityX).getCultureForPlayer(i) / 30
 					+ 2 * aiYields[YieldTypes.YIELD_FOOD] / 100
 					+ 3 * aiYields[YieldTypes.YIELD_PRODUCTION] / 100
 					+ 3 * aiYields[YieldTypes.YIELD_COMMERCE] / 100
@@ -943,24 +943,24 @@ class CvInfoScreen:
 			#	Under the accurate calendar the stored member is an encoded DATE, so the engine decodes it and
 			#	the year is already the answer; without it the member is a turn and still needs converting.
 			if bACalendar :
-				iTurnYear = STATE.getCityDateFounded(iOwnerX, iCityX, True)
+				iTurnYear = GC.getPlayer(iOwnerX).getCity(iCityX).getDateFounded(True)
 			else :
-				iTurnYear = GAME.getTurnYear(STATE.getCityDateFounded(iOwnerX, iCityX, False))
+				iTurnYear = GAME.getTurnYear(GC.getPlayer(iOwnerX).getCity(iCityX).getDateFounded(False))
 
 			if iTurnYear < 0:
 				szTurnFounded = TRNSLTR.getText("TXT_KEY_TIME_BC", (-iTurnYear,))
 			else:
 				szTurnFounded = TRNSLTR.getText("TXT_KEY_TIME_AD", (iTurnYear,))
 
-			if STATE.isCityRevealed(iOwnerX, iCityX, self.iTeam):
-				szCityNames[iNumCities] = STATE.getCityName(iOwnerX, iCityX)
+			if GC.getPlayer(iOwnerX).getCity(iCityX).isRevealedTo(self.iTeam):
+				szCityNames[iNumCities] = GC.getPlayer(iOwnerX).getCity(iCityX).getName()
 				szCityDescs[iNumCities] = "%s, %s" % (pPlayer.getCivilizationAdjective(0), TRNSLTR.getText("TXT_KEY_MISC_FOUNDED_IN", (szTurnFounded,)))
 			else:
 				szCityNames[iNumCities] = TRNSLTR.getText("TXT_KEY_UNKNOWN", ())
 				szCityDescs[iNumCities] = TRNSLTR.getText("TXT_KEY_MISC_FOUNDED_IN", (szTurnFounded,))
 
-			iCitySizes[iNumCities] = STATE.getCityPopulation(iOwnerX, iCityX)
-			aaCitiesXY[iNumCities] = STATE.getCityPosition(iOwnerX, iCityX)
+			iCitySizes[iNumCities] = GC.getPlayer(iOwnerX).getCity(iCityX).getPopulation()
+			aaCitiesXY[iNumCities] = GC.getPlayer(iOwnerX).getCity(iCityX).getPosition()
 			iNumCities += 1
 
 		for iWidgetLoop in xrange(iNumCities):
@@ -979,7 +979,7 @@ class CvInfoScreen:
 			if iDistance > 400:
 				iDistance = 400
 
-			if STATE.isCityRevealed(iOwnerX, iCityX, self.iTeam):
+			if GC.getPlayer(iOwnerX).getCity(iCityX).isRevealedTo(self.iTeam):
 				screen.addPlotGraphicGFC(self.getNextWidgetName(), 65, self.Y_ROWS_CITIES[iWidgetLoop], 150, 110, pPlot, iDistance, False, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		# Draw Wonder icons
@@ -1003,7 +1003,7 @@ class CvInfoScreen:
 				# Loop through world wonders
 				for iWW in aWonderList:
 
-					if STATE.getBuildingInCity(aCityX[0], aCityX[1], iWW)[CityBuildingRead.CITY_BUILDING_HAS]:
+					if GC.getPlayer(aCityX[0]).getCity(aCityX[1]).getBuildingReads(iWW)[CityBuildingRead.CITY_BUILDING_HAS]:
 
 						aiTempWondersList.append(iWW)
 						aiTopCitiesNumWonders[i] += 1
@@ -1072,17 +1072,17 @@ class CvInfoScreen:
 			iTeamX = playerX.getTeam()
 
 			# Loop through this player's cities and determine if they have any wonders to display
-			for iCityX in STATE.getCityIds(iPlayerX):
+			for iCityX in GC.getPlayer(iPlayerX).getCityIds():
 
 				#	Everything below asks about the SAME city, so the per-city facts are fetched once here
 				#	rather than re-crossed inside the registry loops that follow.
 				aCityX = [iPlayerX, iCityX]
-				aPosX = STATE.getCityPosition(iPlayerX, iCityX)
+				aPosX = GC.getPlayer(iPlayerX).getCity(iCityX).getPosition()
 				pCityPlotX = CyMap().plot(aPosX[0], aPosX[1])
-				bRevealedX = STATE.isCityRevealed(iPlayerX, iCityX, self.iTeam)
+				bRevealedX = GC.getPlayer(iPlayerX).getCity(iCityX).isRevealedTo(self.iTeam)
 				#	The head order names WHICH registry it indexes, so the project / building under
 				#	construction is one read rather than a getter per kind.
-				aOrderX = STATE.getOrder(iPlayerX, iCityX)
+				aOrderX = GC.getPlayer(iPlayerX).getCity(iCityX).getOrder()
 				iProjectProd = -1
 				if aOrderX[CityOrderRead.ORDER_READ_TYPE] == OrderTypes.ORDER_CREATE:
 					iProjectProd = aOrderX[CityOrderRead.ORDER_READ_ID]
@@ -1122,12 +1122,12 @@ class CvInfoScreen:
 								and bRevealedX):
 									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
-							if STATE.getBuildingInCity(iPlayerX, iCityX, iBuildingLoop)[CityBuildingRead.CITY_BUILDING_HAS]:
+							if GC.getPlayer(iPlayerX).getCity(iCityX).getBuildingReads(iBuildingLoop)[CityBuildingRead.CITY_BUILDING_HAS]:
 
 								if iTeamX == self.iTeam or self.team.isHasMet(iTeamX):
-									aaWondersBuilt.append([STATE.getBuildingBuiltTime(iPlayerX, iCityX, iBuildingLoop),iBuildingLoop,True, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
+									aaWondersBuilt.append([GC.getPlayer(iPlayerX).getCity(iCityX).getBuildingBuiltTime(iBuildingLoop),iBuildingLoop,True, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 								else:
-									aaWondersBuilt.append([STATE.getBuildingBuiltTime(iPlayerX, iCityX, iBuildingLoop),iBuildingLoop,False,TRNSLTR.getText("TXT_KEY_UNKNOWN", ()), aCityX, -1])
+									aaWondersBuilt.append([GC.getPlayer(iPlayerX).getCity(iCityX).getBuildingBuiltTime(iBuildingLoop),iBuildingLoop,False,TRNSLTR.getText("TXT_KEY_UNKNOWN", ()), aCityX, -1])
 								iNumWonders += 1
 
 						# National/Team Wonder Mode
@@ -1146,14 +1146,14 @@ class CvInfoScreen:
 									aaWondersBeingBuilt.append([iBuildingLoop, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 
 							# Has this city built a wonder?
-							if STATE.getBuildingInCity(iPlayerX, iCityX, iBuildingLoop)[CityBuildingRead.CITY_BUILDING_HAS]:
+							if GC.getPlayer(iPlayerX).getCity(iCityX).getBuildingReads(iBuildingLoop)[CityBuildingRead.CITY_BUILDING_HAS]:
 								if iTeamX == self.iTeam:
-									aaWondersBuilt.append([STATE.getBuildingBuiltTime(iPlayerX, iCityX, iBuildingLoop),iBuildingLoop,True, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
+									aaWondersBuilt.append([GC.getPlayer(iPlayerX).getCity(iCityX).getBuildingBuiltTime(iBuildingLoop),iBuildingLoop,True, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 									iNumWonders += 1
 
 								elif self.team.isHasMet(iTeamX) and bRevealedX:
 
-									aaWondersBuilt.append([STATE.getBuildingBuiltTime(iPlayerX, iCityX, iBuildingLoop),iBuildingLoop,True, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
+									aaWondersBuilt.append([GC.getPlayer(iPlayerX).getCity(iCityX).getBuildingBuiltTime(iBuildingLoop),iBuildingLoop,True, playerX.getCivilizationShortDescription(0), aCityX, iPlayerX])
 									iNumWonders += 1
 
 		# This array used to store which players have already used up a team's slot so team projects don't get added to list more than once
@@ -1223,8 +1223,8 @@ class CvInfoScreen:
 			szTurnYearBuilt = u"<font=2>%c</font>" % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION)
 
 			# Check to see if active player can see this city
-			if aCity and STATE.isCityRevealed(aCity[0], aCity[1], self.iTeam):
-				szCityName = STATE.getCityName(aCity[0], aCity[1])
+			if aCity and GC.getPlayer(aCity[0]).getCity(aCity[1]).isRevealedTo(self.iTeam):
+				szCityName = GC.getPlayer(aCity[0]).getCity(aCity[1]).getName()
 			else:
 				szCityName = ""
 
@@ -1267,9 +1267,9 @@ class CvInfoScreen:
 				szTurnYearBuilt = TRNSLTR.getText("TXT_KEY_TIME_AD", (iTurnYearBuilt,))
 
 			# Check to see if active player can see this city
-			bCityRevealed = bool(aCity) and STATE.isCityRevealed(aCity[0], aCity[1], self.iTeam)
+			bCityRevealed = bool(aCity) and GC.getPlayer(aCity[0]).getCity(aCity[1]).isRevealedTo(self.iTeam)
 			if bCityRevealed:
-				szCityName = STATE.getCityName(aCity[0], aCity[1])
+				szCityName = GC.getPlayer(aCity[0]).getCity(aCity[1]).getName()
 			else:
 				szCityName = ""
 
@@ -1581,7 +1581,7 @@ class CvInfoScreen:
 				if szWidgetName == self.szWondersTable and not inputClass.getMouseX():
 					screen.hideScreen()
 					#	The widget carries the (owner, id) pair the table row was built with.
-					aCityPos = STATE.getCityPosition(inputClass.getData1(), inputClass.getData2())
+					aCityPos = GC.getPlayer(inputClass.getData1()).getCity(inputClass.getData2()).getPosition()
 					CyCamera().JustLookAtPlot(CyMap().plot(aCityPos[0], aCityPos[1]))
 
 		# Something Clicked

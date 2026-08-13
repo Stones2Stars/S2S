@@ -206,18 +206,18 @@ class CvGameUtils:
 
 		gold = self.BASE_CAPTURE_GOLD
 
-		gold += STATE.getCityPopulation(iOwner, iCity) * self.CAPTURE_GOLD_PER_POP
+		gold += GC.getPlayer(iOwner).getCity(iCity).getPopulation() * self.CAPTURE_GOLD_PER_POP
 		gold += GAME.getSorenRandNum(self.CAPTURE_GOLD_RAND1, "One")
 		gold += GAME.getSorenRandNum(self.CAPTURE_GOLD_RAND2, "Two")
 
 		iMaxTurns = self.CAPTURE_GOLD_MAX_TURNS
 		if iMaxTurns > 0:
-			aCounts = STATE.getCityCounts(iOwner, iCity)
+			aCounts = GC.getPlayer(iOwner).getCity(iCity).getCounts()
 			iTurns = GAME.getGameTurn() - aCounts[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED]
 			if iTurns > 0 and iTurns < iMaxTurns:
 				gold *= 1.0 * iTurns / iMaxTurns
 
-		aMint = STATE.getBuildingInCity(iOwner, iCity, self.iNationalMint)
+		aMint = GC.getPlayer(iOwner).getCity(iCity).getBuildingReads(self.iNationalMint)
 		if aMint[CityBuildingRead.CITY_BUILDING_ACTIVE]:
 			gold *= 10
 

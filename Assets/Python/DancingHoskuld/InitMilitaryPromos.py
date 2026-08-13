@@ -62,7 +62,7 @@ def onUnitBuilt( argsList):
 	if iMilitaryCivic:
 		if (aUnit[UnitReadKind.UNIT_READ_COMBAT_CLASS] not in gaiSettlerWorkerCombatList
 		and not INFO.isWorldUnit(aUnit[UnitReadKind.UNIT_READ_TYPE])):
-			aCityPos = STATE.getCityPosition(iCityOwner, iCityId)
+			aCityPos = GC.getPlayer(iCityOwner).getCity(iCityId).getPosition()
 			iX = aCityPos[0]
 			iY = aCityPos[1]
 			MAP = GC.getMap()

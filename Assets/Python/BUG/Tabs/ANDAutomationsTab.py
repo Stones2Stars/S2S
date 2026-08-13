@@ -11,7 +11,6 @@ import BugOptionsTab
 GC = CyGlobalContext()
 INFO = CyInfo()
 ENABLER = CyEnabler()
-STATE = CyState()
 GAME = GC.getGame()
 TRNSLTR = CyTranslator()
 
@@ -212,7 +211,7 @@ class ANDAutomationsTab(BugOptionsTab.BugOptionsTab):
 					self.addSpacer(screen, left, "City Spacer")
 				bFirst = False
 
-				szCityName = TextUtil.convertToAscii(STATE.getCityName(player.getID(), cityX.getID()))
+				szCityName = TextUtil.convertToAscii(GC.getPlayer(player.getID()).getCity(cityX.getID()).getName())
 				n += 1
 				self.addLabel(screen, left, szCityName + str(n), TRNSLTR.getText("TXT_KEY_AUTOMATED_WORKERS_CAN_BUILD_CITY", (szCityName,)), None, False, True)
 

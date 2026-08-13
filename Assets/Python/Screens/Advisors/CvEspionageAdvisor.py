@@ -5,7 +5,7 @@ from CvPythonExtensions import *
 import CvScreenEnums
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
@@ -13,7 +13,6 @@ INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves enti
 # -- asking the generic slot plane for them is what silently classified NO mission and crashed this screen.
 ESPIONAGEMISSION = CyEspionageMissionInfo()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -509,9 +508,9 @@ class TheScreen:
 		iCityActID = self.iCityActID
 		iCount = 0
 		#	The id enumeration: a CyCity carries only its identity, so the reads are addressed by (owner, id).
-		for iCityID in STATE.getCityIds(iPlayer):
-			if STATE.isCityRevealed(iPlayer, iCityID, iTeamAct):
-				szText = uFont2 + STATE.getCityName(iPlayer, iCityID)
+		for iCityID in GC.getPlayer(iPlayer).getCityIds():
+			if GC.getPlayer(iPlayer).getCity(iCityID).isRevealedTo(iTeamAct):
+				szText = uFont2 + GC.getPlayer(iPlayer).getCity(iCityID).getName()
 				screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, iCityID, 0, 1<<0)
 
 				if iCityActID == -1:
@@ -521,7 +520,7 @@ class TheScreen:
 					screen.setSelectedListBoxStringGFC(LIST, iCount)
 				iCount += 1
 
-				aCityPos = STATE.getCityPosition(iPlayer, iCityID)
+				aCityPos = GC.getPlayer(iPlayer).getCity(iCityID).getPosition()
 				iCost = CyPlayerAct.getEspionageMissionCost(iMissionAct, iPlayer, CyMap().plot(aCityPos[0], aCityPos[1]), -1)
 				if iCost > -1:
 					szCost = uFont2

@@ -1074,13 +1074,13 @@ class CvCityDesc:
 		iCity = city.getID()
 
 		f.write("\tBeginCity\n\t\tCityOwner=%d, (%s)\n\t\tCityName=%s\n\t\tCityPopulation=%d\n\t\tStoredFood=%d\n"
-			%(iOwner, STATE.getPlayerName(iOwner).encode(fEncode), STATE.getCityName(iOwner, iCity).encode(fEncode),
-			  STATE.getCityPopulation(iOwner, iCity),
-			  STATE.getGrowth(iOwner, iCity)[CityGrowthRead.GROWTH_READ_FOOD_STORED])
+			%(iOwner, STATE.getPlayerName(iOwner).encode(fEncode), GC.getPlayer(iOwner).getCity(iCity).getName().encode(fEncode),
+			  GC.getPlayer(iOwner).getCity(iCity).getPopulation(),
+			  GC.getPlayer(iOwner).getCity(iCity).getGrowth()[CityGrowthRead.GROWTH_READ_FOOD_STORED])
 		)
 		#	The current ORDER is ONE read carrying its kind and its id, so four isProductionX tests and their
 		#	four getters collapse into it.
-		kOrder = STATE.getOrder(iOwner, iCity)
+		kOrder = GC.getPlayer(iOwner).getCity(iCity).getOrder()
 		iOrderType = kOrder[CityOrderRead.ORDER_READ_TYPE]
 		iOrderId = kOrder[CityOrderRead.ORDER_READ_ID]
 		if iOrderType == OrderTypes.ORDER_TRAIN:
@@ -1093,17 +1093,17 @@ class CvCityDesc:
 			f.write("\t\tProductionProcess=%s\n" %(INFO.getType("PROCESS_", iOrderId),))
 
 		for iI in xrange(GC.getNumBuildingInfos()):
-			if STATE.getBuildingInCity(iOwner, iCity, iI)[CityBuildingRead.CITY_BUILDING_HAS]:
-				f.write("\t\tBuildingType=%s, BuildDate=%d\n" %(INFO.getType("BUILDING_", iI), STATE.getBuildingBuiltTime(iOwner, iCity, iI)))
+			if GC.getPlayer(iOwner).getCity(iCity).getBuildingReads(iI)[CityBuildingRead.CITY_BUILDING_HAS]:
+				f.write("\t\tBuildingType=%s, BuildDate=%d\n" %(INFO.getType("BUILDING_", iI), GC.getPlayer(iOwner).getCity(iCity).getBuildingBuiltTime(iI)))
 
 		#	ONE crossing each: the rows are [id, bIsHolyCity] / [id, bIsHeadquarters] over exactly what the
 		#	city HAS, so neither registry is swept to rediscover it.
-		for kReligion in STATE.getCityReligions(iOwner, iCity):
+		for kReligion in GC.getPlayer(iOwner).getCity(iCity).getReligions():
 			f.write("\t\tReligionType=%s\n" %(INFO.getType("RELIGION_", kReligion[0])))
 			if kReligion[1]:
 				f.write("\t\tHolyCityReligionType=%s\n" %(INFO.getType("RELIGION_", kReligion[0])))
 
-		for kCorporation in STATE.getCityCorporations(iOwner, iCity):
+		for kCorporation in GC.getPlayer(iOwner).getCity(iCity).getCorporations():
 			f.write("\t\tCorporationType=%s\n" %(INFO.getType("CORPORATION_", kCorporation[0])))
 			if kCorporation[1]:
 				f.write("\t\tHeadquarterCorporationType=%s\n" %(INFO.getType("CORPORATION_", kCorporation[0])))
@@ -1111,10 +1111,10 @@ class CvCityDesc:
 		#	The ADDED free specialists only. Writing the engine-DERIVED total instead would hand its derived
 		#	half over a second time when the scenario is read back.
 		for iI in xrange(GC.getNumSpecialistInfos()):
-			for iJ in xrange(STATE.getAddedFreeSpecialists(iOwner, iCity, iI)):
+			for iJ in xrange(GC.getPlayer(iOwner).getCity(iCity).getAddedFreeSpecialists(iI)):
 				f.write("\t\tFreeSpecialistType=%s\n" %(INFO.getType("SPECIALIST_", iI)))
 
-		szScriptData = STATE.getCityScriptData(iOwner, iCity)
+		szScriptData = GC.getPlayer(iOwner).getCity(iCity).getScriptData()
 		if szScriptData:
 			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % szScriptData)
 
@@ -1124,7 +1124,7 @@ class CvCityDesc:
 			if STATE.isPlayerAlive(iPlayerX):
 				name = STATE.getPlayerName(iPlayerX).encode(fEncode)
 			else: name = "Error"
-			iPlayerCulture = STATE.getCultureForPlayer(iOwner, iCity, iPlayerX)
+			iPlayerCulture = GC.getPlayer(iOwner).getCity(iCity).getCultureForPlayer(iPlayerX)
 			if iPlayerCulture > 0:
 				if not bFound:
 					f.write("\t\tCityCultures\n")
@@ -1133,32 +1133,32 @@ class CvCityDesc:
 
 		if bFound: f.write("\t\t!CityCultures\n")
 
-		iDefenseDamage = STATE.getCityCounts(iOwner, iCity)[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE]
+		iDefenseDamage = GC.getPlayer(iOwner).getCity(iCity).getCounts()[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE]
 		if iDefenseDamage > 0:
 			f.write("\t\tDamage=%d\n" %(iDefenseDamage,))
-		iOccupation = STATE.getCountdowns(iOwner, iCity)[CityCountdownKind.COUNTDOWN_OCCUPATION]
+		iOccupation = GC.getPlayer(iOwner).getCity(iCity).getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 		if iOccupation > 0:
 			f.write("\t\tOccupation=%d\n" %(iOccupation,))
 
 		#	The one-shot EVENT/VOTE grants. They are non-derivable state in their own persisted store
 		#	([state-repositories.md]), so a scenario that could not carry them would drop them silently on
 		#	every round trip -- which is exactly why these reads exist rather than being left to the total.
-		kExtras = STATE.getCityGrantedExtras(iOwner, iCity)
+		kExtras = GC.getPlayer(iOwner).getCity(iCity).getGrantedExtras()
 		if kExtras[CityGrantedExtra.GRANTED_EXTRA_HAPPINESS] != 0:
 			f.write("\t\tExtraHappiness=%d\n" %(kExtras[CityGrantedExtra.GRANTED_EXTRA_HAPPINESS],))
 		if kExtras[CityGrantedExtra.GRANTED_EXTRA_HEALTH] != 0:
 			f.write("\t\tExtraHealth=%d\n" %(kExtras[CityGrantedExtra.GRANTED_EXTRA_HEALTH],))
 		for i in xrange(GC.getNumBuildingInfos()):
 			szType = INFO.getType("BUILDING_", i)
-			kYields = STATE.getBuildingGrantedYields(iOwner, iCity, i)
+			kYields = GC.getPlayer(iOwner).getCity(iCity).getBuildingGrantedYields(i)
 			for k in xrange(YieldTypes.NUM_YIELD_TYPES):
 				if kYields[k] != 0:
 					f.write("\t\tModifiedBuilding=%s, Yield=%s, Amount=%s\n" %(szType, INFO.getType("YIELD_", k), kYields[k]))
-			kCommerces = STATE.getBuildingGrantedCommerces(iOwner, iCity, i)
+			kCommerces = GC.getPlayer(iOwner).getCity(iCity).getBuildingGrantedCommerces(i)
 			for k in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 				if kCommerces[k] != 0:
 					f.write("\t\tModifiedBuilding=%s, Commerce=%s, Amount=%s\n" %(szType, INFO.getType("COMMERCE_", k), kCommerces[k]))
-			kWellbeing = STATE.getBuildingGrantedWellbeing(iOwner, iCity, i)
+			kWellbeing = GC.getPlayer(iOwner).getCity(iCity).getBuildingGrantedWellbeing(i)
 			if kWellbeing[BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS] != 0:
 				f.write("\t\tModifiedBuilding=%s, Happy=%s\n" %(szType, kWellbeing[BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS]))
 			if kWellbeing[BuildingGrantedKind.BUILDING_GRANTED_HEALTH] != 0:

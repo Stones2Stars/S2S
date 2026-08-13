@@ -267,11 +267,11 @@ class CvCorporationScreen:
 				if pHeadquarters is None:
 					szFounded = u"-"
 					screen.setLabelAt("", "CivicList", szFounded, 1<<2, xLoop, self.Y_HEADQUARTERS, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-				elif not STATE.isCityRevealed(pHeadquarters.getOwner(), pHeadquarters.getID(), STATE.getPlayerTeam(self.iActivePlayer)):
+				elif not pHeadquarters.isRevealedTo(STATE.getPlayerTeam(self.iActivePlayer)):
 					szFounded = localText.getText("TXT_KEY_UNKNOWN", ())
 					screen.setLabelAt("", "CivicList", szFounded, 1<<2, xLoop, self.Y_HEADQUARTERS, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				else:
-					szFounded = STATE.getCityName(pHeadquarters.getOwner(), pHeadquarters.getID())
+					szFounded = pHeadquarters.getName()
 					screen.setLabelAt("", "CivicList", "(%s)" % GC.getPlayer(pHeadquarters.getOwner()).getCivilizationAdjective(0), 1<<2, xLoop, self.Y_HEADQUARTERS+8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 					screen.setLabelAt("", "CivicList", szFounded, 1<<2, xLoop, self.Y_HEADQUARTERS-8, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				xLoop += self.DX_CORPORATION
@@ -315,20 +315,20 @@ class CvCorporationScreen:
 			bFirstColumn = (i % 2 == 0)
 
 			szCityName = ""
-			if STATE.getCityFlags(cityX.getOwner(), cityX.getID())[CityFlagKind.CITY_FLAG_CAPITAL]:
+			if cityX.getFlags()[CityFlagKind.CITY_FLAG_CAPITAL]:
 				szCityName += u"%c" % CyGame().getSymbolID(FontSymbols.STAR_CHAR)
 
 			#	ONE crossing for the corporations this city HAS -- rows are [corporationId, bIsHeadquarters],
 			#	so both questions are answered without asking the city once per corporation.
 			lCorporations = []
-			for kCorporation in STATE.getCityCorporations(cityX.getOwner(), cityX.getID()):
+			for kCorporation in cityX.getCorporations():
 					iI = kCorporation[0]
 					lCorporations.append(iI)
 					if kCorporation[1]:
 						szCityName += u"%c" % TEXT.getHeadquarterSymbolChar(iI)
 					else: szCityName += u"%c" % TEXT.getSymbolChar("CORPORATION_", iI)
 
-			szCityName += STATE.getCityName(cityX.getOwner(), cityX.getID())[0:17] + "  "
+			szCityName += cityX.getName()[0:17] + "  "
 
 			if iLinkCorporation == -1:
 				bFirst = True

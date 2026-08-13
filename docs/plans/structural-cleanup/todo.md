@@ -446,6 +446,48 @@
 
 ## Stage 4 — the Python surface
 
+- **Re-home the UNIT / BUILDING / PLAYER reads onto their own accessors, and finish dissolving the flat state
+  class** ([DEC-accessor-homing](../../architecture/decisions.md#dec-accessor-homing)). A game object's data is
+  read from its OWN accessor; a method whose name carries another object's noun is homed wrong by construction,
+  and the flat address-keyed class reproduces the getter spaghetti and unreadable provenance the boundary exists
+  to end ([patterns.md § THE PYTHON READ BOUNDARY](../../architecture/patterns.md)). The CITY pass is the worked
+  precedent; each of these is the same shape.
+  - ⛔ **It is a MOVE, never an addition.** The state class loses each read as the accessor gains it, or both are
+    live at once — the two surfaces the one-surface ruling forbids. Re-point every consumer in the same pass.
+  - ⛔ **Not the legacy per-field contract restored** ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)):
+    what an accessor carries is the coherent GROUP reads and named concepts, homed on their own object.
+  - ⚠ **UNITS have no accessor to move to yet** — they are the deliberate FUTURE role-specific scope
+    ([contexts.md](../../architecture/contexts.md)) and `CyUnit` carries only its identity set, so the unit plane
+    is blocked on that scope being taken, not on the re-home. What stands on the flat class meanwhile is the NEXT
+    pass, never a sanctioned residue.
+  - ⛔ **THE WRAPPER'S LEGACY DECLARATIONS ARE KILLED ON SIGHT, DECL AND BODY (owner)** — not only the ones a
+    re-homed name collides with, and not scheduled as a later tidy-up
+    ([patterns.md](../../architecture/patterns.md)). An unpublished legacy method is the per-field contract still
+    written down, which is what makes "just publish what is already declared" look cheap exactly when the new
+    surface arrives. ⇒ The wrapper converges on the identity set PLUS the new reads, and nothing else.
+    ⚠ Keep the `class_<>` registration and the identity set (the kept engine→Python direction needs both), and
+    let the COMPILER name anything the engine itself calls on the wrapper.
+  - ⛔ **A DEF COUNT IS NEVER THE SIZE OF A PASS (owner): much of the surviving player surface exists only to feed
+    OLD LOOPS and is not needed.** A whole-registry sweep is the actual defect
+    ([patterns.md](../../architecture/patterns.md)), so it converts to the maintained set / the entity's own
+    compiled entries / its reverse edge families — and the per-id endpoints it was walking DIE WITH IT rather than
+    being re-homed. ⇒ Size each pass by what survives once its loops convert, never by counting what is published
+    ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface): a DELETION list plus a
+    COVERAGE checklist, never a per-getter worklist).
+
+- **Serve the domestic advisor's per-city COLUMN TABLE as a columnar payload, and drop its `eval` dispatch**
+  ([python-read-map.md §5.2](../../reference/python-read-map.md)). The table holds an engine method NAME per
+  column and builds the call as a string, so the column set is invisible to every grep — and it does not close by
+  swapping the `eval` for a `getattr`: most of the names it dispatches are legacy PER-CHANNEL getters
+  (`findYieldRateRank`, `getCommerceRate`, `getPlotYield`) that the new surface answers as GROUPS, and a
+  string-built call cannot express indexing into one.
+  ⛔ Do NOT re-add a per-channel getter to make the strings resolve — that is the shape the surface exists to
+  delete ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)); the read-map's own
+  answer is one columnar per-entity payload over a city set, which also collapses the table's N reads per city
+  into one crossing.
+  ⚠ The bare `except:` wrapping the draw loop swallows exactly the failure this would surface — remove it with
+  the dispatch, so a dead column reports instead of rendering blank.
+
 - **Verify map generation actually works — start a NEW GAME.** Nothing on the standing save exercises
   `CvMapGeneratorUtil.py` (the DLL's map-gen fallback, [engine.md](../../reference/engine.md)) or the
   game-start grants (free techs/units/gold, `freePopulation`, `FreeStartEra` —

@@ -144,7 +144,7 @@ class UnitReName(object):
 		zsUnitDomain = BugUtil.getPlainText("TXT_KEY_BUG_UNIT_NAMING_" + INFO.getType("DOMAIN_", aUnit[UnitReadKind.UNIT_READ_DOMAIN]))
 		zsUnit = INFO.getDescription("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])
 		if pCity:
-			zsCity = STATE.getCityName(pCity[0], pCity[1])
+			zsCity = GC.getPlayer(pCity[0]).getCity(pCity[1]).getName()
 		else: zsCity = ""
 
 ##  - ^rd^ - random name
