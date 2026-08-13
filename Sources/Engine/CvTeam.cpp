@@ -5460,33 +5460,36 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumBuildInfos(); iI++)
+	const CvTechInfo& kUnlockingTech = GC.getTechInfo(eTech);
+	const std::vector<int>* pEnabledBuilds =
+		kUnlockingTech.getEdges() ? kUnlockingTech.getEdges()->find(EDGEF_ENABLES, EDGEB_BUILDS) : NULL;
+	if (pEnabledBuilds != NULL && !pEnabledBuilds->empty())
 	{
-		if (GC.getBuildInfo((BuildTypes)iI).getTechPrereq() == eTech)
+		setLastRoundOfValidImprovementCacheUpdate();
+
+		bool bUnlocksRoute = false;
+		for (size_t iEdge = 0; iEdge < pEnabledBuilds->size() && !bUnlocksRoute; ++iEdge)
 		{
-			setLastRoundOfValidImprovementCacheUpdate();
-			if (GC.getBuildInfo((BuildTypes)iI).getRoute() != NO_ROUTE)
+			bUnlocksRoute = GC.getBuildInfo(static_cast<BuildTypes>((*pEnabledBuilds)[iEdge])).getRoute() != NO_ROUTE;
+		}
+		if (bUnlocksRoute)
+		{
+			for (int iJ = 0; iJ < MAX_PLAYERS; iJ++)
 			{
-				for (int iJ = 0; iJ < MAX_PLAYERS; iJ++)
+				if (GET_PLAYER((PlayerTypes)iJ).isAliveAndTeam(getID()))
 				{
-					if (GET_PLAYER((PlayerTypes)iJ).isAliveAndTeam(getID()))
-					{
-						GET_PLAYER((PlayerTypes)iJ).processNewRoutes();
-					}
+					GET_PLAYER((PlayerTypes)iJ).processNewRoutes();
 				}
 			}
-			break;
 		}
 	}
 	if (getLastRoundOfValidImprovementCacheUpdate() != GC.getGame().getGameTurn())
 	{
-		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+		const std::vector<int>* pEnabledImprovements =
+			kUnlockingTech.getEdges() ? kUnlockingTech.getEdges()->find(EDGEF_ENABLES, EDGEB_IMPROVEMENTS) : NULL;
+		if (pEnabledImprovements != NULL && !pEnabledImprovements->empty())
 		{
-			if (GC.getImprovementInfo((ImprovementTypes)iI).getPrereqTech() == eTech)
-			{
-				setLastRoundOfValidImprovementCacheUpdate();
-				break;
-			}
+			setLastRoundOfValidImprovementCacheUpdate();
 		}
 	}
 
@@ -6370,18 +6373,17 @@ void CvTeam::ObsoletePromotions(TechTypes eObsoleteTech)
 	PROFILE_EXTRA_FUNC();
 	if (eObsoleteTech != NO_TECH)
 	{
-		for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+		const CvTechInfo& kObsoleteTech = GC.getTechInfo(eObsoleteTech);
+		const std::vector<int>* pObsoletedPromotions =
+			kObsoleteTech.getEdges() ? kObsoleteTech.getEdges()->find(EDGEF_OBSOLETES, EDGEB_PROMOTIONS) : NULL;
+		if (pObsoletedPromotions != NULL && !pObsoletedPromotions->empty())
 		{
-			if (GC.getPromotionInfo((PromotionTypes)iI).getObsoleteTech() == eObsoleteTech)
+			for (int i = 0; i < MAX_PLAYERS; ++i)
 			{
-				for (int i = 0; i < MAX_PLAYERS; ++i)
+				if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(getID()))
 				{
-					if (GET_PLAYER((PlayerTypes)i).isAliveAndTeam(getID()))
-					{
-						algo::for_each(GET_PLAYER((PlayerTypes)i).units(), CvUnit::fn::checkPromotionObsoletion());
-					}
+					algo::for_each(GET_PLAYER((PlayerTypes)i).units(), CvUnit::fn::checkPromotionObsoletion());
 				}
-				break;
 			}
 		}
 	}
@@ -6390,18 +6392,12 @@ void CvTeam::ObsoletePromotions(TechTypes eObsoleteTech)
 void CvTeam::ObsoleteCorporations(TechTypes eObsoleteTech)
 {
 	PROFILE_EXTRA_FUNC();
-	bool bValid = false;
 	if (eObsoleteTech != NO_TECH)
 	{
-		for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-		{
-			if (GC.getCorporationInfo((CorporationTypes)iI).getObsoleteTech() == eObsoleteTech)
-			{
-				bValid = true;
-				break;
-			}
-		}
-		if (bValid)
+		const CvTechInfo& kObsoleteTech = GC.getTechInfo(eObsoleteTech);
+		const std::vector<int>* pObsoletedCorporations =
+			kObsoleteTech.getEdges() ? kObsoleteTech.getEdges()->find(EDGEF_OBSOLETES, EDGEB_CORPORATIONS) : NULL;
+		if (pObsoletedCorporations != NULL && !pObsoletedCorporations->empty())
 		{
 			for (int i = 0; i < MAX_PLAYERS; ++i)
 			{
@@ -6409,9 +6405,10 @@ void CvTeam::ObsoleteCorporations(TechTypes eObsoleteTech)
 				{
 					foreach_(CvCity * pLoopCity, GET_PLAYER((PlayerTypes)i).cities())
 					{
-						for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
+						for (size_t iEdge = 0; iEdge < pObsoletedCorporations->size(); ++iEdge)
 						{
-							if (pLoopCity->isHasCorporation((CorporationTypes)iI) && GC.getCorporationInfo((CorporationTypes)iI).getObsoleteTech() == eObsoleteTech)
+							const CorporationTypes iI = static_cast<CorporationTypes>((*pObsoletedCorporations)[iEdge]);
+							if (pLoopCity->isHasCorporation((CorporationTypes)iI))
 							{
 								pLoopCity->setHasCorporation((CorporationTypes)iI, false, false, false);
 								//Remove the Corp HQ Building
