@@ -832,27 +832,6 @@ scan bugs rather than fix them.
   per (building × candidate) on open, and the `expected*` what-if being called inside a loop rather than once
   per decision ([patterns.md]: `expected*` is a per-DECISION read; an AI caching its own scores is the sanctioned
   shape, re-asking it in an inner loop is not).
-- **⛔ THE AI'S PLOT-vs-SPECIALIST VALUATION IS WILDLY OFF, AND A ×100 SEAM IS THE PRIME SUSPECT (owner).**
-  Plot and specialist yields are compared against each other in the citizen-assignment decision, so a scale
-  mismatch on ONE side does not merely mis-tune it — it makes one option dominate absolutely.
-  ⚑ Why the suspicion is well-founded rather than a guess: a specialist's yield carries its OWN percent layer
-  before it joins BASE and takes the city modifier ([modifier.md §2a](../../specs/modifier.md) — two distinct percent stacks),
-  and the per-specialist "all" source is EMPIRE-wide, so the two sides of this comparison genuinely travel
-  different paths to the same unit.
-  ⚠ The failure signature to look for is [fixed-point-and-scales] §5's: a decision that never varies, or one
-  side always winning, is a truncated-to-zero input — not an AI-logic problem. Read the scale at the boundary
-  where the two are compared, against each side's DECLARED unit, before touching any weighting.
-- **⛔ TURN TIME IS FAR LONGER THAN EXPECTED — AND THE REAL ISSUE IS THAT LEGACY IS RUNNING ON A HOT PATH AT ALL,
-  WHEN IT EXPLICITLY SHOULD NOT (owner).** ⚠ Do NOT read this as the poisoned-measurement caveat and stop there.
-  [DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) says a
-  number taken with legacy on a read path measures legacy's decache penalty — true, and it is the SMALLER point.
-  The larger one is that a surviving legacy calc on the turn path is a DEFECT to DELETE, not a condition to
-  measure around ([roadmap.md](roadmap.md) § LEGACY STILL BREATHING: surviving legacy is never a gap, a stage or
-  a transitional shape).
-  ⇒ **So the slowness is not the problem to solve — it is the INSTRUMENT that reveals which legacy is still
-  breathing.** Follow it to the surviving caller and cut that; the time comes back as a consequence. ⛔ What is
-  banned is the inverse move: treating the number as the deliverable and optimising around a path that should
-  not execute.
 - **⚠ A CPP_EXCEPTION CRASH ON END TURN.** `code=0xE06D7363` (a thrown C++ exception, not an access violation)
   with `lastCyRead=CyState::canUnitAcquirePromotion` and a minidump beside it. ⚑ The breadcrumb names the last
   PYTHON→C++ read, which is not necessarily the faulting frame — the wrapper itself guards both ids and cannot
@@ -1173,48 +1152,3 @@ outside `getOwner`/`getID`/`getX`/`getY` and therefore dead.
 it — `RevolutionInit` imports the module and binds only `kbdEvent` / `GameStart` / `OnLoad` — so it cannot fire,
 and Revolution is a carve-out owed its own rework. ⛔ Do not "fix" it into the live set.
 
-## THE FREE-SPECIALIST READ REBUILDS AN EVAL CTX AND WALKS THE EMPIRE, ~40x PER CITIZEN
-
-The hoisted segment lookup was the frame the sampler caught, not the cost. The shape underneath it:
-
-```
-CvCityAI::AI_assignWorkingPlots  (per CITY)
-  -> AI_fillCitizensByPriority   (per CITIZEN)
-    -> AI_foodAvailable
-      -> for iI in 0..getNumSpecialistInfos()      <- 40 specialists, the registry count
-        -> CvCity::getFreeSpecialistCount(iI)
-             fillEvalCtx(...)                       <- a FRESH CvCascadeEvalCtx, per call
-             for each ACTIVE building in the city: keyedTargetSum(...)
-             -> CvPlayer::getFreeSpecialistCount(iI)
-                  for each building the PLAYER HAS: collectKeyedTarget(...)
-                  for each civic option, each held trait: the same again
-```
-
-So the per-turn cost carries a factor of `cities x citizens x 40 x (city buildings + empire buildings + civics
-+ traits)`, for an answer that does not vary with the citizen being placed -- and `AI_foodAvailable`'s own
-`iExtra` parameter does not reach the specialist term at all, so the whole block is INVARIANT across the loop
-it sits in.
-
-Y It is [DEC-legacy-decache-poisons-perf] exactly: the shape was always this, and every inner read used to hit
-a serialized accumulator and cost O(1). Stripping the accumulators is what turned it from wasteful into a
-stall -- and the same ruling says the decache is an INSTRUMENT, so this is the hot path announcing itself.
-
-**BOTH HALVES ARE THE FIX, and neither alone is** (the same ruling):
-
-1. **The READ.** A per-specialist scalar forces one full walk PER SPECIALIST. The grammar already answers this:
-   ONE GETTER PER GROUP, filling a caller-owned array ([patterns.md] THE TWO READ ROLES rule 1 and rule 7) --
-   one eval ctx, one walk of the operating set, one walk of the player's sources, all 40 slots filled. That is
-   a ~40x constant factor and it is the spec'd shape rather than an optimization.
-   V The scalar has ~30 call sites, so it stays -- re-bodied onto the group read so there is ONE implementation
-   ([DEC-single-implementation]), never two that drift.
-2. **The CALLER.** Even at one walk per call it is still asked per CITIZEN for a value that moves only when the
-   city's sources move. The invariant term lifts out of the loop.
-
-X NOT to be answered with a new cache. [DEC-legacy-decache-poisons-perf] sequences it: run uncached, let the
-hot paths announce themselves, **fix the reads that should never have computed**, and only then let the AI
-plane cache its own scores. A cache added while a wrong-shaped read is still underneath it hides the read
-instead of fixing it.
-
-Y The keyed walk itself is spec-correct and is NOT the defect: a keyed deposit is an entry-list read over the
-live sources ([modifier.md] par.5), cheap "because it iterates the handful an entity AUTHORED" -- which holds
-only if discovering the live sources is itself cheap. Here it is rediscovered 40 times per citizen.
