@@ -4796,14 +4796,21 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 		}
 		processTech(eTech, iChange, bAnnounce);
 		// #430 event spine: broad tech-changed event on the repeat-tech (e.g. Future Tech) count change path.
-		if (bNewValue)
-	{
-		emitEmpireTechAdded((int)ePlayer, (int)eTech);
-	}
-	else
-	{
-		emitEmpireTechRemoved((int)ePlayer, (int)eTech);
-	}
+		// Fanned per alive member, exactly as the non-repeat commit below.
+		for (int iMember = 0; iMember < MAX_PLAYERS; iMember++)
+		{
+			if (GET_PLAYER((PlayerTypes)iMember).isAliveAndTeam(getID()))
+			{
+				if (bNewValue)
+				{
+					emitEmpireTechAdded(iMember, (int)eTech);
+				}
+				else
+				{
+					emitEmpireTechRemoved(iMember, (int)eTech);
+				}
+			}
+		}
 		return;
 	}
 
@@ -4829,13 +4836,22 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	m_pabHasTech[eTech] = bNewValue;
 	// #430 event spine: broad tech-changed event (any set, gain or loss) -- past the no-change guard, after commit.
 	// This is the ADDITIONAL broad emit; the SEVT_TECH_ACQUIRED first-discoverer emit below stays separate.
-	if (bNewValue)
+	// Tech is TEAM-held, so the fact fans PER-SELF over every alive member (the reseed's own shape: one emit
+	// per member player) -- a single leader-attributed emit left every other teammate's consumers deaf to a
+	// play-time acquisition.
+	for (int iMember = 0; iMember < MAX_PLAYERS; iMember++)
 	{
-		emitEmpireTechAdded((int)ePlayer, (int)eTech);
-	}
-	else
-	{
-		emitEmpireTechRemoved((int)ePlayer, (int)eTech);
+		if (GET_PLAYER((PlayerTypes)iMember).isAliveAndTeam(getID()))
+		{
+			if (bNewValue)
+			{
+				emitEmpireTechAdded(iMember, (int)eTech);
+			}
+			else
+			{
+				emitEmpireTechRemoved(iMember, (int)eTech);
+			}
+		}
 	}
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
