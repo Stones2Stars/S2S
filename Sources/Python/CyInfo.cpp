@@ -8,7 +8,12 @@
 // boost::python::dict is NOT in the PCH's boost set (list/tuple/class/object are). Included HERE rather than
 // widened into CvGameCoreDLL.h: the umbrella is a foundational header, and adding to it rebuilds every TU.
 // ⚠ This resolves to Boost 1.32 -- the `python::` alias -- never boost155 (engine.md: two Boosts coexist).
+// The guard is C4275: 1.32 declares dict_base dll-interface over a non-dll-interface api::object, and the
+// toolchain is frozen by the closed EXE. Scoped to the include, so C4275 stays live for our own declarations.
+#pragma warning( push )
+#pragma warning( disable: 4275 )
 #include <boost/python/dict.hpp>
+#pragma warning( pop )
 #include "CyInfo.h"
 #include "Data/CvReadJson.h"     // the ONE infotype-prefix -> InfoRepo dispatch, READ-ONLY half (rjInfoForTypeConst / rjCountForType)
 #include "Infos/CvInfo.h"

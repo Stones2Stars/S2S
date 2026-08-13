@@ -13954,7 +13954,6 @@ bool CvUnitAI::AI_spreadReligionAirlift()
 	PROFILE_FUNC();
 
 	int iValue;
-	int iI;
 
 	if (getGroup()->getNumUnits() > 1)
 	{
@@ -20370,7 +20369,6 @@ bool CvUnitAI::AI_specialSeaTransportMissionary()
 	int iValue;
 	int iCorpValue;
 	int iBestValue;
-	int iJ;
 	bool bExecutive = false;
 
 	FAssert(hasCargo());
@@ -28337,7 +28335,6 @@ bool CvUnitAI::AI_foundReligion()
 	PROFILE_FUNC();
 
 	ReligionTypes eReligion;
-	int iI;
 	int iJ;
 	int value;
 	int bestValue;

@@ -3901,7 +3901,9 @@ const CvArtInfoBuilding* CvCity::getBuildingArtInfo(BuildingTypes eBuilding) con
 
 float CvCity::getBuildingVisibilityPriority(BuildingTypes eBuilding) const
 {
-	return GC.getBuildingInfo(eBuilding).getVisibilityPriority();
+	// The float is the EXE's: this accessor is DllExport and the closed EXE resolves it, so the return type is a
+	// fixed ABI obligation while the info holds the priority as an int. The conversion is the boundary, made explicit.
+	return static_cast<float>(GC.getBuildingInfo(eBuilding).getVisibilityPriority());
 }
 
 bool CvCity::hasTrait(TraitTypes eTrait) const

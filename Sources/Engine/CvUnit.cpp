@@ -17127,7 +17127,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	PROFILE_EXTRA_FUNC();
 	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eIndex);
 	const int iChange = (bAdding ? 1 : -1);
-	int	iI;
 	bool bSM = GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS);
 
 	if (bSM)
@@ -17139,10 +17138,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 			setQualityBaseTotal(m_pUnitInfo->getBaseQualityRank());
 			setSizeBaseTotal(m_pUnitInfo->getBaseSizeRank());
 			setGroupBaseTotal(m_pUnitInfo->getBaseGroupRank());
-		}
-		const int iClassGroupBase = kUnitCombat.getSizeMatters().groupBase;
-		if (bAdding && iClassGroupBase > -10)
-		{
 		}
 	}
 
@@ -19553,7 +19548,6 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 		}
 		mapUnitDamage.erase(pBestUnit);
 		//TB SubCombat Mod Begin
-		int iI;
 		//	collateral immunity is ONE boolean skill ([skills.md] §1: the legacy per-source keying -- siege /
 		//	assault-mech / robot, all the siege variant -- collapses to a single enabler), so the per-class
 		//	sweep it used to need is gone with the keying.

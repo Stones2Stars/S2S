@@ -2,7 +2,13 @@
 #include "CyBuildInfo.h"
 #include "Infos/CvBuildInfo.h"
 #include "Defines/CvGlobals.h"
+// Boost 1.32 declares dict_base dll-interface over a non-dll-interface api::object (C4275). The toolchain is
+// frozen by the closed EXE, so the header cannot be fixed; the guard is scoped to the include alone, leaving
+// C4275 live for our own declarations. Same family as the C4251 disable in CvString.h.
+#pragma warning( push )
+#pragma warning( disable: 4275 )
 #include <boost/python/dict.hpp>
+#pragma warning( pop )
 
 namespace
 {

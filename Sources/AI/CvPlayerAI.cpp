@@ -10471,7 +10471,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 
 	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	if (!kUnitInfo.getDomain() == AI_unitAIDomainType(eUnitAI) && eUnitAI != UNITAI_ICBM)
+	if (kUnitInfo.getDomain() != AI_unitAIDomainType(eUnitAI) && eUnitAI != UNITAI_ICBM)
 	{
 		return 0;
 	}
