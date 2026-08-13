@@ -389,9 +389,6 @@ public:
 	bool isAutomatedCanBuild(int /*BuildTypes*/ eIndex) const;
 	void setAutomatedCanBuild(int /*BuildTypes*/ eIndex, bool bNewValue);
 
-	int getCulture(int /*PlayerTypes*/ eIndex) const;
-	int getCultureTimes100(int /*PlayerTypes*/ eIndex) const;
-	int countTotalCultureTimes100() const;
 	PlayerTypes findHighestCulture() const;
 	int calculateCulturePercent(int eIndex) const;
 	void setCulture(int /*PlayerTypes*/ eIndex, int iNewValue, bool bPlots);

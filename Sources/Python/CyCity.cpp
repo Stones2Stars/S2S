@@ -1057,21 +1057,6 @@ int CyCity::getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const
 }
 
 
-int CyCity::getCulture(int /*PlayerTypes*/ eIndex) const
-{
-	return m_pCity->getCulture((PlayerTypes)eIndex);
-}
-
-int CyCity::getCultureTimes100(int /*PlayerTypes*/ eIndex) const
-{
-	return m_pCity->getCultureTimes100((PlayerTypes)eIndex);
-}
-
-int CyCity::countTotalCultureTimes100() const
-{
-	return m_pCity->countTotalCultureTimes100();
-}
-
 PlayerTypes CyCity::findHighestCulture() const
 {
 	return m_pCity->findHighestCulture();
