@@ -16,8 +16,8 @@ computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the
 > ([superseded-ideas](superseded-ideas.md) #30); what stands in its place is § THE MAINTAINED SUM below.
 
 This is the **design the cascade plane is built to**, stated independently of any one implementation of it. The ONE
-uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat (×100) / Σpercent (unscaled) slots +
-receiver sums) is a data member on team / player / city / plot; the per-scope channel sets are minted from the
+uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat (×100) / Σpercent (unscaled) slots)
+is a data member on team / player / city / plot; the per-scope channel sets are minted from the
 compiled deposits at load (`CvCascadeChannelRegistry`, the ClassificationRegistry precedent); the package carries
 **apply verbs and no other writer**, so the modifier's own spine consumer (`CvModifierConsumer`, load-active)
 applies a moved source's deposits directly into the slots they feed; and the combine lives on the calc surface
@@ -351,6 +351,14 @@ AI score fit it.
 sequences it: run uncached, let the hot paths announce themselves, fix the READS that should never have
 computed, and only THEN let the AI plane cache its own scores. This rules how that cache is maintained when it
 lands, not when it lands.
+
+⚖ **AND UNTIL IT LANDS, THE EXISTING AI VALUATION MEMOS SELF-HEAL — ruled (owner): *"AI valuation should self
+heal for now, it is not part of cascade."*** The turn-scoped memo clears (tech values, mission targets, civic
+values, build values, unit counts, trade routes, resource consumption) are the sanctioned interim: an AI
+VALUATION is a heuristic the asking side owns, not cascade/derived game state, so
+[DEC-no-self-heal](decisions.md#dec-no-self-heal) does not reach it at this stage. ⛔ Do not strip the memo
+clears meanwhile, and do not convert one onto fact-driven invalidation ahead of the sequencing above — this
+section rules the shape the AI cache takes WHEN the plane converts, never that it converts now.
 
 ## ⚖ EVERY DERIVED STORE IS ONE SHAPE — a KEYED ACCUMULATOR maintained by a delta (owner)
 
@@ -923,23 +931,20 @@ keyed count vs summed magnitude — is § EVERY DERIVED STORE IS ONE SHAPE, abov
     uniformly, so it forces its own bespoke maintenance path — which is precisely how 33 of them accumulated.
     Channel-indexed slots are reached by the deposit's own compiled address, with no per-field code.
   - **The receiving scope is NOT the storing scope.** A package never moves to its consumer (that breaks the scope
-    principle); the consumer stores only its own realized TOTAL — one cheap variable per channel.
+    principle); the consumer SUMS its members at the read and stores nothing (§ A CROSS-SCOPE receiver total).
   - **⛔ A CROSS-SCOPE receiver total is the Σ of its MEMBERS' REALIZED values — and NOTHING beside that Σ.** The
     empire's gold / research / culture / espionage sums are Σ over the player's cities of each city's realized
-    rate of that channel: exactly the quantity the retired per-read city walk answered, merely cached. The
+    rate of that channel, re-summed at the read. The
     per-city quantity for a commerce channel is the whole [modifier.md §2a](../specs/modifier.md) split — the
     slider share of the city's COMMERCE yield, the channel's own deposits, and the process conversion — not the
     channel's deposits alone. ⛔ **An upper scope's own package is NEVER added on top of that Σ:** its deposits
     roll DOWN ([modifier.md §1](../specs/modifier.md)) and are therefore already inside every member's realized
     value, so adding them again at the receiving scope counts each empire-scope deposit once per city PLUS once
     more — a silent multiplication that compiles, runs, and simply reports wrong numbers.
-  - **⛔ NOT a push accumulator, and NOT a per-read walk — the cached sum sits between those two failures.**
-    Rejecting the legacy incremental accumulator does not license recomputing on every read: an empire-scope
-    getter that re-walks every city per call (`CvPlayer::getCommerceRate`) is the per-read-walk cost class this
-    doc exists to prevent, merely relocated one scope up.
-  - **ONE EVENT REACHES BOTH LEVELS (owner).** The event names the packages it feeds **and** the sum slots those
-    packages feed — one derivation from the deposit index, two targets (for a cross-scope aggregate, two owners).
-    There is **no** dependency-ordered pass, because nothing is deferred at either level.
+  - **⛔ NOT a push accumulator, and NOT a per-CANDIDATE ask — the re-sum's cost is the member count, and the
+    CADENCE is the only thing that can be wrong with it.** Rejecting the legacy incremental accumulator does not
+    license an AI loop asking the Σ per candidate in a scoring pass: that caller hoists it once per pass into its
+    own scratch (the sanctioned AI-heuristic residual), never a stored slot on the machine.
   - **⚖ THE CROSS-SCOPE RECEIVER — SUPPRESSION IS SETTLED; ONLY THE DELTA QUESTION IS OPEN.** A receiver total is
     the Σ of its members' **REALIZED** values (§ A CROSS-SCOPE receiver total), and a realized value is the §2a
     combine over the member's packages, not a stored deposit sum. Two of its apparent obstacles dissolve:
@@ -986,9 +991,9 @@ keyed count vs summed magnitude — is § EVERY DERIVED STORE IS ONE SHAPE, abov
     two independent sums over the same packages).
     ⚑ **MAINTENANCE is the one NON-commerce receiver, and it is what makes the rule general rather than a
     commerce habit.** The empire's total maintenance is the Σ over its cities of each city's realized
-    maintenance — precisely the cross-scope receiver shape above — so it is a SLOT in the empire's own package
-    cache, never a hand-named cache beside it ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape):
-    a named field cannot be addressed by a derived mask, so it forces its own bespoke invalidation path).
+    maintenance — precisely the cross-scope receiver shape above — re-summed at the read like its commerce
+    siblings, never a hand-named cache beside the packages
+    ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)).
     ⚠ Its per-city quantity is the one a package cannot answer alone: a city's realized maintenance composes the
     three component KINDS (distance / numCities / colony) each against its own modifiers, takes the `amount`
     stack over the total, and declines wholesale under WLTKD/disorder ([economy.md](../reference/economy.md)).

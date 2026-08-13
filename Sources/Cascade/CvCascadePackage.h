@@ -31,8 +31,7 @@
 //	design, it IS the missed-emit tripwire ([DEC-no-self-heal]): the wrong value is how the missing fact is found.
 //
 //	Storage is sized lazily (ensureSized) from the registry layout -- the layout is minted at load, after the
-//	owners construct. Receiver slots ride in the same package, one variable per channel: there is no separate
-//	receiver mechanism.
+//	owners construct.
 //
 
 #include "CvCascadeChannelRegistry.h"

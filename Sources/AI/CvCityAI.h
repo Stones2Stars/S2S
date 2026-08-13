@@ -199,6 +199,7 @@ public:
 		int totalPopulation;
 		int wellbeing[NUM_WELLBEING_CHANNELS];
 		int yields[NUM_YIELD_TYPES];
+		int playerCommerceRate[NUM_COMMERCE_TYPES];
 	};
 
 	//	Fills the basis above from this city's current state. Cheap to call once; ruinous to call per candidate.

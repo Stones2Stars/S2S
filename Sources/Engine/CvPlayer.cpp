@@ -259,11 +259,6 @@ m_cachedBonusCount(NULL)
 	m_iMinTaxIncome = 0;
 	m_iMaxTaxIncome = 0;
 
-	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
-	{
-		m_cachedTotalCityBaseCommerceRate[i] = MAX_INT;
-	}
-
 	for (int i = 0; i < NUM_MAPS; i++)
 	{
 		m_groupCycles.push_back(new CLinkList<int>);
@@ -11797,26 +11792,6 @@ void CvPlayer::changeCommercePercent(CommerceTypes eIndex, int iChange)
 	setCommercePercent(eIndex, getCommercePercent(eIndex) + iChange);
 }
 
-int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
-{
-	PROFILE_FUNC();
-
-	if (m_cachedTotalCityBaseCommerceRate[eIndex] == MAX_INT)
-	{
-		// The empire receiver total is the Sigma of its members' REALIZED values
-		// ([state-repositories.md]); the retired base tier was never the quantity wanted here.
-		int64_t iTotal = 0;
-		foreach_(const CvCity* pLoopCity, cities())
-		{
-			int aiLoopCommerces[NUM_COMMERCE_TYPES];
-			pLoopCity->getCommerces(aiLoopCommerces);
-			iTotal += aiLoopCommerces[eIndex];
-		}
-		m_cachedTotalCityBaseCommerceRate[eIndex] = (int)(iTotal / 100);
-	}
-	return m_cachedTotalCityBaseCommerceRate[eIndex];
-}
-
 void CvPlayer::changeCommerceRate(CommerceTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
@@ -16855,11 +16830,20 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			const CvTeam& kMyTeam = GET_TEAM(getTeam());
 			// Tech is TEAM-held and the EXE reads teams BEFORE players, so the team's techs are loaded now -- emit
 			// per-self for each held team tech (one emit per alive member player, realized from the player side).
+			// A REPEAT tech (the Future Tech class) announced once per COUNT INCREMENT at play, so the reseed
+			// matches: one emit per held count -- an emit-per-flag would fold a different state across a
+			// save/load round-trip than play built.
 			for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
 			{
 				if (kMyTeam.isHasTech((TechTypes)iTech))
 				{
-					emitEmpireTechAdded(getID(), iTech);
+					const int iHeldCount =
+						GC.getTechInfo((TechTypes)iTech).isRepeat()
+						? std::max(1, kMyTeam.getTechCount((TechTypes)iTech)) : 1;
+					for (int iHeld = 0; iHeld < iHeldCount; ++iHeld)
+					{
+						emitEmpireTechAdded(getID(), iTech);
+					}
 				}
 			}
 			// The team's completed projects, per-self (the tech-emit precedent). The count IS the delta (old = 0
@@ -22061,10 +22045,6 @@ void CvPlayer::doUpdateCacheOnTurn()
 	// invalidateYieldRankCache();
 
 	invalidateBuildingLists();
-	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
-	{
-		m_cachedTotalCityBaseCommerceRate[i] = MAX_INT;
-	}
 }
 
 void CvPlayer::processVoteSourceBonus(VoteSourceTypes eVoteSource, bool bActive)

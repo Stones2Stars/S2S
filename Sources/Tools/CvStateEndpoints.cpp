@@ -252,12 +252,26 @@ namespace
 	{
 			kCity.getBuildingYields().readValuesInto(kValues);
 			oe_stampIdentity(kValues, CASC_SCOPE_CITY, (int)kCity.getOwner(), kCity.getID());
+			// The receiver plane is NOT a stored slot (CvCascadePackage.h: the receiver re-sums its
+			// participating members), so the census asks the ONE realized read every consumer uses -- a census
+			// that re-derived its own Σ beside it could disagree with the number it claims to explain
+			// ([DEC-single-implementation]).
+			for (size_t iSlot = 0; iSlot < kValues.sum.size(); ++iSlot)
+			{
+				const int iChannel = CascadeChannelRegistry::scopeReceiverChannel(CASC_SCOPE_CITY, (int)iSlot);
+				kValues.sum[iSlot] = InfoValuation::realizedAtCity(kCity, iChannel);
+			}
 	}
 
 	void oe_fillEmpire(const CvPlayer& kPlayer, CvCascadeSlotValues& kValues)
 	{
 			kPlayer.getCascadePackage().readValuesInto(kValues);
 			oe_stampIdentity(kValues, CASC_SCOPE_EMPIRE, (int)kPlayer.getID(), -1);
+			for (size_t iSlot = 0; iSlot < kValues.sum.size(); ++iSlot)
+			{
+				const int iChannel = CascadeChannelRegistry::scopeReceiverChannel(CASC_SCOPE_EMPIRE, (int)iSlot);
+				kValues.sum[iSlot] = InfoValuation::realizedAtEmpire(kPlayer, iChannel);
+			}
 	}
 
 	void oe_fillTeam(const CvTeam& kTeam, CvCascadeSlotValues& kValues)

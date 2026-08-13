@@ -5073,6 +5073,17 @@ void CvCityAI::AI_fillCityValuationBasis(CityValuationBasis& basis) const
 		/ 100
 	);
 	basis.totalPopulation = kOwner.getTotalPopulation();
+
+	// The empire's realized commerce -- the receiver Σ over its cities, asked of the ONE roll-up and
+	// reduced here, where the scorer consumes it as a whole-unit weight operand.
+	{
+		int aiPlayerCommerces[NUM_COMMERCE_TYPES];
+		kOwner.getCommerces(aiPlayerCommerces);
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			basis.playerCommerceRate[iCommerce] = aiPlayerCommerces[iCommerce] / 100;
+		}
+	}
 }
 
 int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanBuildReplacement, bool bForTech, const CityValuationBasis* pBasis)
@@ -5178,7 +5189,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	int aiPlayerCommerceRate[NUM_COMMERCE_TYPES];
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		aiPlayerCommerceRate[iI] = kOwner.getTotalCityBaseCommerceRate((CommerceTypes)iI);
+		aiPlayerCommerceRate[iI] = kBasis.playerCommerceRate[iI];
 	}
 
 	aiYieldRank[YIELD_PRODUCTION] = findBaseYieldRateRank(YIELD_PRODUCTION);
@@ -13128,12 +13139,11 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	}
 	iResult += iCommerceMultiplierValue;
 
-	//	The empire's realized commerce for this channel is ALREADY hoisted and memoized into aiPlayerCommerceRate
-	//	by the caller, and it is the SAME quantity: getTotalCityBaseCommerceRate is the sum over the player's
-	//	cities of each city's realized commerce, /100 -- precisely what this recomputed and then divided by 100.
-	//	⛔ Asking CvPlayer::getCommerces here re-walked EVERY CITY, per candidate, per channel, inside the
-	//	building-scoring loop ([DEC-legacy-decache-poisons-perf]: an AI loop asking a receiver sum per candidate
-	//	is answered by the CALLER, never by reshaping the machine -- and here the caller already answered it).
+	//	The empire's realized commerce arrives from the valuation BASIS -- the receiver Σ asked of the ONE
+	//	roll-up once per scoring PASS, not per candidate. ⛔ Asking CvPlayer::getCommerces here re-walked EVERY
+	//	CITY, per candidate, per channel, inside the building-scoring loop ([DEC-legacy-decache-poisons-perf]:
+	//	an AI loop asking a receiver sum per candidate is answered by the CALLER caching its own inputs, never
+	//	by reshaping the machine).
 	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * aiPlayerCommerceRate[iI] / 8;
 	{
 		const ReligionTypes eStateReligion = kOwner.getStateReligion();

@@ -33,11 +33,10 @@ supply + corporate maintenance.
   and the vassal-cities term are gone. A behaviour change is a fact to state and weigh
   ([validation.md](../specs/validation.md): the spec leads), never a curve to preserve for its own sake.
   The city's realized value is a BARE PACKAGE READ — nothing about maintenance is cached at the city any more,
-  because there is no longer a formula whose result would need caching. **The empire total is a RECEIVER SLOT in
-  the player's own package cache** — the Σ over
-  its cities' realized values, marked by whatever moved a member
-  ([state-repositories.md](../architecture/state-repositories.md)). It is the one non-commerce receiver, and it
-  carries no cache of its own: a receiver is the same cache holding a different slot.
+  because there is no longer a formula whose result would need caching. **The empire total is the Σ over its
+  cities' realized values, re-summed at the read** — no stored receiver slot holds it
+  ([state-repositories.md](../architecture/state-repositories.md) § A CROSS-SCOPE RECEIVER TOTAL). It is the one
+  non-commerce receiver, and it carries no cache of its own.
   > **⛔ THE ONE SPECIAL CASE MAINTENANCE HAS OVER ANY OTHER CASCADE CHANNEL (owner): a city emits 0 instead of
   > its package while **WE LOVE THE KING DAY** or **DISORDER** holds.** The package is sent out to the rest of
   > the cascade only if no status negates it.

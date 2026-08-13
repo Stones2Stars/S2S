@@ -5748,6 +5748,15 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 	kTechWithout.absent[EDGEB_TECHS].insert((int)eTech);
 	const CvCity* pTechCapital = getCapitalCity();
 
+	// The empire's realized yield totals -- the receiver Σ over the cities, asked ONCE for the whole sweep
+	// rather than per (building × yield) inside it (an AI loop asking a receiver Σ per candidate is answered
+	// by the CALLER caching its own inputs).
+	int aiEmpireTotalYield[NUM_YIELD_TYPES];
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+	{
+		aiEmpireTotalYield[iYield] = calculateTotalYield((YieldTypes)iYield);
+	}
+
 	for (std::set<int>::const_iterator itUnlocked = unlockedBuildings.begin(); itUnlocked != unlockedBuildings.end(); ++itUnlocked)
 	{
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itUnlocked);
@@ -5940,7 +5949,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 					const int iYieldModifier = aiWith[iJ] - aiWithout[iJ];
 					if (iYieldModifier != 0)
 					{
-						iTempValue += 4 * calculateTotalYield((YieldTypes)iJ) * iYieldModifier / getNumCities();
+						iTempValue += 4 * aiEmpireTotalYield[iJ] * iYieldModifier / getNumCities();
 					}
 				}
 

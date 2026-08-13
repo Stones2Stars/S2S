@@ -960,7 +960,6 @@ public:
 	void setCommercePercent(CommerceTypes eIndex, int iNewValue);
 	void changeCommercePercent(CommerceTypes eIndex, int iChange);
 
-	int getTotalCityBaseCommerceRate(CommerceTypes eIndex) const;
 	void changeCommerceRate(CommerceTypes eIndex, int iChange);
 
 
@@ -2133,8 +2132,6 @@ private:
 	mutable int m_orbitalInfrastructureCount;
 	mutable int* m_cachedBonusCount;
 	mutable int	 m_cachedBonusCountGameTurn;
-
-	mutable int m_cachedTotalCityBaseCommerceRate[NUM_COMMERCE_TYPES];
 
 	std::vector<civcSwitchInstance> m_civicSwitchHistory;
 
