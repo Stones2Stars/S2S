@@ -212,6 +212,29 @@ where the same bleed can re-form. The contest data therefore lives in **`hideAnd
 ([json.md §9](json.md): a dedicated system's data lives in its own block, and the module is ON iff that block
 exists and is non-empty), and `vision` keeps only the budget — strength, `elevation`, `obstruction`.
 
+> **⛔ VISIBILITY ITSELF IS NOT A SKILL, AND IS NOT MODELLED AS ONE BEYOND FILTERING (owner): *"if visibility was
+> a skill it would only be absolute values, and hide and seek has gradient values."*** A skill is a pure boolean
+> ENABLER ([json.md §8](json.md)) — it carries no value — so it can express WHICH method is in play and never HOW
+> WELL. The contest is graduated on both sides, so the strength lives in `concealment` / `detection` and the skill
+> plane is used **only as the membership filter**: which method a hider hides by, which method a seeker answers.
+> ⛔ So do not model a visibility LEVEL as skills (a ladder of `camouflage1/2/3`, a per-tier key) — that re-encodes
+> a magnitude in a plane that cannot hold one, which is exactly what the retired per-type intensity tables did
+> ([superseded-ideas #35](../architecture/superseded-ideas.md)). ⚑ And it is why the membership test is the SKILL
+> while the contest reads the magnitudes beside it — the two are not alternatives, they are the filter and the
+> value.
+>
+> **⚖ ⇒ AND THEREFORE THE VISIBILITY AND HIDING VALUES ARE MODELLED THE SAME WAY NORMAL VISION IS, JUST WITH
+> DIFFERENT PARAMETERS (owner).** That is the conclusion the gradient forces, not a separate preference: §1a's
+> scale and §2's budget-against-cost shape already express a graduated quantity correctly, so `concealment` and
+> `detection` are the same KIND of number as `sight` and `obstruction` — same ×100 fixed point, same
+> one-step-is-100 denominator, differing only in the parameters they carry.
+> ⛔ **So there is no bespoke intensity scale here, and none is to be invented.** A per-method 1…26 ladder is the
+> legacy shape that died ([superseded-ideas #35](../architecture/superseded-ideas.md)); a fresh one would be the
+> same mistake re-authored.
+> ⚠ **What this does NOT reopen is the REACH** — detection still gets none of its own (§4 below), and "modelled
+> like vision" is a statement about how the VALUES behave, never a licence to grow the second range system
+> `visibilityIntensityRange` was retired for. The contest runs on the plot the §2 budget already granted.
+
 ⚖ **THE METHOD IS A SKILL, NOT A TAG (owner).** The operative test is *can a promotion grant it?*
 ([json.md §8](json.md)) — and it plainly can: **optical camouflage** is exactly a late-game promotion INTO a
 hiding method. So the method is a [skill](skills.md), which fits on both counts: promotion-grantable, and a pure

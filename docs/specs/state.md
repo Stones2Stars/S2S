@@ -64,22 +64,51 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 | `weLoveTheKingDay` | the celebration; a DURATION-1 status re-applied every turn while its conditions hold | its own bool + timer |
 | `powerDisabled` | a blackout — the city's power is out for N turns and comes back on its own | `m_iDisabledPowerTimer`, longhand |
 
-**PLAYER** (`PlayerStatus`) — `goldenAge`, and `anarchy` beside it. ⛔ **Neither is wired, deliberately** — see
-the carve-out below; `CvPlayer` carries no status store at all.
+**PLAYER** (`PlayerStatus`)
+
+| state | meaning | legacy mechanism |
+|---|---|---|
+| `goldenAge` | the empire-wide boost period. Starting one **instantly ENDS anarchy** — not merely mutually exclusive with it ([golden-age.md](../reference/golden-age.md)) | `m_iGoldenAgeTurns`, longhand |
+| `anarchy` | the empire is in anarchy — **city disorder, empire-wide** (the callout below) | `m_iAnarchyTurns`, longhand |
+| `revolutionCooldown` | how long until CIVICS may be changed again | `m_iRevolutionTimer`, longhand |
+| `conversionCooldown` | how long until the STATE RELIGION may be changed again | `m_iConversionTimer`, longhand |
+
+⛔ **None is wired, deliberately** — see the carve-out below; `CvPlayer` carries no status store at all.
+
+> **⚖ ANARCHY IS CITY DISORDER, EMPIRE-WIDE — AND IT IS AN EMPIRE-SIDE STATUS IN ITS OWN RIGHT (owner).** The
+> city half is already the model working: `CvCity::isDisorder()` is `isOccupation() || owner.isAnarchy()`, so
+> an anarchic empire's cities are in disorder and the [economy.md](../reference/economy.md) participation gate
+> already declines their packages at the Σ. ⛔ That does NOT make anarchy a purely city-landed effect: it
+> ALSO acts at the empire — the research line is replaced by an anarchy COUNTDOWN — so the player genuinely
+> HOLDS a status rather than merely sourcing one the cities hold.
+> ⚑ **Which is why the PLAYER scope carries statuses at all, and why the list above is not just the two.**
+> The anarchy COOLDOWNS are the same shape and the same scope: each bars its action until its counter reaches
+> zero, gated `> 0` and ticked once per turn, with the UI reading *"while in anarchy"* and then *"wait N more
+> turns"* off them. ⛔ So they are not timers to leave longhand on the grounds that anarchy is the interesting
+> one — they are members of this enum.
+> ⚖ **AND THE COOLDOWN IS PER-ACTION: TWO members, never one (owner).** A civic change and a religion change
+> bar only THEMSELVES, from counters set at different moments, so folding them into a single empire cooldown
+> would make converting your religion bar a civic swap. ⛔ That is a BEHAVIOUR change wearing a consolidation,
+> which is exactly what the one-member reading looks like from the outside — the two counters are the mechanic,
+> not duplication to tidy.
+> ⚠ **The city fan is therefore anarchy's CITY HALF, never its whole expression** — reading the
+> land-on-each-city design below as the complete model is what leaves the empire-side effects homeless.
 
 > **⛔ GOLDEN AGE AND ANARCHY ARE THE TWO DELIBERATE EXCEPTIONS, AND THEY ARE NOT WIRED (owner).** They remain the
 > hand-named `m_iGoldenAgeTurns` / `m_iAnarchyTurns` on `CvPlayer`, and **the existing engine handles their
 > empire-wide effect today**. `PlayerStatus` is forward intent; nothing implements it, and `CvPlayer` carries no
 > status store. **A held decision, not an unfinished conversion** — do not read the enum entry as wired.
 >
-> **⚖ THE DESIGN IS SETTLED — this is SEQUENCING, not an open question (owner).** The two are empire-wide on all
-> cities, and they resolve by **landing a status ON EACH CITY**, driven by the empire-scope happening:
+> **⚖ THE DESIGN IS SETTLED — this is SEQUENCING, not an open question (owner).** Their CITY-reaching half
+> resolves by **landing a status ON EACH CITY**, driven by the empire-scope happening:
 > `SEVT_EMPIRE_GOLDEN_AGE_ADDED` / `_REMOVED` and `SEVT_EMPIRE_ANARCHY_ADDED` / `_REMOVED`, both of which
-> **already exist**. The player holds the SOURCE (am I in one, for how long); each city holds the EFFECT as an
-> ordinary city status. What is missing is only the consumer that does the landing.
-> ⚑ **So the object-local rule is not broken by them — it is RESTORED by the fan.** Once the status is
-> city-held, `hasStatus()` at the point of use is the whole wiring again, exactly as everywhere else. The
-> empire-wide part is the announcement, never the storage.
+> **already exist**. The player holds the status; each city holds the per-city EFFECT as an ordinary city
+> status. What is missing is only the consumer that does the landing.
+> ⚑ **So the object-local rule is not broken by them — it is RESTORED by the fan.** Once the per-city effect is
+> city-held, `hasStatus()` at the point of use is the whole wiring again, exactly as everywhere else.
+> ⚠ **But the fan is not the whole model** (the callout above): an empire-side effect — the anarchy countdown
+> displacing the research line, the two post-anarchy countdowns barring their own action — is held and read at
+> the PLAYER, and has no city to land on.
 >
 > **⛔ AND IT IS BUILT AT THE END, WHEN THE STRUCTURE IS SET — NOT AS PART OF INITIAL SETUP (owner):** *"that is
 > how rollerskating happens."* ⛔ Do not wire the consumer now, and do not re-home the two members onto a player

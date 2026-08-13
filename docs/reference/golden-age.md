@@ -3,7 +3,18 @@
 A **golden age** is a temporary, player-wide boost period. Everything hangs off one counter:
 `CvPlayer::getGoldenAgeTurns()` (turns remaining); **`isGoldenAge()` is just `goldenAgeTurns > 0`**
 (`CvPlayer.cpp:9390`). Every effect below is gated on `isGoldenAge()` and stops the turn the counter hits 0.
-It is **mutually exclusive with anarchy** and decrements 1/turn at end of the player's turn (`CvPlayer.cpp:3852`).
+It decrements 1/turn at end of the player's turn (`CvPlayer.cpp:3852`).
+
+> **⚖ A GOLDEN AGE INSTANTLY ENDS ANARCHY (owner) — it is not merely mutually exclusive with it.** On the
+> 0 → non-zero crossing `changeGoldenAgeTurns` runs `changeAnarchyTurns(-getAnarchyTurns())`, so an anarchic
+> empire that triggers one is out of anarchy that instant, with the anarchy crossing's own fact and every
+> consequence riding it. ⚑ **It sits in the PUBLIC setter's EFFECT half, never in
+> `changeGoldenAgeTurnsInternal`** — which is exactly the [DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)
+> split doing its job: a genuine golden-age START cancels anarchy, while a save read (which reaches the internal
+> setter directly, commit + maintain + announce and nothing else) restores a loaded golden age without
+> retroactively clearing the anarchy the save recorded beside it.
+> ⛔ So do not "simplify" the cancel into the internal setter to put it beside the counter — that would make a
+> LOAD mutate base state the stream is authoritative for.
 
 This doc exists so we don't re-derive golden-age behaviour from the engine each time. Locations are `file:line`
 into `Sources/`.

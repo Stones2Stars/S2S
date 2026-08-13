@@ -61,9 +61,14 @@ int CyGameTextMgr::getSymbolChar(const std::string& szTypePrefix, int iId) const
 {
 	if (iId < 0) return 0;
 
-	// The seven registries this manager's symbol pass assigns a glyph to. An explicit table rather than a
-	// generic info read, because the glyph is NOT on the info surface: these straddle the JSON/XML line and
-	// several are not CvInfo-derived at all. The set is the spec's, so it does not grow by accident.
+	// The five VARIABLE-COUNT-or-fixed registries addressed BY ID. An explicit table rather than a generic info
+	// read, because the glyph is NOT on the info surface: these straddle the JSON/XML line and several are not
+	// CvInfo-derived at all. The set is the spec's, so it does not grow by accident.
+	// ⚠ PROPERTY_ and INVISIBLE_ are deliberately ABSENT and are NOT a gap to close here: the symbol pass builds
+	// them a per-entity [ICON_<TYPE>] token instead (CvDllTranslator::initializeTags), so a caller resolves those
+	// two through the translator. ⛔ A prefix this table does not serve returns 0, and a "%c" of 0 embeds a NUL
+	// that truncates whatever string it is concatenated into -- so an unserved prefix fails as MISSING TEXT
+	// rather than as a missing icon.
 	if (szTypePrefix == "YIELD_")
 	{
 		if (iId < NUM_YIELD_TYPES) return GC.getYieldInfo((YieldTypes)iId).getChar();
