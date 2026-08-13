@@ -3026,16 +3026,6 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_ARGH", iAnger));
 		szBuffer.append(NEWLINE);
 	}
-	if (kPlayer.getCityLimit() > 0 && kPlayer.getCityOverLimitUnhappy() > 0)
-	{
-		iAnger = kPlayer.getCityOverLimitUnhappy() * (kPlayer.getNumCities() - kPlayer.getCityLimit());
-		if (iAnger > 0)
-		{
-			iTotal += iAnger;
-			szBuffer.append(gDLL->getText("TXT_KEY_ANGER_TOO_MANY_CITIES", iAnger));
-			szBuffer.append(NEWLINE);
-		}
-	}
 	if (iUnhappy > iTotal)
 	{
 		// The MISC residual -- what the named lines do not account for (the foreign-culture and landmark terms,

@@ -4292,15 +4292,6 @@ void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBE
 		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, owner.calculateTaxRateUnhappiness());
 		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getEventAnger());
 		wellbeing[WELLBEING_ANGER] -= 100 * std::min(0, iEventGranted);
-
-		if (owner.getCityLimit() != 0 && owner.getCityOverLimitUnhappy() != 0)
-		{
-			const int iOverLimitCities = owner.getNumCities() - owner.getCityLimit();
-			if (iOverLimitCities > 0)
-			{
-				wellbeing[WELLBEING_ANGER] += 100 * owner.getCityOverLimitUnhappy() * iOverLimitCities;
-			}
-		}
 	}
 	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
 	{
