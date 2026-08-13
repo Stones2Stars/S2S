@@ -722,24 +722,23 @@ scan bugs rather than fix them.
 
 > One shape: a `process*` function reads a rebuilt info's compiled deposits and pushes them into the legacy
 > accumulator the cascade replaced — while the gather folds the SAME entries into the scope package, and one
-> consumer sums both. In three of four an in-tree comment asserts the legacy leg is sanctioned, which is exactly
-> why they survived ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
+> consumer sums both. An in-tree comment asserting the legacy leg is sanctioned is what let this class survive
+> ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
 
-- **City over-limit anger — counted twice, and the magnitude is wrong.** The ruling is written FIVE LINES ABOVE
-  the feeder: the over-limit member is a PRESENCE COUNT and "the anger MAGNITUDE now lives in the cascade's
-  CITY_LIMIT `per.above` deposits, never here." Every other consumer obeys it (`==0` / `>0` / `<1`). The
-  wellbeing verdict multiplies the presence count as a per-city anger amount, on top of the cascade's own
-  deposit — as does the UI attribution. Serve it from the wellbeing read alone.
-- **Tech health and happiness — counted twice behind a camouflaging comment.** `processTech` pushes the tech's
-  compiled empire-scope wellbeing into `m_iExtraHealth`/`m_iExtraHappiness`, which the city then adds on top of
-  the cascade fold of the same entries. ⛔ The comment calling these "genuine one-shot event state" is TRUE of the
-  random-event feeders (the owner-ruled carve-out) and FALSE since `processTech` started writing the same member.
-  Cut the `processTech` lines; keep the member for the event grants.
-- **Building-keyed happiness — the reverse pass lands it, then `processBuilding` lands it again.** The keyed
-  happiness deposit is reverse-landed onto the TARGET building and folded with that building's own output; the
-  player-side keyed accumulator adds it a second time. ⛔ **Do NOT cut the neighbouring
-  `changeBuildingProductionModifier` on the same logic** — `buildRate` is excluded from the output-channel
-  landing and keyed entries are skipped by the fold outside plot scope, so its keyed accumulator is its only home.
+- **City over-limit anger — counted twice, the magnitude disagrees, and the legacy leg ignores its game option.**
+  The ruling is written FIVE LINES ABOVE the feeder: the over-limit member is a PRESENCE COUNT and "the anger
+  MAGNITUDE now lives in the cascade's CITY_LIMIT `per.above` deposits, never here." `CvPlayer::read` obeys it
+  (`hasCityOverLimitAnger() ? 1 : 0`), and so does every other consumer (`==0` / `>0` / `<1`).
+  **PROVEN — the wellbeing verdict still multiplies that presence as a magnitude:** `CvCity.cpp`'s realized
+  wellbeing adds `100 * getCityOverLimitUnhappy() * iOverLimitCities`, i.e. 1 anger per over-limit city, on top
+  of the cascade's own deposit — as does the UI attribution.
+  **PROVEN — six civics author the cascade side** (anarchism · chiefdom · despotism · monarchy · republic ·
+  theocracy) as `happiness.empire.flat {value: -3…-6, per: {CITY, above: CITY_LIMIT}}`, so the two legs are not
+  even the same size: the data says 3–6 anger per over-limit city and the legacy leg adds 1 more.
+  ⛔ **And the legs disagree on APPLICABILITY, which is the sharper half:** every authored entry is gated
+  `enabled: "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"` and the legacy fold consults no option at all — so with the
+  option OFF the engine still charges over-expansion anger the data says should not exist.
+  ⇒ Serve it from the wellbeing read alone.
 
 ## ⛔ A LEGACY PLANE ALIVE ONLY FOR PYTHON — and a value silently lost
 
@@ -1004,8 +1003,10 @@ reads as a mystery rather than as a missing binding.
   `CaptureSlaves.py` 2 · `Partisan.py` 2 · six files with one each.
 - ⚠ **46 is a FLOOR.** The census keyed on `= argsList` at end-of-line and therefore MISSED any unpack with a
   trailing comment (`autologEventManager.py` is exactly that). Re-run it with that fixed before trusting a total.
-- **Live gameplay is silently off, not merely noisy:** all three `combatResult` handlers raise every combat, so
-  `CaptureSlaves` (captives) and `Partisan` (unit capture) never run.
+- ⚑ **The `combatResult` slice is CONVERTED and is the worked precedent for the rest.** All four of its handlers
+  (`CvEventManager` · `autologEventManager` · `CaptureSlaves` · `Partisan`) unpack the identity pair and read
+  through `STATE.getUnitRead` / `getUnitFlags`, so captives and unit capture run again. It was the largest
+  contributor to the log above; the remaining worklist below is what is left.
 
 **⚖ THE LOGS ARE THE PRIORITY ORDER; THE CENSUS IS THE UPPER BOUND.** A session's `PythonDbg` shows what FIRED,
 so it is a far shorter list than the census and is the right thing to work down — measured over one late-game
@@ -1038,12 +1039,13 @@ the deliberate IDENTITY SET ruling ([patterns.md](../../architecture/patterns.md
 **The conversion PATTERN is settled** — `pyWB/CvWBDesc.py` is the worked precedent: unpack the identity, read
 through `STATE.xxx(iOwner, iId)`, write through `CyAct`. `.getOwner()` becomes free (element 0).
 
-**NOT YET KNOWN / what makes this bigger than a Python sweep.** The `combatResult` slice alone needs reads the
-new surface does not publish. Union of what its four handlers do to the two units:
+**WHAT MAKES THIS BIGGER THAN A PYTHON SWEEP — a converted handler drags reads with it.** `combatResult` is the
+measured instance: serving its four handlers took the union below, roughly half of which had to be ADDED to the
+surface rather than re-pointed. Expect the same of each remaining handler — the unpack is the cheap half.
 
-| served today | NOT served — must be ADDED |
+| already served | had to be ADDED |
 |---|---|
-| `getOwner` (free) · `getUnitPosition` · `getUnitRead[UNIT_READ_TYPE\|_DOMAIN]` · `hasUnitPromotion` · `hasUnitCombat` · probably `getCaptureKinds` | `isMadeAttack` · `isAnimal` · `getCaptureUnitType` · `getUnitCombatType` · `getExperience` · `isHuman`/`isNPC` · a position→`CyPlot` path for `plot()` · a **CyAct** route for `setDamage` and `changeExperience` |
+| `getOwner` (free) · `getUnitPosition` · `getUnitRead[UNIT_READ_TYPE\|_DOMAIN]` · `hasUnitPromotion` · `hasUnitCombat` · `getCaptureKinds` | `isMadeAttack` · `isAnimal` · `getCaptureUnitType` · `getUnitCombatType` · `getExperience` · `isHuman`/`isNPC` · a position→`CyPlot` path for `plot()` · a **CyAct** route for `setDamage` and `changeExperience` |
 
 **⛔ A PROMOTION GRANT NEVER CHECKS ACQUIRABILITY, AND ADDING THAT CHECK BREAKS IT (owner).** Events grant
 promotions that sit OUTSIDE the normal promotion list — *"they cannot be taken by xp, they can just be
