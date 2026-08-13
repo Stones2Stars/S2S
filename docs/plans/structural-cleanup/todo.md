@@ -255,14 +255,19 @@
   (gated deposit × city) whenever the city does not hold the source, but inside the load bracket *"the source has
   not streamed yet"* and *"this city will never hold it"* are indistinguishable — so it stores the cities that can
   never apply and the drain re-tests every one of them, on a heap under the 32-bit ceiling
-  ([memory-footprint.md](../../reference/memory-footprint.md)). Store the SMALL side instead of the complement.
-  ⛔ **Banking the atom ALONE is NOT the re-key, and reading it that way produces a silent DOUBLE-APPLY.** The
-  per-city route applies immediately where the city already holds the source, and banks only where it does not —
-  so a drain that re-derives every holder reaches the cities that already applied and books them a second time
+  ([memory-footprint.md](../../reference/memory-footprint.md)).
+  ⚑ **NEITHER THING IT STORES NEEDS STORING, which is the whole of the size problem.** The deposit list comes
+  back from the reverse index at drain (`DepositIndex::gatedByType` / `gatedByPredicate` / `gatedByToken` — that
+  is what the index is FOR), and the cities are enumerable from the owner. What cannot be recovered afterwards is
+  only THAT THE CROSSING HAPPENED inside the bracket, so that is the sole thing worth keeping: the key is
+  `(atom, owner)` — the shape `s_bankedAtomFans` twenty lines above it already uses.
+  ⛔ **But re-keying ALONE is a silent DOUBLE-APPLY, so the storage inverts as well.** The per-city route applies
+  immediately where the city already holds the source and banks only where it does not, so a drain that re-derives
+  every holder reaches the cities that already applied and books them a second time
   ([state-repositories.md](../../architecture/state-repositories.md) § THE INVARIANT). Nothing records the
   application per deposit, so the drain cannot tell them apart after the fact.
-  ⇒ What inverts is the STORAGE, not the key: bank the atom together with the cities that DID apply, and let the
-  drain walk the holders and skip those. The oversized thing is the complement, never the keying.
+  ⇒ Keep `(atom, owner)` PLUS the cities that DID apply, and have the drain walk the holders and skip those. The
+  appliers are a small fraction of the skips, so the complement is what was oversized — never the keying alone.
   ⚑ The drain's own reason split (`noSource` against `booked` on `<atomDrain>`) is what names the share, so this
   closes against the instrument rather than against a guess.
   ⛔ It is NOT redundant the way the fan bank's city half was — it applies deposits nothing else reaches (the
