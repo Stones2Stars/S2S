@@ -2589,6 +2589,17 @@ namespace
 					pPlayer, pCity, NULL);
 				break;
 			}
+			case SEVT_CITY_HEADQUARTERS_ADDED:
+			case SEVT_CITY_HEADQUARTERS_REMOVED:
+			{
+				// The designation IS the verdict, so this is a clean plane-C crossing: setHeadquarters emits
+				// REMOVED for the losing city and ADDED for the gaining one, and a relocation is those two facts
+				// rather than a move anything has to model.
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_IS_HEADQUARTERS), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, pCity, NULL);
+				break;
+			}
 			case SEVT_EMPIRE_ERA_ADDED:
 			case SEVT_EMPIRE_ERA_REMOVED:
 			{

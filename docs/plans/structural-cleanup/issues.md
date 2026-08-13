@@ -524,17 +524,22 @@ scan bugs rather than fix them.
   computed while `DISTANCE_TO_GOVERNMENT_CENTER` is read live. ⚠ It also re-derives by reading the amenity fold,
   which is the ordering dependency [contexts.md](../../architecture/contexts.md) bans — settle the registration
   order in the same change, and correct contexts.md, which still documents the retired counter as live.
-- **Route the CORPORATION predicates on plane C.** A conditioned deposit is withdrawn by its ATOM's verdict
-  crossing ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum)); the modifier consumer wires
-  those crossings as a hand-written `case SEVT_X → gatedByPredicate(CASC_PRED_Y)` switch, and two AUTHORED
-  predicates have no arm in it.
-  **PROVEN:** `HAS_CORPORATION` carries **93** authored deposit conditions and `IS_HEADQUARTERS` **24**, all
-  `enabled` on `flat` entries under `Assets/Data/corporations/`; neither appears in the consumer's routed set.
-  So the deposits apply when the corporation ARRIVES (plane A) and are never re-resolved.
-  ⚠ **NOT YET KNOWN — whether that is a live phantom.** The gate is the corp's own `{HAS_CORPORATION: SELF}`, and
-  a corp going DORMANT is engine-driven spread state with no source change
-  ([culture-religion-research.md](../../reference/culture-religion-research.md)), so the question is whether an
-  active↔dormant flip announces at all. Establish that before building a route.
+- **`HAS_CORPORATION` on plane C needs a VERDICT to announce — the fact that exists is the wrong one.** A
+  conditioned deposit is withdrawn by its ATOM's verdict crossing
+  ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum)), and this predicate has no arm in
+  the modifier consumer's routed set, so its deposits apply when the corporation arrives (plane A) and are never
+  re-resolved. *(`IS_HEADQUARTERS` was the other half and is now routed off
+  `SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED`, whose designation crossing IS that predicate's verdict.)*
+  **PROVEN — the open question is ANSWERED, and the answer forbids the obvious route.** `{HAS_CORPORATION}` means
+  ACTIVE ([json.md §3.5](../../specs/json.md)), and `CvCity::isActiveCorporation` computes that LIVE over four
+  legs — presence, the player-level active state, the obsoleting tech, and a prereq bonus being held. The only
+  fact on the surface, `SEVT_CITY_CORPORATION_ADDED / _REMOVED`, is emitted from `setHasCorporationInternal`,
+  i.e. **PRESENCE — one of those four legs**. Routing plane C on it would apply and withdraw on a crossing that
+  is not the predicate's, leaving a present-but-dormant corporation depositing.
+  ⇒ **So this wants the THRESHOLD-CROSSING shape, not a case arm** ([event-spine.md](../../specs/event-spine.md)
+  § THE THRESHOLD CROSSING IS ITS OWN FACT): the holder announces when the VERDICT moves, exactly as the amenity
+  fold announces `isPowered` rather than its refcount. ⚠ That is a STRUCTURE call — where the verdict is held
+  and what drives the other three legs — so it is owner input before code, not a sweep.
   ⚑ **The PLOT plane is the shape to copy**: `SEVT_PLOT_PREDICATE_ADDED / _REMOVED` carries the predicate id, so
   ONE route covers every plot bit and a new bit needs no case
   ([contexts.md](../../architecture/contexts.md): derive the routing, never hand-write it).
