@@ -574,7 +574,7 @@ enum SpineDomainEvent
 	// iC = the owner this fact is about, iSrcLoc = plotId. DOMAIN.
 	SEVT_PLOT_OWNER_ADDED           = 128,
 	SEVT_PLOT_OWNER_REMOVED         = 129,
-	// The plot ENTERED / LEFT a city's workable RADIUS (CvPlot::setWorkingCity) -- the MEMBERSHIP fact: which city
+	// The plot ENTERED / LEFT a city's workable RADIUS (CvPlot::updateWorkingCity) -- the MEMBERSHIP fact: which city
 	// may work the plot. The plot's yield moves from the old city to the new, so both cities' packages change.
 	// DISTINCT from the WORKED pair below -- membership is the superset, working is the citizen actually assigned.
 	// iA = the cityId, iC = owner, iSrcLoc = plotId. DOMAIN.

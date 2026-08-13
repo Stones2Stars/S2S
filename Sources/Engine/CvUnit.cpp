@@ -17887,6 +17887,27 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 
 		if (canPromote)
 		{
+			// A VISION promotion moves the unit's sight strength IN PLACE, so the standing unit's seen region
+			// is re-bracketed around the commit: the remove resolves against the OLD strength while it still
+			// holds (the withdrawal rule, [state-repositories.md] § THE INVARIANT). Without it the visibility
+			// counts skew on the unit's next move -- it removes a region it never added. The strength is
+			// base + combat classes + promotions (vision.md), so a promotion moves it by its own authored
+			// vision OR by a vision-authoring combat class it provides or removes.
+			bool bMovesSight = kPromotion.getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) != 0;
+			for (int iProvided = 0; !bMovesSight && iProvided < (int)kPromotion.providesUnitCombats().size(); ++iProvided)
+			{
+				bMovesSight = GC.getUnitCombatInfo((UnitCombatTypes)kPromotion.providesUnitCombats()[iProvided]).getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) != 0;
+			}
+			for (int iRemoved = 0; !bMovesSight && iRemoved < (int)kPromotion.removesUnitCombats().size(); ++iRemoved)
+			{
+				bMovesSight = GC.getUnitCombatInfo((UnitCombatTypes)kPromotion.removesUnitCombats()[iRemoved]).getFlatVision(VISION_STRENGTH, CASC_SCOPE_UNIT) != 0;
+			}
+			CvPlot* pSightPlot = bMovesSight ? plot() : NULL;
+			if (pSightPlot != NULL)
+			{
+				pSightPlot->changeAdjacentSight(getTeam(), sight(pSightPlot), false, this, true);
+			}
+
 			// The commit, the hash and the fact; then the STATS this promotion carries, then the effects below.
 			setHasPromotionInternal(eIndex, bNewValue);
 
@@ -17906,6 +17927,11 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 			}
 
 			processPromotion(eIndex, bNewValue, bInitial);
+
+			if (pSightPlot != NULL)
+			{
+				pSightPlot->changeAdjacentSight(getTeam(), sight(pSightPlot), true, this, true);
+			}
 
 			AI_flushValueCache();
 

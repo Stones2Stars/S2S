@@ -7027,8 +7027,42 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 
 	if (eOldTerrain != eNewValue)
 	{
+		// The ground's VISION values move with the terrain (a levelled peak stops raising whoever stands
+		// here), so sight is re-bracketed around the commit exactly as the feature and improvement setters
+		// do: the remove resolves against the OLD ground while it still holds. OBSTRUCTION reaches every
+		// observer whose line crosses this plot (the range box); ELEVATION only the observers standing on it.
+		bool bBoxSight = false;
+		bool bPlotSight = false;
+		{
+			const CvInfo* pOldInfo = eOldTerrain == NO_TERRAIN ? NULL : &GC.getTerrainInfo(eOldTerrain);
+			const CvInfo* pNewInfo = eNewValue == NO_TERRAIN ? NULL : &GC.getTerrainInfo(eNewValue);
+			const int iOldObstruction = pOldInfo == NULL ? 0 : pOldInfo->modifier(MODFAM_VISION, VISION_OBSTRUCTION, CASC_SCOPE_PLOT, CASC_UNIT_FLAT);
+			const int iNewObstruction = pNewInfo == NULL ? 0 : pNewInfo->modifier(MODFAM_VISION, VISION_OBSTRUCTION, CASC_SCOPE_PLOT, CASC_UNIT_FLAT);
+			const int iOldElevation = pOldInfo == NULL ? 0 : pOldInfo->modifier(MODFAM_VISION, VISION_ELEVATION, CASC_SCOPE_PLOT, CASC_UNIT_FLAT);
+			const int iNewElevation = pNewInfo == NULL ? 0 : pNewInfo->modifier(MODFAM_VISION, VISION_ELEVATION, CASC_SCOPE_PLOT, CASC_UNIT_FLAT);
+			bBoxSight = iOldObstruction != iNewObstruction;
+			bPlotSight = !bBoxSight && iOldElevation != iNewElevation;
+		}
+		if (bBoxSight)
+		{
+			updateSeeFromSight(false, true);
+		}
+		else if (bPlotSight)
+		{
+			updateSight(false, true);
+		}
+
 		// The commit, the hash and the facts; then this setter's own EFFECTS below.
 		setTerrainTypeInternal(eNewValue);
+
+		if (bBoxSight)
+		{
+			updateSeeFromSight(true, true);
+		}
+		else if (bPlotSight)
+		{
+			updateSight(true, true);
+		}
 
 		updatePlotGroup();
 
