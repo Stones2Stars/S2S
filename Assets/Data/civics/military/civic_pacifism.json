@@ -184,13 +184,13 @@
     "flat": -1
    },
    "nationalityMod": {
-    "percent": -0.3
+    "percent": -30
    },
    "distanceModifier": {
     "percent": -25
    },
    "violentMod": {
-    "percent": 1
+    "percent": 100
    }
   }
  },

@@ -124,7 +124,7 @@
     "flat": -1
    },
    "nationalityMod": {
-    "percent": 0.1
+    "percent": 10
    },
    "distanceModifier": {
     "percent": -10

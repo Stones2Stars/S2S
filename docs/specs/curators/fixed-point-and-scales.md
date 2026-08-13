@@ -172,6 +172,32 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 > The per-pop row is the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case in miniature:
 > the scale was *mapped* at the consumption site, never guessed from the field name.
 
+### 4c-rev. ⛔ TWO SCALES IN ONE TAG — the RevolutionDCM mods
+
+`fRevIdxNationalityMod` · `fRevIdxGoodReligionMod` · `fRevIdxBadReligionMod` · `fRevViolentMod`
+(Civic + Trait). RevolutionDCM consumes them as **`1.0 + mod`** (`Revolution.py`; `violentMod` as a fraction of
+the always-violent threshold), so the number carries a PERCENTAGE either way — but legacy authored it on **two
+incompatible scales in the same tag**:
+
+| population | form | example |
+|---|---|---|
+| the CIVICS + the BASE trait file | a RATIO | `0.5` = +50% |
+| the **Thunderbrd trait module** | PERCENT POINTS | `40` = +40% — which legacy fed to `1.0 + mod` as **41×** |
+
+⚖ **OWNER RULING: they all mean PERCENT POINTS.** The ratio population converts (×100) and the module's values
+pass through — TB *"does not follow any spec, plan, or any kind of coherent structure … we make sure it does
+now"*, so the incoherence is normalized AT THE CURATOR and never reaches the data.
+⚠ **This is a stated BEHAVIOUR change** ([validation.md](../validation.md)): the TB traits stop being ~11–41×
+multipliers. It is currently INERT — no leaderhead authors a trait — and bites the moment the community does.
+⛔ The two populations are **disjoint by an order of magnitude** (ratios reach 2.0, points start at 10), so the
+boundary is exact over the authored data rather than a judgement re-made per value. A value landing in the gap
+is a scale nobody has ruled on: `curate_common.ratio_to_percent` **RAISES** instead of guessing.
+⚑ The reader divides once, at its own point of use (`RevUtils._revModRatio`), turning the whole percent back
+into the ratio the index formulas want.
+⚠ The three `CvPlayer` float accumulators these also feed (`m_fRevIdx*Mod`) have **no readers at all** — the
+Python side reads `INFO.getRevolution(...)` directly — so they are inert here and belong to the
+writerless-accumulator sweep ([todo.md](../../plans/structural-cleanup/todo.md)), not to this scale question.
+
 ## 4c-bis. ⛔ CONVERT BY ARITHMETIC CLUSTER, NEVER BY GETTER
 
 **A getter cannot be converted alone.** Its co-operands are on the same scale *by arithmetic necessity*: convert one

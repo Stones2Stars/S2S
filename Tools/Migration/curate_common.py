@@ -54,6 +54,31 @@ def descale100(v):
         return v // 100 if v % 100 == 0 else round(v / 100.0, 2)
     return v
 
+RATIO_AS_PERCENT = frozenset((
+    "fRevIdxNationalityMod", "fRevIdxBadReligionMod", "fRevIdxGoodReligionMod", "fRevViolentMod",
+))
+
+def ratio_to_percent(tag, v):
+    """The RevolutionDCM mods (RATIO_AS_PERCENT) -> whole percent POINTS, from TWO legacy populations.
+    RevolutionDCM consumes these as `1.0 + mod` (Revolution.py; violentMod as a fraction of the
+    always-violent threshold), so the number carries a percentage either way -- but legacy authored it on
+    two incompatible scales in the SAME tag: the base trait file and the civics write a RATIO (`0.5` =
+    +50%), while the Thunderbrd trait module writes PERCENT POINTS (`40` = +40%, which the engine has
+    always fed to `1.0 + mod` as 41x). Owner ruling: they all mean percent points, so the ratios convert
+    and the module's values are already correct.
+    The two populations are disjoint by an order of magnitude -- ratios reach 2.0, percent points start at
+    10 -- so the boundary is exact over the authored data. It is NOT a judgement to be re-made per value:
+    anything landing in the gap is a scale nobody has ruled on, and it RAISES rather than guessing."""
+    a = abs(v)
+    if a <= 2:
+        return int(round(v * 100))
+    if a >= 10:
+        return int(round(v))
+    raise ValueError(
+        "%s=%r sits between the ratio population (<=2) and the percent-point population (>=10); "
+        "its intended scale is unruled -- see docs/specs/curators/fixed-point-and-scales.md 4c-rev"
+        % (tag, v))
+
 HOIST = {"Description": "description", "Civilopedia": "civilopedia", "Quote": "quote",
          "Help": "help", "Strategy": "strategy"}
 # b-flags -> clean boolean keys (no Hungarian). Rename the unclear ones; others just drop the leading 'b'.

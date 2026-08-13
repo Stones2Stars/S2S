@@ -552,6 +552,8 @@ def curate(typ, rec, store):
             v = _num(t)
             if v not in (None, 0, 0.0):
                 family, scope, member, unit = SCALAR[tag]
+                if tag in cc.RATIO_AS_PERCENT:
+                    v = cc.ratio_to_percent(tag, v)
                 _put(fam, family, scope, member, unit, v)
         elif tag == "iLargestCityHappiness":
             v = _num(t)

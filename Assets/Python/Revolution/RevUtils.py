@@ -829,6 +829,13 @@ def getCivicsHolyCityEffects(pPlayer):
 
 	return [goodEffect, badEffect]
 
+def _revModRatio(v):
+	# The revolution mods are authored as whole percent points, while the index formulas below scale by
+	# the ratio they represent (`1.0 + mod`, and violentMod as a fraction of the violence threshold).
+	# ONE conversion point for every reader of them.
+	return v / 100.0
+
+
 def getCivicsReligionMods(pPlayer):
 
 	if not pPlayer or pPlayer.getNumCities() < 1:
@@ -842,7 +849,7 @@ def getCivicsReligionMods(pPlayer):
 		goodMod += INFO.getRevolution("CIVIC_", iKCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_GOOD_RELIGION]
 		badMod += INFO.getRevolution("CIVIC_", iKCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_BAD_RELIGION]
 
-	return [goodMod,badMod]
+	return [_revModRatio(goodMod), _revModRatio(badMod)]
 
 
 def getCivicsNationalityMod(pPlayer):
@@ -855,7 +862,7 @@ def getCivicsNationalityMod(pPlayer):
 
 		natMod += INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_NATIONALITY]
 
-	return natMod
+	return _revModRatio(natMod)
 
 def getCivicsViolentRevMod(pPlayer):
 
@@ -867,7 +874,7 @@ def getCivicsViolentRevMod(pPlayer):
 
 		vioMod += INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_VIOLENT]
 
-	return vioMod
+	return _revModRatio(vioMod)
 
 def canDoCommunism(pPlayer):
 
@@ -1121,7 +1128,7 @@ def getTraitsReligionMods(pPlayer):
 			goodMod += INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_GOOD_RELIGION]
 			badMod += INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_BAD_RELIGION]
 
-	return [goodMod, badMod]
+	return [_revModRatio(goodMod), _revModRatio(badMod)]
 
 
 ########################## Traits effect helper functions #####################

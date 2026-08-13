@@ -98,10 +98,10 @@
     "flat": 3
    },
    "badReligionMod": {
-    "percent": 0.2
+    "percent": 20
    },
    "goodReligionMod": {
-    "percent": 0.5
+    "percent": 50
    },
    "religiousFreedom": {
     "flat": 5
