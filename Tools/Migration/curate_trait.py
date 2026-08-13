@@ -94,7 +94,6 @@ SCALAR = {
     # wellbeing
     "iHealth":                         ("health", "empire", "", "flat"),
     "iHappiness":                      ("happiness", "empire", "", "flat"),
-    "iNonStateReligionHappiness":      ("happiness", "empire", "nonStateReligion", "flat"),
     "iGlobalPopulationgrowthratepercentage": ("growth", "empire", "", "percent"),
     # great people / generals
     "iGreatPeopleRateModifier":        ("greatPeopleRate", "empire", "", "percent"),
@@ -567,6 +566,15 @@ def curate(typ, rec, store):
                 entry = OrderedDict([("value", v), ("unit", "IS_MILITARY")])   # entry on the `cities` target (json
                 cur = node.get("flat")                                         # §3.7; retires the BANNED perMilitaryUnit
                 node["flat"] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])  # member, DEC-conditions-are-predicates)
+        elif tag == "iNonStateReligionHappiness":
+            v = _num(t)
+            if v not in (None, 0, 0.0):   # per NON-STATE religion present -> the SPEC form: a `religion:`-qualified
+                node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})  # entry on
+                entry = OrderedDict([("value", v), ("religion", "!IS_STATE_RELIGION")])   # the `cities` target (json
+                cur = node.get("flat")                                                    # §3.7), exactly as
+                node["flat"] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])
+                # ⛔ NOT a `nonStateReligion` MEMBER: it answers WHAT IS COUNTED, which §6's triage test rules is
+                # never a kind -- and no kind was ever registered for it, so all 24 authorings landed nowhere.
         elif tag in SCALAR_COND:
             v = _num(t)
             if v not in (None, 0, 0.0):

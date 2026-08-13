@@ -230,13 +230,16 @@
 - **Land the UNKINDED MEMBERS — authored deposits `readJson` drops.** ⛔ Read the `[READJSON] unkinded-member
   <family>.<member>` census before anything else on this — it is the authoritative worklist, one grep of the
   load log. Each one resolves to exactly one disposition:
-  - **a genuine KIND to mint** — `happiness.nonStateReligion` is the §3.7 counted-kind filter
-    `{religion: "!IS_STATE_RELIGION"}` ([json.md §3.7](../../specs/json.md)), still authored and still
-    unregistered;
-  - **the trigger-plane set** — `cityCapture.resistance` is trigger-plane and deliberately unkinded
-    ([triggers.md](../../specs/triggers.md)) — minting a row for it carves the rollerskate in;
-  - **the trigger-plane set** (`combat.subdueAnimal`, `combat.nukeInterception`, …) stays deliberately unkinded
-    ([triggers.md](../../specs/triggers.md)); minting a kind for one is the banned move.
+  - **the trigger-plane set** (`cityCapture.resistance`, `combat.subdueAnimal`, `combat.nukeInterception`, …)
+    stays deliberately unkinded ([triggers.md](../../specs/triggers.md)); minting a kind for one is the banned
+    move.
+  - **⛔ a CONDITION-AS-MEMBER rollerskate, which is what most of them turn out to be.** A member answering
+    WHERE or WHAT-IS-COUNTED rather than WHICH COMPONENT is never a kind (§6's triage test): it re-authors as
+    the predicate or qualifier that already says the same thing, at the CURATOR, and no kind is minted.
+    ⚠ **The census cannot tell this class from a genuinely missing kind** — both surface as the same
+    `unkinded-member` line — so run the triage test on every entry before minting anything. ⚑ Where a sibling
+    curator emits the same mechanic correctly, that is the shape to copy: the outlier is the defect, not the
+    vocabulary.
 
 - **Route the remaining `per` COUNT scalers.** Deposits scale on the commerce-slider rates
   (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), on the wonder counts
