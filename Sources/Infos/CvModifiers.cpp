@@ -219,6 +219,38 @@ int CvModifiers::pluralTargetSum(ModifierFamily eFamily, int iKind, CvCascScope 
 		bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
 }
 
+// The sign-split read (see the header). ONE walk over both populations the two point reads cover -- the
+// point-foldable plane (what sum()'s compiled slots fold) and the FK-less plural-target plane (what
+// pluralTargetSum walks, its filter mirrored verbatim) -- each included entry split by its own sign.
+void CvModifiers::sumSigned(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+	int iPluralTargetSeg, CvModAudience eAudience, int& iPositiveOut, int& iNegativeOut) const
+{
+	iPositiveOut = 0;
+	iNegativeOut = 0;
+	for (size_t iEntry = 0; iEntry < m_entries.size(); ++iEntry)
+	{
+		const CvModEntry* pEntry = m_entries[iEntry];
+		if (pEntry->family != eFamily || pEntry->scope != eScope || pEntry->unit != eUnit) continue;
+		if (iKind >= 0 && pEntry->kind != iKind) continue;
+		const bool bPointPlane = pEntry->isPointFoldable();
+		const bool bPluralPlane = iPluralTargetSeg >= 0 && pEntry->targetSeg == iPluralTargetSeg
+			&& pEntry->targetFk < 0
+			&& pEntry->enabled == NULL && pEntry->disabled == NULL
+			&& pEntry->unitQual == NULL && pEntry->religionQual == NULL && !pEntry->hasPer;
+		if (!bPointPlane && !bPluralPlane) continue;
+		if (pEntry->aiOnly && eAudience == MOD_AUDIENCE_HUMAN) continue;
+		if (!pEntry->aiOnly && eAudience == MOD_AUDIENCE_AI_ONLY) continue;
+		if (pEntry->value >= 0)
+		{
+			iPositiveOut += pEntry->value;
+		}
+		else
+		{
+			iNegativeOut -= pEntry->value;
+		}
+	}
+}
+
 int CvModifiers::targetedSum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
 	int iTargetSeg, int iTargetFk, CvModAudience eAudience) const
 {

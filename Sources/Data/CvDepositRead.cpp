@@ -219,9 +219,23 @@ bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascSco
 	int64_t iValue = (ePerScaling == PER_SCALE_APPLIED)
 		? perScale(kEntry, evalCtx, kEntry.value)
 		: (int64_t)kEntry.value;
+	// modifier.md §2b: a negative WELLBEING amount routes to the opposing channel HERE, at the one resolve, so
+	// every plane applies, books and withdraws through the same routed slot. The sign is tested BEFORE the
+	// multiplicity multiply: multiplicity carries the apply/withdraw direction, so testing after it would route
+	// a withdrawal of a positive deposit onto the twin.
+	int iChannelRouted = iChannel;
+	if (!bPercentSide && iValue < 0)
+	{
+		const int iTwin = CascadeChannelRegistry::wellbeingTwin(iChannel);
+		if (iTwin >= 0)
+		{
+			iChannelRouted = iTwin;
+			iValue = -iValue;
+		}
+	}
 	iValue *= iMultiplier;
 
-	iChannelOut = iChannel;
+	iChannelOut = iChannelRouted;
 	bPercentSideOut = bPercentSide;
 	iValueOut = iValue;
 	return true;

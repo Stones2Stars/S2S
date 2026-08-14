@@ -208,7 +208,11 @@ licence to add one speculatively; mint it only if and when a family's data actua
 > **⛔ There is NO `polarity` mode — wellbeing is FOUR ORDINARY CHANNELS (owner):** `happiness`, `anger`,
 > `health`, `unhealth`. Happiness sums against anger, health against unhealth, at the verdict (§2b). A negative
 > deposit is routed to the opposing channel **at fill**, so the split is a routing rule, never a storage shape —
-> no good/bad plane, no duplicated positions, no per-family combiner. This is what keeps
+> no good/bad plane, no duplicated positions, no per-family combiner. **The routing granularity is PER ENTRY**
+> (a deposit IS an entry, [json.md §3.9](json.md)) — a mixed-sign author SPLITS across the pair rather than
+> netting, and per-entry is the only delta-able form, so the apply, the valuation and every other fill aggregate
+> identically by construction. It reaches the FLAT side only: a negative PERCENT scales its own channel down and
+> is never re-homed to the twin. This is what keeps
 > [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield) literal: wellbeing is four yields like
 > any other, on the one uniform package
 > ([DEC-uniform-cache-shape](../architecture/decisions.md#dec-uniform-cache-shape)).

@@ -95,6 +95,12 @@ public:
 	// sites still use -- they move to the enum with their next touch (reported follow-up).
 	int sum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, CvModAudience eAudience) const;
 	int sum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const;
+	// The SIGN-SPLIT read of the same population sum() + pluralTargetSum() cover, split PER ENTRY by each
+	// entry's own sign (modifier.md §2b: a negative wellbeing deposit routes to the opposing channel per entry
+	// -- the granularity the apply's resolve routes at, so the wellbeing fill aggregates exactly as the apply
+	// does; a mixed-sign author SPLITS rather than netting). Both magnitudes come back POSITIVE.
+	void sumSigned(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit,
+		int iPluralTargetSeg, CvModAudience eAudience, int& iPositiveOut, int& iNegativeOut) const;
 	// The per-property point read (the open MODFAM_PROPERTY plane is keyed by the property's FK id).
 	int propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, CvModAudience eAudience) const;
 	// THE KEYED READ ([modifier.md §5]): what this source deposits onto each NAMED target of a keyed axis

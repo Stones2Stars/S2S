@@ -12,12 +12,11 @@
 //	game state that never happened -- and with no self-heal anywhere ([DEC-no-self-heal]) nothing would put it
 //	back. That is the whole reason the raw membership reads (enableCount/removeCount) are public.
 //
-//	WHO ASKS. Two consumers, one shape (both were previously filed as separate missing machines):
-//	  - the TECH-PICKING logic (enabler.md par.8): "hypothetically finish this tech" -> which candidates does it
-//	    unlock -> repeat, walking outward. Queuing beyond the tree is one such step; the cheapest path is a chain
-//	    of them. The enabler itself deliberately cannot answer this -- its maintained frontier holds only what is
-//	    unlocked NOW -- which is exactly why the overlay is the caller's.
-//	  - the AI's "would acquiring X unlock anything worth having" valuations.
+//	WHO ASKS. Any hypothetical asker (enabler.md par.8 -- one overlay implementation, never a second); the live
+//	consumer is the civic what-if's MEMBERSHIP half (CvPlayerAI's civic-value building leg). A future asker adds
+//	the read it needs in the same change as its consumer -- "what does this tech ENABLE" is deliberately not one
+//	of them: that is a forward edge fetch off the tech's own compiled `enables`, never an overlay question
+//	(AGENTS.md par. AI valuation of ENABLEMENT).
 //
 //	⛔ WHAT IT DOES NOT ANSWER -- THE BONUS AXIS. A bonus NEVER drives tree membership (enabler.md par.8, resolved
 //	forks: the BONUS axis is GATE-ONLY): its dependents ROOT in the tree and sit visible-GREYED on the bonus
@@ -34,7 +33,6 @@
 
 #include "Enabler/CvEnablerKernel.h"   // EnBucketSets + accumHave -- the ONE source-side edge walk
 #include "CvEdges.h"                   // EnEdgeBucket -- the interned bucket vocabulary
-#include <vector>
 
 class CvInfo;
 class EnablerDomain;
@@ -69,19 +67,10 @@ public:
 	void clear();
 	bool isEmpty() const;
 
-	// ---- the reads: the par.7.1 formula over (maintained + overlay) ----
+	// ---- the read: the par.7.1 formula over (maintained + overlay) ----
 
 	// In the tree GIVEN the hypothetical.
 	bool inTree(const EnablerDomain& kDomain, EnEdgeBucket eBucket, int iId) const;
-
-	// The DELTA -- in the tree WITH the hypothetical and not without it. This is the question both consumers
-	// actually ask ("what does acquiring this OPEN UP"), and it is deliberately the primitive rather than
-	// something each caller re-derives by differencing two inTree calls.
-	bool unlocks(const EnablerDomain& kDomain, EnEdgeBucket eBucket, int iId) const;
-
-	// Every id `unlocks` holds for. One O(N) scan over the domain, filling a caller-owned buffer (the
-	// EnablerDomain::listedIds shape) so a hot caller reuses one vector.
-	void unlockedIds(const EnablerDomain& kDomain, EnEdgeBucket eBucket, std::vector<int>& out) const;
 
 private:
 	// A SET per bucket, not a count -- and that is exact rather than a simplification: the formula only ever

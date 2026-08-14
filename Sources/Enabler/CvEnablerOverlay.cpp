@@ -84,32 +84,3 @@ bool EnablerOverlay::inTree(const EnablerDomain& kDomain, EnEdgeBucket eBucket, 
 	return ov_member(kDomain, iId, m_enables[eBucket], m_removes[eBucket], m_held[eBucket]);
 }
 
-bool EnablerOverlay::unlocks(const EnablerDomain& kDomain, EnEdgeBucket eBucket, int iId) const
-{
-	// WITH the hypothetical and not without it. The "without" side reads the maintained state directly rather
-	// than re-running the formula on an empty overlay -- same answer, and it keeps the maintained tri-state the
-	// authority on what is really in the tree.
-	return inTree(kDomain, eBucket, iId) && !kDomain.inTree(iId);
-}
-
-void EnablerOverlay::unlockedIds(const EnablerDomain& kDomain, EnEdgeBucket eBucket, std::vector<int>& out) const
-{
-	out.clear();
-
-	if (eBucket == NO_EDGEB || !kDomain.isSeeded())
-	{
-		return;
-	}
-	// Only an id this overlay ENABLES can newly enter the tree, so the scan is over the overlay's own
-	// contributions rather than the whole domain: a hypothetical that removes or holds can take a candidate OUT
-	// of the tree, never put one in, and `unlocks` asks the in-direction only.
-	const std::set<int>& kEnabled = m_enables[eBucket];
-
-	for (std::set<int>::const_iterator it = kEnabled.begin(); it != kEnabled.end(); ++it)
-	{
-		if (unlocks(kDomain, eBucket, *it))
-		{
-			out.push_back(*it);
-		}
-	}
-}

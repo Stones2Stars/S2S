@@ -1590,15 +1590,15 @@ void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 	const bool bAiAudience = val_aiAudience(evalCtx);
 	// The two AUTHORED families, each sign-routed onto its channel pair (modifier.md §2b: a negative deposit is
 	// routed to the opposing channel -- at THIS fill; the info's storage stays the two signed families).
-	// Contribution granularity: the collapsed unconditioned slot sum routes by its NET sign per scope (the
-	// per-entry split is preserved across the conditioned tail, which routes entry by entry).
+	// Contribution granularity: PER ENTRY on both passes, exactly as the apply's resolve routes -- a mixed-sign
+	// author SPLITS across the pair rather than netting (two shipped civics author both signs in one scope).
 	const ModifierFamily FAMILY_OF[2] = { MODFAM_HAPPINESS, MODFAM_HEALTH };
 	const WellbeingChannel GOOD_OF[2] = { WELLBEING_HAPPINESS, WELLBEING_HEALTH };
 	const WellbeingChannel BAD_OF[2]  = { WELLBEING_ANGER, WELLBEING_UNHEALTH };
 	for (int iPair = 0; iPair < 2; ++iPair)
 	{
 		const ModifierFamily eFamily = FAMILY_OF[iPair];
-		// (1) the compiled unconditioned sums per folded scope, net-sign-routed
+		// (1) the unconditioned population per folded scope, sign-split per entry
 		for (int iScopeIdx = 0; iScopeIdx < NUM_VAL_FOLD_SCOPES; ++iScopeIdx)
 		{
 			//	⛔ TWO PLANES, exactly as the point read sums ([CvInfo.h] getFlatWellbeing). A source fans its
@@ -1609,20 +1609,16 @@ void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 			//	⚑ The asking CITY is one of the cities fanned to, so the flat IS this candidate's delta here --
 			//	no city count enters a per-city valuation.
 			//	⚠ A QUALIFIED plural entry stays unserved by design ([modifier.md] §5: a keyed+conditioned
-			//	deposit is honestly UNSERVED rather than papered over with an unconditional sum) -- pluralTargetSum
-			//	declines those, so this cannot smuggle one in.
+			//	deposit is honestly UNSERVED rather than papered over with an unconditional sum) -- sumSigned
+			//	mirrors pluralTargetSum's filter, so this cannot smuggle one in.
 			static int s_iCitiesSeg = -1;
-			const int iSum = modifiers->sum(eFamily, CHANNEL_AMOUNT, VAL_FOLD_SCOPES[iScopeIdx], CASC_UNIT_FLAT, bAiAudience)
-				+ modifiers->pluralTargetSum(eFamily, CHANNEL_AMOUNT, VAL_FOLD_SCOPES[iScopeIdx], CASC_UNIT_FLAT,
-					modSegmentCached("cities", s_iCitiesSeg), bAiAudience);
-			if (iSum >= 0)
-			{
-				wellbeing[GOOD_OF[iPair]] += iSum;
-			}
-			else
-			{
-				wellbeing[BAD_OF[iPair]] -= iSum;
-			}
+			int iPositive = 0;
+			int iNegative = 0;
+			modifiers->sumSigned(eFamily, CHANNEL_AMOUNT, VAL_FOLD_SCOPES[iScopeIdx], CASC_UNIT_FLAT,
+				modSegmentCached("cities", s_iCitiesSeg),
+				bAiAudience ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN, iPositive, iNegative);
+			wellbeing[GOOD_OF[iPair]] += iPositive;
+			wellbeing[BAD_OF[iPair]] += iNegative;
 		}
 		// (2) the conditioned tail, routed entry by entry
 		size_t iBegin = 0;
