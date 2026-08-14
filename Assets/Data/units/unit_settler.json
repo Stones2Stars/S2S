@@ -129,6 +129,62 @@
      "max": 0
     }
    }
+  ],
+  "culture": [
+   {
+    "value": 5,
+    "enabled": "TRAIT_CREATIVE"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_CREATIVE1"
+   },
+   {
+    "value": 10,
+    "enabled": "TRAIT_COMPLEX_CREATIVE2"
+   },
+   {
+    "value": 20,
+    "enabled": "TRAIT_COMPLEX_CREATIVE3"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_COMPLEX_PROGRESSIST2"
+   },
+   {
+    "value": 10,
+    "enabled": "TRAIT_COMPLEX_PROGRESSIST3"
+   },
+   {
+    "value": 10,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC1"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC2"
+   }
+  ],
+  "population": [
+   {
+    "value": 1,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC"
+   },
+   {
+    "value": 1,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC1"
+   },
+   {
+    "value": 1,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC2"
+   },
+   {
+    "value": 1,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC3"
+   }
   ]
  },
  "cost": {

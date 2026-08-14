@@ -1,4 +1,11 @@
 {
+ "BUILDING_VALLEY_OF_THE_KINGS": { "requires": { "operate": { "all": [
+  "BUILDING_THE_GREAT_PYRAMID",
+  "BUILDING_THE_GREAT_SPHINX",
+  { "type": "POPULATION", "scope": "city", "min": 3 },
+  "TECH_SCULPTURE",
+  { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+ ] } } },
  "BUILDING_HOUSING_STONE_HUTS": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
  "BUILDING_HOUSING_CAVE_DWELLING": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
  "BUILDING_EARTH_WALL": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },

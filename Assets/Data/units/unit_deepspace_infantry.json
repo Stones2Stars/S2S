@@ -99,7 +99,7 @@
   "militaryWorth": 500,
   "xpValueAttack": 6,
   "xpValueDefense": 3,
-  "domain": "DOMAIN_IMMOBILE",
+  "domain": "DOMAIN_LAND",
   "defaultUnitAI": "UNITAI_CITY_DEFENSE",
   "formationType": "FORMATION_TYPE_RANGED",
   "advisor": "ADVISOR_MILITARY",

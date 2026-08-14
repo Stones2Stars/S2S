@@ -98,15 +98,6 @@
 
 ## Legacy still breathing — delete it
 
-- Give the WORLD-capped autoBuild its first-to-earn award path — `BUILDING_VALLEY_OF_THE_KINGS` is the whole
-  population. It is excluded from system placement ([enabler.md §3](../../specs/enabler.md): a `{world: 1}` cap
-  is a cross-player race dormancy cannot express, and its one-shot pulses — freeTechs, goldenAge — have no
-  defined moment on a building that can wake repeatedly), so it is placed nowhere until an award-on-crossing
-  placer exists: when its gate first becomes satisfied for a player AND the world cap has room, place it in that
-  city as a genuine first acquisition (bFirst grants fire normally).
-  ⚑ The rest of the former "placer cluster" is closed: achievements / relics / traditions / national beliefs are
-  all `constructs` outcome targets (the constructs-migration entry below), and the autoBuild population — the
-  `C_AD_*` adoption markers included — is system-placed with the bands.
 
 > The standing rule (purge violently; blast radius is the signal; the worst offenders are the ones OFF the core
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is

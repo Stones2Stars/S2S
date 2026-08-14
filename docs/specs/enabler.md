@@ -271,9 +271,15 @@ dormant forever — the band model, which is what deletes both legacy per-turn p
 already fact-maintained, so no per-turn re-check exists for either.
 - ⛔ **A WORLD/TEAM-capped autoBuild member is EXCLUDED from placement** (the enabler's census excludes it): its
   cap is a cross-player RACE — two empires satisfying the gate would both activate a `{world: 1}` entity, and
-  `allowed` gates BUILDS, never activations. Such a member needs its own first-to-earn award path
-  (`BUILDING_VALLEY_OF_THE_KINGS` is the whole shipped population). An EMPIRE cap stays in: it is per-player,
-  and the shipped members' own gates pin the one active city (the C_AD palace atom).
+  `allowed` gates BUILDS, never activations. Such a member is instead **AWARDED FIRST-TO-EARN** by the trigger
+  engine: on the facts that can move its gate (a building added, a tech acquired, a population step), the gate is
+  evaluated through the ONE evaluator and the cap through the ONE cap comparison (`allowedOk`), and the first
+  city to satisfy both receives it as a **genuine first acquisition** (`bFirst = true`, so its one-shot pulses
+  fire exactly once through the ordinary ADDED path); thereafter it stands and dormancy toggles its standing
+  effects like anything else. `BUILDING_VALLEY_OF_THE_KINGS` is the whole shipped population — its gate is the
+  Pyramid AND the Sphinx standing IN THE SAME CITY (owner), which makes the qualifying city world-unique by
+  construction. An EMPIRE cap stays in placement: it is per-player, and the shipped members' own gates pin the
+  one active city (the C_AD palace atom).
 - ⚖ **A system-placed building's CONSIDERED ACTION is its ACTIVATION, never its placement (owner).** It is
   placed with `bFirst = false`, and the trigger engine fires its considered BUILDING-GRANT leg on the
   `SEVT_CITY_BUILDING_ACTIVATED` crossing instead — the live case is `C_AD_*` granting its `C_AC_*` access

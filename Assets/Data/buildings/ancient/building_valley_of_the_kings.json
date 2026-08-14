@@ -8,23 +8,12 @@
  "requires": {
   "operate": {
    "all": [
+    "BUILDING_THE_GREAT_PYRAMID",
+    "BUILDING_THE_GREAT_SPHINX",
     {
      "type": "POPULATION",
      "scope": "city",
      "min": 3
-    },
-    "BUILDING_PALACE",
-    {
-     "type": "BUILDING_THE_GREAT_PYRAMID",
-     "scope": "empire",
-     "min": 1,
-     "scaling": "amountBuildings"
-    },
-    {
-     "type": "BUILDING_THE_GREAT_SPHINX",
-     "scope": "empire",
-     "min": 1,
-     "scaling": "amountBuildings"
     },
     "TECH_SCULPTURE",
     {
