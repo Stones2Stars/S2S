@@ -36,19 +36,15 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
+ "grants": {
+  "buildings": [
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TREASURY"
+    "building": "BUILDING_TREASURY"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MUSEUM"
+    "building": "BUILDING_MUSEUM"
    }
-  ]
- },
- "grants": {
+  ],
   "greatPersonAction": {
    "hurry": {
     "base": 100,

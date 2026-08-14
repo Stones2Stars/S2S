@@ -63,58 +63,6 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_AGRICULTURAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_COMMERCIAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_CULTURAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_INDUSTRIAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_MEDICAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_MILITARY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_POLITICAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_SAFETY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_SCIENTIFIC"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_SEAFARING"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ACHIEVEMENT_TOURISTIC"
-   }
-  ]
- },
  "grants": {
   "promotions": [
    "PROMOTION_RETINUE_LOYAL_SERVANT"
@@ -126,6 +74,44 @@
    "SPECIALIST_GREAT_ENGINEER",
    "SPECIALIST_NOBLE",
    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_ACHIEVEMENT_AGRICULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_COMMERCIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_CULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_INDUSTRIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MEDICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MILITARY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_POLITICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SAFETY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SCIENTIFIC"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SEAFARING"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_TOURISTIC"
+   }
   ]
  },
  "cost": {

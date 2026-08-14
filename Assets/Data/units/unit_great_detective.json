@@ -67,10 +67,6 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SCOTLAND_YARD"
    }
   ]
  },
@@ -78,7 +74,12 @@
   "greatPeople": [
    "SPECIALIST_GREAT_SLEUTH"
   ],
-  "goldenAge": true
+  "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_SCOTLAND_YARD"
+   }
+  ]
  },
  "cost": {
   "upkeep": 1

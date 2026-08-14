@@ -54,14 +54,16 @@
     },
     "chance": 100,
     "commerce": 10000
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MARS_SCIENCE_LABORATORY"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MARS_SCIENCE_LABORATORY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MISSION_TO_MARS"
+    "building": "BUILDING_MISSION_TO_MARS"
    }
   ]
  },

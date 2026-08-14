@@ -35,7 +35,7 @@ import engine
 import boolexpr
 from curate_common import (VISION_PLOT, collapse_hide_and_seek, merge_vision, put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity,
                            add_tags, specialunit_tag,
-                           emit_sizematters, SM_COMBATMOD_UNIT)
+                           emit_sizematters, SM_COMBATMOD_UNIT, wipe_entity_json)
 from store import Store, REPO
 
 # ---- identity.base: the create-unit FOUNDATION (§0.6) ----
@@ -145,9 +145,9 @@ TAG_BY_UNITAI = {
 }
 
 # ---- grants (one-shot, lists) ----
-# NB `Buildings` is NOT here: the unit's <Buildings> (MISSION_CONSTRUCT -- buildings it can construct via a mission)
-# is NOT a grant. It emits as the `constructs` OUTCOME verb under outcomes.actions[] (owner 2026-07-21, json.md §8),
-# in emit_outcomes() -- moved off the off-grammar grants.buildings.
+# NB `Buildings` is not in this table but IS a grants emission: the unit's <Buildings> (MISSION_CONSTRUCT -- the
+# buildings it can construct via a mission) emits to grants.buildings in pass2, beside the founder list -- the
+# construct mission reads exactly that surface (CvUnit::canConstruct -> grantsBuilding).
 GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople"}
 # GroupSpawnUnitCombatTypes is NOT a grant (handout) -- it is the unit's own group-SPAWN config (pack combat class +
 # chance + title). It emits to its OWN top-level `groupSpawn` block as struct rows (owner principle 2026-07-11: config
@@ -808,11 +808,6 @@ def emit_outcomes(typ, rec):
             arr.append(ao)
         if arr:
             out["actions"] = arr
-    # MISSION_CONSTRUCT: the unit's <Buildings> = the buildings it can construct via a mission. Emitted as the
-    # `constructs` OUTCOME verb (owner 2026-07-21, json.md §8) -- ONE action per building -- NOT grants.buildings
-    # (a construct is a mission-action producing an outcome, not a one-shot provision).
-    for b in _typelist(rec, "Buildings"):
-        out.setdefault("actions", []).append(OrderedDict([("mission", "MISSION_CONSTRUCT"), ("constructs", b)]))
     return out or None
 
 
@@ -1126,6 +1121,16 @@ def curate(typ, rec, store):
         # plain grants.buildings (ruling 8 / json.md §5): the settler's considered action IS founding, so no
         # bespoke foundBuildings key -- entry form {building, enabled?} unchanged.
         grants["buildings"] = found_buildings(store)
+    # MISSION_CONSTRUCT: the unit's <Buildings> = the buildings it can construct via a mission. The construct
+    # mission reads the unit's grants.buildings (CvUnit::canConstruct -> grantsBuilding), so the repertoire IS
+    # grants.buildings (owner ruling -- the earlier outcomes.actions `constructs` emission reached nothing:
+    # no engine consumer ever read the verb). Same {building} entry form as the founder list above; no shipped
+    # unit is both a founder and a constructor, but composing via extend keeps that safe anyway.
+    cons = _typelist(rec, "Buildings")
+    if cons:
+        lst = grants.setdefault("buildings", [])
+        for b in cons:
+            lst.append(OrderedDict([("building", b)]))
     # UnitUpgrades is ALREADY carried by the edges: requires.build.dormant.all is the upgrades MINUS the
     # superseders and replacedBy.units is the superseders (enabler.md par.3), so an `upgradesTo` block
     # beside them was a duplicate in a section that does not exist. Verified over the shipped data: every
@@ -1344,7 +1349,7 @@ def curate_special_unit(typ, rec, store):
 
 HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set(DCM_AIRBOMB) | set(GRANT_LIST)
            | set(COST) | set(ID_SCALAR) | set(ID_LIST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS
-           | PASS2_TAGS | {"Buildings",   # -> outcomes.actions[] `constructs` verb (MISSION_CONSTRUCT, owner 2026-07-21)
+           | PASS2_TAGS | {"Buildings",   # -> grants.buildings (the MISSION_CONSTRUCT repertoire; canConstruct reads it)
                            "Type", "Combat", "SubCombatTypes",   # -> root combatClass / combatClasses (owner 2026-07-20)
                            "iCombat", "iMoves",   # -> strength / movement families (owner 2026-07-20)
                            "Flavors", "iAIWeight", "bGoldenAge",
@@ -1412,11 +1417,16 @@ def main():
     if args.write:
         base = os.path.join(REPO, "Assets", "Data", "units")
         os.makedirs(base, exist_ok=True)
+        # drop-before-rewrite THROUGH THE SHARED WIPE -- it is also what registers this folder for the
+        # additions-overlay re-apply at exit (curate_common). This curator's bespoke in-place write skipped it,
+        # so every unit regen silently dropped the _additions overlays (the settler founder-culture case).
+        wipe_entity_json(base, expected=n)
         for typ, obj in results.items():
             with open(os.path.join(base, typ.lower() + ".json"), "w") as fp:
                 json.dump(obj, fp, indent=1, ensure_ascii=False)
         sud = os.path.join(REPO, "Assets", "Data", "specialunits")
         os.makedirs(sud, exist_ok=True)
+        wipe_entity_json(sud, expected=len(su_results))
         for typ, obj in su_results.items():
             with open(os.path.join(sud, typ.lower() + ".json"), "w") as fp:
                 json.dump(obj, fp, indent=1, ensure_ascii=False)

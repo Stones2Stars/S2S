@@ -54,42 +54,37 @@
      "base": 4,
      "random": 5
     }
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_CARNIVAL"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CARNIVAL"
+    "building": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+    "building": "BUILDING_FOLKLORE_GUANACO"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_GUANACO"
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+    "building": "BUILDING_GOVERNORS_PETS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
+    "building": "BUILDING_HERD_LLAMA"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HERD_LLAMA"
+    "building": "BUILDING_TAXIDERMIST"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
+    "building": "BUILDING_ZOO"
    }
   ]
  },

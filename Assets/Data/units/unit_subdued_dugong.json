@@ -61,30 +61,28 @@
      "base": 4,
      "random": 4
     }
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_FOLKLORE_E_MERMAID"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_E_MERMAID"
+    "building": "BUILDING_FOLKLORE_DUGONG"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_DUGONG"
+    "building": "BUILDING_MASTER_SEA_HUNTER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MASTER_SEA_HUNTER"
+    "building": "BUILDING_WONDERS_OF_THE_DEEP"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_WONDERS_OF_THE_DEEP"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
+    "building": "BUILDING_TAXIDERMIST"
    }
   ]
  },

@@ -39,7 +39,7 @@ import engine
 from store import Store, REPO
 from curate_common import (FAMILY_ORDER, collapse_hide_and_seek, merge_vision, put_art, emit_art, descale100, fold_text_to_identity, gate_entity,
                            TAG_BY_UNITCOMBAT, add_tags,
-                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
+                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE, wipe_entity_json)
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
 from curate_promotion import (COMBAT_MODS, FAMILIES, NEGATE_TAGS, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
@@ -364,6 +364,9 @@ def main():
     if args.write:
         base = os.path.join(REPO, "Assets", "Data", "unitcombats")
         os.makedirs(base, exist_ok=True)
+        # drop-before-rewrite THROUGH THE SHARED WIPE -- also what registers the folder for the additions-overlay
+        # re-apply at exit (curate_common). A bespoke in-place write skips both (the curate_unit precedent).
+        wipe_entity_json(base, expected=n)
         for typ, obj in results.items():
             with open(os.path.join(base, typ.lower() + ".json"), "w") as fp:
                 json.dump(obj, fp, indent=1, ensure_ascii=False)

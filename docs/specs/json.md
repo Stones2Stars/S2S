@@ -677,10 +677,11 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 > ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)), with the scattered
 > `destroy`/`consumes` verbs as migration input.
 
-> **`grants` is ONLY genuine provisions handed out on the considered action.** What does NOT belong here (and where it lives
-> instead): unit `buildings` (MISSION_CONSTRUCT) → the **`constructs`** outcome verb under `outcomes.actions[]` (§8,
-> one action per building — a construct is a mission-action producing an outcome, not a provision; emitted by
-> `curate_unit.py`, no longer `grants.buildings`); `greatPersonAction` / `goldenAge` → **`missions`** (§8 — the rest of
+> **`grants` is ONLY genuine provisions handed out on the considered action.** A unit's MISSION_CONSTRUCT
+> repertoire — the buildings it can hand over by consuming itself — IS `grants.buildings` (the construct mission
+> reads exactly that surface; the founder's list and the hero's are one grammar, distinguished only by the
+> considered action that delivers them: founding vs the mission). What does NOT belong here (and where it lives
+> instead): `greatPersonAction` / `goldenAge` → **`missions`** (§8 — the rest of
 > the mission-CONCEPT unification is a PERMANENT carve-out: missions/CvOutcome ground-up rework);
 > `builds` → the **`builds`** block (§8); promotion `unitCombats`/`removesUnitCombats` → **`skills`**; project
 > `grantsSpecialBuilding` → **`enables.specialBuildings`** (flips SpecialBuildingValid — unlocks, hands out nothing);
@@ -1270,7 +1271,7 @@ restricts nothing and is one. The question is whose property it is, never who is
   enclosing section gives the relationship (`enables.builds` = "unlocks these," unit `builds` = "can perform these").
 - **`missions`** *(PERMANENT carve-out — missions/CvOutcome ground-up rework)* — the actions a unit **performs**, each
   producing an **outcome**; **a mission carries its `grants`** — the outcome (what lands) IS the mission's grant payload.
-  Unifies the hardcoded mission-abilities (MISSION_CONSTRUCT/DISCOVER/GOLDEN_AGE — mis-filed today as `grants.buildings` /
+  Unifies the hardcoded mission-abilities (MISSION_CONSTRUCT/DISCOVER/GOLDEN_AGE — carried today by `grants.buildings` /
   `greatPersonAction` / `goldenAge`) with the **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions`
   — data-driven MISSION→outcome-list with cost/conditions/kill). The CvOutcome DATA is ALREADY JSON-migrated into the
   `outcomes` block below (owner 2026-07-20); what this future `missions` block adds is the CONCEPT unification with the
@@ -1280,8 +1281,8 @@ restricts nothing and is one. The question is whose property it is, never who is
   > **⚖ OUTCOME PAYLOAD VOCABULARY (owner 2026-07-20) — the `outcomes` block uses clean VERB-PER-PAYLOAD keys.**
   > `outcomes.kill[]` (combat-kill) / `outcomes.actions[]` (missions), each entry
   > `{ requires:{outcome:OUTCOME_*, plot?, unit?}, chance, <reward verbs> }`. Each effect is a verb, collision-checked
-  > against the reserved words (avoiding `builds`/`provides`/`grants`/`construct`): **`constructs`** a building
-  > (LOCKED) · **`spawns`** `{unit,toCity?}` · **`places`** a bonus · **`promotes`** · **`triggers`** an event ·
+  > against the reserved words (avoiding `builds`/`provides`/`grants`/`construct`):
+  > **`spawns`** `{unit,toCity?}` · **`places`** a bonus · **`promotes`** · **`triggers`** an event ·
   > **`consumes`** the unit · reused families for one-shot yields (`food`/`production`/`commerce`/`gold`/…),
   > `greatPeople`/`population`/`revolution`, `happiness:{duration}`, `PROPERTY_*`; `{python}` for Python-authoritative
   > outcomes. **The engine CONSUMES this** — the `CvOutcome` classes are fed from it via `mapFrom` (the CvOutcome

@@ -63,34 +63,6 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TRADITION_WORK_ETHIC"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_IRONWORKS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_CREATIVE_CONSTRUCTIONS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_MINING_INC"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_BULLSEYE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT"
    }
   ]
  },
@@ -99,6 +71,29 @@
    "SPECIALIST_GREAT_ENGINEER"
   ],
   "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_TRADITION_WORK_ETHIC"
+   },
+   {
+    "building": "BUILDING_IRONWORKS"
+   },
+   {
+    "building": "BUILDING_HQ_CREATIVE_CONSTRUCTIONS"
+   },
+   {
+    "building": "BUILDING_HQ_MINING_INC"
+   },
+   {
+    "building": "BUILDING_HQ_BULLSEYE"
+   },
+   {
+    "building": "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL"
+   },
+   {
+    "building": "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT"
+   }
+  ],
   "greatPersonAction": {
    "discover": {
     "base": 100000,

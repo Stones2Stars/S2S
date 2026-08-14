@@ -96,134 +96,6 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_TEMPLE_OF_SOLOMON"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_CHURCH_OF_THE_NATIVITY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_MASJID_AL_HARAM"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_KASHI_VISHWANATH"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_MAHABODHI"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_KONG_MIAO"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_DAI_MIAO"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_STATUE_OF_ZEUS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_PIR_E_SABZ"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_KARNAK_TEMPLE_COMPLEX"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TEOTIHUACAN"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CORICANCHA"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_ODINS_SANCTUARY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SHRINE_OF_BAB"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CANAANITE_SHRINE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GREAT_TEMPLE_TAY_NINH"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_NATURE_ANSWER"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_STATUE_OF_GOMATESHWARA"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_BABEL_TOWER"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MORMAN_SHRINE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_OLDOINYO_NGAI"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ARKONA"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SCIENTOLOGY_SEDE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SPIRITS_ANSWER"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_ISE_JINGU"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_GOLDEN_TEMPLE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_KHAN_TENGRI"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_THE_TOMB_OF_ANSYEN_BON"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_PATTAKY_OF_OLODUMARE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_NATIONAL_BELIEF_KARMA"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_NATIONAL_BELIEF_RESURRECTION"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_NATIONAL_BELIEF_REINCARNATION"
    }
   ]
  },
@@ -232,6 +104,104 @@
    "SPECIALIST_GREAT_PROPHET"
   ],
   "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_THE_TEMPLE_OF_SOLOMON"
+   },
+   {
+    "building": "BUILDING_THE_CHURCH_OF_THE_NATIVITY"
+   },
+   {
+    "building": "BUILDING_THE_MASJID_AL_HARAM"
+   },
+   {
+    "building": "BUILDING_THE_KASHI_VISHWANATH"
+   },
+   {
+    "building": "BUILDING_THE_MAHABODHI"
+   },
+   {
+    "building": "BUILDING_THE_KONG_MIAO"
+   },
+   {
+    "building": "BUILDING_THE_DAI_MIAO"
+   },
+   {
+    "building": "BUILDING_THE_STATUE_OF_ZEUS"
+   },
+   {
+    "building": "BUILDING_PIR_E_SABZ"
+   },
+   {
+    "building": "BUILDING_THE_KARNAK_TEMPLE_COMPLEX"
+   },
+   {
+    "building": "BUILDING_TEOTIHUACAN"
+   },
+   {
+    "building": "BUILDING_CORICANCHA"
+   },
+   {
+    "building": "BUILDING_THE_ODINS_SANCTUARY"
+   },
+   {
+    "building": "BUILDING_SHRINE_OF_BAB"
+   },
+   {
+    "building": "BUILDING_CANAANITE_SHRINE"
+   },
+   {
+    "building": "BUILDING_GREAT_TEMPLE_TAY_NINH"
+   },
+   {
+    "building": "BUILDING_NATURE_ANSWER"
+   },
+   {
+    "building": "BUILDING_STATUE_OF_GOMATESHWARA"
+   },
+   {
+    "building": "BUILDING_BABEL_TOWER"
+   },
+   {
+    "building": "BUILDING_MORMAN_SHRINE"
+   },
+   {
+    "building": "BUILDING_OLDOINYO_NGAI"
+   },
+   {
+    "building": "BUILDING_ARKONA"
+   },
+   {
+    "building": "BUILDING_SCIENTOLOGY_SEDE"
+   },
+   {
+    "building": "BUILDING_SPIRITS_ANSWER"
+   },
+   {
+    "building": "BUILDING_THE_ISE_JINGU"
+   },
+   {
+    "building": "BUILDING_THE_GOLDEN_TEMPLE"
+   },
+   {
+    "building": "BUILDING_KHAN_TENGRI"
+   },
+   {
+    "building": "BUILDING_THE_TOMB_OF_ANSYEN_BON"
+   },
+   {
+    "building": "BUILDING_PATTAKY_OF_OLODUMARE"
+   },
+   {
+    "building": "BUILDING_NATIONAL_BELIEF_KARMA"
+   },
+   {
+    "building": "BUILDING_NATIONAL_BELIEF_RESURRECTION"
+   },
+   {
+    "building": "BUILDING_NATIONAL_BELIEF_REINCARNATION"
+   }
+  ],
   "greatPersonAction": {
    "discover": {
     "base": 100000,

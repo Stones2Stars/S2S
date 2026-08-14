@@ -54,26 +54,25 @@
     },
     "chance": 100,
     "commerce": 6000
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LUNAR_OUTPOST"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_LUNAR_OUTPOST"
+    "building": "BUILDING_LUNAR_XPRIZE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_LUNAR_XPRIZE"
+    "building": "BUILDING_YUTU"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_YUTU"
+    "building": "BUILDING_MOON_ROCK_LAB"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MOON_ROCK_LAB"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY"
+    "building": "BUILDING_LUNAR_ORBITAL_PLATFORM_GATEWAY"
    }
   ]
  },

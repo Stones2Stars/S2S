@@ -57,20 +57,17 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GLADIATORIAL_SCHOOL"
-   }
-  ]
- },
  "grants": {
   "promotions": [
    "PROMOTION_DRILL1"
   ],
   "greatPeople": [
    "SPECIALIST_SETTLED_GLADIATOR"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_GLADIATORIAL_SCHOOL"
+   }
   ]
  },
  "cost": {

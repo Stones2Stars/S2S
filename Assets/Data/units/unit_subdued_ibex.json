@@ -143,42 +143,37 @@
       }
      }
     ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+    "building": "BUILDING_HERD_GOAT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HERD_GOAT"
+    "building": "BUILDING_MASTER_HUNTER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MASTER_HUNTER"
+    "building": "BUILDING_FOLKLORE_WALIA_IBEX"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_WALIA_IBEX"
+    "building": "BUILDING_ZOO"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
+    "building": "BUILDING_TAXIDERMIST"
    }
   ]
  },

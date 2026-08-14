@@ -114,46 +114,40 @@
       "culture": 5
      }
     ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST"
+    "building": "BUILDING_ENCLOSURE_PRIMATE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_PRIMATE"
+    "building": "BUILDING_MONKEY_BREEDER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MONKEY_BREEDER"
+    "building": "BUILDING_ZOO"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
+    "building": "BUILDING_TAXIDERMIST"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
+    "building": "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_MANDRILL"
+    "building": "BUILDING_FOLKLORE_MANDRILL"
    }
   ]
  },

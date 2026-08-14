@@ -54,46 +54,40 @@
      "base": 3,
      "random": 2
     }
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_FOLKLORE_SEA_LION"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_SEA_LION"
+    "building": "BUILDING_MASTER_HUNTER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MASTER_HUNTER"
+    "building": "BUILDING_CAMP_SEAL"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CAMP_SEAL"
+    "building": "BUILDING_CARNIVAL_TRAINED_SEAL"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CARNIVAL_TRAINED_SEAL"
+    "building": "BUILDING_ENCLOSURE_SEAL"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_SEAL"
+    "building": "BUILDING_ZOO"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
+    "building": "BUILDING_TAXIDERMIST"
    }
   ]
  },

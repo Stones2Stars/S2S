@@ -69,34 +69,31 @@
       "culture": 16
      }
     ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RAIN_DANCE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_RAIN_DANCE"
+    "building": "BUILDING_WAR_DANCE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_WAR_DANCE"
+    "building": "BUILDING_FIRE_DANCE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FIRE_DANCE"
+    "building": "BUILDING_NATURE_DANCE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_NATURE_DANCE"
+    "building": "BUILDING_MOON_DANCE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MOON_DANCE"
+    "building": "BUILDING_FERTILITY_DANCE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FERTILITY_DANCE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_BLOOD_DANCE"
+    "building": "BUILDING_BLOOD_DANCE"
    }
   ]
  },

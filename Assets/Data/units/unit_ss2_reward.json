@@ -54,22 +54,22 @@
     },
     "chance": 100,
     "commerce": 5000
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MIR"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MIR"
+    "building": "BUILDING_SKYLAB"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SKYLAB"
+    "building": "BUILDING_SPACE_STATION_TOURS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SPACE_STATION_TOURS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ORBITAL_HOTEL"
+    "building": "BUILDING_ORBITAL_HOTEL"
    }
   ]
  },

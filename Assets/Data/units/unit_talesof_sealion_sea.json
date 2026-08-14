@@ -32,15 +32,13 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
+ "grants": {
+  "buildings": [
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_SEA_LION"
+    "building": "BUILDING_FOLKLORE_SEA_LION"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_E_SEA"
+    "building": "BUILDING_FOLKLORE_E_SEA"
    }
   ]
  },

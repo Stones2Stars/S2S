@@ -32,19 +32,16 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
+ "grants": {
+  "buildings": [
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_T_TALES_OF_FISH"
+    "building": "BUILDING_FOLKLORE_T_TALES_OF_FISH"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_E_SEA"
+    "building": "BUILDING_FOLKLORE_E_SEA"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_GIANT_SQUID"
+    "building": "BUILDING_FOLKLORE_GIANT_SQUID"
    }
   ]
  },

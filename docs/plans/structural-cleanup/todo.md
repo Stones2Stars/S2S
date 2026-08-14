@@ -264,12 +264,12 @@
   clears this city's anger").
   ⛔ Not a getter per channel — it is the `per`-scaled share of a group the read already hands out.
 
-- Migrate the `constructs` outcome data onto the unit's grants. `constructs` is the dominant
-  `outcomes.actions[]` verb ([json.md §8](../../specs/json.md)) and reaches nothing; the has-building surface it
-  needs already exists on the rebuilt unit info and is read by the construct mission.
-  ⚡ CURATOR item — units authoring `constructs` vastly outnumber those authoring `grants.buildings`.
-  ⛔ Do NOT give `CvOutcome` a building member — that carries a hardcoded ability's payload on the data-driven
-  outcome plane, the carve-out the mission-concept rework owns.
+- Route every fat curator's `--write` block through `wipe_entity_json` — ~20 still write in place
+  (`curate_civic`, `curate_era`, `curate_handicap`, and their kin; census: grep the `--write` blocks for the
+  missing call). A bespoke write skips the drop-before-rewrite AND the additions-overlay registration
+  ([curators/README.md](../../specs/curators/README.md)) — inert only while the type has no `_additions` file,
+  and the first overlay someone authors for one of those types silently drops on the next regen (the
+  `curate_unit` settler-overlay case, now fixed there and in `curate_unitcombat`).
 
 - Evaluate the ROUTE's tech-gated movement tail at the movement read. A route's base move cost and its
   tech-gated delta are ONE slot (the bare number plus a conditioned entry, [modifier.md §6](../../specs/modifier.md)),

@@ -119,26 +119,24 @@
       "production": 15
      }
     ]
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_WORLDVIEW_SLAVERY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SLAVE_MARKET"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_WORLDVIEW_CANNIBALISM"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
    }
   ]
  },
  "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WORLDVIEW_SLAVERY"
+   },
+   {
+    "building": "BUILDING_SLAVE_MARKET"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_CANNIBALISM"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+   }
+  ],
   "greatPersonAction": {
    "hurry": {
     "base": 100,

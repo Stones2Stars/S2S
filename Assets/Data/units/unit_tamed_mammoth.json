@@ -86,41 +86,32 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HERD_MAMMOTH"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CARNIVAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
-   }
-  ]
- },
  "grants": {
   "promotions": [
    "PROMOTION_COLD1"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_HERD_MAMMOTH"
+   },
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "building": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+   },
+   {
+    "building": "BUILDING_CARNIVAL"
+   },
+   {
+    "building": "BUILDING_ZOO"
+   },
+   {
+    "building": "BUILDING_TAXIDERMIST"
+   }
   ]
  },
  "cost": {

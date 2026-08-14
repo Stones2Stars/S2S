@@ -32,15 +32,13 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
+ "grants": {
+  "buildings": [
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_E_MERMAID"
+    "building": "BUILDING_FOLKLORE_E_MERMAID"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_DUGONG"
+    "building": "BUILDING_FOLKLORE_DUGONG"
    }
   ]
  },

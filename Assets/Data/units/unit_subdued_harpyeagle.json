@@ -51,58 +51,49 @@
      "base": 4,
      "random": 4
     }
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_ENCLOSURE_BIRD"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_BIRD"
+    "building": "BUILDING_FOLKLORE_T_BIRDS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_T_BIRDS"
+    "building": "BUILDING_FOLKLORE_HARPY_EAGLE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_HARPY_EAGLE"
+    "building": "BUILDING_FOLKLORE_T_RAPTORS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_T_RAPTORS"
+    "building": "BUILDING_FOLKLORE_E_SKY"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_E_SKY"
+    "building": "BUILDING_FALCONER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FALCONER"
+    "building": "BUILDING_HAWKING_HUT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HAWKING_HUT"
+    "building": "BUILDING_FEATHER_WORKER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FEATHER_WORKER"
+    "building": "BUILDING_ZOO"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
+    "building": "BUILDING_TAXIDERMIST"
    }
   ]
  },

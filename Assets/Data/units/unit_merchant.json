@@ -66,62 +66,6 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CENTRAL_BANK"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_WALL_STREET"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_CEREAL_MILLS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_SIDS_SUSHI_CO"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_ADVENTURE_TOURS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_BURGERWORLD"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_EAST_WEST_TRADERS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_FASHION_HOUSE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_MALLWART"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_MAPSTER"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_BIG_MCDOWELLS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_MOONBEAN_COFFEE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_WONKA_CONFECTIONERIES"
    }
   ]
  },
@@ -130,6 +74,50 @@
    "SPECIALIST_GREAT_MERCHANT"
   ],
   "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_CENTRAL_BANK"
+   },
+   {
+    "building": "BUILDING_WALL_STREET"
+   },
+   {
+    "building": "BUILDING_HQ_CEREAL_MILLS"
+   },
+   {
+    "building": "BUILDING_HQ_SIDS_SUSHI_CO"
+   },
+   {
+    "building": "BUILDING_HQ_ADVENTURE_TOURS"
+   },
+   {
+    "building": "BUILDING_HQ_BURGERWORLD"
+   },
+   {
+    "building": "BUILDING_HQ_EAST_WEST_TRADERS"
+   },
+   {
+    "building": "BUILDING_HQ_FASHION_HOUSE"
+   },
+   {
+    "building": "BUILDING_HQ_MALLWART"
+   },
+   {
+    "building": "BUILDING_HQ_MAPSTER"
+   },
+   {
+    "building": "BUILDING_HQ_BIG_MCDOWELLS"
+   },
+   {
+    "building": "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL"
+   },
+   {
+    "building": "BUILDING_HQ_MOONBEAN_COFFEE"
+   },
+   {
+    "building": "BUILDING_HQ_WONKA_CONFECTIONERIES"
+   }
+  ],
   "greatPersonAction": {
    "discover": {
     "base": 100000,

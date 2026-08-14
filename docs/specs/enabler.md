@@ -198,7 +198,7 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 >   be byte-identical duplicated state that must never drift — and a city-local atom (the plot map-category
 >   gate) stays a live check at the gate, the same split projects already use. Completion acquires it for the
 >   PLAYER, and it leaves every city's offer at once (the built leave-rule, keyed on the held set). A
->   `notConstructible` member is placed by its own system (the grants machine, the outcome `constructs` verb)
+>   `notConstructible` member is placed by its own system (the grants machine, a unit's construct mission)
 >   through the ONE placement choke point, which routes an empire-level target to the player — the placing
 >   systems never learn the tag exists.
 > - **The self-grant is DELETED with the copies.** Holding at the player IS the empire-wide effect, so the

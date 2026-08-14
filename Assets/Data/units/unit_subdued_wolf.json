@@ -114,66 +114,55 @@
       "culture": 5
      }
     ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_MILITARY_STANDARD_CANINES"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_CANINES"
+    "building": "BUILDING_DOG_BREEDER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_DOG_BREEDER"
+    "building": "BUILDING_DOG_KENNELS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_DOG_KENNELS"
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+    "building": "BUILDING_GOVERNORS_PETS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
+    "building": "BUILDING_GUARD_DOG_TRAINER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GUARD_DOG_TRAINER"
+    "building": "BUILDING_HERDING_DOG_TRAINER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HERDING_DOG_TRAINER"
+    "building": "BUILDING_HUNTING_DOG_TRAINER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HUNTING_DOG_TRAINER"
+    "building": "BUILDING_POLICE_DOG_TRAINER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_POLICE_DOG_TRAINER"
+    "building": "BUILDING_SLED_DOG_TRAINER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SLED_DOG_TRAINER"
+    "building": "BUILDING_TAXIDERMIST"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
+    "building": "BUILDING_WAR_DOG_TRAINER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_WAR_DOG_TRAINER"
+    "building": "BUILDING_ENCLOSURE_WOLF"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_WOLF"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
+    "building": "BUILDING_ZOO"
    }
   ]
  },

@@ -280,8 +280,8 @@ two-leg shape exactly ([contexts.md](../architecture/contexts.md)), and it is wh
 `checkFreeBuildings` sweep was doing. ⚠ A one-shot fan passes every test on the cities standing at the time
 and silently misses every future one.
 ⚠ A separate ARRIVAL mechanism feeds the same targets and is not this: the buildings and heritages handed over
-by animals or entertainers come from the OUTCOME system's `constructs` verb
-([mission-outcome-system.md](mission-outcome-system.md)), which places the first copy; the grant above is what
+by animals or entertainers come from the unit's CONSTRUCT MISSION — its repertoire is the unit's own
+`grants.buildings`, read by `CvUnit::canConstruct` — which places the first copy; the grant above is what
 spreads it.
 
 **GRANT, contradicting the earlier reclassification** — the **unattributed** free-specialist ledger

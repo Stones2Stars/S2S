@@ -54,14 +54,16 @@
     },
     "chance": 100,
     "commerce": 10000
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SEDNA_PROBE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SEDNA_PROBE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ASTRONOMICAL_DATABASE"
+    "building": "BUILDING_ASTRONOMICAL_DATABASE"
    }
   ]
  },

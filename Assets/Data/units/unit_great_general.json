@@ -63,52 +63,44 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TRADITION_HUNTER"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TRADITION_SEA_HUNTING"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TRADITION_NAVAL_MASCOT"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TRADITION_ARCHERY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SECRET_ARMY_BASE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_NATIONAL_COURIER_SYSTEM"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_ACADEMY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_SAFARI_HUNTERS"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HQ_ULTIMATE_SOLDIERS"
    }
   ]
  },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_TRADITION_HUNTER"
+   },
+   {
+    "building": "BUILDING_TRADITION_SEA_HUNTING"
+   },
+   {
+    "building": "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT"
+   },
+   {
+    "building": "BUILDING_TRADITION_NAVAL_MASCOT"
+   },
+   {
+    "building": "BUILDING_TRADITION_ARCHERY"
+   },
+   {
+    "building": "BUILDING_SECRET_ARMY_BASE"
+   },
+   {
+    "building": "BUILDING_NATIONAL_COURIER_SYSTEM"
+   },
+   {
+    "building": "BUILDING_MILITARY_ACADEMY"
+   },
+   {
+    "building": "BUILDING_HQ_SAFARI_HUNTERS"
+   },
+   {
+    "building": "BUILDING_HQ_ULTIMATE_SOLDIERS"
+   }
   ]
  },
  "cost": {

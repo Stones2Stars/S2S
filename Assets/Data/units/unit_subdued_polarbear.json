@@ -114,46 +114,40 @@
       "culture": 5
      }
     ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+    "building": "BUILDING_ENCLOSURE_BEAR"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ENCLOSURE_BEAR"
+    "building": "BUILDING_CARNIVAL_DANCING_BEAR"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CARNIVAL_DANCING_BEAR"
+    "building": "BUILDING_FOLKLORE_T_BEAR"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_T_BEAR"
+    "building": "BUILDING_FOLKLORE_POLAR_BEAR"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_FOLKLORE_POLAR_BEAR"
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+    "building": "BUILDING_GOVERNORS_PETS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_GOVERNORS_PETS"
+    "building": "BUILDING_MASTER_HUNTER"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MASTER_HUNTER"
+    "building": "BUILDING_TAXIDERMIST"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_TAXIDERMIST"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ZOO"
+    "building": "BUILDING_ZOO"
    }
   ]
  },

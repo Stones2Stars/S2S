@@ -54,10 +54,13 @@
     },
     "chance": 100,
     "commerce": 10000
-   },
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_INTERSTELLAR_PROBE"
+    "building": "BUILDING_INTERSTELLAR_PROBE"
    }
   ]
  },

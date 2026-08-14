@@ -54,14 +54,16 @@
     },
     "chance": 100,
     "commerce": 10000
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EUROPA_PROBE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_EUROPA_PROBE"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ASTROBIOLOGY_LAB"
+    "building": "BUILDING_ASTROBIOLOGY_LAB"
    }
   ]
  },

@@ -49,31 +49,24 @@
    "flat": 100
   }
  },
- "outcomes": {
-  "actions": [
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_CAPTURED_ASTEROID"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_VENUS_HYDROGEN_BOMBARDMENT"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MERCURY_COMETARY_BOMBARDMENT"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_MARTIAN_ASTEROID_MINE"
-   }
-  ]
- },
  "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CAPTURED_ASTEROID"
+   },
+   {
+    "building": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT"
+   },
+   {
+    "building": "BUILDING_VENUS_HYDROGEN_BOMBARDMENT"
+   },
+   {
+    "building": "BUILDING_MERCURY_COMETARY_BOMBARDMENT"
+   },
+   {
+    "building": "BUILDING_MARTIAN_ASTEROID_MINE"
+   }
+  ],
   "greatPersonAction": {
    "hurry": {
     "base": 1500

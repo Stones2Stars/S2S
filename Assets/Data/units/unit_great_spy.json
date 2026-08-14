@@ -66,18 +66,6 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SPY_NETWORK"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SPY_TRAINING_FACILITY"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SCOTLAND_YARD"
    }
   ]
  },
@@ -85,7 +73,18 @@
   "greatPeople": [
    "SPECIALIST_GREAT_SPY"
   ],
-  "goldenAge": true
+  "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_SPY_NETWORK"
+   },
+   {
+    "building": "BUILDING_SPY_TRAINING_FACILITY"
+   },
+   {
+    "building": "BUILDING_SCOTLAND_YARD"
+   }
+  ]
  },
  "ai": {
   "flavours": [

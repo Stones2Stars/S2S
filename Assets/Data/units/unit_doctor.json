@@ -63,14 +63,6 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_HEALTH_SPA"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_UNIVERSAL_HEALTH_CARE"
    }
   ]
  },
@@ -79,6 +71,14 @@
    "SPECIALIST_GREAT_DOCTOR"
   ],
   "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_HEALTH_SPA"
+   },
+   {
+    "building": "BUILDING_UNIVERSAL_HEALTH_CARE"
+   }
+  ],
   "greatPersonAction": {
    "discover": {
     "base": 100000,

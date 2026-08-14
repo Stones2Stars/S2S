@@ -54,34 +54,31 @@
     },
     "chance": 100,
     "commerce": 10000
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_IKAROS"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_IKAROS"
+    "building": "BUILDING_KEPLER_SPACE_TELESCOPE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_KEPLER_SPACE_TELESCOPE"
+    "building": "BUILDING_JAMES_WEBB_SPACE_TELESCOPE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_JAMES_WEBB_SPACE_TELESCOPE"
+    "building": "BUILDING_ATLAST_SPACE_TELESCOPE"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ATLAST_SPACE_TELESCOPE"
+    "building": "BUILDING_ASTEROID_DEFLECTION_SYSTEM"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_ASTEROID_DEFLECTION_SYSTEM"
+    "building": "BUILDING_SENTINEL"
    },
    {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SENTINEL"
-   },
-   {
-    "mission": "MISSION_CONSTRUCT",
-    "constructs": "BUILDING_SOLAR_WEATHER_MONITOR"
+    "building": "BUILDING_SOLAR_WEATHER_MONITOR"
    }
   ]
  },
