@@ -1310,6 +1310,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		// The held-set mirrors that array, so it empties with it. Load-bearing on a RECYCLED player slot:
 		// without it a new player would inherit the previous occupant's held buildings.
 		m_heldBuildings.clear();
+		// The empire-level OPERATE verdicts empty with the count they gate (derived, never serialized).
+		m_abEmpireBuildingActive.assign(GC.getNumBuildingInfos(), false);
 
 		FAssertMsg(m_paiBuildingGroupCount==NULL, "about to leak memory, CvPlayer::m_paiBuildingGroupCount");
 		m_paiBuildingGroupCount = new int [GC.getNumSpecialBuildingInfos()];
@@ -12334,6 +12336,126 @@ int CvPlayer::getBuildingCount(BuildingTypes eIndex) const
 }
 
 
+bool CvPlayer::hasEmpireBuilding(BuildingTypes eIndex) const
+{
+	// The held store IS the count at 0/1 for an empireLevel id (DEC-empire-level-buildings). TOTAL against a
+	// player whose full reset has not run yet (the count array unallocated) -- the same map-read window the
+	// active read guards: a load-stream fact may evaluate a building-conditioned deposit before the players
+	// re-size, and the answer there is "not held", never a fault.
+	return m_paiBuildingCount != NULL && getBuildingCount(eIndex) > 0;
+}
+
+
+bool CvPlayer::isEmpireBuildingActive(BuildingTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
+	// TOTAL against the not-yet-sized store (contexts.md: a read reachable from a load-stream fact answers its
+	// sentinel, it does not fault): a player reset before the building registry existed carries an empty vector,
+	// and the map read's plot facts evaluate building-conditioned deposits before the players re-size it.
+	if ((size_t)eIndex >= m_abEmpireBuildingActive.size())
+	{
+		return false;
+	}
+	return m_abEmpireBuildingActive[eIndex];
+}
+
+
+void CvPlayer::ensureEmpireBuildingActiveSized()
+{
+	// The store sizes on demand rather than trusting reset ordering: a player reset before the building
+	// registry loaded carries an empty vector (GC.getNumBuildingInfos() was 0 at that reset).
+	if (m_abEmpireBuildingActive.size() < (size_t)GC.getNumBuildingInfos())
+	{
+		m_abEmpireBuildingActive.resize(GC.getNumBuildingInfos(), false);
+	}
+}
+
+
+namespace
+{
+	// The ONE operate evaluation for an empire-level member: its requires.operate tree against the empire
+	// context, through the one evaluator. A member with no operate clause is active while held.
+	bool evalEmpireBuildingOperate(const CvPlayer& kPlayer, const CvBuildingInfo& kBuilding)
+	{
+		const CvRequires* pRequires = kBuilding.getRequires();
+		if (pRequires == NULL || pRequires->operate == NULL)
+		{
+			return true;
+		}
+		CvCascadeEvalCtx evalCtx;
+		kPlayer.getEmpireContext().fillEvalCtx(evalCtx);
+		return cascadeEvalCondition(pRequires->operate, evalCtx, CvCascadeEvalFlags());
+	}
+}
+
+
+void CvPlayer::setHasEmpireBuilding(BuildingTypes eIndex, bool bNewValue, bool bFirst)
+{
+	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eIndex);
+	FAssertMsg(kBuilding.isEmpireLevel(), "setHasEmpireBuilding on a building that is not identity.empireLevel");
+
+	if (bNewValue == hasEmpireBuilding(eIndex))
+	{
+		return;   // idempotent by requirement: N old-save city copies fold to held-once
+	}
+	ensureEmpireBuildingActiveSized();
+	if (bNewValue)
+	{
+		changeBuildingCount(eIndex, 1);   // the held store; maintains m_heldBuildings + the count fact
+		emitEmpireBuildingAdded((int)getID(), (int)eIndex, bFirst);
+		if (evalEmpireBuildingOperate(*this, kBuilding))
+		{
+			m_abEmpireBuildingActive[eIndex] = true;
+			emitEmpireBuildingActivated((int)getID(), (int)eIndex);
+		}
+	}
+	else
+	{
+		// The withdrawal is announced while the old state still holds ([state-repositories.md] THE INVARIANT):
+		// an active member dormants first, so its deposits are withdrawn, then the held crossing fires.
+		if (m_abEmpireBuildingActive[eIndex])
+		{
+			m_abEmpireBuildingActive[eIndex] = false;
+			emitEmpireBuildingDormanted((int)getID(), (int)eIndex);
+		}
+		changeBuildingCount(eIndex, -1);
+		emitEmpireBuildingRemoved((int)getID(), (int)eIndex);
+	}
+}
+
+
+void CvPlayer::updateEmpireBuildingOperate()
+{
+	// Bounded by what the player HOLDS, never the registry: the held-set names the candidates, and only
+	// empireLevel members carry a player-side verdict. A flip announces its own crossing, which is what the
+	// modifier's deposit route rides.
+	ensureEmpireBuildingActiveSized();
+	for (size_t iHeld = 0; iHeld < m_heldBuildings.size(); ++iHeld)
+	{
+		const BuildingTypes eBuilding = m_heldBuildings[iHeld];
+		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+		if (!kBuilding.isEmpireLevel())
+		{
+			continue;
+		}
+		const bool bActiveNow = evalEmpireBuildingOperate(*this, kBuilding);
+		if (bActiveNow != m_abEmpireBuildingActive[eBuilding])
+		{
+			m_abEmpireBuildingActive[eBuilding] = bActiveNow;
+			if (bActiveNow)
+			{
+				emitEmpireBuildingActivated((int)getID(), (int)eBuilding);
+			}
+			else
+			{
+				emitEmpireBuildingDormanted((int)getID(), (int)eBuilding);
+			}
+		}
+	}
+}
+
+
 void CvPlayer::changeBuildingMaking(const BuildingTypes eIndex, const int iChange)
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
@@ -16899,6 +17021,27 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		//	⚠ Without it the set is EMPTY while the count says held, and the first REMOVAL of any held building
 		//	(a tech obsoleting one, a building destroyed, a city lost) erases an iterator that is end() -- memory
 		//	corruption, not a wrong number. It is load-only: a new game builds both together.
+		// DEC-empire-level-buildings: an OLD save's count for an empire-level id is its per-city copy count
+		// (the copies this model deletes), so the held store NORMALIZES to 0/1 here -- and announces the held
+		// fact, the in-read half of the reseed. The cities stream later in this read; their per-city ledger
+		// copies then fold to no-ops at the one holding choke point. The OPERATE verdict seeds beside it: the
+		// civic/trait facts this read announces later re-run updateEmpireBuildingOperate through the enabler
+		// consumer, so a verdict seeded against a half-read empire context is corrected by the facts that
+		// complete it.
+		ensureEmpireBuildingActiveSized();
+		for (int iI = 0; iI < GC.getNumBuildingInfos(); ++iI)
+		{
+			if (m_paiBuildingCount[iI] > 0 && GC.getBuildingInfo((BuildingTypes)iI).isEmpireLevel())
+			{
+				m_paiBuildingCount[iI] = 1;
+				emitEmpireBuildingAdded((int)getID(), iI, /*bFirst*/false);   // a load RESTORES
+				if (evalEmpireBuildingOperate(*this, GC.getBuildingInfo((BuildingTypes)iI)))
+				{
+					m_abEmpireBuildingActive[iI] = true;
+					emitEmpireBuildingActivated((int)getID(), iI);
+				}
+			}
+		}
 		m_heldBuildings.clear();
 		for (int iI = 0; iI < GC.getNumBuildingInfos(); ++iI)
 		{

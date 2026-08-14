@@ -417,6 +417,10 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_CITY_BUILDING_REMOVED:            return "[SPINE/CITY] cityBuildingRemoved";
 	case SEVT_CITY_BUILDING_ACTIVATED:          return "[SPINE/CITY] cityBuildingActivated";
 	case SEVT_CITY_BUILDING_DORMANTED:          return "[SPINE/CITY] cityBuildingDormanted";
+	case SEVT_EMPIRE_BUILDING_ADDED:            return "[SPINE/EMPIRE] empireBuildingAdded";
+	case SEVT_EMPIRE_BUILDING_REMOVED:          return "[SPINE/EMPIRE] empireBuildingRemoved";
+	case SEVT_EMPIRE_BUILDING_ACTIVATED:        return "[SPINE/EMPIRE] empireBuildingActivated";
+	case SEVT_EMPIRE_BUILDING_DORMANTED:        return "[SPINE/EMPIRE] empireBuildingDormanted";
 	case SEVT_CITY_BUILDING_OBSOLETED_ADDED:    return "[SPINE/CITY] cityBuildingObsoletedAdded";
 	case SEVT_CITY_BUILDING_OBSOLETED_REMOVED:  return "[SPINE/CITY] cityBuildingObsoletedRemoved";
 	case SEVT_CITY_RELIGION_ADDED:              return "[SPINE/CITY] cityReligionAdded";
@@ -752,6 +756,40 @@ void emitCityBuildingDormanted(int iCity, int iOwner, int iBuilding)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_BUILDING_DORMANTED, iBuilding, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+// The EMPIRE-LEVEL building facts (DEC-empire-level-buildings): held once by the PLAYER, no city to name, so
+// iSrcLoc is -1 throughout. iA on ADDED = bFirst -- whether the first-build payload is owed (a load RESTORES).
+void emitEmpireBuildingAdded(int iOwner, int iBuilding, bool bFirst)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_BUILDING_ADDED, iBuilding, bFirst ? 1 : 0, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bFirst ? 1 : 0);
+	eventSpine().emit(e);
+}
+
+void emitEmpireBuildingRemoved(int iOwner, int iBuilding)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_BUILDING_REMOVED, iBuilding, 0, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+
+void emitEmpireBuildingActivated(int iOwner, int iBuilding)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_BUILDING_ACTIVATED, iBuilding, 0, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+
+void emitEmpireBuildingDormanted(int iOwner, int iBuilding)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_BUILDING_DORMANTED, iBuilding, 0, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner);
 	eventSpine().emit(e);
 }
 

@@ -604,10 +604,10 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 	}
 
-	// THE QUEUE-EXCLUDED BACKFILL -- every `identity.notConstructible` building is present in every city by ruling
-	// (CvCity::placeSystemBuildings), but a save taken before that has none of them, so they are placed here. This
-	// is the `TECH_GAME_START` backfill shape (enabler.md §2): the one engine special case a "it is always there"
-	// rule needs, rather than a migration pass.
+	// THE SYSTEM-PLACED BACKFILL -- the property bands + the autoBuild population are present in every city by
+	// ruling (CvCity::placeSystemBuildings), but a save taken before that has none of them, so they are placed
+	// here. This is the `TECH_GAME_START` backfill shape (enabler.md §2): the one engine special case a "it is
+	// always there" rule needs, rather than a migration pass.
 	//
 	// ⛔ It runs BEFORE the bracket closes, deliberately. The placement fires the ordinary building fact, so inside
 	// the bracket it streams through the same appliers the reseed uses -- the enabler applies its edges and the

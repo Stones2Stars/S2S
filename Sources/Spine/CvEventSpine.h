@@ -469,6 +469,18 @@ enum SpineDomainEvent
 	// player alert -- re-implements the same sweep ([DEC-single-implementation]).
 	SEVT_CITY_PROPERTY_BAND_ADDED    = 196,
 	SEVT_CITY_PROPERTY_BAND_REMOVED  = 197,
+	// The EMPIRE-LEVEL BUILDING facts (DEC-empire-level-buildings, enabler-spec §2): the PLAYER gained / lost an
+	// identity.empireLevel building -- held once, never present in any city. The held store is the player's own
+	// building count at 0/1, announced here at its crossing; iType = the building, iA = bFirst (a load RESTORES,
+	// so the reseed emits 0), iC = owner. DOMAIN.
+	SEVT_EMPIRE_BUILDING_ADDED       = 198,
+	SEVT_EMPIRE_BUILDING_REMOVED     = 199,
+	// The player-side OPERATE verdict crossing for an empire-level building -- the empire twin of
+	// SEVT_CITY_BUILDING_ACTIVATED / _DORMANTED, and the same split: the building's OWN deposits ride THIS
+	// crossing (a held-but-dormant member deposits nothing -- the civic-gated markers genuinely toggle), while
+	// plane-C atom re-resolution rides the presence pair above. iType = the building, iC = owner. DOMAIN.
+	SEVT_EMPIRE_BUILDING_ACTIVATED   = 200,
+	SEVT_EMPIRE_BUILDING_DORMANTED   = 201,
 	// The city GAINED / LOST fresh-water ACCESS (announced from the amenity refcount crossing) -- the
 	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
 	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
@@ -786,6 +798,12 @@ void emitCityBuildingAdded(int iCity, int iOwner, int iBuilding, bool bFirst);
 void emitCityBuildingRemoved(int iCity, int iOwner, int iBuilding);
 void emitCityBuildingProcessed(int iCity, int iOwner, int iBuilding, int iCount);   // DIAGNOSTIC -- "the apply ran"
 void emitCityBuildingActivated(int iCity, int iOwner, int iBuilding);
+// The EMPIRE-LEVEL building facts (DEC-empire-level-buildings): the PLAYER's held crossing, and the player-side
+// operate verdict crossing the member's own deposits ride. iSrcLoc is -1 -- there is no city.
+void emitEmpireBuildingAdded(int iOwner, int iBuilding, bool bFirst);
+void emitEmpireBuildingRemoved(int iOwner, int iBuilding);
+void emitEmpireBuildingActivated(int iOwner, int iBuilding);
+void emitEmpireBuildingDormanted(int iOwner, int iBuilding);
 void emitCityBuildingDormanted(int iCity, int iOwner, int iBuilding);
 // Observability only (logging + the player notification) -- drives no apply.
 void emitCityBuildingObsoletedAdded(int iCity, int iOwner, int iBuilding);

@@ -20,6 +20,7 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
+#include "Data/CvDepositIndex.h"   // propertyGateThresholds -- the deposit-gate half of the band-boundary registry
 #include "CvCondition.h"       // CvCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
 #include "Conditions/CvConditionQuery.h"   // bucketForType -- the ONE prefix router the atom-kind reason builds on
 #include "CvBuildingInfo.h"
@@ -653,6 +654,9 @@ namespace {
 static bool s_operateIndexBuilt = false;
 static std::vector<int> s_operateNeedsPopulation, s_operateNeedsPower, s_operateNeedsReligion, s_operateNeedsCorporation, s_operateNeedsGoldenAge, s_operateNeedsStateReligion, s_operateNeedsCivic, s_operateNeedsTech;
 static std::vector<int> s_propertyBandBuildings;                          // buildings whose requires.operate carries a PROPERTY band -- the population the PROPERTY SYSTEM places in every city
+static std::vector<int> s_autoBuildBuildings;                             // the identity.autoBuild population (minus world/team-capped members) -- placed with the bands, toggled by dormancy (enabler.md §3, owner)
+static std::vector<int> s_contestedAutoBuilds;                            // the world/team-capped autoBuild members -- NOT placed; awarded first-to-earn by the trigger engine (Valley of the Kings)
+static std::set<int> s_systemPlacedBuildings;                             // band ∪ autoBuild -- the system-placed membership the trigger engine's activation-fired grant leg tests
 static std::map<int, std::vector<int> > s_operatePropertyBandConsumers;   // F5: PROPERTY_ id -> buildings whose requires.operate has a band on it
 static std::map<int, std::set<int> > s_operatePropertyBandThresholds;         // F5: PROPERTY_ id -> the sorted union of its band thresholds (the watermark's window boundaries)
 static std::vector<int> s_operateNeedsAnyBonus;                         // {buildings whose operate references ANY bonus} -- the whole-set re-check (plot-group membership change)
@@ -990,6 +994,9 @@ void EnablerKernel::clearCompiledIndexes()
 	s_operateBonusConsumers.clear();
 	s_operateBuildingDependents.clear();
 	s_propertyBandBuildings.clear();
+	s_autoBuildBuildings.clear();
+	s_contestedAutoBuilds.clear();
+	s_systemPlacedBuildings.clear();
 	s_operatePropertyBandConsumers.clear();
 	s_operatePropertyBandThresholds.clear();
 	s_operateDormantTriggeredBy.clear();
@@ -1019,7 +1026,34 @@ void EnablerKernel::buildActiveIndex()
 		if (!d.bonuses.empty()) s_operateNeedsAnyBonus.push_back(b);   // #430 G3: the whole-set bucket (a plot-group membership shift may move any of them)
 		for (std::set<int>::const_iterator it = d.bonuses.begin(); it != d.bonuses.end(); ++it) s_operateBonusConsumers[*it].push_back(b);
 		for (std::set<int>::const_iterator it = d.buildings.begin(); it != d.buildings.end(); ++it) s_operateBuildingDependents[*it].push_back(b);
-		if (!d.propertyBands.empty()) s_propertyBandBuildings.push_back(b);   // the PROPERTY-BAND population (see the accessor)
+		if (!d.propertyBands.empty())
+		{
+			s_propertyBandBuildings.push_back(b);   // the PROPERTY-BAND population (see the accessor)
+			s_systemPlacedBuildings.insert(b);
+		}
+		// The AUTOBUILD population -- the legacy doAutobuild set (housing / pests / resources / presence markers /
+		// civic markers / education bases / space colonies / the C_AD adoption markers). Placed once with the bands
+		// (CvCity::placeSystemBuildings) and toggled by dormancy thereafter (owner ruling; enabler.md §3).
+		// ⛔ A WORLD/TEAM-capped member is EXCLUDED: its cap is a cross-player RACE the place-everywhere model
+		// cannot express -- two empires satisfying the gate would both activate a `world: 1` entity, and `allowed`
+		// gates BUILDS, never activations. Such a member awaits its own first-to-earn award path. An EMPIRE cap
+		// stays in: the cap is per-player, and the shipped members' own gates pin the active city (the C_AD
+		// palace atom).
+		if (GC.getBuildingInfo((BuildingTypes)b).isAutoBuild())
+		{
+			const CvAllowed* pAllowed = j->getAllowed();
+			const bool bContested = pAllowed != NULL
+				&& (pAllowed->cap(ALLOWEDCAP_WORLD) != -1 || pAllowed->cap(ALLOWEDCAP_TEAM) != -1);
+			if (!bContested)
+			{
+				s_autoBuildBuildings.push_back(b);
+				s_systemPlacedBuildings.insert(b);
+			}
+			else
+			{
+				s_contestedAutoBuilds.push_back(b);   // awarded first-to-earn by the trigger engine, never placed
+			}
+		}
 		for (std::map<int, std::pair<int, int> >::const_iterator it = d.propertyBands.begin(); it != d.propertyBands.end(); ++it)
 		{
 			s_operatePropertyBandConsumers[it->first].push_back(b);                       // F5: the property-band operate reverse-index
@@ -1030,6 +1064,19 @@ void EnablerKernel::buildActiveIndex()
 		for (size_t i = 0; i < dorm.size(); ++i) s_operateDormantTriggeredBy[dorm[i]].push_back(b);
 		// obsolescence is tech-driven (obsoletedBy.techs): index the obsoletable buildings for the player-scope re-check.
 		if (j->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) != NULL) s_operateObsoletableBuildings.push_back(b);
+	}
+	// The DEPOSIT-GATE half of the authored boundary set. The band emit tests THIS registry, once, for every
+	// consumer (CvProperties.cpp) -- so a boundary only a deposit's `{PROPERTY_X, min/max}` gate declares must be
+	// in it, or a value sweep crossing only that boundary announces nothing and the deposit's re-book never
+	// fires. The union keeps it ONE registry served from the two compiled surfaces, each scanned by its own
+	// compiler ([DEC-single-implementation]).
+	{
+		const std::map<int, std::set<int> >& kGateThresholds = DepositIndex::propertyGateThresholds();
+		for (std::map<int, std::set<int> >::const_iterator it = kGateThresholds.begin();
+			it != kGateThresholds.end(); ++it)
+		{
+			s_operatePropertyBandThresholds[it->first].insert(it->second.begin(), it->second.end());
+		}
 	}
 }
 
@@ -1106,6 +1153,31 @@ const std::map<int, std::set<int> >& EnablerKernel::propertyBandThresholds()
 {
 	buildActiveIndex();
 	return s_operatePropertyBandThresholds;
+}
+
+// The AUTOBUILD population (identity.autoBuild minus world/team-capped members): the second system-placed
+// class beside the bands -- the legacy doAutobuild set, placed once and toggled by dormancy (owner ruling).
+const std::vector<int>& EnablerKernel::autoBuildBuildings()
+{
+	buildActiveIndex();
+	return s_autoBuildBuildings;
+}
+
+// Is this building placed by the system (band or autoBuild)? The trigger engine's activation-fired grant leg
+// tests this: a system-placed building's considered action is its ACTIVATION, never its placement.
+bool EnablerKernel::isSystemPlacedBuilding(int iBuilding)
+{
+	buildActiveIndex();
+	return s_systemPlacedBuildings.count(iBuilding) != 0;
+}
+
+// The world/team-capped autoBuild members: excluded from placement (the cap is a cross-player race dormancy
+// cannot express, and their one-shot pulses need a genuine first acquisition), awarded FIRST-TO-EARN by the
+// trigger engine when a gate first holds with cap room (enabler.md §3).
+const std::vector<int>& EnablerKernel::contestedAutoBuildings()
+{
+	buildActiveIndex();
+	return s_contestedAutoBuilds;
 }
 
 void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)

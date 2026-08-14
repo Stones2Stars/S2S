@@ -14,6 +14,7 @@
 #include "CvImprovementInfo.h"
 #include "CvBuildingInfo.h"
 #include <map>
+#include <set>
 #include <vector>
 
 static std::map<std::string, int> s_segs;    // segment string -> id (append-only)
@@ -56,6 +57,12 @@ static std::map<std::string, std::vector<DepositIndex::GatedDeposit> > s_gatedBy
 static std::map<std::string, std::vector<DepositIndex::GatedDeposit> > s_gatedByToken;
 static std::map<int, std::vector<DepositIndex::GatedDeposit> > s_gatedByPredicate;
 static std::vector<DepositIndex::GatedDeposit> s_gatedReligionCounts;
+// The PROPERTY thresholds the DEPOSIT gates declare (PROPERTY_ id -> boundary values), collected in the same
+// condition scan that interns the gate. The band emit tests ONE registry of authored boundaries
+// (EnablerKernel::propertyBandThresholds), and the operate bands are only half of what the data authors -- a
+// deposit gated `{PROPERTY_X, min: N}` declares a boundary too, and a value sweep crossing ONLY that boundary
+// must still announce, or the deposit's re-book never fires ([DEC-close-event-gaps-now]).
+static std::map<int, std::set<int> > s_propertyGateThresholds;
 
 
 
@@ -240,6 +247,7 @@ void DepositIndex::clearCompiled()
 	s_gatedByToken.clear();
 	s_gatedByPredicate.clear();
 	s_gatedReligionCounts.clear();
+	s_propertyGateThresholds.clear();
 	s_depByType.clear();
 	s_depByToken.clear();
 	s_depByPredicate.clear();
@@ -355,6 +363,16 @@ static void di_scanConditionTree(const CvCondition* node, const CvInfo* pSource,
 		{
 			di_addRecordReach(s_depByType[node->type], record);
 			s_gatedByType[node->type].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
+			// A PROPERTY gate's bounds are BOUNDARIES the band emit must test (see s_propertyGateThresholds).
+			// The boundary is the authored value itself for both senses: a `min: T` clause flips between T-1
+			// and T and a `max: T` clause between T and T+1, and the emit's closed-interval sweep test catches
+			// each (CvProperties.cpp). hasMin/hasMax are the authored-bound flags -- a property bound is
+			// legitimately NEGATIVE, so the value's sign says nothing ([enabler.md] §3).
+			if (node->id >= 0 && node->type.compare(0, 9, "PROPERTY_") == 0)
+			{
+				if (node->hasMin) { s_propertyGateThresholds[node->id].insert(node->min); }
+				if (node->hasMax) { s_propertyGateThresholds[node->id].insert(node->max); }
+			}
 		}
 		return;
 	}
@@ -497,6 +515,11 @@ const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByPredicate(Cv
 const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByReligionCounts()
 {
 	return s_gatedReligionCounts.empty() ? NULL : &s_gatedReligionCounts;
+}
+
+const std::map<int, std::set<int> >& DepositIndex::propertyGateThresholds()
+{
+	return s_propertyGateThresholds;
 }
 
 const std::vector<CascadeDeposit>& DepositIndex::depositsFor(const CvInfo* j)

@@ -1681,21 +1681,35 @@ void CvCity::doTurn()
 void CvCity::placeSystemBuildings()
 {
 	PROFILE_EXTRA_FUNC();
-	// ⛔ THE POPULATION IS THE PROPERTY BANDS, AND NOTHING ELSE. `notConstructible` bars the production queue and
-	// says nothing about placement (enabler.md §3, owner) -- WHO places a queue-excluded entity belongs to the
-	// system that owns it: the grants machine hands over a granted building, setHeadquarters places a corporate
-	// HQ in the one city holding it, an achievement is awarded once. A band is the one population whose placing
-	// system genuinely puts it in EVERY city, and it is identified by what the DATA says -- its `requires.operate`
-	// carries a PROPERTY band -- which the enabler already derives.
-	// ⚑ It stays UNCONDITIONAL and removes nothing: the band is placed once and its operate clause then decides
-	// active vs dormant, which is what deletes the legacy per-turn add/remove churn.
+	// ⛔ THE POPULATION IS THE PROPERTY BANDS PLUS THE AUTOBUILD SET (owner). `notConstructible` bars the
+	// production queue and says nothing about placement (enabler.md §3) -- WHO places a queue-excluded entity
+	// belongs to the system that owns it: the grants machine hands over a granted building, setHeadquarters
+	// places a corporate HQ in the one city holding it, the outcome `constructs` verb awards an achievement.
+	// Two populations genuinely belong in every city, each identified by what the DATA says, never by
+	// `notConstructible`: the bands (a `requires.operate` PROPERTY band) and the identity.autoBuild set (the
+	// legacy per-turn doAutobuild population -- housing, pests, resources, presence and civic markers, the C_AD
+	// adoption markers), minus its world/team-capped members, whose cap is a cross-player race dormancy cannot
+	// express (the enabler's census excludes them).
+	// ⚑ Placement stays UNCONDITIONAL and removes nothing: placed once, the operate clause decides active vs
+	// dormant forever, which is what deletes both legacy per-turn passes.
+	// ⚑ bFirst = false: placement is NOT the considered action for this class -- its ACTIVATION is, and the
+	// trigger engine fires the considered building-grant leg on that crossing (CvTriggerEngine, enabler.md §3).
 	const std::vector<int>& aBands = EnablerKernel::propertyBandBuildings();
 	for (size_t iBand = 0; iBand < aBands.size(); ++iBand)
 	{
 		const BuildingTypes eBuilding = (BuildingTypes)aBands[iBand];
 		if (!hasBuilding(eBuilding))
 		{
-			changeHasBuilding(eBuilding, true);   // present; the operate fixpoint decides active vs dormant
+			setHasBuilding(eBuilding, true, getOwner(), GC.getGame().getGameTurnYear(), /*bFirst*/ false);
+		}
+	}
+	const std::vector<int>& aAutoBuilds = EnablerKernel::autoBuildBuildings();
+	for (size_t iAuto = 0; iAuto < aAutoBuilds.size(); ++iAuto)
+	{
+		const BuildingTypes eBuilding = (BuildingTypes)aAutoBuilds[iAuto];
+		if (!hasBuilding(eBuilding))
+		{
+			setHasBuilding(eBuilding, true, getOwner(), GC.getGame().getGameTurnYear(), /*bFirst*/ false);
 		}
 	}
 }
@@ -10313,6 +10327,15 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 
+	// DEC-empire-level-buildings: an identity.empireLevel building is held by the PLAYER, once, and is never
+	// present in any city -- every placing system funnels through here, so the routing lives here ONCE and the
+	// placing systems never learn the tag exists. The city stores nothing.
+	if (GC.getBuildingInfo(eType).isEmpireLevel())
+	{
+		GET_PLAYER(getOwner()).setHasEmpireBuilding(eType, bNewValue, bFirst);
+		return;
+	}
+
 	if (bNewValue != hasBuilding(eType))
 	{
 		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
@@ -13129,6 +13152,14 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 			if (eType != NO_BUILDING)
 			{
+				// DEC-empire-level-buildings: an old save's per-city copy of an empire-level building folds to
+				// the OWNER (idempotent -- the player read already normalized its count, so this is a no-op on
+				// every copy after the first); the city keeps nothing and writes nothing back.
+				if (GC.getBuildingInfo(eType).isEmpireLevel())
+				{
+					GET_PLAYER((PlayerTypes)m_eOwner).setHasEmpireBuilding(eType, true, /*bFirst*/false);
+					continue;
+				}
 				m_bHasBuildings[eType] = true; // quick lookup
 				m_hasBuildings.push_back(eType); // quick iteration
 				// #430 reseed (event-spine.md the load-RESEED): the per-city building DOMAIN event fires HERE, as each

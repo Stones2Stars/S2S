@@ -90,6 +90,9 @@ public:
 	// from a KNOWN state, never a re-derivation of an unknown one -- the distinction that separates it from the
 	// refresh this replaced.
 	void foldAllCivicsOf(int iPlayer, int iSign);
+	// The owner's ACTIVE empire-level members (DEC-empire-level-buildings) -- the same fold-in, one grantor
+	// kind over: the city-starts-existing leg and the load build both call it beside the civic one.
+	void foldAllEmpireBuildingsOf(int iPlayer, int iSign);
 	// ⚖ THE GATE FLIP -- the conditioned tail as a DELTA rather than a re-resolution. When an atom a grant is
 	// gated on moves, the FACT supplies the verdict and its direction, so the entries gated on that atom are
 	// applied WITHOUT evaluating it. That is what makes the capital move exact: after the flip, asking

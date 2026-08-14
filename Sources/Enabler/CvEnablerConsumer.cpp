@@ -258,6 +258,31 @@ private:
 			}
 			break;
 		}
+		// The EMPIRE-LEVEL building facts (DEC-empire-level-buildings): held by the PLAYER, reaching every city.
+		// The fan below is the grantor-fact leg; a city that starts existing later folds the owner's held set in
+		// its own seed (BuildingEnabler::onCityCreated) -- the two-leg shape. Per city the delta IS the ordinary
+		// city-building delta: the member reads held (leaves every offer at once), its edges contribute, its
+		// dependents re-gate, and the per-city operate set re-checks the buildings whose gates name it (the
+		// REMAINS_* class).
+		case SEVT_EMPIRE_BUILDING_ADDED:
+		case SEVT_EMPIRE_BUILDING_REMOVED:
+		{
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS && kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
+			{
+				CvPlayer& kOwner = GET_PLAYER((PlayerTypes)kEvent.iC);
+				const bool bHeld = (kEvent.iEventId == SEVT_EMPIRE_BUILDING_ADDED);
+				// a member arriving/leaving can flip the operate verdict of OTHER held members whose gates name it
+				// (the folklore chains), and the flip announces its own crossing for the deposit route.
+				kOwner.updateEmpireBuildingOperate();
+				foreach_(const CvCity* pLoopCity, kOwner.cities())
+				{
+					UnitEnabler::onCityBuildingChanged(*pLoopCity, kEvent.iType, bHeld);
+					BuildingEnabler::onCityBuildingChanged(*pLoopCity, kEvent.iType, bHeld);
+					EnablerKernel::onBuildingChangedActive(pLoopCity, kEvent.iType);
+				}
+			}
+			break;
+		}
 		case SEVT_CITY_RELIGION_ADDED:
 		case SEVT_CITY_RELIGION_REMOVED:
 		{
@@ -413,6 +438,9 @@ private:
 				{
 					EnablerKernel::onPlayerScopeChangedActive(pLoopCity);
 				}
+				// The player-side OPERATE twin (DEC-empire-level-buildings): a held empire-level member's gate can
+				// read a tech, so its verdict re-derives here too.
+				GET_PLAYER((PlayerTypes)kEvent.iC).updateEmpireBuildingOperate();
 			}
 			break;
 		case SEVT_EMPIRE_TRAIT_ADDED:
@@ -440,6 +468,9 @@ private:
 				{
 					EnablerKernel::onPlayerScopeChangedActive(pLoopCity);
 				}
+				// The player-side OPERATE twin (DEC-empire-level-buildings): the civic-gated members (the
+				// worldview/belief/firewall markers) genuinely toggle on a swap.
+				GET_PLAYER((PlayerTypes)kEvent.iC).updateEmpireBuildingOperate();
 			}
 			break;
 		case SEVT_EMPIRE_PROJECT_ADDED:

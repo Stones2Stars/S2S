@@ -55,6 +55,10 @@ public:
 	// so the live sources have to be enumerable cheaply for that read to be the cheap one modifier.md §5 describes.
 	void heldTraits(std::vector<TraitContext::HeldTrait>& heldTraits) const;
 	bool hasHeritage(int eHeritage) const;    // CvPlayer::hasHeritage
+	// The EMPIRE-LEVEL building axis (DEC-empire-level-buildings): the held store and the player-side operate
+	// verdict, both the object's own O(1) data -- FORWARDED, never stored (the STORES-vs-FORWARDS split).
+	bool hasEmpireBuilding(int eBuilding) const;         // CvPlayer::hasEmpireBuilding
+	bool isEmpireBuildingActive(int eBuilding) const;    // CvPlayer::isEmpireBuildingActive
 	bool isGoldenAge() const;                 // CvPlayer::isGoldenAge (IS_GOLDEN_AGE)
 	bool isAnarchy() const;                   // CvPlayer::isAnarchy (IS_ANARCHY)
 	bool isRebel() const;                     // CvPlayer::isRebel (IS_REBEL)

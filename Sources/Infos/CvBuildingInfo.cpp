@@ -33,6 +33,7 @@ CvBuildingInfo::CvBuildingInfo()
 	, m_bCenterInCity(false)
 	, m_bNotConstructible(false)
 	, m_bAutoBuild(false)
+	, m_bEmpireLevel(false)
 	, m_bNoInstanceLimit(false)
 	, m_bAllowsNukes(false)
 	, m_bForceNoPrereqScaling(false)
@@ -221,6 +222,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_bCenterInCity = jsonIdBool(identity, "centerInCity");
 	m_bNotConstructible = jsonIdBool(identity, "notConstructible");
 	m_bAutoBuild = jsonIdBool(identity, "autoBuild");
+	m_bEmpireLevel = jsonIdBool(identity, "empireLevel");
 	m_bNoInstanceLimit = jsonIdBool(identity, "noInstanceLimit");
 	m_bAllowsNukes = jsonIdBool(identity, "allowsNukes");
 	m_bForceNoPrereqScaling = jsonIdBool(identity, "forceNoPrereqScaling");

@@ -112,11 +112,13 @@ public:
 
 	void doTurn();
 
-	// PLACE the queue-excluded buildings -- every `identity.notConstructible` building is placed in EVERY city,
-	// UNCONDITIONALLY, and its `requires.operate` then decides whether it is active or dormant (owner ruling;
-	// enabler.md §3, the band model generalized to the whole class). There is no placement gate to evaluate and
-	// nothing is ever auto-removed: dormancy is reversible and removal is not, so a band leaving its range goes
-	// DORMANT rather than being torn down and rebuilt.
+	// PLACE the system-placed buildings -- the PROPERTY BANDS plus the identity.autoBuild population (minus its
+	// world/team-capped members) -- in every city, UNCONDITIONALLY; each one's `requires.operate` then decides
+	// whether it is active or dormant (owner ruling; enabler.md §3, the band model extended to the autoBuild
+	// class). There is no placement gate to evaluate and nothing is ever auto-removed: dormancy is reversible and
+	// removal is not, so a member whose condition lapses goes DORMANT rather than being torn down and rebuilt.
+	// ⛔ NOT every `notConstructible` building: the rest of that class is placed by its own system (grants /
+	// setHeadquarters / the outcome `constructs` verb), and blanket-placing it is the defect enabler.md §3 names.
 	//
 	// ⛔ It replaces the per-turn add/remove churn wholesale -- the property-band sweep AND the autobuild pass,
 	// which between them re-evaluated a placement gate for every band in every city every turn and could remove a

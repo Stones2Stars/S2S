@@ -140,6 +140,21 @@ void BuildingEnabler::onCityCreated(const CvCity& kCity)
 		const CivicTypes c = kPlayer.getCivics((CivicOptionTypes)co);
 		if (c != NO_CIVIC) bd_applyAxis(d, AX_CIVIC, (int)c, +1);
 	}
+	// DEC-empire-level-buildings: the owner's held EMPIRE-LEVEL buildings are HAVE this city starts under -- the
+	// member reads held here (never offerable) and its edges contribute, the civic fold's two-leg shape: the
+	// grantor fact fans the standing cities, and a city that starts existing folds what the owner already holds.
+	const std::vector<BuildingTypes>& heldBuildings = kPlayer.getHasBuildings();
+	for (size_t iHeld = 0; iHeld < heldBuildings.size(); ++iHeld)
+	{
+		const int iHeldBuilding = (int)heldBuildings[iHeld];
+		const CvBuildingInfo* jHeld = (const CvBuildingInfo*)InfoRepo<CvBuildingInfo>::get().get(iHeldBuilding);
+		if (jHeld != NULL && jHeld->isEmpireLevel())
+		{
+			d.setHeld(iHeldBuilding, true);
+			if (!EnablerKernel::obsoletedByHeldTech(jHeld, kTeam))
+				EnablerKernel::applyEdges(d, jHeld, EDGEB_BUILDINGS, +1);
+		}
+	}
 	// gate the fold's entrants (no events carried them, so nothing else gates them). Inside the load bracket
 	// the GAME_LOAD_FINISHED pass gates instead (a mid-read evaluation is the hazard, see the header).
 	if (!spineGameLoadInProgress()) gateCity(kCity);

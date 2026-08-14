@@ -63,6 +63,11 @@ bool AmenityContext::wantsEvent(int iEventId)
 	// then leaves the amenity standing after its last grantor is gone.
 	// ⛔ The owner-REMOVED half is deliberately NOT here either -- see the apply.
 	case SEVT_CITY_OWNER_ADDED:
+	// The EMPIRE-LEVEL building grantor leg (DEC-empire-level-buildings): a player-held member's amenities reach
+	// every city of the owner, so its ACTIVE crossing fans exactly as a civic swap does (239 members author
+	// amenities -- the power markers among them).
+	case SEVT_EMPIRE_BUILDING_ACTIVATED:
+	case SEVT_EMPIRE_BUILDING_DORMANTED:
 	// ⚖ THE STATUS LEG -- a status is MIDDLEWARE that gates DELIVERY, so it moves no amenity count and is never
 	// folded into the store. It reaches this context for ONE reason: the powered verdict it gates is what this
 	// store announces, so a blackout starting or ending crosses that verdict with the grantor set untouched.
@@ -114,6 +119,22 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			}
 		}
 		break;
+	// The EMPIRE-LEVEL building leg, play-time: the member's amenities fan over every city of the owner on its
+	// ACTIVE crossing, the civic-swap shape. Load-time the player emits before the cities deserialize, so the
+	// load build (and the city-starts-existing fold) carries that half.
+	case SEVT_EMPIRE_BUILDING_ACTIVATED:
+	case SEVT_EMPIRE_BUILDING_DORMANTED:
+		if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)kEvent.iC);
+			int iLoop = 0;
+			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				pCity->amenity().onGrantorCrossing(kEvent.iType,
+					(kEvent.iEventId == SEVT_EMPIRE_BUILDING_ACTIVATED) ? 1 : -1);
+			}
+		}
+		break;
 	// THE CAPITAL MOVED -- a conditioned grant's GATE flipped while the grantor set did not move at all. Each
 	// fact names ONE city (iSrcLoc) and its owner (iC), so a move is the REMOVED of the old beside the ADDED of
 	// the new and neither side has to be recovered from a payload.
@@ -145,6 +166,9 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			if (pCity != NULL)
 			{
 				pCity->amenity().foldAllCivicsOf(kEvent.iC, +1);
+				// ...and the owner's ACTIVE empire-level members (DEC-empire-level-buildings) -- the same
+				// city-starts-existing leg, one grantor kind over.
+				pCity->amenity().foldAllEmpireBuildingsOf(kEvent.iC, +1);
 			}
 		}
 		break;
@@ -177,6 +201,7 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
 			{
 				pCity->amenity().foldAllCivicsOf(iPlayer, +1);
+				pCity->amenity().foldAllEmpireBuildingsOf(iPlayer, +1);   // the empire-building half of the same pass
 			}
 		}
 		break;
@@ -223,6 +248,27 @@ void AmenityContext::foldAllCivicsOf(int iPlayer, int iSign)
 	for (int iCivicOption = 0; iCivicOption < iNumCivicOptions; ++iCivicOption)
 	{
 		foldCivic((int)kPlayer.getCivics((CivicOptionTypes)iCivicOption), iSign);
+	}
+}
+
+// The empire-building fold-in (DEC-empire-level-buildings): the owner's ACTIVE empire-level members, folded like
+// its civics -- reading the player's own held set is the ordinary HAVE forward, and only an ACTIVE member
+// confers (the dormant firewall marker darkens nothing, exactly as a dormant building would).
+void AmenityContext::foldAllEmpireBuildingsOf(int iPlayer, int iSign)
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
+	{
+		return;
+	}
+	const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+	const std::vector<BuildingTypes>& kHeld = kPlayer.getHasBuildings();
+	for (size_t iHeld = 0; iHeld < kHeld.size(); ++iHeld)
+	{
+		const BuildingTypes eBuilding = kHeld[iHeld];
+		if (GC.getBuildingInfo(eBuilding).isEmpireLevel() && kPlayer.isEmpireBuildingActive(eBuilding))
+		{
+			onGrantorCrossing((int)eBuilding, iSign);
+		}
 	}
 }
 

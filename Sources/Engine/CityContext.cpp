@@ -407,6 +407,27 @@ int  CityContext::improvedPlotCount(int eImprovement) const
 	return m_city->countNumImprovedPlots((ImprovementTypes)eImprovement, false);
 }
 
+int  CityContext::numWorldWonders() const
+{
+	if (m_city == NULL)
+		return 0;
+	return m_city->getNumWorldWonders();
+}
+
+int  CityContext::numTeamWonders() const
+{
+	if (m_city == NULL)
+		return 0;
+	return m_city->getNumTeamWonders();
+}
+
+int  CityContext::numNationalWonders() const
+{
+	if (m_city == NULL)
+		return 0;
+	return m_city->getNumNationalWonders();
+}
+
 int  CityContext::ownCulturePercent() const
 {
 	if (m_city == NULL || m_city->plot() == NULL)

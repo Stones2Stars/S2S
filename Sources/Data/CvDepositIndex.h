@@ -25,6 +25,8 @@
 
 #include "CvModEntry.h"                 // CvCascUnit -- the entry's unit enum (the unit segment the push interns)
 #include "CvCascadeChannelRegistry.h"   // the minted channel vocabulary + per-scope bit spaces the routes speak
+#include <map>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -239,6 +241,11 @@ public:
 	static const std::vector<GatedDeposit>* gatedByToken(const char* szToken);
 	static const std::vector<GatedDeposit>* gatedByPredicate(CvCascPredKind ePredicate);
 	static const std::vector<GatedDeposit>* gatedByReligionCounts();
+
+	// The PROPERTY boundaries the DEPOSIT gates declare (PROPERTY_ id -> boundary values), collected in the
+	// dependency scan. One half of the ONE authored-boundary registry the band emit tests -- the enabler's
+	// operate bands are the other half, and EnablerKernel::propertyBandThresholds unions the two.
+	static const std::map<int, std::set<int> >& propertyGateThresholds();
 
 	// Fill a record's compiled fields from its address/unit strings (push-time; the strings stay for
 	// rendering/diagnostics). Splits the dotted address, interns each segment (the first CASC_DEP_SEGS kept),

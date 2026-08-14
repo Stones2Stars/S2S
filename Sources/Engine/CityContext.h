@@ -239,6 +239,9 @@ public:
 	// before they were wired, so every deposit scaled by one silently contributed nothing.
 	int  specialistCount() const;             // CvCity::getSpecialistPopulation -- the SPECIALIST count token
 	int  improvedPlotCount(int eImprovement) const;   // CvCity::countNumImprovedPlots -- the IMPROVEMENT_ count
+	int  numWorldWonders() const;             // CvCity::getNumWorldWonders    -- the WORLD_WONDER count token (json §3.1)
+	int  numTeamWonders() const;              // CvCity::getNumTeamWonders     -- the TEAM_WONDER count token
+	int  numNationalWonders() const;          // CvCity::getNumNationalWonders -- the NATIONAL_WONDER count token
 	int  ownCulturePercent() const;           // CULTURE_PERCENTAGE -- see the CONTEXT GAP note below
 	int  owner() const;                       // CvCity::getOwner
 	int  team() const;                        // CvCity::getTeam (the plot-bonus reveal axis)

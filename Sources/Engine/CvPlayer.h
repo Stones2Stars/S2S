@@ -1020,6 +1020,25 @@ public:
 	// maintained by the ONE `changeBuildingCount` choke point and rebuilt by the load reseed, the same shape
 	// `CvCity::getHasBuildings` already has at city scope.
 	const std::vector<BuildingTypes>& getHasBuildings() const { return m_heldBuildings; }
+
+	// ===== EMPIRE-LEVEL buildings (DEC-empire-level-buildings, enabler-spec §2) -- held by the PLAYER, once,
+	// never present in any city. The held store IS m_paiBuildingCount at 0/1 for an identity.empireLevel id (no
+	// second store to drift); setHasEmpireBuilding is the ONE holding choke point (CvCity::setHasBuilding and the
+	// city-read ledger both route here), announcing SEVT_EMPIRE_BUILDING_ADDED / _REMOVED at the crossing and the
+	// OPERATE verdict's ACTIVATED / DORMANTED beside it -- the member's own deposits ride the operate crossing,
+	// exactly as a city building's do. =====
+	bool hasEmpireBuilding(BuildingTypes eIndex) const;
+	void setHasEmpireBuilding(BuildingTypes eIndex, bool bNewValue, bool bFirst = true);
+	// The player-side OPERATE verdict -- a bare fetch of the derived store; never serialized, rebuilt by the
+	// facts. A member with no operate clause is active while held.
+	bool isEmpireBuildingActive(BuildingTypes eIndex) const;
+	// Re-evaluate every held member's operate against the empire context and announce the crossings. Called by
+	// the enabler consumer on the facts an empire-evaluable operate can name (civic / tech / empire-building).
+	void updateEmpireBuildingOperate();
+	// Size the verdict store on demand -- a player reset before the building registry loaded carries an empty
+	// vector, and the reads reachable from load-stream facts answer false rather than trusting reset ordering.
+	void ensureEmpireBuildingActiveSized();
+
 	int getBuildingGroupCount(SpecialBuildingTypes eIndex) const;
 	bool isBuildingMaxedOut(BuildingTypes eIndex, int iExtra = 0) const;
 	bool isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra = 0) const;
@@ -1828,6 +1847,9 @@ protected:
 	int** m_paiExtraBuildingYield;
 	int** m_paiExtraBuildingCommerce;
 	int* m_paiBuildingCount;
+	// The empire-level OPERATE verdicts, indexed by building id -- DERIVED, never serialized; meaningful only
+	// where the id is empireLevel and held.
+	std::vector<bool> m_abEmpireBuildingActive;
 	// The ENUMERABLE half of the count above: which building types the empire currently holds at all.
 	// DERIVED, never serialized -- maintained by `changeBuildingCount` at its 0<->held crossings and rebuilt
 	// by the load reseed, exactly as `CvCity::m_hasBuildings` is at city scope.

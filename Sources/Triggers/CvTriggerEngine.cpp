@@ -366,6 +366,45 @@ static int tr_grantBuildingsFrom(const CvInfo* j, CvCity* pSourceCity, CvPlayer&
 	return nPlaced;
 }
 
+// THE CONTESTED-AUTOBUILD AWARD -- first-to-earn (enabler.md §3). A world/team-capped autoBuild (Valley of the
+// Kings is the whole shipped population) is excluded from system placement: its cap is a cross-player race
+// dormancy cannot express, and its one-shot pulses (freeTechs, goldenAge) need a genuine first acquisition. So
+// it is AWARDED once, in the city whose state first satisfies its operate gate while the cap has room -- placed
+// with bFirst=true, so the ordinary ADDED path fires the pulses exactly once; thereafter it stands and dormancy
+// toggles its standing effects like anything else.
+// ⚑ Called from the facts that can move such a gate (a building added, a tech acquired, a population step); the
+// contested census is one entity, so the check is an early-out for everyone else.
+static void tr_awardContestedAutoBuilds(CvCity* pCity)
+{
+	PROFILE_EXTRA_FUNC();
+	if (pCity == NULL) return;
+	const std::vector<int>& aContested = EnablerKernel::contestedAutoBuildings();
+	if (aContested.empty()) return;
+	CvPlayer& player = GET_PLAYER(pCity->getOwner());
+	for (size_t i = 0; i < aContested.size(); ++i)
+	{
+		const int iBuilding = aContested[i];
+		if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
+		const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
+		if (j == NULL) continue;
+		// the cap has room -- the ONE cap comparison ([DEC-single-implementation]), reading the tally
+		if (!EnablerKernel::allowedOk(j, iBuilding, player, /*bUnit*/ false)) continue;
+		if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)) continue;
+		// the operate gate through the ONE evaluator against the contexts (contexts.md: the fill seams)
+		const CvCondition* pOperate = j->requiresOperate();
+		if (pOperate != NULL)
+		{
+			CvCascadeEvalCtx ec;
+			pCity->getCityContext().fillEvalCtx(ec);
+			player.getEmpireContext().fillEvalCtx(ec);
+			EnablerKernel::wireOperatingBuildings(pCity, ec);
+			const CvCascadeEvalFlags kFlags;
+			if (!cascadeEvalCondition(pOperate, ec, kFlags)) continue;
+		}
+		pCity->changeHasBuilding((BuildingTypes)iBuilding, true);   // a genuine first acquisition: bFirst fires the pulses
+	}
+}
+
 // Ordering note: the legacy applied these MID-setup; the machine applies at SEVT_CITY_BUILDING_ADDED, which fires at
 // the END of setHasBuilding (after setupBuilding) -- so the building is fully set up before its provisions land,
 // which is strictly the safer order.
@@ -1108,7 +1147,10 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// was blind to every building grant on load (0 lines, indistinguishable from "no grants"); the presence fact
 	// fires on the genuine flip in play AND per building in the reseed read loop, which is exactly one resolve in
 	// both worlds; and it is NOT the dormancy signal (that is the operate crossing, which also fires on every
-	// disable/enable flip -- listening there would re-grant a building each time it woke up).
+	// disable/enable flip -- a CONSTRUCTED building granting there would re-grant each time it woke up).
+	// ⚖ The SYSTEM-PLACED population is the deliberate exception: its considered action IS the activation (it is
+	// placed dormant with bFirst=false), so the ACTIVATED case below fires its building-grant leg, which is
+	// idempotent under re-wake by construction (enabler.md §3).
 	// ⚑ The machine subscribes to the ARRIVAL and never sees a removal, so there is no direction to test: a payload
 	// guard here was the fact's missing name, wearing an `if` ([DEC-facts-name-happenings]).
 	// iC = owner, iSrcLoc = city.
@@ -1118,6 +1160,13 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 		s_bFirstAcquire = (e.iA != 0);
 		if (!s_bFirstAcquire) s_bSuppressed = true;
 		tr_resolveBuilding(e.iType, e.iC, e.iSrcLoc);   // iSrcLoc = the city the building landed in
+		// ...and a building arriving here may complete a contested autoBuild's gate (the Sphinx joining the
+		// Pyramid completes Valley of the Kings). Not during the load bracket: a loaded save already holds
+		// whatever it earned, and the legacy one-turn award lag is its own semantics.
+		if (!spineGameLoadInProgress() && e.iC >= 0)
+		{
+			tr_awardContestedAutoBuilds(GET_PLAYER((PlayerTypes)e.iC).getCity(e.iSrcLoc));
+		}
 		break;
 	// The per-TYPE tally carries no instance, so it cannot apply -- the instance-aware SEVT_UNIT_CREATED does.
 	case SEVT_UNIT_CREATED:
@@ -1148,7 +1197,18 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// iC = owner, iSrcLoc = the capital that ARRIVED. A move is REMOVED beside ADDED, so "none left" is simply
 // the absence of an ADDED fact rather than a -1 this case has to recognise.
 	case SEVT_EMPIRE_CAPITAL_ADDED: tr_resolveCapitalChanged(e.iC, e.iSrcLoc); break;
-	case SEVT_TECH_ACQUIRED:    tr_resolveTech(e.iType, e.iC);       break;  // first-discover only (iC = discoverer)
+	case SEVT_TECH_ACQUIRED:
+		tr_resolveTech(e.iType, e.iC);   // first-discover only (iC = discoverer)
+		// A tech can complete a contested autoBuild's gate (Sculpture for Valley of the Kings) -- check the
+		// discoverer's cities. The contested census is one entity, so this is cities × 1 gate on a rare fact.
+		if (!s_bSuppressed && e.iC >= 0 && !EnablerKernel::contestedAutoBuildings().empty())
+		{
+			foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)e.iC).cities())
+			{
+				tr_awardContestedAutoBuilds(pLoopCity);
+			}
+		}
+		break;
 	// iType = chosen religion, iA = slot religion, iB = bAward, iC = founding player, iSrcLoc = holy city
 	case SEVT_RELIGION_FOUNDED: tr_resolveReligion(e.iType, e.iA, e.iC, e.iSrcLoc, e.iB != 0); break;
 	case SEVT_CIVIC_ADOPTED:    tr_resolveCivic(e.iType, e.iC);      break;  // iC = adopting player
@@ -1163,7 +1223,12 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// iC = owner, iSrcLoc = city. Withheld during the save read like every other apply: the saved plot already
 	// carries whatever feature it should, and mutating the map mid-stream is not this machine's business.
 	case SEVT_CITY_POPULATION_ADDED:
-		if (!s_bSuppressed) { tr_resolveFeatureDestroy(e.iC, e.iSrcLoc); }
+		if (!s_bSuppressed)
+		{
+			tr_resolveFeatureDestroy(e.iC, e.iSrcLoc);
+			// ...and a contested autoBuild's gate may carry a population threshold this step crossed.
+			if (e.iC >= 0) { tr_awardContestedAutoBuilds(GET_PLAYER((PlayerTypes)e.iC).getCity(e.iSrcLoc)); }
+		}
 		break;
 	// Trigger (2) for free promotions: a building went ACTIVE in a city -- a fresh build OR a step out of
 	// dormancy (the operate crossing covers both). Hand its promotions to everyone already standing there.
@@ -1173,12 +1238,26 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 		if (!s_bSuppressed && e.iC >= 0)
 		{
 			CvCity* pC = GET_PLAYER((PlayerTypes)e.iC).getCity(e.iSrcLoc);
-			const int n = (pC != NULL) ? tr_promoteCityUnits(pC, InfoRepo<CvBuildingInfo>::get().get(e.iType)) : 0;
-			if (n > 0)
+			const CvInfo* jB = InfoRepo<CvBuildingInfo>::get().get(e.iType);
+			const int n = (pC != NULL) ? tr_promoteCityUnits(pC, jB) : 0;
+			// A SYSTEM-PLACED building (band / autoBuild): its considered action is the ACTIVATION, never the
+			// placement (placed dormant everywhere with bFirst=false, enabler.md §3), so the considered
+			// BUILDING-GRANT leg fires here -- the C_AD adoption marker granting its C_AC access marker is the
+			// live case. A re-activation re-fires it, and that is safe by construction: the place path skips a
+			// held target and the empire-level choke point folds to held-once, so the grant is idempotent.
+			// ⛔ The one-shot PULSE legs (population / goldenAge / freeTechs) deliberately do NOT fire here --
+			// a building that can wake repeatedly gives them no defined moment, which is exactly why the
+			// world-capped autoBuild that authors them (Valley of the Kings) is excluded from system placement.
+			int nGranted = 0;
+			if (pC != NULL && jB != NULL && EnablerKernel::isSystemPlacedBuilding(e.iType))
+			{
+				nGranted = tr_grantBuildingsFrom(jB, pC, GET_PLAYER((PlayerTypes)e.iC));
+			}
+			if (n > 0 || nGranted > 0)
 			{
 				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1)
 					.addI(TF_SUPPRESSED, 0).addI(TF_PLAYER, e.iC).addI(TF_CITY, e.iSrcLoc)
-					.addI(TF_BUILDING, e.iType).addI(TF_FREEPROMOS, n));
+					.addI(TF_BUILDING, e.iType).addI(TF_FREEPROMOS, n).addI(TF_APPLIED, nGranted));
 			}
 		}
 		break;

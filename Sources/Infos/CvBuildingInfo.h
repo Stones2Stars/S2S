@@ -184,6 +184,10 @@ public:
 	bool isCenterInCity() const             { return m_bCenterInCity; }
 	bool isNotConstructible() const         { return m_bNotConstructible; }         // json §7: excluded from the queue
 	bool isAutoBuild() const                { return m_bAutoBuild; }                // json §7: autoBuild ⊂ notConstructible
+	// identity.empireLevel -- the building is held by the PLAYER, once, empire-wide, and is never present in any
+	// city (DEC-empire-level-buildings, enabler-spec §2). The ONE placement choke point routes an empire-level id
+	// to the owner; an atom naming one implies EMPIRE scope (json §3.4 -- the tag IS the type's domain).
+	bool isEmpireLevel() const              { return m_bEmpireLevel; }
 	bool isNoInstanceLimit() const          { return m_bNoInstanceLimit; }
 	bool isAllowsNukes() const              { return m_bAllowsNukes; }
 	bool isForceNoPrereqScaling() const     { return m_bForceNoPrereqScaling; }
@@ -277,6 +281,7 @@ private:
 	bool m_bCenterInCity;
 	bool m_bNotConstructible;
 	bool m_bAutoBuild;
+	bool m_bEmpireLevel;
 	bool m_bNoInstanceLimit;
 	bool m_bAllowsNukes;
 	bool m_bForceNoPrereqScaling;

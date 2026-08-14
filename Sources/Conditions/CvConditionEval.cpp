@@ -8,6 +8,7 @@
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "Conditions/CvConditionEval.h"
 #include "CvGate.h"              // cascadeGateOk -- the entity-level enabled/disabled pair
+#include "CvBuildingInfo.h"      // isEmpireLevel -- the atom implied-scope override (DEC-empire-level-buildings)
 #include "CvFoldTargetInfo.h"    // FoldTargets -- what a generalized plot predicate MEANS (json.md §3.5)
 #include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
@@ -183,9 +184,22 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 		ctx.unit != NULL && id >= 0 && ctx.unit->isHasPromotion((PromotionTypes)id));
 	// the enabler GATE reads raw PRESENCE (ctx.buildingAtomsPresence -- the §7 has-list / engine PrereqInCity
 	// mirror, exclusions included); deposits + the operate fixpoint read the cascade-computed ACTIVE set
-	if (en_starts(t, "BUILDING_")) return ev_hypothetical(ctx, EDGEB_BUILDINGS, id, ctx.buildingAtomsPresence
-		? (cityContext != NULL && cityContext->hasBuilding(id))
-		: ev_hasActiveBuilding(ctx, id));
+	if (en_starts(t, "BUILDING_"))
+	{
+		// DEC-empire-level-buildings: an identity.empireLevel building is never in any city, so a bare atom
+		// naming one resolves at EMPIRE (json §3.4 -- the tag IS the type's domain): presence is the OWNER's
+		// held set, the active verdict the player-side operate crossing's store.
+		if (id >= 0 && GC.getBuildingInfo((BuildingTypes)id).isEmpireLevel())
+		{
+			return ev_hypothetical(ctx, EDGEB_BUILDINGS, id,
+				empireContext != NULL && (ctx.buildingAtomsPresence
+					? empireContext->hasEmpireBuilding(id)
+					: empireContext->isEmpireBuildingActive(id)));
+		}
+		return ev_hypothetical(ctx, EDGEB_BUILDINGS, id, ctx.buildingAtomsPresence
+			? (cityContext != NULL && cityContext->hasBuilding(id))
+			: ev_hasActiveBuilding(ctx, id));
+	}
 	if (en_starts(t, "CORPORATION_")) return ev_hypothetical(ctx, EDGEB_CORPORATIONS, id,
 		cityContext != NULL && id >= 0 && cityContext->hasCorporation(id));
 	// game/world-scope facts have no context by design (the scope set is plot/city/player, contexts.md)
@@ -273,6 +287,24 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 	if (en_starts(t, "BONUS_") && id >= 0 && eScope == CASC_SCOPE_CITY && cityContext != NULL)
 	{
 		iOut = cityContext->tradedBonusCount(id);
+		return true;
+	}
+	// the §3.1 wonder-CATEGORY count tokens (json §3.1: city = CvCity::getNum{World,National,Team}Wonders --
+	// the trait free-specialist-per-wonder scaler's multiplier). CITY scope only: a wonder-count deposit asks
+	// the city holding the wonders, and no cross-city roll-up of the category exists to answer anything else.
+	if (t == "WORLD_WONDER" && eScope == CASC_SCOPE_CITY)
+	{
+		iOut = cityContext != NULL ? cityContext->numWorldWonders() : 0;
+		return true;
+	}
+	if (t == "TEAM_WONDER" && eScope == CASC_SCOPE_CITY)
+	{
+		iOut = cityContext != NULL ? cityContext->numTeamWonders() : 0;
+		return true;
+	}
+	if (t == "NATIONAL_WONDER" && eScope == CASC_SCOPE_CITY)
+	{
+		iOut = cityContext != NULL ? cityContext->numNationalWonders() : 0;
 		return true;
 	}
 	// the §3.1 CORPORATION_LEVEL counter (rulings 4+10 -- the corp HQ-revenue per-scaler): the game-wide corp

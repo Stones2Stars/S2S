@@ -261,6 +261,9 @@ public:
 	static void onBonusAccessChangedActive(const CvCity* pCity, int eBonus);   // #430 G3: a SINGLE bonus's access (trade/vicinity) flipped -> re-check its operate consumers (reverse-FK targeted)
 	static void onPropertyBandHitActive(const CvCity* pCity, int eProperty);   // F5: a property crossed a band threshold in pCity -> re-check its operate-band consumers (reverse-FK targeted)
 	static const std::vector<int>& propertyBandBuildings();                   // the PROPERTY-BAND population -- what the property system places in every city (CvCity::placeSystemBuildings)
+	static const std::vector<int>& autoBuildBuildings();                      // the identity.autoBuild population minus world/team-capped members -- the second system-placed class (enabler.md §3, owner)
+	static const std::vector<int>& contestedAutoBuildings();                  // the world/team-capped autoBuild members -- awarded first-to-earn by the trigger engine, never placed
+	static bool isSystemPlacedBuilding(int iBuilding);                        // band ∪ autoBuild -- the membership the activation-fired grant leg tests (CvTriggerEngine)
 	static const std::map<int, std::set<int> >& propertyBandThresholds();      // PROPERTY_ id -> the sorted union of its operate-band boundaries; the enabler's own consumer reads it to tell a value MOVE from a band CROSSING
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
 

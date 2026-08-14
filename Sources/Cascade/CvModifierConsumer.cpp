@@ -80,6 +80,7 @@ namespace
 #include "CvTerrainInfo.h"
 #include "CvFeatureInfo.h"
 #include "CvRouteInfo.h"
+#include "CvPropertyInfo.h"
 
 namespace
 {
@@ -342,6 +343,7 @@ namespace
 		switch (kEvent.iEventId)
 		{
 		case SEVT_CITY_BUILDING_ACTIVATED:
+		case SEVT_EMPIRE_BUILDING_ACTIVATED:
 		case SEVT_CITY_BONUS_ADDED:
 		case SEVT_CITY_RELIGION_ADDED:
 		case SEVT_CITY_CORPORATION_ADDED:
@@ -368,6 +370,7 @@ namespace
 		case SEVT_EMPIRE_STATE_RELIGION_ADDED: return 1;
 
 		case SEVT_CITY_BUILDING_DORMANTED:
+		case SEVT_EMPIRE_BUILDING_DORMANTED:
 		case SEVT_CITY_BONUS_REMOVED:
 		case SEVT_CITY_RELIGION_REMOVED:
 		case SEVT_CITY_CORPORATION_REMOVED:
@@ -2189,6 +2192,53 @@ namespace
 					// this city has it.
 					mc_applyTypeAtom(GC.getBuildingInfo((BuildingTypes)kEvent.iType).getType(), EDGEB_BUILDINGS,
 						kEvent.iType, mc_sourceDirection(kEvent) > 0, pPlayer, pCity);
+					// ...and the WONDER-CATEGORY count route (plane B): a wonder arriving or leaving moves this
+					// city's category count, which the §3.1 count tokens read (the trait free-specialist-per-wonder
+					// scaler). The category comes from the ONE classification the count maintenance itself uses --
+					// derived from which self-cap the building authors, never an isWorldWonder mirror
+					// ([enabler.md] §4). Re-BOOKED for the same reason every count route is: perApply is a step
+					// function, so the re-book against the count as it stands is the only exact form.
+					if (pCity != NULL)
+					{
+						const char* szWonderToken = NULL;
+						if      (isWorldWonder((BuildingTypes)kEvent.iType))    { szWonderToken = "WORLD_WONDER"; }
+						else if (isTeamWonder((BuildingTypes)kEvent.iType))     { szWonderToken = "TEAM_WONDER"; }
+						else if (isNationalWonder((BuildingTypes)kEvent.iType)) { szWonderToken = "NATIONAL_WONDER"; }
+						const std::vector<DepositIndex::GatedDeposit>* pWonderGated =
+							(szWonderToken != NULL) ? DepositIndex::gatedByToken(szWonderToken) : NULL;
+						if (pWonderGated != NULL)
+						{
+							McGatedTally kWonderTally;
+							mc_bookGated(pWonderGated, *pCity, &kWonderTally);
+							CascadeChannelRegistry::reportAtomRoute(szWonderToken, (int)pWonderGated->size(),
+								kWonderTally.iFound, kWonderTally.iNoSource, kWonderTally.iRefused,
+								kWonderTally.iApplied, (int)pCity->getOwner(), pCity->getID());
+						}
+					}
+				}
+				break;
+			}
+			// The EMPIRE-LEVEL building pairs (DEC-empire-level-buildings) -- the city pair's split, one scope
+			// up: the member's OWN deposits ride its player-side OPERATE crossing (a held-but-dormant member
+			// deposits nothing), and plane-C atom re-resolution rides the held crossing. No city -- the deposits
+			// are empire-scope by curation and land in the player's package, rolling down at the read.
+			case SEVT_EMPIRE_BUILDING_ACTIVATED:
+			case SEVT_EMPIRE_BUILDING_DORMANTED:
+			{
+				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
+				{
+					mc_applySource(&GC.getBuildingInfo((BuildingTypes)kEvent.iType), mc_sourceDirection(kEvent), kEvent.iEventId,
+						pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
+				}
+				break;
+			}
+			case SEVT_EMPIRE_BUILDING_ADDED:
+			case SEVT_EMPIRE_BUILDING_REMOVED:
+			{
+				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
+				{
+					mc_applyTypeAtom(GC.getBuildingInfo((BuildingTypes)kEvent.iType).getType(), EDGEB_BUILDINGS,
+						kEvent.iType, kEvent.iEventId == SEVT_EMPIRE_BUILDING_ADDED, pPlayer, NULL);
 				}
 				break;
 			}
@@ -2654,6 +2704,41 @@ namespace
 					pPlayer, pCity, NULL);
 				break;
 			}
+			// A city PROPERTY crossed an authored boundary -- the HOLDER's crossing fact, announced beside the raw
+			// value fact precisely so a consumer never gates on the value firehose ([event-spine.md]: the solver
+			// moves nearly every property of every city every turn; the boundaries are ONE registry and are tested
+			// once, at the emit). The deposits a `{PROPERTY_X, min/max}` gate governs re-book HERE.
+			// ⚑ Re-BOOKED, never crossed: a property gate is a THRESHOLD, so it has no held/not-held verdict to pin
+			// (the POPULATION / ERA shape), and the fact is deliberately DIRECTION-LESS in effect -- the re-book
+			// reads the live value against each gate, so which way the boundary was crossed is redundant.
+			// ⛔ The registry the emit tests carries the DEPOSIT-declared boundaries too
+			// (DepositIndex::propertyGateThresholds, unioned into EnablerKernel::propertyBandThresholds) -- without
+			// that half a gate at a value between two operate-band boundaries would never see its crossing fire.
+			// ⛔ NO case for SEVT_PROPERTY_ADDED / _REMOVED itself, and that is the DESIGN, not a hole: the raw
+			// value fact is the highest-volume mutation in the engine, and the holder already reduced it to the
+			// crossings a gate can act on. A `per: {PROPERTY_X}` SCALED deposit would need the value fact's delta,
+			// and no modifier deposit authors one -- the property-scaled `per` lives on the trigger plane's chance
+			// ([json.md] §5), which is not this consumer's.
+			case SEVT_CITY_PROPERTY_BAND_ADDED:
+			case SEVT_CITY_PROPERTY_BAND_REMOVED:
+			{
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+				if (pCity != NULL && kEvent.iType >= 0 && kEvent.iType < GC.getNumPropertyInfos())
+				{
+					const char* szPropertyType = GC.getPropertyInfo((PropertyTypes)kEvent.iType).getType();
+					const std::vector<DepositIndex::GatedDeposit>* pPropertyGated =
+						(szPropertyType != NULL) ? DepositIndex::gatedByType(std::string(szPropertyType)) : NULL;
+					if (pPropertyGated != NULL)
+					{
+						McGatedTally kPropertyTally;
+						mc_bookGated(pPropertyGated, *pCity, &kPropertyTally);
+						CascadeChannelRegistry::reportAtomRoute(szPropertyType, (int)pPropertyGated->size(),
+							kPropertyTally.iFound, kPropertyTally.iNoSource, kPropertyTally.iRefused,
+							kPropertyTally.iApplied, (int)pCity->getOwner(), pCity->getID());
+					}
+				}
+				break;
+			}
 			// ⛔ NO case for the CITY fresh-water counter. `CvPlot::isFreshWater` reads
 			// `getPlotCity()->hasFreshWater()`, so the counter crossing moves the CENTRE PLOT's own bit --
 			// PlotContext consumes that city fact for exactly this reason (pc_cityAxisFor) and announces the
@@ -2729,9 +2814,8 @@ namespace
 			case SEVT_EMPIRE_ERA_REMOVED:
 			{
 				// ⛔ THE ERA ROUTE WAS ASKING THE WRONG INDEX AND MOVED NOTHING AT ALL.
-				// It read gatedByToken("ERA"), but s_gatedByToken is populated from ONE place -- a deposit's `per`
-				// SCALER (di_scanRecordDependencies) -- and no authored deposit anywhere scales `per: {type: ERA}`.
-				// An era CONDITION is `{type: "ERA", min/max: N}`, whose node type interns into s_gatedBy**Type**.
+				// It read ONLY gatedByToken("ERA") -- the `per`-SCALER index (di_scanRecordDependencies) -- while
+				// an era CONDITION is `{type: "ERA", min/max: N}`, whose node type interns into s_gatedBy**Type**.
 				// So the list this asked for was empty on every era advance, and the 1130 era-gated deposits in
 				// Assets/Data (all empire-scope: research 565, culture 565) kept whatever verdict they were booked
 				// at when their source arrived -- for the rest of the game.
@@ -2750,10 +2834,52 @@ namespace
 					CascadeChannelRegistry::reportAtomRoute("ERA", (int)pEraGated->size(), kEraTally.iFound,
 						kEraTally.iNoSource, kEraTally.iRefused, kEraTally.iApplied, (int)pPlayer->getID(), -1);
 				}
-				// The `per: {type: ERA}` scaler route stays beside it -- nothing authors one today, so it is the
-				// empty half rather than the wrong one, and it costs a null lookup.
+				// The `per: {type: ERA}` scaler route beside it -- the handicap AI percents scale on it
+				// (`{value: -3, per: "ERA"}`), and an era advance is Δ1, so applying the per-unit value once per
+				// crossing IS the exact delta.
 				mc_applyGated(DepositIndex::gatedByToken("ERA"), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_SUPPRESSED,
 					pPlayer, NULL, NULL);
+				break;
+			}
+			// A commerce SLIDER moved -- the COUNT route for the §3.1 rate tokens ("happiness per 10% culture
+			// rate" / "anger per gold rate"). ⚠ ONE slider move emits SEVERAL of these, one per channel the
+			// setter rebalanced ([event-spine.md]), and each names its own channel -- so the route maps the
+			// channel to ITS token and never widens to the whole family.
+			// ⚑ Re-BOOKED, never delta'd: `each: 100` makes the scaler a STEP function (the POPULATION shape), so
+			// the re-book resolves against the rate as it stands and moves only the difference -- idempotent when
+			// the same fact is seen twice, and correct in both directions off a direction-less pass.
+			// Both planes: the civic's empire-scope deposit re-books at the player, the building's city-scope one
+			// per city (a slider is PLAYER state, so every city of this owner reads the same new rate).
+			case SEVT_EMPIRE_COMMERCE_PERCENT_ADDED:
+			case SEVT_EMPIRE_COMMERCE_PERCENT_REMOVED:
+			{
+				const char* szRateToken = NULL;
+				switch (kEvent.iType)
+				{
+				case COMMERCE_GOLD:      szRateToken = "GOLD_RATE"; break;
+				case COMMERCE_RESEARCH:  szRateToken = "RESEARCH_RATE"; break;
+				case COMMERCE_CULTURE:   szRateToken = "CULTURE_RATE"; break;
+				case COMMERCE_ESPIONAGE: szRateToken = "ESPIONAGE_RATE"; break;
+				default: break;
+				}
+				const std::vector<DepositIndex::GatedDeposit>* pRateGated =
+					(szRateToken != NULL) ? DepositIndex::gatedByToken(szRateToken) : NULL;
+				if (pPlayer != NULL && pRateGated != NULL)
+				{
+					McGatedTally kRateTally;
+					mc_bookGatedEmpire(pRateGated, *pPlayer, &kRateTally);
+					for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities();
+						cityIterator != pPlayer->endCities(); ++cityIterator)
+					{
+						if (*cityIterator != NULL)
+						{
+							mc_bookGated(pRateGated, **cityIterator, &kRateTally);
+						}
+					}
+					CascadeChannelRegistry::reportAtomRoute(szRateToken, (int)pRateGated->size(),
+						kRateTally.iFound, kRateTally.iNoSource, kRateTally.iRefused, kRateTally.iApplied,
+						(int)pPlayer->getID(), -1);
+				}
 				break;
 			}
 			// ⚠ The WORLD ban, not the empire's own nuke capability: CASC_PRED_NO_NUKES is the world verdict
