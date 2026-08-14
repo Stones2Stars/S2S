@@ -290,8 +290,9 @@ POLICIES = {
 }
 # --- FreeSpecialistPer{Wonder,Project}: EFFECTS, not policies (owner 2026-07-01) -> a `freeSpecialists` MODIFIER scaled
 # per wonder count (CvCity:5764: +1 free specialist of any type per world/national/team wonder in each city). Emitted as
-# freeSpecialists.empire.any list entries {value:1, per:{type:<WONDER_TOKEN>, scope:city}} -- the ordinary §3.7 per-count
-# scaler. The count tokens are WORLD_WONDER / NATIONAL_WONDER / TEAM_WONDER -- the existing engine terms (json.md §3.1
+# freeSpecialists.city.any list entries {value:1, per:{type:<WONDER_TOKEN>, scope:city}} -- the ordinary §3.7 per-count
+# scaler at CITY scope, since the count is the city's OWN wonder count and the entry realizes per city.
+# The count tokens are WORLD_WONDER / NATIONAL_WONDER / TEAM_WONDER -- the existing engine terms (json.md §3.1
 # count registry, UPPER_SNAKE like POPULATION/ERA; pedia display names can be aligned later). Coexists with iFreeSpecialist. ---
 FREE_SPEC_PER_WONDER = {
     "bFreeSpecialistperWorldWonder":    "WORLD_WONDER",
@@ -797,11 +798,13 @@ def curate(typ, rec, store):
                                         ("enabled", OrderedDict([("type", b), ("scope", "empire"), ("min", 1)]))]))
         node["flat"] = entries
 
-    # FreeSpecialistPer* -> freeSpecialists.empire.any per-wonder deposits (owner 2026-07-01; EFFECTS, not policies).
-    # +1 free specialist of ANY type per world/national/team wonder in each city (CvCity:5764). Coexists in the `any`
-    # leaf with a bare iFreeSpecialist count (merged into a list, json §3.9).
+    # FreeSpecialistPer* -> freeSpecialists.city.any per-wonder deposits (owner 2026-07-01; EFFECTS, not policies).
+    # +1 free specialist of ANY type per world/national/team wonder IN EACH CITY (CvCity:5764) -- the count is the
+    # CITY's own wonder count, so the entry is CITY-scope and realizes per city like the trait's other city-scope
+    # entries (an empire-scope resolve has no city to count and multiplied by 0). Coexists in the `any` leaf with
+    # any city-scope count (merged into a list, json §3.9).
     if free_spec_wonder:
-        node = fam.setdefault("freeSpecialists", {}).setdefault("empire", {})
+        node = fam.setdefault("freeSpecialists", {}).setdefault("city", {})
         existing = node.get("any")
         entries = (existing if isinstance(existing, list) else [existing]) if existing is not None else []
         entries.extend(free_spec_wonder)

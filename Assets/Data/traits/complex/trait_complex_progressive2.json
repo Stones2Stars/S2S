@@ -39,7 +39,7 @@
   }
  },
  "freeSpecialists": {
-  "empire": {
+  "city": {
    "any": [
     {
      "value": 1,
