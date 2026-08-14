@@ -220,10 +220,15 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and from
   `SEVT_UNIT_CREATED`, the instance; all three fire at one birth and none duplicates another).
   **THE UNIT PLANE has its mark triggers** — [state-repositories.md](../architecture/state-repositories.md)
-  specifies a unit's resolved values move *"ONLY when a promotion or combat class changes"*, and neither
-  existed: `SEVT_UNIT_PROMOTION_ADDED / _REMOVED` (`CvUnit::processPromotion`, the ONE funnel both `setHasPromotion`
-  overloads reach) and `SEVT_UNIT_COMBAT_ADDED / _REMOVED` (`CvUnit::processUnitCombat`, reached once past
-  `setHasUnitCombat`'s change guard AND its game-option/spy validity gate). **`SEVT_UNIT_KILLED`** is the DEATH
+  specifies a unit's resolved values move on a promotion or combat-class change plus one seeding gather at
+  birth: `SEVT_UNIT_PROMOTION_ADDED / _REMOVED` (`CvUnit::processPromotion`, the ONE funnel both `setHasPromotion`
+  overloads reach), `SEVT_UNIT_COMBAT_ADDED / _REMOVED` (`CvUnit::processUnitCombat`, reached once past
+  `setHasUnitCombat`'s change guard AND its game-option/spy validity gate), and `SEVT_UNIT_CREATED` itself —
+  the seed that serves the unit's OWN info's share (the non-delta slots, vision above all, carry the unit's
+  base), without which a unit holding no promotion and no extra combat class never gathered and read 0 sight.
+  ⚠ At LOAD the seed is the unit marking ITSELF at the end of its own `read()` — the consumer's mark cannot
+  serve a save-carried unit, because its getUnit lookup runs while the player's unit list is still mid-stream
+  and silently resolves nothing; the created/promotion facts remain the play-time triggers. **`SEVT_UNIT_KILLED`** is the DEATH
   TWIN `SEVT_UNIT_CREATED` lacked — without it grants and the out-of-process replay see units born and never die.
   ⛔ Its correctness is **STRUCTURAL, not positional**: it is emitted on the FIRST line of **`CvUnit::die`**, the
   one function that ends a unit's life, which carries no early return and no conditional deletion and always ends
@@ -712,8 +717,11 @@ event-sourced read, so the read-driven reseed is built as its own step, never sh
 > (owner).** *"The AI needs to be allowed to do work; the important part is to not have the AI do work during
 > saveload."* A citizen assignment, a production choice, a re-scored plan are DECISIONS taken over base state —
 > and while the stream is still arriving that state is incomplete, so the decision is paid for in full and then
-> invalidated by the next fact. The save already carries the answer the AI would re-derive, so a load owes no
-> re-decision at all.
+> invalidated by the next fact.
+> ⚖ **The CITIZEN ASSIGNMENT (workers + specialists) IS re-decided at load END (owner)** — the saved assignment
+> was decided against the values the save's DLL computed, so `CvGame::onFinalInitialized` marks every city after
+> the load-end rebuilds settle and the first post-load sweep re-runs it against the rebuilt state. Still only a
+> MARK inside the load path; the work runs past the bracket like everything else here.
 > ⚑ **The flag STAYS SET; only the WORK is suppressed.** Whoever marked the city still wants the work, so it is
 > DEFERRED to the first sweep past `GAME_LOAD_FINISHED` — the identical suppress-then-resume shape grants take
 > off this bracket, applied to the AI plane.

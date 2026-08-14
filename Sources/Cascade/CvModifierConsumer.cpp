@@ -2313,6 +2313,11 @@ namespace
 			case SEVT_UNIT_PROMOTION_REMOVED:
 			case SEVT_UNIT_COMBAT_ADDED:
 			case SEVT_UNIT_COMBAT_REMOVED:
+			// ⚑ BIRTH IS THE THIRD TRIGGER, and it is what serves the unit's OWN info's share of the plane. The
+			// vision slot (and every non-delta slot) carries the unit's base, so a unit holding no promotion and
+			// no extra combat class must still gather ONCE -- without this fact it read 0 sight forever and saw
+			// only the plot it stood on. The in-read half of the same emit covers every loaded unit.
+			case SEVT_UNIT_CREATED:
 			{
 				if (pPlayer != NULL && kEvent.iA >= 0)
 				{

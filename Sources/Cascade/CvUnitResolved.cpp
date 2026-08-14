@@ -126,6 +126,12 @@ namespace
 				: kAddress.unit;
 			aiOut[iSlot] += pInfo->modifier(kAddress.family, kAddress.kind, CASC_SCOPE_UNIT, eUnit);
 		}
+		// THE AIR-RANGE SLOT SUMS TWO ADDRESSES. The unit's own BASE rides the top-level `range` family
+		// (range.unit.flat -- where the curator lands the legacy iAirRange), while boosts ride the `air`
+		// family's range member (air.unit.range) the table row above reads. The slot serves their SUM:
+		// reading only the boost member left every un-boosted airplane at range 0 -- no recon, no rebase,
+		// no strike -- while the authored 12 sat in a family nothing gathered.
+		aiOut[URS_AIR_RANGE] += pInfo->getScalar(SCALAR_RANGE, CASC_SCOPE_UNIT, CASC_UNIT_FLAT);
 	}
 }
 

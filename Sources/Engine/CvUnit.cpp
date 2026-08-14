@@ -18986,11 +18986,29 @@ void CvUnit::read(FDataStreamBase* pStream)
 				}
 			}
 		}
+		else if (!m_pUnitInfo->getBuilds().empty())
+		{
+			// The component's EXISTENCE is DERIVABLE -- init creates it from the info's builds list, so the save
+			// is authoritative only for the component's CONTENTS (the extras block above), never for whether a
+			// builds-authoring unit IS a worker ([DEC-derived-never-trusted]). A save chain that once wrote the
+			// bool false left every existing worker unable to build ANYTHING forever -- hasBuild's first gate --
+			// which no later fix could repair through the round-trip. Seed the hills base exactly as the stored
+			// path does; the saved extras of a component lost by an old save are gone and stay gone.
+			m_worker = new UnitCompWorker();
+			m_worker->changeHillsWorkModifier(m_pUnitInfo->getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT));
+		}
 	}
 
 	//Example of how to skip an outdated and unnecessary save element (at least for ints and bools)
 	/*WRAPPER_SKIP_ELEMENT(wrapper,"CvUnit", m_bHiddenNationality, SAVE_VALUE_ANY);*/
 	WRAPPER_READ_OBJECT_END(wrapper);
+
+	// The resolved plane gathers HERE, at the end of the unit's own read -- the one point its full held set
+	// (info + promotions + combat classes) has streamed in. The consumer's mark cannot serve a loaded unit:
+	// its getUnit lookup runs while the player's unit list is still mid-stream, so every save-carried unit
+	// silently kept an all-zero plane (sight above all) while in-session births and promotions gathered --
+	// which is why loaded armies were blind and freshly trained units saw.
+	markResolvedValuesDirty();
 
 
 	// Post Process

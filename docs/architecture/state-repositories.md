@@ -871,7 +871,11 @@ keyed count vs summed magnitude — is § EVERY DERIVED STORE IS ONE SHAPE, abov
   - **UNIT is RESOLVED VALUES, not a package** — "when the number is put on the unit, no more percentages or
     whatever is involved, the data just IS". The exact set of numbers a unit carries is known, so they are summed
     and stored individually, and they move on a different trigger from everything else: ONLY when a promotion or
-    combat class changes. It is the most static plane in the engine.
+    combat class changes — plus ONE seeding gather at BIRTH (`SEVT_UNIT_CREATED` at play; the END of the unit's
+    own `read()` at load, the one point its full held set has streamed in — the consumer's mark cannot serve a
+    loaded unit, since its getUnit lookup runs while the player's unit list is still mid-stream), because the
+    non-delta slots (vision above all) carry the unit's own BASE: a unit holding no promotion and no extra
+    combat class would otherwise never gather and read 0. It is the most static plane in the engine.
     ⛔ **THE SUM WALKS WHAT THE UNIT HOLDS, NEVER THE REGISTRY.** The contributors are the unit's own type plus
     its held promotions and held combat classes, enumerated from the containers the unit already keys them in —
     not discovered by sweeping every promotion and every class asking "do I have this?". That sweep costs the
