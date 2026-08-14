@@ -423,6 +423,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_CITY_RELIGION_REMOVED:            return "[SPINE/CITY] cityReligionRemoved";
 	case SEVT_CITY_CORPORATION_ADDED:           return "[SPINE/CITY] cityCorporationAdded";
 	case SEVT_CITY_CORPORATION_REMOVED:         return "[SPINE/CITY] cityCorporationRemoved";
+	case SEVT_CITY_CORPORATION_ACTIVE_ADDED:    return "[SPINE/CITY] cityCorporationActiveAdded";
+	case SEVT_CITY_CORPORATION_ACTIVE_REMOVED:  return "[SPINE/CITY] cityCorporationActiveRemoved";
 	case SEVT_CITY_BONUS_ADDED:                 return "[SPINE/CITY] cityBonusAdded";
 	case SEVT_CITY_BONUS_REMOVED:               return "[SPINE/CITY] cityBonusRemoved";
 	case SEVT_CITY_VICINITY_BONUS_ADDED:        return "[SPINE/CITY] cityVicinityBonusAdded";
@@ -788,6 +790,22 @@ void emitCityReligionRemoved(int iCity, int iOwner, int iReligion)
 void emitCityCorporationAdded(int iCity, int iOwner, int iCorporation)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CORPORATION_ADDED, iCorporation, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityCorporationActiveAdded(int iCity, int iOwner, int iCorporation)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CORPORATION_ACTIVE_ADDED, iCorporation, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	eventSpine().emit(e);
+}
+
+void emitCityCorporationActiveRemoved(int iCity, int iOwner, int iCorporation)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CORPORATION_ACTIVE_REMOVED, iCorporation, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);

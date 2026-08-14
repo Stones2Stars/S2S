@@ -525,6 +525,16 @@ enum SpineDomainEvent
 	// looks like from a consumer's side, and why this fact exists.
 	// iType = the FOUNDING unit's type (-1 if none), iA = that unit's id, iC = owner, iSrcLoc = the new city.
 	SEVT_CITY_FOUNDED               = 98,
+	// The city's CORPORATION-ACTIVE verdict crossed ({HAS_CORPORATION: X} = ACTIVE, json §3.5). The verdict is a
+	// four-leg engine composition (CvCity::isActiveCorporation -- presence, the player-level state, the obsoleting
+	// tech, a consumed bonus held), so no single leg's fact is it: the stored verdict's holder (CityContext)
+	// re-reads the ONE engine implementation on each leg's fact and announces here only when the verdict moved --
+	// the threshold-crossing shape (event-spine.md: the holder of the value announces the crossing).
+	// ⛔ NOT a duplicate of the CORPORATION presence pair above: a present-but-dormant corporation is the case
+	// that separates them, and it is what plane C routes on ({HAS_CORPORATION}-gated deposits).
+	// iType = Corporation, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_CORPORATION_ACTIVE_ADDED   = 99,
+	SEVT_CITY_CORPORATION_ACTIVE_REMOVED = 100,
 
 	// ===== PLOT =====
 	// ⛔ THE SUBSTRATE SLOTS. Each (terrain / feature / improvement / route / bonus / type / landmark) holds ONE
@@ -785,6 +795,10 @@ void emitCityReligionAdded(int iCity, int iOwner, int iReligion);
 void emitCityReligionRemoved(int iCity, int iOwner, int iReligion);
 void emitCityCorporationAdded(int iCity, int iOwner, int iCorporation);
 void emitCityCorporationRemoved(int iCity, int iOwner, int iCorporation);
+// The ACTIVE-verdict crossing (the presence pair's four-leg composed twin) -- emitted ONLY by CityContext's
+// verdict store, which is the one place that remembers what held before.
+void emitCityCorporationActiveAdded(int iCity, int iOwner, int iCorporation);
+void emitCityCorporationActiveRemoved(int iCity, int iOwner, int iCorporation);
 // The NETWORK supply presence crossing (0 <-> non-zero), not a count move.
 void emitCityBonusAdded(int iCity, int iOwner, int iBonus);
 void emitCityBonusRemoved(int iCity, int iOwner, int iBonus);

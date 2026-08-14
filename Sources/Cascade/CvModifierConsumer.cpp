@@ -354,6 +354,7 @@ namespace
 		case SEVT_PLOT_ROUTE_ADDED:
 		case SEVT_PLOT_BONUS_ADDED:
 		case SEVT_CITY_POWER_ADDED:
+		case SEVT_CITY_CORPORATION_ACTIVE_ADDED:
 		case SEVT_CITY_HOLY_CITY_ADDED:
 		case SEVT_CITY_OWNER_ADDED:
 		case SEVT_PLOT_OWNER_ADDED:
@@ -376,6 +377,7 @@ namespace
 		case SEVT_PLOT_ROUTE_REMOVED:
 		case SEVT_PLOT_BONUS_REMOVED:
 		case SEVT_CITY_POWER_REMOVED:
+		case SEVT_CITY_CORPORATION_ACTIVE_REMOVED:
 		case SEVT_CITY_HOLY_CITY_REMOVED:
 		case SEVT_CITY_OWNER_REMOVED:
 		case SEVT_PLOT_OWNER_REMOVED:
@@ -606,6 +608,45 @@ namespace
 	// plot package (CascadeChannelRegistry::reportPlotsFan). A zero here with a non-empty `selected` is the
 	// signature of an entry that SELECTED but never RESOLVED, which nothing else in the engine would show.
 	int g_iFanResolved = 0;   // scratch: how many (plot × entry) pairs resolveEntry accepted, per reported fan
+
+	// ONE plot's application of a source's selected `plots` entries -- the shared body of the source-move fan
+	// below and the WORKING-CITY membership fold. iMultiplicity is signed: the fan passes the source's own
+	// direction, the membership fold ±1 per crossing.
+	bool mc_applyPlotsEntriesToPlot(const std::vector<const CvModEntry*>& selected, int iMultiplicity,
+		int iSourceIndex, const CvPlot& kPlot, PlayerTypes eReportOwner, int iReportCity)
+	{
+		CvCascadeEvalCtx evalCtx;
+		InfoValuation::fillEvalCtxAtPlot(kPlot, evalCtx);
+		bool bApplied = false;
+		for (size_t iEntry = 0; iEntry < selected.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = selected[iEntry];
+			int iChannel = -1;
+			bool bPercentSide = false;
+			int64_t iValue = 0;
+			if (!MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_PLOT,
+				evalCtx, &kPlot, false, iChannel, bPercentSide, iValue))
+			{
+				continue;
+			}
+			++g_iFanResolved;
+			// the ORIGIN RULE: plot is yield-only, so a plot-landing percent has no side to land on
+			if (!bPercentSide)
+			{
+				foldPlotSegment(kPlot,
+					CvCascadePackage<CvPlot>::PLOTSEG_REST, iChannel, iValue);
+				CascadeChannelRegistry::reportDepositApply("<plotsFan>", iChannel, CASC_SCOPE_PLOT,
+					false, iValue, (int)eReportOwner, iReportCity, "plotsFan");
+				bApplied = true;
+			}
+		}
+		if (bApplied)
+		{
+			kPlot.getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
+		}
+		return bApplied;
+	}
+
 	int mc_applyPlotsTargetDeposits(const std::vector<const CvModEntry*>& selected, int iMultiplicity,
 		int iSourceIndex, const CvCity& city)
 	{
@@ -618,34 +659,9 @@ namespace
 			{
 				continue;
 			}
-			CvCascadeEvalCtx evalCtx;
-			InfoValuation::fillEvalCtxAtPlot(*pLoopPlot, evalCtx);
-			bool bApplied = false;
-			for (size_t iEntry = 0; iEntry < selected.size(); ++iEntry)
+			if (mc_applyPlotsEntriesToPlot(selected, iMultiplicity, iSourceIndex, *pLoopPlot,
+				city.getOwner(), city.getID()))
 			{
-				const CvModEntry* pEntry = selected[iEntry];
-				int iChannel = -1;
-				bool bPercentSide = false;
-				int64_t iValue = 0;
-				if (!MMKernel::resolveEntry(*pEntry, iMultiplicity, CASC_SCOPE_PLOT,
-					evalCtx, pLoopPlot, false, iChannel, bPercentSide, iValue))
-				{
-					continue;
-				}
-				++g_iFanResolved;
-				// the ORIGIN RULE: plot is yield-only, so a plot-landing percent has no side to land on
-				if (!bPercentSide)
-				{
-					foldPlotSegment(*pLoopPlot, 
-						CvCascadePackage<CvPlot>::PLOTSEG_REST, iChannel, iValue);
-					CascadeChannelRegistry::reportDepositApply("<plotsFan>", iChannel, CASC_SCOPE_PLOT,
-						false, iValue, (int)city.getOwner(), city.getID(), "plotsFan");
-					bApplied = true;
-				}
-			}
-			if (bApplied)
-			{
-				pLoopPlot->getCascadePackage().noteSourceApplied(iSourceIndex, iMultiplicity);
 				++iPlotsApplied;
 			}
 		}
@@ -1021,9 +1037,11 @@ namespace
 	// package's own record of what it holds, which cannot disagree with what was applied.
 	// ⛔ Not a recompute and not a sweep: the worklist is the owner's HELD sources, and each one goes through the
 	// ONE per-entry resolve ([DEC-single-implementation]). A source nobody holds is never reached.
-	void mc_foldOwnerSourcesIntoCity(const CvPlayer& kOwner, const CvCity& kCity, const char* szOnFact)
+	// The owner's HELD empire-level sources (team techs + projects, adopted civics, active traits, heritages) --
+	// the ONE enumeration, shared by the city fold below and the plots-fan membership fold
+	// ([DEC-single-implementation]: a second copy of this walk would drift the moment a source kind is added).
+	void mc_collectOwnerHeldSources(const CvPlayer& kOwner, std::vector<const CvInfo*>& heldSources)
 	{
-		std::vector<const CvInfo*> heldSources;
 		const CvTeam& kTeam = GET_TEAM(kOwner.getTeam());
 		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
 		{
@@ -1068,6 +1086,12 @@ namespace
 				heldSources.push_back(&GC.getHeritageInfo(heritages[iHeritage]));
 			}
 		}
+	}
+
+	void mc_foldOwnerSourcesIntoCity(const CvPlayer& kOwner, const CvCity& kCity, const char* szOnFact)
+	{
+		std::vector<const CvInfo*> heldSources;
+		mc_collectOwnerHeldSources(kOwner, heldSources);
 
 		for (size_t iSource = 0; iSource < heldSources.size(); ++iSource)
 		{
@@ -1084,6 +1108,66 @@ namespace
 			}
 			mc_applyCityDeposits(pModifiers->entries(), 1, iSourceIndex, kCity,
 				pSourceInfo->getType(), szOnFact, mc_buildingIdOf(pSourceInfo), CASC_ORIGIN_BUILDING);
+		}
+	}
+
+	// One source's half of the plots-fan MEMBERSHIP fold below: select its `plots` entries at the scope its
+	// kind authors, test the plot package's OWN applied-source record for the direction, and move the one plot.
+	// The record -- not the HAVE axis -- is the liveness key, exactly as it is for planes B and C: a source
+	// whose fan never resolved here (a dormant building, a land tile against an IS_WATER filter) is absent from
+	// it, so an ADDED retry costs a resolve and a REMOVED withdraws nothing it never held.
+	void mc_foldPlotsFanSource(const CvInfo* pSource, CvCascScope eEntryScope, const CvPlot& kPlot,
+		const CvCity& kCity, int iDirection)
+	{
+		const CvModifiers* pModifiers = (pSource != NULL) ? pSource->getModifiers() : NULL;
+		if (pModifiers == NULL || pModifiers->empty())
+		{
+			return;
+		}
+		std::vector<const CvModEntry*> selected;
+		if (!mc_selectPlotsTargetEntries(pModifiers->entries(), eEntryScope, selected))
+		{
+			return;
+		}
+		const int iSourceIndex = DepositIndex::sourceIndexOf(pSource);
+		const bool bAlreadyApplied = kPlot.getCascadePackage().hasAppliedSource(iSourceIndex);
+		if ((iDirection > 0) ? bAlreadyApplied : !bAlreadyApplied)
+		{
+			return;
+		}
+		mc_applyPlotsEntriesToPlot(selected, iDirection, iSourceIndex, kPlot, kCity.getOwner(), kCity.getID());
+	}
+
+	// ⚖ THE MEMBERSHIP LEG OF THE `plots` FAN -- what ONE plot folds when it ENTERS or LEAVES a city's working
+	// set (SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED). The source-move fan above delivers a `plots` deposit to the
+	// plots standing in the working set AT THAT MOMENT; without this leg a plot that changes hands afterwards
+	// keeps the departed owner's deposits in PLOTSEG_REST and never receives the new owner's -- the two legs
+	// together are what keep the segment total, and dropping either leaves it permanently wrong with nothing to
+	// re-derive it ([DEC-no-self-heal]).
+	// ⚑ This is also where the DEPARTED owner's obligation on an ownership flip lives: CvPlot::setOwner calls
+	// updateWorkingCity ([contexts.md]: a city cannot work a plot it does not own), so the REMOVED crossing names
+	// the departing city and owner while the ADDED names the arriving ones -- one route, both ends, and the
+	// owner facts themselves carry no modifier work at all.
+	void mc_foldPlotsFanMembership(const CvPlot& kPlot, const CvCity& kCity, const CvPlayer& kOwner, int iDirection)
+	{
+		// CITY-scope authors: the city's ACTIVE buildings -- a dormant or obsolete building's fan never ran, and
+		// the per-source record above is what filters an active one whose entries never resolved here.
+		const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(&kCity);
+		for (std::set<int>::const_iterator itBuilding = kOperating.active.begin();
+			itBuilding != kOperating.active.end(); ++itBuilding)
+		{
+			if (*itBuilding >= 0 && *itBuilding < GC.getNumBuildingInfos())
+			{
+				mc_foldPlotsFanSource(&GC.getBuildingInfo((BuildingTypes)*itBuilding), CASC_SCOPE_CITY,
+					kPlot, kCity, iDirection);
+			}
+		}
+		// EMPIRE-scope authors: the owner's held sources -- the same enumeration the city fold walks.
+		std::vector<const CvInfo*> heldSources;
+		mc_collectOwnerHeldSources(kOwner, heldSources);
+		for (size_t iSource = 0; iSource < heldSources.size(); ++iSource)
+		{
+			mc_foldPlotsFanSource(heldSources[iSource], CASC_SCOPE_EMPIRE, kPlot, kCity, iDirection);
 		}
 	}
 
@@ -2378,10 +2462,34 @@ namespace
 				mc_applyPlotPredicate((CvCascPredKind)kEvent.iType, iCrossing, mc_plot(kEvent.iSrcLoc));
 				break;
 			}
-			// ⛔ STILL NO case for the WORKING-CITY fact, and IS_WORKED's DEPOSITS are not routed here either:
-			// IS_WORKED is a plot VERDICT, so the deposits it gates re-resolve through the predicate fact above
-			// like every other bit, and routing them here as well would apply the same crossing twice.
-			// ⚖ BUT THE WORKED FACT DOES MOVE ONE THING HERE NOW -- the city's worked-plot Σ. That Σ used to be
+			// ⚖ THE WORKING-CITY FACT CARRIES THE `plots` FAN'S MEMBERSHIP LEG -- and nothing else. IS_WORKED's
+			// DEPOSITS are not routed on either membership fact: IS_WORKED is a plot VERDICT, so the deposits it
+			// gates re-resolve through the predicate fact above like every other bit, and routing them here as
+			// well would apply the same crossing twice.
+			case SEVT_PLOT_WORKING_CITY_ADDED:
+			case SEVT_PLOT_WORKING_CITY_REMOVED:
+			{
+				// Inside the load bracket the membership facts are DECLINED, not banked: the banked-fan drain at
+				// GAME_LOAD_FINISHED applies every plots-authoring source over the FINAL working set, so a fold
+				// here would double with it -- the same final-state shape CityContext takes for its per-bit facts.
+				if (!spineGameLoadInProgress())
+				{
+					const CvPlot* pWorkingPlot = mc_plot(kEvent.iSrcLoc);
+					// The fact NAMES its city (iA) and owner (iC) -- on the REMOVE end the departing pair, which
+					// getWorkingCity() can no longer answer.
+					if (pWorkingPlot != NULL && pPlayer != NULL)
+					{
+						const CvCity* pMemberCity = pPlayer->getCity(kEvent.iA);
+						if (pMemberCity != NULL)
+						{
+							mc_foldPlotsFanMembership(*pWorkingPlot, *pMemberCity, *pPlayer,
+								(kEvent.iEventId == SEVT_PLOT_WORKING_CITY_ADDED) ? +1 : -1);
+						}
+					}
+				}
+				break;
+			}
+			// ⚖ THE WORKED FACT MOVES the city's worked-plot Σ. That Σ used to be
 			// re-summed at the combine (cityReceiverRate walking getCityIndexPlot over the whole ring), which is
 			// the per-read walk [state-repositories.md] bans and which hung a late-game turn inside the citizen
 			// assignment. It is a MAINTAINED SLOT (CvCascadePackage::plotBaseFlat), and this is its MEMBERSHIP
@@ -2600,6 +2708,18 @@ namespace
 					pPlayer, pCity, NULL);
 				break;
 			}
+			case SEVT_CITY_CORPORATION_ACTIVE_ADDED:
+			case SEVT_CITY_CORPORATION_ACTIVE_REMOVED:
+			{
+				// The {HAS_CORPORATION} verdict crossing -- announced by CityContext's verdict store, which
+				// re-reads the four-leg engine verdict on each leg's fact. ⛔ The corporation PRESENCE pair is one
+				// leg of that verdict and must not route these deposits: a present-but-dormant corporation is
+				// exactly the case that separates the two facts.
+				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_HAS_CORPORATION), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+					pPlayer, pCity, NULL);
+				break;
+			}
 			case SEVT_EMPIRE_ERA_ADDED:
 			case SEVT_EMPIRE_ERA_REMOVED:
 			{
@@ -2687,30 +2807,18 @@ namespace
 					pPlayer, NULL, NULL);
 				break;
 			}
+			// ⚖ NOTHING FOR THE MODIFIER, AND THAT IS THE ONE-FACT RULE RATHER THAN A HOLE. CvPlot::setOwner
+			// CALLS updateWorkingCity ([contexts.md]: a city cannot work a plot it does not own, so the two
+			// facts cannot come apart), and every modifier consequence of an ownership flip rides those facts:
+			// the WORKING-CITY pair moves the plots-fan deposits of the departing and arriving owners, and the
+			// WORKED pair moves the city's worked-plot Σ. Routing any of it here as well would apply one
+			// happening twice. The IS_OWNED verdict is PlotContext's -- it derives the bit off this fact and
+			// announces the crossing, and the predicate route serves the deposits gated on it. Cross-scope
+			// receiver totals store nothing ([DEC-uniform-cache-shape]), so there is no empire-side slot to
+			// move for either owner.
 			case SEVT_PLOT_OWNER_ADDED:
 			case SEVT_PLOT_OWNER_REMOVED:
-			{
-				// an owner flip changes the plot's evaluated SOURCE SET (refreshPlot folds gt_foldPlayerSources
-				// over the NEW owner), so the whole isolated base package re-derives -- the substrate blanket's
-				// ruling applies (no per-source route can address the departed owner's folded deposits) -- and
-				// the realized sums the plot feeds go stale with it ([DEC-no-self-heal]: marked here or never).
-				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
-				if (pPlot != NULL)
-				{
-					// ...and the DEPARTED owner. mc_markPlotFedSums reads the plot's LIVE owner, so it can only
-					// ever reach the NEW one -- but the plot's yield has just left the old empire, whose plot-fed
-					// receiver sums are now stale with no route to re-derive them ([DEC-no-self-heal]: marked here
-					// or never). The fact carries the old owner precisely so a consumer can act on the DELTA, and
-					// this is the same both-sides shape SEVT_WORKING_CITY_CHANGED uses for its two cities.
-					if (kEvent.iA >= 0 && kEvent.iA != (int)NO_PLAYER)
-					{
-					}
-					// ⛔ IS_OWNED is NOT re-derived here. It is an ordinary plot verdict on the OWNER axis, so
-					// PlotContext derives it off this same fact and announces the crossing; the predicate route
-					// then reaches the plot and the city standing on it. Re-deriving it here would double it.
-				}
 				break;
-			}
 			// ⚖ THE TURN IS A FACT LIKE ANY OTHER, AND IT CARRIES WHAT THE AGE GATE NEEDS (owner).
 			// `existedFor` is the one condition class whose dependency is ELAPSED TIME: no source moves, no count
 			// moves, no atom crosses -- the deposit simply becomes due. Nothing else in the engine can announce

@@ -288,55 +288,6 @@ scan bugs rather than fix them.
   the on-site verdict ([contexts.md](../../architecture/contexts.md) § THE VICINITY SPLIT — the storage is
   already right, the ADDRESSING is what conflates them). ⚠ Reaches the authored `vicinity:` key, `CvCondition`
   and the evaluator, so it is a STRUCTURE call, not a sweep — owner input first.
-- **Give `ev_countCore` a `TAG_` branch** so `CvCascadeTally::countUnitsWithTag` is reachable. The count-atom
-  dispatcher branches on specialist/building/tech/unit only, so an authored `{TAG_X, min:N}` count silently falls
-  through to presence and answers 0/1. ⚠ Latent — no data authors one yet.
-- **Wire the `EnablerOverlay` DELTA reads** (`unlocks` / `unlockedIds`) or delete them. The overlay's `addHave`
-  half is live in the civic what-if; the delta half — the header's "deliberately the primitive rather than
-  something each caller re-derives" — has no consumer because the tech-picking one does not exist yet.
-- **Re-route `governmentCenterDistance` and delete the fact pair nobody emits.** Its interest set names the
-  government-centre crossing, whose emitters have no callers at all — the counter that raised them became the
-  amenity fold and the interest set did not follow, so the distance is frozen at whatever founding or load
-  computed while `DISTANCE_TO_GOVERNMENT_CENTER` is read live. ⚠ It also re-derives by reading the amenity fold,
-  which is the ordering dependency [contexts.md](../../architecture/contexts.md) bans — settle the registration
-  order in the same change, and correct contexts.md, which still documents the retired counter as live.
-- **`HAS_CORPORATION` on plane C needs a VERDICT to announce — the fact that exists is the wrong one.** A
-  conditioned deposit is withdrawn by its ATOM's verdict crossing
-  ([DEC-maintained-sum](../../architecture/decisions.md#dec-maintained-sum)), and this predicate has no arm in
-  the modifier consumer's routed set, so its deposits apply when the corporation arrives (plane A) and are never
-  re-resolved. *(`IS_HEADQUARTERS` was the other half and is now routed off
-  `SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED`, whose designation crossing IS that predicate's verdict.)*
-  **PROVEN — the open question is ANSWERED, and the answer forbids the obvious route.** `{HAS_CORPORATION}` means
-  ACTIVE ([json.md §3.5](../../specs/json.md)), and `CvCity::isActiveCorporation` computes that LIVE over four
-  legs — presence, the player-level active state, the obsoleting tech, and a prereq bonus being held. The only
-  fact on the surface, `SEVT_CITY_CORPORATION_ADDED / _REMOVED`, is emitted from `setHasCorporationInternal`,
-  i.e. **PRESENCE — one of those four legs**. Routing plane C on it would apply and withdraw on a crossing that
-  is not the predicate's, leaving a present-but-dormant corporation depositing.
-  ⇒ **So this wants the THRESHOLD-CROSSING shape, not a case arm** ([event-spine.md](../../specs/event-spine.md)
-  § THE THRESHOLD CROSSING IS ITS OWN FACT): the holder announces when the VERDICT moves, exactly as the amenity
-  fold announces `isPowered` rather than its refcount. ⚠ That is a STRUCTURE call — where the verdict is held
-  and what drives the other three legs — so it is owner input before code, not a sweep.
-  ⚑ **The PLOT plane is the shape to copy**: `SEVT_PLOT_PREDICATE_ADDED / _REMOVED` carries the predicate id, so
-  ONE route covers every plot bit and a new bit needs no case
-  ([contexts.md](../../architecture/contexts.md): derive the routing, never hand-write it).
-  ⛔ **RULED OUT — do not re-tread these.** `HAS_POWER` is correctly served by ONE route: the amenity fold
-  announces the VERDICT (`AmenityContext::announcePowerCrossing` → `CvCity::isPowered`, grantor ∧ no blackout),
-  and the blackout status routes INTO that fold, exactly as [event-spine.md](../../specs/event-spine.md)
-  requires — there is no "three legs" and no clean-power flag in the tree. `IS_ANARCHY` gates no deposit at all
-  (its 17 authored uses are `outcomes` gates on the captive units); the empire-status gap it really points at is
-  recorded in [state.md](../../specs/state.md). `HAS_RELIGION` and `IS_TAG` have ZERO authored uses — latent, not
-  defects.
-- **Fill or delete the empty departed-owner branch** in the modifier consumer's `SEVT_PLOT_OWNER_ADDED /
-  _REMOVED` case. Its own comment states the obligation — a plot's yield has just left the OLD empire, whose
-  plot-fed receiver sums go stale "marked here or never" — and the `if (kEvent.iA >= 0 && kEvent.iA != NO_PLAYER)`
-  body is **empty**. Either the delta is applied for the departed owner or the branch and its comment go; an
-  empty guard reads as handled.
-- **Route the wellbeing sign-split in the APPLY path.** `modifier.md` §2b routes a negative deposit to the
-  opposing channel AT FILL, and only the VALUATION fill does it — so the event-built side never populates `anger`
-  or `unhealth` and folds every negative into `happiness`/`health` instead. ⚠ The two fills also disagree on
-  GRANULARITY (the valuation routes a collapsed sum by its net sign per scope; an apply can only route per entry,
-  which is the delta-able form) — settle which is canonical in the same change, or the tripwire keeps reporting a
-  divergence that is really two different aggregations.
 - **Apply the SLIDER TEST to the rest of the assign-work fans.** `AI_makeAssignWorkDirty` re-runs the FULL citizen
   assignment over a player's cities — and through `CvGame`, over EVERY player's — and the commerce slider was only
   one of its callers. Each remaining one answers the question the owner settled there: *does this actually move an
@@ -378,16 +329,8 @@ scan bugs rather than fix them.
   `EnablerKernel::applyEdges` like every other domain — techs are the largest HAVE axis, so the one domain that
   bypasses the single writer is the one that matters most
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
-- **Clamp the enabler's membership refcounts, or make the guard survive the shipped build.** The negative-refcount
-  `FAssertMsg` compiles out of `Release`/`FinalRelease` (`FASSERT_ENABLE` is Assert/Debug/Testing only) and
-  neither changer clamps, so in a shipping build an over-release leaves the enable count negative and the next
-  legitimate acquisition lands at zero — silently absenting the candidate.
-- **Repair the `savemigration.txt` obligations naming `CascadeWellbeing`** — that class lives only in
-  `SourceArchive/`, so those cut fields have no source at all ([save.md §3](../../specs/save.md)).
 - **Stop handing `CvPlot*` out of `CityContext`** (`cityPlot`, `radiusPlot`) — the evaluator uses that hole to
   reach a second context, while the eval ctx already carries one. The isolation is meant to be structural.
-- **De-instantiate `CvCascadeTally`** — a calculator is a static-methods holder, never an instance
-  ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
 - **Reset the enabler's build-once latches**, or make them re-entrant: `rj_clearAllRepos` re-maps every info on
   the postmenu pass while `buildActiveIndex`, `bd_buildGateClasses`, `ud_buildClasses`, `bd_sbMembers` and
   `bd_cappedBuildings` latch permanently. `di_ensureDependencies` is a literal ensure-on-read behind four reads.

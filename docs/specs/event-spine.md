@@ -188,7 +188,13 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   > ⚑ **Power is the shape; it generalizes to every threshold.** The second instance is the PROPERTY BAND:
   > `SEVT_PROPERTY_ADDED / _REMOVED` announces the value, which the solver moves for nearly every property of
   > every city every turn, while **`SEVT_CITY_PROPERTY_BAND_ADDED / _REMOVED`** announces the far rarer crossing
-  > of a boundary some `requires.operate` clause actually declares ([enabler.md §3](enabler.md)).
+  > of a boundary some `requires.operate` clause actually declares ([enabler.md §3](enabler.md)). The third is
+  > the **CORPORATION-ACTIVE verdict** (`SEVT_CITY_CORPORATION_ACTIVE_ADDED / _REMOVED`): the `{HAS_CORPORATION}`
+  > verdict is a four-leg engine composition (`CvCity::isActiveCorporation` — presence, the player-level state,
+  > the obsoleting tech, a consumed bonus held), so no leg's fact is it — CityContext's verdict store re-reads
+  > the one engine implementation on each leg's fact and announces only a genuine crossing
+  > ([contexts.md](../architecture/contexts.md)). The corporation PRESENCE pair is one leg and must never route
+  > the `{HAS_CORPORATION}`-gated deposits: a present-but-dormant corporation is the case that separates them.
   > ⛔ **The detection belongs to the HOLDER, never to each consumer.** A consumer that gates on the raw value
   > fact re-derives the same sweep once per consumer AND pays it per event — and the boundaries are one registry
   > (`EnablerKernel::propertyBandThresholds`), so testing them anywhere else is a second implementation
@@ -205,9 +211,10 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   **not** a duplicate of the building/corporation PRESENCE facts the same setter drives),
   **`SEVT_PLOT_CITY_ADDED / _REMOVED`** (`CvPlot::setPlotCity` — the ONE emit covering its `changeCityRadiusCount` /
   `changePlayerCityRadiusCount` pass-throughs), **`SEVT_CITY_GOVERNMENT_CENTER_ADDED / _REMOVED`** and
-  **`SEVT_CITY_FRESH_WATER_ADDED / _REMOVED`** (the two `CvCity` counters, at their existing verdict crossings; the fresh
-  water one is the provider-BUILDING-fed access counter, distinct from the plot-adjacency verdict the substrate
-  maintains), **`SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`** and
+  **`SEVT_CITY_FRESH_WATER_ADDED / _REMOVED`** (both announced by the city's AMENITY FOLD at the verdict crossing —
+  the `isPowered` shape, except that no status gates either, so the refcount crossing IS the verdict and composing
+  a second read would invent a second definition; the fresh-water one is the provider-BUILDING-fed access verdict,
+  distinct from the plot-adjacency verdict the substrate maintains), **`SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`** and
   **`SEVT_AREA_TILE_ADDED / _REMOVED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
   AREA_SIZE + max-adjacent-water read), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED`** (the world-instance cap's
   cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and from
@@ -234,7 +241,7 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   a unit vacates while the ENTRY's conquest branch resolves into an acquisition instead of an entry, so the two
   do NOT net to occupancy — a consumer needing occupancy reads the unit's live plot.
   **The reseed grew the matching in-read halves** wherever the setter cannot run on a load: `CvCity::read`
-  (government-centre count, fresh-water counter, disabled-power timer — a save can be taken mid-blackout — and
+  (the disabled-power timer — a save can be taken mid-blackout — and
   the headquarters designation, tested off the loaded IDInfo via `CvGame::isHeadquartersByOwnerId`, the
   `isHolyCityByOwnerId` precedent, because `CvGame`'s array deserializes before the cities), `CvPlayer::read`
   (anarchy turns — a save can load mid-revolution — the golden-age twin), `CvPlot::read` (the plot's city, whose
@@ -243,11 +250,13 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   is the team's WHOLE reseed, because `EmpireContext` forwards exactly three team facts and the other two, techs
   and projects, are announced per-self from `CvPlayer::read`), and
   **`CvUnit::read`, which previously emitted NOTHING** — the instance, its promotion set and its combat-class
-  set, each at its own genuine per-element read. ⛔ Two in-read halves are deliberately ABSENT and are not
+  set, each at its own genuine per-element read. ⛔ Three in-read halves are deliberately ABSENT and are not
   oversights: **the world unit-created counter** (nothing stores a derivative of it — the cap reads it live, so
-  there is nothing to seed) and **the area tile count** (`SEVT_AREAS_RECALCULATED` is a WHOLESALE fact by
+  there is nothing to seed), **the area tile count** (`SEVT_AREAS_RECALCULATED` is a WHOLESALE fact by
   construction — it names no source, so every area-id holder re-reads on it and a per-area announcement would
-  say nothing the wholesale one has not).
+  say nothing the wholesale one has not), and **the fold-announced verdicts** (power / government centre / fresh
+  water — the amenity fold rebuilds from the load's own facts and announces each verdict crossing itself, so an
+  in-read emit beside it would announce the same crossing twice).
   ⛔ Neither is the retired *"another slot's fact covers it"* argument, which is why they are stated in their own
   terms: one has no consumer to seed, the other already has a fact. **No slot is ever covered by a neighbour's.**
   ⚠ **One endpoint is deliberately unwired: `emitLoadPipeline`** — every one of its arguments is produced by the

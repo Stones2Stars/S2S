@@ -163,6 +163,15 @@ public:
 	// government centre appears or goes, and for one city when it is founded or changes hands -- the fan-out is
 	// bounded by the city count and the facts driving it are rare.
 	void refreshGovernmentCenterDistance() const;
+	// THE CORPORATION-ACTIVE VERDICT STORE. The verdict ({HAS_CORPORATION: X} = ACTIVE, json §3.5) is a four-leg
+	// engine composition -- presence, the player-level state, the obsoleting tech, a consumed bonus held -- so no
+	// single leg's fact IS it. Each leg's fact triggers a re-read of the ONE engine implementation
+	// (CvCity::isActiveCorporation -- the sanctioned engine-owned input; hasActiveCorporation below keeps reading
+	// it LIVE), and the store exists ONLY so the crossing can be announced: a remembered verdict is what a
+	// crossing needs, and nothing else holds one. Announces SEVT_CITY_CORPORATION_ACTIVE_ADDED / _REMOVED, the
+	// fact plane C's {HAS_CORPORATION}-gated deposits route on.
+	void refreshCorporationActive(int iCorporation) const;
+	void refreshAllCorporationsActive() const;
 	// (The amenity fold is NOT here: it is a DELTA, not a re-derivation -- see onBuildingChanged above.)
 
 	void clear() const;   // m_city is a binding, not cleared
@@ -322,6 +331,10 @@ private:
 	// Plot distance to the owner's NEAREST government centre (0 here, or with none anywhere). One int answers
 	// the whole distance-maintenance leg; it moves only on a government-centre crossing or a city gained/lost.
 	mutable int m_governmentCenterDistance;
+	// The remembered CORPORATION-ACTIVE verdicts (refreshCorporationActive above) -- one char per corporation,
+	// lazily sized to the registry. Held ONLY for crossing detection; every read of the verdict stays the live
+	// engine one (hasActiveCorporation).
+	mutable std::vector<char> m_activeCorporations;
 };
 
 void cityContextRegisterConsumer();   // register on the event spine (from spineRegisterConsumers; idempotent)

@@ -35,6 +35,8 @@
 #include "Infos/CvBuildingInfo.h"         // the grantor's `amenities` block (the city-local grantor)
 #include "Infos/CvCivicInfo.h"            // the EMPIRE-scope grantor's `amenities` block
 #include "Infos/CvClassificationRegistry.h"   // cachedKeyId -- the by-key amenity read's memoized id resolve
+#include "Enabler/CvEnablerKernel.h"          // infoFor / addEdge -- the tech's own obsoletes edge (the corp-active tech leg)
+#include <set>
 
 void CityContext::onPlotChanged(const CvPlot* plot, int sign)
 {
@@ -75,6 +77,7 @@ void CityContext::clear() const
 	m_maxAdjacentWaterTiles = 0;
 	m_holyCityCount = 0;
 	m_headquartersCount = 0;
+	m_activeCorporations.clear();   // a recycled city must not remember another city's verdicts
 	// ⚠ The AMENITY state is NOT cleared here -- it is not this context's to clear. `CvCity::reset` zeroes its own
 	// amenity context, the same way it resets its enabler and its operating set, because a city is recycled out of
 	// an FFreeListTrashArray and a delta store is correct only from a known zero.
@@ -162,6 +165,43 @@ void CityContext::refreshGovernmentCenterDistance() const
 		}
 	}
 	m_governmentCenterDistance = (iNearest > 0) ? iNearest : 0;
+}
+
+// The CORPORATION-ACTIVE verdict store (see the header): re-read the ONE engine implementation, announce only a
+// genuine crossing. The engine keeps owning the verdict's computation -- this neither re-derives a leg nor caches
+// for the read side (hasActiveCorporation stays live).
+void CityContext::refreshCorporationActive(int iCorporation) const
+{
+	if (m_city == NULL || iCorporation < 0 || iCorporation >= GC.getNumCorporationInfos())
+	{
+		return;
+	}
+	if ((int)m_activeCorporations.size() != GC.getNumCorporationInfos())
+	{
+		m_activeCorporations.assign(GC.getNumCorporationInfos(), 0);
+	}
+	const bool bActiveNow = m_city->isActiveCorporation((CorporationTypes)iCorporation);
+	if ((m_activeCorporations[iCorporation] != 0) == bActiveNow)
+	{
+		return;
+	}
+	m_activeCorporations[iCorporation] = bActiveNow ? 1 : 0;
+	if (bActiveNow)
+	{
+		emitCityCorporationActiveAdded(m_city->getID(), m_city->getOwner(), iCorporation);
+	}
+	else
+	{
+		emitCityCorporationActiveRemoved(m_city->getID(), m_city->getOwner(), iCorporation);
+	}
+}
+
+void CityContext::refreshAllCorporationsActive() const
+{
+	for (int iCorporation = 0; iCorporation < GC.getNumCorporationInfos(); ++iCorporation)
+	{
+		refreshCorporationActive(iCorporation);
+	}
 }
 
 // ±1 from the fact that names the designation. ⛔ Never a recount: the store is zeroed at owner reset and every
@@ -686,6 +726,33 @@ namespace
 		}
 	}
 
+	// A PLAYER-LEVEL leg of the corporation-active verdict moved (the HQ designation, an obsoleting tech, a
+	// policy-carrying civic or trait): every city of that player re-reads. iCorporation -1 = every corporation.
+	void cc_refreshCorporationActiveForPlayer(int iOwner, int iCorporation)
+	{
+		if (iOwner < 0 || iOwner >= MAX_PLAYERS)
+		{
+			return;
+		}
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iOwner);
+		if (!kPlayer.isAlive())
+		{
+			return;
+		}
+		int iLoop = 0;
+		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+		{
+			if (iCorporation >= 0)
+			{
+				pCity->getCityContext().refreshCorporationActive(iCorporation);
+			}
+			else
+			{
+				pCity->getCityContext().refreshAllCorporationsActive();
+			}
+		}
+	}
+
 	// The RADIUS-CITY INVERSE: which cities can see this plot. The workable fat cross is symmetric, so the cities
 	// that may hold this plot in radius sit at exactly the same offsets around it. Deliberately over-inclusive --
 	// a candidate whose radius has since shrunk simply re-derives its own facts and finds nothing changed.
@@ -779,6 +846,19 @@ bool CityContext::wantsEvent(int iEventId)
 	case SEVT_CITY_HOLY_CITY_REMOVED:
 	case SEVT_CITY_HEADQUARTERS_ADDED:
 	case SEVT_CITY_HEADQUARTERS_REMOVED:
+	// THE CORPORATION-ACTIVE VERDICT LEGS (refreshCorporationActive): each fact below can move one leg of the
+	// four-leg engine verdict, so each triggers a re-read that announces only a genuine crossing. Over-inclusion
+	// is the safe side of a re-check (enabler.md §5) -- a fact that moved nothing announces nothing.
+	case SEVT_CITY_CORPORATION_ADDED:      // leg 1: presence in this city
+	case SEVT_CITY_CORPORATION_REMOVED:
+	case SEVT_CITY_BONUS_ADDED:            // leg 4: a consumed bonus' has-verdict crossed
+	case SEVT_CITY_BONUS_REMOVED:
+	case SEVT_EMPIRE_TECH_ADDED:           // leg 3: the obsoleting tech (both directions -- WB can un-research)
+	case SEVT_EMPIRE_TECH_REMOVED:
+	case SEVT_CIVIC_ADOPTED:               // leg 2: a policy flip (noCorporations / noForeignCorporations)
+	case SEVT_EMPIRE_TRAIT_ADDED:
+	case SEVT_EMPIRE_TRAIT_REMOVED:
+	case SEVT_CITY_OWNER_ADDED:            // leg 2 again: acquisition swaps whose player-level legs compose
 	// A government centre appeared or went: every city of that player re-measures its distance to the nearest one.
 	// ⚑ BOTH directions drive the SAME re-measure, and that is not a discriminator the fact has lost: the answer
 	// is a MINIMUM over the player's centres, so gaining one and losing one both move it and neither direction
@@ -962,8 +1042,96 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 
 	case SEVT_CITY_HOLY_CITY_ADDED:      cc_changeHolyCityCount(kEvent.iC, kEvent.iSrcLoc, +1); break;
 	case SEVT_CITY_HOLY_CITY_REMOVED:    cc_changeHolyCityCount(kEvent.iC, kEvent.iSrcLoc, -1); break;
-	case SEVT_CITY_HEADQUARTERS_ADDED:   cc_changeHeadquartersCount(kEvent.iC, kEvent.iSrcLoc, +1); break;
-	case SEVT_CITY_HEADQUARTERS_REMOVED: cc_changeHeadquartersCount(kEvent.iC, kEvent.iSrcLoc, -1); break;
+	case SEVT_CITY_HEADQUARTERS_ADDED:
+	case SEVT_CITY_HEADQUARTERS_REMOVED:
+		cc_changeHeadquartersCount(kEvent.iC, kEvent.iSrcLoc,
+			(kEvent.iEventId == SEVT_CITY_HEADQUARTERS_ADDED) ? +1 : -1);
+		// The HQ designation is ALSO a player-level leg of the corporation-active verdict (noForeignCorporations
+		// spares the player's own HQ corp), so the fact's owner re-reads that corp across their cities. Each end
+		// of a relocation carries its own fact, so both affected players are reached through their own halves.
+		if (!spineGameLoadInProgress())
+		{
+			cc_refreshCorporationActiveForPlayer(kEvent.iC, kEvent.iType);
+		}
+		break;
+
+	// THE CORPORATION-ACTIVE VERDICT LEGS. The verdict is a four-leg engine composition
+	// (CvCity::isActiveCorporation), so each leg's fact triggers a re-read of that ONE implementation; the store
+	// announces only a genuine crossing, so a fact that moved nothing announces nothing.
+	// ⛔ Dropped inside the load bracket, deliberately: the verdict reads the trade NETWORK (getNumBonuses),
+	// which is only final after the load-end re-color -- the GAME_LOAD_FINISHED build below is the one load
+	// derivation, exactly as the area facts and the government-centre distance build there.
+	case SEVT_CITY_CORPORATION_ADDED:
+	case SEVT_CITY_CORPORATION_REMOVED:
+	{
+		if (spineGameLoadInProgress())
+		{
+			break;
+		}
+		const CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
+		if (pCity != NULL)
+		{
+			pCity->getCityContext().refreshCorporationActive(kEvent.iType);
+		}
+		break;
+	}
+	case SEVT_CITY_BONUS_ADDED:
+	case SEVT_CITY_BONUS_REMOVED:
+	{
+		if (spineGameLoadInProgress())
+		{
+			break;
+		}
+		// The consumed-bonus leg. Which corporations consume this bonus is each corporation's own data, and the
+		// re-read is crossing-guarded, so re-reading them all is the safe over-inclusive re-check.
+		const CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
+		if (pCity != NULL)
+		{
+			pCity->getCityContext().refreshAllCorporationsActive();
+		}
+		break;
+	}
+	case SEVT_EMPIRE_TECH_ADDED:
+	case SEVT_EMPIRE_TECH_REMOVED:
+	{
+		if (spineGameLoadInProgress())
+		{
+			break;
+		}
+		// Only the corporations THIS tech obsoletes -- the tech's own edge names the handful, never a registry
+		// scan ([DEC-one-reverse-view]).
+		std::set<int> kObsoletedCorporations;
+		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, kEvent.iType),
+			EDGEF_OBSOLETES, EDGEB_CORPORATIONS, kObsoletedCorporations);
+		for (std::set<int>::const_iterator itCorp = kObsoletedCorporations.begin();
+			itCorp != kObsoletedCorporations.end(); ++itCorp)
+		{
+			cc_refreshCorporationActiveForPlayer(kEvent.iC, *itCorp);
+		}
+		break;
+	}
+	case SEVT_CIVIC_ADOPTED:
+	case SEVT_EMPIRE_TRAIT_ADDED:
+	case SEVT_EMPIRE_TRAIT_REMOVED:
+		// A policy flip (noCorporations / noForeignCorporations) rides civic and trait movement. Which policies
+		// the mover carries is not readable from the fact, and the facts are rare, so every corporation of the
+		// player's cities re-reads -- the crossing guard keeps a no-op flip silent.
+		if (!spineGameLoadInProgress())
+		{
+			cc_refreshCorporationActiveForPlayer(kEvent.iC, -1);
+		}
+		break;
+	case SEVT_CITY_OWNER_ADDED:
+		// Acquisition: the city's verdicts now compose against the NEW owner's player-level legs.
+		if (!spineGameLoadInProgress())
+		{
+			const CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				pCity->getCityContext().refreshAllCorporationsActive();
+			}
+		}
+		break;
 
 	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:
 	case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:
@@ -1069,6 +1237,10 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			{
 				pCity->getCityContext().refreshAreaFacts();
 				pCity->getCityContext().refreshGovernmentCenterDistance();
+				// The corporation-active verdicts read the trade NETWORK, which is only final after the load-end
+				// re-color -- so this is their one load derivation, and the crossings it announces are what the
+				// {HAS_CORPORATION}-gated deposits book against.
+				pCity->getCityContext().refreshAllCorporationsActive();
 				// The map streamed BEFORE the cities, so no plot could announce a membership to a city that did
 				// not exist. Establishing the work area now fires those facts, and the vicinity store fills
 				// through the ordinary route -- not a second build mechanism beside the event stream.

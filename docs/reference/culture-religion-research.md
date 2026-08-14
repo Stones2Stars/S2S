@@ -94,7 +94,11 @@
   > (which bans reading a *cascade-owned* computed verdict — above all a BUILDING's active/dormant, which the cascade
   > DOES own via `cascadeIsBuildingActive`). Hence `{HAS_CORPORATION:X}` = ACTIVE ([enabler §3](../specs/enabler.md),
   > [json §3.5](../specs/json.md)), and the corp-commerce deposit gate reading `isActiveCorporation` is correct, not
-  > interim debt.
+  > interim debt. The verdict's CROSSINGS are announced by CityContext's verdict store
+  > (`SEVT_CITY_CORPORATION_ACTIVE_ADDED / _REMOVED` — the threshold-crossing shape,
+  > [event-spine.md](../specs/event-spine.md)): the store re-reads this one engine implementation on each leg's
+  > fact and remembers only what held before, so the engine keeps owning the verdict while plane C's
+  > `{HAS_CORPORATION}`-gated deposits get the crossing they route on.
 - **⚖ A CORPORATION CAN BE OBSOLETED, and the capability is KEPT (owner) — it is HEADROOM, not dead surface.**
   The chain is wired end to end and needs no code to activate: a tech authoring `obsoletes.corporations` lands on
   its `EDGEF_OBSOLETES`/`EDGEB_CORPORATIONS` edge, the readJson reverse pass stamps the corporation's obsoleting
