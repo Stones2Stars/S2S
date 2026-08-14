@@ -432,6 +432,15 @@ static void ud_recordPlotAtoms(int eKind, const std::set<int>& ids, int u)
 		s_udPlotAtomConsumers[std::make_pair(eKind, *it)].push_back(u);
 	}
 }
+void UnitEnabler::clearCompiledIndexes()
+{
+	s_udClassBuilt = false;
+	for (int i = 0; i < UnitEnabler::NUM_GATE_CLASSES; ++i) s_udClass[i].clear();
+	s_udUnitDeps.clear();
+	s_udUpgradePred.clear();
+	s_udPlotAtomConsumers.clear();
+}
+
 static void ud_buildClasses()
 {
 	if (s_udClassBuilt) return;

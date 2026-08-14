@@ -52,6 +52,9 @@ public:
 	// Per-class member counts + the registry size -- the twin of BuildingEnabler::gateClassCensus. Declared
 	// BELOW the enum it is dimensioned by.
 	static void gateClassCensus(int (&aiCountsOut)[NUM_GATE_CLASSES], int& iTotalOut);
+	// Re-map safety (rj_clearAllRepos): the class / unit-relation / plot-atom lists compile from the infos, so
+	// the postmenu re-map that frees them resets them here; the next consumer rebuilds.
+	static void clearCompiledIndexes();
 	static void onCityGateClass(const CvCity& kCity, int eClass);
 	static void onPlayerGateClass(PlayerTypes ePlayer, int eClass);
 	// SEVT_UNIT_COUNT (par.7.1 step 3): the changed unit's cap/relations re-gate (skip-guarded for the

@@ -173,6 +173,10 @@ public:
 	// The interner is NOT cleared (append-only law; ids survive the re-map).
 	static void clearCompiled();
 
+	// The dependency/gated-deposit compile (the routes below) -- runs once at the END of each loadJson pass,
+	// after every pushInfo has landed, so the accessors are bare fetches. Idempotent; clearCompiled resets it.
+	static void compileDependencies();
+
 	// The compiled records of one source info -- the matchers' iteration surface (a shared empty vector when the
 	// info authored none / is NULL). whenObsoleteFor = the building's obsolete-state tree (json #4.2).
 	static const std::vector<CascadeDeposit>& depositsFor(const CvInfo* j);
@@ -187,10 +191,10 @@ public:
 
 	// THE CONDITION-DEPENDENCY ROUTES -- the same derivation applied to the deposits' OWN gates (modifier.md
 	// §3: conditions re-evaluate on every recompute, so the state a condition READS must mark the packages
-	// that carry the conditioned deposit). Compiled lazily in ONE global pass over every compiled record's
-	// enabled/disabled trees, per scalers, and religion filters -- the routing stays a pure function of the
-	// index, never a hand-coded mask per event site. NULL = nothing anywhere depends on that state (mark
-	// nothing). Keys:
+	// that carry the conditioned deposit). Compiled by compileDependencies() in ONE global pass over every
+	// compiled record's enabled/disabled trees, per scalers, and religion filters -- the routing stays a pure
+	// function of the index, never a hand-coded mask per event site. NULL = nothing anywhere depends on that
+	// state (mark nothing). Keys:
 	//  - an INFOTYPE the state names (a presence atom's `type`, a parameterized predicate's `param`, a typed
 	//    `per`): dependencyForType, by the TYPE string ("BUILDING_X", "RELIGION_Y", ...);
 	//  - a counter/token a `per` reads (POPULATION, CITY, ERA, GOLD_RATE, ...): dependencyForToken;

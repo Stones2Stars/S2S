@@ -46,6 +46,9 @@
 #include "CvFoldTargetInfo.h"
 #include "CvInfos.h"               // the umbrella -- the remaining RJ_REPO_TYPES complete types with no own header
 #include "Data/CvReversePass.h"        // reversePassRun/reversePassCounts -- the ONE general reverse pass ([DEC-one-reverse-view])
+#include "Enabler/CvEnablerKernel.h"   // EnablerKernel::clearCompiledIndexes -- the operate index compiles from the infos this re-map frees
+#include "Enabler/CvBuildingEnabler.h" // BuildingEnabler::clearCompiledIndexes -- the gate-class / plot-atom / group / capped lists
+#include "Enabler/CvUnitEnabler.h"     // UnitEnabler::clearCompiledIndexes -- the class / unit-relation / plot-atom lists
 #include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates;
                                        // the CvXInfo tag types for the RJ_REPO_TYPES prefix dispatch are forward-declared there
 #include <fstream>
@@ -362,6 +365,9 @@ static void rj_clearAllRepos()
 {
 	DepositIndex::clearCompiled();                // the compiled registry keys the about-to-be-freed infos -- drop it
 	                                              // FIRST (the interner stays, append-only: ids survive the re-map)
+	EnablerKernel::clearCompiledIndexes();        // the enabler's load-compiled indexes read the same infos --
+	BuildingEnabler::clearCompiledIndexes();      // reset with them so the next consumer rebuilds against the
+	UnitEnabler::clearCompiledIndexes();          // re-mapped registry instead of the freed one
 #define X(PFX, T) InfoRepo<T>::get().clear();
 	RJ_REPO_TYPES(X)
 #undef X
@@ -767,6 +773,9 @@ void loadJson(JsonLoadPhase eLoadPhase)
 			DepositIndex::pushInfo(store[s].data);
 		}
 	}
+	// The condition-dependency / gated-deposit routes compile HERE, once every push has landed, so the
+	// dependencyFor*/gatedBy* accessors are bare fetches with no ensure-on-read.
+	DepositIndex::compileDependencies();
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] deposit-index push done ms=%u",
 		(unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 

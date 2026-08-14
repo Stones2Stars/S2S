@@ -82,6 +82,9 @@ public:
 	static void plotAtomCensus(int& iKeysOut, int& iEntriesOut);
 	// Per-class member counts + the registry size -- the instrument that makes a class WIDENING observable.
 	static void gateClassCensus(int (&aiCountsOut)[NUM_GATE_CLASSES], int& iTotalOut);
+	// Re-map safety (rj_clearAllRepos): the gate-class / plot-atom / group-member / capped lists compile from
+	// the infos, so the postmenu re-map that frees them resets them here; the next consumer rebuilds.
+	static void clearCompiledIndexes();
 	static void onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding);   // the empire per-type COUNT moved: re-check its `allowed` self-cap across the cap's own scope
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
 	static void onCityCorporationChanged(const CvCity& kCity, int iCorporation, bool bHas);

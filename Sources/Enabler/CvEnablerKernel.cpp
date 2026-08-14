@@ -975,6 +975,27 @@ void EnablerKernel::plotAtomSeeds(int eKind, int iId, std::vector<std::pair<int,
 	}
 }
 
+void EnablerKernel::clearCompiledIndexes()
+{
+	s_operateIndexBuilt = false;
+	s_operateNeedsPopulation.clear();
+	s_operateNeedsPower.clear();
+	s_operateNeedsReligion.clear();
+	s_operateNeedsCorporation.clear();
+	s_operateNeedsGoldenAge.clear();
+	s_operateNeedsStateReligion.clear();
+	s_operateNeedsCivic.clear();
+	s_operateNeedsTech.clear();
+	s_operateNeedsAnyBonus.clear();
+	s_operateBonusConsumers.clear();
+	s_operateBuildingDependents.clear();
+	s_propertyBandBuildings.clear();
+	s_operatePropertyBandConsumers.clear();
+	s_operatePropertyBandThresholds.clear();
+	s_operateDormantTriggeredBy.clear();
+	s_operateObsoletableBuildings.clear();
+}
+
 void EnablerKernel::buildActiveIndex()
 {
 	if (s_operateIndexBuilt) return;
@@ -1077,6 +1098,7 @@ void EnablerKernel::onPropertyBandHitActive(const CvCity* pCity, int eProperty)
 // bars the production queue and says nothing about placement (enabler.md par.3, owner).
 const std::vector<int>& EnablerKernel::propertyBandBuildings()
 {
+	buildActiveIndex();
 	return s_propertyBandBuildings;
 }
 

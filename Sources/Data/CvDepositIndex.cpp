@@ -412,7 +412,7 @@ static void di_scanRecordDependencies(const CvInfo* pSource, const CascadeDeposi
 	}
 }
 
-static void di_ensureDependencies()
+void DepositIndex::compileDependencies()
 {
 	if (s_bDepsCompiled)
 	{
@@ -435,7 +435,6 @@ static void di_ensureDependencies()
 
 const SourceRoute* DepositIndex::dependencyForType(const std::string& szType)
 {
-	di_ensureDependencies();
 	const std::map<std::string, SourceRoute>::const_iterator found = s_depByType.find(szType);
 	return found == s_depByType.end() ? NULL : &found->second;
 }
@@ -446,26 +445,23 @@ const SourceRoute* DepositIndex::dependencyForToken(const char* szToken)
 	{
 		return NULL;
 	}
-	di_ensureDependencies();
 	const std::map<std::string, SourceRoute>::const_iterator found = s_depByToken.find(std::string(szToken));
 	return found == s_depByToken.end() ? NULL : &found->second;
 }
 
 const SourceRoute* DepositIndex::dependencyForPredicate(CvCascPredKind ePredicate)
 {
-	di_ensureDependencies();
 	const std::map<int, SourceRoute>::const_iterator found = s_depByPredicate.find((int)ePredicate);
 	return found == s_depByPredicate.end() ? NULL : &found->second;
 }
 
 const SourceRoute* DepositIndex::dependencyForReligionCounts()
 {
-	di_ensureDependencies();
 	return s_depReligionCounts.empty() ? NULL : &s_depReligionCounts;
 }
 
 // The gated-deposit accessors -- the apply path's half of the same reverse derivation the mask routes serve.
-// Same lazy compile, same lifetime, same NULL-means-nothing-depends-on-it contract.
+// Same compile (compileDependencies), same lifetime, same NULL-means-nothing-depends-on-it contract.
 int DepositIndex::sourceIndexOf(const CvInfo* j)
 {
 	if (j == NULL)
@@ -478,7 +474,6 @@ int DepositIndex::sourceIndexOf(const CvInfo* j)
 
 const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByType(const std::string& szType)
 {
-	di_ensureDependencies();
 	const std::map<std::string, std::vector<GatedDeposit> >::const_iterator it = s_gatedByType.find(szType);
 	return (it == s_gatedByType.end()) ? NULL : &it->second;
 }
@@ -489,21 +484,18 @@ const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByToken(const 
 	{
 		return NULL;
 	}
-	di_ensureDependencies();
 	const std::map<std::string, std::vector<GatedDeposit> >::const_iterator it = s_gatedByToken.find(std::string(szToken));
 	return (it == s_gatedByToken.end()) ? NULL : &it->second;
 }
 
 const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByPredicate(CvCascPredKind ePredicate)
 {
-	di_ensureDependencies();
 	const std::map<int, std::vector<GatedDeposit> >::const_iterator it = s_gatedByPredicate.find((int)ePredicate);
 	return (it == s_gatedByPredicate.end()) ? NULL : &it->second;
 }
 
 const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByReligionCounts()
 {
-	di_ensureDependencies();
 	return s_gatedReligionCounts.empty() ? NULL : &s_gatedReligionCounts;
 }
 

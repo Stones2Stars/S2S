@@ -253,6 +253,9 @@ public:
 	// AUTHORITATIVE m_operatingBuildings (active/provided/providedCount) in place. Mirrors the frontier's
 	// s_bc*/recheckHave, extended to the operate/provides fixpoint.
 	static void buildActiveIndex();
+	// Re-map safety (rj_clearAllRepos): the index above compiles from the infos, so the postmenu re-map that
+	// frees them resets it here and the next hook rebuilds against the re-mapped registry.
+	static void clearCompiledIndexes();
 	static void onBuildingChangedActive(const CvCity* pCity, int eBuilding);   // a building built/lost in pCity
 	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power/bonus-whole-set (CASC_HAVE_*)
 	static void onBonusAccessChangedActive(const CvCity* pCity, int eBonus);   // #430 G3: a SINGLE bonus's access (trade/vicinity) flipped -> re-check its operate consumers (reverse-FK targeted)

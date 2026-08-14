@@ -180,13 +180,13 @@ static const std::vector<int>& bd_sbMembers(int iSb)
 // static data (the bd_sbMembers precedent). This is the re-gate SET for the two facts that move a category
 // verdict without referencing the building at all -- the city's culture level, and another wonder of the same
 // category appearing here.
+static std::vector<int> s_cappedBuildings;
+static bool s_cappedBuildingsBuilt = false;
 static const std::vector<int>& bd_cappedBuildings()
 {
-	static std::vector<int> s_capped;
-	static bool s_built = false;
-	if (!s_built)
+	if (!s_cappedBuildingsBuilt)
 	{
-		s_built = true;
+		s_cappedBuildingsBuilt = true;
 		for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 		{
 			const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
@@ -194,11 +194,11 @@ static const std::vector<int>& bd_cappedBuildings()
 			if (a == NULL) continue;
 			if (a->cap(ALLOWEDCAP_WORLD) >= 0 || a->cap(ALLOWEDCAP_TEAM) >= 0 || a->cap(ALLOWEDCAP_EMPIRE) >= 0)
 			{
-				s_capped.push_back(b);
+				s_cappedBuildings.push_back(b);
 			}
 		}
 	}
-	return s_capped;
+	return s_cappedBuildings;
 }
 
 static bool bd_categoryCapOk(int iB, const CvCity& kCity)
@@ -390,6 +390,17 @@ static void bd_recordPlotAtoms(int eKind, const std::set<int>& ids, int b)
 		s_gatePlotAtomConsumers[std::make_pair(eKind, *it)].push_back(b);
 	}
 }
+void BuildingEnabler::clearCompiledIndexes()
+{
+	s_gateClassBuilt = false;
+	for (int i = 0; i < BuildingEnabler::NUM_GATE_CLASSES; ++i) s_gateClass[i].clear();
+	s_gatePlotAtomConsumers.clear();
+	s_specialBuildingMembersBuilt = false;
+	s_specialBuildingMembers.clear();
+	s_cappedBuildingsBuilt = false;
+	s_cappedBuildings.clear();
+}
+
 static void bd_buildGateClasses()
 {
 	if (s_gateClassBuilt) return;
