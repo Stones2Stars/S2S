@@ -381,6 +381,14 @@ public:
 	static int64_t groupSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
 		const CvCascadeEvalCtx& evalCtx);
 
+	// The CONDITIONED TAIL alone -- groupSum's second half without the compiled slots, for a caller whose
+	// unconditioned half is already served by a maintained package (the empire kind reads), where re-adding the
+	// slots would double-count. The SOURCE-SLOT asks come through here: a {CIVIC_CATEGORY}-gated entry can never
+	// sit in a package (its verdict depends on which civic is being resolved), so the ask site fills a local ctx
+	// with the carrier slot set and evaluates the held sources' tails per resolve (contexts.md THE SOURCE SLOTS).
+	static int64_t conditionedSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+		CvCascUnit eUnit, const CvCascadeEvalCtx& evalCtx);
+
 	// The SCOPE-RESTRICTED sibling of groupSum -- ONE info's (family, kind, unit) contribution AT one scope
 	// (unconditioned slot sum + the conditioned tail at that scope). The package plane's per-source fold and
 	// the receiver combine's specialist term read through this ([DEC-single-implementation]: the gather never

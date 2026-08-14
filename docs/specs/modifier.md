@@ -368,9 +368,10 @@ table is rebuilt it wants one field per named engine term, so a divergence local
   `HAS_STATE_RELIGION`-gated and the reverse-landed source-keyed boosts — a wonder/civic/tech `buildings.{B}`
   wellbeing deposit is authored deliverer-side (§4) but the readJson reverse pass lands it on the TARGET building
   as a CITY-scope conditioned entry gated on the source's presence at the authored scope, so it reads
-  building-side under this term), **civics** (empire flats + the keyed/heterogeneous members read civic-side:
-  `features.{F}`, `nonStateReligion`, the `cities.{unit: IS_MILITARY}` per-unit scaler, the ranked `cities`
-  scaler — the civic's `buildings.{B}` member lands building-side per the above), **traits** (same member
+  building-side under this term), **civics** (empire flats — incl. the tax-anger deposit, a `happiness.empire`
+  entry per-scaled on `GOLD_RATE`, re-booked by the slider-rate count route — + the keyed/heterogeneous members
+  read civic-side: `features.{F}`, `nonStateReligion`, the `cities.{unit: IS_MILITARY}` per-unit scaler, the
+  ranked `cities` scaler — the civic's `buildings.{B}` member lands building-side per the above), **traits** (same member
   vocabulary), **features** (`health.plot.percent` — summed over radius plots, ÷100 — the fallout class),
   **bonuses** (`empire.cities` flats, presence-gated — ⛔ NEVER a bare `empire` flat: that lands in the empire
   package and rolls DOWN to every city, while the engine applies it on the per-city presence fact, so one
@@ -400,7 +401,7 @@ table is rebuilt it wants one field per named engine term, so a divergence local
   revRequest timers, war-weariness, revIndex, civic anger%), the **happiness timer** (`getHappinessTimer` —
   the same countdown shape as the anger timers above, folded on the happiness side: `GC.getTEMP_HAPPY()` while
   the timer runs), the **espionage counters**, **event anger**
-  (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated —
+  (one-shot event state), **foreign-culture anger**, **landmark anger** (option-gated —
   ⚖ KEEP through the migration: the existing engine implementation stays, *"straight up state derived from the
   plot in question"*; the landmark data pass is a sanctioned separate data pass (#448); the engine impl KEEPS),
   **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state — legitimate inputs, since

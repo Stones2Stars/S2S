@@ -195,20 +195,15 @@ m_cachedBonusCount(NULL)
 	m_paiBuildingGroupMaking = NULL;
 	m_paiHurryCount = NULL;
 	m_paiSpecialBuildingNotRequiredCount = NULL;
-	m_paiHasCivicOptionCount = NULL;
-	m_paiNoCivicUpkeepCount = NULL;
 	m_paiHasReligionCount = NULL;
 	m_paiHasCorporationCount = NULL;
-	m_paiUpkeepCount = NULL;
 	m_paiSpecialistValidCount = NULL;
 	m_aiPathLengthCache = NULL;
 	m_aiCostPathLengthCache = NULL;
 	m_pabResearchingTech = NULL;
 	m_pabLoyalMember = NULL;
 	m_paeCivics = NULL;
-	m_ppaaiSpecialistExtraYield = NULL;
 	m_pabAutomatedCanBuild = NULL;
-	m_ppaaiTerrainYieldChange = NULL;
 	m_paiResourceConsumption = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_ppiBuildingCommerceChange = NULL;
@@ -216,7 +211,6 @@ m_cachedBonusCount(NULL)
 
 
 	//TB Traits begin
-	m_paiBuildWorkerSpeedModifierSpecific = NULL;
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
 
@@ -580,11 +574,8 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY(m_paiBuildingGroupMaking);
 	SAFE_DELETE_ARRAY(m_paiHurryCount);
 	SAFE_DELETE_ARRAY(m_paiSpecialBuildingNotRequiredCount);
-	SAFE_DELETE_ARRAY(m_paiHasCivicOptionCount);
-	SAFE_DELETE_ARRAY(m_paiNoCivicUpkeepCount);
 	SAFE_DELETE_ARRAY(m_paiHasReligionCount);
 	SAFE_DELETE_ARRAY(m_paiHasCorporationCount);
-	SAFE_DELETE_ARRAY(m_paiUpkeepCount);
 	SAFE_DELETE_ARRAY(m_paiSpecialistValidCount);
 
 	SAFE_DELETE_ARRAY(m_pabResearchingTech);
@@ -599,13 +590,10 @@ void CvPlayer::uninit()
 
 	SAFE_DELETE(m_pBuildLists);
 
-	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraYield, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY(m_pabAutomatedCanBuild);
 	SAFE_DELETE_ARRAY(m_paiResourceConsumption);
-	SAFE_DELETE_ARRAY(m_paiBuildWorkerSpeedModifierSpecific);
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
 	SAFE_DELETE_ARRAY(m_paiNationalTechResearchModifier);
-	SAFE_DELETE_ARRAY2(m_ppaaiTerrainYieldChange, GC.getNumTerrainInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceChange, GC.getNumBuildingInfos());
 
@@ -1184,27 +1172,20 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_ePledgedVote = NO_PLAYER_VOTE;
 	m_eSecretaryGeneralVote = NO_TEAM;
 	m_eGreatGeneralTypetoAssign = NO_UNIT;
-	m_iTaxRateUnhappiness = 0;
 
 	m_iFreeUnitUpkeepCivilianEvents = 0;
 	m_iDistantUnitSupportCostModifier = 0;
-	m_iReligionSpreadRate = 0;
 
 	m_iForceAllTradeRoutes = 0;
 
 	m_bShowLandmarks = true;
 
 
-	m_iHurryCostModifier = 0;
 	m_iHurryCount = 0;
 
 	m_eBestRoute = NO_ROUTE;
 
-	m_iNoLandmarkAngerCount = 0;
-	m_iLandmarkHappiness = 0;
 	m_eDemandWarAgainstTeam = NO_TEAM;
-
-	m_iCorporationSpreadModifier = 0;
 
 	m_iCulture = 0;
 
@@ -1317,16 +1298,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			m_paiSpecialBuildingNotRequiredCount[iI] = 0;
 		}
 
-		FAssertMsg(m_paiHasCivicOptionCount==NULL, "about to leak memory, CvPlayer::m_paiHasCivicOptionCount");
-		m_paiHasCivicOptionCount = new int[GC.getNumCivicOptionInfos()];
-		FAssertMsg(m_paiNoCivicUpkeepCount==NULL, "about to leak memory, CvPlayer::m_paiNoCivicUpkeepCount");
-		m_paiNoCivicUpkeepCount = new int[GC.getNumCivicOptionInfos()];
 		FAssertMsg(m_paeCivics==NULL, "about to leak memory, CvPlayer::m_paeCivics");
 		m_paeCivics = new CivicTypes [GC.getNumCivicOptionInfos()];
 		for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 		{
-			m_paiHasCivicOptionCount[iI] = 0;
-			m_paiNoCivicUpkeepCount[iI] = 0;
 			m_paeCivics[iI] = NO_CIVIC;
 		}
 
@@ -1373,14 +1348,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			m_pabLoyalMember[iI] = true;
 		}
 
-		FAssertMsg(0 < GC.getNumUpkeepInfos(), "GC.getNumUpkeepInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
-		FAssertMsg(m_paiUpkeepCount==NULL, "about to leak memory, CvPlayer::m_paiUpkeepCount");
-		m_paiUpkeepCount = new int[GC.getNumUpkeepInfos()];
-		for (iI = 0; iI < GC.getNumUpkeepInfos(); iI++)
-		{
-			m_paiUpkeepCount[iI] = 0;
-		}
-
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
 		FAssertMsg(m_paiSpecialistValidCount==NULL, "about to leak memory, CvPlayer::m_paiSpecialistValidCount");
 		m_paiSpecialistValidCount = new int[GC.getNumSpecialistInfos()];
@@ -1389,18 +1356,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			m_paiSpecialistValidCount[iI] = 0;
 		}
 
-		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
-		FAssertMsg(m_ppaaiSpecialistExtraYield==NULL, "about to leak memory, CvPlayer::m_ppaaiSpecialistExtraYield");
-		m_ppaaiSpecialistExtraYield = new int*[GC.getNumSpecialistInfos()];
-
-		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-		{
-			m_ppaaiSpecialistExtraYield[iI] = new int[NUM_YIELD_TYPES];
-			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				m_ppaaiSpecialistExtraYield[iI][iJ] = 0;
-			}
-		}
 		//TB Traits begin
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
@@ -1433,16 +1388,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 		FAssertMsg(m_pabAutomatedCanBuild==NULL, "about to leak memory, CvPlayer::m_pabAutomatedCanBuild");
 		m_pabAutomatedCanBuild = new bool [GC.getNumBuildInfos()];
-		//TB Traits begin
-		FAssertMsg(m_paiBuildWorkerSpeedModifierSpecific==NULL, "about to leak memory, CvPlayer::m_paiBuildWorkerSpeedModifierSpecific");
-		m_paiBuildWorkerSpeedModifierSpecific = new int [GC.getNumBuildInfos()];
-		//TB Traits end
 		for (iI = 0; iI < GC.getNumBuildInfos(); iI++)
 		{
 			m_pabAutomatedCanBuild[iI] = true;
-			//TB Traits begin
-			m_paiBuildWorkerSpeedModifierSpecific[iI] = 0;
-			//TB Traits end
 		}
 
 		FAssertMsg(0 < GC.getNumBonusInfos(), "GC.getNumBonusInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
@@ -1453,16 +1401,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			m_paiResourceConsumption[iI] = 0;
 		}
 
-		FAssertMsg(m_ppaaiTerrainYieldChange==NULL, "about to leak memory, CvPlayer::m_ppaaiTerrainYieldChange");
-		m_ppaaiTerrainYieldChange = new int*[GC.getNumTerrainInfos()];
-		for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
-		{
-			m_ppaaiTerrainYieldChange[iI] = new int[NUM_YIELD_TYPES];
-			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				m_ppaaiTerrainYieldChange[iI][iJ] = 0;
-			}
-		}
 		FAssertMsg(m_ppiBuildingCommerceModifier==NULL, "about to leak memory, CvPlayer::m_ppiBuildingCommerceModifier");
 		m_ppiBuildingCommerceModifier = new int*[GC.getNumBuildingInfos()];
 		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
@@ -7869,8 +7807,7 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 			// `enables.civics` edge ([enabler.md] par.2), so the verdict is the maintained tri-state rather than a
 			// prereq read on the civic. STATE_HIDDEN means no held source enables it; GREYED/LISTED both mean it
 			// is in the tree, which is exactly what the tech prereq used to answer.
-			!isHasCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption())
-			&& getCivicAvailability(eCivic) == EnablerDomain::STATE_HIDDEN
+			getCivicAvailability(eCivic) == EnablerDomain::STATE_HIDDEN
 		)
 	))
 	{
@@ -8576,7 +8513,7 @@ int CvPlayer::specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) co
 {
 	// ×100 NATIVE, like every other cascade read -- a getter never reduces ([DEC-fixedpoint-x100]); the
 	// consumer reduces at its own point of use, and an EVALUATION never scales at all.
-	return (GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY) + getExtraSpecialistYield(eSpecialist, eYield));
+	return GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY);
 }
 
 
@@ -9217,7 +9154,21 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 	}
 	int aiScalars[NUM_INFO_SCALARS];
 	getScalars(aiScalars);
-	iRate = getModifiedIntValue(iRate, aiScalars[SCALAR_WORK_RATE] + getBuildWorkerSpeedModifierSpecific(eBuild));
+	//	The per-BUILD worker-speed rows are trait-keyed entry-list reads (`workRate.empire.builds.{BUILD_X}` --
+	//	a keyed deposit never folds into a scope package, [modifier.md §5]), summed over the held-trait set.
+	int iBuildSpecific = 0;
+	{
+		const int iBuildsSegment = InfoValuation::keyedTargetSegment("builds");
+		std::vector<TraitContext::HeldTrait> heldTraits;
+		traits().heldTraits(heldTraits);
+		for (size_t iHeld = 0; iHeld < heldTraits.size(); ++iHeld)
+		{
+			if (heldTraits[iHeld].info == NULL) continue;
+			iBuildSpecific += InfoValuation::keyedTarget(heldTraits[iHeld].info->getModifiers(),
+				MODFAM_WORK_RATE, -1, iBuildsSegment, (int)eBuild, (int)CASC_SCOPE_EMPIRE);
+		}
+	}
+	iRate = getModifiedIntValue(iRate, aiScalars[SCALAR_WORK_RATE] + iBuildSpecific);
 
 	if (isNormalAI())
 	{
@@ -12367,57 +12318,6 @@ void CvPlayer::changeSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex
 }
 
 
-int CvPlayer::getHasCivicOptionCount(CivicOptionTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), eIndex);
-	return m_paiHasCivicOptionCount[eIndex];
-}
-
-
-bool CvPlayer::isHasCivicOption(CivicOptionTypes eIndex) const
-{
-	return (getHasCivicOptionCount(eIndex) > 0);
-}
-
-
-void CvPlayer::changeHasCivicOptionCount(CivicOptionTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), eIndex);
-	m_paiHasCivicOptionCount[eIndex] += iChange;
-	FASSERT_NOT_NEGATIVE(getHasCivicOptionCount(eIndex));
-}
-
-
-int CvPlayer::getNoCivicUpkeepCount(CivicOptionTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), eIndex);
-	return m_paiNoCivicUpkeepCount[eIndex];
-}
-
-
-bool CvPlayer::isNoCivicUpkeep(CivicOptionTypes eIndex) const
-{
-	return (getNoCivicUpkeepCount(eIndex) > 0);
-}
-
-
-void CvPlayer::changeNoCivicUpkeepCount(CivicOptionTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		m_paiNoCivicUpkeepCount[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getNoCivicUpkeepCount(eIndex));
-
-		if (getID() == GC.getGame().getActivePlayer())
-		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		}
-	}
-}
-
-
 int CvPlayer::getHasReligionCount(ReligionTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
@@ -12518,32 +12418,6 @@ void CvPlayer::changeHasCorporationCount(CorporationTypes eIndex, int iChange)
 }
 
 
-int CvPlayer::getUpkeepCount(UpkeepTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUpkeepInfos(), eIndex);
-	FAssertMsg(m_paiUpkeepCount, "m_paiUpkeepCount is not expected to be equal with NULL");
-	return m_paiUpkeepCount[eIndex];
-}
-
-
-void CvPlayer::changeUpkeepCount(UpkeepTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumUpkeepInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		FAssertMsg(m_paiUpkeepCount, "m_paiUpkeepCount is not expected to be equal with NULL");
-		m_paiUpkeepCount[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getUpkeepCount(eIndex));
-
-		if (getID() == GC.getGame().getActivePlayer())
-		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		}
-	}
-}
-
-
 int CvPlayer::getSpecialistValidCount(SpecialistTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
@@ -12640,7 +12514,24 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	{
 		return 0;
 	}
-	if (isNoCivicUpkeep((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOption()))
+	//	A {CIVIC_CATEGORY}-gated upkeep waiver (a trait making a whole category's civics free) rides the held
+	//	traits' conditioned tail: the source-slot predicate needs the asking civic in hand, so it can never sit
+	//	in the empire package and is evaluated here, per ask, on a local ctx with the civic slot set.
+	int iWaiverPercent = 0;
+	{
+		CvCascadeEvalCtx waiverCtx;
+		getEmpireContext().fillEvalCtx(waiverCtx);
+		waiverCtx.civic = eCivic;
+		std::vector<TraitContext::HeldTrait> heldTraits;
+		traits().heldTraits(heldTraits);
+		for (size_t iHeld = 0; iHeld < heldTraits.size(); ++iHeld)
+		{
+			if (heldTraits[iHeld].info == NULL) continue;
+			iWaiverPercent += (int)InfoValuation::conditionedSum(heldTraits[iHeld].info->getModifiers(),
+				MODFAM_UPKEEP, UPKEEP_CIVIC, CASC_UNIT_PERCENT, waiverCtx);
+		}
+	}
+	if (100 + iWaiverPercent <= 0)
 	{
 		return 0;
 	}
@@ -12663,6 +12554,11 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	int aiUpkeep[NUM_UPKEEP_KINDS];
 	getUpkeepKinds(aiUpkeep);
 	iUpkeep = getModifiedIntValue(iUpkeep, aiUpkeep[UPKEEP_CIVIC]);
+	//	A partial waiver (none authored today -- the shipped entry is the full -100) scales the remainder.
+	if (iWaiverPercent != 0)
+	{
+		iUpkeep = iUpkeep * (100 + iWaiverPercent) / 100;
+	}
 
 	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getUpkeepModifier(UPKEEP_CIVIC, CASC_SCOPE_EMPIRE, false);
 	iUpkeep /= 100;
@@ -12820,27 +12716,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	}
 }
 
-
-int CvPlayer::getExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_ppaaiSpecialistExtraYield[eIndex1][eIndex2];
-}
-
-
-void CvPlayer::changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_ppaaiSpecialistExtraYield[eIndex1][eIndex2] += iChange;
-
-		AI_makeAssignWorkDirty();
-	}
-}
 
 
 // How far either way along the group cycle a near-move reinsert looks for its slot, in nodes. Its only user is
@@ -16755,27 +16630,18 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiHasCivicOptionCount);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiNoCivicUpkeepCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiHasReligionCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_paiHasCorporationCount);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UPKEEPS, GC.getNumUpkeepInfos(), m_paiUpkeepCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistValidCount);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iTaxRateUnhappiness);
 
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
 
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForceAllTradeRoutes);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryCostModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHurryCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoLandmarkAngerCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iLandmarkHappiness);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCorporationSpreadModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCityLimit);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCityOverLimitUnhappy);
 
@@ -16828,19 +16694,13 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		m_Properties.readWrapper(pStream);
 
+		// m_ppaaiTerrainYieldChange went with the writerless-accumulator sweep -- every element an older save
+		// holds is an orphan, so both branches drain (save.md §4: the member is dead, and the decorated
+		// per-element tag cannot be soft-removed in savemigration.txt).
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_TERRAINS); ++i)
 		{
-			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_TERRAINS, i, true);
-
-			if ( iI != -1 )
-			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiTerrainYieldChange[iI]);
-			}
-			else
-			{
-				//	Consume the values
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiTerrainYieldChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
-			}
+			wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_TERRAINS, i, true);
+			WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiTerrainYieldChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 		}
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_BUILDINGS); ++i)
 		{
@@ -16950,19 +16810,13 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 
+		// m_ppaaiSpecialistExtraYield went with the writerless-accumulator sweep -- every element an older save
+		// holds is an orphan, so both branches drain (save.md §4: the member is dead, and the decorated
+		// per-element tag cannot be soft-removed in savemigration.txt).
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
-			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
-
-			if ( iI != -1 )
-			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiSpecialistExtraYield[iI]);
-			}
-			else
-			{
-				//	Consume the values
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraYield[iI], SAVE_VALUE_TYPE_INT_ARRAY);
-			}
+			wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
+			WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraYield[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 		}
 
 		// ⛔ m_ppaaiImprovementYieldChange went with the accumulator cut, so EVERY element an older save holds for
@@ -17506,8 +17360,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			pCurrUnitNode = pNextUnitNode;
 		}
 		//TB Combat Mod begin
-		//TB Traits begin
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 
 		// The CvCity twin of this loop, one scope up: m_ppaaiSpecialistExtraCommerce was cut and both branches
 		// left empty, so an older save's elements sat unconsumed and desynced everything after them (save.md §3).
@@ -17977,25 +17829,16 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiHasCivicOptionCount);
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiNoCivicUpkeepCount);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiHasReligionCount);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_paiHasCorporationCount);
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UPKEEPS, GC.getNumUpkeepInfos(), m_paiUpkeepCount);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistValidCount);
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTaxRateUnhappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianEvents);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
 
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForceAllTradeRoutes);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryCostModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHurryCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoLandmarkAngerCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLandmarkHappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCorporationSpreadModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCityLimit);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCityOverLimitUnhappy);
 
@@ -18030,10 +17873,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		m_Properties.writeWrapper(pStream);
 
-		for (iI=0;iI<GC.getNumTerrainInfos();iI++)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiTerrainYieldChange[iI]);
-		}
 		for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceModifier[i]);
@@ -18050,11 +17889,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		for (iI=0;iI<GC.getNumCivicOptionInfos();iI++)
 		{
 			WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVICS, m_paeCivics[iI]);
-		}
-
-		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiSpecialistExtraYield[iI]);
 		}
 
 		m_researchQueue.Write(pStream);
@@ -18307,8 +18141,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", iTempUnitId);
 		//TB Combat mod begin
 		//TB Combat mod end
-		//TB Traits begin
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 
 		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
 		{
@@ -24201,33 +24033,6 @@ bool CvPlayer::hasEnemyDefenderUnit(const CvPlot* pPlot) const
 	return false;
 }
 
-void CvPlayer::changeCivicHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
-int CvPlayer::getTaxRateUnhappiness() const
-{
-	return m_iTaxRateUnhappiness;
-}
-
-void CvPlayer::changeTaxRateUnhappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iTaxRateUnhappiness = (m_iTaxRateUnhappiness + iChange);
-	}
-}
-
-int CvPlayer::calculateTaxRateUnhappiness() const
-{
-	return (getCommercePercent(COMMERCE_GOLD) * getTaxRateUnhappiness() / 100);
-}
-
 //Sevo Begin -VCM
 /*  getSevoWonderScore
 This function returns the number of wonders BUILT by the playerID (not OWNED!)
@@ -24288,16 +24093,6 @@ int CvPlayer::getPopulationgrowthratepercentage() const
 	return InfoValuation::realizedAtEmpire(*this, CascadeChannelRegistry::channelLookup(eFamily, iKind, -1));
 }
 
-int CvPlayer::getReligionSpreadRate() const
-{
-	return m_iReligionSpreadRate;
-}
-
-void CvPlayer::changeReligionSpreadRate(int iChange)
-{
-	m_iReligionSpreadRate += iChange;
-	FASSERT_NOT_NEGATIVE(m_iReligionSpreadRate);
-}
 
 int CvPlayer::getDistantUnitSupportCostModifier() const
 {
@@ -24418,25 +24213,6 @@ void CvPlayer::getFreeSpecialists(std::vector<int64_t>& aiCounts) const
 	}
 }
 
-int CvPlayer::getTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_ppaaiTerrainYieldChange[eIndex1][eIndex2];
-}
-
-void CvPlayer::changeTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
-	{
-		m_ppaaiTerrainYieldChange[eIndex1][eIndex2] += iChange;
-
-	}
-}
-
 int CvPlayer::doMultipleResearch(int iOverflow)
 {
 	PROFILE_EXTRA_FUNC();
@@ -24482,39 +24258,9 @@ int CvPlayer::doMultipleResearch(int iOverflow)
 	return std::max(0, iOverflow);
 }
 
-int CvPlayer::getNoLandmarkAngerCount() const
-{
-	return m_iNoLandmarkAngerCount;
-}
-
 bool CvPlayer::isNoLandmarkAnger() const
 {
-	return getNoLandmarkAngerCount() > 0;
-}
-
-void CvPlayer::changeNoLandmarkAngerCount(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iNoLandmarkAngerCount += iChange;
-
-		AI_makeAssignWorkDirty();
-	}
-}
-
-int CvPlayer::getLandmarkHappiness() const
-{
-	return m_iLandmarkHappiness;
-}
-
-void CvPlayer::changeLandmarkHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iLandmarkHappiness += iChange;
-
-		AI_makeAssignWorkDirty();
-	}
+	return policies().has(CLS_POLICY_NO_LANDMARK_ANGER);
 }
 
 bool CvPlayer::isShowLandmarks() const
@@ -24802,16 +24548,6 @@ void CvPlayer::recalculateAllResourceConsumption()
 	}
 }
 
-int CvPlayer::getHurryCostModifier() const
-{
-	return m_iHurryCostModifier;
-}
-
-void CvPlayer::changeHurryCostModifier(int iChange)
-{
-	m_iHurryCostModifier += iChange;
-}
-
 int CvPlayer::getHurriedCount() const
 {
 	return m_iHurryCount;
@@ -24985,17 +24721,6 @@ void CvPlayer::setModderOption(ModderOptionTypes eIndex, bool bNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
 	m_aiModderOptions[eIndex] = bNewValue;
-}
-
-int CvPlayer::getCorporationSpreadModifier() const
-{
-	return m_iCorporationSpreadModifier;
-}
-
-void CvPlayer::changeCorporationSpreadModifier(int iChange)
-{
-	m_iCorporationSpreadModifier += iChange;
-	FAssertMsg(getCorporationSpreadModifier() >= -100, "Corporation Spread Rate is Below Zero!");
 }
 
 int64_t CvPlayer::getCorporateMaintenance() const
@@ -25606,16 +25331,6 @@ CvCity*	CvPlayer::findClosestCity(const CvPlot* pPlot) const
 	}
 
 	return pResult;
-}
-
-int CvPlayer::getBuildWorkerSpeedModifierSpecific(BuildTypes eBuild) const
-{
-	return m_paiBuildWorkerSpeedModifierSpecific[eBuild];
-}
-
-void CvPlayer::changeBuildWorkerSpeedModifierSpecific(BuildTypes eBuild, int iChange)
-{
-	m_paiBuildWorkerSpeedModifierSpecific[eBuild] = (m_paiBuildWorkerSpeedModifierSpecific[eBuild] + iChange);
 }
 
 

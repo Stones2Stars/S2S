@@ -72,7 +72,9 @@ HEADROOM = {
     # answered false for every civic. The revolutions view still ASKS (RevUtils canDoFreeSpeech / isFreeSpeech),
     # so the id mints here and those reads answer false, exactly as they always did. It leaves this list the
     # moment a civic authors the flag.
-    "policies": ["freeSpeech"],
+    # `noLandmarkAnger` is the same shape: mapped by the POLICIES table, authored by no civic, and the landmark
+    # anger gate (CvPlayer::isNoLandmarkAnger) still asks.
+    "policies": ["freeSpeech", "noLandmarkAnger"],
 }
 
 

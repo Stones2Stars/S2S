@@ -355,8 +355,9 @@ the bound game objects. Consequences, each already implied by the model above:
 - **⚖ THE SOURCE SLOTS — a predicate about the CARRIER needs the carrier named, because an entry cannot name
   itself.** Neither a compiled entry nor an info knows its own engine id, so a condition asking about the
   DEPOSITING entity rather than the target (`existedFor` — how long has THIS building stood) has no other way
-  to ask. The ctx therefore carries a slot per such axis — `religion` (the §3.7 counted-kind filter) and
-  `sourceBuilding` — **set per-iteration by the walk that knows the id, on a LOCAL COPY of the ctx, and -1
+  to ask. The ctx therefore carries a slot per such axis — `religion` (the §3.7 counted-kind filter),
+  `sourceBuilding`, and `civic` (the `{CIVIC_CATEGORY}` predicate's carrier, set by the civic-upkeep resolve) —
+  **set per-iteration by the walk that knows the id, on a LOCAL COPY of the ctx, and -1
   everywhere else**; the shared ctx is never mutated. ⛔ -1 means "no carrier in hand" and a source-predicate
   must answer FALSE there: a scope-wide read that never set it would otherwise resolve against whichever
   entity the walk happened to reach last.

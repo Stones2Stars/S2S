@@ -11189,8 +11189,7 @@ int CvGame::getAverageCorporationInfluence(const CvCity* pCity, const Corporatio
 	const int iSpread0 = GC.getCorporationInfo(eCorporation).getSpreadFactor();
 	if (iSpread0 == 0) return 0;
 
-	const int iSpreadMod = 100 + GET_PLAYER(pCity->getOwner()).getCorporationSpreadModifier();
-	if (iSpreadMod == 0) return 0;
+	const int iSpreadMod = 100;
 
 	const int iInfluence = GET_PLAYER(pCity->getOwner()).getCorporationInfluence(eCorporation);
 	if (iInfluence == 0) return 0;

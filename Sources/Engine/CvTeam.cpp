@@ -5170,7 +5170,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 							const CivicOptionTypes eOption =
 								(CivicOptionTypes)GC.getCivicInfo(eCandidate).getCivicOption();
 
-							if (eOption != NO_CIVICOPTION && !playerX.isHasCivicOption(eOption))
+							if (eOption != NO_CIVICOPTION)
 							{
 								eCivicOptionType = eOption;
 								eCivicType = eCandidate;

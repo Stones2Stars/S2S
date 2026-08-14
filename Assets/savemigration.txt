@@ -2190,3 +2190,54 @@ CvPlayer::m_iRevIdxHolyCityBad
 CvPlayer::m_fRevIdxNationalityMod
 CvPlayer::m_fRevIdxBadReligionMod
 CvPlayer::m_fRevIdxGoodReligionMod
+
+|=== The writerless-serialized-accumulator sweep (state-repositories.md THE LEGACY-ACCUMULATOR CUT) ========|
+| Every member below had NO surviving mutator caller (the feeder went with an earlier cut, or never existed
+| in S2S at all), so a consumer was being served a frozen save value. Four groups by replacement:
+| (1) Served by a LIVE cascade read -- the quantity's authored deposits reach the consumer through the
+| maintained packages or an entry-list walk:
+| - hurryCostModifier: civic costs.empire.hurry rides the COSTS_HURRY empire package
+|   (CvPlayer::getCostKinds), already applied beside the old read in the city hurry composition.
+| - taxRateUnhappiness: civic happiness.empire per-GOLD_RATE deposits, maintained in the wellbeing
+|   packages by the slider-rate count route.
+| - healthPercentPerPopulation (CvCity): building health.city.perPopulation deposits in the wellbeing
+|   packages (plane B on the population fact).
+| - minimumDefenseLevel (CvCity): the cascade DEFENSE_MIN floor, CvCity::getExtraMinDefense -- the frozen
+|   member's ==0 early-return was GATING the live floor off entirely.
+| - modifiedBuildingDefenseRecoverySpeedCap (CvCity): recomputed at CvCity::cityDefenseRecoveryRate as the
+|   operating recovery-carrying buildings' own DEFENSE_AMOUNT.
+| - buildWorkerSpeedModifierSpecific: trait workRate.empire.builds keyed rows, read over the held-trait
+|   set at CvPlayer::getWorkRate.
+| - noCivicUpkeepCount: the CIVIC_CATEGORY-gated trait upkeep.empire.civic conditioned entries, evaluated
+|   at CvPlayer::getSingleCivicUpkeep with the ctx civic slot set (InfoValuation::conditionedSum).
+CvPlayer::m_iHurryCostModifier
+CvPlayer::m_iTaxRateUnhappiness
+CvCity::m_iHealthPercentPerPopulation
+CvCity::m_iMinimumDefenseLevel
+CvCity::m_iModifiedBuildingDefenseRecoverySpeedCap
+CvPlayer::m_paiBuildWorkerSpeedModifierSpecific
+CvPlayer::m_paiNoCivicUpkeepCount
+| (2) Curated route exists, authored by NOTHING today -- the id/deposit mapping is live headroom and the
+| verdict correctly reads false/zero until data authors one:
+| - noLandmarkAngerCount: the noLandmarkAnger policy (CvPlayer::isNoLandmarkAnger reads the policy store;
+|   headroom id in CvClassificationIds.h).
+| - landmarkHappiness: the civic iLandmarkHappiness -> happiness.empire.flat mapping (curate_civic), rides
+|   the ordinary empire package when authored.
+CvPlayer::m_iNoLandmarkAngerCount
+CvPlayer::m_iLandmarkHappiness
+| (3) NEVER AUTHORED anywhere (schema-only fields, or feeders that never existed in S2S) -- cut with NO
+| replacement, deliberately: hasCivicOptionCount (no building ever carried CivicOption), upkeepCount
+| (assert-only reader), the two spread accumulators (schema-only civic fields), citySizeBoost (its setter
+| was unreachable since the S2S import), the specialist priority/ban pair (dead city-screen UI), and
+| quarantinedCount (curate_building: bQuarantine is data-dead and deliberately unclassified).
+CvPlayer::m_paiHasCivicOptionCount
+CvPlayer::m_paiUpkeepCount
+CvPlayer::m_iReligionSpreadRate
+CvPlayer::m_iCorporationSpreadModifier
+CvCity::m_iCitySizeBoost
+CvCity::m_iPrioritySpecialist
+CvCity::m_paiSpecialistBannedCount
+CvCity::m_iQuarantinedCount
+| (The two decorated per-element arrays cut in the same sweep -- CvPlayer::m_ppaaiTerrainYieldChange and
+| CvPlayer::m_ppaaiSpecialistExtraYield -- drain in read() loops instead: a bracketed per-element tag
+| cannot be soft-removed here, save.md par.4.)

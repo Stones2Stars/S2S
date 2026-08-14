@@ -470,7 +470,7 @@ void CvCity::getCityFlags(int (&flags)[NUM_CITY_FLAGS]) const
 	flags[CITY_FLAG_POWER]                 = isPowered() ? 1 : 0;
 	flags[CITY_FLAG_OCCUPATION]            = isOccupation() ? 1 : 0;
 	flags[CITY_FLAG_PLUNDERED]             = isPlundered() ? 1 : 0;
-	flags[CITY_FLAG_QUARANTINED]           = isQuarantined() ? 1 : 0;
+	flags[CITY_FLAG_QUARANTINED]           = 0;   // the quarantine feeder is data-dead (curator: bQuarantine unauthored); column kept for schema stability
 	flags[CITY_FLAG_CONNECTED_TO_CAPITAL]  = isConnectedToCapital() ? 1 : 0;
 	flags[CITY_FLAG_COASTAL]               = isCoastal(0) ? 1 : 0;
 }
@@ -577,8 +577,6 @@ CvCity::CvCity()
 	m_ppaaiExtraBonusAidModifier = NULL;
 	m_paiUnitCombatDefenseAgainstModifier = NULL;
 	m_ppaaiLocalSpecialistExtraYield = NULL;
-
-	m_paiSpecialistBannedCount = NULL;
 
 	m_bVisibilitySetup = false;
 
@@ -835,7 +833,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY2(m_ppaaiExtraBonusAidModifier, GC.getNumBonusInfos());
 	SAFE_DELETE_ARRAY(m_paiUnitCombatDefenseAgainstModifier);
 	SAFE_DELETE_ARRAY(m_paiStartDeferredSectionNumBonuses);
-	SAFE_DELETE_ARRAY(m_paiSpecialistBannedCount);
 	SAFE_DELETE_ARRAY2(m_ppaaiLocalSpecialistExtraYield, GC.getNumSpecialistInfos());
 }
 
@@ -917,7 +914,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iLastDefenseDamage = 0;
 	m_iOccupationTimer = 0;
 	m_iCultureUpdateTimer = 0;
-	m_iCitySizeBoost = 0;
 	m_icachedPropertyNeedsTurn = 0;
 	m_iCiv = NO_CIVILIZATION;
 	m_iLandmarkAngerTimer = 0;
@@ -926,9 +922,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iProtectedCultureCount = 0;
 	m_iWarWearinessTimer = 0;
 	m_iEventAnger = 0;
-	m_iMinimumDefenseLevel = 0;
-	m_iHealthPercentPerPopulation = 0;
-	m_iQuarantinedCount = 0;
 	m_bNeverLost = true;
 	m_bPropertyControlBuildingQueued = false;
 	m_bVisibilitySetup = false;
@@ -965,11 +958,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iRevolutionCounter = 0;
 	m_iReinforcementCounter = 0;
 
-	//TB Combat Mod (Buildings) begin
-	m_iModifiedBuildingDefenseRecoverySpeedCap = 0;
-	m_iPrioritySpecialist = NO_SPECIALIST;
 	m_icachedPropertyNeedsTurn = 0;
-	//TB Combat Mod (Buildings) end
 
 	m_iZoCCount = 0;
 
@@ -1035,17 +1024,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but an array is being allocated in CvCity::reset");
 		FAssertMsg(m_ppaaiLocalSpecialistExtraYield == NULL, "about to leak memory, CvCity::m_ppaaiLocalSpecialistExtraYield");
 		m_ppaaiLocalSpecialistExtraYield = new int* [GC.getNumSpecialistInfos()];
-		m_paiSpecialistBannedCount = new int[GC.getNumSpecialistInfos()];
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
 			m_ppaaiLocalSpecialistExtraYield[iI] = new int[NUM_YIELD_TYPES];
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
 				m_ppaaiLocalSpecialistExtraYield[iI][iJ] = 0;
-			}
-			m_paiSpecialistBannedCount[iI] = 0;
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
 			}
 		}
 
@@ -4304,22 +4288,14 @@ void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBE
 
 		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getVassalUnhappiness());
 		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getEspionageHappinessCounter());
-		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, owner.calculateTaxRateUnhappiness());
 		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getEventAnger());
 		wellbeing[WELLBEING_ANGER] -= 100 * std::min(0, iEventGranted);
 	}
-	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
+	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED)
+	&& (wellbeing[WELLBEING_ANGER] != 0 || !isNoUnhappiness())
+	&& !owner.isNoLandmarkAnger())
 	{
-		// The landmark terms are one signed quantity too: the happiness half applies whatever the anger gate did.
-		wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, owner.getLandmarkHappiness());
-		if (wellbeing[WELLBEING_ANGER] != 0 || !isNoUnhappiness())
-		{
-			wellbeing[WELLBEING_ANGER] -= 100 * std::min(0, owner.getLandmarkHappiness());
-			if (!owner.isNoLandmarkAnger())
-			{
-				wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getLandmarkAnger());
-			}
-		}
+		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getLandmarkAnger());
 	}
 
 	// (4) The HEALTH pair's raw-state inputs -- the event-granted accumulator splitting by sign as above, the
@@ -4448,7 +4424,7 @@ int CvCity::totalBadBuildingHealthUngated() const
 			iBadHealth += getBuildingBadHealthUngated(eBuilding);
 		}
 	}
-	return iBadHealth + std::min(0, calculatePopulationHealth());
+	return iBadHealth;
 }
 
 
@@ -4663,7 +4639,6 @@ int CvCity::getHurryCostModifier(int iBaseModifier, int iExtraMod) const
 	int aiCostKinds[NUM_COSTS_KINDS];
 	GET_PLAYER(getOwner()).getCostKinds(aiCostKinds);
 	iModifier = getModifiedIntValue(iModifier, aiCostKinds[COSTS_HURRY]);
-	iModifier = getModifiedIntValue(iModifier, GET_PLAYER(getOwner()).getHurryCostModifier());
 
 	return std::max(1, iModifier); // Avoid potential divide by 0s
 }
@@ -7643,22 +7618,6 @@ void CvCity::changeCultureUpdateTimer(int iChange)
 }
 
 
-int CvCity::getCitySizeBoost() const
-{
-	return m_iCitySizeBoost;
-}
-
-
-void CvCity::setCitySizeBoost(int iBoost)
-{
-	if (getCitySizeBoost() != iBoost)
-	{
-		m_iCitySizeBoost = iBoost;
-
-		setLayoutDirty(true);
-	}
-}
-
 bool CvCity::isNeverLost() const
 {
 	return m_bNeverLost;
@@ -8130,10 +8089,7 @@ int CvCity::getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist)
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-	return (
-		GC.getSpecialistInfo(eSpecialist).getFlatYield(eIndex, CASC_SCOPE_CITY) / 100
-		+ GET_PLAYER(getOwner()).getExtraSpecialistYield(eSpecialist, eIndex)
-	);
+	return GC.getSpecialistInfo(eSpecialist).getFlatYield(eIndex, CASC_SCOPE_CITY) / 100;
 }
 
 // note: player->invalidateYieldRankCache() must be called for anything that is checked here
@@ -11015,7 +10971,7 @@ void CvCity::updateTradeRoutes()
 
 	clearTradeRoutes();
 
-	if (!isDisorder() && !isPlundered() && !isQuarantined())
+	if (!isDisorder() && !isPlundered())
 	{
 		const int iTradeRoutes = getTradeRoutes();
 
@@ -12429,8 +12385,6 @@ void CvCity::doReligion()
 					}
 					if (iRandThreshold > 0)
 					{
-						iRandThreshold *= std::max(1, getModifiedIntValue(100, GET_PLAYER(getOwner()).getReligionSpreadRate()));
-						iRandThreshold /= 100;
 
 						const int iSpreadRand =
 						(
@@ -12585,7 +12539,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iLastDefenseDamage);
 	WRAPPER_READ(wrapper, "CvCity", &m_iOccupationTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iCultureUpdateTimer);
-	WRAPPER_READ(wrapper, "CvCity", &m_iCitySizeBoost);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_bNeverLost);
 	WRAPPER_READ(wrapper, "CvCity", &m_bBombarded);
@@ -12763,9 +12716,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatExtraStrength);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
-
-	WRAPPER_READ(wrapper, "CvCity", &m_iMinimumDefenseLevel);
-	WRAPPER_READ(wrapper, "CvCity", &m_iHealthPercentPerPopulation);
 
 	// Read all saved trade routes
 	int iNumTradeRoutes = 0;
@@ -12953,9 +12903,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	}
 
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iPrioritySpecialist);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistBannedCount);
-	WRAPPER_READ(wrapper, "CvCity", &m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatDefenseAgainstModifier);
 	//TB Combat Mod (Buildings) end
 
@@ -13002,7 +12949,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 	}
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROPERTIES, GC.getNumPropertyInfos(), m_paiAidRate);
-	WRAPPER_READ(wrapper, "CvCity", &m_iQuarantinedCount);
 	// The EVENT/WB half only -- the building half is derived and rebuilt by the reseed (save.md par.5).
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
 	WRAPPER_READ(wrapper, "CvCity", &m_bPropertyControlBuildingQueued);
@@ -13231,7 +13177,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLastDefenseDamage);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iOccupationTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iCultureUpdateTimer);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iCitySizeBoost);
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_bNeverLost);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bBombarded);
@@ -13293,9 +13238,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatExtraStrength);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
-
-	WRAPPER_WRITE(wrapper, "CvCity", m_iMinimumDefenseLevel);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iHealthPercentPerPopulation);
 
 	const int iNumTradeRoutes = m_paTradeCities.size();
 	WRAPPER_WRITE(wrapper, "CvCity", iNumTradeRoutes);
@@ -13361,9 +13303,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	{
 		WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_ppaaiLocalSpecialistExtraYield[iI]);
 	}
-	WRAPPER_WRITE(wrapper, "CvCity", m_iPrioritySpecialist);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistBannedCount);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatDefenseAgainstModifier);
 	//TB Combat Mod (Buildings) end
 
@@ -13380,7 +13319,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	}
 
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROPERTIES, GC.getNumPropertyInfos(), m_paiAidRate);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iQuarantinedCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bPropertyControlBuildingQueued);
 
@@ -13568,7 +13506,7 @@ void CvCity::getVisibleBuildings(std::list<BuildingTypes>& kChosenVisible, int& 
 	{
 		iNumUniques = kVisible.size();
 	}
-	iNumGenerics = iTotalVisibleBuildings - iNumUniques + getCitySizeBoost();
+	iNumGenerics = iTotalVisibleBuildings - iNumUniques;
 
 	// return
 	iChosenNumGenerics = iNumGenerics;
@@ -15461,7 +15399,7 @@ void CvCity::doCorporation()
 					}
 				}
 			}
-			iRandThreshold *= kOwner.getCorporationSpreadModifier() + 100;
+			iRandThreshold *= 100;
 			iRandThreshold /= 100;
 			iRandThreshold *= kOwner.getCorporationInfluence((CorporationTypes)iI);
 			iRandThreshold /= 100;
@@ -15735,23 +15673,7 @@ int CvCity::getMinimumDefenseLevel() const
 	{
 		return 0;
 	}
-
-	if (m_iMinimumDefenseLevel == 0)
-	{
-		return m_iMinimumDefenseLevel;
-	}
-
-	if (getExtraMinDefense() > m_iMinimumDefenseLevel)
-	{
-		return getExtraMinDefense();
-	}
-
-	return m_iMinimumDefenseLevel;
-}
-
-void CvCity::setMinimumDefenseLevel(int iNewValue)
-{
-	m_iMinimumDefenseLevel = iNewValue;
+	return getExtraMinDefense();
 }
 
 void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeopleRate, int& iHappiness, int& iHealthiness, int*& aiYields, int*& aiCommerces) const
@@ -15882,20 +15804,6 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 				}
 			}
 		}
-	}
-}
-
-int CvCity::calculatePopulationHealth() const
-{
-	return m_iHealthPercentPerPopulation * getPopulation() / 100;
-}
-
-void CvCity::changeHealthPercentPerPopulation(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iHealthPercentPerPopulation += iChange;
-		AI_setAssignWorkDirty(true);
 	}
 }
 
@@ -16252,19 +16160,6 @@ int CvCity::getExtraRiverDefensePenalty() const { return cascadeDefense(DEFENSE_
 int CvCity::getExtraMinDefense() const { return cascadeDefense(DEFENSE_MIN); }
 
 int CvCity::getExtraBuildingDefenseRecoverySpeedModifier() const { return cascadeDefense(DEFENSE_BUILDING_RECOVERY); }
-int CvCity::getModifiedBuildingDefenseRecoverySpeedCap() const
-{
-	return m_iModifiedBuildingDefenseRecoverySpeedCap;
-}
-void CvCity::setModifiedBuildingDefenseRecoverySpeedCap(int iValue)
-{
-	m_iModifiedBuildingDefenseRecoverySpeedCap = iValue;
-}
-void CvCity::changeModifiedBuildingDefenseRecoverySpeedCap(int iChange)
-{
-	m_iModifiedBuildingDefenseRecoverySpeedCap += iChange;
-}
-
 int CvCity::getExtraCityDefenseRecoverySpeedModifier() const { return cascadeDefense(DEFENSE_CITY_RECOVERY); }
 int CvCity::cityDefenseRecoveryRate() const
 {
@@ -16272,7 +16167,18 @@ int CvCity::cityDefenseRecoveryRate() const
 
 	int iRecoveryModifier = getExtraCityDefenseRecoverySpeedModifier();
 
-	if (getDefenseModifier(false) < getModifiedBuildingDefenseRecoverySpeedCap())
+	//	The building-defense recovery bonus applies only while defenses sit below what the recovery-carrying
+	//	buildings themselves provide, so the cap is those buildings' own defense over the operating set.
+	int iRecoveryCap = 0;
+	foreach_(const BuildingTypes eBuilding, getHasBuildings())
+	{
+		if (hasFullyActiveBuilding(eBuilding)
+		&& GC.getBuildingInfo(eBuilding).getDefense(DEFENSE_BUILDING_RECOVERY, CASC_SCOPE_CITY) != 0)
+		{
+			iRecoveryCap += GC.getBuildingInfo(eBuilding).getDefense(DEFENSE_AMOUNT, CASC_SCOPE_CITY);
+		}
+	}
+	if (getDefenseModifier(false) < iRecoveryCap)
 	{
 		iRecoveryModifier += getExtraBuildingDefenseRecoverySpeedModifier();
 	}
@@ -16340,47 +16246,6 @@ int CvCity::specialistYieldTotal(SpecialistTypes eSpecialist, YieldTypes eYield)
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
 
 	return (specialistCount(eSpecialist) * specialistYield(eSpecialist, eYield));
-}
-
-int CvCity::getPrioritorizedSpecialist() const
-{
-	return m_iPrioritySpecialist;
-}
-
-void CvCity::setPrioritorizedSpecialist(SpecialistTypes eSpecialist)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-
-	m_iPrioritySpecialist = (int)eSpecialist;
-	if (isSpecialistBanned(eSpecialist))
-	{
-		removeSpecialistBan(eSpecialist);
-	}
-}
-
-bool CvCity::isSpecialistBanned(SpecialistTypes eSpecialist) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-
-	return m_paiSpecialistBannedCount[eSpecialist] > 0;
-}
-
-void CvCity::banSpecialist(SpecialistTypes eSpecialist)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-
-	m_paiSpecialistBannedCount[eSpecialist] = 1;
-	if (m_iPrioritySpecialist == (int)eSpecialist)
-	{
-		m_iPrioritySpecialist = NO_SPECIALIST;
-	}
-}
-
-void CvCity::removeSpecialistBan(SpecialistTypes eSpecialist)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-
-	m_paiSpecialistBannedCount[eSpecialist] = 0;
 }
 
 bool CvCity::isDirectAttackable() const
@@ -16524,20 +16389,6 @@ int CvCity::getPropertyNeed(PropertyTypes eProperty) const
 }
 
 
-bool CvCity::isQuarantined() const
-{
-	return (getQuarantinedCount() > 0);
-}
-
-int CvCity::getQuarantinedCount() const
-{
-	return m_iQuarantinedCount;
-}
-
-void CvCity::changeQuarantinedCount(int iChange)
-{
-	m_iQuarantinedCount += iChange;
-}
 
 // ---- THE CITIZEN-JUGGLE BRACKET -------------------------------------------------------------------------
 //
@@ -16651,12 +16502,6 @@ void CvCity::endCitizenJuggling()
 	}
 	m_bJuggleDeferredSpec = false;
 	m_bJuggleDeferredWork = false;
-}
-
-
-void CvCity::resetQuarantinedCount()
-{
-	m_iQuarantinedCount = 0;
 }
 
 

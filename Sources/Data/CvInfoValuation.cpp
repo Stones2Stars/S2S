@@ -489,6 +489,17 @@ int64_t InfoValuation::groupSum(const CvModifiers* modifiers, ModifierFamily eFa
 		iTotal += modifiers->sum(eFamily, iKind, VAL_FOLD_SCOPES[iScopeIdx], eUnit, bAiAudience);
 	}
 	// (2) the family's conditioned tail, through the ONE evaluator + the ONE §3.7 resolver
+	return iTotal + conditionedSum(modifiers, eFamily, iKind, eUnit, evalCtx);
+}
+
+int64_t InfoValuation::conditionedSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
+	CvCascUnit eUnit, const CvCascadeEvalCtx& evalCtx)
+{
+	if (modifiers == NULL)
+	{
+		return 0;
+	}
+	int64_t iTotal = 0;
 	size_t iBegin = 0;
 	size_t iEnd = 0;
 	modifiers->conditionedRange(eFamily, iBegin, iEnd);

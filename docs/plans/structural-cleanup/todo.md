@@ -114,15 +114,6 @@
   ([save.md §3](../../specs/save.md)). The wellbeing cut notes are the known cluster to start from — they name
   the archived bespoke substrate ([superseded-ideas #14](../../architecture/superseded-ideas.md)) rather than
   what actually serves them now.
-- Sweep the WRITERLESS SERIALIZED ACCUMULATORS over `CvCity`/`CvPlayer` and cut every hit with the uniform
-  mechanism ([state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md)).
-  Run the detector's THIRD LEG against the MEMBER, never only the getter — a reader is often named for the
-  ANSWER it computes rather than for the member it reads. Work it together with the unkinded-member census
-  below: a matched pair is the data and carrier sides of ONE missing quantity.
-  ⚠ A genuine one-shot event-state writer (`applyEvent`) correctly stays serialized
-  ([save.md §3](../../specs/save.md)); every other hit re-points.
-  ⛔ A hit is never a plain deletion until the third leg says so — where the getter still has consumers, the
-  read is re-pointed at the cascade or dropped, and the REPLACEMENT is named in `savemigration.txt`.
 - Serve the PER-SCALER RATE for a given count-key — "how much does this source deposit per unit of
   `per: {type: X}`". ⛔ Not `keyedTargetSum`: that matches a NAMED TARGET, this filters on the `per` key and
   wants the value UNSCALED (the rate, not rate × current count). The live demand is an AI valuation — "what
@@ -262,14 +253,6 @@
   tech-gated delta are ONE slot (the bare number plus a conditioned entry, [modifier.md §6](../../specs/modifier.md)),
   but `CvPlot::movementCost` takes the point read (unconditioned entries only), so the gated delta never applies.
   ⛔ Needs the conditioned tail evaluated against the asking team, the same shape every other conditioned read uses.
-
-- Set `ctx.civic` where a civic's value is resolved, so `{CIVIC_CATEGORY: CIVICOPTION_X}` can answer. The
-  predicate, ctx slot, and authored deposit all exist (a trait waiving religion-civic upkeep authors
-  `upkeep.empire.civic.percent: -100` gated on it) but no walk sets the slot, so it is FALSE everywhere and the
-  waiver is inert.
-  ⛔ FALSE is the correct unset answer ([contexts.md](../../architecture/contexts.md) § THE SOURCE SLOTS) — the
-  gap is the consumer, not the predicate. The civic-upkeep resolve sets the slot on a LOCAL COPY of ctx, exactly
-  as the religion/sourceBuilding slots are set.
 
 - Apply the PER-CITY GATES AT THE COMBINE. [modifier.md §1](../../specs/modifier.md) specifies the realized
   value as the scope-package sum with per-city gates (state-religion-in-city, coastal, connected, area

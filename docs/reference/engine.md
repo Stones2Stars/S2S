@@ -244,6 +244,8 @@ where it is. Read what the option is being ASKED, never match on the option name
   orphaned serialized member together rather than one at a time as each is noticed. ⛔ This is owner-ruled
   SEQUENCING, not a deferral to hide behind: the pass is a named piece of work, and any other write-only or
   consumer-less serialized state found on the way belongs to it — record it here rather than cutting it alone.
+  Recorded so far for that pass: `CvPlayer::m_iCompatCheckCount` and `CvPlayer::m_iMotherPlayer` (both
+  round-trip the save and are read by nothing).
 - **Category id ORDER comes from the `_order.json` manifest** (`Assets/Data/<cat>/_order.json`, curator-derived —
   `Tools/Migration/curate_order.py`): `loadJsonCategory` sorts a category's entities by manifest position before
   the registration assigns ids, so the engine ids reproduce the LEGACY id order (base XML document order, then

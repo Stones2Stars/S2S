@@ -1012,14 +1012,6 @@ public:
 	bool isSpecialBuildingNotRequired(SpecialBuildingTypes eIndex) const;
 	void changeSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex, int iChange);
 
-	int getHasCivicOptionCount(CivicOptionTypes eIndex) const;
-	bool isHasCivicOption(CivicOptionTypes eIndex) const;
-	void changeHasCivicOptionCount(CivicOptionTypes eIndex, int iChange);
-
-	int getNoCivicUpkeepCount(CivicOptionTypes eIndex) const;
-	bool isNoCivicUpkeep(CivicOptionTypes eIndex) const;
-	void changeNoCivicUpkeepCount(CivicOptionTypes eIndex, int iChange);
-
 	int getHasReligionCount(ReligionTypes eIndex) const;
 	int countTotalHasReligion() const;
 	int findHighestHasReligionCount() const;
@@ -1029,9 +1021,6 @@ public:
 	int countTotalHasCorporation() const;
 	void changeHasCorporationCount(CorporationTypes eIndex, int iChange);
 	bool isActiveCorporation(CorporationTypes eIndex) const;
-
-	int getUpkeepCount(UpkeepTypes eIndex) const;
-	void changeUpkeepCount(UpkeepTypes eIndex, int iChange);
 
 	int getSpecialistValidCount(SpecialistTypes eIndex) const;
 	bool isSpecialistValid(SpecialistTypes eIndex) const;
@@ -1050,9 +1039,6 @@ public:
 	void setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue);
 
 	int64_t getTreasuryUpkeep() const;
-
-	int getExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2) const;
-	void changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange);
 
 
 	void updateGroupCycle(CvUnit* pUnit, bool bFarMove);
@@ -1304,13 +1290,6 @@ public:
 
 
 
-	int getTaxRateUnhappiness() const;
-	void changeTaxRateUnhappiness(int iChange);
-	int calculateTaxRateUnhappiness() const;
-
-	int getReligionSpreadRate() const;
-	void changeReligionSpreadRate(int iChange);
-
 	int getDistantUnitSupportCostModifier() const;
 	void setDistantUnitSupportCostModifier(int iNewValue);
 	void changeDistantUnitSupportCostModifier(int iChange);
@@ -1319,9 +1298,6 @@ public:
 
 
 
-
-	int getHurryCostModifier() const;
-	void changeHurryCostModifier(int iChange);
 
 	int getCityLimit() const { return m_iCityLimit; }
 	void changeCityLimit(int iChange);
@@ -1333,13 +1309,9 @@ public:
 	bool isShowLandmarks() const;
 	void setShowLandmarks(bool bNewVal);
 
-	int getTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2) const;
-	void changeTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2, int iChange);
-
 
 	int getSevoWondersScore(int mode);
 
-	void changeCivicHappiness(int iChange);
 
 	bool hasEnemyDefenderUnit(const CvPlot* pPlot) const;
 
@@ -1398,12 +1370,7 @@ public:
 
 
 
-	int getNoLandmarkAngerCount() const;
 	bool isNoLandmarkAnger() const;
-	void changeNoLandmarkAngerCount(int iChange);
-
-	int getLandmarkHappiness() const;
-	void changeLandmarkHappiness(int iChange);
 
 	void setColor(PlayerColorTypes eColor);
 
@@ -1415,9 +1382,6 @@ public:
 	bool isModderOption(ModderOptionTypes eIndex) const;
 	void setModderOption(ModderOptionTypes eIndex, bool bNewValue);
 	void setModderOption(ModderOptionTypes eIndex, int iNewValue);
-
-	int getCorporationSpreadModifier() const;
-	void changeCorporationSpreadModifier(int iChange);
 
 	int64_t getCorporateMaintenance() const;
 
@@ -1488,7 +1452,6 @@ public:
 	inline void setTurnHadUIInteraction(bool newVal) { m_turnHadUIInteraction = newVal; }
 
 protected:
-	int** m_ppaaiTerrainYieldChange;
 	int** m_ppiBuildingCommerceModifier;
 	int** m_ppiBuildingCommerceChange;
 	bool* m_pabAutomatedCanBuild;
@@ -1497,19 +1460,13 @@ protected:
 	PlayerVoteTypes m_ePledgedVote;
 	TeamTypes m_eSecretaryGeneralVote;
 	UnitTypes m_eGreatGeneralTypetoAssign;
-	int m_iNoLandmarkAngerCount;
-	int m_iLandmarkHappiness;
 	int m_iFreeUnitUpkeepCivilianEvents;   // event-granted free upkeep -- one-shot, persisted
 	int m_iDistantUnitSupportCostModifier;
-	int m_iReligionSpreadRate;
-	int m_iTaxRateUnhappiness;
 	int m_iForceAllTradeRoutes;
-	int m_iCorporationSpreadModifier;
 	bool m_bShowLandmarks;
 	int m_iCityLimit;
 	int m_iCityOverLimitUnhappy;
 	//TB Traits
-	int* m_paiBuildWorkerSpeedModifierSpecific;
 	bool* m_pabHasTrait;
 	int m_iLeaderHeadLevel;
 	int m_iCompatCheckCount;
@@ -1528,7 +1485,6 @@ protected:
 	int m_iAmbushingTargetUnit;
 	bool m_bAssassinate;
 
-	int m_iHurryCostModifier;
 	int m_iHurryCount;
 
 	int m_iFractionalCombatExperience;
@@ -1783,11 +1739,8 @@ protected:
 	int* m_paiBuildingGroupMaking;
 	int* m_paiHurryCount;
 	int* m_paiSpecialBuildingNotRequiredCount;
-	int* m_paiHasCivicOptionCount;
-	int* m_paiNoCivicUpkeepCount;
 	int* m_paiHasReligionCount;
 	int* m_paiHasCorporationCount;
-	int* m_paiUpkeepCount;
 	int* m_paiSpecialistValidCount;
 
 	bool* m_pabResearchingTech;
@@ -1796,8 +1749,6 @@ protected:
 	std::vector<EventTriggerTypes> m_triggersFired;
 
 	CivicTypes* m_paeCivics;
-
-	int** m_ppaaiSpecialistExtraYield;
 
 	CLinkList<TechTypes> m_researchQueue;
 
@@ -1896,9 +1847,6 @@ protected:
 public:
 
 
-
-	int getBuildWorkerSpeedModifierSpecific(BuildTypes eBuild) const;
-	void changeBuildWorkerSpeedModifierSpecific(BuildTypes eBuild, int iChange);
 
 
 

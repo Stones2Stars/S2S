@@ -3012,13 +3012,6 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_ESPIONAGE", iAnger));
 		szBuffer.append(NEWLINE);
 	}
-	iAnger = kPlayer.calculateTaxRateUnhappiness();
-	if (iAnger > 0)
-	{
-		iTotal += iAnger;
-		szBuffer.append(gDLL->getText("TXT_KEY_CITY_TAXATION_ANGER", iAnger));
-		szBuffer.append(NEWLINE);
-	}
 	iAnger = city.getEventAnger();
 	if (iAnger > 0)
 	{

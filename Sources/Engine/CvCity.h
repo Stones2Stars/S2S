@@ -426,16 +426,11 @@ public:
 
 
 	//TB Combat Mods (Buildings) end
-	bool isQuarantined() const;
-	int getQuarantinedCount() const;
-	void changeQuarantinedCount(int iChange);
 	// The CITIZEN-JUGGLE bracket (see CvCity.cpp): the governor's probe run defers its side-effect layer and
 	// replays the run's NET once at the close. Refcounted so a nested bracket cannot close the outer one.
 	void startCitizenJuggling();
 	void endCitizenJuggling();
 	bool isCitizenJuggling() const { return m_iCitizenJugglingCount > 0; }
-
-	void resetQuarantinedCount();
 
 
 	DllExport int getID() const;
@@ -894,9 +889,6 @@ public:
 	void setCultureUpdateTimer(int iNewValue);
 	void changeCultureUpdateTimer(int iChange);
 
-	int getCitySizeBoost() const;
-	void setCitySizeBoost(int iBoost);
-
 	bool isNeverLost() const;
 	void setNeverLost(bool bNewValue);
 
@@ -1339,15 +1331,11 @@ public:
 	int getNonHolyReligionCount() const;
 
 	int getMinimumDefenseLevel() const;
-	void setMinimumDefenseLevel(int iNewValue);
 
 	SpecialistTypes getBestSpecialist(int iExtra) const;
 
 
 	void removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeopleRate, int& iHappiness, int& iHealthiness, int*& aiYields, int*& aiCommerces) const;
-
-	void changeHealthPercentPerPopulation(int iChange);
-	int calculatePopulationHealth() const;
 
 	int getAssignedSpecialistCount() const;
 
@@ -1579,8 +1567,6 @@ protected:
 	int m_iWorkableRadiusOverride;
 	int m_iProtectedCultureCount;
 	int m_iWarWearinessTimer;
-	int m_iMinimumDefenseLevel;
-	int m_iHealthPercentPerPopulation;
 
 	int m_iLostProduction;
 	int m_iEventAnger;
@@ -1614,11 +1600,8 @@ protected:
 	int m_iLastDefenseDamage;
 	int m_iOccupationTimer;
 	int m_iCultureUpdateTimer;
-	int m_iCitySizeBoost;
 	// Mutable as its used in caching
 	mutable int m_icachedPropertyNeedsTurn;
-
-	int m_iQuarantinedCount;
 
 	bool m_bNeverLost;
 	bool m_bPropertyControlBuildingQueued;
@@ -1652,12 +1635,8 @@ protected:
 	int* m_paiAidRate;
 	int** m_ppaaiExtraBonusAidModifier;
 	int* m_paiUnitCombatDefenseAgainstModifier;
-	//TB Building Tags
-	int m_iModifiedBuildingDefenseRecoverySpeedCap;
 
 	int** m_ppaaiLocalSpecialistExtraYield;
-	int m_iPrioritySpecialist;
-	int* m_paiSpecialistBannedCount;
 
 	int* m_aiYieldRateModifier;
 	int* m_aiTradeYield;
@@ -1777,13 +1756,6 @@ public:
 	int specialistCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const;
 	int specialistYieldTotal(SpecialistTypes eSpecialist, YieldTypes eYield) const;
 
-	int getPrioritorizedSpecialist() const;
-	void setPrioritorizedSpecialist(SpecialistTypes eSpecialist);
-
-	bool isSpecialistBanned(SpecialistTypes eSpecialist) const;
-	void banSpecialist(SpecialistTypes eSpecialist);
-	void removeSpecialistBan(SpecialistTypes eSpecialist);
-
 
 #ifdef YIELD_VALUE_CACHING
 	virtual void AI_NoteWorkerChange() = 0;
@@ -1808,10 +1780,6 @@ public:
 	int getExtraMinDefense() const;
 
 	int getExtraBuildingDefenseRecoverySpeedModifier() const;
-
-	int getModifiedBuildingDefenseRecoverySpeedCap() const;
-	void setModifiedBuildingDefenseRecoverySpeedCap(int iValue);
-	void changeModifiedBuildingDefenseRecoverySpeedCap(int iChange);
 
 	int getExtraCityDefenseRecoverySpeedModifier() const;
 
