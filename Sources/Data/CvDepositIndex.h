@@ -12,9 +12,9 @@
 //	INTS, and a query address that was never authored anywhere answers 0 without touching a single deposit.
 //
 //	The compiled records (typed family/kind/scope/channel axes + the FK-resolved target id) are ALSO the generator
-//	of the data-derived event->cache routing (state-repositories.md): a DOMAIN event's source names the
-//	channels x scopes x targets it touches straight off its compiled deposits -- routeFor + the condition-dependency
-//	routes below ARE that derivation; no event site carries a hand-wired mask.
+//	of the data-derived event->apply routing (state-repositories.md THE MAINTAINED SUM): the gatedBy* reverse
+//	routes below hand plane B and C's appliers the exact deposits an atom gates or a count scales, straight off
+//	the compiled index -- never a hand-wired list per event site.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated (patterns.md static-class law).
 //	Game-thread only. The interner is APPEND-ONLY -- ids stay valid across a readJson re-map (rj_clearAllRepos +
@@ -24,7 +24,7 @@
 //
 
 #include "CvModEntry.h"                 // CvCascUnit -- the entry's unit enum (the unit segment the push interns)
-#include "CvCascadeChannelRegistry.h"   // the minted channel vocabulary + per-scope bit spaces the routes speak
+#include "CvCascadeChannelRegistry.h"   // the minted channel vocabulary (registerDeposit at push; CASCADE_PACKAGE_SCOPES)
 #include <map>
 #include <set>
 #include <string>
@@ -104,58 +104,6 @@ struct CascadeDeposit
 	{ for (int i = 0; i < CASC_DEP_SEGS; ++i) seg[i] = -1; }
 };
 
-//
-//	The COMPILED REVERSE ROUTE of a source info (state-repositories.md: "the event->cache routing is DERIVED
-//	FROM THE DATA, never hand-wired -- the dirty flags fall out of the deposit addresses"). A DOMAIN event's
-//	source names the channels x scopes it touches straight off its compiled deposits; this is that inversion,
-//	computed ONCE per source info (lazily, post-load -- the registry layouts are complete by then) and cached.
-//
-//	THE UNIFORM MODEL: per package scope, the 64-bit channel mask (in THAT scope's local bit space,
-//	CascadeChannelRegistry) the source's deposits land in -- the consumer marks the owner object each event
-//	names (the plot's / city's / player's / area's / team's package). The registry's bit contract is
-//	ORDER-INDEPENDENT (channel slots append-only, receiver bits in a fixed top region), so a cached route's
-//	bits stay valid across later channel minting -- caching needs no ordering guarantee against the load's
-//	push. ONE derivation marks BOTH levels
-//	([DEC-uniform-cache-shape]): the receiver-fan masks name the SUM slots those packages feed -- the city's
-//	realized rates (cityFanAll when an above-city deposit rolls DOWN to every owner city) and the player's
-//	empire sums. There is NO dependency-ordered rebuild: package and sum are both marked dirty, and a sum's
-//	rebuild reads its packages through their own lazy dirty-check.
-//
-//	Unit-qualified deposits are EXCLUDED: a unit-carried value rides ON TOP live and never dirties any cache
-//	([DEC-unit-modifiers-on-top]).
-//
-struct SourceRoute
-{
-	int64_t packageMask[CASCADE_PACKAGE_SCOPES];   // per-scope package channel bits (that scope's bit space)
-	int64_t citySumMask;                           // receiver bits (CITY bit space) the deposits feed
-	int64_t empireSumMask;                         // receiver bits (EMPIRE bit space) the deposits feed
-	bool cityFanAll;    // an above-city deposit feeds EVERY owner city's sums (else only the event's own city)
-	bool world;         // a world-scope deposit is authored (world is CONFIG -- census visibility, no package)
-
-	SourceRoute() : citySumMask(0), empireSumMask(0), cityFanAll(false), world(false)
-	{
-		for (int i = 0; i < CASCADE_PACKAGE_SCOPES; ++i)
-		{
-			packageMask[i] = 0;
-		}
-	}
-	bool empty() const
-	{
-		if (citySumMask != 0 || empireSumMask != 0)
-		{
-			return false;
-		}
-		for (int i = 0; i < CASCADE_PACKAGE_SCOPES; ++i)
-		{
-			if (packageMask[i] != 0)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-};
-
 class DepositIndex
 {
 public:
@@ -184,34 +132,17 @@ public:
 	static const std::vector<CascadeDeposit>& depositsFor(const CvInfo* j);
 	static const std::vector<CascadeDeposit>& whenObsoleteFor(const CvInfo* j);
 
-	// THE REVERSE ROUTE: the source info's per-scope package masks + receiver fan, unioned over its compiled
-	// deposits and cached (lazy, first query -- post-load, so the registry layouts are complete; dropped by
-	// clearCompiled with the compiled registry, its keys being the freed infos). The modifier consumer queries
-	// this O(1) to mark exactly the packages a source feeds AND the sum slots they roll into (the ONE mark
-	// derivation, [DEC-uniform-cache-shape]). NULL / family-less info -> the empty route.
-	static const SourceRoute& routeFor(const CvInfo* j);
-
-	// THE CONDITION-DEPENDENCY ROUTES -- the same derivation applied to the deposits' OWN gates (modifier.md
-	// §3: conditions re-evaluate on every recompute, so the state a condition READS must mark the packages
-	// that carry the conditioned deposit). Compiled by compileDependencies() in ONE global pass over every
-	// compiled record's enabled/disabled trees, per scalers, and religion filters -- the routing stays a pure
-	// function of the index, never a hand-coded mask per event site. NULL = nothing anywhere depends on that
-	// state (mark nothing). Keys:
+	// ⚖ THE CONDITION-DEPENDENCY ROUTES, ANSWERED AS DEPOSITS -- what planes B and C apply. Compiled by
+	// compileDependencies() in ONE global pass over every compiled record's enabled/disabled trees, per
+	// scalers, and religion filters -- the routing stays a pure function of the index, never a hand-coded
+	// list per event site. The APPLY gets the DEPOSITS themselves: the exact entries that atom gates or that
+	// count scales, so it can move each slot by that entry's own resolved value ([DEC-maintained-sum]: B is
+	// ±value × Δcount on the COUNT fact, C is ±value on the ATOM's verdict crossing). Keys:
 	//  - an INFOTYPE the state names (a presence atom's `type`, a parameterized predicate's `param`, a typed
-	//    `per`): dependencyForType, by the TYPE string ("BUILDING_X", "RELIGION_Y", ...);
-	//  - a counter/token a `per` reads (POPULATION, CITY, ERA, GOLD_RATE, ...): dependencyForToken;
-	//  - a bare predicate's state (IS_GOLDEN_AGE, IS_CAPITAL, HAS_POWER, ...): dependencyForPredicate;
-	//  - the counted-religion filter class (`religion:` qualifiers + religion-scoped counts): dependencyForReligionCounts.
-	static const SourceRoute* dependencyForType(const std::string& szType);
-	static const SourceRoute* dependencyForToken(const char* szToken);
-	static const SourceRoute* dependencyForPredicate(CvCascPredKind ePredicate);
-	static const SourceRoute* dependencyForReligionCounts();
-
-	// ⚖ THE SAME REVERSE AXES, ANSWERED AS DEPOSITS -- what planes B and C actually apply.
-	// A MASK names the channels a dependency can move, which is all a mark ever needed. An APPLY needs the
-	// DEPOSITS themselves: the exact entries that atom gates or that count scales, so it can move each slot by
-	// that entry's own resolved value ([DEC-maintained-sum]: B is ±value × Δcount on the COUNT fact, C is
-	// ±value on the ATOM's verdict crossing).
+	//    `per`): gatedByType, by the TYPE string ("BUILDING_X", "RELIGION_Y", ...);
+	//  - a counter/token a `per` reads (POPULATION, CITY, ERA, GOLD_RATE, ...): gatedByToken;
+	//  - a bare predicate's state (IS_GOLDEN_AGE, IS_CAPITAL, HAS_POWER, ...): gatedByPredicate;
+	//  - the counted-religion filter class (`religion:` qualifiers + religion-scoped counts): gatedByReligionCounts.
 	// ⛔ EACH DEPOSIT IS PAIRED WITH ITS OWNING SOURCE, and that is not bookkeeping: a gated deposit applies
 	// only where its source is LIVE. The count route tests that with an O(1) has() at the owner and applies for
 	// nobody else, which is exactly what makes source-then-count and count-then-source converge

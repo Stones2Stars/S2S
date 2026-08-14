@@ -12,19 +12,18 @@
 //	DepositIndex push registers every compiled entry's (scope, family, kind, propertyFk, unit) here, so after
 //	load each scope's channel set is exactly what the data authors AT that scope and nothing else.
 //
-//	THE PER-SCOPE LAYOUT is the storage/bit contract of the ONE uniform package (CvCascadePackage): a scope's
-//	channels get LOCAL slot indices in first-sight order; the package's dirty bit for a channel IS its local
-//	index; RECEIVER sum slots (the realized totals the scope CONSUMES -- [DEC-uniform-cache-shape]: a receiver
-//	is the same cache holding a different slot) take a FIXED region at the TOP of the 64-bit space (bits
-//	58..62; bit 63 is the over-budget tripwire). The contract is ORDER-INDEPENDENT BY CONSTRUCTION: channel
-//	slots are append-only (an assigned index never moves) and receiver bits are position constants, so a mask
-//	computed or applied at ANY point of the load stays valid across later minting -- a receiver bit can never
-//	come to denote a channel slot. City and empire exceed 32 channels, so every bit space is 64-bit (int64_t).
+//	THE PER-SCOPE LAYOUT is the storage contract of the ONE uniform package (CvCascadePackage): a scope's
+//	channels get LOCAL slot indices in first-sight order, and RECEIVER sum slots (the realized totals the
+//	scope CONSUMES -- [DEC-uniform-cache-shape]: a receiver is the same cache holding a different slot) get
+//	their own index space beside them. The contract is ORDER-INDEPENDENT BY CONSTRUCTION: slot indices are
+//	append-only (an assigned index never moves), so an index taken at ANY point of the load stays valid
+//	across later minting, and the layout grows with the authored data with no fixed ceiling (json.md §8: the
+//	registries are open by design).
 //
 //	The WELLBEING SIGN TWINS: happiness/health are the only AUTHORED wellbeing families; anger/unhealth are
 //	minted BESIDE them as sign twins (modifier.md #2b -- a negative deposit routes to the opposing channel at
-//	fill; four ordinary channels, no polarity storage). Twins are flagged so the authored-channel census stays
-//	comparable to the measured per-scope counts (plot 13 / city 40 / empire 50 / team 3).
+//	fill; four ordinary channels, no polarity storage). Twins are flagged so the authored-channel census
+//	counts what the DATA authors, with the minted twins reported beside it rather than inside it.
 //
 //	APPEND-ONLY, like the DepositIndex interner: channel ids and local slot indices survive a readJson re-map
 //	(the re-push re-registers the same keys to the same ids). Purely-organizational static-methods class
@@ -78,21 +77,12 @@ public:
 
 	// The scope's channel-set size (package slots; sign twins included).
 	static int scopeChannelCount(CvCascScope eScope);
-	// The scope's AUTHORED channel count (twins excluded) -- the census figure comparable to the measured
-	// plot 13 / city 40 / empire 50 / team 3.
+	// The scope's AUTHORED channel count (twins excluded) -- the census figure the channel-census line reports.
 	static int scopeAuthoredChannelCount(CvCascScope eScope);
 	// A channel's local slot index at a scope; -1 = not authored at that scope (no storage anywhere).
 	static int scopeSlotIndex(CvCascScope eScope, int iChannel);
 	// The channel id occupying a local slot; -1 = out of range.
 	static int scopeSlotChannel(CvCascScope eScope, int iSlotIndex);
-	// The package dirty bit of a channel at a scope (1 << local index); 0 = not authored there.
-	static int64_t scopeChannelBit(CvCascScope eScope, int iChannel);
-	// The whole scope's package-channel mask (every authored channel bit; receiver bits excluded).
-	static int64_t scopeAllChannelsMask(CvCascScope eScope);
-	// The OR of ONE FAMILY's channel bits at a scope -- so a consumer can ask "did this rebuild touch my
-	// family here?" against the SAME index-derived mask the rebuild was routed by, never a hand-kept list
-	// ([state-repositories.md]: the dirty flags fall out of the deposit addresses).
-	static int64_t scopeFamilyMask(CvCascScope eScope, ModifierFamily eFamily);
 
 	// ---- the RECEIVER slots (one consuming scope per channel; culture the lone dual-consumer) ----
 
@@ -106,27 +96,13 @@ public:
 	static int scopeReceiverIndex(CvCascScope eScope, int iChannel);
 	// The channel a receiver slot realizes; -1 = out of range.
 	static int scopeReceiverChannel(CvCascScope eScope, int iReceiverIndex);
-	// The receiver sum's dirty bit at its consuming scope (a FIXED top-region position, 1 << (58 +
-	// receiverIndex) -- independent of the scope's channel count); 0 = none.
-	static int64_t scopeReceiverBit(CvCascScope eScope, int iChannel);
-	// The whole scope's receiver-bit mask.
-	static int64_t scopeAllReceiversMask(CvCascScope eScope);
-	// The receiver bits at eReceiverScope fed by the channels AUTHORED at eSourceScope -- DERIVED from the
-	// minted per-scope channel sets (the data), never hand-listed: the mark mask for an event that re-bases
-	// a whole source scope (a plot substrate/owner change, a plot moving between cities) names exactly the
-	// realized sums the source scope's authored channels feed.
-	static int64_t scopeReceiversFedBy(CvCascScope eReceiverScope, CvCascScope eSourceScope);
-
-	// Decode a scope's dirty mask to a "|"-joined channel-name string (receiver bits render as "sum:<name>")
-	// -- the [CASCADE] invalidate/rebuilt observability's package-name decode.
-	static void decodeMask(CvCascScope eScope, int64_t iMask, char* szOut, int iOutSize);
 
 	// ---- the minted layout's observability ----
 
 	// Emit the per-scope CHANNEL-SET census ([MODIFIER] channels scope=... authored=... slots=... receivers=...)
-	// -- the KEYS-ONLY-WHERE-NEEDED derivation made observable (the measured expectation: plot 13 / city 40 /
-	// empire 50 / team 3 authored channels). Reports what THIS registry minted, so it can only run once
-	// the load has pushed every compiled deposit: fired at GAME_LOAD_FINISHED, guarded to once per load.
+	// -- the KEYS-ONLY-WHERE-NEEDED derivation made observable. Reports what THIS registry minted, so it can
+	// only run once the load has pushed every compiled deposit: fired at GAME_LOAD_FINISHED, guarded to once
+	// per load.
 	static void reportChannelCensus();
 
 	// Emit ONE `plots`-target fan ([MODIFIER] plotsFan source=... scope=... entries=... cities=... plots=...).

@@ -825,11 +825,10 @@ keyed count vs summed magnitude — is § EVERY DERIVED STORE IS ONE SHAPE, abov
   DATA-DEFINED (`PROPERTY_*` is one channel per property info) and no object uses more than a fraction of it, so
   a dense array over every channel on every object is mostly zeros — on 9,600 plots that is ~7 MB of nothing.
   Each scope carries ONLY the channels authored AT that scope, both the channel ids and the per-scope sets
-  derived from the data at load (the `ClassificationRegistry` minting precedent), never hand-listed. Measured
-  from `Assets/Data`: plot **13** · city **40** · empire **50** · team **3** · self 1 — the distinct non-unit
-  channels, with no object carrying more than 50. ⚠ city and empire exceed 32 channels, so the per-scope
-  channel mask (`CvCascadeChannelRegistry`) is a 64-bit budget, with a fixed top region reserved for receiver
-  sum bits (every existing user occupies few bits and is unaffected).
+  derived from the data at load (the `ClassificationRegistry` minting precedent), never hand-listed. The
+  layout is OPEN-ENDED: slot indices are append-only ints with no fixed bit budget, so the per-scope counts
+  grow with the authored data — read them off the load's `[MODIFIER]` channel-census line
+  (`Cascade.log`, one line per scope: authored / slots / receivers), never from a remembered figure.
 
   **⛔ A SCOPE MUST BE UNAMBIGUOUSLY OWNABLE — WHICH IS WHY A LANDMASS IS NOT ONE (owner).** This is the test a
   candidate scope has to pass, and it explains the whole spine at once:

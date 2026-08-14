@@ -30,17 +30,6 @@ struct DiCompiledSet
 static std::map<const CvInfo*, DiCompiledSet> s_compiled;
 static const std::vector<CascadeDeposit> s_noDeposits;   // the shared empty answer (NULL / family-less infos)
 
-// The lazy reverse-route cache: source info -> its compiled per-scope package masks + receiver fan. Filled on
-// first routeFor query (post-load -- the registry layouts are complete by then), dropped with s_compiled by
-// clearCompiled() (its keys are the about-to-be-freed infos).
-static std::map<const CvInfo*, SourceRoute> s_routes;
-
-// The lazy CONDITION-DEPENDENCY routes (see the header): one global pass over every compiled record's gates,
-// per scalers, and religion filters -- keyed by the state the gate reads. Dropped by clearCompiled().
-static std::map<std::string, SourceRoute> s_depByType;    // presence atoms / parameterized predicates / typed pers
-static std::map<std::string, SourceRoute> s_depByToken;   // per counter tokens (POPULATION / CITY / ERA / *_RATE ...)
-static std::map<int, SourceRoute> s_depByPredicate;       // bare predicates (IS_GOLDEN_AGE / IS_CAPITAL / ...)
-static SourceRoute s_depReligionCounts;                   // the counted-religion filter class (`religion:` qualifiers)
 static bool s_bDepsCompiled = false;
 
 // The dense SOURCE INDEX (see the header): assigned on first push, stable for the load, dropped with the
@@ -49,10 +38,10 @@ static bool s_bDepsCompiled = false;
 static std::map<const CvInfo*, int> s_sourceIndex;
 
 
-// The SAME reverse axes carrying the DEPOSITS themselves -- what the apply path consumes (a mask names
-// channels; an apply needs the entries). Built in the one dependency pass below, so the two views cannot
-// describe different sets. Records are pointers INTO s_compiled, which is not mutated after the pass and is
-// dropped wholesale by clearCompiled() -- the same lifetime the mask routes already rely on.
+// The CONDITION-DEPENDENCY routes, carrying the DEPOSITS themselves -- what the apply path consumes: one
+// global pass over every compiled record's gates, per scalers, and religion filters, keyed by the state the
+// gate reads. Records are pointers INTO s_compiled, which is not mutated after the pass and is dropped
+// wholesale by clearCompiled().
 static std::map<std::string, std::vector<DepositIndex::GatedDeposit> > s_gatedByType;
 static std::map<std::string, std::vector<DepositIndex::GatedDeposit> > s_gatedByToken;
 static std::map<int, std::vector<DepositIndex::GatedDeposit> > s_gatedByPredicate;
@@ -241,94 +230,17 @@ void DepositIndex::pushInfo(const CvInfo* j)
 void DepositIndex::clearCompiled()
 {
 	s_compiled.clear();
-	s_routes.clear();
 	s_sourceIndex.clear();
 	s_gatedByType.clear();
 	s_gatedByToken.clear();
 	s_gatedByPredicate.clear();
 	s_gatedReligionCounts.clear();
 	s_propertyGateThresholds.clear();
-	s_depByType.clear();
-	s_depByToken.clear();
-	s_depByPredicate.clear();
-	s_depReligionCounts = SourceRoute();
 	s_bDepsCompiled = false;
 }
 
-// ===================== the ONE mark derivation (state-repositories.md: derive, never hand-wire) =====================
-
-// Fold ONE compiled record's reach into a route: its package bit at its own scope, plus the receiver-sum bits
-// the channel feeds (city rates / empire sums -- the spec'd consuming scopes; culture the dual-consumer falls
-// out of both receiver tables carrying it). Unit-qualified records never dirty a cache
-// ([DEC-unit-modifiers-on-top]); world-scope records only flag the census (world is CONFIG, no package).
-static void di_addRecordReach(SourceRoute& route, const CascadeDeposit& record)
-{
-	if (record.unitQual != NULL)
-	{
-		return;
-	}
-	if (record.channel < 0)
-	{
-		return;
-	}
-	const CvCascScope eScope = (CvCascScope)record.scopeIdx;
-	if ((int)eScope < 0 || (int)eScope >= CASCADE_PACKAGE_SCOPES)
-	{
-		return;
-	}
-	if (eScope == CASC_SCOPE_WORLD)
-	{
-		route.world = true;   // mis-scoped world authorings are curator debt -- visible, never a mark target
-		return;
-	}
-	route.packageMask[(int)eScope] |= CascadeChannelRegistry::scopeChannelBit(eScope, record.channel);
-	// the wellbeing sign twin shares the fill (a signed deposit can land either side) -- mark both slots
-	const int iTwin = CascadeChannelRegistry::wellbeingTwin(record.channel);
-	if (iTwin >= 0)
-	{
-		route.packageMask[(int)eScope] |= CascadeChannelRegistry::scopeChannelBit(eScope, iTwin);
-	}
-	// ONE derivation marks BOTH levels: the packages AND the sum slots they feed. An above-city deposit rolls
-	// DOWN to every owner city's realized rates; a city/plot deposit feeds only the event's own city.
-	const int64_t iCitySumBit = CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_CITY, record.channel);
-	if (iCitySumBit != 0)
-	{
-		route.citySumMask |= iCitySumBit;
-		if (eScope != CASC_SCOPE_CITY && eScope != CASC_SCOPE_PLOT)
-		{
-			route.cityFanAll = true;
-		}
-	}
-	route.empireSumMask |= CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_EMPIRE, record.channel);
-}
-
-// THE REVERSE ROUTE: a source's compiled deposits name exactly the channels x scopes they touch -- the union
-// IS the event's dirty mask ("the dirty flags fall out of the deposit addresses"). Computed once per source
-// info, lazily (post-load), and cached. An obsolete building's whenObsolete tree folds into the SAME route:
-// the route must cover the source's reach in EITHER state (the obsoletion flip itself re-marks both sides).
-const SourceRoute& DepositIndex::routeFor(const CvInfo* j)
-{
-	static const SourceRoute s_empty;
-	if (j == NULL) return s_empty;
-	const std::map<const CvInfo*, SourceRoute>::const_iterator cit = s_routes.find(j);
-	if (cit != s_routes.end()) return cit->second;
-
-	SourceRoute route;
-	const std::vector<CascadeDeposit>& deposits = depositsFor(j);
-	for (size_t i = 0; i < deposits.size(); ++i)
-	{
-		di_addRecordReach(route, deposits[i]);
-	}
-	const std::vector<CascadeDeposit>& obsoleteDeposits = whenObsoleteFor(j);
-	for (size_t i = 0; i < obsoleteDeposits.size(); ++i)
-	{
-		di_addRecordReach(route, obsoleteDeposits[i]);
-	}
-	return s_routes[j] = route;
-}
-
 // ---- the condition-dependency compile: ONE global pass over every compiled record's gates (modifier.md §3:
-// ---- conditions re-evaluate on every recompute, so the state a gate reads must mark the carrying package).
+// ---- a conditioned deposit re-resolves when the state its gate reads moves, routed by these tables).
 
 // Classify one condition-tree node's state reads into the dependency tables, crediting them with the carrying
 // record's reach. GROUP nodes recurse; PRESENCE atoms key their TYPE string; parameterized predicates key the
@@ -361,7 +273,6 @@ static void di_scanConditionTree(const CvCondition* node, const CvInfo* pSource,
 	{
 		if (!node->type.empty())
 		{
-			di_addRecordReach(s_depByType[node->type], record);
 			s_gatedByType[node->type].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 			// A PROPERTY gate's bounds are BOUNDARIES the band emit must test (see s_propertyGateThresholds).
 			// The boundary is the authored value itself for both senses: a `min: T` clause flips between T-1
@@ -379,12 +290,10 @@ static void di_scanConditionTree(const CvCondition* node, const CvInfo* pSource,
 	// PREDICATE: a parameterized predicate depends on the named INFOTYPE's state; a bare one on its own fact.
 	if (!node->param.empty())
 	{
-		di_addRecordReach(s_depByType[node->param], record);
 		s_gatedByType[node->param].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 	}
 	if (node->predKind != CASC_PRED_UNKNOWN)
 	{
-		di_addRecordReach(s_depByPredicate[(int)node->predKind], record);
 		s_gatedByPredicate[(int)node->predKind].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 	}
 }
@@ -398,12 +307,10 @@ static void di_scanRecordDependencies(const CvInfo* pSource, const CascadeDeposi
 	{
 		if (record.perTypeId >= 0)
 		{
-			di_addRecordReach(s_depByType[record.perType], record);
 			s_gatedByType[record.perType].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		}
 		else
 		{
-			di_addRecordReach(s_depByToken[record.perType], record);
 			s_gatedByToken[record.perType].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		}
 	}
@@ -411,20 +318,17 @@ static void di_scanRecordDependencies(const CvInfo* pSource, const CascadeDeposi
 	{
 		for (size_t i = 0; i < record.perAnyOfTypes->size(); ++i)
 		{
-			di_addRecordReach(s_depByType[(*record.perAnyOfTypes)[i]], record);
 			s_gatedByType[(*record.perAnyOfTypes)[i]].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		}
 	}
 	// the legacy per-unit spellings are population/specialist-count dependencies by construction
 	if (record.unit == "perPopulation")
 	{
-		di_addRecordReach(s_depByToken["POPULATION"], record);
 		s_gatedByToken["POPULATION"].push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 	}
 	// the §3.7 religion: counted-kind filter re-counts on any city religion change
 	if (record.religionQual != NULL)
 	{
-		di_addRecordReach(s_depReligionCounts, record);
 		s_gatedReligionCounts.push_back(DepositIndex::GatedDeposit(pSource, &record, DepositIndex::sourceIndexOf(pSource)));
 		di_scanConditionTree(record.religionQual, pSource, record);
 	}
@@ -451,35 +355,8 @@ void DepositIndex::compileDependencies()
 	}
 }
 
-const SourceRoute* DepositIndex::dependencyForType(const std::string& szType)
-{
-	const std::map<std::string, SourceRoute>::const_iterator found = s_depByType.find(szType);
-	return found == s_depByType.end() ? NULL : &found->second;
-}
-
-const SourceRoute* DepositIndex::dependencyForToken(const char* szToken)
-{
-	if (szToken == NULL)
-	{
-		return NULL;
-	}
-	const std::map<std::string, SourceRoute>::const_iterator found = s_depByToken.find(std::string(szToken));
-	return found == s_depByToken.end() ? NULL : &found->second;
-}
-
-const SourceRoute* DepositIndex::dependencyForPredicate(CvCascPredKind ePredicate)
-{
-	const std::map<int, SourceRoute>::const_iterator found = s_depByPredicate.find((int)ePredicate);
-	return found == s_depByPredicate.end() ? NULL : &found->second;
-}
-
-const SourceRoute* DepositIndex::dependencyForReligionCounts()
-{
-	return s_depReligionCounts.empty() ? NULL : &s_depReligionCounts;
-}
-
-// The gated-deposit accessors -- the apply path's half of the same reverse derivation the mask routes serve.
-// Same compile (compileDependencies), same lifetime, same NULL-means-nothing-depends-on-it contract.
+// The gated-deposit accessors -- compiled by compileDependencies(); NULL means nothing anywhere depends on
+// that state.
 int DepositIndex::sourceIndexOf(const CvInfo* j)
 {
 	if (j == NULL)

@@ -25,7 +25,7 @@
 #include "CvModifierConsumer.h"
 #include "CvCascadePackage.h"
 #include "CvCascadeChannelRegistry.h"
-#include "Data/CvDepositIndex.h"        // routeFor + the dependency routes -- the ONE mark derivation
+#include "Data/CvDepositIndex.h"        // depositsFor + the gatedBy* routes -- the apply's compiled worklists
 #include "Data/CvDepositRead.h"         // MMKernel::resolveEntry -- the ONE per-entry resolve
 #include "Data/CvInfoValuation.h"       // the eval-ctx fill seam (the contexts ARE the eval state)
 #include "Enabler/CvEnablerKernel.h"    // wireOperatingBuildings -- the THIRD leg of the eval state

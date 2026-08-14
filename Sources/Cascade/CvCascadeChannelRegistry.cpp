@@ -165,54 +165,6 @@ namespace
 		cr_addReceivers(s_layouts[(int)CASC_SCOPE_EMPIRE], EMPIRE_RECEIVES, 5);
 	}
 
-	// THE BIT CONTRACT IS ORDER-INDEPENDENT BY CONSTRUCTION: receiver bits live in a FIXED region at the TOP
-	// of the 64-bit budget, so a receiver's bit never depends on how many channels have been minted when it
-	// is computed. Channel slots are append-only (a local slot never moves once assigned), so EVERY bit's
-	// meaning is stable for the process lifetime -- a mask computed or applied at any point of the load
-	// (a cached SourceRoute, a package's already-set dirty bits) stays valid across later minting. Budget:
-	// the measured channel sets (city 40 / empire 50 authored + the wellbeing sign twins) fit under the
-	// 58-slot channel region; the spec'd receiver tables are 4 slots at CITY and 5 at EMPIRE (bits 58..62),
-	// the region sized by the LARGER of the two so one position constant serves both scopes.
-	// Bit 63 stays the over-budget tripwire.
-	enum
-	{
-		CASCADE_RECEIVER_BIT_FIRST = 58,
-		CASCADE_TRIPWIRE_BIT = 63
-	};
-
-	// A CHANNEL slot's bit, clamped below the fixed receiver region: an over-budget slot shares the region's
-	// last channel bit (coarse-safe -- marks a sibling too rather than never marking, and never collides with
-	// a receiver bit; the measured sets fit, so this is a tripwire, not a plan).
-	int64_t cr_channelBitOf(int iSlotIndex)
-	{
-		if (iSlotIndex < 0)
-		{
-			return 0;
-		}
-		if (iSlotIndex >= CASCADE_RECEIVER_BIT_FIRST)
-		{
-			FAssertMsg(false, "CascadeChannelRegistry: a scope's channel count exceeded the fixed channel-bit region");
-			return (int64_t)1 << (CASCADE_RECEIVER_BIT_FIRST - 1);
-		}
-		return (int64_t)1 << iSlotIndex;
-	}
-
-	// A RECEIVER slot's bit at its FIXED position (the spec'd receiver tables carry 4 entries at CITY and 5 at
-	// EMPIRE; the region holds exactly 5 -- a 6th spec'd receiver trips the assert, never a silent alias).
-	int64_t cr_receiverBitOf(int iReceiverIndex)
-	{
-		if (iReceiverIndex < 0)
-		{
-			return 0;
-		}
-		if (CASCADE_RECEIVER_BIT_FIRST + iReceiverIndex >= CASCADE_TRIPWIRE_BIT)
-		{
-			FAssertMsg(false, "CascadeChannelRegistry: a scope's receiver count exceeded the fixed receiver-bit region");
-			return (int64_t)1 << (CASCADE_TRIPWIRE_BIT - 1);
-		}
-		return (int64_t)1 << (CASCADE_RECEIVER_BIT_FIRST + iReceiverIndex);
-	}
-
 	// Lazy name resolution (the property type string needs its registered info).
 	const char* cr_resolveName(int iChannel)
 	{
@@ -393,37 +345,6 @@ int CascadeChannelRegistry::scopeSlotChannel(CvCascScope eScope, int iSlotIndex)
 	return layout.channels[iSlotIndex];
 }
 
-int64_t CascadeChannelRegistry::scopeChannelBit(CvCascScope eScope, int iChannel)
-{
-	const int iSlot = scopeSlotIndex(eScope, iChannel);
-	return iSlot < 0 ? 0 : cr_channelBitOf(iSlot);
-}
-
-int64_t CascadeChannelRegistry::scopeAllChannelsMask(CvCascScope eScope)
-{
-	const int iCount = scopeChannelCount(eScope);
-	int64_t iMask = 0;
-	for (int iSlot = 0; iSlot < iCount; ++iSlot)
-	{
-		iMask |= cr_channelBitOf(iSlot);
-	}
-	return iMask;
-}
-
-int64_t CascadeChannelRegistry::scopeFamilyMask(CvCascScope eScope, ModifierFamily eFamily)
-{
-	const int iCount = scopeChannelCount(eScope);
-	int64_t iMask = 0;
-	for (int iSlot = 0; iSlot < iCount; ++iSlot)
-	{
-		if (channelFamily(scopeSlotChannel(eScope, iSlot)) == eFamily)
-		{
-			iMask |= cr_channelBitOf(iSlot);
-		}
-	}
-	return iMask;
-}
-
 int CascadeChannelRegistry::scopeReceiverCount(CvCascScope eScope)
 {
 	if (!cr_isPackageScope(eScope))
@@ -462,102 +383,6 @@ int CascadeChannelRegistry::scopeReceiverChannel(CvCascScope eScope, int iReceiv
 		return -1;
 	}
 	return layout.receiverChannels[iReceiverIndex];
-}
-
-int64_t CascadeChannelRegistry::scopeReceiverBit(CvCascScope eScope, int iChannel)
-{
-	const int iReceiver = scopeReceiverIndex(eScope, iChannel);
-	if (iReceiver < 0)
-	{
-		return 0;
-	}
-	return cr_receiverBitOf(iReceiver);
-}
-
-int64_t CascadeChannelRegistry::scopeAllReceiversMask(CvCascScope eScope)
-{
-	const int iReceivers = scopeReceiverCount(eScope);
-	int64_t iMask = 0;
-	for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
-	{
-		iMask |= cr_receiverBitOf(iReceiver);
-	}
-	return iMask;
-}
-
-int64_t CascadeChannelRegistry::scopeReceiversFedBy(CvCascScope eReceiverScope, CvCascScope eSourceScope)
-{
-	if (!cr_isPackageScope(eSourceScope))
-	{
-		return 0;
-	}
-	const CascadeScopeLayout& sourceLayout = s_layouts[(int)eSourceScope];
-	int64_t iMask = 0;
-	for (size_t iSlot = 0; iSlot < sourceLayout.channels.size(); ++iSlot)
-	{
-		iMask |= scopeReceiverBit(eReceiverScope, sourceLayout.channels[iSlot]);
-	}
-	return iMask;
-}
-
-namespace
-{
-	// The decode's shared name append (the "|"-joined rendering; receivers prefix "sum:").
-	void cr_appendDecodedName(char* szOut, int iOutSize, bool& bWroteAny, bool bReceiver, const char* szName)
-	{
-		int iRemaining = iOutSize - (int)strlen(szOut) - 1;
-		if (iRemaining <= 0)
-		{
-			return;
-		}
-		if (bWroteAny)
-		{
-			strncat(szOut, "|", iRemaining);
-			iRemaining = iOutSize - (int)strlen(szOut) - 1;
-		}
-		if (iRemaining > 0 && bReceiver)
-		{
-			strncat(szOut, "sum:", iRemaining);
-			iRemaining = iOutSize - (int)strlen(szOut) - 1;
-		}
-		if (iRemaining > 0)
-		{
-			strncat(szOut, szName, iRemaining);
-		}
-		bWroteAny = true;
-	}
-}
-
-void CascadeChannelRegistry::decodeMask(CvCascScope eScope, int64_t iMask, char* szOut, int iOutSize)
-{
-	szOut[0] = '\0';
-	if (!cr_isPackageScope(eScope) || iOutSize <= 0)
-	{
-		return;
-	}
-	const int iChannels = scopeChannelCount(eScope);
-	const int iReceivers = scopeReceiverCount(eScope);
-	bool bWroteAny = false;
-	for (int iSlot = 0; iSlot < iChannels && iSlot < (int)CASCADE_RECEIVER_BIT_FIRST; ++iSlot)
-	{
-		if ((iMask & cr_channelBitOf(iSlot)) == 0)
-		{
-			continue;
-		}
-		cr_appendDecodedName(szOut, iOutSize, bWroteAny, false, channelName(scopeSlotChannel(eScope, iSlot)));
-	}
-	for (int iReceiver = 0; iReceiver < iReceivers; ++iReceiver)
-	{
-		if ((iMask & cr_receiverBitOf(iReceiver)) == 0)
-		{
-			continue;
-		}
-		cr_appendDecodedName(szOut, iOutSize, bWroteAny, true, channelName(scopeReceiverChannel(eScope, iReceiver)));
-	}
-	if (!bWroteAny)
-	{
-		strncat(szOut, "none", iOutSize - (int)strlen(szOut) - 1);
-	}
 }
 
 namespace
@@ -735,25 +560,6 @@ void CascadeChannelRegistry::reportChannelCensus()
 		census.addI(MODF_SLOTS, scopeChannelCount((CvCascScope)iScope));
 		census.addI(MODF_RECEIVERS, scopeReceiverCount((CvCascScope)iScope));
 		eventSpine().emit(census);
-	}
-
-	// ⛔ The BIT BUDGET is checked UNCONDITIONALLY, not by assert. FAssertMsg compiles out of Release and
-	// FinalRelease -- the builds actually played -- while the channel registry is OPEN BY DESIGN (json.md §8:
-	// the member set grows with authored data, permanently), and empire already measures ~50 of the 59-slot
-	// region. Over budget, cr_channelBitOf clamps every excess slot onto the region's LAST bit: coarse-safe, so
-	// it over-marks rather than missing an invalidation -- but it silently pays rebuilds nothing asked for, and
-	// silence is the half this project cannot afford. Reported like the readJson coverage counts: one line, no
-	// gate, on every load, so growth is visible BEFORE it starts aliasing.
-	for (int iScope = 0; iScope < CASCADE_PACKAGE_SCOPES; ++iScope)
-	{
-		const int iSlots = scopeChannelCount((CvCascScope)iScope);
-		if (iSlots > (int)CASCADE_RECEIVER_BIT_FIRST)
-		{
-			gDLL->logMsg("Loading.log", CvString::format(
-				"[CASCADE] ERROR channel-bit-overflow scope=%s slots=%d budget=%d -- the excess slots share the "
-				"region's last bit (over-marking, never a missed invalidation)",
-				cr_scopeName(iScope), iSlots, (int)CASCADE_RECEIVER_BIT_FIRST).c_str(), true, false);
-		}
 	}
 }
 
