@@ -588,18 +588,6 @@
 
 ## Triggers / grants
 
-- The EMPIRE-LEVEL BUILDING move ([DEC-empire-level-buildings](../../architecture/decisions.md#dec-empire-level-buildings),
-  [enabler.md §2](../../specs/enabler.md)). Curator leg: derive `identity.empireLevel` from the membership rule;
-  delete the self-grant entries; COLLAPSE the grantor→marker pairs whose source exists only to deliver the
-  marker (the work-ethic shape — owner-confirmed; enumerate the pairs and flag each against the
-  does-the-source-have-any-other-job test, with a real wonder granting a marker kept split); re-scope the
-  class's city deposits to empire; drop the now-redundant `scope: "empire"` on grants targeting class members;
-  normalize per-city atoms out of class members' `operate`. Engine leg: the player-held set + serialization +
-  `SEVT_EMPIRE_BUILDING_ADDED / _REMOVED` with the in-read half; route the ONE building-placement choke point
-  by the tag (old saves' per-city copies fold to the owner there); the player-held frontier with the city-queue
-  offer + live city-local gate (the project split); serve the atoms, the tally empire domain and the
-  empire-scope deposits from the held set; retire the class from the self-grant fan and the
-  city-starts-existing fold; forward the axis through `EmpireContext`.
 - Build START PACKAGES: the entity type, its folder + prefix + repo row + manifest, and the shipped defaults
   ([triggers.md](../../specs/triggers.md)). Two content decisions ride it — which units the defaults name, and
   NPC/barbarian starts.
