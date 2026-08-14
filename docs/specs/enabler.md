@@ -262,10 +262,28 @@ city a copy of entities whose own data says one may exist — a `{world: 1}` cor
 queue-excluded entity is never a build candidate. ⚑ **The damage is not confined to over-offering:** an entity
 that is ACTIVE in N cities deposits N times, so a scope-wide deposit it carries is multiplied by the city count —
 silently, on a plausible-looking number ([modifier.md §5](modifier.md)).
-⚠ **A per-city population is the BAND's property, not the class's.** A band genuinely belongs in every city and is
-toggled by its `requires.operate` threshold, which is what deletes the legacy per-turn add/remove churn; that is
-the property system placing its own entities, and it stays exactly as it is. What does not follow is the
-generalization from it.
+⚠ **The place-everywhere population is TWO data-identified classes, never the whole queue-excluded set (owner):
+the PROPERTY BANDS (a `requires.operate` PROPERTY band) and the `identity.autoBuild` set** — the legacy per-turn
+`doAutobuild` population: the housing ladder, the pests, the resource and presence markers, the civic markers,
+the education knowledge bases, the space colonies, the `C_AD_*` culture-adoption markers. Both are placed ONCE
+(`CvCity::placeSystemBuildings`, at founding + the load backfill) and their `requires.operate` decides active vs
+dormant forever — the band model, which is what deletes both legacy per-turn passes. Every gate axis they name is
+already fact-maintained, so no per-turn re-check exists for either.
+- ⛔ **A WORLD/TEAM-capped autoBuild member is EXCLUDED from placement** (the enabler's census excludes it): its
+  cap is a cross-player RACE — two empires satisfying the gate would both activate a `{world: 1}` entity, and
+  `allowed` gates BUILDS, never activations. Such a member needs its own first-to-earn award path
+  (`BUILDING_VALLEY_OF_THE_KINGS` is the whole shipped population). An EMPIRE cap stays in: it is per-player,
+  and the shipped members' own gates pin the one active city (the C_AD palace atom).
+- ⚖ **A system-placed building's CONSIDERED ACTION is its ACTIVATION, never its placement (owner).** It is
+  placed with `bFirst = false`, and the trigger engine fires its considered BUILDING-GRANT leg on the
+  `SEVT_CITY_BUILDING_ACTIVATED` crossing instead — the live case is `C_AD_*` granting its `C_AC_*` access
+  marker on adoption. Re-activation re-fires the leg, and that is safe by construction: the place path skips a
+  held target and the empire-level choke point folds to held-once, so the grant is idempotent — and the grant
+  PERSISTS when the marker later dorms (losing the adoption keeps the earned access; grants are never
+  refcounted, [legacy-grant-apply-sites.md §4](../reference/legacy-grant-apply-sites.md)).
+  ⛔ The one-shot PULSE legs (population / goldenAge / freeTechs) deliberately do NOT fire on activation — a
+  building that can wake repeatedly gives them no defined moment, which is the second reason the world-capped
+  member above is excluded rather than band-placed.
 
 ⚠ **A pseudobuilding representing a CHOICE (an ordinance ENACTED, a culture HELD, a folklore requirement) was
 the second, separate defect of the per-city placement: present everywhere AND active everywhere, its
@@ -290,12 +308,12 @@ the half nothing reads). The curator therefore folds `build` into `operate` for 
 the entity correctly dorms if the ground it needed stops existing (terrain levelled to sea level — the WMD case),
 which a checked-once `build` clause could never do.
 
-⚠ **Cost, for the population a placing system genuinely does put in every city (the bands):** it allocates nothing
-new — the per-city building arrays are already dimensioned by `NUM_BUILDING_TYPES`
+⚠ **Cost, for the population a placing system genuinely does put in every city (the bands + the autoBuild
+set):** it allocates nothing new — the per-city building arrays are already dimensioned by `NUM_BUILDING_TYPES`
 ([memory-footprint.md §2](../reference/memory-footprint.md)) — and it is not a per-turn cost, because the operate
 fixpoint is targeted-propagation maintained (§3.2) and re-walks only what an event touched — each building
-resolving its own dormancy as it arrives, once. ⛔ That is a cost argument for the BAND population, and it was never a licence to widen the population it
-is paid for.
+resolving its own dormancy as it arrives, once. ⛔ That is a cost argument for the two DATA-IDENTIFIED
+populations, and it was never a licence to widen placement to the whole queue-excluded class.
 Where the bands form a succession chain (the **Education ladder**) a higher band dorms the lower via
 `requires.operate.dormant` (only-highest-active, no stacking) — the **same uniform `ReplacementBuildings → dormant`
 mirror as §2, not a special case** (there is no separate "education" ruling); chainless bands (crime/disease/

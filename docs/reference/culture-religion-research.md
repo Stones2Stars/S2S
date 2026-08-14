@@ -34,6 +34,25 @@
   cityStrength100`. Permanent flip needs `numRevolts(attacker) ≥ NUM_WARNING_REVOLTS`. Fort revolt: an `isActsAsCity`
   improvement owned past `SUPER_FORTS_DURATION_BEFORE_REVOLT`, a different cultural owner, no defenders → immediate flip.
 
+## The culture-GROUP chain — C_N / C_AC / C_L / C_AD (+ the culture wonders)
+
+Eight culture groups (European · Asian · African · Middle Eastern · North American · South American · Oceanian ·
+Neanderthal), four chain buildings each, plus the individual `BUILDING_CULTURE_*` wonders (per-culture, hundreds):
+
+| piece | what it is | how it arrives |
+|---|---|---|
+| `C_N_<group>` | the NATIVE-group marker | the CIVILIZATION's own `grants.buildings` at start — the starting culture needs no C_L path |
+| `C_AC_<group>` | the ACCESS marker (`identity.empireLevel` — held by the player): "this empire may use this group". Its `enables` lists the group's `C_L` and every `CULTURE_*` wonder of the group | **granted** by `C_N` (native) or `C_AD` (adopted) |
+| `C_L_<group>` | the ordinary CONSTRUCTIBLE per-city building (cost 100, `requires.build: C_AC`) | built manually — it is what opens building the group's `CULTURE_*` wonders in that city |
+| `BUILDING_CULTURE_*` | the actual culture wonders (cost ~1200, `allowed {world: 1}`, requiring `C_AC` + `C_L` in city + tech + terrain) | ordinary construction |
+| `C_AD_<group>` | the ADOPTION marker (`identity.autoBuild`, `allowed {empire: 1}`): active at the PALACE city while the empire holds **3+ `C_L_<group>`** of a **foreign** group (`noneOf C_N`); on activation it **grants `C_AC`** | system-placed with the band population ([enabler.md §3](../specs/enabler.md)); dormant until the gate holds |
+
+So foreign-culture adoption loops through conquest: capture 3+ cities holding a foreign group's `C_L`, the `C_AD`
+marker activates at your palace and grants the group's `C_AC`, and the foreign culture tree opens. Losing the
+`C_L` count later dorms `C_AD` but the granted `C_AC` PERSISTS — once adopted, access is earned (grants are never
+refcounted; an intentional divergence from the legacy autobuild tear-out, stated per
+[validation.md](../specs/validation.md)).
+
 ## Religion spread
 
 - Passive spread/decay: **one religion per `doCorporation` call per turn** (break after the first fires); gated by

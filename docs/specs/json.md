@@ -1006,7 +1006,9 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   ⚠ An effect authored into `identity` is a data error; the re-home worklist lives in
   [todo.md](../plans/structural-cleanup/todo.md).
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
-  and `autoBuild` (the placing system is the engine's own auto-placement); `autoBuild ⊂ notConstructible`.
+  and `autoBuild` (the placing system is the band placer: placed once in every city at founding, its
+  `requires.operate` toggling active/dormant forever — [enabler.md §3](enabler.md); a world/team-capped member is
+  excluded and needs its own award path); `autoBuild ⊂ notConstructible`.
   ⛔ **A `notConstructible` entity carries NO `requires.build` — placement is UNCONDITIONAL and DORMANCY decides
   everything** (owner). It is placed in every city and its `requires.operate` then makes it active or dormant, the
   uniform band model ([enabler.md §3](enabler.md)) applied to the whole queue-excluded class. `build` only ever

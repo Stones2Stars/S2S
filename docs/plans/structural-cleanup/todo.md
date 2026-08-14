@@ -28,13 +28,6 @@
 
 ## Blocked on an owner ruling
 
-- Rule on how an ENACTED / HELD state pseudo-building (an ordinance, a culture `C_AC_*` set, a folklore
-  requirement) expresses the CHOICE behind it — the gate faithfully evaluates data that says every city already
-  holds the choice, so each offers unconditionally ([enabler.md §3](../../specs/enabler.md)).
-  ⛔ Reading ACTIVE instead of PRESENT at the gate fixes nothing — the mechanism is spelled out in the spec.
-  ⛔ Do NOT invent an ordinance-enactment mechanism to close it; the ruling is what the missing condition should BE.
-  ⚠ A data-model answer triggers the curator + regen in the same work item
-  ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
 - Make the `savemigration.txt` reader and its own header comment agree on format. The header (lines 15–17)
   documents literal `CUT:` / `RENAME:` line prefixes, but the parser (`sm_ensureLoaded`/`sm_token`,
   `CvTaggedSaveFormatWrapper.cpp`) never checks for that text — it distinguishes a rename from a cut purely by
@@ -105,12 +98,15 @@
 
 ## Legacy still breathing — delete it
 
-- Build the missing PLACERS for the queue-excluded, self-capped entities that have none: achievements, relics,
-  traditions, national beliefs, and the `C_AD_*` culture set ([enabler.md §3](../../specs/enabler.md) — a corp
-  HQ already has one, `CvGame::setHeadquarters`). They are placed nowhere today, so their effects reach nobody.
-  ⚑ The relic half is the `constructs` outcome verb tracked below; achievements and the culture set need their
-  own award path — the same question as the ENACTED/HELD choice above.
-  ⛔ Not a return to the blanket pass — that's the retired reading ([modifier.md §5](../../specs/modifier.md)).
+- Give the WORLD-capped autoBuild its first-to-earn award path — `BUILDING_VALLEY_OF_THE_KINGS` is the whole
+  population. It is excluded from system placement ([enabler.md §3](../../specs/enabler.md): a `{world: 1}` cap
+  is a cross-player race dormancy cannot express, and its one-shot pulses — freeTechs, goldenAge — have no
+  defined moment on a building that can wake repeatedly), so it is placed nowhere until an award-on-crossing
+  placer exists: when its gate first becomes satisfied for a player AND the world cap has room, place it in that
+  city as a genuine first acquisition (bFirst grants fire normally).
+  ⚑ The rest of the former "placer cluster" is closed: achievements / relics / traditions / national beliefs are
+  all `constructs` outcome targets (the constructs-migration entry below), and the autoBuild population — the
+  `C_AD_*` adoption markers included — is system-placed with the bands.
 
 > The standing rule (purge violently; blast radius is the signal; the worst offenders are the ones OFF the core
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
