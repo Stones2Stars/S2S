@@ -512,11 +512,11 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 			int iCount = -1;
 			if (iKind == ALLOWEDCAP_WORLD)
 			{
-				iCount = cascadeTally().techCount((int)kPlayer.getID(), iId, CASCADE_COUNT_WORLD);
+				iCount = CvCascadeTally::techCount((int)kPlayer.getID(), iId, CASCADE_COUNT_WORLD);
 			}
 			else if (iKind == ALLOWEDCAP_TEAM || iKind == ALLOWEDCAP_EMPIRE)
 			{
-				iCount = cascadeTally().techCount((int)kPlayer.getID(), iId, CASCADE_COUNT_EMPIRE);
+				iCount = CvCascadeTally::techCount((int)kPlayer.getID(), iId, CASCADE_COUNT_EMPIRE);
 			}
 			if (iCount >= 0 && iCount >= iCap) return false;
 		}
@@ -554,8 +554,8 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 		{
 			continue;
 		}
-		const int iCount = bUnit ? cascadeTally().unitCount(iEntity, iId, eScope)
-		                         : cascadeTally().buildingCount(iEntity, iId, eScope);
+		const int iCount = bUnit ? CvCascadeTally::unitCount(iEntity, iId, eScope)
+		                         : CvCascadeTally::buildingCount(iEntity, iId, eScope);
 		if (iCount >= iCap) return false;
 	}
 	return true;

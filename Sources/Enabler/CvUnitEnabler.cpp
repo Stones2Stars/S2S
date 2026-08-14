@@ -250,7 +250,7 @@ static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noN
 	{
 		const int era = (int)kPlayer.getCurrentEra();
 		const int cap = (ecap == 5 && era > 0) ? ecap + era * 5 : ecap;   // era-scaled base-5 national cap
-		if (cascadeTally().unitCount((int)kPlayer.getID(), eU, CASCADE_COUNT_EMPIRE) + making >= cap) return true;
+		if (CvCascadeTally::unitCount((int)kPlayer.getID(), eU, CASCADE_COUNT_EMPIRE) + making >= cap) return true;
 	}
 	return false;
 }

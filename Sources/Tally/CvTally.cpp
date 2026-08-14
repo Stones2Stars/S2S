@@ -13,12 +13,6 @@
 #include "CvUnitInfo.h"      // getTags() (the unit tag bitset)
 #include "CvClassificationBlock.h" // hasId (the classification bitset O(1) test)
 
-CvCascadeTally& cascadeTally()
-{
-	static CvCascadeTally s_tally;
-	return s_tally;
-}
-
 // Does this alive player contribute to a roll-up at (eScope, iEntity)? EMPIRE = the one player; TEAM = the team's
 // players; WORLD = all. The single place the spine roll-up membership is decided.
 static bool tallyPlayerInScope(const CvPlayer& kPlayer, CascadeCountScope eScope, int iEntity)
@@ -36,7 +30,7 @@ static bool tallyPlayerInScope(const CvPlayer& kPlayer, CascadeCountScope eScope
 	return false;
 }
 
-int CvCascadeTally::buildingCount(int iEntity, int iBuilding, CascadeCountScope eScope) const
+int CvCascadeTally::buildingCount(int iEntity, int iBuilding, CascadeCountScope eScope)
 {
 	if (iBuilding < 0)
 	{
@@ -60,7 +54,7 @@ int CvCascadeTally::buildingCount(int iEntity, int iBuilding, CascadeCountScope 
 	return iSum;
 }
 
-int CvCascadeTally::unitCount(int iEntity, int iUnit, CascadeCountScope eScope) const
+int CvCascadeTally::unitCount(int iEntity, int iUnit, CascadeCountScope eScope)
 {
 	if (iUnit < 0)
 	{
@@ -83,7 +77,7 @@ int CvCascadeTally::unitCount(int iEntity, int iUnit, CascadeCountScope eScope) 
 	return iSum;
 }
 
-int CvCascadeTally::techCount(int iEntity, int iTech, CascadeCountScope eScope) const
+int CvCascadeTally::techCount(int iEntity, int iTech, CascadeCountScope eScope)
 {
 	if (iTech < 0)
 	{
@@ -109,7 +103,7 @@ int CvCascadeTally::techCount(int iEntity, int iTech, CascadeCountScope eScope) 
 	return (eTeam != NO_TEAM && GET_TEAM(eTeam).isHasTech(eTech)) ? 1 : 0;
 }
 
-int CvCascadeTally::specialistCount(int iEntity, CascadeCountScope eScope) const
+int CvCascadeTally::specialistCount(int iEntity, CascadeCountScope eScope)
 {
 	// The cross-city specialist count. No player-side O(1) aggregate exists, so this iterates on read over the
 	// in-scope alive players' cities, summing each city's own maintained population (tally.md read-not-store).
@@ -129,7 +123,7 @@ int CvCascadeTally::specialistCount(int iEntity, CascadeCountScope eScope) const
 }
 
 
-int CvCascadeTally::countUnitsWithTag(int iEntity, int iTagId, CascadeCountScope eScope) const
+int CvCascadeTally::countUnitsWithTag(int iEntity, int iTagId, CascadeCountScope eScope)
 {
 	if (iTagId < 0)
 	{

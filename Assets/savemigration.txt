@@ -35,6 +35,14 @@ CvUnit::m_iImmobileTimer
 | hold, so the bool was its legacy shape. REPLACEMENT: CvCity::m_aiStatusTurns, serialized in its place.
 CvCity::m_bWeLoveTheKingDay
 ========================
+| ⚖ RE-HOMED OBLIGATIONS: every `CascadeWellbeing::*` a wellbeing note below names as the replacement is
+| ARCHIVED with the shadow substrate (SourceArchive/Cascade/), and the intermediate per-term getters those
+| notes describe were deleted with the hard rebuild. The LIVE source of every one of these values is the
+| wellbeing CHANNEL PLANE: the four ordinary channels (happiness/anger/health/unhealth, modifier.md §2b) on
+| the uniform packages, maintained by the spine and read through the getWellbeing group reads and the
+| realized fold -- the consumers were re-pointed onto those reads, never onto revived per-term getters. The
+| notes below stay as the record of WHAT each cut field carried; this line is where the obligation lives now.
+========================
 2026-07-20 — #430 delete-driven legacy cut (CvPlayer civic/trait/project/world wellbeing feeders): the 8 stored
 player-scope wellbeing accumulators fully removed (no member, no read, no write). The getters now read fresh
 deposit-derived cascade recomputes: getCivicHappiness/getCivicHealth -> CascadeWellbeing::civicWellbeing (civic

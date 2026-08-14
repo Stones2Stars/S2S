@@ -326,15 +326,23 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 		                                           : ctx.empireContext->playerId();
 		// the SPECIALIST count's AGGREGATE half: a local city count stays local (above), and rolling it up
 		// across cities is the tally's job -- one place holding the count of all specialists in scope.
-		if (t == "SPECIALIST") { iOut = cascadeTally().specialistCount(ent, sc); return true; }
-		if (en_starts(t, "BUILDING_") && id >= 0) { iOut = cascadeTally().buildingCount(ent, id, sc); return true; }
+		if (t == "SPECIALIST") { iOut = CvCascadeTally::specialistCount(ent, sc); return true; }
+		if (en_starts(t, "BUILDING_") && id >= 0) { iOut = CvCascadeTally::buildingCount(ent, id, sc); return true; }
 		// TECH_X as a COUNT: how many teams hold it (world) / does this side hold it (team, empire). The count
 		// domain a `techShare`-style threshold reads -- "known by N other teams" is `{TECH_X, world, min: N}`.
-		if (en_starts(t, "TECH_") && id >= 0) { iOut = cascadeTally().techCount(ent, id, sc); return true; }
+		if (en_starts(t, "TECH_") && id >= 0) { iOut = CvCascadeTally::techCount(ent, id, sc); return true; }
 		if (en_starts(t, "UNIT_") && id >= 0)
 		{
 			iOut = (sc == CASCADE_COUNT_WORLD) ? GC.getGame().getUnitCreatedCount((UnitTypes)id)
-			                                   : cascadeTally().unitCount(ent, id, sc);
+			                                   : CvCascadeTally::unitCount(ent, id, sc);
+			return true;
+		}
+		// TAG_X as a COUNT: how many in-scope units carry the classification tag -- the iterate-on-read tally
+		// domain (tally.md: no O(1) object aggregate exists for a tag). Without this branch an authored
+		// {TAG_X, min:N} atom fell through to presence and answered 0/1.
+		if (en_starts(t, "TAG_") && id >= 0)
+		{
+			iOut = CvCascadeTally::countUnitsWithTag(ent, id, sc);
 			return true;
 		}
 	}

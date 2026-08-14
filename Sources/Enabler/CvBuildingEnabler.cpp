@@ -272,7 +272,7 @@ static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 		int iCount = 0;
 		for (size_t iMember = 0; iMember < mem.size(); ++iMember)
 		{
-			iCount += cascadeTally().buildingCount(iEntity, mem[iMember], eScope);
+			iCount += CvCascadeTally::buildingCount(iEntity, mem[iMember], eScope);
 		}
 		if (iCount >= iCap) return false;
 	}

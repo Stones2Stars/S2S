@@ -47,19 +47,25 @@ void EnablerDomain::refresh(int iId)
 		                                            : (unsigned char)STATE_LISTED);
 }
 
+// ⛔ Both changers CLAMP at zero, in every config. The assert names the wrong delta in the dev builds, but it
+// compiles out of Release/FinalRelease -- and there an unclamped negative count makes the NEXT legitimate
+// acquisition land at zero, silently absenting the candidate forever. A floored count instead self-corrects on
+// the next genuine delta, so the corruption stays bounded where the unclamped form compounds.
 void EnablerDomain::addEnable(int iId, int iDelta)
 {
 	if (!inRange(iId)) return;
-	m_aiEnable[iId] = (short)(m_aiEnable[iId] + iDelta);
-	FAssertMsg(m_aiEnable[iId] >= 0, "EnablerDomain enable-refcount went negative -- a lost-source delta without its acquire");
+	const int iNewCount = (int)m_aiEnable[iId] + iDelta;
+	FAssertMsg(iNewCount >= 0, "EnablerDomain enable-refcount went negative -- a lost-source delta without its acquire");
+	m_aiEnable[iId] = (short)std::max(0, iNewCount);
 	refresh(iId);
 }
 
 void EnablerDomain::addRemove(int iId, int iDelta)
 {
 	if (!inRange(iId)) return;
-	m_aiRemove[iId] = (short)(m_aiRemove[iId] + iDelta);
-	FAssertMsg(m_aiRemove[iId] >= 0, "EnablerDomain remove-refcount went negative -- a lost-source delta without its acquire");
+	const int iNewCount = (int)m_aiRemove[iId] + iDelta;
+	FAssertMsg(iNewCount >= 0, "EnablerDomain remove-refcount went negative -- a lost-source delta without its acquire");
+	m_aiRemove[iId] = (short)std::max(0, iNewCount);
 	refresh(iId);
 }
 
