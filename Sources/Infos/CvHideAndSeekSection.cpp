@@ -5,6 +5,7 @@
 
 #include "CvGameCoreDLL.h"   // PCH umbrella -- picojson
 #include "CvHideAndSeekSection.h"
+#include "CvClassificationRegistry.h"   // typeName(CLSD_SKILL, ...) -- the ONE camelCase->SKILL_* spelling
 #include "CvInfoKinds.h"     // VISION_PLOT / VISION_OPEN_GROUND_COST -- the ONE vision scale
 #include "CvJsonParse.h"     // jsonChildObj / jsonIdInt / jsonIdStr
 #include "Defines/CvGlobals.h"
@@ -47,7 +48,7 @@ namespace
 }
 
 CvHideAndSeekSection::CvHideAndSeekSection()
-	: concealment(0)
+	: concealment(0), classicMethod(-1)
 {
 }
 
@@ -55,6 +56,8 @@ void CvHideAndSeekSection::clearParsed()
 {
 	concealment = 0;
 	detection.clear();
+	classicMethodType.clear();
+	classicMethod = -1;
 }
 
 void CvHideAndSeekSection::parse(const picojson::value& entity)
@@ -69,6 +72,14 @@ void CvHideAndSeekSection::parse(const picojson::value& entity)
 	if (pBlock == NULL)
 	{
 		return;
+	}
+
+	// the CLASSIC method: `method: "camouflage"` -- the legacy single-tag system's own datum, a skill name
+	// resolved to its minted SKILL_* id on first ask (the rows' lazy shape). Absent = classically never-invisible.
+	std::string szClassicMethod;
+	if (jsonIdStr(*pBlock, "method", szClassicMethod) && !szClassicMethod.empty())
+	{
+		classicMethodType = ClassificationRegistry::typeName(CLSD_SKILL, szClassicMethod);
 	}
 
 	// the hider: `concealment: { flat: N }` -- one memberless magnitude, signed
@@ -109,6 +120,16 @@ int CvHideAndSeekSection::resolveMethodSkill(const CvDetectionRow& kRow) const
 		kRow.methodSkill = GC.getInfoTypeForString(kRow.methodSkillType.c_str(), /*bHideAssert*/true);
 	}
 	return kRow.methodSkill;
+}
+
+int CvHideAndSeekSection::classicMethodSkill() const
+{
+	if (classicMethod < 0 && !classicMethodType.empty())
+	{
+		// the same lazy resolve as the rows; a re-lookup while negative is the standing registry convention
+		classicMethod = GC.getInfoTypeForString(classicMethodType.c_str(), /*bHideAssert*/true);
+	}
+	return classicMethod;
 }
 
 int CvHideAndSeekSection::detectionAgainst(int iMethodSkillId) const

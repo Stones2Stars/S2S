@@ -1435,10 +1435,19 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   data. *(This is the pattern for every game-option-specific system — each gets its own block; `hideAndSeek`
   below is its sibling.)*
 - **`hideAndSeek`** — the concealment-vs-detection CONTEST (gated by `GAMEOPTION_COMBAT_HIDE_AND_SEEK`), the
-  own-block sibling of `sizeMatters`. **Two members, one per side of the equation:** `concealment` (how well
-  this unit hides) and `detection` (how well it finds a hidden one, per method it answers, each entry qualified
-  `{unit: HAS_<SKILL>}`). Both are graduated magnitudes and both may be NEGATIVE — a negative detection deposit
-  is counter-detection, a negative concealment strips cover (the `WANTED` line does exactly that).
+  own-block sibling of `sizeMatters`. **Two contest members, one per side of the equation:** `concealment` (how
+  well this unit hides) and `detection` (how well it finds a hidden one, per method it answers, each entry
+  qualified `{unit: HAS_<SKILL>}`). Both are graduated magnitudes and both may be NEGATIVE — a negative
+  detection deposit is counter-detection, a negative concealment strips cover (the `WANTED` line does exactly
+  that).
+  ⛔ **The block's third member, `method`, belongs to the CLASSIC system, not the contest** — the ONE method a
+  unit hides by when the option is OFF, carried from the legacy single `<Invisible>` tag (`"method":
+  "camouflage"`). Legacy authored TWO invisibility planes — the single classic tag, and the per-type intensity
+  tables the contest replaced — and only units carrying the single tag were ever classically invisible. The
+  classic engine branch reads `method` ALONE; deriving it from the method-skill union instead made every
+  contest-only hider (the robber class authors no classic tag) classically invisible for the first time ever,
+  and border patrols stopped killing criminals. ABSENT means classically never-invisible; the skill set still
+  carries the contest's membership beside it.
   ⚑ **The METHOD is not in this block at all — it is a [skill](skills.md)** (`camouflage`, `cloaked`,
   `disguised`, …), because a promotion can grant one and optical camouflage is precisely that
   ([vision.md §4](vision.md)). A [tag](tags.md) could not hold it: tags are not promotion-grantable, and 73

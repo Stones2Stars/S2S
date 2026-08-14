@@ -55,6 +55,12 @@ public:
 
 	// The TEAM CAPABILITY union of iPlayer's team (-1 = the active player's team).
 	static CvString teamCapabilities(int iPlayer);
+
+	// The GAME OPTION census: every GAMEOPTION_* with its live verdict. An option is the one axis an entity
+	// gate reads and it is fixed at setup, so an external reader must never have to ASK a human which mode a
+	// save runs in -- the Orwell bar ([observability.md]) applied to the config plane. Complete by construction
+	// (every registered option, on or off), so absence is never ambiguous.
+	static CvString gameOptions();
 };
 
 #endif // CV_STATE_ENDPOINTS_H

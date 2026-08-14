@@ -467,9 +467,10 @@ the total-observability bar below.)
     `event: hello` and not that error, and kill every loop when done — an empty capture reads exactly like "the
     feature did not fire."
   - **(3) The on-demand mailbox-snapshot endpoints** compute a game-thread snapshot via the single-slot mailbox and
-    depend on no log file or gate — the most reliable read for a POINT-IN-TIME value. ⚠ **The route table was purged:
-    the only data routes today are FOUR stored-side decomposition censuses** — `/computed/cascade/packages`,
-    `/computed/enabler/operating`, `/computed/city/yield`, `/computed/capabilities`. ⛔ There is **no `oracle`
+    depend on no log file or gate — the most reliable read for a POINT-IN-TIME value. ⚠ **The route table was purged
+    and rebuilt sparse: the only data routes are the stored-side decomposition censuses, and the ROUTE TABLE in
+    `CvHttpServer.cpp::handleRequest` is their census** (an enumerated list here drifted twice; `GET /computed`
+    serves the live index). ⛔ There is **no `oracle`
     twin and none comes back** (`superseded-ideas` #33: an endpoint cannot replay the event chain, so its
     recompute answers a number that was never comparable — do not run one as evidence, and do not rebuild it).
     Everything else 404s, and the route surface is defined with the access surface

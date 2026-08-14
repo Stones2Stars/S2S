@@ -10462,22 +10462,26 @@ DomainTypes CvUnit::getDomainType() const
 
 InvisibleTypes CvUnit::getInvisibleType() const
 {
-	// The unit's hiding METHOD: the skill->key direction of GC.getMethodSkill. The CARRIER is a SKILL because a
-	// promotion can grant a method (optical camouflage); the KEY stays the INVISIBLE_* registry because that is
-	// what the per-plot per-method registration is dimensioned by ([vision.md] §4).
-	// ⚠ Asked of the INFO, which is behaviour-preserving (the legacy body read the info too) and keeps this
-	// cheap -- isInvisible is one of the hottest reads in the engine. A PROMOTION-granted method therefore does
-	// not show here yet: that wants a resolved slot dirtied on promotion change, not a per-read walk of every
-	// promotion inside this call.
+	// THE CLASSIC METHOD -- the ONE method this unit hides by under the classic system, read from the info's
+	// `hideAndSeek.method` (the legacy single `<Invisible>` tag's own datum). Most units carry none and answer
+	// NO_INVISIBLE in one compare, which is what keeps this hot read cheap.
+	// ⛔ NEVER derived from the unit's method-SKILL SET: the skills are the hide-and-seek CONTEST's membership
+	// (a unit can contest by several methods at once), and deriving the classic method from their union made
+	// every contest-only hider classically invisible for the first time ever -- the robber class authors no
+	// classic method at all, and border patrols stopped killing criminals.
+	const int iClassicSkill = getUnitInfo().getHideAndSeek().classicMethodSkill();
+	if (iClassicSkill < 0)
+	{
+		return NO_INVISIBLE;
+	}
 	for (int iI = 0; iI < GC.getNumInvisibleInfos(); ++iI)
 	{
 		const InvisibleTypes eMethod = (InvisibleTypes)iI;
-		const int iMethodSkill = GC.getMethodSkill(eMethod);
 
 		//	A method whose cover has been STRIPPED is not a method this unit hides by — the WANTED line does
 		//	exactly that. Without the suppression a marked unit still reported a hiding method, so the classic
 		//	branch read it as invisible to every foreign team that had no spotter for it.
-		if (iMethodSkill >= 0 && getUnitInfo().hasSkill(iMethodSkill) && !isNegatesInvisible(eMethod))
+		if (GC.getMethodSkill(eMethod) == iClassicSkill && !isNegatesInvisible(eMethod))
 		{
 			return eMethod;
 		}

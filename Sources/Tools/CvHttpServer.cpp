@@ -298,6 +298,10 @@ namespace
 			{
 				return StateEndpoints::teamCapabilities(iPlayer);
 			}
+			if (strcmp(szAction, "gameOptions") == 0)
+			{
+				return StateEndpoints::gameOptions();
+			}
 		}
 		picojson::value::object o;
 		o["error"]  = picojson::value(std::string("unknown action"));
@@ -411,6 +415,7 @@ namespace
 			{ "/computed/enabler/units",     "enablerUnits",     "ONE unit's verdict in every city, DECOMPOSED into the named gate legs: spawnOnly/obsoleteTech/capped/entityGateFail/requiresFail/upgradeDormant/superseded(+By). ?type=UNIT_X&player=N[&city=M]" },
 			{ "/computed/city/yield",               "cityYield",              "the yield TOOLTIP's own census, served: every term of the §2a combine per yield, the refused deposits with the atom that refused them, and the city's traded/onSite bonus lists read LIVE. ?player=N[&city=M]" },
 			{ "/computed/capabilities",      "capabilities",     "the empire ability union as the grantor facts built it: capabilities/canTrade/canWorkOn/canTradeOn. ?player=N" },
+			{ "/computed/game/options",      "gameOptions",      "every GAMEOPTION_* with its live verdict -- which mode this save runs in, complete so absence is never ambiguous" },
 		};
 
 		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));

@@ -277,6 +277,15 @@ The legacy per-invisible-type table pair is retired — [superseded-ideas.md #35
 counter-detection (the entries sum, so a negative deposit just subtracts). A promotion carries **both** — the
 method skill it grants, and the magnitudes it adds — which is precisely what the tag reading could not express.
 
+⛔ **The CLASSIC system keeps its own datum — `hideAndSeek.method` — and the contest never reads it.** Legacy
+carried TWO invisibility planes: the single `<Invisible>` tag (what the classic branch reads with the option
+OFF) and the intensity tables (the contest's ancestor). The method-skill SET is the contest's membership and
+deliberately wider than the classic plane — a robber contests by disguise and politics yet authors no classic
+tag, i.e. it was **never classically invisible at all**. Deriving the classic method from the skill union
+therefore made the whole contest-only population classically invisible for the first time ever (border patrols
+stopped killing criminals — the live find that forced this datum). The curator emits `method` from the single
+tag alone; absent means classically never-invisible ([json.md §9](json.md)).
+
 ## 5. What this model retires
 
 The legacy engine expressed one idea with two unrelated number systems: a **radius**

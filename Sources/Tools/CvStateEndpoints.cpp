@@ -618,6 +618,22 @@ CvString StateEndpoints::teamCapabilities(int iPlayer)
 	return oe_serialize(kRoot);
 }
 
+// ---- THE GAME OPTION CENSUS -- which mode this save runs in, asked of the wire instead of a human --------------
+
+CvString StateEndpoints::gameOptions()
+{
+	const CvGame& kGame = GC.getGame();
+	picojson::value::object kOptions;
+	for (int iOption = 0; iOption < GC.getNumGameOptionInfos(); ++iOption)
+	{
+		kOptions[std::string(GC.getGameOptionInfo((GameOptionTypes)iOption).getType())] =
+			picojson::value(kGame.isOption((GameOptionTypes)iOption));
+	}
+	picojson::value::object kRoot;
+	kRoot["gameOptions"] = picojson::value(kOptions);
+	return oe_serialize(kRoot);
+}
+
 // ---- THE CITY YIELD CENSUS -- the tooltip's own document, served ------------------------------------------------
 
 CvString StateEndpoints::cityYield(int iPlayer, int iCity)

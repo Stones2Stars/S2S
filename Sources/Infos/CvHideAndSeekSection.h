@@ -58,7 +58,14 @@ public:
 
 	// The block is authored iff either side carries something -- json.md §9's "a module is ON iff its block
 	// exists and is non-empty", asked of this entity.
-	bool isAuthored() const { return concealment != 0 || !detection.empty(); }
+	bool isAuthored() const { return concealment != 0 || !detection.empty() || !classicMethodType.empty(); }
+
+	// THE CLASSIC METHOD (`method`) -- the ONE method this entity hides by under the CLASSIC system
+	// (GAMEOPTION_COMBAT_HIDE_SEEK off), from the legacy single `<Invisible>` tag. Returns the SKILL_* id;
+	// -1 = classically never-invisible, which is what an absent tag always meant. The hide-and-seek CONTEST
+	// never reads this: its membership is the full skill set, and the two systems answer different questions
+	// (a robber contests by disguise yet was never classically invisible at all).
+	int classicMethodSkill() const;
 
 	// How well this entity HIDES (×100). MAY BE NEGATIVE: a negative concealment strips cover (the WANTED line).
 	int concealment;
@@ -75,6 +82,11 @@ public:
 	// row SET, which a per-method query cannot hand back.
 	// ⛔ Rows whose method never minted are skipped, exactly as `detectionAgainst` declines to match them.
 	void collectDetectionInto(std::vector<std::pair<int, int> >& aResolvedRowsOut) const;
+
+	// The classic method's minted-type spelling ("SKILL_CAMOUFLAGE") + its lazily-resolved id -- the same
+	// resolve-late shape the detection rows carry, for the same minting-order reason.
+	std::string classicMethodType;
+	mutable int classicMethod;
 
 private:
 	// THE ONE RESOLVE PATH ([DEC-single-implementation]). The id mints AFTER the entities parse, so it resolves
