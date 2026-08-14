@@ -117,6 +117,10 @@ void CvHandicapInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers, folds grants into m_triggers)
 
+	// PROPERTY_* per-turn SOURCES: player-gathered (the handicap slot), fanned to every owner city -- the ONE
+	// shared walk.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED, 0, NULL, getType());
+
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
 	m_aiGoodies.clear();
 	m_perEraStart.clear();

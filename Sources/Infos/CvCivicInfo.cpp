@@ -26,6 +26,9 @@ void CvCivicInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
 
+	// PROPERTY_* per-turn SOURCES: player-gathered, fanned to every owner city -- the ONE shared walk.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED, 0, NULL, getType());
+
 	m_iCivicOption = -1;
 	m_iAnarchyLength = 0;
 	m_iUpkeepLevel = -1;

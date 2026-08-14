@@ -425,7 +425,7 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 
 	// PROPERTY_* per-turn SOURCES: a unit's <PROPERTY_X>.{city|plot}.flat emits into the city / plot it stands
 	// on (RELATION_SAME_PLOT) each turn -- the ONE shared walk.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT, 0, NULL, getType());
 
 	// world.art -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr, and the MESH GROUPS beside it: art
 	// is art, and the formation's numbers were authored in the same block as the tags that name their models

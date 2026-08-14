@@ -317,7 +317,7 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 
 	// PROPERTY_* per-turn SOURCES: the improvement's `triggers` property pulses feed the KEEP-legacy solver
 	// via the plot gather. The ONE shared pulse walk (clear-and-refill inside).
-	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators);
+	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators, getType());
 
 	// mapGeneration
 	if (const picojson::object* pMapGen = jsonChildObj(entityObj, "mapGeneration"))

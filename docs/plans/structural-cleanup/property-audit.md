@@ -166,6 +166,15 @@
 
 - **Property own decay + population baseline** in `Assets/Data/properties/*.json` (7 files): decay = `PROPERTY_X.city.percent`
   / `.plot.percent`; population baseline = `PROPERTY_X.city.flat:{value,per:{type:POPULATION,each}}`. Matches XML exactly.
+  > **⚖ FLAMMABILITY AUTHORS NEITHER — ITS BASELINE IS 0 (owner).** No decay, no population baseline — the
+  > city's flammability is a PURE ACCUMULATOR over its source deltas: the per-turn building adders push it up
+  > and the reducers pull it down, and nothing else moves it. ⚖ A REAL decay/baseline for it is a LATER owner
+  > design decision, not a gap to fill by matching the siblings — the owner also notes flammability is a bit
+  > too NARROW as a property compared to the others, so the shape may be revisited wholesale. ⛔ Until that
+  > decision, do not author a decay or baseline into `property_flammability.json`.
+  > ⚑ Consequence to hold when reading a city's value: under the per-turn model a fresh game (or a save whose
+  > sessions predate the source feed) legitimately reads 0 everywhere until turns have run — an empty
+  > flammability row is the accumulator starting from its 0 baseline, not evidence the feed is broken.
 - **Building/unit flat deposits**: ordinary `PROPERTY_*` modifier families — `PROPERTY_X.city.flat` / `.plot.flat` —
   on ~250 building + 114 unit files. Verified exact vs XML (`building_3d_printing_mill` air-pollution +2;
   `unit_police_dog` crime city −5/plot −3 = the implicit unit `RELATION_SAME_PLOT`).

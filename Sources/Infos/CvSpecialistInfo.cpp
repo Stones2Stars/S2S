@@ -29,6 +29,9 @@ void CvSpecialistInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
 
+	// PROPERTY_* per-turn SOURCES: city-gathered per assigned specialist -- the ONE shared walk.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT, 0, NULL, getType());
+
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member. The base map
 	// runs FIRST and this type's own members are reset after it -- the documented order every sibling follows.
 	m_iGreatPeopleUnitType = -1;

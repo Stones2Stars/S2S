@@ -23,6 +23,10 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
 
+	// PROPERTY_* per-turn SOURCES: player-gathered, fanned to every owner city -- the ONE shared walk.
+	// Covers BOTH trait sets: the complex repo stores CvTraitInfo subclasses mapping through this same body.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED, 0, NULL, getType());
+
 	m_bNegativeTrait = false;
 	m_bBarbarianSelectionOnly = false;
 	m_bImpurePropertyManipulators = false;

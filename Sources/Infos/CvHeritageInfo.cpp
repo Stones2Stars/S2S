@@ -104,6 +104,9 @@ void CvHeritageInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers, fills edges)
 
+	// PROPERTY_* per-turn SOURCES: player-gathered, fanned to every owner city -- the ONE shared walk.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED, 0, NULL, getType());
+
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every member mapFrom owns. The
 	// acquisition prereqs are NOT mapFrom's -- they come from the cross-entity view and are redefined by
 	// materializeCrossEntity(), which the reader runs after this pass.

@@ -102,7 +102,7 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 
 	// PROPERTY_* per-turn SOURCES: a promotion's <PROPERTY_X>.{city|plot}.flat (the crime-fighting /
 	// law-enforcement lines) emits into the holding unit's same-plot city / plot -- the ONE shared walk.
-	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT, 0, NULL, getType());
 
 	// doubleMove is HALF MOVEMENT COST on that ground ([skills.md] par.1), so it is a keyed MOVEMENT
 	// modifier and NOT a skill. The typed FK lists are materialized once here from the compiled entries

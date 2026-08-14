@@ -9,7 +9,8 @@
 #include "CvModEntry.h"                 // CvModEntry + CvCondition (JsonInfo, on /I)
 #include "CvModifiers.h"                // the per-poco family map bridgeFamilies walks
 #include "CvTriggers.h"                     // the `triggers` PROPERTY pulses bridgePulses walks
-#include "CvJsonParse.h"                    // jsonResolveId -- the PROPERTY_X family-key FK
+#include "CvJsonParse.h"                    // jsonResolveId + jsonNoteUnconsumed -- the FK + the skip census
+#include "CvPropertyInfo.h"                 // the skipped deposit's PROPERTY_X type for the census attribution
 #include "Engine/CvPropertyManipulators.h"
 #include "Infrastructure/BoolExpr.h"
 #include "Infrastructure/IntExpr.h"
@@ -159,13 +160,23 @@ const IntExpr* CascadePropertyBridge::perPopulationAmount(int iValue, int iEach)
 	return pAmount;
 }
 
+// The census attribution for a skipped deposit: "<PROPERTY_X>.<reason>" against the SOURCE's own type, so the
+// [READJSON] unconsumed-section line is a worklist entry rather than a count. The property registry is complete
+// before any carrier maps (same-pass registration precedes every mapFrom), so the type read is total.
+static std::string pb_skipSection(int iPropertyFk, const char* szReason)
+{
+	const char* szProp = GC.getPropertyInfo((PropertyTypes)iPropertyFk).getType();
+	return std::string(szProp != NULL ? szProp : "PROPERTY_?") + "." + szReason;
+}
+
 void CascadePropertyBridge::bridgeFamilies(const CvModifiers* pMods, CvPropertyManipulators& kTarget,
-	RelationTypes eRelation, int iRelationData, CvPropertyManipulators* pEmpireTarget)
+	RelationTypes eRelation, int iRelationData, CvPropertyManipulators* pEmpireTarget, const char* szSourceType)
 {
 	kTarget.clear();
 	if (pEmpireTarget != NULL) pEmpireTarget->clear();
 	if (pMods == NULL) return;
 
+	const std::string szSource = (szSourceType != NULL) ? szSourceType : "propertyBridge";
 	const std::vector<CvModEntry*>& entries = pMods->entries();
 	for (size_t i = 0; i < entries.size(); ++i)
 	{
@@ -173,16 +184,32 @@ void CascadePropertyBridge::bridgeFamilies(const CvModifiers* pMods, CvPropertyM
 		if (e->family != MODFAM_PROPERTY || e->propertyFk < 0) continue;
 		if (e->nSeg != 2) continue;   // PROPERTY_X.<scope> exactly -- a deeper/targeted address is not an own-source
 		if (e->scope != CASC_SCOPE_CITY && e->scope != CASC_SCOPE_PLOT && e->scope != CASC_SCOPE_EMPIRE) continue;
-		if (e->scope == CASC_SCOPE_EMPIRE && pEmpireTarget == NULL) continue;   // no empire entries authored off buildings
+		if (e->scope == CASC_SCOPE_EMPIRE && pEmpireTarget == NULL)
+		{
+			// an empire-scope authoring on a carrier with no all-cities container -- authored data with no delivery
+			jsonNoteUnconsumed(szSource, pb_skipSection(e->propertyFk, "empireScopeNoContainer"));
+			continue;
+		}
 		if (e->unit != CASC_UNIT_FLAT) continue;
 		const GameObjectTypes eObj = (e->scope == CASC_SCOPE_PLOT) ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
 		CvPropertyManipulators& manip = (e->scope == CASC_SCOPE_EMPIRE) ? *pEmpireTarget : kTarget;
 		bool bUntranslatable = false;
 		const BoolExpr* pActive = entryActiveExpr(e, &bUntranslatable);
-		if (bUntranslatable) continue;
+		if (bUntranslatable)
+		{
+			// the gate refuses what it cannot faithfully translate -- correct; loading and never applying with
+			// NO report is not (triggers.md: fail-closed AND silent is invisible on both axes at once)
+			jsonNoteUnconsumed(szSource, pb_skipSection(e->propertyFk, "conditionUntranslatable"));
+			continue;
+		}
 		if (e->hasPer)
 		{
-			if (e->perType != "POPULATION") { delete pActive; continue; }   // no non-POPULATION per authored
+			if (e->perType != "POPULATION")
+			{
+				jsonNoteUnconsumed(szSource, pb_skipSection(e->propertyFk, "perNotPopulation"));
+				delete pActive;
+				continue;
+			}
 			if (e->perEach <= 1 && pActive == NULL)
 				manip.addAttributeConstantSource((PropertyTypes)e->propertyFk, ATTRIBUTE_POPULATION, e->value / 100, eObj);
 			else
@@ -193,11 +220,13 @@ void CascadePropertyBridge::bridgeFamilies(const CvModifiers* pMods, CvPropertyM
 	}
 }
 
-void CascadePropertyBridge::bridgePulses(const CvTriggers* pTriggers, CvPropertyManipulators& kTarget)
+void CascadePropertyBridge::bridgePulses(const CvTriggers* pTriggers, CvPropertyManipulators& kTarget,
+	const char* szSourceType)
 {
 	kTarget.clear();
 	if (pTriggers == NULL) return;
 
+	const std::string szSource = (szSourceType != NULL) ? szSourceType : "propertyBridge";
 	const std::vector<CvTriggerEntry*>& entries = pTriggers->entries();
 	for (size_t i = 0; i < entries.size(); ++i)
 	{
@@ -205,13 +234,13 @@ void CascadePropertyBridge::bridgePulses(const CvTriggers* pTriggers, CvProperty
 		if (pEntry->propertyId < 0) continue;
 		// plain per-turn pulses only -- a chance-rolled, interval>1, or non-turn entry is not a constant
 		// source (none authored on features/improvements); fail closed.
-		if (pEntry->happening != "onTurn" || pEntry->happeningInterval != 1) { jsonNoteUnconsumed("triggers.pulse", "notPerTurnConstant"); continue; }
-		if (pEntry->chanceValue != 0 || pEntry->chancePerTypeId >= 0 || !pEntry->chancePerToken.empty()) { jsonNoteUnconsumed("triggers.pulse", "chanceRolled"); continue; }
+		if (pEntry->happening != "onTurn" || pEntry->happeningInterval != 1) { jsonNoteUnconsumed(szSource, pb_skipSection(pEntry->propertyId, "pulseNotPerTurnConstant")); continue; }
+		if (pEntry->chanceValue != 0 || pEntry->chancePerTypeId >= 0 || !pEntry->chancePerToken.empty()) { jsonNoteUnconsumed(szSource, pb_skipSection(pEntry->propertyId, "pulseChanceRolled")); continue; }
 		const BoolExpr* pActive = NULL;
 		if (pEntry->condition != NULL)
 		{
 			pActive = condToBoolExpr(pEntry->condition);
-			if (pActive == NULL) { jsonNoteUnconsumed("triggers.pulse", "conditionUntranslatable"); continue; }
+			if (pActive == NULL) { jsonNoteUnconsumed(szSource, pb_skipSection(pEntry->propertyId, "pulseConditionUntranslatable")); continue; }
 		}
 		const GameObjectTypes eObj = (pEntry->spatialOn == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
 		const RelationTypes eRel = (pEntry->spatialRelation == "near") ? RELATION_NEAR

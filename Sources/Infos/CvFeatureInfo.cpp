@@ -85,7 +85,7 @@ void CvFeatureInfo::mapFrom(const picojson::value& entity)
 	// PROPERTY_* per-turn SOURCES: the feature's `triggers` property pulses (bamboo/jungle air-pollution
 	// sinks, reef water-pollution sinks) feed the KEEP-legacy solver via the plot gather. The ONE shared
 	// pulse walk (clear-and-refill inside).
-	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators);
+	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators, getType());
 
 	// identity: placement + relief fields
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))

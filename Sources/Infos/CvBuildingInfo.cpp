@@ -106,6 +106,10 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers)
 
+	// PROPERTY_* per-turn SOURCES: own-city deposits NO_RELATION; the `empire`-scope authorings ride the
+	// all-cities container -- the ONE shared walk (clear-and-refill inside).
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, NO_RELATION, 0, &m_PropertyManipulatorsAllCities, getType());
+
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
 	m_aeMapCategories.clear();
 	m_aiEnabledCivilizations.clear();

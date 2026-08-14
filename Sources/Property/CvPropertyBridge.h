@@ -51,18 +51,22 @@ public:
 	// THE ONE per-poco family walk ([DEC-single-implementation]): every PROPERTY_X.{city|plot}.flat entry of
 	// pMods becomes a per-turn Constant/AttributeConstant source in kTarget, carrying eRelation/iRelationData
 	// (the category's legacy delivery shape: buildings NO_RELATION, units/promotions/specialists
-	// RELATION_SAME_PLOT, civics/traits/heritages RELATION_ASSOCIATED — player-gathered, fanned to every
-	// associated city). PROPERTY_X.empire.flat routes to pEmpireTarget when given (the buildings' all-cities
-	// container), else skips. Conditioned entries ride entryActiveExpr; untranslatable ones skip (fail closed).
+	// RELATION_SAME_PLOT, civics/traits/heritages/handicaps RELATION_ASSOCIATED — player-gathered, fanned to
+	// every associated city). PROPERTY_X.empire.flat routes to pEmpireTarget when given (the buildings'
+	// all-cities container), else skips. Conditioned entries ride entryActiveExpr; untranslatable ones skip
+	// (fail closed). EVERY skip announces on the readJson census (jsonNoteUnconsumed, attributed to
+	// szSourceType) — fail-closed AND silent is the invisible-on-both-axes state triggers.md bans.
 	// Clears kTarget (and pEmpireTarget) first — the CvInfo.h mapFrom idempotency contract.
 	static void bridgeFamilies(const CvModifiers* pMods, CvPropertyManipulators& kTarget,
-		RelationTypes eRelation, int iRelationData = 0, CvPropertyManipulators* pEmpireTarget = 0);
+		RelationTypes eRelation, int iRelationData = 0, CvPropertyManipulators* pEmpireTarget = 0,
+		const char* szSourceType = 0);
 
 	// The `triggers` PROPERTY pulse walk (features/improvements — json §5 property-delta actions, curated from
 	// the legacy plot manipulators): every plain per-turn onTurn pulse becomes a Constant source with its
 	// authored spatial intent (on/relation/distance). Chance-rolled, interval>1, or non-turn entries skip
-	// (fail closed — none authored). Clears kTarget first (idempotency).
-	static void bridgePulses(const CvTriggers* pTriggers, CvPropertyManipulators& kTarget);
+	// (fail closed — none authored), each skip announced on the same census. Clears kTarget first (idempotency).
+	static void bridgePulses(const CvTriggers* pTriggers, CvPropertyManipulators& kTarget,
+		const char* szSourceType = 0);
 
 private:
 	CascadePropertyBridge();   // purely-organizational static-methods class -- never instantiated
