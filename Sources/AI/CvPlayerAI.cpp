@@ -9556,23 +9556,27 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 			if (!bJustNonTradeBuildings)
 			{
 				PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Route Value");
-				RouteTypes eBestRoute = getBestRoute();
-				for (int iI = 0; iI < GC.getNumBuildInfos(); iI++)
+				//	The routes that need THIS bonus, read off the bonus's own inverted enables buckets. The AND
+				//	prereq and the OR list ride DISTINCT buckets by construction -- the route's own forward
+				//	getters are reconstructed from exactly these (rp_reconstructRouteBonusPrereqs) -- so the
+				//	mandatory-vs-alternative worth split survives without the whole-build-database driver that
+				//	asked every route about every bonus.
+				const RouteTypes eBestRoute = getBestRoute();
+				const CvEdges* pBonusEdges = GC.getBonusInfo(eBonus).getEdges();
+				for (int iLeg = 0; pBonusEdges != NULL && iLeg < 2; iLeg++)
 				{
-					RouteTypes eRoute = (RouteTypes)(GC.getBuildInfo((BuildTypes)iI).getRoute());
-
-					if (eRoute != NO_ROUTE)
+					const bool bMandatory = (iLeg == 0);
+					const std::vector<int>* pRoutes = pBonusEdges->find(EDGEF_ENABLES,
+						bMandatory ? EDGEB_ROUTES_AND : EDGEB_ROUTES);
+					if (pRoutes == NULL)
 					{
-						int iTempValue = 0;
-						if (GC.getRouteInfo(eRoute).getPrereqBonus() == eBonus)
-						{
-							iTempValue += 80;
-						}
-						if (algo::any_of_equal(GC.getRouteInfo(eRoute).getPrereqOrBonuses(), eBonus))
-						{
-							iTempValue += 40;
-						}
-						if (eBestRoute != NO_ROUTE && GC.getRouteInfo(getBestRoute()).getValue() > GC.getRouteInfo(eRoute).getValue())
+						continue;
+					}
+					for (size_t iRoute = 0; iRoute < pRoutes->size(); iRoute++)
+					{
+						const RouteTypes eRoute = (RouteTypes)(*pRoutes)[iRoute];
+						int iTempValue = bMandatory ? 80 : 40;
+						if (eBestRoute != NO_ROUTE && GC.getRouteInfo(eBestRoute).getValue() > GC.getRouteInfo(eRoute).getValue())
 						{
 							iTempValue /= 2;
 						}

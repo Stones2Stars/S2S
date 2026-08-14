@@ -313,7 +313,6 @@ public:
 	friend bool operator!=(const CvUnit& lhs, const CvUnit& rhs) { return &lhs != &rhs; }
 
 	DllExport void NotifyEntity(MissionTypes eMission);
-	DllExport PlayerTypes getNationality() const;
 	DllExport DomainTypes getDomainType() const;
 	DllExport bool canMove() const;
 	DllExport bool hasMoved() const;
@@ -740,7 +739,6 @@ public:
 	int nukeRange() const;
 
 	bool canBuildRoute() const;
-	ImprovementTypes getBuildTypeImprovement() const;
 
 	bool isAnimal() const;
 	bool isNoBadGoodies() const;
@@ -836,10 +834,7 @@ public:
 	bool flatMovementCost() const;
 	bool ignoreTerrainCost() const;
 	bool isNeverInvisible() const;
-	int getNoInvisibilityCount() const;
-	void changeNoInvisibilityCount(int iChange);
 	bool isNukeImmune() const;
-	bool isInquisitor() const;
 
 	int maxInterceptionProbability() const;
 	int currInterceptionProbability() const;
@@ -975,7 +970,6 @@ public:
 	int getFortifyTurns() const;
 	void setFortifyTurns(int iNewValue);
 
-	int getBlitzCount() const;
 	bool isBlitz() const;
 	void changeBlitzCount(int iChange);
 
@@ -1006,7 +1000,6 @@ public:
 	void changeAlwaysInvisibleCount(int iChange);
 
 	int getDefensiveVictoryMoveCount() const;
-	bool isDefensiveVictoryMove() const;
 	void changeDefensiveVictoryMoveCount(int iChange);
 
 	int getFreeDropCount() const;
@@ -1014,7 +1007,6 @@ public:
 	void changeFreeDropCount(int iChange);
 
 	int getOffensiveVictoryMoveCount() const;
-	bool isOffensiveVictoryMove() const;
 	void changeOffensiveVictoryMoveCount(int iChange);
 
 	int getOneUpCount() const;
@@ -1523,7 +1515,6 @@ protected:
 	int m_iAssassinCount;
 	int m_iStealthDefenseCount;
 	int m_iOnlyDefensiveCount;
-	int m_iNoInvisibilityCount;
 	int m_iNoCaptureCount;
 	int m_iExtraNoDefensiveBonusCount;
 	int m_iExtraGatherHerdCount;
@@ -1696,7 +1687,6 @@ public:
 	virtual int AI_beneficialPropertyValueToCity(const CvCity* pCity, PropertyTypes eProperty) const = 0;
 
 	bool isUsingDummyEntities() const;
-	static bool isDummyEntity(const CvEntity* entity);
 	static bool isRealEntity(const CvEntity* entity);
 
 	std::map<UnitCombatTypes, UnitCombatKeyedInfo>&  getUnitCombatKeyedInfo() const;
@@ -1711,7 +1701,6 @@ private:
 
 	//TB Combat Mods begin
 public:
-	bool isArcher() const;
 	bool isPromotionOverriden(PromotionTypes ePromotionType) const;
 
 
@@ -1788,7 +1777,6 @@ public:
 	bool isBreakdownCombat(const CvPlot* pPlot, bool bSamePlot = false) const;
 	void resolveBreakdownAttack(const CvPlot* pPlot);
 
-	int getDiminishingReturn(int i) const;
 
 	bool hasCannotMergeSplit() const;
 	int getCannotMergeSplitCount() const;
@@ -1842,7 +1830,6 @@ public:
 	void setNewDomainCargo(DomainTypes eDomain);
 	SpecialUnitTypes getSpecialCargo() const;
 	void setNewSpecialCargo(SpecialUnitTypes eSpecialUnit);
-	SpecialUnitTypes getSMSpecialCargo() const;
 	SpecialUnitTypes getSMNotSpecialCargo() const;
 	void setNewSMNotSpecialCargo(SpecialUnitTypes eSpecialUnit);
 
@@ -1887,8 +1874,6 @@ public:
 	int getCargoCapacitybyType(int iValue) const;
 	bool isCarrier() const;
 	bool isUnitAtBaseGroup() const;
-	bool isUnitAboveBaseGroup() const;
-	bool isUnitBelowBaseGroup() const;
 
 	//int getExtraGeneric() const;
 	//void changeExtraGeneric(int iChange);
@@ -1939,7 +1924,6 @@ public:
 	int getHealSupportRemaining() const;
 	bool hasHealSupportRemaining() const;
 
-	MissionTypes getSleepType() const;
 	void setSleepType(MissionTypes eSleepType);
 	void establishBuildups();
 	PromotionLineTypes getBuildUpType() const;
@@ -1964,7 +1948,6 @@ public:
 	bool isPassage() const;
 	void changePassageCount(int iChange);
 
-	bool isNoNonOwnedCityEntry() const;
 	void changeNoNonOwnedCityEntryCount(int iChange);
 
 	bool isBarbCoExist() const;
@@ -1993,7 +1976,6 @@ public:
 	bool criminalSuccessCheck();
 	void doInsidiousnessVSInvestigationCheck();
 	void doRemoveInvestigatedPromotionCheck();
-	bool isWantedbyPlayer(PlayerTypes ePlayer) const;
 	bool isWanted() const;
 
 	void attackSamePlotSpecifiedUnit(CvUnit* pSelectedDefender);
@@ -2008,7 +1990,6 @@ public:
 	void setDebugCount(int iValue);
 
 	bool isAssassin() const;
-	int getAssassinCount() const;
 	void changeAssassinCount(int iChange);
 
 	int stealthStrikesTotal() const;
@@ -2030,7 +2011,6 @@ public:
 
 
 
-	bool isArmed() const;
 
 	void changeHiddenNationalityCount(int iValue);
 	int getHiddenNationalityCount() const;
@@ -2044,7 +2024,6 @@ public:
 	void clearCityOfOrigin();
 	CvCity* getCityOfOrigin() const;
 
-	bool isPromotionFromTrait(PromotionTypes ePromotion) const;
 	void setPromotionFromTrait(PromotionTypes ePromotion, bool iChange);
 
 	bool isGatherHerd() const;
@@ -2152,7 +2131,6 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvUnitInfo&, getUnitInfo);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvUnit*, getTransportUnit);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, BuildTypes, getBuildType);
-		DECLARE_MAP_FUNCTOR_CONST(CvUnit, ImprovementTypes, getBuildTypeImprovement);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, getCargo);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, SMgetCargo);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, SMCargoVolume);

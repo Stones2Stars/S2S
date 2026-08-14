@@ -630,7 +630,8 @@ authored shape.
 > **⚖ IT IS A TYPE RENAME, AND THE SAVELOAD MECHANISM TRANSLATES IT (owner).** A renamed Type is NOT a removed
 > one: the record still exists under a new id, so resolving the old name to `-1` and letting the allow-missing
 > class read drop the slot would throw away a rung the player still holds. The old id is mapped to the new one in
-> `Assets/savemigration.txt` (a bare `INFOTYPE_NAME` key, which cannot collide with a `Class::field` rename) and
+> `Assets/savemigration.txt` (a `TYPE::INFOTYPE_NAME` key — the `TYPE::` namespace satisfies the parser's `::`
+> guard and cannot collide with a `Class::field` rename) and
 > applied at the ONE stored-Type resolution point the class reads share.
 > ⚠ The distinction generalizes beyond traits, and [save.md §7](save.md)'s three removal classes do not cover it:
 > that decision procedure asks what to do when a Type is GONE. Ask first whether it is gone or merely RENAMED —

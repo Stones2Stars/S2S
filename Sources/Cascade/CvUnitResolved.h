@@ -66,12 +66,14 @@ class CvUnit;
 //	table are precisely the two that move this. There is no third trigger to find and none to invent.
 struct UnitResolvedHideAndSeek
 {
-	UnitResolvedHideAndSeek() : concealment(0) {}
+	UnitResolvedHideAndSeek() : concealment(0), noInvisibilityNet(0) {}
 
 	void clear()
 	{
 		concealment = 0;
+		noInvisibilityNet = 0;
 		detection.clear();
+		methodSkills.clear();
 	}
 
 	// Detection against ONE method (×100). A linear scan of a HANDFUL -- the rows a unit's own carriers actually
@@ -81,8 +83,17 @@ struct UnitResolvedHideAndSeek
 	// Fold one carrier's resolved rows in, summing per method.
 	void addDetection(int iMethodSkillId, int iValue);
 
+	// MEMBERSHIP -- does this unit hide by that method at all? Holding the method SKILL is the membership
+	// question (vision.md §4), and it is answered from the SAME fold as the magnitudes: net grants minus
+	// revokes over the three carriers. This is what lets a promotion grant a hiding method (optical
+	// camouflage) -- an info-only membership read never saw one.
+	bool holdsMethodSkill(int iMethodSkillId) const;
+	void addMethodSkill(int iMethodSkillId, int iNet);
+
 	int concealment;                                  // ×100; MAY BE NEGATIVE (a negative row strips cover)
+	int noInvisibilityNet;                            // net grants of the `noInvisibility` canceller skill
 	std::vector<std::pair<int, int> > detection;      // (methodSkill, summed value), one entry per method answered
+	std::vector<std::pair<int, int> > methodSkills;   // (methodSkill, net grant count); held iff net > 0
 };
 
 //	The unit's folded HEAL block. Heal is its OWN SET, not a skill: a skill is a pure boolean enabler carrying no
@@ -190,6 +201,8 @@ public:
 	// The `hideAndSeek` reads -- bare fetches, exactly like the slot read above.
 	int concealment() const { return m_hideAndSeek.concealment; }
 	int detectionAgainst(int iMethodSkillId) const { return m_hideAndSeek.detectionAgainst(iMethodSkillId); }
+	bool holdsMethodSkill(int iMethodSkillId) const { return m_hideAndSeek.holdsMethodSkill(iMethodSkillId); }
+	bool noInvisibilityGranted() const { return m_hideAndSeek.noInvisibilityNet > 0; }
 
 	// The HEAL block's verdicts -- bare fetches on the same terms.
 	bool healsOutsideFriendlyTerritory() const { return m_heal.healsOutsideFriendlyTerritory; }

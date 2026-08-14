@@ -12,12 +12,20 @@
 | anywhere is a COMPILE error (caught); an empty stub silently      |
 | returns a wrong value (hidden). Gone > stubbed.                   |
 |                                                                   |
-| FORMAT (one entry per line; headers/comments/blank ignored):      |
-|   CUT:    ClassName::m_field            (type note, optional)      |
-|   RENAME: ClassName::m_old -> ClassName::m_new                     |
+| FORMAT (one entry per line; a line starting | = # is ignored):    |
+|   a CUT is the bare tag FIRST on the line (note after, optional): |
+|     ClassName::m_field                  (type note, optional)     |
+|   a RENAME is old -> new; a TYPE rename rides the TYPE:: space:   |
+|     ClassName::m_old -> ClassName::m_new                          |
+|     TYPE::OLD_INFOTYPE -> TYPE::NEW_INFOTYPE                      |
+| There is NO literal CUT:/RENAME: prefix: the reader takes the     |
+| FIRST whitespace-delimited token of each side and keeps it only   |
+| if it contains `::`, so a prefixed line parses to NOTHING -- and  |
+| a wrapped note line must never BEGIN with a Class::field token,   |
+| which registers as an entry (save.md §3).                         |
 | The reader keys on the normalized "Class::field" name (the same   |
-| NormalizeName the dictionary stores). A CUT tag is drained where  |
-| it appears; a RENAME tag is matched against the new member. So    |
+| NormalizeName the dictionary stores). A cut tag is drained where  |
+| it appears; a rename tag is matched against the new member. So    |
 | old saves load clean and the format is NEVER save-breaking as     |
 | long as the entry is listed here.                                 |
 |                                                                   |
@@ -2270,3 +2278,10 @@ CvUnit::m_aExtraVisibleImprovementRanges.size
 CvUnit::iType1
 CvUnit::iType2
 CvUnit::iType3
+
+| The noInvisibility canceller count -- a serialized DERIVED accumulator (a Sigma over the unit's held
+| promotions and combat classes of a static skill, fed by the processPromotion/processUnitCombat batteries).
+| REPLACEMENT: the resolved hideAndSeek fold's noInvisibility net (UnitResolvedHideAndSeek, gathered over
+| info + promotions + combat classes on the promotion/combat facts), read by CvUnit::hasInvisibilityType /
+| setHasAnyInvisibility.
+CvUnit::m_iNoInvisibilityCount

@@ -66,11 +66,6 @@ int*	CvUnit::g_paiTempHealUnitCombatTypeAdjacentVolume = NULL;
 int*	CvUnit::g_paiTempHealAsDamage = NULL;
 bool	CvUnit::m_staticsInitialized = false;
 
-bool CvUnit::isDummyEntity(const CvEntity* entity)
-{
-	return (entity == g_dummyEntity);
-}
-
 bool CvUnit::isRealEntity(const CvEntity* entity)
 {
 	return (entity != NULL && entity != g_dummyEntity);
@@ -688,7 +683,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iAssassinCount = 0;
 	m_iStealthDefenseCount = 0;
 	m_iOnlyDefensiveCount = 0;
-	m_iNoInvisibilityCount = 0;
 	m_iNoCaptureCount = 0;
 	m_iExtraNoDefensiveBonusCount = 0;
 	m_iExtraGatherHerdCount = 0;
@@ -895,7 +889,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iAssassinCount = other.m_iAssassinCount;
 	m_iStealthDefenseCount = other.m_iStealthDefenseCount;
 	m_iOnlyDefensiveCount = other.m_iOnlyDefensiveCount;
-	m_iNoInvisibilityCount = other.m_iNoInvisibilityCount;
 	m_iNoCaptureCount = other.m_iNoCaptureCount;
 	m_iExtraNoDefensiveBonusCount = other.m_iExtraNoDefensiveBonusCount;
 	m_iExtraGatherHerdCount = other.m_iExtraGatherHerdCount;
@@ -10694,13 +10687,6 @@ BuildTypes CvUnit::getBuildType() const
 	return NO_BUILD;
 }
 
-ImprovementTypes CvUnit::getBuildTypeImprovement() const
-{
-	const BuildTypes buildType = getBuildType();
-	if (buildType == NO_BUILD) return NO_IMPROVEMENT;
-	return GC.getBuildInfo(buildType).getImprovement();
-}
-
 bool CvUnit::isAnimal() const
 {
 	return GET_PLAYER(getOwner()).isAnimal();
@@ -12462,18 +12448,6 @@ bool CvUnit::isNeverInvisible() const
 	return !alwaysInvisible() && getInvisibleType() == NO_INVISIBLE && !hasAnyInvisibilityType();
 }
 
-int CvUnit::getNoInvisibilityCount() const
-{
-	return GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK) * m_iNoInvisibilityCount;
-}
-
-void CvUnit::changeNoInvisibilityCount(int iChange)
-{
-	m_iNoInvisibilityCount += iChange;
-	setHasAnyInvisibility();
-}
-
-
 int CvUnit::concealment() const
 {
 	// How well this unit hides. ONE number -- the METHOD it hides by is a SKILL, and a seeker's detection
@@ -12563,11 +12537,6 @@ bool CvUnit::isNukeImmune() const
 	return getUnitInfo().hasSkill(CLS_SKILL_NUKE_IMMUNE);
 }
 
-
-bool CvUnit::isInquisitor() const
-{
-	return getUnitInfo().hasSkill(CLS_SKILL_INQUISITOR);
-}
 
 
 int CvUnit::maxInterceptionProbability() const
@@ -14705,11 +14674,6 @@ void CvUnit::setFortifyTurns(int iNewValue)
 	}
 }
 
-int CvUnit::getBlitzCount() const
-{
-	return m_iBlitzCount;
-}
-
 bool CvUnit::isBlitz() const
 {
 	return m_iBlitzCount > 0;
@@ -14830,11 +14794,6 @@ int CvUnit::getDefensiveVictoryMoveCount() const
 	return m_iDefensiveVictoryMoveCount;
 }
 
-bool CvUnit::isDefensiveVictoryMove() const
-{
-	return (getDefensiveVictoryMoveCount() > 0);
-}
-
 void CvUnit::changeDefensiveVictoryMoveCount(int iChange)
 {
 	m_iDefensiveVictoryMoveCount += iChange;
@@ -14862,11 +14821,6 @@ void CvUnit::changeFreeDropCount(int iChange)
 int CvUnit::getOffensiveVictoryMoveCount() const
 {
 	return m_iOffensiveVictoryMoveCount;
-}
-
-bool CvUnit::isOffensiveVictoryMove() const
-{
-	return (getOffensiveVictoryMoveCount() > 0);
 }
 
 void CvUnit::changeOffensiveVictoryMoveCount(int iChange)
@@ -17229,7 +17183,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraInvestigation(kUnitCombat.getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeStealthDefenseCount((kUnitCombat.hasSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((kUnitCombat.hasSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
-	changeNoInvisibilityCount((kUnitCombat.hasSkill(CLS_SKILL_NO_INVISIBILITY) ? 1 : 0) * iChange);
 	changeNoCaptureCount((kUnitCombat.hasSkill(CLS_SKILL_NO_CAPTURE) ? 1 : 0) * iChange);
 
 	//	The DOMAIN-keyed combat percents: the entity's OWN compiled entries name the handful of domains it
@@ -17645,7 +17598,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeAssassinCount((kPromotion.providesSkill(CLS_SKILL_ASSASSIN) ? 1 : 0) * iChange);
 	changeStealthDefenseCount((kPromotion.providesSkill(CLS_SKILL_STEALTH_DEFENSE) ? 1 : 0) * iChange);
 	changeOnlyDefensiveCount((kPromotion.providesSkill(CLS_SKILL_DEFENSE_ONLY) ? 1 : 0) * iChange);
-	changeNoInvisibilityCount((kPromotion.providesSkill(CLS_SKILL_NO_INVISIBILITY) ? 1 : 0) * iChange);
 	changeHiddenNationalityCount((kPromotion.providesSkill(CLS_SKILL_HIDDEN_NATIONALITY) ? 1 : 0) * iChange);
 
 	// the promotion's SM rank deltas live in its sizeMatters section (json.md par.9: Promotion carries the
@@ -18610,7 +18562,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iStealthDefenseCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bRevealed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnlyDefensiveCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iNoInvisibilityCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsArmed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHiddenNationalityCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iNoCaptureCount);
@@ -19059,7 +19010,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iStealthDefenseCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bRevealed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnlyDefensiveCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoInvisibilityCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsArmed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iHiddenNationalityCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iNoCaptureCount);
@@ -22263,11 +22213,6 @@ void CvUnit::addMission(const CvMissionDefinition& mission)
 	}
 }
 
-bool CvUnit::isArcher() const
-{
-	return isHasUnitCombat(GC.getUNITCOMBAT_ARCHER());
-}
-
 //TB Combat Mods begin
 //	Is this promotion SUPERSEDED by a higher rung of its own line that the unit also holds?
 //
@@ -23105,31 +23050,6 @@ void CvUnit::resolveBreakdownAttack(const CvPlot* pPlot)
 		szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_REDUCE_CITY_DEFENSES", getNameKey(), pCity->getNameKey(), pCity->getDefenseModifier(false));
 		AddDLLMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARD", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), pCity->getX(), pCity->getY());
 	}
-}
-
-int CvUnit::getDiminishingReturn(int i) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (i < 51)
-	{
-		return i;
-	}
-	int iA = 0;
-	int iB = 100;
-
-	for (int iC = i; iC > 0; iC /= 2)
-	{
-		iB /= 2;
-		iA += iB;
-		i -= iB;
-		i /= 2;
-		if (i < iB/2 + 1)
-		{
-			i += iA;
-			return i;
-		}
-	}
-	return 0;
 }
 
 bool CvUnit::hasCannotMergeSplit() const
@@ -24178,16 +24098,6 @@ bool CvUnit::isUnitAtBaseGroup() const
 	return m_pUnitInfo->getBaseGroupRank() == groupRank();
 }
 
-bool CvUnit::isUnitAboveBaseGroup() const
-{
-	return groupRank() > m_pUnitInfo->getBaseGroupRank();
-}
-
-bool CvUnit::isUnitBelowBaseGroup() const
-{
-	return groupRank() < m_pUnitInfo->getBaseGroupRank();
-}
-
 //Model of how to use Size Matters Most Multiplicative plug in.
 //optional - if there is a flat +/- modifier it plugs in here in the Extra functions
 //Confusingly, this is often already in place and is sometimes not well named but is convenient to keep as was.
@@ -24528,11 +24438,6 @@ int CvUnit::getHealSupportRemaining() const
 bool CvUnit::hasHealSupportRemaining() const
 {
 	return getHealSupportRemaining() > 0;
-}
-
-MissionTypes CvUnit::getSleepType() const
-{
-	return m_eSleepType;
 }
 
 void CvUnit::setSleepType(MissionTypes eSleepType)
@@ -24912,16 +24817,6 @@ void CvUnit::changePassageCount(int iChange)
 	m_iPassageCount += iChange;
 }
 
-bool CvUnit::isNoNonOwnedCityEntry() const
-{
-	int iCount = m_iNoNonOwnedCityEntryCount;
-	if (m_pUnitInfo->hasSkill(CLS_SKILL_NO_NON_OWNED_CITY_ENTRY))
-	{
-		iCount++;
-	}
-	return (iCount > 0);
-}
-
 void CvUnit::changeNoNonOwnedCityEntryCount(int iChange)
 {
 	m_iNoNonOwnedCityEntryCount += iChange;
@@ -24972,14 +24867,22 @@ bool CvUnit::hasInvisibilityType(InvisibleTypes eInvisibleType) const
 	//	⛔ MEMBERSHIP FIRST — a unit is hidden only by a method it actually HIDES BY. This test was a pure
 	//	negation filter, so it answered TRUE for all 14 methods on any unit that negated none of them; and
 	//	isInvisible's first clause returns INVISIBLE for a method no seer has registered against, which is
-	//	nearly all of them. The method is a SKILL (vision.md §4), so holding it is the membership question.
+	//	nearly all of them. The method is a SKILL (vision.md §4), so holding it is the membership question —
+	//	answered from the RESOLVED fold (info ∪ held promotions ∪ held unit-combat classes), which is what lets
+	//	a promotion grant a hiding method at all; the info alone never saw one.
 	const int iMethodSkill = GC.getMethodSkill(eInvisibleType);
 
-	if (iMethodSkill < 0 || !getUnitInfo().hasSkill(iMethodSkill))
+	if (iMethodSkill < 0 || !m_resolvedValues.holdsMethodSkill(iMethodSkill))
 	{
 		return false;
 	}
-	return !isNegatesInvisible(eInvisibleType) && !m_pUnitInfo->hasSkill(CLS_SKILL_NO_INVISIBILITY) && getNoInvisibilityCount() < 1;
+	if (isNegatesInvisible(eInvisibleType) || m_pUnitInfo->hasSkill(CLS_SKILL_NO_INVISIBILITY))
+	{
+		return false;
+	}
+	//	A GRANTED canceller (a promotion or combat class conferring `noInvisibility`) applies under the contest
+	//	option alone — the same gating the per-combat count it replaces carried.
+	return !(GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK) && m_resolvedValues.noInvisibilityGranted());
 }
 
 bool CvUnit::hasAnyInvisibilityType() const
@@ -24990,7 +24893,8 @@ bool CvUnit::hasAnyInvisibilityType() const
 void CvUnit::setHasAnyInvisibility()
 {
 	PROFILE_EXTRA_FUNC();
-	if (m_pUnitInfo->hasSkill(CLS_SKILL_NO_INVISIBILITY) || getNoInvisibilityCount() > 0)
+	if (m_pUnitInfo->hasSkill(CLS_SKILL_NO_INVISIBILITY)
+	|| GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK) && m_resolvedValues.noInvisibilityGranted())
 	{
 		m_bHasAnyInvisibility = false;
 		return;
@@ -25158,11 +25062,6 @@ void CvUnit::doRemoveInvestigatedPromotionCheck()
 			}
 		}
 	}
-}
-
-bool CvUnit::isWantedbyPlayer(PlayerTypes ePlayer) const
-{
-	return (m_pPlayerInvestigated == ePlayer);
 }
 
 bool CvUnit::isWanted() const
@@ -25468,11 +25367,6 @@ bool CvUnit::isAssassin() const
 	return m_iAssassinCount + m_pUnitInfo->hasSkill(CLS_SKILL_ASSASSIN) > 0;
 }
 
-int CvUnit::getAssassinCount() const
-{
-	return m_iAssassinCount;
-}
-
 void CvUnit::changeAssassinCount(int iChange)
 {
 	m_iAssassinCount += iChange;
@@ -25626,11 +25520,6 @@ void CvUnit::doSetDefaultStatuses()
 
 
 
-bool CvUnit::isArmed() const
-{
-	return m_bIsArmed || hasStatus(STATUS_PARALYZED);
-}
-
 
 
 
@@ -25714,15 +25603,6 @@ CvCity* CvUnit::getCityOfOrigin() const
 		}
 	}
 	return NULL;
-}
-
-bool CvUnit::isPromotionFromTrait(PromotionTypes ePromotion) const
-{
-	FASSERT_BOUNDS(0, GC.getNumPromotionInfos(), ePromotion);
-
-	const PromotionKeyedInfo* info = findPromotionKeyedInfo(ePromotion);
-
-	return info == NULL ? false : info->m_iPromotionFromTraitCount > 0;
 }
 
 void CvUnit::setPromotionFromTrait(PromotionTypes ePromotion, bool iChange)

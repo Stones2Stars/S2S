@@ -28,17 +28,6 @@
 
 ## Blocked on an owner ruling
 
-- Make the `savemigration.txt` reader and its own header comment agree on format. The header (lines 15–17)
-  documents literal `CUT:` / `RENAME:` line prefixes, but the parser (`sm_ensureLoaded`/`sm_token`,
-  `CvTaggedSaveFormatWrapper.cpp`) never checks for that text — it distinguishes a rename from a cut purely by
-  whether the line contains `->`, and takes the first whitespace-delimited `Class::field`-shaped token. A line
-  actually written in the documented `CUT: ClassName::m_field` form is silently dropped (the leading `CUT:`
-  token has no `::`, so `sm_token` returns empty and nothing is registered) — every live entry in the file
-  already avoids this by omitting the prefix, so nothing is desyncing today, but the file's own documented
-  format is a footgun for the next entry written to match it ([save.md §3](../../specs/save.md), which documents
-  the bare-token form the parser actually implements). Settle which side is authoritative — extend the parser to
-  strip an optional `CUT:`/`RENAME:` prefix, or correct the header comment to the bare-token format — and make
-  the two agree.
 - Rule on the river-attack term for a CITY defender (`CvUnit::getDefenderCombatValues`). Its two branches
   disagree: attacking across a river hands an ordinary defender `-RIVER_ATTACK_MODIFIER`, while the city branch
   is `min(0, riverDefensePenalty - RIVER_ATTACK_MODIFIER)` — capped at zero, so a city defender can never
@@ -185,11 +174,6 @@
   pre-scaling number while the live plot answers the scaled one
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation): the arithmetic is
   shared, the operands must be too).
-- **Re-point `CvPlayer::getExtraYieldThresholds` / `getLessYieldThresholds`, or delete them.** They read the
-  channel through `realizedAtEmpire`, which SUMS — but the interval is the smallest positive one held, so the
-  summed answer is wrong by construction. Their only callers are the Python bindings; the live feed uses
-  `updateExtraYieldThreshold`'s min selection instead.
-
 - **Land the UNKINDED MEMBERS — authored deposits `readJson` drops.** ⛔ Read the `[READJSON] unkinded-member
   <family>.<member>` census before anything else on this — it is the authoritative worklist, one grep of the
   load log. Each one resolves to exactly one disposition:
@@ -275,11 +259,6 @@
   [event-spine.md](../../specs/event-spine.md)) — nothing STATIC may depend on a LIVE option.
   ⛔ Add a readJson check refusing a `MODDERGAMEOPTION_` condition, so the split is unsayable to violate.
 
-- Make `hideAndSeek` a CACHED BLOCK on the CITY, as the UNIT side already is
-  ([state-repositories.md](../../architecture/state-repositories.md) — a SECTION folds beside the slot table on
-  the same mark). The city side marks on its building facts.
-  ⚠ `getInvisibleType()` still reads the INFO alone, so a promotion-granted invisibility type does not work at
-  all — it wants the same folded read.
 - The PLAYER-ALERT consumer, and the alerts owed to it: "power restored" (`TXT_KEY_MISC_POWER_RESTORED`, now
   hangs on `SEVT_CITY_STATUS_REMOVED` carrying `CITYSTATUS_POWER_DISABLED`); the CAN_RETRAIN/NO_RETRAIN pairs
   the promotion KEEP gate used to emit per failing axis (terrain / feature / plot bonus /

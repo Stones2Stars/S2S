@@ -2371,10 +2371,14 @@ namespace
 			{
 				if (pPlayer != NULL && kEvent.iA >= 0)
 				{
-					const CvUnit* pUnit = pPlayer->getUnit(kEvent.iA);
+					CvUnit* pUnit = GET_PLAYER((PlayerTypes)kEvent.iC).getUnit(kEvent.iA);
 					if (pUnit != NULL)
 					{
 						pUnit->markResolvedValuesDirty();
+						// The held set moved, so the hide-membership fold moved with it -- re-derive the cached
+						// does-this-unit-hide-at-all verdict off the fresh fold, the same mark-then-rederive
+						// order the load path runs at the end of CvUnit::read.
+						pUnit->setHasAnyInvisibility();
 					}
 				}
 				break;

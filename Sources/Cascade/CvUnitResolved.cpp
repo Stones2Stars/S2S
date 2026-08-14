@@ -6,6 +6,7 @@
 #include "CvUnitResolved.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvUnit.h"
+#include "Infos/CvClassificationIds.h"
 #include "Infos/CvInfo.h"
 #include "Infos/CvUnitInfo.h"
 #include "Infos/CvPromotionInfo.h"
@@ -91,7 +92,8 @@ namespace
 
 	// ONE contributor's share of the `hideAndSeek` BLOCK, added in. The block is a SECTION rather than a
 	// modifier-family address, so it folds beside the slot table rather than into it (see the header).
-	void urs_addHideAndSeek(const CvHideAndSeekSection& kBlock, UnitResolvedHideAndSeek& kOut)
+	void urs_addHideAndSeek(const CvInfo& kCarrier, const CvHideAndSeekSection& kBlock,
+		const std::vector<int>& aMethodSkills, UnitResolvedHideAndSeek& kOut)
 	{
 		kOut.concealment += kBlock.concealment;
 
@@ -102,6 +104,30 @@ namespace
 		for (size_t iRow = 0; iRow < aRows.size(); ++iRow)
 		{
 			kOut.addDetection(aRows[iRow].first, aRows[iRow].second);
+		}
+
+		// THE MEMBERSHIP FOLD -- which methods this carrier grants (or revokes) the unit hiding by. The skill
+		// plane is the block's membership filter (vision.md §4), so it folds here beside the magnitudes, over
+		// the hoisted method-skill list -- never the whole skill registry.
+		for (size_t iSkill = 0; iSkill < aMethodSkills.size(); ++iSkill)
+		{
+			const int iMethodSkill = aMethodSkills[iSkill];
+			if (kCarrier.hasSkill(iMethodSkill))
+			{
+				kOut.addMethodSkill(iMethodSkill, 1);
+			}
+			if (kCarrier.revokesSkill(iMethodSkill))
+			{
+				kOut.addMethodSkill(iMethodSkill, -1);
+			}
+		}
+		if (kCarrier.hasSkill(CLS_SKILL_NO_INVISIBILITY))
+		{
+			kOut.noInvisibilityNet += 1;
+		}
+		if (kCarrier.revokesSkill(CLS_SKILL_NO_INVISIBILITY))
+		{
+			kOut.noInvisibilityNet -= 1;
 		}
 	}
 
@@ -155,11 +181,25 @@ static void urs_gatherAll(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SL
 	const int iSelfHealLine = GC.getInfoTypeForString("PROMOTIONLINE_SELF_HEAL", /*bHideAssert*/true);
 	const int iSelfRepairLine = GC.getInfoTypeForString("PROMOTIONLINE_SELF_REPAIR", /*bHideAssert*/true);
 
+	// The METHOD-SKILL list, hoisted once per gather: which SKILL_* ids are hiding methods at all. Both the
+	// detection rows and the membership fold key on the method's SKILL, never the INVISIBLE_ index
+	// (vision.md §4).
+	std::vector<int> aMethodSkills;
+	for (int iMethod = 0; iMethod < GC.getNumInvisibleInfos(); ++iMethod)
+	{
+		const int iMethodSkill = GC.getMethodSkill((InvisibleTypes)iMethod);
+		if (iMethodSkill >= 0
+			&& std::find(aMethodSkills.begin(), aMethodSkills.end(), iMethodSkill) == aMethodSkills.end())
+		{
+			aMethodSkills.push_back(iMethodSkill);
+		}
+	}
+
 	// THE HELD SET, in full: the unit's own type, every held promotion, every held unit-combat class. A unit's
 	// combat classes are its primary + subs + promotion-granted, and CvUnit::isHasUnitCombat already answers the
 	// composed question, so this needs no second derivation of the class set.
 	urs_addContributor(&kUnit.getUnitInfo(), aiOut);
-	urs_addHideAndSeek(kUnit.getUnitInfo().getHideAndSeek(), kBlockOut);
+	urs_addHideAndSeek(kUnit.getUnitInfo(), kUnit.getUnitInfo().getHideAndSeek(), aMethodSkills, kBlockOut);
 
 	// ⛔ STRENGTH IS THE ONE SLOT WHOSE BASE IS PER-UNIT STATE, NOT A FUNCTION OF THE TYPE (owner): WorldBuilder
 	// edits an individual unit's strength, and the WBS scenario format persists it (`CombatStr=`, written only
@@ -187,7 +227,7 @@ static void urs_gatherAll(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SL
 		{
 			const CvPromotionInfo& kPromotion = GC.getPromotionInfo(itPromotion->first);
 			urs_addContributor(&kPromotion, aiOut);
-			urs_addHideAndSeek(kPromotion.getHideAndSeek(), kBlockOut);
+			urs_addHideAndSeek(kPromotion, kPromotion.getHideAndSeek(), aMethodSkills, kBlockOut);
 
 			const int iLine = (int)kPromotion.getPromotionLine();
 			if (iLine >= 0 && (iLine == iSelfHealLine || iLine == iSelfRepairLine))
@@ -209,7 +249,7 @@ static void urs_gatherAll(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SL
 		{
 			const CvUnitCombatInfo& kCombat = GC.getUnitCombatInfo(itCombat->first);
 			urs_addContributor(&kCombat, aiOut);
-			urs_addHideAndSeek(kCombat.getHideAndSeek(), kBlockOut);
+			urs_addHideAndSeek(kCombat, kCombat.getHideAndSeek(), aMethodSkills, kBlockOut);
 		}
 	}
 
@@ -261,6 +301,35 @@ void UnitResolvedHideAndSeek::addDetection(int iMethodSkillId, int iValue)
 		}
 	}
 	detection.push_back(std::make_pair(iMethodSkillId, iValue));
+}
+
+bool UnitResolvedHideAndSeek::holdsMethodSkill(int iMethodSkillId) const
+{
+	if (iMethodSkillId < 0)
+	{
+		return false;
+	}
+	for (size_t iRow = 0; iRow < methodSkills.size(); ++iRow)
+	{
+		if (methodSkills[iRow].first == iMethodSkillId)
+		{
+			return methodSkills[iRow].second > 0;
+		}
+	}
+	return false;
+}
+
+void UnitResolvedHideAndSeek::addMethodSkill(int iMethodSkillId, int iNet)
+{
+	for (size_t iRow = 0; iRow < methodSkills.size(); ++iRow)
+	{
+		if (methodSkills[iRow].first == iMethodSkillId)
+		{
+			methodSkills[iRow].second += iNet;
+			return;
+		}
+	}
+	methodSkills.push_back(std::make_pair(iMethodSkillId, iNet));
 }
 
 void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS])

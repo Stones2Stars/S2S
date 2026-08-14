@@ -3812,7 +3812,7 @@ namespace {
 	// player still owns. The worked case is the complex-trait re-key (`TRAIT_X` -> `TRAIT_COMPLEX_X`,
 	// [modifier.md §4](../../docs/specs/modifier.md)), which is 240 records of the complex set.
 	// ⚑ It reuses the SAME `old -> new` table `savemigration.txt` already carries, and the two key spaces cannot
-	// collide: a FIELD rename is `Class::field` and a TYPE rename is a bare `INFOTYPE_NAME`.
+	// collide: a FIELD rename is `Class::field` and a TYPE rename is `TYPE::INFOTYPE_NAME` (the namespace note below).
 	// ⚠ The live name is tried FIRST, so a rename entry can never shadow a Type that still exists -- a stale
 	// entry left behind after a name is reused costs nothing.
 	// ⚖ A SAVE IS RESOLVED INTO THE ACTIVE TRAIT SET (owner): *"if you see it is a complex trait game, you make

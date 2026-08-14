@@ -179,10 +179,14 @@ case to encode.
 > that number and reads 0 under the one it was authored for — silently, since `setSpotIntensity` stores nothing
 > for a zero.
 >
-> ⛔ **KNOWN BOUND — a PROMOTION-granted method does not register yet.** Both the method read and the membership
-> test ask the unit's INFO, while **73 promotions author a method** (below). Closing it wants a resolved per-unit
-> skill plane dirtied on promotion change — the shape the resolved detection block already uses — never a
-> per-read walk of every promotion inside `isInvisible`, which is one of the engine's hottest reads.
+> ⚑ **A PROMOTION-GRANTED METHOD REGISTERS THROUGH THE RESOLVED FOLD.** The membership test
+> (`hasInvisibilityType`) reads the unit's resolved `hideAndSeek` block — method-skill grants minus revokes
+> over info ∪ held promotions ∪ held unit-combat classes, gathered on the promotion/combat facts — never a
+> per-read walk of the carriers inside `isInvisible`, which is one of the engine's hottest reads. The
+> `noInvisibility` canceller skill rides the same fold.
+> ⛔ **The CLASSIC method read stays the INFO's own datum** (§ the classic callout below): only a UNIT authors
+> `hideAndSeek.method`, so there is nothing promotion- or combat-class-granted for the classic read to see —
+> deriving it from the skill union is the border-patrol bug, never a gap to close.
 >
 > ⚑ **WHY THIS MATTERS MORE THAN TIDINESS — the mechanic is playable but not UNDERSTANDABLE (owner):**
 > *"it's expressed in icons, and nowhere is it really stated what counters what"*, with four kinds of
@@ -235,6 +239,19 @@ bled into its classic-visibility evaluation for years** (owner), so the two must
 where the same bleed can re-form. The contest data therefore lives in **`hideAndSeek`**, the option-gated block
 ([json.md §9](json.md): a dedicated system's data lives in its own block, and the module is ON iff that block
 exists and is non-empty), and `vision` keeps only the budget — strength, `elevation`, `obstruction`.
+
+> **⚖ THE CONTEST'S CARRIERS TODAY ARE UNITS, PROMOTIONS AND UNIT-COMBAT CLASSES (owner): no building shows
+> hidden units, classically or in the contest — detection travels with seeker UNITS ("various kinds of
+> dogs").** The absence is INHERITED DESIGN, not a data accident: vanilla Civ4 deliberately had no detection
+> on buildings at all, which is why no building surface down the whole lineage ever carried one. So the block
+> folds onto the UNIT's resolved plane and nowhere else today.
+> ⚖ **A BUILDING-FED CITY PLANE IS UN-KILLED FORWARD INTENT, not a dead idea (owner): a scenario is wanted
+> where buildings do it — a NEW mechanic, since legacy never had one — so the city must stay PREPARED for
+> it.** When data authors a building `hideAndSeek` block, the city gains its own cached fold over its
+> OPERATING buildings, marked on the building facts (the unit block's shape one scope over). ⛔ Until that
+> data exists nothing is built (a shape with zero authorings is an example, not live data —
+> [triggers.md](triggers.md)); a building authoring the block today surfaces on the readJson
+> unconsumed-section census, which is the fail-loud signal that the wiring's moment has come.
 
 > **⛔ VISIBILITY ITSELF IS NOT A SKILL, AND IS NOT MODELLED AS ONE BEYOND FILTERING (owner): *"if visibility was
 > a skill it would only be absolute values, and hide and seek has gradient values."*** A skill is a pure boolean
