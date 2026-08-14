@@ -2040,6 +2040,164 @@ def apply_property_bands(results, pseudo):
     return banded
 
 
+def _el_prune_operate(node, stats, keep_building_ids):
+    """Drop per-city/per-plot leaves from an EMPIRE-LEVEL member's requires.operate tree (enabler-spec §2 /
+    DEC-empire-level-buildings: an empire-held building's gates are empire-evaluable; the per-city half of any
+    such question already lives on the per-city consumers' own gates). Returns the pruned node or None.
+
+    Dropped: dict atoms at plot/city scope or carrying a connection/vicinity axis (the MAPCATEGORY plot gates,
+    the city bonus-vicinity atoms), and bare predicate leaves (HAS_*/IS_* -- city/plot questions by nature).
+    Kept: TECH_/CIVIC_/GAMEOPTION_ leaves, BUILDING_ leaves (they resolve at EMPIRE via the implied-scope rule
+    once the referenced building is itself empire-level), and dict atoms at empire/team/world scope."""
+    if isinstance(node, str):
+        if node.startswith(("TECH_", "CIVIC_", "GAMEOPTION_", "HERITAGE_", "TRAIT_")):
+            return node
+        if node.startswith("BUILDING_"):
+            if node in keep_building_ids:
+                return node   # a fellow member -- an empire fact
+            # a per-city building on an empire-held gate: the per-city question lives on the per-city
+            # consumers' own gates, so it is dropped here (enabler-spec §2)
+            stats["operate_building_ref_outside_class"].append(node)
+            return None
+        stats["operate_dropped"][node.split("_")[0]] += 1
+        return None
+    if isinstance(node, dict):
+        if "type" in node and not any(k in node for k in ("all", "any", "noneOf", "dormant")):
+            scope = node.get("scope")
+            if scope in ("plot", "city") or "connection" in node or "vicinity" in node:
+                stats["operate_dropped"][str(node.get("type", "?")).split("_")[0]] += 1
+                return None
+            return node
+        out = OrderedDict()
+        for k, v in node.items():
+            if k in ("all", "any", "noneOf"):
+                kept = [c for c in (_el_prune_operate(c, stats, keep_building_ids) for c in v) if c is not None]
+                if kept:
+                    out[k] = kept
+            else:
+                out[k] = v   # dormant lists, enabled/disabled clauses ride as-is
+        return out if out else None
+    return node
+
+
+def apply_empire_level(results):
+    """The EMPIRE-LEVEL BUILDING derivation (DEC-empire-level-buildings, enabler-spec §2). Membership is
+    EMPIRE-UNIFORMITY BY CONSTRUCTION: a building that self-grants a copy into every city (grants.buildings on
+    itself at empire scope -- the folklores, the elemental-knowledge and requirement markers), plus the
+    notConstructible effect markers whose only arrival is another building's empire-wide grant. Presence of such
+    a building carries no per-city information, so it is held by the PLAYER, once, and is never in any city.
+
+    Transforms per member: identity.empireLevel = true (the tag IS the type's domain, so bare atoms naming it
+    imply EMPIRE scope -- json.md §3.4); the self-grant entry is DELETED (holding at the player IS the
+    empire-wide effect); every family node's `city` scope re-keys to `empire` (the deposit rolls down to every
+    city at the read, exactly as a civic's -- modifier.md §1); per-city atoms are pruned from requires.operate
+    (empire-held gates are empire-evaluable; requires.build on a constructible member is untouched -- it is
+    evaluated in the BUILDING city, the project split). On every grantor, the `scope: "empire"` qualifier on an
+    entry targeting a member is dropped as redundant -- placement is decided by the target's own level.
+
+    The grantor->marker COLLAPSE pairs (a source existing only to deliver its marker) are a separate Store-rekey
+    pass, not taken here: 432 external references across five categories re-point when a pair collapses, which is
+    the trait-rekey shape (one rename definition on the Store, every curator regenerated). Mutates results;
+    returns the stats dict."""
+    from collections import Counter
+    stats = {"members": 0, "selfgrant": 0, "markers": 0, "rescoped_nodes": 0,
+             "selfgrants_deleted": 0, "scope_qualifiers_dropped": 0,
+             "operate_dropped": Counter(), "operate_building_ref_outside_class": [],
+             "city_empire_merge_conflicts": [], "families_skipped": Counter()}
+    # -- membership ------------------------------------------------------------------------------------------
+    selfgrant = set()
+    empire_grant_targets = set()
+    for typ, obj in results.items():
+        for e in (obj.get("grants", {}) or {}).get("buildings", []) or []:
+            if isinstance(e, dict) and e.get("scope") == "empire":
+                if e.get("building") == typ:
+                    selfgrant.add(typ)
+                else:
+                    empire_grant_targets.add(e.get("building"))
+    markers = set(t for t in empire_grant_targets
+                  if t in results and (results[t].get("identity", {}) or {}).get("notConstructible"))
+    members = selfgrant | markers
+    stats["selfgrant"], stats["markers"], stats["members"] = len(selfgrant), len(markers), len(members)
+    # -- per-member transforms -------------------------------------------------------------------------------
+    NEVER_RESCOPE = frozenset(("tradeRoutes", "replacedBy"))   # not scope-keyed family nodes
+    for typ in sorted(members):
+        obj = results[typ]
+        ident = OrderedDict(obj.get("identity") or {})
+        ident["empireLevel"] = True
+        obj["identity"] = ident
+        g = obj.get("grants")
+        if isinstance(g, dict) and isinstance(g.get("buildings"), list):
+            kept = [e for e in g["buildings"]
+                    if not (isinstance(e, dict) and e.get("building") == typ and e.get("scope") == "empire")]
+            stats["selfgrants_deleted"] += len(g["buildings"]) - len(kept)
+            if kept:
+                g["buildings"] = kept
+            else:
+                g.pop("buildings", None)
+            if not g:
+                obj.pop("grants", None)
+        for fam, node in list(obj.items()):
+            if fam in _RESERVED_TOPLEVEL or not isinstance(node, dict):
+                continue
+            if fam in NEVER_RESCOPE:
+                stats["families_skipped"][fam] += 1
+                continue
+            if "city" in node:
+                if "empire" in node:
+                    stats["city_empire_merge_conflicts"].append((typ, fam))
+                    continue
+                new = OrderedDict()
+                for scope, inner in node.items():
+                    new["empire" if scope == "city" else scope] = inner
+                obj[fam] = new
+                stats["rescoped_nodes"] += 1
+        req = obj.get("requires")
+        if isinstance(req, dict) and req.get("operate") is not None:
+            pruned = _el_prune_operate(req["operate"], stats, members)
+            if pruned:
+                req["operate"] = pruned
+            else:
+                req.pop("operate", None)
+            if not req:
+                obj.pop("requires", None)
+    # -- grantor-side qualifier drop -------------------------------------------------------------------------
+    for typ, obj in results.items():
+        g = obj.get("grants")
+        if not (isinstance(g, dict) and isinstance(g.get("buildings"), list)):
+            continue
+        for e in g["buildings"]:
+            if isinstance(e, dict) and e.get("building") in members and e.get("scope") == "empire":
+                del e["scope"]
+                stats["scope_qualifiers_dropped"] += 1
+    # -- external-atom normalization -------------------------------------------------------------------------
+    # An atom naming a member is a held-once EMPIRE fact (0/1), so count semantics against it are gone: a
+    # min > 1 could only ever be met by the per-city copies this pass deletes (the REMAINS_* "folklore in >= 3
+    # cities" gates -- a STATED behaviour change: the atom reduces to presence). The dict form collapses to the
+    # bare id (scope implied EMPIRE by the tag, json.md §3.4); its never-enforced `scaling` marker goes with it.
+    stats["external_atoms_normalized"] = []
+    def _norm(node, owner):
+        if isinstance(node, dict):
+            for k, v in list(node.items()):
+                if isinstance(v, list):
+                    for i, c in enumerate(v):
+                        if isinstance(c, dict) and c.get("type") in members and \
+                           not any(x in c for x in ("all", "any", "noneOf", "dormant")):
+                            if c.get("min", 1) > 1 or "scaling" in c:
+                                stats["external_atoms_normalized"].append((owner, json.dumps(c)))
+                            v[i] = c["type"]
+                        else:
+                            _norm(c, owner)
+                elif isinstance(v, dict):
+                    _norm(v, owner)
+    for typ, obj in results.items():
+        if typ in members:
+            continue
+        for sect in ("requires", "enabled", "disabled"):
+            if isinstance(obj.get(sect), dict):
+                _norm(obj[sect], typ)
+    return stats
+
+
 def build_era(store):
     """tech Type -> era short name (from the tech XML <Era>)."""
     cache = {}
@@ -2079,6 +2237,30 @@ def main():
     pseudo = property_band_buildings()
     n_band = apply_property_bands(results, pseudo)
     print("PROPERTY BANDS: %d pseudobuildings | %d got requires.operate band atom" % (len(pseudo), n_band))
+
+    # EMPIRE-LEVEL derivation (DEC-empire-level-buildings): the empire-uniform class moves to player-held.
+    el = apply_empire_level(results)
+    print("EMPIRE LEVEL: %d members (%d self-grant + %d markers) | %d self-grants deleted | "
+          "%d family nodes city->empire | %d grant scope qualifiers dropped"
+          % (el["members"], el["selfgrant"], el["markers"], el["selfgrants_deleted"],
+             el["rescoped_nodes"], el["scope_qualifiers_dropped"]))
+    if el["operate_dropped"]:
+        print("  operate per-city atoms pruned: %s"
+              % ", ".join("%s=%d" % kv for kv in sorted(el["operate_dropped"].items())))
+    if el["operate_building_ref_outside_class"]:
+        print("  operate per-city BUILDING refs dropped from member gates: %s"
+              % ", ".join(sorted(set(el["operate_building_ref_outside_class"]))))
+    if el["city_empire_merge_conflicts"]:
+        print("  !! city+empire scope collision (NOT re-scoped -- review): %s"
+              % ", ".join("%s.%s" % p for p in el["city_empire_merge_conflicts"]))
+    if el["families_skipped"]:
+        print("  non-scope-keyed sections skipped on members: %s"
+              % ", ".join("%s=%d" % kv for kv in sorted(el["families_skipped"].items())))
+    if el["external_atoms_normalized"]:
+        print("  external count atoms on members reduced to PRESENCE (stated behaviour change): %d"
+              % len(el["external_atoms_normalized"]))
+        for owner, atom in el["external_atoms_normalized"]:
+            print("    %s: %s" % (owner, atom))
 
     from collections import Counter
     leftover = Counter()

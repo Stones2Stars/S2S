@@ -10,18 +10,13 @@
  "requires": {
   "operate": {
    "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT",
     "BUILDING_FOLKLORE_E_SEA",
-    "TECH_ORAL_TRADITION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_ORAL_TRADITION"
    ]
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": [
     1,
     {
@@ -48,7 +43,7 @@
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 0.1,
@@ -73,14 +68,6 @@
    ]
   }
  },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_FOLKLORE_BELUGA",
-    "scope": "empire"
-   }
-  ]
- },
  "attributes": {
   "destroyedOnCapture": true
  },
@@ -101,6 +88,7 @@
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

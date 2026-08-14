@@ -27,8 +27,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION"
    }
   ]
  },

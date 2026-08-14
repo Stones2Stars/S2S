@@ -28,8 +28,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_MARS_CYCLER",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_MARS_CYCLER"
    }
   ]
  },

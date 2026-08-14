@@ -3,26 +3,22 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_URBAN_CULTURE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_URBAN_CULTURE"
    ]
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "maintenance": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -15
   }
  },
@@ -44,6 +40,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

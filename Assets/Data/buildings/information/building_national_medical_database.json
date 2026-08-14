@@ -54,8 +54,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_MEDICAL_DATABASE",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_MEDICAL_DATABASE"
    }
   ]
  },

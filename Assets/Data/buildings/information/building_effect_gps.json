@@ -10,16 +10,12 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_COMMUNICATION_NETWORKS",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_COMMUNICATION_NETWORKS"
    ]
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 8,
@@ -37,7 +33,7 @@
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 8,
@@ -68,6 +64,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

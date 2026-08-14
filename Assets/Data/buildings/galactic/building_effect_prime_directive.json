@@ -3,26 +3,22 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_ASTROIMPERIALISM",
-    {
-     "type": "MAPCATEGORY_CISLUNAR",
-     "scope": "plot"
-    }
+    "TECH_ASTROIMPERIALISM"
    ]
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": 5
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 10
   }
  },
  "buildRate": {
-  "city": {
+  "empire": {
    "units": {
     "percent": [
      {
@@ -48,6 +44,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_CISLUNAR"
-  ]
+  ],
+  "empireLevel": true
  }
 }

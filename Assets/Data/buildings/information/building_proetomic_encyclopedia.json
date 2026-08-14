@@ -76,8 +76,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_ENHANCED_SPECIES",
-    "scope": "empire"
+    "building": "BUILDING_ENHANCED_SPECIES"
    }
   ]
  },

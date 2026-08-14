@@ -11,11 +11,7 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_FOLDING_SPACE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_FOLDING_SPACE"
    ]
   }
  },
@@ -33,6 +29,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

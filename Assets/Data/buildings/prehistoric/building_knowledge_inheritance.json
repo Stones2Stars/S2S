@@ -32,27 +32,19 @@
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "PROPERTY_EDUCATION": {
-  "city": {
+  "empire": {
    "flat": 2
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_KNOWLEDGE_INHERITANCE",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 40,
@@ -88,6 +80,7 @@
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

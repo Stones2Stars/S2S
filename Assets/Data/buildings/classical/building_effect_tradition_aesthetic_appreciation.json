@@ -8,21 +8,17 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_AESTHETICS",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_AESTHETICS"
    ]
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -2
   }
  },
  "PROPERTY_WATER_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -2
   }
  },
@@ -57,6 +53,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

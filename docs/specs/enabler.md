@@ -171,14 +171,53 @@ techs are monotonic, no `operate`.
 **Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
 via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 
-> **⚖ MOVING THE ALL-ENCOMPASSING BUILDINGS TO EMPIRE SCOPE IS WANTED, AND IS OUTSIDE THIS REWORK (owner).**
-> It is forward intent, not a #430 instruction — do not read it as one, and do not build a player-held building
-> instance for it.
-> ⛔ **In particular it is NOT how the free building is served.** That is a GRANT: the source names the target
-> in `grants.buildings` and the receiving city genuinely HAS the building, which is load-bearing because the
-> authored data gates on holding those targets in over a thousand `requires` atoms — an empire-scope effect-only
-> shape would satisfy none of them ([legacy-grant-apply-sites.md](../reference/legacy-grant-apply-sites.md) §4
-> carries the ruling and the two-leg apply).
+> **⚖ THE EMPIRE-LEVEL BUILDING (`identity.empireLevel`) — a building the PLAYER holds, once (owner).** The home
+> of [DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings).
+> **Membership is EMPIRE-UNIFORMITY BY CONSTRUCTION:** a building whose presence cannot vary per city — the
+> class that self-granted a copy into every city (`grants.buildings` on itself at empire scope: the folklores,
+> the elemental-knowledge and requirement markers), plus the `notConstructible` effect markers whose ONLY
+> arrival is another source's empire-wide grant. A per-city copy of such a building carries no information
+> beyond "the empire has it", so the copies are the wrong shape: the building is held by the PLAYER and is
+> never IN any city. The curator derives the tag from that membership rule — it is never hand-authored per
+> entity.
+> - **HAVE is the player's held set** — genuine non-derivable state, serialized on `CvPlayer`
+>   ([save.md §5](save.md)), announced as `SEVT_EMPIRE_BUILDING_ADDED / _REMOVED` with the in-read half
+>   emitted from `CvPlayer::read` ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)), and
+>   forwarded through `EmpireContext` beside the civic / trait / heritage axes
+>   ([contexts.md](../architecture/contexts.md)).
+> - **An atom naming one resolves at EMPIRE scope by the implied-scope rule** ([json.md §3.4](json.md): scope
+>   is implied from the type's DOMAIN, and the tag IS the type's domain) — so the bare `requires`/`per` atoms
+>   naming class members stay bare and answer from the held set; a count atom reads the tally's empire domain,
+>   which the held set feeds.
+> - **Its deposits author at EMPIRE scope** and roll down to every city at the read, exactly as a civic's do
+>   ([modifier.md §1](modifier.md)) — no fan, no per-city copies. Per-city variation stays expressible as
+>   city-conditioned entries (the city-realization law,
+>   [state-repositories.md](../architecture/state-repositories.md)).
+> - **The BUILD path is the PROJECT precedent (§7.1), exactly:** a constructible member is offered on the CITY
+>   production queue; its axes are empire-held so the frontier is the PLAYER's domain — per-city copies would
+>   be byte-identical duplicated state that must never drift — and a city-local atom (the plot map-category
+>   gate) stays a live check at the gate, the same split projects already use. Completion acquires it for the
+>   PLAYER, and it leaves every city's offer at once (the built leave-rule, keyed on the held set). A
+>   `notConstructible` member is placed by its own system (the grants machine, the outcome `constructs` verb)
+>   through the ONE placement choke point, which routes an empire-level target to the player — the placing
+>   systems never learn the tag exists.
+> - **The self-grant is DELETED with the copies.** Holding at the player IS the empire-wide effect, so the
+>   `grants.buildings` self-entry, the construction fan over standing cities and the city-starts-existing fold
+>   all cease to exist for this class — and a city capture or culture flip moves NOTHING for it, which is the
+>   point (owner: it *"vastly reduces the amount of domain-event flips we have to handle when a city gets
+>   taken"*).
+> - **Removal is the ordinary machinery at the holder:** `obsoletedBy`/`whenObsolete` and `disables` evaluate
+>   against the player exactly as they evaluate against a city. An empire-level building's gates are
+>   empire-evaluable by construction; a per-city atom surviving in one's `requires.operate` is a data error the
+>   curator resolves (the per-city half of such a question already lives on the per-city consumers' own gates).
+> - ⚠ **An old save's per-city copies NORMALIZE at load:** the city read routes an `empireLevel` id to the
+>   owner — idempotent, so N city copies fold to held-once — and the city keeps nothing.
+>
+> ⛔ **The per-city GRANT stays the model for everything else.** A wonder granting an ordinary constructible
+> building to every city (a Granary, Irrigation Canals) grants real per-city copies whose presence genuinely
+> varies — that is the two-leg apply of
+> [legacy-grant-apply-sites.md §4](../reference/legacy-grant-apply-sites.md), unchanged. The line is
+> EMPIRE-UNIFORMITY: presence that cannot vary per city moves up; presence that can stays down.
 
 > **The two fates are two mechanisms — nothing to declare.** `disables` = **destroy** (a law/ban
 > removes it; rebuilt on repeal); the target's `requires.operate.dormant` = **dormant** (it stays put,
@@ -228,12 +267,12 @@ toggled by its `requires.operate` threshold, which is what deletes the legacy pe
 the property system placing its own entities, and it stays exactly as it is. What does not follow is the
 generalization from it.
 
-⚠ **A pseudobuilding representing a CHOICE (an ordinance ENACTED, a culture HELD, a folklore requirement) is not
-merely PRESENT everywhere by the same `notConstructible` placement — it is ACTIVE everywhere too, and that is a
-second, separate defect.** Its `requires.operate` names only a tech and a map category, never the choice itself,
-so nothing stops it operating in every city regardless of what the player actually enacted or holds. Reading
-ACTIVE instead of PRESENT at the gate fixes nothing — both answers are already yes; what is missing is an
-authored condition that expresses the choice, which is open ([todo.md](../plans/structural-cleanup/todo.md)).
+⚠ **A pseudobuilding representing a CHOICE (an ordinance ENACTED, a culture HELD, a folklore requirement) was
+the second, separate defect of the per-city placement: present everywhere AND active everywhere, its
+`requires.operate` naming only a tech and a map category — never the choice itself.** The empire-level move
+(§2, [DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings)) resolves it
+structurally for that class: the player HOLDS the marker iff the choice was actually made, so holding IS the
+choice and no per-city active-everywhere state exists to get wrong.
 
 ⛔ **A band bound is a SIGNED threshold, so "absent" can never be encoded as a negative.** A property value is
 legitimately negative (the low-education ladder is authored entirely in negative bands), so a `min`/`max` absent-test

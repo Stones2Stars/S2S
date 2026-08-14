@@ -3,41 +3,37 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_PLANETARY_TERRAFORMING",
-    {
-     "type": "MAPCATEGORY_VENUSIAN",
-     "scope": "plot"
-    }
+    "TECH_PLANETARY_TERRAFORMING"
    ]
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 20
   }
  },
  "gold": {
-  "city": {
+  "empire": {
    "flat": 125
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": 250
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 50
   }
  },
  "PROPERTY_WATER_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -50
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -50
   }
  },
@@ -56,6 +52,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_VENUSIAN"
-  ]
+  ],
+  "empireLevel": true
  }
 }

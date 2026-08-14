@@ -6,19 +6,8 @@
    "BUILDING_FOLKLORE_T_RAPTORS"
   ]
  },
- "requires": {
-  "operate": {
-   "all": [
-    "BUILDING_FOLKLORE_REQUIREMENT",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  }
- },
  "research": {
-  "city": {
+  "empire": {
    "flat": [
     1,
     {
@@ -45,7 +34,7 @@
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 0.1,
@@ -70,14 +59,6 @@
    ]
   }
  },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_FOLKLORE_HAASTS_EAGLE",
-    "scope": "empire"
-   }
-  ]
- },
  "attributes": {
   "destroyedOnCapture": true
  },
@@ -98,6 +79,7 @@
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

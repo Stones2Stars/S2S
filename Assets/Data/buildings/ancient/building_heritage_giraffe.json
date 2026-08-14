@@ -26,8 +26,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_HERITAGE_GIRAFFES",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_HERITAGE_GIRAFFES"
    }
   ]
  },

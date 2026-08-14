@@ -43,8 +43,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_TRADITION_ARCHERY",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_TRADITION_ARCHERY"
    }
   ]
  },

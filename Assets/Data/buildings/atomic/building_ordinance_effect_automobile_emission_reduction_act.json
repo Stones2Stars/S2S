@@ -14,16 +14,12 @@
     "BUILDING_TELEPORT_BOOTH"
    ],
    "all": [
-    "TECH_ECOLOGY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_ECOLOGY"
    ]
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -50
   }
  },
@@ -45,6 +41,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

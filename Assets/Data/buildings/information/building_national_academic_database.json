@@ -39,8 +39,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE"
    }
   ]
  },

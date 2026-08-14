@@ -19,27 +19,6 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      {
-       "type": "BONUS_STONE",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_MARBLE",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_FLINT",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      }
-     ]
-    }
-   ],
    "dormant": [
     "BUILDING_LYCEUM",
     "BUILDING_ELEMENTARY_SCHOOL",
@@ -48,27 +27,19 @@
   }
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "PROPERTY_EDUCATION": {
-  "city": {
+  "empire": {
    "flat": 1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_TALLY_STONE",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 60,
@@ -93,6 +64,7 @@
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

@@ -17,7 +17,7 @@
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 1,
    "improvements": {
     "IMPROVEMENT_FARM": {
@@ -25,14 +25,6 @@
     }
    }
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_GRAIN_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 30,
@@ -71,6 +63,7 @@
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

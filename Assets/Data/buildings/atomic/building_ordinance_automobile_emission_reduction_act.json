@@ -37,8 +37,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT",
-    "scope": "empire"
+    "building": "BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT"
    }
   ]
  },

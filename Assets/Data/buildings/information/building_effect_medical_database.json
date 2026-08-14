@@ -8,26 +8,22 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_KNOWLEDGE_MANAGEMENT",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_KNOWLEDGE_MANAGEMENT"
    ]
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": 5
   }
  },
  "greatPeopleRate": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "PROPERTY_DISEASE": {
-  "city": {
+  "empire": {
    "flat": -20
   }
  },
@@ -50,6 +46,7 @@
   "greatPeopleUnitType": "UNIT_DOCTOR",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

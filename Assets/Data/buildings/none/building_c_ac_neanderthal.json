@@ -49,18 +49,8 @@
    "TECH_SEDENTARY_LIFESTYLE"
   ]
  },
- "requires": {
-  "operate": {
-   "all": [
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  }
- },
  "research": {
-  "city": {
+  "empire": {
    "percent": -5
   }
  },
@@ -86,6 +76,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

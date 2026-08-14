@@ -3,21 +3,17 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_FOREIGN_POLICY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_FOREIGN_POLICY"
    ]
   }
  },
  "espionage": {
-  "city": {
+  "empire": {
    "percent": 10
   }
  },
  "experience": {
-  "city": {
+  "empire": {
    "unitCombats": {
     "UNITCOMBAT_DIPLOMAT": {
      "flat": 1
@@ -43,6 +39,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

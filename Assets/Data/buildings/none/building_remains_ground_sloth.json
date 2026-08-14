@@ -4,12 +4,7 @@
   "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    {
-     "type": "BUILDING_FOLKLORE_GROUND_SLOTH",
-     "scope": "empire",
-     "min": 3,
-     "scaling": "amountBuildings"
-    },
+    "BUILDING_FOLKLORE_GROUND_SLOTH",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"

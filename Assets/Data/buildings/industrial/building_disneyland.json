@@ -79,8 +79,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_DISNEYLAND",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_DISNEYLAND"
    }
   ]
  },

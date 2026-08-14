@@ -27,7 +27,7 @@
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": [
     1,
     {
@@ -38,7 +38,7 @@
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": [
     -1,
     {
@@ -47,14 +47,6 @@
     }
    ]
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_TIDEPOOL_SCAVENGER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 30,
@@ -76,6 +68,7 @@
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

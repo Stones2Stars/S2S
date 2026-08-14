@@ -54,8 +54,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_FERTILITY_FESTIVAL"
    }
   ]
  },

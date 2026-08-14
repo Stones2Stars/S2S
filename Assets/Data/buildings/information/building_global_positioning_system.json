@@ -39,8 +39,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_GPS",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_GPS"
    }
   ]
  },

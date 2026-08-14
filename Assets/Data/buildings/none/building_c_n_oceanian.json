@@ -13,8 +13,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_C_AC_OCEANIAN",
-    "scope": "empire"
+    "building": "BUILDING_C_AC_OCEANIAN"
    }
   ]
  },

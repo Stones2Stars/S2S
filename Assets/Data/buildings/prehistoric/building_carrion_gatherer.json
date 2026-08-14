@@ -24,126 +24,6 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      {
-       "type": "BONUS_CAMEL",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_COW",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_DONKEY",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_HORSE",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_LLAMA",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_PIG",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_SHEEP",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_BEAVER",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_BISON",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_DEER",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_ELEPHANT",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_GUINEA_PIG",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_KANGAROO",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_MAMMOTH",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_PARROT",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_POULTRY",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_RABBIT",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_WALRUS",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      },
-      {
-       "type": "BONUS_SEA_LION_AND_SEAL",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "owned"
-      }
-     ]
-    }
-   ],
    "dormant": [
     "BUILDING_INDUSTRIAL_FARMS",
     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
@@ -151,12 +31,12 @@
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": [
     -1,
     {
@@ -165,14 +45,6 @@
     }
    ]
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_CARRION_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 30,
@@ -194,6 +66,7 @@
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

@@ -37,8 +37,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_ORDINANCE_EFFECT_CARPOOL",
-    "scope": "empire"
+    "building": "BUILDING_ORDINANCE_EFFECT_CARPOOL"
    }
   ]
  },

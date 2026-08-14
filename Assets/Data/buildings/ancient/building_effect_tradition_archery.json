@@ -15,16 +15,12 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_BRONZE_WORKING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_BRONZE_WORKING"
    ]
   }
  },
  "experience": {
-  "city": {
+  "empire": {
    "unitCombats": {
     "UNITCOMBAT_ARCHER": {
      "flat": 2
@@ -64,6 +60,7 @@
   "militaryWorth": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

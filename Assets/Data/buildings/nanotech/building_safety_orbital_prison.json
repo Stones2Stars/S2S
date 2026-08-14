@@ -8,43 +8,39 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
    ]
   }
  },
  "espionage": {
-  "city": {
+  "empire": {
    "percent": 125
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 5
   }
  },
  "revolution": {
-  "city": {
+  "empire": {
    "local": {
     "flat": -50
    }
   }
  },
  "warWeariness": {
-  "city": {
+  "empire": {
    "percent": -25
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -100
   }
  },
  "allowedSpecialists": {
-  "city": {
+  "empire": {
    "SPECIALIST_SPY": 3
   }
  },
@@ -66,6 +62,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

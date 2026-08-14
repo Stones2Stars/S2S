@@ -23,7 +23,7 @@
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
@@ -33,7 +33,7 @@
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": [
     1,
     {
@@ -42,14 +42,6 @@
     }
    ]
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_WILD_HERBS_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "triggers": [
   {
@@ -85,6 +77,7 @@
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

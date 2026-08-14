@@ -19,36 +19,20 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "type": "BONUS_OBSIDIAN",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    }
-   ],
    "dormant": [
     "BUILDING_OBSIDIAN_QUARRY"
    ]
   }
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 2
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_OBSIDIAN_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 30,
@@ -74,6 +58,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

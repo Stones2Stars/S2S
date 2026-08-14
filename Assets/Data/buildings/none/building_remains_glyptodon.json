@@ -4,12 +4,7 @@
   "operate": {
    "all": [
     "BUILDING_FOLKLORE_REQUIREMENT",
-    {
-     "type": "BUILDING_FOLKLORE_GLYPTODON",
-     "scope": "empire",
-     "min": 3,
-     "scaling": "amountBuildings"
-    },
+    "BUILDING_FOLKLORE_GLYPTODON",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"

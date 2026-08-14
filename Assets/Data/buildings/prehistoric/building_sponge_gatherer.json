@@ -59,12 +59,12 @@
   ]
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": -1,
@@ -72,14 +72,6 @@
     }
    ]
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_SPONGE_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 160,
@@ -101,6 +93,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

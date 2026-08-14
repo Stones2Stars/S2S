@@ -52,8 +52,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_TERRAFORMED_VENUS",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_TERRAFORMED_VENUS"
    }
   ]
  },

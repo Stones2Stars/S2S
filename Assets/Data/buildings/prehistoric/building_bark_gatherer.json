@@ -31,17 +31,9 @@
   ]
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": 1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_BARK_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 80,
@@ -69,6 +61,7 @@
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

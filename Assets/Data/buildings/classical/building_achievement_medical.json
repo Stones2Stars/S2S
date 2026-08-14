@@ -28,8 +28,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_ACHIEVEMENT_MEDICAL"
    }
   ]
  },

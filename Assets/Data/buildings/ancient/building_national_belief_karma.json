@@ -27,8 +27,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_BELIEF_KARMA",
-    "scope": "empire"
+    "building": "BUILDING_BELIEF_KARMA"
    }
   ]
  },

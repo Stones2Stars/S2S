@@ -21,8 +21,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_HERITAGE_BIG_CATS"
    }
   ]
  },

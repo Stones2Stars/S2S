@@ -20,38 +20,20 @@
      "scope": "plot"
     }
    ]
-  },
-  "operate": {
-   "all": [
-    {
-     "any": [
-      {
-       "type": "BONUS_CLOTH",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_LEATHER",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      }
-     ]
-    }
-   ]
   }
  },
  "espionage": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "experience": {
-  "city": {
+  "empire": {
    "unitCombats": {
     "UNITCOMBAT_CRIMINAL": {
      "flat": 2
@@ -61,14 +43,6 @@
     }
    }
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_CAPTURE_THE_FLAG",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 90,
@@ -100,6 +74,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

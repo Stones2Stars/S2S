@@ -8,21 +8,17 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_WOMENS_SUFFRAGE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_WOMENS_SUFFRAGE"
    ]
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "maintenance": {
-  "city": {
+  "empire": {
    "flat": 5
   }
  },
@@ -44,6 +40,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

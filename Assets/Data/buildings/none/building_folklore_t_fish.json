@@ -40,7 +40,7 @@
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": [
     1,
     {
@@ -67,7 +67,7 @@
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 0.1,
@@ -93,7 +93,7 @@
   }
  },
  "PROPERTY_EDUCATION": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
@@ -105,14 +105,6 @@
     }
    ]
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_FOLKLORE_T_FISH",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 250,
@@ -138,6 +130,7 @@
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

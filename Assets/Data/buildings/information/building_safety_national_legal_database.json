@@ -3,21 +3,17 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_CLOUD_COMPUTING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_CLOUD_COMPUTING"
    ]
   }
  },
  "espionage": {
-  "city": {
+  "empire": {
    "percent": 5
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -15
   }
  },
@@ -39,6 +35,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

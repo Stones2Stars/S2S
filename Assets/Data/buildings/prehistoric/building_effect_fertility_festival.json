@@ -13,31 +13,27 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_CELEBRATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_CELEBRATION"
    ]
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "foodKept": {
-  "city": {
+  "empire": {
    "percent": 5
   }
  },
@@ -59,6 +55,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

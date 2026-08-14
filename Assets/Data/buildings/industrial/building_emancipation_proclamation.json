@@ -17,8 +17,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    }
   ]
  },

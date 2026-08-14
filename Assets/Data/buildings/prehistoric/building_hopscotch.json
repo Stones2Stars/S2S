@@ -26,7 +26,7 @@
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
@@ -45,22 +45,14 @@
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "PROPERTY_EDUCATION": {
-  "city": {
+  "empire": {
    "flat": 1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_HOPSCOTCH",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 90,
@@ -90,6 +82,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

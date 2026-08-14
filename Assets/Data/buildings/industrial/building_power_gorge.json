@@ -3,26 +3,22 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_HYDROELECTRICITY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_HYDROELECTRICITY"
    ]
   }
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": 25
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 10
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": 10
   }
  },
@@ -45,6 +41,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

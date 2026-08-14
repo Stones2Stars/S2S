@@ -3,31 +3,27 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_REINCARNATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_REINCARNATION"
    ]
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "warWeariness": {
-  "city": {
+  "empire": {
    "percent": -5
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -5
   }
  },
@@ -49,6 +45,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

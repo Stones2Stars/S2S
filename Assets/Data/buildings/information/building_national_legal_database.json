@@ -34,8 +34,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
-    "scope": "empire"
+    "building": "BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE"
    }
   ]
  },

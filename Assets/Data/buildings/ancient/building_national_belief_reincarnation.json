@@ -28,8 +28,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_BELIEF_REINCARNATION",
-    "scope": "empire"
+    "building": "BUILDING_BELIEF_REINCARNATION"
    }
   ]
  },

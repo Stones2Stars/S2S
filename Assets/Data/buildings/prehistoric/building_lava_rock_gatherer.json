@@ -64,27 +64,19 @@
   ]
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": -1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_LAVA_ROCK_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 30,
@@ -110,6 +102,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

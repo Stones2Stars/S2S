@@ -3,28 +3,24 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_CODE_OF_LAWS",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_CODE_OF_LAWS"
    ]
   }
  },
  "revolution": {
-  "city": {
+  "empire": {
    "local": {
     "flat": -5
    }
   }
  },
  "PROPERTY_FLAMMABILITY": {
-  "city": {
+  "empire": {
    "flat": -10
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -10
   }
  },
@@ -46,6 +42,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

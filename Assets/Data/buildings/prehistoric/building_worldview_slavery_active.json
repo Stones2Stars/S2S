@@ -14,16 +14,12 @@
     "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ],
    "all": [
-    "TECH_SLAVERY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_SLAVERY"
    ]
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "percent": [
     {
      "value": -5,
@@ -85,7 +81,7 @@
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "percent": [
     {
      "value": -5,
@@ -135,7 +131,7 @@
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": -5,
@@ -165,7 +161,7 @@
   }
  },
  "allowedSpecialists": {
-  "city": {
+  "empire": {
    "SPECIALIST_SLAVES": 3
   }
  },
@@ -190,6 +186,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

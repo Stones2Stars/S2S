@@ -73,8 +73,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
-    "scope": "empire"
+    "building": "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON"
    }
   ]
  },

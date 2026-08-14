@@ -71,8 +71,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_POWER_NUCLEAR",
-    "scope": "empire"
+    "building": "BUILDING_POWER_NUCLEAR"
    }
   ]
  },

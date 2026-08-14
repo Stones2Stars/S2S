@@ -22,16 +22,12 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_CULTURAL_IDENTITY",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_CULTURAL_IDENTITY"
    ]
   }
  },
  "experience": {
-  "city": {
+  "empire": {
    "unitCombats": {
     "UNITCOMBAT_CIVILIAN": {
      "flat": 1
@@ -61,6 +57,7 @@
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

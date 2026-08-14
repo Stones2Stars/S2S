@@ -3,31 +3,27 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_RESURRECTION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_RESURRECTION"
    ]
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 3
   }
  },
  "warWeariness": {
-  "city": {
+  "empire": {
    "percent": -10
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -10
   }
  },
@@ -49,6 +45,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

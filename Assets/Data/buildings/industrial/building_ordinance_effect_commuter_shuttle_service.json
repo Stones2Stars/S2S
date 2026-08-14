@@ -14,26 +14,22 @@
     "BUILDING_TELEPORT_BOOTH"
    ],
    "all": [
-    "TECH_MOTORIZED_TRANSPORTATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_MOTORIZED_TRANSPORTATION"
    ]
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "maintenance": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -25
   }
  },
@@ -55,6 +51,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

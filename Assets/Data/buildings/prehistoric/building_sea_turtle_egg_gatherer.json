@@ -24,24 +24,6 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "any": [
-      {
-       "type": "BONUS_SEA_LION_AND_SEAL",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
-      },
-      {
-       "type": "BONUS_CLAM",
-       "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
-      }
-     ]
-    }
-   ],
    "dormant": [
     "BUILDING_INDUSTRIAL_FARMS",
     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
@@ -49,22 +31,14 @@
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_SEA_TURTLE_EGG_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 160,
@@ -86,6 +60,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

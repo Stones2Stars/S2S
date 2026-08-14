@@ -46,8 +46,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_SAFETY_GREAT_FIREWALL",
-    "scope": "empire"
+    "building": "BUILDING_SAFETY_GREAT_FIREWALL"
    }
   ]
  },

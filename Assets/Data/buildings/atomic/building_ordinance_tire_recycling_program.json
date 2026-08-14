@@ -30,8 +30,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
-    "scope": "empire"
+    "building": "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM"
    }
   ]
  },

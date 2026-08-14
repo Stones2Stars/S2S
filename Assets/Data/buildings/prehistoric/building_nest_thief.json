@@ -21,14 +21,6 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "type": "BONUS_POULTRY",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "owned"
-    }
-   ],
    "dormant": [
     "BUILDING_CHICKEN_COOP",
     "BUILDING_FARM_ANIMAL_DUCK",
@@ -41,12 +33,12 @@
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": [
     -1,
     {
@@ -55,14 +47,6 @@
     }
    ]
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_NEST_THIEF",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 30,
@@ -92,6 +76,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

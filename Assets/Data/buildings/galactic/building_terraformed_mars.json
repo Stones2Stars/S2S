@@ -76,8 +76,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_TERRAFORMED_MARS",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_TERRAFORMED_MARS"
    }
   ]
  },

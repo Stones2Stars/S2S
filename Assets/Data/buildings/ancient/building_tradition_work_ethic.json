@@ -37,8 +37,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_TRADITION_WORK_ETHIC",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_TRADITION_WORK_ETHIC"
    }
   ]
  },

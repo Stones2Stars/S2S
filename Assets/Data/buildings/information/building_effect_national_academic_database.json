@@ -3,31 +3,22 @@
  "requires": {
   "operate": {
    "all": [
-    {
-     "type": "BONUS_COMPUTERS",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
-    "TECH_CLOUD_COMPUTING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_CLOUD_COMPUTING"
    ]
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 3
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": 3
   }
  },
  "PROPERTY_EDUCATION": {
-  "city": {
+  "empire": {
    "flat": 25
   }
  },
@@ -49,6 +40,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

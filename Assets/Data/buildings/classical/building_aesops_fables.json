@@ -27,8 +27,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_SAFETY_AESOPS_FABLES",
-    "scope": "empire"
+    "building": "BUILDING_SAFETY_AESOPS_FABLES"
    }
   ]
  },

@@ -12,11 +12,7 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_REALITY_REPROGRAMMING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_REALITY_REPROGRAMMING"
    ]
   }
  },
@@ -34,6 +30,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

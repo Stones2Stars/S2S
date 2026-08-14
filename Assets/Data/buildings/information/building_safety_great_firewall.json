@@ -3,7 +3,6 @@
  "requires": {
   "operate": {
    "all": [
-    "HAS_POWER",
     {
      "any": [
       "CIVIC_INQUISITORIAL",
@@ -14,47 +13,42 @@
       "CIVIC_GRID"
      ]
     },
-    "BUILDING_COMPUTER_NETWORK",
-    "TECH_CYBERWARFARE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_CYBERWARFARE"
    ]
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": -5
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": -5
   }
  },
  "espionage": {
-  "city": {
+  "empire": {
    "flat": 10
   }
  },
  "maintenance": {
-  "city": {
+  "empire": {
    "percent": -5
   }
  },
  "espionageDefense": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -10
   }
  },
  "allowedSpecialists": {
-  "city": {
+  "empire": {
    "SPECIALIST_SPY": 1
   }
  },
@@ -76,6 +70,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

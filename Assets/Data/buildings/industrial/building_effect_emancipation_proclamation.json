@@ -3,37 +3,33 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_EMANCIPATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_EMANCIPATION"
    ]
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 3
   }
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": 3,
    "percent": 5
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 3
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": [
     1,
     {
@@ -47,27 +43,27 @@
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -1
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -2
   }
  },
  "PROPERTY_DISEASE": {
-  "city": {
+  "empire": {
    "flat": -2
   }
  },
  "PROPERTY_WATER_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -1
   }
  },
@@ -85,6 +81,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

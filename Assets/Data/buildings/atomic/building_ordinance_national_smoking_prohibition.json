@@ -24,8 +24,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_ORDINANCE_SMOKING_PROHIBITION",
-    "scope": "empire"
+    "building": "BUILDING_ORDINANCE_SMOKING_PROHIBITION"
    }
   ]
  },

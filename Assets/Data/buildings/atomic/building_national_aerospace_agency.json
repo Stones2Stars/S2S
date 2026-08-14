@@ -77,8 +77,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_LAUNCH_SITE",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_LAUNCH_SITE"
    }
   ]
  },

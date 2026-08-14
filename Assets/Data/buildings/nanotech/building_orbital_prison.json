@@ -43,8 +43,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_SAFETY_ORBITAL_PRISON",
-    "scope": "empire"
+    "building": "BUILDING_SAFETY_ORBITAL_PRISON"
    }
   ]
  },

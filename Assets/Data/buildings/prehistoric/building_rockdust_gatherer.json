@@ -24,31 +24,15 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "type": "BONUS_STONE",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    }
-   ],
    "dormant": [
     "BUILDING_MODERN_EARTHWORKS"
    ]
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_ROCKDUST_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 70,
@@ -70,6 +54,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

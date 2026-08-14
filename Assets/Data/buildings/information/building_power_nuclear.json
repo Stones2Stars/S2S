@@ -8,23 +8,14 @@
  "requires": {
   "operate": {
    "all": [
-    {
-     "type": "BONUS_ATOMPUNK",
-     "scope": "city",
-     "connection": "trade|vicinity"
-    },
     "TECH_KNOWLEDGE_MANAGEMENT",
     "TECH_SUPERCONDUCTORS",
-    "TECH_ATOMPUNK",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_ATOMPUNK"
    ]
   }
  },
  "production": {
-  "city": {
+  "empire": {
    "flat": 200
   }
  },
@@ -47,6 +38,7 @@
   "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

@@ -28,8 +28,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_C_AC_AFRICAN",
-    "scope": "empire"
+    "building": "BUILDING_C_AC_AFRICAN"
    }
   ]
  },

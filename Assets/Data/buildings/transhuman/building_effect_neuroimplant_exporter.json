@@ -8,11 +8,7 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_COMPREHENSIVE_CYBERNETICS",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_COMPREHENSIVE_CYBERNETICS"
    ]
   }
  },
@@ -30,6 +26,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

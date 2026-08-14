@@ -13,11 +13,7 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_LUNAR_TRADE",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_LUNAR_TRADE"
    ]
   }
  },
@@ -35,6 +31,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

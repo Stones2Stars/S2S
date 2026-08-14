@@ -82,8 +82,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_SAFETY_POLICE_ACADEMY",
-    "scope": "empire"
+    "building": "BUILDING_SAFETY_POLICE_ACADEMY"
    }
   ]
  },

@@ -32,8 +32,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER"
    }
   ]
  },

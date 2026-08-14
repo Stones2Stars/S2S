@@ -71,8 +71,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_LASCAUX_CAVES",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_LASCAUX_CAVES"
    }
   ]
  },

@@ -13,16 +13,12 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_SAILING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_SAILING"
    ]
   }
  },
  "experience": {
-  "city": {
+  "empire": {
    "unitCombats": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "flat": 2
@@ -64,6 +60,7 @@
   "freeStartEra": "C2C_ERA_CLASSICAL",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

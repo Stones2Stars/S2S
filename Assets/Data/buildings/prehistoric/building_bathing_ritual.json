@@ -26,7 +26,7 @@
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": [
     1,
     {
@@ -41,17 +41,9 @@
   }
  },
  "PROPERTY_DISEASE": {
-  "city": {
+  "empire": {
    "flat": -2
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_BATHING_RITUAL",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 60,
@@ -79,6 +71,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

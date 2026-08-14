@@ -10,16 +10,12 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_HUNTING",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_HUNTING"
    ]
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
@@ -105,17 +101,17 @@
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "health": {
-  "city": {
+  "empire": {
    "flat": [
     {
      "value": 1,
@@ -201,7 +197,7 @@
   }
  },
  "experience": {
-  "city": {
+  "empire": {
    "unitCombats": {
     "UNITCOMBAT_HUNTER": {
      "flat": 3
@@ -210,7 +206,7 @@
   }
  },
  "PROPERTY_EDUCATION": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
@@ -248,6 +244,7 @@
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

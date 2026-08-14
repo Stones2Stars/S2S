@@ -102,16 +102,6 @@
    "BUILDING_C_L_EUROPEAN"
   ]
  },
- "requires": {
-  "operate": {
-   "all": [
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
-   ]
-  }
- },
  "attributes": {
   "destroyedOnCapture": true
  },
@@ -131,6 +121,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

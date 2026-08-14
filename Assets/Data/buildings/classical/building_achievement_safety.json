@@ -23,8 +23,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_ACHIEVEMENT_SAFETY"
    }
   ]
  },

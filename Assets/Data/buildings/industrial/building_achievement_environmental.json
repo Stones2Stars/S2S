@@ -28,8 +28,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL"
    }
   ]
  },

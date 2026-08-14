@@ -201,7 +201,10 @@ Each leaf is **either** a count/presence **atom** or a **predicate** (§3.5):
 ```
 
 An **atom** is `{ type, scope?, min?, max?, connection? }`. **Scope is IMPLIED from the type's domain** (derived from
-the ID prefix) — TECH→`team`, civic/heritage→`empire`, building/bonus/religion/corporation→`city`.
+the ID prefix) — TECH→`team`, civic/heritage→`empire`, building/bonus/religion/corporation→`city`. One data-driven
+override: a building carrying `identity.empireLevel` (§7) has EMPIRE as its domain, so an atom naming one implies
+`empire` — the player-held set is the only place its presence exists
+([enabler.md §2](enabler.md), [DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings)).
 State `scope` explicitly ONLY when it differs from that default (e.g. a `world`-scope victory, a `player`-scope tech).
 So a **plain default-scope presence collapses to a bare type-string** — author the common case as a simple string
 array: `"all": ["BUILDING_FORGE", "TECH_ASTRONOMY"]` ≡ `[{type:"BUILDING_FORGE"},{type:"TECH_ASTRONOMY",scope:"team"}]`.
@@ -1009,6 +1012,10 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   uniform band model ([enabler.md §3](enabler.md)) applied to the whole queue-excluded class. `build` only ever
   greys a QUEUE candidate and is checked once; a queue-excluded entity is never a queue candidate, so a clause left
   in `build` would never be evaluated again. Authoring one is a data error — the curator folds it into `operate`.
+  A third holding-scope flag: **`empireLevel`** — the building is held by the PLAYER, once, empire-wide, and is
+  never present in any city; an atom naming one implies EMPIRE scope (§3.4 — the tag IS the type's domain).
+  Curator-DERIVED from empire-uniformity, never hand-authored; the machine and the membership rule are
+  [enabler.md §2](enabler.md) ([DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings)).
   **Civilization selectability** lives here too: `playable` / `aiPlayable` (can a human / the AI pick this civ) —
   **load-only metadata, no gameplay relevance** (animals/barbarians/neanderthals are technically civilizations), so
   it is intrinsic self-description, not a `policy`.

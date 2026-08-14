@@ -12,11 +12,7 @@
   "operate": {
    "all": [
     "TECH_HERITAGE",
-    "TECH_MEGAFAUNA_DOMESTICATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_MEGAFAUNA_DOMESTICATION"
    ]
   }
  },
@@ -39,6 +35,7 @@
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

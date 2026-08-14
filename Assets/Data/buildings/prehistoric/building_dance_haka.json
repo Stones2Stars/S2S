@@ -16,73 +16,15 @@
      "scope": "plot"
     }
    ]
-  },
-  "operate": {
-   "all": [
-    {
-     "any": [
-      {
-       "type": "BONUS_ABORIGINE",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_FIJIAN",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_HAWAIIAN",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_MAORI",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_NEW_ZEALANDER",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_POLYNESIAN",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_RAPA_NUI",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_SAMOAN",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_TAHITIAN",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      },
-      {
-       "type": "BONUS_TONGAN",
-       "scope": "city",
-       "connection": "trade|vicinity"
-      }
-     ]
-    }
-   ]
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "buildRate": {
-  "city": {
+  "empire": {
    "units": {
     "percent": [
      {
@@ -94,17 +36,9 @@
   }
  },
  "warWeariness": {
-  "city": {
+  "empire": {
    "percent": -5
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_DANCE_HAKA",
-    "scope": "empire"
-   }
-  ]
  },
  "triggers": [
   {
@@ -139,6 +73,7 @@
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

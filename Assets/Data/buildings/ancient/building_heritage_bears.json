@@ -21,8 +21,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_HERITAGE_BEARS",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_HERITAGE_BEARS"
    }
   ]
  },

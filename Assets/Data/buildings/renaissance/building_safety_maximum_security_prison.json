@@ -6,21 +6,17 @@
     "BUILDING_SAFETY_ORBITAL_PRISON"
    ],
    "all": [
-    "TECH_CONSTITUTION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_CONSTITUTION"
    ]
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 2
   }
  },
  "PROPERTY_CRIME": {
-  "city": {
+  "empire": {
    "flat": -20
   }
  },
@@ -42,6 +38,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

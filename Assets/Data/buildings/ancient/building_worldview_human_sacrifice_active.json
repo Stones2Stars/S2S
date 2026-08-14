@@ -11,11 +11,7 @@
     "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
    ],
    "all": [
-    "TECH_SACRIFICE_CULT",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_SACRIFICE_CULT"
    ]
   }
  },
@@ -37,6 +33,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

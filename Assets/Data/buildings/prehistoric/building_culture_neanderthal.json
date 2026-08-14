@@ -99,8 +99,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_C_AC_NEANDERTHAL",
-    "scope": "empire"
+    "building": "BUILDING_C_AC_NEANDERTHAL"
    }
   ]
  },

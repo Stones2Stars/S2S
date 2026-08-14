@@ -76,8 +76,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_SAFETY_ALCATRAZ",
-    "scope": "empire"
+    "building": "BUILDING_SAFETY_ALCATRAZ"
    }
   ]
  },

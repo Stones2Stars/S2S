@@ -31,8 +31,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_BELIEF_RESURRECTION",
-    "scope": "empire"
+    "building": "BUILDING_BELIEF_RESURRECTION"
    }
   ]
  },

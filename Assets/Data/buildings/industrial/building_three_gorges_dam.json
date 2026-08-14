@@ -58,8 +58,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_POWER_GORGE",
-    "scope": "empire"
+    "building": "BUILDING_POWER_GORGE"
    }
   ]
  },

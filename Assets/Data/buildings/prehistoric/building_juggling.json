@@ -25,22 +25,14 @@
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 1
   }
  },
  "happiness": {
-  "city": {
+  "empire": {
    "flat": 1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_JUGGLING",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 90,
@@ -65,6 +57,7 @@
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

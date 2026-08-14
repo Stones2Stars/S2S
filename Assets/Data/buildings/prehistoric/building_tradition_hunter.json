@@ -23,8 +23,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_MASTER_HUNTER_TRADITION",
-    "scope": "empire"
+    "building": "BUILDING_MASTER_HUNTER_TRADITION"
    }
   ]
  },

@@ -3,41 +3,37 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_LUNAR_TERRAFORMING",
-    {
-     "type": "MAPCATEGORY_LUNAR",
-     "scope": "plot"
-    }
+    "TECH_LUNAR_TERRAFORMING"
    ]
   }
  },
  "food": {
-  "city": {
+  "empire": {
    "flat": 15
   }
  },
  "gold": {
-  "city": {
+  "empire": {
    "flat": 20
   }
  },
  "research": {
-  "city": {
+  "empire": {
    "flat": 20
   }
  },
  "culture": {
-  "city": {
+  "empire": {
    "flat": 4
   }
  },
  "PROPERTY_WATER_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -30
   }
  },
  "PROPERTY_AIR_POLLUTION": {
-  "city": {
+  "empire": {
    "flat": -30
   }
  },
@@ -56,6 +52,7 @@
   "visibilityPriority": 1,
   "mapCategories": [
    "MAPCATEGORY_LUNAR"
-  ]
+  ],
+  "empireLevel": true
  }
 }

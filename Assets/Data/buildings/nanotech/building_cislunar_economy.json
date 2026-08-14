@@ -61,8 +61,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_CISLUNAR_ECONOMY",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_CISLUNAR_ECONOMY"
    }
   ]
  },

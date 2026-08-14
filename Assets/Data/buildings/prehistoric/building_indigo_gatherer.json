@@ -24,14 +24,6 @@
    ]
   },
   "operate": {
-   "all": [
-    {
-     "type": "BONUS_INDIGO",
-     "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
-    }
-   ],
    "dormant": [
     "BUILDING_FARM_FLOWER_INDIGO",
     "BUILDING_GREENHOUSE"
@@ -39,17 +31,9 @@
   }
  },
  "commerce": {
-  "city": {
+  "empire": {
    "flat": 1
   }
- },
- "grants": {
-  "buildings": [
-   {
-    "building": "BUILDING_INDIGO_GATHERER",
-    "scope": "empire"
-   }
-  ]
  },
  "cost": {
   "production": 70,
@@ -71,6 +55,7 @@
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

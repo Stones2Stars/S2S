@@ -752,6 +752,18 @@ is save-neutral. ⚠ A **HOLDER'S** side is not always a bitset: where several
 grantors can confer the same key the holder stores an id→COUNT dictionary instead (the city's `amenities`, json.md §8) —
 the by-id resolution is what is uniform, not the storage width. **Home:** [json.md §8](../specs/json.md).
 
+### DEC-empire-level-buildings
+
+A building whose presence is EMPIRE-UNIFORM by construction — the self-granting every-city class (folklores,
+the elemental-knowledge and requirement markers) plus the `notConstructible` markers whose only arrival is an
+empire-wide grant — is an **`identity.empireLevel`** building: held by the PLAYER once, never present in any
+city. Atoms naming one imply EMPIRE scope, its deposits author at empire and roll down like a civic's, the
+build path is the project precedent (city queue, player-held frontier, live city-local gate), and the
+self-grant fan, the city-starts-existing fold and every capture/flip transfer cease to exist for the class. A
+grantor→marker pair whose source exists only to deliver the marker COLLAPSES into one empire-level building.
+The per-city grant stays the model wherever presence genuinely varies per city. The tag is curator-DERIVED
+from the membership rule, never hand-authored. **Home:** [enabler.md §2](../specs/enabler.md).
+
 ### DEC-enabler-not-cascade
 
 *(One instance of [EACH IS ITS OWN SYSTEM](north-star.md) — kept as its own entry because the NAMING guard below

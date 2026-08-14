@@ -8,11 +8,7 @@
  "requires": {
   "operate": {
    "all": [
-    "TECH_SPECIALIZATION",
-    {
-     "type": "MAPCATEGORY_EARTH",
-     "scope": "plot"
-    }
+    "TECH_SPECIALIZATION"
    ]
   }
  },
@@ -47,6 +43,7 @@
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ]
+  ],
+  "empireLevel": true
  }
 }

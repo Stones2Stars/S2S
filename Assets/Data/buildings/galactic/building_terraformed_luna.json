@@ -55,8 +55,7 @@
  "grants": {
   "buildings": [
    {
-    "building": "BUILDING_EFFECT_TERRAFORMED_LUNA",
-    "scope": "empire"
+    "building": "BUILDING_EFFECT_TERRAFORMED_LUNA"
    }
   ]
  },
