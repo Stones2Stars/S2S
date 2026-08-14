@@ -182,30 +182,6 @@ struct ImprovementBuildTypes
 	bool operator< (const ImprovementBuildTypes& rhs) const { return (int)eBuildType < (int)rhs.eBuildType; }
 };
 
-struct InvisibleTerrainChanges
-{
-	InvisibleTypes eInvisible;
-	TerrainTypes eTerrain;
-	int iIntensity;
-	operator int() const {return (int)eInvisible;}
-	bool operator< (const InvisibleTerrainChanges& rhs) const {return (int)eInvisible < (int)rhs.eInvisible;}
-};
-struct InvisibleFeatureChanges
-{
-	InvisibleTypes eInvisible;
-	FeatureTypes eFeature;
-	int iIntensity;
-	operator int() const {return (int)eInvisible;}
-	bool operator< (const InvisibleFeatureChanges& rhs) const {return (int)eInvisible < (int)rhs.eInvisible;}
-};
-struct InvisibleImprovementChanges
-{
-	InvisibleTypes eInvisible;
-	ImprovementTypes eImprovement;
-	int iIntensity;
-	operator int() const {return (int)eInvisible;}
-	bool operator< (const InvisibleImprovementChanges& rhs) const {return (int)eInvisible < (int)rhs.eInvisible;}
-};
 struct EnabledCivilizations
 {
 	CivilizationTypes eCivilization;

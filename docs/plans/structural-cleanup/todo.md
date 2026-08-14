@@ -134,10 +134,6 @@
 - Converge `CvCity`/`CvPlayer` on the read surface we actually NEED, understandably structured: move consumers
   onto the group reads, serve genuine demand on the coherent surface, and the hand-named channel-shaped names
   fall away as nothing needs them ([patterns.md § THE TWO READ ROLES](../../architecture/patterns.md), owner).
-- Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
-  `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
-  ⚡ The four accessor families have no call sites at all, so this is a plain deletion.
-  ⛔ Leave `getInvisibleType` alone — a live `CvUnit` method, unrelated.
 - Retire the direct `gDLL->logMsg` / BetterBTSAI log-helper call sites and the log-level globals they gate,
   wholesale as each domain migrates onto the spine — never tidied in place.
 

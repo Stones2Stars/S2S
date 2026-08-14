@@ -2241,3 +2241,32 @@ CvCity::m_iQuarantinedCount
 | (The two decorated per-element arrays cut in the same sweep -- CvPlayer::m_ppaaiTerrainYieldChange and
 | CvPlayer::m_ppaaiSpecialistExtraYield -- drain in read() loops instead: a bracketed per-element tag
 | cannot be soft-removed here, save.md par.4.)
+
+| ==== The CvUnit hide-and-seek per-type intensity cut ====
+| The retired per-invisible-type table pair's RUNTIME accumulators (superseded-ideas par.35): the contest
+| replacement is the hideAndSeek block (concealment/detection deposits, the method SKILLS) and the seeker
+| registration is plot-side (CvPlot::changeVisibilityCount -> setSpotIntensity). Every member below had no
+| writer and no reader left outside its own serialization. The negates counter's live leg survives inside
+| CvUnit::isNegatesInvisible as the isRevealed() read; counter-detection is a negative detection deposit.
+| The per-type group (one set per authored invisible type, terminated by the Visibilities sentinel):
+CvUnit::Visibilities
+CvUnit::extraVisibilityIntensity
+CvUnit::extraInvisibilityIntensity
+CvUnit::extraVisibilityIntensityRange
+CvUnit::negatesInvisibleCount
+CvUnit::extraVisibilityIntensitySameTile
+| The nine per-(invisible x substrate) sized lists: each wrote a .size then per-element iType1/2/3 locals,
+| and those three local-named tags belonged to these lists ALONE (the AidChange block beside them is
+| decorated), so the elements drain by name:
+CvUnit::m_aExtraInvisibleTerrains.size
+CvUnit::m_aExtraInvisibleFeatures.size
+CvUnit::m_aExtraInvisibleImprovements.size
+CvUnit::m_aExtraVisibleTerrains.size
+CvUnit::m_aExtraVisibleFeatures.size
+CvUnit::m_aExtraVisibleImprovements.size
+CvUnit::m_aExtraVisibleTerrainRanges.size
+CvUnit::m_aExtraVisibleFeatureRanges.size
+CvUnit::m_aExtraVisibleImprovementRanges.size
+CvUnit::iType1
+CvUnit::iType2
+CvUnit::iType3

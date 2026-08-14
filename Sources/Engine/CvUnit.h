@@ -1619,12 +1619,6 @@ protected:
 
 	int* m_aiExtraDomainModifier;
 
-	int* m_aiExtraVisibilityIntensity;
-	int* m_aiExtraInvisibilityIntensity;
-	int* m_aiExtraVisibilityIntensityRange;
-	int* m_aiNegatesInvisibleCount;
-	int* m_aiExtraVisibilityIntensitySameTile;
-
 	CvWString m_szName;
 	CvString m_szScriptData;
 
@@ -1982,70 +1976,11 @@ public:
 	bool isUpgradeAnywhere() const;
 	void changeUpgradeAnywhereCount(int iChange);
 
-	void updateSpotIntensity(const InvisibleTypes eInvisibleType = NO_INVISIBLE, const bool bSameTile = false);
-	int getExtraVisibilityIntensityType(InvisibleTypes eIndex) const;
-	void changeExtraVisibilityIntensityType(InvisibleTypes eIndex, int iChange);
-
 	bool hasAnyInvisibilityType() const;
 	bool hasInvisibilityType(InvisibleTypes eInvisibleType) const;
-	int getExtraInvisibilityIntensityType(InvisibleTypes eIndex) const;
-	void changeExtraInvisibilityIntensityType(InvisibleTypes eIndex, int iChange);
 	void setHasAnyInvisibility();
 
-	//These need text displays on the unit
-	int getExtraVisibilityIntensityRangeType(InvisibleTypes eIndex) const;
-	void changeExtraVisibilityIntensityRangeType(InvisibleTypes eIndex, int iChange);
-
-	void changeExtraVisibilityIntensitySameTileType(InvisibleTypes eIndex, int iChange);
-
-	int getNumExtraInvisibleTerrains() const;
-	InvisibleTerrainChanges& getExtraInvisibleTerrain(int iIndex);
-	void changeExtraInvisibleTerrain(InvisibleTypes eInvisible, TerrainTypes eTerrain, int iChange);
-	int extraInvisibleTerrain(InvisibleTypes eInvisible, TerrainTypes eTerrain) const;
-
-	int getNumExtraInvisibleFeatures() const;
-	InvisibleFeatureChanges& getExtraInvisibleFeature(int iIndex);
-	void changeExtraInvisibleFeature(InvisibleTypes eInvisible, FeatureTypes eFeature, int iChange);
-	int extraInvisibleFeature(InvisibleTypes eInvisible, FeatureTypes eTFeature) const;
-
-	int getNumExtraInvisibleImprovements() const;
-	InvisibleImprovementChanges& getExtraInvisibleImprovement(int iIndex);
-	void changeExtraInvisibleImprovement(InvisibleTypes eInvisible, ImprovementTypes eImprovement, int iChange);
-	int extraInvisibleImprovement(InvisibleTypes eInvisible, ImprovementTypes eImprovement) const;
-
-	int getNumExtraVisibleTerrains() const;
-	InvisibleTerrainChanges& getExtraVisibleTerrain(int iIndex);
-	void changeExtraVisibleTerrain(InvisibleTypes eInvisible, TerrainTypes eTerrain, int iChange);
-	int extraVisibleTerrain(InvisibleTypes eInvisible, TerrainTypes eTerrain) const;
-
-	int getNumExtraVisibleFeatures() const;
-	InvisibleFeatureChanges& getExtraVisibleFeature(int iIndex);
-	void changeExtraVisibleFeature(InvisibleTypes eInvisible, FeatureTypes eFeature, int iChange);
-	int extraVisibleFeature(InvisibleTypes eInvisible, FeatureTypes eTFeature) const;
-
-	int getNumExtraVisibleImprovements() const;
-	InvisibleImprovementChanges& getExtraVisibleImprovement(int iIndex);
-	void changeExtraVisibleImprovement(InvisibleTypes eInvisible, ImprovementTypes eImprovement, int iChange);
-	int extraVisibleImprovement(InvisibleTypes eInvisible, ImprovementTypes eImprovement) const;
-
-	int getNumExtraVisibleTerrainRanges() const;
-	InvisibleTerrainChanges& getExtraVisibleTerrainRange(int iIndex);
-	void changeExtraVisibleTerrainRange(InvisibleTypes eInvisible, TerrainTypes eTerrain, int iChange);
-	int extraVisibleTerrainRange(InvisibleTypes eInvisible, TerrainTypes eTerrain) const;
-
-	int getNumExtraVisibleFeatureRanges() const;
-	InvisibleFeatureChanges& getExtraVisibleFeatureRange(int iIndex);
-	void changeExtraVisibleFeatureRange(InvisibleTypes eInvisible, FeatureTypes eFeature, int iChange);
-	int extraVisibleFeatureRange(InvisibleTypes eInvisible, FeatureTypes eTFeature) const;
-
-	int getNumExtraVisibleImprovementRanges() const;
-	InvisibleImprovementChanges& getExtraVisibleImprovementRange(int iIndex);
-	void changeExtraVisibleImprovementRange(InvisibleTypes eInvisible, ImprovementTypes eImprovement, int iChange);
-	int extraVisibleImprovementRange(InvisibleTypes eInvisible, ImprovementTypes eImprovement) const;
-
 	bool isNegatesInvisible(InvisibleTypes eInvisible) const;
-	int getNegatesInvisibleCount(InvisibleTypes eInvisible) const;
-	void changeNegatesInvisibleCount(InvisibleTypes eInvisible, int iChange);
 
 	bool hasInvisibleAbility() const;
 	bool isCriminal() const;
@@ -2135,15 +2070,6 @@ private:
 
 	static	bool			m_staticsInitialized;
 
-	std::vector<InvisibleTerrainChanges> m_aExtraInvisibleTerrains;
-	std::vector<InvisibleFeatureChanges> m_aExtraInvisibleFeatures;
-	std::vector<InvisibleImprovementChanges> m_aExtraInvisibleImprovements;
-	std::vector<InvisibleTerrainChanges> m_aExtraVisibleTerrains;
-	std::vector<InvisibleFeatureChanges> m_aExtraVisibleFeatures;
-	std::vector<InvisibleImprovementChanges> m_aExtraVisibleImprovements;
-	std::vector<InvisibleTerrainChanges> m_aExtraVisibleTerrainRanges;
-	std::vector<InvisibleFeatureChanges> m_aExtraVisibleFeatureRanges;
-	std::vector<InvisibleImprovementChanges> m_aExtraVisibleImprovementRanges;
 	std::vector<AidStruct> m_aExtraAidChanges;
 
 	PlayerTypes m_pPlayerInvestigated;
