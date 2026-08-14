@@ -49,21 +49,6 @@ void CvGameAI::AI_reset()
 }
 
 
-void CvGameAI::AI_makeAssignWorkDirty()
-{
-	PROFILE_EXTRA_FUNC();
-	int iI;
-
-	for (iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
-		{
-			GET_PLAYER((PlayerTypes)iI).AI_makeAssignWorkDirty();
-		}
-	}
-}
-
-
 void CvGameAI::AI_updateAssignWork()
 {
 	PROFILE_FUNC();

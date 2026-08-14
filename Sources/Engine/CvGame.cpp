@@ -713,6 +713,22 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 	}
 
+	// ⚖ RE-DECIDE WORKERS + SPECIALISTS ON LOAD (owner): the saved assignment was decided against the values the
+	// SAVE's DLL computed, and this build's rebuilt cascade values can differ -- so every city's citizen
+	// assignment is marked here and re-runs at the first post-load sweep, against the fully-final state the
+	// rebuilds above just settled. The mark is a flag; no work runs inside the load path itself.
+	if (!bNewGame)
+	{
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (kPlayer.isAlive())
+			{
+				kPlayer.AI_makeAssignWorkDirty();
+			}
+		}
+	}
+
 	OutputDebugString("onFinalInitialized: End\n");
 }
 
@@ -5677,6 +5693,7 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 	{
 		pOldValue->changeReligionInfluence(eIndex, -GC.getHOLY_CITY_INFLUENCE());
 		pOldValue->setInfoDirty(true);
+		pOldValue->AI_setAssignWorkDirty(true);
 	}
 
 	if (getHolyCity(eIndex) != NULL)
@@ -5686,6 +5703,7 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 		pHolyCity->setHasReligion(eIndex, true, bAnnounce, true);
 		pHolyCity->changeReligionInfluence(eIndex, GC.getHOLY_CITY_INFLUENCE());
 		pHolyCity->setInfoDirty(true);
+		pHolyCity->AI_setAssignWorkDirty(true);
 
 		if (bAnnounce && isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 		{
@@ -5730,7 +5748,6 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 			}
 		}
 	}
-	AI_makeAssignWorkDirty();
 
 	// Attitude cache
 	if (isFinalInitialized())
@@ -5864,7 +5881,6 @@ void CvGame::setHeadquarters(CorporationTypes eIndex, CvCity* pNewValue, bool bA
 				}
 			}
 		}
-		AI_makeAssignWorkDirty();
 	}
 }
 

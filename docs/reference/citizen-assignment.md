@@ -218,9 +218,24 @@ flattening `1.5 → 1` and `0.4 → 0`.
 
 ## Dirtying the assignment — the ruled trigger set (owner)
 
-`AI_setAssignWorkDirty` marks a city for a full `AI_updateAssignWork` re-run; today it is set from hand-wired
-call sites across the engine plus an unconditional per-turn sweep. The mechanism (a dirty mark drained by a
-re-run) is right and stays — the AI needs a way to be told the best plots may have moved.
+`AI_setAssignWorkDirty` marks a city for a full `AI_updateAssignWork` re-run — the drain is FLAG-GATED, so a
+mark IS one full re-assignment at the city's next drain, which is what makes an over-broad fan a real cost
+rather than a spare bit. The mechanism (a dirty mark drained by a re-run) is right and stays — the AI needs a
+way to be told the best plots may have moved.
+
+**The assignment is re-decided ON LOAD (owner: "recalculate workers and specialists should also happen on
+load").** `CvGame::onFinalInitialized` marks every alive player's cities after the load-end rebuilds settle, so
+the first post-load sweep re-runs the assignment against this build's values rather than trusting the save's —
+a mark only; no assignment work runs inside the load path
+([event-spine.md](../specs/event-spine.md) § AI RE-EVALUATION).
+
+**The call sites now conform to the set below, scoped to the cities whose inputs actually moved.** There is no
+game-wide fan any more (`CvGameAI` carries none): a civic/religion/wellbeing grantor fans its OWN player's
+cities, war and peace fan the TWO teams involved, a holy-city designation marks the two cities it moved
+between, and a city's population change marks that city. A mark whose value fed no citizen input at all — the
+Python-only yield/commerce modifier planes, non-state-religion building commerce, the corp-HQ designation — is
+gone ([DEC-flag-is-fossil](../architecture/decisions.md#dec-flag-is-fossil): each asserted a change no citizen
+decision could read).
 
 ⚖ **It LISTENS TO THE EVENT SPINE; no AI loop ever touches it directly (owner).** This is a ROUTING job, never a
 judgement re-made per call site — the same shape the player-alert re-attach uses
@@ -244,10 +259,14 @@ facts, the culture-level fact and the working-city fact all announce today. No n
 reassignment; the radius growing with culture / `adds3rdRing`, adding tiles that were never candidates — no
 per-plot fact announces this) and the water-work TEAM capability.
 
-⛔ **Two gates are UNIT-MOVEMENT driven and must NOT ride this routing:** an enemy unit sieging a plot, and a
-naval blockade. Unit movement never dirties a cache
-([DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top)) — decide these
-deliberately rather than discovering the churn in a profile.
+⛔ **Three marks are UNIT-MOVEMENT driven and stand as live per-move marks PENDING A DELIBERATE DECISION
+(owner):** an enemy unit sieging a plot (`CvUnit::setXY`), a naval blockade (`CvPlot::changeBlockadedCount`),
+and the military-happiness garrison count (`CvCity::changeMilitaryHappinessUnits`). Unit movement never dirties
+a cache ([DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top)), so these must
+not ride the spine routing when it lands — but they were NOT cut with the fossils, because the siege/blockade
+marks are LOAD-BEARING today: `verifyWorkingPlots` runs only inside the flag-gated assignment, so without them
+a besieged city would keep working a plot it cannot work. The deliberate decision (a turn-cadence `canWork`
+verification, or something better) has not been taken; do not remove them ahead of it.
 
 ⚑ **The instrument for finding today's live call sites is already built:** the setter emits the caller's
 module-relative return address on every false→true transition, resolvable offline against the PDB.

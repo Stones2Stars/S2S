@@ -1272,7 +1272,8 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan)
 			}
 		}
 
-		GC.getGame().AI_makeAssignWorkDirty();
+		AI_makeAssignWorkDirty();
+		teamFoe.AI_makeAssignWorkDirty();
 
 		if ((getID() == GC.getGame().getActiveTeam()) || (eTeam == GC.getGame().getActiveTeam()))
 		{
@@ -1571,7 +1572,8 @@ void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 			GC.getMap().verifyUnitValidPlot();
 		}
 
-		GC.getGame().AI_makeAssignWorkDirty();
+		AI_makeAssignWorkDirty();
+		GET_TEAM(eTeam).AI_makeAssignWorkDirty();
 
 		if ((getID() == GC.getGame().getActiveTeam()) || (eTeam == GC.getGame().getActiveTeam()))
 		{

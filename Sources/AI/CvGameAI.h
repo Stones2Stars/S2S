@@ -40,14 +40,6 @@ public:
 	void AI_reset();
 
   /**
-   * Marks all players as needing to assign work.
-   * Steps:
-   *   1. Loops through all players.
-   *   2. If the player is alive, calls AI_makeAssignWorkDirty for that player.
-   */
-	void AI_makeAssignWorkDirty();
-
-  /**
    * Updates work assignment for all human players.
    * Steps:
    *   1. Loops through all players.

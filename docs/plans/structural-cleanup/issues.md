@@ -288,16 +288,6 @@ scan bugs rather than fix them.
   the on-site verdict ([contexts.md](../../architecture/contexts.md) § THE VICINITY SPLIT — the storage is
   already right, the ADDRESSING is what conflates them). ⚠ Reaches the authored `vicinity:` key, `CvCondition`
   and the evaluator, so it is a STRUCTURE call, not a sweep — owner input first.
-- **Apply the SLIDER TEST to the rest of the assign-work fans.** `AI_makeAssignWorkDirty` re-runs the FULL citizen
-  assignment over a player's cities — and through `CvGame`, over EVERY player's — and the commerce slider was only
-  one of its callers. Each remaining one answers the question the owner settled there: *does this actually move an
-  input a citizen decision reads?* One that does not is a flag asserting a change that did not happen
-  ([DEC-flag-is-fossil](../../architecture/decisions.md#dec-flag-is-fossil)) and goes with it. ⚠ The per-city
-  `AI_setAssignWorkDirty` sites are the same question one scope down, and the game-wide fans are the expensive end.
-  ⚑ The instrument answers this directly and needs nothing built: a DIRECT setter call names its caller on the
-  per-city `[CIT/assign/dirty]` line, and a whole-scope fan names its own caller on `[CIT/assign/fan]`. Both land
-  in **`CityAI.log`** — the `[CIT]` domain's file, NOT `Cascade.log`. Resolve an RVA against the PDB
-  (`ln CvGameCoreDLL+<callerRva>`), and the histogram of those values IS the worklist, ranked by cost.
 - **Give the vicinity store its `CASC_PRED_*`-keyed twin** — the vicinity counterpart of `plotAttrs` (river / coast
   / hills / peak / fresh water over the radius tiles), beside the `BONUS_*`-keyed one that now exists
   ([contexts.md](../../architecture/contexts.md), owner). ⛔ The two are NOT merged: the key spaces are disjoint
@@ -331,25 +321,6 @@ scan bugs rather than fix them.
   ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)).
 - **Stop handing `CvPlot*` out of `CityContext`** (`cityPlot`, `radiusPlot`) — the evaluator uses that hole to
   reach a second context, while the eval ctx already carries one. The isolation is meant to be structural.
-- **Reset the enabler's build-once latches**, or make them re-entrant: `rj_clearAllRepos` re-maps every info on
-  the postmenu pass while `buildActiveIndex`, `bd_buildGateClasses`, `ud_buildClasses`, `bd_sbMembers` and
-  `bd_cappedBuildings` latch permanently. `di_ensureDependencies` is a literal ensure-on-read behind four reads.
-- **Announce the property bridge's fail-closed SKIPS.** ⚠ **The earlier disposition here — "collapse the second
-  condition-evaluation surface" — is RETRACTED: it contradicts the LOCKED property spec**, which APPROVES this
-  translator explicitly (owner-decisions #1/#2, [property-audit.md](property-audit.md): a small scoped
-  `CvCondition` → legacy `BoolExpr` bridge, because the KEEP-legacy solver evaluates `BoolExpr` and the engine
-  math is not to be rewritten). Collapsing it would be remodelling the property engine, which is banned.
-  **PROVEN — and the fail-closed half is CORRECT, not the defect.** `condToBoolExpr` refuses what it cannot
-  faithfully translate — a count threshold (`min > 1` / `max`), a `connection` qualifier, an unmapped predicate —
-  returning NULL rather than applying the source under a wrong condition, and `entryActiveExpr` raises an
-  explicit `bUntranslatable`.
-  **PROVEN — what IS the defect is that the caller then drops it in SILENCE:** `bridgeFamilies` does
-  `if (bUntranslatable) continue;` with no report, and the same for a non-`POPULATION` `per`. That is exactly
-  what [triggers.md](../../specs/triggers.md) rules out — *"being fail-closed is right; being fail-closed AND
-  silent is not: authored data that loads, never applies, and reports nothing is invisible on both axes at
-  once"* — so each skip belongs on the ONE load-time census beside readJson's coverage counts, never a second
-  reporting path.
-
 ## ⛔ THE PROPERTY-BAND ECOSYSTEM IS BROKEN FOUR INDEPENDENT WAYS
 
 > The crime / disease / pollution / education building ecosystem — the largest `requires.operate` population in

@@ -784,7 +784,6 @@ public:
 
 	virtual void AI_init() = 0;
 	virtual void AI_reset() = 0;
-	virtual void AI_makeAssignWorkDirty() = 0;
 	virtual void AI_updateAssignWork() = 0;
 	virtual int AI_combatValue(const UnitTypes eUnit) const = 0;
 
