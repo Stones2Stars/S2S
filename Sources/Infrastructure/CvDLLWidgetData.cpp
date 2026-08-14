@@ -3146,7 +3146,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 								for (int iY = 0; iY < NUM_YIELD_TYPES; ++iY)
 								{
 									aiRouteYields[iY] = GC.getRouteInfo((RouteTypes)iI).getImprovementYield(
-										pMissionPlot->getImprovementType(), (YieldTypes)iY);
+										pMissionPlot->getImprovementType(), (YieldTypes)iY) / 100;
 								}
 								GAMETEXT.setYieldChangeHelp(szBuffer, GC.getRouteInfo((RouteTypes)iI).getDescription(),
 									L": ", L"", aiRouteYields);
@@ -3188,10 +3188,10 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						int aiYields[NUM_YIELD_TYPES];
 						for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 						{
-							aiYields[iI] = GC.getRouteInfo(eRoute).getImprovementYield(eFinalImprovement, (YieldTypes)iI);
+							aiYields[iI] = GC.getRouteInfo(eRoute).getImprovementYield(eFinalImprovement, (YieldTypes)iI) / 100;
 							if (eExistingRoute != NO_ROUTE)
 							{
-								aiYields[iI] -= GC.getRouteInfo(eExistingRoute).getImprovementYield(eFinalImprovement, (YieldTypes)iI);
+								aiYields[iI] -= GC.getRouteInfo(eExistingRoute).getImprovementYield(eFinalImprovement, (YieldTypes)iI) / 100;
 							}
 						}
 

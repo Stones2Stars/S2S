@@ -125,8 +125,19 @@ int CvActionInfo::getMissionType() const
 		case ACTIONSUBTYPE_SPECIALIST:
 			return GC.getSpecialistInfo((SpecialistTypes)m_iOriginalIndex).getMissionType();
 
-		// ACTIONSUBTYPE_BUILDING carries NO mission: the action-table builder keeps the building its slot but
-		// writes no mission or hotkey back onto the JSON-fed info, so this falls through to NO_MISSION.
+		case ACTIONSUBTYPE_BUILDING:
+		{
+			// Every building action IS a construct order -- the legacy write-back onto each building info stored
+			// this one constant per entity, and cutting the write-back answered NO_MISSION here, which made every
+			// great-person "construct me" button (the prophet's shrines) unmatchable in canHandleAction. The
+			// mission id is XML-registered, so it resolves once (the CvHideAndSeekSection lazy-resolve shape).
+			static int iConstructMission = -2;
+			if (iConstructMission == -2)
+			{
+				iConstructMission = GC.getInfoTypeForString("MISSION_CONSTRUCT", /*bHideAssert*/true);
+			}
+			return iConstructMission >= 0 ? iConstructMission : NO_MISSION;
+		}
 
 		case ACTIONSUBTYPE_HERITAGE:
 			return GC.getHeritageInfo((HeritageTypes)m_iOriginalIndex).getMissionType();
