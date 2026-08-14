@@ -82,6 +82,7 @@ namespace
 		case CIT_ASSIGN_CAND:         return "[CIT/assign/cand]";
 		case CIT_ASSIGN_SPECVAL:      return "[CIT/assign/specval]";
 		case CIT_ASSIGN_PLOTVAL:      return "[CIT/assign/plotval]";
+		case CIT_ORDER_CAND:          return "[CIT/order/cand]";
 		case CIT_PUSH_REJECT_UNIT:    return "[CIT/push/reject] kind=unit reason=spamGuard";
 		case CIT_PUSH_REJECT_BUILDING:return "[CIT/push/reject] kind=building reason=dupGuard";
 		case CIT_PUSH_UNIT:           return "[CIT/push] kind=unit";
@@ -179,6 +180,7 @@ namespace
 		case CITF_wellbeingPart:return "wellbeingPart";
 		case CITF_propertyPart: return "propertyPart";
 		case CITF_underworldPart: return "underworldPart";
+		case CITF_turnsLeft:    return "turnsLeft";
 		default:              return NULL;
 		}
 	}
@@ -4794,9 +4796,21 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 				if (iMaxTurns <= 0 || iTurnsLeft <= iMaxTurns || AI_canRushBuildingConstruction(eBuilding))
 				{
 					FAssert(MAX_INT / 100 >= iValue);
+					const int64_t iValueBeforeTurns = iValue;
 					// Adjust the score based on the turns to complete the building, more turns means lower score
 					// As we got this far we definitely consider this building a candidate so we should give it a score of at least 1
 					iValue = std::max<int64_t>(1, iValue * 100 / (iTurnsLeft + 3));
+
+					// [CIT/order/cand] -- one candidate's value/turns/final split, the per-candidate tier under
+					// the committed [CIT/order] pick: whether a candidate lost on VALUE or the turns damper is a
+					// reading off these three numbers rather than a theory.
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_CAND, 3)
+						.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+						.addI(CITF_building, (int)eBuilding)
+						.addI(CITF_val, (int)iValueBeforeTurns)
+						.addI(CITF_turnsLeft, iTurnsLeft)
+						.addI(CITF_finalVal, (int)iValue)
+						.addI(CITF_focus, iFocusFlags));
 
 					// Add to our list of potential buildings to return later
 					scoredBuildings.push_back(ScoredBuilding(eBuilding, iValue));

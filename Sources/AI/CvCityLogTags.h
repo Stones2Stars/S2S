@@ -53,7 +53,11 @@ enum CitEvent
 	//	specialist: GPP + XP + wellbeing + property + underworld; plot: the improvement blend, the potential-plot
 	//	penalty and the bonus-discovery adds. Which term carries the advantage is then a reading, not a theory.
 	CIT_ASSIGN_SPECVAL,      // [CIT/assign/specval] -- one specialist's score, yield term vs final
-	CIT_ASSIGN_PLOTVAL       // [CIT/assign/plotval] -- one plot's score, yield term vs final
+	CIT_ASSIGN_PLOTVAL,      // [CIT/assign/plotval] -- one plot's score, yield term vs final
+	//	The governor's building choice, per CANDIDATE: the value BEFORE the turns division, the turns-left the
+	//	division used, and the final score. [CIT/order] shows only the committed pick, so whether a cheap food
+	//	building lost on VALUE or the turns damper failed to separate it was unanswerable from the wire.
+	CIT_ORDER_CAND           // [CIT/order/cand] -- one scored building candidate: value, turnsLeft, final
 };
 
 // CIT LOCAL field tags. city/owner are ints (city ID / PlayerTypes); prop is a PropertyTypes index (rendered as int).
@@ -93,7 +97,9 @@ enum CitField
 	//	lands at nearly the SAME magnitude on unrelated specialist types, which is the signature of a shared term
 	//	rather than of what any specialist produces -- so it is split into its five actual contributors instead
 	//	of being reasoned about from the source.
-	CITF_gppPart, CITF_xpPart, CITF_wellbeingPart, CITF_propertyPart, CITF_underworldPart
+	CITF_gppPart, CITF_xpPart, CITF_wellbeingPart, CITF_propertyPart, CITF_underworldPart,
+	//	The building-candidate split (CIT_ORDER_CAND): how many turns the score divider used.
+	CITF_turnsLeft
 };
 
 // ⛔ WHY THE FAN NEEDS ITS OWN TAG: the per-city [CIT/assign/dirty] line captures the return address inside
