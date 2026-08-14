@@ -243,17 +243,6 @@
     curator emits the same mechanic correctly, that is the shape to copy: the outlier is the defect, not the
     vocabulary.
 
-- **Route the remaining `per` COUNT scalers.** Deposits scale on the commerce-slider rates
-  (`GOLD_RATE`/`RESEARCH_RATE`/`CULTURE_RATE`/`ESPIONAGE_RATE`), on the wonder counts
-  (`WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER`) and on per-improvement counts, and none of those counts moves
-  the deposits it scales. The facts already exist (`SEVT_EMPIRE_COMMERCE_PERCENT_*`,
-  `SEVT_EMPIRE_BUILDING_COUNT_*`, the plot improvement pair); what is missing is the consumer route
-  ([DEC-close-event-gaps-now](../../architecture/decisions.md#dec-close-event-gaps-now) — the third gap form).
-- **Route `SEVT_PROPERTY_ADDED / _REMOVED` and `SEVT_CITY_PROPERTY_BAND_ADDED / _REMOVED` into the modifier.**
-  They fire from the `CvProperties` choke points and the band registry into a consumer set that carries no case
-  for either, so a threshold-conditioned deposit on a property never moves
-  ([event-spine.md](../../specs/event-spine.md) § THE RECEIVED LINE names this as the worked instance).
-
 - Serve a city's OFFERED RESOURCES, and give the city screen a VICINITY tab showing them (owner) — no readable
   list exists today for what a city's plot group supplies.
   ⛔ READ only — nothing mirrors onto the city ([enabler.md §8](../../specs/enabler.md) RESIDENCY); a stored
