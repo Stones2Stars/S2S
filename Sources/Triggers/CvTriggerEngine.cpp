@@ -380,27 +380,12 @@ static void tr_awardContestedAutoBuilds(CvCity* pCity)
 	if (pCity == NULL) return;
 	const std::vector<int>& aContested = EnablerKernel::contestedAutoBuildings();
 	if (aContested.empty()) return;
-	CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	for (size_t i = 0; i < aContested.size(); ++i)
 	{
 		const int iBuilding = aContested[i];
-		if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
-		const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
-		if (j == NULL) continue;
-		// the cap has room -- the ONE cap comparison ([DEC-single-implementation]), reading the tally
-		if (!EnablerKernel::allowedOk(j, iBuilding, player, /*bUnit*/ false)) continue;
-		if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)) continue;
-		// the operate gate through the ONE evaluator against the contexts (contexts.md: the fill seams)
-		const CvCondition* pOperate = j->requiresOperate();
-		if (pOperate != NULL)
-		{
-			CvCascadeEvalCtx ec;
-			pCity->getCityContext().fillEvalCtx(ec);
-			player.getEmpireContext().fillEvalCtx(ec);
-			EnablerKernel::wireOperatingBuildings(pCity, ec);
-			const CvCascadeEvalFlags kFlags;
-			if (!cascadeEvalCondition(pOperate, ec, kFlags)) continue;
-		}
+		// the ONE arrival gate for a queue-excluded building -- cap + obsolescence + the operate condition
+		// ([DEC-single-implementation]; the mission-construct path asks the same question of the same body)
+		if (!EnablerKernel::queueExcludedArrivalOk(pCity, iBuilding)) continue;
 		pCity->changeHasBuilding((BuildingTypes)iBuilding, true);   // a genuine first acquisition: bFirst fires the pulses
 	}
 }

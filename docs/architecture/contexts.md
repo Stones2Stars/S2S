@@ -305,7 +305,7 @@ surface: the fold is the ONE reader of the grantor side
 **Every boolean city attribute of this shape is generalized onto the ONE fold, not just power:**
 `governmentCenter`, `abolishedAnger`, `abolishedUnhealthFromPopulation` and `abolishedUnhealthFromBuildings` are
 all ordinary `CITY_HAS_AMENITY` keys (`CvCity::isGovernmentCenter` / `isNoUnhappiness` /
-`cityHasNoUnhealthyPopulation` / `cityHasBuildingOnlyHealthy`), so a NEW attribute of this shape costs no engine
+`isNoUnhealthyPopulation` / `isBuildingOnlyHealthy`), so a NEW attribute of this shape costs no engine
 change — it is pure data, the open-registry promise ([DEC-classification-infos](decisions.md#dec-classification-infos))
 reaching the consumer side. ⛔ There is no surviving hand-named counter for any of them — no
 `changeGovernmentCenterCount` / `changeNoUnhappinessCount` / `changeNoUnhealthyPopulationCount` member on
@@ -647,12 +647,14 @@ CAPSTONE — LOAD is the only full build).
   the trait setter, so that fact is the only announcement they ever make.
   ⛔ It is deliberately **not** maintained from `CvPlayer::setCivics` / `setHasTrait`: a direct hook beside an event
   is a second maintenance surface for one fact, and the fact already exists.
-  ⚑ **`CvPlayer::processCivics`'s per-flag POLICY counters retire here** —
-  `changeFixedBordersCount`/`changeNoForeignTradeCount`/`changeNoCorporationsCount`/`changeStateReligionCount`/
-  `changeAllReligionsActiveCount` and the like are the SAME family as the amenity counters above, not a
-  modifier-channel push ([DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform)). Genuine
-  non-cascade state on that same class (the revolution index, `changeMaxConscript`,
-  `changeSpecialistValidCount`, hurry counts) is neither — it stays serialized as-is.
+  ⚑ **This store is the ONE home of the per-flag policy verdicts** — the boolean getters (`isNoForeignTrade`,
+  `isStateReligion`, `isInquisitionConditions` and their kin) read `has`, and the AI civic-value what-ifs read
+  `count` with an unconditional vacuum subtraction of the option slot's own civic. The serialized per-flag
+  counters `processCivics`/`processTrait` once pushed beside it were the second-surface class and are cut
+  ([DEC-accumulator-cut-uniform](decisions.md#dec-accumulator-cut-uniform)); their changers' side-effect riders
+  live at the adoption site (`setCivics`), diff-gated on the policy actually moving. Genuine non-cascade state
+  on that same class (the revolution index, `changeMaxConscript`, `changeSpecialistValidCount`, hurry counts)
+  stays serialized as-is.
 - **The HELD-TRAIT set** ← the **same trait / player-init facts**, consumed by its own store beside the policy one
   (one dictionary per area of responsibility — the `TRAIT_` and `POLICY_` key spaces are disjoint registries).
   > **⚖ IT IS THE CASE WHERE ONE AXIS SPLITS ACROSS THE SCAN-vs-HOP TEST, and reading the FORWARD row as settling

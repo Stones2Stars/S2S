@@ -319,8 +319,6 @@ public:
 	void changeHappinessTimer(int iChange);
 	bool isNoUnhappiness() const;
 
-	bool isBuildingOnlyHealthy() const;
-
 	int getFood() const;
 	void setFood(int iNewValue);
 	void changeFood(int iChange);

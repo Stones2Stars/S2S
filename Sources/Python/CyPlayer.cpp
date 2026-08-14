@@ -824,11 +824,6 @@ int CyPlayer::getOverflowResearch() const
 	return m_pPlayer->getOverflowResearch();
 }
 
-bool CyPlayer::isBuildingOnlyHealthy() const
-{
-	return m_pPlayer->isBuildingOnlyHealthy();
-}
-
 int64_t CyPlayer::getTreasuryUpkeep() const
 {
 	return m_pPlayer->getTreasuryUpkeep();

@@ -624,8 +624,6 @@ void CvPlayer::uninit()
 	m_buildingMaking.clear();
 	m_extraBuildingHappiness.clear();
 	m_extraBuildingHealth.clear();
-	m_buildingProductionMod.clear();
-	m_buildingCostMod.clear();
 	m_researchQueue.clear();
 	m_cityNames.clear();
 	m_myHeritage.clear();
@@ -1073,17 +1071,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iGreatGeneralsThresholdModifier = 0;
 	m_iFeatureProductionModifier = 0;
 
-	m_iNonStateReligionCommerceCount = 0;
-	m_iUpgradeAnywhereCount = 0;
 	m_iRevIdxLocal = 0;
 	m_iRevIdxNational = 0;
 	m_iRevIdxDistanceModifier = 0;
-	m_iRevIdxHolyCityGood = 0;
-	m_iRevIdxHolyCityBad = 0;
-	m_fRevIdxNationalityMod = 0;
-	m_fRevIdxBadReligionMod = 0;
-	m_fRevIdxGoodReligionMod = 0;
-	m_bInquisitionConditions = false;
 	m_iCityLimit = 0;
 	m_iCityOverLimitUnhappy = 0;
 
@@ -1093,26 +1083,17 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iFinalUnitUpkeep = 0;
 
 	m_iNumMilitaryUnits = 0;
-	m_iMilitaryFoodProductionCount = 0;
 	m_iConscriptCount = 0;
 	m_iMaxConscript = 0;
 	m_iHighestUnitLevel = 1;
 	m_iOverflowResearch = 0;
-	m_iNoUnhealthyPopulationCount = 0;
-	m_iBuildingOnlyHealthyCount = 0;
-
 
 	m_iExtraHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
 	m_iWarWearinessPercentAnger = 0;
-	m_iNoForeignTradeCount = 0;
-	m_iNoCorporationsCount = 0;
-	m_iNoForeignCorporationsCount = 0;
 	m_iRevolutionTimer = 0;
 	m_iConversionTimer = 0;
-	m_iStateReligionCount = 0;
-	m_iNoNonStateReligionSpreadCount = 0;
 	m_iStateReligionUnitProductionModifier = 0;
 	m_iStateReligionBuildingProductionModifier = 0;
 	m_iCapitalCityID = FFreeList::INVALID_INDEX;
@@ -1146,7 +1127,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_bHuman = false;
 	//TB Traits begin
 	m_iLeaderHeadLevel = 0;
-	m_iInquisitionCount = 0;
 
 	m_iNationalAirUnitCapacity = 0;
 
@@ -6578,8 +6558,6 @@ uint64_t iProductionNeeded = (uint64_t) 100*iBaseCost;
 	iProductionNeeded *= GC.getBUILDING_PRODUCTION_PERCENT();
 	iProductionNeeded /= 100;
 
-	iProductionNeeded = getModifiedIntValue64(iProductionNeeded, getBuildingCostModifier(eBuilding));
-
 	if (isNormalAI())
 	{
 		int iMod = 0;
@@ -6790,6 +6768,41 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 		}
 	}
 
+	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+	{
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)iI);
+		if (eCivic != NO_CIVIC)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+
+			iMultiplier += InfoValuation::keyedTarget(
+				kCivic.getModifiers(), MODFAM_BUILD_RATE, -1, iBuildingsSegment, (int)eBuilding,
+				(int)CASC_SCOPE_EMPIRE);
+
+			if (eSpecialBuilding != NO_SPECIALBUILDING)
+			{
+				iMultiplier += InfoValuation::keyedTarget(
+					kCivic.getModifiers(), MODFAM_BUILD_RATE, -1, iSpecialBuildingsSegment,
+					(int)eSpecialBuilding, (int)CASC_SCOPE_EMPIRE);
+			}
+		}
+	}
+
+	// The EMPIRE-scope rows the player's HELD BUILDINGS author against this target (a wonder cheapening a
+	// building across the empire). The authoring handful is load-compiled; only held authors are read.
+	const std::vector<int>& kBuildRateAuthors = InfoValuation::empireBuildingKeyedBuildRateAuthors();
+	for (size_t iAuthor = 0; iAuthor < kBuildRateAuthors.size(); ++iAuthor)
+	{
+		const BuildingTypes eAuthor = (BuildingTypes)kBuildRateAuthors[iAuthor];
+		const int iHeldCount = getBuildingCount(eAuthor);
+		if (iHeldCount > 0)
+		{
+			iMultiplier += iHeldCount * InfoValuation::keyedTarget(
+				GC.getBuildingInfo(eAuthor).getModifiers(), MODFAM_BUILD_RATE, -1,
+				iBuildingsSegment, (int)eBuilding, (int)CASC_SCOPE_EMPIRE);
+		}
+	}
+
 	//	The wonder categories are their own build-rate kinds, named by the cap SCOPE that makes a building a
 	//	wonder ([json.md par.4.4]). All three are percents and enter the multiplier unscaled.
 	int aiBuildRate[NUM_BUILD_RATE_KINDS];
@@ -6874,16 +6887,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		const int iKeyedHappy = kKeyedHappy[iKeyed].second / 100;
 		changeExtraBuildingHappiness(eKeyedBuilding, iKeyedHappy * iChange);
 	}
-	// The EMPIRE-scope building-keyed buildRate rows this building authored (modifier.md §5 entry-list read).
-	std::vector<std::pair<int, int> > kKeyedBuildRate;
-	InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
-		InfoValuation::keyedTargetSegment("buildings"), kKeyedBuildRate, (int)CASC_SCOPE_EMPIRE);
-	for (size_t iKeyed = 0; iKeyed < kKeyedBuildRate.size(); ++iKeyed)
-	{
-		changeBuildingProductionModifier((BuildingTypes)kKeyedBuildRate[iKeyed].first,
-			kKeyedBuildRate[iKeyed].second * iChange);
-	}
-
 }
 
 
@@ -9235,26 +9238,12 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 
 bool CvPlayer::isNonStateReligionCommerce() const
 {
-	return m_iNonStateReligionCommerceCount > 0;
-}
-
-void CvPlayer::changeNonStateReligionCommerce(int iNewValue)
-{
-	FASSERT_BOUNDS(0, 3, m_iNonStateReligionCommerceCount);
-
-	m_iNonStateReligionCommerceCount += iNewValue;
+	return policies().has(CLS_POLICY_NON_STATE_RELIGION_COMMERCE);
 }
 
 bool CvPlayer::isUpgradeAnywhere() const
 {
-	return m_iUpgradeAnywhereCount > 0;
-}
-
-void CvPlayer::changeUpgradeAnywhere(int iNewValue)
-{
-	FASSERT_BOUNDS(0, 3, m_iUpgradeAnywhereCount);
-
-	m_iUpgradeAnywhereCount += iNewValue;
+	return policies().has(CLS_POLICY_UPGRADE_ANYWHERE);
 }
 
 
@@ -9301,103 +9290,16 @@ void CvPlayer::changeRevIdxDistanceModifier(int iChange)
 }
 
 
-int CvPlayer::getRevIdxHolyCityGood() const
-{
-	return m_iRevIdxHolyCityGood;
-}
-
-void CvPlayer::changeRevIdxHolyCityGood(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iRevIdxHolyCityGood += iChange;
-	}
-}
-
-
-int CvPlayer::getRevIdxHolyCityBad() const
-{
-	return m_iRevIdxHolyCityBad;
-}
-
-void CvPlayer::changeRevIdxHolyCityBad(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iRevIdxHolyCityBad += iChange;
-	}
-}
-
-
-float CvPlayer::getRevIdxNationalityMod() const
-{
-	return m_fRevIdxNationalityMod;
-}
-
-void CvPlayer::changeRevIdxNationalityMod(float fChange)
-{
-	if (fChange != 0)
-	{
-		m_fRevIdxNationalityMod += fChange;
-	}
-}
-
-
-float CvPlayer::getRevIdxBadReligionMod() const
-{
-	return m_fRevIdxBadReligionMod;
-}
-
-void CvPlayer::changeRevIdxBadReligionMod(float fChange)
-{
-	if (fChange != 0)
-	{
-		m_fRevIdxBadReligionMod += fChange;
-	}
-}
-
-
-float CvPlayer::getRevIdxGoodReligionMod() const
-{
-	return m_fRevIdxGoodReligionMod;
-}
-
-void CvPlayer::changeRevIdxGoodReligionMod(float fChange)
-{
-	if (fChange != 0)
-	{
-		m_fRevIdxGoodReligionMod += fChange;
-	}
-}
-
-
+// A disallowing grantor VETOES: the two are DISTINCT policies asked separately, never a signed net -- one
+// grantor of each answered false under the netted counter this replaced, and the data authors both keys
+// independently (the hasBannedNonStateReligions precedent).
 bool CvPlayer::isInquisitionConditions() const
 {
-	return GC.getGame().isOption(GAMEOPTION_RELIGION_INQUISITIONS) && getStateReligion() != NO_RELIGION && m_iInquisitionCount > 0;
+	return GC.getGame().isOption(GAMEOPTION_RELIGION_INQUISITIONS)
+		&& getStateReligion() != NO_RELIGION
+		&& policies().has(CLS_POLICY_ALLOW_INQUISITIONS)
+		&& !policies().has(CLS_POLICY_DISALLOW_INQUISITIONS);
 }
-
-//TB Note: Should be unnecessary now but leaving it in for a bit to allow for a reversal of method if needbe.
-//void CvPlayer::setInquisitionConditions()
-//{
-//	m_bInquisitionConditions = false;
-//
-//	if (!GC.getGame().isOption(GAMEOPTION_RELIGION_INQUISITIONS) || getStateReligion() == NO_RELIGION)
-//	{
-//		return;
-//	}
-//
-//	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
-//	{
-//		if (GC.getCivicInfo(getCivics((CivicOptionTypes)iI)).isDisallowInquisitions())
-//		{
-//			return;
-//		}
-//		else if (GC.getCivicInfo(getCivics((CivicOptionTypes)iI)).isAllowInquisitions())
-//		{
-//			m_bInquisitionConditions = true;
-//		}
-//	}
-//}
 
 
 bool CvPlayer::canFoundReligion() const
@@ -9713,30 +9615,9 @@ int CvPlayer::getHappyPerMilitaryUnit() const
 }
 
 
-int CvPlayer::getMilitaryFoodProductionCount() const
-{
-	return m_iMilitaryFoodProductionCount;
-}
-
-
 bool CvPlayer::isMilitaryFoodProduction() const
 {
-	return (getMilitaryFoodProductionCount() > 0);
-}
-
-
-void CvPlayer::changeMilitaryFoodProductionCount(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iMilitaryFoodProductionCount += iChange;
-		FASSERT_NOT_NEGATIVE(getMilitaryFoodProductionCount());
-
-		if (!bLimited && getTeam() == GC.getGame().getActiveTeam())
-		{
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-		}
-	}
+	return policies().has(CLS_POLICY_MILITARY_FOOD_PRODUCTION);
 }
 
 
@@ -9795,62 +9676,6 @@ void CvPlayer::changeOverflowResearch(int iChange)
 {
 	m_iOverflowResearch += iChange;
 	FASSERT_NOT_NEGATIVE(m_iOverflowResearch);
-}
-
-
-int CvPlayer::getNoUnhealthyPopulationCount() const
-{
-	return m_iNoUnhealthyPopulationCount;
-}
-
-
-bool CvPlayer::isNoUnhealthyPopulation() const
-{
-	return (getNoUnhealthyPopulationCount() > 0);
-}
-
-
-void CvPlayer::changeNoUnhealthyPopulationCount(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iNoUnhealthyPopulationCount += iChange;
-		FASSERT_NOT_NEGATIVE(getNoUnhealthyPopulationCount());
-
-		if (!bLimited)
-		{
-			AI_makeAssignWorkDirty();
-		}
-	}
-}
-
-
-
-
-int CvPlayer::getBuildingOnlyHealthyCount() const
-{
-	return m_iBuildingOnlyHealthyCount;
-}
-
-
-bool CvPlayer::isBuildingOnlyHealthy() const
-{
-	return (getBuildingOnlyHealthyCount() > 0);
-}
-
-
-void CvPlayer::changeBuildingOnlyHealthyCount(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingOnlyHealthyCount += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingOnlyHealthyCount());
-
-		if (!bLimited)
-		{
-			AI_makeAssignWorkDirty();
-		}
-	}
 }
 
 
@@ -10009,84 +9834,21 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 
 
 
-int CvPlayer::getNoForeignTradeCount() const
-{
-	return m_iNoForeignTradeCount;
-}
-
-
 bool CvPlayer::isNoForeignTrade() const
 {
-	return (getNoForeignTradeCount() > 0);
-}
-
-
-void CvPlayer::changeNoForeignTradeCount(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iNoForeignTradeCount += iChange;
-		FASSERT_NOT_NEGATIVE(getNoForeignTradeCount());
-
-		if (!bLimited)
-		{
-			GC.getGame().updateTradeRoutes();
-		}
-	}
-}
-
-
-int CvPlayer::getNoCorporationsCount() const
-{
-	return m_iNoCorporationsCount;
+	return policies().has(CLS_POLICY_NO_FOREIGN_TRADE);
 }
 
 
 bool CvPlayer::isNoCorporations() const
 {
-	return (getNoCorporationsCount() > 0);
-}
-
-
-void CvPlayer::changeNoCorporationsCount(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iNoCorporationsCount += iChange;
-		FASSERT_NOT_NEGATIVE(getNoCorporationsCount());
-
-		if (!bLimited)
-		{
-			updateCorporation();
-		}
-	}
-}
-
-
-int CvPlayer::getNoForeignCorporationsCount() const
-{
-	return m_iNoForeignCorporationsCount;
+	return policies().has(CLS_POLICY_NO_CORPORATIONS);
 }
 
 
 bool CvPlayer::isNoForeignCorporations() const
 {
-	return (getNoForeignCorporationsCount() > 0);
-}
-
-
-void CvPlayer::changeNoForeignCorporationsCount(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iNoForeignCorporationsCount += iChange;
-		FASSERT_NOT_NEGATIVE(getNoForeignCorporationsCount());
-
-		if (!bLimited)
-		{
-			updateCorporation();
-		}
-	}
+	return policies().has(CLS_POLICY_NO_FOREIGN_CORPORATIONS);
 }
 
 
@@ -10158,55 +9920,15 @@ void CvPlayer::changeConversionTimer(int iChange)
 }
 
 
-int CvPlayer::getStateReligionCount() const
-{
-	return m_iStateReligionCount;
-}
-
-
 bool CvPlayer::isStateReligion() const
 {
-	return (getStateReligionCount() > 0);
-}
-
-
-void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		// religion visibility now part of espionage
-		//GC.getGame().updateCitySight(false, true);
-
-		m_iStateReligionCount += iChange;
-		FASSERT_NOT_NEGATIVE(getStateReligionCount());
-
-		// religion visibility now part of espionage
-		//GC.getGame().updateCitySight(true, true);
-
-		if (!bLimited)
-		{
-			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-		}
-	}
-}
-
-
-int CvPlayer::getNoNonStateReligionSpreadCount() const
-{
-	return m_iNoNonStateReligionSpreadCount;
+	return policies().has(CLS_POLICY_STATE_RELIGION);
 }
 
 
 bool CvPlayer::isNoNonStateReligionSpread() const
 {
-	return (getNoNonStateReligionSpreadCount() > 0);
-}
-
-
-void CvPlayer::changeNoNonStateReligionSpreadCount(int iChange)
-{
-	m_iNoNonStateReligionSpreadCount += iChange;
-	FASSERT_NOT_NEGATIVE(getNoNonStateReligionSpreadCount());
+	return policies().has(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD);
 }
 
 
@@ -12986,6 +12708,14 @@ int64_t CvPlayer::getTreasuryUpkeep() const
 }
 
 
+namespace
+{
+	bool civicProvidesPolicy(CivicTypes eCivic, int iPolicyId)
+	{
+		return eCivic != NO_CIVIC && GC.getCivicInfo(eCivic).providesPolicy(iPolicyId);
+	}
+}
+
 void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 {
 	PROFILE_FUNC();
@@ -13009,6 +12739,27 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		if (getCivics(eIndex) != NO_CIVIC)
 		{
 			processCivics(getCivics(eIndex), 1);
+		}
+
+		// The side effects the retired per-flag policy counters' changers carried ([save.md] par.6), fired at
+		// the adoption site when the swap actually moves the policy verdict.
+		if (civicProvidesPolicy(eOldCivic, CLS_POLICY_NO_FOREIGN_TRADE) != civicProvidesPolicy(eNewValue, CLS_POLICY_NO_FOREIGN_TRADE))
+		{
+			GC.getGame().updateTradeRoutes();
+		}
+		if (civicProvidesPolicy(eOldCivic, CLS_POLICY_NO_CORPORATIONS) != civicProvidesPolicy(eNewValue, CLS_POLICY_NO_CORPORATIONS)
+		||  civicProvidesPolicy(eOldCivic, CLS_POLICY_NO_FOREIGN_CORPORATIONS) != civicProvidesPolicy(eNewValue, CLS_POLICY_NO_FOREIGN_CORPORATIONS))
+		{
+			updateCorporation();
+		}
+		if (civicProvidesPolicy(eOldCivic, CLS_POLICY_STATE_RELIGION) != civicProvidesPolicy(eNewValue, CLS_POLICY_STATE_RELIGION))
+		{
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		}
+		if (getTeam() == GC.getGame().getActiveTeam()
+		&&  civicProvidesPolicy(eOldCivic, CLS_POLICY_MILITARY_FOOD_PRODUCTION) != civicProvidesPolicy(eNewValue, CLS_POLICY_MILITARY_FOOD_PRODUCTION))
+		{
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 
 		// A civic newly adopted -- the swap fact (adopted + swapped-out). A NO_CIVIC slot is no adoption.
@@ -16657,27 +16408,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 
 		changeMaxConscript(getWorldSizeMaxConscript(eCivic) * iChange);
 
-		changeUpgradeAnywhere((kCivic.providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE))? iChange : 0);
-		// The holy-city kinds are FLAT, so the ×100 reduces here at the point of use; the three MOD kinds are
-		// percents and carry no scaling at all ([DEC-fixedpoint-x100]) -- a family-wide ÷100 would zero them.
-		changeRevIdxHolyCityGood(kCivic.getRevolution(REVOLUTION_HOLY_CITY_GOOD, CASC_SCOPE_EMPIRE) / 100 * iChange);
-		changeRevIdxHolyCityBad(kCivic.getRevolution(REVOLUTION_HOLY_CITY_BAD, CASC_SCOPE_EMPIRE) / 100 * iChange);
-		changeRevIdxNationalityMod(kCivic.getRevolution(REVOLUTION_NATIONALITY, CASC_SCOPE_EMPIRE) * static_cast<float>(iChange));
-		changeRevIdxBadReligionMod(kCivic.getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE) * static_cast<float>(iChange));
-		changeRevIdxGoodReligionMod(kCivic.getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE) * static_cast<float>(iChange));
-		changeInquisitionCount((kCivic.providesPolicy(CLS_POLICY_ALLOW_INQUISITIONS))? iChange : 0);
-		changeInquisitionCount((kCivic.providesPolicy(CLS_POLICY_DISALLOW_INQUISITIONS))? -iChange : 0);
-
-		std::vector<std::pair<int, int> > kCivicBuildRate;
-		InfoValuation::collectKeyedTarget(kCivic.getModifiers(), MODFAM_BUILD_RATE, -1,
-			InfoValuation::keyedTargetSegment("buildings"), kCivicBuildRate, (int)CASC_SCOPE_EMPIRE);
-		for (size_t iKeyed = 0; iKeyed < kCivicBuildRate.size(); ++iKeyed)
-		{
-			changeBuildingProductionModifier((BuildingTypes)kCivicBuildRate[iKeyed].first,
-				kCivicBuildRate[iKeyed].second * iChange);
-		}
-
-
 		const std::vector<int>* pValidSpecialists = kCivic.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIALISTS);
 		if (pValidSpecialists != NULL)
 		{
@@ -16705,18 +16435,6 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		}
 
 	}
-
-	changeNoUnhealthyPopulationCount(kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) * iChange, bLimited);
-	changeBuildingOnlyHealthyCount(kCivic.providesAmenity(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) * iChange, bLimited);
-
-	changeMilitaryFoodProductionCount(kCivic.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION) * iChange, bLimited);
-
-	changeNoForeignTradeCount(kCivic.providesPolicy(CLS_POLICY_NO_FOREIGN_TRADE) * iChange, bLimited);
-	changeNoCorporationsCount(kCivic.providesPolicy(CLS_POLICY_NO_CORPORATIONS) * iChange, bLimited);
-	changeNoForeignCorporationsCount(kCivic.providesPolicy(CLS_POLICY_NO_FOREIGN_CORPORATIONS) * iChange, bLimited);
-
-	changeStateReligionCount(kCivic.providesPolicy(CLS_POLICY_STATE_RELIGION) * iChange, bLimited);
-	changeNoNonStateReligionSpreadCount(kCivic.providesPolicy(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD) * iChange);
 
 	// local/national are FLAT index deltas (the ×100 reduces here); distanceModifier is a percent and does not.
 	changeRevIdxLocal(kCivic.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) / 100 * iChange);
@@ -16816,38 +16534,22 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatPeopleThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGreatGeneralsThresholdModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFeatureProductionModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionCommerceCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpgradeAnywhereCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxLocal);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxNational);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxDistanceModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxHolyCityGood);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxHolyCityBad);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_fRevIdxNationalityMod);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_fRevIdxBadReligionMod);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_fRevIdxGoodReligionMod);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_bInquisitionConditions);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumNukeUnits);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumOutsideUnits);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumMilitaryUnits);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryFoodProductionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConscriptCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxConscript);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHighestUnitLevel);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iOverflowResearch);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoUnhealthyPopulationCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingOnlyHealthyCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCorporationsCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignCorporationsCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevolutionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConversionTimer);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoNonStateReligionSpreadCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionUnitProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCapitalCityID);
@@ -17828,7 +17530,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// @SAVEBREAK - Delete
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iTraitDisplayCount, SAVE_VALUE_ANY);
 		// !SAVEBREAK
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iInquisitionCount);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCompatCheckCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
@@ -17958,33 +17659,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBuildingProductionModSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iBuildingProductionModType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iCount, "iBuildingProductionModCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BUILDINGS, iType, true));
-
-				if (iType > -1)
-				{
-					m_buildingProductionMod.insert(std::make_pair(iType, iCount));
-				}
-			}
-
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBuildingCostModSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iBuildingCostModType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iCount, "iBuildingCostModCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BUILDINGS, iType, true));
-
-				if (iType > -1)
-				{
-					m_buildingCostMod.insert(std::make_pair(iType, iCount));
-				}
-			}
 			// Unit counters
 			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iUnitCountSize");
@@ -18226,38 +17900,22 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatPeopleThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iGreatGeneralsThresholdModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFeatureProductionModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionCommerceCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpgradeAnywhereCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxLocal);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxNational);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxDistanceModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxHolyCityGood);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxHolyCityBad);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_fRevIdxNationalityMod);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_fRevIdxBadReligionMod);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_fRevIdxGoodReligionMod);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_bInquisitionConditions);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumNukeUnits);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumOutsideUnits);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumMilitaryUnits);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryFoodProductionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConscriptCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxConscript);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHighestUnitLevel);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iOverflowResearch);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoUnhealthyPopulationCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingOnlyHealthyCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCorporationsCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignCorporationsCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevolutionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConversionTimer);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoNonStateReligionSpreadCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionUnitProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCapitalCityID);
@@ -18657,7 +18315,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		}
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLeaderHeadLevel);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iInquisitionCount);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLessYieldThreshold);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCompatCheckCount);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
@@ -18728,18 +18385,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			{
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iExtraBuildingHealthType");
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iExtraBuildingHealthCount");
-			}
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_buildingProductionMod.size(), "iBuildingProductionModSize");
-			for (std::map<short, int>::const_iterator it = m_buildingProductionMod.begin(), itEnd = m_buildingProductionMod.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iBuildingProductionModType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iBuildingProductionModCount");
-			}
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_buildingCostMod.size(), "iBuildingCostModSize");
-			for (std::map<short, int>::const_iterator it = m_buildingCostMod.begin(), itEnd = m_buildingCostMod.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iBuildingCostModType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iBuildingCostModCount");
 			}
 			// Unit counters
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitCount.size(), "iUnitCountSize");
@@ -24528,68 +24173,6 @@ int CvPlayer::getBonusMintedPercent(const BonusTypes eBonus) const
 }
 
 
-void CvPlayer::changeBuildingProductionModifier(const BuildingTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	if (iChange == 0)
-	{
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_buildingProductionMod.find((short)eIndex);
-
-	if (itr == m_buildingProductionMod.end())
-	{
-		m_buildingProductionMod.insert(std::make_pair((short)eIndex, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_buildingProductionMod.erase(itr->first);
-	}
-	else // change building mod
-	{
-		m_buildingProductionMod[itr->first] += iChange;
-	}
-}
-
-int CvPlayer::getBuildingProductionModifier(const BuildingTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	std::map<short, int>::const_iterator itr = m_buildingProductionMod.find((short)eIndex);
-	return itr != m_buildingProductionMod.end() ? itr->second : 0;
-}
-
-
-void CvPlayer::changeBuildingCostModifier(const BuildingTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	if (iChange == 0)
-	{
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_buildingCostMod.find((short)eIndex);
-
-	if (itr == m_buildingCostMod.end())
-	{
-		m_buildingCostMod.insert(std::make_pair((short)eIndex, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_buildingCostMod.erase(itr->first);
-	}
-	else // change building mod
-	{
-		m_buildingCostMod[itr->first] += iChange;
-	}
-}
-
-int CvPlayer::getBuildingCostModifier(const BuildingTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	std::map<short, int>::const_iterator itr = m_buildingCostMod.find((short)eIndex);
-	return itr != m_buildingCostMod.end() ? itr->second : 0;
-}
-
-
 bool CvPlayer::isAutomatedCanBuild(BuildTypes eBuild) const
 {
 	return m_pabAutomatedCanBuild[eBuild];
@@ -25693,23 +25276,10 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	//	cascade does not carry.
 
 	//	REVOLUTION is Python-authoritative, so the engine stores what Python reads back and models nothing. The
-	//	flat index deltas reduce their ×100 here; the three MOD kinds are percents and carry no scaling.
+	//	flat index deltas reduce their ×100 here.
 	changeRevIdxLocal(iChange * (kTrait.getRevolution(REVOLUTION_LOCAL, CASC_SCOPE_EMPIRE) / 100));
 	changeRevIdxNational(iChange * (kTrait.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_EMPIRE) / 100));
 	changeRevIdxDistanceModifier(iChange * kTrait.getRevolution(REVOLUTION_DISTANCE_MODIFIER, CASC_SCOPE_EMPIRE));
-	changeRevIdxHolyCityGood(iChange * (kTrait.getRevolution(REVOLUTION_HOLY_CITY_GOOD, CASC_SCOPE_EMPIRE) / 100));
-	changeRevIdxHolyCityBad(iChange * (kTrait.getRevolution(REVOLUTION_HOLY_CITY_BAD, CASC_SCOPE_EMPIRE) / 100));
-	changeRevIdxNationalityMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_NATIONALITY, CASC_SCOPE_EMPIRE)));
-	changeRevIdxBadReligionMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE)));
-	changeRevIdxGoodReligionMod(iChange * static_cast<float>(kTrait.getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE)));
-
-	//	The empire POLICY states this trait enacts while it is held -- pure on/off conditions of the civilization
-	//	([json.md §9]), read off the trait's own policy block. They are per-flag counters today and retire onto
-	//	the EmpireContext.policies union with the rest of that family ([contexts.md]).
-	changeNonStateReligionCommerce(kTrait.providesPolicy(CLS_POLICY_NON_STATE_RELIGION_COMMERCE) ? iChange : 0);
-	changeUpgradeAnywhere(kTrait.providesPolicy(CLS_POLICY_UPGRADE_ANYWHERE) ? iChange : 0);
-	changeMilitaryFoodProductionCount(kTrait.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION) ? iChange : 0);
-	changeInquisitionCount(kTrait.providesPolicy(CLS_POLICY_ALLOW_INQUISITIONS) ? iChange : 0);
 
 	//	The anarchy CLAMPS are intrinsic bounds on a duration, not a channel that accumulates.
 	if (kTrait.getMaxAnarchy() > -1)
@@ -25719,6 +25289,12 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	if (kTrait.getMinAnarchy() > 0)
 	{
 		updateMinAnarchyTurns();
+	}
+
+	// The rider the retired militaryFoodProduction counter's changer carried ([save.md] par.6).
+	if (kTrait.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION) && getTeam() == GC.getGame().getActiveTeam())
+	{
+		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 	}
 
 	//	Run through Unit Promotion Changes
@@ -26427,15 +26003,6 @@ void CvPlayer::clearLeaderTraits()
 	setLeaderHeadLevel(0);
 }
 
-int CvPlayer::getInquisitionCount() const
-{
-	return m_iInquisitionCount;
-}
-
-void CvPlayer::changeInquisitionCount(int iChange)
-{
-	m_iInquisitionCount += iChange;
-}
 
 void CvPlayer::changeNationalGreatPeopleUnitRate(const UnitTypes eUnit, const int iChange)
 {

@@ -12,6 +12,7 @@
 #include "CvModifiers.h"                  // the compiled read surface (sum / conditioned ranges / entries)
 #include "CvTraitInfo.h"                  // the ACTIVE trait set's record -- the §4 specialist-keyed leg
 #include "CvUnitInfo.h"                   // the unitBuildRate battery's candidate axes (domain / combat classes)
+#include "CvBuildingInfo.h"               // the empire-keyed buildRate author compile
 #include "CvModEntry.h"                   // the compiled §3.9 entry + modSegmentLookup (the plots target id)
 #include "Engine/CityContext.h"           // fillEvalCtx (city/plot) + plotAttrs (the plot-predicate COUNTS)
 #include "Engine/EmpireContext.h"         // fillEvalCtx (player/team)
@@ -297,6 +298,28 @@ void InfoValuation::collectKeyedTarget(const CvModifiers* modifiers, ModifierFam
 		}
 		targetValues[iRow].second += kEntry.value;
 	}
+}
+
+const std::vector<int>& InfoValuation::empireBuildingKeyedBuildRateAuthors()
+{
+	static std::vector<int> s_authors;
+	static bool s_bCompiled = false;
+	if (!s_bCompiled)
+	{
+		s_bCompiled = true;
+		const int iBuildingsSegment = keyedTargetSegment("buildings");
+		std::vector<std::pair<int, int> > kRows;
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
+		{
+			collectKeyedTarget(GC.getBuildingInfo((BuildingTypes)iBuilding).getModifiers(),
+				MODFAM_BUILD_RATE, -1, iBuildingsSegment, kRows, (int)CASC_SCOPE_EMPIRE);
+			if (!kRows.empty())
+			{
+				s_authors.push_back(iBuilding);
+			}
+		}
+	}
+	return s_authors;
 }
 
 int InfoValuation::keyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,

@@ -803,11 +803,6 @@ bool CyCity::isNoUnhappiness() const
 	return m_pCity->isNoUnhappiness();
 }
 
-bool CyCity::isBuildingOnlyHealthy() const
-{
-	return m_pCity->isBuildingOnlyHealthy();
-}
-
 int CyCity::getFood() const
 {
 	return m_pCity->getFood();

@@ -118,7 +118,7 @@ public:
 	// class). There is no placement gate to evaluate and nothing is ever auto-removed: dormancy is reversible and
 	// removal is not, so a member whose condition lapses goes DORMANT rather than being torn down and rebuilt.
 	// ⛔ NOT every `notConstructible` building: the rest of that class is placed by its own system (grants /
-	// setHeadquarters / the outcome `constructs` verb), and blanket-placing it is the defect enabler.md §3 names.
+	// setHeadquarters / a unit's construct mission), and blanket-placing it is the defect enabler.md §3 names.
 	//
 	// ⛔ It replaces the per-turn add/remove churn wholesale -- the property-band sweep AND the autobuild pass,
 	// which between them re-evaluated a placement gate for every band in every city every turn and could remove a
@@ -379,6 +379,7 @@ public:
 
 	int unhealthyPopulation(int iExtra = 0) const;
 	int totalBadBuildingHealth() const;
+	int totalBadBuildingHealthUngated() const;
 	int healthRate(int iExtra = 0) const;
 	int getPopulationPlusProgress(const int iExtra) const;
 	int getFoodConsumedPerPopulation(const int iExtra = 0) const;
@@ -638,11 +639,6 @@ public:
 	bool isNoUnhappiness() const;
 
 	bool isNoUnhealthyPopulation() const;
-	// The CITY-ONLY halves of the two composed verdicts above, for the what-if health calc, which weighs the city's
-	// own amenity against the owner's separately and so must not read the OR.
-	bool cityHasNoUnhealthyPopulation() const;
-	bool cityHasBuildingOnlyHealthy() const;
-
 	bool isBuildingOnlyHealthy() const;
 
 	int getFood() const;
@@ -1259,6 +1255,7 @@ public:
 	void buildingWellbeing(BuildingTypes eBuilding, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 	int getBuildingGoodHealth(BuildingTypes eBuilding) const;
 	int getBuildingBadHealth(BuildingTypes eBuilding) const;
+	int getBuildingBadHealthUngated(BuildingTypes eBuilding) const;
 
 	PlayerTypes getLiberationPlayer(bool bConquest) const;
 	void liberate(bool bConquest);

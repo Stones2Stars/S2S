@@ -418,7 +418,7 @@ table is rebuilt it wants one field per named engine term, so a divergence local
   not exist in the city"* — the side ceases to exist rather than being reduced, so the combine drops the whole
   channel instead of subtracting from it.
   ⛔ **The gate asks the CITY, never a grantor** — `CvCity::isNoUnhappiness` /
-  `cityHasNoUnhealthyPopulation` / `cityHasBuildingOnlyHealthy` are folds over the city's `amenities`
+  `isNoUnhealthyPopulation` / `isBuildingOnlyHealthy` are folds over the city's `amenities`
   ([contexts.md](../architecture/contexts.md)), so a WHERE rides the grant's own `enabled` condition and is
   evaluated per receiver at fold time. There is no hand-named counter and no per-key grantor read to reach for.
   ⚑ **No BUILDING authors one, and that is DELIBERATE — the mechanic is "wildly overpowered" (owner)** — so

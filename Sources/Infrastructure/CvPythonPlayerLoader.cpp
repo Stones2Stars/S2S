@@ -292,7 +292,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("getNumMilitaryUnits", &CyPlayer::getNumMilitaryUnits, "int ()")
 
 		.def("getOverflowResearch", &CyPlayer::getOverflowResearch, "int ()")
-		.def("isBuildingOnlyHealthy", &CyPlayer::isBuildingOnlyHealthy, "bool ()")
 
 		.def("getTreasuryUpkeep", &CyPlayer::getTreasuryUpkeep, "int64 ()")
 		.def("getCorporateMaintenance", &CyPlayer::getCorporateMaintenance, "int64 ()")

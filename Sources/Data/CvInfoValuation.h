@@ -164,6 +164,13 @@ public:
 	static void collectKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, std::vector<std::pair<int, int> >& targetValues, int iScope = -1);
 
+	//	The BUILDING types that author an EMPIRE-scope buildings-keyed `buildRate` row -- the wonder-cheapens-a-
+	//	building-across-the-empire class ([modifier.md] par.5: an empire-scope keyed row on a building is answered
+	//	player-side). The player's entry-list read iterates THIS list against its held counts, so the per-ask cost
+	//	is the authoring handful rather than the whole building registry. Compiled lazily on first use -- gameplay
+	//	reads run only past the postmenu load pass, so the write-once info data it walks is final by then.
+	static const std::vector<int>& empireBuildingKeyedBuildRateAuthors();
+
 	//	THE AUTHORS-ANY PREDICATE -- "does this entity author a deposit of this SIGN anywhere in this family?"
 	//	It answers the RELEVANCE question an AI focus probe asks ("is this building worth considering for
 	//	production?"), which the point reads structurally cannot: a point read serves ONE compiled

@@ -1684,7 +1684,7 @@ void CvCity::placeSystemBuildings()
 	// ⛔ THE POPULATION IS THE PROPERTY BANDS PLUS THE AUTOBUILD SET (owner). `notConstructible` bars the
 	// production queue and says nothing about placement (enabler.md §3) -- WHO places a queue-excluded entity
 	// belongs to the system that owns it: the grants machine hands over a granted building, setHeadquarters
-	// places a corporate HQ in the one city holding it, the outcome `constructs` verb awards an achievement.
+	// places a corporate HQ in the one city holding it, a unit's construct mission awards an achievement.
 	// Two populations genuinely belong in every city, each identified by what the DATA says, never by
 	// `notConstructible`: the bands (a `requires.operate` PROPERTY band) and the identity.autoBuild set (the
 	// legacy per-turn doAutobuild population -- housing, pests, resources, presence and civic markers, the C_AD
@@ -2952,7 +2952,19 @@ int CvCity::getProductionNeeded(UnitTypes eUnit) const
 
 int CvCity::getProductionNeeded(BuildingTypes eBuilding) const
 {
-	return std::max(1, getModifiedIntValue(GET_PLAYER(getOwner()).getProductionNeeded(eBuilding), -getProductionModifier(eBuilding)));
+	int iNeeded = GET_PLAYER(getOwner()).getProductionNeeded(eBuilding);
+	// The building's OWN conditioned cost entries, resolved against THIS city through the ONE evaluator -- the
+	// C_L culture set is the live population (each foreign culture's C_L standing here makes this one costlier,
+	// its own presence cheaper). The curator re-homed the legacy source-keyed cost map onto the TARGET as these
+	// entries; the player-side accumulator it fed is gone.
+	const int iOwnCostMod = InfoValuation::expectedSumAt(GC.getBuildingInfo(eBuilding).getModifiers(),
+		MODFAM_COSTS, COSTS_AMOUNT, CASC_UNIT_PERCENT, CASC_SCOPE_CITY,
+		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
+	if (iOwnCostMod != 0)
+	{
+		iNeeded = getModifiedIntValue(iNeeded, iOwnCostMod);
+	}
+	return std::max(1, getModifiedIntValue(iNeeded, -getProductionModifier(eBuilding)));
 }
 
 int CvCity::getProductionNeeded(ProjectTypes eProject) const
@@ -3250,8 +3262,6 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 				iBuildingsSegment, (int)eBuilding, (int)CASC_SCOPE_CITY);
 		}
 	}
-
-	iMultiplier += GET_PLAYER(getOwner()).getBuildingProductionModifier(eBuilding);
 
 	// The building's own `buildRate.self.percent`, which the data authors CONDITIONED on holding a bonus
 	// (curate_building's COND_KEYED bonus gate). A point read serves the unconditioned sum only, so the gate is
@@ -4418,17 +4428,24 @@ int CvCity::unhealthyPopulation(int iExtra) const
 // ⚠ Per-DECISION cadence only (the AI what-if deltas); it is not a read path.
 int CvCity::totalBadBuildingHealth() const
 {
-	PROFILE_EXTRA_FUNC();
 	if (isBuildingOnlyHealthy())
 	{
 		return 0;
 	}
+	return totalBadBuildingHealthUngated();
+}
+
+// The UNGATED sum -- what the bad side WOULD be with the abolishedUnhealthFromBuildings amenity cleared. The
+// civic what-if reads it for its hypothetical; every realized read goes through the gated twin above.
+int CvCity::totalBadBuildingHealthUngated() const
+{
+	PROFILE_EXTRA_FUNC();
 	int iBadHealth = 0;
 	foreach_(const BuildingTypes eBuilding, getHasBuildings())
 	{
 		if (hasFullyActiveBuilding(eBuilding))
 		{
-			iBadHealth += getBuildingBadHealth(eBuilding);
+			iBadHealth += getBuildingBadHealthUngated(eBuilding);
 		}
 	}
 	return iBadHealth + std::min(0, calculatePopulationHealth());
@@ -6570,6 +6587,11 @@ int CvCity::getBuildingBadHealth(BuildingTypes eBuilding) const
 	{
 		return 0;
 	}
+	return getBuildingBadHealthUngated(eBuilding);
+}
+
+int CvCity::getBuildingBadHealthUngated(BuildingTypes eBuilding) const
+{
 	int aiWellbeing[NUM_WELLBEING_CHANNELS];
 	buildingWellbeing(eBuilding, aiWellbeing);
 
@@ -6630,14 +6652,16 @@ int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 }
 
 
+// The civic what-if legs read the city's own AMENITY FOLD, which carries the civic (empire-grantor) leg since
+// the two-leg fold landed -- "would removing that many grantors clear the amenity HERE" is a count test, and
+// the retired player-side counter (plus its mutate-and-restore probe) said nothing the fold does not.
 int CvCity::getAdditionalHealthByPlayerNoUnhealthyPopulation(int iExtraPop, int iIgnoreNoUnhealthyPopulationCount) const
 {
 	int iHealth = 0;
 	if (iIgnoreNoUnhealthyPopulationCount != 0)
 	{
-		if (GET_PLAYER(getOwner()).getNoUnhealthyPopulationCount() <= iIgnoreNoUnhealthyPopulationCount && !cityHasNoUnhealthyPopulation())
+		if (getCityContext().amenityCount(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_POPULATION) <= iIgnoreNoUnhealthyPopulationCount)
 		{
-			//std::max(0, ((getPopulation() + iExtra - ((bNoAngry) ? angryPopulation(iExtra) : 0))))
 			iHealth += std::max(0, ((getPopulation() + iExtraPop)));
 		}
 	}
@@ -6653,13 +6677,9 @@ int CvCity::getAdditionalHealthByPlayerBuildingOnlyHealthy(int iIgnoreBuildingOn
 	int iHealth = 0;
 	if (iIgnoreBuildingOnlyHealthyCount != 0)
 	{
-		CvPlayer& kOwner = GET_PLAYER(getOwner());
-		int iOwnerBuildingOnlyHealthyCount = kOwner.getBuildingOnlyHealthyCount();
-		if (iOwnerBuildingOnlyHealthyCount <= iIgnoreBuildingOnlyHealthyCount && !cityHasBuildingOnlyHealthy())
+		if (getCityContext().amenityCount(CLS_AMENITY_ABOLISHED_UNHEALTH_FROM_BUILDINGS) <= iIgnoreBuildingOnlyHealthyCount)
 		{
-			kOwner.changeBuildingOnlyHealthyCount(-iOwnerBuildingOnlyHealthyCount, true);
-			iHealth -= totalBadBuildingHealth();
-			kOwner.changeBuildingOnlyHealthyCount(iOwnerBuildingOnlyHealthyCount, true);
+			iHealth -= totalBadBuildingHealthUngated();
 		}
 	}
 	else
@@ -7137,32 +7157,8 @@ void CvCity::changeHappinessTimer(int iChange)
 bool CvCity::isNoUnhappiness() const CITY_HAS_AMENITY(getCityContext(), "abolishedAnger")
 
 
-bool CvCity::isNoUnhealthyPopulation() const
-{
-	// The EMPIRE leg stays an explicit OR: the player-scope flag is fed by its own legacy path, not by this city's
-	// fold. It collapses once an empire grantor authors the amenity (it then folds into every city).
-	if (GET_PLAYER(getOwner()).isNoUnhealthyPopulation())
-	{
-		return true;
-	}
-	static int s_amenityId = -1;
-	return getCityContext().hasAmenityKey(s_amenityId, "abolishedUnhealthFromPopulation");
-}
-
-
-bool CvCity::cityHasNoUnhealthyPopulation() const CITY_HAS_AMENITY(getCityContext(), "abolishedUnhealthFromPopulation")
-bool CvCity::cityHasBuildingOnlyHealthy() const   CITY_HAS_AMENITY(getCityContext(), "abolishedUnhealthFromBuildings")
-
-bool CvCity::isBuildingOnlyHealthy() const
-{
-	// The EMPIRE leg stays an explicit OR -- see isNoUnhealthyPopulation above.
-	if (GET_PLAYER(getOwner()).isBuildingOnlyHealthy())
-	{
-		return true;
-	}
-	static int s_amenityId = -1;
-	return getCityContext().hasAmenityKey(s_amenityId, "abolishedUnhealthFromBuildings");
-}
+bool CvCity::isNoUnhealthyPopulation() const CITY_HAS_AMENITY(getCityContext(), "abolishedUnhealthFromPopulation")
+bool CvCity::isBuildingOnlyHealthy() const   CITY_HAS_AMENITY(getCityContext(), "abolishedUnhealthFromBuildings")
 
 
 int CvCity::getFood() const

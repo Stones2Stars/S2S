@@ -12346,7 +12346,7 @@ int CvPlayerAI::AI_missionaryValue(const CvArea* pArea, ReligionTypes eReligion,
 						if (kLoopPlayer.getStateReligion() == NO_RELIGION)
 						{
 							// Paganism counts as a state religion civic, that's what's caught below
-							if (kLoopPlayer.getStateReligionCount() > 0)
+							if (kLoopPlayer.isStateReligion())
 							{
 								const int iTotalReligions = kLoopPlayer.countTotalHasReligion();
 								iMultiplier += 100 * std::max(0, kLoopPlayer.getNumCities() - iTotalReligions);
@@ -14559,12 +14559,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//#3: Trade
 	{
-		int iTempNoForeignTradeCount = getNoForeignTradeCount();
-
-		if (!bCivicOptionVacuum)
-		{
-			iTempNoForeignTradeCount -= (eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_FOREIGN_TRADE));
-		}
+		// Unconditional vacuum subtraction against the event-fed store (see the corporation twin below).
+		int iTempNoForeignTradeCount = policies().count(CLS_POLICY_NO_FOREIGN_TRADE);
+		iTempNoForeignTradeCount -= (eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_FOREIGN_TRADE));
+		iTempNoForeignTradeCount = std::max(0, iTempNoForeignTradeCount);
 		const int iConnectedForeignCities = countPotentialForeignTradeCitiesConnected();
 		int iTempValue = 0;
 		if (iTempNoForeignTradeCount > 0)
@@ -14619,25 +14617,19 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			}
 		}
 
-		int iTempNoForeignCorporationsCount = 0;
-		iTempNoForeignCorporationsCount += getNoForeignCorporationsCount();
-		if (!bCivicOptionVacuum)
+		// The vacuum is now ALWAYS the explicit subtraction: the policy store is event-fed, so the caller's
+		// processCivics probe no longer moves it and both call modes read the same live count.
+		int iTempNoForeignCorporationsCount = policies().count(CLS_POLICY_NO_FOREIGN_CORPORATIONS);
+		if (eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_FOREIGN_CORPORATIONS))
 		{
-			if (eCivicOptionCivic != NO_CIVIC ? GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_FOREIGN_CORPORATIONS) : false)
-			{
-				iTempNoForeignCorporationsCount--;
-			}
+			iTempNoForeignCorporationsCount--;
 		}
 		iTempNoForeignCorporationsCount = std::max(0, iTempNoForeignCorporationsCount);
 
-		int iTempNoCorporationsCount = 0;
-		iTempNoCorporationsCount += getNoCorporationsCount();
-		if (!bCivicOptionVacuum)
+		int iTempNoCorporationsCount = policies().count(CLS_POLICY_NO_CORPORATIONS);
+		if (eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_CORPORATIONS))
 		{
-			if (eCivicOptionCivic != NO_CIVIC ? GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_CORPORATIONS) : false)
-			{
-				iTempNoCorporationsCount--;
-			}
+			iTempNoCorporationsCount--;
 		}
 		iTempNoCorporationsCount = std::max(0, iTempNoCorporationsCount);
 
@@ -14738,12 +14730,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	//#5: state religion
 	int iStateReligionValue = 0;
-	int iTempStateReligionCount = 0;
-	iTempStateReligionCount += getStateReligionCount();
-	if (!bCivicOptionVacuum)
-	{
-		iTempStateReligionCount -= ((eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_STATE_RELIGION)) ? 1 : 0);
-	}
+	// Unconditional vacuum subtraction against the event-fed store (see the corporation twin above).
+	int iTempStateReligionCount = policies().count(CLS_POLICY_STATE_RELIGION);
+	iTempStateReligionCount -= ((eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_STATE_RELIGION)) ? 1 : 0);
+	iTempStateReligionCount = std::max(0, iTempStateReligionCount);
 
 	if (kCivic.providesPolicy(CLS_POLICY_STATE_RELIGION) || iTempStateReligionCount > 0)
 	{
@@ -14752,12 +14742,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			//iValue += ((kCivic.providesPolicy(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD) && !isNoNonStateReligionSpread()) ? ((getNumCities() - iHighestReligionCount) * 2) : 0);
 			if (kCivic.providesPolicy(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD))
 			{
-				int iTempNoNonStateReligionSpreadCount = 0;
-				iTempNoNonStateReligionSpreadCount += getNoNonStateReligionSpreadCount();
-				if (!bCivicOptionVacuum)
-				{
-					iTempNoNonStateReligionSpreadCount -= ((eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD)) ? 1 : 0);
-				}
+				int iTempNoNonStateReligionSpreadCount = policies().count(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD);
+				iTempNoNonStateReligionSpreadCount -= ((eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_NO_NON_STATE_RELIGION_SPREAD)) ? 1 : 0);
 				iTempNoNonStateReligionSpreadCount = std::max(0, iTempNoNonStateReligionSpreadCount);
 
 				iStateReligionValue += ((getNumCities() - iHighestReligionCount) * 2) / std::max(1, iTempNoNonStateReligionSpreadCount);
@@ -14850,14 +14836,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	if (kCivic.providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION))
 	{
 
-		int iTempMilitaryFoodProductionCount = 0;
-		iTempMilitaryFoodProductionCount += getMilitaryFoodProductionCount();
-		if (!bCivicOptionVacuum)
+		int iTempMilitaryFoodProductionCount = policies().count(CLS_POLICY_MILITARY_FOOD_PRODUCTION);
+		if (eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION))
 		{
-			if (eCivicOptionCivic != NO_CIVIC && GC.getCivicInfo(eCivicOptionCivic).providesPolicy(CLS_POLICY_MILITARY_FOOD_PRODUCTION))
-			{
-				iTempMilitaryFoodProductionCount--;
-			}
+			iTempMilitaryFoodProductionCount--;
 		}
 		iTempMilitaryFoodProductionCount = std::max(0, iTempMilitaryFoodProductionCount);
 
@@ -14868,7 +14850,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		else
 		{
 			//We want to grow so we don't want this
-			iTempValue = -10 * getNumCities() / (1 + std::max(0, getMilitaryFoodProductionCount()));
+			iTempValue = -10 * getNumCities() / (1 + policies().count(CLS_POLICY_MILITARY_FOOD_PRODUCTION));
 		}
 		
 		iValue += iTempValue;
@@ -25582,7 +25564,7 @@ bool CvPlayerAI::AI_isCivicValueRecalculationRequired(CivicTypes eCivic, CivicTy
 			{
 				return true;
 			}
-			if (getStateReligionCount() > 1)
+			if (policies().count(CLS_POLICY_STATE_RELIGION) > 1)
 			{
 				// "Does this civic treat the STATE religion specially?" -- each leg is one of the civic's own
 				// `stateReligion.empire.<kind>` deposits. ⚠ The old happiness leg compared against a NON-state

@@ -562,6 +562,32 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 	return true;
 }
 
+// May this queue-excluded building ARRIVE here -- a mission construct, a first-to-earn award? The direct gate
+// the queue tri-state cannot serve: a notConstructible entity is permanently HIDDEN there by design
+// (enabler.md §3), so its arrival gates are asked HERE, once, for every arriving system
+// ([DEC-single-implementation]): not already held, the allowed cap has room, not obsolete, and the authored
+// gate (build folded into operate for the whole class) holds through the ONE evaluator against the contexts.
+bool EnablerKernel::queueExcludedArrivalOk(const CvCity* pCity, int iBuilding)
+{
+	if (pCity == NULL || pCity->hasBuilding((BuildingTypes)iBuilding)) return false;
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
+	if (j == NULL) return false;
+	CvPlayer& kPlayer = GET_PLAYER(pCity->getOwner());
+	if (!allowedOk(j, iBuilding, kPlayer, /*bUnit*/ false)) return false;
+	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)) return false;
+	const CvCondition* pOperate = j->requiresOperate();
+	if (pOperate != NULL)
+	{
+		CvCascadeEvalCtx ec;
+		pCity->getCityContext().fillEvalCtx(ec);
+		kPlayer.getEmpireContext().fillEvalCtx(ec);
+		wireOperatingBuildings(pCity, ec);
+		const CvCascadeEvalFlags kFlags;
+		if (!cascadeEvalCondition(pOperate, ec, kFlags)) return false;
+	}
+	return true;
+}
+
 // (The empire-capability query lives on the PLAYER, as its own keyed union -- Engine/CapabilityContext.h;
 // the kernel's former techs-only duplicate was folded into it 2026-07-02, capabilities.md.)
 

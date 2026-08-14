@@ -103,11 +103,6 @@
 > loop) is [roadmap.md § LEGACY STILL BREATHING](roadmap.md). ⚠ KNOWN-INCOMPLETE — legacy found anywhere else is
 > killed on the same terms. ⛔ Never record a found legacy surface as acceptable or "kept until X".
 
-- Retire the building-COST-modifier accumulator and move its readers. The writer is already gone — the curator
-  re-homed the legacy source-keyed cost map onto the TARGET as a conditioned own-cost entry, so the accumulator
-  reads zero. Point readers at the target building's own `costs` entries instead of the player-side map.
-  ⚠ Distinct from its `buildRate` sibling, which stays source-keyed and converts to an entry-list read — the two
-  look alike and do not resolve the same way.
 - Serve the team improvement-yield GRANT through the new Python surface. The wonder events call it from
   `CvEventManager` and the binding they called is gone — by design
   ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)): it comes back as the library's own
@@ -119,14 +114,6 @@
   ([save.md §3](../../specs/save.md)). The wellbeing cut notes are the known cluster to start from — they name
   the archived bespoke substrate ([superseded-ideas #14](../../architecture/superseded-ideas.md)) rather than
   what actually serves them now.
-- Cut `CvPlayer::processCivics` — the legacy civic ACCUMULATOR PUSH. A civic's deposits reach its cities by
-  rolling DOWN the scope chain ([modifier.md §1](../../specs/modifier.md)); pushing them into player-side
-  accumulators is the STORED-ACCUMULATOR DRIFT class
-  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)).
-  ⛔ Not uniform — collapsing the three kinds is the mistake: modifier-channel deposits cut per that DEC;
-  per-flag POLICY counters retire onto `EmpireContext.policies` instead
-  ([contexts.md](../../architecture/contexts.md)); genuine non-cascade state (the revolution index,
-  `changeMaxConscript`, `changeSpecialistValidCount`, hurry counts) stays.
 - Sweep the WRITERLESS SERIALIZED ACCUMULATORS over `CvCity`/`CvPlayer` and cut every hit with the uniform
   mechanism ([state-repositories.md § THE LEGACY-ACCUMULATOR CUT](../../architecture/state-repositories.md)).
   Run the detector's THIRD LEG against the MEMBER, never only the getter — a reader is often named for the

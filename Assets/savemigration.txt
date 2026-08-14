@@ -2137,3 +2137,56 @@ CvPlayer::m_iSpaceProductionModifier
 | for those triggers is deleted with the serialization.
 CvGame::m_iNumCultureVictoryCities       (int)
 CvGame::m_eCultureVictoryCultureLevel    (int)
+
+| ── The player-side building-COST-modifier accumulator is CUT (the STORED-ACCUMULATOR class). Its writer was
+| already gone -- the curator re-homed the legacy source-keyed cost map onto the TARGET building as conditioned
+| own-cost entries (the C_L culture set: costs.city.percent gated on in-city C_L presence) -- so the map served
+| only frozen save history. The value is now served by CvCity::getProductionNeeded(BuildingTypes) resolving the
+| building's own conditioned costs tail against the city (InfoValuation::expectedSumAt, COSTS_AMOUNT).
+CvPlayer::iBuildingCostModSize
+CvPlayer::iBuildingCostModType
+CvPlayer::iBuildingCostModCount
+
+| ── The processCivics ACCUMULATOR PUSH is CUT (the STORED-ACCUMULATOR class). Three populations, three
+| replacements:
+| (1) The per-flag POLICY counters retire onto the event-fed policy store (PolicyContext -- the
+| EmpireContext.policies union over live civic/trait grantors): the boolean getters (isNoForeignTrade,
+| isNoCorporations, isNoForeignCorporations, isStateReligion, isNoNonStateReligionSpread,
+| isMilitaryFoodProduction, isUpgradeAnywhere, isNonStateReligionCommerce, isInquisitionConditions) read
+| policies().has, and the AI civic-value what-ifs read policies().count with an unconditional vacuum
+| subtraction. The inquisition pair is two DISTINCT policies asked separately (allow held AND disallow not
+| held), never the signed net the old counter carried. The changers' side-effect riders (updateTradeRoutes,
+| updateCorporation, the Score/CityInfo dirty bits) re-homed to CvPlayer::setCivics / processTrait,
+| diff-gated on the policy actually moving.
+CvPlayer::m_iNoForeignTradeCount
+CvPlayer::m_iNoCorporationsCount
+CvPlayer::m_iNoForeignCorporationsCount
+CvPlayer::m_iStateReligionCount
+CvPlayer::m_iNoNonStateReligionSpreadCount
+CvPlayer::m_iMilitaryFoodProductionCount
+CvPlayer::m_iUpgradeAnywhereCount
+CvPlayer::m_iInquisitionCount
+CvPlayer::m_iNonStateReligionCommerceCount
+| (2) The two player-side AMENITY counters were a second surface beside the city amenity fold, whose civic
+| leg already folds every empire grantor into every city -- and NO data authors either key today, so both
+| served only frozen save history. CvCity::isNoUnhealthyPopulation / isBuildingOnlyHealthy are now pure fold
+| reads; the AI civic what-ifs test the fold count (amenityCount <= removable grantors) and read the new
+| ungated bad-building sum instead of the mutate-and-restore probe. The stale verdict bool rides out with
+| them (nothing read it).
+CvPlayer::m_iNoUnhealthyPopulationCount
+CvPlayer::m_iBuildingOnlyHealthyCount
+CvPlayer::m_bInquisitionConditions
+| (3) The keyed buildRate accumulator (civic + held-building empire rows pushed into a serialized map) is
+| replaced by the live keyed walk in CvPlayer::getProductionModifier(BuildingTypes): the trait loop it always
+| had, plus the adopted-civic loop and the held-building loop over
+| InfoValuation::empireBuildingKeyedBuildRateAuthors x getBuildingCount.
+CvPlayer::iBuildingProductionModSize
+CvPlayer::iBuildingProductionModType
+CvPlayer::iBuildingProductionModCount
+| (4) The five reader-less revolution accumulators (nothing in the engine or Python ever read them back --
+| Python reads the INFO getRevolution values directly): cut with NO replacement, deliberately.
+CvPlayer::m_iRevIdxHolyCityGood
+CvPlayer::m_iRevIdxHolyCityBad
+CvPlayer::m_fRevIdxNationalityMod
+CvPlayer::m_fRevIdxBadReligionMod
+CvPlayer::m_fRevIdxGoodReligionMod

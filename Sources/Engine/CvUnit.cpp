@@ -8575,6 +8575,16 @@ bool CvUnit::canConstruct(const CvPlot* pPlot, BuildingTypes eBuilding, bool bTe
 		return false;
 	}
 
+	// A queue-excluded target (identity.notConstructible -- the achievements, relics, traditions, beliefs a
+	// unit's mission awards) is permanently HIDDEN in the queue tri-state BY DESIGN (enabler.md §3), so its gate
+	// is the direct arrival one: the allowed cap, obsolescence, and the authored operate condition -- a
+	// seafaring achievement needs the coastal city it is authored to need, and an {empire: 1} cap refuses a
+	// second copy for the same player. One implementation, shared with the first-to-earn awarder.
+	if (GC.getBuildingInfo(eBuilding).isNotConstructible())
+	{
+		return EnablerKernel::queueExcludedArrivalOk(pCity, (int)eBuilding);
+	}
+
 	if (pCity->getBuildingAvailability(eBuilding) < (bTestVisible ? EnablerDomain::STATE_GREYED : EnablerDomain::STATE_LISTED))
 	{
 		return false;

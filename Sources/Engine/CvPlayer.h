@@ -518,10 +518,8 @@ public:
 
 
 	bool isNonStateReligionCommerce() const;
-	void changeNonStateReligionCommerce(int iNewValue);
 
 	bool isUpgradeAnywhere() const;
-	void changeUpgradeAnywhere(int iNewValue);
 
 	int getRevIdxLocal() const;
 	void changeRevIdxLocal(int iChange);
@@ -532,23 +530,7 @@ public:
 	int getRevIdxDistanceModifier() const;
 	void changeRevIdxDistanceModifier(int iChange);
 
-	int getRevIdxHolyCityGood() const;
-	void changeRevIdxHolyCityGood(int iChange);
-
-	int getRevIdxHolyCityBad() const;
-	void changeRevIdxHolyCityBad(int iChange);
-
-	float getRevIdxNationalityMod() const;
-	void changeRevIdxNationalityMod(float fChange);
-
-	float getRevIdxBadReligionMod() const;
-	void changeRevIdxBadReligionMod(float fChange);
-
-	float getRevIdxGoodReligionMod() const;
-	void changeRevIdxGoodReligionMod(float fChange);
-
 	bool isInquisitionConditions() const;
-	void setInquisitionConditions();
 
 
 	bool canFoundReligion() const;
@@ -587,10 +569,7 @@ public:
 
 	int getHappyPerMilitaryUnit() const;
 
-	int getMilitaryFoodProductionCount() const;
 	bool isMilitaryFoodProduction() const;
-
-	void changeMilitaryFoodProductionCount(int iChange, bool bLimited = false);
 
 	int getHighestUnitLevel() const;
 	void setHighestUnitLevel(int iNewValue);
@@ -604,22 +583,6 @@ public:
 
 	int getOverflowResearch() const;
 	void changeOverflowResearch(int iChange);
-
-	int getNoUnhealthyPopulationCount() const;
-	bool isNoUnhealthyPopulation() const;
-
-	void changeNoUnhealthyPopulationCount(int iChange, bool bLimited = false);
-
-
-	int getBuildingOnlyHealthyCount() const;
-	bool isBuildingOnlyHealthy() const;
-
-
-
-	void changeBuildingOnlyHealthyCount(int iChange, bool bLimited = false);
-
-
-
 
 
 
@@ -649,18 +612,9 @@ public:
 
 
 
-	int getNoForeignTradeCount() const;
 	bool isNoForeignTrade() const;
-	void changeNoForeignTradeCount(int iChange, bool bLimited = false);
-
-	int getNoCorporationsCount() const;
 	bool isNoCorporations() const;
-	void changeNoCorporationsCount(int iChange, bool bLimited = false);
-
-	int getNoForeignCorporationsCount() const;
 	bool isNoForeignCorporations() const;
-	void changeNoForeignCorporationsCount(int iChange, bool bLimited = false);
-
 
 	int getTradeRoutes() const;
 
@@ -672,13 +626,8 @@ public:
 	void setConversionTimer(int iNewValue);
 	void changeConversionTimer(int iChange);
 
-	int getStateReligionCount() const;
 	bool isStateReligion() const;
-	void changeStateReligionCount(int iChange, bool bLimited = false);
-
-	int getNoNonStateReligionSpreadCount() const;
 	bool isNoNonStateReligionSpread() const;
-	void changeNoNonStateReligionSpreadCount(int iChange);
 
 
 	int getStateReligionUnitProductionModifier() const;
@@ -1401,11 +1350,6 @@ public:
 	void setPledgedSecretaryGeneralVote(TeamTypes eIndex);
 
 
-	int getBuildingProductionModifier(const BuildingTypes eIndex) const;
-	void changeBuildingProductionModifier(const BuildingTypes eIndex, const int iChange);
-	int getBuildingCostModifier(const BuildingTypes eIndex) const;
-	void changeBuildingCostModifier(const BuildingTypes eIndex, const int iChange);
-
 	bool isAutomatedCanBuild(BuildTypes eBuild) const;
 	void setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue);
 
@@ -1568,7 +1512,6 @@ protected:
 	int* m_paiBuildWorkerSpeedModifierSpecific;
 	bool* m_pabHasTrait;
 	int m_iLeaderHeadLevel;
-	int m_iInquisitionCount;
 	int m_iCompatCheckCount;
 	int* m_paiNationalTechResearchModifier;
 
@@ -1713,18 +1656,9 @@ protected:
 	int m_iGreatGeneralsThresholdModifier;
 	int m_iFeatureProductionModifier;
 
-	int m_iNonStateReligionCommerceCount;
-	int m_iUpgradeAnywhereCount;
 	int m_iRevIdxLocal;
 	int m_iRevIdxNational;
 	int m_iRevIdxDistanceModifier;
-	int m_iRevIdxHolyCityGood;
-	int m_iRevIdxHolyCityBad;
-	float m_fRevIdxNationalityMod;
-	float m_fRevIdxBadReligionMod;
-	float m_fRevIdxGoodReligionMod;
-	bool m_bInquisitionConditions;
-
 
 	int m_iNumNukeUnits;
 	int m_iNumOutsideUnits;
@@ -1733,26 +1667,17 @@ protected:
 	mutable bool m_bUnitUpkeepDirty;
 
 	int m_iNumMilitaryUnits;
-	int m_iMilitaryFoodProductionCount;
 	int m_iConscriptCount;
 	int m_iMaxConscript;
 	int m_iHighestUnitLevel;
 	int m_iOverflowResearch;
-	int m_iNoUnhealthyPopulationCount;
-	int m_iBuildingOnlyHealthyCount;
-
 
 	int m_iExtraHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
 	int m_iWarWearinessPercentAnger;
-	int m_iNoForeignTradeCount;
-	int m_iNoCorporationsCount;
-	int m_iNoForeignCorporationsCount;
 	int m_iRevolutionTimer;
 	int m_iConversionTimer;
-	int m_iStateReligionCount;
-	int m_iNoNonStateReligionSpreadCount;
 	int m_iStateReligionUnitProductionModifier;
 	int m_iStateReligionBuildingProductionModifier;
 	int m_iCapitalCityID;
@@ -2000,9 +1925,6 @@ public:
 	void clearLeaderTraits();
 
 
-	int getInquisitionCount() const;
-	void changeInquisitionCount(int iChange);
-
 	int getNationalGreatPeopleUnitRate(const UnitTypes eIndex) const;
 	void changeNationalGreatPeopleUnitRate(const UnitTypes eIndex, const int iChange);
 
@@ -2130,8 +2052,6 @@ private:
 	std::map<short, int> m_bonusMintedPercent;
 	std::map<short, int> m_extraBuildingHappiness;
 	std::map<short, int> m_extraBuildingHealth;
-	std::map<short, int> m_buildingProductionMod;
-	std::map<short, int> m_buildingCostMod;
 	std::map<short, int> m_greatPeopleRateforUnit;
 	std::map<short, char> m_goldenAgeOnBirthOfGreatPersonCount;
 

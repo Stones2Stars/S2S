@@ -215,7 +215,6 @@ public:
 	int getNumMilitaryUnits() const;
 
 	int getOverflowResearch() const;
-	bool isBuildingOnlyHealthy() const;
 
 	int64_t getTreasuryUpkeep() const;
 	int64_t getCorporateMaintenance() const;
