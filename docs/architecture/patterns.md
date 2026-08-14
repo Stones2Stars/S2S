@@ -480,6 +480,21 @@ surface — never a per-getter migration worklist. Mapping legacy→new one sign
 half-migration reflex in its purest form: it lets the legacy contract dictate the replacement's shape, which is
 precisely how that surface accumulated.
 
+> **⚖ AND THE DELIVERABLE IS THE SURVIVING SURFACE, NOT "A GETTER CUT" (owner): *"we should ensure that we
+> just have the getters we need, and have an understandable structure."*** The `CvCity`/`CvPlayer` work is
+> judged by its END STATE — a surface carrying exactly the reads consumers genuinely NEED, organized so a
+> reader can tell where a value lives — never by how much legacy was deleted. The deletion of the legacy
+> channel-shaped names is the CONSEQUENCE of consumers moving onto that surface; it is not the unit of work
+> and not the acceptance test.
+> ⚑ It is the SAME ruling the Python boundary below already carries — *"minimal amount of endpoints is not
+> the target here, properly organized is"* — applied to the C++ game-object half: NEED decides membership
+> (demand-driven, freely given where a consumer genuinely wants a read, and never derived from the legacy
+> list), and COMPREHENSIBILITY decides structure (the group reads and named concepts of the grammar below).
+> ⛔ Two failure modes it bans equally, because both measure the wrong thing: sweeping getters for deletion's
+> own sake (a falling def count read as progress), and sparing a legacy name because deleting it is work. A
+> read nothing needs GOES; a read something needs is served on the coherent surface; the census is DEMAND,
+> never the surviving getter count.
+
 **The two roles are DISTINCT, and the distinction is load-bearing:**
 
 | role | asks | answers from |

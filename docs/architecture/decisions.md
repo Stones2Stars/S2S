@@ -403,7 +403,10 @@ keep both surfaces live, and never widen a legacy getter to fit. Python is rewir
 This SUPERSEDES the computed-getter-flip strategy ("rewire the body, never the call sites"), which was correct
 only while the cascade had no uniform vocabulary to rewire consumers ONTO. The general form of
 [DEC-fixedpoint-x100](#dec-fixedpoint-x100)'s "reducing at the getter lets the cascade be shoehorned into
-legacy-shaped getters — the half-migration reflex". **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
+legacy-shaped getters — the half-migration reflex". ⚖ The DELIVERABLE is the SURVIVING surface — just the
+getters we need, understandably structured — never "a getter cut" for its own sake; the deletion is the
+consequence of consumers moving ([patterns.md § THE TWO READ ROLES](patterns.md), owner).
+**Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
 
 ### DEC-no-self-heal
 

@@ -166,7 +166,9 @@
   not an entity ([contexts.md](../../architecture/contexts.md) § THE EVAL CTX). Widening it to carry
   predicates is a STRUCTURE call, not a sweep: settle the shape before building either read, since the two
   differ only in which index they walk.
-- Move every consumer off the hand-named channel-shaped getters on `CvCity`/`CvPlayer`, then delete the old names.
+- Converge `CvCity`/`CvPlayer` on the read surface we actually NEED, understandably structured: move consumers
+  onto the group reads, serve genuine demand on the coherent surface, and the hand-named channel-shaped names
+  fall away as nothing needs them ([patterns.md § THE TWO READ ROLES](../../architecture/patterns.md), owner).
 - Cut the hide-and-seek per-type intensity ACCUMULATORS on `CvUnit` (serialized — the cut carries a
   `savemigration.txt` step; confirm the tag spelling against the stream first). Their replacements are built.
   ⚡ The four accessor families have no call sites at all, so this is a plain deletion.
@@ -397,9 +399,12 @@
   — a ranked entry applies unranked until it lands.
 - The Python data-fetching library (below).
 
-## The GETTER cut — game objects + AI
+## The game-object READ SURFACE — game objects + AI
 
-> Sequencing, and the ban on bending the new surface to fit an old call: [roadmap.md](roadmap.md).
+> The deliverable is the SURVIVING surface — just the getters we need, understandably structured — never "a
+> getter cut" for its own sake; the legacy deletion is the consequence of consumers moving
+> ([patterns.md § THE TWO READ ROLES](../../architecture/patterns.md), owner). Sequencing, and the ban on
+> bending the new surface to fit an old call: [roadmap.md](roadmap.md).
 > ⛔ The unit of work is the CLASS of read, never the individual getter — many collapse as the rebuilt infos
 > wire through ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
 
