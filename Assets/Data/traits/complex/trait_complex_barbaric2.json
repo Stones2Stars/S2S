@@ -28,8 +28,13 @@
    "nationalWonder": {
     "percent": -15
    },
-   "military": {
-    "percent": 5
+   "units": {
+    "percent": [
+     {
+      "value": 5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
    }
   }
  },

@@ -34,8 +34,13 @@
  },
  "buildRate": {
   "empire": {
-   "military": {
-    "percent": 75
+   "units": {
+    "percent": [
+     {
+      "value": 75,
+      "enabled": "IS_MILITARY"
+     }
+    ]
    },
    "unitCombats": {
     "UNITCOMBAT_HERO": {

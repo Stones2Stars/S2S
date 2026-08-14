@@ -380,16 +380,6 @@
   ⚑ Live case: the free-specialist split authors BOTH a city-scope row and an empire-scope row on the same
   building, so the empire read must pin the scope or the two legs double-count.
   ⛔ Not a second read — one parameter on the existing one, matching the other two's spelling.
-- Serve the CITY-scope `buildRate` CATEGORY rows (`military`, `space`) in the PRODUCTION path. They reach the AI
-  weights, which read the whole stack at the city, and nothing else — the city production read answers the
-  category by chaining the player's, which is the empire tier only, so a building saying "military trains faster
-  HERE" changes no build.
-  ⛔ It does NOT fix the same way the keyed half did, and the difference is the unit. A category is a PERCENT, and
-  percents combine as ONE additive stack, so there is deliberately no city-only percent read to add beside the
-  player's — `rolledLegsAtCity` splits the FLATS and hands back one `percentSum` for the whole chain.
-  ⇒ The city must read the WHOLE stack (`realizedAtCity`) and the category term must MOVE OFF
-  `CvPlayer::getProductionModifier` rather than being summed with it, which first needs the player-level callers
-  of that overload enumerated — a player asking it with no city still needs an empire answer.
 - Serve the EMPIRE-scope `buildRate.<scope>.units` rows a capped WONDER authors (`{enabled: IS_SPACE}`). The
   city-scope rows are served off the city's operating buildings, but an empire row means faster in EVERY city of
   the owner, so it is answered PLAYER-side ([modifier.md](../../specs/modifier.md) §5) — and no player-side read

@@ -101,7 +101,8 @@ SCALAR = {
     "iDomesticGreatGeneralRateModifier":("greatGeneralRate", "empire", "domestic", "percent"),
     "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "any"),
     # build-rate (owner 2026-06-16: production=total city OUTPUT; buildRate=faster to build a target/category).
-    "iMilitaryProductionModifier":     ("buildRate", "empire", "military", "percent"),
+    # iMilitaryProductionModifier is NOT here: military is a PREDICATE on the `units` target, never a category
+    # member (modifier.md §4; the curate_building shape) -> the explicit branch in curate().
     "iMaxGlobalBuildingProductionModifier": ("buildRate", "empire", "worldWonder", "percent"),
     "iMaxTeamBuildingProductionModifier":   ("buildRate", "empire", "teamWonder", "percent"),
     "iMaxPlayerBuildingProductionModifier": ("buildRate", "empire", "nationalWonder", "percent"),
@@ -615,6 +616,12 @@ def curate(typ, rec, store):
             vDelta = vMissile - vFlight
             if vDelta not in (None, 0, 0.0):
                 _put_cond(fam, "air", "empire", "flat", vDelta, "IS_MISSILE", "range")
+        elif tag == "iMilitaryProductionModifier":
+            # The UNIT build rate, filtered on IS_MILITARY (owner): military is a predicate on the plural
+            # `units` target, never a category member (modifier.md §4; the curate_building shape).
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                _put_cond(fam, "buildRate", "empire", "percent", v, "IS_MILITARY", "units")
         elif tag == "iCoastalTradeRoutes":
             # +N routes, but only in a COASTAL city -- a CITY verdict, so the predicate is HAS_COAST (the shape
             # curate_building.py already uses for this same tag).

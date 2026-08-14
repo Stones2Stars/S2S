@@ -6674,28 +6674,65 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 	return std::max(1, iTotal);
 }
 
+// The EMPIRE tier of a unit's buildRate: the held TRAITS' and adopted CIVICS' rows, each source's own compiled
+// entries through the ONE battery (keyed `units`/`domains`/`unitCombats` + the tag-filtered `units` rows --
+// Monarchy's nobles, the war civics' IS_MILITARY filter, Aggressive's military boost). The city tier chains
+// this from CvCity::getProductionModifier.
 int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();
+	const bool bTypeMods = !GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_NO_NON_TYPE_PROD_MODS);
 	int iMultiplier = 0;
-
-	// Resolved ONCE per call rather than per trait: the interner is only populated after load, so a file-scope
-	// static would latch -1 forever.
-	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
 
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
 		if (hasTrait((TraitTypes)iI))
 		{
-			const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iI);
-
-			// `buildRate.<scope>.units.{UNIT_X}` -- the trait's OWN compiled keyed entries, never a walk of a
-			// keyed container the info no longer holds (pedia-read-map finding 2).
-			iMultiplier += InfoValuation::keyedTarget(
-				kTrait.getModifiers(), MODFAM_BUILD_RATE, -1, iUnitsSegment, (int)eUnit);
+			iMultiplier += (int)InfoValuation::unitBuildRate(
+				GC.getTraitInfo((TraitTypes)iI).getModifiers(), eUnit, CASC_SCOPE_EMPIRE, bTypeMods);
+		}
+	}
+	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+	{
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)iI);
+		if (eCivic != NO_CIVIC)
+		{
+			iMultiplier += (int)InfoValuation::unitBuildRate(
+				GC.getCivicInfo(eCivic).getModifiers(), eUnit, CASC_SCOPE_EMPIRE, bTypeMods);
 		}
 	}
 	return iMultiplier;
+}
+
+// The empire tier of the TAG stack -- what "military units build faster" is worth from the held traits and
+// adopted civics; the city read composes it with its own (CvCity::taggedBuildRate).
+int CvPlayer::taggedBuildRate(int iTagId) const
+{
+	PROFILE_EXTRA_FUNC();
+	if (iTagId < 0)
+	{
+		return 0;
+	}
+	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
+	int iRate = 0;
+	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
+	{
+		if (hasTrait((TraitTypes)iI))
+		{
+			iRate += (int)InfoValuation::taggedTargetSum(GC.getTraitInfo((TraitTypes)iI).getModifiers(),
+				MODFAM_BUILD_RATE, -1, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT, iUnitsSegment, iTagId);
+		}
+	}
+	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+	{
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)iI);
+		if (eCivic != NO_CIVIC)
+		{
+			iRate += (int)InfoValuation::taggedTargetSum(GC.getCivicInfo(eCivic).getModifiers(),
+				MODFAM_BUILD_RATE, -1, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT, iUnitsSegment, iTagId);
+		}
+	}
+	return iRate;
 }
 
 

@@ -304,6 +304,7 @@ public:
 	int getProductionNeeded(BuildingTypes eBuilding) const;
 	int getProductionNeeded(ProjectTypes eProject) const;
 	int getProductionModifier(UnitTypes eUnit) const;
+	int taggedBuildRate(int iTagId) const;   // the empire tier of CvCity::taggedBuildRate (held traits + adopted civics)
 	int keyedExperience(int iTargetSegment, int iTargetFk) const;   // the empire half of CvCity::keyedExperience
 	int getProductionModifier(BuildingTypes eBuilding) const;
 	int getProductionModifier(ProjectTypes eProject) const;

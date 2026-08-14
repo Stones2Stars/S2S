@@ -67,7 +67,8 @@ FAMILIES = {
     "iHealth":                    ("health",      "city",   None,           "flat",    None,             False),
     "iHappiness":                 ("happiness",   "city",   None,           "flat",    None,             False),
     "iFreeXP":                    ("experience",  "city",   None,           "flat",    None,             False),
-    "iMilitaryProductionModifier":("buildRate",   "city",   "military",     "percent", None,             False),
+    # iMilitaryProductionModifier is NOT here: military is a PREDICATE on the `units` target, never a category
+    # member (modifier.md §4; the curate_building shape) -> the explicit branch in curate().
     "iMaintenance":               ("maintenance", "city",   "corporation",  "flat",    None,             True),
     "CommerceChanges":            (None,          "city",   None,           "flat",    engine.COMMERCES, False),
     "YieldChanges":               (None,          "city",   None,           "flat",    engine.YIELDS,    False),
@@ -177,6 +178,17 @@ def curate(typ, rec, store):
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
             _apply_family(fam, FAMILIES[tag], c, typ, per_bonus)
+        elif tag == "iMilitaryProductionModifier":
+            # The UNIT build rate, filtered on IS_MILITARY (owner): military is a predicate on the plural
+            # `units` target, never a category member (modifier.md §4; the curate_building shape).
+            # ⛔ NO {HAS_CORPORATION: SELF} wrap here, deliberately: a plural-target entry's `enabled` is the
+            # per-unit FILTER (json.md §6.1) and the tagged reads honour only a BARE IS_TAG -- a composed
+            # condition is declined fail-closed (CvInfoValuation val_filterTagId). The corp-active gate is
+            # supplied by the CONSUMER walking ACTIVE corporations (CvCity::getProductionModifier), exactly as
+            # building presence is supplied by the operating-set walk rather than authored per entry.
+            if engine.is_int(t) and int(t) != 0:
+                _put_entry(fam, "buildRate", "city", "units", "percent",
+                           OrderedDict([("value", int(t)), ("enabled", "IS_MILITARY")]))
         elif tag == HQ_COMMERCE:                               # HQ revenue -> conditioned per-scaler
             # WHERE it lands is a condition, not a member semantic: the revenue accrues in the corporation's
             # HQ CITY only (the HQ building carries it, CvCity.cpp:12386-12391) -> the parameterized

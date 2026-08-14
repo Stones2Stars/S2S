@@ -85,8 +85,9 @@ SCALAR = {
     "iHurryInflationModifier":         ("hurry", "empire", "inflation", "percent"),
     "iWorkerSpeedModifier":            ("workRate", "empire", "", "percent"),
     "iImprovementUpgradeRateModifier": ("improvementUpgradeRate", "empire", "", "percent"),
-    # military / great-people
-    "iMilitaryProductionModifier":     ("buildRate", "empire", "military", "percent"),
+    # iMilitaryProductionModifier is NOT here: military is a PREDICATE on the `units` target, never a category
+    # member (modifier.md §4; the curate_building shape) -> SCALAR_COND below.
+    # great-people
     # L13 re-home (2026-07-05): the spec'd DEFENSE family (modifier.md §6: `amount` = the additive defense %),
     # matching the buildings' defense.empire.amount -- the old combat.empire.cityDefense had NO reader.
     "iExtraCityDefense":               ("defense", "empire", "amount",             "percent"),
@@ -199,6 +200,10 @@ SCALAR_COND = {
     "iForeignTradeRouteModifier":     ("tradeRoutes", "empire", "modifier", "percent", "IS_FOREIGN"),
     "iSharedCivicTradeRouteModifier": ("tradeRoutes", "empire", "modifier", "percent",
                                        OrderedDict([("all", ["IS_FOREIGN", "SHARES_CIVIC"])])),
+    # The UNIT build rate, filtered on IS_MILITARY (owner): military is a predicate on the plural `units`
+    # target, never a category member (modifier.md §4; the curate_building shape). The `units` node rides the
+    # member slot exactly as a member does.
+    "iMilitaryProductionModifier": ("buildRate", "empire", "units", "percent", "IS_MILITARY"),
 }
 
 # --- entity-keyed (target-keyed) maps: tag -> (family, scope, targetType, unit, valueKeys|None). ---

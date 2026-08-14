@@ -88,13 +88,11 @@
  },
  "buildRate": {
   "city": {
-   "military": {
+   "units": {
     "percent": [
      {
       "value": 15,
-      "enabled": {
-       "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
-      }
+      "enabled": "IS_MILITARY"
      }
     ]
    }

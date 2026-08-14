@@ -209,8 +209,19 @@
  },
  "buildRate": {
   "empire": {
-   "military": {
-    "percent": 10
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ],
+    "UNIT_NOBLE": {
+     "percent": 20
+    },
+    "UNIT_LORD": {
+     "percent": 20
+    }
    },
    "buildings": {
     "BUILDING_CASTLE": {
@@ -308,14 +319,6 @@
     },
     "BUILDING_HOLOGRAPHIC_SCHOOL": {
      "percent": 0
-    }
-   },
-   "units": {
-    "UNIT_NOBLE": {
-     "percent": 20
-    },
-    "UNIT_LORD": {
-     "percent": 20
     }
    }
   }

@@ -5,8 +5,13 @@
  ],
  "buildRate": {
   "empire": {
-   "military": {
-    "percent": 40
+   "units": {
+    "percent": [
+     {
+      "value": 40,
+      "enabled": "IS_MILITARY"
+     }
+    ]
    }
   }
  },

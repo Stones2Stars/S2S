@@ -97,8 +97,13 @@
      "percent": 20
     }
    },
-   "military": {
-    "percent": 10
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
    },
    "unitCombats": {
     "UNITCOMBAT_COMBATANT": {

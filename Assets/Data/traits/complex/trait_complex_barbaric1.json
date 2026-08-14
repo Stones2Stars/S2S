@@ -14,8 +14,13 @@
    "worldWonder": {
     "percent": -10
    },
-   "military": {
-    "percent": 5
+   "units": {
+    "percent": [
+     {
+      "value": 5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
    }
   }
  },

@@ -282,10 +282,10 @@ void CvCity::getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const
 //	The city's build-rate stack for ONE unit TAG -- what "military units build faster here" is worth, now that
 //	military and space are PREDICATES on the `units` target rather than categories with a channel of their own
 //	([modifier.md] §4). A filtered entry is CONDITIONED, so it never folds into the package and cannot be a
-//	channel read: it is the ordinary entry-list read over the live sources ([modifier.md] §5), which at city
-//	scope is the OPERATING buildings -- a dormant one deposits nothing.
-//	⚠ EMPIRE-scope rows are NOT included: a capped wonder's empire row reaches every city of the owner, so it is
-//	answered player-side, and no such read exists yet (named in the todo).
+//	channel read: it is the ordinary entry-list read over the live sources ([modifier.md] §5) -- the OPERATING
+//	buildings and ACTIVE corporations here, plus the player's empire tier (held traits + adopted civics).
+//	⚠ A capped wonder's EMPIRE-scope row is still NOT included: no player-side read walks the owner's buildings
+//	for one (named in the todo).
 int CvCity::taggedBuildRate(int iTagId) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -294,12 +294,20 @@ int CvCity::taggedBuildRate(int iTagId) const
 		return 0;
 	}
 	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
-	int iRate = 0;
+	int iRate = GET_PLAYER(getOwner()).taggedBuildRate(iTagId);
 	const std::set<int>& kActive = m_operatingBuildings.active;
 	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
 	{
 		iRate += (int)InfoValuation::taggedTargetSum(GC.getBuildingInfo((BuildingTypes)*it).getModifiers(),
 			MODFAM_BUILD_RATE, -1, CASC_SCOPE_CITY, CASC_UNIT_PERCENT, iUnitsSegment, iTagId);
+	}
+	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
+	{
+		if (isActiveCorporation((CorporationTypes)iI))
+		{
+			iRate += (int)InfoValuation::taggedTargetSum(GC.getCorporationInfo((CorporationTypes)iI).getModifiers(),
+				MODFAM_BUILD_RATE, -1, CASC_SCOPE_CITY, CASC_UNIT_PERCENT, iUnitsSegment, iTagId);
+		}
 	}
 	return iRate;
 }
@@ -3179,41 +3187,24 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 	PROFILE_EXTRA_FUNC();
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eUnit);
-
-	// Resolved ONCE per call: the interner is only populated after load, so a file-scope static would latch -1.
-	const int iUnitsSegment = InfoValuation::keyedTargetSegment("units");
-	const int iDomainsSegment = InfoValuation::keyedTargetSegment("domains");
-	const int iUnitCombatsSegment = InfoValuation::keyedTargetSegment("unitCombats");
 	const bool bTypeMods = !kUnit.hasSkill(CLS_SKILL_NO_NON_TYPE_PROD_MODS);
 
 	const std::set<int>& kActive = m_operatingBuildings.active;
 	for (std::set<int>::const_iterator it = kActive.begin(); it != kActive.end(); ++it)
 	{
-		const CvModifiers* pModifiers = GC.getBuildingInfo((BuildingTypes)*it).getModifiers();
-		if (pModifiers == NULL)
+		iMultiplier += (int)InfoValuation::unitBuildRate(
+			GC.getBuildingInfo((BuildingTypes)*it).getModifiers(), eUnit, CASC_SCOPE_CITY, bTypeMods);
+	}
+	//	The ACTIVE corporations' city-scope rows -- ULTSOLDIER's IS_MILITARY-filtered `units` entry. Activeness is
+	//	the WALK's own gate (the sanctioned engine-owned input, [culture-religion-research.md]), which is why the
+	//	authored entry carries the bare tag filter alone rather than a composed {HAS_CORPORATION} condition the
+	//	tagged read would decline fail-closed.
+	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
+	{
+		if (isActiveCorporation((CorporationTypes)iI))
 		{
-			continue;
-		}
-		iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitsSegment, (int)eUnit);
-		if (!bTypeMods)
-		{
-			continue;   // the unit opts out of every non-TYPE production modifier (the `noNonTypeProdMods` skill)
-		}
-		//	The predicate-filtered half of the same `units` target: `buildRate.city.units.percent` entries gated
-		//	`{enabled: IS_MILITARY|IS_SPACE}` -- which is what "military units build faster HERE" IS, now that
-		//	military and space are PREDICATES rather than categories of their own ([modifier.md] §4). The
-		//	candidate answers the filter off its own tag bitset, so this needs no eval ctx and no live unit.
-		iMultiplier += (int)InfoValuation::candidateTaggedTargetSum(
-			pModifiers, MODFAM_BUILD_RATE, -1, CASC_SCOPE_CITY, CASC_UNIT_PERCENT, iUnitsSegment, kUnit);
-		iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iDomainsSegment, (int)kUnit.getDomain());
-		if (kUnit.getCombatClass() != NO_UNITCOMBAT)
-		{
-			iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)kUnit.getCombatClass());
-			foreach_(const int iSubCombat, kUnit.getCombatClasses())
-			{
-				const UnitCombatTypes eSubCombat = static_cast<UnitCombatTypes>(iSubCombat);
-				iMultiplier += InfoValuation::keyedTarget(pModifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, (int)eSubCombat);
-			}
+			iMultiplier += (int)InfoValuation::unitBuildRate(
+				GC.getCorporationInfo((CorporationTypes)iI).getModifiers(), eUnit, CASC_SCOPE_CITY, bTypeMods);
 		}
 	}
 	// The unit's OWN `buildRate.self.percent` -- the off-spine self scope, read exactly as the building and

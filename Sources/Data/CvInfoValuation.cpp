@@ -11,6 +11,7 @@
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- the eval state the contexts fill
 #include "CvModifiers.h"                  // the compiled read surface (sum / conditioned ranges / entries)
 #include "CvTraitInfo.h"                  // the ACTIVE trait set's record -- the §4 specialist-keyed leg
+#include "CvUnitInfo.h"                   // the unitBuildRate battery's candidate axes (domain / combat classes)
 #include "CvModEntry.h"                   // the compiled §3.9 entry + modSegmentLookup (the plots target id)
 #include "Engine/CityContext.h"           // fillEvalCtx (city/plot) + plotAttrs (the plot-predicate COUNTS)
 #include "Engine/EmpireContext.h"         // fillEvalCtx (player/team)
@@ -1799,6 +1800,36 @@ int64_t InfoValuation::taggedTargetSum(const CvModifiers* modifiers, ModifierFam
 		return 0;
 	}
 	return val_taggedTargetWalk(modifiers, eFamily, iKind, eScope, eUnit, iTargetSegment, iTagId, NULL);
+}
+
+int64_t InfoValuation::unitBuildRate(const CvModifiers* modifiers, UnitTypes eUnit, CvCascScope eScope,
+	bool bTypeModifiers)
+{
+	if (modifiers == NULL)
+	{
+		return 0;
+	}
+	//	Resolved per call: the interner is only populated after load, so a file-scope static would latch -1.
+	const int iUnitsSegment = keyedTargetSegment("units");
+	int64_t iTotal = keyedTarget(modifiers, MODFAM_BUILD_RATE, -1, iUnitsSegment, (int)eUnit, (int)eScope);
+	if (!bTypeModifiers)
+	{
+		return iTotal;   // the unit opts out of every non-TYPE production modifier (the `noNonTypeProdMods` skill)
+	}
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	iTotal += candidateTaggedTargetSum(modifiers, MODFAM_BUILD_RATE, -1, eScope, CASC_UNIT_PERCENT, iUnitsSegment, kUnit);
+	iTotal += keyedTarget(modifiers, MODFAM_BUILD_RATE, -1, keyedTargetSegment("domains"), (int)kUnit.getDomain(), (int)eScope);
+	if (kUnit.getCombatClass() != NO_UNITCOMBAT)
+	{
+		const int iUnitCombatsSegment = keyedTargetSegment("unitCombats");
+		iTotal += keyedTarget(modifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, kUnit.getCombatClass(), (int)eScope);
+		const std::vector<int>& kSubCombats = kUnit.getCombatClasses();
+		for (std::vector<int>::const_iterator it = kSubCombats.begin(); it != kSubCombats.end(); ++it)
+		{
+			iTotal += keyedTarget(modifiers, MODFAM_BUILD_RATE, -1, iUnitCombatsSegment, *it, (int)eScope);
+		}
+	}
+	return iTotal;
 }
 
 int64_t InfoValuation::unitQualifiedRate(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,

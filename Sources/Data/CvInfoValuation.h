@@ -357,6 +357,17 @@ public:
 	static int64_t taggedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		CvCascScope eScope, CvCascUnit eUnit, int iTargetSegment, int iTagId);
 
+	///<summary>ONE source's whole unit build-rate battery for a unit being trained: the keyed `units` row naming
+	/// THAT unit, and -- unless it opts out of non-TYPE production modifiers -- the tag-filtered `units` rows
+	/// ([modifier.md] §4) plus the keyed domain and combat-class rows.</summary>
+	//	⚑ Lifted to the shared surface so the city's operating-building walk, the player's trait/civic walk and
+	//	the city's active-corporation walk are ONE implementation ([DEC-single-implementation]) -- the source's
+	//	liveness is the CALLER's walk (operating / adopted / held / active), never re-tested here.
+	//	⚠ Keyed reads pin to the AUTHORED scope exactly as the tagged read does ([modifier.md] §5: the city- and
+	//	empire-scope halves are read at different scopes and must each filter to their own).
+	static int64_t unitBuildRate(const CvModifiers* modifiers, UnitTypes eUnit, CvCascScope eScope,
+		bool bTypeModifiers);
+
 	// The ctx-taking core the endpoints share (fill the ctx ONCE per endpoint, fold each channel through this):
 	// Σ over the folded scopes of the compiled unconditioned sums (audience-resolved) + the family's conditioned
 	// tail (kind/unit-matched, untargeted, gated via the ONE evaluator, per-resolved via the ONE §3.7 resolver).

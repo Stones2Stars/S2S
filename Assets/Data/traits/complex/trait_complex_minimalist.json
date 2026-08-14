@@ -28,8 +28,13 @@
      "percent": -50
     }
    },
-   "military": {
-    "percent": -20
+   "units": {
+    "percent": [
+     {
+      "value": -20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
    }
   }
  },
