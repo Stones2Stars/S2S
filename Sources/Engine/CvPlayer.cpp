@@ -715,19 +715,6 @@ void CvPlayer::getTrainableAnywhere(std::vector<int>& units) const
 	units.assign(kUnion.begin(), kUnion.end());
 }
 
-void CvPlayer::getConstructableAnywhere(std::vector<int>& buildings) const
-{
-	std::set<int> kUnion;
-	std::vector<int> kCityFrontier;
-	for (CvPlayer::city_iterator it = beginCities(); it != endCities(); ++it)
-	{
-		if ((*it) == NULL) continue;
-		(*it)->getAvailableBuildings(kCityFrontier);
-		kUnion.insert(kCityFrontier.begin(), kCityFrontier.end());
-	}
-	buildings.assign(kUnion.begin(), kUnion.end());
-}
-
 EnablerDomain::State CvPlayer::getTechAvailability(TechTypes eTech) const
 {
 	return (EnablerDomain::State)m_enabler.techs.state((int)eTech);
@@ -973,25 +960,6 @@ void CvPlayer::getCargoKinds(int (&cargos)[NUM_CARGO_KINDS]) const
 	{
 		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_CARGO, iKind, -1);
 		cargos[iKind] = InfoValuation::realizedAtEmpire(*this, iChannel);
-	}
-}
-
-void CvPlayer::getExtraYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const
-{
-	// the kind axis IS the engine's YieldTypes value (CvInfoKinds.h ruling 1: the member spelling is the channel)
-	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
-	{
-		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_EXTRA_YIELD_THRESHOLD, iYield, -1);
-		thresholds[iYield] = InfoValuation::realizedAtEmpire(*this, iChannel);
-	}
-}
-
-void CvPlayer::getLessYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const
-{
-	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
-	{
-		const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_LESS_YIELD_THRESHOLD, iYield, -1);
-		thresholds[iYield] = InfoValuation::realizedAtEmpire(*this, iChannel);
 	}
 }
 
@@ -4428,17 +4396,6 @@ int CvPlayer::countNumCoastalCitiesByArea(const CvArea* pArea) const
 	return iCount;
 }
 
-
-int CvPlayer::countNumCitiesWithOrbitalInfrastructure() const
-{
-	if (m_orbitalInfrastructureCountDirty)
-	{
-		m_orbitalInfrastructureCount = algo::count_if(cities(), CvCity::fn::hasOrbitalInfrastructure());
-		m_orbitalInfrastructureCountDirty = false;
-	}
-
-	return m_orbitalInfrastructureCount;
-}
 
 
 int CvPlayer::countOwnedBonuses(BonusTypes eBonus) const
@@ -8021,30 +7978,6 @@ bool CvPlayer::hasHolyCity() const
 }
 
 
-bool CvPlayer::hasStateReligionHolyCity() const
-{
-	const ReligionTypes eStateReligion = getStateReligion();
-	return eStateReligion != NO_RELIGION && hasHolyCity(eStateReligion);
-}
-
-
-bool CvPlayer::hasStateReligionShrine() const
-{
-	const ReligionTypes eStateReligion = getStateReligion();
-
-	if (eStateReligion == NO_RELIGION)
-	{
-		return false;
-	}
-
-	const CvCity* pHolyCity = GC.getGame().getHolyCity(eStateReligion);
-
-	if (pHolyCity && pHolyCity->hasShrine(eStateReligion))
-	{
-		return pHolyCity->getOwner() == getID();
-	}
-	return false;
-}
 
 
 int CvPlayer::countHolyCities() const
@@ -8601,11 +8534,6 @@ void CvPlayer::changeTotalPopulation(int iChange)
 	changeAssets(iChange*10);
 	changePower(iChange); // Should sync up with the total power value for this player from all CvArea.
 	changePopScore(iChange);
-}
-
-int CvPlayer::getAveragePopulation() const
-{
-	return 0 == getNumCities() ? 0 : getTotalPopulation() / getNumCities();
 }
 
 
@@ -9503,17 +9431,6 @@ void CvPlayer::setUnitUpkeepDirty() const
 	}
 }
 
-int CvPlayer::getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary)
-{
-	if (iExtra == 0) return 0;
-
-	// NON-MUTATING: the hypothetical rides in as a parameter rather than as a temp add/restore on a stored
-	// bucket -- there is no stored bucket to nudge any more.
-	const int64_t iCivilian100 = getUnitUpkeepCivilian100() + (bMilitary ? 0 : iExtra);
-	const int64_t iMilitary100 = getUnitUpkeepMilitary100() + (bMilitary ? iExtra : 0);
-
-	return static_cast<int>(calcFinalUnitUpkeepFrom(iCivilian100, iMilitary100, false) - getFinalUnitUpkeep());
-}
 // ! Unit Upkeep
 
 
@@ -11503,12 +11420,6 @@ void CvPlayer::changeCommerceRate(CommerceTypes eIndex, int iChange)
 }
 
 
-int CvPlayer::getCommerceRateModifierfromEvents(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCommerceRateModifierfromEvents[eIndex];
-}
-
 void CvPlayer::changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
@@ -12212,23 +12123,6 @@ bool CvPlayer::isBuildingMaxedOut(BuildingTypes eIndex, int iExtra) const
 	return ((getBuildingCount(eIndex) + iExtra) >= (GC.getBuildingInfo(eIndex).getAllowed()->cap(ALLOWEDCAP_EMPIRE) + GC.getBuildingInfo(eIndex).getMaxPlayerInstancesExtra()));
 }
 
-bool CvPlayer::isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra) const
-{
-	PROFILE_FUNC();
-
-	FASSERT_BOUNDS(0, GC.getNumSpecialBuildingInfos(), eIndex);
-
-	if (!isNationalWonderGroupSpecialBuilding(eIndex))
-	{
-		return false;
-	}
-
-	const int iLimit = GC.getSpecialBuildingInfo(eIndex).getMaxPlayerInstances();
-	FAssertMsg(getBuildingGroupCount(eIndex) <= iLimit, "SpecialbuildingCount is expected to be less than or match the number of max player instances plus extra player instances");
-
-	return ((getBuildingGroupCount(eIndex) + iExtra) >= iLimit);
-}
-
 void CvPlayer::changeBuildingGroupMaking(SpecialBuildingTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialBuildingInfos(), eIndex);
@@ -12251,11 +12145,6 @@ int CvPlayer::getBuildingGroupMaking(SpecialBuildingTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialBuildingInfos(), eIndex);
 	return m_paiBuildingGroupMaking[eIndex];
-}
-
-int CvPlayer::getBuildingGroupCountPlusMaking(SpecialBuildingTypes eIndex) const
-{
-	return (getBuildingGroupCount(eIndex) + getBuildingGroupMaking(eIndex));
 }
 
 
@@ -12304,11 +12193,6 @@ int CvPlayer::getSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex) co
 }
 
 
-bool CvPlayer::isSpecialBuildingNotRequired(SpecialBuildingTypes eIndex) const
-{
-	return (getSpecialBuildingNotRequiredCount(eIndex) > 0);
-}
-
 
 void CvPlayer::changeSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex, int iChange)
 {
@@ -12343,19 +12227,6 @@ int CvPlayer::getHasCorporationCount(CorporationTypes eIndex) const
 	return isActiveCorporation(eIndex) ? m_paiHasCorporationCount[eIndex] : 0;
 }
 
-
-int CvPlayer::countTotalHasCorporation() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iCount = 0;
-
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-	{
-		iCount += getHasCorporationCount((CorporationTypes)iI);
-	}
-
-	return iCount;
-}
 
 bool CvPlayer::isActiveCorporation(CorporationTypes eIndex) const
 {
@@ -13213,11 +13084,6 @@ CvPlotGroup* CvPlayer::nextPlotGroup(int *pIterIdx, bool bRev) const
 }
 
 
-int CvPlayer::getNumPlotGroups() const
-{
-	return m_plotGroups[CURRENT_MAP]->getCount();
-}
-
 
 CvPlotGroup* CvPlayer::getPlotGroup(int iID) const
 {
@@ -13459,11 +13325,6 @@ EventTriggeredData* CvPlayer::firstEventTriggered(int *pIterIdx, bool bRev) cons
 EventTriggeredData* CvPlayer::nextEventTriggered(int *pIterIdx, bool bRev) const
 {
 	return !bRev ? m_eventsTriggered.nextIter(pIterIdx) : m_eventsTriggered.prevIter(pIterIdx);
-}
-
-int CvPlayer::getNumEventsTriggered() const
-{
-	return m_eventsTriggered.getCount();
 }
 
 EventTriggeredData* CvPlayer::getEventTriggered(int iID) const
@@ -22078,41 +21939,6 @@ bool CvPlayer::canSpyDestroyUnit(PlayerTypes eTarget, const CvUnit& kUnit) const
 	return true;
 }
 
-bool CvPlayer::canSpyBribeUnit(PlayerTypes eTarget, const CvUnit& kUnit) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (!canSpyDestroyUnit(eTarget, kUnit))
-	{
-		return false;
-	}
-
-	// Can't buy units when at war
-	if (kUnit.isEnemy(getTeam()))
-	{
-		return false;
-	}
-
-	// Can't buy units if they are not in a legal plot
-	if (!GET_TEAM(getTeam()).isFriendlyTerritory(GET_PLAYER(eTarget).getTeam()) && !GET_TEAM(getTeam()).isOpenBorders(GET_PLAYER(eTarget).getTeam()))
-	{
-		return false;
-	}
-
-	foreach_(const CvUnit* pLoopUnit, kUnit.plot()->units())
-	{
-		if (pLoopUnit != &kUnit)
-		{
-			if (pLoopUnit->isEnemy(getTeam()))
-			{
-				// If we buy the unit, we will be on the same plot as an enemy unit! Not good.
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
 bool CvPlayer::canSpyDestroyBuilding(PlayerTypes eTarget, BuildingTypes eBuilding) const
 {
 	return (GC.getBuildingInfo(eBuilding).getCost() > 0 && !isLimitedWonder(eBuilding));
@@ -23573,22 +23399,6 @@ bool CvPlayer::hasSpaceshipArrived() const
 }
 
 
-bool CvPlayer::isTradingMilitaryBonus(PlayerTypes ePlayer) const
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (GET_PLAYER(ePlayer).AI_militaryBonusVal((BonusTypes)iI) > 0)
-		{
-			if (getNumTradeImportsByBonus(ePlayer, ((BonusTypes)iI)) > 0)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 int CvPlayer::getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -24015,24 +23825,6 @@ void CvPlayer::setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue)
 	m_pabAutomatedCanBuild[eBuild] = bNewValue;
 }
 
-bool CvPlayer::hasEnemyDefenderUnit(const CvPlot* pPlot) const
-{
-	PROFILE_EXTRA_FUNC();
-	std::vector<CvUnit *> plotUnits;
-
-	GC.getGame().getPlotUnits(pPlot, plotUnits);
-
-	foreach_(CvUnit* pLoopUnit, plotUnits)
-	{
-		if (atWar(getTeam(), GET_PLAYER(pLoopUnit->getOwner()).getTeam()))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
 //Sevo Begin -VCM
 /*  getSevoWonderScore
 This function returns the number of wonders BUILT by the playerID (not OWNED!)
@@ -24261,11 +24053,6 @@ int CvPlayer::doMultipleResearch(int iOverflow)
 bool CvPlayer::isNoLandmarkAnger() const
 {
 	return policies().has(CLS_POLICY_NO_LANDMARK_ANGER);
-}
-
-bool CvPlayer::isShowLandmarks() const
-{
-	return m_bShowLandmarks && GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED);
 }
 
 void CvPlayer::setShowLandmarks(bool bNewVal)
@@ -24898,11 +24685,6 @@ int CvPlayer::getWonderConstructRand() const
 	return iWonderConstructRand;
 }
 
-int CvPlayer::getFractionalCombatExperience() const
-{
-	return m_iFractionalCombatExperience;
-}
-
 void CvPlayer::changeFractionalCombatExperience(int iChange, UnitTypes eGGType)
 {
 	m_iFractionalCombatExperience += iChange;
@@ -25266,17 +25048,6 @@ bool CvPlayer::isNukesValid() const
 	return m_bNukesValid;
 }
 
-
-int CvPlayer::getNukeState() const
-{
-	// 0 DISABLED (no nuke-enabling building) / 1 ENABLED (available) / 2 BANNED (world AP-UN no-nukes vote/option).
-	// isNoNukes (world) OVERRIDES -- the option/vote ban trumps per-player availability.
-	if (GC.getGame().isNoNukes())
-	{
-		return 2;
-	}
-	return isNukesValid() ? 1 : 0;
-}
 
 void CvPlayer::makeNukesValid(bool bValid)
 {
@@ -25883,15 +25654,6 @@ bool CvPlayer::hasExtraGoody() const
 }
 
 
-	//Team Project (5)
-// ⚑ Two DISTINCT policies, asked separately. The counter these replaced held both in ONE SIGNED int
-// (`allReligionsActive` positive, `bansNonStateReligions` negative), so a player holding one grantor of each
-// netted to zero and BOTH reads answered false -- and the data authors both keys independently.
-bool CvPlayer::hasBannedNonStateReligions() const
-{
-	return policies().has(CLS_POLICY_BANS_NON_STATE_RELIGIONS);
-}
-
 bool CvPlayer::hasAllReligionsActive() const
 {
 	return policies().has(CLS_POLICY_ALL_RELIGIONS_ACTIVE);
@@ -26092,16 +25854,6 @@ void CvPlayer::setFocusPlots(int iX, int iY)
 {
 	m_iFocusPlotX = iX;
 	m_iFocusPlotY = iY;
-}
-
-int CvPlayer::getFocusPlotX() const
-{
-	return m_iFocusPlotX;
-}
-
-int CvPlayer::getFocusPlotY() const
-{
-	return m_iFocusPlotY;
 }
 
 // K-Mod

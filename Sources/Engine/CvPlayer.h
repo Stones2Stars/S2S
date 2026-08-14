@@ -253,7 +253,6 @@ public:
 
 	int countNumCoastalCities() const;
 	int countNumCoastalCitiesByArea(const CvArea* pArea) const;
-	int countNumCitiesWithOrbitalInfrastructure() const;
 	inline void noteOrbitalInfrastructureCountDirty() { m_orbitalInfrastructureCountDirty = true; }
 
 	int countOwnedBonuses(BonusTypes eBonus) const;
@@ -330,7 +329,6 @@ public:
 	// the four one-channel aggregate functions ([patterns.md] § THE TWO READ ROLES: the getter IS the group).
 	void getRealizedCityWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 
-	int calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& iPaidUnits, int& iPaidMilitaryUnits, int& iBaseUnitCost, int& iMilitaryCost, int& iExtraCost) const;
 
 	int calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const;
 	int calculateUnitSupply() const;
@@ -368,8 +366,6 @@ public:
 	void convert(ReligionTypes eReligion);
 	bool hasHolyCity(ReligionTypes eReligion) const;
 	bool hasHolyCity() const;
-	bool hasStateReligionHolyCity() const;
-	bool hasStateReligionShrine() const;
 
 	int countHolyCities() const;
 	void foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligion, bool bAward);
@@ -398,7 +394,6 @@ public:
 	void setStartingPlot(CvPlot* pNewValue, const bool bUpdateStartDist);
 
 	int getTotalPopulation() const;
-	int getAveragePopulation() const;
 	void changeTotalPopulation(int iChange);
 	int64_t getRealPopulation() const;
 	int getReligionPopulation(ReligionTypes eReligion) const;
@@ -436,7 +431,6 @@ public:
 	bool canForceCivics(PlayerTypes eTarget, CivicTypes eCivic) const;
 	bool canForceReligion(PlayerTypes eTarget, ReligionTypes eReligion) const;
 	bool canSpyDestroyUnit(PlayerTypes eTarget, const CvUnit& kUnit) const;
-	bool canSpyBribeUnit(PlayerTypes eTarget, const CvUnit& kUnit) const;
 	bool canSpyDestroyBuilding(PlayerTypes eTarget, BuildingTypes eBuilding) const;
 	bool canSpyDestroyProject(PlayerTypes eTarget, ProjectTypes eProject) const;
 
@@ -561,7 +555,6 @@ public:
 	int64_t calcFinalUnitUpkeep(const bool bReal=true) const;
 	int64_t calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal=true) const;
 	int64_t getFinalUnitUpkeep() const;
-	int getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary);
 	// ! Unit Upkeep
 
 	int getNumMilitaryUnits() const;
@@ -804,7 +797,6 @@ public:
 	// save a walk that is already cheap once hoisted.
 	// Filled ASCENDING and deduplicated, so a caller's id-ordered tie-break is unchanged.
 	void getTrainableAnywhere(std::vector<int>& units) const;
-	void getConstructableAnywhere(std::vector<int>& buildings) const;
 
 	EnablerDomain::State getTechAvailability(TechTypes eTech) const;
 	EnablerDomain::State getCivicAvailability(CivicTypes eCivic) const;
@@ -867,8 +859,6 @@ public:
 	void getCargoKinds(int (&cargos)[NUM_CARGO_KINDS]) const;
 	// The two threshold families key the ENGINE's YieldTypes directly (their member spelling IS the channel --
 	// CvInfoKinds.h ruling 1), so they are yield-indexed groups rather than kind-indexed ones.
-	void getExtraYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const;
-	void getLessYieldThresholds(int (&thresholds)[NUM_YIELD_TYPES]) const;
 	// The straggler-scalar group (patterns.md getScalar, read as ONE group): every InfoScalar slot answered at
 	// THIS scope; the entries whose family the empire carries hold a value, the rest answer 0.
 	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
@@ -913,7 +903,6 @@ public:
 	void changeCommerceRate(CommerceTypes eIndex, int iChange);
 
 
-	int getCommerceRateModifierfromEvents(CommerceTypes eIndex) const;
 	void changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iChange);
 
 
@@ -990,7 +979,6 @@ public:
 
 	int getBuildingGroupCount(SpecialBuildingTypes eIndex) const;
 	bool isBuildingMaxedOut(BuildingTypes eIndex, int iExtra = 0) const;
-	bool isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra = 0) const;
 	void changeBuildingCount(BuildingTypes eIndex, int iChange);
 	void changeBuildingGroupCount(SpecialBuildingTypes eIndex, int iChange);
 
@@ -1001,7 +989,6 @@ public:
 	void changeBuildingGroupMaking(SpecialBuildingTypes eIndex, int iChange);
 
 	int getBuildingCountPlusMaking(BuildingTypes eIndex) const;
-	int getBuildingGroupCountPlusMaking(SpecialBuildingTypes eIndex) const;
 
 	int getHurryCount(HurryTypes eIndex) const;
 	bool canHurry(HurryTypes eIndex) const;
@@ -1009,7 +996,6 @@ public:
 	void changeHurryCount(HurryTypes eIndex, int iChange);
 
 	int getSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex) const;
-	bool isSpecialBuildingNotRequired(SpecialBuildingTypes eIndex) const;
 	void changeSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex, int iChange);
 
 	int getHasReligionCount(ReligionTypes eIndex) const;
@@ -1018,7 +1004,6 @@ public:
 	void changeHasReligionCount(ReligionTypes eIndex, int iChange);
 
 	int getHasCorporationCount(CorporationTypes eIndex) const;
-	int countTotalHasCorporation() const;
 	void changeHasCorporationCount(CorporationTypes eIndex, int iChange);
 	bool isActiveCorporation(CorporationTypes eIndex) const;
 
@@ -1077,7 +1062,6 @@ public:
 	// deprecated, use plot_group_iterator
 	CvPlotGroup* nextPlotGroup(int* pIterIdx, bool bRev = false) const;
 
-	int getNumPlotGroups() const;
 	CvPlotGroup* getPlotGroup(int iID) const;
 	CvPlotGroup* addPlotGroup();
 	void deletePlotGroup(int iID);
@@ -1175,7 +1159,6 @@ public:
 	// deprecated, use event_iterator
 	EventTriggeredData* nextEventTriggered(int* pIterIdx, bool bRev = false) const;
 
-	int getNumEventsTriggered() const;
 	EventTriggeredData* getEventTriggered(int iID) const;
 	EventTriggeredData* addEventTriggered();
 	void deleteEventTriggered(int iID);
@@ -1306,14 +1289,12 @@ public:
 	void changeCityOverLimitUnhappy(int iChange);
 
 
-	bool isShowLandmarks() const;
 	void setShowLandmarks(bool bNewVal);
 
 
 	int getSevoWondersScore(int mode);
 
 
-	bool hasEnemyDefenderUnit(const CvPlot* pPlot) const;
 
 	CvCity* getBestHQCity(CorporationTypes eCorporation) const;
 	PlayerVoteTypes getPledgedVote() const;
@@ -1326,7 +1307,6 @@ public:
 	void setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue);
 
 	int getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) const;
-	bool isTradingMilitaryBonus(PlayerTypes ePlayer) const;
 
 	DenialTypes AI_workerTrade(const CvUnit* pUnit, PlayerTypes ePlayer) const;
 
@@ -1401,7 +1381,6 @@ public:
 
 
 
-	int getFractionalCombatExperience() const;
 	void changeFractionalCombatExperience(int iChange, UnitTypes eGGType = NO_UNIT);
 
 	void clearTileCulture();
@@ -1914,7 +1893,6 @@ public:
 
 	bool hasExtraGoody() const;
 
-	bool hasBannedNonStateReligions() const;
 	bool hasAllReligionsActive() const;
 
 
@@ -1957,14 +1935,11 @@ public:
 	void upgradePlot(int iX, int iY, ImprovementTypes eImprovement, bool bConfirm);
 
 	void setFocusPlots(int iX, int iY);
-	int getFocusPlotX() const;
-	int getFocusPlotY() const;
 
 	void RecalculatePlotGroupHashes();
 	CvContractBroker& getContractBroker();
 	CvWorkerAI& getWorkerAI() { return m_workerAI; }
 	CvHunterAI& getHunterAI() { return m_hunterAI; }
-	CvDecisionAI& getDecisionAI() { return m_decisionAI; }
 
 	void addPlotDangerSource(const CvPlot* pPlot, int iStrength);
 
@@ -1974,7 +1949,6 @@ public:
 	bool canHaveBuilder(BuildTypes eBuild) const;
 	//TB Nukefix
 	bool isNukesValid() const;
-	int getNukeState() const;   // the spine 3-state: 0 disabled / 1 enabled / 2 banned
 	void makeNukesValid(bool bValid = true);
 
 	int getUpgradeRoundCount() const;

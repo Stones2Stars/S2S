@@ -67,7 +67,6 @@ public:
 	const CvGameObjectCity* getGameObject() const { return &m_GameObject; }
 
 	int getNumWorkers() const { return m_workers.size(); }
-	std::vector<int> getWorkers() const { return m_workers; }
 	void setWorkerHave(const int iUnitID, const bool bNewValue);
 
 
@@ -105,7 +104,6 @@ public:
 	void setReinforcementCounter( int iNewValue );
 	void changeReinforcementCounter( int iChange );
 
-	bool isRecentlyAcquired() const;
 
 	void kill(bool bUpdatePlotGroups, bool bUpdateCulture = true);
 	void killTestCheap(); // For testing, do not call in a game situation
@@ -199,7 +197,6 @@ public:
 	void clearWorkingOverride(int iIndex);
 	int countNumImprovedPlots(ImprovementTypes eImprovement = NO_IMPROVEMENT, bool bPotential = false) const;
 	int countNumWaterPlots() const;
-	int countNumRiverPlots() const;
 
 	int findPopulationRank() const;
 	int findBaseYieldRateRank(YieldTypes eYield) const;
@@ -222,8 +219,6 @@ public:
 	// ⚠ It EVALUATES (unlike every read above), so it is a per-decision call and never an inner-loop one.
 	bool couldConstructWith(BuildingTypes eCandidate, BuildingTypes eExtraBuilding) const;
 	bool isWorldWondersMaxed() const;
-	bool isTeamWondersMaxed() const;
-	bool isNationalWondersMaxed() const;
 	int getMaxNumWorldWonders() const;
 	int getMaxNumTeamWonders() const;
 	int getMaxNumNationalWonders() const;
@@ -237,7 +232,6 @@ public:
 
 	int getFoodTurnsLeft() const;
 	bool isProduction() const;
-	bool isProductionLimited() const;
 	bool isProductionUnitCombat(int iIndex) const;
 	bool isProductionUnit() const;
 	bool isProductionBuilding() const;
@@ -467,7 +461,6 @@ public:
 	void setGameDateFounded(const int iNewValue, const bool bACalendar = false);
 
 	int getGameTurnAcquired(const bool bHistoricalCalendar = false) const;
-	int getGameDateAcquired(const bool bHistoricalCalendar = false) const;
 	void setGameTurnAcquired(const int iNewValue, const bool bHistoricalCalendar = false);
 
 	// ── THE INTERNAL SLOT SETTERS (#430) ─────────────────────────────────────────────────────────
@@ -516,7 +509,6 @@ public:
 	int getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eType) const;
 	int getAdditionalGreatPeopleRateModifierByBuilding(BuildingTypes eType) const;
 
-	int getAdditionalGreatPeopleRateBySpecialist(SpecialistTypes eSpecialist, int iChange) const;
 	int getAdditionalBaseGreatPeopleRateBySpecialist(SpecialistTypes eSpecialist, int iChange) const;
 
 	int getGreatPeopleProgress() const;
@@ -536,7 +528,6 @@ public:
 
 	bool isGovernmentCenter() const;
 
-	int getSavedMaintenanceByBuilding(BuildingTypes eType) const;
 	int getSavedMaintenanceTimes100ByBuilding(BuildingTypes eType) const;
 
 	// The city's realized maintenance. ⛔ NOTHING IS CACHED HERE, deliberately: the downward roll is realized AT
@@ -578,7 +569,6 @@ public:
 // BUG - Feature Health - end
 
 // BUG - Actual Effects - start
-	int getAdditionalAngryPopuplation(int iGood, int iBad) const;
 	int getAdditionalSpoiledFood(int iGood, int iBad, int iHealthAdjust = 0) const;
 	int getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust = 0) const;
 // BUG - Actual Effects - end
@@ -666,7 +656,6 @@ public:
 	int getBuildingDefense() const;
 
 	int getBombardDefense() const;
-	int getAdditionalBombardDefenseByBuilding(BuildingTypes eType) const;
 
 
 	int getCurrAirlift() const;
@@ -947,7 +936,6 @@ public:
 
 	int getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eType, bool bFilter = false) const;
 
-	int getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist) const;
 
 	int getBaseYieldRateModifier(YieldTypes eIndex, int iExtra = 0) const;
 
@@ -975,9 +963,7 @@ public:
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
 
 	int getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
-	int getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
 
-	int getAdditionalCommerceBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 	int getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 
 
@@ -1080,7 +1066,6 @@ public:
 	void tickDelayOnBuilding(const BuildingTypes eType, const bool bIncrement = true);
 
 	bool isBuildingProductionDecay(BuildingTypes eIndex) const;
-	int getBuildingProductionDecay(BuildingTypes eIndex) const;
 	int getBuildingProductionDecayTurns(BuildingTypes eIndex) const;
 
 	BuiltBuildingData getBuildingData(const BuildingTypes eType) const;
@@ -1094,7 +1079,6 @@ public:
 	void tickDelayOnUnit(const UnitTypes eUnit, const bool bIncrement = true);
 
 	bool isUnitProductionDecay(UnitTypes eIndex) const;
-	int getUnitProductionDecay(UnitTypes eIndex) const;
 	int getUnitProductionDecayTurns(UnitTypes eIndex) const;
 
 	int getProjectProduction(ProjectTypes eIndex) const;
@@ -1119,7 +1103,6 @@ public:
 	bool isSpecialistValid(SpecialistTypes eIndex, int iExtra = 0) const;
 
 	int getForceSpecialistCount(SpecialistTypes eIndex) const;
-	bool isSpecialistForced() const;
 	void setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue);
 
 	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
@@ -1190,7 +1173,6 @@ public:
 
 	int getOrderQueueLength() const;
 	bst::optional<OrderData> getHeadOrder() const { return m_orderQueue.empty() ? bst::optional<OrderData>() : m_orderQueue.front(); }
-	bst::optional<OrderData> getTailOrder() const { return m_orderQueue.empty() ? bst::optional<OrderData>() : m_orderQueue.back(); }
 	OrderData getOrderAt(int index) const { return m_orderQueue[index]; }
 
 	//CLLNode<OrderData>* nextOrderQueueNode(CLLNode<OrderData>* pNode) const;
@@ -1272,7 +1254,6 @@ public:
 	bool hasFreshWater() const;
 	void refreshFreshWaterDerived();
 
-	bool canUpgradeUnit(UnitTypes eUnit) const;
 
 
 	bool isBuiltFoodProducedUnit() const;
@@ -1294,7 +1275,6 @@ public:
 	int getLandmarkAnger() const;
 	bool isDevelopingCity() const;
 
-	int getMintedCommerce() const;
 
 	int getUnitCombatExtraStrength(UnitCombatTypes eIndex) const;
 	void changeUnitCombatExtraStrength(UnitCombatTypes eIndex, int iChange);
@@ -1727,7 +1707,6 @@ protected:
 	int getHurryCost(BuildingTypes eType) const;
 	int getHurryCost(int iProductionLeft, int iHurryModifier) const;
 	int getHurryPopulation(HurryTypes eHurry, int iHurryCost) const;
-	bool canHurryUnit(HurryTypes eHurry, UnitTypes eUnit) const;
 	bool canHurryBuilding(HurryTypes eHurry, BuildingTypes eType) const;
 	virtual bool AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot = NULL, SpecialistTypes* peBestSpecialist = NULL) = 0;
 	virtual bool AI_removeWorstCitizen(SpecialistTypes eIgnoreSpecialist = NO_SPECIALIST) = 0;
@@ -1747,7 +1726,6 @@ private:
 
 
 	void updateExtraTechHappiness();
-	int getTechHealth(TechTypes eTech) const;
 	void changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield, int iChange);
 
 public:

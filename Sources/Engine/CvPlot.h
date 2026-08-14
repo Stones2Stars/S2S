@@ -395,7 +395,6 @@ public:
 	int getNumVisibleEnemyUnits(const CvUnit* pUnit) const;
 	int getNumVisibleEnemyTargetUnits(const CvUnit* pUnit) const;
 	int getNumVisibleEnemyUnits(PlayerTypes ePlayer) const;
-	int getNumVisibleEnemyCombatUnits(PlayerTypes ePlayer) const;
 	int getBorderPlotCount() const;
 	int getEnemyBorderPlotCount(PlayerTypes ePlayer) const;
 	int getVisibleEnemyStrength(PlayerTypes ePlayer, int iRange = 0) const;
@@ -444,8 +443,6 @@ public:
 	bool isVisible(TeamTypes eTeam, bool bDebug) const;
 	bool isVisibleToCivTeam() const;
 	bool isVisibleToWatchingHuman() const;
-	bool isAdjacentVisible(TeamTypes eTeam, bool bDebug) const;
-	bool isAdjacentNonvisible(TeamTypes eTeam) const;
 
 	DllExport bool isGoody(TeamTypes eTeam = NO_TEAM) const;
 
@@ -628,7 +625,6 @@ public:
 	int getLatitude() const;
 	int getLatitudeRaw() const;
 	int getLongitude() const;
-	int getLongitudeRaw() const;
 	int getFOWIndex() const;
 
 	CvArea* area() const;
@@ -853,7 +849,6 @@ public:
 
 	int getBuildProgress(BuildTypes eBuild) const;
 	bool changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam = NO_TEAM);
-	bool hasAnyBuildProgress() const;
 
 	void updateFeatureSymbolVisibility();
 	void updateFeatureSymbol(bool bForce = false);
@@ -877,10 +872,8 @@ public:
 	void updateRiverSymbol(bool bForce = false, bool bAdjacent = false);
 	void updateRiverSymbolArt(bool bAdjacent = true);
 
-	CvFeature* getFeatureSymbol() const;
 
 	DllExport CvFlagEntity* getFlagSymbol() const;
-	CvFlagEntity* getFlagSymbolOffset() const;
 	DllExport void updateFlagSymbol();
 	//	The same repaint, reporting whether it actually happened. The EXE-bound signature above cannot say,
 	//	so a caller holding a repaint MARK has no way to know the request was declined.

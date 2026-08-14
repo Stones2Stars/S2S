@@ -1789,6 +1789,7 @@ int CvPlot::getPlotGroupConnectedBonus(PlayerTypes ePlayer, BonusTypes eBonus) c
 }
 
 
+
 bool CvPlot::isPlotGroupConnectedBonus(PlayerTypes ePlayer, BonusTypes eBonus) const
 {
 	return getPlotGroupConnectedBonus(ePlayer, eBonus) > 0;
@@ -4973,16 +4974,6 @@ bool CvPlot::isVisibleToWatchingHuman() const
 }
 
 
-bool CvPlot::isAdjacentVisible(TeamTypes eTeam, bool bDebug) const
-{
-	return algo::any_of(adjacent(), CvPlot::fn::isVisible(eTeam, bDebug));
-}
-
-bool CvPlot::isAdjacentNonvisible(TeamTypes eTeam) const
-{
-	return algo::any_of(adjacent(), !CvPlot::fn::isVisible(eTeam, false));
-}
-
 
 bool CvPlot::isGoody(TeamTypes eTeam) const
 {
@@ -5239,24 +5230,6 @@ int CvPlot::getNumVisibleUnits(PlayerTypes ePlayer) const
 int CvPlot::getNumVisibleEnemyUnits(PlayerTypes ePlayer) const
 {
 	return plotCount(PUF_isEnemy, ePlayer, 0, NULL, NO_PLAYER, NO_TEAM, PUF_isVisible, ePlayer);
-}
-
-int CvPlot::getNumVisibleEnemyCombatUnits(PlayerTypes ePlayer) const
-{
-	PROFILE_FUNC();
-
-	int iCount = 0;
-	foreach_(const CvUnit* unitX, units())
-	{
-		if (!unitX->isDead()
-		&& (unitX->canAttack() || unitX->canDefend())
-		&& PUF_isEnemy(unitX, ePlayer, 0)
-		&& PUF_isVisible(unitX, ePlayer))
-		{
-			iCount++;
-		}
-	}
-	return iCount;
 }
 
 int CvPlot::getNumVisibleEnemyUnits(const CvUnit* pUnit) const
@@ -5676,10 +5649,6 @@ int CvPlot::getLongitude() const
 	return abs(getLongitudeMinutes() / MINUTES_PER_DEGREE);
 }
 
-int CvPlot::getLongitudeRaw() const
-{
-	return getLongitudeMinutes() / MINUTES_PER_DEGREE;
-}
 // BUG - Lat/Long Coordinates - end
 
 
@@ -9585,16 +9554,6 @@ bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam
 }
 
 
-// BUG - Partial Builds - start
-/*
- * Returns true if the build progress array has been created; false otherwise.
- * A false return value implies that every build has zero progress.
- * A true return value DOES NOT imply that any build has a non-zero progress--just the possibility.
- */
-bool CvPlot::hasAnyBuildProgress() const
-{
-	return NULL != m_paiBuildProgress;
-}
 // BUG - Partial Builds - end
 
 
@@ -9717,11 +9676,6 @@ CvRiver* CvPlot::getRiverSymbol() const
 }
 
 
-CvFeature* CvPlot::getFeatureSymbol() const
-{
-	return m_pFeatureSymbol;
-}
-
 void CvPlot::updateRiverSymbol(bool bForce, bool bAdjacent)
 {
 	PROFILE_FUNC();
@@ -9819,11 +9773,6 @@ void CvPlot::updateRiverSymbolArt(bool bAdjacent)
 CvFlagEntity* CvPlot::getFlagSymbol() const
 {
 	return m_pFlagSymbol;
-}
-
-CvFlagEntity* CvPlot::getFlagSymbolOffset() const
-{
-	return m_pFlagSymbolOffset;
 }
 
 void CvPlot::updateFlagSymbol()

@@ -1283,16 +1283,6 @@ void CvCity::changeReinforcementCounter(int iChange)
 	setReinforcementCounter(getReinforcementCounter() + iChange);
 }
 
-bool CvCity::isRecentlyAcquired() const
-{
-	return
-	(
-		(GC.getGame().getGameTurn() - getGameTurnAcquired())
-		<
-		12 * CvGameSpeedScale::speedPercent() / 100
-	);
-}
-
 
 void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 {
@@ -2008,12 +1998,6 @@ int CvCity::countNumWaterPlots() const
 		bind(CvPlot::getWorkingCity, _1) == this && bind(CvPlot::isWater, _1));
 }
 
-int CvCity::countNumRiverPlots() const
-{
-	return algo::count_if(plots(),
-		bind(CvPlot::getWorkingCity, _1) == this && bind(CvPlot::isRiver, _1));
-}
-
 
 int CvCity::findPopulationRank() const
 {
@@ -2196,44 +2180,10 @@ int CvCity::getMaxNumTeamWonders() const
 	return GC.getCultureLevelInfo(getCultureLevel()).getMaxTeamWonders();
 }
 
-bool CvCity::isTeamWondersMaxed() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
-	{
-		return false;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_NO_WONDER_LIMIT))
-	{
-		return false;
-	}
-	if (getNumTeamWonders() >= getMaxNumTeamWonders())
-	{
-		return true;
-	}
-	return false;
-}
-
 
 int CvCity::getMaxNumNationalWonders() const
 {
 	return GC.getCultureLevelInfo(getCultureLevel()).getMaxNationalWonders();
-}
-
-bool CvCity::isNationalWondersMaxed() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY))
-	{
-		return false;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_NO_WONDER_LIMIT))
-	{
-		return false;
-	}
-	if (getMaxNumNationalWonders() != -1 && getNumNationalWonders() >= getMaxNumNationalWonders())
-	{
-		return true;
-	}
-	return false;
 }
 
 void CvCity::clearUpgradeCache(UnitTypes eUnit) const
@@ -2318,39 +2268,6 @@ bool CvCity::isProduction() const
 	return getHeadOrder();
 }
 
-
-bool CvCity::isProductionLimited() const
-{
-	bst::optional<OrderData> order = getHeadOrder();
-
-	if (order != NULL)
-	{
-		switch (order->eOrderType)
-		{
-		case ORDER_TRAIN:
-			return isLimitedUnit((UnitTypes)EXTERNAL_ORDER_IDATA(order->iData1));
-			break;
-
-		case ORDER_CONSTRUCT:
-			return isLimitedWonder(static_cast<BuildingTypes>(order->iData1));
-			break;
-
-		case ORDER_CREATE:
-			return isLimitedProject((ProjectTypes)(order->iData1));
-			break;
-
-		case ORDER_MAINTAIN:
-		case ORDER_LIST:
-			break;
-
-		default:
-			FErrorMsg("order->m_data.eOrderType failed to match a valid option");
-			break;
-		}
-	}
-
-	return false;
-}
 
 bool CvCity::isProductionUnitCombat(int iIndex) const
 {
@@ -3366,30 +3283,6 @@ bool CvCity::canHurry(const HurryTypes eHurry, const bool bTestVisible) const
 		{
 			return false;
 		}
-	}
-	return true;
-}
-
-bool CvCity::canHurryUnit(HurryTypes eHurry, UnitTypes eUnit) const
-{
-	if (!canHurryInternal(eHurry))
-	{
-		return false;
-	}
-
-	if (getProgressOnUnit(eUnit) >= getProductionNeeded(eUnit))
-	{
-		return false;
-	}
-
-	if (GET_PLAYER(getOwner()).getGold() < getHurryGold(eHurry, getHurryCost(eUnit)))
-	{
-		return false;
-	}
-
-	if (maxHurryPopulation() < getHurryPopulation(eHurry, getHurryCost(eUnit)))
-	{
-		return false;
 	}
 	return true;
 }
@@ -5423,15 +5316,6 @@ int CvCity::getGameTurnAcquired(const bool bHistoricalCalendar) const
 	return m_iGameTurnAcquired;
 }
 
-int CvCity::getGameDateAcquired(const bool bHistoricalCalendar) const
-{
-	if (bHistoricalCalendar) // Accurate Calendar
-	{
-		return decodeACDate(m_iGameTurnAcquired);
-	}
-	return m_iGameTurnAcquired;
-}
-
 
 void CvCity::setGameTurnAcquired(const int iNewValue, const bool bHistoricalCalendar)
 {
@@ -5984,21 +5868,6 @@ int CvCity::getAdditionalGreatPeopleRateModifierByBuilding(BuildingTypes eBuildi
 }
 
 
-// BUG - Specialist Additional Great People - start
-/*
- * Returns the total additional great people rate that changing the number of the given specialist will provide/remove.
- */
-int CvCity::getAdditionalGreatPeopleRateBySpecialist(SpecialistTypes eSpecialist, int iChange) const
-{
-	const int iRate = getBaseGreatPeopleRate();
-	const int iModifier = getTotalGreatPeopleRateModifier();
-	const int iExtraRate = getAdditionalBaseGreatPeopleRateBySpecialist(eSpecialist, iChange);
-
-	const int iExtra = ((iRate + iExtraRate) * iModifier / 100) - (iRate * iModifier / 100);
-
-	return iExtra;
-}
-
 /*
  * Returns the additional great people rate that changing the number of the given specialist will provide/remove.
  */
@@ -6068,17 +5937,6 @@ void CvCity::changeNumBuildings(int iChange)
 // DEFECT, and the reason a NEW attribute used to cost an engine change (a counter, a fact, a predicate) instead
 // of being pure data. The fold is derived, so it serializes nothing ([DEC-derived-never-trusted]).
 bool CvCity::isGovernmentCenter() const CITY_HAS_AMENITY(getCityContext(), "governmentCenter")
-
-// BUG - Building Saved Maintenance - start
-/*
- * Returns the rounded total additional gold from saved maintenance that adding one of the given buildings will provide.
- *
- * Doesn't check if the building can be constructed in this city.
- */
-int CvCity::getSavedMaintenanceByBuilding(BuildingTypes eBuilding) const
-{
-	return getSavedMaintenanceTimes100ByBuilding(eBuilding) / 100;
-}
 
 /*
  * Returns the total additional gold from saved maintenance times 100 that adding one of the given buildings will provide.
@@ -6451,24 +6309,6 @@ int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, i
 	return iGood - iBad - iStarting;
 }
 // BUG - Feature Health - end
-
-// BUG - Actual Effects - start
-/*
- * Returns the additional angry population caused by the given happiness changes.
- *
- * Positive values for iBad mean an increase in unhappiness.
- */
-int CvCity::getAdditionalAngryPopuplation(int iGood, int iBad) const
-{
-	// The ANGER balance is the negated net. ⚠ netHappiness is ×100 NATIVE while iGood/iBad, iPop and the returned
-	// figure are all whole citizens, so the verdict reduces HERE to meet them -- the same cluster boundary this
-	// what-if family already declares at buildingWellbeing's fold ([DEC-fixedpoint-x100]). Without it a ×100
-	// balance is ranged against a whole population and the result is pinned at the clamp.
-	const int iAngerBalance = -netHappiness() / 100;
-	const int iPop = getPopulation();
-
-	return range(iAngerBalance + iBad - iGood, 0, iPop) - range(iAngerBalance, 0, iPop);
-}
 
 /*
  * Returns the additional spoiled food caused by the given health changes.
@@ -7336,16 +7176,6 @@ int CvCity::getBombardDefense() const
 		cascadeDefense(DEFENSE_BOMBARD));
 }
 
-// BUG - Building Additional Bombard Defense - start
-int CvCity::getAdditionalBombardDefenseByBuilding(BuildingTypes eBuilding) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
-
-	const int iBaseDefense = getBombardDefense();
-
-	// cap total bombard defense at 100
-	return std::min(GC.getBuildingInfo(eBuilding).getDefense(DEFENSE_BOMBARD, CASC_SCOPE_CITY) + iBaseDefense, 100) - iBaseDefense;
-}
 // BUG - Building Additional Bombard Defense - end
 
 
@@ -8085,13 +7915,6 @@ int CvCity::getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuild
 	return iDelta / 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
 }
 
-int CvCity::getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialist);
-	return GC.getSpecialistInfo(eSpecialist).getFlatYield(eIndex, CASC_SCOPE_CITY) / 100;
-}
-
 // note: player->invalidateYieldRankCache() must be called for anything that is checked here
 // so if any extra checked things are added here, the cache needs to be invalidated
 // ⚖ ONE ADDITIVE STACK (modifier.md §2a). The legacy form kept the same sum in SEVEN hand-named accumulators
@@ -8426,49 +8249,8 @@ int CvCity::getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes 
 	return iDelta;
 }
 
-/*
- * Returns the additional base commerce rate constructing the given building will provide.
- *
- * Doesn't check if the building can be constructed in this city.
- */
-/*
- * Returns the additional commerce rate modifier constructing the given building will provide.
- *
- * Doesn't check if the building can be constructed in this city.
- */
-int CvCity::getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
-
-	if (isDormantBuilding(eBuilding))
-	{
-		return 0;
-	}
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	// ONE valuation: the compiled unconditioned sums with every scope folded into the experienced-here
-	// answer, plus the conditioned tail resolved against THIS city ([patterns.md] THE GETTER SETUP read 3).
-	// The tech-gated and bonus-gated rows are ordinary conditioned entries, so the two walks this replaces
-	// were re-deriving by hand what the evaluator already answers. A percent is not scaled.
-	return kBuilding.expectedModifier(
-		infoCommerceFamily(eIndex), CHANNEL_AMOUNT, CASC_UNIT_PERCENT,
-		getCityContext(), GET_PLAYER(getOwner()).getEmpireContext(), plotGroup(getOwner()));
-}
 // BUG - Building Additional Commerce - end
 
-
-// Returns the total additional commerce that changing the number of given specialists will provide/remove.
-int CvCity::getAdditionalCommerceBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
-{
-	int iExtraRate = getAdditionalBaseCommerceRateBySpecialist(eIndex, eSpecialist, iChange);
-	if (iExtraRate == 0)
-	{
-		return 0;
-	}
-	return iExtraRate * getTotalCommerceRateModifier(eIndex);
-}
 
 // Returns the additional base commerce rate that changing the number of given specialists will provide/remove.
 int CvCity::getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const
@@ -9422,15 +9204,6 @@ bool CvCity::isBuildingProductionDecay(BuildingTypes eIndex) const
 	);
 }
 
-// Returns the amount by which the given building will decay once it reaches the limit.
-// Ignores whether or not the building will actually decay this turn.
-int CvCity::getBuildingProductionDecay(BuildingTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	const int iProduction = getProgressOnBuilding(eIndex);
-	return iProduction - iProduction * GC.getBUILDING_PRODUCTION_DECAY_PERCENT() / 100;
-}
-
 // Returns the number of turns left before the given building will decay.
 int CvCity::getBuildingProductionDecayTurns(BuildingTypes eIndex) const
 {
@@ -9614,15 +9387,6 @@ bool CvCity::isUnitProductionDecay(UnitTypes eIndex) const
 			GC.getUNIT_PRODUCTION_DECAY_TIME() * CvGameSpeedScale::speedPercent()
 		)
 	);
-}
-
-// Returns the amount by which the given unit will decay once it reaches the limit.
-// Ignores whether or not the unit will actually decay this turn.
-int CvCity::getUnitProductionDecay(UnitTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eIndex);
-	const int iProduction = getProgressOnUnit(eIndex);
-	return iProduction - iProduction * GC.getUNIT_PRODUCTION_DECAY_PERCENT() / 100;
 }
 
 // Returns the number of turns left before the given unit will decay.
@@ -9884,19 +9648,6 @@ int CvCity::getForceSpecialistCount(SpecialistTypes eIndex) const
 	return m_paiForceSpecialistCount[eIndex];
 }
 
-
-bool CvCity::isSpecialistForced() const
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		if (getForceSpecialistCount((SpecialistTypes)iI) > 0)
-		{
-			return true;
-		}
-	}
-	return false;
-}
 
 
 void CvCity::setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue)
@@ -15071,22 +14822,6 @@ void CvCity::refreshFreshWaterDerived()
 }
 
 
-bool CvCity::canUpgradeUnit(UnitTypes eUnit) const
-{
-	PROFILE_FUNC();
-
-	foreach_(const int iUpgrade, GC.getUnitInfo(eUnit).getUpgradesTo())
-	{
-		const UnitTypes eUpgradeUnit = (UnitTypes)iUpgrade;
-
-		if (GC.getGame().isUnitMaxedOut(eUpgradeUnit) || GET_PLAYER(getOwner()).isUnitMaxedOut(eUpgradeUnit))
-		{ // if the upgrade unit is maxed out, I assume you can construct them, and already have constructed the max
-			return true;
-		}
-	}
-	return false;
-}
-
 void CvCity::setCivilizationType(int iCiv)
 {
 	m_iCiv = iCiv;
@@ -15826,21 +15561,6 @@ bool CvCity::isAutomatedCanBuild(BuildTypes eBuild) const
 void CvCity::setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue)
 {
 	m_pabAutomatedCanBuild[eBuild] = bNewValue;
-}
-
-int CvCity::getMintedCommerce() const
-{
-	PROFILE_EXTRA_FUNC();
-	int iCommerceTimes100 = 0;
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		int iBonusCount = getNumBonuses((BonusTypes)iI);
-		if (iBonusCount != 0)
-		{
-			iCommerceTimes100 += iBonusCount * GET_PLAYER(getOwner()).getBonusMintedPercent((BonusTypes)iI);
-		}
-	}
-	return iCommerceTimes100;
 }
 
 void CvCity::setBuildingListInvalid()
