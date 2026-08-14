@@ -32,6 +32,24 @@ splitting them out would scatter one mechanic across three families to no end.
   is **city-scoped**, and that is not a detail: ⛔ *a building by its very definition cannot add elevation to a
   unit that moves* (owner). It elevates the fixed observer it belongs to and transfers to nobody passing through,
   which is precisely what distinguishes it from an improvement on the same plot.
+- **A city's base STRENGTH is engine config, not authored data: the `CITY_VISIBILITY_RANGE` global define**,
+  written in PLOTS and lifted to the scale at the read (the `MAX_UNIT_VISIBILITY_RANGE` shape). No data authors a
+  memberless `vision.city` strength — every city sees the same base, and buildings differentiate via elevation.
+- **⛔ A CITY'S RING IS BOUGHT BY THE BUDGET, NEVER GUARANTEED PAST IT (owner): "a guaranteed innermost vision
+  feels wrong — this should be modelled by a default elevation increase and sight strength."** A settlement
+  stands tall by construction, so beside its base strength (`CITY_VISIBILITY_RANGE`) every city carries a
+  DEFAULT ELEVATION (`CITY_BASE_ELEVATION`, plots, lifted at the read like its sibling); buildings raise the
+  elevation further through the channel. The combined budget is what keeps the earliest city's innermost ring
+  visible through ordinary obstruction — through the walk, with no bypass, so an extreme obstruction may still
+  legitimately blind it.
+- **⛔ A city REGISTERS ITS OWN TEAM'S SIGHT like any other observer.** The inherited city block registered only
+  vassal / espionage / embassy viewers — legacy leaned on the owned-plot leg's RANGE semantics to light the
+  owner's ring, which the budget walk deliberately does not reproduce — so `CvPlot::updateSight`'s city leg
+  carries the own-team condition first.
+- **⛔ A FOREIGN VIEWER SEES THE CITY, NEVER *FROM* THE CITY (owner).** Espionage, embassy and vassal city
+  visibility register the city PLOT alone — a ZERO budget, which collapses the walk's box to the origin — never
+  the city's own observer budget: a watcher must not inherit the watched city's eyes and see into the lands
+  around it.
 
 > **⚖ `elevation`, never "vantage" (owner).** The plain-English word wins: not every reader knows "vantage", and a
 > name nobody has to look up beats a precise one that some do.
@@ -74,8 +92,14 @@ cost(p)     = Σ vision.plot.obstruction.flat  on p           (open ground = 1)
   elevationAt(a unit) = Σ vision.plot.elevation.flat  on the plot it is STANDING ON
   elevationAt(a city) = Σ vision.city.elevation.flat  on that city
 
-visible(T)  ⟺  Σ cost(p)  over p on the straight line O → T, excluding O  ≤  sight
+visible(T)  ⟺  Σ cost(p)  over p on the straight line O → T, excluding O AND T  <  sight
 ```
+
+**⚖ THE SPEND MIRRORS MOVEMENT EXACTLY (owner): a positive REMAINDER reaches the next plot** — as a unit with
+a fraction of a move left still enters an expensive tile. A plot is seen on the budget left BEFORE its own cost
+is charged; the charge then gates seeing PAST it. Two things fall out for free: any ADJACENT plot is visible to
+any observer with a positive budget (no intervening plot to charge — a city's innermost ring needs no
+guarantee), and "into the jungle, not past it" is the charge doing its one job.
 
 ⚑ **Elevation is POSITIONAL, never carried** (owner): a peak has 2 elevation, so a unit standing on the peak has
 2 — *and only while on that plot*. Step off and it is gone. That is what makes elevation the ground's property
@@ -96,7 +120,7 @@ fractional obstruction needs no new scale.
 
 ⛔ **The walk is the STRAIGHT LINE, not the cheapest path — the one place the movement mirror deliberately
 breaks.** Movement may route around a mountain; vision must not, because routing around is exactly what would let
-you see behind it. Everything else about the two machines is the same shape.
+you see behind it. The SPEND itself mirrors movement fully (the remainder rule above); only the routing differs.
 
 ### Why STRENGTH and ELEVATION stay two channels
 

@@ -2639,8 +2639,9 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iSight, bool bIncrement, C
 
 	const bool bAerial = pUnit && pUnit->getDomainType() == DOMAIN_AIR;
 	// The budget bounds the search: nothing past `iSight` plots of open ground can be reachable, and the
-	// per-plot walk then charges obstruction inside that box.
-	const int iRange = iSight / VISION_OPEN_GROUND_COST;
+	// per-plot walk then charges obstruction inside that box. CEILING division -- under the remainder rule a
+	// fractional budget reaches one plot further, so a floored box would clip the last reachable ring.
+	const int iRange = (iSight + VISION_OPEN_GROUND_COST - 1) / VISION_OPEN_GROUND_COST;
 
 	foreach_(const InvisibleTypes eInvisible, aSeeInvisibleTypes)
 	{
@@ -2685,14 +2686,19 @@ bool CvPlot::canSeePlot(const CvPlot* pPlot, int iSight) const
 	}
 	// Spend the budget walking the STRAIGHT LINE to the target (vision.md). Vision must NOT route around an
 	// obstruction the way movement routes around a hill -- routing around is precisely what would let you see
-	// behind it, so this is the one place the movement mirror deliberately breaks.
-	// The target plot is itself paid for, which is what makes "you see INTO the jungle and not past it" fall
-	// out rather than needing a rule of its own.
+	// behind it -- but the SPEND mirrors movement exactly (owner): a positive REMAINDER reaches the next plot,
+	// as a unit with a fraction of a move left still enters an expensive tile. So each plot is seen on the
+	// budget left BEFORE its own cost is charged, and the charge then gates seeing PAST it -- which is what
+	// makes "you see INTO the jungle and not past it" fall out, and any adjacent plot visible to any observer.
 	const int iSteps = std::max(abs(dx), abs(dy));
 	const int iHalf = iSteps / 2;
-	int iSpent = 0;
+	int iRemaining = iSight;
 	for (int iStep = 1; iStep <= iSteps; ++iStep)
 	{
+		if (iRemaining <= 0)
+		{
+			return false;
+		}
 		const int iOffsetX = (dx * iStep + (dx < 0 ? -iHalf : iHalf)) / iSteps;
 		const int iOffsetY = (dy * iStep + (dy < 0 ? -iHalf : iHalf)) / iSteps;
 		const CvPlot* pStep = plotXY(getX(), getY(), iOffsetX, iOffsetY);
@@ -2700,11 +2706,7 @@ bool CvPlot::canSeePlot(const CvPlot* pPlot, int iSight) const
 		{
 			return false;
 		}
-		iSpent += pStep->visionCost();
-		if (iSpent > iSight)
-		{
-			return false;
-		}
+		iRemaining -= pStep->visionCost();
 	}
 	return true;
 }
@@ -2723,14 +2725,24 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 
 			for (int iI = 0; iI < MAX_PC_TEAMS; ++iI)
 			{
-				// Vassal
-				if (GET_TEAM(getTeam()).isVassal((TeamTypes)iI)
+				// The city's OWN team sees with the city's full observer budget -- a city is an observer like
+				// any other (vision.md). No other site registers this: the legacy tree leaned on the owned-plot
+				// leg's RANGE semantics lighting the ring, which the budget walk deliberately does not do.
+				if ((TeamTypes)iI == pCity->getTeam())
+				{
+					changeAdjacentSight((TeamTypes)iI, pCity->sight(), bIncrement, NULL, bUpdatePlotGroups);
+				}
+				// A FOREIGN viewer SEES THE CITY, never FROM the city (owner): espionage/embassy/vassal
+				// visibility registers the city plot alone -- a zero budget collapses the walk's box to the
+				// origin, which is always visible -- or the watcher would inherit the watched city's own eyes
+				// and see deep into enemy lands.
+				else if (GET_TEAM(getTeam()).isVassal((TeamTypes)iI)
 				// Espionage - Enough EPs gives you visibility into someone's cities
 				|| pCity->getEspionageVisibility((TeamTypes)iI)
 				// Embassy Allows Players to See Capitals
 				|| pCity->isCapital() && team.isHasEmbassy((TeamTypes)iI))
 				{
-					changeAdjacentSight((TeamTypes)iI, pCity->sight(), bIncrement, NULL, bUpdatePlotGroups);
+					changeAdjacentSight((TeamTypes)iI, 0, bIncrement, NULL, bUpdatePlotGroups);
 				}
 			}
 		}
@@ -2759,11 +2771,12 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 
 				changeAdjacentSight(pLoopUnit->getTeam(), pLoopUnit->sight(), bIncrement, pLoopUnit, bUpdatePlotGroups);
 			}
-			else
-			{
-				verifyUnitValidPlot();
-				pUnitNode = NULL;
-			}
+			// A STALE node (a unit removed without its node) is SKIPPED, never a reason to abort the plot's
+			// remaining registrations: the abort this replaces silently unregistered every unit AFTER the stale
+			// node, and city plots -- where units die and upgrade -- are exactly where stale nodes accumulate,
+			// so a garrisoned city went dark at each turn-end sweep while the load's unitGameStateCorrections
+			// pre-clean hid the same defect on the load path. The node itself is cleaned by that pass; sight
+			// registration is not the place to mutate the unit list.
 		}
 	}
 
@@ -3101,12 +3114,20 @@ long CvPlot::canBuildFromPython(BuildTypes eBuild, PlayerTypes ePlayer) const
 		return 0L;
 	}
 
-	return Cy::call<long>(PYGameModule, "canBuild", Cy::Args()
+	// ⛔ A FAILED callback is NO OVERRIDE (-1), never a verdict. The callback's contract is tri-state (-1 = no
+	// override, 0 = deny, >0 = allow), and Cy::call's failure default is long() = 0 -- so a RAISING Python
+	// handler read as an authoritative world-wide DENY: every build, every plot, every player, silently. The
+	// raise stays visible in PythonErr.log; it must not veto gameplay.
+	long lResult = -1L;
+	if (!Cy::call_optional(PYGameModule, "canBuild", Cy::Args()
 		<< getX()
 		<< getY()
 		<< eBuild
-		<< ePlayer
-	);
+		<< ePlayer, lResult))
+	{
+		return -1L;
+	}
+	return lResult;
 }
 
 bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible, bool bIncludePythonOverrides) const
@@ -8744,8 +8765,9 @@ void CvPlot::clearVisibilityCounts()
 		}
 		else
 		{
-			verifyUnitValidPlot();
-			pUnitNode = NULL;
+			// A stale node is skipped, matching the updateSight loop -- aborting here left later units'
+			// debug counters unreset while the rebuild re-counted them.
+			pUnitNode = nextUnitNode(pUnitNode);
 		}
 	}
 	//TBUPDATERECALC

@@ -326,6 +326,14 @@
 		<iDefineIntVal>8</iDefineIntVal>
 	</Define>
 	<Define>
+		<DefineName>CITY_VISIBILITY_RANGE</DefineName>
+		<iDefineIntVal>2</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>CITY_BASE_ELEVATION</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
+	<Define>
 		<DefineName>MAX_YIELD_STACK</DefineName>
 		<iDefineIntVal>10</iDefineIntVal>
 	</Define>

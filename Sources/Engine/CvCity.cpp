@@ -724,7 +724,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	{
 		if (GET_TEAM(getTeam()).isVassal((TeamTypes)iI))
 		{
-			pPlot->changeAdjacentSight((TeamTypes)iI, sight(), true, NULL, false);
+			pPlot->changeAdjacentSight((TeamTypes)iI, 0, true, NULL, false);
 		}
 	}
 
@@ -778,7 +778,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	GC.getMap().updateWorkingCity();
 
-	GC.getGame().AI_makeAssignWorkDirty();
+	player.AI_makeAssignWorkDirty();
 
 	player.setFoundedFirstCity(true);
 
@@ -1417,7 +1417,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	{
 		if (GET_TEAM(kOwner.getTeam()).isVassal((TeamTypes)iI))
 		{
-			pPlot->changeAdjacentSight((TeamTypes)iI, sight(), false, NULL, false);
+			pPlot->changeAdjacentSight((TeamTypes)iI, 0, false, NULL, false);
 		}
 	}
 
@@ -1425,14 +1425,14 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	{
 		if (abEspionageVisibility[iI])
 		{
-			pPlot->changeAdjacentSight((TeamTypes)iI, sight(), false, NULL, false);
+			pPlot->changeAdjacentSight((TeamTypes)iI, 0, false, NULL, false);
 		}
 	}
 
 
 	GC.getMap().updateWorkingCity();
 
-	GC.getGame().AI_makeAssignWorkDirty();
+	kOwner.AI_makeAssignWorkDirty();
 
 	if (bCapital)
 	{
@@ -1440,7 +1440,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 		{
 			if (GET_TEAM(kOwner.getTeam()).isHasEmbassy((TeamTypes)iI))
 			{
-				pPlot->changeAdjacentSight((TeamTypes)iI, sight(), false, NULL, false);
+				pPlot->changeAdjacentSight((TeamTypes)iI, 0, false, NULL, false);
 			}
 		}
 		kOwner.findNewCapital();
@@ -5607,7 +5607,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		) AI_setChooseProductionDirty(true);
 	}
 
-	owner.AI_makeAssignWorkDirty();
+	AI_setAssignWorkDirty(true);
 
 	setInfoDirty(true);
 	setLayoutDirty(true);
@@ -15208,12 +15208,15 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 
 int CvCity::sight() const
 {
-	// A city is an OBSERVER like any other (vision.md): its sight is its own STRENGTH plus the ELEVATION its
-	// buildings raise -- a tree platform puts the lookout a storey up. Both are cascade channels built by the
-	// spine, so this is a bare read; the accumulator that used to sum them served nothing and is gone.
+	// A city is an OBSERVER like any other (vision.md): base sight STRENGTH plus ELEVATION -- a settlement
+	// stands tall by construction (CITY_BASE_ELEVATION), and its buildings raise it further (the cascade
+	// channel: a tree platform puts the lookout a storey up). Both defines are authored in PLOTS and lifted to
+	// the vision scale here (the MAX_UNIT_VISIBILITY_RANGE shape); the ring a city keeps eyes on is bought by
+	// this budget, never by a bypass of the walk (owner: no guaranteed ring -- model it as strength + elevation).
 	int aVisions[NUM_VISION_KINDS];
 	getVisionKinds(aVisions);
-	return aVisions[VISION_STRENGTH] + aVisions[VISION_ELEVATION] + VISION_OPEN_GROUND_COST;
+	return aVisions[VISION_STRENGTH] + aVisions[VISION_ELEVATION]
+		+ (GC.getCITY_VISIBILITY_RANGE() + GC.getCITY_BASE_ELEVATION()) * VISION_OPEN_GROUND_COST;
 }
 
 void CvCity::getVisionKinds(int (&visions)[NUM_VISION_KINDS]) const

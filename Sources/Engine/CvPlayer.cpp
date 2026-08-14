@@ -9204,11 +9204,6 @@ void CvPlayer::changeNonStateReligionCommerce(int iNewValue)
 	FASSERT_BOUNDS(0, 3, m_iNonStateReligionCommerceCount);
 
 	m_iNonStateReligionCommerceCount += iNewValue;
-
-	if(iNewValue != 0)
-	{
-		AI_makeAssignWorkDirty();
-	}
 }
 
 bool CvPlayer::isUpgradeAnywhere() const
@@ -10151,16 +10146,8 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 
 		if (!bLimited)
 		{
-		}
-
-		if (!bLimited)
-		{
-
-			GC.getGame().AI_makeAssignWorkDirty();
-
 			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
-
 	}
 }
 
@@ -10288,11 +10275,11 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			{
 				if (pOldCapitalCity)
 				{
-					pOldCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, pOldCapitalCity->sight(), false, NULL, bUpdatePlotGroups);
+					pOldCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, 0, false, NULL, bUpdatePlotGroups);
 				}
 				if (pNewCapitalCity)
 				{
-					pNewCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, pNewCapitalCity->sight(), true, NULL, bUpdatePlotGroups);
+					pNewCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, 0, true, NULL, bUpdatePlotGroups);
 				}
 			}
 		}
@@ -11412,7 +11399,7 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 		setLastStateReligionInternal(eNewReligion);
 
 		GC.getGame().updateSecretaryGeneral();
-		GC.getGame().AI_makeAssignWorkDirty();
+		AI_makeAssignWorkDirty();
 
 		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 
@@ -11616,8 +11603,6 @@ void CvPlayer::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		invalidateYieldRankCache(eIndex);
 
-		AI_makeAssignWorkDirty();
-
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
 			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
@@ -11820,10 +11805,6 @@ void CvPlayer::changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iC
 	{
 		//Totals into Events to split for display
 		m_aiCommerceRateModifierfromEvents[eIndex] = std::min(m_aiCommerceRateModifierfromEvents[eIndex] + iChange, MAX_COMMERCE_RATE_MODIFIER_VALUE);
-		//Also totals into generic Rate Modifier total
-
-
-		AI_makeAssignWorkDirty();
 	}
 }
 
@@ -12640,10 +12621,6 @@ void CvPlayer::changeHasReligionCount(ReligionTypes eIndex, int iChange)
 	{
 		m_paiHasReligionCount[eIndex] += iChange;
 		FASSERT_NOT_NEGATIVE(getHasReligionCount(eIndex));
-
-		//AIAndy: Commented out for now to make interfaith project work properly
-		//GC.getGame().
-		//GC.getGame().AI_makeAssignWorkDirty();
 	}
 }
 
@@ -12656,10 +12633,6 @@ void CvPlayer::changeHasCorporationCount(CorporationTypes eIndex, int iChange)
 	{
 		m_paiHasCorporationCount[eIndex] += iChange;
 		FASSERT_NOT_NEGATIVE(getHasCorporationCount(eIndex));
-
-		//AIAndy: Commented out to keep same as religion one, this expensive function will be called at next turn change anyway
-		//GC.getGame().
-		//GC.getGame().AI_makeAssignWorkDirty();
 	}
 }
 
@@ -12886,8 +12859,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		}
 
 		GC.getGame().updateSecretaryGeneral();
-
-		GC.getGame().AI_makeAssignWorkDirty();
 
 		if (GC.getGame().isFinalInitialized())
 		{
@@ -24362,9 +24333,9 @@ void CvPlayer::changeBonusMintedPercent(const BonusTypes eBonus, const int iChan
 		if (city->getNumBonuses(eBonus) > 0)
 		{
 			city->processBonus(eBonus, 1);
+			city->AI_setAssignWorkDirty(true);
 		}
 		city->updateCorporation();
-		city->AI_setAssignWorkDirty(true);
 		city->setInfoDirty(true);
 	}
 }

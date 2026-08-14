@@ -149,7 +149,7 @@ bool CvSelectionGroup::sentryAlert() const
 		//	⚠ Silent, and only on units carrying VISION promotions -- the inflation rides URS_VISION (base +
 		//	combat classes + promotions), and the area grows with the SQUARE of it. That is how ONE
 		//	interface-mode gate reached 7 SECONDS while every other measurement on the path read ~0.
-		const int iScanPlots = iMaxRange / 100;
+		const int iScanPlots = (iMaxRange + VISION_OPEN_GROUND_COST - 1) / VISION_OPEN_GROUND_COST;
 		foreach_(const CvPlot* plotX, myPlot->rect(iScanPlots, iScanPlots))
 		{
 			if (myPlot->canSeePlot(plotX, iMaxRange) && plotX->isVisibleEnemyUnit(unit))
@@ -194,7 +194,7 @@ bool CvSelectionGroup::sentryAlertSameDomainType() const
 		//	⚠ Silent, and only on units carrying VISION promotions -- the inflation rides URS_VISION (base +
 		//	combat classes + promotions), and the area grows with the SQUARE of it. That is how ONE
 		//	interface-mode gate reached 7 SECONDS while every other measurement on the path read ~0.
-		const int iScanPlots = iMaxRange / 100;
+		const int iScanPlots = (iMaxRange + VISION_OPEN_GROUND_COST - 1) / VISION_OPEN_GROUND_COST;
 		foreach_(const CvPlot* plotX, myPlot->rect(iScanPlots, iScanPlots))
 		{
 			if (myPlot->canSeePlot(plotX, iMaxRange) && plotX->isVisibleEnemyUnit(unit))
