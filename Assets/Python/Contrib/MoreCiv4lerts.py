@@ -147,7 +147,9 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 						aCulture = GC.getPlayer(iPlayerX).getCity(iCityX).getCultureReads()
 						iThreshold = aCulture[CityCultureRead.CULTURE_READ_THRESHOLD]
 						if iThreshold > 0:
-							iCultureRate = GC.getPlayer(iPlayerX).getCity(iCityX).getCommerces()[CommerceTypes.COMMERCE_CULTURE]
+							# getCommerces is x100 native; the culture amount and threshold are whole culture, so the
+							# rate reduces at the point of use or this alert fires every single turn.
+							iCultureRate = GC.getPlayer(iPlayerX).getCity(iCityX).getCommerces()[CommerceTypes.COMMERCE_CULTURE] / 100
 							if aCulture[CityCultureRead.CULTURE_READ_OWNER_AMOUNT] + iCultureRate >= iThreshold:
 								szCityX = GC.getPlayer(iPlayerX).getCity(iCityX).getName()
 								if GAME.isOption(GameOptionTypes.GAMEOPTION_CULTURE_REALISTIC_SPREAD):

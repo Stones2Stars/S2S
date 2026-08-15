@@ -210,18 +210,18 @@ class CvTechSplashScreen:
 		# Add Contents
 
 		# Title
-		szTech = techInfo.getDescription()
+		szTech = INFO.getDescription("TECH_", self.iTech)
 		screen.setLabel(self.getNextWidgetName(), "Background", u"<font=4>" + szTech.upper() + u"</font>", 1<<2,
 			self.X_TITLE, self.Y_TITLE, self.Z_CONTROLS, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 		# Tech Icon
-		screen.addDDSGFC(self.getNextWidgetName(), techInfo.getButton(), self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, self.iTech, 2)
+		screen.addDDSGFC(self.getNextWidgetName(), INFO.getButton("TECH_", self.iTech), self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, self.iTech, 2)
 
 		# Tech Quote
-		szTechQuote = techInfo.getQuote()
+		szTechQuote = INFO.getQuote("TECH_", self.iTech)
 		iTextOffset = 0
 		if TechWindowOpt.isShowCivilopediaText():
-			szTechQuote += "\n\n" + techInfo.getCivilopedia()
+			szTechQuote += "\n\n" + INFO.getCivilopedia("TECH_", self.iTech)
 		else:
 			iTextOffset = 20
 		screen.addMultilineText( "Text", szTechQuote,

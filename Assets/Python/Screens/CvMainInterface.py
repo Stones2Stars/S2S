@@ -3050,6 +3050,12 @@ class CvMainInterface:
 		wName = w - w / 3 - 24
 
 		aBuildingList = self.aSortedBuildingTuple[self.iShowBuildings]
+		# The CONCEPTUAL tab (the zero-cost, system-placed markers: civic markers, states, bands) lists only
+		# what is ACTIVE (owner): a dormant marker is machinery standing by, not a holding the player has --
+		# every rung of every band ladder is present in every city by construction, so listing them by
+		# presence would fill the tab with scenery. The verdict is the enabler's operating set, read off
+		# CITY_BUILDING_ACTIVE -- never re-derived here.
+		bActiveOnly = self.iShowBuildings == 2
 		ID = "WID|BUILDING|BldgList%d"
 		ROW_0 = "BldgListRow%d"
 		iRow = 0
@@ -3058,6 +3064,8 @@ class CvMainInterface:
 
 			aBuilding = GC.getPlayer(iCityOwner).getCity(iCityID).getBuildingReads(i)
 			if aBuilding[CityBuildingRead.CITY_BUILDING_HAS]:
+				if bActiveOnly and not aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]:
+					continue
 				szStat = ""
 
 				if aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]:
