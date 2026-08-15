@@ -2300,8 +2300,6 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 		FAssertMsg((GC.getNumTraitInfos() > 0),
 			"GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvSimpleCivPicker::setLeaderText");
 
-		bool bFirst = true;
-
 		// The leader's authored assignment for whichever trait set is ACTIVE (CvTraitSelection owns the
 		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition).
 		// ⚠ The option filter applies only once a game EXISTS -- the EXE commits the staging checkboxes into
@@ -2312,9 +2310,13 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 		// developed rung(s) -- the unnumbered trait `enables` its numbered successors, and a non-developing
 		// game grants the rungs cumulatively -- so the raw list names every line twice. Every trait name is
 		// ONE WORD (owner), so the line's name is the description's first word ("Seafaring I" -> "Seafaring"),
-		// which is also the dedupe key: the rungs of a line collapse by construction. Colored by the trait's
-		// sign so a negative reads as one at a glance; the full name renders, never the "Meg"-style short key.
+		// which is also the dedupe key: the rungs of a line collapse by construction. The full name renders,
+		// never the "Meg"-style short key.
+		// ⚠ SIGN is shown by SEGMENTING, never by color: the EXE dropdown renders color markup as literal text
+		// (owner), so the positives lead and the negatives follow after " - ", each group "/"-joined.
 		std::set<CvWString> seenLineNames;
+		CvWString szPositives;
+		CvWString szNegatives;
 		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 		{
 			const TraitTypes eTrait = (TraitTypes)iTrait;
@@ -2330,15 +2332,22 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 				{
 					continue;
 				}
-				if (!bFirst)
+				CvWString& szGroup = GC.getTraitInfo(eTrait).isNegativeTrait() ? szNegatives : szPositives;
+				if (!szGroup.empty())
 				{
-					szHelpString.append(L"/");
+					szGroup += L"/";
 				}
-				szHelpString.append(CvWString::format(SETCOLR L"%s" ENDCOLR,
-					TEXT_COLOR(GC.getTraitInfo(eTrait).isNegativeTrait() ? "COLOR_NEGATIVE_TEXT" : "COLOR_POSITIVE_TEXT"),
-					szLineName.c_str()));
-				bFirst = false;
+				szGroup += szLineName;
 			}
+		}
+		szHelpString.append(szPositives);
+		if (!szNegatives.empty())
+		{
+			if (!szPositives.empty())
+			{
+				szHelpString.append(L" - ");
+			}
+			szHelpString.append(szNegatives);
 		}
 	}
 	else
