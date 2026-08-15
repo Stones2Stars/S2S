@@ -15,6 +15,25 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_FLINT",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
    ]
   },

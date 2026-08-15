@@ -16,6 +16,11 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "type": "BONUS_POTATOES",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   },

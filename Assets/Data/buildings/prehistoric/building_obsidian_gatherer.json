@@ -15,6 +15,12 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "type": "BONUS_OBSIDIAN",
+     "scope": "city",
+     "connection": "vicinity",
+     "vicinity": "onSite"
     }
    ]
   },

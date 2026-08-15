@@ -18,6 +18,20 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CLOTH",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
    ]
   }

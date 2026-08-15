@@ -2032,40 +2032,63 @@ def apply_property_bands(results, pseudo):
     return banded
 
 
-def _el_prune_operate(node, stats, keep_building_ids):
-    """Drop per-city/per-plot leaves from an EMPIRE-LEVEL member's requires.operate tree (enabler-spec §2 /
-    DEC-empire-level-buildings: an empire-held building's gates are empire-evaluable; the per-city half of any
-    such question already lives on the per-city consumers' own gates). Returns the pruned node or None.
+def _el_prune_operate(node, stats, keep_building_ids, moved):
+    """Split per-city/per-plot leaves out of an EMPIRE-LEVEL member's requires.operate tree (enabler-spec §2 /
+    DEC-empire-level-buildings: an empire-held building's ONGOING gate is empire-evaluable). Returns the pruned
+    node or None.
 
-    Dropped: dict atoms at plot/city scope or carrying a connection/vicinity axis (the MAPCATEGORY plot gates,
-    the city bonus-vicinity atoms), and bare predicate leaves (HAS_*/IS_* -- city/plot questions by nature).
-    Kept: TECH_/CIVIC_/GAMEOPTION_ leaves, BUILDING_ leaves (they resolve at EMPIRE via the implied-scope rule
-    once the referenced building is itself empire-level), and dict atoms at empire/team/world scope."""
+    City-side: dict atoms at plot/city scope or carrying a connection/vicinity axis (the MAPCATEGORY plot
+    gates, the city bonus-vicinity atoms), bare predicate leaves (HAS_*/IS_* -- city/plot questions by nature),
+    and BUILDING_ leaves outside the class. Kept in operate: TECH_/CIVIC_/GAMEOPTION_ leaves, fellow-member
+    BUILDING_ leaves (empire facts), and dict atoms at empire/team/world scope.
+
+    `moved` decides the city-side atoms' FATE, and it is the constructibility split: a CONSTRUCTIBLE member
+    passes a list and the atoms MOVE into requires.build -- the build-time gate is build AND operate
+    (enabler-spec §3), build is evaluated in the BUILDING city (the project split), so dropping them deleted
+    the member's whole build-city requirement (the obsidian-gatherer over-offer). A notConstructible marker
+    passes None and the atoms DROP (nothing reads its build gate; the per-city half lives on the per-city
+    consumers' own gates). An any/noneOf group must move or stay WHOLE -- splitting one changes its semantics
+    -- so a group mixing empire- and city-side children fails LOUD instead of guessing."""
     if isinstance(node, str):
         if node.startswith(("TECH_", "CIVIC_", "GAMEOPTION_", "HERITAGE_", "TRAIT_")):
             return node
-        if node.startswith("BUILDING_"):
-            if node in keep_building_ids:
-                return node   # a fellow member -- an empire fact
-            # a per-city building on an empire-held gate: the per-city question lives on the per-city
-            # consumers' own gates, so it is dropped here (enabler-spec §2)
+        if node.startswith("BUILDING_") and node in keep_building_ids:
+            return node   # a fellow member -- an empire fact
+        if moved is not None:
+            moved.append(node)
+        elif node.startswith("BUILDING_"):
             stats["operate_building_ref_outside_class"].append(node)
-            return None
-        stats["operate_dropped"][node.split("_")[0]] += 1
+        else:
+            stats["operate_dropped"][node.split("_")[0]] += 1
         return None
     if isinstance(node, dict):
         if "type" in node and not any(k in node for k in ("all", "any", "noneOf", "dormant")):
             scope = node.get("scope")
             if scope in ("plot", "city") or "connection" in node or "vicinity" in node:
-                stats["operate_dropped"][str(node.get("type", "?")).split("_")[0]] += 1
+                if moved is not None:
+                    moved.append(node)
+                else:
+                    stats["operate_dropped"][str(node.get("type", "?")).split("_")[0]] += 1
                 return None
             return node
         out = OrderedDict()
         for k, v in node.items():
             if k in ("all", "any", "noneOf"):
-                kept = [c for c in (_el_prune_operate(c, stats, keep_building_ids) for c in v) if c is not None]
-                if kept:
-                    out[k] = kept
+                if k == "all" or moved is None:
+                    # a conjunction splits cleanly: each child keeps or moves on its own
+                    kept = [c for c in (_el_prune_operate(c, stats, keep_building_ids, moved) for c in v) if c is not None]
+                    if kept:
+                        out[k] = kept
+                else:
+                    # any/noneOf: the group moves or stays WHOLE
+                    group_moved = []
+                    kept = [c for c in (_el_prune_operate(c, stats, keep_building_ids, group_moved) for c in v) if c is not None]
+                    if kept and group_moved:
+                        raise SystemExit("empire-level %s group mixes empire- and city-side atoms; split it by hand: %r" % (k, v))
+                    if kept:
+                        out[k] = kept
+                    elif group_moved:
+                        moved.append(OrderedDict([(k, group_moved)]))
             else:
                 out[k] = v   # dormant lists, enabled/disabled clauses ride as-is
         return out if out else None
@@ -2082,9 +2105,10 @@ def apply_empire_level(results):
     Transforms per member: identity.empireLevel = true (the tag IS the type's domain, so bare atoms naming it
     imply EMPIRE scope -- json.md §3.4); the self-grant entry is DELETED (holding at the player IS the
     empire-wide effect); every family node's `city` scope re-keys to `empire` (the deposit rolls down to every
-    city at the read, exactly as a civic's -- modifier.md §1); per-city atoms are pruned from requires.operate
-    (empire-held gates are empire-evaluable; requires.build on a constructible member is untouched -- it is
-    evaluated in the BUILDING city, the project split). On every grantor, the `scope: "empire"` qualifier on an
+    city at the read, exactly as a civic's -- modifier.md §1); per-city atoms leave requires.operate (the
+    ongoing empire-held gate is empire-evaluable): on a CONSTRUCTIBLE member they MOVE into requires.build --
+    the build-time gate is build AND operate (enabler-spec §3), evaluated in the BUILDING city, the project
+    split -- and on a notConstructible marker they DROP. On every grantor, the `scope: "empire"` qualifier on an
     entry targeting a member is dropped as redundant -- placement is decided by the target's own level.
 
     The grantor->marker COLLAPSE pairs (a source existing only to deliver its marker) are a separate Store-rekey
@@ -2093,7 +2117,7 @@ def apply_empire_level(results):
     returns the stats dict."""
     from collections import Counter
     stats = {"members": 0, "selfgrant": 0, "markers": 0, "rescoped_nodes": 0,
-             "selfgrants_deleted": 0, "scope_qualifiers_dropped": 0,
+             "selfgrants_deleted": 0, "scope_qualifiers_dropped": 0, "operate_moved_to_build": 0,
              "operate_dropped": Counter(), "operate_building_ref_outside_class": [],
              "city_empire_merge_conflicts": [], "families_skipped": Counter()}
     # -- membership ------------------------------------------------------------------------------------------
@@ -2145,11 +2169,21 @@ def apply_empire_level(results):
                 stats["rescoped_nodes"] += 1
         req = obj.get("requires")
         if isinstance(req, dict) and req.get("operate") is not None:
-            pruned = _el_prune_operate(req["operate"], stats, members)
+            # constructible member: city-side operate atoms MOVE into requires.build (the build-city gate,
+            # evaluated where the queue sits -- the project split); marker: they drop (nothing reads its build).
+            moved = [] if not ident.get("notConstructible") else None
+            pruned = _el_prune_operate(req["operate"], stats, members, moved)
             if pruned:
                 req["operate"] = pruned
             else:
                 req.pop("operate", None)
+            if moved:
+                build = req.get("build")
+                if not isinstance(build, dict):
+                    build = OrderedDict()
+                    req["build"] = build
+                build.setdefault("all", []).extend(moved)
+                stats["operate_moved_to_build"] += len(moved)
             if not req:
                 obj.pop("requires", None)
     # -- grantor-side qualifier drop -------------------------------------------------------------------------

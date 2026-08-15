@@ -207,9 +207,13 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 >   point (owner: it *"vastly reduces the amount of domain-event flips we have to handle when a city gets
 >   taken"*).
 > - **Removal is the ordinary machinery at the holder:** `obsoletedBy`/`whenObsolete` and `disables` evaluate
->   against the player exactly as they evaluate against a city. An empire-level building's gates are
->   empire-evaluable by construction; a per-city atom surviving in one's `requires.operate` is a data error the
->   curator resolves (the per-city half of such a question already lives on the per-city consumers' own gates).
+>   against the player exactly as they evaluate against a city. An empire-level building's ONGOING gate is
+>   empire-evaluable by construction; a per-city atom in one's `requires.operate` is a data shape the curator
+>   resolves **by the constructibility split**: on a CONSTRUCTIBLE member it MOVES into `requires.build` — the
+>   build-time gate is `build ∧ operate` (§3), and `build` is evaluated in the BUILDING city, so dropping it
+>   deletes the member's whole build-city requirement (the obsidian-gatherer over-offer — a gatherer offered
+>   with no resource anywhere near) — and on a `notConstructible` marker it DROPS (nothing reads its build
+>   gate; the per-city half lives on the per-city consumers' own gates).
 > - ⚠ **An old save's per-city copies NORMALIZE at load:** the city read routes an `empireLevel` id to the
 >   owner — idempotent, so N city copies fold to held-once — and the city keeps nothing.
 >

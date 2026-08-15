@@ -19,6 +19,9 @@
   lumber gatherer class and kin) from every player's build list.
 - The civilization-whitelist mechanic is removed outright: what a civ can build is decided by
   its techs and requirements — NPCs included — and deliberate bars use the disable mechanism.
+- Empire-wide gatherer-class buildings require their resource again (obsidian gatherer needs
+  obsidian in the city vicinity, and kin) — the empire conversion had dropped those build
+  requirements.
 
 Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
 rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,

@@ -14,6 +14,60 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_ABORIGINE",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_FIJIAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_HAWAIIAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_MAORI",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_NEW_ZEALANDER",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_POLYNESIAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_RAPA_NUI",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_SAMOAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TAHITIAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      },
+      {
+       "type": "BONUS_TONGAN",
+       "scope": "city",
+       "connection": "trade|vicinity"
+      }
+     ]
     }
    ]
   }

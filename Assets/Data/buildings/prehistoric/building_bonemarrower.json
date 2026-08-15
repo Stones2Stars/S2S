@@ -12,6 +12,11 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    },
+    {
+     "type": "BONUS_BONE",
+     "scope": "city",
+     "connection": "trade|vicinity"
     }
    ]
   }
