@@ -863,6 +863,8 @@ the total-observability bar below.)
   engineering statements, not changelog lines. The safety net for anything that slips is the committed
   `/changelog-update` skill (an agent digest from the file's own `last-digested` marker); the owner curates
   Unreleased into release sections, never an agent unasked.
+- **⛔ NO SESSION LINKS IN COMMITS (owner).** An agent commit carries no `Claude-Session:` / session-URL
+  trailer — the default harness footer is overridden for this repo. The `Co-Authored-By` line stays.
 - **Keep quirky/intermediate commits — do NOT push to squash them (owner taste).** Mention squashing exists at most
   once; default to preserving history as-is.
 - **PG-13 public quotes.** When quoting the owner in public artifacts (issues, PR bodies, commits, repo docs), keep
