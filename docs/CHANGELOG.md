@@ -33,6 +33,10 @@
   lines lower the output of tiles above their threshold, which had stopped applying entirely
   while the matching bonus on positive traits kept working.
 - The city yield breakdown now reports the route's share of a tile's output separately.
+- Complex-trait games no longer hand a leader the base rung of a trait line *and* its rank-1 rung at the
+  same time. A line now runs 1 → 2 → 3, as complex games have always been played, and a leader holds the
+  rung rather than the rung plus a hidden extra copy underneath it. Leaders therefore start with the values
+  their rank actually states — noticeably less in some cases, because the duplicate was stacking on top.
 
 Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
 rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,

@@ -40,6 +40,18 @@ knowledge. **Home:** [fixed-point-and-scales.md §1](../specs/curators/fixed-poi
 A cross-entity modifier lives on whoever DELIVERS it, keyed by the target ("who brings this to the table?"); the
 other entity is a referenced `enabled`/`requires` condition, never the home. **Home:** [modifier.md §4](../specs/modifier.md).
 
+### DEC-trait-sets-separate
+
+**The SIMPLE and COMPLEX trait sets are two SEPARATE, self-complete tables — no overlay, no base-fill, no
+superset relationship (owner).** A complex record is never a simple record with tags laid over it, and a simple
+record is never copied into `complex/` to make the sets align; the only thing they share is the game option that
+selects which is live. **A complex game has never used rung 0 of any trait — a line is `1 → 2 → 3`** — so an
+un-digited record sitting in `complex/` beside numbered rungs is the simple set leaking in, and a leaderhead's
+`complexTraits` names rung 1 and above. The `<ReplacementID>` overlay machinery was TB's workaround and is NOT
+reproduced. ⚠ **This ruling has been re-litigated repeatedly because it was RESTATED in four places rather than
+linked from one** — and once recorded inverted under an `(owner ruling)` stamp, the wrong version outranked the
+correction. Link this id; never restate it. **Home:** [modifier.md §4](../specs/modifier.md).
+
 ### DEC-cascade-bidirectional
 
 The cascade is bidirectional — the enabler resolves `requires` by a `require` callback UP the scope chain (this is

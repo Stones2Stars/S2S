@@ -1235,3 +1235,11 @@ _TRAIT_REKEY_CACHE = {}
 def trait_rekey_map(store):
     """{oldTraitId: newTraitId} -- delegates to the ONE definition on the store."""
     return store.trait_rekey()
+
+
+def trait_rung_zero_map(store):
+    """{TRAIT_COMPLEX_X: TRAIT_COMPLEX_X1} -- delegates to the ONE definition on the store.
+
+    Apply it AFTER the re-key wherever a trait id is NAMED (a tech's gate edge, a leader's assignment): the
+    complex set has no rung 0 ([DEC-trait-sets-separate]), so an un-demoted id names nothing."""
+    return store.trait_rung_zero()

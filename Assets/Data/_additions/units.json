@@ -52,10 +52,6 @@
      "enabled": "TRAIT_COMPLEX_PROGRESSIST3"
     },
     {
-     "value": 10,
-     "enabled": "TRAIT_COMPLEX_PROLIFIC"
-    },
-    {
      "value": 5,
      "enabled": "TRAIT_COMPLEX_PROLIFIC1"
     },
@@ -65,10 +61,6 @@
     }
    ],
    "population": [
-    {
-     "value": 1,
-     "enabled": "TRAIT_COMPLEX_PROLIFIC"
-    },
     {
      "value": 1,
      "enabled": "TRAIT_COMPLEX_PROLIFIC1"

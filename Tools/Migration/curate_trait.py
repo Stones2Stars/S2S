@@ -74,6 +74,7 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
 import argparse
 import json
 import os
+import re
 from collections import OrderedDict
 
 import engine
@@ -941,17 +942,52 @@ def main():
             print("  re-keyed %d complex-set record(s) onto TRAIT_COMPLEX_: %s"
                   % (len(rename), ", ".join(sorted(rename))))
 
+        # ⛔ A COMPLEX GAME HAS NEVER USED RUNG 0 OF ANY TRAIT -- A LINE IS 1 -> 2 -> 3 (owner,
+        # [DEC-trait-sets-separate]). So a stem that HAS numbered rungs in the complex set must NOT also carry an
+        # un-digited record there: that record is the SIMPLE base copied across, and nothing in a complex game
+        # ever holds it. A stem with NO rungs (the NPC-civ barbarian trait) has no rung-0 concept and keeps its
+        # bare record, which is why this is keyed on the ladder rather than on a name list.
+        # ⚠ Guarding only ONE of the two emission sites below leaves the ladder edges and the written files
+        # disagreeing, so both take this test.
+        complex_ladder_stems = set()
+        for typ in results:
+            cid = typ if (typ in rid_to_base or folders.get(typ) == "complex") else None
+            if cid and re.search(r"\d+$", cid):
+                complex_ladder_stems.add(re.sub(r"\d+$", "", cid))
+
+        def _leaks_rung_zero(simple_typ):
+            """Would base-filling this simple trait put a rung 0 into a complex ladder?"""
+            return ("TRAIT_COMPLEX_" + simple_typ[len("TRAIT_"):]) in complex_ladder_stems
+
+        def _is_rung_zero(complex_typ):
+            """An UN-DIGITED complex record for a line that has rungs -- the leak, whichever door it came through.
+
+            ⚠ It arrives by TWO paths and guarding only one leaves 76 of them standing: the base-fill above, and
+            (the larger source) TB's complex REPLACEMENT OF THE BASE TRAIT, re-keyed onto TRAIT_COMPLEX_. The
+            second reads as a legitimate variant because it genuinely is one -- of a rung a complex game never
+            uses."""
+            return (not re.search(r"\d+$", complex_typ)) and complex_typ in complex_ladder_stems
+
         emitted = {"simple": set(), "complex": set()}
         for typ in results:
             if typ in rid_to_base:
-                emitted["complex"].add(typ)          # the complex variant, under its OWN TRAIT_COMPLEX_ id
+                if not _is_rung_zero(typ):
+                    emitted["complex"].add(typ)      # the complex variant, under its OWN TRAIT_COMPLEX_ id
             else:
-                emitted[folders[typ]].add(typ)
-                if folders[typ] == "simple" and typ not in repl_map:
-                    emitted["complex"].add(typ)      # base-fill: no complex variant exists for this one
+                if not (folders[typ] == "complex" and _is_rung_zero(typ)):
+                    emitted[folders[typ]].add(typ)   # keep the ladder edges off a record that is not emitted
+                if folders[typ] == "simple" and typ not in repl_map and not _leaks_rung_zero(typ):
+                    emitted["complex"].add(typ)      # no complex variant, and no complex ladder to intrude on
         ladders = dict((f, ladder_edges(lineOf, rankOf, ids)) for f, ids in emitted.items())
 
         def _write(folder, typ, obj):
+            # ⛔ THE ONE CHOKE POINT FOR THE RUNG-0 RULE ([DEC-trait-sets-separate]). It is enforced HERE rather
+            # than at each caller because the leak reached complex/ by THREE independent routes -- the base-fill,
+            # TB's complex replacement of the base, and a complex-only record re-keyed off the base -- and each
+            # was guarded in turn while the next kept emitting. A rule applied at the single place every record
+            # must pass cannot be bypassed by a fourth route nobody has found yet.
+            if folder == "complex" and _is_rung_zero(typ):
+                return
             d = os.path.join(out_dir, folder)
             os.makedirs(d, exist_ok=True)
             edges = ladders[folder].get(typ)
@@ -980,6 +1016,8 @@ def main():
                 # colliding-id problem -- two different entities answering to one name, which then forced every
                 # reader to disambiguate by game option. The two sets are separated by FOLDER and by ID, so
                 # nothing has to be resolved at read time.
+                if _is_rung_zero(typ):
+                    continue             # rung 0 of a laddered line -- no complex game has ever held it
                 _write("complex", typ, obj)
                 nwritten += 1
                 continue
@@ -987,13 +1025,15 @@ def main():
             nwritten += 1
             if typ in repl_map:
                 pass   # its complex variant is emitted above under its own TRAIT_COMPLEX_ id
-            elif folders[typ] == "simple":
-                # SELF-COMPLETE COMPLEX (owner ruling 2026-07-21): a simple trait with NO complex replacement is ALSO
-                # base-filled into complex/ (its whole def, identical) so the complex folder is a SUPERSET of simple.
-                # The option-gated active-set read (getTraitInfo / MMKernel::traitData) then NEVER falls back to a
-                # simple record under GAMEOPTION_LEADER_COMPLEX_TRAITS -- ② can make that read fail-loud with nothing
-                # to fall back to. Distinct from the whole-swap above: there is no replacement to swap to, so the base
-                # IS the complex version (e.g. TRAIT_BARBARIAN, the NPC-civ trait -- the only such case today).
+            elif folders[typ] == "simple" and not _leaks_rung_zero(typ):
+                # A simple trait with NO complex replacement AND NO complex ladder is written into complex/ under
+                # its own TRAIT_COMPLEX_ id, because that set still needs a record for it and there is no rung to
+                # conflict with (TRAIT_BARBARIAN, the NPC-civ trait -- the only such case today).
+                # ⛔ THIS IS NOT A BASE-FILL AND THE SETS ARE NOT A SUPERSET PAIR ([DEC-trait-sets-separate]):
+                # where a complex LADDER exists the un-digited record is deliberately NOT emitted, because a
+                # complex game has never used rung 0 of any trait. The retired reading -- "every simple trait is
+                # copied across so the active-set read can never fall back" -- is what put 76 rung-0 records into
+                # complex/ and had leaderheads holding a base beside rung 1.
                 # ⛔ IT IS EMITTED UNDER ITS OWN `TRAIT_COMPLEX_` ID, not shared with the simple record (owner):
                 # the two sets are COMPLETELY SELF-SUFFICIENT, in every way. A shared id is the ONE thread that
                 # still tied them together, and the reason it cannot stay is empirical -- "it is impossible for

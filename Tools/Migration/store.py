@@ -15,6 +15,7 @@ import argparse
 import copy
 import glob
 import os
+import re
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
@@ -492,6 +493,41 @@ class Store:
 
     def get(self, ent, typ):
         return self.tables.get(ent, {}).get(typ)
+
+    def trait_rung_zero(self):
+        """{TRAIT_COMPLEX_X: TRAIT_COMPLEX_X1} -- the RUNG-0 demotion, defined ONCE here.
+
+        ⛔ A COMPLEX GAME HAS NEVER USED RUNG 0 OF ANY TRAIT -- a line is 1 -> 2 -> 3 (owner,
+        [DEC-trait-sets-separate]), so the complex set carries no un-digited record for a line that has rungs.
+        Anything that NAMED that record -- a leaderhead's assignment, a tech's gate edge -- has to name rung 1
+        instead, or it points at an id nothing defines.
+
+        ⚠ It is deliberately SEPARATE from `trait_rekey` even though both rewrite a trait id: that one answers
+        WHICH SET a record belongs to, this one answers WHICH RUNG. Folding them would make a record's set
+        depend on its ladder position.
+        ⚑ It lives on the store for the same reason the re-key does -- a trait id is named from several
+        curators, and one definition is what stops an edge naming an id no record defines
+        ([enabler.md]: a severed rung gate is silent).
+        """
+        if getattr(self, "_trait_rung_zero_cache", None) is not None:
+            return self._trait_rung_zero_cache
+        final_ids = set(self.trait_rekey().values())
+        table = self.tables.get("TraitInfo", {})
+        repl = self.replacements.get("TraitInfo", {})
+        rid_to_base = dict((v["replacement"], b) for b, v in repl.items())
+        for typ in table:
+            if typ in rid_to_base:
+                final_ids.add(complex_variant_id(rid_to_base[typ]))
+            elif typ.startswith("TRAIT_COMPLEX_"):
+                final_ids.add(typ)
+        ladder_stems = set(re.sub(r"\d+$", "", i) for i in final_ids if re.search(r"\d+$", i))
+        out = {}
+        for stem in ladder_stems:
+            if stem in final_ids or True:          # the base need not itself be emitted to be NAMED by an edge
+                if stem + "1" in final_ids:
+                    out[stem] = stem + "1"
+        self._trait_rung_zero_cache = out
+        return out
 
     def trait_rekey(self):
         """{oldTraitId: newTraitId} -- the COMPLEX-SET re-key, defined ONCE here.

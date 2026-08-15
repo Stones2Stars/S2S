@@ -702,13 +702,17 @@ authored shape.
 > techs, not just traits.
 > **⚖ A SAVE IS RESOLVED INTO THE ACTIVE SET AT LOAD (owner): *"for savegames, if you see it is a complex trait
 > game, you make sure the trait is the complex version."*** A stored plain `TRAIT_X` in a game running
-> `GAMEOPTION_LEADER_COMPLEX_TRAITS` takes the prefix — EVERY held id, with BARBARIAN the one exception (the
-> base-filled record above); `complex/` is a SUPERSET of `simple/`, so the prefixed id always exists, no per-id
-> table needed. This is distinct from the `savemigration.txt` rename plane (which id, not which SET), so it lives
-> at the ONE stored-Type resolution point (`sm_resolveStoredType`), beside the rename lookup rather than inside
-> it — otherwise a loaded save could hold simple rank-1 rungs beside complex rank-2/3 ones.
-> ⚠ **Leaderheads author NO traits (owner)** — dropped for the community to fill post-launch — so the save is
-> the only place a held id comes from, which is why resolving it there is sufficient.
+> `GAMEOPTION_LEADER_COMPLEX_TRAITS` resolves into the active set. This is distinct from the
+> `savemigration.txt` rename plane (which id, not which SET), so it lives at the ONE stored-Type resolution
+> point (`sm_resolveStoredType`), beside the rename lookup rather than inside it — otherwise a loaded save could
+> hold simple rank-1 rungs beside complex rank-2/3 ones.
+> ⛔ **The sets are SEPARATE and complex carries no rung 0** ([DEC-trait-sets-separate](../architecture/decisions.md#dec-trait-sets-separate)),
+> so this resolution may NOT assume a prefixed id always exists — the retired superset claim is exactly what
+> made it look free. **Which rung a stored un-digited `TRAIT_X` resolves to in a complex game is UNDECIDED and
+> is the owner's call**; do not infer one.
+> ⚠ **Leaderheads DO author traits** — 118 of 120 carry both a `traits` and a `complexTraits` list, so a NEW
+> GAME takes its held ids from the leaderhead and the save is not the only source. *(The retired claim that
+> leaderheads author none was used to argue the save-side resolution was sufficient on its own.)*
 >
 > ⚠ A record that does not obey this is a CURATOR defect, and fixing it rides the curator + regen in the same
 > work item ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)); the id change is
@@ -741,29 +745,27 @@ authored shape.
 > - **CRAZY → curator (`curate_trait`), offline, once.** The replacement/promotion-line machinery is dissolved into
 >   sensible JSON:
 >   - **Simple/complex split** by `COMPLEX_TRAITS` — the two `DefaultTraits`/`DefaultComplexTraits` sets become
->     `traits/simple/` + `traits/complex/`. **`complex/` is SELF-COMPLETE = a SUPERSET of `simple/` (owner ruling
->     2026-07-21):** every trait is present, so the option-gated active-set read (`getTraitInfo`/`MMKernel::traitData`)
->     NEVER falls back to a simple record under `COMPLEX_TRAITS` — the read can be made fail-loud with nothing to fall
->     back to. Each id's complex def is its base **plus** its `Has(COMPLEX_TRAITS)`-gated **replacement** overlaid on
->     top (§4-bis: a field the replacement omits is INHERITED from the base); a simple trait
->     with **no** replacement is base-filled into `complex/` whole (its base IS the complex version — e.g.
->     `TRAIT_BARBARIAN`, the NPC-civ trait).
+>     `traits/simple/` + `traits/complex/`.
 >
->     > **⛔ §4-bis — A REPLACEMENT IS AN OVERLAY ON ITS BASE, AND THE LEGACY ENGINE'S FAILURE TO MERGE IS A BUG WE
->     > DO NOT REPRODUCE (owner).** The variant is built BASE + the replacement's own tags on top, exactly as an
->     > ordinary module override is — unlike the legacy engine, where a plain module override runs
->     > `copyNonDefaults` and inherits the base, while a `<ReplacementID>` record reaches `addReplacement` with a
->     > FRESH `new T()` read from its own XML alone; `CvInfoReplacement::updateInfo`, the merge that would have
->     > closed the gap, sits commented out.
->     > ⚑ **The data settles it against the engine:** **304 of 305** complex trait records carry NO
->     > `ShortDescription`, while **0 of 65** simple ones lack it (the sole exception is the base-filled
->     > `TRAIT_COMPLEX_BARBARIAN`) — a mandatory field missing from every whole-swapped record and none of the
->     > base-filled ones is not an authoring choice: the replacements were authored expecting the base underneath,
->     > and the engine never supplied it.
->     > ⚠ **A field the replacement DOES author still wins, including when it zeroes one** — that is the overlay
->     > working, not a loss, and it is why a handful of families legitimately disappear from a variant.
->     > ⛔ The merge has ONE home, the STORE (`Store._load`'s replacement post-pass), because the base must be fully
->     > loaded before the overlay lands and file order is not guaranteed. **Folder classification** keys on the `OnGameOptions: COMPLEX` gate /
+>     > **⛔⛔ THE TWO SETS ARE COMPLETELY SEPARATE AND EACH IS SELF-COMPLETE ON ITS OWN TERMS — THERE IS NO
+>     > OVERLAY, NO BASE-FILL, AND NO SUPERSET RELATIONSHIP (owner).** A complex record is NOT a simple record
+>     > with tags laid over it, and a simple record is never copied into `complex/` to make the sets line up.
+>     > Each set is authored, emitted and read as its own table; the only thing they share is the game option
+>     > that selects which one is live.
+>     > ⛔ **The overlay/`<ReplacementID>` machinery was TB's workaround for not knowing how to do this properly.
+>     > It is NOT the model and is NOT reproduced** — do not rebuild it, and do not reason from it.
+>     > **⛔ A COMPLEX GAME HAS NEVER USED RUNG 0 OF ANY TRAIT — A LINE IS `1 → 2 → 3` (owner).** The un-digited
+>     > record is the SIMPLE set's base; in `complex/` it is not a lower rung, it is the simple trait leaking in,
+>     > and nothing in a complex game ever holds it. So a leaderhead's `complexTraits` names rung 1 and above,
+>     > never a base beside it.
+>     > ⚠ **This has been corrected repeatedly, and every recurrence traced back to THIS PARAGRAPH still carrying
+>     > the retired model** ([DEC-WF-rulings-to-repo](../architecture/decisions.md#dec-wf-rulings-to-repo)): the
+>     > ruling was given in conversation and the spec was left standing, so each new agent read the overlay model
+>     > here and rebuilt it in good faith. A ruling that is not written down is a ruling that gets re-litigated.
+>     > ⚑ **The measurable tell that the leak is present:** `complex/` carrying an un-digited record for a line
+>     > that has numbered rungs. Only a line with NO rungs may legitimately have a bare record.
+>
+>     **Folder classification** keys on the `OnGameOptions: COMPLEX` gate /
 >     replacement-variant; a developing-line (`PromotionLine`) member that UNIQUELY lacks the gate its siblings carry is
 >     a SOURCE-data bug to fix (restore the tag), not a classifier change (the `TRAIT_TIMID1` case). The active set is
 >     chosen by the live option (callout above).

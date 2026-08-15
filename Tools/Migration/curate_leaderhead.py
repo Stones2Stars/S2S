@@ -46,6 +46,7 @@ the same table on the two NPC leaders).
 import argparse
 import json
 import os
+import re
 from collections import OrderedDict
 
 import engine
@@ -179,6 +180,34 @@ def _list(node):
     return out
 
 
+def _complex_trait_entries(trait_entries):
+    """The COMPLEX-set assignment for a leader, respelled from its legacy (simple) trait list.
+
+    ⛔ A COMPLEX GAME HAS NEVER USED RUNG 0 OF ANY TRAIT -- A LINE IS 1 -> 2 -> 3 (owner,
+    [DEC-trait-sets-separate]). The legacy table pairs a base with its rank-1 entry (`TRAIT_NOMAD`,
+    `TRAIT_NOMAD1`), and respelling that verbatim made the leader hold `TRAIT_COMPLEX_NOMAD` -- a rung 0 that
+    exists in no complex ladder -- BESIDE rung 1, so the base's values applied on top of the rung's.
+
+    So the base is dropped where the same line already names a rung, and promoted to rung 1 where it does not.
+    ⚠ The promotion is the one judgement in here: it reaches exactly the two NPC leaders that author a bare
+    `TRAIT_BARBARIC`, and the alternative (emitting nothing) would leave them with no complex assignment at all.
+    """
+    def stem(entry):
+        return re.sub(r"\d+$", "", entry)
+
+    rung_stems = set(stem(e) for e in trait_entries if re.search(r"\d+$", e))
+    out = []
+    for entry in trait_entries:
+        if not re.search(r"\d+$", entry) and stem(entry) in rung_stems:
+            continue                     # its own line already names a rung -- the base is the leaked rung 0
+        complex_id = "TRAIT_COMPLEX_" + entry[len("TRAIT_"):]
+        if not re.search(r"\d+$", entry):
+            complex_id += "1"            # a bare base means rank 1 in a set whose ladder starts there
+        if complex_id not in out:
+            out.append(complex_id)
+    return out
+
+
 def curate(typ, rec):
     text, ai, identity, grants, art_blocks, sound = {}, {}, {}, {}, {}, {}
     leftover = []
@@ -248,7 +277,7 @@ def curate(typ, rec):
     # even when a leader authors nothing -- an absent key hides the capability from a modder (same rule as unit
     # `tags`). Which set is ACTIVE is chosen at runtime by GAMEOPTION_LEADER_COMPLEX_TRAITS (modifier.md §4).
     out["traits"] = list(trait_entries)
-    out["complexTraits"] = ["TRAIT_COMPLEX_" + entry[len("TRAIT_"):] for entry in trait_entries]
+    out["complexTraits"] = _complex_trait_entries(trait_entries)
     for k in ("description", "civilopedia"):
         if k in text:
             out[k] = text[k]

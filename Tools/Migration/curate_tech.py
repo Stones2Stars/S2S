@@ -258,6 +258,12 @@ def synthesize_game_start(store, result):
             # un-remapped id severs the gate silently ([enabler.md])
             rekey = cc.trait_rekey_map(store)
             ids = [rekey.get(t, t) for t in ids]
+            # ...then the RUNG-0 demotion: the complex set has no un-digited record for a laddered line, so a
+            # gate edge naming one would point at nothing and sever that line's entry rung silently.
+            rung0 = cc.trait_rung_zero_map(store)
+            ids = [rung0.get(t, t) for t in ids]
+            seen = set()
+            ids = [t for t in ids if not (t in seen or seen.add(t))]   # a base and its rung 1 can now collide
         if ids:
             enables[bucket] = ids
 
