@@ -51,13 +51,40 @@ quantities collapsed into one int (`plotBase` · `trade` · `goldenAgeYield` · 
 `cityFlatExtra`, plus `percentSum` and the `workedPlots` the plot Σ walked), so "this city produces too little"
 is unanswerable against the total and immediately answerable against the terms.
 ⚑ **And a term that is itself a Σ decomposes again — `plotBase` carries its THREE SEGMENTS beside it**
-(`plotNature` · `plotImprovement` · `plotRest`, the plot package's own storage split). One level of
+(`plotNature` · `plotImprovement` · `plotRest`, the plot package's own storage split), with **`plotRoute` as a
+BREAKDOWN of `plotRest`** rather than a fourth term: the package stores route apart (for the golden-age
+operand, [modifier.md §2](modifier.md)) while `plotRest` keeps reporting route + the owner's plot flats, so no
+stored segment goes unreported. ⚠ `plotRoute` reaches the
+`/computed/city/yield` document and the tooltip, NOT the `[MODIFIER] rateRead` line — that line stands at the
+16-field cap, where a seventeenth term is silently DROPPED ([event-spine.md](event-spine.md)). One level of
 decomposition only moves the question: a short `plotBase` says the plots are short and not WHICH leg is short,
-and a dead improvement leg is the same number in the total as a dead nature leg. ⚠ The segments are reported
-RAW — pre-floor — so they need not add to `plotBase` exactly (`readFlat` floors nature at 0, improvement at
-−nature, the total at 0); **a gap between Σsegments and `plotBase` is itself the signal that a floor is biting**,
-which a floored report would have hidden. They come out of the SAME walk the total does
-([DEC-single-implementation]).
+and a dead improvement leg is the same number in the total as a dead nature leg. They come out of the SAME walk
+the total does ([DEC-single-implementation]).
+
+> **⛔ Σsegments DOES NOT EQUAL `plotBase`, AND THE DIFFERENCE IS THE WHOLE §2a PLOT RESOLVE — reading a gap as
+> drift is the misreading this callout exists to stop.** The segments are the package's STORAGE; `plotBase` is
+> the Σ of each worked plot's RESOLVED value, and `resolvePlotFlat` puts a whole composition between the two:
+> the three floors (nature at 0, improvement at −nature, the total at 0), **the city-centre block**, **both
+> scaling legs**, **the golden-age addend**, and the **MinCity** floor ([modifier.md §2](modifier.md)). None of
+> those is a segment, because none of them is a stored deposit — each is read LIVE off the plot at resolve.
+> ⚑ **So a gap is EXPECTED, and its ordinary size is one thing: the CENTRE plot's city block.** On a city with
+> no scaling, no golden age and no biting floor, `plotBase − Σsegments` is exactly `CityChange + population /
+> PopulationChangeDivisor` for that one tile — 41 on a production channel at population 81, 0 on food wherever
+> the −1 constant and the ÷5 cancel. A reader who has not accounted for it measures that on every city and
+> reads a systematic double-count.
+> ⚠ **The earlier wording here named only the FLOORS**, which is what made the difference look like a defect
+> class rather than the resolve. Attribute a gap against the full list above before suspecting the Σ.
+
+⚑ **When the Σ genuinely IS wrong, `[MODIFIER] plotBaseFold` names the leg.** The
+city's worked-plot Σ is maintained by several legs — the segment resolve, the city-plot re-resolve, the
+owner-operand pass, the worked-membership fold — and a total that is merely wrong cannot say which of them put
+the extra there. The line carries the LEG, the plot, the channel, the delta and the running total, and it is
+emitted from the Σ's ONE write point (`applyPlotBaseFlat`), so a leg added later cannot escape it.
+⛔ **The census gap above is NOT the trigger for reaching for it** — that gap is the resolve, not a drift. What
+this answers is a `plotBase` that disagrees with what the FACTS should have folded.
+⚠ Level 4, and bounded by WORKED plots rather than by the map — a fold only happens where a plot is in a city's
+base — so it is a readable few tens of thousands of lines on a large save, not a per-plot firehose.
+
 ⚑ **`specialists` decomposes too, and on its OWN line (`[MODIFIER] specialistRead`, one row per held type)** —
 because that Σ has an axis the term does not: WHICH specialist type. A per-type row is not a term, so it could
 never have ridden `rateRead` inline, and `rateRead` is at the field cap besides

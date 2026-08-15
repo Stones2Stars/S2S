@@ -698,6 +698,7 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 			kTermsOut["plotNature"] = picojson::value((double)kTerms.plotNature);
 			kTermsOut["plotImprovement"] = picojson::value((double)kTerms.plotImprovement);
 			kTermsOut["plotRest"] = picojson::value((double)kTerms.plotRest);
+			kTermsOut["plotRoute"] = picojson::value((double)kTerms.plotRoute);
 			kTermsOut["workedPlots"] = picojson::value((double)kTerms.workedPlots);
 			kTermsOut["tradeYield"] = picojson::value((double)kTerms.tradeYield);
 			kTermsOut["goldenAge"] = picojson::value((double)kTerms.goldenAge);

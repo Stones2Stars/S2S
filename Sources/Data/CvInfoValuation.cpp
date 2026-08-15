@@ -999,6 +999,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 		pTermsOut->plotNature = 0;
 		pTermsOut->plotImprovement = 0;
 		pTermsOut->plotRest = 0;
+		pTermsOut->plotRoute = 0;
 		pTermsOut->tradeYield = 0;
 		pTermsOut->goldenAge = 0;
 		pTermsOut->upperFlat = 0;
@@ -1028,6 +1029,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 	int64_t iPlotNature = 0;
 	int64_t iPlotImprovement = 0;
 	int64_t iPlotRest = 0;
+	int64_t iPlotRoute = 0;
 	int iWorkedPlots = 0;
 	std::map<int, int> kWorkedImprovements;   // improvement id -> worked tiles carrying it (the trait leg's key)
 	int64_t iBase = iPlotBase;
@@ -1096,13 +1098,17 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 			{
 				// ⚠ The census reads the SEGMENTS the total is made of rather than re-deriving them beside it
 				// ([DEC-single-implementation]). It deliberately does NOT re-sum the total: pTermsOut->plotBase
-				// reports the SLOT, which is the number every consumer actually uses -- so a gap between
-				// Σsegments and plotBase now signals either a biting floor (as before) or slot drift.
+				// reports the SLOT, which is the number every consumer actually uses. ⛔ The two are NOT expected
+				// to agree, and reading a gap as drift is the standing misreading: the whole §2a plot resolve
+				// sits between them -- the floors, the city-centre block, both scaling legs, the golden-age
+				// addend and the MinCity floor, none of which is a stored segment ([http-endpoints.md] carries
+				// the attribution).
 				if (pTermsOut != NULL)
 				{
 					iPlotNature += pWorkedPlot->getCascadePackage().readSubstrateFlat(iChannel);
 					iPlotImprovement += pWorkedPlot->getCascadePackage().readImprovementFlat(iChannel);
 					iPlotRest += pWorkedPlot->getCascadePackage().readRestFlat(iChannel);
+					iPlotRoute += pWorkedPlot->getCascadePackage().readRouteFlat(iChannel);
 				}
 				// the improvement this worked tile carries -- the key the trait leg below is summed against
 				const ImprovementTypes eWorkedImprovement = pWorkedPlot->getImprovementType();
@@ -1258,6 +1264,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 		pTermsOut->plotNature = iPlotNature;
 		pTermsOut->plotImprovement = iPlotImprovement;
 		pTermsOut->plotRest = iPlotRest;
+		pTermsOut->plotRoute = iPlotRoute;
 		pTermsOut->tradeYield = iTradeYield;
 		pTermsOut->goldenAge = iGoldenAgeYield;
 		pTermsOut->upperFlat = iUpperFlatSum;

@@ -592,6 +592,9 @@ public:
 		int64_t plotNature;
 		int64_t plotImprovement;
 		int64_t plotRest;
+		// A BREAKDOWN OF plotRest above, never a term beside it: plotRest still carries route + the owner's
+		// plot flats, so the three segments still sum against plotBase. This says how much of it is the ROUTE.
+		int64_t plotRoute;
 		int64_t tradeYield;    // the ONE sanctioned live-yield input, lifted to ×100
 		int64_t goldenAge;     // the empire goldenAge member-mirror, while the golden age holds
 		int64_t upperFlat;     // team + empire flats -- TIER 1, so the percent stack multiplies them

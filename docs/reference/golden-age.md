@@ -57,8 +57,19 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
      added **AFTER** the golden-age check, so a rich improvement/route on a tile does **not** help it qualify — only
      the tile's intrinsic + city/player yields decide. (Thresholds are low for some yields — e.g. commerce — so the
      bonus fires almost everywhere and *looks* like "+1 on everything", but it is genuinely gated, and a
-     low-pre-improvement tile can miss it.) A cascade reproducing this must test the same pre-improvement base —
-     which no surface currently emits per tile.
+     low-pre-improvement tile can miss it.)
+   - **⚖ THE PRE-IMPROVEMENT, PRE-ROUTE OPERAND IS REPRODUCED FAITHFULLY (owner ruling), and it is what forced
+     the ROUTE into a plot segment of its own.** The plot package stores nature / improvement / **route** / rest
+     precisely so this operand — `nature + the city block + the owner's plot flats` — is expressible at all;
+     while route and the owner's flats shared one sum it was not ([modifier.md §2](../specs/modifier.md)).
+     ⚠ **The distinction decides the bonus on nearly every tile, so it is not a rounding question:** both
+     authored thresholds are **1**, so a tile whose only production or commerce comes from its improvement or
+     its route qualifies on the full total and did not in the engine. **FOOD authors neither value**, so food
+     correctly gains nothing from this leg.
+     ⚠ The extra-yield SCALING step is deliberately outside the operand: the engine's own operand was
+     pre-improvement, while the cascade's scaling is ruled to test the FULL total
+     ([modifier.md §2](../specs/modifier.md)), so folding it in would drag improvement and route back into the
+     very test this excludes them from.
 2. **Player base golden-age yield** — `CvCity.cpp:22902`. `getBaseYieldRate` adds `player.getGoldenAgeYield(y)`,
    a flat player-wide per-yield bonus, fed by traits' `getGoldenAgeYieldChanges[]` (`CvTraitInfo.cpp:2263`).
    Part of TIER-1 `base` ([modifier.md §2a](../specs/modifier.md)) — distinct from the per-plot bonus above.
@@ -131,6 +142,15 @@ Golden age touches the yield path in **three** places, all inside `base` (so all
 commerce** — plus faster great people and zero-anarchy civic swaps elsewhere. The one reproduction
 gotcha is the per-plot bonus's **pre-improvement/pre-route** threshold test (`CvPlot.cpp:8403`).
 ⛔ It does **not** touch city GROWTH: the food-for-growth discount is a dead mechanic that never once ran (§2).
+
+> **⚖ WHERE EACH OF THE THREE ACTUALLY APPLIES (owner: the cascade's say in a golden age is its LENGTH and its
+> grant — the yield EFFECT is the engine's).** The two player-wide legs (2 and 3) apply at the CITY combine, as
+> a plain package read of the `{ch}.empire.goldenAge` mirror. The PER-PLOT leg (1) applies in the PLOT RESOLVE,
+> read live off the plot's owner — the same engine-core shape the city-centre block already uses
+> (`cascadePlotCityAdd100`'s twin), added AFTER the scaling and BEFORE the MinCity floor, which is the engine's
+> own position for it. ⛔ None of the three is an authored deposit and none becomes one; ⛔ and the per-plot leg
+> is never folded into the `empire.goldenAge` mirror, which is the trait-fed player-wide source at a different
+> scope.
 
 > **Cascade representation — PERMANENT engine member-mirror, effect-only.**
 > [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires condition-as-member

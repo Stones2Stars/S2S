@@ -149,6 +149,11 @@ public:
 	// "does the cascade cover this atom" a number instead of an assertion.
 	static void reportAtomRoute(const char* szAtom, int iListSize, int iFound, int iNoSource,
 		int iRefused, int iApplied, int iPlayer, int iCity);
+	// ONE write into a city's worked-plot Σ, tagged with the LEG that wrote it -- the trace that attributes a
+	// `plotBase`-vs-worked-plots disagreement to a named leg instead of a guess. Emitted from the Σ's one write
+	// point, at level 4 (per-fold, a firehose by construction).
+	static void reportPlotBaseFold(const char* szLeg, int iX, int iY, int iChannelId,
+		int iDelta, int iTotalAfter, int iPlayer, int iCity);
 	static void reportBonusStores(int iPlayer, int iCity, int iOnSite, int iVicinityAll, int iVicinityOwned,
 		int iVicinityWorked, int iTraded, int iNetworkList);
 	static void reportRateRead(int iPlayer, int iHuman, int iCity, int iChannelId,

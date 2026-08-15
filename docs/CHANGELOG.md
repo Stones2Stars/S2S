@@ -22,6 +22,17 @@
 - Empire-wide gatherer-class buildings require their resource again (obsidian gatherer needs
   obsidian in the city vicinity, and kin) — the empire conversion had dropped those build
   requirements.
+- A trait's extra-yield-threshold bonus reaches its cities again: the per-tile step was being
+  applied to each plot but never added to the city's own food/hammer/commerce totals, so a
+  trait that grants it changed the tile readouts and nothing the city actually produced.
+- Golden ages give their per-tile bonus again (+1 hammer and +1 commerce on qualifying worked
+  tiles). It had stopped applying entirely, while the AI still valued golden ages as though it
+  were there. As before, a tile qualifies on what it makes *before* its improvement and route
+  are counted — so a tile whose whole output comes from a mine or a road does not qualify.
+- Negative traits impose their tile penalty again: the lazy, gluttonous, excessive and nomad
+  lines lower the output of tiles above their threshold, which had stopped applying entirely
+  while the matching bonus on positive traits kept working.
+- The city yield breakdown now reports the route's share of a tile's output separately.
 
 Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
 rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,

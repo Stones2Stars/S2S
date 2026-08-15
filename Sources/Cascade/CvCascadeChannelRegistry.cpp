@@ -402,7 +402,8 @@ namespace
 		MODEVT_BONUS_STORES,        // one city's bonus stores, by size -- empty store vs refusing route
 		MODEVT_ATOM_ROUTE,          // ONE atom crossing's outcome: found / noSource / refused / applied
 		MODEVT_SPECIALIST_READ,     // ONE specialist TYPE's share of a rate's `specialists` term (the Σ decomposed)
-		MODEVT_TRAIT_IMPROVEMENT_READ   // ONE (trait x improvement) keyed deposit's share of a rate's BASE
+		MODEVT_TRAIT_IMPROVEMENT_READ,  // ONE (trait x improvement) keyed deposit's share of a rate's BASE
+		MODEVT_PLOTBASE_FOLD        // ONE write into a city's worked-plot Σ, tagged with WHICH leg wrote it
 	};
 	enum ModifierDomainField
 	{
@@ -426,7 +427,8 @@ namespace
 		MODF_ONSITE, MODF_VICALL, MODF_VICOWNED, MODF_VICWORKED, MODF_TRADED, MODF_NETLIST,
 		MODF_ATOM, MODF_LISTSIZE, MODF_FOUND, MODF_NOSOURCE, MODF_REFUSED, MODF_APPLIED,
 		MODF_SPECIALIST, MODF_ASSIGNED, MODF_FREETYPED, MODF_PERUNIT, MODF_CONTRIB,
-		MODF_TRAIT, MODF_IMPROVEMENT, MODF_TILES, MODF_PERTILE
+		MODF_TRAIT, MODF_IMPROVEMENT, MODF_TILES, MODF_PERTILE,
+		MODF_LEG, MODF_X, MODF_Y, MODF_DELTA, MODF_TOTAL
 	};
 
 	const char* cr_modifierDomainPrefix(int iEventId)
@@ -442,6 +444,7 @@ namespace
 		case MODEVT_ATOM_ROUTE:     return "[MODIFIER] atomRoute";
 		case MODEVT_SPECIALIST_READ: return "[MODIFIER] specialistRead";
 		case MODEVT_TRAIT_IMPROVEMENT_READ: return "[MODIFIER] traitImprovementRead";
+		case MODEVT_PLOTBASE_FOLD:  return "[MODIFIER] plotBaseFold";
 		default:                    return "[MODIFIER] ?";
 		}
 	}
@@ -511,6 +514,11 @@ namespace
 		case MODF_IMPROVEMENT: *peType = SFT_IMPROVEMENT; return "improvement";
 		case MODF_TILES:       *peType = SFT_INT; return "workedTiles";
 		case MODF_PERTILE:     *peType = SFT_INT; return "perTile";
+		case MODF_LEG:         *peType = SFT_STR; return "leg";
+		case MODF_X:           *peType = SFT_INT; return "x";
+		case MODF_Y:           *peType = SFT_INT; return "y";
+		case MODF_DELTA:       *peType = SFT_INT; return "delta";
+		case MODF_TOTAL:       *peType = SFT_INT; return "plotBaseAfter";
 		case MODF_CHANNEL:     *peType = SFT_STR; return "channel";
 		case MODF_UNIT:        *peType = SFT_STR; return "unit";
 		case MODF_VALUE:       *peType = SFT_INT; return "value";
@@ -867,4 +875,66 @@ int64_t cascadePlotCityFloor100(int iX, int iY, int iChannel)
 		return 0;
 	}
 	return (int64_t)GC.getYieldInfo(eYield).getMinCity() * 100;
+}
+
+// ⚖ THE PER-PLOT GOLDEN-AGE BONUS, read LIVE off the plot's owner -- engine-core, the city block's twin
+// (owner: the cascade's say in a golden age is its LENGTH and its grant; the yield EFFECT is the engine's, so
+// it is read here rather than authored anywhere).
+// ⛔ `iOperand100` is the PRE-IMPROVEMENT, PRE-ROUTE running yield, which is what the engine tested
+// ([golden-age.md] §1 -- the improvement and the route were added AFTER this check, and reproducing that is
+// owner-ruled). The caller owns assembling it; this end only compares.
+// ⚠ The threshold is authored HUMAN on the yield info and the operand is on the x100 plane, so the LIFT is
+// here. Both authored values are 1 today (production and commerce; FOOD authors neither, so food correctly
+// gains nothing) -- which is exactly why the operand's composition decides the outcome on nearly every tile.
+int64_t cascadePlotGoldenAge100(int iX, int iY, int iChannel, int64_t iOperand100)
+{
+	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	if (pPlot == NULL)
+	{
+		return 0;
+	}
+	const PlayerTypes eOwner = pPlot->getOwner();
+	if (eOwner == NO_PLAYER || !GET_PLAYER(eOwner).isGoldenAge())
+	{
+		return 0;
+	}
+	const YieldTypes eYield = cr_yieldForChannel(iChannel);
+	if (eYield == NO_YIELD)
+	{
+		return 0;
+	}
+	const CvYieldInfo& kYield = GC.getYieldInfo(eYield);
+	const int iAmount = kYield.getGoldenAgeYield();
+	if (iAmount == 0)
+	{
+		return 0;
+	}
+	if (iOperand100 < (int64_t)kYield.getGoldenAgeYieldThreshold() * 100)
+	{
+		return 0;
+	}
+	return (int64_t)iAmount * 100;
+}
+
+// ⛑ THE PLOT-BASE FOLD TRACE -- ONE line per write into a city's worked-plot Σ, tagged with the LEG that wrote
+// it. It exists to answer one question the totals cannot: when `plotBase` disagrees with the sum of the city's
+// worked plots, WHICH leg put the extra there.
+// ⛔ Emitted from `applyPlotBaseFlat` itself -- the Σ's ONE write point -- so a leg cannot be added later
+// without appearing here, exactly as the emit lives in the internal setter rather than in a hand-kept list.
+// ⚠ LEVEL 4 (the inner-loop tier): a fold fires per segment apply per channel, so this is a genuine firehose
+// and stays off at the level the game is normally played at.
+void CascadeChannelRegistry::reportPlotBaseFold(const char* szLeg, int iX, int iY, int iChannelId,
+	int iDelta, int iTotalAfter, int iPlayer, int iCity)
+{
+	cr_ensureModifierDomain();
+	CvSpineEvent fold(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MODEVT_PLOTBASE_FOLD, 4);
+	fold.addStr(MODF_LEG, (szLeg != NULL) ? szLeg : "?");
+	fold.addI(MODF_X, iX);
+	fold.addI(MODF_Y, iY);
+	fold.addI(MODF_VALUE, iChannelId);
+	fold.addI(MODF_DELTA, iDelta);
+	fold.addI(MODF_TOTAL, iTotalAfter);
+	fold.addI(MODF_PLAYER, iPlayer);
+	fold.addI(MODF_CITY, iCity);
+	eventSpine().emit(fold);
 }

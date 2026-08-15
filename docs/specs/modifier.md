@@ -168,6 +168,14 @@ slot does pure integer math and never sees the human boundary.
 > A plain flat channel SUMS, so reading one through the ordinary roll-up is wrong by construction — it needs the
 > non-additive family metadata this section already defines for `defense`'s floor kind. The AMOUNT is an ordinary
 > additive number; only the threshold is a min.
+> ⚖ **AND IT HAS TWO LEGS, ONE RAISING AND ONE LOWERING — `extraYieldThreshold` and `lessYieldThreshold`.** They
+> are ONE mechanic with opposite signs: each selects the smallest positive threshold its owner holds, and each
+> moves the SAME `EXTRA_YIELD` amount, one adding it and one subtracting it. Both are real authored data — the
+> agricultural line raises, the lazy / gluttonous / excessive / nomad lines lower — so a plane carrying only the
+> raising leg silently drops every downside a negative trait is meant to impose.
+> ⛔ They are **two pairs, not one signed pair**: an owner can hold both at once at different thresholds, so one
+> `(interval, amount)` slot per channel cannot express them. The lowering leg resolves on the value the raising
+> one produced, which is the engine's own order (its second branch tests the already-raised running yield).
 >
 > **A plot's yield is ONE base package, resolved in isolation BEFORE the city modifiers.**
 > All output from a single plot is computed in **complete isolation** as one base-yield package — `CvPlot::calculateYield`
@@ -186,6 +194,18 @@ slot does pure integer math and never sees the human boundary.
 > facts are RE-RESOLVE routes only (the refresh-an-operand shape), each folding the exact delta into the working
 > city's worked-plot Σ. *(A founded city physically clears its plot's improvement, so the legacy city-block
 > improvement exclusion needs no resolve leg; route flats stay in the base per this row.)*
+> ⚖ **THE PLOT PACKAGE STORES FOUR SEGMENTS, AND THE FOURTH EXISTS FOR ONE OPERAND: nature · improvement ·
+> ROUTE · rest.** Route and the owner's plot flats sum and floor identically, so the split buys nothing on the
+> TOTAL — what it buys is the engine's per-plot GOLDEN-AGE threshold, which tests the **pre-improvement,
+> pre-route** running yield (`nature + the city block + the owner's plot flats`,
+> [golden-age.md](../reference/golden-age.md)). That operand is inexpressible while route and the owner's flats
+> share a sum, and at the authored threshold of 1 the difference is very nearly every improved tile.
+> ⛔ The SCALING is the opposite case and stays on the FULL total (the row above: *terrain + feature +
+> improvement + route*) — the two thresholds deliberately take different operands, so do not "unify" them.
+> ⚠ For REPORTING, `plotRest` keeps its meaning — the owner's flats **plus** route — so the segments still sum
+> against `plotBase`; `plotRoute` is a breakdown of it, never a fourth term beside it
+> ([http-endpoints.md](http-endpoints.md)).
+>
 > Today every component-specific buff is **flat** (so the package is a pure sum); should a per-improvement *percentage*
 > ever be needed, it applies **here, inside the isolated plot calc** — **never** in the city `(100+Σpercent)` stack,
 > which only ever scales the already-summed base. Consequence: a `basePlotYield` divergence is *necessarily* a per-plot

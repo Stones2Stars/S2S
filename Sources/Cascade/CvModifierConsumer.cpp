@@ -58,7 +58,8 @@ namespace
 		const CvCity* pWorkingCity = kPlot.getWorkingCity();
 		if (pWorkingCity != NULL)
 		{
-			pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
+			pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta,
+				"segment", kPlot.getX(), kPlot.getY());
 		}
 	}
 }
@@ -122,14 +123,17 @@ namespace
 		return iChannel >= 0 && s_channels.find(iChannel) != s_channels.end();
 	}
 
-	// ⚖ THE PLOT YIELD-THRESHOLD IS AN OPERAND OF THE *RESOLVE*, NOT A DEPOSIT -- so when it moves, the plots it
-	// governs must re-resolve. A trait gained or lost changes what
-	// `CvPlayer::getExtraYieldThresholds` answers, and that fact names no plot at all: the consequence is
-	// non-local, which is precisely the sanctioned event-triggered recalc ([contexts.md] -- a genuine DOMAIN
-	// fact, a consequence the fact cannot name, and no finer route to derive).
+	// ⚖ TWO OWNER-SCOPE OPERANDS OF THE *RESOLVE* ARE NOT DEPOSITS -- so when either moves, the plots it governs
+	// must re-resolve. The plot yield THRESHOLD moves when a trait is gained or lost (changing what
+	// `CvPlayer::getExtraYieldThreshold` answers), and the per-plot GOLDEN-AGE bonus moves when a golden age
+	// starts or ends. Neither fact names a plot at all: the consequence is non-local, which is precisely the
+	// sanctioned event-triggered recalc ([contexts.md] -- a genuine DOMAIN fact, a consequence the fact cannot
+	// name, and no finer route to derive).
 	// ⛔ Not a rebuild: the plot's SEGMENTS are untouched and nothing is re-derived from a source; only the
 	// non-linear step over the already-stored sums is recomputed.
-	std::set<int> s_thresholdPendingOwners;
+	// ⚠ They share one pending set because they share the WALK, not because they are one mechanic -- the
+	// threshold is FED as an operand, the golden age is READ live inside the resolve.
+	std::set<int> s_plotResolvePendingOwners;
 
 	bool mc_isPlotThresholdChannel(int iChannel)
 	{
@@ -159,20 +163,20 @@ namespace
 	// ⚠ The play-time route is deliberately guarded to the non-load path (a per-fact mark during the reseed would
 	// re-resolve the same plots once per streaming trait); this pass is its load-time twin, run once at the end
 	// against final state -- the same shape the trade-route rebuild takes.
-	void mc_markAllThresholdOwners()
+	void mc_markAllPlotResolveOwners()
 	{
 		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
 		{
 			if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
 			{
-				s_thresholdPendingOwners.insert(iPlayer);
+				s_plotResolvePendingOwners.insert(iPlayer);
 			}
 		}
 	}
 
-	void mc_flushThresholdResolves()
+	void mc_flushOwnerPlotResolves()
 	{
-		if (s_thresholdPendingOwners.empty())
+		if (s_plotResolvePendingOwners.empty())
 		{
 			return;
 		}
@@ -183,23 +187,29 @@ namespace
 			const int iCh = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
 			if (iCh >= 0) { yieldChannels.push_back(iCh); }
 		}
-		for (std::set<int>::const_iterator it = s_thresholdPendingOwners.begin();
-			it != s_thresholdPendingOwners.end(); ++it)
+		for (std::set<int>::const_iterator it = s_plotResolvePendingOwners.begin();
+			it != s_plotResolvePendingOwners.end(); ++it)
 		{
 			if (*it < 0 || *it >= MAX_PLAYERS) { continue; }
 			const CvPlayer& kOwner = GET_PLAYER((PlayerTypes)*it);
-			// The owner's two numbers, resolved ONCE per owner rather than per plot.
-			// ⚠ The INTERVAL is the smallest positive one the owner holds, NOT a sum -- two sources at 7 and 5
-			// mean "per 5", never "per 12" ([modifier.md] §2a). CvPlayer::updateExtraYieldThreshold already makes
-			// that selection and reduces the ×100 authoring to whole units, so it is the correct feed and the
-			// summed cascade roll-up is not.
+			// The owner's numbers, resolved ONCE per owner rather than per plot -- BOTH LEGS of the scaling: the
+			// RAISING threshold (`extraYieldThreshold`, the agricultural line) and the LOWERING one
+			// (`lessYieldThreshold`, the lazy / gluttonous / excessive / nomad lines). An owner can hold both.
+			// ⚠ Each INTERVAL is the smallest positive one the owner holds, NOT a sum -- two sources at 7 and 5
+			// mean "per 5", never "per 12" ([modifier.md] §2a). The two `CvPlayer::update*YieldThreshold` bodies
+			// already make that selection and reduce the ×100 authoring to whole units, so they are the correct
+			// feed and the summed cascade roll-up is not.
 			std::vector<int> aiInterval;
+			std::vector<int> aiLessInterval;
 			for (size_t iCh = 0; iCh < yieldChannels.size(); ++iCh)
 			{
 				aiInterval.push_back(kOwner.getExtraYieldThreshold((YieldTypes)iCh));
+				aiLessInterval.push_back(kOwner.getLessYieldThreshold((YieldTypes)iCh));
 			}
-			// The AMOUNT each whole interval grants. It is a SEPARATE number by ruling and is meant to be movable
+			// The AMOUNT each whole interval moves. It is a SEPARATE number by ruling and is meant to be movable
 			// data; until an authoring surface carries it, the engine define supplies it (×100 for the plot plane).
+			// ⚑ ONE define serves both legs, signed by which leg it is -- that is the engine's own shape: the two
+			// branches add and subtract the same `EXTRA_YIELD`.
 			const int64_t iAmount = (int64_t)GC.getEXTRA_YIELD() * 100;
 			// every plot the owner's cities can work -- the reach the scaling actually has on the yield plane
 			std::set<const CvPlot*> kSeen;
@@ -216,22 +226,41 @@ namespace
 					kSeen.insert(pPlot);
 					for (size_t iCh = 0; iCh < yieldChannels.size(); ++iCh)
 					{
-						// FEED the plot its two numbers; the package resolves itself off them. The plot never
-						// reaches back for the owner -- that is the whole point of storing them here.
-						pPlot->getCascadePackage().setYieldScaling(yieldChannels[iCh],
-							(int64_t)aiInterval[iCh] * 100, (int64_t)iAmount);
+						// FEED the plot its two scaling numbers; the package resolves itself off them. The plot
+						// never reaches back for the owner -- that is the whole point of storing them here.
+						int64_t iResolvedDelta = pPlot->getCascadePackage().setYieldScaling(
+							yieldChannels[iCh], (int64_t)aiInterval[iCh] * 100, iAmount,
+							(int64_t)aiLessInterval[iCh] * 100, -iAmount);
+						// ...then re-resolve unconditionally, for the OTHER owner-scope operand this pass
+						// carries and does not feed: the GOLDEN AGE, read live inside the resolve. A golden age
+						// starting or ending moves no scaling number, so without this the feed above reports 0
+						// for every plot and the bonus never lands or leaves. Idempotent -- a plot whose
+						// resolved value did not actually move reports 0 and folds nothing.
+						iResolvedDelta += pPlot->getCascadePackage().refreshPlotResolve(yieldChannels[iCh]);
+						// ⛑ FOLD the resolved delta into the working city's Σ, the RESOLVE leg every writer of a
+						// plot's resolved slot owes it (foldPlotSegment's rule). Moving the plot without folding
+						// lands the step on the plot and leaves the city's base short of it forever.
+						if (iResolvedDelta != 0 && pPlot->isBeingWorked())
+						{
+							const CvCity* pWorkingCity = pPlot->getWorkingCity();
+							if (pWorkingCity != NULL)
+							{
+								pWorkingCity->getPlotYields().applyPlotBaseFlat(yieldChannels[iCh], iResolvedDelta,
+									"ownerOperand", pPlot->getX(), pPlot->getY());
+							}
+						}
 					}
 				}
 			}
 		}
-		s_thresholdPendingOwners.clear();
+		s_plotResolvePendingOwners.clear();
 	}
 
 	void mc_noteChannelApplied(int iChannel, int iOwner)
 	{
 		if (iOwner >= 0 && mc_isPlotThresholdChannel(iChannel) && !spineGameLoadInProgress())
 		{
-			s_thresholdPendingOwners.insert(iOwner);
+			s_plotResolvePendingOwners.insert(iOwner);
 		}
 		// Inside the load bracket the load-end pass rebuilds every player once, so noting here would only make
 		// that pass run twice.
@@ -431,8 +460,11 @@ namespace
 		case SEVT_PLOT_IMPROVEMENT_ADDED:
 		case SEVT_PLOT_IMPROVEMENT_REMOVED:
 			return CvCascadePackage<CvPlot>::PLOTSEG_IMPROVEMENT;   // floored at -nature at resolve
+		case SEVT_PLOT_ROUTE_ADDED:
+		case SEVT_PLOT_ROUTE_REMOVED:
+			return CvCascadePackage<CvPlot>::PLOTSEG_ROUTE;         // apart for the golden-age operand
 		default:
-			return CvCascadePackage<CvPlot>::PLOTSEG_REST;          // route + the owner's plot-scope flats
+			return CvCascadePackage<CvPlot>::PLOTSEG_REST;          // the owner's plot-scope flats
 		}
 	}
 
@@ -1570,8 +1602,12 @@ namespace
 			{
 				return CvCascadePackage<CvPlot>::PLOTSEG_NATURE;
 			}
+			if (strncmp(szType, "ROUTE_", 6) == 0)
+			{
+				return CvCascadePackage<CvPlot>::PLOTSEG_ROUTE;
+			}
 		}
-		return CvCascadePackage<CvPlot>::PLOTSEG_REST;   // route + the owner's plot-scope flats
+		return CvCascadePackage<CvPlot>::PLOTSEG_REST;   // the owner's plot-scope flats
 	}
 
 	// ⛔ PLANE C ON THE PLOT PLANE -- the half that did not exist. mc_applyGated's plot branch needs a PLOT, and
@@ -2143,7 +2179,8 @@ namespace
 				const CvCity* pWorkingCity = pCityPlot->getWorkingCity();
 				if (pWorkingCity != NULL)
 				{
-					pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
+					pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta,
+						"cityPlot", pCityPlot->getX(), pCityPlot->getY());
 				}
 			}
 		}
@@ -2811,6 +2848,13 @@ namespace
 					pPlayer, NULL, NULL);
 				// the golden-age member-mirror (the ledgered engine carve-out) applies at the receiver
 				// combine -- the flip re-realizes every rate of the player
+				// ...and the PER-PLOT golden-age bonus is the third leg, resolved on the plot itself: the flip
+				// moves its verdict for every plot this player works and names none of them, so the owner is
+				// marked for the plot re-resolve pass -- the same non-local shape the yield THRESHOLD takes.
+				if (pPlayer != NULL && !spineGameLoadInProgress())
+				{
+					s_plotResolvePendingOwners.insert((int)pPlayer->getID());
+				}
 				break;
 			}
 			// The rebel maintenance discount's ONLY route. Its source (TECH_GAME_START) is held from turn one and
@@ -3064,10 +3108,10 @@ namespace
 			case SEVT_GAME_LOAD_FINISHED:
 			{
 				mc_drainBankedPlotsFans();
-				// The plot yield-THRESHOLD load build: every plot resolved while the map streamed, which is before
-				// its owner held a single trait, so the step was computed against an empty player. Re-resolve now,
-				// against final state, for every alive owner.
-				mc_markAllThresholdOwners();
+				// The load build for both owner-scope resolve operands: every plot resolved while the map streamed,
+				// which is before its owner held a single trait or a loaded golden age had been announced, so the
+				// step was computed against an empty player. Re-resolve now, against final state, for every owner.
+				mc_markAllPlotResolveOwners();
 				mc_drainBankedAtomCrossings();
 				mc_drainBankedAtomFanPlots();
 				mc_reportGrowthCensus();
@@ -3085,8 +3129,9 @@ namespace
 			// The engine owns the route network, so its output has to be re-derived rather than delta'd -- but only
 			// where the fact reached, never as a sweep (owner: "it needs to run targeted, for where an event has hit").
 			mc_flushTradeRouteUpdates();
-			// ...and the plots whose RESOLVE operand moved (a trait changing an owner's yield threshold).
-			mc_flushThresholdResolves();
+			// ...and the plots whose RESOLVE operand moved (a trait moving an owner's yield threshold, or a
+			// golden age starting or ending).
+			mc_flushOwnerPlotResolves();
 		}
 
 	private:

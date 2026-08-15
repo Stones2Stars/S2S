@@ -48,6 +48,11 @@
 int64_t cascadePlotCityAdd100(int iX, int iY, int iChannel);
 int64_t cascadePlotCityFloor100(int iX, int iY, int iChannel);
 
+// ⚖ THE PER-PLOT GOLDEN-AGE BONUS, the same engine-core shape one mechanic over: the plot's owner is in a
+// golden age and `iOperand100` (the PRE-improvement, PRE-route running yield) clears the channel's authored
+// threshold, so the channel gains the authored amount. 0 otherwise, and 0 for every non-yield channel.
+int64_t cascadePlotGoldenAge100(int iX, int iY, int iChannel, int64_t iOperand100);
+
 // ⚖ THE PLOT'S OWN YIELD SCALING -- "+amount per whole interval of what this plot already makes" (owner).
 // A plot whose terrain + feature + improvement + route totals 12, on a 1-per-5 scaling, gains 2 and outputs 14.
 //
@@ -152,10 +157,18 @@ struct CvCascadePackage
 	// (max(0, x+d) != max(0, x) + d), so the RESOLVED slot cannot itself be a maintained sum -- but each
 	// SEGMENT is a plain sum and therefore can be ([DEC-maintained-sum]: the fact applies, nothing recomputes).
 	// So the SEGMENTS are what the facts maintain, and `flat` is re-derived from them at APPLY time by
-	// resolvePlotFlat -- O(1) arithmetic over three stored numbers, never a walk, which is exactly what keeps
+	// resolvePlotFlat -- O(1) arithmetic over the four stored numbers, never a walk, which is exactly what keeps
 	// every READ a bare fetch. Sized at PLOT scope only; only the yield channels ever carry one.
 	mutable std::vector<int64_t> improvementFlat;   // the improvement's own untargeted plot-scope output
-	mutable std::vector<int64_t> restFlat;          // route + the owner's plot-scope flats (both unfloored)
+	mutable std::vector<int64_t> restFlat;          // the owner's plot-scope flats (unfloored)
+	// ⚖ ROUTE IS ITS OWN SEGMENT, AND IT IS THE GOLDEN-AGE THRESHOLD THAT FORCES THE SPLIT. It sums and floors
+	// exactly like `restFlat` -- storing it apart buys nothing on the TOTAL -- but the engine's per-plot
+	// golden-age test runs on the PRE-IMPROVEMENT, PRE-ROUTE running yield ([golden-age.md] §1: "load-bearing
+	// for faithful reproduction"), and that operand is not expressible while route and the owner's plot flats
+	// share one sum. ⚠ The distinction is not academic at the authored values: the threshold is 1, so a tile
+	// whose only production or commerce comes from its improvement or its route qualifies post-hoc and did not
+	// in the engine -- which at threshold 1 is very nearly every improved tile.
+	mutable std::vector<int64_t> routeFlat;         // the route's own plot-scope output (unfloored)
 	// The plot-local YIELD-SCALING operands (PLOT scope only), one pair per channel -- see the callout above the
 	// template. ⚖ IT IS A RATE, NOT A ONE-SHOT THRESHOLD (owner): `interval` is "per how much", `amount` is what
 	// each whole interval grants, so a plot whose own total is 12 on a 1-per-5 scaling gains 2 and ends at 14.
@@ -166,6 +179,15 @@ struct CvCascadePackage
 	// plot-local. The interval is a resolved SELECTION rather than a summed deposit ([modifier.md] §2a).
 	mutable std::vector<int64_t> yieldScaleInterval;
 	mutable std::vector<int64_t> yieldScaleAmount;
+	// ⚖ THE SCALING HAS TWO LEGS, ONE RAISING AND ONE LOWERING, and they are ONE mechanic with opposite signs --
+	// the engine's `extraYieldThreshold` and `lessYieldThreshold`, each selecting the SMALLEST POSITIVE threshold
+	// its owner holds and each paying the SAME `EXTRA_YIELD` amount, one adding it and one subtracting it.
+	// ⛔ Both legs are real authored data (the agricultural line raises, the lazy / gluttonous / excessive /
+	// nomad lines lower), so a package carrying only the raising leg silently drops every downside a negative
+	// trait is supposed to impose.
+	// ⚠ They are SEPARATE pairs, not one signed pair: an owner can hold both at once, at different thresholds.
+	mutable std::vector<int64_t> yieldLessInterval;
+	mutable std::vector<int64_t> yieldLessAmount;
 
 	CvCascadePackage() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
@@ -199,8 +221,11 @@ struct CvCascadePackage
 		substrateFlat.clear();
 		improvementFlat.clear();
 		restFlat.clear();
+		routeFlat.clear();
 		yieldScaleInterval.clear();
 		yieldScaleAmount.clear();
+		yieldLessInterval.clear();
+		yieldLessAmount.clear();
 		appliedSources.clear();
 		bookedGated.clear();
 	}
@@ -255,7 +280,12 @@ struct CvCascadePackage
 
 	// Move the city's worked-plot Σ by an EXACT delta the caller computed (a resolve delta, or ± a whole plot
 	// as it joins or leaves the worked set). ⛔ Never a recount -- the caller always knows both ends.
-	void applyPlotBaseFlat(int iChannel, int64_t iDelta) const
+	// ⛑ EVERY WRITE IS TAGGED WITH THE LEG THAT MADE IT, and the tag is taken HERE rather than at the call
+	// sites: this is the Σ's ONE write point, so a leg added later cannot escape the trace ([DEC-single-implementation]
+	// -- the same reason an emit lives in the internal setter rather than in a hand-kept list). The trace is
+	// LEVEL 4 and costs nothing below it.
+	void applyPlotBaseFlat(int iChannel, int64_t iDelta, const char* szLeg = NULL,
+	                       int iPlotX = -1, int iPlotY = -1) const
 	{
 		if (scope != CASC_SCOPE_CITY || iDelta == 0)
 		{
@@ -272,6 +302,8 @@ struct CvCascadePackage
 			plotBaseFlat.resize(iSlot + 1, 0);
 		}
 		plotBaseFlat[iSlot] += iDelta;
+		CascadeChannelRegistry::reportPlotBaseFold(szLeg, iPlotX, iPlotY, iChannel, (int)iDelta,
+			(int)plotBaseFlat[iSlot], identityFirst, identitySecond);
 	}
 
 	// THE MEMBERSHIP LEG of the worked-plot Σ: fold a plot's WHOLE resolved flat vector into this CITY package,
@@ -299,7 +331,9 @@ struct CvCascadePackage
 			const int iChannel = CascadeChannelRegistry::scopeSlotChannel(CASC_SCOPE_PLOT, iSlot);
 			if (iChannel >= 0)
 			{
-				applyPlotBaseFlat(iChannel, iSign > 0 ? iValue : -iValue);
+				applyPlotBaseFlat(iChannel, iSign > 0 ? iValue : -iValue,
+					iSign > 0 ? "membership+" : "membership-",
+					kPlotPackage.identityFirst, kPlotPackage.identitySecond);
 			}
 		}
 	}
@@ -316,10 +350,10 @@ struct CvCascadePackage
 	}
 
 	// The IMPROVEMENT and REST segments, RAW -- the census decomposition of readFlat. readFlat collapses the
-	// three segments into one number, so it can say a plot's yield is short and never WHICH leg is short: a
+	// segments into one number, so it can say a plot's yield is short and never WHICH leg is short: a
 	// dead improvement leg and a dead nature leg are indistinguishable in the total. These are the only reads
 	// that can tell them apart, and they exist for that census alone ([DEC-obs-scale]).
-	// ⚠ RAW ON PURPOSE -- unfloored, so the three sum to the pre-floor base and a NEGATIVE improvement (an
+	// ⚠ RAW ON PURPOSE -- unfloored, so they sum to the pre-floor base and a NEGATIVE improvement (an
 	// improvement that consumes its nature yield) stays visible instead of being clamped into agreement.
 	// Never a consumer read: the value a consumer wants is readFlat, which is the floored §2a combine.
 	int64_t readImprovementFlat(int iChannel) const
@@ -332,6 +366,11 @@ struct CvCascadePackage
 		return iSlot < (int)improvementFlat.size() ? improvementFlat[iSlot] : 0;
 	}
 
+	// ⚠ REST KEEPS ITS MEANING -- "everything that is neither nature nor improvement" -- so it reports the owner's
+	// plot flats PLUS the route, even though the two are stored apart. The split exists for the golden-age
+	// operand, not for the census: reporting rest WITHOUT route would leave the route silently outside every
+	// decomposition that sums the segments against `plotBase`, and a gap there is the signal that a FLOOR is
+	// biting ([http-endpoints.md]). `readRouteFlat` is the sub-breakdown for the surfaces that have room for it.
 	int64_t readRestFlat(int iChannel) const
 	{
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
@@ -339,7 +378,20 @@ struct CvCascadePackage
 		{
 			return 0;
 		}
-		return iSlot < (int)restFlat.size() ? restFlat[iSlot] : 0;
+		const int64_t iRest = iSlot < (int)restFlat.size() ? restFlat[iSlot] : 0;
+		const int64_t iRoute = iSlot < (int)routeFlat.size() ? routeFlat[iSlot] : 0;
+		return iRest + iRoute;
+	}
+
+	// The ROUTE leg alone -- a breakdown OF readRestFlat above, never a fourth term beside it.
+	int64_t readRouteFlat(int iChannel) const
+	{
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0)
+		{
+			return 0;
+		}
+		return iSlot < (int)routeFlat.size() ? routeFlat[iSlot] : 0;
 	}
 
 	// ⛔ A RECEIVER TOTAL IS NOT STORED HERE, AND IT IS NOT A DEPOSIT-FED DELTA (owner: "the receiver re-sums its
@@ -433,11 +485,12 @@ struct CvCascadePackage
 	{
 		PLOTSEG_NATURE = 0,        // terrain + feature + bonus (the pre-improvement substrate)
 		PLOTSEG_IMPROVEMENT = 1,   // the improvement's own output, floored at −nature at resolve
-		PLOTSEG_REST = 2,          // route + the owner's plot-scope flats, both unfloored
+		PLOTSEG_REST = 2,          // the owner's plot-scope flats, unfloored
+		PLOTSEG_ROUTE = 3,         // the route's own output, unfloored -- apart for the golden-age operand
 	};
 
-	// Apply into a plot yield SEGMENT and re-derive the resolved slot from the three. ⛔ The re-derivation is
-	// NOT a recompute: it reads three stored numbers and applies the §2a floors, so it is O(1) arithmetic and
+	// Apply into a plot yield SEGMENT and re-derive the resolved slot from the four. ⛔ The re-derivation is
+	// NOT a recompute: it reads four stored numbers and applies the §2a floors, so it is O(1) arithmetic and
 	// touches no source, no info and no game object. Doing it HERE rather than at the read is what keeps every
 	// consumer read a bare fetch.
 	int64_t applyPlotSegment(PlotSegment eSegment, int iChannel, int64_t iDelta) const
@@ -450,6 +503,7 @@ struct CvCascadePackage
 		}
 		std::vector<int64_t>& segment = (eSegment == PLOTSEG_NATURE) ? substrateFlat
 		                              : (eSegment == PLOTSEG_IMPROVEMENT) ? improvementFlat
+		                              : (eSegment == PLOTSEG_ROUTE) ? routeFlat
 		                              : restFlat;
 		if (iSlot >= (int)segment.size())
 		{
@@ -477,7 +531,7 @@ struct CvCascadePackage
 		return iSlot >= 0 ? resolvePlotFlat(iSlot, iChannel) : 0;
 	}
 
-	// The §2a plot-as-base combine over the three segments (modifier.md §2a basePlotYield). The SEGMENTS hold
+	// The §2a plot-as-base combine over the four segments (modifier.md §2a basePlotYield). The SEGMENTS hold
 	// raw sums -- that is what makes them delta-able -- so every floor is applied here.
 	int64_t resolvePlotFlat(int iSlot, int iChannel) const
 	{
@@ -495,7 +549,9 @@ struct CvCascadePackage
 		{
 			iImprovement = -iNature;   // an improvement may consume the nature yield, never drive the base under it
 		}
-		int64_t iTotal = iNature + iImprovement + (iSlot < (int)restFlat.size() ? restFlat[iSlot] : 0);
+		const int64_t iRest = (iSlot < (int)restFlat.size()) ? restFlat[iSlot] : 0;
+		const int64_t iRoute = (iSlot < (int)routeFlat.size()) ? routeFlat[iSlot] : 0;
+		int64_t iTotal = iNature + iImprovement + iRest + iRoute;
 		if (iTotal < 0)
 		{
 			iTotal = 0;
@@ -503,9 +559,11 @@ struct CvCascadePackage
 		// The CITY-PLOT ADD (the legacy city block's CityChange + population/divisor), read LIVE off the plot
 		// itself, BEFORE the scaling -- so the threshold plane tests the total legacy tested. The MinCity floor
 		// below bounds the one negative constant (food's -1).
+		const int64_t iCityAdd = (scope == CASC_SCOPE_PLOT)
+			? cascadePlotCityAdd100(identityFirst, identitySecond, iChannel) : 0;
 		if (scope == CASC_SCOPE_PLOT)
 		{
-			iTotal += cascadePlotCityAdd100(identityFirst, identitySecond, iChannel);
+			iTotal += iCityAdd;
 			if (iTotal < 0)
 			{
 				iTotal = 0;
@@ -524,6 +582,28 @@ struct CvCascadePackage
 		if (scope == CASC_SCOPE_PLOT && iSlot < (int)yieldScaleInterval.size())
 		{
 			iTotal = InfoValuation::plotScaledYield(iTotal, yieldScaleInterval[iSlot], yieldScaleAmount[iSlot]);
+		}
+		// ...then the LOWERING leg, on the value the raising one just produced -- the engine's own order, where
+		// the second threshold tests the already-raised running yield rather than the original.
+		if (scope == CASC_SCOPE_PLOT && iSlot < (int)yieldLessInterval.size())
+		{
+			iTotal = InfoValuation::plotScaledYield(iTotal, yieldLessInterval[iSlot], yieldLessAmount[iSlot]);
+		}
+		// ⚖ THE PER-PLOT GOLDEN-AGE BONUS, read LIVE off the plot's owner -- engine-core, exactly like the city
+		// block above (owner: the cascade's say in a golden age is its LENGTH; the yield EFFECT is the engine's).
+		// It is NOT an authored deposit and never becomes one.
+		// ⛔ ITS THRESHOLD TESTS THE PRE-IMPROVEMENT, PRE-ROUTE RUNNING YIELD -- nature + the city block + the
+		// owner's plot flats, which is what the engine tested ([golden-age.md] §1, owner-ruled faithful). That is
+		// the whole reason `routeFlat` is a segment of its own; at the authored threshold of 1 the difference is
+		// nearly every improved tile, so it is not a rounding question.
+		// ⚠ The scaling step is deliberately NOT in the operand: the engine's own operand was pre-improvement,
+		// while the cascade's scaling is ruled to test the FULL total ([modifier.md] §2), so folding it in here
+		// would drag improvement and route back into the very test this excludes them from.
+		// ⚑ Added AFTER the scaling and BEFORE the floor -- the engine's own position for it.
+		if (scope == CASC_SCOPE_PLOT)
+		{
+			iTotal += cascadePlotGoldenAge100(identityFirst, identitySecond, iChannel,
+				iNature + iCityAdd + iRest);
 		}
 		// The CITY-CENTRE FLOOR, last, read LIVE off the plot itself (owner: the flooring is the PLOT'S own
 		// state -- a plot knows it carries a city -- never an operand mirrored here): a city plot yields at
@@ -639,33 +719,55 @@ struct CvCascadePackage
 			{
 				yieldScaleAmount.resize(iChannels, 0);
 			}
+			if (yieldLessInterval.size() < iChannels)
+			{
+				yieldLessInterval.resize(iChannels, 0);
+			}
+			if (yieldLessAmount.size() < iChannels)
+			{
+				yieldLessAmount.resize(iChannels, 0);
+			}
+			if (routeFlat.size() < iChannels)
+			{
+				routeFlat.resize(iChannels, 0);
+			}
 		}
 	}
 
-	// ⚖ FEED THE PLOT ITS TWO SCALING OPERANDS -- the fan's write point, and the only way they ever move.
-	// Returns true when either number actually CHANGED, so a caller re-resolves nothing it need not.
-	// ⛔ It SETS rather than accumulates: the interval is a resolved selection, not a sum of deposits, so
+	// ⚖ FEED THE PLOT ITS SCALING OPERANDS -- the fan's write point, and the only way they ever move. BOTH LEGS
+	// land in one call: they are one mechanic with opposite signs, they are fed by the same pass from the same
+	// owner, and one call means ONE resolve and ONE delta to fold rather than two.
+	// ⛔ It SETS rather than accumulates: an interval is a resolved selection, not a sum of deposits, so
 	// accumulating it would produce a "per N" no source ever authored.
-	bool setYieldScaling(int iChannel, int64_t iInterval, int64_t iAmount) const
+	// ⛔ RETURNS THE RESOLVED DELTA, exactly as the slot's other two writers do (applyPlotSegment,
+	// refreshPlotResolve), because the caller OWES that delta to the working city's worked-plot Σ. Moving a
+	// plot's resolved value without folding it leaves the city short, permanently and silently -- nothing
+	// rebuilds that Σ ([DEC-no-self-heal]). 0 when no operand moved, so a caller that changed nothing folds
+	// nothing.
+	int64_t setYieldScaling(int iChannel, int64_t iInterval, int64_t iAmount,
+	                        int64_t iLessInterval, int64_t iLessAmount) const
 	{
 		if (scope != CASC_SCOPE_PLOT)
 		{
-			return false;
+			return 0;
 		}
 		ensureSized();
 		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
-		if (iSlot < 0 || iSlot >= (int)yieldScaleInterval.size())
+		if (iSlot < 0 || iSlot >= (int)yieldScaleInterval.size()
+			|| iSlot >= (int)yieldLessInterval.size())
 		{
-			return false;
+			return 0;
 		}
-		if (yieldScaleInterval[iSlot] == iInterval && yieldScaleAmount[iSlot] == iAmount)
+		if (yieldScaleInterval[iSlot] == iInterval && yieldScaleAmount[iSlot] == iAmount
+			&& yieldLessInterval[iSlot] == iLessInterval && yieldLessAmount[iSlot] == iLessAmount)
 		{
-			return false;
+			return 0;
 		}
 		yieldScaleInterval[iSlot] = iInterval;
 		yieldScaleAmount[iSlot] = iAmount;
-		resolvePlotFlat(iSlot, iChannel);
-		return true;
+		yieldLessInterval[iSlot] = iLessInterval;
+		yieldLessAmount[iSlot] = iLessAmount;
+		return resolvePlotFlat(iSlot, iChannel);
 	}
 
 	// Slot write access for the gather (refs into the mutable storage; game-thread only).
