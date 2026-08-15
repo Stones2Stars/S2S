@@ -176,11 +176,16 @@ slot does pure integer math and never sees the human boundary.
 > packages into the §1 `base`.
 > **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or
 > plot component* resolves **inside** this per-plot package, **before** the city-level `(100+Σpercent)` stack ever runs.
-> ⚖ **The CITY-CENTRE constant is a FLOOR inside this same isolated resolve, and it reads the plot's OWN city-ness
-> LIVE (owner: "the flooring should be on the plot itself, not on the cascade")** — a city plot's yield channels
-> floor at the YieldInfo `MinCity` minimums as the resolve's last step. City-ness is the plot's own state, so it is
-> never mirrored onto the package as a fed operand; the `SEVT_PLOT_CITY` pair's route is only the RE-RESOLVE on the
-> crossing (the refresh-an-operand shape), whose exact delta folds into the working city's worked-plot Σ.
+> ⚖ **The CITY-CENTRE constant is the legacy `calculateYield` city block, inside this same isolated resolve,
+> reading the plot's OWN city-ness LIVE (owner: "the flooring should be on the plot itself, not on the
+> cascade")** — three terms on a city plot's yield channels: the YieldInfo `CityChange` constant (food −1 /
+> production +1 / commerce +1) **plus** `population / PopulationChangeDivisor` (food /5, production /2,
+> commerce /4 — integer division), both added BEFORE the plot scaling so the threshold plane tests the total
+> legacy tested; and the `MinCity` floor (3/1/1) applied LAST. City-ness is the plot's own state, so none of it
+> is mirrored onto the package as a fed operand; the `SEVT_PLOT_CITY` pair and the city's `SEVT_CITY_POPULATION`
+> facts are RE-RESOLVE routes only (the refresh-an-operand shape), each folding the exact delta into the working
+> city's worked-plot Σ. *(A founded city physically clears its plot's improvement, so the legacy city-block
+> improvement exclusion needs no resolve leg; route flats stay in the base per this row.)*
 > Today every component-specific buff is **flat** (so the package is a pure sum); should a per-improvement *percentage*
 > ever be needed, it applies **here, inside the isolated plot calc** — **never** in the city `(100+Σpercent)` stack,
 > which only ever scales the already-summed base. Consequence: a `basePlotYield` divergence is *necessarily* a per-plot

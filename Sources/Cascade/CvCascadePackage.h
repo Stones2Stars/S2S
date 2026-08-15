@@ -40,9 +40,12 @@
 #include "Data/CvInfoValuation.h"   // InfoValuation::plotScaledYield -- the plot scaling calc lives on the calc surface
 #include <vector>
 
-// ⚖ THE CITY-CENTRE FLOOR input, read LIVE off the plot itself at resolve (owner: the flooring is the PLOT'S --
-// a plot knows it carries a city -- never an operand mirrored onto the package). Defined beside the registry
-// (CvCascadeChannelRegistry.cpp); answers the MinCity minimum x100 for a city plot's yield channel, else 0.
+// ⚖ THE CITY-PLOT LEG, read LIVE off the plot itself at resolve (owner: the city leg is the PLOT'S -- a plot
+// knows it carries a city -- never an operand mirrored onto the package). Defined beside the registry
+// (CvCascadeChannelRegistry.cpp). The ADD is the legacy calculateYield city block's CityChange constant +
+// population/divisor, applied BEFORE the scaling; the FLOOR is the MinCity minimum, applied LAST. Both x100,
+// 0 for every non-city plot and non-yield channel.
+int64_t cascadePlotCityAdd100(int iX, int iY, int iChannel);
 int64_t cascadePlotCityFloor100(int iX, int iY, int iChannel);
 
 // ⚖ THE PLOT'S OWN YIELD SCALING -- "+amount per whole interval of what this plot already makes" (owner).
@@ -496,6 +499,17 @@ struct CvCascadePackage
 		if (iTotal < 0)
 		{
 			iTotal = 0;
+		}
+		// The CITY-PLOT ADD (the legacy city block's CityChange + population/divisor), read LIVE off the plot
+		// itself, BEFORE the scaling -- so the threshold plane tests the total legacy tested. The MinCity floor
+		// below bounds the one negative constant (food's -1).
+		if (scope == CASC_SCOPE_PLOT)
+		{
+			iTotal += cascadePlotCityAdd100(identityFirst, identitySecond, iChannel);
+			if (iTotal < 0)
+			{
+				iTotal = 0;
+			}
 		}
 		// JUST BEFORE OUTBOUND (owner): the plot-local yield SCALING, applied to the total those floors just
 		// produced and folded into the slot every consumer reads -- so the city base, the AI plot valuation and

@@ -806,11 +806,52 @@ void CascadeChannelRegistry::reportTraitImprovementRead(int iPlayer, int iCity, 
 	eventSpine().emit(row);
 }
 
-// ⚖ THE CITY-CENTRE FLOOR input, read LIVE off the plot itself (owner: the flooring is the PLOT'S -- a plot
-// knows it carries a city -- never an operand mirrored onto the package): a city plot's yield channels floor
-// at the YieldInfo MinCity values (authored HUMAN; the package plane is x100). Answers 0 for every non-city
-// plot and every non-yield channel, so the resolve pays one plot fetch and, on the rare city plot, the
-// channel match.
+// The channel -> engine yield resolve behind the two city-plot legs below. NO_YIELD for every non-yield channel.
+static YieldTypes cr_yieldForChannel(int iChannel)
+{
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		if (CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1) == iChannel)
+		{
+			return (YieldTypes)iYield;
+		}
+	}
+	return NO_YIELD;
+}
+
+// ⚖ THE CITY-PLOT ADD, read LIVE off the plot itself (owner: the city leg is the PLOT'S -- a plot knows it
+// carries a city -- never an operand mirrored onto the package): the YieldInfo CityChange constant (the
+// legacy calculateYield city block: food -1 / production +1 / commerce +1) plus population/divisor (food /5,
+// production /2, commerce /4 -- integer division, the legacy step). Applied BEFORE the plot scaling, so the
+// threshold plane tests the total the legacy engine tested. Answers 0 for every non-city plot.
+// ⚠ The population half resolves the city OBJECT, which mid-map-read has not streamed yet -- it answers 0
+// there, and the city's own in-read SEVT_CITY_POPULATION fact re-resolves this plot with the object in hand
+// (the consumer's route), so the term lands exactly once the amount is knowable.
+int64_t cascadePlotCityAdd100(int iX, int iY, int iChannel)
+{
+	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	if (pPlot == NULL || !pPlot->isCityDesignated())
+	{
+		return 0;
+	}
+	const YieldTypes eYield = cr_yieldForChannel(iChannel);
+	if (eYield == NO_YIELD)
+	{
+		return 0;
+	}
+	const CvYieldInfo& kYield = GC.getYieldInfo(eYield);
+	int iAdd = kYield.getCityChange();
+	const CvCity* pPlotCity = pPlot->getPlotCity();
+	if (pPlotCity != NULL && kYield.getPopulationChangeDivisor() != 0)
+	{
+		iAdd += pPlotCity->getPopulation() / kYield.getPopulationChangeDivisor();
+	}
+	return (int64_t)iAdd * 100;
+}
+
+// ⚖ THE CITY-CENTRE FLOOR input, read LIVE off the plot itself (the same ruling as the add above): a city
+// plot's yield channels floor at the YieldInfo MinCity values (authored HUMAN; the package plane is x100).
+// Applied LAST, after the scaling -- the legacy max(iYield, MinCity) position.
 int64_t cascadePlotCityFloor100(int iX, int iY, int iChannel)
 {
 	// isCityDesignated, never isCity: the reseed's plot-city fact resolves this mid-map-read, when the city
@@ -820,12 +861,10 @@ int64_t cascadePlotCityFloor100(int iX, int iY, int iChannel)
 	{
 		return 0;
 	}
-	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	const YieldTypes eYield = cr_yieldForChannel(iChannel);
+	if (eYield == NO_YIELD)
 	{
-		if (CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1) == iChannel)
-		{
-			return (int64_t)GC.getYieldInfo((YieldTypes)iYield).getMinCity() * 100;
-		}
+		return 0;
 	}
-	return 0;
+	return (int64_t)GC.getYieldInfo(eYield).getMinCity() * 100;
 }

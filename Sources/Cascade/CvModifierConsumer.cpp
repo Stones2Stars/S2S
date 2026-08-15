@@ -2121,6 +2121,34 @@ namespace
 		return (iPlotId >= 0 && iPlotId < GC.getMap().numPlots()) ? GC.getMap().plotByIndex(iPlotId) : NULL;
 	}
 
+	// Re-resolve a CITY plot's yield channels and fold each exact delta into the working city's worked-plot Σ.
+	// The city leg (cascadePlotCityAdd100/Floor100) is read LIVE inside the resolve, so this is the whole of
+	// what its two operand facts -- the plot-city crossing, and the city's population moving -- have to do.
+	void mc_refreshCityPlotYields(const CvPlot* pCityPlot)
+	{
+		if (pCityPlot == NULL)
+		{
+			return;
+		}
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+			if (iChannel < 0)
+			{
+				continue;
+			}
+			const int64_t iResolvedDelta = pCityPlot->getCascadePackage().refreshPlotResolve(iChannel);
+			if (iResolvedDelta != 0 && pCityPlot->isBeingWorked())
+			{
+				const CvCity* pWorkingCity = pCityPlot->getWorkingCity();
+				if (pWorkingCity != NULL)
+				{
+					pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
+				}
+			}
+		}
+	}
+
 	//
 	//	The consumer. DOMAIN-only; LOAD-ACTIVE (the reseed's in-read emits build the dirty picture).
 	//
@@ -2392,37 +2420,15 @@ namespace
 				}
 				break;
 			}
-			// ---- THE CITY-CENTRE FLOOR (modifier.md §2a's city-centre constant) ----
-			// A plot BECOMING a city floors its yield channels at the YieldInfo MinCity values; ceasing to be
-			// one removes the floor. The floor itself is read LIVE off the plot inside the resolve (owner: the
-			// flooring is the PLOT'S own state, never an operand mirrored onto the package --
-			// cascadePlotCityFloor100), so this route's whole job is the RE-RESOLVE on the crossing: the
-			// non-linear step re-runs against the new city-ness and the resolved delta folds into the working
-			// city's worked-plot Σ exactly as a segment delta does.
+			// ---- THE CITY-PLOT LEG (modifier.md §2a's city-centre constant) ----
+			// The resolve reads the city leg LIVE off the plot itself (owner: never an operand mirrored onto
+			// the package -- cascadePlotCityAdd100/Floor100), so this route's whole job is the RE-RESOLVE on
+			// the crossing: the non-linear step re-runs against the new city-ness and the resolved delta folds
+			// into the working city's worked-plot Σ exactly as a segment delta does.
 			case SEVT_PLOT_CITY_ADDED:
 			case SEVT_PLOT_CITY_REMOVED:
 			{
-				const CvPlot* pEventPlot = mc_plot(kEvent.iSrcLoc);
-				if (pEventPlot != NULL)
-				{
-					for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
-					{
-						const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
-						if (iChannel < 0)
-						{
-							continue;
-						}
-						const int64_t iResolvedDelta = pEventPlot->getCascadePackage().refreshPlotResolve(iChannel);
-						if (iResolvedDelta != 0 && pEventPlot->isBeingWorked())
-						{
-							const CvCity* pWorkingCity = pEventPlot->getWorkingCity();
-							if (pWorkingCity != NULL)
-							{
-								pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
-							}
-						}
-					}
-				}
+				mc_refreshCityPlotYields(mc_plot(kEvent.iSrcLoc));
 				break;
 			}
 			case SEVT_PLOT_IMPROVEMENT_ADDED:
@@ -2739,6 +2745,14 @@ namespace
 					CascadeChannelRegistry::reportAtomRoute("POPULATION", (int)pPopGated->size(), kPopTally.iFound,
 						kPopTally.iNoSource, kPopTally.iRefused, kPopTally.iApplied,
 						(pPlayer != NULL) ? (int)pPlayer->getID() : -1, (pCity != NULL) ? pCity->getID() : -1);
+				}
+				// The CITY-PLOT population term (modifier.md §2a's city-centre constant): the centre's resolve
+				// adds population/divisor read LIVE, so a population move re-resolves the city plot and folds
+				// the exact delta -- the same route the plot-city crossing rides. At load this is also where
+				// the term first lands: the plot's own reseed resolves before the city object streams.
+				if (pCity != NULL)
+				{
+					mc_refreshCityPlotYields(pCity->plot());
 				}
 				break;
 			}
