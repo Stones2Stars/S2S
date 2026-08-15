@@ -1,7 +1,21 @@
 {
  "type": "LEADER_AFONSO",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_AGGRESSIVE",
+  "TRAIT_EXPANSIVE",
+  "TRAIT_POPULIST",
+  "TRAIT_AGGRESSIVE1",
+  "TRAIT_EXPANSIVE1",
+  "TRAIT_POPULIST1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_AGGRESSIVE",
+  "TRAIT_COMPLEX_EXPANSIVE",
+  "TRAIT_COMPLEX_POPULIST",
+  "TRAIT_COMPLEX_AGGRESSIVE1",
+  "TRAIT_COMPLEX_EXPANSIVE1",
+  "TRAIT_COMPLEX_POPULIST1"
+ ],
  "ai": {
   "flavours": [
    {

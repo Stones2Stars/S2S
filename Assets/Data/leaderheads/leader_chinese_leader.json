@@ -1,7 +1,21 @@
 {
  "type": "LEADER_CHINESE_LEADER",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_PROGRESSIST",
+  "TRAIT_POLITICIAN",
+  "TRAIT_CRUEL",
+  "TRAIT_PROGRESSIST1",
+  "TRAIT_POLITICIAN1",
+  "TRAIT_CRUEL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_PROGRESSIST",
+  "TRAIT_COMPLEX_POLITICIAN",
+  "TRAIT_COMPLEX_CRUEL",
+  "TRAIT_COMPLEX_PROGRESSIST1",
+  "TRAIT_COMPLEX_POLITICIAN1",
+  "TRAIT_COMPLEX_CRUEL1"
+ ],
  "ai": {
   "flavours": [
    {

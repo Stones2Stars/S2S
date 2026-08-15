@@ -1,7 +1,21 @@
 {
  "type": "LEADER_HANNIBAL",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_EXPANSIVE",
+  "TRAIT_ORGANIZED",
+  "TRAIT_POPULIST",
+  "TRAIT_EXPANSIVE1",
+  "TRAIT_ORGANIZED1",
+  "TRAIT_POPULIST1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_EXPANSIVE",
+  "TRAIT_COMPLEX_ORGANIZED",
+  "TRAIT_COMPLEX_POPULIST",
+  "TRAIT_COMPLEX_EXPANSIVE1",
+  "TRAIT_COMPLEX_ORGANIZED1",
+  "TRAIT_COMPLEX_POPULIST1"
+ ],
  "ai": {
   "flavours": [
    {

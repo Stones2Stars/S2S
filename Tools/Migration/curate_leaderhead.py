@@ -30,12 +30,14 @@ Non-ai:
 - bNPC                         -> ai.npc (barbarian/NPC leader; an AI classification; 3 leaders).
 - Description / Civilopedia    -> text.
 
-TRAITS -> the SLOTS are emitted, the ASSIGNMENTS are not (owner). Every leader carries an always-present
-`traits: []` + `complexTraits: []` pair, and the curator never fills them: **who has which trait is CONTENT the
-community owns**, so it is authored, not reconstructed from the legacy `Traits`/`DefaultTraits`/
-`DefaultComplexTraits` tables (whose simple->complex mirroring depended on a correspondence the TRAIT pass
-deliberately dropped). Emitting the empty arrays is the point — an absent key hides the capability, an empty one
-shows a modder exactly where an assignment goes and keeps the shape stable once one lands.
+TRAITS -> BOTH assignment sets are seeded from the legacy `Traits` table (owner). Every authored leader trait
+has a simple AND a complex variant, and the correspondence is pure SPELLING: `TRAIT_X` / `TRAIT_X1` are the
+simple set's entries, and `TRAIT_COMPLEX_X` / `TRAIT_COMPLEX_X1` are their complex twins — so `traits` carries
+the legacy entries verbatim and `complexTraits` the `TRAIT_` -> `TRAIT_COMPLEX_` respelling of the same list.
+The earlier never-fill rule existed because that correspondence was believed broken; it was the SPELLING that
+was wrong, not the mapping. Every emitted id is validated against the TraitInfo table and a miss FAILS LOUD —
+never silently dropped. `DefaultTraits`/`DefaultComplexTraits` stay dropped (redundant single-entry mirrors of
+the same table on the two NPC leaders).
 (Mid-game trait-type swapping is catastrophic — see WorldBuilder-safe-swap #438.)
 
   python3 curate_leaderhead.py --sample LEADER_ALEXANDER LEADER_GANDHI LEADER_BARBARIAN
@@ -121,10 +123,9 @@ FAVORITES = {"FavoriteCivic": "civic", "FavoriteReligion": "religion"}
 MUSIC = {"DiplomacyIntroMusicPeace": "diploIntroMusicPeace", "DiplomacyMusicPeace": "diploMusicPeace",
          "DiplomacyIntroMusicWar": "diploIntroMusicWar", "DiplomacyMusicWar": "diploMusicWar"}
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
-# The legacy trait ASSIGNMENTS are dropped (owner): the leader<->trait mapping is community-owned content, not
-# something the curator reconstructs. What IS emitted is the empty `traits`/`complexTraits` SLOT pair (see
-# curate()) -- the assignment lands there when a modder or the trait pass authors it.
-DROP = {"Type", "Traits", "DefaultTraits", "DefaultComplexTraits"}
+# `Traits` seeds BOTH assignment slots (see the module doc); the two Default* tables are redundant
+# single-entry mirrors of it on the NPC leaders and stay dropped.
+DROP = {"Type", "DefaultTraits", "DefaultComplexTraits"}
 
 AI_ORDER = ["npc", "flavours", "personality", "war", "victory", "trade", "attitude", "refuse",
             "memory", "contact", "noWarProb", "unitWeights", "improvementWeights", "favorites"]
@@ -181,6 +182,7 @@ def _list(node):
 def curate(typ, rec):
     text, ai, identity, grants, art_blocks, sound = {}, {}, {}, {}, {}, {}
     leftover = []
+    trait_entries = []
 
     def put_ai(sub, key, val):
         node = ai.setdefault(sub, OrderedDict())
@@ -193,6 +195,8 @@ def curate(typ, rec):
         tag, t = c.tag, engine.text(c)
         if tag in DROP:
             continue
+        elif tag == "Traits":
+            trait_entries = _list(c)
         elif tag in TEXT:
             if t:
                 text[TEXT[tag]] = t
@@ -238,15 +242,13 @@ def curate(typ, rec):
 
     out = OrderedDict()
     out["type"] = typ
-    # The leader<->trait ASSIGNMENT is CONTENT the community owns (traits are content-LOCKED), so the curator
-    # emits the SLOTS and never fills them: one ALWAYS-PRESENT array per trait set, empty. An absent key is
-    # undiscoverable -- a modder cannot tell the capability exists without reading the engine -- while an empty
-    # one is an invitation to author into (json.md: the data reads cold). Same rule as unit `tags`: mandatory
-    # even when empty, so nothing about the shape changes when an assignment lands.
-    # The two sets are separate because the ACTIVE one is chosen at runtime by GAMEOPTION_LEADER_COMPLEX_TRAITS
-    # (modifier.md §4) -- `traits` is the simple set, `complexTraits` the complex/Thunderbrd one.
-    out["traits"] = []
-    out["complexTraits"] = []
+    # BOTH assignment sets, seeded from the one legacy `Traits` table (owner; module doc): the entries are the
+    # SIMPLE set verbatim, and the complex set is the same list respelled TRAIT_ -> TRAIT_COMPLEX_ (every
+    # starting trait has both variants; the correspondence is pure spelling). The arrays stay ALWAYS-PRESENT
+    # even when a leader authors nothing -- an absent key hides the capability from a modder (same rule as unit
+    # `tags`). Which set is ACTIVE is chosen at runtime by GAMEOPTION_LEADER_COMPLEX_TRAITS (modifier.md §4).
+    out["traits"] = list(trait_entries)
+    out["complexTraits"] = ["TRAIT_COMPLEX_" + entry[len("TRAIT_"):] for entry in trait_entries]
     for k in ("description", "civilopedia"):
         if k in text:
             out[k] = text[k]
@@ -275,7 +277,8 @@ def main():
     ap.add_argument("--sample", nargs="*", help="print these types (default: first 1)")
     ap.add_argument("--write", action="store_true")
     args = ap.parse_args()
-    table = Store().table("LeaderHeadInfo")
+    store = Store()
+    table = store.table("LeaderHeadInfo")
     results, all_leftover = OrderedDict(), set()
     for typ, rec in table.items():
         obj, leftover = curate(typ, rec)
@@ -286,6 +289,19 @@ def main():
     print("LeaderHeadInfo curated: %d" % n)
     for k in ("grants", "ai", "world", "sound", "identity"):
         print("  with %-9s: %d" % (k, has(k)))
+    # The trait-assignment validation (module doc): every emitted id -- both sets -- must resolve in the
+    # TraitInfo table. A miss means the spelling correspondence broke for that entry; FAIL LOUD, never drop.
+    trait_types = set(store.table("TraitInfo"))
+    bad = []
+    for typ, obj in results.items():
+        for slot in ("traits", "complexTraits"):
+            for entry in obj.get(slot, []):
+                if entry not in trait_types:
+                    bad.append("%s.%s: %s" % (typ, slot, entry))
+    iAssigned = sum(1 for o in results.values() if o.get("traits"))
+    print("  trait assignments seeded: %d leaders (both sets); unresolved: %d" % (iAssigned, len(bad)))
+    if bad:
+        raise SystemExit("  !! UNRESOLVED TRAIT ASSIGNMENTS:\n    " + "\n    ".join(bad))
     if all_leftover:
         print("  !! leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))
     else:

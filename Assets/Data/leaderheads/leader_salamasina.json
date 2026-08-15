@@ -1,7 +1,21 @@
 {
  "type": "LEADER_SALAMASINA",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_ORGANIZED",
+  "TRAIT_SCIENTIFIC",
+  "TRAIT_CRUEL",
+  "TRAIT_ORGANIZED1",
+  "TRAIT_SCIENTIFIC1",
+  "TRAIT_CRUEL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_ORGANIZED",
+  "TRAIT_COMPLEX_SCIENTIFIC",
+  "TRAIT_COMPLEX_CRUEL",
+  "TRAIT_COMPLEX_ORGANIZED1",
+  "TRAIT_COMPLEX_SCIENTIFIC1",
+  "TRAIT_COMPLEX_CRUEL1"
+ ],
  "ai": {
   "flavours": [
    {

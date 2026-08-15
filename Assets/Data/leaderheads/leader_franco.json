@@ -1,7 +1,21 @@
 {
  "type": "LEADER_FRANCO",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_DECEIVER",
+  "TRAIT_IMPERIALIST",
+  "TRAIT_CRUEL",
+  "TRAIT_DECEIVER1",
+  "TRAIT_IMPERIALIST1",
+  "TRAIT_CRUEL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_DECEIVER",
+  "TRAIT_COMPLEX_IMPERIALIST",
+  "TRAIT_COMPLEX_CRUEL",
+  "TRAIT_COMPLEX_DECEIVER1",
+  "TRAIT_COMPLEX_IMPERIALIST1",
+  "TRAIT_COMPLEX_CRUEL1"
+ ],
  "ai": {
   "flavours": [
    {

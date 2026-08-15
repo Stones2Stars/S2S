@@ -1,7 +1,21 @@
 {
  "type": "LEADER_PEDRO_II",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_SCIENTIFIC",
+  "TRAIT_CREATIVE",
+  "TRAIT_EXCESSIVE",
+  "TRAIT_SCIENTIFIC1",
+  "TRAIT_CREATIVE1",
+  "TRAIT_EXCESSIVE1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_SCIENTIFIC",
+  "TRAIT_COMPLEX_CREATIVE",
+  "TRAIT_COMPLEX_EXCESSIVE",
+  "TRAIT_COMPLEX_SCIENTIFIC1",
+  "TRAIT_COMPLEX_CREATIVE1",
+  "TRAIT_COMPLEX_EXCESSIVE1"
+ ],
  "ai": {
   "flavours": [
    {

@@ -1,7 +1,21 @@
 {
  "type": "LEADER_MEIJI",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_SEAFARING",
+  "TRAIT_IMPERIALIST",
+  "TRAIT_FOREIGN",
+  "TRAIT_SEAFARING1",
+  "TRAIT_IMPERIALIST1",
+  "TRAIT_FOREIGN1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_SEAFARING",
+  "TRAIT_COMPLEX_IMPERIALIST",
+  "TRAIT_COMPLEX_FOREIGN",
+  "TRAIT_COMPLEX_SEAFARING1",
+  "TRAIT_COMPLEX_IMPERIALIST1",
+  "TRAIT_COMPLEX_FOREIGN1"
+ ],
  "ai": {
   "flavours": [
    {

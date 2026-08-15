@@ -1,7 +1,21 @@
 {
  "type": "LEADER_MENZIES",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_POLITICIAN",
+  "TRAIT_FINANCIAL",
+  "TRAIT_EXCESSIVE",
+  "TRAIT_POLITICIAN1",
+  "TRAIT_FINANCIAL1",
+  "TRAIT_EXCESSIVE1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_POLITICIAN",
+  "TRAIT_COMPLEX_FINANCIAL",
+  "TRAIT_COMPLEX_EXCESSIVE",
+  "TRAIT_COMPLEX_POLITICIAN1",
+  "TRAIT_COMPLEX_FINANCIAL1",
+  "TRAIT_COMPLEX_EXCESSIVE1"
+ ],
  "ai": {
   "flavours": [
    {

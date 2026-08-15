@@ -1,7 +1,21 @@
 {
  "type": "LEADER_PHILIP_II",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_IMPERIALIST",
+  "TRAIT_SPIRITUAL",
+  "TRAIT_FANATICAL",
+  "TRAIT_IMPERIALIST1",
+  "TRAIT_SPIRITUAL1",
+  "TRAIT_FANATICAL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_IMPERIALIST",
+  "TRAIT_COMPLEX_SPIRITUAL",
+  "TRAIT_COMPLEX_FANATICAL",
+  "TRAIT_COMPLEX_IMPERIALIST1",
+  "TRAIT_COMPLEX_SPIRITUAL1",
+  "TRAIT_COMPLEX_FANATICAL1"
+ ],
  "ai": {
   "flavours": [
    {

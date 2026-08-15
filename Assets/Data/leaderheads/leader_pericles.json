@@ -1,7 +1,21 @@
 {
  "type": "LEADER_PERICLES",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_PHILOSOPHICAL",
+  "TRAIT_CREATIVE",
+  "TRAIT_POPULIST",
+  "TRAIT_PHILOSOPHICAL1",
+  "TRAIT_CREATIVE1",
+  "TRAIT_POPULIST1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_PHILOSOPHICAL",
+  "TRAIT_COMPLEX_CREATIVE",
+  "TRAIT_COMPLEX_POPULIST",
+  "TRAIT_COMPLEX_PHILOSOPHICAL1",
+  "TRAIT_COMPLEX_CREATIVE1",
+  "TRAIT_COMPLEX_POPULIST1"
+ ],
  "ai": {
   "flavours": [
    {

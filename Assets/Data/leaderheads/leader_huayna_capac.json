@@ -1,7 +1,21 @@
 {
  "type": "LEADER_HUAYNA_CAPAC",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_FINANCIAL",
+  "TRAIT_FOREIGN",
+  "TRAIT_AGRICULTURAL",
+  "TRAIT_FINANCIAL1",
+  "TRAIT_FOREIGN1",
+  "TRAIT_AGRICULTURAL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_FINANCIAL",
+  "TRAIT_COMPLEX_FOREIGN",
+  "TRAIT_COMPLEX_AGRICULTURAL",
+  "TRAIT_COMPLEX_FINANCIAL1",
+  "TRAIT_COMPLEX_FOREIGN1",
+  "TRAIT_COMPLEX_AGRICULTURAL1"
+ ],
  "ai": {
   "flavours": [
    {

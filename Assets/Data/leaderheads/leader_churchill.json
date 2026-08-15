@@ -1,7 +1,21 @@
 {
  "type": "LEADER_CHURCHILL",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_CHARISMATIC",
+  "TRAIT_PROTECTIVE",
+  "TRAIT_FOREIGN",
+  "TRAIT_CHARISMATIC1",
+  "TRAIT_PROTECTIVE1",
+  "TRAIT_FOREIGN1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_CHARISMATIC",
+  "TRAIT_COMPLEX_PROTECTIVE",
+  "TRAIT_COMPLEX_FOREIGN",
+  "TRAIT_COMPLEX_CHARISMATIC1",
+  "TRAIT_COMPLEX_PROTECTIVE1",
+  "TRAIT_COMPLEX_FOREIGN1"
+ ],
  "ai": {
   "flavours": [
    {

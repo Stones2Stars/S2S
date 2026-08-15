@@ -1,7 +1,21 @@
 {
  "type": "LEADER_RICHELIEU",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_SPIRITUAL",
+  "TRAIT_DECEIVER",
+  "TRAIT_FOREIGN",
+  "TRAIT_SPIRITUAL1",
+  "TRAIT_DECEIVER1",
+  "TRAIT_FOREIGN1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_SPIRITUAL",
+  "TRAIT_COMPLEX_DECEIVER",
+  "TRAIT_COMPLEX_FOREIGN",
+  "TRAIT_COMPLEX_SPIRITUAL1",
+  "TRAIT_COMPLEX_DECEIVER1",
+  "TRAIT_COMPLEX_FOREIGN1"
+ ],
  "ai": {
   "flavours": [
    {

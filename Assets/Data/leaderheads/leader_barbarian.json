@@ -1,7 +1,11 @@
 {
  "type": "LEADER_BARBARIAN",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_BARBARIC"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_BARBARIC"
+ ],
  "ai": {
   "npc": true,
   "personality": {

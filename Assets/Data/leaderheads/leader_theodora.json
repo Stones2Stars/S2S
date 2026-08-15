@@ -1,7 +1,21 @@
 {
  "type": "LEADER_THEODORA",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_SPIRITUAL",
+  "TRAIT_CREATIVE",
+  "TRAIT_IDEALISTIC",
+  "TRAIT_SPIRITUAL1",
+  "TRAIT_CREATIVE1",
+  "TRAIT_IDEALISTIC1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_SPIRITUAL",
+  "TRAIT_COMPLEX_CREATIVE",
+  "TRAIT_COMPLEX_IDEALISTIC",
+  "TRAIT_COMPLEX_SPIRITUAL1",
+  "TRAIT_COMPLEX_CREATIVE1",
+  "TRAIT_COMPLEX_IDEALISTIC1"
+ ],
  "ai": {
   "flavours": [
    {

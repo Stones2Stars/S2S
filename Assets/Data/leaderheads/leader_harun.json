@@ -1,7 +1,21 @@
 {
  "type": "LEADER_HARUN",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_CREATIVE",
+  "TRAIT_FINANCIAL",
+  "TRAIT_POPULIST",
+  "TRAIT_CREATIVE1",
+  "TRAIT_FINANCIAL1",
+  "TRAIT_POPULIST1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_CREATIVE",
+  "TRAIT_COMPLEX_FINANCIAL",
+  "TRAIT_COMPLEX_POPULIST",
+  "TRAIT_COMPLEX_CREATIVE1",
+  "TRAIT_COMPLEX_FINANCIAL1",
+  "TRAIT_COMPLEX_POPULIST1"
+ ],
  "ai": {
   "flavours": [
    {

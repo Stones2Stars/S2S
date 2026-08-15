@@ -1,7 +1,21 @@
 {
  "type": "LEADER_GENGHIS_KHAN",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_NOMAD",
+  "TRAIT_AGGRESSIVE",
+  "TRAIT_POPULIST",
+  "TRAIT_NOMAD1",
+  "TRAIT_AGGRESSIVE1",
+  "TRAIT_POPULIST1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_NOMAD",
+  "TRAIT_COMPLEX_AGGRESSIVE",
+  "TRAIT_COMPLEX_POPULIST",
+  "TRAIT_COMPLEX_NOMAD1",
+  "TRAIT_COMPLEX_AGGRESSIVE1",
+  "TRAIT_COMPLEX_POPULIST1"
+ ],
  "ai": {
   "flavours": [
    {

@@ -1,7 +1,21 @@
 {
  "type": "LEADER_HEKE",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_POLITICIAN",
+  "TRAIT_PROGRESSIST",
+  "TRAIT_EXCESSIVE",
+  "TRAIT_POLITICIAN1",
+  "TRAIT_PROGRESSIST1",
+  "TRAIT_EXCESSIVE1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_POLITICIAN",
+  "TRAIT_COMPLEX_PROGRESSIST",
+  "TRAIT_COMPLEX_EXCESSIVE",
+  "TRAIT_COMPLEX_POLITICIAN1",
+  "TRAIT_COMPLEX_PROGRESSIST1",
+  "TRAIT_COMPLEX_EXCESSIVE1"
+ ],
  "ai": {
   "flavours": [
    {

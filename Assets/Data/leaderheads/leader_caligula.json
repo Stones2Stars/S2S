@@ -1,7 +1,21 @@
 {
  "type": "LEADER_CALIGULA",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_IMPERIALIST",
+  "TRAIT_SPIRITUAL",
+  "TRAIT_CRUEL",
+  "TRAIT_IMPERIALIST1",
+  "TRAIT_SPIRITUAL1",
+  "TRAIT_CRUEL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_IMPERIALIST",
+  "TRAIT_COMPLEX_SPIRITUAL",
+  "TRAIT_COMPLEX_CRUEL",
+  "TRAIT_COMPLEX_IMPERIALIST1",
+  "TRAIT_COMPLEX_SPIRITUAL1",
+  "TRAIT_COMPLEX_CRUEL1"
+ ],
  "ai": {
   "flavours": [
    {

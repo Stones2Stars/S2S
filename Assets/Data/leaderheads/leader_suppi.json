@@ -1,7 +1,21 @@
 {
  "type": "LEADER_SUPPI",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_EXPANSIVE",
+  "TRAIT_IMPERIALIST",
+  "TRAIT_EXCESSIVE",
+  "TRAIT_EXPANSIVE1",
+  "TRAIT_IMPERIALIST1",
+  "TRAIT_EXCESSIVE1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_EXPANSIVE",
+  "TRAIT_COMPLEX_IMPERIALIST",
+  "TRAIT_COMPLEX_EXCESSIVE",
+  "TRAIT_COMPLEX_EXPANSIVE1",
+  "TRAIT_COMPLEX_IMPERIALIST1",
+  "TRAIT_COMPLEX_EXCESSIVE1"
+ ],
  "ai": {
   "flavours": [
    {

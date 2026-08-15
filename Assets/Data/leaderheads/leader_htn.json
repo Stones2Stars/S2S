@@ -1,7 +1,21 @@
 {
  "type": "LEADER_HTN",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_FINANCIAL",
+  "TRAIT_SEAFARING",
+  "TRAIT_POPULIST",
+  "TRAIT_FINANCIAL1",
+  "TRAIT_SEAFARING1",
+  "TRAIT_POPULIST1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_FINANCIAL",
+  "TRAIT_COMPLEX_SEAFARING",
+  "TRAIT_COMPLEX_POPULIST",
+  "TRAIT_COMPLEX_FINANCIAL1",
+  "TRAIT_COMPLEX_SEAFARING1",
+  "TRAIT_COMPLEX_POPULIST1"
+ ],
  "ai": {
   "flavours": [
    {

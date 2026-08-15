@@ -1,7 +1,21 @@
 {
  "type": "LEADER_IVAN",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_AGGRESSIVE",
+  "TRAIT_AGRICULTURAL",
+  "TRAIT_CRUEL",
+  "TRAIT_AGGRESSIVE1",
+  "TRAIT_AGRICULTURAL1",
+  "TRAIT_CRUEL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_AGGRESSIVE",
+  "TRAIT_COMPLEX_AGRICULTURAL",
+  "TRAIT_COMPLEX_CRUEL",
+  "TRAIT_COMPLEX_AGGRESSIVE1",
+  "TRAIT_COMPLEX_AGRICULTURAL1",
+  "TRAIT_COMPLEX_CRUEL1"
+ ],
  "ai": {
   "flavours": [
    {

@@ -1,7 +1,21 @@
 {
  "type": "LEADER_ITZCOATL",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_INDUSTRIOUS",
+  "TRAIT_POLITICIAN",
+  "TRAIT_FOREIGN",
+  "TRAIT_INDUSTRIOUS1",
+  "TRAIT_POLITICIAN1",
+  "TRAIT_FOREIGN1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_INDUSTRIOUS",
+  "TRAIT_COMPLEX_POLITICIAN",
+  "TRAIT_COMPLEX_FOREIGN",
+  "TRAIT_COMPLEX_INDUSTRIOUS1",
+  "TRAIT_COMPLEX_POLITICIAN1",
+  "TRAIT_COMPLEX_FOREIGN1"
+ ],
  "ai": {
   "flavours": [
    {

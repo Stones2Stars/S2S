@@ -1,7 +1,21 @@
 {
  "type": "LEADER_MEHMED",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_INDUSTRIOUS",
+  "TRAIT_EXPANSIVE",
+  "TRAIT_FANATICAL",
+  "TRAIT_INDUSTRIOUS1",
+  "TRAIT_EXPANSIVE1",
+  "TRAIT_FANATICAL1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_INDUSTRIOUS",
+  "TRAIT_COMPLEX_EXPANSIVE",
+  "TRAIT_COMPLEX_FANATICAL",
+  "TRAIT_COMPLEX_INDUSTRIOUS1",
+  "TRAIT_COMPLEX_EXPANSIVE1",
+  "TRAIT_COMPLEX_FANATICAL1"
+ ],
  "ai": {
   "flavours": [
    {

@@ -1,7 +1,21 @@
 {
  "type": "LEADER_CHARLES_V",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_ORGANIZED",
+  "TRAIT_IMPERIALIST",
+  "TRAIT_FOREIGN",
+  "TRAIT_ORGANIZED1",
+  "TRAIT_IMPERIALIST1",
+  "TRAIT_FOREIGN1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_ORGANIZED",
+  "TRAIT_COMPLEX_IMPERIALIST",
+  "TRAIT_COMPLEX_FOREIGN",
+  "TRAIT_COMPLEX_ORGANIZED1",
+  "TRAIT_COMPLEX_IMPERIALIST1",
+  "TRAIT_COMPLEX_FOREIGN1"
+ ],
  "ai": {
   "flavours": [
    {

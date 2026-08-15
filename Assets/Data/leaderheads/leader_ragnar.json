@@ -1,7 +1,21 @@
 {
  "type": "LEADER_RAGNAR",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_SEAFARING",
+  "TRAIT_PROGRESSIST",
+  "TRAIT_BARBARIC",
+  "TRAIT_SEAFARING1",
+  "TRAIT_PROGRESSIST1",
+  "TRAIT_BARBARIC1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_SEAFARING",
+  "TRAIT_COMPLEX_PROGRESSIST",
+  "TRAIT_COMPLEX_BARBARIC",
+  "TRAIT_COMPLEX_SEAFARING1",
+  "TRAIT_COMPLEX_PROGRESSIST1",
+  "TRAIT_COMPLEX_BARBARIC1"
+ ],
  "ai": {
   "flavours": [
    {

@@ -1,7 +1,21 @@
 {
  "type": "LEADER_BRENNUS",
- "traits": [],
- "complexTraits": [],
+ "traits": [
+  "TRAIT_PROTECTIVE",
+  "TRAIT_FINANCIAL",
+  "TRAIT_BARBARIC",
+  "TRAIT_PROTECTIVE1",
+  "TRAIT_FINANCIAL1",
+  "TRAIT_BARBARIC1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_PROTECTIVE",
+  "TRAIT_COMPLEX_FINANCIAL",
+  "TRAIT_COMPLEX_BARBARIC",
+  "TRAIT_COMPLEX_PROTECTIVE1",
+  "TRAIT_COMPLEX_FINANCIAL1",
+  "TRAIT_COMPLEX_BARBARIC1"
+ ],
  "ai": {
   "flavours": [
    {
