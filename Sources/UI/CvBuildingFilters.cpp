@@ -94,13 +94,20 @@ BuildingFilterBase::~BuildingFilterBase()
 
 bool BuildingFilterCanBuild::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
-	// The build-list filter's two modes ARE the two tri-state thresholds: normally only what is offered
-	// (== LISTED), and in show-unbuildable mode everything in the tree including the greyed (>= GREYED).
-	const EnablerDomain::State eFloor = m_bShowSomeUnconstructable ? EnablerDomain::STATE_GREYED : EnablerDomain::STATE_LISTED;
 	if (pCity)
 	{
-		return pCity->getBuildingAvailability(eBuilding) >= eFloor;
+		// The list is an OFFER consumer, so its normal content is the fresh offer -- gate-passed AND not
+		// queued. A queued building is already being handled, and the raw tri-state deliberately ignores the
+		// queued overlay (CvCity.h), so the offer question is asked of the offer read, never of the state.
+		if (pCity->isBuildingOffered(eBuilding))
+		{
+			return true;
+		}
+		// Show-unbuildable mode adds the GREYED tree members. A queued candidate reads LISTED, not GREYED, so
+		// it stays excluded in both modes.
+		return m_bShowSomeUnconstructable && pCity->getBuildingAvailability(eBuilding) == EnablerDomain::STATE_GREYED;
 	}
+	const EnablerDomain::State eFloor = m_bShowSomeUnconstructable ? EnablerDomain::STATE_GREYED : EnablerDomain::STATE_LISTED;
 	return pPlayer->getBuildingAvailabilityAnywhere(eBuilding) >= eFloor;
 }
 

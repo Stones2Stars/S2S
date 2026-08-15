@@ -759,6 +759,10 @@ public:
 	// Caller-owned vector, cleared and filled, so a hot caller reuses one buffer.
 	void getAvailableBuildings(std::vector<int>& buildings) const;
 	void getAvailableUnits(std::vector<int>& units) const;
+	// The OFFER's single-candidate spelling (gate-passed AND not queued) -- what a per-id offer consumer (the
+	// build-list filter) asks, since the tri-state above deliberately ignores the queued overlay. Buildings
+	// only: a unit stays trainable however many are queued, so its offer IS its LISTED state.
+	bool isBuildingOffered(BuildingTypes eBuilding) const;
 
 	// THE VISIBLE TRI-STATE -- LISTED **plus** GREYED: everything in the tree, gate held or not. Distinct from
 	// the OFFER above, which is what may be started right now. This is what a build list showing "go get copper"

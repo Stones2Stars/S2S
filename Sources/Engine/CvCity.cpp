@@ -111,6 +111,14 @@ void CvCity::getAvailableBuildings(std::vector<int>& buildings) const
 	m_enabler.buildings.listedIds(buildings);
 }
 
+// The OFFER's single-candidate spelling: gate-passed AND not currently queued -- exactly what listedIds fills,
+// asked of one id. The build-list filter is an OFFER consumer, so it asks this and never the raw tri-state,
+// which deliberately ignores the queued overlay (CvCity.h).
+bool CvCity::isBuildingOffered(BuildingTypes eBuilding) const
+{
+	return m_enabler.buildings.listed((int)eBuilding);
+}
+
 // The VISIBLE tri-state -- LISTED plus GREYED, i.e. everything in the tree whether or not its gate holds.
 // Distinct from getAvailableBuildings, which is the OFFER: what may be started right now.
 void CvCity::getInTreeBuildings(std::vector<int>& buildings) const
