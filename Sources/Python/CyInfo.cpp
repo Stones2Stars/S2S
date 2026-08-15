@@ -608,6 +608,24 @@ bool CyInfo::providesNukeImmunity(int iBuildingId) const
 {
 	return providesAmenity("BUILDING_", iBuildingId, CLS_AMENITY_NUKE_IMMUNE);
 }
+// The building's own authored FLAT contribution to one property, over the scopes a building authors the open
+// per-property plane at -- the CvBuildingFilters read, served to Python (the fire events rank burn candidates
+// by flammability). x100 NATIVE like every amount; the reader divides at the point of use.
+int CyInfo::getBuildingPropertyAmount(int iBuildingId, int iPropertyId) const
+{
+	const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
+	if (pBuilding == NULL || iPropertyId < 0)
+	{
+		return 0;
+	}
+	const CvModifiers* pModifiers = pBuilding->getModifiers();
+	if (pModifiers == NULL)
+	{
+		return 0;
+	}
+	return pModifiers->propertySum(iPropertyId, CASC_SCOPE_CITY, CASC_UNIT_FLAT)
+		+ pModifiers->propertySum(iPropertyId, CASC_SCOPE_EMPIRE, CASC_UNIT_FLAT);
+}
 bool CyInfo::isUnfoundable(int iFeatureId) const
 {
 	return hasCharacteristic("FEATURE_", iFeatureId, CLS_CHARACTERISTIC_UNFOUNDABLE);
@@ -1544,6 +1562,7 @@ void CyInfo::pythonPublish()
 		.def("isReligiousBuilding", &CyInfo::isReligiousBuilding)
 		.def("isAutoBuild",         &CyInfo::isAutoBuild)
 		.def("providesNukeImmunity",  &CyInfo::providesNukeImmunity)
+		.def("getBuildingPropertyAmount", &CyInfo::getBuildingPropertyAmount)
 		.def("providesCapitalStatus", &CyInfo::providesCapitalStatus)
 		.def("isUnfoundable",         &CyInfo::isUnfoundable)
 		.def("getHandicapCivicUpkeepPercent", &CyInfo::getHandicapCivicUpkeepPercent)

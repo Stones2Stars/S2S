@@ -534,7 +534,8 @@ def canTriggerHurricaneCity(argsList):
 	if not CyCity.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
 		return False
 
-	iLat = CyCity.plot().getLatitude()
+	aPos = CyCity.getPosition()
+	iLat = MAP.plot(aPos[0], aPos[1]).getLatitude()
 	if iLat < 0 or iLat > 30: return False
 
 	if CyCity.getPopulation() < 2: return False
@@ -597,7 +598,8 @@ def canTriggerCycloneCity(argsList):
 	if not CyCity.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
 		return False
 
-	iLat = CyCity.plot().getLatitude()
+	aPos = CyCity.getPosition()
+	iLat = MAP.plot(aPos[0], aPos[1]).getLatitude()
 	if iLat >= 0 or iLat < -30: return False
 
 	if CyCity.getPopulation() < 2: return False
@@ -804,15 +806,17 @@ def canTriggerChampion(argsList):
 	return not GC.getTeam(GC.getPlayer(argsList[0].ePlayer).getTeam()).isAtWar(False)
 
 def canTriggerChampionUnit(argsList):
-	unit = GC.getPlayer(argsList[1]).getUnit(argsList[2])
-
-	if not unit or not unit.canFight():
+	iPlayer = argsList[1]
+	iUnit = argsList[2]
+	aRead = STATE.getUnitRead(iPlayer, iUnit)
+	if aRead[UnitReadKind.UNIT_READ_TYPE] == -1:
 		return False
-
-	if unit.getDamage() > 0 or unit.getLevel() < 5:
+	# can fight = a real base combat strength; damaged = current HP below max.
+	if aRead[UnitReadKind.UNIT_READ_BASE_COMBAT] <= 0:
 		return False
-
-	if unit.isHasPromotion(GC.getInfoTypeForString("PROMOTION_LEADERSHIP")):
+	if aRead[UnitReadKind.UNIT_READ_HP] < aRead[UnitReadKind.UNIT_READ_MAX_HP] or aRead[UnitReadKind.UNIT_READ_LEVEL] < 5:
+		return False
+	if STATE.hasUnitPromotion(iPlayer, iUnit, GC.getInfoTypeForString("PROMOTION_LEADERSHIP")):
 		return False
 
 	return True
@@ -820,13 +824,12 @@ def canTriggerChampionUnit(argsList):
 
 def applyChampion(argsList):
 	data = argsList[1]
-	GC.getPlayer(data.ePlayer).getUnit(data.iUnitId).setHasPromotion(GC.getInfoTypeForString("PROMOTION_LEADERSHIP"), True)
+	ACT.setUnitPromotion(data.ePlayer, data.iUnitId, GC.getInfoTypeForString("PROMOTION_LEADERSHIP"), True)
 
 def getHelpChampion(argsList):
 	data = argsList[1]
-	unit = GC.getPlayer(data.ePlayer).getUnit(data.iUnitId)
 	iLeadership = GC.getInfoTypeForString("PROMOTION_LEADERSHIP")
-	return TRNSLTR.getText("TXT_KEY_EVENT_CHAMPION_HELP", (unit.getNameKey(), INFO.getTextKey("PROMOTION_", iLeadership)))
+	return TRNSLTR.getText("TXT_KEY_EVENT_CHAMPION_HELP", (STATE.getUnitName(data.ePlayer, data.iUnitId), INFO.getTextKey("PROMOTION_", iLeadership)))
 
 ######## ELECTRIC COMPANY ###########
 
@@ -6328,13 +6331,21 @@ def doWildFire(argsList):
 			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 		ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBuilding, False)
 
+# getProperties serves [propertyId, value] rows -- the per-property value is a row scan.
+def getCityPropertyValue(CyCity, iProperty):
+	for aRow in CyCity.getProperties():
+		if aRow[0] == iProperty:
+			return aRow[1]
+	return 0
+
 def doMinorFire(argsList):
 	data = argsList[1]
 	CyPlayer = GC.getPlayer(data.ePlayer)
 	CyTeam = GC.getTeam(CyPlayer.getTeam())
 	CyCity = CyPlayer.getCity(data.iCityId)
 
-	iFlammStart = CyCity.getProperties().getValueByProperty(GC.getInfoTypeForString("PROPERTY_FLAMMABILITY"))
+	iFlammProperty = GC.getInfoTypeForString("PROPERTY_FLAMMABILITY")
+	iFlammStart = getCityPropertyValue(CyCity, iFlammProperty)
 
 	iPop = CyCity.getPopulation()
 	iFlammRand = iFlammStart/5 + iPop*iPop
@@ -6344,12 +6355,12 @@ def doMinorFire(argsList):
 	for i in xrange(GC.getNumBuildingInfos()):
 		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
-		info = GC.getBuildingInfo(i)
-		if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():
+		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_COST) < 1 or INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i):
 			continue
 
 		randNum = GAME.getSorenRandNum(iFlammRand, "Buildings destroyed by fire.")
-		iFlamm = info.getProperties().getValueByProperty(GC.getInfoTypeForString("PROPERTY_FLAMMABILITY"))
+		# x100-native amount read; reduced here so it ranks against the plain city property value.
+		iFlamm = INFO.getBuildingPropertyAmount(i, iFlammProperty) / 100
 		iFlammScore = iFlamm + randNum
 		if iFlammScore > iHighFlamm:
 			iHighFlamm = iFlammScore
@@ -6367,7 +6378,8 @@ def doMajorFire(argsList):
 	CyPlayer = GC.getPlayer(data.ePlayer)
 	CyTeam = GC.getTeam(CyPlayer.getTeam())
 	CyCity = CyPlayer.getCity(data.iCityId)
-	iFlammStart = CyCity.getProperties().getValueByProperty(GC.getInfoTypeForString("PROPERTY_FLAMMABILITY"))
+	iFlammProperty = GC.getInfoTypeForString("PROPERTY_FLAMMABILITY")
+	iFlammStart = getCityPropertyValue(CyCity, iFlammProperty)
 	popScore = CyCity.getPopulation() * CyCity.getPopulation()
 	iFlammRand = (iFlammStart / 4) + popScore
 	iFlammEnd = iFlammStart * 3 / 4
@@ -6376,18 +6388,18 @@ def doMajorFire(argsList):
 	for i in xrange(iFlammRange):
 		iBurnBuilding = -1
 		iHighFlamm = 0
-		currFlamm = CyCity.getProperties().getValueByProperty(GC.getInfoTypeForString("PROPERTY_FLAMMABILITY"))
+		currFlamm = getCityPropertyValue(CyCity, iFlammProperty)
 		if currFlamm <= iFlammEnd:
 			break
 		for j in xrange(GC.getNumBuildingInfos()):
 			if BUILDING.isLimitedWonder(j) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
 				continue
-			info = GC.getBuildingInfo(j)
-			if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():
+			if INFO.getIntrinsic("BUILDING_", j, IntrinsicSlot.PYINT_COST) < 1 or INFO.providesNukeImmunity(j) or INFO.isAutoBuild(j):
 				continue
 
 			randNum = GAME.getSorenRandNum(iFlammRand, "Buildings destroyed by fire.")
-			iFlamm = info.getProperties().getValueByProperty(GC.getInfoTypeForString("PROPERTY_FLAMMABILITY"))
+			# x100-native amount read; reduced so it ranks against the plain city property value.
+			iFlamm = INFO.getBuildingPropertyAmount(j, iFlammProperty) / 100
 			iFlammScore = iFlamm + randNum
 			if iFlammScore > iHighFlamm:
 				iHighFlamm = iFlammScore
@@ -6409,7 +6421,7 @@ def doCatastrophicFire(argsList):
 	CyTeam = GC.getTeam(CyPlayer.getTeam())
 	CyCity = CyPlayer.getCity(data.iCityId)
 	iProp = GC.getInfoTypeForString("PROPERTY_FLAMMABILITY")
-	iFlammStart = CyCity.getProperties().getValueByProperty(iProp)
+	iFlammStart = getCityPropertyValue(CyCity, iProp)
 	iPop = CyCity.getPopulation()
 	popScore = iPop * iPop
 	iFlammRand = iFlammStart/3 + popScore
@@ -6428,7 +6440,7 @@ def doCatastrophicFire(argsList):
 			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
 
 	for i in xrange(iFlammRange):
-		currFlamm = CyCity.getProperties().getValueByProperty(iProp)
+		currFlamm = getCityPropertyValue(CyCity, iProp)
 		if currFlamm <= iFlammEnd: break
 		iBurnBuilding = -1
 		iHighFlamm = 0
@@ -6436,11 +6448,11 @@ def doCatastrophicFire(argsList):
 		for j in xrange(GC.getNumBuildingInfos()):
 			if BUILDING.isLimitedWonder(j) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
 				continue
-			info = GC.getBuildingInfo(j)
-			if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():
+			if INFO.getIntrinsic("BUILDING_", j, IntrinsicSlot.PYINT_COST) < 1 or INFO.providesNukeImmunity(j) or INFO.isAutoBuild(j):
 				continue
 
-			iFlammScore = info.getProperties().getValueByProperty(iProp) + GAME.getSorenRandNum(iFlammRand, "Buildings destroyed by fire.")
+			# x100-native amount read; reduced so it ranks against the plain city property value.
+			iFlammScore = INFO.getBuildingPropertyAmount(j, iProp) / 100 + GAME.getSorenRandNum(iFlammRand, "Buildings destroyed by fire.")
 			if iFlammScore > iHighFlamm:
 				iHighFlamm = iFlammScore
 				iBurnBuilding = j

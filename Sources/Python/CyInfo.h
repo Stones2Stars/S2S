@@ -459,6 +459,9 @@ public:
 	// the building PROVIDES and not an attribute it HAS. The plot-substrate key of the same name is a
 	// CHARACTERISTIC and a different mechanic; the blocks are distinct precisely so they cannot merge.
 	bool providesNukeImmunity(int iBuildingId) const;
+	// The building's authored FLAT contribution to one property (city + empire scope), x100 native -- the
+	// burn-candidate ranking read (fire events).
+	int getBuildingPropertyAmount(int iBuildingId, int iPropertyId) const;
 	// Does this building confer CAPITAL status on its city (the `capital` AMENITY -- the palace)?
 	bool providesCapitalStatus(int iBuildingId) const;
 	// Does this FEATURE bar a city from being founded on its plot (the `unfoundable` CHARACTERISTIC)?

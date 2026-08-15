@@ -2350,6 +2350,10 @@ class CvMainInterface:
 					screen.setImageButton("WID|TECH|ProgBar0", "", x, y, w, h, eWidGen, iCurrentResearch, 0)
 					x += w / 2
 					if CyPlayer.isAnarchy():
+						# Anarchy shows only the label + turn timer: the bar fill and its tick marks are the
+						# LAST research redraw's leftovers, so both clear or they render under the label.
+						screen.hide("ResearchBar")
+						self.researchBarDC.drawTickMarks(screen, 0, 0, 0)
 						szTxt = TRNSLTR.getText("INTERFACE_ANARCHY", (CyPlayer.getAnarchyTurns(),))
 						screen.setText("WID|TECH|ProgBar1", "", szTxt, 1<<2, x, 2, 0, eFontGame, eWidGen, iCurrentResearch, 0)
 					elif iCurrentResearch != -1:
@@ -3963,11 +3967,12 @@ class CvMainInterface:
 			n += 1
 			y += iSize + 4
 
-		iBestUnit = city.AI_bestUnitAI(UnitAITypes.UNITAI_SETTLE)
+		iBestUnit = GC.getPlayer(iCityOwner).getCity(iCityID).getBestUnitForRole(UnitAITypes.UNITAI_SETTLE)
 		if iBestUnit > -1 and not self.isUnitMaxedOut(iBestUnit, InCity):
 			szRow = str(n)
 			screen.attachPanelAt(PnlRight, ROW + szRow, "", "", True, False, ePanelBlack, 0, y - 4, w3, iSize + 2, eWidGen, 1, 2)
-			szTxt = uFont3 + TRNSLTR.getText("TXT_KEY_POPUP_RECOMMENDED", (INFO.getDescription("UNIT_", iBestUnit), city.getUnitProductionTurnsLeft(iBestUnit, 0), "TXT_KEY_UNIT_SETTLER"))
+			iTurns = GC.getPlayer(iCityOwner).getCity(iCityID).getProductionTurnsLeftFor(OrderTypes.ORDER_TRAIN, iBestUnit, 0)
+			szTxt = uFont3 + TRNSLTR.getText("TXT_KEY_POPUP_RECOMMENDED", (INFO.getDescription("UNIT_", iBestUnit), iTurns, "TXT_KEY_UNIT_SETTLER"))
 
 			PF = "WID|UNIT|CityWork%d"
 			screen.addDDSGFCAt("", ROW + szRow, INFO.getButton("UNIT_", iBestUnit), -2, 0, iSize, iSize, eWidGen, 1, 2, False)

@@ -769,9 +769,8 @@ class CvEventManager:
 				popup.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON_SCREEN)
 				popup.setText('showDawnOfMan')
 				popup.addPopup(iPlayer)
+			# Any-era starts are supported (owner): the legacy later-era warning popup is gone, not conditional.
 			szText = ""
-			if GC.getDefineINT("START_YEAR") != GAME.getGameTurnYear():
-				szText += "\n\n" + TRNSLTR.getText("TXT_KEY_MOD_GAMESTART_NOT_PREHISTORIC", ())
 			if GAME.isOption(GameOptionTypes.GAMEOPTION_CORE_CUSTOM_START):
 				szText += "\n\n" + TRNSLTR.getText("TXT_KEY_MOD_GAMESTART_ADVANCED_START", ())
 			if szText:
