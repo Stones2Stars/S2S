@@ -158,6 +158,12 @@ struct CvCascadePackage
 	// plot-local. The interval is a resolved SELECTION rather than a summed deposit ([modifier.md] §2a).
 	mutable std::vector<int64_t> yieldScaleInterval;
 	mutable std::vector<int64_t> yieldScaleAmount;
+	// The CITY-CENTRE FLOOR operand (PLOT scope only), per channel: the guaranteed minimum a CITY plot yields
+	// (the YieldInfo MinCity values, x100), 0 on every non-city plot. FED IN by the SEVT_PLOT_CITY route --
+	// city-ness is owner state the resolve must not read, the yieldScale operands' own rule -- and applied as a
+	// max() floor at the END of the resolve (modifier.md §2a's city-centre constant): the centre yields at
+	// least this, whatever the tile provides.
+	mutable std::vector<int64_t> plotCityFloor;
 
 	CvCascadePackage() : scope(CASC_SCOPE_CITY), identityFirst(-1), identitySecond(-1) {}
 
@@ -191,6 +197,9 @@ struct CvCascadePackage
 		substrateFlat.clear();
 		improvementFlat.clear();
 		restFlat.clear();
+		yieldScaleInterval.clear();
+		yieldScaleAmount.clear();
+		plotCityFloor.clear();
 		appliedSources.clear();
 		bookedGated.clear();
 	}
@@ -504,6 +513,12 @@ struct CvCascadePackage
 		{
 			iTotal = InfoValuation::plotScaledYield(iTotal, yieldScaleInterval[iSlot], yieldScaleAmount[iSlot]);
 		}
+		// The CITY-CENTRE FLOOR, last: the centre yields at least its MinCity whatever the tile provides
+		// (0 everywhere else, so this is one comparison on every non-city plot).
+		if (scope == CASC_SCOPE_PLOT && iSlot < (int)plotCityFloor.size() && iTotal < plotCityFloor[iSlot])
+		{
+			iTotal = plotCityFloor[iSlot];
+		}
 		//	⚑ ANSWERS THE EXACT DELTA IT MOVED, which is what makes the CITY's worked-plot Σ maintainable at all:
 		//	the floors above break linearity over a DEPOSIT delta, but (new - old) on the resolved slot is exact
 		//	whatever they did. The caller -- which knows the PLOT and therefore its working city -- applies it.
@@ -607,7 +622,30 @@ struct CvCascadePackage
 			{
 				yieldScaleAmount.resize(iChannels, 0);
 			}
+			if (plotCityFloor.size() < iChannels)
+			{
+				plotCityFloor.resize(iChannels, 0);
+			}
 		}
+	}
+
+	// ⚖ FEED THE PLOT ITS CITY-CENTRE FLOOR -- the SEVT_PLOT_CITY route's write point, and the only way it ever
+	// moves. SETS rather than accumulates (a floor is a resolved property of being a city, not a sum), and
+	// returns true when the value actually changed so the caller re-resolves nothing it need not.
+	bool setPlotCityFloor(int iChannel, int64_t iValue) const
+	{
+		if (scope != CASC_SCOPE_PLOT)
+		{
+			return false;
+		}
+		ensureSized();
+		const int iSlot = CascadeChannelRegistry::scopeSlotIndex(scope, iChannel);
+		if (iSlot < 0 || iSlot >= (int)plotCityFloor.size() || plotCityFloor[iSlot] == iValue)
+		{
+			return false;
+		}
+		plotCityFloor[iSlot] = iValue;
+		return true;
 	}
 
 	// ⚖ FEED THE PLOT ITS TWO SCALING OPERANDS -- the fan's write point, and the only way they ever move.

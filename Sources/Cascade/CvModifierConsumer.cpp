@@ -2392,6 +2392,45 @@ namespace
 				}
 				break;
 			}
+			// ---- THE CITY-CENTRE FLOOR (modifier.md §2a's city-centre constant) ----
+			// A plot BECOMING a city floors its yield channels at the YieldInfo MinCity values; ceasing to be one
+			// removes the floor. The floor is a RESOLVE OPERAND on the plot package (the yieldScale precedent:
+			// city-ness is owner state the resolve must not read), so it is FED here and the non-linear step
+			// re-resolved -- and the resolved delta folds into the working city's worked-plot Σ exactly as a
+			// segment delta does. At founding the centre is not yet worked, so the membership fold carries the
+			// floored value when the worked fact lands; in-read the same order holds (plots stream before cities).
+			case SEVT_PLOT_CITY_ADDED:
+			case SEVT_PLOT_CITY_REMOVED:
+			{
+				const CvPlot* pEventPlot = mc_plot(kEvent.iSrcLoc);
+				if (pEventPlot != NULL)
+				{
+					const bool bCity = (kEvent.iEventId == SEVT_PLOT_CITY_ADDED);
+					for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+					{
+						const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
+						if (iChannel < 0)
+						{
+							continue;
+						}
+						// MinCity is authored HUMAN on the yield info; the package plane is x100.
+						const int64_t iFloor = bCity ? (int64_t)GC.getYieldInfo((YieldTypes)iYield).getMinCity() * 100 : 0;
+						if (pEventPlot->getCascadePackage().setPlotCityFloor(iChannel, iFloor))
+						{
+							const int64_t iResolvedDelta = pEventPlot->getCascadePackage().refreshPlotResolve(iChannel);
+							if (iResolvedDelta != 0 && pEventPlot->isBeingWorked())
+							{
+								const CvCity* pWorkingCity = pEventPlot->getWorkingCity();
+								if (pWorkingCity != NULL)
+								{
+									pWorkingCity->getPlotYields().applyPlotBaseFlat(iChannel, iResolvedDelta);
+								}
+							}
+						}
+					}
+				}
+				break;
+			}
 			case SEVT_PLOT_IMPROVEMENT_ADDED:
 			case SEVT_PLOT_IMPROVEMENT_REMOVED:
 			case SEVT_PLOT_TERRAIN_ADDED:
