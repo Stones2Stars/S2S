@@ -86,9 +86,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ELEPHANT",
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ELEPHANT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 4,
   "militaryWorth": 6,
   "advisor": "ADVISOR_ECONOMY",

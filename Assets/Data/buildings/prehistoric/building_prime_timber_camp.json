@@ -48,9 +48,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP",
   "civilopedia": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

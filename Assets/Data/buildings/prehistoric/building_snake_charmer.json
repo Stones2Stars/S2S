@@ -55,9 +55,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SNAKE_CHARMER",
   "civilopedia": "TXT_KEY_BUILDING_SNAKE_CHARMER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 2,
   "conquestProbability": 75,
   "advisor": "ADVISOR_MILITARY",

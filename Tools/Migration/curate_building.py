@@ -295,7 +295,10 @@ DROP_DEAD = {"iMaxPopulationAllowed", "iMaxPopulationChange", "iDCMNukesOkay", "
     # dead, re-verified 2026-06-20: the repel combat mechanic was REMOVED from the engine (CvCombatModel.cpp:294); field is a vestige (only debug TestCode.py reads getLocalRepel)
     "iLocalRepel",
     # dead, re-verified 2026-06-20: old wonder item never wired (only the loader/getter decl, zero consumers)
-    "bNoEnemyPillagingIncome"}
+    "bNoEnemyPillagingIncome",
+    # killed mechanic (owner: a civ whitelist is poorly visible game design; techs decide, `disable` covers
+    # any bar) -- see superseded-ideas
+    "EnabledCivilizationTypes"}
 # Module-LOADER directives (not gameplay): bForceOverwrite is a modular-merge control, never a building property.
 DROP_MODULE = {"bForceOverwrite"}
 # Handled by requires_fn (read off rec). Most are in the mapping prereqs; listed here for the coverage check.
@@ -308,7 +311,7 @@ REQUIRES_TAGS = {
     "PrereqInCityBuildings", "PrereqNotInCityBuildings", "PrereqOrBuildings", "PrereqAmountBuildings",
     "PrereqAnyoneBuilding", "PrereqOrTerrain", "PrereqAndTerrain", "PrereqOrFeature", "PrereqOrImprovement",
     "PrereqOrHeritage", "VictoryPrereq", "iCitiesPrereq", "iTeamsPrereq", "iLevelPrereq",
-    "iMaxGlobalInstances", "iMaxTeamInstances", "iMaxPlayerInstances", "EnabledCivilizationTypes",
+    "iMaxGlobalInstances", "iMaxTeamInstances", "iMaxPlayerInstances",
     "PrereqGameOption", "NotGameOption",
 }
 # store-handled enabler edges (DROP building-side: they invert onto the SOURCE) + obsolete/replace.
@@ -1280,13 +1283,6 @@ def requires_building(rec, store):
     # operate (dormancy). Folded via the shared boolexpr converter (And/Or of Has over bonus/feature/tech/terrain/
     # building). owner 2026-06-16; renames §Building. ---
     boolexpr.merge_into(boolexpr.convert_field(rec.find("ConstructCondition")), build_all, build_any, build_none)
-    # EnabledCivilizationTypes is NOT a requires gate: CvCity::canConstruct:2557 applies it ONLY to an
-    # isStronglyRestricted() NPC civ (Neanderthal) -- a WHITELIST so the era-locked NPC may build a thing past its
-    # block (e.g. the buffalo trainer, which sits past SEDENTARY_LIFESTYLE). For a real civ the check is SKIPPED.
-    # So it is an IDENTITY field (identity.enabledCivilizations, emitted in curate()), IGNORED by the dry-calc (NPCs
-    # excluded); remodel post-rework (owner 2026-06-24). Was wrongly AND-ed into requires.build -> under-offered every
-    # real civ (the whole animal-trainer cluster).
-
     boolexpr.fold_or_groups(build_all, build_any)   # OR-groups -> nested {any} under all (any = ||, never list-of-groups)
     build = OrderedDict()
     if build_all:
@@ -1715,10 +1711,6 @@ def curate(typ, rec, store):
     if _pedcat:
         identity["pediaCategory"] = _pedcat
     gate_on, gate_off = gate_building(rec)
-    # EnabledCivilizationTypes -> identity whitelist (NPC-only gate; dry-calc ignores it; remodel post-rework).
-    _civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
-    if _civs:
-        identity["enabledCivilizations"] = _civs
 
     # --- PASS 2: keyed inversions (§6.1), properties, triggers entries, one-shot grants, enables-from-XML ---
     bespoke = OrderedDict()   # top-level bespoke sections (shrine/headquarters, json §9)

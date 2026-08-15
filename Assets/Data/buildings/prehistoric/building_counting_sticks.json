@@ -58,9 +58,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_COUNTING_STICKS",
   "civilopedia": "TXT_KEY_BUILDING_COUNTING_STICKS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_SCIENCE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

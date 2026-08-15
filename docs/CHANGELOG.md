@@ -17,6 +17,8 @@
   floor) instead of acting like a regular tile.
 - Fixed a civilization-restriction misread that hid 21 empire-wide buildings (the rock/stick/
   lumber gatherer class and kin) from every player's build list.
+- The civilization-whitelist mechanic is removed outright: what a civ can build is decided by
+  its techs and requirements — NPCs included — and deliberate bars use the disable mechanism.
 
 Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
 rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,

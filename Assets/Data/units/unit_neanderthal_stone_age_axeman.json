@@ -137,9 +137,6 @@
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
   ]
  }
 }

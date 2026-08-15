@@ -90,9 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANT_CATCHER",
   "civilopedia": "TXT_KEY_BUILDING_ANT_CATCHER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

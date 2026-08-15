@@ -191,18 +191,6 @@ public:
 	bool isDefendAgainstUnit(int iUnit) const { return vectorHas(m_aiDefendAgainstUnits, iUnit); }
 	const std::vector<int>& getHeritage() const { return m_aiHeritage; }       // identity.heritage
 	const std::vector<std::string>& getUniqueNames() const { return m_aszUniqueNames; }   // identity.uniqueNames (raw name/TXT strings)
-	// identity.enabledCivilizations -- a WHITELIST (empty = available to every civilization; non-empty = the
-	// Neanderthal/NPC restriction class). The asking side resolves its own civilization -- an info never
-	// learns what an owner is (patterns.md INFO DATA-OUT).
-	const std::vector<int>& getEnabledCivilizations() const { return m_aiEnabledCivilizations; }
-	// The WHITELIST rule, in ONE place: empty means every civilization, so a restriction only ever NARROWS.
-	// ⚠ Takes a CIVILIZATION, never a player -- the asking side resolves its own (an info never learns what an
-	// owner is). A caller holding a player passes GET_PLAYER(id).getCivilizationType().
-	bool isEnabledForCivilization(int iCivilization) const
-	{ return m_aiEnabledCivilizations.empty() || vectorHas(m_aiEnabledCivilizations, iCivilization); }
-	// Is this unit restricted to SOME civilization at all (the Neanderthal/NPC class)? -- the whitelist's
-	// existence, asked by a spawner that has no civilization in hand.
-	bool isCivilizationRestricted() const { return !m_aiEnabledCivilizations.empty(); }
 	// identity.{feature|terrain}PassableTechs -- substrate id -> the tech that opens passage (-1 = none).
 	const std::map<int, int>& getFeaturePassableTechs() const { return m_featurePassableTechs; }
 	const std::map<int, int>& getTerrainPassableTechs() const { return m_terrainPassableTechs; }
@@ -402,7 +390,6 @@ private:
 	std::vector<int> m_aiDefendAgainstUnits;
 	std::vector<int> m_aiHeritage;
 	std::vector<std::string> m_aszUniqueNames;
-	std::vector<int> m_aiEnabledCivilizations;
 	std::map<int, int> m_featurePassableTechs;
 	std::map<int, int> m_terrainPassableTechs;
 

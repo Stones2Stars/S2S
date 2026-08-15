@@ -97,9 +97,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SLAUGHTERHOUSE",
   "civilopedia": "TXT_KEY_BUILDING_SLAUGHTERHOUSE_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

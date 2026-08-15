@@ -83,9 +83,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TORCHES",
   "civilopedia": "TXT_KEY_BUILDING_TORCHES_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 4,
   "conquestProbability": 100,
   "advisor": "ADVISOR_ECONOMY",

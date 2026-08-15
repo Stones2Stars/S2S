@@ -32,9 +32,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BIG_CATS",
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BIG_CAT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "notConstructible": true,
   "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
   "advisor": "ADVISOR_MILITARY",

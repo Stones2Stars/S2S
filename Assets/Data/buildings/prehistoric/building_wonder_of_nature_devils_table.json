@@ -89,9 +89,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEVILS_TABLE",
   "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEVILS_TABLE_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 4,
   "conquestProbability": 70,
   "greatPeopleUnitType": "UNIT_PROPHET",

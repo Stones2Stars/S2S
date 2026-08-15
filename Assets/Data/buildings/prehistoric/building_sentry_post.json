@@ -102,9 +102,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SENTRY_POST",
   "civilopedia": "TXT_KEY_BUILDING_SENTRY_POST_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

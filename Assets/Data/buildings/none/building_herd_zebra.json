@@ -49,9 +49,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HERD_ZEBRA",
   "civilopedia": "TXT_KEY_BUILDING_HERD_ZEBRA_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "notConstructible": true,
   "worth": 3,
   "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",

@@ -141,9 +141,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TANNERY",
   "civilopedia": "TXT_KEY_BUILDING_TANNERY_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 4,
   "militaryWorth": 2,
   "conquestProbability": 75,

@@ -1995,10 +1995,6 @@ bool CvPlayer::addStartUnitAI(const UnitAITypes eUnitAI, const int iCount)
 		{
 			continue;
 		}
-		if (!kUnit.isEnabledForCivilization(getCivilizationType()))
-		{
-			continue; // is a Civ unit, but not for this player.
-		}
 		if (EnablerKernel::requiresMetForPlayer(*this, EDGEB_UNITS, iI))
 		{
 			int iValue = AI_unitValue((UnitTypes) iI, eUnitAI, NULL);

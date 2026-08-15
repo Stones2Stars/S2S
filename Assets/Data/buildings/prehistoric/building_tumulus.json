@@ -71,9 +71,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TUMULUS",
   "civilopedia": "TXT_KEY_BUILDING_TUMULUS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "centerInCity": true,
   "worth": 2,
   "conquestProbability": 66,

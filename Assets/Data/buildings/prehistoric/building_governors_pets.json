@@ -48,9 +48,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GOVERNORS_PETS",
   "civilopedia": "TXT_KEY_BUILDING_GOVERNORS_PETS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 1,
   "conquestProbability": 25,
   "advisor": "ADVISOR_CULTURE",

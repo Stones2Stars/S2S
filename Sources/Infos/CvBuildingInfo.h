@@ -236,7 +236,6 @@ public:
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 	const CvPropertyManipulators* getPropertyManipulatorsAllCities() const { return &m_PropertyManipulatorsAllCities; }
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }   // MAPCATEGORY_* FKs
-	const std::vector<int>& getEnabledCivilizations() const { return m_aiEnabledCivilizations; }  // CIVILIZATION_* FKs
 	const std::map<int, int>& getVictoryThresholds() const  { return m_victoryThresholds; }       // VICTORY_* FK -> threshold
 	// The commerce-magnitude identity config (×100 -- a magnitude, not a count).
 	int getStateReligionCommerce(CommerceTypes eCommerce) const { return m_aiStateReligionCommerce[(int)eCommerce]; }
@@ -303,7 +302,6 @@ private:
 	int m_iHeadquartersCorporation;
 	std::string m_szConstructSound;
 	std::vector<MapCategoryTypes> m_aeMapCategories;
-	std::vector<int> m_aiEnabledCivilizations;
 	std::map<int, int> m_victoryThresholds;
 	std::map<int, int> m_flavours;                  // ai.flavours: FLAVOR_* id -> weight
 	int m_iPopulationChange;

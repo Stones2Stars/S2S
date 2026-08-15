@@ -70,9 +70,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS",
   "civilopedia": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 1,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

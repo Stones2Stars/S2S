@@ -69,9 +69,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHALK_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_CHALK_GATHERER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

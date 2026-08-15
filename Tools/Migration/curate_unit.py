@@ -178,7 +178,7 @@ REQUIRES_TAGS = {
     "PrereqTech", "TechTypes", "BonusType", "PrereqBonuses", "VicinityBonusType", "PrereqVicinityBonuses",
     "PrereqReligion", "PrereqCorporation", "PrereqOrCivics", "PrereqAndBuildings", "PrereqOrBuildings",
     "PrereqAndHeritage", "PrereqOrHeritage", "iMinAreaSize", "StateReligion", "bRequiresStateReligionInCity",
-    "HolyCity", "Domain", "EnabledCivilizationTypes",
+    "HolyCity", "Domain",
     "TrainCondition", "PrereqGameOption", "NotGameOption", "iMaxGlobalInstances", "iMaxPlayerInstances",
     "iMaxTeamInstances",
 }
@@ -360,10 +360,6 @@ def requires_unit(rec, store):
     # 2026-06-25 requires.build routing): a whole-entity option gate authors as the top-level `enabled`/`disabled`
     # condition (`enabled: GAMEOPTION_X`), the ONE canonical form across every type -- `requires` holds only genuine
     # needs (resources/civics/counts). Collected in curate() via gate_unit() below.
-    # EnabledCivilizationTypes is NOT a train gate: CvCity::canTrain applies it ONLY to an isStronglyRestricted()
-    # NPC civ (the Neanderthal whitelist, same mechanism as buildings, CvCity.cpp:2218). Real civs SKIP it. So it is
-    # an identity whitelist (identity.enabledCivilizations, emitted in curate()), IGNORED by the dry-calc; remodel
-    # post-rework (owner 2026-06-24). Was wrongly AND-ed into requires -> under-offered every real civ.
     # --- instance caps are NOT a requires SELF-atom (owner 2026-06-17): they move to the declarative `allowed`
     # cap (authored by allowed_unit() below). SELF leaves requires entirely; uniform with Building/Tech/CultureLevel.
     # enabler-spec §5a/§13.7. ---
@@ -1279,10 +1275,6 @@ def curate(typ, rec, store):
     gate_entity(out,
                 _typelist(rec, "PrereqGameOption") or ([_txt(rec, "PrereqGameOption")] if _txt(rec, "PrereqGameOption") else []),
                 _typelist(rec, "NotGameOption") or ([_txt(rec, "NotGameOption")] if _txt(rec, "NotGameOption") else []))
-    # EnabledCivilizationTypes -> identity whitelist (NPC-only train gate; dry-calc ignores it; remodel post-rework).
-    _civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
-    if _civs:
-        identity["enabledCivilizations"] = _civs
     allowed = allowed_unit(rec)
     if allowed:
         out["allowed"] = allowed
@@ -1356,6 +1348,9 @@ HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set
                            # DROPPED, not re-homed: the per-instance build-cost ramp is a killed mechanic
                            # (owner) -- see superseded-ideas. Listed here so coverage knows it is accounted for.
                            "iInstanceCostModifier",
+                           # DROPPED: the civ whitelist is a killed mechanic (owner: poorly visible game design;
+                           # techs decide, `disable` covers any bar) -- see superseded-ideas.
+                           "EnabledCivilizationTypes",
                            "DefaultUnitAI", "UnitMeshGroups", "FreePromotions", "Builds",
                            "ReligionSpreads", "CorporationSpreads",   # -> spread.religion / spread.corporation (own block)
                            "GroupSpawnUnitCombatTypes",   # -> groupSpawn (own block, struct rows)

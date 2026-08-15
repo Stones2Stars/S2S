@@ -88,9 +88,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BOATYARD",
   "civilopedia": "TXT_KEY_BUILDING_BOATYARD_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "conquestProbability": 25,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

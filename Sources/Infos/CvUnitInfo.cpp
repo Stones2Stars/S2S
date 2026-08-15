@@ -394,7 +394,6 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	m_aiDefendAgainstUnits.clear();
 	m_aiHeritage.clear();
 	m_aszUniqueNames.clear();
-	m_aiEnabledCivilizations.clear();
 	m_featurePassableTechs.clear();
 	m_terrainPassableTechs.clear();
 	m_targetUnitCombats.clear();
@@ -539,7 +538,6 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		jsonReadIdList(*pIdentity, "defendAgainstUnit", m_aiDefendAgainstUnits);
 		jsonReadIdList(*pIdentity, "heritage", m_aiHeritage);
 		jsonReadStrList(*pIdentity, "uniqueNames", m_aszUniqueNames);
-		jsonReadIdList(*pIdentity, "enabledCivilizations", m_aiEnabledCivilizations);
 		// identity.advancedStart.cost
 		if (const picojson::object* pAdvancedStart = jsonChildObj(*pIdentity, "advancedStart"))
 		{

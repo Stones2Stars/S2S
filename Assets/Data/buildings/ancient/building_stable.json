@@ -109,9 +109,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STABLE",
   "civilopedia": "TXT_KEY_BUILDING_STABLE_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 2,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

@@ -68,9 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CAPTURE_THE_FLAG",
   "civilopedia": "TXT_KEY_BUILDING_CAPTURE_THE_FLAG_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

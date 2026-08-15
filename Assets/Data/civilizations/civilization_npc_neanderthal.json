@@ -58,7 +58,6 @@
   "adjective": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_ADJECTIVE",
   "civilopedia": "TXT_KEY_CIVILIZATION_NPC_NEANDERTHAL_PEDIA",
   "isNpc": true,
-  "stronglyRestricted": true,
   "leaders": [
    "LEADER_NEANDERTHAL"
   ],

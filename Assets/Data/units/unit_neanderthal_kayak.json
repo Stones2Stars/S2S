@@ -164,9 +164,6 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
-  ],
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
   ]
  }
 }

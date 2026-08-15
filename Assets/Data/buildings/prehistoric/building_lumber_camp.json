@@ -88,9 +88,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LUMBER_CAMP",
   "civilopedia": "TXT_KEY_BUILDING_LUMBER_CAMP_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [

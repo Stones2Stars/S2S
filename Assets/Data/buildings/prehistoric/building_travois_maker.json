@@ -106,9 +106,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TRAVOIS_MAKER",
   "civilopedia": "TXT_KEY_BUILDING_TRAVOIS_MAKER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "conquestProbability": 33,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [

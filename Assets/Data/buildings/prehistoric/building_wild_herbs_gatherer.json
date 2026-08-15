@@ -70,9 +70,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_GROWTH",
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [

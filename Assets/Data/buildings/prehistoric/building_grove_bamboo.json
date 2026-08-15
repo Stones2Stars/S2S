@@ -68,9 +68,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GROVE_BAMBOO",
   "civilopedia": "TXT_KEY_BUILDING_GROVE_BAMBOO_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

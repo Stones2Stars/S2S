@@ -255,10 +255,10 @@ callout exists to stop.
 offerable to canConstruct — that is literally the getter needed, and then that should be folded in the
 enabler."*** `CvBuildingInfo::isOfferable()` / `CvUnitInfo::isOfferable()` are that verdict, and the enabler's
 static-exclusion plane folds THE GETTER — never per-flag logic re-assembled at the consumer. ⛔ An
-asker-DEPENDENT bar can never live in it (an info does not know who is asking): the strongly-restricted NPC
-lockdown paired with `enabledCivilizations` is a `requires.build` civ-membership gate ([json.md §9](json.md)
-policies note), **inert for every normal civ** — reading that list as a universal whitelist is the defect that
-statically barred 21 empire-level constructibles for every human player.
+asker-DEPENDENT bar can never live in it (an info does not know who is asking) — and the one legacy
+asker-dependent bar, the civ whitelist + NPC lockdown, is a KILLED mechanic
+([superseded-ideas #38](../architecture/superseded-ideas.md)): techs decide what any civ can build, and a
+deliberate bar authors as `disables`.
 
 ⇒ **WHO places it, and WHERE, belongs to the PLACING SYSTEM — never to this flag.** The property solver places its
 bands; `CvGame::setHeadquarters` places a corporate HQ in the ONE city that holds it; the achievement system awards

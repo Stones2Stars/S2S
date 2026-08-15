@@ -114,9 +114,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PALISADE",
   "civilopedia": "TXT_KEY_BUILDING_PALISADE_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "militaryWorth": 3,
   "conquestProbability": 25,
   "advisor": "ADVISOR_MILITARY",

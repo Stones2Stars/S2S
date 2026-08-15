@@ -90,9 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FARM_ANIMAL_LLAMA",
   "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_LLAMA_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_ECONOMY",

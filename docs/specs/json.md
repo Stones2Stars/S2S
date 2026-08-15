@@ -1343,9 +1343,10 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   `onlyAllowedToBuildReligion: X` ✗ — a *targeted* restriction that carries a WHAT is an [enabler](enabler.md) concern
   (`enables`/`disables`/`requires`), not a policy. This is the group-unambiguity discipline (each group name = exactly
   one meaning; cf. empire `capabilities` vs unit `skills` vs `tags`). *(NOT here: civilization selectability
-  `playable`/`aiPlayable` → `identity` §7, load-only; the NPC `stronglyRestricted` build-lockdown is a `requires.build`
-  civ-membership gate paired with `EnabledCivilization`, folded into the enabler when civilizations are wired — not a
-  policy. Some legacy trait keys under `policies` are EFFECTS, not states: `freeSpecialistPer{World,National,Team}Wonder`
+  `playable`/`aiPlayable` → `identity` §7, load-only. The legacy NPC `stronglyRestricted` build-lockdown and its
+  `EnabledCivilization` whitelists are a KILLED mechanic — owner: a civ whitelist is poorly visible game design;
+  techs decide what a civ can build, and `disables` covers any bar ([superseded-ideas #38](../architecture/superseded-ideas.md)).
+  Some legacy trait keys under `policies` are EFFECTS, not states: `freeSpecialistPer{World,National,Team}Wonder`
   (free specialists scaled by wonder count, CvCity:5764) belong to the `freeSpecialists` modifier family, keyed by
   the `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER` count token (§3.1).
   (NB `nonStateReligionCommerce` was *suspected* an effect but is VERIFIED a pure STATE — a Free-Church permission that

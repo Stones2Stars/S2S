@@ -113,7 +113,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 
 	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
 	m_aeMapCategories.clear();
-	m_aiEnabledCivilizations.clear();
 	m_victoryThresholds.clear();
 	m_flavours.clear();
 	m_iPopulationChange = 0;
@@ -246,22 +245,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 				if (iCategory >= 0)
 				{
 					m_aeMapCategories.push_back((MapCategoryTypes)iCategory);
-				}
-			}
-		}
-	}
-	listIt = identity.find("enabledCivilizations");
-	if (listIt != identity.end() && listIt->second.is<picojson::array>())
-	{
-		const picojson::array& civilizations = listIt->second.get<picojson::array>();
-		for (size_t i = 0; i < civilizations.size(); ++i)
-		{
-			if (civilizations[i].is<std::string>())
-			{
-				const int iCivilization = jsonResolveId(civilizations[i].get<std::string>());
-				if (iCivilization >= 0)
-				{
-					m_aiEnabledCivilizations.push_back(iCivilization);
 				}
 			}
 		}

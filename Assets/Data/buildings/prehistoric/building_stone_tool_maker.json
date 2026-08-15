@@ -203,9 +203,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STONE_TOOL_MAKER",
   "civilopedia": "TXT_KEY_BUILDING_STONE_TOOL_MAKER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

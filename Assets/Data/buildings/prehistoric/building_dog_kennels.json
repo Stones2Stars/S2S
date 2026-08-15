@@ -70,9 +70,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DOG_KENNELS",
   "civilopedia": "TXT_KEY_BUILDING_DOG_KENNELS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",
   "freeStartEra": "C2C_ERA_ANCIENT",

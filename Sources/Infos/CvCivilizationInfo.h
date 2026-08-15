@@ -63,8 +63,6 @@ public:
 	// selectability -- load-only identity metadata (json.md §7); EXE-bound (civ-selection screen)
 	DllExport bool isPlayable() const { return m_bPlayable; }       // identity.playable
 	DllExport bool isAIPlayable() const { return m_bAIPlayable; }   // identity.aiPlayable
-	// the NPC build-lockdown (paired with the unit/building EnabledCivilization gate)
-	bool isStronglyRestricted() const { return m_bStronglyRestricted; }   // identity.stronglyRestricted
 	CivilizationTypes getDerivativeCiv() const { return m_eDerivativeCiv; }   // identity.derivativeCiv (FK)
 	// leaders -- identity.leaders (FK list); the count feeds random-leader generation
 	const std::vector<LeaderHeadTypes>& getLeaders() const { return m_leaders; }
@@ -116,7 +114,6 @@ private:
 	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
 	bool m_bPlayable;
 	bool m_bAIPlayable;
-	bool m_bStronglyRestricted;
 	CivilizationTypes m_eDerivativeCiv;
 	std::vector<LeaderHeadTypes> m_leaders;
 	std::vector<CvString> m_cityNames;

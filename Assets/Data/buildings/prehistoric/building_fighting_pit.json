@@ -90,9 +90,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FIGHTING_PIT",
   "civilopedia": "TXT_KEY_BUILDING_FIGHTING_PIT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 5,
   "militaryWorth": 6,
   "advisor": "ADVISOR_MILITARY",

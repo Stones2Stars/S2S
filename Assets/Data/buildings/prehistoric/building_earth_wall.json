@@ -103,9 +103,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EARTH_WALL",
   "civilopedia": "TXT_KEY_BUILDING_EARTH_WALL_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "centerInCity": true,
   "worth": 1,
   "militaryWorth": 3,

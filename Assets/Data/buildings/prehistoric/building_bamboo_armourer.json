@@ -73,9 +73,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_BAMBOO_ARMOURER",
   "civilopedia": "TXT_KEY_BUILDING_BAMBOO_ARMOURER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

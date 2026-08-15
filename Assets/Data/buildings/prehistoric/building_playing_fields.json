@@ -57,9 +57,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_PLAYING_FIELDS",
   "civilopedia": "TXT_KEY_BUILDING_PLAYING_FIELDS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 1,
   "conquestProbability": 100,
   "advisor": "ADVISOR_GROWTH",

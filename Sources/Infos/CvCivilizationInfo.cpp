@@ -17,7 +17,6 @@
 CvCivilizationInfo::CvCivilizationInfo()
 	: m_bPlayable(false)
 	, m_bAIPlayable(false)
-	, m_bStronglyRestricted(false)
 	, m_eDerivativeCiv(NO_CIVILIZATION)
 	, m_iDefaultPlayerColor(-1)     // NO_PLAYERCOLOR (enum-as-int default)
 	, m_iArtStyleType(-1)
@@ -56,7 +55,6 @@ void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 	m_aszAdjective.clear();
 	m_bPlayable = false;
 	m_bAIPlayable = false;
-	m_bStronglyRestricted = false;
 	m_eDerivativeCiv = NO_CIVILIZATION;
 	m_iDefaultPlayerColor = -1;
 	m_iArtStyleType = -1;
@@ -166,10 +164,9 @@ void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 	// --- identity: selectability, text keys, the leaders + cityNames pools, the derivative-civ FK ---
 	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
-		// selectability + the NPC build-lockdown (curator emits each only when true; absent -> false)
+		// selectability (curator emits each only when true; absent -> false)
 		m_bPlayable = jsonIdBool(*pIdentity, "playable");
 		m_bAIPlayable = jsonIdBool(*pIdentity, "aiPlayable");
-		m_bStronglyRestricted = jsonIdBool(*pIdentity, "stronglyRestricted");
 		// NOTE: identity.isNpc is authored by the curator but has NO CvCivilizationInfo member (no engine consumer
 		// on this class) -- deliberately unmapped.
 

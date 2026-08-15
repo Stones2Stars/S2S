@@ -462,3 +462,15 @@
     XML defines. ⇒ Reasoning about a tech binding from `GlobalDefines.xml` says nothing here; the tech itself is
     real and is the first era-gate tech. The cause is unknown and does not need to be known — the mechanic is
     gone.
+
+38. **THE CIVILIZATION WHITELIST + NPC BUILD-LOCKDOWN** (`EnabledCivilizationTypes` on buildings/units +
+    `bStronglyRestricted` on civilizations) *(killed, owner: "creating explicit whitelist for some edgecase npc
+    civ like this means it's poorly designed in the first place — whitelists in things like this create poorly
+    visible gamedesign")*. Legacy applied the whitelist ONLY inside `isStronglyRestricted() && isNPC()` (a
+    strongly-restricted NPC could build only what listed it; inert for every normal civ) — and a rebuild misread
+    it as a universal whitelist, statically barring 21 empire-level constructibles for every human player, which
+    is exactly the poor visibility the ruling names. Techs (and `requires`) decide what any civ can build; a
+    deliberate bar authors as `disables`, the mechanic that *"suits any purpose better than whitelist
+    override."* Cut whole: engine members/getters, enabler bars, barbarian-spawn and start-unit picker filters,
+    curator emits and the data keys. ⛔ Do not re-introduce a civ whitelist for NPC shaping — the NPC culture
+    plane already carries the limitation tools.

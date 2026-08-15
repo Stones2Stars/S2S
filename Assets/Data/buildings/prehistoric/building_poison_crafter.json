@@ -81,9 +81,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_POISON_CRAFTER",
   "civilopedia": "TXT_KEY_BUILDING_POISON_CRAFTER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_MILITARY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

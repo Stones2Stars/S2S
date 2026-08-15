@@ -111,9 +111,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DOG_BREEDER",
   "civilopedia": "TXT_KEY_BUILDING_DOG_BREEDER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 4,
   "militaryWorth": 2,
   "advisor": "ADVISOR_ECONOMY",

@@ -43,9 +43,6 @@
   "description": "TXT_KEY_BUILDING_C_N_NEANDERTHAL",
   "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
   "help": "TXT_KEY_BUILDING_C_N_HELP",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "notConstructible": true,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

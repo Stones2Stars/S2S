@@ -65,9 +65,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BUFFALO",
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BUFFALO_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 2,
   "conquestProbability": 75,
   "advisor": "ADVISOR_MILITARY",

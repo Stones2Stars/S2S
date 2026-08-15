@@ -72,9 +72,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_WARRIORS_HUT",
   "civilopedia": "TXT_KEY_BUILDING_WARRIORS_HUT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 1,
   "militaryWorth": 1,
   "advisor": "ADVISOR_MILITARY",

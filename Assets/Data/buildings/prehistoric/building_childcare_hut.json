@@ -87,9 +87,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CHILDCARE_HUT",
   "civilopedia": "TXT_KEY_BUILDING_CHILDCARE_HUT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

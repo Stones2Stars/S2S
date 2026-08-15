@@ -63,9 +63,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DIVINE_MONUMENT",
   "civilopedia": "TXT_KEY_BUILDING_DIVINE_MONUMENT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 3,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

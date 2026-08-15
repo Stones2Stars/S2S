@@ -81,9 +81,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STICK_COMBAT",
   "civilopedia": "TXT_KEY_BUILDING_STICK_COMBAT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

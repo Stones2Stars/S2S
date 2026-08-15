@@ -96,9 +96,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -96,9 +96,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",
   "visibilityPriority": 1,

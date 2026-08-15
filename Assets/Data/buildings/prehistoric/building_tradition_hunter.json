@@ -50,9 +50,6 @@
   "description": "TXT_KEY_BUILDING_TRADITION_HUNTER",
   "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_PEDIA",
   "pediaCategory": "nationalWonder",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "notConstructible": true,
   "worth": 1,
   "advisor": "ADVISOR_MILITARY",

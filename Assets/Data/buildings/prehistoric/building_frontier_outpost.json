@@ -122,9 +122,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FRONTIER_OUTPOST",
   "civilopedia": "TXT_KEY_BUILDING_FRONTIER_OUTPOST_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "worth": 2,
   "militaryWorth": 2,
   "advisor": "ADVISOR_MILITARY",

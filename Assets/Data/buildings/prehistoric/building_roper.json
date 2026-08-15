@@ -108,9 +108,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ROPER",
   "civilopedia": "TXT_KEY_BUILDING_ROPER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

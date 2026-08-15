@@ -137,9 +137,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STONEWORKER",
   "civilopedia": "TXT_KEY_BUILDING_STONEWORKER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,
   "mapCategories": [

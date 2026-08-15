@@ -147,9 +147,6 @@
   "description": "TXT_KEY_BUILDING_C_L_NEANDERTHAL",
   "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
   "help": "TXT_KEY_BUILDING_C_L_HELP",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "conquestProbability": 85,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

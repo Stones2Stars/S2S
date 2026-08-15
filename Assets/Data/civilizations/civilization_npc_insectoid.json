@@ -43,7 +43,6 @@
   "adjective": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_ADJECTIVE",
   "civilopedia": "TXT_KEY_CIVILIZATION_NPC_INSECTOID_PEDIA",
   "isNpc": true,
-  "stronglyRestricted": true,
   "leaders": [
    "LEADER_BARBARIAN"
   ]

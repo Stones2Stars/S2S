@@ -92,9 +92,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ABATIS",
   "civilopedia": "TXT_KEY_BUILDING_ABATIS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "militaryWorth": 1,
   "conquestProbability": 30,
   "advisor": "ADVISOR_MILITARY",

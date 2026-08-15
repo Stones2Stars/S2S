@@ -98,9 +98,6 @@
   "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY",
   "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_PEDIA",
   "help": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_HELP",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "notConstructible": true,
   "worth": 3,
   "advisor": "ADVISOR_ECONOMY",

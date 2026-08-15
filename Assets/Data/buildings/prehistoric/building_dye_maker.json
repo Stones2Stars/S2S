@@ -107,9 +107,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DYE_MAKER",
   "civilopedia": "TXT_KEY_BUILDING_DYE_MAKER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

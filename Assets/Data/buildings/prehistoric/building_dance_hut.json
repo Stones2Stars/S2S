@@ -104,9 +104,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_DANCE_HUT",
   "civilopedia": "TXT_KEY_BUILDING_DANCE_HUT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

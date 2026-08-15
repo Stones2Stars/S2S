@@ -63,9 +63,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES",
   "civilopedia": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

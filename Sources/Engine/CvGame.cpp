@@ -7034,7 +7034,6 @@ namespace {
 			&& (area->isWater() && unitInfo.getDomain() == DOMAIN_SEA || !area->isWater() && unitInfo.getDomain() == DOMAIN_LAND)
 			// Barbs don't need the bonus, but the bonus must be enabled by tech
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true) // "true" to invalidate units that require cultural bonuses
-			&& !unitInfo.isCivilizationRestricted() // Invalidates Neanderthal units and units that require the palace.
 			// General requirements that must be fulfilled, also invalidates World Units for NPC
 			// A barbarian spawn PLACES a unit; it does not shop a city's queue, so it asks the `requires` gate and
 			// not the availability tri-state (which caps and city-local supply would wrongly bind).
@@ -11400,7 +11399,6 @@ namespace {
 		return unitInfo.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) > 0 && !unitInfo.hasSkill(CLS_SKILL_ONLY_DEFENSIVE)
 			&& unitInfo.getDomain() == DOMAIN_LAND
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true)
-			&& !unitInfo.isCivilizationRestricted()
 			// A barbarian spawn PLACES a unit; it does not shop a city's queue, so it asks the `requires` gate and
 			// not the availability tri-state (which caps and city-local supply would wrongly bind).
 			&& EnablerKernel::requiresMetForPlayer(GET_PLAYER(BARBARIAN_PLAYER), EDGEB_UNITS, (int)unitType);

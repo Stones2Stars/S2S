@@ -105,9 +105,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_STORAGE_PIT",
   "civilopedia": "TXT_KEY_BUILDING_STORAGE_PIT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "conquestProbability": 80,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

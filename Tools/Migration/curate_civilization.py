@@ -18,8 +18,7 @@ pre-base ArtDefineTag merge) → a bespoke curator. Verdicts (light-four-classif
   cascade modifier (PERCENT, (100+mod)/100; CvGame:6359/6363). Barb/NPC civs only.
 - `identity` (civ meta, owner 2026-07-01 -- NOT `policies`; a policy is a pure empire STATE, json.md §9): `isNpc`
   (derived from the CIVILIZATION_NPC_* type convention -- no engine flag for the full NPC set), `playable` / `aiPlayable`
-  (selectability, load-only), `stronglyRestricted` (the NPC build-lockdown, CvCity:2205/2547 -- a DEFERRED enabler input
-  parked here so no context is lost). These describe WHAT/WHO the civ is, so they live in identity, not a policy block.
+  (selectability, load-only). These describe WHAT/WHO the civ is, so they live in identity, not a policy block.
 - `disables.techs` — per-civ research ban (canEverResearch=false while active, CvPlayer:8266). Modeled as a v0.3
   `disables` (a reversible ban), NOT a permanent removal to re-home (owner 2026-06-15: there is no CURRENT in-game
   logic to reverse a tech disable — so today it is effectively permanent — BUT nothing stops us adding reversal
@@ -69,12 +68,12 @@ GRANTS = OrderedDict([      # container tag -> (child tag, grant key)
 ])
 SPAWN = OrderedDict([("iSpawnRateModifier", "general"), ("iSpawnRateNPCPeaceModifier", "npcPeace")])
 # Civ META booleans -> the `identity` block (owner 2026-07-01), NOT a `policies` block. These describe WHAT/WHO the civ
-# IS (selectability + an NPC build-lockdown), not a pure empire STATE a civic/trait enacts (a `policy`, json.md §9), so
-# they leave the ambiguous `policies` word entirely -- keeping `policies` = one meaning. `playable`/`aiPlayable` are
-# load-only meta; `stronglyRestricted` is a DEFERRED enabler input (the NPC build-lockdown pairs with EnabledCivilization
-# -> a `requires` gate when NPC civs are wired, out of scope now) -- parked in identity so no context is lost.
-CIV_META = OrderedDict([("bPlayable", "playable"), ("bAIPlayable", "aiPlayable"),
-                        ("bStronglyRestricted", "stronglyRestricted")])
+# IS (selectability), not a pure empire STATE a civic/trait enacts (a `policy`, json.md §9), so they leave the
+# ambiguous `policies` word entirely -- keeping `policies` = one meaning. `playable`/`aiPlayable` are load-only meta.
+CIV_META = OrderedDict([("bPlayable", "playable"), ("bAIPlayable", "aiPlayable")])
+# DROPPED: the NPC build-lockdown (bStronglyRestricted + the unit/building EnabledCivilization whitelist) is a
+# killed mechanic (owner: poorly visible game design; techs decide, `disable` covers any bar) -- superseded-ideas.
+CIV_DROP = {"bStronglyRestricted"}
 # art/audio tags -> ui/world/sound via the canonical curate_common.ART_BLOCK:
 #   DefaultPlayerColor->world.art.playerColor, ArtDefineTag->world.art.icon, ArtStyleType->world.art.style,
 #   UnitArtStyleType->world.art.unitStyle, Civilization{Selection,Action}Sound->sound.{selection,action}.
@@ -82,7 +81,7 @@ ART = ("DefaultPlayerColor", "ArtDefineTag", "ArtStyleType", "UnitArtStyleType",
        "CivilizationSelectionSound", "CivilizationActionSound")
 # every tag we knowingly handle — anything else gets flagged (leftover check)
 KNOWN = ({"Type", "Cities", "Leaders", "DisableTechs", "DerivativeCiv"} | set(TEXT) | set(GRANTS)
-         | set(SPAWN) | set(CIV_META) | set(ART))
+         | set(SPAWN) | set(CIV_META) | CIV_DROP | set(ART))
 
 
 def _list(rec, container, child):

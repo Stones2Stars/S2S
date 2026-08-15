@@ -60,9 +60,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HERD_MAMMOTH",
   "civilopedia": "TXT_KEY_BUILDING_HERD_MAMMOTH_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "notConstructible": true,
   "worth": 3,
   "conquestProbability": 75,

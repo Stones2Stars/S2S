@@ -45,9 +45,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ROCK_GATHERER",
   "civilopedia": "TXT_KEY_BUILDING_ROCK_GATHERER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "conquestProbability": 70,
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 1,

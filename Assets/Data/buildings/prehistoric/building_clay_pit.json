@@ -74,9 +74,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CLAY_PIT",
   "civilopedia": "TXT_KEY_BUILDING_CLAY_PIT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "freeStartEra": "C2C_ERA_ANCIENT",
   "mapCategories": [

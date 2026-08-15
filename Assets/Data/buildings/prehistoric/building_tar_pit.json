@@ -70,9 +70,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_TAR_PIT",
   "civilopedia": "TXT_KEY_BUILDING_TAR_PIT_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

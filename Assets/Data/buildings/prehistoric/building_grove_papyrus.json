@@ -57,9 +57,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GROVE_PAPYRUS",
   "civilopedia": "TXT_KEY_BUILDING_GROVE_PAPYRUS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -33,9 +33,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_MAMMOTHS",
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "notConstructible": true,
   "worth": 2,
   "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",

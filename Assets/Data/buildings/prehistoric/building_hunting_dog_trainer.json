@@ -56,9 +56,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_HUNTING_DOG_TRAINER",
   "civilopedia": "TXT_KEY_BUILDING_HUNTING_DOG_TRAINER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -57,9 +57,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER",
   "civilopedia": "TXT_KEY_BUILDING_GUARD_DOG_TRAINER_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_ECONOMY",
   "visibilityPriority": 10000,
   "mapCategories": [

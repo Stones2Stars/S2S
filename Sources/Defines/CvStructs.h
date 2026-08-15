@@ -182,12 +182,6 @@ struct ImprovementBuildTypes
 	bool operator< (const ImprovementBuildTypes& rhs) const { return (int)eBuildType < (int)rhs.eBuildType; }
 };
 
-struct EnabledCivilizations
-{
-	CivilizationTypes eCivilization;
-	operator int() const {return (int)eCivilization;}
-	bool operator< (const EnabledCivilizations& rhs) const {return (int)eCivilization < (int)rhs.eCivilization;}
-};
 struct BonusAidModifiers
 {
 	BonusTypes eBonusType;

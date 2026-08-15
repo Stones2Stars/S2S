@@ -114,9 +114,6 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS",
   "civilopedia": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS_PEDIA",
-  "enabledCivilizations": [
-   "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
   "advisor": "ADVISOR_GROWTH",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
