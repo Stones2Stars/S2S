@@ -2310,16 +2310,23 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 		const bool bGameLive = GC.getGame().isFinalInitialized();
 		// ONE ENTRY PER TRAIT LINE (owner). A leader's assignment carries a line's ladder BASE beside its
 		// developed rung(s) -- the unnumbered trait `enables` its numbered successors, and a non-developing
-		// game grants the rungs cumulatively -- so the raw list names every line twice. The rungs of a line
-		// share the line's ONE short key, so the render dedupes on it.
-		std::set<CvWString> seenShortNames;
+		// game grants the rungs cumulatively -- so the raw list names every line twice. Every trait name is
+		// ONE WORD (owner), so the line's name is the description's first word ("Seafaring I" -> "Seafaring"),
+		// which is also the dedupe key: the rungs of a line collapse by construction. Colored by the trait's
+		// sign so a negative reads as one at a glance; the full name renders, never the "Meg"-style short key.
+		std::set<CvWString> seenLineNames;
 		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 		{
 			const TraitTypes eTrait = (TraitTypes)iTrait;
 			if (!bGameLive || CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 			{
-				const CvWString szShortName = gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey());
-				if (!seenShortNames.insert(szShortName).second)
+				CvWString szLineName = GC.getTraitInfo(eTrait).getDescription();
+				const size_t iFirstSpace = szLineName.find(L' ');
+				if (iFirstSpace != CvWString::npos)
+				{
+					szLineName = szLineName.substr(0, iFirstSpace);
+				}
+				if (!seenLineNames.insert(szLineName).second)
 				{
 					continue;
 				}
@@ -2327,7 +2334,9 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 				{
 					szHelpString.append(L"/");
 				}
-				szHelpString.append(szShortName);
+				szHelpString.append(CvWString::format(SETCOLR L"%s" ENDCOLR,
+					TEXT_COLOR(GC.getTraitInfo(eTrait).isNegativeTrait() ? "COLOR_NEGATIVE_TEXT" : "COLOR_POSITIVE_TEXT"),
+					szLineName.c_str()));
 				bFirst = false;
 			}
 		}
