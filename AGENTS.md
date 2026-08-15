@@ -432,6 +432,16 @@ not findings to re-discover.
   like a graphics bug: the walk animation plays **in place on the tile the unit left**, animations never end,
   units render **stacked** (`setupGraphical`'s `ExecuteMove(0, false)` is what separates a stack, and it is
   spent on the empty queue), and **re-selecting the unit fixes it** — `reloadEntity` skips a selected unit.
+  ⛔ **AND AN ENTITY MAY BE CREATED BEFORE GRAPHICS INIT, SO THE SETUP LATCH IS OWNED BY `setupGraphical` AND
+  SET ONLY WHEN ITS GATE PASSES.** A NEW game forms the starting units' groups during `CvGame::init` — before
+  `SetGraphicsInitialized` — and the head-unit swap in `CvSelectionGroup::addUnit` calls `reloadEntity` right
+  there, creating a REAL entity with no landscape to set it up against (a LOAD never hits this: deserialization
+  writes coordinates raw, so no pre-graphics reload fires — which is why the defect class is invisible on every
+  save-based test). Creating pre-graphics is fine (the non-dynamic ctor path always has); what must survive is
+  the RETRY: `bGraphicsSetup` latched on the *attempt* left the entity model-less forever, and the EXE dies at
+  `faultAddr=0x24` the first time that unit is selected or moved. The keep-the-entity rule above is what removed
+  the accidental repair (the old churn recreated the entity post-init, resetting the latch), so the two rules
+  only compose because the latch is honest.
 
 ### ⛔ THE NO-GUESSING RULE — map everything, always
 

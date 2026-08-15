@@ -258,10 +258,12 @@ void CvUnit::reloadEntity(bool bForceLoad)
 			}
 		}
 
+		//	setupGraphical owns the latch and sets it only when its gate passes -- so an attempt made while
+		//	graphics are down (or the unit is off-viewport) stays retryable, and the next reloadEntity after
+		//	graphics come up performs the setup the first attempt could not.
 		if (!bGraphicsSetup && bNeedsRealEntity && plot())
 		{
 			setupGraphical();
-			bGraphicsSetup = true;
 		}
 	}
 	else OutputDebugString("Reload of selected unit\n");
@@ -952,8 +954,14 @@ void CvUnit::setupGraphical()
 
 	if (!GC.IsGraphicsInitialized() || !isInViewport())
 	{
+		//	The latch below must NOT be set on this path: an entity created before the engine landscape
+		//	exists (a starting unit's group forms during game init) reaches here with nothing to set up,
+		//	and a latch recording the ATTEMPT leaves the entity model-less forever -- the EXE then reads
+		//	NULL scene internals the first time the unit moves. The retry is free: reloadEntity re-calls
+		//	this whenever the latch is still down.
 		return;
 	}
+	bGraphicsSetup = true;
 
 	if (!isUsingDummyEntities())
 	{
