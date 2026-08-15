@@ -10,6 +10,10 @@
 #include "CvPropertyInfo.h"    // the property plane's channel name (the PROPERTY_* type string)
 #include "Spine/CvEventSpine.h"   // the [MODIFIER] domain -- the channel-set census render path
 #include "Defines/CvGlobals.h"
+#include "Engine/CvMap.h"      // cascadePlotCityFloor100 -- the plot fetch behind the live city-centre floor
+#include "Engine/CvPlot.h"     // cascadePlotCityFloor100 -- isCity, the plot's own state
+#include "CvYieldInfo.h"       // cascadePlotCityFloor100 -- the authored MinCity minimums
+#include "CvInfoKinds.h"       // infoYieldFamily -- the yield -> channel family mapping
 #include <map>
 #include <string>
 #include <vector>
@@ -800,4 +804,26 @@ void CascadeChannelRegistry::reportTraitImprovementRead(int iPlayer, int iCity, 
 	row.addI(MODF_PERTILE, iPerTile);
 	row.addI(MODF_CONTRIB, iContribution);
 	eventSpine().emit(row);
+}
+
+// ⚖ THE CITY-CENTRE FLOOR input, read LIVE off the plot itself (owner: the flooring is the PLOT'S -- a plot
+// knows it carries a city -- never an operand mirrored onto the package): a city plot's yield channels floor
+// at the YieldInfo MinCity values (authored HUMAN; the package plane is x100). Answers 0 for every non-city
+// plot and every non-yield channel, so the resolve pays one plot fetch and, on the rare city plot, the
+// channel match.
+int64_t cascadePlotCityFloor100(int iX, int iY, int iChannel)
+{
+	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	if (pPlot == NULL || !pPlot->isCity())
+	{
+		return 0;
+	}
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		if (CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1) == iChannel)
+		{
+			return (int64_t)GC.getYieldInfo((YieldTypes)iYield).getMinCity() * 100;
+		}
+	}
+	return 0;
 }

@@ -176,6 +176,11 @@ slot does pure integer math and never sees the human boundary.
 > packages into the §1 `base`.
 > **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or
 > plot component* resolves **inside** this per-plot package, **before** the city-level `(100+Σpercent)` stack ever runs.
+> ⚖ **The CITY-CENTRE constant is a FLOOR inside this same isolated resolve, and it reads the plot's OWN city-ness
+> LIVE (owner: "the flooring should be on the plot itself, not on the cascade")** — a city plot's yield channels
+> floor at the YieldInfo `MinCity` minimums as the resolve's last step. City-ness is the plot's own state, so it is
+> never mirrored onto the package as a fed operand; the `SEVT_PLOT_CITY` pair's route is only the RE-RESOLVE on the
+> crossing (the refresh-an-operand shape), whose exact delta folds into the working city's worked-plot Σ.
 > Today every component-specific buff is **flat** (so the package is a pure sum); should a per-improvement *percentage*
 > ever be needed, it applies **here, inside the isolated plot calc** — **never** in the city `(100+Σpercent)` stack,
 > which only ever scales the already-summed base. Consequence: a `basePlotYield` divergence is *necessarily* a per-plot
