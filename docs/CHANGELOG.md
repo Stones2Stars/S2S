@@ -15,6 +15,8 @@
 - Fixed a crash when loading a save from inside a running game.
 - The city centre plot yields its guaranteed minimums again (3 food / 1 hammer / 1 commerce
   floor) instead of acting like a regular tile.
+- Fixed a civilization-restriction misread that hid 21 empire-wide buildings (the rock/stick/
+  lumber gatherer class and kin) from every player's build list.
 
 Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
 rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,

@@ -134,6 +134,11 @@ public:
 
 	// --- identity scalars/flags ---
 	bool isSpawnOnly() const { return m_bSpawnOnly; }             // identity.spawnOnly (never-buildable flag, json par.4.3)
+	/// <summary>The info's OWN offerability verdict: may this unit ever appear on a canTrain offer (owner
+	/// ruling)? The enabler's static exclusion folds THIS getter -- never per-flag logic assembled at the
+	/// consumer. Asker-dependent bars (the strongly-restricted NPC lockdown) are gate concerns and can never
+	/// live here: an info does not know who is asking.</summary>
+	bool isOfferable() const { return !m_bSpawnOnly; }
 	int getWorth() const { return m_iWorth; }                     // identity.worth (AI asset valuation config)
 	int getMilitaryWorth() const { return m_iMilitaryWorth; }     // identity.militaryWorth (power valuation config)
 	int getXpValueAttack() const { return m_iXpValueAttack; }     // identity.xpValueAttack

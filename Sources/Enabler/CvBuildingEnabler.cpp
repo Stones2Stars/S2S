@@ -90,37 +90,15 @@ static void bd_applyAxis(EnablerDomain& d, int eAxis, int iId, int iDelta)
 	if (iId >= 0) EnablerKernel::applyEdges(d, bd_sourceInfo(eAxis, iId), EDGEB_BUILDINGS, iDelta);
 }
 
-// `identity.enabledCivilizations` is a WHITELIST -- empty means every civilization, non-empty means ONLY those.
-// It is STATIC for the city's life (a conquered city is constructed anew for its acquirer, so the domain is
-// rebuilt with the new owner's civ), which is why it belongs on the static-exclusion plane and not on a fact
-// (enabler.md par.8: a civilization bar is one of the two membership bars that ARE the enabler's).
-static bool bd_barredByCivilization(const CvBuildingInfo* jb, const CvPlayer& kPlayer)
-{
-	if (jb == NULL)
-	{
-		return false;
-	}
-	const std::vector<int>& aiCivs = jb->getEnabledCivilizations();
-	if (aiCivs.empty())
-	{
-		return false;
-	}
-	const int iCivilization = (int)kPlayer.getCivilizationType();
-	for (std::vector<int>::const_iterator it = aiCivs.begin(); it != aiCivs.end(); ++it)
-	{
-		if (*it == iCivilization)
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
 // The CITY-CREATED applier (founding init + the load read's start, BEFORE the city's own in-read emits): init
-// the domain (size + the notConstructible static exclusions) and fold ONLY the cross-scope HAVE that predates
+// the domain (size + the offerability static exclusions) and fold ONLY the cross-scope HAVE that predates
 // the city -- team techs + player civics (no events can carry 400 pre-existing techs to a new city). The
 // city's OWN facts (buildings/religions/corps/bonuses/culture) arrive as DOMAIN events -- at load from the
 // in-read reseed emits, at founding from the real grant/build emits -- one mechanism (DEC-spine-reseed).
+// ⛔ `identity.enabledCivilizations` is NOT a bar here: legacy applied it only inside the strongly-restricted
+// NPC lockdown (a whitelist for WHICH restricted NPCs may build this -- inert for every normal civ), and that
+// lockdown is a requires.build civ-membership gate when civilizations wire (json.md par.9 policies note).
+// Reading it as a universal whitelist statically barred 21 empire-level constructibles for every human player.
 void BuildingEnabler::onCityCreated(const CvCity& kCity)
 {
 	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
@@ -130,7 +108,7 @@ void BuildingEnabler::onCityCreated(const CvCity& kCity)
 	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
 	{
 		const CvBuildingInfo* jb = (const CvBuildingInfo*)InfoRepo<CvBuildingInfo>::get().get(b);
-		if (jb != NULL && (jb->isNotConstructible() || bd_barredByCivilization(jb, kPlayer))) d.setStaticExcluded(b, true);
+		if (jb != NULL && !jb->isOfferable()) d.setStaticExcluded(b, true);
 	}
 	// the TECH_GAME_START root IS a held engine tech (the load backfill guarantees it) -- covered by this loop
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)

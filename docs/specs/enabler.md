@@ -251,6 +251,15 @@ statement about the PRODUCTION QUEUE and nothing else — the entity is not offe
 build candidate. ⛔ **It does NOT mean "build it in every city"** (owner), and reading it that way is what this
 callout exists to stop.
 
+⚖ **THE INFO SELF-SERVES ITS OFFERABILITY, AS ONE GETTER (owner): *"the info should know itself if it is
+offerable to canConstruct — that is literally the getter needed, and then that should be folded in the
+enabler."*** `CvBuildingInfo::isOfferable()` / `CvUnitInfo::isOfferable()` are that verdict, and the enabler's
+static-exclusion plane folds THE GETTER — never per-flag logic re-assembled at the consumer. ⛔ An
+asker-DEPENDENT bar can never live in it (an info does not know who is asking): the strongly-restricted NPC
+lockdown paired with `enabledCivilizations` is a `requires.build` civ-membership gate ([json.md §9](json.md)
+policies note), **inert for every normal civ** — reading that list as a universal whitelist is the defect that
+statically barred 21 empire-level constructibles for every human player.
+
 ⇒ **WHO places it, and WHERE, belongs to the PLACING SYSTEM — never to this flag.** The property solver places its
 bands; `CvGame::setHeadquarters` places a corporate HQ in the ONE city that holds it; the achievement system awards
 one per player. Those systems already know their own answer, and the flag's job is only to keep the production

@@ -184,6 +184,11 @@ public:
 	bool isCenterInCity() const             { return m_bCenterInCity; }
 	bool isNotConstructible() const         { return m_bNotConstructible; }         // json §7: excluded from the queue
 	bool isAutoBuild() const                { return m_bAutoBuild; }                // json §7: autoBuild ⊂ notConstructible
+	/// <summary>The info's OWN offerability verdict: may this building ever appear on a canConstruct offer
+	/// (owner ruling)? The enabler's static exclusion folds THIS getter -- never per-flag logic assembled at the
+	/// consumer. Asker-dependent bars (the strongly-restricted NPC lockdown) are gate concerns and can never
+	/// live here: an info does not know who is asking.</summary>
+	bool isOfferable() const                { return !m_bNotConstructible; }
 	// identity.empireLevel -- the building is held by the PLAYER, once, empire-wide, and is never present in any
 	// city (DEC-empire-level-buildings, enabler-spec §2). The ONE placement choke point routes an empire-level id
 	// to the owner; an atom naming one implies EMPIRE scope (json §3.4 -- the tag IS the type's domain).
