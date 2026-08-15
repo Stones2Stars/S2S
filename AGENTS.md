@@ -857,6 +857,12 @@ the total-observability bar below.)
   `Start-Process -FilePath 'C:\code\s2s\s2s\agentstart.bat' -WorkingDirectory 'C:\code\s2s\s2s'`, and do **not** wait
   on or block the call. Confirm the launch ONLY by polling the HTTP surface (`/` → `hello world`) — never by the
   launcher's exit code. *(Repeat offence — agents keep re-learning this one the hard way.)*
+- **THE CHANGELOG RIDES THE COMMIT (owner): a change a player or modder would NOTICE appends one bullet to
+  `docs/CHANGELOG.md`'s `## Unreleased` section in the SAME commit.** Internal refactors, docs and tooling do
+  not. The old commit-message-derived changelog script is DEAD and is never revived — commit subjects here are
+  engineering statements, not changelog lines. The safety net for anything that slips is the committed
+  `/changelog-update` skill (an agent digest from the file's own `last-digested` marker); the owner curates
+  Unreleased into release sections, never an agent unasked.
 - **Keep quirky/intermediate commits — do NOT push to squash them (owner taste).** Mention squashing exists at most
   once; default to preserving history as-is.
 - **PG-13 public quotes.** When quoting the owner in public artifacts (issues, PR bodies, commits, repo docs), keep

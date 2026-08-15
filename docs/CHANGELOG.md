@@ -2,6 +2,17 @@
 
 > **DRAFT — pending owner curation.** Content is assembled from the repo docs and the
 > cascade-rebuild git history; nothing here is final until reviewed.
+>
+> **Maintenance:** a commit whose change a player or modder would notice appends one bullet to
+> `## Unreleased` in the SAME commit (AGENTS.md Git/delivery). The `/changelog-update` skill
+> digests anything that slipped, from the marker below. The old commit-message-derived
+> changelog script is dead and stays dead.
+
+<!-- last-digested: bc719eb4e -->
+
+## Unreleased
+
+*(nothing yet — bullets land here as commits do)*
 
 Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
 rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,
@@ -119,7 +130,8 @@ observable live from outside the game.
   cities, city effects stay local; plural targets (`cities`, `plots`, `units`) name receivers.
 - Count scaling: `per: {type, each, scope}` — e.g. happiness per military unit.
 - Conditional entries: `enabled` / `disabled` gates on any entry, applied and withdrawn
-  automatically when the condition crosses.
+  automatically when the condition crosses — including age gates (`existedFor`), which is how
+  legacy "commerce doubles after N years" authors as a second age-gated deposit.
 - Ranked subsets: `orderedBy: CITY_SIZE, max: 5` targets the five largest cities
   [spec — verify: ranked entries currently apply unranked until the selection lands].
 
@@ -196,8 +208,6 @@ the process:
 
 - **Volumetric resources**: bonus counts moving from presence-only (0/1) to quantities (0..N)
   is specced as future work; not yet implemented.
-- **Property pulses**: replacement for legacy double-time commerce via a second conditioned
-  deposit with an `existedFor` gate — specced, implementation TBD.
 - **Events rework**: engine events gaining spine emits (Python callbacks still live) — partial;
   full move to the trigger system is future work.
 
