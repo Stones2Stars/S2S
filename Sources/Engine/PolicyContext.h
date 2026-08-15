@@ -48,9 +48,6 @@ public:
 	// registerable object to dispatch through.
 	void foldCivic(int iCivic, int iSign);
 	void foldTrait(int iTrait, int iSign);
-	// A player's INITIAL traits are written straight into the has-array rather than through the trait setter, so
-	// SEVT_PLAYER_INIT is the only announcement they ever make. A fold from a known zero, not a re-derivation.
-	void foldHeldTraits(int iSign);
 
 private:
 	void foldBlock(const CvClassificationBlock* pBlock, int iSign);

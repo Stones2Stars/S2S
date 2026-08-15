@@ -10,6 +10,7 @@
 #include "Engine/CvGameSpeedScale.h"
 #include "Conditions/CvConditionQuery.h"   // the ONE structural read over a requires tree
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
+#include "Enabler/CvEnablerConsumer.h" // enablerEmitDomainCensus -- the new-game half of the [ENABLER/census] read
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
@@ -524,6 +525,11 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	if (bNewGame)
 	{
 		doPreTurn0();
+		// The [ENABLER/census] read for THIS lifecycle path. The load path emits it from the
+		// SEVT_GAME_LOAD_FINISHED route, and a new game never closes that bracket -- so without this call the
+		// one instrument that separates "nothing in the tree" from "in the tree but gated out" is blind on
+		// exactly the path where the init ordering can drop the seeding facts.
+		enablerEmitDomainCensus();
 	}
 	else
 	{
@@ -1305,6 +1311,19 @@ void CvGame::initFreeState()
 	PROFILE_EXTRA_FUNC();
 	const EraTypes iStartEra = getStartEra();
 
+	//	THE PLAYERS PRIME BEFORE THE FIRST TEAM TECH IS SET. The tech grants below fan SEVT_EMPIRE_TECH_ADDED
+	//	per member, and every player-domain applier DROPS a fact that lands on an un-seeded domain -- so with the
+	//	tech loop first, the universal root (TECH_GAME_START, a civilization free tech) and the NPC pre-era techs
+	//	were announced into un-primed enablers and every player's tech/civic/promotion/process/build frontier
+	//	built permanently EMPTY on a new game: no researchable tech, no research popup, nothing ever unlocking.
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			GET_PLAYER((PlayerTypes)iI).initFreeState();
+		}
+	}
+
 	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
 	{
 		const CvTechInfo& tech = GC.getTechInfo((TechTypes)iI);
@@ -1331,14 +1350,6 @@ void CvGame::initFreeState()
 					}
 				}
 			}
-		}
-	}
-
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
-		{
-			GET_PLAYER((PlayerTypes)iI).initFreeState();
 		}
 	}
 }

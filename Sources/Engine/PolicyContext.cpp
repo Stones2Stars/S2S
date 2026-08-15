@@ -44,8 +44,7 @@ bool PolicyContext::wantsEvent(int iEventId)
 	{
 	case SEVT_CIVIC_ADOPTED:          // the swap: iType adopted, iB displaced
 	case SEVT_EMPIRE_TRAIT_ADDED:     // iType trait; the direction is the fact's identity
-	case SEVT_EMPIRE_TRAIT_REMOVED:
-	case SEVT_PLAYER_INIT:            // the initial traits, which no setter announces
+	case SEVT_EMPIRE_TRAIT_REMOVED:   // the initial leader traits ride these too (initMore's setHasTraitInternal)
 		return true;
 	default:
 		return false;
@@ -78,9 +77,6 @@ void PolicyContext::onSpineEvent(const CvSpineEvent& kEvent)
 	case SEVT_EMPIRE_TRAIT_REMOVED:
 		pPolicies->foldTrait(kEvent.iType, -1);
 		break;
-	case SEVT_PLAYER_INIT:
-		pPolicies->foldHeldTraits(+1);
-		break;
 	default:
 		break;
 	}
@@ -106,22 +102,6 @@ void PolicyContext::foldTrait(int iTrait, int iSign)
 	}
 	const CvTraitInfo* pTrait = MMKernel::traitData(iTrait);
 	foldBlock((pTrait != NULL) ? pTrait->getPolicies() : NULL, iSign);
-}
-
-void PolicyContext::foldHeldTraits(int iSign)
-{
-	if (m_player == NULL)
-	{
-		return;
-	}
-	const int iNumTraits = GC.getNumTraitInfos();
-	for (int iTrait = 0; iTrait < iNumTraits; ++iTrait)
-	{
-		if (m_player->hasTrait((TraitTypes)iTrait))
-		{
-			foldTrait(iTrait, iSign);
-		}
-	}
 }
 
 // Walk what the GRANTOR carries (the index IS the generated id), never every minted policy id.

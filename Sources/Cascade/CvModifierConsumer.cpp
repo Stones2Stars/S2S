@@ -30,6 +30,7 @@
 #include "Data/CvInfoValuation.h"       // the eval-ctx fill seam (the contexts ARE the eval state)
 #include "Enabler/CvEnablerKernel.h"    // wireOperatingBuildings -- the THIRD leg of the eval state
 #include "Spine/CvEventSpine.h"
+#include "CvHandicapInfo.h"             // the handicap plane-A apply -- its deposits ride SEVT_EMPIRE_HANDICAP_*
 #include "Defines/CvGlobals.h"
 #include "Engine/CvMap.h"
 #include "Engine/CvGameCoreUtils.h"     // plotDirection -- the one-hop adjacency fan of the two adjacency verdicts
@@ -367,6 +368,7 @@ namespace
 		case SEVT_EMPIRE_TRAIT_ADDED:
 		case SEVT_EMPIRE_HERITAGE_ADDED:
 		case SEVT_EMPIRE_GOLDEN_AGE_ADDED:
+		case SEVT_EMPIRE_HANDICAP_ADDED:
 		case SEVT_EMPIRE_STATE_RELIGION_ADDED: return 1;
 
 		case SEVT_CITY_BUILDING_DORMANTED:
@@ -391,6 +393,7 @@ namespace
 		case SEVT_EMPIRE_TRAIT_REMOVED:
 		case SEVT_EMPIRE_HERITAGE_REMOVED:
 		case SEVT_EMPIRE_GOLDEN_AGE_REMOVED:
+		case SEVT_EMPIRE_HANDICAP_REMOVED:
 		case SEVT_EMPIRE_STATE_RELIGION_REMOVED: return -1;
 
 		// These carry a MAGNITUDE (iA), so the multiplicity is the payload and the SIGN is still the id --
@@ -2155,11 +2158,17 @@ namespace
 					}
 				}
 				break;
-			// A player's DIFFICULTY moved (flexible difficulty). The handicap is a modifier SOURCE the gather
-			// folds per scope, so this one player's whole basis re-derives.
+			// A player's DIFFICULTY -- established at init, announced by the load reseed, or moved by flexible
+			// difficulty. The handicap is an ORDINARY modifier source: the fact names it, so its compiled
+			// deposits apply into this player's packages here (plane A), and a difficulty change's
+			// REMOVED(old) + ADDED(new) pair is the exact withdraw-then-apply ([DEC-maintained-sum]).
 			case SEVT_EMPIRE_HANDICAP_ADDED:
 			case SEVT_EMPIRE_HANDICAP_REMOVED:
-				mc_markPlayerWhole(pPlayer, szSource);
+				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumHandicapInfos())
+				{
+					mc_applySource(&GC.getHandicapInfo((HandicapTypes)kEvent.iType), mc_sourceDirection(kEvent),
+						kEvent.iEventId, pPlayer, NULL, NULL, CASC_ORIGIN_BUILDING);
+				}
 				break;
 			// ---- source-carrying state changes: the mask IS the source's compiled route ----
 			// The OPERATE CROSSING -- deposits flow only while the building is operating, so this is the fact that
@@ -3035,16 +3044,14 @@ namespace
 
 	private:
 		// A whole PLAYER's deposit basis moved -- every package it owns re-derives (its cities' channels + sums and
-		// its own empire channels + sums). The two callers are the facts that move a source felt at EVERY scope
-		// rather than at a deposit-addressed one:
-		//   - a DIFFICULTY change: the handicap's own modifier families feed this player's packages, so
-		//     flexible difficulty moving the handicap moves that whole basis;
-		//   - a GAME OPTION flip, per player (below).
+		// its own empire channels + sums). The one caller is the GAME OPTION flip (below) -- a fact that moves a
+		// source felt at EVERY scope rather than at a deposit-addressed one. (The HANDICAP is NOT this class: its
+		// fact NAMES the source, so it is an ordinary plane-A apply above.)
 		// ⚠ This IS a whole-scope blanket, and it is the SANCTIONED kind: the fact is not deposit-addressed, so no
 		// union of per-source routes can express it -- exactly the SEVT_AREAS_RECALCULATED shape. It is NOT the
 		// banned self-heal, which papers over a MISSED invalidation ([DEC-no-self-heal]); this ANNOUNCES a genuine
-		// wholesale one. Both callers are also vanishingly rare (a WB toggle, a flexible-difficulty step), so the
-		// "emit liberally, mark precisely" cost argument does not bite: there is nothing finer to derive.
+		// wholesale one. The caller is also vanishingly rare (a WB toggle), so the "emit liberally, mark precisely"
+		// cost argument does not bite: there is nothing finer to derive.
 		static void mc_markPlayerWhole(const CvPlayer* pPlayer, const char* szSource)
 		{
 			if (pPlayer == NULL)

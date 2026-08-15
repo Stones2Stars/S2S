@@ -18,4 +18,10 @@
 
 void enablerRegisterConsumer();   // register on the event spine (from spineRegisterConsumers)
 
+//	The [ENABLER/census] emit -- what the lifecycle actually BUILT in every player's domains, plus the two
+//	load-compiled index censuses. The load path fires it from SEVT_GAME_LOAD_FINISHED; a NEW GAME never emits
+//	that bracket close, so its finalization calls this directly ("the domain is empty" must be readable off the
+//	domain itself on BOTH lifecycle paths, never inferred from a vanishing UI list).
+void enablerEmitDomainCensus();
+
 #endif // CV_ENABLER_CONSUMER_H

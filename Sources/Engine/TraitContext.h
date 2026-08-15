@@ -39,10 +39,10 @@
 //
 //	⚑ NO LOAD SPECIAL CASE, and it needs none for the reason PolicyContext needs none: a player EXISTS when its
 //	own facts stream, and `CvPlayer::read` emits ADDED per held trait after the wholesale has-array read, so the
-//	reseed builds this store through the appliers play uses ([DEC-spine-reseed]). SEVT_PLAYER_INIT is the
-//	NEW-GAME half -- a player's INITIAL traits are written straight into the has-array rather than through the
-//	setter, so that fact is the only announcement they ever make. ⚠ The two cannot both fire, which is what
-//	keeps the fold from doubling: PLAYER_INIT rides `CvGame::setInitialItems`, which a load never runs.
+//	reseed builds this store through the appliers play uses ([DEC-spine-reseed]). The NEW-GAME half rides the
+//	same pair: initMore assigns the leader's traits through `setHasTraitInternal` AFTER the lifecycle announce
+//	has primed, so the initial assignment announces exactly as a runtime swap does -- one mechanism, no
+//	lifecycle fold beside it.
 //
 //	⛔ IT ONLY CONSUMES. Facts in, state out, nothing back.
 //
@@ -86,9 +86,6 @@ public:
 	// registerable object to dispatch through; a direct call beside the emit would be a second surface
 	// maintaining one fact.
 	void foldTrait(int iTrait, int iSign);
-	// The NEW-GAME half (above): the initial traits, which no setter announces. A fold from a known zero, not a
-	// re-derivation -- it runs ONCE at a player's lifecycle start, never on a read.
-	void foldHeldTraits(int iSign);
 
 private:
 	const CvPlayer* m_player;   // the bound game object; a binding, never cleared

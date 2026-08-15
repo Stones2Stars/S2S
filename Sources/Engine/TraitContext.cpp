@@ -39,8 +39,7 @@ bool TraitContext::wantsEvent(int iEventId)
 	switch (iEventId)
 	{
 	case SEVT_EMPIRE_TRAIT_ADDED:     // iType trait; the direction is the fact's identity, never a re-read
-	case SEVT_EMPIRE_TRAIT_REMOVED:
-	case SEVT_PLAYER_INIT:            // the initial traits, which no setter announces
+	case SEVT_EMPIRE_TRAIT_REMOVED:   // the initial leader traits ride these too (initMore's setHasTraitInternal)
 		return true;
 	default:
 		return false;
@@ -68,9 +67,6 @@ void TraitContext::onSpineEvent(const CvSpineEvent& kEvent)
 	case SEVT_EMPIRE_TRAIT_REMOVED:
 		pTraits->foldTrait(kEvent.iType, -1);
 		break;
-	case SEVT_PLAYER_INIT:
-		pTraits->foldHeldTraits(+1);
-		break;
 	default:
 		break;
 	}
@@ -83,24 +79,6 @@ void TraitContext::foldTrait(int iTrait, int iSign)
 		return;
 	}
 	add(iTrait, iSign);
-}
-
-// The NEW-GAME build, from a known zero. ⚑ This is the ONE place the registry is walked, and it is a
-// lifecycle-start fold rather than a read -- which is the whole distinction this store exists to draw.
-void TraitContext::foldHeldTraits(int iSign)
-{
-	if (m_player == NULL)
-	{
-		return;
-	}
-	const int iNumTraits = GC.getNumTraitInfos();
-	for (int iTrait = 0; iTrait < iNumTraits; ++iTrait)
-	{
-		if (m_player->hasTrait((TraitTypes)iTrait))
-		{
-			foldTrait(iTrait, iSign);
-		}
-	}
 }
 
 // The ACTIVE set's record per held id -- a complex trait carries different values from its simple twin, so the

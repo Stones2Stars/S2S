@@ -340,6 +340,12 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	{
 		setAlive(true);
 	}
+	// THE LIFECYCLE ANNOUNCE PRECEDES THE PLAYER'S FIRST FACTS. Everything below announces through internal
+	// setters (the commerce sliders, the traits, the initial civics), and a fact that fires before the enabler
+	// domains prime is dropped by every applier with nothing to re-derive it -- which is exactly what happened
+	// to the initial civics on every new game: initMore runs from the EXE's player init, long before
+	// CvGame::initFreeState reached its announce, so the whole init fact stream landed on un-primed consumers.
+	announceLifecycleStart();
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
@@ -380,14 +386,16 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	FAssertMsg(GC.getNumTraitInfos() > 0, "GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvPlayer::init");
 	{
 		// The leader's authored assignment for whichever trait set is ACTIVE -- the
-		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition lives in the calc, not here.
+		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition lives in the calc, not here. Through the INTERNAL
+		// SETTER, never a raw has-array write: the setter is the one body that commits + announces
+		// (SEVT_EMPIRE_TRAIT_ADDED), and the lifecycle announce above has already primed the domains, so the
+		// trait facts build the enabler / policy / trait stores exactly as a load or a runtime swap does.
 		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(ePersonality)))
 		{
 			const TraitTypes eTrait = (TraitTypes)iTrait;
 			if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 			{
-				m_pabHasTrait[eTrait] = true;
-				processTrait(eTrait, 1);
+				setHasTraitInternal(eTrait, true);
 			}
 		}
 	}
@@ -476,6 +484,15 @@ void CvPlayer::initInGame(PlayerTypes eID, bool bSetAlive)
 	{
 		GET_TEAM(getTeam()).changeNumMembers(1);
 	}
+
+	// The lifecycle start a mid-game created player was never given: without it the enabler domains stay
+	// permanently un-primed (every fact the appliers see is dropped), so a barbarian city settling into a minor
+	// civ got a player whose tech/civic/promotion frontiers were empty for the rest of the game. The held-tech
+	// replay inside is what delivers the facts that fired before this player existed. It runs AFTER the team
+	// join above (the replay reads the team's held techs/projects) and BEFORE initMore, whose trait/civic
+	// setters emit this player's first own facts. initMore announces first-thing itself, so the placement here
+	// covers only a slot initMore's status guard skips.
+	announceLifecycleStart();
 
 	if ((GC.getInitCore().getSlotStatus(getID()) == SS_TAKEN) || (GC.getInitCore().getSlotStatus(getID()) == SS_COMPUTER))
 	{
@@ -1809,19 +1826,75 @@ void CvPlayer::setupGraphical()
 }
 
 
+// THE LIFECYCLE-START ANNOUNCE -- the ONE body every INIT path shares (initMore announces first-thing, so the
+// EXE-driven player init, mid-game creation via initInGame, and the initFreeState fallback all pass through
+// here), so a player cannot be stood up without it. It primes the enabler domains and then announces the facts
+// the save read's reseed announces for a loaded player: load, new game and mid-game creation build the same
+// way, through the same appliers ([DEC-spine-reseed]). The INITIAL CIVICS and TRAITS are deliberately NOT
+// announced here -- initMore sets them through their own emitting setters AFTER this has primed, which is the
+// whole point of it running first: a fact that lands on an un-primed domain is dropped permanently, and that
+// is exactly what happened to every initial civic while the announce waited for CvGame::initFreeState.
+// ⛔ FIRST-TIME-ONLY. A map REGENERATION re-enters initFreeState (regenerateMap -> setInitialItems) with the
+// domains already seeded and every fact below already announced: re-priming would WIPE the built domain content
+// (the no-op tech re-grants can never rebuild it), and re-announcing would double-fold every consumer (the
+// trait fold on PLAYER_INIT, the handicap deposits, the held-tech edges). A NEW game and a recycled mid-game
+// slot both pass because the owner's reset un-seeds the domains.
+void CvPlayer::announceLifecycleStart()
+{
+	if (m_enabler.techs.isSeeded())
+	{
+		return;
+	}
+	// THE ENABLER'S PER-PLAYER LIFECYCLE START (enabler.md §7.1), ahead of the fact that begins this player's
+	// event stream: size each domain and apply its static exclusions. The appliers SKIP an un-init'd domain, so
+	// a player primed after its first HAVE-event would drop that event's edges permanently.
+	primeEnablerDomains();
+	// The HANDICAP is CvInitCore state with no internal setter on this object; the modifier folds the
+	// handicap's families into this player's packages off this fact (event-spine.md: a genuine cascade input).
+	emitEmpireHandicapAdded((int)getID(), (int)getHandicapType());
+	// The team techs + projects this player STARTS UNDER. At game start the team holds nothing yet
+	// (CvGame::initFreeState grants the team techs only after every player has primed), so these loops are
+	// structural no-ops there -- but a MID-GAME created player joins a world whose facts fired long ago, and no
+	// event can re-deliver them. The per-self emits are the read reseed's own shape (one emit per member,
+	// count-aware for a repeat tech), and every applier's held-flip guard makes them exact for this player and
+	// a no-op for any teammate that already applied them.
+	if (getTeam() != NO_TEAM)
+	{
+		const CvTeam& kMyTeam = GET_TEAM(getTeam());
+		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
+		{
+			if (kMyTeam.isHasTech((TechTypes)iTech))
+			{
+				const int iHeldCount =
+					GC.getTechInfo((TechTypes)iTech).isRepeat()
+					? std::max(1, kMyTeam.getTechCount((TechTypes)iTech)) : 1;
+				for (int iHeld = 0; iHeld < iHeldCount; ++iHeld)
+				{
+					emitEmpireTechAdded((int)getID(), iTech);
+				}
+			}
+		}
+		for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
+		{
+			const int iProjectCount = kMyTeam.getProjectCount((ProjectTypes)iProject);
+			if (iProjectCount > 0)
+			{
+				emitEmpireProjectAdded((int)getID(), iProject, iProjectCount);
+			}
+		}
+	}
+	emitPlayerInit((int)getID());
+}
+
 void CvPlayer::initFreeState()
 {
 	// The game-start provisions (civ civics/techs/buildings + era/handicap startingGold) are handed over by the
-	// GRANTS MACHINE off this emit -- emit() dispatches synchronously, so the gold has landed by the time this
-	// returns. ⛔ The trigger belongs HERE, not in initFreeUnits: initFreeUnits early-returns on a null starting
-	// plot (so a player could be skipped entirely) and ran AFTER the gold was already applied, while initFreeState
-	// is called for every alive player (CvGame::initFreeState) and has no early return.
-	// THE ENABLER'S PER-PLAYER LIFECYCLE START (enabler.md §7.1), ahead of the fact that begins this player's
-	// event stream: size each domain and apply its static exclusions. The appliers SKIP an un-init'd domain, so
-	// a player primed after its first HAVE-event would drop that event's edges permanently. Content is NOT built
-	// here -- the events build it ([DEC-spine-reseed]).
-	primeEnablerDomains();
-	emitPlayerInit((int)getID());
+	// GRANTS MACHINE off the lifecycle announce's PLAYER_INIT -- emit() dispatches synchronously, so the gold has
+	// landed by the time this returns. ⛔ The trigger belongs HERE, not in initFreeUnits: initFreeUnits
+	// early-returns on a null starting plot (so a player could be skipped entirely) and ran AFTER the gold was
+	// already applied, while initFreeState is called for every alive player (CvGame::initFreeState) and has no
+	// early return.
+	announceLifecycleStart();
 	clearResearchQueue();
 }
 
@@ -16393,6 +16466,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		const bool bLoadedNukesValid = m_bNukesValid;
 		m_bNukesValid = false;
 		makeNukesValid(bLoadedNukesValid);
+		// The HANDICAP is CvInitCore state (deserialized before the players) with no internal setter on this
+		// object, so no slot landing above announces it -- the reseed does, here. The modifier folds the
+		// handicap's families into this player's packages off this fact (event-spine.md: a genuine cascade
+		// input); initFreeState carries the new-game twin of this emit.
+		emitEmpireHandicapAdded((int)getID(), (int)getHandicapType());
 		if (getTeam() != NO_TEAM)
 		{
 			const CvTeam& kMyTeam = GET_TEAM(getTeam());
@@ -25106,9 +25184,9 @@ CvCity*	CvPlayer::findClosestCity(const CvPlot* pPlot) const
 
 
 
-// COMMIT + ANNOUNCE + apply. Static/initial assignment is covered by PLAYER_INIT and by the load reseed, so
-// the emit belongs here rather than in processTrait -- but every RUNTIME move of a held trait comes through
-// this body, including a leader SWAP, which used to write the has-array raw and announce nothing at all.
+// COMMIT + ANNOUNCE + apply -- the ONE body every held-trait move comes through: the initial leader assignment
+// (initMore), the load reseed's replay, and every runtime SWAP (which used to write the has-array raw and
+// announce nothing at all). The emit belongs here rather than in processTrait.
 void CvPlayer::setHasTraitInternal(TraitTypes eIndex, bool bNewValue)
 {
 	if (eIndex == NO_TRAIT || hasTrait(eIndex) == bNewValue)

@@ -756,6 +756,11 @@ public:
 	// Size every player-held domain + apply its static exclusions, at BOTH lifecycle starts (new game and load).
 	// Sizing only; the events build the content.
 	void primeEnablerDomains() const;
+	// The INIT paths' lifecycle start (game start via initFreeState, mid-game creation via initInGame):
+	// primeEnablerDomains + the announcements the save read's reseed makes for a loaded player (the handicap,
+	// the team techs/projects this player starts under, PLAYER_INIT). First-time-only; the load path stays
+	// CvPlayer::read's own in-read emits.
+	void announceLifecycleStart();
 
 	// ---- THE AVAILABILITY READ SURFACE (player-held domains) -- the ENABLER's "can I, right now?" half of the
 	// GAME-OBJECT read role (patterns.md § THE TWO READ ROLES), one read pair per DOMAIN, the existing engine enum

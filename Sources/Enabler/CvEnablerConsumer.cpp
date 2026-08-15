@@ -44,7 +44,8 @@ enum EnFld
 	ENF_ATOMKEYS,    // distinct (kind, id) plot atoms any candidate names -- 0 means the index built EMPTY
 	ENF_ATOMENTRIES, // total candidate entries across those keys (the re-gate work one atom can cost)
 	ENF_CLASS,       // the gate class, by name
-	ENF_MEMBERS      // candidates in it -- read against `of` (the registry size) to see how coarse it is
+	ENF_MEMBERS,     // candidates in it -- read against `of` (the registry size) to see how coarse it is
+	ENF_CITY         // the city, on the per-founding city-domain census lines
 };
 
 static const char* en_prefix(int evt)
@@ -71,6 +72,7 @@ static const char* en_field(int tag, SpineFieldType* peType)
 	case ENF_ATOMENTRIES: return "atomEntries";
 	case ENF_CLASS:   *peType = SFT_STR; return "class";
 	case ENF_MEMBERS: return "members";
+	case ENF_CITY:    return "city";
 	default:         return NULL;
 	}
 }
@@ -209,6 +211,43 @@ static void en_emitDomainCensus()
 		  .addI(ENF_TOTAL, GC.getNumUnitInfos());
 		eventSpine().emit(eU);
 	}
+}
+
+//	THE PER-FOUNDING CITY-DOMAIN CENSUS -- the new-game half of the city lines above. The one lifecycle census
+//	fires at finalization, which on a FRESH START is before any city exists, so the city domains were blind on
+//	exactly the path where "the build list is empty" defects live ("the domain is empty" must be readable off
+//	the domain itself on BOTH lifecycle paths -- the header's contract). A founding is rare, so two DIAGNOSTIC
+//	lines per city cost nothing.
+//	⚠ Registration order puts this ahead of the trigger engine's settle-time provisions, so the counts read the
+//	seed fold + gate state, before the palace lands -- membership and the gate verdicts are the informative half.
+static void en_emitCityDomainCensus(const CvCity& kCity)
+{
+	int iBuildingsInTree = 0;
+	int iBuildingsListed = 0;
+	for (int iId = 0; iId < GC.getNumBuildingInfos(); ++iId)
+	{
+		const EnablerDomain::State eState = kCity.getBuildingAvailability((BuildingTypes)iId);
+		if (eState >= EnablerDomain::STATE_GREYED) ++iBuildingsInTree;
+		if (eState == EnablerDomain::STATE_LISTED) ++iBuildingsListed;
+	}
+	int iUnitsInTree = 0;
+	int iUnitsListed = 0;
+	for (int iId = 0; iId < GC.getNumUnitInfos(); ++iId)
+	{
+		const EnablerDomain::State eState = kCity.getUnitAvailability((UnitTypes)iId);
+		if (eState >= EnablerDomain::STATE_GREYED) ++iUnitsInTree;
+		if (eState == EnablerDomain::STATE_LISTED) ++iUnitsListed;
+	}
+	CvSpineEvent eBuildings(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_DOMAIN_CENSUS, 0);
+	eBuildings.addI(ENF_OWNER, (int)kCity.getOwner()).addI(ENF_CITY, kCity.getID()).addStr(ENF_DOMAIN, "buildings")
+	          .addI(ENF_INTREE, iBuildingsInTree).addI(ENF_LISTED, iBuildingsListed)
+	          .addI(ENF_TOTAL, GC.getNumBuildingInfos());
+	eventSpine().emit(eBuildings);
+	CvSpineEvent eUnits(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_DOMAIN_CENSUS, 0);
+	eUnits.addI(ENF_OWNER, (int)kCity.getOwner()).addI(ENF_CITY, kCity.getID()).addStr(ENF_DOMAIN, "units")
+	      .addI(ENF_INTREE, iUnitsInTree).addI(ENF_LISTED, iUnitsListed)
+	      .addI(ENF_TOTAL, GC.getNumUnitInfos());
+	eventSpine().emit(eUnits);
 }
 
 // Resolve a per-city event's (owner, cityId) to the live CvCity. A negative owner/id => NULL (an empire/world
@@ -731,6 +770,13 @@ private:
 			}
 			break;
 		}
+		// ---- the founding census: what the city's seed fold + gate just built, readable off the domain itself ----
+		case SEVT_CITY_FOUNDED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL) en_emitCityDomainCensus(*pCity);
+			break;
+		}
 		// ---- the load-end gate pass (the par.7.1 order rule's "gate once after the stream ends" option --
 		// fires while the bracket is still open, at the end of onFinalInitialized, state fully final) ----
 		case SEVT_GAME_LOAD_FINISHED:
@@ -767,4 +813,12 @@ void enablerRegisterConsumer()
 {
 	en_registerDomain();
 	eventSpine().registerConsumer(&s_enablerConsumer);
+}
+
+//	The new-game half of the census (header): the load bracket never opens on a fresh start, so the
+//	SEVT_GAME_LOAD_FINISHED route above cannot fire it -- CvGame::onFinalInitialized calls it for that path.
+void enablerEmitDomainCensus()
+{
+	en_registerDomain();
+	en_emitDomainCensus();
 }
