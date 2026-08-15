@@ -639,6 +639,14 @@ python::list CyPlot::rect(int halfWid, int halfHgt) const
 //
 void CyPlot::pythonPublish()
 {
+	// The 3D-point VALUE TYPE the kept point surfaces traffic in: getPoint hands it out, and the graphics-side
+	// consumers (CyEngine::triggerEffect, CyCamera::JustLookAt, CyAudioGame's 3D sound coords) take it back.
+	// Its registration was lost with the legacy structs interface while all of those surfaces stayed published,
+	// so every plot.getPoint() raised "No to_python converter found for C++ type: class NiPoint3".
+	python::class_<NiPoint3>("NiPoint3")
+		.def_readwrite("x", &NiPoint3::x)
+		.def_readwrite("y", &NiPoint3::y)
+		.def_readwrite("z", &NiPoint3::z);
 	// A game-object HANDLE, not an info. Its def set publishes through the loader, whose split across
 	// translation units keeps any single one inside the VC7.1 compiler's limits.
 	python::class_<CyPlot> plot("CyPlot", python::no_init);

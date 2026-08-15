@@ -4316,15 +4316,30 @@ void CvGameTextMgr::appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& in
 		{
 			continue;
 		}
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText(akBuckets[iBucket].szHeadingKey));
+		// The synthetic TECH_GAME_START root is machinery, never player-facing content (every civilization
+		// grants it, and its text keys are deliberately unauthored — it renders as a raw key). It is skipped,
+		// and the heading with it when the root was the bucket's only entry (the Dawn of Man civ blurb showed
+		// "Grants technologies: TXT_KEY_GAME_START" on every leader).
+		const int iRootTech = (akBuckets[iBucket].eRegistry == GRANTREG_TECH)
+			? GC.getInfoTypeForString("TECH_GAME_START", true) : -1;
+		bool bHeadingAppended = false;
 
 		for (size_t iEntry = 0; iEntry < pList->size(); iEntry++)
 		{
+			if (iRootTech >= 0 && (*pList)[iEntry] == iRootTech)
+			{
+				continue;
+			}
 			const CvWString szName = gt_grantedEntityName(akBuckets[iBucket].eRegistry, (*pList)[iEntry]);
 			if (szName.empty())
 			{
 				continue;
+			}
+			if (!bHeadingAppended)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText(akBuckets[iBucket].szHeadingKey));
+				bHeadingAppended = true;
 			}
 			szBuffer.append(NEWLINE);
 			szBuffer.append(szName);
