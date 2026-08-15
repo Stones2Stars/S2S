@@ -13284,7 +13284,9 @@ static int natGetDeterministicRandom(int iMin, int iMax, int iSeedX, int iSeedY)
 void CvCity::getVisibleEffects(ZoomLevelTypes eCurZoom, std::vector<const char*>& kEffectNames)
 {
 	PROFILE_EXTRA_FUNC();
-	if (isOccupation() && isVisible(getTeam(), false) == true)
+	// DISORDER, both halves: conquest occupation AND the owner's anarchy show the burning city (owner) -- the
+	// occupation-only gate left a revolution's cities looking perfectly calm.
+	if (isDisorder() && isVisible(getTeam(), false) == true)
 	{
 		if (eCurZoom == ZOOM_DETAIL)
 		{
