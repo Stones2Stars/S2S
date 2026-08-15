@@ -61,8 +61,6 @@
   `advancedStart` → resolve the curator's parked flag; `base.airCombat` → the `strength` family, where every
   other unit's base value already lives.
   ⚠ `espionagePoints` rides the missions/`CvOutcome` carve-out — its channel is settled, only its authoring home waits.
-- Author the leader→trait assignments. The chain is wired and the slots are authorable; the CONTENT is
-  community-owned, so this closes by AUTHORING and never by reconstructing the tables the curator dropped.
 - Author per-leader `ai.personality.researchSearchDepth` ([enabler.md §8](../../specs/enabler.md)). Same shape as
   the trait assignments: the read is wired and an unauthored leader takes the default, so this closes by
   AUTHORING, never by touching the enablement valuation.
@@ -470,10 +468,6 @@
   ⛔ `getChar` is NOT part of this — TEXT-plane, served off `CyGameTextMgr`
   ([patterns.md](../../architecture/patterns.md)).
   ⚑ Re-derive demand with `python Tools/census-python-boundary.py`.
-- Serve the free-function map helpers (plot direction / XY / distance / step distance) — their registrar went
-  with the binding purge; the map-generation utilities call them throughout. A failed read here is silent,
-  falling to DLL-default generation ([python-load-sequence.md](../../reference/python-load-sequence.md)), so a
-  wrong map is the only symptom.
 - **Give WorldBuilder's two `CyMapGenerator` calls a home.** Its registrar is gone (no `class_<>`, no `.def`),
   so `CyMapGenerator()` raises `NameError` at the click; the class itself still compiles as a dead TU nobody
   reaches.
