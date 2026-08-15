@@ -2258,10 +2258,15 @@ void CvGameTextMgr::parseLeaderTraits(CvWStringBuffer &szHelpString, LeaderHeadT
 
 		// The leader's authored assignment for whichever trait set is ACTIVE (CvTraitSelection owns the
 		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition), rendered in order.
+		// ⚠ The option filter applies only once a game EXISTS. The EXE's staging checkboxes are not committed
+		// into CvInitCore until launch, so any option read at the custom-game screen answers with the PREVIOUS
+		// game's options -- filtering there rendered a stale, untoggleable verdict (an empty bracket that only a
+		// started game could refresh). Pre-game the leader's authored identity is the truthful render.
+		const bool bGameLive = GC.getGame().isFinalInitialized();
 		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 		{
 			const TraitTypes eTrait = (TraitTypes)iTrait;
-			if (!CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
+			if (bGameLive && !CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 			{
 				continue;
 			}
@@ -2299,16 +2304,30 @@ void CvGameTextMgr::parseLeaderShortTraits(CvWStringBuffer &szHelpString, Leader
 
 		// The leader's authored assignment for whichever trait set is ACTIVE (CvTraitSelection owns the
 		// GAMEOPTION_LEADER_COMPLEX_TRAITS composition).
+		// ⚠ The option filter applies only once a game EXISTS -- the EXE commits the staging checkboxes into
+		// CvInitCore at launch, so a pre-game option read answers with the PREVIOUS game's options (the stale,
+		// untoggleable empty bracket). Pre-game the authored identity renders unfiltered.
+		const bool bGameLive = GC.getGame().isFinalInitialized();
+		// ONE ENTRY PER TRAIT LINE (owner). A leader's assignment carries a line's ladder BASE beside its
+		// developed rung(s) -- the unnumbered trait `enables` its numbered successors, and a non-developing
+		// game grants the rungs cumulatively -- so the raw list names every line twice. The rungs of a line
+		// share the line's ONE short key, so the render dedupes on it.
+		std::set<CvWString> seenShortNames;
 		foreach_(const int iTrait, CvTraitSelection::leaderTraits(GC.getLeaderHeadInfo(eLeader)))
 		{
 			const TraitTypes eTrait = (TraitTypes)iTrait;
-			if (CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
+			if (!bGameLive || CvTraitSelection::isSelectable(GC.getTraitInfo(eTrait), true))
 			{
+				const CvWString szShortName = gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey());
+				if (!seenShortNames.insert(szShortName).second)
+				{
+					continue;
+				}
 				if (!bFirst)
 				{
 					szHelpString.append(L"/");
 				}
-				szHelpString.append(gDLL->getText(GC.getTraitInfo(eTrait).getShortDescriptionKey()));
+				szHelpString.append(szShortName);
 				bFirst = false;
 			}
 		}
