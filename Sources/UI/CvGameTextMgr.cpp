@@ -5215,16 +5215,31 @@ void CvGameTextMgr::parsePlayerTraits(CvWStringBuffer &szBuffer, PlayerTypes ePl
 
 	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
 	{
+		// ONE ENTRY PER TRAIT LINE (owner) -- the parseLeaderShortTraits collapse: a line's rungs are held
+		// CUMULATIVELY (the base beside its numbered successors), so listing each held rung named every line
+		// twice ("Creative CT, Creative I, ..."). Every trait name is ONE WORD, so the line's name is the
+		// description's first word, which is also the dedupe key.
 		bool bStarted = false;
+		std::set<CvWString> seenLineNames;
 		const int iNumTraitInfos = GC.getNumTraitInfos();
 		for (int i = 0; i < iNumTraitInfos; ++i)
 		{
 			if (kPlayer.hasTrait(static_cast<TraitTypes>(i)))
 			{
+				CvWString szLineName = GC.getTraitInfo(static_cast<TraitTypes>(i)).getDescription();
+				const size_t iFirstSpace = szLineName.find(L' ');
+				if (iFirstSpace != CvWString::npos)
+				{
+					szLineName = szLineName.substr(0, iFirstSpace);
+				}
+				if (!seenLineNames.insert(szLineName).second)
+				{
+					continue;
+				}
 				if (bStarted) szBuffer.append(L", ");
 				else bStarted = true;
 
-				szBuffer.append(GC.getTraitInfo(static_cast<TraitTypes>(i)).getDescription());
+				szBuffer.append(szLineName);
 			}
 		}
 	}
