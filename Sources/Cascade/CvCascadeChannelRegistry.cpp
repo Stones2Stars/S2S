@@ -813,8 +813,10 @@ void CascadeChannelRegistry::reportTraitImprovementRead(int iPlayer, int iCity, 
 // channel match.
 int64_t cascadePlotCityFloor100(int iX, int iY, int iChannel)
 {
+	// isCityDesignated, never isCity: the reseed's plot-city fact resolves this mid-map-read, when the city
+	// OBJECT has not streamed yet -- the raw designation is the committed state the emit itself rode.
 	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
-	if (pPlot == NULL || !pPlot->isCity())
+	if (pPlot == NULL || !pPlot->isCityDesignated())
 	{
 		return 0;
 	}

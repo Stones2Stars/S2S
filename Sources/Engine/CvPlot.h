@@ -450,6 +450,11 @@ public:
 	void removeGoody();
 
 	DllExport bool isCity(bool bCheckImprovement = false, TeamTypes eForTeam = NO_TEAM) const;
+	/// <summary>The plot carries a CITY DESIGNATION -- the raw IDInfo test, valid mid-load before the cities
+	/// stream (the isHeadquartersByOwnerId precedent). isCity() resolves the city OBJECT through the owner's
+	/// list and answers false for the whole map read; a reader needing only "is there a city here" asks
+	/// this.</summary>
+	bool isCityDesignated() const { return m_plotCity.eOwner != NO_PLAYER && m_plotCity.iID != FFreeList::INVALID_INDEX; }
 
 	bool isFriendlyCity(const CvUnit& kUnit, bool bCheckImprovement) const;
 	bool isEnemyCity(const CvUnit& kUnit, bool bOnlyRealCities = false) const;
