@@ -4380,14 +4380,11 @@ int CvCity::getFoodConsumedByPopulation(const int iExtra) const
 int CvCity::foodConsumption(const bool bNoAngry, const int iExtra, const bool bIncludeWastage) const
 {
 	return getFoodConsumedByPopulation(iExtra)
-		// ⚠ ANGRY CITIZENS are a WHOLE count and LIFT to the x100 food plane; the HEALTH RATE is NOT -- it comes
-		// off the wellbeing package (realizedWellbeing -> InfoValuation::netHealth), which is x100 NATIVE like
-		// every other channel ([DEC-fixedpoint-x100]). Lifting it again multiplied the health term by 10000 and
-		// inflated consumption by 100x the deficit for any unhealthy city -- silently, since the number stayed
-		// plausible. The legacy twin genuinely WAS whole (min(0, goodHealth() - badHealth())), which is what made
-		// the wrong lift look right.
+		// ⚠ ANGRY CITIZENS and the HEALTH RATE are both WHOLE counts at this edge and LIFT to the x100 food
+		// plane: healthRate() is min(0, netHealth), and InfoValuation::netHealth already reduced at the
+		// discrete boundary (whole health points), so the deficit converts HERE like its angry sibling.
 		- (bNoAngry ? 100 * angryPopulation(iExtra) : 0) // Doesn't belong here, should be extracted out to wherever it is needed
-		- healthRate(iExtra)
+		- 100 * healthRate(iExtra)
 		+ (bIncludeWastage ? 100 * (int)foodWastage() : 0);
 }
 // ! Toffer - Gradual food consumption change
