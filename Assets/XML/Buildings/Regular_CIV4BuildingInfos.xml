@@ -2579,11 +2579,6 @@
 		</BuildingInfo>
 		<BuildingInfo>
 			<Type>BUILDING_ALPHA_FEMALE</Type>
-			<EnabledCivilizationTypes>
-				<EnabledCivilizationType>
-					<CivilizationType>CIVILIZATION_NPC_NEANDERTHAL</CivilizationType>
-				</EnabledCivilizationType>
-			</EnabledCivilizationTypes>
 			<FreeBuilding>BUILDING_ALPHA_FEMALE</FreeBuilding>
 			<Description>TXT_KEY_BUILDING_ALPHA_FEMALE</Description>
 			<Civilopedia>TXT_KEY_BUILDING_ALPHAGENDER_PEDIA</Civilopedia>
@@ -2623,11 +2618,6 @@
 		</BuildingInfo>
 		<BuildingInfo>
 			<Type>BUILDING_ALPHA_MALE</Type>
-			<EnabledCivilizationTypes>
-				<EnabledCivilizationType>
-					<CivilizationType>CIVILIZATION_NPC_NEANDERTHAL</CivilizationType>
-				</EnabledCivilizationType>
-			</EnabledCivilizationTypes>
 			<FreeBuilding>BUILDING_ALPHA_MALE</FreeBuilding>
 			<Description>TXT_KEY_BUILDING_ALPHA_MALE</Description>
 			<Civilopedia>TXT_KEY_BUILDING_ALPHAGENDER_PEDIA</Civilopedia>
