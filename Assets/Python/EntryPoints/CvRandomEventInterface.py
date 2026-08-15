@@ -5488,7 +5488,7 @@ def TriggerHarryPotter2(argsList):
 			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iLibrary, True)
 
 		if CyCity.isHasReligion(iStateReligion):
-			CyCity.changeHurryAngerTimer(CyCity.flatHurryAngerLength())
+			ACT.changeCityHurryAngerTimer(CyCity.getOwner(), CyCity.getID(), CyCity.flatHurryAngerLength())
 
 	CyTeam = GC.getTeam(CyPlayer.getTeam())
 	for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):

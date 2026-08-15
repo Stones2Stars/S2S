@@ -26,6 +26,8 @@ GAME = GC.getGame()
 MAP = GC.getMap()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
+UNITINFO = CyUnitInfo()       # the per-info UNIT accessor
+CULTURELEVEL = CyCultureLevelInfo()   # the culture threshold a city counts toward, per (level x gamespeed)
 STATE = CyState()
 ACT = CyAct()
 ENABLER = CyEnabler()
@@ -578,24 +580,26 @@ class CvEventManager:
 					CyPlayer.changeGold(iData5)
 					CvScreensInterface.mainInterface.buildCityListLeft()
 					CyInterface().setDirty(InterfaceDirtyBits.SelectionButtons_DIRTY_BIT, True)
-					if GC.getBuildingInfo(iData4).getReligionType() >= 0:
-						CyCity.changeHurryAngerTimer(CyCity.flatHurryAngerLength())
+					if INFO.isReligiousBuilding(iData4):
+						ACT.changeCityHurryAngerTimer(CyCity.getOwner(), CyCity.getID(), CyCity.flatHurryAngerLength())
 				elif ID == 904:
 					CyPlayer.changeGold(iData5)
-					self.onCityRazed((CyCity, iPlayer))
+					self.onCityRazed(((CyCity.getOwner(), CyCity.getID()), iPlayer))
 					ACT.disbandCity(CyCity.getOwner(), CyCity.getID())
 				elif ID == 905 or ID == 906:
 					X = CyCity.getX()
 					Y = CyCity.getY()
 					CyUnit = CyPlayer.initUnit(iData5, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 					if iData4 == -1:
-						CyCity.addProductionExperience(CyUnit, True)
+						ACT.addUnitProductionExperience(CyUnit.getOwner(), CyCity.getID(), CyUnit.getID(), True)
 					else:
 						if iData4 > 0:
 							ACT.setUnitExperience(CyUnit.getOwner(), CyUnit.getID(), iData4)
 						if ID == 906 and self.PROMO_GUARDIAN_TRIBAL > -1:
-							CyUnit.setHasPromotion(self.PROMO_GUARDIAN_TRIBAL, True)
-					CyUnit.setMoves(CyUnit.maxMoves()-1)
+							ACT.setUnitPromotion(CyUnit.getOwner(), CyUnit.getID(), self.PROMO_GUARDIAN_TRIBAL, True)
+					# Leave the fresh unit one move point: spent = movesLeft - 1 on a unit that has spent nothing.
+					iMovesLeft = STATE.getUnitRead(CyUnit.getOwner(), CyUnit.getID())[UnitReadKind.UNIT_READ_MOVES_LEFT]
+					ACT.setUnitMoves(CyUnit.getOwner(), CyUnit.getID(), iMovesLeft - 1)
 
 		elif ID == 999:
 			GC.getPlayer(iData2).changeCommercePercent(CommerceTypes(iData3), iData4)
@@ -715,18 +719,19 @@ class CvEventManager:
 			CyPlayer = GC.getPlayer(iPlayer)
 			if not CyPlayer.isAlive(): continue
 
-			civInfo = GC.getCivilizationInfo(CyPlayer.getCivilizationType())
+			aGranted = INFO.getIdList("CIVILIZATION_", CyPlayer.getCivilizationType(), IdListSlot.PYLIST_GRANTED_BUILDINGS)
 			aList = []
 			for iPromo, _, native in self.aCultureList:
 				if -1 in (iPromo, native): continue
-				if civInfo.isCivilizationBuilding(native):
+				if native in aGranted:
 					aList.append(iPromo)
 			if not aList: continue
 
 			for CyUnit in CyPlayer.units():
-				if CyUnit.isFound():
+				iUnitType = STATE.getUnitRead(iPlayer, CyUnit.getID())[UnitReadKind.UNIT_READ_TYPE]
+				if UNITINFO.isFound(iUnitType):
 					for iPromo in aList:
-						CyUnit.setHasPromotion(iPromo, True)
+						ACT.setUnitPromotion(iPlayer, CyUnit.getID(), iPromo, True)
 
 	def onMapRegen(self, argsList):
 		if not CyInterface().isInAdvancedStart():
@@ -1316,20 +1321,21 @@ class CvEventManager:
 
 
 	def onNukeExplosion(self, argsList):
-		CyPlot, CyUnit = argsList
-		if not CyUnit:
+		# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle; the plot arg is a real wrapper.
+		CyPlot, (iUnitOwner, iUnitID) = argsList
+		if iUnitID == -1:
 			return
 		iX = CyPlot.getX()
 		iY = CyPlot.getY()
-		iUnit = CyUnit.getUnitType()
+		iUnit = STATE.getUnitRead(iUnitOwner, iUnitID)[UnitReadKind.UNIT_READ_TYPE]
 		if iUnit == ENUMS.getInfoType('UNIT_TURN'):
 			if CyPlot.isCity():
-				GC.getPlayer(CyUnit.getOwner()).acquireCity(CyPlot.getPlotCity(), False, False)
+				GC.getPlayer(iUnitOwner).acquireCity(CyPlot.getPlotCity(), False, False)
 			for pNukedPlot in CyPlot.rect(1, 1):
 				numUnits = pNukedPlot.getNumUnits()
 				for e in xrange(numUnits - 1, -1, -1):
 					pUnit = pNukedPlot.getUnit(e)
-					pUnit.kill(False, -1)
+					ACT.killUnit(pUnit.getOwner(), pUnit.getID(), False, -1)
 				if pNukedPlot.getFeatureType() == GC.getInfoTypeForString('FEATURE_FALLOUT'):
 					pNukedPlot.setFeatureType(-1, -1)
 
@@ -2443,13 +2449,13 @@ class CvEventManager:
 			for iPlayerX in xrange(self.MAX_PC_PLAYERS):
 				if iPlayerX == iPlayer: continue
 				CyPlayerX = GC.getPlayer(iPlayerX)
-				if not CyPlayerX.isAlive() or iReligion != GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getFavoriteReligion():
+				if not CyPlayerX.isAlive() or iReligion != INFO.getIntrinsic("LEADER_", CyPlayerX.getLeaderType(), IntrinsicSlot.PYINT_FAVORITE_RELIGION):
 					continue
 				capital = CyPlayerX.getCapitalCity()
 				if capital:
-					capital.setHasReligion(iReligion, True, True, True)
+					ACT.setCityReligion(capital.getOwner(), capital.getID(), iReligion, False)
 					if CyPlayerX.isHuman():
-						strReligionName = GC.getReligionInfo(iReligion).getText()
+						strReligionName = INFO.getDescription("RELIGION_", iReligion)
 						popup = CyPopup(-1, EventContextTypes.NO_EVENTCONTEXT, True)
 						popup.setHeaderString(TRNSLTR.getText("TXT_KEY_POPUP_FAVORITE_RELIGION_HEADER",()), 1<<2)
 						popup.setBodyString(TRNSLTR.getText("TXT_KEY_POPUP_FAVORITE_RELIGION", (strReligionName, strReligionName)), 1<<0)
@@ -2519,22 +2525,23 @@ class CvEventManager:
 
 
 	def onCityBuilt(self, argsList):
-		CyCity, CyUnit, = argsList
-		if not CyCity:
+		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		(iPlayer, iCityID), (iUnitOwner, iUnitID) = argsList
+		if iCityID == -1:
 			print "[ERR] CvEventManager.onCityBuilt\n  Not a real city!"
 			return
-		iPlayer = CyCity.getOwner()
+		CyCity = GC.getPlayer(iPlayer).getCity(iCityID)
 		# Give extra population to new cities
 		iPop = 0
-		if CyUnit:
-			iUnit = CyUnit.getUnitType()
+		if iUnitID != -1:
+			iUnit = STATE.getUnitRead(iUnitOwner, iUnitID)[UnitReadKind.UNIT_READ_TYPE]
 			if iUnit in self.mapSettlerPop:
 				iPop += self.mapSettlerPop[iUnit]
 
 			for iPromo, iBuilding, _ in self.aCultureList:
 				if -1 in (iPromo, iBuilding): continue
-				if CyUnit.isHasPromotion(iPromo):
-					ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBuilding, True)
+				if STATE.hasUnitPromotion(iUnitOwner, iUnitID, iPromo):
+					ACT.setCityBuilding(iPlayer, iCityID, iBuilding, True)
 
 			# Give a free defender to the first city when it is built
 			if iUnit == self.UNIT_BAND:
@@ -2543,16 +2550,17 @@ class CvEventManager:
 					iUnitTG = GC.getInfoTypeForString("UNIT_NEANDERTHAL_TRIBAL_GUARDIAN")
 				else:
 					iUnitTG = GC.getInfoTypeForString("UNIT_TRIBAL_GUARDIAN")
-				CyUnitTG = CyPlayer.initUnit(iUnitTG, CyUnit.getX(), CyUnit.getY(), UnitAITypes.UNITAI_PROPERTY_CONTROL, DirectionTypes.DIRECTION_SOUTH)
-				iExp = STATE.getUnitRead(CyUnit.getOwner(), CyUnit.getID())[UnitReadKind.UNIT_READ_EXPERIENCE]
+				iUnitX, iUnitY = STATE.getUnitPosition(iUnitOwner, iUnitID)
+				CyUnitTG = CyPlayer.initUnit(iUnitTG, iUnitX, iUnitY, UnitAITypes.UNITAI_PROPERTY_CONTROL, DirectionTypes.DIRECTION_SOUTH)
+				iExp = STATE.getUnitRead(iUnitOwner, iUnitID)[UnitReadKind.UNIT_READ_EXPERIENCE]
 				ACT.setUnitExperience(CyUnitTG.getOwner(), CyUnitTG.getID(), iExp)
 		if iPop:
-			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), iPop)
+			ACT.changeCityPopulation(iPlayer, iCityID, iPop)
 			iThreshold = CyCity.getGrowth()[CityGrowthRead.GROWTH_READ_THRESHOLD]
 			if self.GO_1_CITY_TILE_FOUNDING:
-				ACT.changeCityStoredFood(CyCity.getOwner(), CyCity.getID(), iThreshold/4)
+				ACT.changeCityStoredFood(iPlayer, iCityID, iThreshold/4)
 			else:
-				ACT.changeCityStoredFood(CyCity.getOwner(), CyCity.getID(), iThreshold/8)
+				ACT.changeCityStoredFood(iPlayer, iCityID, iThreshold/8)
 		# Human player city naming
 		iActivePlayer = GAME.getActivePlayer()
 		if iPlayer == iActivePlayer and not GAME.getAIAutoPlay(iActivePlayer):
@@ -2560,8 +2568,9 @@ class CvEventManager:
 
 
 	def onCityRazed(self, argsList):
-		CyCity, iPlayer = argsList
-		iCityID = CyCity.getID()
+		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		(iOwner, iCityID), iPlayer = argsList
+		CyCity = GC.getPlayer(iOwner).getCity(iCityID)
 		# Handle Python Buildings
 		aWonderTuple = self.aWonderTuple
 		if iCityID in aWonderTuple[3]:
@@ -2591,10 +2600,10 @@ class CvEventManager:
 				del aWonderTuple[0][idx], aWonderTuple[1][idx], aWonderTuple[2][idx], aWonderTuple[3][idx], aWonderTuple[4][idx]
 				n += 1
 		# Messages - Wonder Destroyed
-		NumWonders = CyCity.getNumWorldWonders()
+		NumWonders = CyCity.getCounts()[CityCountRead.CITY_COUNT_WORLD_WONDERS]
 		if NumWonders:
 
-			if CyCity.isRevealed(GAME.getActiveTeam(), False):
+			if CyCity.isRevealedTo(GAME.getActiveTeam()):
 				iActivePlayer = GAME.getActivePlayer()
 				if iActivePlayer > -1:
 					if iPlayer == iActivePlayer:
@@ -2608,14 +2617,13 @@ class CvEventManager:
 					artPath = 'Art/Interface/Buttons/General/warning_popup.dds'
 
 					for iBuilding in xrange(GC.getNumBuildingInfos()):
-						if not CyCity.hasBuilding(iBuilding): continue
-						CvBuildingInfo = GC.getBuildingInfo(iBuilding)
-						if CvBuildingInfo.getMaxGlobalInstances() == 1:
+						if not CyCity.getBuildingReads(iBuilding)[CityBuildingRead.CITY_BUILDING_HAS]: continue
+						if BUILDING.getWonderScope(iBuilding) == AllowedCap.ALLOWEDCAP_WORLD:
 
 							if bActive:
-								szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_DESTROYED_YOU", (CvBuildingInfo.getDescription(),))
+								szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_DESTROYED_YOU", (INFO.getDescription("BUILDING_", iBuilding),))
 							else:
-								szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_DESTROYED", (szPlayerName, CvBuildingInfo.getDescription()))
+								szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_DESTROYED", (szPlayerName, INFO.getDescription("BUILDING_", iBuilding)))
 
 							CvUtil.sendMessage(szTxt, iActivePlayer, 16, artPath, eColor, iX, iY, True, True, bForce = bActive)
 		# Partisans!
@@ -2626,10 +2634,10 @@ class CvEventManager:
 
 				iNumCultureLevels = GC.getNumCultureLevelInfos()
 				iGamespeedType = GAME.getGameSpeedType()
-				iCulture = CyCity.getCulture(iPlayerHC)
+				iCulture = CyCity.getCultureForPlayer(iPlayerHC) / 100
 				for i in xrange(iNumCultureLevels):
 					iCultureLevel = iNumCultureLevels - i - 1
-					if iCulture >= GC.getCultureLevelInfo(iCultureLevel).getSpeedThreshold(iGamespeedType):
+					if iCulture >= CULTURELEVEL.getSpeedThreshold(iCultureLevel, iGamespeedType):
 						bAtCapital = True
 						iNumUnits = iCultureLevel * 3/4
 
@@ -2681,7 +2689,7 @@ class CvEventManager:
 									TRNSLTR.getText("TXT_KEY_EVENT_PARTISANS_2", (iNumUnits, szUnitKey, CyCity.getName())), iPlayerHC, 10,
 									szUnitBtn, ColorTypes(13), iX, iY, True, True, bForce=False
 								)
-								if not capital.isRevealed(iPlayer, False):
+								if not capital.isRevealedTo(GC.getPlayer(iPlayer).getTeam()):
 									iX = CyCity.getX(); iY = CyCity.getY()
 
 								CvUtil.sendMessage(
@@ -2694,31 +2702,35 @@ class CvEventManager:
 
 		# Ruin Arcology.
 		mapBuildingType = self.mapBuildingType
-		if CyCity.hasBuilding(mapBuildingType["ARCOLOGY"]) or CyCity.hasBuilding(mapBuildingType["ARCOLOGY_SHIELDING"]) or CyCity.hasBuilding(mapBuildingType["ADVANCED_SHIELDING"]):
+		if (CyCity.getBuildingReads(mapBuildingType["ARCOLOGY"])[CityBuildingRead.CITY_BUILDING_HAS]
+		or CyCity.getBuildingReads(mapBuildingType["ARCOLOGY_SHIELDING"])[CityBuildingRead.CITY_BUILDING_HAS]
+		or CyCity.getBuildingReads(mapBuildingType["ADVANCED_SHIELDING"])[CityBuildingRead.CITY_BUILDING_HAS]):
 			self.iArcologyCityID = iCityID
 
 
 	# This is the last function a city object call before being deleted.
 	def onCityLost(self, argsList):
-		CyCity, = argsList
-		self.iOldCityID = iCityID = CyCity.getID()
+		# The callback hands over an IDENTITY, not a handle -- unpack the (owner, id) pair.
+		(iOwner, iCityID), = argsList
+		self.iOldCityID = iCityID
 		# Ruin Arcology.
 		if self.iArcologyCityID != -1 and iCityID == self.iArcologyCityID:
-			CyCity.plot().setImprovementType(GC.getInfoTypeForString("IMPROVEMENT_CITY_RUINS_ARCOLOGY"))
+			iX, iY = GC.getPlayer(iOwner).getCity(iCityID).getPosition()
+			MAP.plot(iX, iY).setImprovementType(GC.getInfoTypeForString("IMPROVEMENT_CITY_RUINS_ARCOLOGY"))
 			self.iArcologyCityID = -1
 
 
 	# This is before city has changed owner or been autorazed
 	def onCityAcquired(self, argsList):
-		iOwnerOld, iOwnerNew, city, bConquest, bTrade, bAutoRaze = argsList
+		# The city arg is the (owner, id) IDENTITY TUPLE, never a handle.
+		iOwnerOld, iOwnerNew, (iCityOwner, iCityID), bConquest, bTrade, bAutoRaze = argsList
 		aWonderTuple = self.aWonderTuple
 		if (
 			bConquest
 		and "HELSINKI" in aWonderTuple[0]
 		and iOwnerNew == aWonderTuple[4][aWonderTuple[0].index("HELSINKI")]
 		):
-			iX = city.getX()
-			iY = city.getY()
+			iX, iY = GC.getPlayer(iCityOwner).getCity(iCityID).getPosition()
 			for x in xrange(iX - 1, iX + 2):
 				for y in xrange(iY - 1, iY + 2):
 					CyPlot = GC.getMap().plot(x, y)
@@ -2729,11 +2741,13 @@ class CvEventManager:
 
 
 	def onCityAcquiredAndKept(self, argsList):
-		iOwnerOld, iOwnerNew, city, bConquest, bTrade = argsList
+		# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		iOwnerOld, iOwnerNew, (iCityOwner, iCityID), bConquest, bTrade = argsList
+		city = GC.getPlayer(iCityOwner).getCity(iCityID)
 		# Messages - Wonder Captured
-		NumWonders = city.getNumWorldWonders()
+		NumWonders = city.getCounts()[CityCountRead.CITY_COUNT_WORLD_WONDERS]
 		if NumWonders:
-			if city.isRevealed(GAME.getActiveTeam(), False):
+			if city.isRevealedTo(GAME.getActiveTeam()):
 				iActivePlayer = GAME.getActivePlayer()
 				if iActivePlayer > -1:
 					if iOwnerNew == iActivePlayer:
@@ -2746,24 +2760,21 @@ class CvEventManager:
 						eColor = -1
 
 					szPlayerName = GC.getPlayer(iOwnerNew).getName()
-					iX = city.getX()
-					iY = city.getY()
+					iX, iY = city.getPosition()
 					for iBuilding in xrange(GC.getNumBuildingInfos()):
-						if city.hasBuilding(iBuilding):
-							CvBuildingInfo = GC.getBuildingInfo(iBuilding)
-							if CvBuildingInfo.getMaxGlobalInstances() == 1:
+						if city.getBuildingReads(iBuilding)[CityBuildingRead.CITY_BUILDING_HAS]:
+							if BUILDING.getWonderScope(iBuilding) == AllowedCap.ALLOWEDCAP_WORLD:
 
 								if bActive:
-									szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_CAPTURED_YOU", (CvBuildingInfo.getDescription(),))
+									szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_CAPTURED_YOU", (INFO.getDescription("BUILDING_", iBuilding),))
 								else:
-									szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_CAPTURED", (szPlayerName, CvBuildingInfo.getDescription()))
+									szTxt = TRNSLTR.getText("TXT_KEY_MSG_WONDER_CAPTURED", (szPlayerName, INFO.getDescription("BUILDING_", iBuilding)))
 
 								CvUtil.sendMessage(szTxt, iActivePlayer, 16, artPath, eColor, iX, iY, True, True, bForce = bActive)
 
 		aWonderTuple = self.aWonderTuple
 		iOldCityID = self.iOldCityID
 		if iOldCityID in aWonderTuple[3]:
-			iCityID = city.getID()
 			iTeamN = GC.getPlayer(iOwnerNew).getTeam()
 			CyTeamN = GC.getTeam(iTeamN)
 			iTeamO = GC.getPlayer(iOwnerOld).getTeam()

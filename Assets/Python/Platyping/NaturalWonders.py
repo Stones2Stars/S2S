@@ -11,6 +11,7 @@ INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
+ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -96,25 +97,15 @@ class NaturalWonders:
 
 
     def checkReveal(self, pPlot, iTeam):
-        ## Defensive guards up front — any of these failing silently in the
-        ## old code caused "Error in plotRevealed event handler" spam. Better
-        ## to return early on bad input than explode inside the handler.
+        ## A NULL plot crosses the boundary as None -- the one guard the handler needs.
         if pPlot is None:
-            return
-        try:
-            if pPlot.isNone():
-                return
-        except:
             return
 
         iFeature = pPlot.getFeatureType()
         if iFeature == -1:
             return
 
-        FeatureInfo = GC.getFeatureInfo(iFeature)
-        if FeatureInfo is None:
-            return
-        sType = FeatureInfo.getType()
+        sType = INFO.getType("FEATURE_", iFeature)
         if sType.find("FEATURE_PLATY_") == -1:
             return
 
@@ -136,8 +127,8 @@ class NaturalWonders:
             if player is None:
                 continue
             pCapital = player.getCapitalCity()
-            if pCapital and not pCapital.isNone():
-                pCapital.changeCulture(iP, c, True)
+            if pCapital:
+                ACT.changeCityCulture(pCapital.getOwner(), pCapital.getID(), iP, c, True)
             else:
                 remaining.append((iP, c))
         self.pendingCulture = remaining
@@ -191,9 +182,9 @@ class NaturalWonders:
             if iTeamX != iTeam:
                 if bFirst and iPlayerX == iPlayerAct:
                     if CyTeam.isHasMet(iTeamX):
-                        CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MET_FIRST_WONDER",(GC.getTeam(iTeam).getName(), FeatureInfo.getDescription())), iPlayerX, 12, bForce=False)
+                        CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MET_FIRST_WONDER",(GC.getTeam(iTeam).getName(), INFO.getDescription("FEATURE_", iFeature))), iPlayerX, 12, bForce=False)
                     else:
-                        CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_NOT_MET_FIRST_WONDER",(FeatureInfo.getDescription(),)), iPlayerX, 12, bForce=False)
+                        CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_NOT_MET_FIRST_WONDER",(INFO.getDescription("FEATURE_", iFeature),)), iPlayerX, 12, bForce=False)
                 continue
             if iPlayerX == iPlayerAct:
                 popupInfo = CyPopupInfo()
@@ -203,11 +194,11 @@ class NaturalWonders:
                 popupInfo.setData3(3)
                 popupInfo.setText("showWonderMovie")
                 popupInfo.addPopup(iPlayerX)
-                CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_WONDERDISCOVERED_YOU",(FeatureInfo.getDescription(),)), iPlayerX, 12, FeatureInfo.getButton(), ColorTypes(44), pPlot.getX(), pPlot.getY(), True, True, bForce=False)
+                CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_WONDERDISCOVERED_YOU",(INFO.getDescription("FEATURE_", iFeature),)), iPlayerX, 12, INFO.getButton("FEATURE_", iFeature), ColorTypes(44), pPlot.getX(), pPlot.getY(), True, True, bForce=False)
             if bFirst:
                 pCapital = CyPlayerX.getCapitalCity()
-                if pCapital and not pCapital.isNone():
-                    pCapital.changeCulture(iPlayerX, iCulture, True)
+                if pCapital:
+                    ACT.changeCityCulture(pCapital.getOwner(), pCapital.getID(), iPlayerX, iCulture, True)
                 else:
                     self.pendingCulture.append((iPlayerX, iCulture))
                 if iPlayerX == iPlayerAct:

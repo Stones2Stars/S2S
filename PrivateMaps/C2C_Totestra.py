@@ -4640,7 +4640,13 @@ class BonusPlacer :
 					numPossible += 1
 			landTiles += numPossible/BONUS.getTilesPer(eBonus)
 		players = GC.getGame().countCivPlayersAlive() * BONUS.getPercentPerPlayer(eBonus)/100
-		bonusCount = BONUS.getRandAppearance(eBonus) * (landTiles + players)/100
+		# The appearance bands are four dice SUMMED onto the constant, drawn here at the caller; every band is
+		# drawn even at ceiling 0 because the draw advances the shared map-RNG seed.
+		iRandAppearance = BONUS.getConstAppearance(eBonus)
+		mapRand = GC.getGame().getMapRand()
+		for iBand in xrange(BONUS.getNumRandAppearanceBands()):
+			iRandAppearance += mapRand.get(BONUS.getRandAppearance(eBonus, iBand), "random%d" % (iBand + 1))
+		bonusCount = iRandAppearance * (landTiles + players)/100
 		bonusCount = max(1,int(bonusCount * mc.BonusBonus))
 
 		return bonusCount

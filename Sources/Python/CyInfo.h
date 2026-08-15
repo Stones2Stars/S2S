@@ -420,6 +420,10 @@ public:
 	// image. Art is an untouched system boundary (the roadmap's scope decision 3): this hands over the path the
 	// info already resolved, and resolves nothing itself.
 	std::string getLeaderHeadArt(int iLeaderId) const;
+	// The peace-loop entry of the leader's era-keyed diplomacy-music table (-1 = engine default) -- what the
+	// Dawn-of-Man screen plays. Named per table rather than parameterized over the music kind: Python has no
+	// LeaderDiploMusic vocabulary, so an int-slot argument would hide which table a call site reads.
+	int getLeaderDiploPeaceMusicScriptId(int iLeaderId, int iEra) const;
 	// Does this entity SUPPLY that bonus in its city while active (json §5a `provides.bonuses`)?
 	// ⛔ Not the merged EDGEF_RELATED bucket: that lands every reference together, so a building which
 	// merely REQUIRES the bonus would answer yes to a question about who PRODUCES it.

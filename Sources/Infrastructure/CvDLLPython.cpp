@@ -33,7 +33,7 @@
 #include "Python/CyUnit.h"
 #include "Python/CySelectionGroup.h"
 #include "Python/CyGameCoreUtils.h"   // the shared calc helpers published as free functions
-#include "Tools/CvRandom.h"           // registered (zero defs) so getMapRand's handle can cross
+#include "Tools/CvRandom.h"           // registered so getMapRand's handle can cross; the draw lives on it
 #include "Tools/SCyDebug.h"
 #include "IDValueMap.h"
 #include "Tools/Win32.h"
@@ -383,6 +383,25 @@ DllExport void DLLPublishToPython()
 	//	handlers feed its result straight into a synced gameplay outcome, and the engine takes the root with
 	//	integer math -- so a script-side float sqrt would round differently from the one the game runs.
 	python::def("intSqrt", cyIntSqrt64);
+	//	In-place shuffle of a Python list, drawing from the CvRandom handle the CALLER passes -- the map scripts
+	//	shuffle their candidate lists through the map RNG at dozens of sites, and a script-side shuffle would
+	//	draw from Python's own random instead of the shared map stream, generating a different map per client.
+	//	Map scripts are an open extension point (their contract is the named callbacks), so the established name
+	//	stays; the function reaches no info and no game state beyond the handle it is given.
+	python::def("shufflePyList", cyShufflePyList);
+	//	The MAP-POSITION helpers -- pure coordinate arithmetic (wrap-aware distances, the neighbour in a
+	//	direction, the ring-ordered city-radius tile) the map scripts and CvMapGeneratorUtil call throughout.
+	//	Same standing as the shuffle above: an open extension point's established names, published rather than
+	//	reimplemented in script ([DEC-single-implementation] -- a Python copy of the wrap arithmetic would
+	//	silently disagree with the engine's on a wrapping map). Demand-published: the legacy registrar's other
+	//	free functions have zero callers and stay dead.
+	python::def("plotDistance", cyPlotDistance, "int (int iX1, int iY1, int iX2, int iY2)");
+	python::def("stepDistance", cyStepDistance, "int (int iX1, int iY1, int iX2, int iY2)");
+	python::def("plotDirection", cyPlotDirection, python::return_value_policy<python::manage_new_object>(), "CyPlot* (int iX, int iY, DirectionTypes eDirection)");
+	python::def("plotCardinalDirection", cyPlotCardinalDirection, python::return_value_policy<python::manage_new_object>(), "CyPlot* (int iX, int iY, CardinalDirectionTypes eCardDirection)");
+	python::def("plotXY", cyPlotXY, python::return_value_policy<python::manage_new_object>(), "CyPlot* (int iX, int iY, int iDX, int iDY)");
+	python::def("plotCity", cyPlotCity, python::return_value_policy<python::manage_new_object>(), "CyPlot* (int iX, int iY, int iIndex)");
+	python::def("getOppositeDirection", getOppositeDirection, "DirectionTypes (DirectionTypes eDirection)");
 
 	Win32::pythonPublish();
 

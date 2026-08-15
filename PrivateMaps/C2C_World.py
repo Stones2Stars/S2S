@@ -3046,8 +3046,13 @@ class BonusPlacer:
 			iBonus = GC.getMapBonus(i)
 			bonus = BonusArea()
 			bonus.indeXML = iBonus
-			# Calculate desired amount
-			fBaseCount = BONUS.getRandAppearance(iBonus) / 100.0
+			# Calculate desired amount. The appearance bands are four dice that are SUMMED onto the constant,
+			# drawn here at the caller; every band is drawn even at ceiling 0 because the draw advances the
+			# shared map-RNG seed, and the sequence is what the generated map is made of.
+			iRandAppearance = BONUS.getConstAppearance(iBonus)
+			for iBand in xrange(BONUS.getNumRandAppearanceBands()):
+				iRandAppearance += mapRand.get(BONUS.getRandAppearance(iBonus, iBand), "random%d" % (iBand + 1))
+			fBaseCount = iRandAppearance / 100.0
 			iTilesPer = BONUS.getTilesPer(iBonus)
 			fDensityCount = 0
 			if iTilesPer > 0:

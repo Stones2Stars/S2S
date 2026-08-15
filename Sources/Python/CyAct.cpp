@@ -143,6 +143,17 @@ bool CyAct::finishUnitMoves(int iPlayer, int iUnit) const
 	return true;
 }
 
+bool CyAct::setUnitMoves(int iPlayer, int iUnit, int iMoves) const
+{
+	//	Moves SPENT, in move points -- the partial-moves sibling of finishUnitMoves (an event spawn that
+	//	leaves its unit a point rather than the whole allowance or none).
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->setMoves(iMoves);
+	return true;
+}
+
 //	Kill a unit. `bDelay` is the engine's own delayed-death flag: TRUE performs the pre-death bookkeeping and
 //	leaves the object intact for the reaper, FALSE deletes it now ([unit-lifecycle.md]).
 //	⛔ After a bDelay=false call the unit is GONE, so a caller iterating a unit list must be holding a snapshot --
@@ -331,6 +342,14 @@ bool CyAct::changeCityStoredFood(int iPlayer, int iCity, int iChange) const
 	return true;
 }
 
+bool CyAct::changeCityHurryAngerTimer(int iPlayer, int iCity, int iChange) const
+{
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	pCity->changeHurryAngerTimer(iChange);
+	return true;
+}
+
 bool CyAct::setCityStoredFood(int iPlayer, int iCity, int iFood) const
 {
 	CvCity* pCity = cya_city(iPlayer, iCity);
@@ -506,6 +525,7 @@ void CyAct::pythonPublish()
 		.def("initUnit", &CyAct::initUnit)
 		.def("addUnitProductionExperience", &CyAct::addUnitProductionExperience)
 		.def("finishUnitMoves", &CyAct::finishUnitMoves)
+		.def("setUnitMoves", &CyAct::setUnitMoves)
 		.def("killUnit", &CyAct::killUnit)
 		.def("setUnitDamage", &CyAct::setUnitDamage)
 		.def("convertUnit", &CyAct::convertUnit)
@@ -521,6 +541,7 @@ void CyAct::pythonPublish()
 		.def("setCityPopulation", &CyAct::setCityPopulation)
 		.def("changeCityPopulation", &CyAct::changeCityPopulation)
 		.def("changeCityStoredFood", &CyAct::changeCityStoredFood)
+		.def("changeCityHurryAngerTimer", &CyAct::changeCityHurryAngerTimer)
 		.def("setUnitExperience", &CyAct::setUnitExperience)
 		.def("setCityStoredFood", &CyAct::setCityStoredFood)
 		.def("setCityCulture", &CyAct::setCityCulture)

@@ -4,6 +4,7 @@
 from CvPythonExtensions import *
 GC = CyGlobalContext()
 TRNSLTR = CyTranslator()
+INFO = CyInfo()
 
 class CvDawnOfMan:
 
@@ -11,14 +12,11 @@ class CvDawnOfMan:
 		GC = CyGlobalContext()
 		G = GC.getGame()
 		if G.isPitbossHost(): return
-		AFM = CyArtFileMgr()
 		TRNSLTR = CyTranslator()
 
 		CyPlayer = GC.getActivePlayer()
 		iLeader = CyPlayer.getLeaderType()
-		CvLeaderHead = GC.getLeaderHeadInfo(iLeader)
 		iCiv = CyPlayer.getCivilizationType()
-		CvCiv = GC.getCivilizationInfo(iCiv)
 
 		plot = CyPlayer.getStartingPlot()
 		GC.getMap().bringIntoView(plot.getX(), plot.getY(), True, False, False, False, False)
@@ -102,7 +100,7 @@ class CvDawnOfMan:
 		screen.addLeaderheadGFC("", iLeader, AttitudeTypes.ATTITUDE_PLEASED, X_LEADER_ICON + 5, Y_LEADER_ICON + 5, W_LEADER_ICON - 10, H_LEADER_ICON - 10, eWidGen, 1, 1)
 
 		# Info/"Stats" text
-		szNameText = "<color=255,255,0,255><font=3b>%s</font>" % CvLeaderHead.getDescription().upper()
+		szNameText = "<color=255,255,0,255><font=3b>%s</font>" % INFO.getDescription("LEADER_", iLeader).upper()
 		szNameText += "\n- %s -\n" % CyPlayer.getCivilizationDescription(0)
 		szNameText += CyGameTextMgr().parseLeaderTraits(iLeader, True, False)
 		screen.addMultilineText("", szNameText, X_LEADER_TITLE_TEXT, Y_LEADER_TITLE_TEXT, W_LEADER_TITLE_TEXT, H_LEADER_TITLE_TEXT, eWidGen, 1, 1, 1<<2)
@@ -112,8 +110,9 @@ class CvDawnOfMan:
 		screen.addMultilineText("", Text_BoxText, X_STATS_TEXT, Y_STATS_TEXT+H_TECH, W_STATS_TEXT - (iMarginSpace * 3), H_STATS_TEXT - (iMarginSpace * 4), eWidGen, 1, 1, 1<<0)
 
 		# Fancy icon things
-		screen.addDDSGFC("", AFM.getCivilizationArtInfo(CvCiv.getArtDefineTag()).getButton(), X_FANCY_ICON1 , Y_FANCY_ICON , WH_FANCY_ICON, WH_FANCY_ICON, eWidGen, 0, 0)
-		screen.addDDSGFC("", AFM.getCivilizationArtInfo(CvCiv.getArtDefineTag()).getButton(), X_FANCY_ICON2 , Y_FANCY_ICON , WH_FANCY_ICON, WH_FANCY_ICON, eWidGen, 0, 0)
+		szCivButton = INFO.getButton("CIVILIZATION_", iCiv)
+		screen.addDDSGFC("", szCivButton, X_FANCY_ICON1 , Y_FANCY_ICON , WH_FANCY_ICON, WH_FANCY_ICON, eWidGen, 0, 0)
+		screen.addDDSGFC("", szCivButton, X_FANCY_ICON2 , Y_FANCY_ICON , WH_FANCY_ICON, WH_FANCY_ICON, eWidGen, 0, 0)
 
 		# Main Body text
 		szDawnTitle = "<font=3>" + TRNSLTR.getText("TXT_KEY_DAWN_OF_MAN_SCREEN_TITLE", ()).upper()
@@ -123,7 +122,7 @@ class CvDawnOfMan:
 
 		screen.setButtonGFC("", EXIT_TEXT, "", X_EXIT, Y_EXIT, W_EXIT, H_EXIT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD)
 
-		screen.setSoundId(CyAudioGame().Play2DSoundWithId(CvLeaderHead.getDiploPeaceMusicScriptIds(0)))
+		screen.setSoundId(CyAudioGame().Play2DSoundWithId(INFO.getLeaderDiploPeaceMusicScriptId(iLeader, 0)))
 
 	def handleInput(self, inputClass): pass
 

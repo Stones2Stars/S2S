@@ -150,6 +150,10 @@ public:
 	// bHandleGrowth defaults FALSE in the engine, matching every caller here: an event handing a city food is
 	// topping up the store, not resolving a growth step this instant.
 	bool changeCityStoredFood(int iPlayer, int iCity, int iChange) const;
+	// The whip-anger countdown a demolition/event charges (CvCity::changeHurryAngerTimer).
+	bool changeCityHurryAngerTimer(int iPlayer, int iCity, int iChange) const;
+	// Moves SPENT, in move points -- the partial-moves sibling of finishUnitMoves.
+	bool setUnitMoves(int iPlayer, int iUnit, int iMoves) const;
 	// The city's culture HELD BY ONE PLAYER. ⚠ It is ×100 and 64-bit on both sides -- the exact twin of
 	// CyState::getCultureForPlayer, so a scenario round-trips the value it was handed rather than a rescaled one
 	// ([culture-religion-research.md]: city culture accumulates the ×100 rate and never decays, which is why it

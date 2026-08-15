@@ -88,6 +88,7 @@
 // key-backed siblings ([json.md] §7).
 #include "Infos/CvCivilizationInfo.h"
 #include "Infos/CvFeatureInfo.h"
+#include "Infos/CvLeaderHeadInfo.h"      // the era-keyed diplomacy-music table + the LeaderDiploMusic kinds
 #include "Infos/CvReligionInfo.h"
 #include "Infos/CvTraitInfo.h"
 #include "Defines/CvGlobals.h"        // GC.getNumCivicInfos / getCivicInfo
@@ -503,6 +504,14 @@ std::string CyInfo::getLeaderHeadArt(int iLeaderId) const
 	const char* szArt = GC.getLeaderHeadInfo((LeaderHeadTypes)iLeaderId).getLeaderHead();
 	return szArt ? std::string(szArt) : std::string();
 }
+int CyInfo::getLeaderDiploPeaceMusicScriptId(int iLeaderId, int iEra) const
+{
+	//	The peace-loop entry of the era-keyed diplomacy music table (-1 = engine default). Named for what it
+	//	fetches rather than parameterized over the music kind -- Python has no LeaderDiploMusic vocabulary, and
+	//	an int-slot argument would hide which table a call site reads.
+	if (iLeaderId < 0 || iLeaderId >= GC.getNumLeaderHeadInfos()) return -1;
+	return GC.getLeaderHeadInfo((LeaderHeadTypes)iLeaderId).getDiploMusicScriptId(DIPLO_MUSIC_PEACE, (EraTypes)iEra);
+}
 int CyInfo::getUnitAirCombat(int iUnitId) const
 {
 	const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(cyi_info("UNIT_", iUnitId));
@@ -863,9 +872,19 @@ python::list CyInfo::getIdList(const std::string& szTypePrefix, int iId, int iSl
 		break;
 	case PYLIST_GRANTED_BUILDINGS:
 		{
-			if (szTypePrefix != "UNIT_" || iId >= GC.getNumUnitInfos()) break;
-			const std::vector<int>& buildings = GC.getUnitInfo((UnitTypes)iId).getGrantedBuildings();
-			for (size_t i = 0; i < buildings.size(); ++i) ids.append(buildings[i]);
+			//	Both carriers of a grants.buildings payload answer the ONE slot -- a unit's construct repertoire
+			//	and a civilization's start set are the same authored concept, so the prefix picks the registry
+			//	rather than the concept getting a second slot spelling.
+			if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
+			{
+				const std::vector<int>& buildings = GC.getUnitInfo((UnitTypes)iId).getGrantedBuildings();
+				for (size_t i = 0; i < buildings.size(); ++i) ids.append(buildings[i]);
+			}
+			else if (szTypePrefix == "CIVILIZATION_" && iId < GC.getNumCivilizationInfos())
+			{
+				const std::vector<BuildingTypes>& buildings = GC.getCivilizationInfo((CivilizationTypes)iId).getFreeBuildings();
+				for (size_t i = 0; i < buildings.size(); ++i) ids.append((int)buildings[i]);
+			}
 		}
 		break;
 	case PYLIST_PREREQ_AND_TECHS:
@@ -1515,6 +1534,7 @@ void CyInfo::pythonPublish()
 		.def("getUnitAirCombat",        &CyInfo::getUnitAirCombat)
 		.def("isNPCLeader",             &CyInfo::isNPCLeader)
 		.def("getLeaderHeadArt",        &CyInfo::getLeaderHeadArt)
+		.def("getLeaderDiploPeaceMusicScriptId", &CyInfo::getLeaderDiploPeaceMusicScriptId)
 		.def("providesBonus",           &CyInfo::providesBonus)
 		.def("isGlobalTech",            &CyInfo::isGlobalTech)
 		.def("isStatusPromotion",       &CyInfo::isStatusPromotion)
