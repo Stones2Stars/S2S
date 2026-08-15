@@ -10566,6 +10566,10 @@ void CvPlot::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvPlot", &m_iX);
 	WRAPPER_READ(wrapper, "CvPlot", &m_iY);
+	// Re-bind the package with the coordinates the stream just delivered: the reset() bind above runs before
+	// they are knowable, and the plot resolve reaches its own city-ness THROUGH this identity
+	// (cascadePlotCityAdd100/Floor100), so it must carry the real pair before any in-read fact resolves.
+	m_cascadePackage.bind(CASC_SCOPE_PLOT, m_iX, m_iY);
 	WRAPPER_READ(wrapper, "CvPlot", &m_iArea);
 
 	int iNum = 0;
