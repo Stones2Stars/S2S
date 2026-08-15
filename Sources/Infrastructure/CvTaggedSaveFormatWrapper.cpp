@@ -3842,7 +3842,21 @@ namespace {
 		&&  strncmp(szStoredType, "TRAIT_COMPLEX_", 14) != 0)
 		{
 			const std::string szComplex = std::string("TRAIT_COMPLEX_") + (szStoredType + 6);
-			const int iComplex = GC.getInfoTypeForString(szComplex.c_str(), true);
+			int iComplex = GC.getInfoTypeForString(szComplex.c_str(), true);
+			// ⛔ THE COMPLEX SET HAS NO RUNG 0 -- A LINE RUNS 1 -> 2 -> 3
+			// ([DEC-trait-sets-separate](../../docs/architecture/decisions.md#dec-trait-sets-separate)), so a
+			// stored BASE id has no same-named twin to resolve to and its entry rung is rank 1. This is the same
+			// demotion the curator applies to a leaderhead's assignment and to a tech's gate edge; applying it
+			// here too is what keeps ONE rule across the save, the data and the edges.
+			// ⚠ Without it the branch below reads "base exists, twin does not" as an incomplete set and fails
+			// loud -- which is precisely what a base id now looks like, so EVERY complex save crashed on load.
+			// The retired superset model ("the prefixed id always exists, no per-id table needed") is what made
+			// that inference look safe.
+			if (iComplex == -1)
+			{
+				const std::string szRungOne = szComplex + "1";
+				iComplex = GC.getInfoTypeForString(szRungOne.c_str(), true);
+			}
 			// ⛔ AN INCOMPLETE COMPLEX SET AND A REMOVED TYPE ARE DIFFERENT THINGS, AND ONLY THE FIRST IS A DEFECT.
 			// The set is incomplete when the BASE still exists and its twin does not -- that is the case with no
 			// legitimate answer. When NEITHER resolves the Type is simply GONE, which is SOFT by design
@@ -3852,9 +3866,10 @@ namespace {
 			if (iComplex == -1 && GC.getInfoTypeForString(szStoredType, true) != -1)
 			{
 				const CvString szCause = CvString::format(
-					"[TRAITSET] INCOMPLETE COMPLEX SET stored=%s wanted=%s -- this game runs "
+					"[TRAITSET] INCOMPLETE COMPLEX SET stored=%s wanted=%s (nor its rung 1) -- this game runs "
 					"GAMEOPTION_LEADER_COMPLEX_TRAITS, in which every held trait resolves into the complex set. "
-					"complex/ is a superset of simple/, so a missing id is a curator/data defect.",
+					"The sets are separate and complex carries no rung 0, so the entry rung is rank 1; neither "
+					"resolving while the base still exists is a curator/data defect.",
 					szStoredType, szComplex.c_str());
 				if (gDLL != NULL)
 				{
