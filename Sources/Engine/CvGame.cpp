@@ -4862,7 +4862,13 @@ void CvGame::setHandicapType(HandicapTypes eHandicap)
 	}
 	emitGameHandicapAdded((int)eHandicap);
 
-		if (eHandicap != NO_HANDICAP)
+		// ⛔ NEVER inside the load bracket: CvGame streams BEFORE the players, so at averageHandicaps time
+		// (CvGame::read) the player objects are still the PREVIOUS game's -- alive-flagged, state mid-teardown --
+		// and getNewCityProductionValue -> getProductionModifier dereferences freed arrays (the in-game-load
+		// ACCESS_VIOLATION at getProductionModifier+0x184). The fan is also REDUNDANT on a load: the per-player
+		// extra costs are SERIALIZED and each player recomputes its own at init. Play-time handicap moves
+		// (flexible difficulty) keep the recalc.
+		if (eHandicap != NO_HANDICAP && !spineGameLoadInProgress())
 		{
 			for (int i = 0; i < GC.getNumUnitInfos(); i++)
 			{

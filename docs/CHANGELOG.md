@@ -12,7 +12,7 @@
 
 ## Unreleased
 
-*(nothing yet — bullets land here as commits do)*
+- Fixed a crash when loading a save from inside a running game.
 
 Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
 rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,
