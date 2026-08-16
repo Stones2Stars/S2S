@@ -1274,8 +1274,18 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 			pActionInfo->setOriginalIndex(piIndexList[piOrderedIndex[i]]);
 			pActionInfo->setSubType(piActionInfoTypeList[piOrderedIndex[i]]);
 
-			GC.getBuildInfo((BuildTypes)piIndexList[piOrderedIndex[i]]).setMissionType(GetInfoClass("MISSION_BUILD"));
-			GC.getBuildInfo((BuildTypes)piIndexList[piOrderedIndex[i]]).setActionInfoIndex(iActionInfoIndex++);
+			CvBuildInfo& build = GC.getBuildInfo((BuildTypes)piIndexList[piOrderedIndex[i]]);
+			build.setMissionType(GetInfoClass("MISSION_BUILD"));
+			build.setActionInfoIndex(iActionInfoIndex++);
+			//	The action tooltip's HEADER is the hotkey description ([CvDLLWidgetData::parseActionHelp]), so a
+			//	build that never seeds one renders a nameless tooltip. Every other action-carrying type is seeded
+			//	below; builds were the one omission.
+			//	⚠ The ALT key is EMPTY, not NULL: it is assigned into a CvWString, and it is what decides the
+			//	form -- an empty one renders the plain name ("Farm"), where a mission key would append a
+			//	constant "(Build)" to every build in the game.
+			build.setHotKeyDescription(
+				build.getTextKeyWide(), L"",
+				CreateHotKeyFromDescription(build.getHotKey(), build.isShiftDown(), build.isAltDown(), build.isCtrlDown()));
 
 			GC.m_paActionInfo.push_back(pActionInfo);
 		}

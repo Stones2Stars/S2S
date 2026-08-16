@@ -170,6 +170,21 @@ namespace
 	// The family/kind name: TXT-reachable where the vocabulary keys an engine info (the ruling-1 channel
 	// families -> Yield/CommerceInfo; the open property plane -> the PropertyInfo); the closed vocabulary's
 	// own families spell back their authored key + member path (no TXT keys exist for them -- honest).
+	//	A yield/commerce channel renders as its GAMEFONT GLYPH -- what legacy showed and what a player reads at a
+	//	glance, rather than the channel spelled out in words.
+	//	⚠ The glyph is a RUNTIME slot the CvGameTextMgr symbol pass assigns, not authored data ([patterns.md]:
+	//	it is text-plane) -- and this renderer ALSO runs inside the load window (the [READJSON] samples, per the
+	//	file header), where that pass has not run yet. The slot is 0 until it does, so a 0 falls back to the NAME
+	//	instead of rendering a null character into a log line.
+	CvWString etx_channelLabel(int iChar, const CvInfoBase& info, const std::string& szFallback)
+	{
+		if (iChar > 0)
+		{
+			return CvWString::format(L"%c", iChar);
+		}
+		return etx_infoBaseName(info, szFallback);
+	}
+
 	CvWString etx_entryName(const CvModEntry& entry)
 	{
 		CvWString szName;
@@ -186,11 +201,13 @@ namespace
 			const std::string szFamilyFallback = (szFamilyKey != NULL) ? szFamilyKey : "?";
 			if (iYield >= 0)
 			{
-				szName = etx_infoBaseName(GC.getYieldInfo((YieldTypes)iYield), szFamilyFallback);
+				const CvYieldInfo& kYield = GC.getYieldInfo((YieldTypes)iYield);
+				szName = etx_channelLabel(kYield.getChar(), kYield, szFamilyFallback);
 			}
 			else if (iCommerce >= 0)
 			{
-				szName = etx_infoBaseName(GC.getCommerceInfo((CommerceTypes)iCommerce), szFamilyFallback);
+				const CvCommerceInfo& kCommerce = GC.getCommerceInfo((CommerceTypes)iCommerce);
+				szName = etx_channelLabel(kCommerce.getChar(), kCommerce, szFamilyFallback);
 			}
 			else
 			{

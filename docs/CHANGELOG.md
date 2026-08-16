@@ -12,6 +12,10 @@
 
 ## Unreleased
 
+- Build-list tooltips show the yield and commerce ICONS again instead of spelling the channel out
+  in words, so an entry reads `+6 <production>` rather than `+6 Production`.
+- Hovering a worker build action shows the build's name again. Builds were the one action type
+  never given a hotkey description, so the tooltip's heading came up empty.
 - Units handed over by a popup or by the Crusade wonder no longer receive their city's free
   experience twice. Creating a unit in a city settles that experience once, and these three paths
   were still adding it a second time on top.
