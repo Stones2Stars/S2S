@@ -72,31 +72,6 @@ void CvDeal::reset(int iID, PlayerTypes eFirstPlayer, PlayerTypes eSecondPlayer)
 void CvDeal::kill(bool bKillTeam)
 {
 	PROFILE_EXTRA_FUNC();
-	if (getLengthFirstTrades() > 0 || getLengthSecondTrades() > 0)
-	{
-		CvWString szString;
-		CvWStringBuffer szDealString;
-		CvWString szCancelString = gDLL->getText("TXT_KEY_POPUP_DEAL_CANCEL");
-
-		if (GET_TEAM(GET_PLAYER(getFirstPlayer()).getTeam()).isHasMet(GET_PLAYER(getSecondPlayer()).getTeam()))
-		{
-
-			szDealString.clear();
-			GAMETEXT.getDealString(szDealString, *this, getFirstPlayer());
-			szString.Format(L"%s: %s", szCancelString.GetCString(), szDealString.getCString());
-			AddDLLMessage((PlayerTypes)getFirstPlayer(), true, GC.getEVENT_MESSAGE_TIME(), szString, "AS2D_DEAL_CANCELLED");
-		}
-
-		if (GET_TEAM(GET_PLAYER(getSecondPlayer()).getTeam()).isHasMet(GET_PLAYER(getFirstPlayer()).getTeam()))
-		{
-
-			szDealString.clear();
-			GAMETEXT.getDealString(szDealString, *this, getSecondPlayer());
-			szString.Format(L"%s: %s", szCancelString.GetCString(), szDealString.getCString());
-			AddDLLMessage((PlayerTypes)getSecondPlayer(), true, GC.getEVENT_MESSAGE_TIME(), szString, "AS2D_DEAL_CANCELLED");
-		}
-	}
-
 	CLLNode<TradeData>* pNode;
 
 	for (pNode = headFirstTradesNode(); (pNode != NULL); pNode = nextFirstTradesNode(pNode))
@@ -108,6 +83,10 @@ void CvDeal::kill(bool bKillTeam)
 	{
 		endTrade(pNode->m_data, getSecondPlayer(), getFirstPlayer(), bKillTeam);
 	}
+
+	// The AGREEMENT ending, after every held item has been unwound and while the deal is still addressable.
+	// This is the sole end path for all callers -- war, elimination, an AI cancel, a broken resource, Python.
+	emitEmpireDealRemoved(getID(), (int)getFirstPlayer(), (int)getSecondPlayer());
 
 	GC.getGame().deleteDeal(getID());
 }
@@ -280,6 +259,11 @@ void CvDeal::addTrades(CLinkList<TradeData>* pFirstList, CLinkList<TradeData>* p
 		}
 	}
 
+	// The AGREEMENT beginning. It sits AFTER the item loops because every guard above returns early, so this is
+	// the first point the deal is known to have been struck -- and BEFORE the alliance merge below, which can
+	// cascade into other deals.
+	emitEmpireDealAdded(getID(), (int)getFirstPlayer(), (int)getSecondPlayer());
+
 	bool bAlliance = false;
 
 	if (pFirstList != NULL)
@@ -380,12 +364,19 @@ void CvDeal::verify()
 	{
 		if (pNode->m_data.m_eItemType == TRADE_RESOURCES)
 		{
+			const BonusTypes eBonus = (BonusTypes)pNode->m_data.m_iData;
+			const int iTradeable = kFirstPlayer.getNumTradeableBonuses(eBonus);
+			const char* szReason = NULL;
+
 			// XXX embargoes?
-			if ((kFirstPlayer.getNumTradeableBonuses((BonusTypes)(pNode->m_data.m_iData)) < 0) ||
-				  !(kFirstPlayer.canTradeNetworkWith(getSecondPlayer())) ||
-				  GET_TEAM(kFirstPlayer.getTeam()).isBonusObsolete((BonusTypes) pNode->m_data.m_iData) ||
-				  GET_TEAM(kSecondPlayer.getTeam()).isBonusObsolete((BonusTypes) pNode->m_data.m_iData))
+			if (iTradeable < 0)                                            szReason = "untradeable";
+			else if (!kFirstPlayer.canTradeNetworkWith(getSecondPlayer())) szReason = "noNetwork";
+			else if (GET_TEAM(kFirstPlayer.getTeam()).isBonusObsolete(eBonus))  szReason = "obsoleteFirst";
+			else if (GET_TEAM(kSecondPlayer.getTeam()).isBonusObsolete(eBonus)) szReason = "obsoleteSecond";
+
+			if (szReason != NULL)
 			{
+				emitDealVerifyCancel(getID(), (int)eBonus, iTradeable, szReason);
 				bCancelDeal = true;
 			}
 		}
@@ -395,12 +386,19 @@ void CvDeal::verify()
 	{
 		if (pNode->m_data.m_eItemType == TRADE_RESOURCES)
 		{
+			const BonusTypes eBonus = (BonusTypes)pNode->m_data.m_iData;
+			const int iTradeable = kSecondPlayer.getNumTradeableBonuses(eBonus);
+			const char* szReason = NULL;
+
 			// XXX embargoes?
-			if ((GET_PLAYER(getSecondPlayer()).getNumTradeableBonuses((BonusTypes)(pNode->m_data.m_iData)) < 0) ||
-				  !(GET_PLAYER(getSecondPlayer()).canTradeNetworkWith(getFirstPlayer())) ||
-				  GET_TEAM(kFirstPlayer.getTeam()).isBonusObsolete((BonusTypes) pNode->m_data.m_iData) ||
-				  GET_TEAM(kSecondPlayer.getTeam()).isBonusObsolete((BonusTypes) pNode->m_data.m_iData))
+			if (iTradeable < 0)                                           szReason = "untradeable";
+			else if (!kSecondPlayer.canTradeNetworkWith(getFirstPlayer())) szReason = "noNetwork";
+			else if (GET_TEAM(kFirstPlayer.getTeam()).isBonusObsolete(eBonus))  szReason = "obsoleteFirst";
+			else if (GET_TEAM(kSecondPlayer.getTeam()).isBonusObsolete(eBonus)) szReason = "obsoleteSecond";
+
+			if (szReason != NULL)
 			{
+				emitDealVerifyCancel(getID(), (int)eBonus, iTradeable, szReason);
 				bCancelDeal = true;
 			}
 		}
@@ -755,6 +753,33 @@ void CvDeal::read(FDataStreamBase* pStream)
 		}
 	}
 
+	// THE IN-READ HALF of the reseed ([DEC-spine-reseed]) -- a deal is genuine non-derivable state that comes
+	// back off the stream, so nothing else could announce it. It is announced HERE, after the type translation
+	// above has dropped any node whose Type no longer resolves, so the stream only ever reports what survives.
+	// ⚠ NOTHING may APPLY the export/import counts on this fact: CvGame::read is the earliest DLL load hook, so
+	// no player has deserialized yet and CvPlayer::reset() would wipe anything written now. The counts are
+	// re-derived at load end instead ([enabler.md §8]: derived from the held deals, exactly as the network is).
+	{
+		CLLNode<TradeData>* pEmitNode;
+
+		// What the stream CONTAINED for this deal -- a SAVELOAD line, testimony about the read rather than state
+		// ([event-spine.md]: a log of LOADING). It sits beside the DOMAIN facts below, never in place of them.
+		emitSaveLoadBlock("CvDeal", getLengthFirstTrades() + getLengthSecondTrades());
+
+		for (pEmitNode = headFirstTradesNode(); pEmitNode != NULL; pEmitNode = nextFirstTradesNode(pEmitNode))
+		{
+			emitEmpireTradeAdded((int)pEmitNode->m_data.m_eItemType, pEmitNode->m_data.m_iData,
+				(int)getFirstPlayer(), (int)getSecondPlayer(), getID());
+		}
+		for (pEmitNode = headSecondTradesNode(); pEmitNode != NULL; pEmitNode = nextSecondTradesNode(pEmitNode))
+		{
+			emitEmpireTradeAdded((int)pEmitNode->m_data.m_eItemType, pEmitNode->m_data.m_iData,
+				(int)getSecondPlayer(), (int)getFirstPlayer(), getID());
+		}
+
+		emitEmpireDealAdded(getID(), (int)getFirstPlayer(), (int)getSecondPlayer());
+	}
+
 	WRAPPER_READ_OBJECT_END(wrapper);
 }
 
@@ -778,10 +803,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	PROFILE_EXTRA_FUNC();
 	bool bSave = false;
 
-	// [DIP/trade] -- realized trade item being applied (the "what was exchanged"
-	// trace; pairs with the [DIP/cand]/[DIP/decision] valuation in CvPlayerAI).
-	logDiploAI(2, "[DIP/trade] from=%d to=%d item=%d data=%d",
-		(int)eFromPlayer, (int)eToPlayer, (int)trade.m_eItemType, trade.m_iData);
+	emitEmpireTradeAdded((int)trade.m_eItemType, trade.m_iData, (int)eFromPlayer, (int)eToPlayer, getID());
 
 	switch (trade.m_eItemType)
 	{
@@ -1170,6 +1192,8 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 void CvDeal::endTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eToPlayer, bool bTeam)
 {
 	PROFILE_EXTRA_FUNC();
+	emitEmpireTradeRemoved((int)trade.m_eItemType, trade.m_iData, (int)eFromPlayer, (int)eToPlayer, getID());
+
 	switch (trade.m_eItemType)
 	{
 		case TRADE_RESOURCES:

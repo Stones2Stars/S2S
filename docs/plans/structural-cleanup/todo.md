@@ -257,14 +257,15 @@
   [event-spine.md](../../specs/event-spine.md)) — nothing STATIC may depend on a LIVE option.
   ⛔ Add a readJson check refusing a `MODDERGAMEOPTION_` condition, so the split is unsayable to violate.
 
-- The PLAYER-ALERT consumer, and the alerts owed to it: "power restored" (`TXT_KEY_MISC_POWER_RESTORED`, now
-  hangs on `SEVT_CITY_STATUS_REMOVED` carrying `CITYSTATUS_POWER_DISABLED`); the CAN_RETRAIN/NO_RETRAIN pairs
-  the promotion KEEP gate used to emit per failing axis (terrain / feature / plot bonus /
-  improvement-or-local-building / promotion prereq, plus two more the axis list does not name); and "your
-  building was obsoleted" (`SEVT_CITY_BUILDING_OBSOLETED_ADDED / _REMOVED`, emitted for exactly this). All are
-  authored and were rendering — a real loss of player-facing information.
+- The alerts still owed to the PLAYER-ALERT consumer (`Sources/UI/CvPlayerAlerts.cpp`): "power restored"
+  (`TXT_KEY_MISC_POWER_RESTORED`, hangs on `SEVT_CITY_STATUS_REMOVED` carrying `CITYSTATUS_POWER_DISABLED`);
+  the CAN_RETRAIN/NO_RETRAIN pairs the promotion KEEP gate used to emit per failing axis (terrain / feature /
+  plot bonus / improvement-or-local-building / promotion prereq, plus two more the axis list does not name);
+  and "your building was obsoleted" (`SEVT_CITY_BUILDING_OBSOLETED_ADDED / _REMOVED`, emitted for exactly
+  this). All are authored and were rendering — a real loss of player-facing information.
   ⛔ They do NOT come back as a per-axis walk beside the gate (rebuilds the legacy battery) — re-attach to the
   fact, never re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)).
+  ⛔ And they attach to the EXISTING consumer — do not mint a second one.
 - Decide WHERE the citizen-assignment re-check is asked for — a CALL-SITE question, never a removal:
   `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL
   assignment for every marked city, so the flips are a turn-time cost in their own right. The ruled trigger set,
@@ -278,8 +279,9 @@
   `setWorkableRadiusOverride` — against keys the data already authors (`zoneOfControl`, `protectedCulture`,
   `adds3rdRing`).
   ⚑ POWER is already converted and is the pattern to copy (contexts.md § POWER IS AN AMENITY).
-  ⛔ What's left is the GENERALIZATION — one parameterized amenity fact carrying the id, replacing the
-  per-attribute ones as each converts; do not grow a second bespoke fact per key.
+  ⛔ The parameterized fact EXISTS (`SEVT_CITY_AMENITY_ADDED / _REMOVED`, carrying the id) and every key now
+  announces its crossing — do not mint a bespoke fact per key, and do not re-add the government-centre or
+  fresh-water pairs it replaced. What is left here is the COUNTER side above.
   ⚠ Check each counter's FEEDERS first — power's conversion was a read-swap (only a dead `CyCity` binding still
   wrote it); the others may not be.
   ⚠ The workable-radius counter is a live BUG, not just an unmigrated shape: it is a plain SET rather than the
@@ -403,21 +405,8 @@
   ⚠ The bare `except:` wrapping the draw loop swallows exactly the failure this would surface — remove it with
   the dispatch, so a dead column reports instead of rendering blank.
 
-- **Verify map generation actually works — start a NEW GAME.** Nothing on the standing save exercises
-  `CvMapGeneratorUtil.py` (the DLL's map-gen fallback, [engine.md](../../reference/engine.md)) or the
-  game-start grants (free techs/units/gold, `freePopulation`, `FreeStartEra` —
-  [legacy-grant-apply-sites.md §5](../../reference/legacy-grant-apply-sites.md)); only a new game observes them
-  ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)).
-  ⛔ Include `PrivateMaps/` in the sweep — it sits outside `Assets/`, is easy to miss, and reads the same named
-  accessors as everything else ([python-read-map.md §7 ruling 1](../../reference/python-read-map.md)).
-
-- **Build the keyed twin of the `expected*` valuation** ([modifier.md §5](../../specs/modifier.md)) — the
-  conditioned-tail read a keyed deposit is missing. Closes an improvement's BONUS-conditioned yield, a
-  feature's HAS_RIVER-conditioned yield, and the dead handles three PerfectWorld-lineage map scripts
-  (`C2C_PerfectMongoose_v310` · `C2C_PerfectWorld2f` · `C2C_Totestra`) keep waiting on it.
-  ⛔ Do not close it by summing the conditioned tail directly — that applies every tech/age-gated deposit from
-  turn 0, silently ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)).
-  ⛔ Those same three scripts also call `isRequiresFlatlands()` on a BONUS — no `CvBonusInfo` has ever carried
+- Three PerfectWorld-lineage map scripts (`C2C_PerfectMongoose_v310` · `C2C_PerfectWorld2f` · `C2C_Totestra`)
+  call `isRequiresFlatlands()` on a BONUS — no `CvBonusInfo` has ever carried
   it (it's a FEATURE member). Pre-existing crash, not a migration casualty; leave it standing, don't invent
   which predicate was meant.
 

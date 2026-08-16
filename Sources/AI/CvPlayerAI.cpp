@@ -17657,6 +17657,10 @@ void CvPlayerAI::AI_doDiplo()
 					&& GC.getGame().getGameTurn() - kLoopDeal.getInitialGameTurn() >= getTreatyLength() * 2)
 					{
 						bool bCancelDeal = false;
+						// WHY this pass reached its verdict, reported on the KEEP as well as the drop
+						// (SEVT_DEAL_AI_EVALUATED). NO_DENIAL with bCancelDeal set means the offer simply
+						// stopped valuing out; NO_DENIAL without it means the deal continues.
+						DenialTypes eDenial = NO_DENIAL;
 
 						if (kLoopDeal.getFirstPlayer() == getID() && kLoopDeal.getSecondPlayer() == (PlayerTypes)iI)
 						{
@@ -17664,7 +17668,7 @@ void CvPlayerAI::AI_doDiplo()
 							{
 								for (pNode = kLoopDeal.getFirstTrades()->head(); pNode; pNode = kLoopDeal.getFirstTrades()->next(pNode))
 								{
-									if (getTradeDenial((PlayerTypes)iI, pNode->m_data) != NO_DENIAL)
+									if ((eDenial = getTradeDenial((PlayerTypes)iI, pNode->m_data)) != NO_DENIAL)
 									{
 										bCancelDeal = true;
 										break;
@@ -17682,7 +17686,7 @@ void CvPlayerAI::AI_doDiplo()
 							{
 								for (pNode = kLoopDeal.getSecondTrades()->head(); pNode; pNode = kLoopDeal.getSecondTrades()->next(pNode))
 								{
-									if (getTradeDenial(((PlayerTypes)iI), pNode->m_data) != NO_DENIAL)
+									if ((eDenial = getTradeDenial(((PlayerTypes)iI), pNode->m_data)) != NO_DENIAL)
 									{
 										bCancelDeal = true;
 										break;
@@ -17693,6 +17697,16 @@ void CvPlayerAI::AI_doDiplo()
 							{
 								bCancelDeal = true;
 							}
+						}
+
+						// ⚠ ONLY when this deal is actually between the two players in hand. The loop walks every deal against
+						// every iI, so an unguarded emit would report a "kept" verdict for deals this pair never evaluated --
+						// thousands of lines saying a decision was taken that never was, which is worse than no line at all.
+						if ((kLoopDeal.getFirstPlayer() == getID() && kLoopDeal.getSecondPlayer() == (PlayerTypes)iI)
+						||  (kLoopDeal.getFirstPlayer() == (PlayerTypes)iI && kLoopDeal.getSecondPlayer() == getID()))
+						{
+							emitDealAiEvaluated(kLoopDeal.getID(), getID(), iI, (int)eDenial,
+								!bCancelDeal ? "kept" : (eDenial != NO_DENIAL ? "denial" : "offerRejected"));
 						}
 
 						if (bCancelDeal)

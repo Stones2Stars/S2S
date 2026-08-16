@@ -640,8 +640,8 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// rebuild re-colors membership from current state and folds the counts through the live entry points as each
 	// plot joins"). `doPreTurn0` runs this for a NEW GAME only, so without it here a loaded game has no network:
 	// `CvCity::getNumBonuses` is a pure relay to the plot group ([enabler.md §8] RESIDENCY), so every
-	// `connection:"trade|vicinity"` requires-atom fails and nothing that needs a networked or vicinity resource
-	// can be built or trained.
+	// `connection:"trade"` requires-atom fails and nothing that needs a networked resource can be built or
+	// trained.
 	// ⚑ It runs INSIDE the bracket, before the close, deliberately: the re-color announces every bonus crossing
 	// as an ordinary fact, so those emits bank with the rest of the reseed and the GAME_LOAD_FINISHED gate pass
 	// (and the operating-set seed it triggers) evaluates against a network that is already correct.
@@ -649,6 +649,53 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// updatePlotGroups early-returns while `!isFinalInitialized()`.
 	if (!bNewGame)
 	{
+		// ⛔ RE-DERIVE THE TRADED-RESOURCE COUNTS FROM THE HELD DEALS, BEFORE the re-color below reads them.
+		// [enabler.md §8]: the DEAL is the one serialized exception in the bonus plane, and "the per-bonus
+		// import/export COUNTS that follow from it are derived and are re-derived from the held deals on load,
+		// exactly as the network is". This is that re-derivation, and it is the same sanctioned shape as the
+		// re-color itself -- it folds through the LIVE entry points (`changeBonusExport`/`changeBonusImport`,
+		// exactly what `CvDeal::startTrade` calls), never a fabricated event over populated state
+		// ([superseded-ideas] #13).
+		// ⚑ It starts from ZERO by construction: the counts are no longer serialized, and `CvPlayer::reset()`
+		// clears both maps, so every player begins the read empty and this pass is the only thing that fills
+		// them. That is also why it cannot run from `CvDeal::read` -- deals deserialize inside `CvGame::read`,
+		// the earliest DLL load hook, before any player exists to receive a count.
+		// ⚠ ORDER IS THE WHOLE POINT: `CvPlot::updatePlotGroupBonus` folds the CAPITAL's import/export into the
+		// group as each plot joins, so running this after `updatePlotGroups` would fold zeroes and every traded
+		// resource would silently vanish from the network on load.
+		foreach_(CvDeal& kLoopDeal, deals())
+		{
+			const CLinkList<TradeData>* pLists[2];
+			PlayerTypes eFrom[2];
+			PlayerTypes eTo[2];
+
+			pLists[0] = kLoopDeal.getFirstTrades();
+			eFrom[0] = kLoopDeal.getFirstPlayer();
+			eTo[0] = kLoopDeal.getSecondPlayer();
+
+			pLists[1] = kLoopDeal.getSecondTrades();
+			eFrom[1] = kLoopDeal.getSecondPlayer();
+			eTo[1] = kLoopDeal.getFirstPlayer();
+
+			for (int iSide = 0; iSide < 2; iSide++)
+			{
+				if (pLists[iSide] == NULL || eFrom[iSide] == NO_PLAYER || eTo[iSide] == NO_PLAYER)
+				{
+					continue;
+				}
+				for (CLLNode<TradeData>* pNode = pLists[iSide]->head(); pNode != NULL; pNode = pLists[iSide]->next(pNode))
+				{
+					// Only RESOURCES carry a count. Every other held type is a standing agreement whose state
+					// lives on the team/player and comes back off the stream on its own.
+					if (pNode->m_data.m_eItemType == TRADE_RESOURCES && pNode->m_data.m_iData != NO_BONUS)
+					{
+						GET_PLAYER(eFrom[iSide]).changeBonusExport((BonusTypes)pNode->m_data.m_iData, 1);
+						GET_PLAYER(eTo[iSide]).changeBonusImport((BonusTypes)pNode->m_data.m_iData, 1);
+					}
+				}
+			}
+		}
+
 		updatePlotGroups(/*reInitialize*/ true);
 
 		// ⛔ RE-PUSH THE BUILDING-SUPPLIED RESOURCES -- the rebuild above DISCARDS them and nothing else puts them
@@ -697,6 +744,11 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// load-end gate pass) run against fully-final state -- the bracket is still open during the FINISHED dispatch
 	// (the flag clears after the emit). No-op on a new game: no GAME_LOAD_STARTED fired, so the endpoint returns.
 	emitGameLoadFinished();
+
+	// What the load actually ended up holding, re-stated where the log level is up (SEVT_SAVELOAD_CENSUS). The
+	// in-read `block=CvGame::m_deals` line is emitted from CvGame::read's own body, which runs BEFORE the BUG log
+	// level is pushed -- so it is unreadable, and its absence proves nothing either way. This is the readable half.
+	emitSaveLoadCensus("CvGame::m_deals", m_deals.getCount());
 
 	// ⚖ REBUILD THE TRADE-ROUTE YIELD FROM SOURCE -- the eager load build for a value that is no longer trusted
 	// from the save. `CvCity::m_aiTradeYield` is DERIVED (route profit x the per-channel route modifier) and used
@@ -8577,6 +8629,11 @@ void CvGame::read(FDataStreamBase* pStream)
 	}
 
 	ReadStreamableFFreeListTrashArray(m_deals, pStream);
+	// What the stream CONTAINED for the whole deal block. The per-deal line above is emitted from inside
+	// CvDeal::read, so a block count with no per-deal lines beneath it says the block was EMPTY -- which is the
+	// one thing no DOMAIN fact can tell you, because a fact that never fires looks identical to a fact that is
+	// not wired ([event-spine.md] § THE RECEIVED LINE names this as the gap form with no other signature).
+	emitSaveLoadBlock("CvGame::m_deals", m_deals.getCount());
 	ReadStreamableFFreeListTrashArray(m_voteSelections, pStream);
 	ReadStreamableFFreeListTrashArray(m_votesTriggered, pStream);
 

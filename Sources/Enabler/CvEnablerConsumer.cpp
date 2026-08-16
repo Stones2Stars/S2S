@@ -635,12 +635,13 @@ private:
 			break;
 		case SEVT_CITY_HOLY_CITY_ADDED:
 		case SEVT_CITY_HOLY_CITY_REMOVED:
-		case SEVT_CITY_GOVERNMENT_CENTER_ADDED:
-		case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:
 		case SEVT_CITY_HEADQUARTERS_ADDED:
 		case SEVT_CITY_HEADQUARTERS_REMOVED:
-		case SEVT_CITY_FRESH_WATER_ADDED:
-		case SEVT_CITY_FRESH_WATER_REMOVED:
+		// ⚖ EVERY amenity crossing re-gates the city, not just the two that used to have facts of their own.
+		// That is deliberate over-inclusion: an amenity is exactly the kind of held city state a `requires`
+		// clause reads, and over-inclusion is SAFE here while a MISS is the bug ([enabler.md] §5).
+		case SEVT_CITY_AMENITY_ADDED:
+		case SEVT_CITY_AMENITY_REMOVED:
 		{
 			// The city-scope twins of the above: one city's designation moved, so only that city re-gates.
 			// Same load-bracket skip, same reason (the capped buildings' culture-level read).

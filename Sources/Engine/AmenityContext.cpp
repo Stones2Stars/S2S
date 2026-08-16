@@ -371,13 +371,20 @@ void AmenityContext::applyKey(int iAmenityId, int iSign)
 	// ⚖ THE GOVERNMENT CENTRE is the same crossing one key over, and it is SIMPLER than power's: no status gates
 	// its delivery, so the store's own 0 <-> non-zero verdict IS the fact and there is nothing to compose it with.
 	// It is read exactly that way -- CvCity::isGovernmentCenter is a bare `has` on this key.
-	const bool bIsGovernmentCenterKey = (iAmenityId == CLS_AMENITY_GOVERNMENT_CENTER);
-	const bool bGovernmentCenterBefore = bIsGovernmentCenterKey && has(iAmenityId);
-	// ⚖ FRESH WATER is the government centre's shape: nothing gates delivery, so this store's own 0 <-> non-zero
-	// verdict IS the fact. It rode a serialized CvCity counter whose changer had lost every caller, so a provider
-	// building granted its city nothing at all -- the grantor's own amenity is the feeder that was missing.
-	const bool bIsFreshWaterKey = (iAmenityId == CLS_AMENITY_PROVIDES_FRESH_WATER);
-	const bool bFreshWaterBefore = bIsFreshWaterKey && has(iAmenityId);
+	// ⚖ EVERY OTHER KEY announces the STORE's own 0 <-> non-zero crossing, generically. Government centre and
+	// fresh water are ordinary members of that set -- nothing gates their delivery, so the refcount crossing IS
+	// their verdict crossing and a bespoke fact for either would be the SAME happening announced twice.
+	// ⛔ The three-way if/else this replaces meant every key nobody had hand-written a case for crossed in
+	// SILENCE. What that actually cost is the PREDICATE-backed keys: IS_GOVERNMENT_CENTER and HAS_FRESHWATER
+	// resolve through this fold and gate real deposits, and neither had a fact the modifier consumed -- so a
+	// deposit gated on one was applied when its source arrived and never re-resolved again
+	// ([DEC-no-self-heal]).
+	// ⚠ The REST of the keys are read LIVE at their point of use -- the abolished<Channel> off-switches are a
+	// bare fold read at the wellbeing combine, and zoneOfControl / protectedCulture / adds3rdRing still ride
+	// legacy counters -- so none of them NEEDS this fact today. They announce because a crossing is a genuine
+	// state change and emitting is near-free ([event-spine.md]: emit liberally, apply precisely); the consumer
+	// side is what stays precise.
+	const bool bHeldBefore = has(iAmenityId);
 	add(iAmenityId, iSign);
 	if (m_city != NULL)
 	{
@@ -385,13 +392,30 @@ void AmenityContext::applyKey(int iAmenityId, int iSign)
 		{
 			announcePowerCrossing(bPoweredBefore);
 		}
-		else if (bIsGovernmentCenterKey)
+		const bool bHeldNow = has(iAmenityId);
+		if (bHeldBefore != bHeldNow)
 		{
-			announceGovernmentCenterCrossing(bGovernmentCenterBefore);
-		}
-		else if (bIsFreshWaterKey)
-		{
-			announceFreshWaterCrossing(bFreshWaterBefore);
+			const int iCityId = m_city->getID();
+			const PlayerTypes eOwner = m_city->getOwner();
+			if (bHeldNow)
+			{
+				emitCityAmenityAdded(iCityId, eOwner, iAmenityId, count(iAmenityId));
+			}
+			else
+			{
+				emitCityAmenityRemoved(iCityId, eOwner, iAmenityId, count(iAmenityId));
+			}
+			// ⛔ FRESH WATER owes DERIVED state off its crossing -- plot irrigation and the city's fresh-water
+			// health both read the verdict -- so it refreshes HERE, where the crossing is known, rather than at
+			// whatever moved it.
+			if (iAmenityId == CLS_AMENITY_PROVIDES_FRESH_WATER && eOwner != NO_PLAYER)
+			{
+				CvCity* pMutableCity = GET_PLAYER(eOwner).getCity(iCityId);
+				if (pMutableCity != NULL)
+				{
+					pMutableCity->refreshFreshWaterDerived();
+				}
+			}
 		}
 	}
 }
@@ -418,63 +442,8 @@ void AmenityContext::announcePowerCrossing(bool bPoweredBefore)
 }
 
 
-// ⚖ THE ONE ANNOUNCEMENT POINT for the government-centre verdict. The designation used to ride a hand-named
-// CvCity counter whose changer announced this fact; the counter is gone and the verdict is now this store's
-// `has` on one key, so the fact has to leave from HERE or it does not leave at all -- which is what left three
-// consumers waiting on an event nothing emitted (the enabler's per-city gate re-check, the DISTANCE_TO_
-// GOVERNMENT_CENTER refresh, and CityContext's interest set).
-// ⛔ Unlike power there is NO gated read to compare against: no status sits between this store and its targets,
-// so the refcount crossing IS the verdict crossing and composing one would invent a second definition.
-void AmenityContext::announceGovernmentCenterCrossing(bool bWasGovernmentCenter)
-{
-	const bool bIsGovernmentCenter = has(CLS_AMENITY_GOVERNMENT_CENTER);
-	if (bWasGovernmentCenter == bIsGovernmentCenter)
-	{
-		return;
-	}
-	if (bIsGovernmentCenter)
-	{
-		emitCityGovernmentCenterAdded(m_city->getID(), m_city->getOwner());
-	}
-	else
-	{
-		emitCityGovernmentCenterRemoved(m_city->getID(), m_city->getOwner());
-	}
-}
 
 
-// ⚖ THE ONE ANNOUNCEMENT POINT for the fresh-water access verdict. The verdict used to live in a serialized
-// CvCity counter fed by changeFreshWater -- which had no caller left, so `providesFreshWater` buildings conferred
-// nothing and the crossing this store now announces could never happen. The refcount IS the verdict, exactly as
-// the government centre's is: no status sits between a provider and the city.
-// ⛔ Unlike the other two crossings this one owes DERIVED state -- plot irrigation and the city's fresh-water
-// health both read the verdict -- so they refresh HERE, off the crossing, rather than at whatever moved it.
-void AmenityContext::announceFreshWaterCrossing(bool bHadFreshWater)
-{
-	const bool bHasFreshWater = has(CLS_AMENITY_PROVIDES_FRESH_WATER);
-	if (bHadFreshWater == bHasFreshWater)
-	{
-		return;
-	}
-	const int iCityId = m_city->getID();
-	const PlayerTypes eOwner = m_city->getOwner();
-	if (bHasFreshWater)
-	{
-		emitCityFreshWaterAdded(iCityId, eOwner, count(CLS_AMENITY_PROVIDES_FRESH_WATER));
-	}
-	else
-	{
-		emitCityFreshWaterRemoved(iCityId, eOwner, count(CLS_AMENITY_PROVIDES_FRESH_WATER));
-	}
-	if (eOwner != NO_PLAYER)
-	{
-		CvCity* pMutableCity = GET_PLAYER(eOwner).getCity(iCityId);
-		if (pMutableCity != NULL)
-		{
-			pMutableCity->refreshFreshWaterDerived();
-		}
-	}
-}
 
 void amenityContextRegisterConsumer()
 {

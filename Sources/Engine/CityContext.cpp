@@ -885,8 +885,8 @@ bool CityContext::wantsEvent(int iEventId)
 	// is a MINIMUM over the player's centres, so gaining one and losing one both move it and neither direction
 	// tells a city what its new distance is. The fact says WHICH PLAYER's centre set moved; the re-measure says
 	// what that means per city.
-	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:
-	case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:
+	case SEVT_CITY_AMENITY_ADDED:
+	case SEVT_CITY_AMENITY_REMOVED:
 	// Every area id was reassigned, so every city re-reads its area facts. Rare by construction and not
 	// addressable per-source, which is why it is announced wholesale rather than being a self-heal.
 	case SEVT_AREAS_RECALCULATED:
@@ -1154,9 +1154,15 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 		}
 		break;
 
-	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:
-	case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:
-		cc_refreshGovernmentCenterDistanceForPlayer(kEvent.iC);
+	// ⛔ ONLY the government-centre key re-measures. The generic amenity fact names WHICH key in iType, so an
+	// unfiltered route here would re-measure every city's distance on any amenity crossing anywhere -- an
+	// empire-wide walk for a value that did not move.
+	case SEVT_CITY_AMENITY_ADDED:
+	case SEVT_CITY_AMENITY_REMOVED:
+		if (kEvent.iType == CLS_AMENITY_GOVERNMENT_CENTER)
+		{
+			cc_refreshGovernmentCenterDistanceForPlayer(kEvent.iC);
+		}
 		break;
 
 	case SEVT_AREAS_RECALCULATED:

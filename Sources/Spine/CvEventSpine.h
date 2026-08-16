@@ -76,7 +76,12 @@ enum SpineFieldType
 	SFT_TRAIT, SFT_ROUTE, SFT_COMMERCE, SFT_PROPERTY,
 	// The unit plane's combat CLASS (UnitCombatTypes) -- resolved via GC.getUnitCombatInfo, bounded by
 	// GC.getNumUnitCombatInfos(). Distinct from SFT_UNIT (the unit TYPE) and from SFT_PROMOTION.
-	SFT_UNITCOMBAT
+	SFT_UNITCOMBAT,
+	// A DIPLOMATIC REFUSAL (DenialTypes -> GC.getDenialInfo). It is what the AI answers when asked whether it
+	// would trade a given item, so it IS the reason an existing deal stops being acceptable -- rendered by name
+	// because "denial=7" is unreadable and the whole point of the fact is the reason.
+	// ⚠ NO_DENIAL is -1, i.e. "it did not refuse", which renders as "none" rather than as an out-of-range "?".
+	SFT_DENIAL
 };
 
 //	Field identities are DOMAIN-LOCAL (owner 2026-06-18): each migrated domain defines its OWN field-tag enum + a
@@ -485,18 +490,20 @@ enum SpineDomainEvent
 	// plane-C atom re-resolution rides the presence pair above. iType = the building, iC = owner. DOMAIN.
 	SEVT_EMPIRE_BUILDING_ACTIVATED   = 200,
 	SEVT_EMPIRE_BUILDING_DORMANTED   = 201,
-	// The city GAINED / LOST fresh-water ACCESS (announced from the amenity refcount crossing) -- the
-	// PROVIDER-BUILDING-fed access counter. ⚠ DISTINCT from the plot-adjacency HAS_FRESHWATER verdict the plot
-	// substrate maintains (CvPlot::isFreshWater): a building can grant a city access on a dry plot.
-	// iB = the new counter, iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_CITY_FRESH_WATER_ADDED     = 82,
-	SEVT_CITY_FRESH_WATER_REMOVED   = 83,
-	// The city BECAME / STOPPED BEING a government centre -- the palace/counterpart buildings that make a city a
-	// maintenance origin. The verdict is the city's AMENITY FOLD, so the crossing is announced by the contexts'
-	// consumer around the fold that moved it. DISTINCT from the CAPITAL pair: a capital is always a government
-	// centre, but a government centre need not be capital. iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_CITY_GOVERNMENT_CENTER_ADDED   = 84,
-	SEVT_CITY_GOVERNMENT_CENTER_REMOVED = 85,
+	// ⛔ THE CITY GAINED / LOST AN AMENITY -- the generic 0 <-> non-zero crossing of the city's amenity fold, for
+	// EVERY key. iType = the AMENITY_* classification id, iC = owner, iSrcLoc = cityId. DOMAIN.
+	// ⚑ The id is NOT the discriminator [DEC-facts-name-happenings] bans -- it names WHICH member of an OPEN
+	// registry moved, exactly as a religion, property or status id does, and the DIRECTION is in the event name.
+	// A fact per amenity would mean an engine change per authored key, which is precisely what the open
+	// classification registry exists to avoid (the SEVT_CITY_STATUS pair settles the identical question).
+	// ⚠ POWER keeps its OWN pair below and that is NOT a duplicate of this: this announces the STORE's refcount
+	// crossing, while power announces the GATED verdict (CvCity::isPowered -- the refcount AND no blackout). The
+	// two genuinely differ, and both are real happenings ([state.md] § A STATUS IS MIDDLEWARE): a plant finished
+	// during a blackout moves the store and delivers nothing; a blackout lifting delivers power with the store
+	// untouched. Government centre and fresh water have no such gate, so THIS fact is their crossing and they
+	// carry no pair of their own.
+	SEVT_CITY_AMENITY_ADDED         = 206,
+	SEVT_CITY_AMENITY_REMOVED       = 207,
 	// The city GAINED / LOST a religion's HOLY-CITY designation (CvGame::setHolyCity) -- the IS_HOLY_CITY /
 	// IS_STATE_RELIGION_HOLY_CITY predicates flip for the OLD city (loses) and the NEW city (gains); gates
 	// conditioned commerce/yields. Emitted per affected city. iType = Religion, iC = owner, iSrcLoc = cityId. DOMAIN.
@@ -742,13 +749,65 @@ enum SpineDomainEvent
 	SEVT_PLAYER_INIT                = 183,  // iType = iC = player -- game start
 	SEVT_NAME_CHANGE                = 184,  // iType = NameChangeKind, iA = owner, iB = entity id
 
+	// ⛔ ONE TRADED ITEM TAKING EFFECT BETWEEN TWO EMPIRES -- iType = TradeableItems, iA = the item's data (a
+	// BONUS for TRADE_RESOURCES, a tech/city/unit id otherwise), iB = from-player, iC = to-player. The deal id
+	// rides as a render field only: a deal is an id, two players and two lists, so the fact is about the
+	// MOVEMENT, not its container ([bonuses.md](../../docs/reference/bonuses.md)). DOMAIN.
+	// ⚑ It NEEDS NO DISCRIMINATOR, which is why it is per ITEM: every deal kind -- trade, demand, tribute,
+	// peace, vassal -- decomposes into the same primitive, so nothing branches on what wrapped it. A demand is
+	// simply items that all flow one way. And multiplicity is FREE: TradeData carries no quantity, so three
+	// iron is three nodes and three emits.
+	// ⚠ ADDED fires for every item; REMOVED only for the ones with a DURATION (the set startTrade stores). A
+	// one-shot -- a tech handed over, gold paid -- correctly gets an ADDED and no REMOVED.
+	SEVT_EMPIRE_TRADE_ADDED         = 202,
+	SEVT_EMPIRE_TRADE_REMOVED       = 203,
+	// ⛔ THE AGREEMENT ITSELF -- iType = the deal id, iB = first player, iC = second player. Distinct from the
+	// per-ITEM pair above and NOT a duplicate of it: an item fact says a resource moved, this says two empires
+	// are (or stop being) bound. They fire together and neither substitutes for the other -- several distinct
+	// happenings reaching one choke point are several facts ([DEC-facts-name-happenings]). DOMAIN.
+	// ⚑ It exists because the DEAL carries what no item does: WHO it favoured, which is what the diplomacy side
+	// rides. A demand is a deal with one empty side, so the fact shape covers it with no discriminator.
+	SEVT_EMPIRE_DEAL_ADDED          = 204,
+	SEVT_EMPIRE_DEAL_REMOVED        = 205,
+
 	// ===== DIAGNOSTIC -- code RAN, never what the state IS =====
 	// ⛔ NO CONSUMER MAY BUILD STATE FROM THESE. "I have completed my job" -- the test that decides the kind is
 	// whether the fact says WHAT THE STATE IS or WHAT SOME CODE DID (event-spine.md § THE RECEIVED LINE). Deriving
 	// held state from an announcement that an apply ran is the failure this kind exists to make unsayable; the
 	// STATE these sit beside is the ACTIVATED / DORMANTED crossing above.
 	SEVT_CITY_BUILDING_PROCESSED    = 190,
-	SEVT_LOAD_PIPELINE              = 191
+	SEVT_LOAD_PIPELINE              = 191,
+
+	// ===== SAVELOAD -- what the STREAM CONTAINED, never what set the state =====
+	// ⛔ NO CONSUMER MAY BUILD STATE FROM THIS. It is testimony ABOUT the read, sitting beside the DOMAIN facts
+	// the internal setters emit ([event-spine.md]: the save stream is authoritative for base state, the fact
+	// stream for derived -- and neither is authoritative for the other's half).
+	// ⚑ It answers the one question a DOMAIN fact structurally cannot: whether a serialized BLOCK was EMPTY. A
+	// fact that never fires is indistinguishable from a fact that is not wired, so the block's own count is the
+	// only thing that separates "the save held none" from "the emit is dead".
+	SEVT_SAVELOAD_BLOCK             = 208,
+
+	// The load-END census of a serialized block, emitted from onFinalInitialized where the BUG log level is
+	// unambiguously up. DIAGNOSTIC, because it states that the load reached this point carrying N -- it is not
+	// testimony about the stream (that is SEVT_SAVELOAD_BLOCK above) and nothing may fold on it.
+	// ⚑ It exists because CvGame::read's OWN body runs before the log level is pushed, so a line emitted there is
+	// invisible while every later one logs -- and a fact that cannot be seen is indistinguishable from a fact that
+	// never fired. Reporting the same count from a live point is what makes the in-read half verifiable at all.
+	SEVT_SAVELOAD_CENSUS            = 209,
+
+	// WHY a deal was cancelled by CvGame::verifyDeals. DIAGNOSTIC: it says which leg of verify()'s OR fired, not
+	// what the state is -- the REMOVAL itself is SEVT_EMPIRE_DEAL_REMOVED, and nothing may fold on this.
+	// ⚑ Four independent conditions (untradeable resource / no trade network / either team obsoleting the bonus)
+	// converge on one kill(), so the deal-removed fact alone can never attribute a mass cancellation.
+	SEVT_DEAL_VERIFY_CANCEL         = 210,
+
+	// The AI's per-turn verdict on an EXISTING deal it is free to cancel: does it CONTINUE, and if not, why.
+	// DIAGNOSTIC -- a decision was re-evaluated; the cancellation it may cause is SEVT_EMPIRE_DEAL_REMOVED.
+	// ⚑ It is emitted on the KEEP as well as the drop, deliberately: "why did it continue" is the owner's
+	// question as much as "why did it stop", and a fact that fires only on cancellation cannot answer the first.
+	// ⚠ This is the AI's own judgement (a refusal, or the offer no longer valuing out) and is a DIFFERENT question
+	// from SEVT_DEAL_VERIFY_CANCEL, which is the mechanical resource check. Both can kill the same deal.
+	SEVT_DEAL_AI_EVALUATED          = 211
 };
 
 //	WHICH typed setter produced a SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED fact (its iB) -- the value's kind decides which render
@@ -842,10 +901,10 @@ void emitCityStatusAdded(int iCity, int iOwner, int iStatus, int iTurns);
 void emitCityStatusRemoved(int iCity, int iOwner, int iStatus, int iTurns);
 void emitUnitStatusAdded(int iUnit, int iOwner, int iStatus, int iTurns, int iPlot);
 void emitUnitStatusRemoved(int iUnit, int iOwner, int iStatus, int iTurns, int iPlot);
-void emitCityFreshWaterAdded(int iCity, int iOwner, int iCount);
-void emitCityFreshWaterRemoved(int iCity, int iOwner, int iCount);
-void emitCityGovernmentCenterAdded(int iCity, int iOwner);
-void emitCityGovernmentCenterRemoved(int iCity, int iOwner);
+// The city's amenity fold crossing 0 <-> non-zero on ONE key (SEVT_CITY_AMENITY_ADDED / _REMOVED above).
+// Government centre and fresh water ride this; POWER does not -- it announces the GATED verdict instead.
+void emitCityAmenityAdded(int iCity, int iOwner, int iAmenity, int iCount);
+void emitCityAmenityRemoved(int iCity, int iOwner, int iAmenity, int iCount);
 // A holy-city / headquarters designation moved. Call per AFFECTED city -- the old one REMOVED, the new one ADDED.
 void emitCityHolyCityAdded(int iCity, int iOwner, int iReligion);
 void emitCityHolyCityRemoved(int iCity, int iOwner, int iReligion);
@@ -1023,6 +1082,22 @@ void emitPlayerInit(int iPlayer);
 // after it completes. Result-producers (grants) suppress between them; the cache-build consumer stays load-active.
 void emitGameLoadStarted();
 void emitGameLoadFinished();
+
+// One traded item taking effect / ceasing between two empires (SEVT_EMPIRE_TRADE_ADDED / _REMOVED above).
+void emitEmpireTradeAdded(int iItem, int iData, int iFromPlayer, int iToPlayer, int iDeal);
+void emitEmpireTradeRemoved(int iItem, int iData, int iFromPlayer, int iToPlayer, int iDeal);
+
+// A serialized BLOCK's contents, announced from the read itself (SEVT_SAVELOAD_BLOCK above). SAVELOAD kind, so
+// logging alone consumes it. szBlock must outlive the emit -- pass a literal (the render is synchronous on the
+// game thread, the SEVT_NAME_CHANGE precedent).
+void emitSaveLoadBlock(const char* szBlock, int iCount);
+void emitSaveLoadCensus(const char* szBlock, int iCount);
+void emitDealVerifyCancel(int iDeal, int iBonus, int iTradeable, const char* szReason);
+void emitDealAiEvaluated(int iDeal, int iPlayer, int iOtherPlayer, int iDenial, const char* szVerdict);
+
+// The agreement between two empires beginning / ending (SEVT_EMPIRE_DEAL_ADDED / _REMOVED above).
+void emitEmpireDealAdded(int iDeal, int iFirstPlayer, int iSecondPlayer);
+void emitEmpireDealRemoved(int iDeal, int iFirstPlayer, int iSecondPlayer);
 // True between GAME_LOAD_STARTED and GAME_LOAD_FINISHED -- the load-active window (the reseed). Consumers that must
 // behave differently during the reseed (e.g. skip play-time targeted ripples) read this.
 bool spineGameLoadInProgress();

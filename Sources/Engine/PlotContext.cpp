@@ -24,6 +24,7 @@
 #include "CvImprovementInfo.h"      // isImprovementBonusTrade -- the SERVED-RESOURCE verdict's second leg
 #include "Defines/CvGlobals.h"      // GC
 #include "Spine/CvEventSpine.h"     // IEventConsumer / SEVT_* / the crossing emit
+#include "Infos/CvClassificationIds.h"  // CLS_AMENITY_PROVIDES_FRESH_WATER -- which amenity crossing this reads
 
 namespace
 {
@@ -180,13 +181,16 @@ namespace
 	// re-derive it ([DEC-no-self-heal]) -- the missing-CONSUMER-ROUTE gap form, which has no other signature.
 	// ⛔ It is kept SEPARATE from pc_axisFor because the two resolve their plot differently: a plot fact carries a
 	// map INDEX in iSrcLoc, a city fact carries a city ID plus its owner in iC.
+	// ⚠ The interest test is by EVENT ID only, so it admits every amenity crossing; WHICH amenity is filtered at
+	// the apply (only PROVIDES_FRESH_WATER moves a plot verdict). Over-inclusion in an interest set is safe --
+	// a miss is the bug ([enabler.md] §5) -- and the id is the fact's own payload, not a second lookup.
 	int pc_cityAxisFor(int iEventId)
 	{
 		switch (iEventId)
 		{
-		case SEVT_CITY_FRESH_WATER_ADDED:
-		case SEVT_CITY_FRESH_WATER_REMOVED:  return PLOTAXIS_CITY;
-		default:                             return 0;
+		case SEVT_CITY_AMENITY_ADDED:
+		case SEVT_CITY_AMENITY_REMOVED:  return PLOTAXIS_CITY;
+		default:                         return 0;
 		}
 	}
 
@@ -228,7 +232,10 @@ void PlotContext::onSpineEvent(const CvSpineEvent& kEvent)
 	else
 	{
 		iAxis = pc_cityAxisFor(kEvent.iEventId);
-		if (iAxis == 0 || kEvent.iC < 0)
+		// ⛔ ONLY the fresh-water key moves a plot verdict. The generic amenity fact carries WHICH key in iType,
+		// so the filter is a payload read rather than a second fact -- and without it every amenity crossing in
+		// the city would re-derive its plot's bits for nothing.
+		if (iAxis == 0 || kEvent.iC < 0 || kEvent.iType != CLS_AMENITY_PROVIDES_FRESH_WATER)
 		{
 			return;
 		}

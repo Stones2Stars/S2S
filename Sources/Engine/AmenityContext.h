@@ -108,16 +108,9 @@ public:
 	void announcePowerCrossing(bool bPoweredBefore);
 
 private:
-	// The single write point, so the CROSSING announcement exists exactly once.
+	// The single write point, so the CROSSING announcement exists exactly once -- the GENERIC amenity crossing
+	// for every key, plus power's gated verdict beside it.
 	void applyKey(int iAmenityId, int iSign);
-	// ⚖ THE GOVERNMENT-CENTRE CROSSING -- the plain refcount verdict, announced from the fold like power's. It
-	// takes no `before` from a caller because nothing outside this store can move it: no status gates it, so the
-	// only input is a grantor starting or stopping, which is applyKey itself.
-	void announceGovernmentCenterCrossing(bool bWasGovernmentCenter);
-	// ⚖ THE FRESH-WATER CROSSING -- the government centre's shape, with one obligation neither of the others
-	// carries: the verdict feeds PLOT irrigation and the city's fresh-water health, so those refresh OFF the
-	// crossing rather than at whatever moved it.
-	void announceFreshWaterCrossing(bool bHadFreshWater);
 
 	const CvCity* m_city;   // the bound game object; a binding, never cleared
 };

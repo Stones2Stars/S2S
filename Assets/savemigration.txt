@@ -2285,3 +2285,19 @@ CvUnit::iType3
 | info + promotions + combat classes on the promotion/combat facts), read by CvUnit::hasInvisibilityType /
 | setHasAnyInvisibility.
 CvUnit::m_iNoInvisibilityCount
+
+| The per-bonus TRADED import/export counts -- a serialized DERIVED pair. The DEAL is the genuine
+| non-derivable state and it stays serialized ([enabler.md] §8: "bonuses traded away needs to be
+| serialized, otherwise the trade is lost -- so that is the current trade DEAL itself being serialized,
+| not the list"); the per-bonus counts merely FOLLOW from the held deals, so they answer to
+| [DEC-derived-never-trusted] like every other derived value.
+| REPLACEMENT: the load-end re-derivation in CvGame::onFinalInitialized, which walks the held deals and
+| folds each TRADE_RESOURCES item through the live entry points (CvPlayer::changeBonusExport /
+| changeBonusImport -- what CvDeal::startTrade itself calls), immediately BEFORE the plot-group re-color
+| whose CvPlot::updatePlotGroupBonus reads them.
+CvPlayer::iBonusExportSize
+CvPlayer::iBonusExportType
+CvPlayer::iBonusExportCount
+CvPlayer::iBonusImportSize
+CvPlayer::iBonusImportType
+CvPlayer::iBonusImportCount

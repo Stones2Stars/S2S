@@ -210,11 +210,14 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   **`SEVT_CITY_HEADQUARTERS_ADDED / _REMOVED`** (`CvGame::setHeadquarters`, per affected city — the `setHolyCity` shape, and
   **not** a duplicate of the building/corporation PRESENCE facts the same setter drives),
   **`SEVT_PLOT_CITY_ADDED / _REMOVED`** (`CvPlot::setPlotCity` — the ONE emit covering its `changeCityRadiusCount` /
-  `changePlayerCityRadiusCount` pass-throughs), **`SEVT_CITY_GOVERNMENT_CENTER_ADDED / _REMOVED`** and
-  **`SEVT_CITY_FRESH_WATER_ADDED / _REMOVED`** (both announced by the city's AMENITY FOLD at the verdict crossing —
-  the `isPowered` shape, except that no status gates either, so the refcount crossing IS the verdict and composing
-  a second read would invent a second definition; the fresh-water one is the provider-BUILDING-fed access verdict,
-  distinct from the plot-adjacency verdict the substrate maintains), **`SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`** and
+  `changePlayerCityRadiusCount` pass-throughs), **`SEVT_CITY_AMENITY_ADDED / _REMOVED`** (the city's AMENITY FOLD
+  crossing 0 ⇄ non-zero on ONE key, carrying the `AMENITY_*` id in `iType` — an OPEN-registry member id, the
+  `SEVT_CITY_STATUS` shape, so a newly authored amenity needs no engine change. It is emitted by the FOLD, the
+  store that owns the verdict, and by nothing else. ⚠ Government centre and fresh water ride THIS fact and carry
+  no pair of their own: nothing gates their delivery, so the refcount crossing IS their verdict and a bespoke
+  fact for either would be one happening announced twice. POWER is the exception and keeps its own pair — it
+  announces the GATED verdict (`isPowered`), which genuinely differs from the store crossing),
+  **`SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`** and
   **`SEVT_AREA_TILE_ADDED / _REMOVED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
   AREA_SIZE + max-adjacent-water read), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED`** (the world-instance cap's
   cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and from
@@ -504,7 +507,7 @@ surface that — but the gap still closes in the same work item.
 > ⇒ **The has-verdict is the only one a value may be applied on.** The other two are the same holding seen from
 > the local tile set and from the connectivity component, and each already CAUSES the crossing — the plot group
 > fans its member cities so every one fires its own ([enabler.md §8](enabler.md) RESIDENCY; vicinity answers
-> `connection:"vicinity"` atoms and nothing else).
+> `connection:"onSite"` atoms and nothing else).
 > ⚠ **The two count-carrying facts fail WORSE than a plain double, and that is why the split is spelled out
 > here:** their payload is a multiplicity, so a consumer using it scales the deposit by the count — three local
 > copies apply three times — and a supply that only ever grows never hands any of it back.

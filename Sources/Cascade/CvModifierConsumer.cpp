@@ -30,6 +30,7 @@
 #include "Data/CvInfoValuation.h"       // the eval-ctx fill seam (the contexts ARE the eval state)
 #include "Enabler/CvEnablerKernel.h"    // wireOperatingBuildings -- the THIRD leg of the eval state
 #include "Spine/CvEventSpine.h"
+#include "Infos/CvClassificationIds.h"  // CLS_AMENITY_* -- which predicate an amenity crossing gates
 #include "CvHandicapInfo.h"             // the handicap plane-A apply -- its deposits ride SEVT_EMPIRE_HANDICAP_*
 #include "Defines/CvGlobals.h"
 #include "Engine/CvMap.h"
@@ -386,6 +387,9 @@ namespace
 		case SEVT_PLOT_ROUTE_ADDED:
 		case SEVT_PLOT_BONUS_ADDED:
 		case SEVT_CITY_POWER_ADDED:
+		// The city's AMENITY fold crossing -- a plane-C GATE crossing, not a source arriving. Power is NOT
+		// covered by it: power's gated verdict has its own fact above, and routing both would double-apply.
+		case SEVT_CITY_AMENITY_ADDED:
 		case SEVT_CITY_CORPORATION_ACTIVE_ADDED:
 		case SEVT_CITY_HOLY_CITY_ADDED:
 		case SEVT_CITY_OWNER_ADDED:
@@ -411,6 +415,7 @@ namespace
 		case SEVT_PLOT_ROUTE_REMOVED:
 		case SEVT_PLOT_BONUS_REMOVED:
 		case SEVT_CITY_POWER_REMOVED:
+		case SEVT_CITY_AMENITY_REMOVED:
 		case SEVT_CITY_CORPORATION_ACTIVE_REMOVED:
 		case SEVT_CITY_HOLY_CITY_REMOVED:
 		case SEVT_CITY_OWNER_REMOVED:
@@ -2799,6 +2804,37 @@ namespace
 				const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
 				mc_applyGated(DepositIndex::gatedByPredicate(CASC_PRED_HAS_POWER), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
 					pPlayer, pCity, NULL);
+				break;
+			}
+			// ⚖ AN AMENITY CROSSING IS A PLANE-C GATE CROSSING -- the amenity-backed PREDICATES resolve through
+			// the city's fold, so a deposit gated on one must be applied or withdrawn exactly here. Without this
+			// route the deposits gated on IS_GOVERNMENT_CENTER and HAS_FRESHWATER were never re-resolved at all:
+			// they had no fact of their own that the modifier consumed, so the slot kept whatever it was given
+			// when the source arrived and nothing could ever correct it ([DEC-no-self-heal]).
+			// ⛔ POWER IS DELIBERATELY ABSENT. Its predicate reads the GATED verdict (CvCity::isPowered), which
+			// has its own fact above; routing the store crossing here as well would apply the same gate twice --
+			// and the two do not even agree (a plant finished during a blackout moves this store and delivers
+			// nothing).
+			// ⚑ The mapping is amenity id -> the predicate it backs, so a key that backs no predicate applies
+			// nothing and costs one comparison. A newly authored amenity that gains a predicate is one row here.
+			case SEVT_CITY_AMENITY_ADDED:
+			case SEVT_CITY_AMENITY_REMOVED:
+			{
+				CvCascPredKind ePredicate = CASC_PRED_UNKNOWN;
+				if (kEvent.iType == CLS_AMENITY_GOVERNMENT_CENTER)
+				{
+					ePredicate = CASC_PRED_IS_GOVERNMENT_CENTER;
+				}
+				else if (kEvent.iType == CLS_AMENITY_PROVIDES_FRESH_WATER)
+				{
+					ePredicate = CASC_PRED_HAS_FRESHWATER;
+				}
+				if (ePredicate != CASC_PRED_UNKNOWN)
+				{
+					const CvCity* pCity = mc_city(pPlayer, kEvent.iSrcLoc);
+					mc_applyGated(DepositIndex::gatedByPredicate(ePredicate), mc_sourceDirection(kEvent), MMKernel::PER_SCALE_APPLIED,
+						pPlayer, pCity, NULL);
+				}
 				break;
 			}
 			// A city PROPERTY crossed an authored boundary -- the HOLDER's crossing fact, announced beside the raw

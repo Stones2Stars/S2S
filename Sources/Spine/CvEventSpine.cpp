@@ -28,6 +28,7 @@
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 #include "Triggers/CvTriggerEngine.h"   // the #430 GRANTS consumer -- registered at the composition root below
+#include "UI/CvPlayerAlerts.h"          // the PLAYER-ALERT consumer -- likewise
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"
@@ -167,6 +168,10 @@ void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 		case SFT_BONUS:
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
 				(fld.v.i >= 0 && fld.v.i < GC.getNumBonusInfos()) ? GC.getBonusInfo((BonusTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_DENIAL:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumDenialInfos()) ? GC.getDenialInfo((DenialTypes)fld.v.i).getType() : "none");
 			break;
 		case SFT_IMPROVEMENT:
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
@@ -351,6 +356,25 @@ enum SpineDomainField
 	// the combat fact's SECOND party: a resolved combat has two units, and the five DOMAIN ints hold the winner
 	// plus the loser's id only, so the loser's type and owner ride here
 	SPF_LOSER_UNIT, SPF_LOSER_UNIT_ID, SPF_LOSER_OWNER,
+	// the traded-item fact: WHAT moved and BETWEEN WHOM, plus the deal it belonged to (correlation only, so a
+	// reader can see several items ending together because one agreement was cancelled).
+	// ⚠ SPF_TRADE_DATA is SFT_INT deliberately: it is a BONUS only for TRADE_RESOURCES and a tech / city / unit
+	// id for the other item types, so a typed declaration would render one registry's id out of another's table.
+	SPF_TRADE_ITEM, SPF_TRADE_DATA, SPF_FROM_PLAYER, SPF_TO_PLAYER, SPF_DEAL,
+	// The DEAL pair's two parties. Deliberately not SPF_FROM_/TO_PLAYER: an agreement has no direction, and a
+	// demand is simply a deal whose items all flow one way.
+	SPF_FIRST_PLAYER, SPF_SECOND_PLAYER,
+	// The AMENITY_* classification id a city amenity crossing names. SFT_INT: it is a runtime-minted OPEN-registry
+	// id with no SFT kind of its own, so the consumer resolves the name (event-spine.md: carry entity IDs).
+	SPF_AMENITY,
+	// the SAVELOAD block fact: WHICH serialized block, and how many records it carried
+	SPF_BLOCK,
+	// the DIPLOMATIC REFUSAL an AI gave when asked whether it would still trade an item (SFT_DENIAL, NO_DENIAL = none)
+	SPF_DENIAL,
+	// WHICH leg of a multi-clause verdict fired, as its own name. A verdict reached through an OR of several
+	// conditions is unattributable from the outcome alone -- the deal-verify cancel is the worked case: four
+	// independent legs all end in one kill(), so "109 deals died" says nothing about WHY until the leg is named.
+	SPF_REASON,
 	// the load-pipeline diagnostic fields (SEVT_LOAD_PIPELINE)
 	SPF_MS_REBUILD, SPF_MS_FIXPOINT, SPF_PASSES, SPF_MS_PLOTWARM, SPF_MS_PKGWARM,
 	SPF_FLIPS, SPF_CONVERGED, SPF_VERIFY_CATCH, SPF_MS_FIX_ENSURE, SPF_MS_FIX_PROCESS
@@ -443,10 +467,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_CITY_STATUS_REMOVED:              return "[SPINE/CITY] cityStatusRemoved";
 	case SEVT_UNIT_STATUS_ADDED:                return "[SPINE/UNIT] unitStatusAdded";
 	case SEVT_UNIT_STATUS_REMOVED:              return "[SPINE/UNIT] unitStatusRemoved";
-	case SEVT_CITY_FRESH_WATER_ADDED:           return "[SPINE/CITY] cityFreshWaterAdded";
-	case SEVT_CITY_FRESH_WATER_REMOVED:         return "[SPINE/CITY] cityFreshWaterRemoved";
-	case SEVT_CITY_GOVERNMENT_CENTER_ADDED:     return "[SPINE/CITY] cityGovernmentCenterAdded";
-	case SEVT_CITY_GOVERNMENT_CENTER_REMOVED:   return "[SPINE/CITY] cityGovernmentCenterRemoved";
+	case SEVT_CITY_AMENITY_ADDED:               return "[SPINE/CITY] cityAmenityAdded";
+	case SEVT_CITY_AMENITY_REMOVED:             return "[SPINE/CITY] cityAmenityRemoved";
 	case SEVT_CITY_HOLY_CITY_ADDED:             return "[SPINE/CITY] cityHolyCityAdded";
 	case SEVT_CITY_HOLY_CITY_REMOVED:           return "[SPINE/CITY] cityHolyCityRemoved";
 	case SEVT_CITY_HEADQUARTERS_ADDED:          return "[SPINE/CITY] cityHeadquartersAdded";
@@ -518,6 +540,14 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_NAME_CHANGE:                      return "[SPINE/GAME] nameChange";
 	case SEVT_CITY_BUILDING_PROCESSED:          return "[SPINE/CITY] cityBuildingProcessed";
 	case SEVT_LOAD_PIPELINE:                    return "[SPINE/GAME] loadPipeline";
+	case SEVT_SAVELOAD_BLOCK:                   return "[SPINE/SAVELOAD] block";
+	case SEVT_SAVELOAD_CENSUS:                  return "[SPINE/SAVELOAD] census";
+	case SEVT_DEAL_VERIFY_CANCEL:               return "[SPINE/EMPIRE] dealVerifyCancel";
+	case SEVT_DEAL_AI_EVALUATED:                return "[SPINE/EMPIRE] dealAiEvaluated";
+	case SEVT_EMPIRE_TRADE_ADDED:               return "[SPINE/EMPIRE] empireTradeAdded";
+	case SEVT_EMPIRE_TRADE_REMOVED:             return "[SPINE/EMPIRE] empireTradeRemoved";
+	case SEVT_EMPIRE_DEAL_ADDED:                return "[SPINE/EMPIRE] empireDealAdded";
+	case SEVT_EMPIRE_DEAL_REMOVED:              return "[SPINE/EMPIRE] empireDealRemoved";
 	default:                                 return "[SPINE] ?";
 	}
 }
@@ -580,6 +610,17 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_LOSER_UNIT:    *peType = SFT_UNIT;      return "loserUnit";
 	case SPF_LOSER_UNIT_ID: *peType = SFT_INT;       return "loserUnitId";
 	case SPF_LOSER_OWNER:   *peType = SFT_PLAYER;    return "loserOwner";
+	case SPF_TRADE_ITEM:  *peType = SFT_INT;         return "item";
+	case SPF_TRADE_DATA:  *peType = SFT_INT;         return "data";
+	case SPF_FROM_PLAYER: *peType = SFT_PLAYER;      return "fromPlayer";
+	case SPF_TO_PLAYER:   *peType = SFT_PLAYER;      return "toPlayer";
+	case SPF_DEAL:        *peType = SFT_INT;         return "deal";
+	case SPF_FIRST_PLAYER:  *peType = SFT_PLAYER;    return "firstPlayer";
+	case SPF_SECOND_PLAYER: *peType = SFT_PLAYER;    return "secondPlayer";
+	case SPF_AMENITY:     *peType = SFT_INT;         return "amenity";
+	case SPF_BLOCK:       *peType = SFT_STR;         return "block";
+	case SPF_REASON:      *peType = SFT_STR;         return "reason";
+	case SPF_DENIAL:      *peType = SFT_DENIAL;      return "denial";
 	case SPF_TEAM:        *peType = SFT_INT;         return "team";
 	case SPF_AREA:        *peType = SFT_INT;         return "area";
 	case SPF_TIMER:       *peType = SFT_INT;         return "timer";
@@ -685,6 +726,11 @@ void spineRegisterConsumers()
 	// fired it -- and since the trigger APPLIES (places buildings, spawns units, promotes), a stale read is a wrong
 	// grant handed out, not merely a wrong number, with nothing to re-derive it afterwards.
 	triggerRegisterConsumer();
+	// The PLAYER-ALERT consumer registers LAST, and for the plainest reason on this list: it is a pure OUTPUT.
+	// It builds no state, so nothing downstream reads it and its position binds nobody -- but it RENDERS the
+	// state the machines above have settled, so running it after them means an alert can never describe a
+	// half-applied world ([event-spine.md] § PLAYER ALERTS ARE A SPINE CONSUMER).
+	playerAlertsRegisterConsumer();
 }
 
 void emitNameChange(int iKind, int iOwner, int iEntityId)
@@ -974,35 +1020,20 @@ void emitUnitStatusRemoved(int iUnit, int iOwner, int iStatus, int iTurns, int i
 	eventSpine().emit(e);
 }
 
-void emitCityFreshWaterAdded(int iCity, int iOwner, int iCount)
+// iType = the AMENITY_* classification id, iB = the new refcount, iC = owner, iSrcLoc = cityId.
+void emitCityAmenityAdded(int iCity, int iOwner, int iAmenity, int iCount)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FRESH_WATER_ADDED, -1, 0, iCount, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_AMENITY_ADDED, iAmenity, 0, iCount, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
+	e.addI(SPF_AMENITY, iAmenity).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
 	eventSpine().emit(e);
 }
 
-void emitCityFreshWaterRemoved(int iCity, int iOwner, int iCount)
+void emitCityAmenityRemoved(int iCity, int iOwner, int iAmenity, int iCount)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FRESH_WATER_REMOVED, -1, 0, iCount, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_AMENITY_REMOVED, iAmenity, 0, iCount, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
-	eventSpine().emit(e);
-}
-
-void emitCityGovernmentCenterAdded(int iCity, int iOwner)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_GOVERNMENT_CENTER_ADDED, -1, 0, 0, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
-	eventSpine().emit(e);
-}
-
-void emitCityGovernmentCenterRemoved(int iCity, int iOwner)
-{
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_GOVERNMENT_CENTER_REMOVED, -1, 0, 0, iOwner, iCity);
-	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	e.addI(SPF_AMENITY, iAmenity).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_COUNT, iCount);
 	eventSpine().emit(e);
 }
 
@@ -1761,6 +1792,76 @@ void emitPropertyAdded(int iObjectKind, int iObjectId, int iOwner, int iProperty
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROPERTY_ADDED, iProperty, iAmount, iObjectKind, iOwner, iObjectId);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_PROPERTY, iProperty).addI(SPF_COUNT, iAmount).addI(SPF_OBJECT_KIND, iObjectKind).addI(SPF_OWNER, iOwner).addI(SPF_ID, iObjectId);
+	eventSpine().emit(e);
+}
+
+void emitEmpireTradeAdded(int iItem, int iData, int iFromPlayer, int iToPlayer, int iDeal)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_TRADE_ADDED, iItem, iData, iFromPlayer, iToPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TRADE_ITEM, iItem).addI(SPF_TRADE_DATA, iData).addI(SPF_FROM_PLAYER, iFromPlayer).addI(SPF_TO_PLAYER, iToPlayer).addI(SPF_DEAL, iDeal);
+	eventSpine().emit(e);
+}
+
+void emitEmpireTradeRemoved(int iItem, int iData, int iFromPlayer, int iToPlayer, int iDeal)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_TRADE_REMOVED, iItem, iData, iFromPlayer, iToPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TRADE_ITEM, iItem).addI(SPF_TRADE_DATA, iData).addI(SPF_FROM_PLAYER, iFromPlayer).addI(SPF_TO_PLAYER, iToPlayer).addI(SPF_DEAL, iDeal);
+	eventSpine().emit(e);
+}
+
+// iType = the deal id, iB = first player, iC = second player -- the same iB/iC party layout the per-ITEM pair
+// uses for from/to, so a consumer reads the two sides out of the same slots on either fact.
+// SAVELOAD: what a serialized block CONTAINED. Logging-only by kind -- nothing may fold on it.
+void emitSaveLoadBlock(const char* szBlock, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_SAVELOAD, SEVT_SAVELOAD_BLOCK, iCount, 0, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addStr(SPF_BLOCK, szBlock).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+// WHICH leg of CvDeal::verify's OR cancelled a deal, with the operands that decided it. See the id's own note:
+// four conditions end in one kill(), so the removal fact alone cannot attribute a mass cancellation.
+void emitDealVerifyCancel(int iDeal, int iBonus, int iTradeable, const char* szReason)
+{
+	CvSpineEvent e(EVENTKIND_DIAGNOSTIC, SD_SPINE, SEVT_DEAL_VERIFY_CANCEL, 1);
+	e.addI(SPF_DEAL, iDeal).addI(SPF_BONUS, iBonus).addI(SPF_COUNT, iTradeable).addStr(SPF_REASON, szReason);
+	eventSpine().emit(e);
+}
+
+// The AI's per-turn verdict on a deal it COULD cancel. See the id's own note: it fires on the keep as well as
+// the drop, because "why did this continue" is as much the question as "why did it stop".
+void emitDealAiEvaluated(int iDeal, int iPlayer, int iOtherPlayer, int iDenial, const char* szVerdict)
+{
+	CvSpineEvent e(EVENTKIND_DIAGNOSTIC, SD_SPINE, SEVT_DEAL_AI_EVALUATED, 2);
+	e.addI(SPF_DEAL, iDeal).addI(SPF_FIRST_PLAYER, iPlayer).addI(SPF_SECOND_PLAYER, iOtherPlayer)
+	 .addI(SPF_DENIAL, iDenial).addStr(SPF_REASON, szVerdict);
+	eventSpine().emit(e);
+}
+
+// The load-END twin of the line above, emitted where the log level is up. See the id's own note: a block read
+// inside CvGame::read's body cannot be SEEN, so its count is re-stated from a live point.
+void emitSaveLoadCensus(const char* szBlock, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DIAGNOSTIC, SD_SPINE, SEVT_SAVELOAD_CENSUS, 1);
+	e.addStr(SPF_BLOCK, szBlock).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitEmpireDealAdded(int iDeal, int iFirstPlayer, int iSecondPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_DEAL_ADDED, iDeal, -1, iFirstPlayer, iSecondPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_DEAL, iDeal).addI(SPF_FIRST_PLAYER, iFirstPlayer).addI(SPF_SECOND_PLAYER, iSecondPlayer);
+	eventSpine().emit(e);
+}
+void emitEmpireDealRemoved(int iDeal, int iFirstPlayer, int iSecondPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_DEAL_REMOVED, iDeal, -1, iFirstPlayer, iSecondPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_DEAL, iDeal).addI(SPF_FIRST_PLAYER, iFirstPlayer).addI(SPF_SECOND_PLAYER, iSecondPlayer);
 	eventSpine().emit(e);
 }
 

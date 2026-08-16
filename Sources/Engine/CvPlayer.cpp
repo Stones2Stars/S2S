@@ -17378,35 +17378,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			int iCount = 0;
 			uint16_t sCountU = 0;
 			uint32_t iCountU = 0;
-			// Bonus counters
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBonusExportSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iBonusExportType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iCountU, "iBonusExportCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BONUSES, iType, true));
-
-				if (iType > -1)
-				{
-					m_bonusExport.insert(std::make_pair(iType, iCountU));
-				}
-			}
-
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBonusImportSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iBonusImportType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iCountU, "iBonusImportCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_BONUSES, iType, true));
-
-				if (iType > -1)
-				{
-					m_bonusImport.insert(std::make_pair(iType, iCountU));
-				}
-			}
-
 			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iBonusMintedPercentSize");
 			while (iSize-- > 0)
@@ -18133,19 +18104,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		// Toffer - Write maps
 		{
-			// Bonus counters
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_bonusExport.size(), "iBonusExportSize");
-			for (std::map<short, uint32_t>::const_iterator it = m_bonusExport.begin(), itEnd = m_bonusExport.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iBonusExportType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iBonusExportCount");
-			}
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_bonusImport.size(), "iBonusImportSize");
-			for (std::map<short, uint32_t>::const_iterator it = m_bonusImport.begin(), itEnd = m_bonusImport.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iBonusImportType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iBonusImportCount");
-			}
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_bonusMintedPercent.size(), "iBonusMintedPercentSize");
 			for (std::map<short, int>::const_iterator it = m_bonusMintedPercent.begin(), itEnd = m_bonusMintedPercent.end(); it != itEnd; ++it)
 			{
