@@ -28,6 +28,7 @@
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the ONE verdict, for the per-clause met/unmet
 #include "Infos/CvRequires.h"             // the build/operate trees the requires block renders
 #include "Infos/CvGrants.h"           // the considered-action payload the first-discoverer widgets render
+#include "Spine/CvEventSpine.h"       // the unit-hover probe emits into the UNT domain CvUnitAI registers
 #include "Infos/CvTechInfo.h"         // canTradeOnTerrain + the tech's own compiled families
 #include "Infos/CvEspionageMissionInfo.h"  // the mission whose cost the espionage census decomposes
 #include "CvClassificationBlock.h"   // the §8/§9 block appendClassificationLines walks
@@ -66,6 +67,12 @@
 //	sets, and an entity that authors none of a family simply contributes no line.
 namespace
 {
+	//	The unit hover's own probe. Local integer values matching CvUnitAI.cpp's anonymous-namespace enums, the
+	//	same idiom CvSelectionGroupAI uses to emit into a domain another TU registered (a file-local enum cannot
+	//	cross a translation unit).
+	enum { UNT_TOOLTIP_ID = 10 };   // == UNT_TOOLTIP in CvUnitAI.cpp
+	enum { UNTF_OWNER = 0, UNTF_UNIT = 1, UNTF_BUILDTYPE = 22, UNTF_HEADMISSION = 23 };
+
 	const ModifierFamily g_aeCityPlaneFamilies[] =
 	{
 		MODFAM_HAPPINESS, MODFAM_HEALTH,
@@ -611,6 +618,15 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	//	WHAT IT IS DOING. A worker mid-build is the case this answers -- the build and how long is left on it is
 	//	the whole question a player hovers a worker to ask.
 	const BuildTypes eBuild = pUnit->getBuildType();
+	//	⚑ LEVEL 4 (the inner-loop tier) because a hover re-renders freely -- it costs nothing until asked for,
+	//	and it answers the one question code reading cannot: whether the line is missing because the unit
+	//	reports NO_BUILD, or because it never reached here. The head mission is beside it, since getBuildType
+	//	reads exactly that and answers NO_BUILD for every mission that is not MISSION_BUILD.
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_TOOLTIP_ID, 4)
+		.addI(UNTF_OWNER, (int)pUnit->getOwner()).addI(UNTF_UNIT, pUnit->getID())
+		.addI(UNTF_BUILDTYPE, (int)eBuild)
+		.addI(UNTF_HEADMISSION, pUnit->getGroup() && pUnit->getGroup()->headMissionQueueNode()
+			? (int)pUnit->getGroup()->headMissionQueueNode()->m_data.eMissionType : -1));
 	if (eBuild != NO_BUILD && pUnit->plot() != NULL)
 	{
 		szString.append(CvWString::format(L", %s (%d)",

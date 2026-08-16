@@ -58,7 +58,8 @@ namespace
 		UNT_GARRISON_JOIN,   // [UNT/garrison] action=join
 		UNT_GARRISON_LEAVE,  // [UNT/garrison] action=leave
 		UNT_MISSION,         // [UNT/mission]
-		UNT_ACT              // [UNT/act] -- instrumented commit point; decision/reason are SFT_STR free-text (existing literals)
+		UNT_ACT,             // [UNT/act] -- instrumented commit point; decision/reason are SFT_STR free-text (existing literals)
+		UNT_TOOLTIP          // [UNT/tooltip] -- what the unit hover could see: the build it is on, and the head mission it came from
 	};
 	const char* untLinePrefix(int iEventId)
 	{
@@ -74,6 +75,7 @@ namespace
 		case UNT_GARRISON_LEAVE: return "[UNT/garrison] action=leave";
 		case UNT_MISSION:        return "[UNT/mission]";
 		case UNT_ACT:            return "[UNT/act]";
+		case UNT_TOOLTIP:        return "[UNT/tooltip]";
 		default:                 return NULL;
 		}
 	}
@@ -85,7 +87,8 @@ namespace
 		UNTF_singleStr, UNTF_defStr,
 		UNTF_city,
 		UNTF_unitAI, UNTF_missionAI, UNTF_targetX, UNTF_targetY,
-		UNTF_decision, UNTF_reason
+		UNTF_decision, UNTF_reason,
+		UNTF_buildType, UNTF_headMission
 	};
 	const char* untFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
@@ -114,6 +117,8 @@ namespace
 		case UNTF_targetY:  return "targetY";
 		case UNTF_decision: *peType = SFT_STR; return "decision";
 		case UNTF_reason:   *peType = SFT_STR; return "reason";
+		case UNTF_buildType:  return "buildType";
+		case UNTF_headMission:return "headMission";
 		default:          return NULL;
 		}
 	}
