@@ -376,7 +376,6 @@ class CvEventManager:
 					[GC.getInfoTypeForString('PROMOTION_CULTURE_OCEANIAN'), GC.getInfoTypeForString('BUILDING_C_L_OCEANIAN'), GC.getInfoTypeForString('BUILDING_C_N_OCEANIAN')],
 					[GC.getInfoTypeForString('PROMOTION_CULTURE_SOUTH_AMERICAN'), GC.getInfoTypeForString('BUILDING_C_L_SOUTH_AMERICAN'), GC.getInfoTypeForString('BUILDING_C_N_SOUTH_AMERICAN')]
 				]
-				self.UNIT_BAND = GC.getInfoTypeForString("UNIT_BAND")
 				self.aHiPriListBase = ('PROMOTION_LIVE1', 'PROMOTION_LIVE2')
 				self.aHiPriListLandHunter = self.aHiPriListBase + ("PROMOTION_HUNTER1", "PROMOTION_HUNTER2", "PROMOTION_HUNTER3", "PROMOTION_HUNTER_GREAT")
 				self.aHiPriListSeaHunter = self.aHiPriListBase + ("PROMOTION_SEA_HUNTER1", "PROMOTION_SEA_HUNTER2", "PROMOTION_SEA_HUNTER3", "PROMOTION_SEA_HUNTER_GREAT")
@@ -1117,7 +1116,7 @@ class CvEventManager:
 					if iPlayer != iPlayerW: continue
 					KEY = aWonderTuple[0][i]
 					if KEY == "PERGAMON":
-						iGGP = intSqrt(aL[UnitReadKind.UNIT_READ_EXPERIENCE])
+						iGGP = intSqrt(aL[UnitReadKind.UNIT_READ_EXPERIENCE] / 100)
 						if iGGP:
 							CyPlayerW.changeCombatExperience(iGGP)
 					elif KEY == "GREAT_JAGUAR_TEMPLE":
@@ -2542,17 +2541,6 @@ class CvEventManager:
 				if STATE.hasUnitPromotion(iUnitOwner, iUnitID, iPromo):
 					ACT.setCityBuilding(iPlayer, iCityID, iBuilding, True)
 
-			# Give a free defender to the first city when it is built
-			if iUnit == self.UNIT_BAND:
-				CyPlayer = GC.getPlayer(iPlayer)
-				if INFO.getType("CIVILIZATION_", CyPlayer.getCivilizationType()) == "CIVILIZATION_NEANDERTHAL":
-					iUnitTG = GC.getInfoTypeForString("UNIT_NEANDERTHAL_TRIBAL_GUARDIAN")
-				else:
-					iUnitTG = GC.getInfoTypeForString("UNIT_TRIBAL_GUARDIAN")
-				iUnitX, iUnitY = STATE.getUnitPosition(iUnitOwner, iUnitID)
-				CyUnitTG = CyPlayer.initUnit(iUnitTG, iUnitX, iUnitY, UnitAITypes.UNITAI_PROPERTY_CONTROL, DirectionTypes.DIRECTION_SOUTH)
-				iExp = STATE.getUnitRead(iUnitOwner, iUnitID)[UnitReadKind.UNIT_READ_EXPERIENCE]
-				ACT.setUnitExperience(CyUnitTG.getOwner(), CyUnitTG.getID(), iExp)
 		if iPop:
 			ACT.changeCityPopulation(iPlayer, iCityID, iPop)
 			iThreshold = CyCity.getGrowth()[CityGrowthRead.GROWTH_READ_THRESHOLD]

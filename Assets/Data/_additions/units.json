@@ -1,4 +1,22 @@
 {
+ "UNIT_BAND": {
+  "grants": {
+   "units": [
+    {
+     "unit": "UNIT_TRIBAL_GUARDIAN",
+     "enabled": {
+      "noneOf": [
+       "BUILDING_C_AC_NEANDERTHAL"
+      ]
+     }
+    },
+    {
+     "unit": "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
+     "enabled": "BUILDING_C_AC_NEANDERTHAL"
+    }
+   ]
+  }
+ },
  "UNIT_CISLUNAR_INFANTRY": {
   "identity": {
    "domain": "DOMAIN_LAND"

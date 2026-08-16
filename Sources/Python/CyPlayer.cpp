@@ -142,7 +142,7 @@ CyUnit* CyPlayer::initUnit(int /*UnitTypes*/ iIndex, int iX, int iY, UnitAITypes
 	}
 	else
 	{
-		CvUnit* unit = m_pPlayer->initUnit((UnitTypes) iIndex, iX, iY, eUnitAI, eFacingDirection, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+		CvUnit* unit = m_pPlayer->createUnit((UnitTypes) iIndex, iX, iY, eUnitAI, eFacingDirection);
 
 		if (unit)
 		{

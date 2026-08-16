@@ -712,8 +712,15 @@ bool CyUnit::isHiddenNationality() const
 	return m_pUnit->isHiddenNationality();
 }
 
-//	⚖ THE IDENTITY SET (CyUnit.h). Owner + id + position only -- what a legacy consumer needs to name the unit
-//	it holds. Unit DATA is asked of CyState / CyInfo, never of this handle.
+//	⚖ THE IDENTITY SET (CyUnit.h) plus the unit's OWN data, read from the unit's OWN accessor
+//	([DEC-accessor-homing](../../docs/architecture/decisions.md#dec-accessor-homing)). A unit's hit points and
+//	whether it can fight are the unit's, so they are asked of the unit -- `STATE.getUnitFlags(owner, id)` is the
+//	mishomed shape that ruling names, and its tell is the NOUN in the method name: an accessor that owns its
+//	subject needs none.
+//	⛔ READS ONLY -- the cut was DIRECTIONAL. A mutation stays on the ACTION surface (`CyAct::setUnitDamage`,
+//	`killUnit`), which routes through the engine's own setter so the DOMAIN fact still fires.
+//	⚑ Added ON DEMAND, for call sites that want them ([patterns.md] § THE PYTHON READ BOUNDARY: endpoint COUNT is
+//	not the axis, findable homing is) -- never a pre-emptive re-publication of the legacy per-field contract.
 void CyUnit::pythonPublish()
 {
 	python::class_<CyUnit>("CyUnit", python::no_init)
@@ -721,5 +728,9 @@ void CyUnit::pythonPublish()
 		.def("getID",    &CyUnit::getID)
 		.def("getX",     &CyUnit::getX)
 		.def("getY",     &CyUnit::getY)
+		.def("canFight", &CyUnit::canFight)
+		.def("getHP",    &CyUnit::getHP)
+		.def("getMaxHP", &CyUnit::getMaxHP)
+		.def("getName",  &CyUnit::getName)
 		;
 }

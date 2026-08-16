@@ -117,7 +117,7 @@ enum SkillClsTypes
 	NUM_CLS_SKILL_TYPES = 89
 };
 
-// CLSD_TAG -- the `tags` block (50 authored keys)
+// CLSD_TAG -- the `tags` block (51 authored keys)
 enum TagClsTypes
 {
 	CLS_TAG_AIR = 0,
@@ -167,10 +167,11 @@ enum TagClsTypes
 	CLS_TAG_TAMED = 44,
 	CLS_TAG_THROWING = 45,
 	CLS_TAG_TROOP = 46,
-	CLS_TAG_VTOL = 47,
-	CLS_TAG_WILD = 48,
-	CLS_TAG_WORKER = 49,
-	NUM_CLS_TAG_TYPES = 50
+	CLS_TAG_UNPROMOTABLE = 47,
+	CLS_TAG_VTOL = 48,
+	CLS_TAG_WILD = 49,
+	CLS_TAG_WORKER = 50,
+	NUM_CLS_TAG_TYPES = 51
 };
 
 // CLSD_ATTRIBUTE -- the `attributes` block (4 authored keys)
@@ -435,6 +436,7 @@ static const char* const CLS_SEED_CLSD_TAG[] =
 	"tamed",
 	"throwing",
 	"troop",
+	"unpromotable",
 	"vtol",
 	"wild",
 	"worker",

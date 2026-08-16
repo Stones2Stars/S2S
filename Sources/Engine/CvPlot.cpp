@@ -6514,7 +6514,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 
 					for (int iI = 0; iI < iFreeUnits; ++iI)
 					{
-						GET_PLAYER(eNewValue).initUnit(eBestUnit, getX(), getY(), UNITAI_CITY_DEFENSE, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+						GET_PLAYER(eNewValue).createUnit(eBestUnit, getX(), getY(), UNITAI_CITY_DEFENSE);
 					}
 				}
 			}

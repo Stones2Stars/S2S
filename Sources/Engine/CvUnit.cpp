@@ -51,6 +51,112 @@ static int		 g_numEntities = 0;
 static int		 g_dummyUsage = 0;
 static bool		 g_bUseDummyEntities = false;
 
+// The compiler intrinsic behind the [XP] caller attribution (VC7.1 supports it; PDB-resolvable as an RVA against
+// the DLL module base -- `ln CvGameCoreDLL+<callerRva>`). The CvCityAI::AI_setAssignWorkDirty precedent.
+extern "C" void* _ReturnAddress(void);
+#pragma intrinsic(_ReturnAddress)
+
+// [XP] the experience-grant trace. A grant carries the RAW amount it was asked for, the amount actually APPLIED
+// (the combat path scales it), the before/after totals, the ceiling, and the CALLER -- so a value that arrives on
+// the wrong scale names both its size and its source in one line, without threading a parameter through the ~22
+// grant sites.
+namespace
+{
+	enum XpEvent
+	{
+		XP_GRANT = 1,   // the grant landed
+		XP_CAPPED,      // the grant hit its iMax ceiling and was truncated to it
+		XP_WRAPPED,     // it arrived through the ×1 changeExperience() wrapper -- this line names the REAL caller,
+		                // because the grant line's own RVA can only ever name the wrapper (raw/applied are ×1/×100)
+		XP_PRODUCTION   // the free-XP-at-creation total, DECOMPOSED into its legs -- a total that is wrong says
+		                // nothing about WHICH leg carries it ([http-endpoints.md]: a route serving one number
+		                // answers nothing when that number is wrong)
+	};
+	enum XpField
+	{
+		XPF_unit = 1, XPF_owner, XPF_unitType, XPF_raw, XPF_applied,
+		XPF_before, XPF_after, XPF_max, XPF_combat, XPF_borders, XPF_callerRva,
+		// the XP_PRODUCTION decomposition -- the legs of CvCity::getProductionExperience, in its own order
+		XPF_city, XPF_flat, XPF_percent, XPF_keyedCombat, XPF_keyedDomain, XPF_stateReligion, XPF_total
+	};
+	const char* xpLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case XP_GRANT:      return "[XP/grant]";
+		case XP_CAPPED:     return "[XP/capped]";
+		case XP_WRAPPED:    return "[XP/wrapped]";
+		case XP_PRODUCTION: return "[XP/production]";
+		default:            return NULL;
+		}
+	}
+	const char* xpFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case XPF_unit:      return "unit";
+		case XPF_owner:     return "owner";
+		case XPF_unitType:  *peType = SFT_UNIT; return "unitType";
+		case XPF_raw:       return "raw";
+		case XPF_applied:   return "applied";
+		case XPF_before:    return "before";
+		case XPF_after:     return "after";
+		case XPF_max:       return "max";
+		case XPF_combat:    return "combat";
+		case XPF_borders:   return "borders";
+		case XPF_callerRva: return "callerRva";
+		case XPF_city:      return "city";
+		case XPF_flat:      return "flat";
+		case XPF_percent:   return "percent";
+		case XPF_keyedCombat:   return "keyedCombat";
+		case XPF_keyedDomain:   return "keyedDomain";
+		case XPF_stateReligion: return "stateReligion";
+		case XPF_total:     return "total";
+		default:            return NULL;
+		}
+	}
+	struct XpLogRegistrar { XpLogRegistrar() { spineRegisterDomain(SD_EXPERIENCE, &xpLinePrefix, "Experience.log", &xpFieldInfo); } };
+	XpLogRegistrar s_xpLogRegistrar; // static-init registration
+
+	void xp_emitGrant(const CvUnit* pUnit, int iEventId, int iRaw, int iApplied, int iMax,
+		int iBefore, bool bFromCombat, bool bInBorders, int iCallerRva)
+	{
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_EXPERIENCE, iEventId, 3)
+			.addI(XPF_unit, pUnit->getID())
+			.addI(XPF_owner, (int)pUnit->getOwner())
+			.addI(XPF_unitType, (int)pUnit->getUnitType())
+			.addI(XPF_raw, iRaw)
+			.addI(XPF_applied, iApplied)
+			.addI(XPF_before, iBefore)
+			.addI(XPF_after, pUnit->getExperience100())
+			.addI(XPF_max, iMax)
+			.addI(XPF_combat, bFromCombat ? 1 : 0)
+			.addI(XPF_borders, bInBorders ? 1 : 0)
+			.addI(XPF_callerRva, iCallerRva));
+	}
+}
+
+// The [XP/production] decomposition. Emitted from CvCity::addProductionExperience -- a different translation unit --
+// so it sits at file scope rather than in the anonymous namespace above. Its terms come OUT of the real combine
+// ([DEC-single-implementation]): a census that re-derived its own decomposition could disagree with the number it
+// claims to explain, which is the one thing it must never do.
+void xpEmitProduction(const CvUnit* pUnit, int iCityId, int iFlat, int iPercent, int iKeyedCombat,
+	int iKeyedDomain, int iStateReligion, int iTotal)
+{
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_EXPERIENCE, XP_PRODUCTION, 3)
+		.addI(XPF_unit, pUnit->getID())
+		.addI(XPF_owner, (int)pUnit->getOwner())
+		.addI(XPF_unitType, (int)pUnit->getUnitType())
+		.addI(XPF_city, iCityId)
+		.addI(XPF_flat, iFlat)
+		.addI(XPF_percent, iPercent)
+		.addI(XPF_keyedCombat, iKeyedCombat)
+		.addI(XPF_keyedDomain, iKeyedDomain)
+		.addI(XPF_stateReligion, iStateReligion)
+		.addI(XPF_total, iTotal));
+}
+
 
 
 //	static buffers allocated once and used during read and write only
@@ -1522,13 +1628,9 @@ void CvUnit::die()
 
 		if (eCapturingPlayer != NO_PLAYER && eCaptureUnitType != NO_UNIT && !GET_PLAYER(eCapturingPlayer).isNPC())
 		{
-			CvUnit* pkCapturedUnit = (
-				GET_PLAYER(eCapturingPlayer).initUnit(
-					eCaptureUnitType, pDeathPlot->getX(), pDeathPlot->getY(),
-					NO_UNITAI, NO_DIRECTION,
-					GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark")
-				)
-			);
+			CvUnit* pkCapturedUnit =
+				GET_PLAYER(eCapturingPlayer).createUnit(
+					eCaptureUnitType, pDeathPlot->getX(), pDeathPlot->getY());
 			if (pkCapturedUnit)
 			{
 				CvEventReporter::getInstance().unitCaptured(eOwner, getUnitType(), pkCapturedUnit);
@@ -14330,6 +14432,12 @@ void CvUnit::setExperience100(int iNewValue)
 
 void CvUnit::changeExperience100(int iChange, int iMax, bool bFromCombat, bool bInBorders, bool bUpdateGlobal)
 {
+	// [XP] capture what was ASKED FOR and WHO asked, before the combat path rescales iChange.
+	const int iRawChange = iChange;
+	const int iBefore = getExperience100();
+	static const char* s_pModuleBase = (const char*)GetModuleHandle("CvGameCoreDLL.dll");
+	const int iCallerRva = (int)((const char*)_ReturnAddress() - s_pModuleBase);
+
 	if (bFromCombat)
 	{
 		if (iChange < 1) return; // Never lose xp from battle.
@@ -14385,6 +14493,7 @@ void CvUnit::changeExperience100(int iChange, int iMax, bool bFromCombat, bool b
 			if (getExperience100() + iChange >= iMax)
 			{
 				setExperience100(iMax);
+				xp_emitGrant(this, XP_CAPPED, iRawChange, iChange, iMax, iBefore, bFromCombat, bInBorders, iCallerRva);
 				return;
 			}
 		}
@@ -14397,11 +14506,13 @@ void CvUnit::changeExperience100(int iChange, int iMax, bool bFromCombat, bool b
 			if (getExperience100() + iChange <= iMax)
 			{
 				setExperience100(iMax);
+				xp_emitGrant(this, XP_CAPPED, iRawChange, iChange, iMax, iBefore, bFromCombat, bInBorders, iCallerRva);
 				return;
 			}
 		}
 	}
 	setExperience100(getExperience100() + iChange);
+	xp_emitGrant(this, XP_GRANT, iRawChange, iChange, iMax, iBefore, bFromCombat, bInBorders, iCallerRva);
 }
 
 int CvUnit::getExperience() const
@@ -14416,7 +14527,15 @@ void CvUnit::setExperience(int iNewValue)
 
 void CvUnit::changeExperience(int iChange, int iMax, bool bFromCombat, bool bInBorders, bool bUpdateGlobal)
 {
+	// [XP] a grant arriving through this ×1 wrapper hides its origin from the trace below -- that RVA would name
+	// THIS function -- so the real caller is named here. `raw` is the ×1 amount as asked for, `applied` the ×100
+	// it becomes, which is what makes a caller computing on the wrong plane visible on one line.
+	static const char* s_pModuleBase = (const char*)GetModuleHandle("CvGameCoreDLL.dll");
+	const int iCallerRva = (int)((const char*)_ReturnAddress() - s_pModuleBase);
+	const int iBefore = getExperience100();
+
 	changeExperience100(iChange * 100, iMax * 100, bFromCombat, bInBorders, bUpdateGlobal);
+	xp_emitGrant(this, XP_WRAPPED, iChange, iChange * 100, iMax, iBefore, bFromCombat, bInBorders, iCallerRva);
 }
 
 
@@ -16407,6 +16526,20 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 
 	//Units without a primary unitcombat are unable to be assigned promos
 	if (getUnitCombatType() == NO_UNITCOMBAT)
+	{
+		return false;
+	}
+
+	// ...and neither can a unit the data declares UNPROMOTABLE ([tags.md]): its primary combat class is qualified
+	// by no promotion, so nothing could ever be acquired through it. A NEGATIVE tag, because the vast majority of
+	// units are promotable -- absent means promotable.
+	// ⚑ The engine cannot reach this verdict by matching, which is why it is DATA: qualification runs over the
+	// unit's whole HELD set, so the Thunderbrd SPECIES / QUALITY taxonomy on the sub-classes admits promotions the
+	// unit's real ROLE grants none of ([engine.md]: those classes are inert identifiers, and are what the tag
+	// purge exists to unwind).
+	// ⚠ It gates EARNING a promotion, never receiving one: the free/granted bypass in isPromotionValid sits ahead
+	// of this, so a unit that cannot promote still gets what its own type hands it.
+	if (m_pUnitInfo->hasTag(CLS_TAG_UNPROMOTABLE))
 	{
 		return false;
 	}

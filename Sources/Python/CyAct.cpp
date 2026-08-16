@@ -283,13 +283,14 @@ int CyAct::initUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int
 	if (iUnitType < 0 || iUnitType >= GC.getNumUnitInfos()) return -1;
 	if (GC.getMap().plot(iX, iY) == NULL) return -1;
 
-	//	The birthmark draw sits AFTER the two validity tests for the same reason the legacy binding put it there:
-	//	it is a draw on the synchronized stream, so a path that rejects must not consume one
-	//	([DEC-synced-rng-is-shared-state]).
+	//	The creation sits AFTER the two validity tests because it draws on the synchronized stream, and a path
+	//	that rejects must not consume a draw ([DEC-synced-rng-is-shared-state]).
+	//	⛔ THE EDITOR CREATES THROUGH THE ONE STEP LIKE EVERYTHING ELSE. WorldBuilder is where a second creation
+	//	path would do the most damage -- it is the surface a MODDER meets ([triggers.md]) -- and the roadmap
+	//	already requires WB to travel the engine's own paths so its facts fire exactly as a normal one's do.
 	CvUnit* pUnit =
-		GET_PLAYER((PlayerTypes)iPlayer).initUnit(
-			(UnitTypes)iUnitType, iX, iY, (UnitAITypes)iUnitAI, (DirectionTypes)iDirection,
-			GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+		GET_PLAYER((PlayerTypes)iPlayer).createUnit(
+			(UnitTypes)iUnitType, iX, iY, (UnitAITypes)iUnitAI, (DirectionTypes)iDirection);
 
 	return pUnit ? pUnit->getID() : -1;
 }

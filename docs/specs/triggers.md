@@ -39,6 +39,69 @@ is that the production/cost step is skipped. Settled by this, not open:
   chain is intended behaviour, not re-entrancy to guard against.
 - **Nothing downstream may branch on "was this granted?"** — there is no such state to read.
 
+> **⛔ AND IT BINDS UNITS EXACTLY AS IT BINDS BUILDINGS — GRANT AND TRAIN ARE ONE PATH (owner): *"creating a unit
+> is creating a unit; how we got to the creation step does not matter."*** The route by which a unit was decided
+> upon — a production order, a trigger payload, a first-discoverer award, a founder package — ends at the SAME
+> creation step, and everything that step owes a new unit is owed identically. ⛔ So a payload applier does NOT
+> hand-assemble its own creation sequence beside the trained one; the divergence is the production debit and
+> nothing else.
+> ⚑ **The tell that the rule is being broken is a DIVERGENT SIDE-EFFECT SET, not a divergent call**: the same
+> `initUnit` reached from several places, each remembering a different subset of what creation owes — free XP
+> here, free promotions there, the AI type somewhere else. That is the parallel apply path this section bans,
+> merely spelled as duplication rather than as a flag.
+> ⚑ **THE ONE STEP IS `CvPlayer::createUnit(eUnit, iX, iY, eUnitAI, bConscript)`** — it brings the unit into
+> existence and settles what creation owes it; a CITY standing at that location settles its own share (the free
+> experience it gives units born in it), and a unit born in the field has nobody to owe it. Every route ends
+> there: the production order, the conscription, each trigger payload, the outcome spawn, the event handout, the
+> founding and culture-flip defenders, and the great-person birth, whose CEREMONY sits on top of it.
+> ⛔ A payload applier calls it and adds only what is genuinely its own — the excile's jump, a spent movement
+> allowance — never a second creation sequence.
+> ⚖ **IT IS THE PLAYER'S, NOT THE CITY'S, AND THE TELL IS WORTH KEEPING (owner).** The player OWNS units, and
+> not every creation has a city — so a city-side step forces every caller holding only COORDINATES to resolve a
+> city first, and the moment two of them did, a second entry point was about to be minted beside it. **Two entry
+> points for one concept is the signal that the step is on the wrong object.** On the player it is one total
+> signature, and the hostile property spawn needs no owner argument at all: the receiver IS the owner, and the
+> city it surfaces in still settles its share.
+> ⚠ **MOVEMENT is deliberately NOT settled there**, and that is a distinction to keep: the engine has two
+> standing answers (a trained unit is spent, a conscript is ready to act), so the caller states which it means
+> rather than inheriting one by accident.
+> ⚑ **WHICH UNITS ARE OWED THE CITY'S EXPERIENCE IS DATA, NOT A CARVE-OUT HERE.** `addProductionExperience`
+> gates on `canAcquirePromotionAny()`, and a unit the data declares `unpromotable` ([tags.md](tags.md)) answers
+> false — so a great person born in a city takes none, without the step carrying an exception for it. ⛔ Do not
+> re-add one: if some unit is taking experience it should not, the defect is its TAG, not this step.
+> ⚠ **Measured, and the reason the step exists:** three creation shapes had disagreed — the property spawn called
+> `addProductionExperience`, the religion founder's free units did not, and the first-discoverer leg went through
+> `createGreatPeople`. A unit's starting experience therefore depended on which payload created it, which is
+> exactly the "downstream can tell it was granted" state the ruling says must not exist.
+> ⛔ **A SCHEDULED REWORK IS NOT A REASON TO STAY OFF THE STEP (owner).** The outcome system's ground-up rework,
+> and the events carve-out, bound what may be REDESIGNED and what may be folded into this machine — neither
+> licenses a system keeping its own creation shape meanwhile. Re-pointing a creation call is not a redesign.
+> **⛔ A SECOND WAY TO CREATE A UNIT IS A ROLLERSKATING SURFACE — AND THE MODDER-FACING ONE MOST OF ALL
+> (owner).** *"The more unified we have createUnit the better it is; if there is 1 place that can create a unit
+> in other ways, that is a rollerskating surface, particularly for modders."* ⇒ **The EDITOR goes through it
+> too** — `CyAct` / `CyPlayer` create through the step, which is why it carries a FACING DIRECTION parameter;
+> WorldBuilder is exactly where an alternate path would teach the wrong lesson, and the roadmap already requires
+> WB to travel the engine's own paths ([roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision 1b).
+> ⚑ **"Unified" means STANDARDIZED PATHS, not merely few of them (owner)** — the point is that a reader looking
+> for how a unit comes into being finds ONE answer and cannot invent a second.
+> ⛔ So a scope boundary is never a reason to keep a creation call off the step: an ARRIVAL created anywhere —
+> a combat CAPTURE, an espionage BRIBE, an advanced-start placement, a field spawn — goes through it.
+>
+> ⚖ **AND THE TRANSFORMATIONS GET THEIR OWN TWIN — `modifyUnit`, in the same vein (owner).** A unit that
+> ALREADY EXISTS changing type, owner or count is not a creation: upgrade · gift · trade · merge / split (and
+> their `CvMessageData` net twins) · `assimilatePlayer` · the map transfer. Each stands a successor up in place
+> of a predecessor, carries its state across (`CvUnit::convert`) and retires the source.
+> ⛔ **They must NOT ride `createUnit`, and the reason is concrete rather than taxonomic:** the step settles what
+> a city owes a unit BORN there, so routing an upgrade through it would hand out the city's free experience on
+> every upgrade, merge and gift — a barracks city turning transformation into an XP faucet.
+> ⚑ Until `modifyUnit` lands, those sites are the ONLY legitimate direct callers of `initUnit`, which is what
+> keeps the rule checkable: **`initUnit` should be reachable from the step and from a transformation, nothing
+> else.** ⚠ Two live non-creations sit outside both by construction and are not gaps — `CvPlayer::getTempUnit`
+> (`m_pTempUnit`, the off-map pathing anchor, excluded from `units()` iteration and from every death sweep) and
+> a `(UnitTypes)0` probe at the origin in `CvGame`'s slot-takeover path, which passes birthmark `0` and so
+> consumes no draw; converting that one would ADD a draw to the synchronized stream
+> ([DEC-synced-rng-is-shared-state](../architecture/decisions.md#dec-synced-rng-is-shared-state)).
+
 ## ⛔ THE MACHINE REPLACES THE PER-TURN WORK — and the spine is its ONLY way in (owner)
 
 It is not a resolver running beside legacy: the per-turn work MOVES onto the machine, and the legacy call sites are

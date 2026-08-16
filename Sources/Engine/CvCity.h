@@ -239,7 +239,18 @@ public:
 	bool isProductionProcess() const;
 
 	bool canContinueProduction(const OrderData& order) const;
-	int getProductionExperience(UnitTypes eUnit = NO_UNIT) const;
+	// The legs of getProductionExperience, filled only when a caller asks for them. The [XP/production] census
+	// reads them off the REAL calculation rather than re-deriving a second one ([DEC-single-implementation]).
+	struct ProductionExperienceLegs
+	{
+		int flat;
+		int percent;
+		int keyedCombat;
+		int keyedDomain;
+		int stateReligion;
+		int total;
+	};
+	int getProductionExperience(UnitTypes eUnit = NO_UNIT, ProductionExperienceLegs* pLegs = NULL) const;
 	void addProductionExperience(CvUnit* pUnit, bool bConscript = false);
 
 	UnitTypes getProductionUnit() const;

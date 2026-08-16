@@ -2440,8 +2440,12 @@ void CvCity::collectUnitCombatExperience(std::vector<std::pair<int, int> >& rows
 }
 
 
+// Defined in CvUnit.cpp, beside the rest of the [XP] domain (its registration and field table live there).
+void xpEmitProduction(const CvUnit* pUnit, int iCityId, int iFlat, int iPercent, int iKeyedCombat,
+	int iKeyedDomain, int iStateReligion, int iTotal);
+
 // The experience a unit trained here starts with.
-int CvCity::getProductionExperience(UnitTypes eUnit) const
+int CvCity::getProductionExperience(UnitTypes eUnit, ProductionExperienceLegs* pLegs) const
 {
 	PROFILE_EXTRA_FUNC();
 	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
@@ -2452,6 +2456,9 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 		*this, CascadeChannelRegistry::channelLookup(MODFAM_EXPERIENCE, EXPERIENCE_AMOUNT, -1), lFlatSum, lPercentSum);
 
 	int64_t lExperience = lFlatSum;
+	int64_t lKeyedCombat = 0;
+	int64_t lKeyedDomain = 0;
+	int64_t lStateReligion = 0;
 
 	if (eUnit != NO_UNIT)
 	{
@@ -2470,23 +2477,36 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 
 			// The ROOT combat-class FKs (json §8: `combatClass` + `combatClasses`, never identity). An absent
 			// primary is -1, which keyedExperience already answers 0 for, so it needs no test of its own.
-			lExperience += keyedExperience(iUnitCombatsSegment, kUnit.getCombatClass());
+			lKeyedCombat += keyedExperience(iUnitCombatsSegment, kUnit.getCombatClass());
 			const std::vector<int>& kSubCombats = kUnit.getCombatClasses();
 			for (size_t iSub = 0; iSub < kSubCombats.size(); ++iSub)
 			{
-				lExperience += keyedExperience(iUnitCombatsSegment, kSubCombats[iSub]);
+				lKeyedCombat += keyedExperience(iUnitCombatsSegment, kSubCombats[iSub]);
 			}
-			lExperience += keyedExperience(iDomainsSegment, (int)kUnit.getDomain());
+			lKeyedDomain += keyedExperience(iDomainsSegment, (int)kUnit.getDomain());
+			lExperience += lKeyedCombat + lKeyedDomain;
 		}
 	}
 
 	if (kPlayer.getStateReligion() != NO_RELIGION && isHasReligion(kPlayer.getStateReligion()))
 	{
-		lExperience += InfoValuation::realizedAtEmpire(
+		lStateReligion = InfoValuation::realizedAtEmpire(
 			kPlayer, CascadeChannelRegistry::channelLookup(MODFAM_STATE_RELIGION, STATE_RELIGION_FREE_EXPERIENCE, -1));
+		lExperience += lStateReligion;
 	}
 
-	return (int)std::max<int64_t>(0, lExperience * (100 + lPercentSum) / 100);
+	const int iTotal = (int)std::max<int64_t>(0, lExperience * (100 + lPercentSum) / 100);
+
+	if (pLegs != NULL)
+	{
+		pLegs->flat = (int)lFlatSum;
+		pLegs->percent = (int)lPercentSum;
+		pLegs->keyedCombat = (int)lKeyedCombat;
+		pLegs->keyedDomain = (int)lKeyedDomain;
+		pLegs->stateReligion = (int)lStateReligion;
+		pLegs->total = iTotal;
+	}
+	return iTotal;
 }
 
 void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
@@ -2495,12 +2515,17 @@ void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
 
 	if (pUnit->canAcquirePromotionAny())
 	{
-		// getProductionExperience is ×100 and the unit's experience is natively ×100, so the units already cancel
-		// and no conversion belongs here ([DEC-fixedpoint-x100]).
-		pUnit->changeExperience100(getProductionExperience(pUnit->getUnitType()) / ((bConscript) ? 2 : 1));
+		ProductionExperienceLegs kLegs;
+		const int iExperience = getProductionExperience(pUnit->getUnitType(), &kLegs);
+		// [XP/production] the free-XP total DECOMPOSED, so a wrong total names the leg that carries it rather
+		// than being one unattributable number.
+		xpEmitProduction(pUnit, getID(), kLegs.flat, kLegs.percent, kLegs.keyedCombat, kLegs.keyedDomain,
+			kLegs.stateReligion, kLegs.total);
+		pUnit->changeExperience100(iExperience / ((bConscript) ? 2 : 1));
 	}
 
 }
+
 
 UnitTypes CvCity::getProductionUnit() const
 {
@@ -3517,13 +3542,11 @@ CvUnit* CvCity::initConscriptedUnit()
 		eCityAI = NO_UNITAI;
 	}
 
-	CvUnit* pUnit = GET_PLAYER(getOwner()).initUnit(eConscriptUnit, getX(), getY(), eCityAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+	CvUnit* pUnit = GET_PLAYER(getOwner()).createUnit(eConscriptUnit, getX(), getY(), eCityAI, NO_DIRECTION, true);
 	FAssertMsg(pUnit != NULL, "pUnit expected to be assigned (not NULL)");
 
 	if (NULL != pUnit)
 	{
-		addProductionExperience(pUnit, true);
-
 		pUnit->setMoves(0);
 	}
 
@@ -11160,7 +11183,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				m_iLostProductionModified = std::max(0, iRawOverflow - iMaxOverflow);
 				m_iGoldFromLostProduction = m_iLostProductionModified * GC.getMAXED_UNIT_GOLD_PERCENT() / 100;
 
-				CvUnit* pUnit = owner.initUnit(eTrainUnit, getX(), getY(), eTrainAIUnit, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+				CvUnit* pUnit = owner.createUnit(eTrainUnit, getX(), getY(), eTrainAIUnit);
 				if (!pUnit)
 				{
 					FErrorMsg("pUnit is expected to be assigned a valid unit object");
@@ -11182,8 +11205,6 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 					getName().GetCString(), (int)getOwner(), GC.getUnitInfo(eTrainUnit).getDescription(),
 					(int)eTrainAIUnit, owner.getUnitCount(eTrainUnit), owner.AI_getNumAIUnits(eTrainAIUnit),
 					iOverflow, m_iLostProductionModified);
-
-				addProductionExperience(pUnit);
 
 				const short iPlotIndex = order.unit.plotIndex;
 				int iFlags;
@@ -13905,7 +13926,7 @@ void CvCity::applyEvent(EventTypes eEvent, const EventTriggeredData* pTriggeredD
 		UnitTypes eUnit = (UnitTypes) kEvent.getFreeUnit();
 		for (int i = 0; i < kEvent.getNumUnits(); ++i)
 		{
-			GET_PLAYER(getOwner()).initUnit(eUnit, getX(), getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+			GET_PLAYER(getOwner()).createUnit(eUnit, getX(), getY());
 		}
 	}
 
@@ -14588,13 +14609,12 @@ void CvCity::emergencyConscript()
 		eCityAI = NO_UNITAI;
 	}
 
-	CvUnit* pUnit = GET_PLAYER(getOwner()).initUnit(eConscriptUnit, getX(), getY(), eCityAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+	CvUnit* pUnit = GET_PLAYER(getOwner()).createUnit(eConscriptUnit, getX(), getY(), eCityAI, NO_DIRECTION, true);
 	if (pUnit == NULL)
 	{
 		FErrorMsg("pUnit is expected to be assigned a valid unit object");
 		return;
 	}
-	addProductionExperience(pUnit, true);
 	pUnit->setMoves(0);
 	pUnit->setDamage((100 - GC.getIDW_EMERGENCY_DRAFT_STRENGTH()) * pUnit->getMaxHP() / 100, getOwner());
 }

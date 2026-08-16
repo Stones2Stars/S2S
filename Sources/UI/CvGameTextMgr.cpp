@@ -7721,9 +7721,23 @@ void CvGameTextMgr::getPlotHelp(CvPlot* mousePlot, CvCity* city, CvPlot* flagPlo
 	{
 		setPlotListHelp(strHelp, flagPlot, false, true);
 	}
-	else if (mousePlot != NULL && mousePlot->isRevealed(GC.getGame().getActiveTeam(), true))
+	else if (mousePlot != NULL)
 	{
-		setPlotHelp(strHelp, mousePlot, bAlt);
+		// ⛔ THE COMBAT ODDS ARE THE FIRST QUESTION A HOVERED PLOT CAN ANSWER, and losing this test is what
+		// silently removed the attack tooltip: the RENDERER (setCombatPlotHelp) was never touched, only its
+		// trigger, so nothing errored and nothing logged -- the tooltip simply stopped appearing.
+		// ⚑ The gate is the engine's own: the odds are offered while the plot is the pending GOTO target (the
+		// attack the player is lining up) or while ALT asks for extended help, and only where a visible enemy
+		// defender is actually there to fight.
+		if ((bAlt || mousePlot == gDLL->getInterfaceIFace()->getGotoPlot())
+		&&  mousePlot->isVisiblePotentialEnemyDefender(gDLL->getInterfaceIFace()->getSelectionList()->getHeadUnit()))
+		{
+			setCombatPlotHelp(strHelp, mousePlot);
+		}
+		if (strHelp.isEmpty() && mousePlot->isRevealed(GC.getGame().getActiveTeam(), true))
+		{
+			setPlotHelp(strHelp, mousePlot, bAlt);
+		}
 	}
 }
 

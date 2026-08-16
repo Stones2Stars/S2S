@@ -9,6 +9,7 @@ INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
+ACT = CyAct()   # the ACTION surface
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -145,14 +146,15 @@ class WoodlandCycle:
 					CyEngine().triggerEffect(GC.getInfoTypeForString('EFFECT_FOREST_FIRE'), point)
 					CyAudioGame().Play3DSound("AS3D_FOREST_FIRE", point.x, point.y, point.z)
 
-				for CyUnit in plot.units():
-					if CyUnit.canFight():
-						iHP = CyUnit.getHP()
+				for pUnit in plot.units():
+					if pUnit.canFight():
+						iHP = pUnit.getHP()
 						iDamage = 5 + GAME.getSorenRandNum(29, "Ouch")
 						if iHP > iDamage:
-							CyUnit.changeDamage(iDamage, -1)
+							# the WRITE goes to the action surface, which routes through the engine's own setter
+							ACT.setUnitDamage(pUnit.getOwner(), pUnit.getID(), pUnit.getMaxHP() - (iHP - iDamage), -1)
 						else:
 							if bActivePlayer:
-								CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_FOREST_FIRE_UNIT_LOST",(CyUnit.getName(),)), iPlayer, 6, eColor=ColorTypes(9))
-							CyUnit.kill(False, -1)
+								CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_FOREST_FIRE_UNIT_LOST",(pUnit.getName(),)), iPlayer, 6, eColor=ColorTypes(9))
+							ACT.killUnit(pUnit.getOwner(), pUnit.getID(), False, -1)
 		#timer.log()

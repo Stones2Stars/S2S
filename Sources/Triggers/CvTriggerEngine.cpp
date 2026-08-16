@@ -587,8 +587,7 @@ static void tr_resolveReligion(int iReligion, int iSlotReligion, int iPlayer, in
 		if (pCity != NULL)
 		{
 			for (int i = 0; i < nNumFree; ++i)
-				player.initUnit((UnitTypes)iFreeUnit, pCity->getX(), pCity->getY(), NO_UNITAI, NO_DIRECTION,
-					GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+				player.createUnit((UnitTypes)iFreeUnit, pCity->getX(), pCity->getY());
 		}
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_RELIGION, 1)
@@ -718,8 +717,9 @@ static void tr_resolvePlayerInit(int iPlayer)
 // It reads the COMPOSED getTriggers() entries (json.md §5 trigger -> chance -> action), never any legacy collapse
 // member. Gated on the enabler's operating-building set: a DORMANT building grants nothing.
 //
-// A granted unit is an ORDINARY unit (owner ruling): placed through initUnit exactly as a trained one, so it fires
-// the ordinary DOMAIN events and nothing downstream can tell the difference -- only the production debit is skipped.
+// A granted unit is an ORDINARY unit (owner ruling): created through CvPlayer::createUnit, the ONE creation step a
+// trained unit also ends at, so it is owed identically and nothing downstream can tell the difference -- only the
+// production debit is skipped.
 
 // The full-heal provision -- heal up to iCount damaged own-team units on the city plot, chosen at random.
 // ⛔ The selection shuffles on CvGame::SorenRand, the SYNCHRONIZED stream, so how many values are consumed here
@@ -784,13 +784,13 @@ static int tr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
 	if (!EnablerKernel::requiresMetForPlayer(GET_PLAYER(pCity->getOwner()), EDGEB_UNITS, (int)eUnit)) return -1;
 
 	const PlayerTypes eSpawnOwner = bPositiveProperty ? pCity->getOwner() : (PlayerTypes)BARBARIAN_PLAYER;
-	CvUnit* pUnit = GET_PLAYER(eSpawnOwner).initUnit(eUnit, pCity->getX(), pCity->getY(), UNITAI_BARB_CRIMINAL,
-		NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+	CvUnit* pUnit = GET_PLAYER(eSpawnOwner).createUnit(eUnit, pCity->getX(), pCity->getY(), UNITAI_BARB_CRIMINAL);
 	if (pUnit == NULL) return -1;
 
+	// The two PLACEMENT rules a spawn carries of its own: an excile cannot remain in the city it surfaced in,
+	// and a spawned unit has already had its turn. Both are this payload's business, not creation's.
 	if (pUnit->isExcile()) pUnit->jumpToNearestValidPlot(false);
 	pUnit->finishMoves();
-	pCity->addProductionExperience(pUnit);
 
 	if (!GET_PLAYER(pCity->getOwner()).isModderOption(MODDEROPTION_IGNORE_DISABLED_ALERTS))
 	{
@@ -966,11 +966,13 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iFounderType);
 	if (j == NULL || j->consideredGrants() == NULL) return;
 	const std::vector<int>* pSeeds = j->consideredGrants()->list(tr_keyBuildings);
+	const std::vector<int>* pUnits = j->consideredGrants()->list(tr_keyUnits);
 	const std::vector<int>* pCulture = j->consideredGrants()->pulseEntries(tr_keyCulture);
 	const std::vector<int>* pPopulation = j->consideredGrants()->pulseEntries(tr_keyPopulation);
 	// ⚠ The guard covers EVERY payload this resolver hands over, not just the buildings. A founder carrying only
 	// pulses would otherwise return before applying any of them.
 	if ((pSeeds == NULL || pSeeds->empty())
+	&& (pUnits == NULL || pUnits->empty())
 	&& (pCulture == NULL || pCulture->empty())
 	&& (pPopulation == NULL || pPopulation->empty())) return;
 
@@ -994,6 +996,22 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
 			if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
 			pCity->changeHasBuilding((BuildingTypes)iBuilding, true);
+			++nPlaced;
+		}
+		// The founder's `grants.units` -- a settler that CARRIES an escort hands it over on its considered action,
+		// exactly as it hands over its founder buildings. A granted unit is an ORDINARY unit ([triggers.md]):
+		// created through the ONE creation step, so it is owed exactly what a trained unit is owed and nothing
+		// downstream can tell it apart from one.
+		// ⛔ It inherits NOTHING from the founder. Handing the escort the settler's accumulated experience was the
+		// legacy Python shape and is DEAD (owner: paying XP for walking a settler is bad game design) -- the unit
+		// is created fresh, like any other.
+		for (size_t i = 0; pUnits != NULL && i < pUnits->size(); ++i)
+		{
+			const int iUnit = (*pUnits)[i];
+			if (iUnit < 0) continue;
+			const CvCondition* pEnabled = j->consideredGrants()->listCond(tr_keyUnits, i);
+			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
+			player.createUnit((UnitTypes)iUnit, pCity->getX(), pCity->getY());
 			++nPlaced;
 		}
 		// The conditioned numeric pulses. Each entry is gated by its own `enabled` through the ONE evaluator, so
@@ -1025,7 +1043,9 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_FOUND, 1)
 		.addI(TF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(TF_APPLIED, nPlaced)
 		.addI(TF_PLAYER, iOwner).addI(TF_CITY, iCity).addI(TF_UNIT, iFounderType)
-		.addI(TF_GRANTBUILDINGS, (int)pSeeds->size()));
+		// ⚠ NULL-guarded: the payload guard above admits a founder carrying only pulses or only units, so
+		// `pSeeds` is legitimately absent here.
+		.addI(TF_GRANTBUILDINGS, (pSeeds != NULL) ? (int)pSeeds->size() : 0));
 }
 
 // LEG TWO of the free building: a city that STARTS EXISTING folds what its owner ALREADY holds. Leg one fans the

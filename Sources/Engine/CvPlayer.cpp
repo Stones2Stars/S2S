@@ -2014,7 +2014,7 @@ bool CvPlayer::addStartUnitAI(const UnitAITypes eUnitAI, const int iCount)
 		const CvPlot* pBestPlot = getStartingPlot();
 		for (int iI = 0; iI < iCount; iI++)
 		{
-			initUnit(eUnit, pBestPlot->getX(), pBestPlot->getY(), eUnitAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+			createUnit(eUnit, pBestPlot->getX(), pBestPlot->getY(), eUnitAI);
 		}
 		return true;
 	}
@@ -3013,6 +3013,24 @@ CvUnit* CvPlayer::initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI,
 	if (pUnit)
 	{
 		pUnit->init(pUnit->getID(), eUnit, ((eUnitAI == NO_UNITAI) ? GC.getUnitInfo(eUnit).getDefaultUnitAI() : eUnitAI), getID(), iX, iY, eFacingDirection, iBirthmark);
+	}
+	return pUnit;
+}
+
+
+CvUnit* CvPlayer::createUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI,
+	DirectionTypes eFacingDirection, bool bConscript)
+{
+	CvUnit* pUnit = initUnit(eUnit, iX, iY, eUnitAI, eFacingDirection, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+	if (pUnit == NULL)
+	{
+		return NULL;
+	}
+	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	CvCity* pBirthCity = (pPlot != NULL) ? pPlot->getPlotCity() : NULL;
+	if (pBirthCity != NULL)
+	{
+		pBirthCity->addProductionExperience(pUnit, bConscript);
 	}
 	return pUnit;
 }
@@ -6040,7 +6058,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 
 	if (GC.getGoodyInfo(eGoody).getGoodyUnit() != NO_UNIT)
 	{
-		initUnit((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit(), pPlot->getX(), pPlot->getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+		createUnit((UnitTypes)GC.getGoodyInfo(eGoody).getGoodyUnit(), pPlot->getX(), pPlot->getY());
 	}
 
 	if (GC.getGoodyInfo(eGoody).getBarbarianUnit() != NO_UNIT)
@@ -6058,8 +6076,8 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 					&& !pLoopPlot->isImpassable(getTeam()) && pLoopPlot->getNumUnits() == 0
 					&& (iPass > 0 || GC.getGame().getSorenRandNum(100, "Goody Barbs") < GC.getGoodyInfo(eGoody).getBarbarianUnitProb()))
 					{
-						GET_PLAYER(BARBARIAN_PLAYER).initUnit(eUnit, pLoopPlot->getX(), pLoopPlot->getY(),
-							(pLoopPlot->isWater() ? UNITAI_ATTACK_SEA : UNITAI_ATTACK), NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+						GET_PLAYER(BARBARIAN_PLAYER).createUnit(eUnit, pLoopPlot->getX(), pLoopPlot->getY(),
+							(pLoopPlot->isWater() ? UNITAI_ATTACK_SEA : UNITAI_ATTACK));
 						iBarbCount++;
 
 						if (iPass > 1 && iBarbCount == GC.getGoodyInfo(eGoody).getMinBarbarians())
@@ -6244,7 +6262,7 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 			const int iInitialDefenders = GC.getHandicapInfo(GC.getGame().getHandicapType()).getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD) / 100;
 			for (int iI = 0; iI < iInitialDefenders; iI++)
 			{
-				initUnit(eDefenderUnit, iX, iY, UNITAI_CITY_DEFENSE, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+				createUnit(eDefenderUnit, iX, iY, UNITAI_CITY_DEFENSE);
 			}
 		}
 		else FErrorMsg(CvString::format("Player %d (%S) no initial defender availible for city %S at %d, %d", getID(), getCivilizationDescription(0), pCity->getName(0).GetCString(), iX, iY).c_str());
@@ -14796,7 +14814,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 				int iY = pTargetUnit->getY();
 				const UnitTypes eBribedType = pTargetUnit->getUnitType();
 				pTargetUnit->kill(false, getID());
-				CvUnit* acquiredWorker = initUnit(eBribedType, iX, iY, UNITAI_WORKER, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+				CvUnit* acquiredWorker = createUnit(eBribedType, iX, iY, UNITAI_WORKER);
 				CvCity* pCapital = this->getCapitalCity();
 				if (pCapital && acquiredWorker)
 				{
@@ -15072,7 +15090,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			{
 				if (getAdvancedStartPoints() >= iCost)
 				{
-					CvUnit* pUnit = initUnit(eUnit, iX, iY, NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+					CvUnit* pUnit = createUnit(eUnit, iX, iY);
 					if (pUnit)
 					{
 						pUnit->finishMoves();
@@ -18226,7 +18244,10 @@ void CvPlayer::write(FDataStreamBase* pStream)
 void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience, int iX, int iY)
 {
 	PROFILE_EXTRA_FUNC();
-	CvUnit* pGreatPeopleUnit = initUnit(eGreatPersonUnit, iX, iY, NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+	// A great person is BORN, so its creation is the ONE creation step like any other unit's -- the birth
+	// CEREMONY below sits on top of it ([triggers.md]: the route a unit was decided upon settles the production
+	// debit and nothing else).
+	CvUnit* pGreatPeopleUnit = createUnit(eGreatPersonUnit, iX, iY);
 	if (!pGreatPeopleUnit)
 	{
 		FErrorMsg("error");
@@ -20042,7 +20063,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 				{
 					for (int i = 0; i < kEvent.getNumUnits(); ++i)
 					{
-						initUnit((UnitTypes)kEvent.getFreeUnit(), pUnitCity->getX(), pUnitCity->getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+						createUnit((UnitTypes)kEvent.getFreeUnit(), pUnitCity->getX(), pUnitCity->getY());
 					}
 				}
 			}

@@ -122,6 +122,10 @@ enum SpineDomainTag
 	SD_TRIGGERS,     // [TRIGGERS] the payload plane: a `triggers` entry is the general form, and a `grants` block
 	                 // is its degenerate case (implicit happening, no condition, no roll) -- json.md §5
 	SD_SPINE,      // [SPINE] spine lifecycle signals (game-load started/finished) -- rendered via the registered prefix, not inline
+	SD_EXPERIENCE, // [XP] every unit experience grant, with the CALLER that asked for it (CvUnit::changeExperience100).
+	               // XP had NO surface at all -- a unit's `level` was the only thing on the wire -- so a grant could not
+	               // be attributed to its source without reading code (observability.md: a fact that is on neither
+	               // surface is EMITTED, never given a side-counter behind a route).
 	NUM_SPINE_DOMAINS
 };
 

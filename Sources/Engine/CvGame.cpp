@@ -6675,7 +6675,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 					// Spawn a new unit
 					CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
-					CvUnit* pUnit = GET_PLAYER(ePlayer).initUnit(eUnit, pPlot->getX(), pPlot->getY(), kUnit.getDefaultUnitAI(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
+					CvUnit* pUnit = GET_PLAYER(ePlayer).createUnit(eUnit, pPlot->getX(), pPlot->getY(), kUnit.getDefaultUnitAI());
 					if (pUnit == NULL)
 					{
 						FErrorMsg("pUnit is expected to be assigned a valid unit object");
@@ -6735,7 +6735,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 					{
 						foreach_(const UnitTypes& spawnGroup, spawnInfo.getSpawnGroups())
 						{
-							pUnit = GET_PLAYER(ePlayer).initUnit(spawnGroup, pPlot->getX(), pPlot->getY(), GC.getUnitInfo(spawnGroup).getDefaultUnitAI(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
+							pUnit = GET_PLAYER(ePlayer).createUnit(spawnGroup, pPlot->getX(), pPlot->getY(), GC.getUnitInfo(spawnGroup).getDefaultUnitAI());
 							FAssertMsg(pUnit != NULL, "pUnit is expected to be assigned a valid unit object");
 							pUnit->finishMoves();
 							spawnCount++;
@@ -7150,7 +7150,7 @@ void CvGame::createBarbarianUnits()
 
 			if (eBestUnit != NO_UNIT)
 			{
-				CvUnit* pUnit = GET_PLAYER(BARBARIAN_PLAYER).initUnit(eBestUnit, pPlot->getX(), pPlot->getY(), eBarbUnitAI, NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
+				CvUnit* pUnit = GET_PLAYER(BARBARIAN_PLAYER).createUnit(eBestUnit, pPlot->getX(), pPlot->getY(), eBarbUnitAI);
 				if (GC.getUnitInfo(eBestUnit).getDomain() == DOMAIN_SEA && pUnit != NULL)
 				{
 					loadPirateShip(pUnit);
@@ -7177,7 +7177,7 @@ void CvGame::createBarbarianUnits()
 						UnitTypes eBestUnit = pLoopCity->AI_bestUnitAI(UNITAI_WORKER, iUnitValue);
 						if (eBestUnit != NO_UNIT)
 						{
-							GET_PLAYER(BARBARIAN_PLAYER).initUnit(eBestUnit, pLoopCity->getX(), pLoopCity->getY(), UNITAI_WORKER, NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
+							GET_PLAYER(BARBARIAN_PLAYER).createUnit(eBestUnit, pLoopCity->getX(), pLoopCity->getY(), UNITAI_WORKER);
 							pLoopCity->AI_setChooseProductionDirty(true);
 						}
 					}
@@ -11438,7 +11438,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		}
 		if (iBestUnit > -1)
 		{
-			CvUnit* pPirate = GET_PLAYER(BARBARIAN_PLAYER).initUnit((UnitTypes)iBestUnit, pUnit->getX(), pUnit->getY(), UNITAI_ATTACK, NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
+			CvUnit* pPirate = GET_PLAYER(BARBARIAN_PLAYER).createUnit((UnitTypes)iBestUnit, pUnit->getX(), pUnit->getY(), UNITAI_ATTACK);
 			if (pPirate != NULL
 			&& pUnit->cargoSpaceAvailable(pPirate->getSpecialUnitType(), pPirate->getDomainType()) >= pPirate->SMCargoVolume())
 			{

@@ -2369,7 +2369,7 @@ def canTriggerExperiencedCaptain(argsList):
   if aUnit[UnitReadKind.UNIT_READ_TYPE] == -1:
     return False
 
-  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] < 7:
+  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] / 100 < 7:
     return False
 
   return True
@@ -3208,7 +3208,7 @@ def canTriggerRubiconUnit(argsList):
   if aUnit[UnitReadKind.UNIT_READ_TYPE] == -1:
     return False
 
-  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] < 25:
+  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] / 100 < 25:
     return False
 
   iMorale = GC.getInfoTypeForString("PROMOTION_MORALE")
@@ -3372,7 +3372,7 @@ def canTriggerCarnationUnit(argsList):
   if aUnit[UnitReadKind.UNIT_READ_TYPE] == -1:
     return False
 
-  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] < 50:
+  if aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] / 100 < 50:
     return False
 
   # do not use this event in multiplayer

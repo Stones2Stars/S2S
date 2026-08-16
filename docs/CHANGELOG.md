@@ -12,6 +12,20 @@
 
 ## Unreleased
 
+- The tribal guardian arrives when the city is founded, and it no longer inherits the settler's
+  accumulated experience. Walking a settler for three turns used to hand its guardian 33 experience
+  — four turns, 44 — because the transfer read a hundredths-scaled value as whole points.
+- Fixed unit experience being read a hundred times too large in several places: the great-general
+  points Pergamon awards (a unit with 33 experience counted as 3,300, paying roughly ten times the
+  points it should), and three random-event requirements that asked for a veteran of 7, 25 or 50
+  experience and in practice accepted almost any unit.
+- Units that arrive by any route other than training — granted, awarded, spawned, captured, bribed,
+  founder escorts, free defenders, great people — now receive the free experience their city gives
+  units, exactly as a trained unit does. Previously it depended on which code path created them.
+- Units whose combat role has no promotions at all can no longer earn them: great people, subdued
+  animals, workers, executives, corporate agents, nukes and captives among them. They kept picking
+  up promotions through the species/size/quality classes attached to them for other reasons.
+- Restored the combat-odds tooltip when hovering an attack target.
 - Fixed a crash when loading a save from inside a running game.
 - The city centre plot yields its guaranteed minimums again (3 food / 1 hammer / 1 commerce
   floor) instead of acting like a regular tile.
