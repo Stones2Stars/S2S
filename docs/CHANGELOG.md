@@ -12,6 +12,9 @@
 
 ## Unreleased
 
+- Units handed over by a popup or by the Crusade wonder no longer receive their city's free
+  experience twice. Creating a unit in a city settles that experience once, and these three paths
+  were still adding it a second time on top.
 - The score list works again. It threw on every screen redraw, so a newly met civilization never
   appeared in it and clicking your own name to expand it took the game down.
 - Six things that had gone quietly dead now work again: the impeachment and chariotry events could

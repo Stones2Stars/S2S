@@ -588,10 +588,10 @@ class CvEventManager:
 				elif ID == 905 or ID == 906:
 					X = CyCity.getX()
 					Y = CyCity.getY()
+					# The unit is created ON the city, and creation settles what the city owes it -- so the
+					# -1 case (take the city's free experience) is already done and asking again doubles it.
 					CyUnit = CyPlayer.createUnit(iData5, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-					if iData4 == -1:
-						ACT.addUnitProductionExperience(CyUnit.getOwner(), CyCity.getID(), CyUnit.getID(), True)
-					else:
+					if iData4 != -1:
 						if iData4 > 0:
 							ACT.setUnitExperience(CyUnit.getOwner(), CyUnit.getID(), iData4)
 						if ID == 906 and self.PROMO_GUARDIAN_TRIBAL > -1:
@@ -1418,9 +1418,9 @@ class CvEventManager:
 			if KEY == "CRUSADE":
 				iUnit = GC.getInfoTypeForString("UNIT_CRUSADER")
 				if iUnit > -1:
-					iNewUnit = ACT.createUnit(iPlayer, iUnit, iCityX, iCityY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
-					if iNewUnit > -1:
-						ACT.addUnitProductionExperience(iPlayer, iCity, iNewUnit, False)
+					# Created ON the city, so creation settles the city's free experience -- adding it here
+					# applied it twice.
+					ACT.createUnit(iPlayer, iUnit, iCityX, iCityY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
 			elif KEY == "TAIPEI_101":
 				iTeam = CyPlayer.getTeam()
 				for iPlayerX in xrange(self.MAX_PC_PLAYERS):
@@ -2832,9 +2832,9 @@ class CvEventManager:
 					aBuilding = GC.getPlayer(iPlayer).getCity(iCityID).getBuildingReads(iBuilding)
 					if aBuilding[CityBuildingRead.CITY_BUILDING_ORIGINAL_OWNER] == iPlayer and not (GAME.getGameTurn() % (1 + 2 * self.iTrainPrcntGS / 100)):
 						iUnit = GC.getInfoTypeForString("UNIT_CRUSADER")
-						iNewUnit = ACT.createUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
-						if iNewUnit != -1:
-							ACT.addUnitProductionExperience(iPlayer, iCityID, iNewUnit, False)
+						# Created ON the city, so creation settles the city's free experience -- adding it
+						# here applied it twice.
+						ACT.createUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
 
 				elif KEY == "GREAT_ZIMBABWE":
 					aGrowth = GC.getPlayer(iPlayer).getCity(iCityID).getGrowth()
