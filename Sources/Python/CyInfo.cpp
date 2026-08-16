@@ -677,6 +677,19 @@ int CyInfo::getFeatureDisappearanceProbability(int iFeatureId) const
 	return pFeature ? pFeature->getDisappearanceProbability() : 0;
 }
 
+int CyInfo::getEventPlotExtraYield(int iEventId, int iYield) const
+{
+	if (iYield < 0 || iYield >= NUM_YIELD_TYPES)
+	{
+		return 0;
+	}
+	//	EVENT_ is XML-only, so it resolves through the xml-only half of the prefix plane -- cyi_info serves the
+	//	JSON repos and returns a CvInfo, which an event is not ([python-read-map.md]: the prefix plane has two
+	//	halves, and checking only one under-reports).
+	const CvEventInfo* pEvent = static_cast<const CvEventInfo*>(cyi_xmlOnlyInfo("EVENT_", iEventId));
+	return pEvent ? pEvent->getPlotExtraYield(iYield) : 0;
+}
+
 python::list CyInfo::getCivilizationLeaders(int iCivilizationId) const
 {
 	python::list lIds;
@@ -1590,6 +1603,7 @@ void CyInfo::pythonPublish()
 		.def("getCivicUpkeep", &CyInfo::getCivicUpkeep)
 		.def("getAllowedCap", &CyInfo::getAllowedCap)
 		.def("getFeatureGrowthProbability", &CyInfo::getFeatureGrowthProbability)
+		.def("getEventPlotExtraYield", &CyInfo::getEventPlotExtraYield)
 		.def("getFeatureDisappearanceProbability", &CyInfo::getFeatureDisappearanceProbability)
 		.def("getCivilizationLeaders", &CyInfo::getCivilizationLeaders)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)

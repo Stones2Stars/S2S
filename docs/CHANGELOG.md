@@ -12,6 +12,11 @@
 
 ## Unreleased
 
+- The score list works again. It threw on every screen redraw, so a newly met civilization never
+  appeared in it and clicking your own name to expand it took the game down.
+- Six things that had gone quietly dead now work again: the impeachment and chariotry events could
+  never trigger, the Malaccan pirates arrived without their promotions or their name, wonder movies
+  for terrain features would not open, and event landmark signs were not placed.
 - Modders: the Python endpoint that brings a unit into existence is now `createUnit`, on both the
   player and the action surface — it was `initUnit`, which named the engine internal that callers
   must never reach directly. It now matches the engine's own single creation step, so a reader

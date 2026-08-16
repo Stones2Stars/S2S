@@ -42,9 +42,8 @@ class CvWonderMovieScreen:
 					szMovieFile = CyArtFileMgr().getMovieArtInfo(szArtDef).getPath()
 
 		elif iMovieType == 3:
-			CvInfo = GC.getFeatureInfo(iMovieItem)
-			if CvInfo:
-				sType = CvInfo.getType()
+			sType = INFO.getType("FEATURE_", iMovieItem)
+			if sType:
 				iPlaty = sType.find("_PLATY_")
 				if iPlaty >= 0:
 					szArtDef = CyArtFileMgr().getMovieArtInfo("ART_DEF_MOVIE_" + sType[iPlaty+7:])

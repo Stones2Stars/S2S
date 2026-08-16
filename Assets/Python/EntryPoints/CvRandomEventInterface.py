@@ -3070,7 +3070,7 @@ def canTriggerDissidentPriestCity(argsList):
 def canTriggerImpeachmentCity(argsList):
 	iCity = argsList[2]
 	player = GC.getPlayer(argsList[1])
-	return player.getCity(iCity).isCapital()
+	return player.getCity(iCity).getFlags()[CityFlagKind.CITY_FLAG_CAPITAL]
 
 ######## FUTBOL_WAR #######
 #Need to stop vassals from being selected as "other player" b/c can't DoW them.  Also, b/c this event railroads other player into war, don't
@@ -3979,10 +3979,12 @@ def applyMalaccanPirates1(argsList):
       spawnedUnits.append(newUnit)
 
   for loopUnit in spawnedUnits:
-      loopUnit.setHasPromotion(iNav1, True)
-      loopUnit.setHasPromotion(iCbt4, True)
-      loopUnit.setHasPromotion(iCoAs1, True)
-      loopUnit.setName("Malaccan Gunboat")
+      iOwner = loopUnit.getOwner()
+      iUnitId = loopUnit.getID()
+      ACT.setUnitPromotion(iOwner, iUnitId, iNav1, True)
+      ACT.setUnitPromotion(iOwner, iUnitId, iCbt4, True)
+      ACT.setUnitPromotion(iOwner, iUnitId, iCoAs1, True)
+      ACT.setUnitName(iOwner, iUnitId, u"Malaccan Gunboat")
 
 
 ######## HENRY_MORGAN ###########
@@ -4763,7 +4765,7 @@ def canTriggerChariotryFounded(argsList):
     if city is None:
         return False
 
-    if city.plot().getLatitude() <= 0:
+    if CyMap().plot(city.getX(), city.getY()).getLatitude() <= 0:
         return False
 
     if city.getNumBonuses(GC.getInfoTypeForString("BONUS_HORSE")) < 1:

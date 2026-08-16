@@ -26,6 +26,7 @@ MAP = GC.getMap()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+INFO = CyInfo()
 engine = CyEngine()
 TRNSLTR = CyTranslator()
 
@@ -186,10 +187,9 @@ def applyLandmarkFromEvent(argsList):
 	iEvent = argsList[0]
 	kTriggeredData = argsList[1]
 
-	event = GC.getEventInfo(iEvent)
-	iFood = event.getPlotExtraYield(YieldTypes.YIELD_FOOD)
-	iProd = event.getPlotExtraYield(YieldTypes.YIELD_PRODUCTION)
-	iComm = event.getPlotExtraYield(YieldTypes.YIELD_COMMERCE)
+	iFood = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_FOOD)
+	iProd = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_PRODUCTION)
+	iComm = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_COMMERCE)
 
 	if iFood != 0 or iProd != 0 or iComm != 0:
 		pPlot = MAP.plot(kTriggeredData.iPlotX, kTriggeredData.iPlotY)

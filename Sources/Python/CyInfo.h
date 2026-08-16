@@ -491,6 +491,11 @@ public:
 	// than the thing ([patterns.md]).
 	int getFeatureGrowthProbability(int iFeatureId) const;
 	int getFeatureDisappearanceProbability(int iFeatureId) const;
+	// An EVENT's authored per-yield plot change -- what the event does to the plot it fires on. Named for the
+	// same reason as its neighbours above: it belongs to ONE registry, and the sign-placing consumer asks for
+	// exactly this. ⚠ EVENT_ is an XML-only registry ([naming.md]) reached through the xml-only half of the
+	// prefix plane, not the JSON repo table.
+	int getEventPlotExtraYield(int iEventId, int iYield) const;
 	// A CIVILIZATION's OWN authored lists -- the leaderheads that may lead it, and its city-name pool.
 	// ⚑ These are the civ's own data, so the read hands the list over. Asking every leaderhead whether it
 	// belongs to this civ is the own-data inversion the reverse-view rule names, and it is what these replace.
