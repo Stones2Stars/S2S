@@ -24,7 +24,8 @@
   "missionary",
   "civilian",
   "landUnit",
-  "people"
+  "people",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_EXECUTIVE",
  "combatClasses": [

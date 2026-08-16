@@ -21,7 +21,8 @@
   "tradable"
  ],
  "tags": [
-  "seaUnit"
+  "seaUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE",
  "combatClasses": [

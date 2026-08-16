@@ -26,7 +26,8 @@
  ],
  "tags": [
   "spy",
-  "landUnit"
+  "landUnit",
+  "unpromotable"
  ],
  "vision": {
   "unit": {

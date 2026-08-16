@@ -27,7 +27,8 @@
   "merchant",
   "civilian",
   "landUnit",
-  "people"
+  "people",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_ADMINISTRATOR",
  "combatClasses": [

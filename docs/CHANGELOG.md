@@ -23,8 +23,11 @@
   founder escorts, free defenders, great people — now receive the free experience their city gives
   units, exactly as a trained unit does. Previously it depended on which code path created them.
 - Units whose combat role has no promotions at all can no longer earn them: great people, subdued
-  animals, workers, executives, corporate agents, nukes and captives among them. They kept picking
-  up promotions through the species/size/quality classes attached to them for other reasons.
+  animals, workers, executives, corporate agents, nukes and captives among them (389 units). They
+  kept picking up promotions through the species/size/quality classes attached to them for other
+  reasons. Promotions a unit is simply *given* by its own type are unaffected. Modders: this is the
+  new `unpromotable` unit tag, derived from whether any promotion accepts the unit's primary combat
+  class — if something ought to promote and cannot, giving that class a promotion is the fix.
 - Restored the combat-odds tooltip when hovering an attack target.
 - Fixed a crash when loading a save from inside a running game.
 - The city centre plot yields its guaranteed minimums again (3 food / 1 hammer / 1 commerce

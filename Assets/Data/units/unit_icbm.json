@@ -38,7 +38,8 @@
   "tradable"
  ],
  "tags": [
-  "military"
+  "military",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_DOOM",
  "combatClasses": [

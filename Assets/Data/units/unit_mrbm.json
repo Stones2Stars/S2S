@@ -43,7 +43,8 @@
  "tags": [
   "military",
   "airUnit",
-  "missile"
+  "missile",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_DOOM",
  "combatClasses": [

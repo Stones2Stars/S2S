@@ -89,7 +89,8 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

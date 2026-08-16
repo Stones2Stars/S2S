@@ -19,7 +19,8 @@
  "tags": [
   "merchant",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_ADMINISTRATOR",
  "combatClasses": [

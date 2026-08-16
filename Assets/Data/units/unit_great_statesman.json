@@ -13,7 +13,8 @@
  "tags": [
   "spy",
   "landUnit",
-  "people"
+  "people",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

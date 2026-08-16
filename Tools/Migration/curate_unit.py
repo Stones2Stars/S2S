@@ -476,6 +476,23 @@ def _unit_primary_combat(store):
             if combat and combat != "NONE":
                 _UNIT_PRIMARY_COMBAT[utyp] = combat
     return _UNIT_PRIMARY_COMBAT
+
+
+_PROMO_QUALIFIED = set()
+
+
+def _promotion_qualified_combats(store):
+    """The set of combat classes named as QUALIFIED by at least one promotion. Built once per run.
+
+    The legacy <UnitCombats> list on a promotion is its qualified set (CvUnit::isPromotionValid: a promotion
+    with no intersection against the unit is refused, and one with an EMPTY list is refused outright unless it
+    is a free/offset/zeroesXP injection). So a class absent from this set is a class no promotion can ever be
+    acquired through.
+    """
+    if not _PROMO_QUALIFIED:
+        for _ptyp, prec in store.table("PromotionInfo").items():
+            _PROMO_QUALIFIED.update(_typelist(prec, "UnitCombats"))
+    return _PROMO_QUALIFIED
 # targeting/immunity capability LISTS -> capabilities.<name>: {TYPE: true}
 CAP_LIST = {
     "UnitCombatTargets": "targets", "UnitCombatDefenders": "defenders",
@@ -1066,6 +1083,19 @@ def curate(typ, rec, store):
     spec_grp = _txt(rec, "Special")
     if spec_grp and spec_grp.startswith("SPECIALUNIT_"):
         tags[specialunit_tag(spec_grp)] = True
+    # `unpromotable` -- this unit's PRIMARY combat class is qualified by NO promotion, so nothing can ever be
+    # acquired through it. A NEGATIVE tag because the vast majority of units ARE promotable (owner): absent means
+    # promotable, so the authored membership stays the small side.
+    # ⛔ IT ASKS THE PRIMARY ONLY, AND THAT IS THE WHOLE POINT (owner). The engine MATCHES a promotion against the
+    # unit's whole HELD set (`isHasUnitCombat` over primary + subs), while only the primary is a genuine combat
+    # ROLE -- the sub-classes are the Thunderbrd SPECIES / QUALITY / SIZE / MOTILITY taxonomy, which is why the
+    # unitcombat enum bloated in the first place ([engine.md]: ~96% of live classes are inert identifiers) and is
+    # exactly what the tag purge exists to unwind. Matching on the held set therefore leaks promotions into units
+    # whose real class grants none: a great person's `UNITCOMBAT_PRODIGY` is named by NO promotion, yet its
+    # `SPECIES_HUMAN` / `QUALITY_ELITE` subs pull in the naturalist and might lines.
+    prim_combat = _txt(rec, "Combat")
+    if not prim_combat or prim_combat not in _promotion_qualified_combats(store):
+        tags["unpromotable"] = True
     # NB the unit does NOT bake its combat classes' identity tags (mounted/gunpowder/naval/outlaw/...). Those are
     # authored ON the UNITCOMBAT and the engine unions them into the unit at load
     # (CvUnitInfo::deriveAtRegistryComplete over primary + combatClasses), so the fact has ONE home. What stays

@@ -106,6 +106,47 @@ Only the OBVIOUS identities map; the size/species/motility/weapon taxonomy stays
 `{unit: IS_MOUNTED}` / `IS_GUNPOWDER` / `IS_NAVAL` / … evaluate live (`cascadeEvalCondition`), and the per-tag
 tally (`CvCascadeTally::countUnitsWithTag`) counts them at empire/team/world scope.
 
+### Capability — `unpromotable` (the one NEGATIVE tag)
+
+**A unit whose PRIMARY combat class is named as QUALIFIED by no promotion.** Nothing can ever be acquired
+through it, so the data says so directly instead of the engine rediscovering it by matching
+(`CvUnit::canAcquirePromotion` refuses a tagged unit beside its existing no-primary-class gate).
+
+> **⚖ IT IS NEGATIVE BECAUSE THE VAST MAJORITY OF UNITS ARE PROMOTABLE (owner)** — absent means promotable, so
+> the authored membership is the small side: **389 of 2073**, against the 1,684 a positive `promotable` would
+> have to carry.
+> **⛔ IT ASKS THE PRIMARY ONLY, AND THAT DISTINCTION IS THE WHOLE MECHANIC (owner).** A unit HAS a primary
+> combat class and a LIST of them, and they answer different questions: the engine's *can this be promoted at
+> all* gate reads the PRIMARY (`getUnitCombatType()`), while promotion MATCHING runs over the whole HELD set
+> (`isHasUnitCombat` — primary + subs + promotion-granted). Only the primary is a genuine combat ROLE.
+> ⚑ **The subs are the Thunderbrd SPECIES / QUALITY / SIZE / MOTILITY taxonomy — the core reason the unitcombat
+> enum bloated at all (owner)**, which [engine.md](../reference/engine.md) already records as ~96% inert
+> identifiers and which the tag work exists to unwind. So matching on the held set leaks promotions into units
+> whose real class grants none.
+> ⚑ **The worked case is the GREAT PERSON, and it is what forced the tag:** every one has primary
+> `UNITCOMBAT_PRODIGY`, which **no promotion names** — the intent was already in the data — while its
+> `SPECIES_HUMAN` / `QUALITY_ELITE` subs pull in the naturalist and might lines. ⚠ So "great people cannot
+> promote" is true of the design and was NOT true of the engine; the tag is what makes it so.
+> ⚑ **The derivation is mechanical, never a list** ([curators/README](curators/README.md)): the curator unions
+> every promotion's qualified `<UnitCombats>` and tags any unit whose primary is absent from it (or which has no
+> primary at all). The population falls out as subdued animals · space and sea workers · sea animals ·
+> executives · great people · warlord/captain ranks · nukes · captives · `unit_sleeper`.
+> ⚠ **It gates EARNING a promotion, never RECEIVING one** — the free/granted bypass sits ahead of it, so a
+> tagged unit still gets what its own type hands it (a great general keeps `PROMOTION_LEADER`).
+> ⚖ **A WRONG VERDICT IS CHEAP, SO CERTAINTY IS NOT A GATE HERE EITHER (owner): *"if we notice something that
+> should have promos but doesn't, we will figure that out real fast — it's not gamebreaking for a unit to have
+> promotions."*** ⛔ This has to be stated for the NEGATIVE tag specifically, because the extra-tag ruling above
+> does not carry over unchanged: a surplus POSITIVE tag is inert, while a surplus negative one takes a capability
+> away. It is still not a reason to withhold the derivation — a unit that should promote and cannot is loud in
+> play and costs a data edit.
+> ⇒ **And the fix is on the DATA side, never an engine exemption:** give that unit's primary class a qualified
+> promotion and it leaves the tag by itself. The populations to expect this from are the ones whose primary is a
+> real ROLE that simply was never wired into a promotion (`CAPTAIN`, `HOVERCRAFT`, `AIR_RECON`), not the
+> taxonomy-primaried ones.
+> ⚑ **Consequence worth knowing:** `canAcquirePromotionAny()` is what `CvCity::addProductionExperience` gates
+> on, so a tagged unit takes no free experience from the city it is created in — the question answers itself at
+> the ONE creation step ([triggers.md](triggers.md)) rather than needing a carve-out there.
+
 ### Cargo group — from the unit's `SPECIALUNIT_*` membership
 
 `people` (176) · `troop` (94) · `fighter` (16) · `missile` (8) · `vtol` (6) · `captive` (3) · `seaplane` (1).

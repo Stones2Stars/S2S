@@ -41,7 +41,8 @@
  ],
  "tags": [
   "landUnit",
-  "people"
+  "people",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_CAPTAIN",
  "combatClasses": [

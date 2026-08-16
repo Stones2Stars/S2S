@@ -36,7 +36,8 @@
   "renderBelowWater"
  ],
  "tags": [
-  "seaUnit"
+  "seaUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_SEA_ANIMAL",
  "combatClasses": [

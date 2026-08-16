@@ -138,6 +138,20 @@
      "max": 0
     }
    }
+  ],
+  "units": [
+   {
+    "unit": "UNIT_TRIBAL_GUARDIAN",
+    "enabled": {
+     "noneOf": [
+      "BUILDING_C_AC_NEANDERTHAL"
+     ]
+    }
+   },
+   {
+    "unit": "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
+    "enabled": "BUILDING_C_AC_NEANDERTHAL"
+   }
   ]
  },
  "world": {

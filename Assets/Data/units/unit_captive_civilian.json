@@ -16,7 +16,8 @@
  ],
  "tags": [
   "landUnit",
-  "captive"
+  "captive",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_CAPTIVE",
  "combatClasses": [

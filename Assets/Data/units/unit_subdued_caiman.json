@@ -15,7 +15,8 @@
   "tradable"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_SUBDUED",
  "combatClasses": [

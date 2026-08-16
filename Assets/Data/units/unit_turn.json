@@ -28,7 +28,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_DOOM",
  "combatClasses": [

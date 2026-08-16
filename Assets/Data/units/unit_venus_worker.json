@@ -30,7 +30,8 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_SPACE_WORKER",
  "combatClasses": [

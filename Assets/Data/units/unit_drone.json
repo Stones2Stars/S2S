@@ -58,7 +58,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_AIR_RECON",
  "combatClasses": [

@@ -97,7 +97,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_HOVERCRAFT",
  "combatClasses": [

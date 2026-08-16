@@ -23,7 +23,8 @@
   "tradable"
  ],
  "tags": [
-  "seaUnit"
+  "seaUnit",
+  "unpromotable"
  ],
  "combatClass": "UNITCOMBAT_SUBDUED",
  "combatClasses": [
