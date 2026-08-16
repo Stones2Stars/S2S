@@ -98,6 +98,24 @@ int CyUnitInfo::getCaptureUnit(int iUnit) const
 	return pUnit ? pUnit->getCaptures() : -1;
 }
 
+int CyUnitInfo::getDomain(int iUnit) const
+{
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	return pUnit ? (int)pUnit->getDomain() : (int)NO_DOMAIN;
+}
+
+int CyUnitInfo::getCost(int iUnit) const
+{
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	return pUnit ? pUnit->getProductionCost() : 0;
+}
+
+int CyUnitInfo::getDefaultUnitAI(int iUnit) const
+{
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	return pUnit ? (int)pUnit->getDefaultUnitAI() : (int)NO_UNITAI;
+}
+
 void CyUnitInfo::pythonPublish()
 {
 	python::class_<CyUnitInfo>("CyUnitInfo")
@@ -108,5 +126,8 @@ void CyUnitInfo::pythonPublish()
 		.def("isIgnoreBuildingDefense", &CyUnitInfo::isIgnoreBuildingDefense)
 		.def("getConscription",         &CyUnitInfo::getConscription)
 		.def("getCaptureUnit",          &CyUnitInfo::getCaptureUnit)
+		.def("getDomain",               &CyUnitInfo::getDomain)
+		.def("getCost",                 &CyUnitInfo::getCost)
+		.def("getDefaultUnitAI",        &CyUnitInfo::getDefaultUnitAI)
 		;
 }

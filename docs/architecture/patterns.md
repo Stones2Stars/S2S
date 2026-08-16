@@ -401,6 +401,25 @@ group's natural index** — never N individual getters for a groupable set. This
      > legacy line removed by a cut is not a regression to restore. **Completeness is measured against what the
      > ENTITY CARRIES, never against what the legacy composer used to print.**
      >
+     > **⚖ THE DEMAND ORDER, MEASURED BY USE (owner) — worker · combat · plot · building · unit.** That is the
+     > order they are actually hovered in, so it is the order they are worked in; COMBAT is already the
+     > standardized exemplar the rest converge onto, so the live work is worker → plot → building → unit.
+     > ⚑ **WORKER is two composers, not one**, and both are the same question from opposite ends: what a worker
+     > CAN do here (`CvDLLWidgetData::parseActionHelp`, the build-action buttons) and what it IS doing
+     > (`CvGameTextMgr::setUnitHelp`'s instance form, the build and its turns left).
+     >
+     > **⚖ A TOOLTIP IS AN ORDERED SET OF BLOCKS, AND THE BLOCKS ARE THE DESIGN (owner): *"we do design tooltips
+     > around the concepts of blocks"*.** So a composer's deliverable is a BLOCK LIST, and per block there are
+     > exactly three decisions — which sources compose it, what heading it sits under, and WHEN IT SHOWS.
+     > ⛔ **The content is NOT the concern (owner): *"most of the info should be able to be programmatically
+     > generated — it is the final structuring of the tooltips themselves, and when they show, that is the
+     > trick."*** The sub-block is `appendEntryLines` and needs no design; a pass that spends itself on generating
+     > lines has worked on the half that was never the problem.
+     > ⚠ **A run-on comma-separated line is therefore NOT a block structure**, however complete its content — which
+     > is the shape the unit instance composer is in today, and what makes a worker's build read as buried rather
+     > than as absent.
+     > ⛔ A SHOW CONDITION is a design call and is not derivable from the data — it is asked, never inferred.
+     >
      > **⚖ THE DLL DOES NOT CONVERT FOR DISPLAY — THE CONSUMER CONVERTS ITSELF (owner: "let python convert
      > themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL performing
      > the presentation layer's arithmetic, and it puts FLOAT in the DLL for a value the engine holds as an

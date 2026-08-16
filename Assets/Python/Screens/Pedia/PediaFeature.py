@@ -96,7 +96,7 @@ class PediaFeature:
 		szTxt = ""
 		iTemp1 = INFO.getFeatureGrowthProbability(iTheFeature)
 		if iTemp1 > 0:
-			fValue = iTemp1 * (GC.getFEATURE_GROWTH_MODIFIER() + 100) / 100.0
+			fValue = iTemp1 * (GC.getDefineINT("FEATURE_GROWTH_MODIFIER") + 100) / 100.0
 			if CyPlayer:
 				fValue /= GC.getGame().getSpeedPercent()
 			else:
@@ -108,7 +108,7 @@ class PediaFeature:
 				szTemp = szTemp[:-1]
 			szTxt += "\nGrowth: %s%% chance per turn." % szTemp
 
-			fRouteFactor = (100 + GC.getROUTE_FEATURE_GROWTH_MODIFIER()) / 100.0
+			fRouteFactor = (100 + GC.getDefineINT("ROUTE_FEATURE_GROWTH_MODIFIER")) / 100.0
 			if fRouteFactor < 0:
 				fRouteFactor = 0
 			fValue *= fRouteFactor

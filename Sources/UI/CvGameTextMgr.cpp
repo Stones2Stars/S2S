@@ -535,14 +535,34 @@ void CvGameTextMgr::setEspionageMissionHelp(CvWStringBuffer &szBuffer, const CvU
 }
 
 
+//	Joins the items WITHIN one block: the first item opens the block, every later one is preceded by a comma. It
+//	exists so a block's items can each be independently conditional without any of them having to know whether it
+//	happens to be first -- which is what a hand-written leading L", " gets wrong the moment an earlier item drops
+//	out (a worker carries no strength, so the condition block would open with a stray comma).
+static void gt_appendSeparator(CvWStringBuffer& szString, bool& bFirstInBlock)
+{
+	if (bFirstInBlock)
+	{
+		bFirstInBlock = false;
+	}
+	else
+	{
+		szString.append(L", ");
+	}
+}
+
+
 //	The UNIT INSTANCE's help -- this unit, right now: what the unit-name widget, the selected-unit hover and the
 //	plot unit list all render. It is the LIVE half; the TYPE half is the sibling overload, delegated to at the end
 //	so the two never drift apart ([DEC-single-implementation]).
 //
-//	⚑ THE LIVE HEADER IS ONE COMMA-SEPARATED LINE, and that shape is load-bearing rather than cosmetic: this
-//	composer runs once per unit in a plot's stack, so a line per stat turns a ten-unit tile into a wall. Every
-//	leg below is CONDITIONAL -- a plain warrior prints its name, strength and moves and nothing else, while a
-//	commanding general in the field prints what it is actually carrying.
+//	⚑ IT IS AN ORDERED SET OF BLOCKS -- IDENTITY, CONDITION, ORDERS, PROMOTIONS, TYPE -- which is how a tooltip is
+//	designed here (owner, [patterns.md] § the per-entry TEXT render), and the ORDER is the owner's: name, then
+//	condition, then the rest. Within a block the items are comma-joined on one line and every one of them is
+//	CONDITIONAL, so a plain warrior prints its name, strength and moves and nothing else while a commanding
+//	general prints what it is actually carrying.
+//	⚠ The block count is what this composer must stay mean with, never the item count: it runs once per unit in a
+//	plot's stack, so a block per stat would turn a ten-unit tile into a wall.
 //
 //	⛔ IT COMPOSES LIVE INSTANCE STATE ONLY. What the unit's TYPE carries -- every magnitude it was built with --
 //	is the TYPE overload's blocks, where each compiled entry renders ITSELF through the ONE renderer
@@ -560,10 +580,30 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	//	channel), so the colour is resolved to a NAME first and never a call.
 	const char* szNameColor = bdarkColor ? "COLOR_BROWN_TEXT" : "COLOR_UNIT_TEXT";
 	szString.append(CvWString::format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR(szNameColor), pUnit->getName().GetCString()));
+
+	//	WHOSE IT IS -- part of IDENTITY, so it sits with the name rather than trailing the numbers. Foreign units
+	//	only, in that player's own colour. ⚠ A hidden-nationality unit and an animal deliberately name nobody:
+	//	concealing the owner IS the mechanic ([skills.md] `hiddenNationality`), so printing it here would hand the
+	//	player exactly what the unit is hiding.
+	if (pUnit->getOwner() != GC.getGame().getActivePlayer() && !pUnit->isAnimal() && !pUnit->isHiddenNationality())
+	{
+		const CvPlayer& kOwner = GET_PLAYER(pUnit->getOwner());
+		const wchar_t* szOwnerName = kOwner.isMinorCiv() ? kOwner.getCivilizationDescription() : kOwner.getName();
+		szString.append(CvWString::format(L", " SETCOLR L"%s" ENDCOLR,
+			kOwner.getPlayerTextColorR(), kOwner.getPlayerTextColorG(),
+			kOwner.getPlayerTextColorB(), kOwner.getPlayerTextColorA(), szOwnerName));
+	}
+
 	if (bOneLine)
 	{
 		return;   // the caller asked for the name alone
 	}
+
+	//	── CONDITION ── what state this unit is in right now, comma-joined on ONE line. It comes second because
+	//	that is the order a unit tooltip has always read in (owner): name, then condition, then the rest
+	//	([patterns.md] § the per-entry TEXT render).
+	szString.append(NEWLINE);
+	bool bFirstCondition = true;
 
 	//	STRENGTH. An air unit fights with its own air strength -- a different number from the ground one -- so the
 	//	DOMAIN decides which is read, never a fallback between them.
@@ -576,13 +616,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	{
 		//	⚠ Mid-combat the CURRENT value is not answerable from here, so it says so rather than printing a
 		//	stale number that would read as authoritative.
+		gt_appendSeparator(szString, bFirstCondition);
 		if (pUnit->isInBattle())
 		{
-			szString.append(CvWString::format(L", ?/%d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
+			szString.append(CvWString::format(L"?/%d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
 		}
 		else
 		{
-			szString.append(CvWString::format(L", %d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
+			szString.append(CvWString::format(L"%d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
 		}
 
 		//	Damage, only when there is some -- a unit at full health says so by omission.
@@ -600,13 +641,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	{
 		const int iMovesLeft = pUnit->movesLeft();
 		const int iCurrMoves = iMovesLeft / iMoveDenominator + ((iMovesLeft % iMoveDenominator > 0) ? 1 : 0);
+		gt_appendSeparator(szString, bFirstCondition);
 		if (iCurrMoves == pUnit->baseMoves() || pUnit->getTeam() != GC.getGame().getActiveTeam())
 		{
-			szString.append(CvWString::format(L", %d%c", pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
+			szString.append(CvWString::format(L"%d%c", pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
 		}
 		else
 		{
-			szString.append(CvWString::format(L", %d/%d%c", iCurrMoves, pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
+			szString.append(CvWString::format(L"%d/%d%c", iCurrMoves, pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
 		}
 	}
 
@@ -615,32 +657,13 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 		szString.append(gDLL->getText("TXT_KEY_UNITHELP_AIR_RANGE", pUnit->airRange()));
 	}
 
-	//	WHAT IT IS DOING. A worker mid-build is the case this answers -- the build and how long is left on it is
-	//	the whole question a player hovers a worker to ask.
-	const BuildTypes eBuild = pUnit->getBuildType();
-	//	⚑ LEVEL 4 (the inner-loop tier) because a hover re-renders freely -- it costs nothing until asked for,
-	//	and it answers the one question code reading cannot: whether the line is missing because the unit
-	//	reports NO_BUILD, or because it never reached here. The head mission is beside it, since getBuildType
-	//	reads exactly that and answers NO_BUILD for every mission that is not MISSION_BUILD.
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_TOOLTIP_ID, 4)
-		.addI(UNTF_OWNER, (int)pUnit->getOwner()).addI(UNTF_UNIT, pUnit->getID())
-		.addI(UNTF_BUILDTYPE, (int)eBuild)
-		.addI(UNTF_HEADMISSION, pUnit->getGroup() && pUnit->getGroup()->headMissionQueueNode()
-			? (int)pUnit->getGroup()->headMissionQueueNode()->m_data.eMissionType : -1));
-	if (eBuild != NO_BUILD && pUnit->plot() != NULL)
-	{
-		szString.append(CvWString::format(L", %s (%d)",
-			GC.getBuildInfo(eBuild).getDescription(),
-			pUnit->plot()->getBuildTurnsLeft(eBuild, pUnit->getOwner())));
-	}
-
 	//	IMMOBILISED. ⚑ The immobile timer is a STATUS now ([state.md]: applied, ticking down, over at zero), so
 	//	this reads the turns remaining off the status store -- `hasStatus`/`getStatus` IS the read, and there is
 	//	deliberately no per-status named accessor to reach for.
 	const int iParalyzedTurns = pUnit->getStatus(STATUS_PARALYZED);
 	if (iParalyzedTurns > 0)
 	{
-		szString.append(L", ");
+		gt_appendSeparator(szString, bFirstCondition);
 		szString.append(gDLL->getText("TXT_KEY_UNITHELP_IMMOBILE", iParalyzedTurns));
 	}
 
@@ -669,16 +692,93 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			pCommodore->getControlPointsLeft(), pCommodore->getControlPoints()));
 	}
 
-	//	WHOSE IT IS -- for a foreign unit only, in that player's own colour. ⚠ A hidden-nationality unit and an
-	//	animal deliberately name nobody: concealing the owner IS the mechanic ([skills.md] `hiddenNationality`),
-	//	so printing it here would hand the player exactly what the unit is hiding.
-	if (pUnit->getOwner() != GC.getGame().getActivePlayer() && !pUnit->isAnimal() && !pUnit->isHiddenNationality())
+	//	── ORDERS ── what this unit is DOING, on its OWN line. A worker mid-build is the case it answers, and that
+	//	is the single most-hovered tooltip in the game (owner), so it gets a block rather than the comma-clause it
+	//	used to be -- buried at the end of the condition line it read as ABSENT rather than as present-but-late.
+	//	⚖ SHOW CONDITION (owner): a unit that is WORKING or AUTOMATED says so; a genuinely idle one shows NOTHING.
+	//	An "idle" line would render on every unit awaiting orders at end of turn, which is precisely when the
+	//	tooltip is least worth reading.
+	const BuildTypes eBuild = pUnit->getBuildType();
+	//	⚑ LEVEL 4 (the inner-loop tier) because a hover re-renders freely -- it costs nothing until asked for,
+	//	and it answers the one question code reading cannot: whether the line is missing because the unit
+	//	reports NO_BUILD, or because it never reached here. The head mission is beside it, since getBuildType
+	//	reads exactly that and answers NO_BUILD for every mission that is not MISSION_BUILD.
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_TOOLTIP_ID, 4)
+		.addI(UNTF_OWNER, (int)pUnit->getOwner()).addI(UNTF_UNIT, pUnit->getID())
+		.addI(UNTF_BUILDTYPE, (int)eBuild)
+		.addI(UNTF_HEADMISSION, pUnit->getGroup() && pUnit->getGroup()->headMissionQueueNode()
+			? (int)pUnit->getGroup()->headMissionQueueNode()->m_data.eMissionType : -1));
+
+	bool bFirstOrder = true;
+	if (eBuild != NO_BUILD && pUnit->plot() != NULL)
 	{
-		const CvPlayer& kOwner = GET_PLAYER(pUnit->getOwner());
-		const wchar_t* szOwnerName = kOwner.isMinorCiv() ? kOwner.getCivilizationDescription() : kOwner.getName();
-		szString.append(CvWString::format(L", " SETCOLR L"%s" ENDCOLR,
-			kOwner.getPlayerTextColorR(), kOwner.getPlayerTextColorG(),
-			kOwner.getPlayerTextColorB(), kOwner.getPlayerTextColorA(), szOwnerName));
+		szString.append(NEWLINE);
+		bFirstOrder = false;
+		szString.append(CvWString::format(L"%s (%d)",
+			GC.getBuildInfo(eBuild).getDescription(),
+			pUnit->plot()->getBuildTurnsLeft(eBuild, pUnit->getOwner())));
+
+		//	WHAT THE BUILD WILL CHANGE, beside how long is left on it -- the name and the turns say a worker is
+		//	busy; this says whether being busy is worth it.
+		//	⛔ The SAME plot calc and the SAME renderer the build-ACTION tooltip uses, so the number a worker
+		//	reports mid-build and the number its action button advertised before it started are ONE number by
+		//	construction ([DEC-single-implementation]) -- which is the whole reason the calc was lifted onto
+		//	`CvPlot` rather than left inline in the action composer.
+		int aiBuildYields[NUM_YIELD_TYPES] = {0};
+		bool bAnyBuildYield = false;
+		for (int iBuildYield = 0; iBuildYield < NUM_YIELD_TYPES; ++iBuildYield)
+		{
+			aiBuildYields[iBuildYield] = pUnit->plot()->calculateBuildYieldChange(eBuild, (YieldTypes)iBuildYield);
+			if (aiBuildYields[iBuildYield] != 0)
+			{
+				bAnyBuildYield = true;
+			}
+		}
+		if (bAnyBuildYield)
+		{
+			setYieldChangeHelp(szString, gDLL->getText("TXT_KEY_YIELD_CHANGE_DESCRIP"),
+				L": ", L"", aiBuildYields, /*bPercent*/ false, /*bNewLine*/ true);
+		}
+	}
+	//	A QUEUED ORDER WITH NO BUILD IN HAND IS STILL AN ORDER. A worker walking to the tile it is going to improve
+	//	is WORKING, not idle, so under the ruling above it owes the player a line -- and `getBuildType` answers
+	//	NO_BUILD for it, because the build only exists once the unit is standing on the plot.
+	//	⚑ MEASURED, not reasoned: the probe caught a worker on `MISSION_ROUTE_TO` reporting `buildType=-1` while
+	//	en route to lay a road, i.e. silent under the build leg alone.
+	//	⚑ The show-nothing case survives intact BY CONSTRUCTION: a genuinely idle unit holds no queued mission at
+	//	all (the probe's `headMission=-1`), and so does a fortified or sleeping one -- their mission has already
+	//	completed and only an ACTIVITY remains. So this leg fires for units that are actually under orders.
+	else if (pUnit->getGroup() != NULL && pUnit->getGroup()->headMissionQueueNode() != NULL)
+	{
+		const int iHeadMission = pUnit->getGroup()->headMissionQueueNode()->m_data.eMissionType;
+		//	⛔ BOUNDS-CHECKED against the INFO count, not against the enum: `MissionTypes` runs past the missions
+		//	the XML defines (the combat/animation pseudo-missions tail it), and `FASSERT_BOUNDS` compiles out of
+		//	Release ([fbuild.bff]) -- so an unguarded lookup here is an out-of-bounds read in the shipped build,
+		//	not an assert.
+		if (iHeadMission >= 0 && iHeadMission < GC.getNumMissionInfos())
+		{
+			szString.append(NEWLINE);
+			bFirstOrder = false;
+			szString.append(CvWString(GC.getMissionInfo((MissionTypes)iHeadMission).getDescription()));
+		}
+	}
+
+	//	AUTOMATION is a SEPARATE fact from the build in progress -- an automated worker part-way through a tile is
+	//	both, and what a reader wants to know is that the orders continue once this tile is done.
+	//	⚑ The automate DESCRIPTION is indexed straight by the enum: `CIV4AutomateInfos.xml` is authored in
+	//	`AutomateTypes` order (verified entry for entry), so index == enum and no lookup scan is needed.
+	if (pUnit->isAutomated())
+	{
+		if (bFirstOrder)
+		{
+			szString.append(NEWLINE);
+			bFirstOrder = false;
+		}
+		else
+		{
+			szString.append(L", ");
+		}
+		szString.append(GC.getAutomateInfo((int)pUnit->getGroup()->getAutomateType()).getDescription());
 	}
 
 	//	⛔ THE HELD PROMOTIONS, WALKED FROM WHAT THE UNIT HOLDS -- never a sweep of the promotion registry asking
@@ -706,8 +806,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 		}
 	}
 
-	//	The TYPE's own blocks, unless the caller wanted the short form. bCivilopediaText suppresses the type's
-	//	heading, which the unit's own name above has already served.
+	//	── TYPE ── the unit TYPE's own blocks. They are the SHORT-FORM switch's whole subject: the instance blocks
+	//	above are what a hover is for, while the type's block set says the same thing on every unit of that type
+	//	and is what makes a tooltip long enough to bury them.
+	//	⚑ WHICH FORM IS THE CALLER'S CALL, not this composer's, and deliberately so: the map-hover entry point is
+	//	handed the EXE's own extended-help modifier (`getPlotHelp`'s `bAlt`), so the decision is made where that
+	//	modifier already lives. A `gDLL->altKey()` read HERE would be a second, private modifier surface competing
+	//	with the engine's own -- and it would sit on a branch no live caller reaches, since every one of them asks
+	//	for the short form today.
 	if (!bShort)
 	{
 		setUnitHelp(szString, pUnit->getUnitType(), true);
@@ -1441,6 +1547,23 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 	{
 		szString.append(NEWLINE);
 		szString.append(CvWString(GC.getRouteInfo(pPlot->getRouteType()).getDescription()));
+	}
+
+	// ---- WHO WORKS IT ----
+	// ⚖ ONLY WHILE IT IS ACTUALLY WORKED (owner): an unworked tile says nothing, which keeps the hover on an
+	// empty tile short. It answers a question the yields below cannot -- a plot produces its package either way,
+	// but only a WORKED tile joins its city's plot Σ ([modifier.md] §2a), so this is the difference between a
+	// yield that reaches someone and one that reaches nobody.
+	// ⚑ `isBeingWorked` asks the CITY whether it is working this plot, so it is the working-city relation AND the
+	// citizen assignment in one read -- a tile can have a working city and still be unworked.
+	if (pPlot->isBeingWorked())
+	{
+		const CvCity* pWorkingCity = pPlot->getWorkingCity();
+		if (pWorkingCity != NULL)
+		{
+			szString.append(NEWLINE);
+			szString.append(gDLL->getText("TXT_KEY_PLOTHELP_WORKED_BY", pWorkingCity->getNameKey()));
+		}
 	}
 
 	// ---- WHOSE TILE IT IS, AND WHO IS TAKING IT ----
@@ -2578,6 +2701,11 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 	{
 		szBuffer.append(kUnit.getDescription());
 	}
+
+	//	The PRICE, directly under the name -- the same position a building states its own, so the two entity
+	//	tooltips read alike across the build list rather than one stating a cost and the other leaving it to be
+	//	guessed.
+	appendUnitProductionCost(szBuffer, eUnit, pCity);
 
 	//	⛔ THE SHARED UNIT-PLANE LIST, not a local copy. This composer used to carry its own duplicate of it beside
 	//	a hand-rolled repeat of the entity spine, and the duplicate had already DRIFTED: it silently dropped
@@ -4265,6 +4393,36 @@ void CvGameTextMgr::appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& inf
 // long enough to be worth showing.
 // ⚠ Progress is rendered ONLY when there is some. A "0 invested" line on every building the city never started
 // would bury the case the line exists for -- the half-built thing you switched away from and forgot.
+//	The UNIT twin of the building price below. A building's tooltip has always stated what it costs and a unit's
+//	never did, which is a plain UNIFORMITY gap rather than a design difference: the two are the same question
+//	asked of the two things a city can build, and a player comparing them across the build list was reading one
+//	price and guessing the other.
+//	⚑ Same plane and same fallbacks as the building twin, deliberately: the derived PRICE (the authored
+//	`cost.production` composed by the engine with gamespeed, era, handicap and the build-cost options), asked of
+//	the CITY because that is the scope which knows them, falling back to the asking PLAYER for the city-less view
+//	(the pedia) and saying nothing at all where there is no player to price it for.
+//	⚠ No banked-progress twin: hammers bank against the CITY's current order, not against a unit type, so there
+//	is no per-unit stored figure to report.
+void CvGameTextMgr::appendUnitProductionCost(CvWStringBuffer& szBuffer, UnitTypes eUnit,
+	const CvCity* pCity) const
+{
+	int iCost = -1;
+	if (pCity != NULL)
+	{
+		iCost = pCity->getProductionNeeded(eUnit);
+	}
+	else if (GC.getGame().getActivePlayer() != NO_PLAYER)
+	{
+		iCost = GET_PLAYER(GC.getGame().getActivePlayer()).getProductionNeeded(eUnit);
+	}
+	if (iCost > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_UNIT_HELP_PRODUCTION_COST", iCost));
+	}
+}
+
+
 void CvGameTextMgr::appendBuildingProductionCost(CvWStringBuffer& szBuffer, BuildingTypes eBuilding,
 	const CvCity* pCity) const
 {
@@ -7735,7 +7893,12 @@ void CvGameTextMgr::getPlotHelp(CvPlot* mousePlot, CvCity* city, CvPlot* flagPlo
 	}
 	else if (flagPlot != NULL)
 	{
-		setPlotListHelp(strHelp, flagPlot, false, true);
+		//	⚑ THE FLAG IS WHERE THE FULL FORM LIVES, because ALT is unspoken for here -- there is no tile census on
+		//	this branch to compete with it. So the ordinary flag hover is the short form and ALT adds the unit
+		//	TYPE's own blocks (owner: the type blocks sit behind a modifier key). ⚠ `bAlt` is the ENGINE's own
+		//	extended-help modifier, handed in by the EXE, so this reads the one the player already uses rather
+		//	than minting a private second one inside a composer.
+		setPlotListHelp(strHelp, flagPlot, false, !bAlt);
 	}
 	else if (mousePlot != NULL)
 	{
@@ -7752,6 +7915,21 @@ void CvGameTextMgr::getPlotHelp(CvPlot* mousePlot, CvCity* city, CvPlot* flagPlo
 		}
 		if (strHelp.isEmpty() && mousePlot->isRevealed(GC.getGame().getActiveTeam(), true))
 		{
+			//	── THE UNITS STANDING HERE, FIRST ── hovering the actual UNIT on the map resolves to its TILE, not
+			//	to its flag: the flag is a separate subject the EXE hands in above. So answering only "what is this
+			//	tile" is precisely why a worker's orders could be read off the flag and NOWHERE ELSE (owner), which
+			//	is not where anyone points when they want to know what a worker is doing.
+			//	⚑ The units LEAD because they are what the pointer is on; the tile follows as the context they
+			//	stand in. It is the same precedence the branch order above already expresses, one level down.
+			//	⛔ The SHORT form, always: `setPlotListHelp` renders EVERY visible unit on the plot, so the type's
+			//	own blocks would multiply by the stack. ⚠ And ALT is already spoken for on this branch -- it is the
+			//	yield DECOMPOSITION census below, which is the thing a plot hover exists to answer; expanding the
+			//	units on the same key would bury it under whatever happens to be standing there.
+			setPlotListHelp(strHelp, mousePlot, false, true);
+			if (!strHelp.isEmpty())
+			{
+				strHelp.append(NEWLINE);
+			}
 			setPlotHelp(strHelp, mousePlot, bAlt);
 		}
 	}

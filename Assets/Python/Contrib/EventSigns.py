@@ -525,7 +525,7 @@ def applySaltpeter(argsList):
 	# Add landmark for initial plot, if there is still a yield change
 	placeLandmark(CyPlot, sEventType, iFood, iProd, iComm, True, -1)
 
-	iForest = GC.getFEATURE_FOREST()
+	iForest = GC.getInfoTypeForString("FEATURE_FOREST")
 
 	listPlots = []
 	for plotX in MAP.plots():
@@ -543,7 +543,7 @@ def applySaltpeter(argsList):
 		iCount -= 1
 		plot[1].setExtraYield(YieldTypes.YIELD_COMMERCE, 2)
 		szTxt = TRNSLTR.getText("TXT_KEY_EVENT_SALTPETER_DISCOVERED",())
-		CvUtil.sendMessage(szTxt, iPlayer, GC.getEVENT_MESSAGE_TIME(), "", -1, plot[1].getX(), plot[1].getY(), True, True, 0, "", False)
+		CvUtil.sendMessage(szTxt, iPlayer, GC.getDefineINT("EVENT_MESSAGE_TIME"), "", -1, plot[1].getX(), plot[1].getY(), True, True, 0, "", False)
 		# Add landmark for other plots too.
 		placeLandmark(plot[1], sEventType, iFood, iProd, iComm, True, -1)
 

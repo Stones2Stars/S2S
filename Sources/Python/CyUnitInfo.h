@@ -58,6 +58,18 @@ public:
 	int getConscription(int iUnit) const;   // identity.conscription -- 0 when it cannot be drafted
 	int getCaptureUnit(int iUnit) const;    // identity.captures -- the UNIT_* capturing this one yields, else -1
 
+	// WHERE the unit operates -- the `DomainTypes` value off identity.domain.
+	// ⛔ It is deliberately NOT answered from the tag set ([tags.md]): a tag says what a unit IS, a domain says
+	// where it OPERATES, so reading it off the tags means filtering every tag for what one field already holds.
+	// A domain is EXCLUSIVE (no unit carries two) and crossing one is a SKILL, so this is a single value.
+	int getDomain(int iUnit) const;
+	// The authored PRODUCTION cost (`cost.production`). ⚠ The unit keeps the `getProductionCost` spelling on its
+	// info while the BUILDING's became `getCost` -- the rename does not generalize, so confirm the member rather
+	// than pattern-matching the sibling accessor.
+	int getCost(int iUnit) const;
+	// The `UnitAITypes` role the unit is created with (identity.defaultUnitAI).
+	int getDefaultUnitAI(int iUnit) const;
+
 	static void pythonPublish();
 };
 

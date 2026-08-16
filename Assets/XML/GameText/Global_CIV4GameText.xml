@@ -27947,6 +27947,10 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<English>Cost: %d1[ICON_PRODUCTION]</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_UNIT_HELP_PRODUCTION_COST</Tag>
+		<English>Cost: %d1[ICON_PRODUCTION]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUILDING_HELP_PRODUCTION_STORED</Tag>
 		<English>[COLOR_HIGHLIGHT_TEXT]Built: %d1[ICON_PRODUCTION][COLOR_REVERT]</English>
 	</TEXT>

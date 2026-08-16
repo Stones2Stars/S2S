@@ -909,13 +909,13 @@ class CvEventManager:
 					if iPlayerAct in (iPlayerW, iPlayerL):
 						szWP = INFO.getDescription("UNIT_", iUnitL)
 					if iPlayerW == iPlayerAct:
-						eColor = ColorTypes(GC.getCOLOR_GREEN())
+						eColor = ColorTypes(GC.getInfoTypeForString("COLOR_GREEN"))
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MISC_WARPRIZES_SUCCESS", (szWP,)), iPlayerW, 16, INFO.getButton("UNIT_", iUnitL), eColor, iX, iY, True, True, bForce=False)
 					elif iPlayerL == iPlayerAct:
 						aPosL = STATE.getUnitPosition(iPlayerL, iUnitIdL)
 						iX = aPosL[0]
 						iY = aPosL[1]
-						eColor = ColorTypes(GC.getCOLOR_RED())
+						eColor = ColorTypes(GC.getInfoTypeForString("COLOR_RED"))
 						artPath = 'Art/Interface/Buttons/General/warning_popup.dds'
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MISC_WARPRIZES_FAILURE", (szWP,)), iPlayerL, 16, artPath, eColor, iX, iY, True, True, bForce=False)
 					# Booty
@@ -1256,28 +1256,28 @@ class CvEventManager:
 			CyPlot.setImprovementType(-1)
 
 			if CyPlot.getTerrainType() == GC.getInfoTypeForString('TERRAIN_TAIGA'):
-				CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 2) # snowy forest
+				CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 2) # snowy forest
 			else:
 				lat = CyPlot.getLatitude()
 				iChance = GAME.getSorenRandNum(100, "FEATURE_FOREST")
 				if lat > 60: # POLAR
 					if iChance < 10:
-						CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 0) # leafy forest
+						CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 0) # leafy forest
 					else:
-						CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 1) # evergreen forest
+						CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 1) # evergreen forest
 				elif lat > 25: # TEMPERATE
 					if iChance < 70:
-						CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 0) # leafy forest
+						CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 0) # leafy forest
 					else:
-						CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 1) # evergreen forest
+						CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 1) # evergreen forest
 				else: # EQUATOR
 					if iChance < 10:
-						CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 1) # evergreen forest
+						CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 1) # evergreen forest
 					elif iChance < 70:
-						CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 0) # leafy forest
+						CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 0) # leafy forest
 					else:
 						if CyPlot.getTerrainType() in (GC.getInfoTypeForString('TERRAIN_LUSH'), GC.getInfoTypeForString('TERRAIN_MUDDY')):
-							CyPlot.setFeatureType(GC.getFEATURE_JUNGLE(), 0)
+							CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_JUNGLE"), 0)
 						else:
 							CyPlot.setFeatureType(GC.getInfoTypeForString('FEATURE_BAMBOO'), 0)
 
@@ -1733,7 +1733,7 @@ class CvEventManager:
 						CyPlotDo.setRouteType(iRoute)
 		# Route66
 		elif iBuilding == mapBuildingType["ROUTE_66"]:
-			iUnit = GC.getUNIT_WORKER()
+			iUnit = GC.getInfoTypeForString("UNIT_WORKER")
 			if iUnit < 0:
 				print "Error CvEventManager.onBuildingBuilt\n\tUNIT_WORKER doesn't exist, aborting python effect for Route 66"
 				return
@@ -1765,7 +1765,7 @@ class CvEventManager:
 						pRoutePlot.setRouteType(iRoute)
 		# Appian Way
 		elif iBuilding == mapBuildingType["APPIAN_WAY"]:
-			iUnit = GC.getUNIT_WORKER()
+			iUnit = GC.getInfoTypeForString("UNIT_WORKER")
 			if iUnit < 0:
 				print "Error CvEventManager.onBuildingBuilt\n\tUNIT_WORKER doesn't exist, aborting python effect for Appian Way"
 				return
@@ -1974,7 +1974,7 @@ class CvEventManager:
 			iTeam = GC.getPlayer(iPlayer).getTeam()
 			iX = CyCity.getX()
 			iY = CyCity.getY()
-			DESERT		= GC.getTERRAIN_DESERT()
+			DESERT		= GC.getInfoTypeForString("TERRAIN_DESERT")
 			PLAINS		= GC.getInfoTypeForString('TERRAIN_PLAINS')
 			GRASS		= GC.getInfoTypeForString('TERRAIN_GRASSLAND')
 			TAIGA		= GC.getInfoTypeForString('TERRAIN_TAIGA')
@@ -2004,8 +2004,8 @@ class CvEventManager:
 							i = CyPlot.getImprovementType()
 							if i > -1 and i in (A, B, C, D, E, F, G, H, I, J):
 								continue
-							if CyPlot.getFeatureType() != GC.getFEATURE_JUNGLE():
-								CyPlot.setFeatureType(GC.getFEATURE_FOREST(), 1)
+							if CyPlot.getFeatureType() != GC.getInfoTypeForString("FEATURE_JUNGLE"):
+								CyPlot.setFeatureType(GC.getInfoTypeForString("FEATURE_FOREST"), 1)
 						elif iTerrain == PLAINS:
 							CyPlot.setTerrainType(GRASS, 1, 1)
 						elif iTerrain == MARSH:
@@ -2740,7 +2740,7 @@ class CvEventManager:
 					if iOwnerNew == iActivePlayer:
 						bActive = True
 						artPath = 'Art/Interface/Buttons/General/happy_person.dds'
-						eColor = ColorTypes(GC.getCOLOR_GREEN())
+						eColor = ColorTypes(GC.getInfoTypeForString("COLOR_GREEN"))
 					else:
 						bActive = False
 						artPath = 'Art/Interface/Buttons/General/warning_popup.dds'

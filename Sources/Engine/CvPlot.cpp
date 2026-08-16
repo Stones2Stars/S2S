@@ -8007,6 +8007,69 @@ int CvPlot::calculateTotalBestNatureYield(TeamTypes eTeam) const
 }
 
 
+//	WHAT LAYING THIS BUILD HERE WOULD CHANGE THIS PLOT'S YIELD BY -- the improvement it creates, the improvement
+//	it replaces, and any feature or terrain it changes, composed into ONE answer.
+//
+//	⚑ IT LIVES HERE, BESIDE `calculateImprovementYieldChange`, BECAUSE THAT IS ITS OWN PRECEDENT: the improvement
+//	half of this question was already a shared plot method with ~18 AI callers, so the displayed number and the
+//	number the AI weighs are the same number for that half ([DEC-single-implementation]). The feature and terrain
+//	halves had NO shared home and were composed inline in the build-action tooltip -- the only site in the tree
+//	that asked the whole question. Composing them here finishes the existing method rather than minting a parallel
+//	one ([DEC-it-already-exists]), and makes the whole answer available to the AI on the same terms.
+//
+//	⚠ The `/100` on the substrate legs is the READER reducing at its point of use
+//	([DEC-fixedpoint-x100]): `getFlatYield` serves the ×100 native value while
+//	`calculateImprovementYieldChange` already answers in whole yields, so the two legs are brought onto one scale
+//	HERE rather than at each call site -- which is exactly the mixing this method exists to stop being re-derived.
+int CvPlot::calculateBuildYieldChange(BuildTypes eBuild, YieldTypes eYield) const
+{
+	if (eBuild == NO_BUILD)
+	{
+		return 0;
+	}
+	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
+	const ImprovementTypes eImprovement = (ImprovementTypes)kBuild.getImprovement();
+	const RouteTypes eRoute = (RouteTypes)kBuild.getRoute();
+	const bool bIsFeatureChange = (kBuild.getFeatureChange() != NO_FEATURE);
+	const bool bIsTerrainChange = (kBuild.getTerrainChange() != NO_TERRAIN);
+
+	int iYield = 0;
+	if (eImprovement != NO_IMPROVEMENT)
+	{
+		iYield += calculateImprovementYieldChange(eImprovement, eYield);
+	}
+
+	//	The improvement standing here is only DISPLACED by another improvement -- laying a route, or changing the
+	//	feature or terrain under it, leaves it in place, so its yield is not withdrawn in those cases.
+	if (getImprovementType() != NO_IMPROVEMENT
+	&&  eRoute == NO_ROUTE
+	&&  !bIsFeatureChange && !bIsTerrainChange)
+	{
+		iYield -= calculateImprovementYieldChange(getImprovementType(), eYield);
+	}
+
+	const FeatureTypes ePlotFeature = getFeatureType();
+	if (ePlotFeature != NO_FEATURE && kBuild.isFeatureRemove(ePlotFeature))
+	{
+		iYield -= GC.getFeatureInfo(ePlotFeature).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
+	}
+	if (bIsFeatureChange)
+	{
+		iYield += GC.getFeatureInfo((FeatureTypes)kBuild.getFeatureChange())
+			.getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
+	}
+
+	const TerrainTypes ePlotTerrain = getTerrainType();
+	if (ePlotTerrain != NO_TERRAIN && bIsTerrainChange)
+	{
+		iYield += GC.getTerrainInfo((TerrainTypes)kBuild.getTerrainChange())
+			.getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
+		iYield -= GC.getTerrainInfo(ePlotTerrain).getFlatYield(eYield, CASC_SCOPE_PLOT) / 100;
+	}
+	return iYield;
+}
+
+
 int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const
 {
 	// What this improvement itself delivers on this plot -- the improvement is the entity that DELIVERS the

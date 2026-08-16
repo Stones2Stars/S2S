@@ -86,6 +86,18 @@ int CyBuildingInfo::getVoteSource(int iBuilding) const
 	return pBuilding ? pBuilding->getDiploVoteType() : NO_VOTESOURCE;
 }
 
+int CyBuildingInfo::getCost(int iBuilding) const
+{
+	const CvBuildingInfo* pBuilding = cyb_building(iBuilding);
+	return pBuilding ? pBuilding->getCost() : 0;
+}
+
+int CyBuildingInfo::getReligion(int iBuilding) const
+{
+	const CvBuildingInfo* pBuilding = cyb_building(iBuilding);
+	return pBuilding ? pBuilding->getReligion() : NO_RELIGION;
+}
+
 int CyBuildingInfo::getHeadquartersCorporation(int iBuilding) const
 {
 	const CvBuildingInfo* pBuilding = cyb_building(iBuilding);
@@ -100,6 +112,8 @@ void CyBuildingInfo::pythonPublish()
 		.def("isLimitedWonder",             &CyBuildingInfo::isLimitedWonder)
 		.def("isRelocatable",               &CyBuildingInfo::isRelocatable)
 		.def("getVoteSource",               &CyBuildingInfo::getVoteSource)
+		.def("getCost",                     &CyBuildingInfo::getCost)
+		.def("getReligion",                 &CyBuildingInfo::getReligion)
 		.def("getHeadquartersCorporation",  &CyBuildingInfo::getHeadquartersCorporation)
 		;
 }

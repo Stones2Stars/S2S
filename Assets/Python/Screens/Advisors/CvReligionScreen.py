@@ -372,12 +372,12 @@ class CvReligionScreen:
 		self.objectUnderConstruction = self.hammerIcon
 
 		# add the colors dependant on the statuses
-		self.objectHave = localText.changeTextColor (self.objectIsPresent, GC.getCOLOR_GREEN()) #"x"
-		self.objectNotPossible = localText.changeTextColor (self.objectIsNotPresent, GC.getCOLOR_RED()) #"-"
-		self.objectPossible = localText.changeTextColor (self.objectCanBeBuild, GC.getCOLOR_BLUE()) #"o"
-		self.objectHaveObsolete = localText.changeTextColor (self.objectIsPresent, GC.getCOLOR_WHITE()) #"x"
-		self.objectNotPossibleConcurrent = localText.changeTextColor (self.objectIsNotPresent, GC.getCOLOR_YELLOW()) #"-"
-		self.objectPossibleConcurrent = localText.changeTextColor (self.objectCanBeBuild, GC.getCOLOR_YELLOW()) #"o"
+		self.objectHave = localText.changeTextColor (self.objectIsPresent, GC.getInfoTypeForString("COLOR_GREEN")) #"x"
+		self.objectNotPossible = localText.changeTextColor (self.objectIsNotPresent, GC.getInfoTypeForString("COLOR_RED")) #"-"
+		self.objectPossible = localText.changeTextColor (self.objectCanBeBuild, GC.getInfoTypeForString("COLOR_BLUE")) #"o"
+		self.objectHaveObsolete = localText.changeTextColor (self.objectIsPresent, GC.getInfoTypeForString("COLOR_WHITE")) #"x"
+		self.objectNotPossibleConcurrent = localText.changeTextColor (self.objectIsNotPresent, GC.getInfoTypeForString("COLOR_YELLOW")) #"-"
+		self.objectPossibleConcurrent = localText.changeTextColor (self.objectCanBeBuild, GC.getInfoTypeForString("COLOR_YELLOW")) #"o"
 
 		self.szCities = localText.getText("TXT_KEY_BUG_RELIGIOUS_CITY", ())
 		self.szTemples = localText.getText("TXT_KEY_BUG_RELIGIOUS_TEMPLE", ())

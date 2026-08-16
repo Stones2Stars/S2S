@@ -475,7 +475,7 @@ def canBuildCowBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if not pPlot.isFlatlands() or pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS")): return 0
 	return 1
 
@@ -499,7 +499,7 @@ def canBuildCowBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),			GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -523,7 +523,7 @@ def canBuildHorseBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if not pPlot.isFlatlands() or pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS")): return 0
 	return 1
 
@@ -547,7 +547,7 @@ def canBuildHorseBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),		GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -572,7 +572,7 @@ def canBuildDonkeyBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS"), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
 	return 1
 
@@ -596,7 +596,7 @@ def canBuildDonkeyBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),		GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -621,7 +621,7 @@ def canBuildSheepBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if not pPlot.isHills() or pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS")): return 0
 	return 1
 
@@ -645,7 +645,7 @@ def canBuildSheepBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),			GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -670,7 +670,7 @@ def canBuildCamelBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getTERRAIN_DESERT(), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
+	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getInfoTypeForString("TERRAIN_DESERT"), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
 	return 1
 
 def doBuildCamelBonus(argsList):
@@ -691,7 +691,7 @@ def canBuildCamelBonusAndPasture(argsList):
 	# Check if plot has a city or any map bonus.
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getTERRAIN_DESERT(), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
+	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getInfoTypeForString("TERRAIN_DESERT"), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
 	return 1
 
 def doBuildCamelBonusAndPasture(argsList):
@@ -713,7 +713,7 @@ def canBuildLlamaBonus(argsList):
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getTerrainType() not in (
-		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getTERRAIN_DESERT(),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
+		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getInfoTypeForString("TERRAIN_DESERT"),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
 		GC.getInfoTypeForString("TERRAIN_ROCKEY"),	GC.getInfoTypeForString("TERRAIN_BADLAND")
 		): return 0
 	return 1
@@ -737,7 +737,7 @@ def canBuildLlamaBonusAndPasture(argsList):
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getTerrainType() not in (
-		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getTERRAIN_DESERT(),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
+		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getInfoTypeForString("TERRAIN_DESERT"),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
 		GC.getInfoTypeForString("TERRAIN_ROCKEY"),	GC.getInfoTypeForString("TERRAIN_BADLAND")
 		): return 0
 	return 1
@@ -761,8 +761,8 @@ def canBuildPigBonus(argsList):
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() not in (
-		GC.getFEATURE_FOREST(), GC.getInfoTypeForString("FEATURE_FOREST_ANCIENT"),
-		GC.getFEATURE_JUNGLE(), GC.getFEATURE_FLOOD_PLAINS()
+		GC.getInfoTypeForString("FEATURE_FOREST"), GC.getInfoTypeForString("FEATURE_FOREST_ANCIENT"),
+		GC.getInfoTypeForString("FEATURE_JUNGLE"), GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS")
 		): return 0
 	if pPlot.getTerrainType() not in (
 		GC.getInfoTypeForString("TERRAIN_SCRUB"), GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS"),

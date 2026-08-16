@@ -25,9 +25,7 @@
 > nine `isRevealed`, four `getBuildingOriginalTime`, three `hasBuilding` and two `plot()` — all of which would
 > have thrown on the following click.)* ⇒ When you touch a file for ANY reason, clear its dead reads while you
 > are in it, and grep the file rather than trusting the traceback that sent you there.
-> ⚠ The exception that is NOT a licence to defer: a read whose replacement surface **does not exist yet** is a
-> SURFACE to build, not a call to re-point — build it, and say so plainly rather than re-pointing onto something
-> that answers a different question. The families known to have NO read today, so nobody re-derives the list:
+> The families known to have NO read today, so nobody re-derives the list:
 > **the vote** (`isVoteSourceType` / `isSecretaryGeneral` — the rebuilt `CvVoteInfo` answers them as
 > `hasVoteSource()` and `getRole() == VOTE_ROLE_SECRETARY_GENERAL`, so the DATA is there and only the binding is
 > missing), **the vote source** (`VOTESOURCE_` is not a registered prefix at all — it needs its own accessor),

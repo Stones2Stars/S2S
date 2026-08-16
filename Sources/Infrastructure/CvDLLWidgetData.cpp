@@ -2675,71 +2675,76 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				CvTeam& team = GET_TEAM(pHeadSelectedUnit->getTeam());
 				RouteTypes eRoute = ((RouteTypes)(GC.getBuildInfo(eBuild).getRoute()));
 
+				//	── COST AND TIME, FIRST ── how long it takes and what it costs are the two facts a player hovers
+				//	a build to ask, so they lead. They used to sit at the very BOTTOM of this branch, under ~570
+				//	lines of yield detail -- present, and unfindable. It is the same defect the unit hover had, and
+				//	it is worth stating as the general one: a block whose ORDER buries the answer reads exactly like
+				//	a block that does not render at all ([patterns.md] § the per-entry TEXT render).
+				//	⚑ The turn count is the SELECTION's, not one worker's: every selected unit not already on this
+				//	build adds its work rate, which is what makes a stack of workers show the time the stack will
+				//	actually take. `workRate(false)` is the rate now, `(true)` the rate once the build is under way.
+				int iNowWorkRate = 0;
+				int iThenWorkRate = 0;
+				foreach_(const CvUnit* pSelectedUnit, gDLL->getInterfaceIFace()->getSelectionList()->units())
+				{
+					if (pSelectedUnit->getBuildType() != eBuild)
+					{
+						iNowWorkRate += pSelectedUnit->workRate(false);
+						iThenWorkRate += pSelectedUnit->workRate(true);
+					}
+				}
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_ACTION_NUM_TURNS",
+					pMissionPlot->getBuildTurnsLeft(eBuild, iNowWorkRate, iThenWorkRate)));
+
+				if (GET_PLAYER(pHeadSelectedUnit->getOwner()).getBuildCost(pMissionPlot, eBuild) > 0)
+				{
+					szBuffer.append(NEWLINE);
+					szBuffer.append(gDLL->getText("TXT_KEY_BUILDHELP_COST",
+						GET_PLAYER(pHeadSelectedUnit->getOwner()).getBuildCost(pMissionPlot, eBuild)));
+				}
+
 				BonusTypes ePlotBonus = pMissionPlot->getBonusType(pHeadSelectedUnit->getTeam());
 				FeatureTypes ePlotFeature = pMissionPlot->getFeatureType();
 				TerrainTypes ePlotTerrain = pMissionPlot->getTerrainType();
 				bool bIsFeatureChange = (GC.getBuildInfo(eBuild).getFeatureChange() != NO_FEATURE);
 				bool bIsTerrainChange = (GC.getBuildInfo(eBuild).getTerrainChange() != NO_TERRAIN);
 
-				// Calculate, show yield/happy changes as a result of improvement changes (including non-improvements using FeatureChange/TerrainChange tag)
+				//	WHAT THE BUILD WOULD CHANGE THIS PLOT'S YIELD BY -- asked of the PLOT, which owns the question.
+				//	⛔ This was composed INLINE here, and it was the only site in the tree that asked the whole
+				//	question: the improvement half was already the shared `calculateImprovementYieldChange` (~18 AI
+				//	callers), while the feature and terrain halves existed nowhere else. So a tooltip was carrying
+				//	arithmetic no other consumer could reach, which is the shape that lets a displayed number and an
+				//	acted-on number drift apart ([DEC-single-implementation]).
+				//	⚑ Composing it on `CvPlot` beside its own improvement half FINISHES that method rather than
+				//	minting a parallel one, and hands the AI the same answer on the same terms.
 				int aYields[NUM_YIELD_TYPES] = {0};
 				bool bIsYield = false;
 				for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 				{
-					int iYield = 0;
-					if (eImprovement != NO_IMPROVEMENT)
-					{
-						iYield += pMissionPlot->calculateImprovementYieldChange(eImprovement, ((YieldTypes)iI));
-					}
-
-					// Assuming neither using FeatureChange/TerrainChange nor placing routes will remove improvements (though former may remove prereqs for imps...)
-					if (pMissionPlot->getImprovementType() != NO_IMPROVEMENT
-					&&  eRoute == NO_ROUTE
-					&&  !bIsFeatureChange && !bIsTerrainChange)
-					{
-						iYield -= pMissionPlot->calculateImprovementYieldChange(pMissionPlot->getImprovementType(), ((YieldTypes)iI));
-					}
-
-					// Yield deltas from removing/changing features
-					if (NO_FEATURE != ePlotFeature
-					&&  GC.getBuildInfo(eBuild).isFeatureRemove(ePlotFeature))
-					{
-						iYield -= GC.getFeatureInfo(ePlotFeature).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
-					}
-					if (bIsFeatureChange)
-					{
-						iYield += GC.getFeatureInfo((FeatureTypes)GC.getBuildInfo(eBuild).getFeatureChange())
-							.getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
-					}
-
-					// Yield delta from terrain change
-					if ( (NO_TERRAIN != ePlotTerrain) && bIsTerrainChange)
-					{
-						iYield += GC.getTerrainInfo((TerrainTypes)GC.getBuildInfo(eBuild).getTerrainChange()).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
-						iYield -= GC.getTerrainInfo(ePlotTerrain).getFlatYield((YieldTypes)iI, CASC_SCOPE_PLOT) / 100;
-					}
-
-					if (iYield != 0)
+					aYields[iI] = pMissionPlot->calculateBuildYieldChange(eBuild, (YieldTypes)iI);
+					if (aYields[iI] != 0)
 					{
 						bIsYield = true;
 					}
-					aYields[iI] = iYield;
 				}
 
-				// Show yields on newline to reduce wrapping, look nicer
+				//	── THE YIELD DELTA, THROUGH THE ONE SHARED RENDERER ──
+				//	⛔ This block used to format the array BY HAND -- a sign test, a `%d`, a `getChar()` and its own
+				//	comma joining -- which is precisely the per-magnitude hand-assembly the text manager is meant to
+				//	have lost ([patterns.md] THE DIVISION OF LABOUR: a composer decides WHICH sources compose a
+				//	block and under what heading; it never decides how a magnitude is SPELLED).
+				//	⚑ `setYieldChangeHelp` is that renderer and every other composer already goes through it, so how
+				//	a yield delta reads is now decided in ONE place -- a change to it lands everywhere at once
+				//	instead of here alone, which is what "uniform" has to mean to be worth anything
+				//	([DEC-single-implementation]).
+				//	⚠ The COMPUTATION above is deliberately untouched: it is a WHAT-IF (what this plot would yield
+				//	if the build landed), which is the valuation plane rather than an entry list, and re-homing it
+				//	is a different and much larger question than how its result is printed.
 				if (bIsYield)
 				{
-					bool bFirstYield = true;
-					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_YIELD_CHANGE_DESCRIP") + " ");
-					for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-					{
-						if (aYields[iI] != 0)
-						{
-							bFirstYield ? bFirstYield = false : szBuffer.append(", ");
-							szBuffer.append(CvWString::format(L"%s%d%c", ((aYields[iI] > 0) ? L"+" : L""), aYields[iI], GC.getYieldInfo((YieldTypes)iI).getChar()));
-						}
-					}
+					GAMETEXT.setYieldChangeHelp(szBuffer, gDLL->getText("TXT_KEY_YIELD_CHANGE_DESCRIP"),
+						L": ", L"", aYields, /*bPercent*/ false, /*bNewLine*/ true);
 				}
 
 
@@ -3227,34 +3232,8 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					szBuffer.append(gDLL->getText("TXT_KEY_ACTION_CONNECTS_RESOURCES"));
 				}
 
-				int iNowWorkRate = 0;
-				int iThenWorkRate = 0;
-
-
-				if (NULL != pHeadSelectedUnit)
-				{
-					if (GET_PLAYER(pHeadSelectedUnit->getOwner()).getBuildCost(pMissionPlot, eBuild) > 0)
-					{
-						szBuffer.append(NEWLINE);
-						szBuffer.append(gDLL->getText("TXT_KEY_BUILDHELP_COST", GET_PLAYER(pHeadSelectedUnit->getOwner()).getBuildCost(pMissionPlot, eBuild)));
-					}
-				}
-
-				foreach_(const CvUnit* pSelectedUnit, gDLL->getInterfaceIFace()->getSelectionList()->units())
-				{
-					if (pSelectedUnit->getBuildType() != eBuild)
-					{
-						iNowWorkRate += pSelectedUnit->workRate(false);
-						iThenWorkRate += pSelectedUnit->workRate(true);
-					}
-				}
-
-				int iTurns = pMissionPlot->getBuildTurnsLeft(eBuild, iNowWorkRate, iThenWorkRate);
-
-
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_ACTION_NUM_TURNS", iTurns));
-
+				//	The build's own HELP text closes the block -- it is authored prose about the build in general,
+				//	so it belongs after everything this particular plot has to say about it.
 				if (!CvWString(GC.getBuildInfo(eBuild).getHelp()).empty())
 				{
 					szBuffer.append(CvWString::format(L"%s%s", NEWLINE, GC.getBuildInfo(eBuild).getHelp()).c_str());

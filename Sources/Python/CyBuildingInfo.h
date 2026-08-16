@@ -51,6 +51,16 @@ public:
 	//	The VOTESOURCE_* diplomatic body this building CONVENES, NO_VOTESOURCE when it convenes none.
 	int getVoteSource(int iBuilding) const;
 
+	//	The authored PRODUCTION cost (`cost.production`). ⛔ It carries NO -1 sentinel: the legacy "-1 means not
+	//	player-constructible" overload is the `notConstructible` flag's job ([json.md] §7), so a consumer asking
+	//	what something COSTS never has to decode a buildability verdict out of the answer.
+	int getCost(int iBuilding) const;
+
+	//	The RELIGION_* this building is associated with, NO_RELIGION when none — the religious-building link.
+	//	⛔ NOT the SHRINE relationship (json §9 `shrine`, a separate FK) and NOT a holy-city gate, which moved to
+	//	`requires.build` ([json.md] §5) and is therefore an availability question, never an info read.
+	int getReligion(int iBuilding) const;
+
 	//	The CORPORATION_* this building is the HEADQUARTERS of (json §9 `headquarters`), NO_CORPORATION when none.
 	//	⛔ NOT the inverse question -- "which building heads corporation X" is a reverse lookup and belongs to the
 	//	edge families ([DEC-one-reverse-view]), never a scan of every building asking this.

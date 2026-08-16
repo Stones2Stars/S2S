@@ -690,6 +690,12 @@ int CyInfo::getEventPlotExtraYield(int iEventId, int iYield) const
 	return pEvent ? pEvent->getPlotExtraYield(iYield) : 0;
 }
 
+int CyInfo::getEventFood(int iEventId) const
+{
+	const CvEventInfo* pEvent = static_cast<const CvEventInfo*>(cyi_xmlOnlyInfo("EVENT_", iEventId));
+	return pEvent ? pEvent->getFood() : 0;
+}
+
 python::list CyInfo::getCivilizationLeaders(int iCivilizationId) const
 {
 	python::list lIds;
@@ -717,6 +723,28 @@ python::list CyInfo::getCivilizationCityNames(int iCivilizationId) const
 		lNames.append(pCiv->getCityName(iName));
 	}
 	return lNames;
+}
+
+python::list CyInfo::getShrineBuildings(int iReligionId) const
+{
+	python::list lIds;
+	const CvReligionInfo* pReligion =
+		static_cast<const CvReligionInfo*>(cyi_info("RELIGION_", iReligionId));
+	if (pReligion == NULL) return lIds;
+
+	const std::vector<BuildingTypes>& aeShrines = pReligion->getShrineBuildings();
+	for (size_t iShrine = 0; iShrine < aeShrines.size(); ++iShrine)
+	{
+		lIds.append((int)aeShrines[iShrine]);
+	}
+	return lIds;
+}
+
+int CyInfo::getDerivativeCiv(int iCivilizationId) const
+{
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	return pCiv ? (int)pCiv->getDerivativeCiv() : (int)NO_CIVILIZATION;
 }
 
 bool CyInfo::hasAttribute(const std::string& szTypePrefix, int iId, int iAttributeId) const
@@ -1604,9 +1632,12 @@ void CyInfo::pythonPublish()
 		.def("getAllowedCap", &CyInfo::getAllowedCap)
 		.def("getFeatureGrowthProbability", &CyInfo::getFeatureGrowthProbability)
 		.def("getEventPlotExtraYield", &CyInfo::getEventPlotExtraYield)
+		.def("getEventFood", &CyInfo::getEventFood)
 		.def("getFeatureDisappearanceProbability", &CyInfo::getFeatureDisappearanceProbability)
 		.def("getCivilizationLeaders", &CyInfo::getCivilizationLeaders)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
+		.def("getShrineBuildings", &CyInfo::getShrineBuildings)
+		.def("getDerivativeCiv", &CyInfo::getDerivativeCiv)
 		.def("civicOptions",   &CyInfo::civicOptions, python::return_value_policy<python::reference_existing_object>())
 		;
 }

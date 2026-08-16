@@ -10,6 +10,24 @@ ENUMS = CyEnums()
 
 class CvWonderMovieScreen:
 
+	def __init__(self):
+		# The ENGINE drives update() for a screen it has turned on, and it does so independently of
+		# interfaceScreen -- which returns early for four perfectly ordinary reasons: the NO_MOVIES graphic
+		# option, an invalid movie type, an entity that simply HAS no movie file ("not all projects have
+		# movies"), and an unrecognised file extension. On any of those the movie state was never established,
+		# and update() read an attribute that did not exist -- an AttributeError per frame, which the engine
+		# reports as "Python function update failed" and which leaves the window rendering NOTHING.
+		# So the state update() reads is established HERE, once, and is never absent.
+		self.resetMovieState()
+
+	def resetMovieState(self):
+		self.screenId = -1
+		self.iMovieType = -1
+		self.iWonderId = -1
+		self.fTime = 0
+		self.bTimer = False
+		self.iInfoPanel = 0
+
 	def interfaceScreen(self, iMovieItem, iCityId, iMovieType, screenId):
 		# iMovieItem is either the WonderID, the ReligionID, or the ProjectID, depending on iMovieType (or the feature id :p)
 
@@ -92,7 +110,11 @@ class CvWonderMovieScreen:
 			szHeader = CvInfo.getDescription()
 
 		elif iMovieType == 3:
-			szHeader = CvInfo.getDescription()
+			# The FEATURE path never binds CvInfo -- it resolves its movie through the id surface, not through
+			# a legacy info handle -- so the header reads the same way ([DEC-cy-not-fixed]: the id surface IS
+			# the read). Falling through to CvInfo here raised UnboundLocalError AFTER showScreen and BEFORE
+			# the exit button was added, which is what left an undismissable empty window.
+			szHeader = INFO.getDescription("FEATURE_", iMovieItem)
 
 		screen.setText("", "", "<font=4b>" + szHeader, 1<<2, 376, 10, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 2)
 
@@ -170,4 +192,7 @@ class CvWonderMovieScreen:
 				self.bTimer = False
 
 	def onClose(self):
-		del self.screenId, self.iMovieType, self.iWonderId, self.fTime, self.bTimer, self.iInfoPanel
+		# RESET, never `del`. Deleting these is what guaranteed the failure above: the screen instance is
+		# long-lived (it is built once by the screen factory), so a closed movie left an object whose state
+		# had been destroyed while the engine could still call update() on it.
+		self.resetMovieState()

@@ -152,7 +152,7 @@ class TheScreen:
 		screen.setLabel("EA_Header", "", uFontEdge + TRNSLTR.getText("TXT_KEY_HUD_BUTTON_ADVISOR_INTELLIGENCE",()), 1<<2, iResX / 2, 2, 0, iFontTitle, iWidGen, 0, 0)
 		screen.setText("EA_Btn_Exit", "", uFontEdge + TRNSLTR.getText("TXT_WORD_EXIT",()), 1<<1, iResX - 16, 0, 0, iFontTitle, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1)
 
-		iCol = GC.getCOLOR_YELLOW()
+		iCol = GC.getInfoTypeForString("COLOR_YELLOW")
 		szTxt = uFontEdge + TRNSLTR.getText("TXT_KEY_ESPIONAGE_MISSIONS_TAB", ())
 		szTxtCol = TRNSLTR.changeTextColor(szTxt, iCol)
 		dX = iResX / 2

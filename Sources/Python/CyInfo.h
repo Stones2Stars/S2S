@@ -496,6 +496,10 @@ public:
 	// exactly this. ⚠ EVENT_ is an XML-only registry ([naming.md]) reached through the xml-only half of the
 	// prefix plane, not the JSON repo table.
 	int getEventPlotExtraYield(int iEventId, int iYield) const;
+	// An EVENT's authored FOOD pulse -- the amount it adds to each affected city. Same registry and the same
+	// xml-only reach as its neighbour above; events are a PERMANENT carve-out (they stay Python), so this
+	// serves the existing handler rather than modelling anything.
+	int getEventFood(int iEventId) const;
 	// A CIVILIZATION's OWN authored lists -- the leaderheads that may lead it, and its city-name pool.
 	// ⚑ These are the civ's own data, so the read hands the list over. Asking every leaderhead whether it
 	// belongs to this civ is the own-data inversion the reverse-view rule names, and it is what these replace.
@@ -503,6 +507,16 @@ public:
 	// surface's to own ([patterns.md] -- the library serves the raw key reference).
 	python::list getCivilizationLeaders(int iCivilizationId) const;
 	python::list getCivilizationCityNames(int iCivilizationId) const;
+	// The buildings that are this RELIGION's shrines -- the load-populated reverse view
+	// (`CvReligionInfo::getShrineBuildings`, filled by the readJson reverse pass from each building's §9 `shrine`
+	// FK). ⛔ This is the read that replaces sweeping every building asking whose shrine it is: the inverse
+	// direction is answered by the referenced info's own list, never by a scan
+	// ([DEC-one-reverse-view]).
+	python::list getShrineBuildings(int iReligionId) const;
+	// The CIVILIZATION_* this civ turns into (identity.derivativeCiv), NO_CIVILIZATION when it derives none.
+	// Its own data, read forward off the civ that carries it -- never a sweep asking every civ what it derives
+	// from ([DEC-one-reverse-view]).
+	int getDerivativeCiv(int iCivilizationId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
 	// STRING-keyed: canTrade keys are open DATA, not classification-registry ids, so the key IS the vocabulary.

@@ -155,12 +155,12 @@ class CvMainInterface:
 				"TXT_KEY_RAW_YIELD_TILES_OWNED",
 				"TXT_KEY_RAW_YIELD_TILES_ALL")
 			# Cache Constants.
-			self.iPlotListMaxRows		= GC.getMAX_PLOT_LIST_ROWS()
+			self.iPlotListMaxRows		= GC.getDefineINT("MAX_PLOT_LIST_ROWS")
 			self.iMaxPlayers			= GC.getMAX_PLAYERS()
 			self.iMaxPcTeams			= GC.getMAX_PC_TEAMS()
 			self.iMaxPcPlayers			= GC.getMAX_PC_PLAYERS()
-			self.iMaxDefenseDamage		= GC.getMAX_CITY_DEFENSE_DAMAGE()
-			self.fMoveDenominator = float(GC.getMOVE_DENOMINATOR())
+			self.iMaxDefenseDamage		= GC.getDefineINT("MAX_CITY_DEFENSE_DAMAGE")
+			self.fMoveDenominator = float(GC.getDefineINT("MOVE_DENOMINATOR"))
 			self.bNegGoldIsMaintenance	= GC.getDefineINT("TREAT_NEGATIVE_GOLD_AS_MAINTENANCE")
 			self.iNumReligionInfos		= GC.getNumReligionInfos()
 			self.iNumCorporationInfos	= GC.getNumCorporationInfos()

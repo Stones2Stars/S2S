@@ -19,6 +19,7 @@ from operator import itemgetter
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 GAME = GC.getGame()
 MAP = GC.getMap()
 STATE = CyState()
@@ -95,7 +96,7 @@ def applyBlessedSea2(argsList):
 	if -1 != data.eReligion:
 		for i in xrange(GC.getNumBuildingInfos()):
 			if BUILDING.getSpecialBuilding(i) == GC.getInfoTypeForString("SPECIALBUILDING_TEMPLE"):
-				if GC.getBuildingInfo(i).getReligionType() == data.eReligion:
+				if BUILDING.getReligion(i) == data.eReligion:
 					iBuilding = i
 					break
 
@@ -115,7 +116,7 @@ def canApplyBlessedSea2(argsList):
 	if -1 != data.eReligion:
 		for i in xrange(GC.getNumBuildingInfos()):
 			if BUILDING.getSpecialBuilding(i) == GC.getInfoTypeForString("SPECIALBUILDING_TEMPLE"):
-				if GC.getBuildingInfo(i).getReligionType() == data.eReligion:
+				if BUILDING.getReligion(i) == data.eReligion:
 					iBuilding = i
 					break
 	if (iBuilding == -1):
@@ -143,7 +144,7 @@ def getHelpHolyMountain1(argsList):
 			or  BUILDING.getSpecialBuilding(i) == GC.getInfoTypeForString("SPECIALBUILDING_CATHEDRAL_II")
 			or  BUILDING.getSpecialBuilding(i) == GC.getInfoTypeForString("SPECIALBUILDING_PANTHEON")
 			)
-			and GC.getBuildingInfo(i).getReligionType() == iReligion
+			and BUILDING.getReligion(i) == iReligion
 			):
 				iBuilding = i
 				break
@@ -205,11 +206,9 @@ def canTriggerHolyMountainRevealed(argsList):
 
 	iPoints = 0
 	for i in xrange(GC.getNumBuildingInfos()):
-		CvBuildingInfo = GC.getBuildingInfo(i)
+		if BUILDING.getReligion(i) == dataOriginal.eReligion:
 
-		if CvBuildingInfo.getReligionType() == dataOriginal.eReligion:
-
-			iSpecialBuilding = CvBuildingInfo.getSpecialBuildingType()
+			iSpecialBuilding = BUILDING.getSpecialBuilding(i)
 
 			if iSpecialBuilding in (
 				GC.getInfoTypeForString("SPECIALBUILDING_CATHEDRAL"),
@@ -301,7 +300,7 @@ def doWeddingFeud3(argsList):
       # this works only because it's a single-player only event
       popupInfo = CyPopupInfo()
       popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
-      popupInfo.setText(TRNSLTR.getText("TXT_KEY_EVENT_WEDDING_FEUD_OTHER_3", (GC.getReligionInfo(data.eReligion).getAdjectiveKey(), player.getCivilizationShortDescriptionKey())))
+      popupInfo.setText(TRNSLTR.getText("TXT_KEY_EVENT_WEDDING_FEUD_OTHER_3", (INFO.getAdjective("RELIGION_", data.eReligion, 0), player.getCivilizationShortDescriptionKey())))
       popupInfo.setData1(data.eOtherPlayer)
       popupInfo.setData2(data.ePlayer)
       popupInfo.setPythonModule("CvRandomEventInterface")
@@ -384,7 +383,7 @@ def doBabyBoom(argList):
 	iEvent = argList[0]
 	data = argList[1]
 	CyPlayer = GC.getPlayer(data.ePlayer)
-	iFood = GC.getEventInfo(iEvent).getFood()
+	iFood = INFO.getEventFood(iEvent)
 
 	if iFood <= 0:
 		return 1
@@ -435,10 +434,9 @@ def canApplyLooters3(argsList):
 	for i in xrange(GC.getNumBuildingInfos()):
 		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i):
 			continue
-		info = GC.getBuildingInfo(i)
-		if info.isAutoBuild():
+		if INFO.isAutoBuild(i):
 			continue
-		iCost = info.getProductionCost()
+		iCost = BUILDING.getCost(i)
 		if iCost <= iTreshold and iCost > 0:
 			return True
 
@@ -457,10 +455,9 @@ def applyLooters3(argsList):
 	aList = []
 	for i in xrange(GC.getNumBuildingInfos()):
 		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i): continue
-		info = GC.getBuildingInfo(i)
-		if info.isAutoBuild():
+		if INFO.isAutoBuild(i):
 			continue
-		iCost = info.getProductionCost()
+		iCost = BUILDING.getCost(i)
 		if iCost <= iTreshold and iCost > 0:
 			aList.append(i)
 
@@ -470,14 +467,14 @@ def applyLooters3(argsList):
 		iBuilding = aList[GAME.getSorenRandNum(len(aList), "Looters event building destroyed")]
 		szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
 		if isLocalHumanPlayer(data.eOtherPlayer) :
-			CyInterface().addMessage(data.eOtherPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.eOtherPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 		ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBuilding, False)
 		aList.remove(iBuilding)
 		iCount += 1
 
 	szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_NUM_BUILDINGS_DESTROYED", (iCount, GC.getPlayer(data.eOtherPlayer).getCivilizationAdjectiveKey(), CyCity.getNameKey()))
 	if isLocalHumanPlayer(data.ePlayer) :
-		CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+		CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 
 ######## BROTHERS IN NEED ###########
 
@@ -551,8 +548,7 @@ def canApplyHurricane1(argsList):
 	for i in xrange(GC.getNumBuildingInfos()):
 		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
-		info = GC.getBuildingInfo(i)
-		if info.isNukeImmune() or info.isAutoBuild() or info.getProductionCost() < 1:
+		if INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i) or BUILDING.getCost(i) < 1:
 			continue
 		return True
 	return False
@@ -572,8 +568,7 @@ def applyHurricane1(argsList):
 	for i in xrange(GC.getNumBuildingInfos()):
 		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
-		info = GC.getBuildingInfo(i)
-		if info.isNukeImmune() or info.isAutoBuild() or info.getProductionCost() < 1:
+		if INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i) or BUILDING.getCost(i) < 1:
 			continue
 		aList.append(i)
 
@@ -581,7 +576,7 @@ def applyHurricane1(argsList):
 		iBuilding = aList[GAME.getSorenRandNum(len(aList), "Hurricane")]
 		szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
 		if isLocalHumanPlayer(data.ePlayer) :
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 		ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBuilding, False)
 
 
@@ -638,8 +633,7 @@ def applyTsunami2(argsList):
 	for i in xrange(GC.getNumBuildingInfos()):
 		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i):
 			continue
-		info = GC.getBuildingInfo(i)
-		if info.getProductionCost() > 0 and not info.isAutoBuild():
+		if BUILDING.getCost(i) > 0 and not INFO.isAutoBuild(i):
 			listBuildings.append(i)
 
 	for i in xrange(5):
@@ -647,7 +641,7 @@ def applyTsunami2(argsList):
 			iBuilding = listBuildings[GAME.getSorenRandNum(len(listBuildings), "Tsunami event building destroyed")]
 			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
 			if isLocalHumanPlayer(data.ePlayer) :
-				CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+				CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBuilding, False)
 			listBuildings.remove(iBuilding)
 
@@ -669,7 +663,7 @@ def canTriggerMonsoonCity(argsList):
   if city is None or city.isCoastalTo(WORLD.getOceanMinAreaSize(GC.getMap().getWorldSize())):
     return False
 
-  iJungleType = GC.getFEATURE_JUNGLE()
+  iJungleType = GC.getInfoTypeForString("FEATURE_JUNGLE")
 
   for iDX in xrange(-3, 4):
     for iDY in xrange(-3, 4):
@@ -741,7 +735,7 @@ def canApplySaltpeter(argsList):
 	if plot is None:
 		return False
 
-	iForest = GC.getFEATURE_FOREST()
+	iForest = GC.getInfoTypeForString("FEATURE_FOREST")
 
 	iNumPlots = 0
 	for loopPlot in map.plots():
@@ -758,7 +752,7 @@ def applySaltpeter(argsList):
 	plot = map.plot(data.iPlotX, data.iPlotY)
 	if plot is None:
 		return
-	iForest = GC.getFEATURE_FOREST()
+	iForest = GC.getInfoTypeForString("FEATURE_FOREST")
 
 	listPlots = []
 	for loopPlot in map.plots():
@@ -775,7 +769,7 @@ def applySaltpeter(argsList):
 			break
 		iCount -= 1
 		loopPlot[1].setExtraYield(YieldTypes.YIELD_COMMERCE, 2)
-		CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), TRNSLTR.getText("TXT_KEY_EVENT_SALTPETER_DISCOVERED", ()), "", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), loopPlot[1].getX(), loopPlot[1].getY(), True, True)
+		CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), TRNSLTR.getText("TXT_KEY_EVENT_SALTPETER_DISCOVERED", ()), "", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), loopPlot[1].getX(), loopPlot[1].getY(), True, True)
 
 ######## GREAT DEPRESSION ###########
 
@@ -882,7 +876,7 @@ def applyInfluenza2(argsList):
     ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -1)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_INFLUENZA_HIT_CITY", (loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
-        CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
+        CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), loopCity.getX(), loopCity.getY(), True, True)
 
 
 def getHelpInfluenza2(argsList):
@@ -2102,7 +2096,7 @@ def applyMasterBlacksmithDone1(argsList):
 
 	if isLocalHumanPlayer(data.ePlayer) :
 		CyInterface().addMessage(
-			data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(),
+			data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"),
 			TRNSLTR.getText(
 				"TXT_KEY_MISC_DISCOVERED_NEW_RESOURCE_IMPROVEMENT",
 				(
@@ -2243,10 +2237,9 @@ def canTriggerCrusadeDone(argsList):
 	kActualTriggeredDataObject.eOtherPlayer = kOrigTriggeredData.eOtherPlayer
 	kActualTriggeredDataObject.eReligion = kOrigTriggeredData.eReligion
 
-	for iBuilding in xrange(GC.getNumBuildingInfos()):
-		if GC.getBuildingInfo(iBuilding).getHolyCity() == kOrigTriggeredData.eReligion:
-			kActualTriggeredDataObject.eBuilding = BuildingTypes(iBuilding)
-			break
+	lShrines = INFO.getShrineBuildings(kOrigTriggeredData.eReligion)
+	if lShrines:
+		kActualTriggeredDataObject.eBuilding = BuildingTypes(lShrines[0])
 	return True
 
 def getHelpCrusadeDone1(argsList):
@@ -2799,7 +2792,7 @@ def canTriggerCorporateExpansion(argsList):
 
   bFound = False
   for iBuilding in xrange(GC.getNumBuildingInfos()):
-    if GC.getBuildingInfo(iBuilding).getFoundsCorporation() == data.eCorporation:
+    if BUILDING.getHeadquartersCorporation(iBuilding) == data.eCorporation:
       kActualTriggeredDataObject.eBuilding = BuildingTypes(iBuilding)
       bFound = True
       break
@@ -2875,7 +2868,7 @@ def canTriggerHostileTakeover(argsList):
 	kActualTriggeredDataObject.iPlotY = city.getY()
 
 	for iBuilding in xrange(GC.getNumBuildingInfos()):
-		if GC.getBuildingInfo(iBuilding).getFoundsCorporation() == data.eCorporation:
+		if BUILDING.getHeadquartersCorporation(iBuilding) == data.eCorporation:
 			kActualTriggeredDataObject.eBuilding = BuildingTypes(iBuilding)
 			break
 	else: return False
@@ -3451,8 +3444,7 @@ def canTriggerSyntheticFuels(argsList):
 	if pPlayer.hasBonus(eOil):
 		return False
 	for i in xrange(GC.getNumBuildingInfos()):
-		building = GC.getBuildingInfo(i)
-		if eOil in building.getFreeBonuses() and pPlayer.hasBuilding(i):
+		if INFO.providesBonus("BUILDING_", i, eOil) and pPlayer.hasBuilding(i):
 			return False
 	return True
 
@@ -3810,7 +3802,10 @@ def canTriggerPiratesoftheNeutralZones(argsList):
 		if CyUnit.getDomainType() == DomainTypes.DOMAIN_SEA:
 			iNavy += CyUnit.baseCombatStr()
 
-	iPirate = GC.getUnitInfo(GC.getInfoTypeForString("UNIT_STEALTH_DESTROYER")).getCombat()
+	# ÷100 at the point of use: the info plane carries strength ×100 like every amount, while the iNavy sum above
+	# is built from CyUnit.baseCombatStr(), which is already the HUMAN read. Both sides of the comparison have to
+	# be on one scale ([DEC-fixedpoint-x100]: a reader reduces, and it reduces where it consumes).
+	iPirate = INFO.getScalar("UNIT_", GC.getInfoTypeForString("UNIT_STEALTH_DESTROYER"), InfoScalar.SCALAR_STRENGTH, CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT) / 100
 
 	MAP = GC.getMap()
 	iPirate = (MAP.getWorldSize() + 1 + 2*(CyPlayer.getHandicapType() + 1)) * iPirate - iPirate
@@ -5126,7 +5121,7 @@ def applyBlackDeath2(argsList):
     ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -2)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_BLACK_DEATH_HIT_CITY", (loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
-        CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
+        CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), loopCity.getX(), loopCity.getY(), True, True)
 
 
 def getHelpBlackDeath2(argsList):
@@ -5177,7 +5172,7 @@ def applySmallpox2(argsList):
     ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -1)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SMALLPOX_HIT_CITY", (loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
-        CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
+        CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), loopCity.getX(), loopCity.getY(), True, True)
 
 
 def getHelpSmallpox2(argsList):
@@ -5640,14 +5635,14 @@ def TriggerSuperVirus1(argsList):
   ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iKilledPop)
   szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iKilledPop, eventCity.getNameKey(), ))
   if isLocalHumanPlayer(data.ePlayer) :
-    CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
+    CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), eventCity.getX(), eventCity.getY(), True, True)
 
   for i in xrange(iNumCities):
     (iDist, loopCity) = listCities[i]
     ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -4)
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (4, loopCity.getNameKey(), ))
     if isLocalHumanPlayer(data.ePlayer) :
-      CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
+      CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), loopCity.getX(), loopCity.getY(), True, True)
 
 def getHelpSuperVirus1(argsList):
 	data = argsList[1]
@@ -5685,14 +5680,14 @@ def TriggerSuperVirus2(argsList):
   ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iKilledPop)
   if isLocalHumanPlayer(data.ePlayer) :
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iKilledPop, eventCity.getNameKey(), ))
-    CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
+    CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), eventCity.getX(), eventCity.getY(), True, True)
 
   for i in xrange(iNumCities):
     (iDist, loopCity) = listCities[i]
     ACT.changeCityPopulation(loopCity.getOwner(), loopCity.getID(), -2)
     if isLocalHumanPlayer(data.ePlayer) :
       szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (2, loopCity.getNameKey(), ))
-      CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), loopCity.getX(), loopCity.getY(), True, True)
+      CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), loopCity.getX(), loopCity.getY(), True, True)
 
 def getHelpSuperVirus2(argsList):
 	data = argsList[1]
@@ -5729,7 +5724,7 @@ def TriggerSuperVirus3(argsList):
   ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iChangePopulation)
   if isLocalHumanPlayer(data.ePlayer) :
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iChangePopulation, eventCity.getNameKey()))
-    CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
+    CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), eventCity.getX(), eventCity.getY(), True, True)
 
   eventCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_GREAT_SCIENTIST"), 2)
 
@@ -5794,7 +5789,7 @@ def TriggerSuperVirus4(argsList):
   ACT.changeCityPopulation(eventCity.getOwner(), eventCity.getID(), -iChangePopulation)
   if isLocalHumanPlayer(data.ePlayer) :
     szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_SUPER_VIRUS_HIT_CITY", (iChangePopulation, eventCity.getNameKey()))
-    CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), eventCity.getX(), eventCity.getY(), True, True)
+    CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), eventCity.getX(), eventCity.getY(), True, True)
 
   eventCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_GREAT_MILITARY_INSTRUCTOR"), 1)
 
@@ -5904,14 +5899,14 @@ def triggerNewWorldCities(argsList):
 		eBestUnit = -1
 		iBestStrength = 0
 		for iUnit in xrange(iNumUnits):
-			CvUnitInfo = GC.getUnitInfo(iUnit)
-			if CvUnitInfo.getMaxGlobalInstances() != -1 or CvUnitInfo.getMaxPlayerInstances() != -1:
+			if INFO.hasUnitInstanceCap(iUnit):
 				continue
-			if CvUnitInfo.getDomainType() != DomainTypes.DOMAIN_LAND or CvUnitInfo.getCombat() <= iBestStrength:
+			iStrength = INFO.getScalar("UNIT_", iUnit, InfoScalar.SCALAR_STRENGTH, CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT)
+			if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND or iStrength <= iBestStrength:
 				continue
 			if CyCity.canTrain(iUnit, False, False, False, False):
 				eBestUnit = iUnit
-				iBestStrength = CvUnitInfo.getCombat()
+				iBestStrength = iStrength
 
 		if eBestUnit > -1:
 			x = CyCity.getX()
@@ -6139,7 +6134,7 @@ def doVolcanoNeighbouringPlots(pPlot):
 			if iImprovement != -1 and not plotX.isCity() and not iImprovement in immuneImprovements:
 				if iPlayer > -1:
 					szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED_NOOWNER", (INFO.getTextKey("IMPROVEMENT_", iImprovement), ))
-					CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("IMPROVEMENT_", iImprovement), GC.getCOLOR_RED(), plotX.getX(), plotX.getY(), True, True)
+					CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("IMPROVEMENT_", iImprovement), GC.getInfoTypeForString("COLOR_RED"), plotX.getX(), plotX.getY(), True, True)
 				if iImprovement in listRuins:
 					plotX.setImprovementType(iRuins)
 				else:
@@ -6222,7 +6217,7 @@ def doVolcanoReport(argsList):
   for i in xrange(iMaxPlayer):
     loopPlayer = GC.getPlayer(i)
     if loopPlayer.isHuman() and loopPlayer.isAlive() and pPlot.isRevealed(loopPlayer.getTeam(), False):
-      CyInterface().addMessage(loopPlayer.getID(), False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("FEATURE_", ft_volcano_active), GC.getCOLOR_RED(), pPlot.getX(), pPlot.getY(), True, True)
+      CyInterface().addMessage(loopPlayer.getID(), False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("FEATURE_", ft_volcano_active), GC.getInfoTypeForString("COLOR_RED"), pPlot.getX(), pPlot.getY(), True, True)
 
       if pPlot.isInViewport():
         point = pPlot.getPoint()
@@ -6321,8 +6316,7 @@ def doWildFire(argsList):
 	for i in range(GC.getNumBuildingInfos()):
 		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
 			continue
-		info = GC.getBuildingInfo(i)
-		if info.getProductionCost() < 1 or info.isNukeImmune() or info.isAutoBuild():
+		if BUILDING.getCost(i) < 1 or INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i):
 			continue
 		validHousesList.append(i)
 
@@ -6330,7 +6324,7 @@ def doWildFire(argsList):
 		iBuilding = validHousesList[GAME.getSorenRandNum(len(validHousesList), "Wildfire")]
 		if isLocalHumanPlayer(data.ePlayer) :
 			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBuilding), ))
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBuilding), GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 		ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBuilding, False)
 
 # getProperties serves [propertyId, value] rows -- the per-property value is a row scan.
@@ -6371,7 +6365,7 @@ def doMinorFire(argsList):
 	if iBurnBuilding != -1:
 		if isLocalHumanPlayer(data.ePlayer) :
 			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBurnBuilding), ))
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding), GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 		ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBurnBuilding, False)
 
 
@@ -6410,10 +6404,10 @@ def doMajorFire(argsList):
 		if iBurnBuilding != -1:
 			if isLocalHumanPlayer(data.ePlayer) :
 				CyInterface().addMessage(
-					data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(),
+					data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"),
 					TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBurnBuilding),)),
 					"AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding),
-					GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True
+					GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True
 				)
 			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBurnBuilding, False)
 
@@ -6435,11 +6429,11 @@ def doCatastrophicFire(argsList):
 	if isLocalHumanPlayer(data.ePlayer) :
 		if iKilledPop == 0:
 			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITYFIRE_NOHIT_CITY", (CyCity.getNameKey(), ))
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 		if iKilledPop > 0:
 			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -iKilledPop)
 			szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITYFIRE_HIT_CITY", (iKilledPop, CyCity.getNameKey(), ))
-			CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+			CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_PILLAGE", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 
 	for i in xrange(iFlammRange):
 		currFlamm = getCityPropertyValue(CyCity, iProp)
@@ -6462,7 +6456,7 @@ def doCatastrophicFire(argsList):
 		if iBurnBuilding != -1:
 			if isLocalHumanPlayer(data.ePlayer) :
 				szBuffer = TRNSLTR.getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", (INFO.getTextKey("BUILDING_", iBurnBuilding),))
-				CyInterface().addMessage(data.ePlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding), GC.getCOLOR_RED(), CyCity.getX(), CyCity.getY(), True, True)
+				CyInterface().addMessage(data.ePlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, INFO.getButton("BUILDING_", iBurnBuilding), GC.getInfoTypeForString("COLOR_RED"), CyCity.getX(), CyCity.getY(), True, True)
 			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iBurnBuilding, False)
 
 def getHelpWildFire(argsList):
@@ -6504,13 +6498,13 @@ def doGlobalWarming(argsList):
 		):
 			iGW -= 1
 		elif iFeature in (
-			GC.getFEATURE_FOREST(),
+			GC.getInfoTypeForString("FEATURE_FOREST"),
 			GC.getInfoTypeForString("FEATURE_BAMBOO")
 		):
 			iGW -= 2
 		elif iFeature == GC.getInfoTypeForString("FEATURE_FOREST_ANCIENT"):
 			iGW -= 3
-		elif iFeature == GC.getFEATURE_JUNGLE():
+		elif iFeature == GC.getInfoTypeForString("FEATURE_JUNGLE"):
 			iGW -= 4
 		elif iFeature == GC.getInfoTypeForString("FEATURE_VOLCANO_ACTIVE"):
 			iGW += 5
@@ -6614,20 +6608,20 @@ def doGlobalWarming(argsList):
 			plot.setTerrainType(GC.getInfoTypeForString("TERRAIN_SCRUB"), True, True)
 
 		elif iTerrain == GC.getInfoTypeForString("TERRAIN_SCRUB"):
-			plot.setTerrainType(GC.getTERRAIN_DESERT(), True, True)
+			plot.setTerrainType(GC.getInfoTypeForString("TERRAIN_DESERT"), True, True)
 			iFeature = plot.getFeatureType()
 			if iFeature in (
 				GC.getInfoTypeForString("FEATURE_FOREST_YOUNG"),
-				GC.getFEATURE_FOREST(),
+				GC.getInfoTypeForString("FEATURE_FOREST"),
 				GC.getInfoTypeForString("FEATURE_FOREST_ANCIENT"),
-				GC.getFEATURE_JUNGLE(),
+				GC.getInfoTypeForString("FEATURE_JUNGLE"),
 				GC.getInfoTypeForString("FEATURE_BAMBOO"),
 				GC.getInfoTypeForString("FEATURE_SAVANNA"),
 				GC.getInfoTypeForString("FEATURE_VERY_TALL_GRASS")
 			):
 				plot.setFeatureType(FeatureTypes.NO_FEATURE, -1)
 
-		elif iTerrain == GC.getTERRAIN_DESERT():
+		elif iTerrain == GC.getInfoTypeForString("TERRAIN_DESERT"):
 			plot.setTerrainType(GC.getInfoTypeForString("TERRAIN_DUNES"), True, True)
 
 		elif iTerrain == GC.getInfoTypeForString("TERRAIN_COAST_POLAR"):
@@ -6709,7 +6703,7 @@ def canApplyNativegood1(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood1 -- was ge 4"
-				CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+				CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 1
 	else:
 		if (0):
@@ -6717,7 +6711,7 @@ def canApplyNativegood1(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood1 -- was lt 4"
-					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+					CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 0
 
 def helpNativegood1(argsList):
@@ -6739,7 +6733,7 @@ def canApplyNativegood2(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood2 -- was ge 5"
-					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+					CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 1
 	else:
 		if (0):
@@ -6747,7 +6741,7 @@ def canApplyNativegood2(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood2 -- was lt 5"
-					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+					CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 0
 
 def helpNativegood2(argsList):
@@ -6768,11 +6762,10 @@ def ApplyNativegood2(argsList):
 	iHighest = 0
 	eBestUnit = -1
 	for iUnit in xrange(GC.getNumUnitInfos()):
-		CvUnitInfo = GC.getUnitInfo(iUnit)
-		if CvUnitInfo.getDomainType() != DomainTypes.DOMAIN_LAND or CvUnitInfo.getDefaultUnitAIType() not in aList:
+		if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND or UNIT.getDefaultUnitAI(iUnit) not in aList:
 			continue
 		if CyCity.canTrain(iUnit, False, True):
-			iValue = CvUnitInfo.getProductionCost()
+			iValue = UNIT.getCost(iUnit)
 			if iValue >= iHighest:
 				iHighest = iValue
 				eBestUnit = iUnit
@@ -6797,7 +6790,7 @@ def canApplyNativegood3(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood3 -- was ge 4"
-					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+					CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 1
 	else:
 		for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
@@ -6805,7 +6798,7 @@ def canApplyNativegood3(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood3 -- was lt 4"
-					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+					CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 0
 
 def helpNativegood3(argsList):
@@ -6833,7 +6826,7 @@ def canApplyNativegood4(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood4 -- was ge 4"
-					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+					CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 1
 	else:
 		for iLoopPlayer in xrange(GC.getMAX_PC_PLAYERS()):
@@ -6841,7 +6834,7 @@ def canApplyNativegood4(argsList):
 				loopPlayer = GC.getPlayer(iLoopPlayer)
 				if loopPlayer.isAlive():
 					szBuffer = "canApplyNativegood4 -- was lt 4"
-					CyInterface().addMessage(iLoopPlayer, False, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
+					CyInterface().addMessage(iLoopPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_BOMBARDED", InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_WHITE"), -1, -1, True, True)
 		return 0
 
 def helpNativegood4(argsList):
@@ -6883,8 +6876,7 @@ def doEventLawyer(argsList):
 		# Removes buildings
 		for iBuildingLoop in xrange(GC.getNumBuildingInfos( )):
 			if pCity.hasBuilding(iBuildingLoop):
-				pBuilding = GC.getBuildingInfo( iBuildingLoop )
-				iRequiredCorporation = pBuilding.getFoundsCorporation( )
+				iRequiredCorporation = BUILDING.getHeadquartersCorporation(iBuildingLoop)
 				for iCorpLoop in xrange(GC.getNumCorporationInfos()):
 					if iRequiredCorporation == iCorpLoop:
 						ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), iBuildingLoop, False)
@@ -6933,7 +6925,7 @@ def applyCivilWar(argsList):
 	iAllCivs = GC.getNumPlayableCivilizationInfos()
 
 	pPlayer = GC.getPlayer(data.ePlayer)
-	iDerivative = GC.getCivilizationInfo(pPlayer.getCivilizationType()).getDerivativeCiv()
+	iDerivative = INFO.getDerivativeCiv(pPlayer.getCivilizationType())
 	if not iDerivative in lAlive:
 		iNewCiv = iDerivative
 	else:
@@ -6947,20 +6939,8 @@ def applyCivilWar(argsList):
 		iTempCiv = dice.get(len(lNotAlive), "Civil War Civilization")
 		iNewCiv = lNotAlive[iTempCiv]
 
-	CurCiv = GC.getCivilizationInfo(iNewCiv)
-	NumLeaders = CurCiv.getNumLeaders()
-	LeaderNum = dice.get(NumLeaders, "Civil War Leader")
-	LeaderCounter = 0
-	for iLeaders in xrange(GC.getNumLeaderHeadInfos()):
-		if CurCiv.isLeaders(iLeaders):
-			if NumLeaders==1:
-				NewLeaderID = iLeaders
-				break
-			else:
-				if LeaderCounter == LeaderNum:
-					NewLeaderID = iLeaders
-					break
-		LeaderCounter += 1
+	lLeaders = INFO.getCivilizationLeaders(iNewCiv)
+	NewLeaderID = lLeaders[dice.get(len(lLeaders), "Civil War Leader")]
 
 	# Find ID for new civ
 	iNewID = -1
@@ -6984,8 +6964,7 @@ def applyCivilWar(argsList):
 	# Give new team open borders tech (for unit handover)
 	iMaxTech = GC.getNumTechInfos()
 	for OBtech in xrange(iMaxTech):
-		pTech = GC.getTechInfo(OBtech)
-		if pTech.isOpenBordersTrading():
+		if INFO.canTradeItem("TECH_", OBtech, "openBorders"):
 			pNewTeam.setHasTech(OBtech, True, iNewID, False, False)
 			break
 	pNewTeam.signOpenBorders(pTriggerTeam.getID())

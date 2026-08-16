@@ -164,7 +164,7 @@ def setNewNameByCivics(iPlayer):
 
 	if not newCivDesc == GC.getPlayer(iPlayer).getCivilizationDescription(0):
 		szMessage = TRNSLTR.getText("TXT_KEY_MOD_DCN_NEWCIV_NAME_DESC", (newCivDesc,))
-		CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), szMessage, None, InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"), -1, -1, False, False)
+		CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szMessage, None, InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"), -1, -1, False, False)
 
 	GC.getPlayer(iPlayer).setCivName(newCivDesc, newCivShort, newCivAdj)
 

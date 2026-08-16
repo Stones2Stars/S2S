@@ -49,7 +49,7 @@ class CvMilitaryAdvisor:
 		self.HILITE_SQUARE	= AFM.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath()
 		self.iconMoves		= u'%c' % GAME.getSymbolID(FontSymbols.MOVES_CHAR)
 		self.iconStrength	= u'%c' % GAME.getSymbolID(FontSymbols.STRENGTH_CHAR)
-		self.fMoveDenominator = float(GC.getMOVE_DENOMINATOR())
+		self.fMoveDenominator = float(GC.getDefineINT("MOVE_DENOMINATOR"))
 		self.GO_SIZE_MATTERS = GAME.isOption(GameOptionTypes.GAMEOPTION_COMBAT_SIZE_MATTERS)
 		self.selectedCivs = [iPlayer]
 		self.selectedGroups = set()

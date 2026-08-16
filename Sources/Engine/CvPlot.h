@@ -783,6 +783,9 @@ public:
 	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const;
 	int calculateTotalBestNatureYield(TeamTypes eTeam) const;
 	int calculateImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const;
+	// What laying this BUILD here would change this plot's yield by -- the improvement it creates, the one it
+	// replaces, and any feature or terrain it changes, composed into one answer.
+	int calculateBuildYieldChange(BuildTypes eBuild, YieldTypes eYield) const;
 	bool hasYield() const;
 	int getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUpgrade) const;
 

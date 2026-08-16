@@ -178,6 +178,8 @@ public:
 	void appendGateReason(CvWStringBuffer& szBuffer, unsigned char eReason) const;
 	// The derived PRICE, and the hammers this city has already banked into it (rendered only when non-zero).
 	void appendBuildingProductionCost(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, const CvCity* pCity) const;
+	// The unit twin of the above -- same plane, same fallbacks, so the two entity tooltips state their price alike.
+	void appendUnitProductionCost(CvWStringBuffer& szBuffer, UnitTypes eUnit, const CvCity* pCity) const;
 	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
 	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
 	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);

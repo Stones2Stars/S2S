@@ -22,9 +22,7 @@
 > shape** — accepting a what-if argument, an ignore-this-clause flag, a bool where the new answer is richer
 > ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)). That, not the folder, is
 > the failure mode.
-> ⚠ **A dangling AI call site is a WORKLIST ENTRY like any other** (the compiler is the census). What genuinely
-> waits is only a read whose REPLACEMENT MACHINE does not exist yet — name the missing machine when you leave
-> one, never the file it lives in.
+> ⚠ **A dangling AI call site is a WORKLIST ENTRY like any other** (the compiler is the census).
 >
 > **⚖ AN AI *WEIGHT* IS NOT A CORRECTNESS GATE — THE AI HAS TO FUNCTION, AND BALANCE COMES AFTER (owner):**
 > *"AI weights we will figure out down the line; AI needs to function, then we balance it later."*
@@ -361,8 +359,7 @@ Unchanged in principle, but note the surface it depends on is currently purged:
    **⛔ AND IT IS NOT A LICENCE TO LEAVE A BREAK YOU CAN SEE (owner): *"we cannot accept actually breaking
    worldbuilder stuff, we fix things we see."*** The carve-out is about SEQUENCING and about what may
    constrain a cut — it never made a WB failure an acceptable outcome. ⇒ A WB path that shows up BROKEN, in a
-   log or on screen, is wired onto the new surface like any other consumer; it is deferred only where its
-   replacement MACHINE does not exist yet, and then it is named
+   log or on screen, is wired onto the new surface like any other consumer
    ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking) still forbids reaching back
    to a legacy binding to do it).
    ⚠ **The misreading to avoid** — and it has already cost a pass: reading "not a constraint" as "WB errors are

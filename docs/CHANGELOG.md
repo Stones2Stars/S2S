@@ -19,6 +19,28 @@
   in words, so an entry reads `+6 <production>` rather than `+6 Production`.
 - Hovering a worker build action shows the build's name again. Builds were the one action type
   never given a hotkey description, so the tooltip's heading came up empty.
+- **Hovering a unit on the map now shows that unit.** Previously only its FLAG did: a map hover
+  answered for the tile alone, so a worker's orders were readable off the flag and nowhere else.
+- Unit tooltips are laid out in blocks — name, then condition, then what it is doing — instead of
+  one long comma-separated line. A worker now states its build and the turns left on its own line,
+  and a unit under orders with no build (walking to lay a road, say) names its mission rather than
+  going silent. An idle unit still says nothing.
+- A worker mid-build shows what the build will CHANGE, beside how long is left on it — the name and the
+  turns say it is busy, this says whether being busy is worth it. It is the same figure the build's own
+  action button advertised before you ordered it, so the two cannot disagree.
+- Worker build tooltips lead with the **turns and the gold cost**. Both were already there, at the
+  bottom of a long block of yield detail, which made them effectively unfindable.
+- A plot tooltip names the city working the tile, while it is being worked. A plot yields either
+  way, but only a worked tile feeds a city.
+- Unit tooltips state what the unit COSTS to build, directly under the name — the same place a building
+  has always stated its own. Comparing a unit against a building in the build list meant reading one
+  price and guessing the other.
+- Random events fire again. Their handlers reached the engine through info accessors that no longer
+  exist, so a handler raised the moment it ran and its event did nothing — invisibly, since the
+  failure lands in a log no player reads.
+- Wonder movies no longer open an empty window. The screen kept per-movie state that was never set
+  up when there was no movie to play (and was torn down when one finished), so it failed on every
+  frame and drew nothing.
 - Units handed over by a popup or by the Crusade wonder no longer receive their city's free
   experience twice. Creating a unit in a city settles that experience once, and these three paths
   were still adding it a second time on top.

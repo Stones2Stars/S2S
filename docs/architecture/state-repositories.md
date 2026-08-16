@@ -895,6 +895,22 @@ keyed count vs summed magnitude — is § EVERY DERIVED STORE IS ONE SHAPE, abov
     silently DOUBLE-COUNTS every unit's authored base. ⚠ It is therefore NOT a
     [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted) violation — the value is genuine
     per-unit state that no amount of re-derivation can reconstruct, which is exactly why it is stored.
+    ⛔ **AND A SECOND ONE IS NOT ADMITTED: AN INVISIBLE ADDITION TO A BASE STAT IS BAD DESIGN WHICHEVER WAY
+    YOU PUT IT (owner).** A per-unit stat change is expressed as a CARRIER — a promotion or a status — *"so you
+    actually see what is going on with the unit and why"*, which is also why the gather walks the carriers it
+    does: each is visible on the unit. ⇒ A mechanic that would force a second carve-out is the MECHANIC that
+    goes — an event handing one unit a stat outright is source-less one-shot state, and *"I would be inclined
+    to nuke such an event."* ⚠ It has no claim anyway: its only delivery is a promotion
+    ([state.md](../specs/state.md)), which is already what serializes.
+    ⚖ **A NEW SPECIAL CASE SHIPS WITH THE MEANS TO SHOW IT, OR IT IS NOT ADDED (owner): *"if we want to
+    support special casing, we also need to support the ability to show it — so if we want to add that in the
+    WorldBuilder, then we need to create tooling for it."***
+    ⛔ **STRENGTH ITSELF STAYS FOR NOW AND IS NOT TO BE TOUCHED — it works (owner)**: illegible in exactly the
+    way this dislikes, and knowingly kept, so an agent "fixing" it is undoing a decision rather than closing a
+    gap. ⚖ It is NOT permanent — **when a real pass at WorldBuilder special-case additions is taken, strength
+    folds into it** (owner): sequencing with a named destination, so
+    [DEC-no-deferred](decisions.md#dec-no-deferred) does not reach it. ⛔ Do not start that fold early or take
+    it opportunistically.
     ⚖ **A SECTION FOLDS BESIDE THE SLOT TABLE, ON THE SAME MARK — it does not become a slot, and it does not
     become a hand-named pair either.** The slot table addresses modifier-FAMILY entries by
     `(family, kind, scope, unit)`; a `hideAndSeek`-shaped SECTION ([json.md §9](../specs/json.md)) has no such

@@ -429,7 +429,7 @@ class WBCityEditScreen:
 
 		elif inputClass.getFunctionName() in ("CityDefensePlus", "CityDefenseMinus"):
 			if inputClass.getData1() == 1030:
-				pCity.changeDefenseDamage(min(iChange, GC.getMAX_CITY_DEFENSE_DAMAGE() - pCity.getDefenseDamage()))
+				pCity.changeDefenseDamage(min(iChange, GC.getDefineINT("MAX_CITY_DEFENSE_DAMAGE") - pCity.getDefenseDamage()))
 			elif inputClass.getData1() == 1031:
 				pCity.changeDefenseDamage(- min(iChange, pCity.getDefenseDamage()))
 			self.placeStats()

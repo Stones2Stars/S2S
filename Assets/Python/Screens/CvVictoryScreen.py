@@ -83,8 +83,8 @@ class CvVictoryScreen:
 		screen.setLabel("VS_Header", "", szfontEdge + TRNSLTR.getText("TXT_WORD_GAME",()), 1<<2, xRes / 2, 2, 0, eFontTitle, eWidGen, 1, 2)
 		screen.setText("VS_Btn_Exit", "", szfontEdge + TRNSLTR.getText("TXT_WORD_EXIT",()), 1<<1, xRes - 16, 0, 0, eFontTitle, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1)
 
-		self.COLOR_GREEN = GC.getCOLOR_GREEN()
-		self.COLOR_YELLOW = iCol = GC.getCOLOR_YELLOW()
+		self.COLOR_GREEN = GC.getInfoTypeForString("COLOR_GREEN")
+		self.COLOR_YELLOW = iCol = GC.getInfoTypeForString("COLOR_YELLOW")
 		szTxt = szfontEdge + TRNSLTR.getText("TXT_KEY_MAIN_MENU_VICTORIES", ())
 		szTxtCol = TRNSLTR.changeTextColor(szTxt, iCol)
 		dX = xRes / 4
@@ -1428,7 +1428,7 @@ class CvVictoryScreen:
 		if not bWinner:
 			return -1
 		if iVoteCand > iVoteReq and bVictoryVote:
-			return GC.getCOLOR_RED()
+			return GC.getInfoTypeForString("COLOR_RED")
 		if iVoteTotal > iVoteReq:
 			return self.COLOR_GREEN
 		return -1

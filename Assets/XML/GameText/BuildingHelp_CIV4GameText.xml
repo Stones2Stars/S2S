@@ -1439,6 +1439,13 @@
 		<Tag>TXT_KEY_PLOTHELP_YIELD</Tag>
 		<English>%s1: %s2 (nature %s3 [ICON_BULLET] improvement %s4 [ICON_BULLET] route/other %s5)</English>
 	</TEXT>
+	<!-- Shown only while the tile is actually being WORKED: an unworked tile says nothing, which keeps an
+	     empty-tile hover short. It answers why a tile's yield is or is not reaching anyone, since a plot
+	     produces its package either way but only a worked tile joins a city's plot sum. -->
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_WORKED_BY</Tag>
+		<English>Worked by %s1</English>
+	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_YIELDHELP_BASE</Tag>
 		<English>[COLOR_HIGHLIGHT_TEXT]Base (multiplied by the percent stack):[COLOR_REVERT]</English>
