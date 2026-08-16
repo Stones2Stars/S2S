@@ -44,17 +44,17 @@
       {
        "type": "BONUS_CARCASS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_PELTS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_POULTRY",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

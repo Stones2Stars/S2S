@@ -25,7 +25,7 @@
     {
      "type": "BONUS_TIME_CRYSTALS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

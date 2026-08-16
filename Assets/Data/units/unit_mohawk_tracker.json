@@ -11,18 +11,18 @@
     {
      "type": "BONUS_MOHAWK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MILITARY_SCIENCE",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [

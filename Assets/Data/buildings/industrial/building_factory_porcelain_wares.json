@@ -29,14 +29,13 @@
     {
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     "HAS_POWER",
     {
      "type": "BONUS_STONE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

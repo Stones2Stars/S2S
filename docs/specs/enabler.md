@@ -909,7 +909,7 @@ and nothing else.
 argued for it is gone: the group maintains its holdings as a sparse `id → count` map, so the relay is a pointer
 hop and a lookup, not the group SUM the mirror was built to avoid.
 
-⚖ **VICINITY belongs to the CITY and is a plain local-presence fact:** it satisfies `connection:"vicinity"`
+⚖ **VICINITY belongs to the CITY and is a plain local-presence fact:** it satisfies `connection:"onSite"`
 atoms and NOTHING else — it never adds a second owned count (one pasture is ONE horse, not vicinity+network=2).
 
 ### The host — where the state lives

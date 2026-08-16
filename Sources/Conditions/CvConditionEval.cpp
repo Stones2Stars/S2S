@@ -129,13 +129,12 @@ static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConne
 {
 	switch (conn)
 	{
-	case CASC_CONN_VICINITY:          return ev_vicinityHas(ctx, eBonus, vic);
+	// ⛔ THE TWO ORIGINS ARE NEVER LOOKED AT TOGETHER (owner) -- see CvCascConnection. A MANUFACTURED bonus needs
+	// no union to be found: an active building's `provides.bonuses` (json §5a) is pushed into the PLOT GROUP
+	// through the operate/provides fixpoint (EnablerKernel's supply crossings), so the network answer already
+	// covers it and a trade-only check misses nothing.
+	case CASC_CONN_ONSITE:            return ev_vicinityHas(ctx, eBonus, vic);
 	case CASC_CONN_TRADE:             return ev_tradedBonus(ctx, eBonus);
-	// "trade|vicinity" = trade-network OR in-vicinity (json §3.4). The vicinity leg is REQUIRED here: a
-	// MANUFACTURED bonus is supplied by an active building's `provides.bonuses` (json §5a) into
-	// vicinityProvidedBonuses, NOT the trade network -- so a trade-only check misses every building-supplied
-	// bonus (the "manufactured bonus buildings can't be built" bug). Matches StoneBase's TradeOrVicinity.
-	case CASC_CONN_TRADE_OR_VICINITY: return ev_tradedBonus(ctx, eBonus) || ev_vicinityHas(ctx, eBonus, vic);
 	default:
 		if (ctx.plotContext != NULL) return ctx.plotContext->hasBonus(eBonus, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
 		return ev_tradedBonus(ctx, eBonus);
@@ -439,7 +438,7 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 			// SAME acquisition events, which is exactly what makes them look interchangeable -- and they are
 			// ⛔ **NEVER TO BE LOOKED AT TOGETHER, AT ANY TIME**. A union here would silently satisfy a network
 			// question with a locally-produced resource, which is the conflation the onSite/connected split was
-			// made to end. onSite is asked EXPLICITLY, via connection:"vicinity" + vicinity:"onSite".
+			// made to end. onSite is asked EXPLICITLY, via connection:"onSite".
 			return ev_tradedBonus(ctx, a->id);
 		}
 		const int n = ev_countOf(ctx, a);

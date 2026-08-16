@@ -15,13 +15,13 @@
     {
      "type": "BONUS_BRICKS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "CIVIC_MONARCHY",
     {
      "type": "BONUS_MARBLE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

@@ -33,8 +33,7 @@
     {
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

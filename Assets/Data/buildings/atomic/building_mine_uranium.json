@@ -24,8 +24,7 @@
     {
      "type": "BONUS_URANIUM",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

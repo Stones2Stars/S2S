@@ -13,12 +13,12 @@
     {
      "type": "BONUS_CEMENT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_FERTILIZERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "MAPCATEGORY_LUNAR",
@@ -31,7 +31,7 @@
     {
      "type": "BONUS_GLASSWARE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ]

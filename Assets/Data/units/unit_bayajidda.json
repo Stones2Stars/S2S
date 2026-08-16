@@ -6,7 +6,7 @@
     {
      "type": "BONUS_HAUSA",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MUSICAL_NOTATION"
    ]

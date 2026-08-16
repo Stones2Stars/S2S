@@ -7,17 +7,17 @@
     {
      "type": "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_HUMAN_MOD_RADIATION_TOLERANCE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_HUMAN_MOD_COLD_TOLERANCE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "MAPCATEGORY_EARTH",

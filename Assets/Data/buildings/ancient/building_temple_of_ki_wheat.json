@@ -18,8 +18,7 @@
     {
      "type": "BONUS_WHEAT",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ]
   }

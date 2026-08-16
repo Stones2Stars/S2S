@@ -15,7 +15,7 @@
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "CIVIC_PUBLIC_WORKS",
     {
@@ -23,17 +23,17 @@
       {
        "type": "BONUS_BRICKS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_PRIME_TIMBER",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_WOOD",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

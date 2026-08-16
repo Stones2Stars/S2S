@@ -29,13 +29,11 @@
     {
      "type": "BONUS_RUBIES",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_SALT",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

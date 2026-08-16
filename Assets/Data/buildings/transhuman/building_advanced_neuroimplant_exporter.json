@@ -16,7 +16,7 @@
     {
      "type": "BONUS_NEUROIMPLANTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

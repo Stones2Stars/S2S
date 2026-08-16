@@ -6,7 +6,7 @@
     {
      "type": "BONUS_ISRAELI",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_IRON_WORKING",
     {
@@ -14,12 +14,12 @@
       {
        "type": "BONUS_BRONZE_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_IRON_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

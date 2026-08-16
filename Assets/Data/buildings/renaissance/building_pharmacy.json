@@ -45,22 +45,22 @@
       {
        "type": "BONUS_DRUGS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_CHEMICALS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_PHARMACEUTICALS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_SMART_MEDICINE",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

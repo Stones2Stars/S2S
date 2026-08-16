@@ -21,12 +21,12 @@
     {
      "type": "BONUS_JADE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_LIANGZHU",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

@@ -24,7 +24,7 @@
     {
      "type": "BONUS_PERSONAL_STARCRAFT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

@@ -18,7 +18,6 @@
     {
      "type": "BONUS_OPIUM",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

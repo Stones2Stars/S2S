@@ -18,17 +18,17 @@
     {
      "type": "BONUS_GRAPHENE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_SHOCKWAVE_ENGINES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
@@ -47,7 +47,7 @@
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ],

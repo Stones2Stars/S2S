@@ -28,17 +28,17 @@
     {
      "type": "BONUS_SUPERINTELLIGENT_COMPUTERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_DEEP_SPACE_NANOBOTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_DEEP_SPACE_LIFEFORMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "MAPCATEGORY_SOLAR_SYSTEM",
@@ -51,7 +51,7 @@
     {
      "type": "BONUS_NANOTUBES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

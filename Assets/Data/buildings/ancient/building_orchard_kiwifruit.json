@@ -30,14 +30,12 @@
       {
        "type": "BONUS_BANANA",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_COTTON",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       }
      ]
     }

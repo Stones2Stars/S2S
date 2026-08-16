@@ -40,14 +40,12 @@
       {
        "type": "BONUS_BEAVER",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_RABBIT",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       }
      ]
     }

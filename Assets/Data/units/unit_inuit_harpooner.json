@@ -6,7 +6,7 @@
     {
      "type": "BONUS_INUIT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_HARPOON_MAKING"
    ],

@@ -15,7 +15,7 @@
     {
      "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

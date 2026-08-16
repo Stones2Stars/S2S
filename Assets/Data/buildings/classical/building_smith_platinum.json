@@ -29,7 +29,7 @@
     {
      "type": "BONUS_PLATINUM_INGOTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

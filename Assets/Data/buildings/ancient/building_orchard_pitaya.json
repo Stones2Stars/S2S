@@ -30,14 +30,12 @@
       {
        "type": "BONUS_APPLE",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_TOBACCO",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       }
      ]
     }

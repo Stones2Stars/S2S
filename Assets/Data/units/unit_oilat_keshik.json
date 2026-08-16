@@ -6,24 +6,24 @@
     {
      "type": "BONUS_DZUNGAR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_FLINTLOCK",
     {
      "type": "BONUS_SULPHUR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_HORSE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

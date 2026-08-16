@@ -29,7 +29,7 @@
     {
      "type": "BONUS_BRASS_INGOTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

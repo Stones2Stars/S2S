@@ -20,7 +20,7 @@
     {
      "type": "BONUS_ANTIMATTER",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

@@ -32,14 +32,12 @@
       {
        "type": "BONUS_PRIME_TIMBER",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_INDIGO",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       }
      ]
     }

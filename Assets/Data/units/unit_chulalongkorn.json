@@ -6,7 +6,7 @@
     {
      "type": "BONUS_SIAMESE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_NATIONALISM"
    ]

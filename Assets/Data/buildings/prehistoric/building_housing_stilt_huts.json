@@ -13,20 +13,17 @@
       {
        "type": "BONUS_BAMBOO",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_WOOD",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_PRIME_TIMBER",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       }
      ]
     },

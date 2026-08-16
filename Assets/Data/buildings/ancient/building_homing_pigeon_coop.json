@@ -30,17 +30,17 @@
       {
        "type": "BONUS_WOOD",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_PRIME_TIMBER",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_BAMBOO",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     },
@@ -49,14 +49,12 @@
       {
        "type": "BONUS_POULTRY",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_STONE",
        "scope": "city",
-       "connection": "vicinity",
-       "vicinity": "onSite"
+       "connection": "onSite"
       }
      ]
     }

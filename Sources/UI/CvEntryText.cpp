@@ -402,11 +402,8 @@ namespace
 		case CASC_CONN_TRADE:
 			szText += L" connected";
 			break;
-		case CASC_CONN_VICINITY:
-			szText += L" in vicinity";
-			break;
-		case CASC_CONN_TRADE_OR_VICINITY:
-			szText += L" connected or in vicinity";
+		case CASC_CONN_ONSITE:
+			szText += L" on site";
 			break;
 		case CASC_CONN_NONE:
 		default:

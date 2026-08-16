@@ -16,8 +16,7 @@
     {
      "type": "BONUS_RABBIT",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ]
   }

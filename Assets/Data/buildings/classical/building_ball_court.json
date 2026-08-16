@@ -23,7 +23,7 @@
     {
      "type": "BONUS_STONE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "RELIGION_NAGHUALISM",
     {
@@ -31,22 +31,22 @@
       {
        "type": "BONUS_MAYAN",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_AZTEC",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_OLMEC",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_ZAPOTEC",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

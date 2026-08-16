@@ -17,7 +17,7 @@
     {
      "type": "BONUS_SPACEPUNK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

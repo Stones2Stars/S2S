@@ -25,7 +25,7 @@
     {
      "type": "BONUS_UNMANNED_AIRCRAFTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

@@ -15,7 +15,7 @@
     {
      "type": "BONUS_GLASSWARE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "POPULATION",
@@ -25,7 +25,7 @@
     {
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

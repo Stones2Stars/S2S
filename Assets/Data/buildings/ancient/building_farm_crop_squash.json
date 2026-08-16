@@ -28,8 +28,7 @@
     {
      "type": "BONUS_SQUASH",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

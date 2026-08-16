@@ -6,19 +6,19 @@
     {
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_SEMICONDUCTORS",
     "TECH_JET_PROPULSION",
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [

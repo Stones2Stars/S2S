@@ -34,13 +34,13 @@
     {
      "type": "BONUS_MARTIAN_ELECTRONICS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
      "type": "BONUS_MARTIAN_ALGAE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

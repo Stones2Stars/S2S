@@ -6,24 +6,24 @@
     {
      "type": "BONUS_ANDROIDS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ROBOTICS_LAB",
     "TECH_SAPIENTROIDS",
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

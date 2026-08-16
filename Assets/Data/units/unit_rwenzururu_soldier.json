@@ -6,19 +6,19 @@
     {
      "type": "BONUS_KONJAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MECHANIZED_WARFARE",
     "TECH_ROCKETRY",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

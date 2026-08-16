@@ -6,13 +6,13 @@
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_CRIMINOLOGY",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [

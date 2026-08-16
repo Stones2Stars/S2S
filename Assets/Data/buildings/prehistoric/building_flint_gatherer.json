@@ -22,12 +22,12 @@
       {
        "type": "BONUS_STONE",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_OBSIDIAN",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "HAS_TERRAIN": "TERRAIN_ROCKY"

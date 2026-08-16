@@ -6,7 +6,7 @@
     {
      "type": "BONUS_DOG",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_WAR_DOG_TRAINER",
     "TECH_MILITARY_TRAINING",
@@ -15,17 +15,17 @@
       {
        "type": "BONUS_COPPER_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_IRON_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_OBSIDIAN",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

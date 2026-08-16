@@ -11,30 +11,30 @@
     {
      "type": "BONUS_PERSONAL_ELECTRONICS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MICROPROCESSOR",
     {
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_FIREARMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
       {
        "type": "BONUS_DISKETTES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_FLASH_MEMORY_DEVICES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     },

@@ -23,7 +23,7 @@
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
@@ -36,12 +36,12 @@
       {
        "type": "BONUS_PETROLEUM_PRODUCTS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_BIOFUEL",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

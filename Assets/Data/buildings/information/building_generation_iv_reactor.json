@@ -32,7 +32,7 @@
     {
      "type": "BONUS_URANIUM",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

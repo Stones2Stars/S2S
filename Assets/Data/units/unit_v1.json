@@ -6,7 +6,7 @@
     {
      "type": "BONUS_ROCKET_FUEL",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_ROCKETRY"
    ],

@@ -17,7 +17,6 @@
     {
      "type": "BONUS_DONKEY",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

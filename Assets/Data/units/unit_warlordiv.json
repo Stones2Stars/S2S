@@ -11,13 +11,13 @@
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MILITARY_SCIENCE",
     {
      "type": "BONUS_SULPHUR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

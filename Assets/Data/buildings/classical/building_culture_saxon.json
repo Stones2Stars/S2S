@@ -17,7 +17,6 @@
     {
      "type": "BONUS_IRON_ORE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

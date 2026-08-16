@@ -6,7 +6,7 @@
     {
      "type": "BONUS_MALINESE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_LITERATURE"
    ]

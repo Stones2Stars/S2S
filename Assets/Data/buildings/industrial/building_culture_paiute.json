@@ -18,7 +18,6 @@
     {
      "type": "BONUS_PEYOTE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

@@ -8,43 +8,36 @@
       {
        "type": "BONUS_COPPER_ORE",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_GOLD_ORE",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_SILVER_ORE",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_TIN_ORE",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_IRON_ORE",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_LEAD_ORE",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_PLATINUM_ORE",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       }
      ]

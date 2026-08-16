@@ -6,7 +6,7 @@
     {
      "type": "BONUS_DRUGS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_BATTLEFIELD_MEDICINE",

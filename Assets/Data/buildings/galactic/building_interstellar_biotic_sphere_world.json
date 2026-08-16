@@ -24,7 +24,7 @@
     {
      "type": "BONUS_YGGDRASIL_SEEDS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

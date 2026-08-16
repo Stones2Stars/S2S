@@ -103,8 +103,7 @@ static CvCascScope cp_impliedScope(const std::string& t)
 static CvCascConnection cp_parseConnection(const std::string& c)
 {
 	if (c == "trade") return CASC_CONN_TRADE;
-	if (c == "vicinity") return CASC_CONN_VICINITY;
-	if (c.find("trade") != std::string::npos && c.find("vicinity") != std::string::npos) return CASC_CONN_TRADE_OR_VICINITY;
+	if (c == "onSite") return CASC_CONN_ONSITE;
 	return CASC_CONN_NONE;
 }
 

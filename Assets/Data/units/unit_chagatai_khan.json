@@ -6,7 +6,7 @@
     {
      "type": "BONUS_TRANSOXANIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_FEUDALISM"
    ]

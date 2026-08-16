@@ -6,14 +6,14 @@
     {
      "type": "BONUS_HELICOPTERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MODERN_WARFARE",
     "TECH_VERTICAL_FLIGHT",
     {
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

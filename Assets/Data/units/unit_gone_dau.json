@@ -18,7 +18,7 @@
     {
      "type": "BONUS_FIJIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_SHIPWRIGHT",
     "HAS_COAST",

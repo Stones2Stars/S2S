@@ -11,7 +11,7 @@
     {
      "type": "BONUS_HORSE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_MERCENARY_STABLES",
     "TECH_BRONZE_WORKING",

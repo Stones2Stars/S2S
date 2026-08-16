@@ -34,7 +34,7 @@
     {
      "type": "BONUS_TIN_ORE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

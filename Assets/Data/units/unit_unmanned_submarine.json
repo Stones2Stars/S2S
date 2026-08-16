@@ -6,7 +6,7 @@
     {
      "type": "BONUS_NANOTUBES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
     {
@@ -18,19 +18,19 @@
     {
      "type": "BONUS_URANIUM",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
       {
        "type": "BONUS_STEEL_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_ALUMINUM_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

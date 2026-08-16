@@ -6,7 +6,7 @@
     {
      "type": "BONUS_VANUATUAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_COPPER_WORKING",
     {
@@ -14,17 +14,17 @@
       {
        "type": "BONUS_COPPER_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_BRONZE_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_IRON_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

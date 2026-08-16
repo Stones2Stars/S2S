@@ -24,13 +24,13 @@
     {
      "type": "BONUS_STEEL_INGOTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
      "type": "BONUS_CEMENT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

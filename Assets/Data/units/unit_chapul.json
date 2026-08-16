@@ -6,19 +6,19 @@
     {
      "type": "BONUS_KIPCHAK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_CHIVALRY",
     {
      "type": "BONUS_HORSE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

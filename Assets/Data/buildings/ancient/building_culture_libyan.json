@@ -18,7 +18,6 @@
     {
      "type": "BONUS_RUBIES",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

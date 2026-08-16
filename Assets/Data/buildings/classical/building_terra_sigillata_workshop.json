@@ -29,8 +29,7 @@
     {
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "POPULATION",
@@ -40,7 +39,7 @@
     {
      "type": "BONUS_ROMAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

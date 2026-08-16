@@ -50,8 +50,7 @@
     {
      "type": "BONUS_DEER",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

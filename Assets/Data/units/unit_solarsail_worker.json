@@ -13,7 +13,7 @@
     {
      "type": "BONUS_ROCKET_FUEL",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_EFFECT_LAUNCH_SITE",
     "TECH_SOLAR_PROPULSION"

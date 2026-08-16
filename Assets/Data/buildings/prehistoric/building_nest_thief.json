@@ -21,7 +21,6 @@
     {
      "type": "BONUS_POULTRY",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

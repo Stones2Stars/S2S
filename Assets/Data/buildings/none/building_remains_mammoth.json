@@ -6,7 +6,6 @@
     {
      "type": "BONUS_MAMMOTH",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     },
     "BUILDING_FOLKLORE_REQUIREMENT",

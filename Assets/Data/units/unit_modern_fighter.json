@@ -6,23 +6,23 @@
     {
      "type": "BONUS_PETROLEUM_PRODUCTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_STEALTH",
     {
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

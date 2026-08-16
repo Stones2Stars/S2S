@@ -15,8 +15,7 @@
     {
      "type": "BONUS_PAPAYA",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     "RELIGION_DRUIDIC_TRADITIONS"
    ]

@@ -18,7 +18,6 @@
     {
      "type": "BONUS_SILK",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

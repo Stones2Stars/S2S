@@ -282,19 +282,21 @@ def requires_unit(rec, store):
     allc, anyc, none = [], [], []
     b = _txt(rec, "BonusType")
     if b:
-        allc.append(_atom(b, "city", connection="trade|vicinity"))
+        allc.append(_atom(b, "city", connection="trade"))
     orb = _typelist_struct(rec, "PrereqBonuses", "BonusType")
     if orb:
-        anyc.append([_atom(x, "city", connection="trade|vicinity") for x in orb])
-    # Vicinity bonus = the engine's hasVicinityBonus (CvCity::canTrainInternal:2241 single, :2250 OR) -- the OBTAINED
-    # level (owned+valid+connected), so it carries the `vicinity:"onSite"` discriminator (json.md §3.4), IDENTICAL
-    # to the building curator's VicinityBonus. (A bare `connection:"vicinity"` would loosely accept any radius tile.)
+        anyc.append([_atom(x, "city", connection="trade") for x in orb])
+    # ⚖ `connection` is the ORIGIN axis and its two values are mutually exclusive (owner): `trade` = the NETWORK
+    # has it, `onSite` = it originates from the city itself. Naming the second one "vicinity" created exactly the
+    # confusion the rename removes -- `vicinity` is the PLOT-SET axis (which plots count) and nothing else.
+    # VicinityBonusType is the engine's hasVicinityBonus (CvCity::canTrainInternal:2241 single, :2250 OR) -- the
+    # OBTAINED level (owned+valid+connected), i.e. it originates here -> `connection:"onSite"`.
     vb = _txt(rec, "VicinityBonusType")
     if vb:
-        allc.append(_atom(vb, "city", connection="vicinity", vicinity="onSite"))
+        allc.append(_atom(vb, "city", connection="onSite"))
     ovb = _typelist_struct(rec, "PrereqVicinityBonuses", "BonusType")
     if ovb:
-        anyc.append([_atom(x, "city", connection="vicinity", vicinity="onSite") for x in ovb])
+        anyc.append([_atom(x, "city", connection="onSite") for x in ovb])
     for x in _typelist_struct(rec, "PrereqAndBuildings", "BuildingType"):
         allc.append(_atom(x, "city"))
     orbld = _typelist_struct(rec, "PrereqOrBuildings", "BuildingType")

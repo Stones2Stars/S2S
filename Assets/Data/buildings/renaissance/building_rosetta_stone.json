@@ -20,7 +20,7 @@
     {
      "type": "BONUS_ANCIENT_RELICS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

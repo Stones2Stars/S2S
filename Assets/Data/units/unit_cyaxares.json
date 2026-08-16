@@ -6,7 +6,7 @@
     {
      "type": "BONUS_MEDIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_HORSE_BREEDING"
    ]

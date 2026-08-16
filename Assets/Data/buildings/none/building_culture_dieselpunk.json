@@ -15,8 +15,7 @@
     {
      "type": "BONUS_OIL",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ]
   }

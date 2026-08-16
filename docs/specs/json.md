@@ -197,7 +197,7 @@ tree (`all`/`any`/`noneOf`, nestable to any depth).
 Each leaf is **either** a count/presence **atom** or a **predicate** (§3.5):
 
 ```jsonc
-{ "type": "BONUS_IRON", "scope": "city", "connection": "trade|vicinity" }   // an atom
+{ "type": "BONUS_IRON", "scope": "city", "connection": "trade" }   // an atom
 ```
 
 An **atom** is `{ type, scope?, min?, max?, connection? }`. **Scope is IMPLIED from the type's domain** (derived from
@@ -215,10 +215,11 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
 - **presence** = `min: 1` ("have ≥ 1"). Authoring presence this way keeps it future-proof if a resource later
   gains amounts.
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
-- `connection` (resources only) ∈ `"trade"` | `"vicinity"` | `"trade|vicinity"`. `trade` = the city has the bonus via
-  the trade network. `vicinity` = the bonus is on a tile in the city's radius.
-- **`vicinity` DISCRIMINATOR** — `connection:"vicinity"` scopes a
-  bonus to the city's workable radius; the optional sibling `vicinity:` field selects WHICH tiles count. A radius tile's
+- `connection` (resources only) ∈ `"trade"` | `"onSite"`. **The two are MUTUALLY EXCLUSIVE** — a gate wanting
+  either states TWO atoms under an `any`, never one combined selector. `vicinity` is a separate field, not a
+  `connection` value. What each means: [bonuses.md](../reference/bonuses.md).
+- **`vicinity`** — a separate field, carried with or without a `connection`: which tiles of
+  the city's workable radius count. A radius tile's
   ownership is one of three — and the distinction is load-bearing: **owned** (the city's team), **neutral** (unowned,
   `NO_TEAM`), or **foreign** (another team). The ownership selectors nest `owned ⊂ owned+neutral ⊂ owned+neutral+foreign`:
   - **absent** = **owned + neutral** — the **DEFAULT**: the city's own tiles plus unclaimed land,
@@ -543,7 +544,7 @@ The means a target needs. Two timings:
 
 ```jsonc
 "requires": {
-  "build":   { "all": [ {"type":"BONUS_STONE","scope":"city","connection":"trade|vicinity"} ] },
+  "build":   { "all": [ {"type":"BONUS_STONE","scope":"city","connection":"trade"} ] },
   "operate": { "all": [ {"type":"CIVIC_GUILDS","scope":"empire"} ] }
 }
 ```
@@ -760,7 +761,7 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 What an entity makes AVAILABLE in its city *while active* — distinct from `grants` (a one-shot/recurring handout).
 The canonical case is a building or map bonus that supplies a `BONUS_*`: a tamed-animal herd / industrial farm
 supplies its animal bonus, and a map bonus on a workable plot supplies itself. One uniform surface, so a
-`connection:"vicinity"` requirement is satisfied by *any* provider in the city — plot bonus **or** active building.
+`connection:"onSite"` requirement is satisfied by *any* provider in the city — plot bonus **or** active building.
 
 ```jsonc
 "provides": { "bonuses": ["BONUS_CAMEL", { "BONUS_MOVIE": 6 }] }
@@ -1518,7 +1519,7 @@ a system can be added, swapped, or removed as a unit.
   "type": "BUILDING_FORGE",
   "identity": { "description": "TXT_KEY_BUILDING_FORGE" },
   "enables": { "units": ["UNIT_CROSSBOWMAN"] },
-  "requires": { "operate": { "all": [ {"type":"BONUS_IRON","scope":"city","connection":"trade|vicinity"} ] } },
+  "requires": { "operate": { "all": [ {"type":"BONUS_IRON","scope":"city","connection":"trade"} ] } },
   "production": { "city": { "percent": 25 } },
   "happiness":  { "city": { "flat": 1, "enabled": "HAS_POWER" } },
   "cost": { "production": 120 }

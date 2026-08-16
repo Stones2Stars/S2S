@@ -18,13 +18,13 @@
     {
      "type": "BONUS_MARBLE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_FRESHWATER",
     {
      "type": "BONUS_BRICKS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_SEWER_SYSTEM",
     "TECH_SURVEYING",

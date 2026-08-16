@@ -6,7 +6,7 @@
     {
      "type": "BONUS_CLOCKPUNK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_METALLURGY",
     "TECH_CLOCKPUNK"

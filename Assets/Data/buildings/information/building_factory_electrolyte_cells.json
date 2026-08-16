@@ -24,7 +24,7 @@
     {
      "type": "BONUS_OMEGA_FATTY_ACID",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ],

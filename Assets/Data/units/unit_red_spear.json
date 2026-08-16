@@ -6,7 +6,7 @@
     {
      "type": "BONUS_POVERTY_POINT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MONARCHY"
    ]

@@ -29,8 +29,7 @@
     {
      "type": "BONUS_PIG",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

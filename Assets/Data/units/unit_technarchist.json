@@ -6,7 +6,7 @@
     {
      "type": "BONUS_ORGANIC_COMPUTERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_COMPREHENSIVE_CYBERNETICS"
    ]

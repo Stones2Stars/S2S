@@ -6,14 +6,14 @@
     {
      "type": "BONUS_STEAMPUNK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_BALLOON_WARFARE",
     "TECH_STEAMPUNK",
     {
      "type": "BONUS_HYDROGEN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

@@ -6,7 +6,7 @@
     {
      "type": "BONUS_OLMEC",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_BRONZE_WORKING",
     {
@@ -14,12 +14,12 @@
       {
        "type": "BONUS_COPPER_ORE",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_IRON_ORE",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

@@ -34,12 +34,12 @@
       {
        "type": "BONUS_RAW_FISH",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_SHELLFISH",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

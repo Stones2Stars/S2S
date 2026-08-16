@@ -6,7 +6,7 @@
     {
      "type": "BONUS_LONGOBARDIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_CODE_OF_LAWS"
    ]

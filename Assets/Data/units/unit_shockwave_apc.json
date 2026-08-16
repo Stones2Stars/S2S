@@ -6,13 +6,13 @@
     {
      "type": "BONUS_AUTOMOBILES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_INTERNAL_SHOCKWAVE_ENGINE",
     {
      "type": "BONUS_SHOCKWAVE_ENGINES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

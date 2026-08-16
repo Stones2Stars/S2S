@@ -33,7 +33,7 @@
     {
      "type": "BONUS_PRIME_TIMBER",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

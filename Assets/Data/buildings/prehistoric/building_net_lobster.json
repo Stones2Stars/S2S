@@ -35,7 +35,6 @@
     {
      "type": "BONUS_LOBSTER",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

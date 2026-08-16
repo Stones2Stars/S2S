@@ -11,26 +11,26 @@
     {
      "type": "BONUS_CELLPHONES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_BLACK_HAT_HIDEOUT",
     "TECH_CYBERWARFARE",
     {
      "type": "BONUS_PERSONAL_ELECTRONICS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
       {
        "type": "BONUS_FLASH_MEMORY_DEVICES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_DISKETTES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

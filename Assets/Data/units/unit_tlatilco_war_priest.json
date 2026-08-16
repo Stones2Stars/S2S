@@ -6,13 +6,13 @@
     {
      "type": "BONUS_TLATILCO",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_OBSIDIAN_WEAPONS",
     {
      "type": "BONUS_OBSIDIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [

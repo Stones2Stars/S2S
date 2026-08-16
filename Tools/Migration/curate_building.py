@@ -1071,16 +1071,22 @@ def requires_building(rec, store):
     bonus_all, bonus_any = op_all, op_any
     b = _txt(rec, "Bonus")
     if b:
-        bonus_all.append(_atom(b, "city", connection="trade|vicinity"))
+        bonus_all.append(_atom(b, "city", connection="trade"))
     orb = _typelist(rec, "PrereqBonuses")
     if orb:
-        bonus_any.append([_atom(x, "city", connection="trade|vicinity") for x in orb])
-    # Vicinity bonus REFINEMENT (owner ruling 2026-06-24, supersedes the 2026-06-16 "fold raw into vicinity"): bare
-    # `connection:"vicinity"` = the bonus on ANY radius tile; a `vicinity` DISCRIMINATOR tightens which tiles count.
-    # The engine has TWO flavors with OPPOSITE strictness, so they CANNOT fold to one (json.md S3.4):
-    #   VicinityBonus    -> hasVicinityBonus    (owned+valid+connected)  -> vicinity:"onSite"  (the resource is available AT this city)
-    #   RawVicinityBonus -> hasRawVicinityBonus (centre OR owned radius tile, no connection) -> vicinity:"owned"
-    # (e.g. MINE_GOLD VicinityBonus needs the connected gate; NET_SHRIMP/MUREX RawVicinityBonus need only owned presence.)
+        bonus_any.append([_atom(x, "city", connection="trade") for x in orb])
+    # ⛔ A RESOURCE ARRIVES ONE OF TWO WAYS AND THE TWO ARE MUTUALLY EXCLUSIVE (owner): `connection:"trade"` (the
+    # network has it) or `connection:"onSite"` (it is here). A gate wanting either states two atoms under an `any`,
+    # deliberately. A gate accepting BOTH at once keeps a city operating on ore it has traded away -- the export
+    # leaves the plot group, but the ore is still in the ground -- so the two may never be combined into one
+    # selector. The `vicinity` BAND (owned/crossBorder/worked) is a different axis: which PLOTS count.
+    # ⚖ VICINITY AND CONNECTED ARE TWO SEPARATE THINGS (owner), so the three legacy tags land on two axes and
+    # nothing is discarded -- the XML is explicit about which is meant:
+    #   Bonus / PrereqBonuses                     the city HAS it            -> connection:"trade"
+    #   VicinityBonus / PrereqVicinityBonuses     owned+valid+CONNECTED      -> connection:"onSite"
+    #   RawVicinityBonus / PrereqRawVicinityBonuses  owned tile, no connection  -> vicinity:"owned"
+    # The third is not an arrival at all: "is this bonus on a plot I control, improved or not" is the PLOT-SET
+    # question, which is what `vicinity` means and all it means.
     # ⚖ THE SINGULAR TAG AND ITS LIST ARE **ONE OR SET**, NOT AN AND PLUS AN OR (owner): a tungsten mine is
     # expected to need tin ore OR iron ore on site, never both. Legacy read them as `singular AND (any of list)`,
     # which on the onSite discriminator -- two DISTINCT resources physically on the city's own tiles -- means the
@@ -1093,17 +1099,17 @@ def requires_building(rec, store):
     # requirements badly (owner), long since gone.
     # ⛔ A list WITHOUT a singular is untouched and stays a pure OR -- that idiom was always used correctly (the
     # pest buildings: grains OR cheese OR vegetables), and folding anything into it would change nothing.
-    for singularTag, listTag, disc in (("VicinityBonus", "PrereqVicinityBonuses", "onSite"),
-                                       ("RawVicinityBonus", "PrereqRawVicinityBonuses", "owned")):
+    for singularTag, listTag, axis in (("VicinityBonus", "PrereqVicinityBonuses", {"connection": "onSite"}),
+                                       ("RawVicinityBonus", "PrereqRawVicinityBonuses", {"vicinity": "owned"})):
         singular = _txt(rec, singularTag)
         lst = _typelist(rec, listTag)
         if singular and lst:
-            bonus_any.append([_atom(x, "city", connection="vicinity", vicinity=disc)
+            bonus_any.append([_atom(x, "city", **axis)
                               for x in ([singular] + [y for y in lst if y != singular])])
         elif singular:
-            bonus_all.append(_atom(singular, "city", connection="vicinity", vicinity=disc))
+            bonus_all.append(_atom(singular, "city", **axis))
         elif lst:
-            bonus_any.append([_atom(x, "city", connection="vicinity", vicinity=disc) for x in lst])
+            bonus_any.append([_atom(x, "city", **axis) for x in lst])
     # --- plot-state predicates (bare). bWater = the city is COASTAL, not the plot being water: legacy
     # isValidBuildingLocation (CvCity.cpp:18500-18506) gates bWater on isCoastal() (a city sits on LAND, so
     # IS_WATER/pl->isWater() is always false -> every coastal building wrongly hidden). With bRiver also set it is
@@ -1133,7 +1139,7 @@ def requires_building(rec, store):
         op_all.append("HAS_POWER")
     pb = _txt(rec, "PowerBonus")
     if pb:
-        bonus_all.append(_atom(pb, "city", connection="trade|vicinity", role="power"))   # operate/build by bAutoBuild
+        bonus_all.append(_atom(pb, "city", connection="trade", role="power"))   # operate/build by bAutoBuild
     # --- city / world counts + size (tally) ---
     # iLevelPrereq (the "empire has a unit of level >= N" gate, CvPlayer::canConstruct:6766 getHighestUnitLevel) is
     # INTENTIONALLY DROPPED (owner ruling 2026-06-24): the gate is removed from the game (XML iLevelPrereq zeroed on

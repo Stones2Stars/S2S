@@ -6,7 +6,7 @@
     {
      "type": "BONUS_TONGAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_FLIGHT",
     "TECH_INDUSTRIALISM"

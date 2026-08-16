@@ -22,7 +22,7 @@
     {
      "type": "BONUS_WOOD",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "RELIGION_CONFUCIANISM",
     {
@@ -30,22 +30,22 @@
       {
        "type": "BONUS_BOOKS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_PAPER",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_SCROLLS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_TABLETS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

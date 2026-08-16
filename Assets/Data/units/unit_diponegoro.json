@@ -6,7 +6,7 @@
     {
      "type": "BONUS_JAVANESE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_STEAM_POWER"
    ]

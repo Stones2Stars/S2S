@@ -35,13 +35,12 @@
     {
      "type": "BONUS_FINE_CLAY",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_STONE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

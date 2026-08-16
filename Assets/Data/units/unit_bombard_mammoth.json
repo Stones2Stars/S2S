@@ -6,7 +6,7 @@
     {
      "type": "BONUS_MAMMOTH",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_CANNON_FORGE",
     "TECH_CAVALRY_TACTICS",
@@ -14,12 +14,12 @@
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_SULPHUR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [

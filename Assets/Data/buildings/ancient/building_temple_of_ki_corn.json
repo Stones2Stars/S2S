@@ -18,8 +18,7 @@
     {
      "type": "BONUS_CORN",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ]
   }

@@ -29,13 +29,13 @@
     {
      "type": "BONUS_HIDE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
      "type": "BONUS_TANNIN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

@@ -18,7 +18,6 @@
     {
      "type": "BONUS_BARLEY",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

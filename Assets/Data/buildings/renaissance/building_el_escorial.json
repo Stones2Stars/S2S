@@ -17,7 +17,7 @@
     {
      "type": "BONUS_STONE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "CIVIC_DIVINE_RIGHT"
    ]

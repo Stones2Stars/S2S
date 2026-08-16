@@ -27,13 +27,13 @@
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
      "type": "BONUS_ENZYMES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

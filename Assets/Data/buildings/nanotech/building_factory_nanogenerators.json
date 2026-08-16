@@ -18,12 +18,12 @@
     {
      "type": "BONUS_LIQUID_METAL",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_NANOTUBES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "MAPCATEGORY_EARTH",
@@ -36,7 +36,7 @@
     {
      "type": "BONUS_MICROGENERATORS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ],

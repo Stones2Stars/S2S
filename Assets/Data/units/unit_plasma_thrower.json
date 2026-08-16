@@ -6,7 +6,7 @@
     {
      "type": "BONUS_PLASMA_GENERATORS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_ELECTRIC_ARC_WEAPONRY"
    ]

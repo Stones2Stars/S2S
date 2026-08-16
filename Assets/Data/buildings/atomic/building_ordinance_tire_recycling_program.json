@@ -17,7 +17,7 @@
     {
      "type": "BONUS_TIRES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "POPULATION",

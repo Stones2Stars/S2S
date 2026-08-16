@@ -6,14 +6,14 @@
     {
      "type": "BONUS_SULPHUR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_SIEGE_WEAPONS_WORKSHOP",
     "TECH_SIEGE_WARFARE",
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

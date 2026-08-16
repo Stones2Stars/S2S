@@ -29,7 +29,7 @@
     {
      "type": "BONUS_CEMENT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
@@ -37,12 +37,12 @@
       {
        "type": "BONUS_STEEL_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_NANOTUBES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

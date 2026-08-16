@@ -6,7 +6,7 @@
     {
      "type": "BONUS_SIOUX",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_AXE_MAKING"
    ],

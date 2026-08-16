@@ -6,7 +6,7 @@
     {
      "type": "BONUS_DUTCH",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "HAS_COAST": {

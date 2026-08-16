@@ -20,7 +20,7 @@
     {
      "type": "BONUS_STEAMPUNK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "POPULATION",

@@ -43,7 +43,7 @@
     {
      "type": "BONUS_MAMMOTH",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

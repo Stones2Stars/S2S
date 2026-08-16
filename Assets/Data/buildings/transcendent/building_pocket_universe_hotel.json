@@ -16,7 +16,7 @@
     {
      "type": "BONUS_POCKET_UNIVERSE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ]

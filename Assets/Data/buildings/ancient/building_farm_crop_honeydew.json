@@ -28,13 +28,11 @@
     {
      "type": "BONUS_MELONS",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_SUGAR",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

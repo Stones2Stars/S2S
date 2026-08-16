@@ -19,8 +19,7 @@
     {
      "type": "BONUS_BISON",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ]
   }

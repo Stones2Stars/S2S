@@ -15,12 +15,12 @@
     {
      "type": "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_NEUROIMPLANTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

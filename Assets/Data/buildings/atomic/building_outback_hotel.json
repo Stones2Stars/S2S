@@ -36,7 +36,7 @@
     {
      "type": "BONUS_KANGAROO",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

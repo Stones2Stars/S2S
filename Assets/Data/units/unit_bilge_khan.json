@@ -6,7 +6,7 @@
     {
      "type": "BONUS_UIGHUR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_CIVIL_SERVICE"
    ]

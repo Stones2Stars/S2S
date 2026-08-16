@@ -6,36 +6,36 @@
     {
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_POLICE_PRECINCT",
     "TECH_TERRA_COMPUTER",
     {
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_ORGANIC_COMPUTERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_NANOTUBES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
       {
        "type": "BONUS_LEVITATION_GENERATORS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

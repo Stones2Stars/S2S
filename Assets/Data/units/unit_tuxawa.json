@@ -6,7 +6,7 @@
     {
      "type": "BONUS_YANOMAMI",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_LIBERALISM"
    ]

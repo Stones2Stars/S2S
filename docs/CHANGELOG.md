@@ -12,6 +12,12 @@
 
 ## Unreleased
 
+- **A resource requirement now names ONE origin.** `connection: "trade"` means the network holds it;
+  `connection: "onSite"` means the city itself supplies it — a mine, or a building that manufactures it.
+  The old combined `"trade|vicinity"` form is gone: the two are genuinely different questions (a mounted
+  unit needs horses on site, a swordsman only needs iron in the network), and a gate wanting either now
+  states two atoms under an `any`. Shipped data is regenerated; hand-authored data using the combined
+  form needs updating.
 - The Heritage advisor has an **Empire** tab listing the empire-level buildings you hold. That class
   is held by the empire rather than by a city, so nothing anywhere showed it — you owned things with
   no way to see them. A held-but-dormant one is marked, since holding is not the same as working.

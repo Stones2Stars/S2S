@@ -6,19 +6,19 @@
     {
      "type": "BONUS_CZECH",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_CANNON_FORGE",
     "TECH_METALLURGY",
     {
      "type": "BONUS_HORSE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_SULPHUR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

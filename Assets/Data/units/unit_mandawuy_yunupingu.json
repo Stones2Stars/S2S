@@ -6,7 +6,7 @@
     {
      "type": "BONUS_YOLNGU",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MASS_MEDIA"
    ]

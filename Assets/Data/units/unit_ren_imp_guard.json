@@ -8,7 +8,7 @@
     {
      "type": "BONUS_SULPHUR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "CIVIC_MONARCHY"
    ],

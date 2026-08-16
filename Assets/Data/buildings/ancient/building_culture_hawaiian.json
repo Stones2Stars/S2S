@@ -18,7 +18,6 @@
     {
      "type": "BONUS_COCONUT",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

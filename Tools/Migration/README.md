@@ -138,7 +138,8 @@ emitters) — do not run them.
 A `requires` leaf atom is `{ "type": "PREFIX_NAME", "scope": "...", "min"?, "max"?,
 "connection"? }` (data-model-spec §2.4). The `_atom(typ, scope, **kw)` helper builds it.
 Scopes: `world`/`team`/`empire`/`area`/`city`/`plot`. Examples a curator produces:
-- resource — `{"type":"BONUS_IRON","scope":"city","connection":"trade|vicinity"}`
+- resource — `{"type":"BONUS_IRON","scope":"city","connection":"trade"}` (or `"onSite"` — the two are mutually
+  exclusive origins; a gate wanting either states two atoms under an `any`)
 - in-city building — `{"type":"BUILDING_FORGE","scope":"city"}`
 - **tech (per-candidate CONFIRM, AND-only for units/buildings)** —
   `{"type":"TECH_ROBOTICS","scope":"team"}` in `requires.build.all`. The forward `enables`

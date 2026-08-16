@@ -62,7 +62,7 @@
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "MAPCATEGORY_EARTH",
@@ -75,7 +75,7 @@
     {
      "type": "BONUS_CEMENT",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
@@ -83,12 +83,12 @@
       {
        "type": "BONUS_IRON_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_STEEL_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

@@ -23,7 +23,7 @@
     {
      "type": "BONUS_FLOWERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

@@ -6,7 +6,7 @@
     {
      "type": "BONUS_CAMEL",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ANIMAL_TRAINER_CAMEL",
     "TECH_MOUNTED_ARCHERY"

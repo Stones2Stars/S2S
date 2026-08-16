@@ -6,7 +6,7 @@
     {
      "type": "BONUS_GOTH",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MILITARY_TRAINING"
    ]

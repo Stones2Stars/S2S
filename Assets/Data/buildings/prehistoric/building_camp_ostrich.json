@@ -35,14 +35,12 @@
     {
      "type": "BONUS_POULTRY",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     },
     {
      "type": "BONUS_ELEPHANT",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

@@ -31,8 +31,7 @@
     {
      "type": "BONUS_COW",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

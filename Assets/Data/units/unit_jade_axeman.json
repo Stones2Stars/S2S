@@ -6,13 +6,13 @@
     {
      "type": "BONUS_LIANGZHU",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_AXE_MAKING",
     {
      "type": "BONUS_JADE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

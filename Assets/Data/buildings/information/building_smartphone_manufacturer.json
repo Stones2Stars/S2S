@@ -30,7 +30,7 @@
     {
      "type": "BONUS_RARE_EARTH_MINERALS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

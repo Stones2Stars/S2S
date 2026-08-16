@@ -6,13 +6,13 @@
     {
      "type": "BONUS_MAORI",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_TATTOOS",
     {
      "type": "BONUS_WOOD",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

@@ -21,7 +21,6 @@
     {
      "type": "BONUS_CORN",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

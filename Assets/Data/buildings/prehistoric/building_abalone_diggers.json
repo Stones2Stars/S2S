@@ -28,14 +28,12 @@
     {
      "type": "BONUS_PEARLS",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     },
     {
      "type": "BONUS_MUREX",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

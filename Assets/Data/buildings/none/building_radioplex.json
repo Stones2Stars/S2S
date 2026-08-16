@@ -20,7 +20,7 @@
     {
      "type": "BONUS_DIESELPUNK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "POPULATION",
@@ -30,7 +30,7 @@
     {
      "type": "BONUS_RADIOS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

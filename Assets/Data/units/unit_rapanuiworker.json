@@ -77,7 +77,7 @@
     {
      "type": "BONUS_RAPA_NUI",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MEGALITH_CONSTRUCTION"
    ],

@@ -18,8 +18,7 @@
     {
      "type": "BONUS_ALMONDS",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     "RELIGION_DRUIDIC_TRADITIONS"
    ]

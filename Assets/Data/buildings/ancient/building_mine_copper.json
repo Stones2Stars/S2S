@@ -29,8 +29,7 @@
     {
      "type": "BONUS_COPPER_ORE",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

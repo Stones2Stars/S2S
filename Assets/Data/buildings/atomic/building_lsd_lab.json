@@ -24,13 +24,13 @@
     {
      "type": "BONUS_CHEMICALS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
      "type": "BONUS_GRAINS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

@@ -28,8 +28,7 @@
     {
      "type": "BONUS_PRICKLY_PEAR",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

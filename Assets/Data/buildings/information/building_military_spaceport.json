@@ -38,12 +38,12 @@
     {
      "type": "BONUS_ROCKET_FUEL",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_NANOTUBES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

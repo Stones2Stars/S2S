@@ -6,7 +6,7 @@
     {
      "type": "BONUS_RED_OCHER",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_AESTHETICS",
     "TECH_CURRENCY"

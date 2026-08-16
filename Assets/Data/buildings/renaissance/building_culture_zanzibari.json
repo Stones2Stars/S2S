@@ -18,7 +18,6 @@
     {
      "type": "BONUS_DATES",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

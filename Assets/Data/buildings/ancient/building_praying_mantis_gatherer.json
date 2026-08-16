@@ -29,13 +29,11 @@
     {
      "type": "BONUS_PEYOTE",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_TEA",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

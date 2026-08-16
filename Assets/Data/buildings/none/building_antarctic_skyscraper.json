@@ -20,7 +20,7 @@
     {
      "type": "BONUS_CRYSTALPUNK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ]

@@ -6,7 +6,7 @@
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_TEMPLE_OF_CHONS",
     "RELIGION_KEMETISM",

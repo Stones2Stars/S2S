@@ -6,25 +6,25 @@
     {
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_AMPHIBIOUS_WARFARE",
     {
      "type": "BONUS_HOVERCRAFTS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
       {
        "type": "BONUS_BIOFUEL",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_PETROLEUM_PRODUCTS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

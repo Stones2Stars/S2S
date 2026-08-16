@@ -17,7 +17,6 @@
     {
      "type": "BONUS_HEMP",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

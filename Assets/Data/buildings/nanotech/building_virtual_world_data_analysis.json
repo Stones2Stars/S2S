@@ -21,7 +21,7 @@
     {
      "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ]

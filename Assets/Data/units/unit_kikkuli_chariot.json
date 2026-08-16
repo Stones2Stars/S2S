@@ -6,7 +6,7 @@
     {
      "type": "BONUS_MITANNI",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_CHARIOT_WORKSHOP",
     "TECH_CHARIOTRY",
@@ -14,7 +14,7 @@
     {
      "type": "BONUS_HORSE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

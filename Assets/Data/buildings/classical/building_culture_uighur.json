@@ -17,7 +17,6 @@
     {
      "type": "BONUS_CAMEL",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

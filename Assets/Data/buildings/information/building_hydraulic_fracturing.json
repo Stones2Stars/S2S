@@ -25,8 +25,7 @@
     {
      "type": "BONUS_NATURAL_GAS",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

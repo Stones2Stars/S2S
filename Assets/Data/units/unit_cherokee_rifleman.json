@@ -6,7 +6,7 @@
     {
      "type": "BONUS_CHEROKEE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_FLINTLOCK",
     {
@@ -14,12 +14,12 @@
       {
        "type": "BONUS_FIREARMS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_AMMUNITION",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

@@ -29,8 +29,7 @@
     {
      "type": "BONUS_TOBACCO",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

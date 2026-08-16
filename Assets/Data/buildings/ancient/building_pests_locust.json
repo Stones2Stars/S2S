@@ -11,8 +11,7 @@
     {
      "type": "BONUS_GRAINS",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "POPULATION",

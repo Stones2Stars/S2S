@@ -6,7 +6,7 @@
     {
      "type": "BONUS_VANDAL",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_FEUDALISM"
    ]

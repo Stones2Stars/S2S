@@ -21,7 +21,6 @@
     {
      "type": "BONUS_POTATOES",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

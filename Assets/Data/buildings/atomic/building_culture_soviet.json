@@ -41,7 +41,6 @@
     {
      "type": "BONUS_NATURAL_GAS",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

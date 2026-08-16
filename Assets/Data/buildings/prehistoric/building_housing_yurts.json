@@ -11,12 +11,11 @@
     {
      "type": "BONUS_WOOD",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_HORSE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     },
     {
@@ -24,12 +23,12 @@
       {
        "type": "BONUS_CLOTH",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_LEATHER",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     },

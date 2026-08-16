@@ -21,7 +21,6 @@
     {
      "type": "BONUS_SULPHUR",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

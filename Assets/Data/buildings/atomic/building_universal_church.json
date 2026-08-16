@@ -15,7 +15,7 @@
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "CIVIC_SECULARISM",
     {
@@ -23,12 +23,12 @@
       {
        "type": "BONUS_BRICKS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_CEMENT",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

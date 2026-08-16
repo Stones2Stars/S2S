@@ -22,7 +22,6 @@
     {
      "type": "BONUS_TURQUOISE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

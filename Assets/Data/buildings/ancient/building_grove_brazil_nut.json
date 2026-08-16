@@ -28,13 +28,11 @@
     {
      "type": "BONUS_ALMONDS",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_COFFEE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

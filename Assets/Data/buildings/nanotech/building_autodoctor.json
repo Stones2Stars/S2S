@@ -30,7 +30,7 @@
     {
      "type": "BONUS_MEDICAL_TRICORDERS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
@@ -38,12 +38,12 @@
       {
        "type": "BONUS_SERVICE_BOTS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_ANDROIDS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

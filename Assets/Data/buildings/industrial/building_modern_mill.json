@@ -30,7 +30,7 @@
     {
      "type": "BONUS_GRAINS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ],

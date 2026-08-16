@@ -31,7 +31,7 @@
     {
      "type": "BONUS_ELECTROLYTIC_CELLS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ],

@@ -23,7 +23,7 @@
     {
      "type": "BONUS_BIOPUNK",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {

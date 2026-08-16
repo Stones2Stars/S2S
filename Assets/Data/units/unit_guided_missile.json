@@ -6,13 +6,13 @@
     {
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_GUIDED_WEAPONS",
     {
      "type": "BONUS_ROCKET_FUEL",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

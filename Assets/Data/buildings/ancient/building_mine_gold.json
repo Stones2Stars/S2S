@@ -29,8 +29,7 @@
     {
      "type": "BONUS_GOLD_ORE",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

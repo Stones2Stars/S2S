@@ -20,7 +20,7 @@
     {
      "type": "BONUS_ALUMINUM_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
@@ -33,12 +33,12 @@
       {
        "type": "BONUS_TITANIUM_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_NANOTUBES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

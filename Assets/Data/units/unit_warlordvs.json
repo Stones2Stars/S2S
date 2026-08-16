@@ -6,14 +6,14 @@
     {
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_LOGISTICS",
     "TECH_GUERRILLA_WARFARE",
     {
      "type": "BONUS_AMMUNITION",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": {

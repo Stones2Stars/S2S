@@ -48,7 +48,6 @@
     {
      "type": "BONUS_GRAPES",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

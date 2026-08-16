@@ -41,7 +41,6 @@
     {
      "type": "BONUS_PRIME_TIMBER",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

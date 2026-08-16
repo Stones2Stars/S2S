@@ -58,6 +58,7 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/economy.md](reference/economy.md)** — maintenance, upkeep, happiness, health, war-weariness, pollution.
 - **[reference/yields-growth.md](reference/yields-growth.md)** — civics, food, improvements/plot yields, city production, golden ages & era.
 - **[reference/golden-age.md](reference/golden-age.md)** — the complete golden-age reference: its 3 base-yield additions (incl. the per-plot **pre-improvement** threshold), faster growth & great people, zero-anarchy civic swaps, all triggers/duration. (So we stop re-deriving it from the engine.)
+- **[reference/bonuses.md](reference/bonuses.md)** — what a resource IS: the plot group owns the number and nothing mirrors it; the two mutually-exclusive origins (`trade` vs `onSite`) and why `vicinity` is a different axis; manufactured bonuses being the same class as any other; every route a resource takes IN and OUT; trading, and the three facts of which only one is a crossing.
 - **[reference/culture-religion-research.md](reference/culture-religion-research.md)** — culture, religion, research/tech, heritage, corporations.
 - **[reference/special-systems.md](reference/special-systems.md)** — espionage, great people, promotions/XP, vision, trade, diplomacy, victory.
 - **[reference/unit-lifecycle.md](reference/unit-lifecycle.md)** — a unit's birth, the five-operation death sequence (only `die()` kills), delayed death vs delayed DELETION, the off-map unit, and the re-entrancy routes.

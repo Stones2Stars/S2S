@@ -24,14 +24,14 @@
     {
      "type": "BONUS_PLASTIC",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_FRESHWATER",
     "HAS_POWER",
     {
      "type": "BONUS_SUGAR",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

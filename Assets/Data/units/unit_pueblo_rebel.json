@@ -11,7 +11,7 @@
     {
      "type": "BONUS_HOPI",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MATCHLOCK",
     "TECH_LEADERSHIP",
@@ -20,12 +20,12 @@
       {
        "type": "BONUS_FIREARMS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_AMMUNITION",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     },

@@ -28,7 +28,7 @@
     {
      "type": "BONUS_BAMBOO",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

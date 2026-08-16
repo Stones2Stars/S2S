@@ -25,13 +25,13 @@
     {
      "type": "BONUS_PRIME_TIMBER",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "RELIGION_SHINTO",
     {
      "type": "BONUS_FURNITURE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

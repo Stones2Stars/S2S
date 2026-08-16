@@ -6,7 +6,7 @@
     {
      "type": "BONUS_SPANISH",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_GUNPOWDER"
    ]

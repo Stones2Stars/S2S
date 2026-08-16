@@ -29,13 +29,11 @@
     {
      "type": "BONUS_JADE",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_LEAD_ORE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

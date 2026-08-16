@@ -21,7 +21,7 @@
     {
      "type": "BONUS_CLAYTRONIC_ATOMS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ]

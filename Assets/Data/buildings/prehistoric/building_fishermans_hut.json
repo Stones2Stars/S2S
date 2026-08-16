@@ -39,44 +39,38 @@
     {
      "type": "BONUS_ROPE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
       {
        "type": "BONUS_FISH",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_CRAB",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_LOBSTER",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_CLAM",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_SHRIMP",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       },
       {
        "type": "BONUS_PEARLS",
        "scope": "city",
-       "connection": "vicinity",
        "vicinity": "owned"
       }
      ]

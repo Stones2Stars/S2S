@@ -31,7 +31,7 @@
     {
      "type": "BONUS_STONE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

@@ -7,7 +7,7 @@
     {
      "type": "BONUS_SILVER_ORE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_MERCANTILISM",
     {

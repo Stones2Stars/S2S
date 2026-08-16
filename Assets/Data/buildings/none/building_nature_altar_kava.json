@@ -15,8 +15,7 @@
     {
      "type": "BONUS_KAVA",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     },
     "RELIGION_DRUIDIC_TRADITIONS"
    ]

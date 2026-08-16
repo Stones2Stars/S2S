@@ -21,7 +21,6 @@
     {
      "type": "BONUS_STONE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

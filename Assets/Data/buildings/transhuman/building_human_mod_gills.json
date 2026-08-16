@@ -15,7 +15,7 @@
     {
      "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

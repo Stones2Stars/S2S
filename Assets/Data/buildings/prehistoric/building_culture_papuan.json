@@ -21,7 +21,6 @@
     {
      "type": "BONUS_MANGO",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

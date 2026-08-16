@@ -34,7 +34,6 @@
     {
      "type": "BONUS_PIG",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

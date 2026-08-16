@@ -125,7 +125,7 @@ supply is a union of two independently-owned halves, and storing either one twic
 
 - **MAP providers** (a bonus on a radius tile providing itself) are per-scope live state with no other home, so
   `CityContext` holds them — tiered by the §3.4 ownership discriminator (`owned` / owned+neutral / `crossBorder` /
-  `worked` / `onSite`), since a `connection:"vicinity"` atom selects which tiles count.
+  `worked`), since the `vicinity` band selects which tiles count — the plot-set axis, distinct from `connection`.
 - **ACTIVE BUILDING providers** (`provides.bonuses`) are the operate/provides **least fixpoint**, which only the
   enabler can resolve — an operate condition may consume a bonus another active building provides. They stay
   `OperatingBuildings::provided`, reached through `CvCascadeEvalCtx::vicinityProvidedBonuses`.
@@ -207,22 +207,20 @@ mutates its set in place as the fixpoint ripples.
 > ⛔ So a reader that answers only the map half is WRONG whatever it is called, and "it says vicinity, so it
 > means tiles" is the specific inference to refuse. The union is not an implementation detail of the read — it
 > IS the read ([json.md §5a](../specs/json.md): a herd BUILDING and an improved herd TILE are the same act).
-> ⛔ **So the code must not spell `onSite` as a band of vicinity, and the SHAPE is what teaches it.** The storage
-> is right — `onSite` and `worked` have their own dictionaries, the bands have theirs — but `CvCascVicinity`
-> carries the plot-set selectors and the connection verdict in ONE enum, so a reader named for VICINITY returns
-> the on-site verdict whenever it is handed that value, and the call site reads as though onSite were just a
-> stricter tier.
-> ⚑ **This has already bitten once and was patched with PROSE, which is exactly why it recurred** — a tier-less
-> `hasVicinityBonus` silently answered `CASC_VIC_ONSITE`, and the fix was a comment telling the next caller to
-> name its tier ([DEC-hard-typing-or-rollerskate](decisions.md#dec-hard-typing-or-rollerskate): prose is the
-> weakest rung, and it binds only an agent who reads it, believes it, and still remembers it).
-> ⇒ **So the rule binds the NAME, not just the argument: a function whose answer can be the on-site verdict does
-> not carry `vicinity` in its name, and it takes NO tier** — `EnablerKernel::cityHasBonusOnSite` for a caller
-> holding a `CvCity*`, `ev_vicinityHas` for the evaluator, which must stay ctx-shaped because the eval ctx is
-> forbidden a game object (§ THE EVAL CTX). Two entry points because they reach different planes; ⛔ neither may
-> answer with one half.
-> ⚠ The durable fix is to SPLIT THE AXIS so the wrong call cannot be spelled at all; that reaches the authored
-> `vicinity:` key, the condition struct and the evaluator, so it is a structure call rather than a sweep.
+> ⛔ **THE AXIS IS SPLIT, so the wrong call cannot be spelled at all** — `onSite` is a value of `connection` (the
+> ORIGIN axis: `trade` = the network has it, `onSite` = it comes from the city itself, mutually exclusive), and
+> `vicinity` is the PLOT-SET axis and nothing else. A gate wanting either origin states two atoms under an `any`,
+> deliberately; there is no combined selector and none may be reintroduced
+> ([json.md §3.4](../specs/json.md)).
+> ⚑ **Why prose was not enough, recorded because it is the general lesson** — a tier-less `hasVicinityBonus`
+> silently answered the on-site verdict, and the first fix was a comment telling the next caller to name its
+> tier. It recurred ([DEC-hard-typing-or-rollerskate](decisions.md#dec-hard-typing-or-rollerskate): prose is the
+> weakest rung, binding only an agent who reads it, believes it, and still remembers it). The split is what makes
+> it unsayable instead.
+> ⇒ **The NAME binds too: a function whose answer can be the on-site verdict does not carry `vicinity` in its
+> name** — `EnablerKernel::cityHasBonusOnSite` for a caller holding a `CvCity*`, `ev_vicinityHas` for the
+> evaluator, which must stay ctx-shaped because the eval ctx is forbidden a game object (§ THE EVAL CTX). Two
+> entry points because they reach different planes; ⛔ neither may answer with one half.
 
 ⚖ **`CityContext.amenities` — THE CITY'S OWN FEATURE LIST, AND THE CITY IS WHAT GETS CHECKED (owner).** A
 grantor's `amenities` block ([json.md §8](../specs/json.md)) is static info data; what a consumer actually asks
@@ -454,7 +452,8 @@ Non-dictionary scalars stay plain: population/power are `int` (power carries 0/1
 > that moved, so the applier can set it. Where that assumption fails the recalc is CORRECT, and banning it on the
 > word `refresh` mistakes the name for the mechanism.
 > ⚑ **The exemplar is `DISTANCE_TO_GOVERNMENT_CENTER`** (`CityContext::refreshGovernmentCenterDistance`, driven by
-> `SEVT_CITY_GOVERNMENT_CENTER_ADDED / _REMOVED`): the value is a **MIN over the player's government centres**, so
+> `SEVT_CITY_AMENITY_ADDED / _REMOVED` filtered to the `governmentCenter` key): the value is a
+> **MIN over the player's government centres**, so
 > a centre appearing in ONE city can shorten the distance for EVERY city, and one disappearing forces a re-derive
 > against the remaining set. The fact names the city that gained or lost the designation; the values that move
 > belong to all the others.

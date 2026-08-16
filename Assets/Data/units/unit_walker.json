@@ -6,7 +6,7 @@
     {
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ROBOTICS_LAB",
     "TECH_MACHINE_LEARNING",
@@ -15,12 +15,12 @@
       {
        "type": "BONUS_ALUMINUM_WARES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_NANOTUBES",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

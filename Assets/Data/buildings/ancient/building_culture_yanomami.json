@@ -17,7 +17,6 @@
     {
      "type": "BONUS_LLAMA",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

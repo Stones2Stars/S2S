@@ -29,7 +29,7 @@
     {
      "type": "BONUS_BOOKS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

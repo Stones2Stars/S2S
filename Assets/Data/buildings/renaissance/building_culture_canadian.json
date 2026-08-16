@@ -42,7 +42,6 @@
     {
      "type": "BONUS_BEAVER",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

@@ -6,7 +6,7 @@
     {
      "type": "BONUS_IRON_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_ARMORED_CAVALRY",
     "TECH_MEGAFAUNA_DOMESTICATION",

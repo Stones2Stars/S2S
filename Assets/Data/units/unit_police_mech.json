@@ -6,7 +6,7 @@
     {
      "type": "BONUS_MECHS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_POLICE_PRECINCT",
     "TECH_DISASTER_ROBOTS"

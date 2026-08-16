@@ -6,7 +6,7 @@
     {
      "type": "BONUS_RUSSIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_GUILDS"
    ]

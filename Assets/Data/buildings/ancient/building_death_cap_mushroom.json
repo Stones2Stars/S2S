@@ -48,8 +48,7 @@
     {
      "type": "BONUS_INDIGO",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

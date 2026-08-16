@@ -18,7 +18,6 @@
     {
      "type": "BONUS_PEARLS",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

@@ -6,13 +6,13 @@
     {
      "type": "BONUS_MOLLO",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_ELIXIRS_AND_TONICS",
     {
      "type": "BONUS_DRUGS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [

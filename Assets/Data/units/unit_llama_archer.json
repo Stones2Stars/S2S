@@ -6,7 +6,7 @@
     {
      "type": "BONUS_LLAMA",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ANIMAL_TRAINER_LLAMA",
     "TECH_MOUNTED_ARCHERY",

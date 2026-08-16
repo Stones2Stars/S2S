@@ -18,7 +18,6 @@
     {
      "type": "BONUS_COAL",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

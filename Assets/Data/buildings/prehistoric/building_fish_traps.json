@@ -39,7 +39,7 @@
     {
      "type": "BONUS_BASKETS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ],
    "dormant": [

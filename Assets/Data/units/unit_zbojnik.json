@@ -11,7 +11,7 @@
     {
      "type": "BONUS_SLOVAKIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_HIGHWAYMANS_HIDEOUT",
     "TECH_MATCHLOCK",
@@ -20,12 +20,12 @@
       {
        "type": "BONUS_FIREARMS",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_AMMUNITION",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

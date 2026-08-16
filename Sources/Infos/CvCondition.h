@@ -40,8 +40,12 @@ enum CvCascScope
 	CASC_SCOPE_SPECIALIST, CASC_SCOPE_UNIT, CASC_SCOPE_SELF
 };
 
-// How a resource atom reaches the city (json §3.4 `connection`).
-enum CvCascConnection { CASC_CONN_NONE, CASC_CONN_TRADE, CASC_CONN_VICINITY, CASC_CONN_TRADE_OR_VICINITY };
+// ⛔ WHERE A RESOURCE ORIGINATES (json §3.4 `connection`) -- the two values are MUTUALLY EXCLUSIVE (owner):
+// TRADE = the NETWORK has it, ONSITE = it comes from the city itself. A gate wanting either states two atoms
+// under an `any`, deliberately. They may never be combined into one selector: a gate satisfied by both keeps a
+// city operating on ore it has traded away, since the export leaves the plot group while the ore stays in the
+// ground. ⚠ Distinct from CvCascVicinity below, which is the PLOT-SET axis -- which plots count, never origin.
+enum CvCascConnection { CASC_CONN_NONE, CASC_CONN_TRADE, CASC_CONN_ONSITE };
 
 // Which radius tiles a vicinity bonus counts (json §3.4; NONE = the DEFAULT owned+neutral, NOT foreign).
 enum CvCascVicinity { CASC_VIC_NONE, CASC_VIC_OWNED, CASC_VIC_WORKED, CASC_VIC_ONSITE, CASC_VIC_CROSSBORDER };

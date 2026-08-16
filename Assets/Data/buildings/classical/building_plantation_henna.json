@@ -30,8 +30,7 @@
     {
      "type": "BONUS_HENNA",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

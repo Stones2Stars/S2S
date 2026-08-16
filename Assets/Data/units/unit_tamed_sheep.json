@@ -6,7 +6,7 @@
     {
      "type": "BONUS_SHEEP",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ANIMAL_TAMER_COMPLEX",
     "TECH_SPECIALIZATION"

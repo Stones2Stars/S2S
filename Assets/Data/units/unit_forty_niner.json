@@ -77,7 +77,7 @@
     {
      "type": "BONUS_CALIFORNIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_NITROGLYCERIN"
    ],

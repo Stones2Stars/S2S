@@ -18,7 +18,6 @@
     {
      "type": "BONUS_SHRIMP",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

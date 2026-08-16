@@ -6,7 +6,7 @@
     {
      "type": "BONUS_ZIMBABWEAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_CHIVALRY"
    ]

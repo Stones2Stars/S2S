@@ -23,8 +23,7 @@
     {
      "type": "BONUS_RESIN",
      "scope": "city",
-     "connection": "vicinity",
-     "vicinity": "onSite"
+     "connection": "onSite"
     }
    ],
    "dormant": [

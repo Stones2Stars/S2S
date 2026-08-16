@@ -14,7 +14,7 @@ grants by hand"). Extend the maps below (consciously) when a new node/GOM/tag ac
 
 OWNER RULINGS 2026-06-16 (recorded in enabler-cascade-spec §3 + migration-renames):
   - `Has GOM_TECH X`     -> {type:TECH_X,   scope:team}                     (per-candidate confirm; Tech/Building precedent)
-  - `Has GOM_BONUS X`    -> {type:BONUS_X,  scope:city, connection:"trade|vicinity"}  (city has the resource)
+  - `Has GOM_BONUS X`    -> {type:BONUS_X,  scope:city, connection:"trade"}  (the NETWORK has the resource)
   - `Has GOM_BUILDING X` -> {type:BUILDING_X, scope:city}                   (in-city building presence; matches requires_building)
   - `Has GOM_FEATURE X`  -> {HAS_FEATURE: FEATURE_X}                        (parameterized predicate, uniform with HAS_BONUS)
   - `Has GOM_TERRAIN X`  -> {HAS_TERRAIN: TERRAIN_X}                        (parameterized predicate)
@@ -61,7 +61,7 @@ def _has_leaf(gom, ident):
     if gom == "GOM_TECH":
         return _atom(ident, "team")
     if gom == "GOM_BONUS":
-        return _atom(ident, "city", connection="trade|vicinity")
+        return _atom(ident, "city", connection="trade")
     if gom == "GOM_BUILDING":
         return _atom(ident, "city")
     if gom == "GOM_FEATURE":

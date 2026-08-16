@@ -6,7 +6,7 @@
     {
      "type": "BONUS_QIN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_PHILOSOPHY"
    ]

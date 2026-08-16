@@ -11,7 +11,7 @@
     {
      "type": "BONUS_CATALONIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_ENGINEERING"
    ],

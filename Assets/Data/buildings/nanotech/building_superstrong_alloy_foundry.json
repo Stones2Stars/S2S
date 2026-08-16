@@ -16,17 +16,17 @@
     {
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_NOVUS_CHEMICALS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "type": "BONUS_TITANIUM_WARES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     {
      "any": [
@@ -45,7 +45,7 @@
     {
      "type": "BONUS_SHOCKWAVE_ENGINES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ],

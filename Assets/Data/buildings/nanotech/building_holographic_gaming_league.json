@@ -21,7 +21,7 @@
     {
      "type": "BONUS_VIDEO_GAMES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
@@ -32,7 +32,7 @@
     {
      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

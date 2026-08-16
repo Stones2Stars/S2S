@@ -25,7 +25,6 @@
     {
      "type": "BONUS_COFFEE",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

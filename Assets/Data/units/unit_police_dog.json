@@ -6,7 +6,7 @@
     {
      "type": "BONUS_DOG",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_POLICE_DOG_TRAINER",
     "TECH_CRIMINOLOGY"

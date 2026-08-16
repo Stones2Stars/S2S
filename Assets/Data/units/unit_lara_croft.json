@@ -6,7 +6,7 @@
     {
      "type": "BONUS_HIT_MOVIES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_MUSEUM",
     "TECH_MASS_MEDIA"

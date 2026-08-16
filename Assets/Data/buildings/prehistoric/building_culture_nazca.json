@@ -21,7 +21,6 @@
     {
      "type": "BONUS_COCA",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

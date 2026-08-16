@@ -11,7 +11,7 @@
     {
      "type": "BONUS_FUEGIAN",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_HUNTING"
    ],

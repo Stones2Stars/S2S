@@ -16,7 +16,7 @@
     {
      "type": "BONUS_ALICE_MATTER",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

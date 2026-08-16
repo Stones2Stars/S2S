@@ -21,7 +21,6 @@
     {
      "type": "BONUS_OBSIDIAN",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ]

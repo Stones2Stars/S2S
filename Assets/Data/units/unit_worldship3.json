@@ -6,7 +6,7 @@
     {
      "type": "BONUS_WARP_DRIVES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "TECH_SPACE_CREASING",
     {

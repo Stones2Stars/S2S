@@ -26,12 +26,12 @@
       {
        "type": "BONUS_SYNTHETIC_RUBBER",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       },
       {
        "type": "BONUS_VULCANIZED_RUBBER",
        "scope": "city",
-       "connection": "trade|vicinity"
+       "connection": "trade"
       }
      ]
     }

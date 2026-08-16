@@ -27,13 +27,13 @@
     {
      "type": "BONUS_DIGITIZED_MEMBRANES",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER",
     {
      "type": "BONUS_SMART_MEDICINE",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     }
    ]
   }

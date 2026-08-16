@@ -35,7 +35,6 @@
     {
      "type": "BONUS_CRAB",
      "scope": "city",
-     "connection": "vicinity",
      "vicinity": "owned"
     }
    ],

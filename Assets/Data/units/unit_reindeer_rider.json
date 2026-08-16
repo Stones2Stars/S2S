@@ -6,7 +6,7 @@
     {
      "type": "BONUS_SAMI",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "BUILDING_ANIMAL_TRAINER_HORSE",
     "TECH_ANIMAL_RIDING",

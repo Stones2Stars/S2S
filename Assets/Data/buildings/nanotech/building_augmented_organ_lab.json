@@ -27,7 +27,7 @@
     {
      "type": "BONUS_REPLACEMENT_ORGANS",
      "scope": "city",
-     "connection": "trade|vicinity"
+     "connection": "trade"
     },
     "HAS_POWER"
    ]
