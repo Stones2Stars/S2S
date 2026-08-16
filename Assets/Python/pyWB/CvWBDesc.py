@@ -1017,7 +1017,7 @@ class CvUnitDesc:
 			eUnitAI = GC.getInfoTypeForString(self.szUnitAIType)
 		else: eUnitAI = -1
 
-		unit = CyPlayer.initUnit(unitTypeNum, self.plotX, self.plotY, UnitAITypes(eUnitAI), self.facingDirection)
+		unit = CyPlayer.createUnit(unitTypeNum, self.plotX, self.plotY, UnitAITypes(eUnitAI), self.facingDirection)
 		if not unit: return
 
 		if self.bCommander:

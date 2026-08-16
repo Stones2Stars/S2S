@@ -1509,7 +1509,7 @@ def applyTheHuns1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
-    barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## THE_VANDALS ###########
@@ -1593,7 +1593,7 @@ def applyTheVandals1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
-    barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## THE_GOTHS ###########
@@ -1676,7 +1676,7 @@ def applyTheGoths1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
-    barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## THE_PHILISTINES ###########
@@ -1760,7 +1760,7 @@ def applyThePhilistines1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
-    barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## THE_VEDIC_ARYANS ###########
@@ -1844,7 +1844,7 @@ def applyTheVedicAryans1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
-    barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 ######## SECURITY_TAX ###########
 
@@ -1913,7 +1913,7 @@ def applyHorseWhisperingDone1(argsList):
 	iUnit = GC.getInfoTypeForString("UNIT_HORSE_ARCHER")
 	iCount = WORLD.getDefaultPlayers(MAP.getWorldSize())
 	while iCount > 0:
-		CyPlayer.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+		CyPlayer.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 		iCount -= 1
 
 ######## HARBORMASTER ###########
@@ -2269,7 +2269,7 @@ def applyCrusadeDone1(argsList):
 	if iUnitType != -1:
 		player = GC.getPlayer(data.ePlayer)
 		for i in xrange(WORLD.getDefaultPlayers(GC.getMap().getWorldSize()) / 2 + 1):
-			player.initUnit(iUnitType, holyCity.getX(), holyCity.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
+			player.createUnit(iUnitType, holyCity.getX(), holyCity.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
 
 def getHelpCrusadeDone2(argsList):
 	data = argsList[1]
@@ -2531,7 +2531,7 @@ def applyGreedDone1(argsList):
 	iNumUnits = WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 
 	for i in xrange(iNumUnits):
-		CyPlayer.initUnit(iUnitType, CyPlot.getX(), CyPlot.getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+		CyPlayer.createUnit(iUnitType, CyPlot.getX(), CyPlot.getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## WAR CHARIOTS ###########
@@ -3017,7 +3017,7 @@ def doSpyDiscovered3(argsList):
 
 	iCount = 1 + CyPlayer.getNumCities() / 4
 	while iCount > 0:
-		CyPlayer.initUnit(iUnitType, x, y, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+		CyPlayer.createUnit(iUnitType, x, y, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 		iCount -= 1
 
 def getHelpSpyDiscovered3(argsList):
@@ -3696,7 +3696,7 @@ def applyTheBuccaneers1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
-    barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## BLACKBEARD ###########
@@ -3781,9 +3781,9 @@ def applyBlackbeard1(argsList):
 	iUnitType2 = GC.getInfoTypeForString("UNIT_FRIGATE")
 
 	for i in xrange(iWorldSize):
-		barb.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
+		barb.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
 	for i in xrange(iWorldSize / 2):
-		barb.initUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
+		barb.createUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## PIRATES_OF_THE_NEUTRAL_ZONES ###########
@@ -3850,7 +3850,7 @@ def applyPiratesoftheNeutralZones1(argsList):
 	x = plot.getX()
 	y = plot.getY()
 	for i in xrange(iNumUnits):
-		CyUnit = barbarian.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
+		CyUnit = barbarian.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
 		CyUnit.setHasPromotion(iNav, True)
 		CyUnit.setName("Pirate Corvette")
 
@@ -3975,7 +3975,7 @@ def applyMalaccanPirates1(argsList):
   iCoAs1 = GC.getInfoTypeForString("PROMOTION_COASTAL_ASSAULT1")
   spawnedUnits = []
   for _ in xrange(iNumUnit1):
-      newUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
+      newUnit = barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
       spawnedUnits.append(newUnit)
 
   for loopUnit in spawnedUnits:
@@ -4116,12 +4116,12 @@ def applyHenryMorgan1(argsList):
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   iCbt4 = GC.getInfoTypeForString("PROMOTION_COMBAT4")
   for i in xrange(iNumUnit1):
-      CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
+      CyUnit = barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
       CyUnit.setHasPromotion(iCbt4, True)
   for i in xrange(iNumUnit2):
-      barbPlayer.initUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
+      barbPlayer.createUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
   for i in xrange(iNumUnit3):
-      barbPlayer.initUnit(iUnitType3, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
+      barbPlayer.createUnit(iUnitType3, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
 
 ######## STEDE_BONNET ###########
 
@@ -4265,10 +4265,10 @@ def applyStedeBonnet1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnit1):
-      CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
+      CyUnit = barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
       CyUnit.setName("Barque")
   for i in xrange(iNumUnit2):
-      CyUnit = barbPlayer.initUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
+      CyUnit = barbPlayer.createUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
       CyUnit.setName("Fast Galleon")
       CyUnit.setHasPromotion(iNav1, True)
 
@@ -4395,7 +4395,7 @@ def applyTheCorsairs1(argsList):
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   sUnitName = TRNSLTR.getText("TXT_KEY_EVENT_THE_CORSAIRS_UNIT_NAME", ())
   for i in xrange(iNumUnit1):
-      CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
+      CyUnit = barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
       CyUnit.setName(sUnitName)
 
 
@@ -4537,7 +4537,7 @@ def applyIllyrianPirates1(argsList):
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   sUnitName = TRNSLTR.getText("TXT_KEY_EVENT_ILLYRIAN_PIRATES_UNIT_NAME", ())
   for i in xrange(iNumUnit1):
-      CyUnit = barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
+      CyUnit = barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
       CyUnit.setName(sUnitName)
 
 
@@ -4621,7 +4621,7 @@ def applyMahdiArmy1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits):
-    barbPlayer.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 
 ######## THE_TALIBAN ###########
@@ -4711,9 +4711,9 @@ def applyTheTaliban1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits1):
-    barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
   for i in xrange(iNumUnits2):
-    barbPlayer.initUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 
 
@@ -4831,7 +4831,7 @@ def applyMercenariesAncient1(argsList):
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
-		CyUnit = barb.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+		CyUnit = barb.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 		CyUnit.setName("Mercenary Warrior")
 		iCount -= 1
 
@@ -4859,7 +4859,7 @@ def applyMercenariesAncient2(argsList):
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
-		CyUnit = GC.getPlayer(data.ePlayer).initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.DIRECTION_SOUTH)
+		CyUnit = GC.getPlayer(data.ePlayer).createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.DIRECTION_SOUTH)
 		CyUnit.setName("Mercenary Warrior")
 		iCount -= 1
 
@@ -4920,7 +4920,7 @@ def applyMercenariesClassical1(argsList):
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
-		CyUnit = barb.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+		CyUnit = barb.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 		CyUnit.setName("Mercenary Warrior")
 		iCount -= 1
 
@@ -4947,7 +4947,7 @@ def applyMercenariesClassical2(argsList):
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
-		CyUnit = GC.getPlayer(data.ePlayer).initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.DIRECTION_SOUTH)
+		CyUnit = GC.getPlayer(data.ePlayer).createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.DIRECTION_SOUTH)
 		CyUnit.setName("Mercenary Warrior")
 		iCount -= 1
 
@@ -5008,7 +5008,7 @@ def applyMercenariesMedieval1(argsList):
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
-		CyUnit = barb.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+		CyUnit = barb.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 		CyUnit.setName("Mercenary Warrior")
 		iCount -= 1
 
@@ -5035,7 +5035,7 @@ def applyMercenariesMedieval2(argsList):
 	iCount = (MAP.getWorldSize() + 5)*2/3
 
 	while iCount > 0:
-		CyUnit = GC.getPlayer(data.ePlayer).initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.DIRECTION_SOUTH)
+		CyUnit = GC.getPlayer(data.ePlayer).createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.DIRECTION_SOUTH)
 		CyUnit.setName("Mercenary Warrior")
 		iCount -= 1
 
@@ -5064,7 +5064,7 @@ def doAssassinDiscovered3(argsList):
 
 	iCount = 1 + CyPlayer.getNumCities() / 4
 	while iCount > 0:
-		CyPlayer.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+		CyPlayer.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 		iCount -= 1
 
 def getHelpAssassinDiscovered3(argsList):
@@ -5273,7 +5273,7 @@ def applySilverRain1(argsList):
 
   barbPlayer = GC.getPlayer(GC.getBARBARIAN_PLAYER())
   for i in xrange(iNumUnits1):
-    barbPlayer.initUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+    barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 
 def getHelpSilverRain3(argsList):
 	return TRNSLTR.getText("TXT_KEY_EVENT_SILVER_RAIN_HELP_3", ())
@@ -5304,7 +5304,7 @@ def applySilverRain3(argsList):
 	iCounterUnit2 = GC.getInfoTypeForString("UNIT_ICBM")
 	for CyCity in player.cities():
 		if CyCity.canTrain(iCounterUnit1, False, False, False, False) or CyCity.canTrain(iCounterUnit2, False, False, False, False):
-			iNukeUnit = GC.getPlayer(GC.getBARBARIAN_PLAYER()).initUnit(GC.getInfoTypeForString("UNIT_NANITE_CLOUD"), x, y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+			iNukeUnit = GC.getPlayer(GC.getBARBARIAN_PLAYER()).createUnit(GC.getInfoTypeForString("UNIT_NANITE_CLOUD"), x, y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			plot.nukeExplosion(1, iNukeUnit)
 			iNukeUnit.kill(False, -1)
 			break
@@ -5313,7 +5313,7 @@ def applySilverRain3(argsList):
 		barb = GC.getPlayer(GC.getBARBARIAN_PLAYER())
 		iCount = (MAP.getWorldSize() + 5)*2/3
 		while iCount > 0:
-			CyUnit = barb.initUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
+			CyUnit = barb.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_CITY_LEMMING, DirectionTypes.DIRECTION_SOUTH)
 			CyUnit.setName("Mercenary Warrior")
 			iCount -= 1
 
@@ -5343,7 +5343,7 @@ def applyCityRuinsTreasure1(argsList):
   iNumUnits = 1
 
   for i in xrange(iNumUnits):
-    player.initUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ENGINEER, DirectionTypes.DIRECTION_SOUTH)
+    player.createUnit(iUnitType, plot.getX(), plot.getY(), UnitAITypes.UNITAI_ENGINEER, DirectionTypes.DIRECTION_SOUTH)
 
 # ###########Compulsory Democracy########### #
 
@@ -5915,7 +5915,7 @@ def triggerNewWorldCities(argsList):
 			x = CyCity.getX()
 			y = CyCity.getY()
 			while iNumNeededDefenders > 0:
-				CyPlayer.initUnit(eBestUnit, x, y, UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_NORTH)
+				CyPlayer.createUnit(eBestUnit, x, y, UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_NORTH)
 				iNumNeededDefenders -= 1
 
 		if iEvent == GC.getInfoTypeForString("EVENT_NEW_WORLD_2"):
@@ -6779,7 +6779,7 @@ def ApplyNativegood2(argsList):
 		x = CyCity.getX()
 		y = CyCity.getY()
 		for j in xrange(3):
-			CyPlayer.initUnit(eBestUnit, x, y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			CyPlayer.createUnit(eBestUnit, x, y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 
 ######## Native Good 3 -- gold ###########
 
@@ -7008,7 +7008,7 @@ def applyCivilWar(argsList):
 			pUnit.doCommand(CommandTypes.COMMAND_GIFT, -1, -1)
 
 	for i in xrange(2):
-		pNewPlayer.initUnit(pCity.getConscriptUnit(), iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+		pNewPlayer.createUnit(pCity.getConscriptUnit(), iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 
 	# Declare war
 	if DeclareWar:

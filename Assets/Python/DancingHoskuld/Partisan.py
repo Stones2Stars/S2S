@@ -231,7 +231,7 @@ def onCityAcquired(argsList):
 		CyPlot = plots[GAME.getSorenRandNum(iPlots, "Random CyPlot for Partisan")]
 		iiX = CyPlot.getX()
 		iiY = CyPlot.getY()
-		pNewUnit = CyPlayerOld.initUnit(UNIT_PARTISAN, iiX, iiY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION )
+		pNewUnit = CyPlayerOld.createUnit(UNIT_PARTISAN, iiX, iiY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION )
 
 ################################
 ### set aditional promotions ###
@@ -398,7 +398,7 @@ def onCombatResult(argsList):
 			aPosW = STATE.getUnitPosition(iOwnerW, iUnitIdW)
 			iX = aPosW[0]
 			iY = aPosW[1]
-			iNewUnit = ACT.initUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+			iNewUnit = ACT.createUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 			# -1 = NO_PLAYER: the damage is not attributed to anyone. The old call passed `False`, which coerced
 			# to 0 and therefore blamed player 0 -- a latent bug this conversion drops rather than carries over.
 			ACT.setUnitDamage(iPlayerW, iNewUnit, 75, -1)

@@ -588,7 +588,7 @@ class CvEventManager:
 				elif ID == 905 or ID == 906:
 					X = CyCity.getX()
 					Y = CyCity.getY()
-					CyUnit = CyPlayer.initUnit(iData5, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					CyUnit = CyPlayer.createUnit(iData5, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 					if iData4 == -1:
 						ACT.addUnitProductionExperience(CyUnit.getOwner(), CyCity.getID(), CyUnit.getID(), True)
 					else:
@@ -901,7 +901,7 @@ class CvEventManager:
 					aPosW = STATE.getUnitPosition(iPlayerW, iUnitIdW)
 					iX = aPosW[0]
 					iY = aPosW[1]
-					iUnitWP = ACT.initUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					iUnitWP = ACT.createUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 					ACT.finishUnitMoves(iPlayerW, iUnitWP)
 					ACT.setUnitDamage(iPlayerW, iUnitWP, GAME.getSorenRandNum(40, "XP") + 40, iPlayerW)
 					# Message
@@ -974,7 +974,7 @@ class CvEventManager:
 				aPosL = STATE.getUnitPosition(iPlayerL, iUnitIdL)
 				iX = aPosL[0]
 				iY = aPosL[1]
-			iNewUnit = ACT.initUnit(iPlayerL, iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+			iNewUnit = ACT.createUnit(iPlayerL, iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 			# ⚠ convertUnit with bKillOriginal DELETES the loser, so nothing may read iUnitIdL after this.
 			ACT.convertUnit(iPlayerL, iNewUnit, iPlayerL, iUnitIdL, True)
 			ACT.setUnitDamage(iPlayerL, iNewUnit, GAME.getSorenRandNum(40, "Damage") + 20, -1)
@@ -1141,7 +1141,7 @@ class CvEventManager:
 					iX = aPosW3[0]
 					iY = aPosW3[1]
 
-				iGladiator = ACT.initUnit(iPlayerW, mapUnitType["GLADIATOR"], iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+				iGladiator = ACT.createUnit(iPlayerW, mapUnitType["GLADIATOR"], iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 				ACT.finishUnitMoves(iPlayerW, iGladiator)
 				# Message
 				if iPlayerAct is None:
@@ -1288,7 +1288,7 @@ class CvEventManager:
 				if self.CIVIC_CONSCRIPTION != -1 and CyPlayer.isCivic(self.CIVIC_CONSCRIPTION):
 					iEra = CyPlayer.getCurrentEra()
 					if iEra != -1 and iEra in self.mapMilitiaByEra and self.mapMilitiaByEra[iEra] != -1:
-						CyPlayer.initUnit(self.mapMilitiaByEra[iEra], iX, iY, UnitAITypes.UNITAI_RESERVE, DirectionTypes.NO_DIRECTION)
+						CyPlayer.createUnit(self.mapMilitiaByEra[iEra], iX, iY, UnitAITypes.UNITAI_RESERVE, DirectionTypes.NO_DIRECTION)
 						if iPlayer == GAME.getActivePlayer():
 							CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_RECRUITED",()), iPlayer, 16, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iX, iY, True, True, bForce=False)
 
@@ -1418,7 +1418,7 @@ class CvEventManager:
 			if KEY == "CRUSADE":
 				iUnit = GC.getInfoTypeForString("UNIT_CRUSADER")
 				if iUnit > -1:
-					iNewUnit = ACT.initUnit(iPlayer, iUnit, iCityX, iCityY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
+					iNewUnit = ACT.createUnit(iPlayer, iUnit, iCityX, iCityY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
 					if iNewUnit > -1:
 						ACT.addUnitProductionExperience(iPlayer, iCity, iNewUnit, False)
 			elif KEY == "TAIPEI_101":
@@ -2126,7 +2126,7 @@ class CvEventManager:
 						iX = aPos[0]
 						iY = aPos[1]
 						szName = STATE.getUnitNameNoDesc(iPlayerL, iUnitID)
-						iNewUnitID = ACT.initUnit(
+						iNewUnitID = ACT.createUnit(
 							iPlayerL, GC.getInfoTypeForString("UNIT_GREAT_GENERAL"), iX, iY,
 							UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION
 						)
@@ -2316,7 +2316,7 @@ class CvEventManager:
 				else:
 					iWorker = GC.getInfoTypeForString("UNIT_CHASER")
 
-				CyUnit = CyPlayer.initUnit(iWorker, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+				CyUnit = CyPlayer.createUnit(iWorker, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 			else: print "Found no valid plot to place the chaser.\n\tNew civ from revolution or barbCiv perhaps?"
 
@@ -2344,7 +2344,7 @@ class CvEventManager:
 				else:
 					iWorker = GC.getInfoTypeForString("UNIT_GATHERER")
 
-				CyUnit = CyPlayer.initUnit(iWorker, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+				CyUnit = CyPlayer.createUnit(iWorker, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 			else: print "Found no valid plot to place the gatherer.\n\tNew civ from revolution or barbCiv perhaps?"
 
@@ -2501,7 +2501,7 @@ class CvEventManager:
 					if CyPlayer.getTeam() == iDefender:
 						for CyCity in CyPlayer.cities():
 							CyCity.changeHappinessTimer(10)
-							CyUnit = CyPlayer.initUnit(CyCity.getConscriptUnit(), CyCity.getX(), CyCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+							CyUnit = CyPlayer.createUnit(CyCity.getConscriptUnit(), CyCity.getX(), CyCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 							CyCity.addProductionExperience(CyUnit, True)
 
 
@@ -2647,7 +2647,7 @@ class CvEventManager:
 										if not listPlots:
 											break
 										iPlot = GAME.getSorenRandNum(len(listPlots), "Partisan event placement")
-										CyPlayerHC.initUnit(iUnit, listPlots[iPlot].getX(), listPlots[iPlot].getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+										CyPlayerHC.createUnit(iUnit, listPlots[iPlot].getX(), listPlots[iPlot].getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 
 									szUnitKey = INFO.getTextKey("UNIT_", iUnit)
 									szUnitBtn = INFO.getButton("UNIT_", iUnit)
@@ -2668,7 +2668,7 @@ class CvEventManager:
 								iNumUnits = (iNumUnits + 1) / 2
 								iX = capital.getX(); iY = capital.getY()
 								for i in xrange(iNumUnits):
-									CyPlayerHC.initUnit(iUnit, iX, iY, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+									CyPlayerHC.createUnit(iUnit, iX, iY, UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
 
 								szUnitKey = INFO.getTextKey("UNIT_", iUnit)
 								szUnitBtn = INFO.getButton("UNIT_", iUnit)
@@ -2832,7 +2832,7 @@ class CvEventManager:
 					aBuilding = GC.getPlayer(iPlayer).getCity(iCityID).getBuildingReads(iBuilding)
 					if aBuilding[CityBuildingRead.CITY_BUILDING_ORIGINAL_OWNER] == iPlayer and not (GAME.getGameTurn() % (1 + 2 * self.iTrainPrcntGS / 100)):
 						iUnit = GC.getInfoTypeForString("UNIT_CRUSADER")
-						iNewUnit = ACT.initUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
+						iNewUnit = ACT.createUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
 						if iNewUnit != -1:
 							ACT.addUnitProductionExperience(iPlayer, iCityID, iNewUnit, False)
 
@@ -2854,7 +2854,7 @@ class CvEventManager:
 					if not self.aBiodomeList or GAME.getGameTurn() % (4*self.iGameSpeedPercent/100 + 1):
 						continue
 					iUnit = self.aBiodomeList[GAME.getSorenRandNum(len(self.aBiodomeList), "Which Animal")]
-					iNewUnit = ACT.initUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					iNewUnit = ACT.createUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 					if iNewUnit != -1 and iPlayer == GAME.getActivePlayer():
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MSG_BIODOME",(STATE.getUnitName(iPlayer, iNewUnit),)), iPlayer, 16, INFO.getButton("UNIT_", iUnit), ColorTypes(11), aPos[0], aPos[1], True, True)
 

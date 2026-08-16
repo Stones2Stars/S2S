@@ -133,7 +133,7 @@ class DebugUtils:
 				except ValueError:
 					iSpawnNum = 1
 				while iSpawnNum > 0:
-					CyPlayer.initUnit(iObject, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					CyPlayer.createUnit(iObject, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 					iSpawnNum -= 1
 		else:
 			self.iLastUnitPicker = -1
@@ -407,5 +407,5 @@ def putOneOfEveryUnit():
 				if iWaterInc == iWater:
 					iWaterInc = 0
 				iTotalWater += 1
-			CyPlayer.initUnit(iUnit, x, y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			CyPlayer.createUnit(iUnit, x, y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 		iUnit += 1

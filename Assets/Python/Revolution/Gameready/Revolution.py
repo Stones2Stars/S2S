@@ -793,7 +793,7 @@ class Revolution:
 		newUnitList = []
 		for i in xrange(iNumUnits) :
 			newUnitID = spawnableUnits[GAME.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-			newUnit = pRevPlayer.initUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+			newUnit = pRevPlayer.createUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 			newUnitList.append( newUnit )
 
 		for [iNum,newUnit] in enumerate(newUnitList) :
@@ -827,7 +827,7 @@ class Revolution:
 		if 40 - 20*pRevPlayer.AI_getNumAIUnits(UnitAITypes.UNITAI_SPY) > GAME.getSorenRandNum(100,'Rev - Spy'):
 			iSpy = pRevPlayer.getBestUnitType(UnitAITypes.UNITAI_SPY)
 			if iSpy != -1 and revStrength > 1.5 and pRevPlayer.canTrain(iSpy,False,False):
-				pSpy = pRevPlayer.initUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+				pSpy = pRevPlayer.createUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				pSpy.setFortifyTurns(GC.getDefineINT("MAX_FORTIFY_TURNS"))
 
 		# Give a little boost to espionage
@@ -5273,19 +5273,19 @@ class Revolution:
 						defaultUnits = RevUtils.getPlayerUnits( ix, iy, pRevPlayer.getID() )
 
 						# Give a few defenders
-						newUnit = pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-						pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-						pRevPlayer.initUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						newUnit = pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						pRevPlayer.createUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 						if(iWorker != -1):
-							pRevPlayer.initUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							pRevPlayer.createUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
 						if( pRevPlayer.getNumCities() <= 2 ) :
 							# Extra units for first two cities
-							#pRevPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-							pRevPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							#pRevPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							pRevPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 						elif( GC.getTeam(pPlayer.getTeam()).isAtWarWith(pRevPlayer.getTeam()) ) :
-							pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-							#pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							#pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
 						if not bIsBarbRev and not bGaveMap:
 							pRevPlayer.receiveGoody(GC.getMap().plot(ix,iy), iGoodyMap, newUnit)
@@ -5440,19 +5440,19 @@ class Revolution:
 							defaultUnits = RevUtils.getPlayerUnits( ix, iy, joinPlayer.getID() )
 
 							# Give a few defenders
-							newUnit = joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-							#joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
-							joinPlayer.initUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							newUnit = joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							#joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
+							joinPlayer.createUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 							if( joinPlayer.getNumCities() <= 2 ) :
 								# Extra units for first two cities (unlikely in this case)
 								if(iWorker != -1):
-									joinPlayer.initUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-								joinPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-								joinPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+									joinPlayer.createUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+								joinPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+								joinPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
 							elif( GC.getTeam(pPlayer.getTeam()).isAtWarWith(joinPlayer.getTeam()) ) :
-								joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-								#joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
+								joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+								#joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
 
 							#joinPlayer.receiveGoody( GC.getMap().plot(ix,iy), iGoodyMap, newUnit )
 							#joinPlayer.receiveGoody( GC.getMap().plot(ix,iy), iGoodyMap, newUnit )
@@ -5751,18 +5751,18 @@ class Revolution:
 				iy = pCity.getY()
 
 				if iBestDefender > -1:
-					joinPlayer.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					joinPlayer.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				if iCounter > -1:
-					joinPlayer.initUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					joinPlayer.createUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				if joinPlayer.getNumCities() <= 2:
 					# Extra units for first two cities (unlikely in this case)
 					if iWorker > -1:
-						joinPlayer.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						joinPlayer.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					if iAttack > -1:
-						joinPlayer.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-						joinPlayer.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						joinPlayer.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						joinPlayer.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				elif iBestDefender > -1 and GC.getTeam(pPlayer.getTeam()).isAtWarWith(joinPlayer.getTeam()):
-					joinPlayer.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					joinPlayer.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				RevData.updateCityVal(pCity, 'RevolutionCiv', joinPlayer.getCivilizationType())
 
@@ -6381,7 +6381,7 @@ class Revolution:
 
 				# Create stolen equipment
 				for unitType in toRebelList:
-					newUnit = pRevPlayer.initUnit(unitType, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					newUnit = pRevPlayer.createUnit(unitType, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					newUnitList.append(newUnit)
 
 				# Spawn revs in the city, plus an extra defender or two
@@ -6396,16 +6396,16 @@ class Revolution:
 
 				for i in xrange(iNumUnits):
 					newUnitID = spawnableUnits[GAME.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-					newUnit = pRevPlayer.initUnit(newUnitID, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					newUnit = pRevPlayer.createUnit(newUnitID, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					newUnitList.append(newUnit)
 
 				# Give a few extra defenders and a worker
 				if cityIdx == 0:
-					newUnitList.append(pRevPlayer.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(pRevPlayer.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 				if iWorker != -1:
-					pRevPlayer.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					pRevPlayer.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					if pCity.getPopulation() > 5:
-						pRevPlayer.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				# Injure units to simulate the lack of training in rebel troops
 				for newUnit in newUnitList:
@@ -6428,7 +6428,7 @@ class Revolution:
 					if 10 + 3*len(cityList) + 5*pCity.getNumRevolts(pCity.getOwner()) < GAME.getSorenRandNum(100,'Rev'):
 						if self.LOG_DEBUG:
 							print "[REV] Revolt: Great General (%d) spawned in %s" % (iGeneral, pCity.getName())
-						pRevPlayer.initUnit(iGeneral, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iGeneral, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				if (iSpy != -1 and pRevPlayer.canTrain(iSpy, False, False)
 				and pRevPlayer.AI_getNumAIUnits(UnitAITypes.UNITAI_SPY) < 3):
@@ -6437,7 +6437,7 @@ class Revolution:
 					or iNumRevolts > 2 and revIdx > self.revInstigatorThreshold):
 						if self.LOG_DEBUG:
 							print "[REV] Revolt: Spy spawned in " + pCity.getName()
-						pRevPlayer.initUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				# Should buildings stay or some destroyed?
 				for buildingType in buildingList:
@@ -6517,7 +6517,7 @@ class Revolution:
 				newUnitList = []
 				for i in xrange(iNumUnits):
 					newUnitID = spawnableUnits[GAME.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-					newUnit = pRevPlayer.initUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+					newUnit = pRevPlayer.createUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 					newUnitList.append(newUnit)
 
 				for [iNum,newUnit] in enumerate(newUnitList):
@@ -6557,19 +6557,19 @@ class Revolution:
 				# Extra stuff for instigator city
 				if cityIdx == 0 and len(cityList) > 1 and iNumUnits > 0 and not bIsBarbRev:
 					if 3*len(cityList) + 5*pCity.getNumRevolts(pCity.getOwner()) < GAME.getSorenRandNum(100,'Rev'):
-						pRevPlayer.initUnit(iGeneral, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iGeneral, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 					if iScout != -1:
 						if pRevPlayer.canTrain(iScout, False, False):
-							pRevPlayer.initUnit(iScout, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+							pRevPlayer.createUnit(iScout, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 					if not bIsBarbRev and not bIsJoinWar and iSettler != -1 and pCity.area().getNumTiles() / pCity.area().getNumCities() > 25:
 						# Settler if there is sufficient empty land available?
-						pRevPlayer.initUnit(iSettler, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iSettler, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				if iSpy != -1 and pRevPlayer.canTrain(iSpy,False,False) and pRevPlayer.AI_getNumAIUnits( UnitAITypes.UNITAI_SPY ) < 3:
 					if pCity.getNumRevolts(pCity.getOwner()) > 1 and revIdx > self.alwaysViolentThreshold or pCity.getNumRevolts(pCity.getOwner()) > 2 and revIdx > self.revInstigatorThreshold:
-						pSpy = pRevPlayer.initUnit( iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						pSpy = pRevPlayer.createUnit( iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 						pSpy.setFortifyTurns(GC.getDefineINT("MAX_FORTIFY_TURNS"))
 
 				# Reveal surrounding countryside

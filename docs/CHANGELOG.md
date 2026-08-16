@@ -12,6 +12,11 @@
 
 ## Unreleased
 
+- Modders: the Python endpoint that brings a unit into existence is now `createUnit`, on both the
+  player and the action surface — it was `initUnit`, which named the engine internal that callers
+  must never reach directly. It now matches the engine's own single creation step, so a reader
+  looking for how a unit comes into being finds one answer instead of two spellings. Every shipped
+  call site moved with it, including the Python embedded in module XML.
 - The tribal guardian arrives when the city is founded, and it no longer inherits the settler's
   accumulated experience. Walking a settler for three turns used to hand its guardian 33 experience
   — four turns, 44 — because the transfer read a hundredths-scaled value as whole points.

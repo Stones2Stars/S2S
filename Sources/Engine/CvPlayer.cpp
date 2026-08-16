@@ -18244,9 +18244,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience, int iX, int iY)
 {
 	PROFILE_EXTRA_FUNC();
-	// A great person is BORN, so its creation is the ONE creation step like any other unit's -- the birth
-	// CEREMONY below sits on top of it ([triggers.md]: the route a unit was decided upon settles the production
-	// debit and nothing else).
 	CvUnit* pGreatPeopleUnit = createUnit(eGreatPersonUnit, iX, iY);
 	if (!pGreatPeopleUnit)
 	{

@@ -166,15 +166,12 @@ public:
 	///<summary>Bring a unit of this player into existence at a location, settling everything creation owes it.</summary>
 	///<remarks>
 	/// The ONE creation step every route ends at -- trained, conscripted, granted, awarded, spawned
-	/// ([triggers.md]: "creating a unit is creating a unit; how we got to the creation step does not matter").
-	/// The route settles the production debit and nothing else; what a new unit is OWED is settled here, once.
-	/// A city standing at the location settles its own share (the free experience it gives units born in it),
-	/// so a caller never resolves that itself -- and a unit born in the field simply has nobody to owe it.
-	/// bConscript takes the half-experience draft rate. Movement is deliberately NOT settled here: the engine
-	/// has two standing answers (a trained unit is spent, a conscript is ready), so the caller states which.
-	/// ⛔ EVERY route goes through it, the editor's included: a second way to bring a unit into existence is a
-	/// rollerskating surface, and the modder-facing one most of all (owner). What is legitimately NOT here is a
-	/// TRANSFORMATION of a unit that already exists.
+	/// ([triggers.md]). The route settles the production debit and nothing else; what a new unit is OWED is
+	/// settled here, once. A city standing at the location settles its own share (the free experience it gives
+	/// units born in it), so a caller never resolves that itself -- and a unit born in the field has nobody to
+	/// owe it. bConscript takes the half-experience draft rate. Movement is deliberately NOT settled here: the
+	/// engine has two standing answers (a trained unit is spent, a conscript is ready), so the caller states
+	/// which. What is legitimately NOT here is a TRANSFORMATION of a unit that already exists.
 	///</remarks>
 	CvUnit* createUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI = NO_UNITAI,
 		DirectionTypes eFacingDirection = NO_DIRECTION, bool bConscript = false);

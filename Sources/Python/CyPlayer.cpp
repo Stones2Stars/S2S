@@ -130,7 +130,7 @@ std::wstring CyPlayer::getNewCityName() const
 	return m_pPlayer->getNewCityName();
 }
 
-CyUnit* CyPlayer::initUnit(int /*UnitTypes*/ iIndex, int iX, int iY, UnitAITypes eUnitAI, DirectionTypes eFacingDirection)
+CyUnit* CyPlayer::createUnit(int /*UnitTypes*/ iIndex, int iX, int iY, UnitAITypes eUnitAI, DirectionTypes eFacingDirection)
 {
 	if (iIndex == -1)
 	{

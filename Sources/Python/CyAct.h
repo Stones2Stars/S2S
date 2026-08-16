@@ -78,7 +78,7 @@ public:
 	// exactly on the paths the legacy binding drew it on -- NOT on the two invalid ones. The number of draws and
 	// their order are shared save state ([DEC-synced-rng-is-shared-state]), so adding or skipping one desyncs
 	// multiplayer and stops a save replaying; this is not a detail to tidy.
-	int initUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int iDirection) const;
+	int createUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int iDirection) const;
 
 	// Give a freshly-created unit the experience a unit BUILT in this city would start with. Its call site is the
 	// CRUSADE wonder's per-turn spawn, which has always handed the new crusader the city's production XP -- so

@@ -15,8 +15,8 @@
 #include "Engine/CvUnitGrouping.h"
 #include "Engine/CvPlayer.h"
 #include "AI/CvPlayerAI.h"                           // GET_PLAYER
-#include "AI/CvGameAI.h"                             // initUnit -- the synchronized birthmark draw
-#include "Engine/CvMap.h"                            // initUnit -- the plot validity test
+#include "AI/CvGameAI.h"                             // createUnit -- the synchronized birthmark draw
+#include "Engine/CvMap.h"                            // createUnit -- the plot validity test
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // selectCity -- the engine action this relays
 
 bool CyAct::selectCity(int iPlayer, int iCity, bool bTestProduction) const
@@ -277,7 +277,7 @@ bool CyAct::setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewVa
 	return true;
 }
 
-int CyAct::initUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int iDirection) const
+int CyAct::createUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int iDirection) const
 {
 	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return -1;
 	if (iUnitType < 0 || iUnitType >= GC.getNumUnitInfos()) return -1;
@@ -285,9 +285,6 @@ int CyAct::initUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int
 
 	//	The creation sits AFTER the two validity tests because it draws on the synchronized stream, and a path
 	//	that rejects must not consume a draw ([DEC-synced-rng-is-shared-state]).
-	//	⛔ THE EDITOR CREATES THROUGH THE ONE STEP LIKE EVERYTHING ELSE. WorldBuilder is where a second creation
-	//	path would do the most damage -- it is the surface a MODDER meets ([triggers.md]) -- and the roadmap
-	//	already requires WB to travel the engine's own paths so its facts fire exactly as a normal one's do.
 	CvUnit* pUnit =
 		GET_PLAYER((PlayerTypes)iPlayer).createUnit(
 			(UnitTypes)iUnitType, iX, iY, (UnitAITypes)iUnitAI, (DirectionTypes)iDirection);
@@ -523,7 +520,7 @@ void CyAct::pythonPublish()
 		.def("invalidateBuildingList", &CyAct::invalidateBuildingList)
 		.def("setBuildDisabled", &CyAct::setBuildDisabled)
 		.def("setUnitPromotion", &CyAct::setUnitPromotion)
-		.def("initUnit", &CyAct::initUnit)
+		.def("createUnit", &CyAct::createUnit)
 		.def("addUnitProductionExperience", &CyAct::addUnitProductionExperience)
 		.def("finishUnitMoves", &CyAct::finishUnitMoves)
 		.def("setUnitMoves", &CyAct::setUnitMoves)

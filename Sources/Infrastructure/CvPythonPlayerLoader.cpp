@@ -27,7 +27,7 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 
 		.def("getNewCityName", &CyPlayer::getNewCityName, "wstring ()")
 
-		.def("initUnit", &CyPlayer::initUnit, boost::python::return_value_policy<boost::python::manage_new_object>(), "CyUnit* initUnit(UnitTypes iIndex, plotX, plotY, UnitAITypes iIndex)  - place Unit at X,Y   NOTE: Always use UnitAITypes.NO_UNITAI")
+		.def("createUnit", &CyPlayer::createUnit, boost::python::return_value_policy<boost::python::manage_new_object>(), "CyUnit* createUnit(UnitTypes iIndex, plotX, plotY, UnitAITypes iIndex)  - bring a unit into existence at X,Y   NOTE: Always use UnitAITypes.NO_UNITAI")
 
 		.def("killUnits", &CyPlayer::killUnits, "void ()")
 		.def("hasTrait", &CyPlayer::hasTrait, "bool hasTrait(int /*TraitTypes*/ iIndex) - returns True if player is the Trait Type.")

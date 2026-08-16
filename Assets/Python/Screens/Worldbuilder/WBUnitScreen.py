@@ -770,7 +770,7 @@ class WBUnitScreen:
 			iRange = iChange
 			if iRange > 10: iRange = 10 # sanity control
 			for i in xrange(iRange):
-				pNewUnit = GC.getPlayer(unitX.getOwner()).initUnit(unitX.getUnitType(), unitX.getX(), unitX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+				pNewUnit = GC.getPlayer(unitX.getOwner()).createUnit(unitX.getUnitType(), unitX.getX(), unitX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 				pNewUnit.convert(unitX, False)
 				pNewUnit.setBaseCombatStr(unitX.baseCombatStr())
 				pNewUnit.changeCargoSpace(unitX.cargoSpace() - pNewUnit.cargoSpace())
@@ -815,7 +815,7 @@ class WBUnitScreen:
 				unitX.rotateFacingDirectionClockwise()
 
 	def changeOwner(self, iPlayer):
-		pNewUnit = GC.getPlayer(iPlayer).initUnit(self.unitType, self.iPlotX, self.iPlotY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+		pNewUnit = GC.getPlayer(iPlayer).createUnit(self.unitType, self.iPlotX, self.iPlotY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 		pNewUnit.convert(self.currentUnit, True)
 		pNewUnit.setBaseCombatStr(self.currentUnit.baseCombatStr())
 		pNewUnit.changeCargoSpace(self.currentUnit.cargoSpace() - pNewUnit.cargoSpace())

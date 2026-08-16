@@ -461,9 +461,9 @@ def checkRebelBonuses(argsList):
 			newUnitList = []
 
 			# Couple units regardless of rebel status
-			newUnitList.append(newOwner.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+			newUnitList.append(newOwner.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 			if pCity.getPopulation() > 4:
-				newUnitList.append(newOwner.initUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+				newUnitList.append(newOwner.createUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 			if newOwner.isRebel():
 				# Extra benefits if still considered a rebel
@@ -490,20 +490,20 @@ def checkRebelBonuses(argsList):
 
 				# Extra units
 				if iWorker != -1:
-					newUnitList.append(newOwner.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 				if pCity.getPopulation() > 7:
-					newUnitList.append(newOwner.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 				if pCity.getPopulation() > 4 and newOwnerTeam.getPower(True) < oldOwnerTeam.getPower(True)/4:
-					newUnitList.append(newOwner.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 				if newOwner.getNumCities() <= 1:
 					# Extra units for first city captured
-					newUnitList.append(newOwner.initUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 					if newOwnerTeam.getPower(True) < oldOwnerTeam.getPower(True)/2:
-						newUnitList.append(newOwner.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
-						newUnitList.append(newOwner.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+						newUnitList.append(newOwner.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+						newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 					elif newOwnerTeam.getPower(True) < oldOwnerTeam.getPower(True):
-						newUnitList.append(newOwner.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+						newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 				# Give a boat to island rebels
 				if pCity.isCoastal(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
@@ -521,7 +521,7 @@ def checkRebelBonuses(argsList):
 								iBestCombat = iCombat
 
 					if iBestCombat > -1:
-						newOwner.initUnit(iBestUnit, ix, iy, UnitAITypes.UNITAI_ASSAULT_SEA, DirectionTypes.DIRECTION_SOUTH)
+						newOwner.createUnit(iBestUnit, ix, iy, UnitAITypes.UNITAI_ASSAULT_SEA, DirectionTypes.DIRECTION_SOUTH)
 						print "Rev - Rebels get a %s to raid motherland" % bestUnit.getDescription()
 
 				# Change city disorder timer to favor new player

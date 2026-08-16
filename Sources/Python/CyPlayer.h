@@ -43,7 +43,7 @@ public:
 
 	std::wstring getNewCityName() const;
 
-	CyUnit* initUnit(int /*UnitTypes*/ iIndex, int iX, int iY, UnitAITypes eUnitAI, DirectionTypes eFacingDirection);
+	CyUnit* createUnit(int /*UnitTypes*/ iIndex, int iX, int iY, UnitAITypes eUnitAI, DirectionTypes eFacingDirection);
 
 	void killUnits();
 	bool hasTrait(int /*TraitTypes*/ iIndex) const;

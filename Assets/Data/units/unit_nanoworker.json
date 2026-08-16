@@ -77,7 +77,7 @@
     "chance": 100,
     "python": {
      "module": "BuildCapturedAsteroidNanoworker",
-     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['ASTEROID_SURFACE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tgc.getPlayer(unit.getOwner()).initUnit(gc.getInfoTypeForString('UNIT_CAPTURED_ASTEROID'),plot.getX(),plot.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Capture an asteroid.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['ASTEROID_SURFACE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_CAPTURED_ASTEROID'),plot.getX(),plot.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Capture an asteroid.\"\ndef getAIValue(unit, plot):\n\treturn 1"
     }
    }
   ]

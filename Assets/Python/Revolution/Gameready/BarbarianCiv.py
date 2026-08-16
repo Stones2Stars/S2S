@@ -304,20 +304,20 @@ class BarbarianCiv:
 			else: iBaseOffensiveUnits = max(1, iBaseOffensiveUnits / 3)
 		else:
 			if iSettler > -1:
-				CyPlayer.initUnit(iSettler, iX, iY, UnitAITypes.UNITAI_SETTLE, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iSettler, iX, iY, UnitAITypes.UNITAI_SETTLE, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free settler: " + CyUnit.getName()
 			if iWorker > -1:
-				CyPlayer.initUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
-				CyPlayer.initUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free Workers (2): " + CyUnit.getName()
 			if iExplorer > -1:
-				CyPlayer.initUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
-				CyPlayer.initUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free Explorers (2): " + CyUnit.getName()
 			if iMerchant > -1:
 				iTemp = 2 + 2*(iEra + 1)
 				for i in xrange(iTemp):
-					CyPlayer.initUnit(iMerchant, iX, iY, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
+					CyPlayer.createUnit(iMerchant, iX, iY, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free Merchant (%d): %s" %(iTemp, CyUnit.getName())
 
 		aList = [iCounter, iAttack, iAttackCity, iMobile]
@@ -329,7 +329,7 @@ class BarbarianCiv:
 				while iCount < iTemp:
 					iUnit = aList[GAME.getSorenRandNum(4, 'BC give offensive')]
 					if iUnit == -1: continue
-					CyUnit = CyPlayer.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					CyUnit = CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					CyUnit.changeExperience(iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
 					iCount += 1
 					#print "Free Combatant: " + CyUnit.getName()
@@ -560,7 +560,7 @@ class BarbarianCiv:
 				):
 					iUnit = CyUnit.getUnitType()
 					CyUnit.kill(False, -1)
-					CyPlayer.initUnit(iUnit, CyPlotX.getX(), CyPlotX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					CyPlayer.createUnit(iUnit, CyPlotX.getX(), CyPlotX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 
 		# City Culture
 		# Transfer barbarian culture to the new player (becomes "accepted" culture)
@@ -590,7 +590,7 @@ class BarbarianCiv:
 		# Free city defenders
 		if iDefender > -1:
 			for i in range(iDefenders):
-				CyPlayer.initUnit(iDefender, X, Y, UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.NO_DIRECTION)
+				CyPlayer.createUnit(iDefender, X, Y, UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.NO_DIRECTION)
 
 
 
@@ -699,17 +699,17 @@ class BarbarianCiv:
 				self.setupFormerBarbCity(cityX, iPlayer, iDefender, int(iNumBarbDefenders*fMilitaryMod + 1))
 				ACT.changeCityPopulation(cityX.getOwner(), cityX.getID(), 1)
 				if iWorker > -1:
-					CyPlayer.initUnit(iWorker, x, y, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+					CyPlayer.createUnit(iWorker, x, y, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 				if iExplorer > -1:
-					CyPlayer.initUnit(iExplorer, x, y, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
+					CyPlayer.createUnit(iExplorer, x, y, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
 				if iMerchant > -1:
 					iTemp = 2 + 2*(iEra + 1)
 					for i in xrange(iTemp):
-						CyPlayer.initUnit(iMerchant, x, y, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
+						CyPlayer.createUnit(iMerchant, x, y, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
 
 			# Bonus units in capital
 			if iWorker != -1:
-				CyPlayer.initUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 			i1 = iCounter
 			i2 = iMobile
 			i3 = iAttack
@@ -730,7 +730,7 @@ class BarbarianCiv:
 				iCount = 0
 				while iCount < amount:
 					iUnit = aList[GAME.getSorenRandNum(iLen, 'Military')]
-					CyUnit = CyPlayer.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					CyUnit = CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					CyUnit.changeExperience(iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
 					iCount += 1
 
@@ -753,7 +753,7 @@ class BarbarianCiv:
 
 				iUnit = aList.pop(GAME.getSorenRandNum(iLen, 'Great Person'))
 				iLen -= 1
-				CyPlayer.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				iCount += 1
 
 			# Gold
