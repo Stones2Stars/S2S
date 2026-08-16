@@ -107,7 +107,7 @@ class HeritageScreen:
 		# Tabs
 		szCol = "<color=255,255,0>"
 		szTxt = uFontEdge + "Heritage"
-		dX = xMid
+		dX = xRes / 3   # three tabs now; the spacing follows the count rather than a fixed half-width
 		x = dX / 2
 		screen.setText("Heritage_Tab0", "", szTxt, 1<<2, x, Y_BOT_TEXT, 0, eFontTitle, eWidGen, 0, 0)
 		screen.setText("Heritage_Tab|Col0", "", szCol + szTxt, 1<<2, x, Y_BOT_TEXT, 0, eFontTitle, eWidGen, 0, 0)
@@ -118,6 +118,14 @@ class HeritageScreen:
 		screen.setText("Heritage_Tab1", "", szTxt, 1<<2, x, Y_BOT_TEXT, 0, eFontTitle, eWidGen, 0, 0)
 		screen.setText("Heritage_Tab|Col1", "", szCol + szTxt, 1<<2, x, Y_BOT_TEXT, 0, eFontTitle, eWidGen, 0, 0)
 		screen.hide("Heritage_Tab|Col1")
+
+		#	Empire-level buildings are held by the PLAYER and are never in a city, so no city screen can list
+		#	them -- this is the only place they are visible at all.
+		szTxt = uFontEdge + "Empire"
+		x += dX
+		screen.setText("Heritage_Tab2", "", szTxt, 1<<2, x, Y_BOT_TEXT, 0, eFontTitle, eWidGen, 0, 0)
+		screen.setText("Heritage_Tab|Col2", "", szCol + szTxt, 1<<2, x, Y_BOT_TEXT, 0, eFontTitle, eWidGen, 0, 0)
+		screen.hide("Heritage_Tab|Col2")
 
 		# Debug
 		if self.bDebug:
@@ -140,6 +148,8 @@ class HeritageScreen:
 			self.drawHeritage(screen)
 		elif self.iTab == 1:
 			self.drawTraits(screen)
+		elif self.iTab == 2:
+			self.drawEmpireBuildings(screen)
 
 	def drawHeritage(self, screen):
 		H_EDGE = self.H_EDGE
@@ -188,6 +198,49 @@ class HeritageScreen:
 				screen.setImageButtonAt("WID|HERITAGE|IMG%d" % iType, ScPnl0, CANCEL, 8, y0, iSize, iSize, eWidGen, 1, 2)
 				screen.setTextAt("WID|HERITAGE|TEXT%d" % iType, ScPnl0, uFont3 + kHeritage["description"], 1<<0, 2+dy, iOff + y0, 0, eFontGame, eWidGen, 1, 2)
 				y0 += dy
+
+
+	def drawEmpireBuildings(self, screen):
+		H_EDGE = self.H_EDGE
+		player = self.CyPlayer
+
+		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2 = self.aFontList
+
+		eWidGen = WidgetTypes.WIDGET_GENERAL
+		eFontGame = FontTypes.GAME_FONT
+
+		h0 = self.yRes - 2*H_EDGE
+		w0 = self.xRes - 16
+		screen.addPanel(self.getNextWidget(), "", "", True, False, 8, H_EDGE, w0, h0, PanelStyles.PANEL_STYLE_BLUE50)
+		ScPnl = self.getNextWidget()
+		screen.addScrollPanel(ScPnl, "", 0, H_EDGE+8, w0, h0-42, PanelStyles.PANEL_STYLE_EMPTY)
+		screen.setStyle(ScPnl, "ScrollPanel_Alt_Style")
+
+		iSize = self.iSize * 2/3
+		dy = iSize + 8
+		y = 0
+		iOff = self.iOff
+
+		#	The player's OWN held list -- a handful, so each entry is read by id rather than crossing the
+		#	boundary for the whole building registry to find them ([patterns.md]: the whole-registry loop is
+		#	the defect, not a faster per-id getter).
+		aHeld = player.getEmpireBuildings()
+		if not aHeld:
+			screen.setTextAt("WID|EMPBLD|NONE", ScPnl, uFont3 + TRNSLTR.getText("TXT_KEY_MAIN_MENU_NONE", ()), 1<<0, 8, iOff, 0, eFontGame, eWidGen, 1, 2)
+			return
+
+		for iBuilding in aHeld:
+			#	HELD is not ACTIVE: the class dorms on its own requires.operate like any other building, so a
+			#	held-but-dormant one says so rather than reading as working.
+			if player.isEmpireBuildingActive(iBuilding):
+				szFont = uFont3b
+				szSuffix = u""
+			else:
+				szFont = uFont3
+				szSuffix = u" <color=160,160,160>(dormant)</color>"
+			screen.setImageButtonAt("WID|EMPBLD|IMG%d" % iBuilding, ScPnl, INFO.getButton("BUILDING_", iBuilding), 8, y, iSize, iSize, eWidGen, 1, 2)
+			screen.setTextAt("WID|EMPBLD|TEXT%d" % iBuilding, ScPnl, szFont + INFO.getDescription("BUILDING_", iBuilding) + szSuffix, 1<<0, 2+dy, iOff + y, 0, eFontGame, eWidGen, 1, 2)
+			y += dy
 
 
 	def drawTraits(self, screen):

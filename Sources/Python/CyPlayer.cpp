@@ -5,6 +5,7 @@
 #include "Engine/CvCity.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
+#include "Infos/CvBuildingInfo.h"   // isEmpireLevel -- the held empire-building list filters on it
 #include "UI/CvMessageControl.h"
 #include "AI/CvPlayerAI.h"
 #include "CvPopupInfo.h"
@@ -1359,6 +1360,29 @@ python::list CyPlayer::getCityIds() const
 		list.append(city->getID());
 	}
 	return list;
+}
+
+python::list CyPlayer::getEmpireBuildings() const
+{
+	PROFILE_EXTRA_FUNC();
+	python::list list = python::list();
+	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+	{
+		if (GC.getBuildingInfo((BuildingTypes)i).isEmpireLevel() && m_pPlayer->hasEmpireBuilding((BuildingTypes)i))
+		{
+			list.append(i);
+		}
+	}
+	return list;
+}
+
+bool CyPlayer::isEmpireBuildingActive(int iBuilding) const
+{
+	if (iBuilding < 0 || iBuilding >= GC.getNumBuildingInfos())
+	{
+		return false;
+	}
+	return m_pPlayer->isEmpireBuildingActive((BuildingTypes)iBuilding);
 }
 
 // ---- THE EMPIRE-SCOPE GROUP READS (see the header for the grammar and the homing rule) ----

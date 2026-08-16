@@ -346,6 +346,17 @@ public:
 	// an address to key their own table on, or to compare against an id an event payload handed them.
 	python::list getCityIds() const;
 
+	// The EMPIRE-LEVEL buildings this player HOLDS -- the identity.empireLevel class, held once by the player
+	// and never present in any city ([DEC-empire-level-buildings]). That is precisely why no city screen can
+	// show them: there is no city holding one to list it, so a player otherwise has no way to see what they own.
+	// ⚑ It hands back the LIST, not a per-id test, so a consumer never sweeps the building registry to find the
+	// handful held ([patterns.md]: a whole-registry loop is the defect, never a faster per-id getter).
+	// ⚠ HELD is not ACTIVE: the class dorms on its own requires.operate like any other building, so the
+	// companion answers whether a held one is actually doing anything. A list without it would say you own a
+	// thing while saying nothing about whether it works.
+	python::list getEmpireBuildings() const;
+	bool isEmpireBuildingActive(int iBuilding) const;
+
 	// ---- THE EMPIRE-SCOPE GROUP READS ----
 	// The empire half of the game-object read role ([patterns.md] § THE TWO READ ROLES): what this player HAS
 	// right now, per channel, rolled up over the scope chain the empire sits under.

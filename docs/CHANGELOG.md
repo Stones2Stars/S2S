@@ -12,6 +12,9 @@
 
 ## Unreleased
 
+- The Heritage advisor has an **Empire** tab listing the empire-level buildings you hold. That class
+  is held by the empire rather than by a city, so nothing anywhere showed it — you owned things with
+  no way to see them. A held-but-dormant one is marked, since holding is not the same as working.
 - Build-list tooltips show the yield and commerce ICONS again instead of spelling the channel out
   in words, so an entry reads `+6 <production>` rather than `+6 Production`.
 - Hovering a worker build action shows the build's name again. Builds were the one action type
