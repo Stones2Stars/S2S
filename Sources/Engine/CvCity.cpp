@@ -14688,32 +14688,21 @@ void CvCity::changeWorkableArea(int iOldNumCityPlots, int iNewNumCityPlots) cons
 // carrying a copy of the override/level ladder each.
 int CvCity::getNumCityPlotsAtCultureLevel(int iCultureLevel) const
 {
-	if (getWorkableRadiusOverride() == 0 && !GC.getGame().isOption(GAMEOPTION_EXP_LARGER_CITIES))
+	if (hasThirdRing(iCultureLevel))
+	{
+		return NUM_CITY_PLOTS;
+	}
+	//	No third ring, so the ladder is the culture level's OWN radius -- and it cannot reach three from here:
+	//	whether a level's authored 3 is actually granted is precisely what hasThirdRing() decides.
+	//	⚠ NO_CULTURELEVEL answers as `culturelevel_none` does (two rings), which is what that level authors. It
+	//	used to answer ONE ring, and only when a third-ring source existed -- so turning the option ON shrank a
+	//	city that had not yet earned a culture level.
+	if (iCultureLevel == NO_CULTURELEVEL)
 	{
 		return NUM_CITY_PLOTS_2;
 	}
-	if (iCultureLevel == -1)
+	switch (GC.getCultureLevelInfo((CultureLevelTypes)iCultureLevel).getCityRadius())
 	{
-		return NUM_CITY_PLOTS_1;
-	}
-	const int iRadius =
-	(
-		getWorkableRadiusOverride() > 0
-		?
-		getWorkableRadiusOverride()
-		:
-		GC.getCultureLevelInfo((CultureLevelTypes)iCultureLevel).getCityRadius()
-	);
-	switch (iRadius)
-	{
-		case 3:
-		{
-			return NUM_CITY_PLOTS;
-		}
-		case 2:
-		{
-			return NUM_CITY_PLOTS_2;
-		}
 		case 1:
 		{
 			return NUM_CITY_PLOTS_1;
@@ -14723,6 +14712,34 @@ int CvCity::getNumCityPlotsAtCultureLevel(int iCultureLevel) const
 			return NUM_CITY_PLOTS_2;
 		}
 	}
+}
+
+//	⚖ THE ONE GETTER FOR THE THIRD RING -- every case that can grant it lives HERE, and every consumer asks
+//	this rather than assembling the sources itself. A new source is one clause added here, never a second
+//	branch somewhere else, and the internals are free to change behind it.
+//	⚑ Parameterized by culture level for the same reason the plot count is: a level the city NO LONGER HOLDS
+//	must stay answerable, so a level change can apply as a ring DELTA rather than a re-derivation.
+bool CvCity::hasThirdRing(int iCultureLevel) const
+{
+	//	SOURCE 1 -- the city HOLDS the amenity a building confers (Metropolitan Administration and its kin).
+	//	Unconditional, and the ONLY path when the option is off.
+	if (m_cityContext.hasAmenity(CLS_AMENITY_ADDS_3RD_RING))
+	{
+		return true;
+	}
+	//	SOURCE 2 -- the culture level authors the radius. GATED BY THE OPTION: reaching Influential grants
+	//	nothing on its own, which is exactly what the option exists to change -- it lets the ring be had
+	//	"without needing the much-later available Metropolitan Administration", i.e. without source 1.
+	if (!GC.getGame().isOption(GAMEOPTION_EXP_LARGER_CITIES) || iCultureLevel == NO_CULTURELEVEL)
+	{
+		return false;
+	}
+	return GC.getCultureLevelInfo((CultureLevelTypes)iCultureLevel).getCityRadius() >= 3;
+}
+
+bool CvCity::hasThirdRing() const
+{
+	return hasThirdRing((int)getCultureLevel());
 }
 
 /*
@@ -15032,15 +15049,6 @@ void CvCity::changeZoCCount(short iChange)
 
 int CvCity::getAdjacentDamagePercent() const { return cascadeDefense(DEFENSE_ADJACENT_DAMAGE); }
 
-//	⚖ THE THIRD RING IS AN AMENITY, read off the fold like power (contexts.md § POWER IS AN AMENITY). The
-//	refcount is what earns it: a city holding two grantors and losing one must keep the ring, which a plain
-//	assignment could not express -- it zeroed the override and took the ring with it.
-//	⚠ The value is the RADIUS the key names, not a count: `adds3rdRing` says three rings, and a second grantor
-//	of the same key adds no fourth. The fold's COUNT decides only whether any live grantor confers it.
-int CvCity::getWorkableRadiusOverride() const
-{
-	return m_cityContext.hasAmenity(CLS_AMENITY_ADDS_3RD_RING) ? 3 : 0;
-}
 
 bool CvCity::isProtectedCulture() const
 {

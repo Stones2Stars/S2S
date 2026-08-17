@@ -1260,6 +1260,9 @@ public:
 	// The same derivation for an ARBITRARY culture level -- the work area a level the city no longer holds
 	// defined, which is what makes a level change a ring DELTA rather than a re-derivation.
 	int getNumCityPlotsAtCultureLevel(int iCultureLevel) const;
+	//	The ONE getter for the third ring -- every source that can grant it. Ask this, never the sources.
+	bool hasThirdRing(int iCultureLevel) const;
+	bool hasThirdRing() const;
 	// ⚖ THE POTENTIAL WORK AREA IS THE CITY'S TO DEFINE (owner), and this is where it hands that definition to
 	// the plots: every plot between the two counts gains or loses this city in its `workableBy` membership.
 	// The addressing is a FIXED ring-ordered table, so the delta is the plain index range [iOld, iNew).
@@ -1301,7 +1304,6 @@ public:
 
 	int getAdjacentDamagePercent() const;
 
-	int getWorkableRadiusOverride() const;
 
 	int getProtectedCultureCount() const;
 	bool isProtectedCulture() const;
