@@ -276,17 +276,14 @@
   ⛔ Do NOT re-add an ungated flip to replace a cut maintainer's gated one.
 - The amenity CONSUMER side: re-point consumers onto the CITY read, and retire the per-flag `CvCity` counters
   and their bespoke per-attribute predicates/facts ([contexts.md](../../architecture/contexts.md)). The apply
-  sites are the `process*` functions — `changeZoCCount`, `changeProtectedCultureCount`,
-  `setWorkableRadiusOverride` — against keys the data already authors (`zoneOfControl`, `protectedCulture`,
-  `adds3rdRing`).
+  sites are the `process*` functions — `changeZoCCount`, `changeProtectedCultureCount` — against keys the data
+  already authors (`zoneOfControl`, `protectedCulture`).
   ⚑ POWER is already converted and is the pattern to copy (contexts.md § POWER IS AN AMENITY).
   ⛔ The parameterized fact EXISTS (`SEVT_CITY_AMENITY_ADDED / _REMOVED`, carrying the id) and every key now
   announces its crossing — do not mint a bespoke fact per key, and do not re-add the government-centre or
   fresh-water pairs it replaced. What is left here is the COUNTER side above.
   ⚠ Check each counter's FEEDERS first — power's conversion was a read-swap (only a dead `CyCity` binding still
-  wrote it); the others may not be. ⚑ The workable-radius one is the worked precedent for WHY: its assignment
-  bug could never fire, because the value it assigned came from a building member no data authored — the live
-  defect was the amenity having no consumer at all. Read the feeder before believing the symptom.
+  wrote it); the others may not be.
 - Re-fold a conditioned amenity on a BUILDING grantor when its condition moves (the empire half is covered). It
   wants the condition-dependency route the modifier consumer already derives.
 - Decide whether `CvTraitInfo` / `CvTechInfo` carry `m_amenities` and its fold leg. ⚑ Answerable NOW: readJson
