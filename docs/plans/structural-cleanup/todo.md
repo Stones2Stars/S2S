@@ -252,15 +252,21 @@
   [event-spine.md](../../specs/event-spine.md)) — nothing STATIC may depend on a LIVE option.
   ⛔ Add a readJson check refusing a `MODDERGAMEOPTION_` condition, so the split is unsayable to violate.
 
-- The alerts still owed to the PLAYER-ALERT consumer (`Sources/UI/CvPlayerAlerts.cpp`): "power restored"
-  (`TXT_KEY_MISC_POWER_RESTORED`, hangs on `SEVT_CITY_STATUS_REMOVED` carrying `CITYSTATUS_POWER_DISABLED`);
-  the CAN_RETRAIN/NO_RETRAIN pairs the promotion KEEP gate used to emit per failing axis (terrain / feature /
-  plot bonus / improvement-or-local-building / promotion prereq, plus two more the axis list does not name);
-  and "your building was obsoleted" (`SEVT_CITY_BUILDING_OBSOLETED_ADDED / _REMOVED`, emitted for exactly
-  this). All are authored and were rendering — a real loss of player-facing information.
-  ⛔ They do NOT come back as a per-axis walk beside the gate (rebuilds the legacy battery) — re-attach to the
-  fact, never re-inlined at a mutation site ([event-spine.md](../../specs/event-spine.md)).
-  ⛔ And they attach to the EXISTING consumer — do not mint a second one.
+- Move the CAN_RETRAIN/NO_RETRAIN promotion-loss pairs onto the PLAYER-ALERT consumer
+  (`Sources/UI/CvPlayerAlerts.cpp`). They are NOT lost — `CvUnit::canKeepPromotion` still renders all 11 axis
+  pairs inline and `setHasPromotion` reaches it with `bMessageOnFalse` — so this is the re-inlined-at-a-mutation-site
+  shape ([event-spine.md](../../specs/event-spine.md)), never a restoration.
+  ⛔ It does NOT close by re-attaching to `SEVT_UNIT_PROMOTION_REMOVED` as it stands: that fact carries promotion /
+  unit / owner and NOT the failing axis, so the alert cannot pick its message. The fact has to carry the axis
+  first — that is the work, and it is why this is not a small re-point.
+  ⛔ They do NOT come back as a per-axis walk beside the gate (rebuilds the legacy battery), and they attach to
+  the EXISTING consumer — do not mint a second one.
+  ⚠ One axis is dead: the RBOMBARD pair names ranged bombard, a removed mechanic
+  ([superseded-ideas #24](../../architecture/superseded-ideas.md)) — it goes rather than moves.
+- Decide whether a building going obsolete should tell the player at all. `SEVT_CITY_BUILDING_OBSOLETED_ADDED /
+  _REMOVED` is emitted and the alert consumer could carry it, but **no player-message text exists in the tree** —
+  the only obsolete keys are `BUILDINGHELP_*` / `EDGE_*` pedia text, so nothing was ever rendering for this and
+  there is no message to restore. Authoring a new player-facing string is a CONTENT decision, not a re-attach.
 - Decide WHERE the citizen-assignment re-check is asked for — a CALL-SITE question, never a removal:
   `AI_setAssignWorkDirty` is called from across the engine while `AI_updateAssignWork` re-runs the FULL
   assignment for every marked city, so the flips are a turn-time cost in their own right. The ruled trigger set,

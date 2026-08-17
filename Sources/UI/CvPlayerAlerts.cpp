@@ -61,6 +61,35 @@ namespace
 		}
 	}
 
+	//	⚖ THE POWER-RESTORED ALERT. A blackout is a city STATUS that ticks down and ends on its own, so the
+	//	player is told when it lifts -- the message the per-turn maintainer used to emit before it was cut.
+	//	⚑ It rides the STATUS fact, not the amenity fold's power crossing, and the two are genuinely different
+	//	events: the fold announces the GATED verdict (isPowered), which also moves when a plant is built or lost,
+	//	while this is specifically the blackout ENDING ([state.md] § A STATUS IS MIDDLEWARE -- the status gates
+	//	delivery and is never folded into the store it gates).
+	void onCityStatusRemoved(const CvSpineEvent& kEvent)
+	{
+		if (kEvent.iType != CITYSTATUS_POWER_DISABLED)
+		{
+			return;
+		}
+		const PlayerTypes eOwner = (PlayerTypes)kEvent.iC;
+		if (eOwner == NO_PLAYER)
+		{
+			return;
+		}
+		const CvCity* pCity = GET_PLAYER(eOwner).getCity(kEvent.iSrcLoc);
+		if (pCity == NULL)
+		{
+			return;
+		}
+		const CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_POWER_RESTORED", pCity->getNameKey());
+		//	⚠ AS2D_REVOLTEND is a REAL tag (audio XML + in-tree use) chosen for the shape it shares -- a bad city
+		//	condition ending. What the cut maintainer sounded is not recoverable; this is not it restored.
+		AddDLLMessage(eOwner, false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_REVOLTEND",
+			MESSAGE_TYPE_MINOR_EVENT, NULL, GC.getCOLOR_WHITE(), pCity->getX(), pCity->getY(), true, true);
+	}
+
 	//	The dispatch object the spine registers. It owns NO state -- an alert is a pure output.
 	class CvPlayerAlertConsumer : public IEventConsumer
 	{
@@ -84,6 +113,9 @@ namespace
 			{
 			case SEVT_EMPIRE_DEAL_REMOVED:
 				onDealRemoved(kEvent);
+				break;
+			case SEVT_CITY_STATUS_REMOVED:
+				onCityStatusRemoved(kEvent);
 				break;
 			default:
 				break;
