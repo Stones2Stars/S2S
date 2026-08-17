@@ -926,7 +926,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iCiv = NO_CIVILIZATION;
 	m_iLandmarkAngerTimer = 0;
 	m_iLostProduction = 0;
-	m_iWorkableRadiusOverride = 0;
 	m_iProtectedCultureCount = 0;
 	m_iWarWearinessTimer = 0;
 	m_iEventAnger = 0;
@@ -3707,10 +3706,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		if (kBuilding.providesAmenity(CLS_AMENITY_PROTECTED_CULTURE))
 		{
 			changeProtectedCultureCount(iChange > 0 ? 1 : -1);
-		}
-		if (kBuilding.getWorkableRadius() > 0)
-		{
-			setWorkableRadiusOverride(iChange > 0 ? kBuilding.getWorkableRadius() : 0);
 		}
 	}
 
@@ -12487,7 +12482,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iLandmarkAngerTimer);
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iWorkableRadiusOverride);
 	WRAPPER_READ(wrapper, "CvCity", &m_iProtectedCultureCount);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessTimer);
 
@@ -13009,7 +13003,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLandmarkAngerTimer);
 
-	WRAPPER_WRITE(wrapper, "CvCity", m_iWorkableRadiusOverride);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iProtectedCultureCount);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWarWearinessTimer);
 
@@ -15039,14 +15032,14 @@ void CvCity::changeZoCCount(short iChange)
 
 int CvCity::getAdjacentDamagePercent() const { return cascadeDefense(DEFENSE_ADJACENT_DAMAGE); }
 
+//	⚖ THE THIRD RING IS AN AMENITY, read off the fold like power (contexts.md § POWER IS AN AMENITY). The
+//	refcount is what earns it: a city holding two grantors and losing one must keep the ring, which a plain
+//	assignment could not express -- it zeroed the override and took the ring with it.
+//	⚠ The value is the RADIUS the key names, not a count: `adds3rdRing` says three rings, and a second grantor
+//	of the same key adds no fourth. The fold's COUNT decides only whether any live grantor confers it.
 int CvCity::getWorkableRadiusOverride() const
 {
-	return m_iWorkableRadiusOverride;
-}
-
-void CvCity::setWorkableRadiusOverride(int iNewVal)
-{
-	m_iWorkableRadiusOverride = iNewVal;
+	return m_cityContext.hasAmenity(CLS_AMENITY_ADDS_3RD_RING) ? 3 : 0;
 }
 
 bool CvCity::isProtectedCulture() const

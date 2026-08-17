@@ -1302,7 +1302,6 @@ public:
 	int getAdjacentDamagePercent() const;
 
 	int getWorkableRadiusOverride() const;
-	void setWorkableRadiusOverride(int iNewVal);
 
 	int getProtectedCultureCount() const;
 	bool isProtectedCulture() const;
@@ -1559,7 +1558,6 @@ protected:
 	bool m_bBuiltFoodProducedUnit;
 	bool m_bResetTechs;
 	int m_iLandmarkAngerTimer;
-	int m_iWorkableRadiusOverride;
 	int m_iProtectedCultureCount;
 	int m_iWarWearinessTimer;
 

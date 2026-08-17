@@ -12,6 +12,13 @@
 
 ## Unreleased
 
+- **Buildings that grant a third ring of workable tiles now actually grant it.** Twelve buildings
+  carry `adds3rdRing`, and nothing in the engine read it — the ring was promised in the data and
+  never delivered, so those cities worked two rings like any other. The city now reads the amenity
+  its buildings confer, and because that is refcounted, holding two grantors and losing one keeps
+  the ring instead of dropping it.
+- **Power restored** tells you again when a city's blackout ends. The message died with the
+  per-turn maintainer that used to emit it.
 - **A resource requirement now names ONE origin.** `connection: "trade"` means the network holds it;
   `connection: "onSite"` means the city itself supplies it — a mine, or a building that manufactures it.
   The old combined `"trade|vicinity"` form is gone: the two are genuinely different questions (a mounted

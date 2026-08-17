@@ -179,7 +179,6 @@ public:
 	int getVisibilityPriority() const       { return m_iVisibilityPriority; }
 	int getAirlift() const                  { return m_iAirlift; }
 	int getAirUnitCapacity() const          { return m_iAirUnitCapacity; }
-	int getWorkableRadius() const           { return m_iWorkableRadius; }
 	int getMaxPlayerInstancesExtra() const  { return m_iMaxPlayerInstancesExtra; }
 	bool isCenterInCity() const             { return m_bCenterInCity; }
 	bool isNotConstructible() const         { return m_bNotConstructible; }         // json §7: excluded from the queue
@@ -280,7 +279,6 @@ private:
 	int m_iVisibilityPriority;
 	int m_iAirlift;
 	int m_iAirUnitCapacity;
-	int m_iWorkableRadius;
 	int m_iMaxPlayerInstancesExtra;
 	bool m_bCenterInCity;
 	bool m_bNotConstructible;

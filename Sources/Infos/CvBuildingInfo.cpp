@@ -28,7 +28,6 @@ CvBuildingInfo::CvBuildingInfo()
 	, m_iVisibilityPriority(0)
 	, m_iAirlift(0)
 	, m_iAirUnitCapacity(0)
-	, m_iWorkableRadius(0)
 	, m_iMaxPlayerInstancesExtra(0)
 	, m_bCenterInCity(false)
 	, m_bNotConstructible(false)
@@ -216,7 +215,6 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_iVisibilityPriority = jsonIdInt(identity, "visibilityPriority");
 	m_iAirlift = jsonIdInt(identity, "airlift");
 	m_iAirUnitCapacity = jsonIdInt(identity, "airUnitCapacity");
-	m_iWorkableRadius = jsonIdInt(identity, "workableRadius");
 	m_iMaxPlayerInstancesExtra = jsonIdInt(identity, "maxPlayerInstancesExtra");
 	m_bCenterInCity = jsonIdBool(identity, "centerInCity");
 	m_bNotConstructible = jsonIdBool(identity, "notConstructible");

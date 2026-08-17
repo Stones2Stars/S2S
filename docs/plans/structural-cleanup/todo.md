@@ -284,10 +284,9 @@
   announces its crossing — do not mint a bespoke fact per key, and do not re-add the government-centre or
   fresh-water pairs it replaced. What is left here is the COUNTER side above.
   ⚠ Check each counter's FEEDERS first — power's conversion was a read-swap (only a dead `CyCity` binding still
-  wrote it); the others may not be.
-  ⚠ The workable-radius counter is a live BUG, not just an unmigrated shape: it is a plain SET rather than the
-  id→COUNT refcount, so a city holding two radius grantors and losing one drops the override to 0 and loses a
-  ring a live grantor still justifies.
+  wrote it); the others may not be. ⚑ The workable-radius one is the worked precedent for WHY: its assignment
+  bug could never fire, because the value it assigned came from a building member no data authored — the live
+  defect was the amenity having no consumer at all. Read the feeder before believing the symptom.
 - Re-fold a conditioned amenity on a BUILDING grantor when its condition moves (the empire half is covered). It
   wants the condition-dependency route the modifier consumer already derives.
 - Decide whether `CvTraitInfo` / `CvTechInfo` carry `m_amenities` and its fold leg. ⚑ Answerable NOW: readJson
