@@ -132,11 +132,6 @@
   ones. ⚠ Settle the `TAG_*` entries in the same pass — they are classification ids minted at load, same
   resolvability question.
 
-- **De-serialize `CvPlayer::m_bonusExport` / `m_bonusImport`.** Re-derive both maps from the player's held deals
-  on load instead ([enabler.md §8](../../specs/enabler.md) — the deal stays serialized, the derived counts do
-  not). Uniform soft-remove cut: delete member + read + write, name the tags in `Assets/savemigration.txt`, no
-  `WRAPPER_SKIP_ELEMENT` ([save.md §3](../../specs/save.md)).
-
 - **Cut the DEFERRED BONUS-PROCESSING BRACKET together with `processBonus`.**
   `CvCity::startDeferredBonusProcessing` / `endDeferredBonusProcessing` exist only to keep the legacy per-bonus
   apply (`processBonus`) off the intermediates of a merge or load-time rebuild — once nothing calls
