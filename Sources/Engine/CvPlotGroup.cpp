@@ -508,15 +508,18 @@ void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
 		// #430 NETWORK bonus event: the plot-group IS the connectivity/network identity (a traded resource enters at
 		// the capital's group and reaches every connected city). On a PRESENCE transition, announce it (owner,
 		// plotGroupId) so the cache-invalidation consumer re-evals connection:trade deposits for the member cities.
+		// ⚑ The count is the MAGNITUDE of the move, unsigned -- the event name carries the direction. On a
+		// crossing one side is always zero, so |iChange| is simultaneously the delta and the holding gained or
+		// lost, and there is no ambiguity about which "how many" the payload means.
 		if ((iOldTotal != 0) != (iNewTotal != 0))
 		{
 			if (iChange > 0)
 	{
-		emitPlotGroupBonusAdded((int)getOwner(), getID(), (int)eBonus, 1);
+		emitPlotGroupBonusAdded((int)getOwner(), getID(), (int)eBonus, iChange);
 	}
 	else
 	{
-		emitPlotGroupBonusRemoved((int)getOwner(), getID(), (int)eBonus, 1);
+		emitPlotGroupBonusRemoved((int)getOwner(), getID(), (int)eBonus, -iChange);
 	}
 		}
 
