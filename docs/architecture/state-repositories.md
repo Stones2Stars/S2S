@@ -424,9 +424,11 @@ because changing what the number MEANS breaks readers that were never meant to s
 of the int is the genuinely volumetric one.
 ⇒ **The surface: `has(id)` → bool for every consumer · `add(id, ±1)` for maintenance · `count(id)` reserved for
 a volumetric reader · and NO `set`.**
-⛔ **`set(id, n)` IS THE FOOTGUN AND DOES NOT BELONG ON THIS TYPE** — it overwrites a refcount, which is exactly
-how the workable-radius override became a plain assignment that zeroes the ring when a city loses ONE of TWO
-grantors. A type that PERMITS the banned move forces the rule to be remembered; removing the verb makes it
+⛔ **`set(id, n)` IS THE FOOTGUN AND DOES NOT BELONG ON THIS TYPE** — it overwrites a refcount, so a key that
+several grantors confer is cleared by the first one to leave. The live case is the THIRD RING
+(`CLS_AMENITY_ADDS_3RD_RING`, read through `CvCity::hasThirdRing`): several buildings confer it, so an assignment
+would shrink a city's workable radius the moment it lost ONE of TWO grantors, where the refcount keeps the ring.
+A type that PERMITS the banned move forces the rule to be remembered; removing the verb makes it
 unsayable, which is the enforcement model this project keeps choosing
 ([patterns.md](patterns.md): a contract, not a prohibition).
 

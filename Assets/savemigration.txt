@@ -2305,6 +2305,6 @@ CvPlayer::iBonusImportCount
 | The city's workable-radius override -- a serialized value DERIVED from a held amenity. The third ring
 | is conferred by the `adds3rdRing` amenity, which the city's fold already refcounts, so the override
 | answers to [DEC-derived-never-trusted] like every other derived value and must not come off a save.
-| REPLACEMENT: CvCity::getWorkableRadiusOverride reads the fold directly
-| (CityContext::hasAmenity(CLS_AMENITY_ADDS_3RD_RING) ? 3 : 0), the same conversion power took.
+| REPLACEMENT: CvCity::hasThirdRing -- the ONE getter owning both sources, the refcounted amenity
+| (CityContext::hasAmenity(CLS_AMENITY_ADDS_3RD_RING)) and the culture level under EXP_LARGER_CITIES.
 CvCity::iWorkableRadiusOverride

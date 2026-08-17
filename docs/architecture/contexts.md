@@ -597,7 +597,8 @@ CAPSTONE — LOAD is the only full build).
   - the **VICINITY store** ← the radius tiles' bonus / owner / worked facts, each applying `±1` through the ONE
     write point.
     > **⚖ THE CITY DEFINES ITS OWN POTENTIAL WORK AREA, AND THAT IS UNAVOIDABLE (owner) — because the cross
-    > GROWS** (culture level, `adds3rdRing`, the workable-radius override), so no fixed geometry can answer it.
+    > GROWS** (culture level, `adds3rdRing` — the two sources `CvCity::hasThirdRing` owns), so no fixed geometry
+    > can answer it.
     > The city hands that definition to the plots as `CvPlot`'s **`workableBy`** membership, announced per plot as
     > `SEVT_PLOT_WORKABLE_BY_ADDED / _REMOVED`; the fold then reads the plot's own list and is EXACT.
     > ⛔ **There is no radius inverse and no membership test** — a store keyed on the radius folds a DELTA, and a
