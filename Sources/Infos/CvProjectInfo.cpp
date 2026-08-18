@@ -1,7 +1,7 @@
 //
 //	CvProjectInfo -- the project poco's own typed reading on top of the base section dispatch (see the header).
 //	mapFrom materializes the census identity set + the bespoke `victory` block ONCE
-//	([DEC-materialize-at-mapfrom]); every modifier magnitude is a compiled point read (header), never a mirrored
+//	(docs/architecture/patterns.md §Materialize at mapFrom); every modifier magnitude is a compiled point read (header), never a mirrored
 //	scalar. Idempotent by contract (unconditional assigns, clear-first containers).
 //
 

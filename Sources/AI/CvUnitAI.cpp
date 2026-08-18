@@ -27827,7 +27827,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 				{
 					//	Terrain defense
 					// The promotion's OWN authored rows, not the TerrainTypes registry: a keyed read walks what the
-					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// entity authored (docs/architecture/patterns.md §DRY (single implementation); the own-data inversion pedia-read-map finding 2
 					// names). The body is unchanged -- iJ still names the target.
 					std::vector<std::pair<int, int> > kTerrainDefense;
 					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN,
@@ -27853,7 +27853,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 					//	Feature defense
 					// The promotion's OWN authored rows, not the FeatureTypes registry: a keyed read walks what the
-					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// entity authored (docs/architecture/patterns.md §DRY (single implementation); the own-data inversion pedia-read-map finding 2
 					// names). The body is unchanged -- iJ still names the target.
 					std::vector<std::pair<int, int> > kFeatureDefense;
 					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE,
@@ -27993,7 +27993,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 
 					//	Terrain attack
 					// The promotion's OWN authored rows, not the TerrainTypes registry: a keyed read walks what the
-					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// entity authored (docs/architecture/patterns.md §DRY (single implementation); the own-data inversion pedia-read-map finding 2
 					// names). The body is unchanged -- iJ still names the target.
 					std::vector<std::pair<int, int> > kTerrainAttack;
 					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN,
@@ -28021,7 +28021,7 @@ int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 					}
 					//	Feature attack
 					// The promotion's OWN authored rows, not the FeatureTypes registry: a keyed read walks what the
-					// entity authored ([DEC-single-implementation]; the own-data inversion pedia-read-map finding 2
+					// entity authored (docs/architecture/patterns.md §DRY (single implementation); the own-data inversion pedia-read-map finding 2
 					// names). The body is unchanged -- iJ still names the target.
 					std::vector<std::pair<int, int> > kFeatureAttack;
 					InfoValuation::collectKeyedCombat(kPromotion.getModifiers(), InfoValuation::COMBAT_TARGET_FEATURE,

@@ -7,12 +7,12 @@
 //	Empire-scope acquired legacies: the era-banded empire commerce is authored as ERA-threshold CONDITIONED
 //	entries ({value, enabled:{type:ERA, min:N}} -- json.md §6 "era-dependent values use the ERA counter"), so it
 //	lives on the compiled conditioned list (base modifierConditioned()/expected* surface), never as a mirrored
-//	band table ([DEC-new-getter-surface]: the legacy era-commerce mirror died with this rebuild). No legacy
+//	band table (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy): the legacy era-commerce mirror died with this rebuild). No legacy
 //	getter name returns.
 //
 //	Acquisition prereqs are store-inverted onto the FORWARD enables edges (curate_heritage.py: PrereqTech ->
 //	tech.enables.heritages; PrereqOrHeritage -> the predecessor heritage's enables.heritages) and read back here
-//	from THIS info's own load-populated reverse view (EDGEF_RELATED -- [DEC-one-reverse-view]: every info
+//	from THIS info's own load-populated reverse view (EDGEF_RELATED -- docs/cascade.md §1 (reverse lookups are populated once, at load): every info
 //	already carries its reverse lookups after load; the exact enables-predicate is confirmed against each
 //	related source's forward edge, so no consumer-side repo scan exists).
 //

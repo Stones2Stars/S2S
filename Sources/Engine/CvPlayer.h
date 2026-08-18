@@ -595,7 +595,7 @@ public:
 	// The empire's realized maintenance TOTAL: a bare fetch of its package's RECEIVER slot -- the Σ of its
 	// member cities' realized values, which is what a cross-scope receiver total IS
 	// ([state-repositories.md]). It carries no cache of its own: a receiver is the same cache holding a
-	// different slot, and a hand-named one beside the package is the shape [DEC-uniform-cache-shape] calls a
+	// different slot, and a hand-named one beside the package is the shape docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a
 	// DEFECT, because it forces a bespoke invalidation path no derived mask can reach.
 	int64_t getTotalMaintenance() const;
 
@@ -744,7 +744,7 @@ public:
 	const EmpireContext& getEmpireContext() const { return m_empireContext; }
 	PolicyContext& policies() const { return m_policies; }
 	// The empire's ABILITY union (capabilities / canTrade / canWorkOn / canTradeOn). It is the PLAYER's, never
-	// the team's -- CvTeam is the tech BRIDGE and owns no live-state surface ([DEC-scope-contexts]).
+	// the team's -- CvTeam is the tech BRIDGE and owns no live-state surface (docs/cascade.md §The contexts (plot/city/player own one live-state context)).
 	CapabilityContext& capabilities() const { return m_capabilities; }
 	// The empire's HELD-TRAIT set. A store rather than a forward because ENUMERATING the held traits off the
 	// has-array walks the whole trait registry, while TESTING one is a pointer hop (Engine/TraitContext.h).
@@ -752,8 +752,8 @@ public:
 
 	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
 	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
-	// consumes) riding the same cache beside the packages ([DEC-uniform-cache-shape]). A MAINTAINED SUM
-	// ([DEC-maintained-sum]): the fact names the source and APPLYING that source's compiled deposits is the whole
+	// consumes) riding the same cache beside the packages (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE). A MAINTAINED SUM
+	// (docs/cascade.md §THE MAINTAINED SUM): the fact names the source and APPLYING that source's compiled deposits is the whole
 	// maintenance -- nothing marked, deferred or rebuilt. Never serialized.
 	const CvCascadePackage<CvPlayer>& getCascadePackage() const { return m_cascadePackage; }
 
@@ -763,7 +763,7 @@ public:
 	// PLAYER-held and the city gate reads through its owner -- per-city copies would be byte-identical state
 	// that must never drift.
 	// ⛔ NO dirty->recompute path: built by the reseed's events through the same appliers play uses
-	// ([DEC-spine-reseed]), maintained by targeted propagation, never serialized. PUBLIC + MUTABLE because the
+	// (docs/spine.md §5 (the load reseed)), maintained by targeted propagation, never serialized. PUBLIC + MUTABLE because the
 	// domain enablers write through a `const CvPlayer&` -- the player owns the storage, not the delta logic.
 	mutable PlayerEnabler m_enabler;
 	// Size every player-held domain + apply its static exclusions, at BOTH lifecycle starts (new game and load).
@@ -779,7 +779,7 @@ public:
 	// GAME-OBJECT read role (patterns.md § THE TWO READ ROLES), one read pair per DOMAIN, the existing engine enum
 	// as the consumer's vocabulary. ⛔ Every read is a BARE O(1) fetch of the maintained tri-state: no gate runs,
 	// no calculator is called, `requires` is never evaluated (enabler.md §7) -- so a missed propagation leaves a
-	// visibly wrong verdict instead of being silently recomputed away ([DEC-no-self-heal]).
+	// visibly wrong verdict instead of being silently recomputed away (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// The tri-state is returned whole (HIDDEN vs GREYED is the "why not"); the frontier read fills a caller-owned
 	// vector so a hot caller reuses one buffer.
 	//
@@ -846,7 +846,7 @@ public:
 	// CvInfoKinds.h's census scope masks): the call carries NO channel argument and NO scope argument (the
 	// object IS the scope), the group's enum indexes the RESULT, and there is no scalar getter per channel --
 	// a caller wanting one value indexes the group. The surface grows by DATA, never by a new getter.
-	// Values are ×100 NATIVE ([DEC-fixedpoint-x100]); a reader divides by 100 at the point of use.
+	// Values are ×100 NATIVE (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); a reader divides by 100 at the point of use.
 	// Each fills its array through the ONE cross-scope roll-up (InfoValuation::realizedAtEmpire -- the team +
 	// empire packages combined AT READ, modifier.md §1), except the four channels the empire CONSUMES
 	// (gold/research/culture/espionage), which answer their maintained receiver sum. Every read is a BARE FETCH.
@@ -977,7 +977,7 @@ public:
 	// `CvCity::getHasBuildings` already has at city scope.
 	const std::vector<BuildingTypes>& getHasBuildings() const { return m_heldBuildings; }
 
-	// ===== EMPIRE-LEVEL buildings (DEC-empire-level-buildings, enabler-spec §2) -- held by the PLAYER, once,
+	// ===== EMPIRE-LEVEL buildings (docs/specs/enabler.md §2 (empire-level buildings), enabler-spec §2) -- held by the PLAYER, once,
 	// never present in any city. The held store IS m_paiBuildingCount at 0/1 for an identity.empireLevel id (no
 	// second store to drift); setHasEmpireBuilding is the ONE holding choke point (CvCity::setHasBuilding and the
 	// city-read ledger both route here), announcing SEVT_EMPIRE_BUILDING_ADDED / _REMOVED at the crossing and the

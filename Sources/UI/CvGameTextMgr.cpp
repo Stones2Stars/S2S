@@ -436,7 +436,7 @@ void CvGameTextMgr::setTimeStr(CvWString& szString, int iGameTurn, bool bSave)
 //	The body is deliberately minimal: the legacy composer read the legacy getter surface, which is cut, and a
 //	composer's acceptance test is that it reads NO legacy getter ([patterns.md] THE DIVISION OF LABOUR). The
 //	minimize-popup help therefore renders EMPTY until the composer is rebuilt on `appendEntryLines` — an
-//	honest visible gap rather than a legacy read masking it ([DEC-no-legacy-masking]).
+//	honest visible gap rather than a legacy read masking it (docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap).
 //
 void CvGameTextMgr::setMinimizePopupHelp(CvWString& szString, const CvPopupInfo& info)
 {
@@ -554,7 +554,7 @@ static void gt_appendSeparator(CvWStringBuffer& szString, bool& bFirstInBlock)
 
 //	The UNIT INSTANCE's help -- this unit, right now: what the unit-name widget, the selected-unit hover and the
 //	plot unit list all render. It is the LIVE half; the TYPE half is the sibling overload, delegated to at the end
-//	so the two never drift apart ([DEC-single-implementation]).
+//	so the two never drift apart (docs/architecture/patterns.md §DRY (single implementation)).
 //
 //	⚑ IT IS AN ORDERED SET OF BLOCKS -- IDENTITY, CONDITION, ORDERS, PROMOTIONS, TYPE -- which is how a tooltip is
 //	designed here (owner, [patterns.md] § the per-entry TEXT render), and the ORDER is the owner's: name, then
@@ -607,7 +607,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 	//	STRENGTH. An air unit fights with its own air strength -- a different number from the ground one -- so the
 	//	DOMAIN decides which is read, never a fallback between them.
-	//	⚑ The ÷100 on the air twin is the READER's ([DEC-fixedpoint-x100]: a reader divides at its point of use).
+	//	⚑ The ÷100 on the air twin is the READER's (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a reader divides at its point of use).
 	//	`baseCombatStrHuman` is the ground cluster's ONE named human read; the air side has no such twin, and
 	//	minting one would grow the per-channel getter surface this rebuild is deleting.
 	const bool bAir = (pUnit->getDomainType() == DOMAIN_AIR);
@@ -722,7 +722,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 		//	busy; this says whether being busy is worth it.
 		//	⛔ The SAME plot calc and the SAME renderer the build-ACTION tooltip uses, so the number a worker
 		//	reports mid-build and the number its action button advertised before it started are ONE number by
-		//	construction ([DEC-single-implementation]) -- which is the whole reason the calc was lifted onto
+		//	construction (docs/architecture/patterns.md §DRY (single implementation)) -- which is the whole reason the calc was lifted onto
 		//	`CvPlot` rather than left inline in the action composer.
 		int aiBuildYields[NUM_YIELD_TYPES] = {0};
 		bool bAnyBuildYield = false;
@@ -822,7 +822,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 
 //	The PLOT's unit list -- what stands here. Each unit is rendered by the INSTANCE composer above rather than
-//	re-described locally, so the plot hover and the unit hover can never disagree ([DEC-single-implementation]);
+//	re-described locally, so the plot hover and the unit hover can never disagree (docs/architecture/patterns.md §DRY (single implementation));
 //	the caller's bOneLine/bShort pass straight through (the off-screen indicator label asks for both, and so
 //	gets one name per unit).
 void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bOneLine, bool bShort)
@@ -1571,7 +1571,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 
 	// ---- WHAT THE TILE YIELDS, decomposed into the package's three stored segments ----
 	// ⛔ Read from the plot's OWN package, never recomputed here: this is the very number the city's Σ walks
-	// ([DEC-single-implementation]), so a tile that reads wrong here is wrong in the city total too, and the
+	// (docs/architecture/patterns.md §DRY (single implementation)), so a tile that reads wrong here is wrong in the city total too, and the
 	// two can be reconciled by eye. A recomputed tooltip could agree with the data while the cache disagreed.
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
@@ -1798,7 +1798,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		{
 			// The city's REALIZED production in ONE read: the cascade folds the worked-plot Σ, the specialists
 			// and the flat tier itself (modifier.md §2a), so the hand-assembled tiers are gone. ÷100 at the
-			// reader -- the cascade carries ×100 natively ([DEC-fixedpoint-x100]).
+			// reader -- the cascade carries ×100 natively (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 			int aiRealizedYields[NUM_YIELD_TYPES];
 			pCity->getYields(aiRealizedYields);
 			iBaseProductionDiffNoFood = aiRealizedYields[YIELD_PRODUCTION] / 100;
@@ -1868,7 +1868,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		{
 			// The city's REALIZED production in ONE read: the cascade folds the worked-plot Σ, the specialists
 			// and the flat tier itself (modifier.md §2a), so the hand-assembled tiers are gone. ÷100 at the
-			// reader -- the cascade carries ×100 natively ([DEC-fixedpoint-x100]).
+			// reader -- the cascade carries ×100 natively (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 			int aiRealizedYields[NUM_YIELD_TYPES];
 			pCity->getYields(aiRealizedYields);
 			iBaseProductionDiffNoFood = aiRealizedYields[YIELD_PRODUCTION] / 100;
@@ -2710,7 +2710,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 	//	⛔ THE SHARED UNIT-PLANE LIST, not a local copy. This composer used to carry its own duplicate of it beside
 	//	a hand-rolled repeat of the entity spine, and the duplicate had already DRIFTED: it silently dropped
 	//	MODFAM_ODDS and MODFAM_SURVIVOR, so those families rendered on the basic-unit help and nowhere else. One
-	//	list, one spine ([DEC-single-implementation]) -- and the edge and requires blocks now come with it.
+	//	list, one spine (docs/architecture/patterns.md §DRY (single implementation)) -- and the edge and requires blocks now come with it.
 	appendEntityBlocks(szBuffer, kUnit, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
 }
 
@@ -2790,10 +2790,10 @@ void CvGameTextMgr::setBuildingActualEffects(CvWStringBuffer &szBuffer, const Cv
 //
 // ⛔ THE VERDICT IS THE ENABLER'S AND IS READ FROM ITS OWN SET, never re-derived and never taken from the
 // engine's own active-building flag -- a building's ACTIVE/DORMANT state is a pure function of requires.operate
-// and is exactly the CAMOUFLAGED ride-in [DEC-calc-zero-ride-in] names ([enabler.md §3.2]: the operating set is
+// and is exactly the CAMOUFLAGED ride-in docs/specs/validation.md §pollution guardrail (zero legacy ride-in) names ([enabler.md §3.2]: the operating set is
 // the enabler's output; patterns.md rule 6: one source of "active"). This is a BARE FETCH of the standing set,
 // so a missed propagation shows here as a visibly wrong state rather than being recomputed away
-// ([DEC-no-self-heal]) -- which is the point of surfacing it at all.
+// (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT) -- which is the point of surfacing it at all.
 //
 // ⚑ ALL THREE STATES PRINT, including ACTIVE. A line that appears only when something is wrong is
 // indistinguishable from a line that failed to render, so the absence of a dormancy warning would carry no
@@ -2918,7 +2918,7 @@ void CvGameTextMgr::buildRequiresClauses(CvWStringBuffer& szBuffer, const CvCond
 	gateFlags.strictStateReligionForBuild = true;
 
 	// The clause decomposition is the SHARED one -- the enabler weighs hide-vs-grey over the same list
-	// ([DEC-single-implementation]); a private copy here would let the two disagree about what a clause is.
+	// (docs/architecture/patterns.md §DRY (single implementation)); a private copy here would let the two disagree about what a clause is.
 	std::vector<const CvCondition*> kClauses;
 	cascadeTopLevelClauses(pRoot, kClauses);
 	for (size_t iClause = 0; iClause < kClauses.size(); ++iClause)
@@ -3625,7 +3625,7 @@ void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBon
 	}
 	//	A bonus authors the CITY-plane families -- 85 carry commerce, 65 health, 58 food, 57 happiness, 49
 	//	production across the curated set -- so it renders through the ONE per-entry renderer like every other
-	//	entity ([DEC-single-implementation]), never a hand-assembled line.
+	//	entity (docs/architecture/patterns.md §DRY (single implementation)), never a hand-assembled line.
 	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies,
 		sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
@@ -3839,7 +3839,7 @@ void CvGameTextMgr::buildFreeTechString(CvWStringBuffer &szBuffer, TechTypes eTe
 		return;
 	}
 	static const int iFreeTechsKey = CvGrants::key("freeTechs");
-	// A pulse is stored ×100 like every amount, so the READER reduces at its point of use ([DEC-fixedpoint-x100]).
+	// A pulse is stored ×100 like every amount, so the READER reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	const int iFreeTechs = pGrants->pulse(iFreeTechsKey) / 100;
 	if (iFreeTechs <= 0)
 	{
@@ -3860,14 +3860,6 @@ void CvGameTextMgr::buildFreeTechString(CvWStringBuffer &szBuffer, TechTypes eTe
 	else
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_FIRST_FREE_TECHS", iFreeTechs));
-	}
-}
-
-void CvGameTextMgr::buildLOSString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
-{
-	if ((int)eTech >= 0)
-	{
-		appendClassificationKey(szBuffer, GC.getTechInfo(eTech).getCapabilities(), "canSeeFurtherFromWater");
 	}
 }
 
@@ -3978,7 +3970,7 @@ void CvGameTextMgr::buildYieldChangeString(CvWStringBuffer &szBuffer, TechTypes 
 {
 	// The parameter is an IMPROVEMENT, not a yield: the question is "what does this tech do to that improvement's
 	// output", and the answer is authored on the IMPROVEMENT as its own conditioned yield entries gated on the
-	// tech (the own-output half of [DEC-deliveryguy]) -- so it is read there, gated, one line per channel.
+	// tech (the own-output half of docs/cascade.md §4 (the deliveryguy ownership rule)) -- so it is read there, gated, one line per channel.
 	if ((int)eTech < 0 || iImprovement < 0)
 	{
 		return;
@@ -4162,7 +4154,7 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 	appendEntityBlocks(szBuffer, kInfo, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
 }
 //	The ONE entity-help spine: the composer's chosen family blocks, then the REQUIRES block. Every entity
-//	composer is this shape, so they cannot drift apart ([DEC-single-implementation]); deciding that build and
+//	composer is this shape, so they cannot drift apart (docs/architecture/patterns.md §DRY (single implementation)); deciding that build and
 //	operate are separate lines is the composer's call (they mean different things -- merging them would
 //	misreport both), while rendering each tree is the condition renderer's.
 void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const
@@ -4177,7 +4169,7 @@ void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& 
 	//	of a tech, so it is the one piece a barebones entity tooltip could least afford to be missing.
 	//	⚑ Living on the SHARED spine rather than in each composer is the point: tech, building, unit, project,
 	//	improvement, feature, terrain, route, heritage and unit-combat all gain it from this one place, and a
-	//	newly-composed entity type gets it with no edit at all ([DEC-single-implementation]).
+	//	newly-composed entity type gets it with no edit at all (docs/architecture/patterns.md §DRY (single implementation)).
 	appendEdgeLines(szBuffer, info, EDGEF_ENABLES,      "TXT_KEY_EDGE_UNLOCKS");
 	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETES,    "TXT_KEY_EDGE_OBSOLETES");
 	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETED_BY, "TXT_KEY_EDGE_OBSOLETED_BY");
@@ -4240,7 +4232,7 @@ enum GrantRegistry
 //	A granted id resolved through the registry its bucket names.
 //
 //	⛔ Bounds-checked HERE: an id outside its registry renders NOTHING rather than reaching the info plane, which
-//	answers an unanswerable read by failing loud ([DEC-info-plane-read-only]). A tooltip is not a place to take a
+//	answers an unanswerable read by failing loud (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD). A tooltip is not a place to take a
 //	load defect down, and the load census is where that defect belongs.
 static CvWString gt_grantedEntityName(int eRegistry, int iId)
 {
@@ -4265,7 +4257,7 @@ static CvWString gt_grantedEntityName(int eRegistry, int iId)
 }
 
 //	An EDGE id resolved through the registry its BUCKET names -- the same discipline as the grant resolver above,
-//	and bounds-checked for the same reason ([DEC-info-plane-read-only]): an id outside its registry renders
+//	and bounds-checked for the same reason (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD): an id outside its registry renders
 //	NOTHING rather than reaching the info plane, which answers an unanswerable read by failing loud. A tooltip is
 //	not the place to take a load defect down; the load census is where that belongs.
 static CvWString gt_edgeEntityName(EnEdgeBucket eBucket, int iId)
@@ -4328,7 +4320,7 @@ static CvWString gt_edgeEntityName(EnEdgeBucket eBucket, int iId)
 //	ONE edge family -> one "Unlocks: A, B, C" line, across every bucket that family authored.
 //
 //	⚑ THIS IS A STRAIGHT FORWARD-EDGE FETCH, NEVER A DATABASE SCAN. The info ALREADY CARRIES its edge lists --
-//	the readJson reverse pass lands them at load ([DEC-one-reverse-view]), so "what does this unlock" is a list
+//	the readJson reverse pass lands them at load (docs/cascade.md §1 (reverse lookups are populated once, at load)), so "what does this unlock" is a list
 //	read of the authored handful. ⛔ Asking it backwards (sweeping every building to test whether this tech
 //	unlocks it) is the whole-database scan the enabler spec exists to delete.
 //
@@ -4593,7 +4585,7 @@ void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const Cv
 			continue;
 		}
 		// The gate axis asks what the entry's condition MENTIONS -- CvConditionQuery, never a walk of our own
-		// ([DEC-single-implementation]; the query surface exists precisely so each consumer does not grow one).
+		// (docs/architecture/patterns.md §DRY (single implementation); the query surface exists precisely so each consumer does not grow one).
 		if (eGateBucket != NO_EDGEB
 		&& !CvConditionQuery::namesId(pEntry->enabled, eGateBucket, iGateId)
 		&& !CvConditionQuery::namesId(pEntry->disabled, eGateBucket, iGateId))
@@ -4766,7 +4758,7 @@ static void gt_attitudeTerm(CvWStringBuffer& szBuffer, int iValue, const char* s
 //	that most needs its terms.
 //
 //	⛔ Every term is read from the AI's OWN component getters, so the block cannot drift from the attitude the AI
-//	actually acts on ([DEC-single-implementation]) — a second summation here could disagree with the verdict it
+//	actually acts on (docs/architecture/patterns.md §DRY (single implementation)) — a second summation here could disagree with the verdict it
 //	claims to explain.
 void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eTargetPlayer)
 {
@@ -5296,7 +5288,7 @@ void CvGameTextMgr::setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
 	FAssertMsg(NO_PLAYER != city.getOwner(), "City must have an owner");
 
-	// A displayed whole-food figure, so the rate reduces at this reader ([DEC-fixedpoint-x100]).
+	// A displayed whole-food figure, so the rate reduces at this reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	city.getYields(aiRealizedYields);
 	int iRate = aiRealizedYields[YIELD_FOOD] / 100;
@@ -5723,7 +5715,7 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	setYieldHelp(szBuffer, city, YIELD_COMMERCE);
 	szBuffer.append(DOUBLE_SEPARATOR);
 
-	// ⛔ THE TERMS COME OUT OF THE REAL SPLIT, never re-derived beside it ([DEC-single-implementation]) -- the
+	// ⛔ THE TERMS COME OUT OF THE REAL SPLIT, never re-derived beside it (docs/architecture/patterns.md §DRY (single implementation)) -- the
 	// city's census read is the same gather and the same combine as its realized one, with the terms kept.
 	CvCommerceSplitTerms kTerms;
 	city.getCommerceTerms(eCommerceType, kTerms);
@@ -5751,7 +5743,7 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_TOTAL", gt_scaled100(kTerms.rate).GetCString()));
 }
 
-// A ×100 fixed-point quantity, rendered whole.fraction ([DEC-fixedpoint-x100] -- the UI is a READ EDGE, so the
+// A ×100 fixed-point quantity, rendered whole.fraction (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- the UI is a READ EDGE, so the
 // reduction happens here and the value travels scaled right up to it). Written out rather than truncated because
 // the whole point of this tooltip is to be reconcilable: a term shown as "3" when it is 3.47 does not add up on
 // screen, and a reader who cannot add the column up cannot trust any line in it.
@@ -5770,7 +5762,7 @@ static CvWString gt_scaled100(int64_t iValue)
 
 // One condition tree, spelled back as the ATOMS it asks about ("BONUS_DEER", "HAS_POWER"). This is what turns
 // "some food is missing" into "this building wants BONUS_DEER and this city has none" -- the refused half of the
-// §2a combine is otherwise invisible on every surface the player has ([DEC-obs-scale]).
+// §2a combine is otherwise invisible on every surface the player has (docs/spine.md §The reconstruction bar (Orwell)).
 static void gt_describeCondition(const CvCondition& kCondition, CvWString& szOut, int iDepth)
 {
 	if (iDepth > 3)
@@ -5811,7 +5803,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 		return;   // a yield no data authors anywhere has no terms to decompose
 	}
 	// ⛔ THE TERMS COME OUT OF THE REAL COMBINE, never a re-derivation beside it
-	// ([DEC-single-implementation]): a tooltip that recomputed its own decomposition could disagree with the
+	// (docs/architecture/patterns.md §DRY (single implementation)): a tooltip that recomputed its own decomposition could disagree with the
 	// number it claims to explain, which is the one thing it must never do.
 	InfoValuation::CityRateTerms kTerms;
 	InfoValuation::cityReceiverRate(city, iChannel, &kTerms);
@@ -5897,7 +5889,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	// ---- THE REFUSED HALF -- the deposits that COULD have applied and did not ----
 	// ⛔ This is the section the tooltip exists for. Every other line reports a number that IS there; a value that
 	// is wrong because a condition answered NO leaves no trace in any of them, so the shortfall is unattributable
-	// from the totals alone ([DEC-no-guessing]: at a gap the moves are VERIFY or ASK, and a bare total supports
+	// from the totals alone (AGENTS.md Conventions §Conduct (do not guess): at a gap the moves are VERIFY or ASK, and a bare total supports
 	// neither). Listing the source and the ATOM it wanted turns it into a question with an answer.
 	std::vector<InfoValuation::RefusedDeposit> kRefused;
 	InfoValuation::cityRefusedDeposits(city, iChannel, kRefused);
@@ -6301,7 +6293,7 @@ void CvGameTextMgr::buildCityBillboardCityNameString( CvWStringBuffer& szBuffer,
 				// guard above tests the ×100 value, so the branch is entered and the division is by zero. A city
 				// starving at less than 1 food/turn crashed the billboard outright (integer divide-by-zero).
 				// ⚠ The food BAR is a whole-unit ledger (the warehouse edge) and foodDifference is ×100, so the
-				// lift is on the stored side ([DEC-fixedpoint-x100]: the discrete operand rises to meet the rate).
+				// lift is on the stored side (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the discrete operand rises to meet the rate).
 				const int iDeficit100 = -pCity->foodDifference();   // > 0 in this branch, so never a zero divisor
 				const int iStored100 = 100 * pCity->getFood();
 				if (iStored100 >= iDeficit100)
@@ -7402,7 +7394,7 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 //	tell that one is needed, and those copies DRIFT).
 //	⚠ Every `iExtraData`-indexed lookup is BOUNDS-CHECKED: it is a caller-supplied id, and an out-of-range one
 //	would reach the info plane, which answers an unanswerable read by failing loud
-//	([DEC-info-plane-read-only]) -- a tooltip is not the place to take a load defect down.
+//	(docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD) -- a tooltip is not the place to take a load defect down.
 void CvGameTextMgr::appendEspionageMissionEffect(CvWStringBuffer& szBuffer, EspionageMissionTypes eMission,
 	PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData) const
 {
@@ -8598,7 +8590,7 @@ void CvGameTextMgr::getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	// ([json.md] par.6), so the legacy building / wonder / resource / civic / trait buckets were never five
 	// quantities -- they were five hand-summed legs of one, and there is no `max(building, natural)` here either.
 	// What a census owes instead is the TOTAL, then WHICH SOURCE each contribution came from.
-	// ⚠ A defense value is a PERCENT and percents are NOT scaled ([DEC-fixedpoint-x100]), so these render plain
+	// ⚠ A defense value is a PERCENT and percents are NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so these render plain
 	// -- a ÷100 here would zero the whole stack.
 	int aiDefenses[NUM_DEFENSE_KINDS];
 	city.getDefenseKinds(aiDefenses);

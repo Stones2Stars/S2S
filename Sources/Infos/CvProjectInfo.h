@@ -6,8 +6,8 @@
 //	CvProjectInfo -- the PROJECT poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP: the four
 //	read categories, nothing else). Team-built endeavours: spaceship parts, Manhattan/SDI class, the Internet.
 //	Styled for the JSON anatomy (json.md §2); every magnitude read is a load-compiled fetch
-//	([DEC-materialize-at-mapfrom]); kind and scope are separate parameters ([DEC-scope-is-an-axis]); no legacy
-//	getter name returns ([DEC-new-getter-surface]).
+//	(docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate parameters (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); no legacy
+//	getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 //	Availability rides the base: the tech prereq (tech.enables.projects) + the prerequisite projects (their
 //	enables.projects) are store-inverted and reconstructed at LOAD by the readJson reverse pass (the setters

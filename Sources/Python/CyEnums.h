@@ -9,7 +9,7 @@
 //	CyEnums -- the Python ENUM VOCABULARY (the engine enums a script indexes results with), plus name->id
 //	resolution. Sibling of CyEnabler ("can I?") and CyState ("what do I HAVE?").
 //
-//	⛔ NOT the banned binding surface ([DEC-cy-not-fixed] bans the .def GETTER contract). This publishes
+//	⛔ NOT the banned binding surface (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) bans the .def GETTER contract). This publishes
 //	CONSTANTS -- no reads, no getters. It is a PREREQUISITE of the new surface rather than a survival of the old
 //	one: patterns.md § THE TWO READ ROLES specifies that the existing ENGINE ENUM indexes the RESULT of a group
 //	read, so `CyState::getYields()[YieldTypes.YIELD_FOOD]` is unconsumable until these types exist.

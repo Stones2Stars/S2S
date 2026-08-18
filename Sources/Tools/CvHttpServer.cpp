@@ -7,7 +7,7 @@
 #include "Property/CvPropertyChannel.h"     // the §430 property channel's per-city sourced numbers
 #include <psapi.h>                           // /computed/perf memory gauge: GetProcessMemoryInfo (the CvPlotPaging mechanism)
 #include "AI/BetterBTSAI.h"                  // /computed/perf frameAccumMs: the whole-turn frame-span ms accumulators
-#include "Data/CvReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
+#include "Data/CvReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (docs/cascade.md §1 (reverse lookups are populated once, at load))
 #include "Tally/CvTally.h"          // /computed/tally TAG_ routing -> countUnitsWithTag (the per-tag unit count)
 #include "CvClassificationBlock.h"        // /state/info classification exposure: the loaded tags/skills held-key sets
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace

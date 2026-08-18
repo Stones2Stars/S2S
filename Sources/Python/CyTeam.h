@@ -83,7 +83,6 @@ public:
 	int getForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSource) const;
 	bool isForceTeamVoteEligible(int /*VoteSourceTypes*/ eVoteSource) const;
 	void changeForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSource, int iChange);
-	bool isExtraWaterSeeFrom() const;
 	bool isMapTrading() const;
 	bool isTechTrading() const;
 	bool isGoldTrading() const;

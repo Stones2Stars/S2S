@@ -1,6 +1,6 @@
 //
 //	CvHeritageInfo -- the heritage poco's own typed reading on top of the base section dispatch (see the
-//	header). mapFrom materializes the identity set + the property bridge ONCE ([DEC-materialize-at-mapfrom]);
+//	header). mapFrom materializes the identity set + the property bridge ONCE (docs/architecture/patterns.md §Materialize at mapFrom);
 //	the ERA-banded empire commerce lives on the compiled conditioned entries (base surface), never as a
 //	mirrored band table. The acquisition prereqs materialize in the general reverse pass's post-map derivation
 //	step from THIS info's own load-populated reverse view (EDGEF_RELATED), the exact enables-predicate confirmed
@@ -25,7 +25,7 @@ CvHeritageInfo::CvHeritageInfo()
 // whose FORWARD enables.heritages edge lists this heritage -- the consumer-kept exact predicate over the
 // RELATED superset. Bounded by the related lists; no repo-wide scan. Run ONCE from inside the general reverse
 // pass (rp_deriveHeritagePrereqs), after it has landed the EDGEF_RELATED families, so both getters are bare
-// member reads and the info carries no memo ([DEC-materialize-at-mapfrom]).
+// member reads and the info carries no memo (docs/architecture/patterns.md §Materialize at mapFrom).
 void CvHeritageInfo::deriveAtRegistryComplete()
 {
 	// Idempotent like the sibling sub-passes: fully redefine the output every run.

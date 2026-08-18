@@ -18,14 +18,14 @@
 //	⚑ WHAT THESE PUBLISH IS ALREADY CARRIED. Every read below is a bare fetch of the unit's own authored member:
 //	the combat classes are the root `combatClass`/`combatClasses` FKs, the builds are its authored repertoire,
 //	the granted promotions are its `grants.promotions`. The boundary was missing a read, never the data -- so
-//	nothing here derives, and nothing here is a legacy per-FIELD getter revived ([DEC-new-getter-surface] bans
+//	nothing here derives, and nothing here is a legacy per-FIELD getter revived (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy) bans
 //	mirroring the old `CvXInfo` contract; a named accessor per info TYPE is a different axis).
 //
 //	⛔ THERE IS DELIBERATELY NO "PROMOTIONS THIS UNIT QUALIFIES FOR" READ. The legacy page swept the whole
-//	promotion registry asking each id whether it applied -- the own-data inversion [DEC-one-reverse-view] bans --
+//	promotion registry asking each id whether it applied -- the own-data inversion docs/cascade.md §1 (reverse lookups are populated once, at load) bans --
 //	and the rebuilt info carries no qualified-promotion member to answer it from. A promotion's own
 //	`PYLIST_QUALIFIED_UNITCOMBATS` is the authored direction; the inverse is not served, so it is left UNSERVED
-//	rather than approximated ([DEC-no-legacy-masking]: a gap shows, it is never papered over).
+//	rather than approximated (docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap: a gap shows, it is never papered over).
 //
 //	The id is the UNIT, passed per call: an accessor holds no bound entity, so it is a plain read surface rather
 //	than a handle with a lifetime.

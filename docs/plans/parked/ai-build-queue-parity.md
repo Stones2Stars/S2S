@@ -49,7 +49,7 @@ entirely rather than merely becoming rarer.
 when previous item is finished; we only reevaluate buildings when that stack is empty."* Earlier phrasing of
 the same model: *"build processing then uses the CACHE, until all buildings it can has been produced — and
 then the cache gets recalced in expectation of the next cycle."* It is
-[state-repositories.md](../../architecture/state-repositories.md) § THE AI PLANE IS NOT EXEMPT's sanctioned
+[state-repositories.md](../../cascade.md) § THE AI PLANE IS NOT EXEMPT's sanctioned
 residual made concrete for this one consumer — the AI keeping its OWN scores — and it is the successor to the
 queue-DEPTH lever above, which bought cheap scoring by suppressing the decision instead of retaining the
 score.
@@ -75,7 +75,7 @@ named and wanted; its POSITION is the ruling.
 ⚠ **So the clock is not a short-lived interim — it is the shape for the duration of #430**, and the ~3× below
 is a STANDING cost rather than a temporary one. ⇒ Inside #430 the double queue buys FAIRNESS and unit
 responsiveness and pays scoring for them; the optimization arrives only in the later lane.
-⚠ **This is owner-ruled SEQUENCING with a named end state, so [DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred)
+⚠ **This is owner-ruled SEQUENCING with a named end state, so ["deferred" is banned](../../../AGENTS.md#design)
 does not reach it** — the same standing as the golden-age / anarchy status carve-out
 ([state.md](../../specs/state.md)). ⛔ It is equally NOT licence to start the AI-plane spine work opportunistically
 while in here.
@@ -102,10 +102,10 @@ AI heuristic ([superseded-ideas #1](../../architecture/superseded-ideas.md)), no
 **The store shape, pinned by rulings that already exist:**
 - ⛔ **A sibling of `ContextDict`, never `ContextDict` itself.** A score is REPLACED wholesale when its inputs
   move, so it wants assignment; the dictionary is a refcount and deliberately has no `set`
-  ([state-repositories.md](../../architecture/state-repositories.md) § THE AI PLANE IS NOT EXEMPT).
+  ([state-repositories.md](../../cascade.md) § THE AI PLANE IS NOT EXEMPT).
 - ⛔ **Never serialized, and CLEARED in `CvCity::reset()`** — a `CvCity` is recycled out of an
   `FFreeListTrashArray`, so an uncleared slot inherits the previous city's shortlist
-  ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted); the enabler's
+  ([derived data is never trusted from a save](../../specs/save.md#5-derived-data-serializes-nothing-); the enabler's
   domains carry the same requirement for the same reason, [enabler.md §8](../../specs/enabler.md)).
 - ⚑ **A LAZY rebuild retires the save question the earlier phrasing raised.** *"This is only possible with a
   serialized cache (which we don't want) or a full cache build on load (acceptable)"* — a stack that refills
@@ -125,15 +125,15 @@ remains in this path is a small fraction of what that took. ⛔ So do NOT re-ope
 perf item, and do not weigh the per-turn clock's increase against a target: the trade was made knowingly.
 ⚑ **And it needs no argument in advance, because it self-reports** — the `[PERF/choose]` census already
 carries chooses and ms per turn, so the increase (or its absence) is one line in the log the turn after this
-lands ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king): the revisit trigger is
+lands ([turn time is king](../../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture): the revisit trigger is
 a MEASUREMENT, never an argument).
 ⛔ **No figure is recorded here deliberately** — a banked percentage becomes a target
-([DEC-baseline-is-a-smell-test](../../architecture/decisions.md#dec-baseline-is-a-smell-test)).
+([a reference number is a smell test](../../specs/validation.md#-a-reference-number-is-a-smell-test-never-a-target-owner)).
 
 ⛔ Its position in the sequence is unchanged either way —
-[DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf) puts "let
+[legacy decache poisons perf measurement](../../cascade.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang-owner) puts "let
 the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed, and a cache added over one of
-those hides it ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal) one plane over).
+those hides it ([self-heal is not a backstop](../../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) one plane over).
 
 **The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
 getting a new building mid-processing, because humans do not get to do that either — they have already gotten

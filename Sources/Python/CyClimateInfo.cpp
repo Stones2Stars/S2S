@@ -6,7 +6,7 @@
 namespace
 {
 	//	The ONE bounds gate for this registry -- the id arrives from a script, so it is checked rather than
-	//	trusted ([DEC-info-plane-read-only]: a read never creates, and FASSERT_BOUNDS is compiled out of Release).
+	//	trusted (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD: a read never creates, and FASSERT_BOUNDS is compiled out of Release).
 	const CvClimateInfo* cyc_climate(int iClimate)
 	{
 		if (iClimate < 0 || iClimate >= GC.getNumClimateInfos())

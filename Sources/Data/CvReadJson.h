@@ -3,7 +3,7 @@
 #define CV_READJSON_H
 
 //
-//	readJson -- the ONE JSON reader ([DEC-one-json-reader]; patterns.md § The ONE reader). The single load-time
+//	readJson -- the ONE JSON reader (docs/architecture/patterns.md §The ONE reader; patterns.md § The ONE reader). The single load-time
 //	pipeline that feeds every JSON-fed info: it enumerates Assets/Data ONCE, parses each file ONCE into a
 //	retained in-memory store, serves each category's entities to the per-category registration
 //	(CvXMLLoadUtility::LoadGlobalClassInfoJson -- id assignment in `_order.json` manifest order at that

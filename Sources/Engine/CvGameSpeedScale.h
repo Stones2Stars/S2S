@@ -9,10 +9,10 @@
 //	CvGameSpeedInfo serves the authored percents as ×100 straggler scalars and NOTHING else: an info never
 //	reads game state, so the option-gated hammer-cost derivation cannot live there (json.md §9 -- a game
 //	option gates AT THE CONSUMING SYSTEM). This class IS that consuming system, held in one place rather
-//	than re-derived per call site ([DEC-single-implementation]).
+//	than re-derived per call site (docs/architecture/patterns.md §DRY (single implementation)).
 //
 //	⚠ EVERY method here returns a percent (100 = normal speed), which is what the info already serves: a
-//	PERCENT IS NOT SCALED ([DEC-fixedpoint-x100] -- the ×100 exists so an AMOUNT can carry two decimals, and a
+//	PERCENT IS NOT SCALED (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- the ×100 exists so an AMOUNT can carry two decimals, and a
 //	percentage has none). So nothing is converted here or at any call site.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state

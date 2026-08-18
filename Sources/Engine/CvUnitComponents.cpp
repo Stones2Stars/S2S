@@ -175,7 +175,7 @@ UnitCompWorker::UnitCompWorker(CvUnitInfo* unitInfo)
 {
 	//	The unit-side seed of the terrain work modifiers. Only HILLS has a kind, and that follows the data: a
 	//	`workRate.peaks` is authored by NOTHING in the tree -- no unit, promotion or combat class -- so the peaks
-	//	plane starts at zero and nothing moves it. A percent is not scaled ([DEC-fixedpoint-x100]).
+	//	plane starts at zero and nothing moves it. A percent is not scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	m_iHillsWorkModifier = unitInfo->getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
 	m_iPeaksWorkModifier = 0;
 	reset(false);

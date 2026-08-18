@@ -12,8 +12,21 @@
 >
 > **You are not the exception. Assume you are about to add to that number unless you deliberately do the opposite:**
 >
-> - **⚑ SESSION-START PROTOCOL — before your FIRST action (and again after any context compaction): enumerate every file in `docs/specs/`, `docs/architecture/`, and `docs/reference/` and read each one IN FULL, PLUS the #430 master roadmap [`docs/plans/structural-cleanup/roadmap.md`](docs/plans/structural-cleanup/roadmap.md) (the plan for the active work).** Not the subset you judge relevant — ALL of them. They are ONE interconnected design (`CvDerivedCache` + the event spine + the cascades + `readJson` + `state-repositories`), and the reference docs are how the engine actually behaves today; the connection you skip is the one that bites. **Your judgment of what is "necessary" is NOT trusted — it is systematically biased toward reading too little.** ([DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all)) **⛔ ALL docs live in the repo — a plan or design note kept only in a local/private notes folder (`.claude/plans/`, assistant memory) is a core-rule VIOLATION to fix by moving it into `docs/`, not a doc you may skip.**
-> - **READ the docs for whatever you touch, IN FULL, BEFORE you act** — not the code, not your memory, not a stale plan doc: the authoritative specs. ([DEC-fast-is-slow](docs/architecture/decisions.md#dec-fast-is-slow-slow-is-fast) · [DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing) · [DEC-kraken](docs/architecture/decisions.md#dec-kraken))
+> - **⚑ READ THE CONCEPT DOC FOR WHAT YOU TOUCH — IN FULL, BEFORE YOU ACT.** `docs/` is ONE FILE PER CONCEPT
+>   (cascade · enabler · json · spine · triggers · save · vision · tally · …); [`docs/README.md`](docs/README.md)
+>   is the index. Read the one that owns your subsystem end to end — not a grep of it, not the section you think
+>   is relevant. **Your judgment of what is "necessary" is systematically biased toward reading too little.**
+>   ⛔ **THE TREE OUTRANKS THE DOC.** The engine has been rebuilt and the docs lag it, so a doc line is a
+>   HYPOTHESIS you confirm against `Sources/` — never the other way round. Where the two disagree the code wins,
+>   and **fixing the doc is part of the same work item** (Conventions § Docs, below).
+>   ⚑ **The blanket read-everything protocol is RETIRED, deliberately** (owner). It was made for the engine
+>   switch, when the docs were the only account of a system in flux. It now does the opposite: it front-loads a
+>   corpus that lags the tree, and — being far too large to actually re-read — it manufactures the confidence
+>   that makes a stale line dangerous. One concept, one file, read properly, verified against the code.
+>   **⛔ ALL docs live in the repo — a plan or design note kept only in a local/private notes folder
+>   (`.claude/plans/`, assistant memory) is a core-rule VIOLATION to fix by moving it into `docs/`, not a doc you
+>   may skip.**
+> - **READ the docs for whatever you touch, IN FULL, BEFORE you act** — not the code, not your memory, not a stale plan doc: the authoritative specs. (Conventions § Conduct, below: fast is slow/slow is fast, do not guess, the kraken rule)
 > - **IMPLEMENT the spec as written. Poke holes in the spec *afterward*, with evidence** — never by inventing your own approach up front.
 > - The instant you catch yourself *designing* something, stop and ask whether the spec already defines it. It almost certainly does. Go read it, then implement *that*.
 > - Verify every claim — including a plan doc's status line — against the live code before you act on it. Half of the waste was agents acting on something they "knew" that a 30-second check would have disproved.
@@ -53,22 +66,23 @@ architecture rules that apply to DLL source.
 > toolchain is locked to stay ABI/STL-compatible with the closed VC7.1 game `.exe`), **not** a style convention.
 > In-process threading means raw Win32 only. Do not modernize or replace the build chain/toolchain.
 >
-> **⛔ HARD RULE — THE RED-RATCHET: NEVER "fix" a build by restoring old Infos ([DEC-red-ratchet](docs/architecture/decisions.md#dec-red-ratchet)).**
+> **⛔ HARD RULE — THE RED-RATCHET: NEVER "fix" a build by restoring old Infos.**
 > The 23 XML engine info classes (`CvBuildingInfo`, `CvUnitInfo`,
-> `CvTechInfo`, … — 46 files) were moved to `SourceArchive/Infos/` ON PURPOSE: parity is past, the JSON-fed
-> `CvJson<X>Info` pocos are their replacements, and the missing classes are a RATCHET — during the cutover,
-> consecutive agents "finished" by quietly wiring old Infos back in wherever the JsonInfos didn't pan out, so the
-> fallback was removed. **Never restore anything from `SourceArchive/`, never re-add a `CvXInfo` class, never treat
-> a red build as a defect to fix by reviving one.** The ONLY road to green: build the JsonInfo structure, wire it up,
-> and wire up/replace ALL the getters (the engine/AI/UI consumer surface onto the JSON-fed infos). The ratchet is
-> permanent and holds **whatever state the build is in**: a red build is fixed by finishing JsonInfo wiring, never
-> by reviving a `CvXInfo`.
+> `CvTechInfo`, … — 46 files) were moved to `SourceArchive/Infos/` ON PURPOSE: parity is past, the JSON-fed pocos
+> in `Sources/Infos/` are their replacements, and the missing classes are a RATCHET — during the cutover,
+> consecutive agents "finished" by quietly wiring old Infos back in wherever the replacement didn't pan out, so the
+> fallback was removed. ⚠ **A replacement KEEPS the archived class's NAME** — `Sources/Infos/CvBuildingInfo.h`
+> declares `CvBuildingInfo`, and there is no `CvJson<X>Info` symbol anywhere — so what is banned is reviving the
+> ARCHIVED XML-READING BODY, never the live name you can see in the tree. **Never restore anything from
+> `SourceArchive/`, and never treat a red build as a defect to fix by reviving one.** The ONLY road to green: build
+> the JSON-fed structure, wire it up, and wire up/replace ALL the getters (the engine/AI/UI consumer surface onto
+> the JSON-fed infos). The ratchet is permanent and holds **whatever state the build is in**.
 > ⛔ **This file states no build STATE, deliberately — a compile-state claim here is guaranteed to drift** (owner),
 > and a stale one is worse than none: it tells every agent the build works when it does not. **No doc records
-> whether the tree compiles today — the roadmap carries no status either. RUN THE BUILD; it is the only
+> whether the tree compiles today. RUN THE BUILD; it is the only
 > authoritative answer, and it now costs ~15s on `Assert`.** Rules belong here; status does not.
 >
-> **⛔ HARD RULE — READING A REPLACED INFO'S XML **INTO THE GAME** IS HARD BANNED ([DEC-no-xml-into-game](docs/architecture/decisions.md#dec-no-xml-into-game)).**
+> **⛔ HARD RULE — READING A REPLACED INFO'S XML **INTO THE GAME** IS HARD BANNED.**
 > The legacy info XMLs (`Assets/XML/**/CIV4<X>Infos.xml`) for every type we have replaced with a `CvJson<X>Info`
 > poco are **CURATOR INPUT ONLY** — the curator reads them to generate the `Assets/Data/**` JSON, which is why they
 > were kept in the repo after being removed once (their removal broke the curator). **The running GAME must NEVER
@@ -95,7 +109,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     defect, not a purge backlog. What binds is the DIRECTION: **we never build TOWARD using the profiler.** So a
     broken/stale FProfiler include or reference is **DELETED as irrelevant code, never repaired** — "the build
     can't find `FProfiler.h`" is never a reason to restore it
-    ([DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate)).
+    ([neither playability nor compiling gates removing legacy](docs/specs/validation.md#playability-not-a-gate)).
   - **Which config for in-game testing:** for ordinary interactive testing — exercising a feature, pulling state
     from the HTTP endpoints, watching `/events` — a normal **`Release`** build suffices and is far faster than
     `FinalRelease` (a clean `FinalRelease` is a ~7-minute full rebuild). **Reserve `FinalRelease` for turn-lag /
@@ -166,8 +180,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     only because a red tree made a build uninformative; that premise is gone, so an `Assert rebuild` (~15s) is a
     real signal and the compiler is once more a census you can actually run. ⛔ It is still not a substitute for
     reading what you changed, and green is still not evidence that a change is CORRECT
-    ([DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate) —
-    [DEC-done-is-observable](docs/architecture/decisions.md#dec-done-is-observable) is the acceptance bar).
+    ([neither playability nor compiling gates removing legacy](docs/specs/validation.md#playability-not-a-gate) —
+    done-is-observable, [validation.md](docs/specs/validation.md), is the acceptance bar).
     ⚠ Keep the cost asymmetry in mind: `Assert` is seconds, `Release`/`FinalRelease` are where the real minutes go.
   - **⛔ MSVC STOPS AT 100 ERRORS PER TRANSLATION UNIT (`fatal error C1003`), so whenever a build is broadly
     failing, a grep for YOUR files in the log PROVES NOTHING.** The unity batches truncate, and which files get to
@@ -244,15 +258,25 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   must not resolve a name string at emit time — while its declaration stayed `SFT_STR`. The tree was red at the
   time, so nothing could run; the first green build crashed on load reading `faultAddr=0x00000005`, the
   object-kind value itself.)* ⛔ If it fires, fix the side that is WRONG — and prefer the raw int, since a payload
-  carries typed fields and never a pre-resolved string ([event-spine.md](docs/specs/event-spine.md)); never widen
+  carries typed fields and never a pre-resolved string ([spine.md](docs/spine.md)); never widen
   the tool.
-- **Worklist docs: `python Tools/verify-worklist-docs.py`** — fails `todo.md` / `roadmap.md` when they carry
-  STATE (counts, censuses, `file:line`, recorded verifications, completion markers). ⚑ It exists because
-  [DEC-spec-plus-todo](docs/architecture/decisions.md#dec-spec-plus-todo) was in place and ignored anyway: the
-  todo grew to 785 lines of state and began handing out work that no longer existed, its entries anchored on
-  symbols long deleted. **A rule has to be remembered; a check does not** — the same move that made the
-  duplicated skill reads unsayable rather than forbidden. ⛔ Run it after editing either doc, and if it fires,
-  DELETE the state or move the durable ruling into its owning spec — never widen the tool to accept it.
+- **Doc references: `python Tools/verify-docs.py`** — two silent decay modes the corpus cannot see in a diff.
+  **LINKS + ANCHORS (fails the run):** every intra-repo link and `#anchor`, by GitHub's own slug algorithm. The
+  cross-reference IS the design — the ledger is *"an INDEX, not a re-statement"*, so a doc LINKS a ruling instead
+  of restating it, and that only works while the links resolve. ⛔ Fix the link or the heading; never delete the
+  cross-reference to silence it, which trades a broken pointer for a second copy.
+  **SYMBOL CENSUS (advisory, never fails):** doc-cited symbols that are `MISSING` or, worse, `ARCHIVED-ONLY` —
+  alive only in `SourceArchive/`, i.e. **a doc describing a world that was deleted**, which is exactly the state
+  that reads as current and gets built on. ⚖ Advisory because the verdict needs a human: naming a dead symbol is
+  CORRECT in a tombstone (`superseded-ideas.md`, `parked/` — both exempt) and a LIE anywhere else. Per entry,
+  either repoint the citation or DELETE the passage — the second is usually right, and it shrinks the corpus.
+- **Whole-registry scans: `python Tools/verify-registry-scans.py [--list]`** — enumerates every
+  `GC.getNum<X>Infos()`-bounded loop in `Sources/AI` + `Sources/Engine`, split into ENABLER-DOMAIN (re-point onto
+  the maintained frontier) and OTHER-REGISTRY (the own-data inversion). ⚑ The compiler can NEVER name one — they
+  are legal code deleting nothing, so this class closes only by being searched for; this is the searcher, so the
+  search is repeatable rather than a snapshot.
+  ⚖ ADVISORY: the registry is mechanical but the CONTEXT is not — init/reset/serialization/UI legitimately walk a
+  registry, so triage per site and treat the counts as a RATCHET that may only fall.
 - **Abandoned `#ifdef` alternates: `python Tools/verify-ifdef-attics.py`** — fails on a guard with NO `#define`
   anywhere (not in `Sources/`, not in `fbuild.bff`, not even commented): nobody can ever switch it on, so the
   block is dead code. ⚑ **That is the ONLY verdict a tool can reach**, because what makes an `#ifdef` wrong is
@@ -451,7 +475,7 @@ hypothesise a cause and try a fix — EMIT the full legacy decomposition (every 
 endpoints, and map the cascade's value by the SAME components, so the divergence is attributed to a NAMED source with
 numbers, not a guess. If the data to attribute it isn't being emitted, the FIRST step is to emit it (extend the
 surface), not to guess. The half-guessing back-and-forth (try a fix, re-sweep, try another) is the anti-pattern this
-rule kills. (The modifier-channel application of [DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing) +
+rule kills. (The modifier-channel application of the no-guessing rule, Conventions § Conduct, +
 the total-observability bar below.)
 
 ### Cascade observability — the total-observability ("Orwell") bar
@@ -460,7 +484,7 @@ the total-observability bar below.)
   `Documents/My Games/Beyond The Sword/Logs/`, and conflating them wastes hours in BOTH directions:
   - **SPINE-written domain logs are READABLE WHILE THE GAME RUNS** — a domain registered via
     `spineRegisterDomain` renders on the game thread and enqueues to the off-thread `CvLogWriter`, which owns the
-    disk I/O and flushes per batch (`Infrastructure/CvLogWriter.{h,cpp}`, [observability.md](docs/reference/observability.md)).
+    disk I/O and flushes per batch (`Infrastructure/CvLogWriter.{h,cpp}`, [spine.md](docs/spine.md)).
     `Cascade.log` (incl. every `[SPINE]`/`[GRANTS]`/`[CASCADE]` line) and the other registered domains are this
     kind: **just read the file.**
   - **⛔ LEGACY `gDLL->logMsg` sinks (the not-yet-migrated domains) ARE held open** by the process, so tailing
@@ -495,7 +519,7 @@ the total-observability bar below.)
   is **non-negotiable and load-bearing**, not polish: it is the ONLY way to reliably verify the state logic on the
   cascade + tally (map-before-delete). The shadow-until-clean discipline governed the migration's cut phase; **the
   shadow phase has ended** (`docs/specs/validation.md`) — the observability bar itself stands. Live surface:
-  `docs/specs/http-endpoints.md` + `docs/reference/observability.md`.
+  `docs/specs/http-endpoints.md` + `docs/spine.md`.
 - **Delegate DATA-READING to the cheap `data-reader` sub-agent — never pull raw endpoint/log dumps into an expensive
   context.** Reading the live surface at scale (a sweep dump is tens of KB; logs are larger) *"will nuke credits"* if
   the orchestrator ingests the raw bytes. Use the read-only **`.claude/agents/data-reader.md`** (Haiku;
@@ -506,11 +530,11 @@ the total-observability bar below.)
 
 ## Conventions
 
-> ⛔ **"Conventions" here means HARD RULES — binding by default, NOT norms to weigh.** Every rule below (and every
-> `DEC-*` it links) is law unless the **owner explicitly relaxes it** — never on an agent's own judgement. Each was
-> paid for in wasted hours. The cross-cutting ones are indexed in the
-> [decisions ledger](docs/architecture/decisions.md); treat any pull toward *"this is just guidance / probably
-> fine / I'll infer it"* as the kraken's bait.
+> ⛔ **"Conventions" here means HARD RULES — binding by default, NOT norms to weigh.** Every rule below is law
+> unless the **owner explicitly relaxes it** — never on an agent's own judgement. Each was paid for in wasted
+> hours. A cross-cutting ruling is stated ONCE, in the doc it belongs to, and every other doc that needs it
+> LINKS there rather than restating it — treat any pull toward *"this is just guidance / probably fine / I'll
+> infer it"* as the kraken's bait.
 
 ### Conduct
 
@@ -545,7 +569,7 @@ the total-observability bar below.)
   an em dash, a mis-transcribed run) — the tool says so, and the fix is to re-read the file and copy the text
   exactly. Reaching for a script instead trades the owner's review surface for a problem that does not exist.
 - **⛔ EVERYTHING HAS ALREADY BEEN FIXED, SPECCED AND SOLVED — IF YOU THINK SOMETHING IS MISSING, YOU ARE MOST
-  PROBABLY WRONG (owner)** ([DEC-it-already-exists](docs/architecture/decisions.md#dec-it-already-exists)). This
+  PROBABLY WRONG (owner).** This
   is the rule of thumb to hold above your own judgement: a gap you perceive is a READING failure first, and a
   genuine hole almost never. ⇒ **The move is to go FIND the thing that already does this** — grep the specs, the
   sibling curator, the calc surface, the call site itself — never to build a parallel mechanism beside it.
@@ -558,13 +582,12 @@ the total-observability bar below.)
   onto a conditioned deposit; and a proposed eval-ctx slot plus a new valuation read when the candidate's tag test
   (`GC.getUnitInfo(eUnit).hasTag(...)`) was already on the very line being edited. Every one compiled, and every
   one was a second way of doing something the tree already did.
-  ⛔ It is the constructive half of [DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing): that rule
+  ⛔ It is the constructive half of the no-guessing rule below: that rule
   says never fill a gap with inference; this one says **the gap is probably not there**.
 - **Trust but verify — EVERY claim, including the owner's.** A doc line, an owner aside, your own recollection, a
   memory entry — all are hypotheses to CONFIRM against ground truth (the live code, the actual data, the running
   game) before you build on them. Say what you verified against.
-- **⛔ DO NOT GUESS, DO NOT INFER, DO NOT ASSUME — an assumption IS a shortcut**
-  ([DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing)). Never fill a gap with inference; do not
+- **⛔ DO NOT GUESS, DO NOT INFER, DO NOT ASSUME — an assumption IS a shortcut.** Never fill a gap with inference; do not
   assume an earlier verification still holds; and never infer an ANSWER or PERMISSION the owner has not given —
   "keep going" authorizes work, never a vote on an open decision. **A question you have posed to the owner is a HARD
   STOP: do not act past it until they answer.** At a gap the only moves are VERIFY or ASK. Every minion you spawn
@@ -573,8 +596,8 @@ the total-observability bar below.)
   BELIEVED CONFORMING at the time.**
   1. **A change that leaves every consumer untouched is the TELL, not the win.** "No blast radius" means the
      ENGINE bent to fit the old shape instead of the consumers being rewired — the half-migration reflex
-     ([DEC-fixedpoint-x100](docs/architecture/decisions.md#dec-fixedpoint-x100),
-     [DEC-cy-not-fixed](docs/architecture/decisions.md#dec-cy-not-fixed)). Blast radius is the SIGNAL that the cut
+     ([the ×100 fixed-point model](docs/specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries),
+     [the Cy* surface is not a fixed contract](docs/architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner)). Blast radius is the SIGNAL that the cut
      reached. *(Caught: a cascade accessor reducing ÷100 internally so nine readers — incl. a `Cy*` binding —
      would not have to change.)*
   2. **A surviving FUDGE FACTOR means two operands are on different scales**, i.e. the conversion landed in the
@@ -587,7 +610,7 @@ the total-observability bar below.)
      the value. ⛔ **Therefore the question is never "where does the conversion belong?" but "WHICH SIDE OF THIS IS
      STILL LEGACY?"** — re-point that side and the constant deletes itself. Adding the multiplier instead is how
      the AI half gets left rotting while the surface underneath it moves
-     ([DEC-new-getter-surface](docs/architecture/decisions.md#dec-new-getter-surface): reusing a legacy getter IS
+     ([build a new getter surface, never widen a legacy one](docs/architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner): reusing a legacy getter IS
      the mechanism that produces the half-migrated state).
      *(Worked: a `CvCityAI` yield valuation carried BOTH a `100 *` on one operand and a `/100` on the total, to
      hold a legacy per-building sum beside a cascade value. Re-pointing that one call site onto the what-if driver
@@ -602,26 +625,24 @@ the total-observability bar below.)
 - **⛔ A DOC THAT DESCRIBES A HALF-STATE READS LIKE A DESIGN — treat "pilot", "X follows per channel", "promoted
   when needed" as GAPS, not as sanctioned shapes.** An agent conforming to such a line does the wrong thing while
   believing it is conforming, which is how drift survives review. If a spec sentence licenses stopping partway,
-  it is the sentence that is wrong: fix it in the same change ([DEC-docs-current-truth](docs/architecture/decisions.md#dec-docs-current-truth)).
-- **"ALL" means EXHAUSTIVE — locust mode, never judgment-filtered**
-  ([DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all)). Enumerate EVERY item mechanically,
+  it is the sentence that is wrong: fix it in the same change (Conventions § Docs, below).
+- **"ALL" means EXHAUSTIVE — locust mode, never judgment-filtered.** Enumerate EVERY item mechanically,
   recursing every aggregate to its leaf sources; a single agent's "do I need this?" is systematically biased toward
   dropping items. Go exhaustive **immediately** (partial passes are slower), and prove completeness
   **adversarially** (a second pass that ASSUMES incompleteness), never by self-assertion. Scoping is never a reason
   to skip a source — promote a private getter to public; there is zero sensitive data in a game mod.
-- **⛔ THE KRAKEN RULE** ([DEC-kraken](docs/architecture/decisions.md#dec-kraken)) — the overall ruling the rigor
+- **⛔ THE KRAKEN RULE** — the overall ruling the rigor
   rules serve: this codebase is *"legendary in its lack of standard, coherence, or any reasonable consideration to
   common sense."* In a coherent codebase a small assumption is usually harmless; here it is the move that gets your
   ship eaten. **Maximal rigor is the STANDING default** until the owner explicitly declares otherwise.
-- **⛔ "FAST IS SLOW, SLOW IS FAST"** ([DEC-fast-is-slow](docs/architecture/decisions.md#dec-fast-is-slow-slow-is-fast)) — read
+- **⛔ "FAST IS SLOW, SLOW IS FAST"** — read
   each subsystem doc IN FULL before acting. Skimming, or grepping a keyword instead of reading end-to-end,
   routinely costs far more downstream than the minutes it "saves."
 - **Nothing here is ever "just a one-liner" — expect hidden consequences.** Non-obvious cross-cutting wiring is the
   norm (combat math shared across UI/AI/resolution, name-tagged save serialization, dual Python-enum registration,
   unity-build include exposure, graphics paths that run pre-init, the dead `.vcxproj`). Before any change, read the
   relevant docs, trace every caller/consumer of what you touch, and assume a small edit has ripples until checked.
-- **Surface sprawl early; don't make the owner restate**
-  ([DEC-WF-surface-sprawl](docs/architecture/decisions.md#dec-wf-surface-sprawl)). When a change balloons or you are
+- **Surface sprawl early; don't make the owner restate.** When a change balloons or you are
   patching pieces of something whose target STRUCTURE is undefined, STOP and tell the owner — never overcompensate
   with more partial fixes. Capture a ruling durably the first time it is given; do the proper cleanup once instead
   of churning. The owner makes the structure call; your job is to surface the risk and options efficiently and not
@@ -629,8 +650,7 @@ the total-observability bar below.)
 
 ### Design
 
-- **⛔ ANYTHING NOT ENFORCED BY HARD TYPING GETS ROLLERSKATED (owner, learned the hard way)**
-  ([DEC-hard-typing-or-rollerskate](docs/architecture/decisions.md#dec-hard-typing-or-rollerskate)). A rule written
+- **⛔ ANYTHING NOT ENFORCED BY HARD TYPING GETS ROLLERSKATED (owner, learned the hard way).** A rule written
   in a doc or a comment binds only an agent who reads it, believes it, and still remembers it at the moment of
   writing the code — which is exactly the population this file already says is systematically unreliable. **So a
   design invariant that matters is expressed as a TYPE that makes the wrong move fail to COMPILE**, never as a
@@ -642,17 +662,15 @@ the total-observability bar below.)
   ⚑ **The worked case, and it is why this is a rule rather than a preference:** *"specialists do NOT live in the
   building package"* was true, documented, and re-corrected **more times than the owner cares to count** — until
   the two yield origins became separate PACKAGE TYPES
-  ([state-repositories.md](docs/architecture/state-repositories.md) § THE ORIGIN RULE), after which the wrong
+  ([cascade.md](docs/cascade.md) § THE ORIGIN RULE), after which the wrong
   deposit simply does not build. ⚠ The corollary for review: when you catch yourself writing a comment that
   tells the next agent not to do something, ask whether the type could refuse it instead — a comment is the
   weakest rung on the ladder and the one that has already failed.
-- **Build the proper structure ONCE — no transitional tech debt**
-  ([DEC-proper-once](docs/architecture/decisions.md#dec-proper-once)). Reject transitional shims that exist only to
+- **Build the proper structure ONCE — no transitional tech debt.** Reject transitional shims that exist only to
   defer the real design; when the right design needs prerequisite work, do the prerequisite and build the real
   thing. **Corollary — ISOLATE COMPONENTS:** prefer clean, interface-bounded components with isolated surfaces so
   each can be built and reasoned about once, properly.
-- **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH (owner)**
-  ([DEC-no-rollerskate-evidence](docs/architecture/decisions.md#dec-no-rollerskate-evidence)). Dead and
+- **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH (owner).** Dead and
   commented-out code, superseded dual surfaces, transitional shims and `was X` / `(formerly …)` trails are all
   REMOVED, in code as well as docs.
   **⚖ FOR AN `#ifdef` THE QUESTION IS WHAT IS BEHIND IT, NEVER THE GUARD (owner): *"some ifdefs are useful, but
@@ -662,10 +680,10 @@ the total-observability bar below.)
   - **A DELIBERATE OFF-SWITCH stays, and its REASON is the thing that protects it.** `THE_GREAT_WALL` is off
     because rendering the great wall *"has literally broken the game in the past"* — a CTD source in the older
     days. ⚠ Record that reason in the subsystem's reference doc: a sweep that eats an unexplained switch
-    re-introduces a crash nobody remembers ([DEC-keep-unkilled-ideas](docs/architecture/decisions.md#dec-keep-unkilled-ideas)).
+    re-introduces a crash nobody remembers ([the keep-unkilled-ideas policy](docs/plans/parked/README.md)).
   - **CACHING or a GAME MECHANIC behind a guard is WRONG** — a cache is either the design or it is not, and a
     mechanic belongs in a `GAMEOPTION_*`, evaluated live and visible to the player
-    ([DEC-entity-gate](docs/architecture/decisions.md#dec-entity-gate)). ⛔ The fix is to CONVERT it, never to
+    ([the whole-entity applicability gate](docs/specs/json.md#2-anatomy-of-an-entity)). ⛔ The fix is to CONVERT it, never to
     delete the mechanic.
   - **No `#define` ANYWHERE, not even commented ⇒ nobody can ever switch it on** ⇒ an abandoned alternate, and
     that is dead code: delete it, git is the archive. This is the ONE verdict a tool can reach, and
@@ -682,33 +700,32 @@ the total-observability bar below.)
   layers, composition over the inherited Civ4 god-classes. The full compass is
   [north-star.md](docs/architecture/north-star.md); the concrete C++03 shape (pure-virtual interfaces, MI as
   `implements`, poor-man's DI at a composition root, graft onto DLL-derived classes never EXE-bound bases) is
-  [patterns.md](docs/architecture/patterns.md) / [DEC-interface-contracts](docs/architecture/decisions.md#dec-interface-contracts).
-- **⛔ "Deferred" is BANNED — a deferred / parked / blocked / not-yet-landed / post-cutover / "later" / "acceptable for now" / TODO / pending item is a FAILURE to fix, not a backlog entry**
-  ([DEC-no-deferred](docs/architecture/decisions.md#dec-no-deferred)). It is the word agents hide behind to skip hard
+  [patterns.md](docs/architecture/patterns.md).
+- **⛔ "Deferred" is BANNED — a deferred / parked / blocked / not-yet-landed / post-cutover / "later" / "acceptable for now" / TODO / pending item is a FAILURE to fix, not a backlog entry.** It is the word agents hide behind to skip hard
   work hoping it won't have impact — and the measured result is a half-built branch whose load-bearing minority is
   quietly missing while it looks nearly done. The general form of
-  [DEC-data-first](docs/architecture/decisions.md#dec-data-first), extended from data to ALL work. The ONLY exceptions
+  [data migration is never deferred](docs/specs/validation.md#the-observation-surface), extended from data to ALL work. The ONLY exceptions
   are owner-ruled PERMANENT design carve-outs, recorded as such (the golden-age yield-effect member-mirror;
   Python-authoritative gameplay staying Python).
 - **"Minimal, local changes" bounds the SIZE of an edit, NOT the SCOPE of the work.** A targeted fix inside a
   tightly-coupled legacy core file stays minimal — don't sprawl it or gratuitously refactor around it. But this is
   no brake on deliberate structural rework (the cascade, the docs rebuild, dissolving the `Cv*AI` god-classes),
-  which is large by design and answers to [DEC-proper-once](docs/architecture/decisions.md#dec-proper-once).
+  which is large by design and answers to build-the-proper-structure-once, above.
 - **⛔ AGENTS ARE BANNED FROM BUILDING ON THE EXISTING PYTHON BINDINGS (owner ruling).** Do NOT treat a `Cy*`
   binding as a destination, a contract to satisfy, or a place to park a conversion — *"every time you try, you start
   shoehorning."* Reaching for an existing binding is what makes the ENGINE bend to fit Python instead of the boundary
-  being redesigned around the cascade/JSON model ([DEC-cy-not-fixed](docs/architecture/decisions.md#dec-cy-not-fixed):
+  being redesigned around the cascade/JSON model ([the Cy* surface is not a fixed contract](docs/architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner):
   that `.def` surface is explicitly NOT a fixed contract). The tell is a change that leaves every Python consumer
   untouched — that is the half-migration, not a clean cut.
   **What to do INSTEAD (owner): build a NEW Python surface and COMPLETELY DISCONNECT the old one.** Not a widened
   binding, not a compatibility shim beside it, not a parallel that both remain live — the replacement is a clean
   surface shaped by the cascade/JSON model, and the legacy `Cy*` surface is cut away rather than left breathing
-  ([DEC-no-legacy-masking](docs/architecture/decisions.md#dec-no-legacy-masking): a legacy path left alive masks the
-  hole; [DEC-proper-once](docs/architecture/decisions.md#dec-proper-once): no transitional shim). Python-authoritative
+  ([legacy must fail loud, never mask a cascade gap](docs/specs/validation.md#legacy-must-fail-loud-never-mask-a-cascade-gap): a legacy path left alive masks the
+  hole; build-the-proper-structure-once, above: no transitional shim). Python-authoritative
   *gameplay* still stays Python — this is about the INFO/state binding surface, not about pulling gameplay into the DLL.
 - **Import Info headers DIRECTLY; do not lean on the `CvInfos.h` umbrella.** New/edited code includes the specific
   header it needs; the umbrella is flagged for retirement. **⛔ Retiring it is a dedicated, hand-careful pass, NOT a
-  session-tail script run** ([DEC-proper-once](docs/architecture/decisions.md#dec-proper-once)) — a scripted attempt
+  session-tail script run** (build-the-proper-structure-once, above) — a scripted attempt
   was reverted after building down to a fragile tail. Three lessons bought by that attempt:
   - **Detect usage by ACCESSOR, not just type name.** Most files touch an Info via `GC.getXInfo()` and never write
     `CvXInfo`, so scanning only for the type name under-adds — the reverted attempt hit 853 undefined-type errors.
@@ -735,12 +752,12 @@ the total-observability bar below.)
   second copy, second copies DRIFT, and a drifted copy does not merely go stale — it **authorizes** the next
   agent to act against the spec while believing they are conforming. That is strictly worse than no comment,
   and it is the same delete-don't-duplicate discipline
-  [DEC-docs-current-truth](docs/architecture/decisions.md#dec-docs-current-truth) applies to docs and
-  [DEC-no-rollerskate-evidence](docs/architecture/decisions.md#dec-no-rollerskate-evidence) applies to dead
+  "docs state current truth only" (below) applies to docs and
+  "leave no evidence of the abandoned path" (above) applies to dead
   names, now applied to CODE.
   ⚑ **The worked class is SCALE.** The model is universal and stated once — integers carry two decimals, ×100
   throughout, reduced only at a read edge
-  ([DEC-fixedpoint-x100](docs/architecture/decisions.md#dec-fixedpoint-x100)) — so a comment ASSERTING a
+  ([the ×100 fixed-point model](docs/specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)) — so a comment ASSERTING a
   value's scale (*"this is ×100"*, *"this is ×1"*, *"the derivable half reduces here"*) says nothing the spec
   does not, and says it wrongly the moment the code moves. ⚠ **Measured: two such comments were false in the
   same file family.** One claimed a reduce that the code did not perform, beside a leg that genuinely reduced —
@@ -750,7 +767,7 @@ the total-observability bar below.)
   the thing the spec cannot know — WHY this site is an edge, or why a value is genuinely exceptional — never a
   restatement of the rule itself.
   ⚖ **THERE ARE WAY TOO MANY COMMENTS AND THEY END UP CONTRADICTING THINGS, SO ONE IS WRITTEN ONLY WHERE THE
-  DESIGN IS HARD SETTLED AND FINALIZED (owner)** ([DEC-comments-only-when-settled](docs/architecture/decisions.md#dec-comments-only-when-settled)).
+  DESIGN IS HARD SETTLED AND FINALIZED (owner).**
   That is the whole bar, and VOLUME is half of what it governs: a comment is by construction a second copy of
   something, so the more of them there are the more are wrong at any given moment — and a wrong one does not
   merely mislead, it AUTHORIZES the next agent to act against the design while believing they conform.
@@ -773,7 +790,7 @@ the total-observability bar below.)
   approach, instead of the many many word salads we see at the moment."*** A `<summary>` is a slot with a
   shape — it asks what the thing IS, once — so filling it requires deciding what the declaration actually
   does, where free prose asks nothing, accepts any length, and gets filled with whatever was in the writer's
-  head. ⇒ It is [DEC-hard-typing-or-rollerskate](docs/architecture/decisions.md#dec-hard-typing-or-rollerskate)
+  head. ⇒ It is the hard-typing-or-rollerskate rule (Conventions § Design, above)
   applied to prose: a structure in which the sprawling version is awkward, never a rule to remember.
 
 - **KEEP THE SPECS CURRENT as the model changes — proactively, in the SAME change.** A stale spec is worse than
@@ -791,7 +808,7 @@ the total-observability bar below.)
   tables / per-item completion ledgers into a doc: an item that is DONE is simply DELETED from the todo list, and
   anything durable it established (a ruling, a design constraint, a hard-won fact) moves into the SPEC where it
   belongs. **The measure of a todo list is what is LEFT, never a record of what was achieved** — git history is
-  the record of work done ([DEC-docs-current-truth](docs/architecture/decisions.md#dec-docs-current-truth): the
+  the record of work done ("docs state current truth only", above: the
   same delete-don't-annotate rule, applied to progress).
   ⚑ **Why this is load-bearing rather than tidiness:** a doc's RULINGS stay true while its STATUS claims decay, so
   a status-heavy doc reads as authoritative long after its status half is fiction — and an agent cannot tell the
@@ -820,14 +837,13 @@ the total-observability bar below.)
   are curator OUTPUT, never hand-edited; right-or-wrong lives in the CURATOR. Regeneration is idempotent and cheap:
   fix curator → `--sample` verify → `--write` → commit the regenerated data alongside the curator, so the two never
   dangle apart. This does NOT loosen commit-on-explicit-ask for gameplay CODE.
-- **ALWAYS RECURATE WHEN A DECISION LANDS** ([DEC-recurate-on-decision](docs/architecture/decisions.md#dec-recurate-on-decision)) —
+- **ALWAYS RECURATE WHEN A DECISION LANDS** —
   any ruling that changes what the data model carries triggers the curator update + regen in the SAME work item.
 - **Docs-only changes go to `main` ONLY when the owner explicitly authorizes it**; default is the working branch. A
   branch-coupled doc (e.g. cascade specs on `json-data-migration`) belongs with that work and commits on the branch.
   The canonical straight-to-`main` docs are the INDEXES (`indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the
   COMPLEXITY catalog) — they pertain to no single branch. Nothing gameplay-affecting ever rides in a docs commit.
-- **Verify the current branch immediately before every commit**
-  ([DEC-WF-branch-safety](docs/architecture/decisions.md#dec-wf-branch-safety)) — run `git branch --show-current` in
+- **Verify the current branch immediately before every commit** — run `git branch --show-current` in
   the same command as the commit. The working copy is shared with the owner, who may check out another branch at any
   moment. If HEAD is not where you expect, stop and repair before pushing.
 - **`release` is a strict follower of `main`: it must NEVER contain a commit `main` does not have.** Never commit,
@@ -881,7 +897,7 @@ change*, so every contributor and every agent sees one shared source of truth:
 
 All documentation lives under **`docs/`** (map: [`docs/README.md`](docs/README.md)): **`docs/specs/`** (the JSON
 data-model + the cascade/system specs, plus the transient `curators/`), **`docs/reference/`** (how the engine +
-subsystems behave today), **`docs/architecture/`** (the decisions ledger, `north-star`, `patterns`,
+subsystems behave today), **`docs/architecture/`** (`north-star`, `patterns`,
 `superseded-ideas`), **`docs/plans/`** (`structural-cleanup/` the cutover bulldozer + `parked/` un-killed intent).
 The hosted DESPAIR/REALISM/COMPLEXITY catalogs live at **`indexes/`** (repo root, served via Pages).
 
@@ -916,8 +932,7 @@ the NEXT session; once that session has read it, it stops being a handover. Ther
 - A handover is **deletable-without-loss** on completion. We keep them as historical context of *work deferred*, but
   no durable doc may depend on that retention.
 
-**⛔ HARD RULE — every owner ruling goes into the repo docs IMMEDIATELY, unprompted**
-([DEC-WF-rulings-to-repo](docs/architecture/decisions.md#dec-wf-rulings-to-repo)).
+**⛔ HARD RULE — every owner ruling goes into the repo docs IMMEDIATELY, unprompted.**
 When the owner makes a ruling in conversation — a design decision, a workflow rule, a
 relaxed or tightened constraint, a "from now on do X" — writing it to assistant memory is
 NOT enough and never the end state. In the SAME work item (same commit/PR, without being
@@ -925,13 +940,15 @@ asked) write it into the right repo home: workflow/convention rulings → this f
 Conventions; subsystem/design rulings → the relevant `docs/` page. Treat "saved to
 memory only" as an unfinished task.
 
-**The discoverability half of that rule: the DECISIONS LEDGER ([`docs/architecture/decisions.md`](docs/architecture/decisions.md)).**
-Cross-cutting rulings kept getting re-stated doc-after-doc; the ledger breaks the loop: it is an **INDEX, not a
-re-statement** — one stable ID per ruling (`DEC-<slug>`), a one-line summary, and a pointer to the authoritative
-home. **Operational rules:** (1) **before adding any cross-cutting ruling anywhere, grep the ledger's ID table
-first**; (2) capture a cross-cutting ruling by adding its line to the ledger and recording the full text in its ONE
-home, **never** by restating it in a second doc; (3) a doc that needs a ledgered ruling **links `[DEC-id]`**, it
-does not re-articulate it.
+**The discoverability half of that rule: a cross-cutting ruling is stated ONCE, in the ONE doc it belongs to, and
+every other doc that needs it LINKS there rather than re-stating it.** Cross-cutting rulings kept getting
+re-stated doc-after-doc — a dedicated ledger of `DEC-<slug>` ids once existed to break that loop, but it was
+itself a second copy of every ruling it indexed (a pure redirect layer, never a unique source), so it was
+dissolved and each ruling now lives directly in its owning doc. **Operational rules:** (1) **before adding any
+cross-cutting ruling anywhere, grep for it first** (the rule's own wording, or the concept it names) to check
+whether it is already stated somewhere; (2) capture a cross-cutting ruling by writing the full text in its ONE
+owning doc, **never** by restating it in a second doc; (3) a doc that needs a ruling stated elsewhere **links to
+that doc's section**, it does not re-articulate it.
 
 ## Project Skills
 

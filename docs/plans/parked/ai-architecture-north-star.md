@@ -156,7 +156,7 @@ pull-up; the constraints (§2); advisory-only safety; no rewrite.
   **`CvPlayer` orchestrator** (they can layer: orchestrator assigns, module executes).
 - Constructible-set retention: **bounded-staleness** (rebuild every N turns + reliable events) vs
   attempting event-exact invalidation (harder — inputs include pop/culture/properties, which move
-  often; see [`state-repositories.md`](../../architecture/state-repositories.md)).
+  often; see [`state-repositories.md`](../../cascade.md)).
 - Per-module backend rung (§4).
 - Module granularity / how many interfaces.
 
@@ -194,7 +194,7 @@ Decide-side (behaviour, interfaces):
 
 | Plan / initiative | Role in the frame | Status |
 |---|---|---|
-| [`state-repositories.md`](../../architecture/state-repositories.md) | the read-side modules + invalidation mechanism | this is the doc that now owns the pattern — the *maintained-sum, event-updated* model, not the `dataRepository()`/versioning skeleton this row originally described (superseded) |
+| [`state-repositories.md`](../../cascade.md) | the read-side modules + invalidation mechanism | this is the doc that now owns the pattern — the *maintained-sum, event-updated* model, not the `dataRepository()`/versioning skeleton this row originally described (superseded) |
 | `turn-time-optimization.md` | the *payoff* of change-driven read-side + a parallel pass | see that doc for current status |
 | `unit-ai-valuation.md` | decide-side correctness (what `IUnitAI` modules must get right) | living report; several bugs found |
 | `sea-ai-rework.md` | decide-side (naval) — early example of carving behaviour out of `CvUnitAI` | PRs merged; one spin root-cause open |
@@ -249,7 +249,7 @@ Nothing is migrated until profiling shows it matters and is recompute-bound (not
 > **⚖ THE DIRECTION (owner): *"without extending AI valuation to some sort of cascade-alike structure,
 > we won't be able to avoid walks — that is the nature of the beast."* And its bound, same breath:
 > *"is that something that can be done? certainly to some degree, but it's not in scope."*** So this is
-> forward intent ([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas)),
+> forward intent ([the keep-unkilled-ideas policy](README.md#parked--out-of-active-scope-plans-kept-for-intent)),
 > recorded so it is not re-derived — ⛔ never a licence to start it inside #430.
 
 **⛔ FIRST, WHAT IS *NOT* THE PROBLEM — SIMPLE AI VALUATION CACHING IS ALLOWED (owner): *"we can cache AI
@@ -257,7 +257,7 @@ valuation, in the simple way it used to be done — that is not banned."*** The 
 `AI_yieldValue` LRU, plot danger, the attitude cache, the strategy-hash turn stamp, the
 `AI_isFinancialTrouble` `(turn, gold)` memo) are the SANCTIONED heuristic residual
 ([superseded-ideas #1](../../architecture/superseded-ideas.md)), not debt.
-⛔ **Do NOT cite [DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape) at them** —
+⛔ **Do NOT cite [every derived cache is one shape](../../cascade.md#-every-derived-store-is-one-shape--a-keyed-accumulator-maintained-by-a-delta-owner) at them** —
 that ruling governs the CASCADE plane, where a slot is a Σ addressed by a compiled deposit address. An AI score
 is not, so "one uniform slot table" has nothing to bite on and the hand-named-scalar argument does not carry
 across. ⚠ This mislabelling was made once, in the session that wrote this note; it is recorded so the next
@@ -275,7 +275,7 @@ O(1) inputs instead of re-derivations. The AI then caches its own scores however
 
 1. **Walks over INPUTS** (`getYields`, `AI_isFinancialTrouble`, `getCommerces`). ⛔ NOT irreducible and not
    the AI's problem: these are reads specified as O(1) that were computing. Fixing them is the CASCADE's job
-   ([state-repositories.md](../../architecture/state-repositories.md)) — three were found and fixed in one
+   ([state-repositories.md](../../cascade.md)) — three were found and fixed in one
    session, all by attaching a debugger to a spinning process.
 2. **The FRONTIER walk** (candidates × cities) — intended and bounded by design
    ([enabler.md §6](../../specs/enabler.md): the AI iterates a small maintained set, never the database).
@@ -283,5 +283,5 @@ O(1) inputs instead of re-derivations. The AI then caches its own scores however
 
 ⇒ **Category 1 is what produced every hang so far, wearing category 3's clothes.** So the highest-value
 work is not this structure — it is the AUDIT of which "reads" still compute
-([DEC-legacy-decache-poisons-perf](../../architecture/decisions.md#dec-legacy-decache-poisons-perf)). The
+([legacy decache poisons perf measurement](../../cascade.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang-owner)). The
 structure is what stops category 1 recurring as fresh ad-hoc memos afterwards.

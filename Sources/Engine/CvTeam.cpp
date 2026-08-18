@@ -38,7 +38,7 @@
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Data/CvInfoValuation.h"       // realizedAtTeam -- the ONE cross-scope roll-up
 
-// The team's ABILITY RELAYS. The union is the PLAYER's ([DEC-scope-contexts]) -- the team stores nothing and
+// The team's ABILITY RELAYS. The union is the PLAYER's (docs/cascade.md §The contexts (plot/city/player own one live-state context)) -- the team stores nothing and
 // mirrors nothing; it asks a member, exactly as CvCity::getNumBonuses relays to the plot group that owns the
 // count (enabler.md RESIDENCY). Tech is team-held, so every alive member's union answers identically.
 const CapabilityContext* CvTeam::memberCapabilities() const
@@ -242,7 +242,7 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	PROFILE_EXTRA_FUNC();
 	int iI, iJ;
 
-	// bind the TEAM-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
+	// bind the TEAM-scope cascade package. It starts EMPTY and is filled ONLY by the facts (docs/cascade.md §THE MAINTAINED SUM).
 	m_cascadePackage.bind(CASC_SCOPE_TEAM, -1, (int)eID);
 
 	//--------------------------------
@@ -973,7 +973,7 @@ void CvTeam::processBuilding(BuildingTypes eBuilding, int iChange, bool bReligio
 {
 	PROFILE_FUNC();
 
-	// `enemy` is the war-weariness KIND ([DEC-scope-is-an-axis]: the building authors it at CITY scope, and this
+	// `enemy` is the war-weariness KIND (docs/architecture/patterns.md §The coherent surface (scope is a separate axis): the building authors it at CITY scope, and this
 	// team-wide total is the Σ over the team's buildings, which is what the legacy accumulator held). The family
 	// is a PERCENT throughout, so the read is unscaled.
 	changeEnemyWarWearinessModifier(
@@ -1932,13 +1932,13 @@ bool CvTeam::isUnitBonusEnabledByTech(const CvUnitInfo& unit, const bool bNoWorl
 	PROFILE_EXTRA_FUNC();
 	// The gating bonuses come from the unit's OWN edge family. The curator inverts a unit's bonus prereqs onto
 	// the BONUS's `enables.units`, and the readJson reverse pass lands the reference back on the unit, so after
-	// load the unit already carries the bonuses it gates on ([DEC-one-reverse-view]) -- no reconstructed forward
+	// load the unit already carries the bonuses it gates on (docs/cascade.md §1 (reverse lookups are populated once, at load)) -- no reconstructed forward
 	// getter on the info, and no per-call walk of the requires tree.
 	// ⚑ A UNIT reads its edges rather than a reconstructed list because a unit physically MOVES; a route is
 	// pinned to its plot, which is why the route side keeps its forward reconstruction (owner).
 	// ⚠ The family is ONE merged bucket, so the legacy mandatory-bonus / one-of-list split is not expressed: every
 	// gating bonus is read as ONE-OF. That is the deliberately PERMISSIVE reading, and this is the barbarian /
-	// start-unit spawn picker, where NPC gate looseness is ruled acceptable (roadmap.md § Scope decisions).
+	// start-unit spawn picker, where NPC gate looseness is ruled acceptable (owner).
 	const CvEdges* pEdges = unit.getEdges();
 	const std::vector<int>* pGatingBonuses = (pEdges != NULL) ? pEdges->find(EDGEF_RELATED, EDGEB_BONUSES) : NULL;
 	if (pGatingBonuses == NULL || pGatingBonuses->empty())
@@ -3124,11 +3124,6 @@ void CvTeam::changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, in
 	FASSERT_NOT_NEGATIVE(getForceTeamVoteEligibilityCount(eVoteSource));
 }
 
-
-bool CvTeam::isExtraWaterSeeFrom() const
-{
-	return teamHasCapability(CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER);
-}
 
 bool CvTeam::isMapTrading()	const
 {
@@ -4397,7 +4392,7 @@ bool CvTeam::isObsoleteBuilding(BuildingTypes eIndex) const
 {
 	// DERIVED, never stored (owner ruling): the team already owns the tech list, so the verdict is a read of it.
 	// The stored counter double-incremented for a grouped member once the group getter went live -- precisely the
-	// failure a stored derived value permits and a computed one cannot ([DEC-derived-never-trusted]).
+	// failure a stored derived value permits and a computed one cannot (docs/specs/save.md §5 (derived data serializes NOTHING)).
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
 	return EnablerKernel::obsoletedByHeldTech(InfoRepo<CvBuildingInfo>::get().get(eIndex), *this);
 }
@@ -5158,7 +5153,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 					CivicTypes eCivicType = NO_CIVIC;
 
 					// The TECH names the civics it unlocks on its own `enables.civics` edge
-					// ([DEC-one-reverse-view]); asking every civic whether this tech is its prereq is the
+					// (docs/cascade.md §1 (reverse lookups are populated once, at load)); asking every civic whether this tech is its prereq is the
 					// own-data inversion, and it re-scanned the whole civic registry once per unheld option.
 					const std::vector<int>* pCivics =
 						kTech.getEdges() ? kTech.getEdges()->find(EDGEF_ENABLES, EDGEB_CIVICS) : NULL;
@@ -5362,12 +5357,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 	// grant carries, so they ask the grantor.
 	const CvClassificationBlock* caps = tech.getCapabilities();
 
-	if (clsHasId(caps, CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER))
-	{
-		GC.getMap().updateSight(false);
-		GC.getMap().updateSight(true);
-	}
-
 	if (iChange > 0 && clsHasId(caps, CLS_CAPABILITY_HAS_CENTERED_MAP))
 	{
 		setMapCentering(true);
@@ -5513,7 +5502,7 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 
 	if (iChange > 0)
 	{
-		// The tech's own `enables.specialBuildings` edge names what it makes valid ([DEC-one-reverse-view]);
+		// The tech's own `enables.specialBuildings` edge names what it makes valid (docs/cascade.md §1 (reverse lookups are populated once, at load));
 		// the store inverts BOTH legacy special-building tech prereqs into it, so this is the whole set.
 		const CvTechInfo& kTech = GC.getTechInfo(eTech);
 		const std::vector<int>* pSpecialBuildings =
@@ -6432,7 +6421,7 @@ void CvTeam::ObsoleteCorporations(TechTypes eObsoleteTech)
 								//Remove the Corp HQ Building
 								if (pLoopCity->isHeadquarters((CorporationTypes)iI))
 								{
-									// The corporation names its HQ buildings ([DEC-one-reverse-view]), so the HQ
+									// The corporation names its HQ buildings (docs/cascade.md §1 (reverse lookups are populated once, at load)), so the HQ
 									// goes without asking every building in the game whose it is.
 									const std::vector<BuildingTypes>& aeHeadquarters =
 										GC.getCorporationInfo((CorporationTypes)iI).getHeadquartersBuildings();

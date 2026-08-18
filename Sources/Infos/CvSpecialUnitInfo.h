@@ -7,7 +7,7 @@
 //	exemplar surface (patterns.md par. THE GETTER SETUP). JSON-fed (Assets/Data/specialunits/*.json via mapFrom);
 //	no XML read. A special-unit class authors the combat/withdrawal unit-plane families (one entity today) --
 //	those ride the composed compiled CvModifiers, read through the point getters; the identity flags are bare
-//	typed intrinsics. No legacy getter name returns ([DEC-new-getter-surface]).
+//	typed intrinsics. No legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include

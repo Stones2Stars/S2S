@@ -19,7 +19,7 @@
 //
 //	⚠ EACH READ IS EARNED BY A LIVE CALL SITE -- the five here are exactly what the espionage advisor's mission
 //	classification loop asks for. It is not a mirror of the legacy per-field getter contract
-//	([DEC-new-getter-surface]), which is a different axis: CvEspionageMissionInfo carries ~25 fields and the
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)), which is a different axis: CvEspionageMissionInfo carries ~25 fields and the
 //	other ~20 stay unpublished until something actually asks.
 //
 class CyEspionageMissionInfo

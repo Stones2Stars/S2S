@@ -26,7 +26,7 @@ namespace
 {
 	//	A composer names its subject by the (owner, id) PAIR, like every other surface script reaches. The
 	//	CyCity* / CyUnit* these used to take are unreachable from script -- both wrappers carry zero defs, so
-	//	nothing can hold or build one ([DEC-cy-not-fixed]) -- which made every city-context tooltip and the
+	//	nothing can hold or build one (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)) -- which made every city-context tooltip and the
 	//	unit help uncallable.
 	//	⚠ A NULL answer is legitimate and always was: the pedia asks these with no city bound, and the composers
 	//	below already branch on it. So an unresolvable pair reads as "no context", never as an error.
@@ -449,7 +449,7 @@ std::wstring CyGameTextMgr::getFlagHelp()
 //	read surface it was aimed at.
 //	⚠ The composer BODIES were cut and are being rebuilt on appendEntryLines + the requires block composer, so a
 //	method here answers empty until its composer lands. That is the correct exposed state -- the hole is visible
-//	rather than masked ([DEC-no-legacy-masking]) -- and it is why nothing is "restored" beyond the publication.
+//	rather than masked (docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap) -- and it is why nothing is "restored" beyond the publication.
 //
 void CyGameTextMgr::pythonPublish()
 {

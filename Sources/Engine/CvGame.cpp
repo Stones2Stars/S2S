@@ -6,7 +6,7 @@
 #include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
 
 #include "CvGameCoreDLL.h"
-#include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level gate ([DEC-entity-gate])
+#include "Conditions/CvConditionEval.h"   // cascadeGateOk -- the entity-level gate (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT)
 #include "Engine/CvGameSpeedScale.h"
 #include "Conditions/CvConditionQuery.h"   // the ONE structural read over a requires tree
 #include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
@@ -619,7 +619,7 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// the bracket it streams through the same appliers the reseed uses -- the enabler applies its edges and the
 	// modifier banks its marks -- and the load-end gate pass that `emitGameLoadFinished` triggers then computes
 	// each one's dormancy in the same fixpoint as everything else. Placed after the close, they would sit present
-	// with no operate verdict and nothing would re-derive one ([DEC-no-self-heal]).
+	// with no operate verdict and nothing would re-derive one (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// Idempotent, so it is a no-op on a new game (founding already placed them) and on an already-migrated save.
 	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 	{
@@ -754,7 +754,7 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// from the save. `CvCity::m_aiTradeYield` is DERIVED (route profit x the per-channel route modifier) and used
 	// to deserialize straight back, so a loaded city served a trade yield no live input could reproduce: a save
 	// carried food off its routes while the live per-channel modifier resolved to ZERO, and nothing in the engine
-	// would ever have corrected it ([DEC-derived-never-trusted]: no cache is ever serialized).
+	// would ever have corrected it (docs/specs/save.md §5 (derived data serializes NOTHING): no cache is ever serialized).
 	// ⛔ It runs AFTER the bracket closes, deliberately: the route profit reads the cascade's tradeRoutes channels
 	// through CvPlayer::getTradeRouteKinds, and those packages are only final once the FINISHED consumers above
 	// have drained. Running it earlier would rebuild against a half-built cascade -- the same ordering the plots
@@ -5897,7 +5897,7 @@ void CvGame::setHeadquarters(CorporationTypes eIndex, CvCity* pNewValue, bool bA
 		CvCity* pHeadquarters = getHeadquarters(eIndex);
 
 		// Set and Replace Corporation HQ's
-		// The CORPORATION names its HQ buildings ([DEC-one-reverse-view], fed at load from each building's §9
+		// The CORPORATION names its HQ buildings (docs/cascade.md §1 (reverse lookups are populated once, at load), fed at load from each building's §9
 		// `headquarters` FK) -- never a scan of every building asking whose headquarters it is.
 		const std::vector<BuildingTypes>& aeHeadquarters =
 			GC.getCorporationInfo(eIndex).getHeadquartersBuildings();
@@ -7850,7 +7850,7 @@ void CvGame::testVictory()
 		// WHICH victory is the diplomatic one is the VICTORY's OWN property -- `condition.diploVote` -- so it is
 		// a forward read over the handful of victories, never a scan of every building asking which one both
 		// gates a victory and carries a vote source. The building side cannot answer that anyway: a building's
-		// victory prereq is an ordinary world-scope gate in `requires.build` ([DEC-entity-gate]), not an FK
+		// victory prereq is an ordinary world-scope gate in `requires.build` (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT), not an FK
 		// naming the victory it belongs to.
 		VictoryTypes eVictoryUN = NO_VICTORY;
 
@@ -11182,7 +11182,7 @@ void CvGame::doFoundCorporation(CorporationTypes eCorporation, bool bForce)
 	TechTypes ePrereqTech = GC.getCorporationInfo(eCorporation).getTechPrereq();
 	// The gating tech falls back to the corp's HQ building's own -- and that fallback is the ONLY live path,
 	// since no corporation authors a tech prereq. The HQ buildings come from the corporation's own registry
-	// ([DEC-one-reverse-view]); what the BUILDING's enabling tech is remains unserved -- a tech reaches a
+	// (docs/cascade.md §1 (reverse lookups are populated once, at load)); what the BUILDING's enabling tech is remains unserved -- a tech reaches a
 	// building through its `enables.buildings` edge, and the building's reverse tech bucket is the MERGED
 	// EDGEF_RELATED one, which cannot tell an enabling tech from an obsoleting or depositing one.
 	if (ePrereqTech == NO_TECH)
@@ -11357,7 +11357,7 @@ void CvGame::calculateRiverBuildings()
 	{
 		// "needs a river" is a PLACEMENT CONDITION, so it lives in the building's own `requires` as the
 		// HAS_RIVER predicate ([json.md] par.4.3/3.5) rather than as a flag on the info -- asked through the
-		// ONE shared tree read ([DEC-single-implementation]).
+		// ONE shared tree read (docs/architecture/patterns.md §DRY (single implementation)).
 		// ⚠ BOTH halves count: the curator puts most of these in `build`, but a handful sit in `operate` (a
 		// building that needs the water to keep RUNNING), and this count is "how many buildings care".
 		const CvBuildingInfo& kBuildingX = GC.getBuildingInfo((BuildingTypes)iJ);
@@ -11665,7 +11665,7 @@ void CvGame::changeImprovementCount(ImprovementTypes eIndex, int iChange)
 bool CvGame::isValidByGameOption(const CvUnitCombatInfo& info) const
 {
 	// A whole-entity game-option bar is the entity-level enabled/disabled pair, evaluated LIVE
-	// ([DEC-entity-gate]) -- not the legacy per-entity on/notOn option LISTS this replaces.
+	// (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT) -- not the legacy per-entity on/notOn option LISTS this replaces.
 	// The ctx is BARE deliberately: every authored entity gate is a GAMEOPTION_ leaf that reads the live
 	// options and consults no scope context, which is what makes the verdict the same for every player and
 	// city (enabler.md par.8). An entity whose data authors no gate has a NULL gate, and cascadeGateOk(NULL)

@@ -1010,7 +1010,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 						// "Would a fresh unit of this type start with at least as much experience as this one has?"
 						// ONE call: the city already answers exactly that, so this block's term-by-term
 						// re-derivation of it was a second implementation of the same calculation
-						// ([DEC-single-implementation]). Both sides are ×100, so nothing converts here.
+						// (docs/architecture/patterns.md §DRY (single implementation)). Both sides are ×100, so nothing converts here.
 						int iCityExp100 = 0;
 						if (unitX->getExperience100() > 0)
 						{
@@ -4678,16 +4678,6 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	int iRandomMax = 2000;
 
 	// Map stuff
-	if (iCoastalCities > 0 && kTech.getCapabilities()->has("canSeeFurtherFromWater"))
-	{
-		iValue += 100 * iRCSMultiplier;
-
-		if (bCapitalAlone)
-		{
-			iValue += 400;
-		}
-	}
-
 	if (kTech.getCapabilities()->has("hasCenteredMap"))
 	{
 		iValue += 100;
@@ -4870,7 +4860,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	}
 
 	// featureProduction / workRate are PERCENT slots, so they read 1:1; the trade-route count is a FLAT and
-	// reduces at its point of use ([DEC-fixedpoint-x100] -- a bare re-point would be 100x here).
+	// reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- a bare re-point would be 100x here).
 	iValue += (kTech.getScalar(SCALAR_FEATURE_PRODUCTION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * 2);
 	iValue += (kTech.getScalar(SCALAR_WORK_RATE, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * 4);
 	iValue += (kTech.getTradeRoute(TRADE_ROUTE_AMOUNT, CASC_SCOPE_CITY) / 100
@@ -4890,7 +4880,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	// from the tech's own edges rather than a scan of every route ([modifier.md] §5).
 	// The as-if-held pair this tech is valued through, shared by every delta below: what an entity is worth
 	// WITH this tech minus what it is worth WITHOUT. A tech-gated deposit is the target's OWN output under a
-	// condition ([DEC-deliveryguy]), so the tech's worth is exactly that difference.
+	// condition (docs/cascade.md §4 (the deliveryguy ownership rule)), so the tech's worth is exactly that difference.
 	CvCascadeHypothetical kWithTech;
 	kWithTech.present[EDGEB_TECHS].insert((int)eTech);
 	CvCascadeHypothetical kWithoutTech;
@@ -4973,7 +4963,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	// What this tech does to tile yields is the tech's OWN edge fetch, never a scan of every improvement asking
 	// whether it happens to mention the tech ([modifier.md] §5 -- the own-data inversion; the todo's "drive them
 	// from the tech's own edges"). An improvement's tech-gated yield is its OWN output under a condition
-	// ([DEC-deliveryguy]), so the worth is the DELTA between holding this tech and not -- one hypothetical pair
+	// (docs/cascade.md §4 (the deliveryguy ownership rule)), so the worth is the DELTA between holding this tech and not -- one hypothetical pair
 	// per related improvement, not a table lookup that no longer exists.
 	int iTileImprovementValue = 0;
 	std::set<int> kRelatedImprovements;
@@ -5072,7 +5062,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 				// The improvement's own PLOT yield, ×100 at the slot so it reduces here. ⚠ The legacy riverSide
 				// and irrigated variants are CONDITIONED entries now (HAS_RIVER / HAS_IRRIGATION,
-				// [DEC-conditions-are-predicates]), not kinds, so they are deliberately NOT in this base: this
+				// docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)), not kinds, so they are deliberately NOT in this base: this
 				// scores an improvement generically, with no plot to evaluate those against. It therefore
 				// UNDERVALUES a river/irrigation improvement, which is the accepted direction -- the
 				// "assume every condition holds" read is an undecided mode ([todo.md]) and is not invented here.
@@ -5870,7 +5860,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 	// WHAT THIS TECH IMPROVES, as distinct from what it UNLOCKS -- two different questions off two different
 	// edges. A tech-gated deposit is a CONDITIONED entry on the building, so the buildings a tech makes better
 	// are exactly those whose compiled entries reference it: the tech's own RELATED family
-	// ([DEC-one-reverse-view]), landed once at load. The loop above walks what the tech ENABLES and can never
+	// (docs/cascade.md §1 (reverse lookups are populated once, at load)), landed once at load. The loop above walks what the tech ENABLES and can never
 	// reach these, which is why this is its own pass rather than a branch inside it.
 	std::set<int> improvedBuildings;
 	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_RELATED, EDGEB_BUILDINGS, improvedBuildings);
@@ -9193,7 +9183,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 				{
 					PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Unit Value");
 					// WHICH UNITS CARE ABOUT THIS BONUS? -- the bonus's own load-populated edge families answer
-					// both halves, so neither is a database scan ([DEC-one-reverse-view]):
+					// both halves, so neither is a database scan (docs/cascade.md §1 (reverse lookups are populated once, at load)):
 					//   RELATED     -- every unit referencing it on any compiled surface, INCLUDING a deposit's
 					//                  `enabled` condition, which is how a buildRate GATED on the bonus is found
 					//                  at all (a gated deposit is no part of `requires`, so the gate index alone
@@ -9293,7 +9283,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 						// HOW FAR OFF IS THE UNIT AT ALL? The techs it needs are atoms in its `requires` tree, read
 						// through the ONE scanner
-						// ([DEC-single-implementation]) rather than a prereq getter -- which is also why the
+						// (docs/architecture/patterns.md §DRY (single implementation)) rather than a prereq getter -- which is also why the
 						// religion/corporation legs the old code carried separately are gone: their tech gates are
 						// atoms in the same tree and arrive here already.
 						CascadeCondDeps kUnitDeps;
@@ -9317,7 +9307,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 			{
 				PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Building Value");
 					// WHICH BUILDINGS CARE ABOUT THIS BONUS? -- the same two legs as the unit half above, off the
-					// bonus's own load-populated edge families ([DEC-one-reverse-view]): RELATED catches every
+					// bonus's own load-populated edge families (docs/cascade.md §1 (reverse lookups are populated once, at load)): RELATED catches every
 					// compiled reference INCLUDING a deposit's `enabled` condition (which is where a
 					// bonus-conditioned yield/commerce/wellbeing deposit lives), REQUIRED_BY the subset it can
 					// UNLOCK. The whole-database sweep this replaces ran a findPathLength per surviving building.
@@ -9486,7 +9476,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 				PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Project Value");
 
 				// Only the projects that reference this bonus at all -- the same RELATED leg the unit and building
-				// halves drive off ([DEC-one-reverse-view]), which for a project is where a bonus-conditioned
+				// halves drive off (docs/cascade.md §1 (reverse lookups are populated once, at load)), which for a project is where a bonus-conditioned
 				// buildRate deposit lives.
 				std::set<int> relatedProjects;
 				EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BONUSES, (int)eBonus),
@@ -9756,7 +9746,7 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 		return NO_DENIAL;
 	}
 	// WHICH UNITS NEED THIS BONUS? -- the bonus's own load-populated requires-reverse index answers it
-	// directly ([DEC-one-reverse-view]), the same read the building half below makes. The capital then
+	// directly (docs/cascade.md §1 (reverse lookups are populated once, at load)), the same read the building half below makes. The capital then
 	// answers "can I train it THERE" as a bare O(1) tri-state fetch (enabler.md par.8), so neither half
 	// scans: walking the trainable set and asking each unit the reverse question was the whole-database
 	// scan the reverse index exists to delete.
@@ -9778,7 +9768,7 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 	if (!bStrategic)
 	{
 		// WHICH BUILDINGS NEED THIS BONUS? -- the bonus's own load-populated requires-reverse index answers it
-		// directly ([DEC-one-reverse-view]); asking every building the reverse question was the whole-database
+		// directly (docs/cascade.md §1 (reverse lookups are populated once, at load)); asking every building the reverse question was the whole-database
 		// scan enabler.md §6 exists to delete. Membership IS "its `requires` references this bonus", so only the
 		// availability predicates remain.
 		std::set<int> dependentBuildings;
@@ -10421,7 +10411,7 @@ int CvPlayerAI::AI_unitHealerValue(UnitTypes eUnit, UnitCombatTypes eUnitCombat)
 	// The unit's OWN keyed heal rows -- the handful of combat classes it authored, collected ONCE instead of
 	// re-fetching the info per index. The MECHANIC below is unchanged; only the feed moved.
 	// ⚠ Both amounts are ×100 and reduce to whole heal points HERE. That is the whole risk in this carve-out:
-	// heal must come out neither lost nor ×100 ([roadmap.md] -- the heal acceptance bar is two-sided).
+	// heal must come out neither lost nor ×100 (the heal acceptance bar is two-sided, owner).
 	std::vector<HealByUnitCombat> healRows;
 	InfoValuation::collectHealByUnitCombat(kUnitInfo.getModifiers(), healRows);
 	const int iNumHealUnitCombatTypes = (int)healRows.size();
@@ -13370,7 +13360,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	const int iWarmongerPercent = 25000 / std::max(100, 100 + GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand());
 
 	// `experience.empire.flat` -- the civic's own compiled deposit; ×100, so it reduces once here rather than
-	// inside the weighting arithmetic below ([DEC-fixedpoint-x100]).
+	// inside the weighting arithmetic below (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	const int iCivicFreeExperience = kCivic.getExperience(EXPERIENCE_AMOUNT, CASC_SCOPE_EMPIRE) / 100;
 	if (iCivicFreeExperience > 0)
 	{
@@ -13718,7 +13708,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		if (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) < 0)
 		{
 			// ATTITUDE_SHARE is the FLAT kind of the diplomacy family (×100), so it reduces at this point of use --
-			// the twin read in AI_getAttitudeVal already does ([DEC-fixedpoint-x100]).
+			// the twin read in AI_getAttitudeVal already does (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 			iTempValue += (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) / 100 * 4);
 		}
 		else if (kCivic.getDiplomacy(DIPLOMACY_ATTITUDE_SHARE, CASC_SCOPE_EMPIRE) > 0)
@@ -13774,7 +13764,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		// THE CANDIDATE SET HAS TWO LEGS, and the second was absent entirely:
 		//   GATED   -- buildings whose `requires` NAMES either civic (EDGEF_REQUIRED_BY): the GATE question.
 		//   ENABLED -- buildings either civic's `enables` proposes (EDGEF_ENABLES): the MEMBERSHIP question.
-		// Both come off each civic's own load-populated edge families ([DEC-one-reverse-view]), so no candidate
+		// Both come off each civic's own load-populated edge families (docs/cascade.md §1 (reverse lookups are populated once, at load)), so no candidate
 		// is found by scanning the building database. ⚑ Most shipped civics author `enables.buildings`, so
 		// omitting the ENABLED leg left this valuation blind to every building a civic straightforwardly
 		// unlocks -- a missing TERM in the AI's civic choice, not a tidiness gap.
@@ -13917,7 +13907,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	// Each was a whole-database scan reading a keyed getter that exists on NO info, because a civic does not
 	// carry these containers by design: its `{channel}.empire.buildings.{B}` deposits are LANDED BY THE REVERSE
 	// PASS ON THE TARGET BUILDING conditioned on this civic's presence (modifier.md §2a), its specialist
-	// percents live on the SPECIALIST as own-output conditioned on the civic ([DEC-deliveryguy]), and the
+	// percents live on the SPECIALIST as own-output conditioned on the civic (docs/cascade.md §4 (the deliveryguy ownership rule)), and the
 	// per-improvement happiness authors on no civic at all (it folds into the feature terms, modifier.md §2b).
 	// Valuing them needs an AS-IF-ADOPTED evaluation of those landed entries, which `expected*` cannot express:
 	// it resolves against the CURRENT EmpireContext, in which this civic is precisely what is not adopted.
@@ -13985,7 +13975,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 				iPlayerValue /= 5;
 			}
 			// The same civic DECISION the rev-effect term below feeds, so it may not be reached through float
-			// either ([DEC-no-float-in-sync]). iOurPower is max(1, ..) above, so the divide is safe -- and
+			// either (docs/reference/engine.md §NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE). iOurPower is max(1, ..) above, so the divide is safe -- and
 			// multiplying BEFORE dividing is strictly more precise than the ratio-first form this replaces.
 			iTempValue += static_cast<int>(static_cast<int64_t>(iPlayerValue) * iTheirPower / iOurPower);
 		}
@@ -14052,7 +14042,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		iTempValue += ((kCivic.getYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE) * getNumCities()) / 2);
 
 		// ⚠ The CAPITAL variant is gone as a member: a capital-only deposit is the ordinary empire one gated
-		// `enabled: "IS_CAPITAL"` ([DEC-conditions-are-predicates]), so it is a CONDITIONED entry and not part
+		// `enabled: "IS_CAPITAL"` (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)), so it is a CONDITIONED entry and not part
 		// of the unconditioned point sum above. Valuing it needs the conditioned tail against a bound capital;
 		// until then this UNDERVALUES a Bureaucracy-style civic, the accepted direction.
 		iTempValue += ((kCivic.getTradeRouteYieldModifier((YieldTypes)iI, CASC_SCOPE_EMPIRE) * getNumCities()) / 11);
@@ -14755,7 +14745,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			//iValue += (kCivic.getStateReligion(STATE_RELIGION_HAPPINESS, CASC_SCOPE_EMPIRE) * iHighestReligionCount * 4);
 			// The whole state-religion cluster reads the civic's own `stateReligion.empire.<kind>` deposits. The
 			// three modifiers are PERCENT kinds (not scaled); free experience is the one FLAT kind, so it alone
-			// reduces ([DEC-fixedpoint-x100] — the unit verdict lives beside the kind enum, not here).
+			// reduces (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) — the unit verdict lives beside the kind enum, not here).
 			const int iGreatPeopleRate = kCivic.getStateReligion(STATE_RELIGION_GREAT_PEOPLE_RATE, CASC_SCOPE_EMPIRE);
 			const int iUnitProduction = kCivic.getStateReligion(STATE_RELIGION_UNIT_PRODUCTION, CASC_SCOPE_EMPIRE);
 			const int iBuildingProduction = kCivic.getStateReligion(STATE_RELIGION_BUILDING_PRODUCTION, CASC_SCOPE_EMPIRE);
@@ -14995,7 +14985,7 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 	{
 		int iRelScore = 0;
 
-		// A PERCENT kind, so it arrives unscaled and whole ([DEC-fixedpoint-x100]) -- it was never a fraction
+		// A PERCENT kind, so it arrives unscaled and whole (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- it was never a fraction
 		// at runtime, which is why reading it as one bought nothing and cost the determinism below.
 		const int iRelGoodMod = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_GOOD_RELIGION, CASC_SCOPE_EMPIRE);
 		const int iRelBadMod = GC.getCivicInfo(eCivic).getRevolution(REVOLUTION_BAD_RELIGION, CASC_SCOPE_EMPIRE);
@@ -16016,7 +16006,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 				if (!pCity->isDormantBuilding(eTypeX))
 				{
 					// ⚠ "needs power" is a requires.operate HAS_POWER clause and the powered yield bonus is a
-					// CONDITIONED entry on the same predicate ([DEC-conditions-are-predicates]) -- neither is a
+					// CONDITIONED entry on the same predicate (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)) -- neither is a
 					// member, and both want the conditioned tail evaluated against this city. Left out rather
 					// than approximated, so the term UNDERVALUES a powered building instead of inventing one.
 				}
@@ -26939,7 +26929,7 @@ int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
 	PROFILE_EXTRA_FUNC();
 	int iValue = 0;
 
-	// Only the units whose `requires` names this bonus can be carried by it ([DEC-one-reverse-view]); the
+	// Only the units whose `requires` names this bonus can be carried by it (docs/cascade.md §1 (reverse lookups are populated once, at load)); the
 	// trainable union below is then the "and I could actually field it" half.
 	std::set<int> dependentUnits;
 	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BONUSES, (int)eBonus),
@@ -29762,7 +29752,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	// magnitude plus a detection ROW per method answered, so this is TWO terms: the per-INVISIBLE_* intensity
 	// tables, their per-substrate terrain/feature/improvement variants and the second RANGE system that ran
 	// beside vision's are all retired, and summing a per-type table would have counted one concealment once
-	// per method. Values are x100 at the info ([DEC-fixedpoint-x100]), reduced here at the point of use.
+	// per method. Values are x100 at the info (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), reduced here at the point of use.
 	// The UnitAI groupings are carried over as-is; the contest's real evaluation is its own piece of work, so
 	// this deliberately UNDER-values rather than guessing a tuned model (owner).
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_HIDE_SEEK))

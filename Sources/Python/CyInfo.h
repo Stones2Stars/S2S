@@ -11,13 +11,13 @@
 //	exposed to script. Sibling of CyEnabler ("can I?"), CyState ("what do I HAVE?") and CyEnums (the vocabulary).
 //
 //	⛔ THIS IS WHERE INFOS LIVE NOW, AND THE ONLY PLACE. The global context deliberately hands out none
-//	([DEC-cy-not-fixed]): its `get<X>Info(i)` accessors returned an object carrying the whole legacy getter set,
+//	(docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)): its `get<X>Info(i)` accessors returned an object carrying the whole legacy getter set,
 //	which is the escape hatch the rebuild closes. A script wanting a SETTING asks the global context; a script
 //	wanting ENTITY DATA asks here.
 //
 //	⚑ ADDRESSED BY INFOTYPE PREFIX, not by a getter per registry. `getDescription("UNIT_", id)` routes through the
 //	ONE infotype-prefix -> InfoRepo dispatch the load pipeline already owns
-//	([DEC-single-implementation]), so a new category is served the moment it is registered there -- no method is
+//	(docs/architecture/patterns.md §DRY (single implementation)), so a new category is served the moment it is registered there -- no method is
 //	added here, and the two cannot drift. That is the same "extensible by DATA" rule the rest of the surface obeys.
 //
 //	⛔ THE PREFIX NAMES THE REGISTRY, AND THAT IS USUALLY -- BUT NOT ALWAYS -- THE AUTHORED INFOTYPE PREFIX
@@ -99,7 +99,7 @@ enum PyIntrinsicSlot
 	PYINT_FAVORITE_RELIGION,    // LEADER_ RELIGION_* FK -- likewise. Both are the leader's OWN datum, so this
 	                            // is a straight member read; ⛔ the inverse ("which leaders favour this civic")
 	                            // is a reverse lookup and belongs to the edge families, never to a scan of
-	                            // every leader testing this slot ([DEC-one-reverse-view]).
+	                            // every leader testing this slot (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 	                            // (identity.pillageGold). ⚠ NOT the building field of the same name, which is
 	                            // orphaned and unwired; this one is live and
 	                            // is the improvement's own value.
@@ -125,7 +125,7 @@ enum PyIntrinsicSlot
 //	worked case: the readJson reverse pass feeds it onto the corporation for exactly this reason ("every
 //	consumer asks the CORPORATION which building is its HQ; feeding the registry here is what stops each of them
 //	scanning the whole building registry" -- CvReversePass), and asking it the other way round is the shape
-//	[DEC-one-reverse-view] exists to delete.
+//	docs/cascade.md §1 (reverse lookups are populated once, at load) exists to delete.
 //
 enum PyIdListSlot
 {
@@ -155,7 +155,7 @@ enum PyIdListSlot
 	                                   // prereq siblings rather than earning the type its own accessor.
 	// BONUS_ -> the IMPROVEMENTS that make this resource tradeable when built on it. The bonus's OWN reverse
 	// list, landed at load, so "what do I build here" is a fetch rather than a sweep of every improvement
-	// asking each whether it trades this one ([DEC-one-reverse-view]).
+	// asking each whether it trades this one (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 	PYLIST_TRADE_PROVIDING_IMPROVEMENTS,
 	NUM_PYLIST
 };
@@ -219,7 +219,7 @@ public:
 	// The entity's EDGE ids for one (family, bucket) -- "what do I unlock", "what unlocks me", "what needs me".
 	// ⚑ This is a SERVED answer to a question script currently asks by SCANNING A WHOLE REGISTRY and testing a
 	// per-id predicate. The readJson reverse pass already lands every reverse family on the info
-	// ([DEC-one-reverse-view]), so the scan is not merely slow, it is re-deriving what the info already carries.
+	// (docs/cascade.md §1 (reverse lookups are populated once, at load)), so the scan is not merely slow, it is re-deriving what the info already carries.
 	// ⛔ Parameterized over the family/bucket ENUMS, never a getter per relation: the axes are the spec's fixed
 	// vocabulary, so a new bucket is data and this surface does not grow.
 	python::list getEdgeIds(const std::string& szTypePrefix, int iId, int iFamily, int iBucket) const;
@@ -273,7 +273,7 @@ public:
 	//
 	// ⚑ THE PEDIA IS A NAMED CONSUMER OF IT, which is why it lands here first: a resource page shows which
 	// units it speeds up and by how much, and in the data that is not a keyed value -- it is 271 units each
-	// carrying `buildRate.self.percent` entries gated on a BONUS_ atom ([DEC-conditions-are-predicates]: the
+	// carrying `buildRate.self.percent` entries gated on a BONUS_ atom (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members): the
 	// condition is a predicate, never a member). The magnitude and the gate live on the entry together.
 	//
 	// Each entry is a dict: {"value", "unit", "scope", "kind", "atoms"} -- `atoms` being the FK-resolved
@@ -306,10 +306,10 @@ public:
 
 	// The WELLBEING group -- one read hands back the WHOLE group, indexed by the published WellbeingChannel
 	// ([patterns.md] THE TWO READ ROLES rule 1: the surface grows by GROUPS, never by channels, so there is no
-	// per-channel getter to add). SCOPE is a spelled-out argument ([DEC-scope-is-an-axis]).
+	// per-channel getter to add). SCOPE is a spelled-out argument (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)).
 	// ⚑ This is what lets a consumer ask "which bonuses are a luxury / a health resource" WITHOUT sweeping the
 	// registry asking a per-id predicate -- it reads the entity's own compiled sum.
-	// Values are x100 ([DEC-fixedpoint-x100]); a reader divides at its point of use.
+	// Values are x100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); a reader divides at its point of use.
 	python::list getWellbeing(const std::string& szTypePrefix, int iId, int iScope) const;
 
 	// The REVOLUTION group -- the whole kind-indexed group in one read, exactly as getWellbeing hands back its
@@ -345,7 +345,7 @@ public:
 	// IS a compile-time constant, so `hasSkill(CLS_SKILL_BLITZ)` already names the thing at the call site. Python
 	// has no such constant, which is why the two planes diverge -- do not "align" them.
 	// ⇒ These parameterized reads stay as the SHARED IMPLEMENTATION the named endpoints below delegate to, so a
-	// named endpoint costs one line and never a second bitset walk ([DEC-single-implementation]).
+	// named endpoint costs one line and never a second bitset walk (docs/architecture/patterns.md §DRY (single implementation)).
 	//
 	// ⚑ ALL SEVEN DOMAINS, because the plane is only usable if it is COMPLETE. The name encodes HOLD vs PROVIDE
 	// exactly as the C++ surface does ([patterns.md] category 2, [json.md] §8): what the entity IS or HAS is
@@ -479,7 +479,7 @@ public:
 	int getCivicUpkeep(int iCivicId) const;
 	// The AUTHORED `allowed` cap at one scope, or -1 where the entity authors none.
 	// ⚑ Parameterized over the SCOPE axis rather than split into a read per question, because scope is an axis
-	// and not part of a name ([DEC-scope-is-an-axis]) -- so one read serves buildings, units, techs and projects,
+	// and not part of a name (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)) -- so one read serves buildings, units, techs and projects,
 	// and a wonder CATEGORY cap is the same read with a category cap id.
 	// ⚠ -1 means UNCAPPED, so a caller tests `>= 0` for "is capped" and prints the value only above it; reading
 	// it as a count would report every uncapped entity as capped at minus one.
@@ -511,11 +511,11 @@ public:
 	// (`CvReligionInfo::getShrineBuildings`, filled by the readJson reverse pass from each building's §9 `shrine`
 	// FK). ⛔ This is the read that replaces sweeping every building asking whose shrine it is: the inverse
 	// direction is answered by the referenced info's own list, never by a scan
-	// ([DEC-one-reverse-view]).
+	// (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 	python::list getShrineBuildings(int iReligionId) const;
 	// The CIVILIZATION_* this civ turns into (identity.derivativeCiv), NO_CIVILIZATION when it derives none.
 	// Its own data, read forward off the civ that carries it -- never a sweep asking every civ what it derives
-	// from ([DEC-one-reverse-view]).
+	// from (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 	int getDerivativeCiv(int iCivilizationId) const;
 
 	// The `canTrade` block -- what this entity puts on the trade table (capabilities.md). Deliberately
@@ -528,7 +528,7 @@ public:
 	// registry, so the call site says what it fetches ([patterns.md] THE PYTHON READ BOUNDARY).
 	// ⛔ These serve the FILTER, never the choice: which response a leader gives is picked in Python
 	// (CvDiplomacy.filterUserResponse weighs attitude / civ / leader / power and rolls the ASYNC stream, which
-	// is correct -- a cosmetic line must not touch the synchronized RNG, [DEC-synced-rng-is-shared-state]).
+	// is correct -- a cosmetic line must not touch the synchronized RNG, docs/reference/engine.md §THE SYNCHRONIZED RNG IS SHARED SAVE STATE).
 	// Porting that selection into C++ belongs to the events move, not here.
 	// ⚠ Every read is total: an out-of-range comment or response answers 0/false/"" rather than raising, because
 	// the caller walks these indices to DISCOVER which responses apply.
@@ -542,7 +542,7 @@ public:
 
 	// A STRAGGLER SCALAR off the compiled sums -- patterns.md's getScalar, the category-4 read for the genuinely
 	// lone unconditioned values that belong to no group. Keyed by the shared InfoScalar vocabulary, with SCOPE
-	// and UNIT as spelled-out arguments ([DEC-scope-is-an-axis]: scope is an axis, never a name fragment).
+	// and UNIT as spelled-out arguments (docs/architecture/patterns.md §The coherent surface (scope is a separate axis): scope is an axis, never a name fragment).
 	// ⚑ This is how a value that looks like it needs a bespoke accessor is actually reached -- a game speed's
 	// percent is getScalar("GAMESPEED_", id, SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT), not a
 	// getSpeedPercent revival. The surface grows by an ENUM ENTRY, never by a method per value.
@@ -557,13 +557,13 @@ public:
 
 	// The entity's OWN authored flat deposits for a scope, one entry per channel -- the cascade-shaped
 	// replacement for the per-type `getYieldProduced` / `getCommerceProduced` accessors that no longer exist.
-	// x100 like every amount ([DEC-fixedpoint-x100]); the reader divides at the point of use.
+	// x100 like every amount (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the reader divides at the point of use.
 	python::list getFlatYields(const std::string& szTypePrefix, int iId, int iScope) const;
 	python::list getFlatCommerces(const std::string& szTypePrefix, int iId, int iScope) const;
 
 	// The PERCENT side of the same two groups. Flats and percents are SEPARATE SLOTS -- the unit is part of the
 	// slot key ([modifier.md] par.2), so a percent is not reachable through the flat read and needs its own.
-	// ⚠ A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]: the x100 exists to carry two decimals on an AMOUNT, and
+	// ⚠ A PERCENT IS NOT SCALED (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the x100 exists to carry two decimals on an AMOUNT, and
 	// a percent has none), so a reader that divides one by 100 destroys it.
 	python::list getPercentYields(const std::string& szTypePrefix, int iId, int iScope) const;
 	python::list getPercentCommerces(const std::string& szTypePrefix, int iId, int iScope) const;
@@ -577,8 +577,8 @@ public:
 	// must never look interchangeable. A recommender asks THIS one.
 	// ⚑ ONE call answers a whole group, and the SAME call answers the AI's weighting and the build-list hover
 	// tooltip -- which is what keeps the number a player is shown and the number the AI plans against the same
-	// number, structurally ([DEC-single-implementation]).
-	// x100 like every amount; percents are unscaled ([DEC-fixedpoint-x100]).
+	// number, structurally (docs/architecture/patterns.md §DRY (single implementation)).
+	// x100 like every amount; percents are unscaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	// ⚠ Answers an empty list when the (player, city) pair does not resolve -- a caller tests it rather than
 	// reading a zero as "this candidate is worth nothing".
 	python::list expectedWellbeing(const std::string& szTypePrefix, int iId, int iPlayer, int iCity) const;

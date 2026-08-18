@@ -85,7 +85,7 @@ static void te_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iTech)
 
 // The TOUCHED candidate set of one tech event H -- everything whose state or gate can change with H, all read
 // off H's OWN info (O(delta)): its enables proposals, its removal-family targets (a withdrawal re-admits), and
-// its EDGEF_REQUIRED_BY dependents (the requires-reverse-index, DEC-one-reverse-view -- the in-tree techs whose
+// its EDGEF_REQUIRED_BY dependents (the requires-reverse-index, docs/cascade.md §1 (reverse lookups are populated once, at load) -- the in-tree techs whose
 // gate references H).
 static void te_touched(int iTech, std::set<int>& touched)
 {

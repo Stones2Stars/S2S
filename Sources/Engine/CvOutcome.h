@@ -70,7 +70,7 @@ protected:
 	const IntExpr* m_aiCommerce[NUM_COMMERCE_TYPES];
 	UnitTypes m_eUnitType;
 	// The gates are typed CONDITION trees evaluated by the ONE evaluator (cascadeEvalCondition) -- never a
-	// BoolExpr round-trip ([DEC-single-implementation], mission-outcome-system.md).
+	// BoolExpr round-trip (docs/architecture/patterns.md §DRY (single implementation), mission-outcome-system.md).
 	const CvCondition* m_bUnitToCity;
 	PromotionTypes m_ePromotionType;
 	BonusTypes m_eBonusType;

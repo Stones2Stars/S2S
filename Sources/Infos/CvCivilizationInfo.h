@@ -5,12 +5,12 @@
 //
 //	CvCivilizationInfo -- the CIVILIZATION poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
 //	Styled for the JSON anatomy (json.md §2): the game-start provisions (grants.buildings/techs/civics) ride the
-//	composed grants payload and are served as typed FK views materialized at mapFrom ([DEC-materialize-at-mapfrom] --
+//	composed grants payload and are served as typed FK views materialized at mapFrom (docs/architecture/patterns.md §Materialize at mapFrom --
 //	bare member reads, never per-call bucket-string walks); the NPC research ban (disables.techs) rides the
 //	composed edges; the spawnRate straggler compiles into the composed modifiers (base getScalar read).
 //	Selectability (identity.playable/aiPlayable) is load-only identity metadata (json.md §7); art / sound /
 //	text / leaders / cityNames are intrinsic self-description. No legacy getter name survives
-//	([DEC-new-getter-surface]).
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 //	This ONE engine class is both the typed getCivilizationInfo(...) consumer surface AND the JSON payload
 //	(InfoRepo aliases GC.m_paCivilizationInfo); there is no separate poco. The DllExport reads are EXE-bound

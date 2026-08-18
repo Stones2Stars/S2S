@@ -57,7 +57,7 @@ public:
 	bool setBuildDisabled(int iBuild, bool bDisabled) const;
 	// Mark a build list stale so the next read rebuilds it. This is the screen ASKING for work, which is why it
 	// is an action and not folded into the read -- a read that rebuilt itself would be the self-healing shape
-	// the whole surface avoids ([DEC-no-self-heal]).
+	// the whole surface avoids (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	bool invalidateUnitList(int iPlayer, int iCity) const;
 	bool invalidateBuildingList(int iPlayer, int iCity) const;
 
@@ -76,7 +76,7 @@ public:
 	// unit type or the plot was invalid.
 	// ⛔ The BIRTHMARK is drawn from the SYNCHRONIZED stream, exactly as every engine caller draws it, and
 	// exactly on the paths the legacy binding drew it on -- NOT on the two invalid ones. The number of draws and
-	// their order are shared save state ([DEC-synced-rng-is-shared-state]), so adding or skipping one desyncs
+	// their order are shared save state (docs/reference/engine.md §THE SYNCHRONIZED RNG IS SHARED SAVE STATE), so adding or skipping one desyncs
 	// multiplayer and stops a save replaying; this is not a detail to tidy.
 	int createUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, int iDirection) const;
 
@@ -162,7 +162,7 @@ public:
 	bool setCityScriptData(int iPlayer, int iCity, std::string szData) const;
 	// PRESENCE of a building in this city, both directions. ⛔ ONE bool-parameterized verb, because the ENGINE
 	// models it as one (CvCity::changeHasBuilding) -- an add-only verb with a remove twin bolted beside it would be
-	// two Python spellings of a single transition, and the two drift ([DEC-single-implementation]).
+	// two Python spellings of a single transition, and the two drift (docs/architecture/patterns.md §DRY (single implementation)).
 	// ⚑ The removal leg is NOT a field poke: it runs the ledger, the setup and processBuilding(-1), so the
 	// contribution is withdrawn and the domain fact fires exactly as a demolition in-game does.
 	bool setCityBuilding(int iPlayer, int iCity, int iBuilding, bool bNewValue) const;

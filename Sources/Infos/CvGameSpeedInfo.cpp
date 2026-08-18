@@ -1,7 +1,7 @@
 //
 //	CvGameSpeedInfo -- the gamespeed poco's exemplar reads (see the header). The legacy scalar MIRRORS are
 //	DEAD (wave D): the base dispatch compiles the two authored world percents into m_modifiers and every read
-//	is a compiled-slot fetch through the base getScalar ([DEC-materialize-at-mapfrom] -- no raw-JSON family
+//	is a compiled-slot fetch through the base getScalar (docs/architecture/patterns.md §Materialize at mapFrom -- no raw-JSON family
 //	walker survives). The derived era-pacing reads below consume ONLY info data (this speed percent +
 //	CvEraInfo's year span / Normal-speed turn count).
 //
@@ -21,7 +21,7 @@ CvGameSpeedInfo::CvGameSpeedInfo()
 
 namespace
 {
-	// This speed's pace percent (normal = 100). A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]), so the read is
+	// This speed's pace percent (normal = 100). A PERCENT IS NOT SCALED (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so the read is
 	// already the human percent and NOTHING is reduced here.
 	// ⚠ Takes the info explicitly, so it answers "THIS speed's percent" -- CvGameSpeedScale::speedPercent()
 	// answers "the RUNNING game's", and is what a live-state caller must use instead of re-reading the scalar.

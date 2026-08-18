@@ -5,7 +5,7 @@
 //	repertoire, the par.9 spread/groupSpawn/vision/sizeMatters/replacedBy sections, the grants
 //	materialization, the ai metadata, and the outcomes system intake. The par.8 keyed targeting/immunity
 //	containers materialize from the COMPILED targeted entries (the family-scoped target tokens). NO
-//	family-address read survives here ([DEC-materialize-at-mapfrom]: the modifier values are served by the
+//	family-address read survives here (docs/architecture/patterns.md §Materialize at mapFrom: the modifier values are served by the
 //	compiled point reads / entry lists, never re-parsed subclass-side).
 //
 
@@ -45,7 +45,7 @@ namespace
 	}
 
 	// Materialize one keyed targeting/immunity container from the COMPILED entries into a SET
-	// ([DEC-materialize-at-mapfrom] -- the raw-JSON subtree read is gone).
+	// (docs/architecture/patterns.md §Materialize at mapFrom -- the raw-JSON subtree read is gone).
 	void un_collectCombatKeyedSet(const CvModifiers& modifiers, const char* szToken, std::set<int>& out)
 	{
 		const int iToken = modSegmentLookup(szToken);

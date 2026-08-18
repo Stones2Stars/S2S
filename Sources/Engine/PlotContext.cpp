@@ -8,7 +8,7 @@
 //	hazard the retired justification was right about (a hand-written per-event bit mask drifting from what the bits
 //	actually read) by putting the dependency BESIDE the derivation instead of in a switch somewhere else.
 //
-//	DEC-single-implementation: every own-plot row derives by calling the SAME CvPlot accessor a read used to call --
+//	docs/architecture/patterns.md §DRY (single implementation): every own-plot row derives by calling the SAME CvPlot accessor a read used to call --
 //	once, when a fact that feeds it arrives, instead of once per read. No predicate's logic is re-implemented here.
 //	The ONE row that does not call an accessor is HAS_COAST, and it does not because the accessor's whole content is
 //	a neighbour walk this store already holds the answer to (the header's ruling).
@@ -70,7 +70,7 @@ namespace
 	// ⚠ TERRAIN IS THE ONE PRECONDITION: isFreshWater's first act is GC.getTerrainInfo(getTerrainType()), so a
 	// plot whose terrain is not set yet (mid world-generation) must not be asked. Terrain is mandatory on every
 	// plot and announces its own fact, which re-derives this row the moment it lands -- so this is a precondition
-	// on ONE derivation, never a staleness mechanism ([DEC-contexts-are-never-marked]).
+	// on ONE derivation, never a staleness mechanism (docs/cascade.md §Maintained EVENT-DRIVEN (a context is never marked)).
 	bool pc_deriveHasFreshWater(const CvPlot* pPlot)
 	{
 		if (pPlot->getTerrainType() == NO_TERRAIN)
@@ -178,7 +178,7 @@ namespace
 	// ⚖ A CITY-SCOPE FACT THAT A PLOT VERDICT READS. `CvPlot::isFreshWater` consults the city STANDING ON the plot
 	// (`hasFreshWater`, the provider-BUILDING access counter), so that counter crossing moves the plot's
 	// HAS_FRESHWATER while no plot fact fires at all. Without this route the verdict goes stale with nothing to
-	// re-derive it ([DEC-no-self-heal]) -- the missing-CONSUMER-ROUTE gap form, which has no other signature.
+	// re-derive it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT) -- the missing-CONSUMER-ROUTE gap form, which has no other signature.
 	// ⛔ It is kept SEPARATE from pc_axisFor because the two resolve their plot differently: a plot fact carries a
 	// map INDEX in iSrcLoc, a city fact carries a city ID plus its owner in iC.
 	// ⚠ The interest test is by EVENT ID only, so it admits every amenity crossing; WHICH amenity is filtered at
@@ -206,7 +206,7 @@ namespace
 }
 
 // ⚖ THE DECLARED INTEREST SET. Everything that maintains a plot's verdict bits is named here, at the store -- so
-// a fact that does not reach it is visible HERE rather than inferable from a router ([DEC-dict-is-a-consumer]).
+// a fact that does not reach it is visible HERE rather than inferable from a router (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)).
 // ⛔ SEVT_PLOT_PREDICATE_* is deliberately ABSENT: this store EMITS that fact, it does not consume it. Routing the
 // fan-out on the AXIS instead of on a bit's own crossing is what bounds the fan-out to one hop and makes a cascade
 // structurally impossible rather than merely avoided.
@@ -380,7 +380,7 @@ int  PlotContext::natureYield(int eYield) const
 	}
 	// The plot's own package SEGMENT -- a bare fetch, never a per-call walk (contexts.md: the number is already
 	// in the package). ×100 native, and a placement threshold is authored as a whole yield, so the single
-	// reduce is here at the point of use ([DEC-fixedpoint-x100]).
+	// reduce is here at the point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int aiNature[NUM_YIELD_TYPES];
 	m_plot->getNatureYields(aiNature);
 	return aiNature[eYield] / 100;

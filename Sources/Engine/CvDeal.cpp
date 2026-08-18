@@ -753,7 +753,7 @@ void CvDeal::read(FDataStreamBase* pStream)
 		}
 	}
 
-	// THE IN-READ HALF of the reseed ([DEC-spine-reseed]) -- a deal is genuine non-derivable state that comes
+	// THE IN-READ HALF of the reseed (docs/spine.md §5 (the load reseed)) -- a deal is genuine non-derivable state that comes
 	// back off the stream, so nothing else could announce it. It is announced HERE, after the type translation
 	// above has dropped any node whose Type no longer resolves, so the stream only ever reports what survives.
 	// ⚠ NOTHING may APPLY the export/import counts on this fact: CvGame::read is the earliest DLL load hook, so

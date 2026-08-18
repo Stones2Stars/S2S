@@ -13,7 +13,7 @@
 //	over the numeric thresholds, plus the two intrinsics. Nothing here is a per-field getter.
 //	⛔ The alternative -- isConquest / isDiploVote / isTargetScore / isEndScore / isTotalVictory /
 //	getReligionPercent / getNumCultureCities / ... -- is the ~300-hand-named-getter shape
-//	([DEC-new-getter-surface]) rebuilt one screen at a time, and it grows by CHANNEL where this grows by GROUP.
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)) rebuilt one screen at a time, and it grows by CHANNEL where this grows by GROUP.
 //	A newly authored condition key is then a new enum entry the data already carries, never a new function.
 //
 //	⚠ The flag/value ids are the engine's own `VictoryConditionFlag` / `VictoryConditionValue` enums, published

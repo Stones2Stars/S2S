@@ -1,7 +1,7 @@
 //
 //	CvLeaderHeadInfo -- the leaderhead poco's exemplar reads (see the header). Every grouped table fills
 //	from the authored key spellings through the shared parse surface (CvJsonParse), and every getter is a
-//	bare member read over the materialized forms ([DEC-materialize-at-mapfrom] -- no string-keyed read
+//	bare member read over the materialized forms (docs/architecture/patterns.md §Materialize at mapFrom -- no string-keyed read
 //	survives past mapFrom).
 //
 

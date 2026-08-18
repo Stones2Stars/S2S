@@ -6,7 +6,7 @@
 //	ProcessEnabler -- the PROCESSES domain's PURE CALCULATORS on the standardized enabler component (enabler.md
 //	par.7/7.1; CvEnabler.h): initDomain (the lifecycle sizing, NO content) + the onTechChanged event-delta
 //	applier that maintain CvPlayer::m_enabler.processes. The content is built PURELY from DOMAIN events -- the
-//	load reseed's in-read per-held-tech emits and the play-time emits are one mechanism (DEC-spine-reseed).
+//	load reseed's in-read per-held-tech emits and the play-time emits are one mechanism (docs/spine.md §5 (the load reseed)).
 //	The maintain choice stays a city production-list thing (CvCity::canMaintain is the gate), but the domain is
 //	PLAYER-held (owner ruling): its ONE axis is team techs (incl. the TECH_GAME_START root, which carries
 //	PROCESS_IDLE), so per-city copies would be byte-identical duplicated state that must never drift. The city

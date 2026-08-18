@@ -344,10 +344,6 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseFreeTechHelp(widgetDataStruct, szBuffer);
 		break;
 
-	case WIDGET_HELP_LOS_BONUS:
-		parseLOSHelp(widgetDataStruct, szBuffer);
-		break;
-
 	case WIDGET_HELP_MAP_CENTER:
 		parseMapCenterHelp(widgetDataStruct, szBuffer);
 		break;
@@ -1980,7 +1976,7 @@ void CvDLLWidgetData::parseHurryHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 
 			// "Which civics unlock this hurry?" is the REVERSE question, and the hurry already carries its own
 			// answer: a civic authors `enables.hurries`, and the readJson reverse pass lands that back on the
-			// hurry as a RELATED civic edge ([DEC-one-reverse-view]). So this reads the handful that actually
+			// hurry as a RELATED civic edge (docs/cascade.md §1 (reverse lookups are populated once, at load)). So this reads the handful that actually
 			// name it, instead of asking every civic in the game whether it does -- the whole-registry scan
 			// enabler.md par.8 singles out, on a hover-help path.
 			const CvHurryInfo& kHurry = GC.getHurryInfo((HurryTypes)(widgetDataStruct.m_iData1));
@@ -2715,7 +2711,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				//	question: the improvement half was already the shared `calculateImprovementYieldChange` (~18 AI
 				//	callers), while the feature and terrain halves existed nowhere else. So a tooltip was carrying
 				//	arithmetic no other consumer could reach, which is the shape that lets a displayed number and an
-				//	acted-on number drift apart ([DEC-single-implementation]).
+				//	acted-on number drift apart (docs/architecture/patterns.md §DRY (single implementation)).
 				//	⚑ Composing it on `CvPlot` beside its own improvement half FINISHES that method rather than
 				//	minting a parallel one, and hands the AI the same answer on the same terms.
 				int aYields[NUM_YIELD_TYPES] = {0};
@@ -2737,7 +2733,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				//	⚑ `setYieldChangeHelp` is that renderer and every other composer already goes through it, so how
 				//	a yield delta reads is now decided in ONE place -- a change to it lands everywhere at once
 				//	instead of here alone, which is what "uniform" has to mean to be worth anything
-				//	([DEC-single-implementation]).
+				//	(docs/architecture/patterns.md §DRY (single implementation)).
 				//	⚠ The COMPUTATION above is deliberately untouched: it is a WHAT-IF (what this plot would yield
 				//	if the build landed), which is the valuation plane rather than an entry list, and re-homing it
 				//	is a different and much larger question than how its result is printed.
@@ -3480,7 +3476,7 @@ void CvDLLWidgetData::parseDisabledCitizenHelp(CvWidgetDataStruct &widgetDataStr
 		GAMETEXT.parseSpecialistHelpActual(szBuffer, (SpecialistTypes)widgetDataStruct.m_iData1, pHeadSelectedCity, false, 1);
 
 		// The "one of these buildings would open the slot" line is a REVERSE cross-link, so it is read off the
-		// specialist's own EDGEF_RELATED family ([DEC-one-reverse-view]) rather than by scanning every building
+		// specialist's own EDGEF_RELATED family (docs/cascade.md §1 (reverse lookups are populated once, at load)) rather than by scanning every building
 		// and asking each one -- the own-data inversion the composer rebuild deletes. The composer re-adds it
 		// on that read; the slot count itself is the keyed `allowedSpecialists.city.{SPECIALIST_X}` entry.
 	}
@@ -5406,11 +5402,6 @@ void CvDLLWidgetData::parseHappinessRateHelp(CvWidgetDataStruct &widgetDataStruc
 void CvDLLWidgetData::parseFreeTechHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	GAMETEXT.buildFreeTechString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
-}
-
-void CvDLLWidgetData::parseLOSHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
-{
-	GAMETEXT.buildLOSString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
 }
 
 void CvDLLWidgetData::parseMapCenterHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)

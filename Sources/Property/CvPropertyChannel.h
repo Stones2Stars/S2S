@@ -10,7 +10,7 @@
 //	(RELATION_NEAR pulses, propagators -- authored as `triggers` property-delta data) is NOT this channel.
 //
 //	Sources summed (city scope): ACTIVE buildings' <PROPERTY_X>.city.flat (constant per-turn sources + the
-//	construction-time bag the curator folded -- the curated data IS the model, DEC-data-first), the units on
+//	construction-time bag the curator folded -- the curated data IS the model, docs/specs/validation.md §observation surface (data migration is never deferred)), the units on
 //	the city plot (SAME_PLOT emission, e.g. a criminal's +20 crime), and the property's OWN self-deposits
 //	(the per-POPULATION attribute source). The property's decay stays a separate PERCENT number.
 //

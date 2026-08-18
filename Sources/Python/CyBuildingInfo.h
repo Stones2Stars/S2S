@@ -19,7 +19,7 @@
 //	⚑ The six reads below came OFF that plane rather than being copied from it -- there is no building case left
 //	in `CyInfo::getIntrinsic`, so the two surfaces cannot drift and a caller has one place to look.
 //
-//	⚠ NOT the legacy per-FIELD getter contract ([DEC-new-getter-surface]) -- that ban is on the ~300 hand-named
+//	⚠ NOT the legacy per-FIELD getter contract (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)) -- that ban is on the ~300 hand-named
 //	getters mirroring the old `CvXInfo` surface, which is a different axis from a named accessor per info TYPE.
 //	This carries the reads Python actually makes, and grows only as a real consumer asks for one.
 //
@@ -63,7 +63,7 @@ public:
 
 	//	The CORPORATION_* this building is the HEADQUARTERS of (json §9 `headquarters`), NO_CORPORATION when none.
 	//	⛔ NOT the inverse question -- "which building heads corporation X" is a reverse lookup and belongs to the
-	//	edge families ([DEC-one-reverse-view]), never a scan of every building asking this.
+	//	edge families (docs/cascade.md §1 (reverse lookups are populated once, at load)), never a scan of every building asking this.
 	int getHeadquartersCorporation(int iBuilding) const;
 
 	static void pythonPublish();

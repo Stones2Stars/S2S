@@ -9,7 +9,7 @@
 //	specialbuildings, techs, units). WRITE-ONCE AT LOAD. The enabler's cap gate compares count(me, scope) < cap.
 //
 //	The key axis is the CLOSED §4.4 vocabulary, interned to EnAllowedCap at PARSE
-//	([DEC-materialize-at-mapfrom]): the authored strings exist on the parse surface only; storage is a fixed
+//	(docs/architecture/patterns.md §Materialize at mapFrom): the authored strings exist on the parse surface only; storage is a fixed
 //	array and every read is a bare typed load.
 //
 

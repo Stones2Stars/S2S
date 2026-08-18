@@ -2,7 +2,7 @@
 
 > How a `CvUnit` comes into existence, how it stops existing, and the constraints the death path is built
 > around. Engine behaviour as it is today. The death fact's place on the spine is
-> [event-spine.md](../specs/event-spine.md); this page is the mechanism the fact comes from.
+> [spine.md](../spine.md); this page is the mechanism the fact comes from.
 
 ## The object
 
@@ -22,7 +22,7 @@ that is what frees the object.
 ## Birth
 
 `CvPlayer::initUnit` → `CvUnit::init`, which emits `SEVT_UNIT_CREATED`. A LOADED unit never runs `init`, so
-`CvUnit::read` emits the same fact from inside the save read (the reseed, [DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)).
+`CvUnit::read` emits the same fact from inside the save read (the reseed, [the load reseed](../spine.md#5-the-load-reseed)).
 
 ## The death sequence — one job per operation
 
@@ -137,5 +137,5 @@ flanking kill). `units_safe()` is the snapshot variant used elsewhere for exactl
 statement that it is safe.
 
 ## See also
-- [event-spine.md](../specs/event-spine.md) — `SEVT_UNIT_KILLED` / `SEVT_UNIT_DEATH_SCHEDULE_ADDED / _REMOVED` and the reseed.
+- [spine.md](../spine.md) — `SEVT_UNIT_KILLED` / `SEVT_UNIT_DEATH_SCHEDULE_ADDED / _REMOVED` and the reseed.
 - [engine.md](engine.md) — the save-load and pointer-lifetime constraints the toolchain imposes.

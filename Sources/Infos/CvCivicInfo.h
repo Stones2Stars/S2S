@@ -5,8 +5,8 @@
 //
 //	CvCivicInfo -- the CIVIC poco rebuilt to the full exemplar surface (patterns.md § THE GETTER SETUP: the four
 //	read categories, nothing else). Styled for the JSON anatomy (json.md §2); every magnitude read is a
-//	load-compiled fetch ([DEC-materialize-at-mapfrom]); kind and scope are separate parameters
-//	([DEC-scope-is-an-axis]); no legacy getter name returns ([DEC-new-getter-surface]).
+//	load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate parameters
+//	(docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"

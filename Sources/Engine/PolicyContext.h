@@ -4,13 +4,13 @@
 
 //
 //	PolicyContext -- the empire's ENACTED-POLICY state: storage, maintenance and its declared interest set, in ONE
-//	place ([DEC-dict-is-a-consumer]). The AmenityContext shape, at empire scope.
+//	place (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). The AmenityContext shape, at empire scope.
 //
 //	IS-A ContextDict: the storage is inherited, never held. `has` / `count` / `add` / `clear` are the base's.
 //
 //	⛔ id -> COUNT, never a set. Several grantors can enact the SAME policy -- a civic, a trait, and (as the data
 //	grows) a project or a wonder -- so dropping one must not clear a state another live grantor still justifies
-//	([DEC-keyed-accumulator]). ⚠ A whole-union REFILL hides that: it recounts every time, so the multi-grantor case
+//	(docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)). ⚠ A whole-union REFILL hides that: it recounts every time, so the multi-grantor case
 //	appears to work while nothing delta-maintains it. That is what this replaced.
 //
 //	⛔ DELTAS ONLY -- no refill, no recount, no record of past contributions. Every fact carries what the
@@ -19,7 +19,7 @@
 //
 //	⚑ NO LOAD SPECIAL CASE, and unlike the city stores it needs none: policies are PLAYER-scope and a player
 //	EXISTS when its own facts stream from CvPlayer::read, so the reseed's civic/trait emits build this store
-//	through the same appliers play uses ([DEC-spine-reseed]). The reseed's civic fact carries NO_CIVIC as the
+//	through the same appliers play uses (docs/spine.md §5 (the load reseed)). The reseed's civic fact carries NO_CIVIC as the
 //	displaced side, so it is a pure +.
 //
 //	⛔ IT ONLY CONSUMES. Facts in, state out, nothing back.

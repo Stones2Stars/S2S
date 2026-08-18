@@ -39,7 +39,7 @@ retreats, not design.) Extended playtests will tune the numbers on top of parity
 
 Specialist yields now receive the city yield modifier exactly like worked tiles. This is now
 the standing cascade yield formula (`rate100 = (BASE + specialists) × modifier/100 + flat
-extras`) documented in [`modifier.md`](../../specs/modifier.md) — specialists sit inside the
+extras`) documented in [`modifier.md`](../../cascade.md) — specialists sit inside the
 multiplied `BASE` term, not the flat extra bucket. The specific accumulator/getter names this
 plan originally described (`m_aiSpecialistYieldTotal`, `getYieldRate100`) predate the
 cascade migration; read `modifier.md` for the current mechanism rather than this paragraph.

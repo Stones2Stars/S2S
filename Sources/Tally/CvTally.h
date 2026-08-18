@@ -19,7 +19,7 @@
 //	-- they serve observability, cache-invalidation, and the out-of-process (StoneBase) replay -- but the in-engine
 //	tally needs none of them. city/plot counts read the live CvCity/CvPlot directly, never this surface (tally.md §2).
 //
-//	C++03 / VC7.1: a purely-organizational static-methods class ([DEC-single-implementation]: a calculator is
+//	C++03 / VC7.1: a purely-organizational static-methods class (docs/architecture/patterns.md §DRY (single implementation): a calculator is
 //	never an instance); EMPIRE = the player's own object aggregate, TEAM/WORLD = summed over alive players on read.
 //
 

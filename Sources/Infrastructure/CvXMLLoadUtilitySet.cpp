@@ -27,7 +27,7 @@
 #include "CvXMLLoadUtility.h"
 #include "CvXMLLoadUtilityModTools.h"
 #include "CvXMLLoadUtilitySetMod.h"
-#include "Data/CvReadJson.h"   // loadJson / loadJsonCategory -- the ONE JSON reader ([DEC-one-json-reader])
+#include "Data/CvReadJson.h"   // loadJson / loadJsonCategory -- the ONE JSON reader (docs/architecture/patterns.md §The ONE reader)
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
 #include "Tools/FVariableSystem.h"
@@ -913,7 +913,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 
 	// PASS 3 is XML three-pass machinery, so it runs for the ONE type still authored in XML. Every other type
 	// here is JSON-fed and inherits the base, which asserts "Override this" -- a legacy load pass reaching a
-	// replaced info ([DEC-no-xml-into-game]), and it aborted the premenu load outright rather than degrading.
+	// replaced info (AGENTS.md §Build And Test (no XML-into-game for replaced infos)), and it aborted the premenu load outright rather than degrading.
 	// EVENTs are a permanent carve-out and stay XML (naming.md), so this loop is the whole of what pass 3 means
 	// now; the JSON types resolve their cross-references in readJson's own FK/reverse pass instead.
 	for (int i=0; i < GC.getNumEventInfos(); ++i)
@@ -1071,7 +1071,7 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 	// naming a late-registered type (the canMaintain empty-frontier bug). Static data, built once; the
 	// [READJSON/*] survey rides the event spine. The pass carries the general reverse pass (and its post-map
 	// cross-entity derivations), then FREES the retained store -- after load, no JSON-shaped object survives
-	// ([DEC-one-json-reader]).
+	// (docs/architecture/patterns.md §The ONE reader).
 	loadJson(JSON_LOAD_POSTMENU);
 
 	// The engine-side load indexes come AFTER that pass, for the same reason: they read the fully re-mapped
@@ -1726,8 +1726,8 @@ void CvXMLLoadUtility::SetDiplomacyInfo(std::vector<CvDiplomacyInfo*>& DiploInfo
 
 // ================= #430: JSON-sourced info loading (the replaced-XML shell reads are GONE) =================
 // The replaced info types load their data from Assets/Data/<folder>/*.json, NOT the archived legacy
-// CIV4<X>Infos.xml. Reading a replaced info's XML into the running game is HARD BANNED (AGENTS.md / DEC-no-xml-into-game):
-// the legacy XMLs are CURATOR INPUT ONLY. This is a THIN REGISTRATION against the ONE reader ([DEC-one-json-reader]):
+// CIV4<X>Infos.xml. Reading a replaced info's XML into the running game is HARD BANNED (AGENTS.md / AGENTS.md §Build And Test (no XML-into-game for replaced infos)):
+// the legacy XMLs are CURATOR INPUT ONLY. This is a THIN REGISTRATION against the ONE reader (docs/architecture/patterns.md §The ONE reader):
 // loadJsonCategory serves the folder's already-parsed entities from readJson's retained store in `_order.json`
 // manifest order (deterministic + machine-independent id assignment -- MP OOS: every client must agree on the
 // type->id map), and this function registers ids, creates the pocos, and mapFrom()s each (mapFrom IS the poco's

@@ -27,7 +27,7 @@
 //
 //	⚖ THE STORE IS SERIALIZED (owner). Turns-remaining is genuine NON-DERIVABLE state -- nothing can reconstruct
 //	"three turns of blackout left" from anything else -- so it is exactly the class save.md par.5 keeps a
-//	serialized store for, and [DEC-derived-never-trusted] does not reach it (that rule bans serializing DERIVED
+//	serialized store for, and docs/specs/save.md §5 (derived data serializes NOTHING) does not reach it (that rule bans serializing DERIVED
 //	data). ⛔ What is deliberately NOT carried is the CONVERSION of a legacy timer into this store: re-homing one
 //	drops its old save field, the in-flight value is lost on existing saves, and that is accepted rather than
 //	migrated. Re-home, name the old tag in savemigration.txt, take the loss.

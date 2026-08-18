@@ -9,7 +9,7 @@
 //	boosts) lives on the compiled modifier surface; the point reads fetch the unconditioned sums, the
 //	conditioned tail is the base conditioned-list access. The identity placement/growth fields, the on-map
 //	art/audio, and the grants/triggers provisions are the genuine bespoke set. No legacy-mirror modifier
-//	member survives ([DEC-new-getter-surface]).
+//	member survives (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"
@@ -57,7 +57,7 @@ public:
 	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
 	// The substrate's own base movement cost, served as the family it is authored in
 	// ([modifier.md] par.6: a plot substrate's base movement cost IS the `movement` family). x100 native like
-	// every compiled sum -- the reader reduces at its point of use ([DEC-fixedpoint-x100]).
+	// every compiled sum -- the reader reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int getFlatMovement(MovementKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
 	// What this ground costs to see THROUGH, served as the family it is authored in ([vision.md] §1: a

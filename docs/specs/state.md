@@ -8,6 +8,14 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > registries ([json.md §8](json.md)) the member set grows as states are identified from the data — an ongoing
 > activity, not a gap to close.
 
+> ⛔ **THIS DOC DOES NOT SPEC HOW A STATUS IS AUTHORED — THAT SHAPE DOES NOT EXIST YET.** Neither this file nor
+> [json.md §8](json.md) defines a JSON authoring shape for a status (timer / trigger / effect / expiry). Nothing
+> today is authored as data at all: every current status is applied only via a pseudo-promotion or a Python event
+> handler (see "Historically NOT a data block" below) and read through the runtime `hasStatus`/`ContextDict`
+> model this file DOES define. **Do not read this file as a complete data-model spec, and do not invent the
+> authoring shape to fill the gap** — that is exactly the guessing [the no-guessing rule](../../AGENTS.md#conduct)
+> bans. The shape is undesigned; see [Open](#open).
+
 > **⚖ STATUS IS A SCOPE CONCEPT, NOT A UNIT ONE (owner).** A unit is PARALYZED, a PLAYER is in a GOLDEN AGE, a
 > CITY is CELEBRATING — all three are the same mechanic: applied, ticking down every turn, over at zero. So each
 > scope that carries statuses gets its own enum and the identical store / accessor / tick shape on its owner
@@ -34,7 +42,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
   than once: a skill is an ability the unit HAS, a status is a condition something PUT ON it for N turns. The
   curator therefore maps no status tag into `skills` — an unmapped tag reports loudly instead.
 - **The read is `count > 0` (owner)** — a status HOLDS while its value is above zero, the ordinary
-  `ContextDict` semantic ([contexts.md](../architecture/contexts.md)). Expiry IS the counter reaching 0; there
+  `ContextDict` semantic ([contexts.md](../cascade.md)). Expiry IS the counter reaching 0; there
   is no separate present/absent plane beside it.
 - ⚠ **It is id→COUNT like a city's `amenities`, but the COUNT MEANS SOMETHING ELSE** — an amenity's count is a
   refcount of live grantors (moved when events add or repeal one), a status's is TURNS REMAINING and moves on
@@ -113,13 +121,13 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > **⛔ AND IT IS BUILT AT THE END, WHEN THE STRUCTURE IS SET — NOT AS PART OF INITIAL SETUP (owner):** *"that is
 > how rollerskating happens."* ⛔ Do not wire the consumer now, and do not re-home the two members onto a player
 > store to "prepare" for it — both look like progress while pre-committing a structure that is not settled yet.
-> ⚠ This is an owner-ruled ORDERING, so [DEC-no-deferred](../architecture/decisions.md#dec-no-deferred) does not
+> ⚠ This is an owner-ruled ORDERING, so ["deferred" is banned](../../AGENTS.md#design) does not
 > reach it: the work is named, its design is decided, and its position in the sequence is the ruling.
 
 > **⚖ THE STORE IS SERIALIZED; WHAT IS NOT CARRIED IS THE CONVERSION (owner).** Turns-remaining is genuine
 > NON-DERIVABLE state — nothing reconstructs *"three turns of blackout left"* from anything else — so it is
 > exactly the class [save.md §5](save.md) keeps a serialized store for, and
-> [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted) does not reach it: that
+> [derived data is never trusted from a save](save.md#5-derived-data-serializes-nothing-) does not reach it: that
 > rule bans serializing DERIVED data.
 > ⛔ **What is deliberately dropped is the MIGRATION of a legacy timer into the store.** Re-homing one deletes
 > its old save field, so an existing save's in-flight value is lost — *"we just don't convert the old statuses
@@ -128,9 +136,8 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ([save.md §3](save.md)).
 > ⚑ **The recipe generalizes to every status that follows:** re-home onto the store, name the old tag, take the
 > one-time loss. There is no per-status migration to design, and none is worth designing.
-> ⚠ Its PLAYER-ALERT ("power restored") died with the per-turn maintainer, as those alerts do — it comes back
-> as a CONSUMER of the fact ([event-spine.md](event-spine.md)), and is on the owed list in
-> [todo.md](../plans/structural-cleanup/todo.md).
+> ⚠ Its PLAYER-ALERT ("power restored") died with the per-turn maintainer, as those alerts do, and comes back
+> as a CONSUMER of the fact ([spine.md](../spine.md)).
 
 > **⚖ A STATUS ACTS ON ITS OWN OBJECT — ITS CONSUMERS ARE NOTIFICATIONS AND LOGGING (owner).** *"Not a lot of
 > things outside of notifications and logging actually care about statuses; they mostly have an effect on the
@@ -138,7 +145,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > celebrating city pays no maintenance — the effect lands **where the status is held**, so almost nothing
 > downstream needs to hear about it at all.
 > ⛔ **So a status gets NO context store, NO dictionary and NO mirror anywhere.** It is object-owned and O(1), so
-> it is FORWARDED under the STORES-vs-FORWARDS split ([contexts.md](../architecture/contexts.md)) — storing it a
+> it is FORWARDED under the STORES-vs-FORWARDS split ([contexts.md](../cascade.md)) — storing it a
 > second time would be the duplication that rule exists to prevent. ⚠ This is the sentence to re-read before
 > "wiring statuses into" anything: the wiring is a `hasStatus` call at the point of use.
 > ⚑ **That is also why the generic fact is enough.** With no machine folding on a status, per-status facts would
@@ -178,9 +185,9 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ⛔ **The gated read is then the ONE definition, and the CROSSING that is announced is ITS crossing, never the
 > store's.** The two genuinely differ — a grantor arriving mid-blackout moves the store and delivers nothing; the
 > blackout lifting delivers power while the store stands still — so announcing the store would put the fact and
-> every consumer's read on two different values, leaving [DEC-maintained-sum](../architecture/decisions.md#dec-maintained-sum)'s
+> every consumer's read on two different values, leaving [the maintained sum](../cascade.md#-the-maintained-sum--three-planes-one-slot-and-nothing-is-ever-recomputed)'s
 > plane C holding deposits nothing withdraws. The fold owns that announcement
-> ([contexts.md](../architecture/contexts.md)), and the status crossing reaches the fold for that reason alone.
+> ([contexts.md](../cascade.md)), and the status crossing reaches the fold for that reason alone.
 
 > **⚖ THE CROSSING IS ANNOUNCED, AND THE FACT IS GENERIC OVER THE STATUS.** `CvCity::setStatus` is the ONE write
 > path — the per-turn tick and the LOAD both come through it — and it emits `SEVT_CITY_STATUS_ADDED` /
@@ -188,7 +195,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ⚠ **The load therefore LANDS through it, never straight into the array.** The store deserializes wholesale, so
 > a status written directly into the slot announces nothing and every consumer gating on it reads a holder that
 > is not held — the same hole the plot substrate had. ⛔ That id is not the discriminator
-> [DEC-facts-name-happenings](../architecture/decisions.md#dec-facts-name-happenings) bans: it names which
+> [a fact names the happening](../spine.md#-a-fact-names-the-happening--something-changed-is-not-a-fact-owner) bans: it names which
 > member of an OPEN registry moved, exactly as a religion or property id does, and the direction is in the event
 > name. A fact per status would mean an engine change per authored status — the very thing the open registry and
 > the no-named-accessor rule exist to avoid.

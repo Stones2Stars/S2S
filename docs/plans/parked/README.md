@@ -1,7 +1,7 @@
 # Parked — out-of-active-scope plans, kept for intent
 
 > **Status:** parked partition (carried as-is, NOT rebuilt) · **Policy:**
-> [DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas).
+> [the keep-unkilled-ideas policy](#parked--out-of-active-scope-plans-kept-for-intent).
 
 These are design initiatives **outside the active cascade / info-handling scope**. They are **kept, not
 retired** — forward design intent is not reconstructible from code, so being merely out-of-scope is never a
@@ -19,13 +19,12 @@ consolidation treatment **when its initiative becomes active** — at which poin
 `combat-odds-baseline`, `combat-phase3b-plan`). Several below are **PARTIAL**: their done phases are noted inside; the
 open remainder is the live item.
 
-- **AI side** — `ai-architecture-north-star`, `ai-logging-rollout`, `ai-vs-human-benchmarking`,
+- **AI side** — `ai-architecture-north-star`, `ai-vs-human-benchmarking`,
   `ai-build-queue-parity`, `unit-ai-valuation`, `sea-ai-rework`, `subdued-animal-ai`.
   *(The AI is the consumer of the cascade data side — [`../../architecture/north-star.md`](../../architecture/north-star.md) §1.)*
 - **Combat model** — `combat-model-sketch` (air-combat / Layer-2 gaps), `combat-simplification-scope`
   (the good-ideas backlog), `fight-or-flight` (preserved for pluggable reimplementation).
-- **Systems / data** — `improvement-category-yields`, `specialist-rebalance`, `team-buildings` (empire-scope
-  constructables — implementation path is now the cascade [enabler](../../specs/enabler.md), not the dead prototype),
+- **Systems / data** — `improvement-category-yields`, `specialist-rebalance`,
   `global-warming-mod` (the #436 vestige-removal scope), `post-migration-content-purge` (content reclassification
   deferred until after the #428/#430 migration completes), `astrological-ancient-way-traits` (a cut trait/wonder
   system kept for reimplementation), `ranked-target-selection` (design locked in `json.md` §3.3, implementation

@@ -104,7 +104,7 @@ public:
 	static const CvInfo* infoFor(EnEdgeBucket eBucket, int id);
 
 	// THE PLOT-ATOM SEEDS a fact resolves to -- the ONE place the terrain -> mapcategory hop lives, so both
-	// domains ask rather than each carrying a copy ([DEC-single-implementation]).
+	// domains ask rather than each carrying a copy (docs/architecture/patterns.md §DRY (single implementation)).
 	// ⚑ A TERRAIN fact seeds its own (PLOTATOM_TERRAIN, id) AND one (PLOTATOM_MAPCATEGORY, id) per category that
 	// terrain carries, because a plot's map categories are DERIVED from its terrain and have no fact of their
 	// own; every other kind seeds itself alone.
@@ -131,7 +131,7 @@ public:
 	// (enabler.md §2: a building replacement is reversible DORMANCY, never a `replaces` removal). So the
 	// forward question the enabler asks every turn -- "is a successor of mine present?" -- and this one are the
 	// two directions of one edge, and this is the only place the reverse is walked
-	// ([DEC-single-implementation]).
+	// (docs/architecture/patterns.md §DRY (single implementation)).
 	//
 	// ⚠ EDGEF_REQUIRED_BY is a MERGED bucket: it also carries every entity whose requires.build/operate merely
 	// REFERENCES eId (enabler.md's edge-family caution -- a consumer with ALL semantics cannot read it raw).
@@ -139,7 +139,7 @@ public:
 	// prescribes; without it a building that simply REQUIRES eId would read as superseded by it.
 	static void supersededBy(EnEdgeBucket eBucket, int eId, std::vector<int>& superseded);
 
-	// The ONE domain-refcount edge applier (enabler.md par.7.1; DEC-single-implementation): apply/withdraw a
+	// The ONE domain-refcount edge applier (enabler.md par.7.1; docs/architecture/patterns.md §DRY (single implementation)): apply/withdraw a
 	// HAVE-source's edges into a domain -- enables.<bucket> -> the enable plane, obsoletes/replaces/
 	// disables.<bucket> -> the remove plane. Every per-domain enabler's seed + event deltas route through this.
 	static void applyEdges(EnablerDomain& d, const CvInfo* j, EnEdgeBucket eBucket, int iDelta);
@@ -150,7 +150,7 @@ public:
 	// enables/removal targets plus its EDGEF_REQUIRED_BY dependents (enabler.md par.7.1 steps 1+2).
 	// ⛔ There is nothing domain-specific left to write: EnablerDomain is generic, applyEdges is generic and the
 	// gate is generic, so a per-domain CLASS varies only by (bucket, repo, event) -- parameters, not code. Minting
-	// one per info is the duplication this collapses ([DEC-single-implementation]).
+	// one per info is the duplication this collapses (docs/architecture/patterns.md §DRY (single implementation)).
 	static void applyPlayerHave(const CvPlayer& kPlayer, EnablerDomain& d, EnEdgeBucket eBucket,
 		const CvInfo* jSource, bool bHas);
 
@@ -171,7 +171,7 @@ public:
 	// enables it YET" with "it can never be offered", and a valuation asking what an unlock is WORTH needs the
 	// second. The picking-side twin of CvPlayer::canEverResearch, which carries the same shape for techs.
 	//
-	// The bar IS the entity-level gate ([DEC-entity-gate]) and nothing else: a whole-entity game-option gate
+	// The bar IS the entity-level gate (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT) and nothing else: a whole-entity game-option gate
 	// authors as `enabled`/`disabled`, so the option read lives HERE, once, for every domain the enabler deals
 	// with -- never as a per-entity point getter on the info (an info never reads game state, json.md par.9).
 	// Evaluated against a bare ctx BY DESIGN: every authored gate is a GAMEOPTION_ leaf, which reads the live
@@ -194,7 +194,7 @@ public:
 	//
 	// PLAYER scope: it answers "may this player have this at all", which is what a spawn asks. A caller needing
 	// city-local supply (vicinity / plot group) is asking an availability question and must ask the CITY.
-	// It routes to the ONE evaluator over a ctx the contexts fill ([DEC-single-implementation]); this is the single
+	// It routes to the ONE evaluator over a ctx the contexts fill (docs/architecture/patterns.md §DRY (single implementation)); this is the single
 	// home of that fill for placement callers, so no site assembles its own.
 	static bool requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket eBucket, int iId);
 
@@ -218,7 +218,7 @@ public:
 	// WHICH clause refused, for every domain whose gate is the standard trio -- the entity-level option gate, the
 	// `allowed` cap, and `requires` ([enabler.md] par.6: the gate carries the REASON, so a greyed candidate can
 	// say what is missing instead of leaving the player and the AI to guess). ONE implementation, so two domains
-	// cannot label the same clause differently ([DEC-single-implementation]); a domain with EXTRA clauses (the
+	// cannot label the same clause differently (docs/architecture/patterns.md §DRY (single implementation)); a domain with EXTRA clauses (the
 	// building domain's dormancy / replaced / group + category caps) tests those itself and defers here for the
 	// shared three.
 	// ⚑ The cap is asked BEFORE `requires` deliberately: a consumed cap is decisive and cannot be acted on, while
@@ -242,7 +242,7 @@ public:
 	// The PURE operating buildings recompute: the two per-city operating buildings in ONE fixpoint pass. `activeOut` = the ACTIVE
 	// (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for pCity. DORMANCY is DERIVED from
 	// `requires.operate` + its dormant triggers (the successor buildings whose presence dorms this) -- never the
-	// engine active-building/`/state` (DEC-calc-zero-ride-in; dormancy is 100% governed by operate enablers).
+	// engine active-building/`/state` (docs/specs/validation.md §pollution guardrail (zero legacy ride-in); dormancy is 100% governed by operate enablers).
 	// `providedOut` = the union of every ACTIVE building's `provides.bonuses` -- the BONUS ids building supply
 	// makes present IN-VICINITY (json §5a). `obsoleteOut` = the PRESENT ∧ obsoleted-by-held-tech buildings (json §4.2):
 	// a THIRD outcome collected in the SAME pass -- excluded from active/provides, it deposits its `whenObsolete` tree.
@@ -271,13 +271,13 @@ public:
 	// The STANDING per-city operating buildings (CvCity::m_operatingBuildings, CvOperatingBuildings.h) -- a BARE
 	// FETCH, unconditionally. Nothing is recomputed on this path: the set is built by the facts and kept current
 	// in place by the targeted on*Active hooks above, so a missed propagation stays visibly wrong
-	// ([DEC-no-self-heal]).
+	// (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	static const OperatingBuildings& operatingBuildings(const CvCity* pCity);
 
 	// "If eCandidate stood here, which of this city's ACTIVE buildings would it send DORMANT?" -- the WHAT half
 	// of a supersession-aware what-if; the caller then asks the VALUATION what each is worth and nets it out
 	// (two calls, one per system: availability is the enabler's, magnitude the cascade's --
-	// [DEC-enabler-not-cascade]). No hypothetical evaluation is involved and none is needed: "B dorms while X is
+	// docs/specs/enabler.md (enabler and cascade are two separate systems)). No hypothetical evaluation is involved and none is needed: "B dorms while X is
 	// present" is STATIC authored data (B's requires.operate dormant trigger), so this is the load-built
 	// dormant-trigger index intersected with the standing ACTIVE set -- both already maintained, nothing scanned.
 	static void dormedByBuilding(const CvCity* pCity, int eCandidate, std::vector<int>& kOut);

@@ -347,7 +347,7 @@ public:
 	python::list getCityIds() const;
 
 	// The EMPIRE-LEVEL buildings this player HOLDS -- the identity.empireLevel class, held once by the player
-	// and never present in any city ([DEC-empire-level-buildings]). That is precisely why no city screen can
+	// and never present in any city (docs/specs/enabler.md §2 (empire-level buildings)). That is precisely why no city screen can
 	// show them: there is no city holding one to list it, so a player otherwise has no way to see what they own.
 	// ⚑ It hands back the LIST, not a per-id test, so a consumer never sweeps the building registry to find the
 	// handful held ([patterns.md]: a whole-registry loop is the defect, never a faster per-id getter).
@@ -360,12 +360,12 @@ public:
 	// ---- THE EMPIRE-SCOPE GROUP READS ----
 	// The empire half of the game-object read role ([patterns.md] § THE TWO READ ROLES): what this player HAS
 	// right now, per channel, rolled up over the scope chain the empire sits under.
-	// ⛔ SCOPE IS THE RECEIVER, NEVER AN ARGUMENT ([DEC-accessor-homing]). The city half of each group below is
+	// ⛔ SCOPE IS THE RECEIVER, NEVER AN ARGUMENT (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (accessor homing)). The city half of each group below is
 	// the identically-named read on CyCity; which one a call site means is decided by WHAT IT ASKED, so neither
 	// carries a scope selector and neither can be handed the wrong one.
 	// The grammar is the surface's, unchanged: one read per GROUP, the group's own enum indexes the RESULT, the
 	// whole group crosses in one call, and every AMOUNT is x100 native while a PERCENT is not scaled
-	// ([DEC-fixedpoint-x100]) -- so a reader divides at its own point of use and no read here reduces.
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- so a reader divides at its own point of use and no read here reduces.
 	python::list getYields() const;
 	python::list getCommerces() const;
 	python::list getWellbeing() const;

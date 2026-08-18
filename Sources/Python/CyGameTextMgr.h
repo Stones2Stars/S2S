@@ -28,7 +28,7 @@ public:
 	// The TXT KEYS a registry declares, handed over as ONE crossing for the whole column.
 	//
 	// ⚑ A key is TEXT-plane, which is why it is served here and not on the info surface: only the JSON-fed
-	// infos carry that ([DEC-cy-not-fixed]), and the registries below are XML-era shells whose Description IS
+	// infos carry that (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)), and the registries below are XML-era shells whose Description IS
 	// the key. ⛔ Serving it at all is the load-bearing part -- the alternative is a consumer hand-listing the
 	// keys, which defines the set in TWO places and has to be edited every time the registry gains a row.
 	//

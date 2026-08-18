@@ -1,7 +1,7 @@
 //
 //	CvSpecialistInfo -- the specialist poco's own typed reading on top of the base section dispatch (see the
 //	header). mapFrom materializes the census identity set + the property bridge ONCE
-//	([DEC-materialize-at-mapfrom]); every output magnitude is a compiled point/conditioned read (header), never
+//	(docs/architecture/patterns.md §Materialize at mapFrom); every output magnitude is a compiled point/conditioned read (header), never
 //	a mirrored array. Idempotent by contract (unconditional assigns, clear-first containers).
 //
 

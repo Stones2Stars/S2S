@@ -35,7 +35,7 @@ buy it, the machine owns it. Consequences that settle most of §5:
   (upgrade/merge promotion carry-over), unit merge/split, scrap refunds, production→gold overflow, negotiated
   deal/gift transfers, improvement upgrades.
 - **OUT — modifiers.** Anything alive only while its source is (§4) never "arrived" independently; it is the
-  source's ongoing effect, and it belongs to [modifier.md](../specs/modifier.md).
+  source's ongoing effect, and it belongs to [modifier.md](../cascade.md).
 
 > **⛔ THE MACHINE REPLACES LEGACY — IT NEVER WIDENS IT (owner ruling).** The goal is a FULL replacement and a
 > **vast reduction of endpoints**: many scattered apply sites collapse into one. So a change that *widens a legacy
@@ -45,9 +45,9 @@ buy it, the machine owns it. Consequences that settle most of §5:
 > into the legacy collapse members (`m_iNumUnitFullHeal`, `m_iPropertySpawnUnit`/`Property`, `m_healUnitCombats`).
 > **It does not.** Those members are the legacy shape being deleted; the machine reads the composed
 > `getGrants()->repeatables()` — which already carries interval, chance, the spatial intent and the `enabled`
-> condition in full ([CvGrants.h](../../../Sources/Infos/CvGrants.h) `CvJsonGrantRepeatable`) — and the
+> condition in full ([CvGrants.h](../../Sources/Infos/CvGrants.h) `CvJsonGrantRepeatable`) — and the
 > collapse members die with the city ledgers. Widening them would be the transitional shim
-> [DEC-proper-once](../architecture/decisions.md#dec-proper-once) bans, applied to a member already condemned.
+> [build the proper structure once](../../AGENTS.md#design) bans, applied to a member already condemned.
 > ⚠ Do NOT confuse the two `getNumUnitFullHeal`s — they are DIFFERENT RECEIVERS with different fates. The
 > **city-side** `CvCity::getNumUnitFullHeal()` is the applier and STAYS (its accumulator was cut; the mechanic
 > was not). The **info-side** read is GONE from the rebuilt info: the effect — the herbalist shape, "set N units
@@ -63,7 +63,7 @@ Three distinctions, each of which has already been got wrong at least once:
 
 - **GRANT** — handed over once, then persists with no living source. The machine's business.
 - **MODIFIER** — alive only while its source is; refcounted or toggled with the source's presence. NOT the
-  machine's business ([modifier.md](../specs/modifier.md) — the `freeSpecialists` precedent).
+  machine's business ([modifier.md](../cascade.md) — the `freeSpecialists` precedent).
 - **READ** — a consumer of the same info data for pedia/AI/UI. Not an apply, but **must keep working when an
   apply moves**, so it is mapped separately rather than discarded.
 
@@ -249,8 +249,8 @@ mistake. The unit-info and TRAIT legs migrate; the event-registry leg does not.
 > it decides `grants`-vs-`freeSpecialists` for a SPECIALIST, and reading it as a general plane test is what put
 > this row on the modifier plane.
 > ⚠ What stays banned is unchanged and is a different question: **do not restore a trait-side
-> promotion×unitcombat MAP** ([todo.md](../plans/structural-cleanup/todo.md)) — the legacy mechanism. The plane is
-> the trigger; the per-class filter is not that map's revival.
+> promotion×unitcombat MAP** — the legacy mechanism. The plane is the trigger; the per-class filter is not that
+> map's revival.
 
 **MODIFIER, not grant** — building `getFreeTraitTypes` ("conferred while active"); vote
 `tradeRoutes`/`isFreeTrade`/`isNoNukes`/`forceCivic` (reversed on repeal); vote-source religion yields;
@@ -266,7 +266,7 @@ the empire.
 the legacy pair was refcounted ±1 with the source's presence and REMOVED the copies when the source went. A
 grant persists — losing the wonder keeps the granted buildings.
 ⚖ **The population SPLITS on empire-uniformity, and only the varying half stays a grant
-([DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings)).** A building granting
+([empire-level buildings](../specs/enabler.md#2-pass-1--generate-the-frontier-the-enables-family)).** A building granting
 ITSELF into every city, and a `notConstructible` marker whose only arrival is an empire-wide grant, are
 `identity.empireLevel` buildings the PLAYER holds once ([enabler.md §2](../specs/enabler.md)) — no fan, no
 fold, nothing to transfer on capture. What remains on THIS model is the wonder granting an ordinary
@@ -276,7 +276,7 @@ genuinely varies.
 misses: "AFTERWARDS" (owner).** A city FOUNDED or ACQUIRED later must receive the copies for every source its
 owner already holds, so the grantor fact fanning over the cities that already stand is only half of it — the
 other half fires when a CITY STARTS EXISTING and folds what the owner holds. This is the amenity fold's
-two-leg shape exactly ([contexts.md](../architecture/contexts.md)), and it is what the legacy per-city
+two-leg shape exactly ([contexts.md](../cascade.md)), and it is what the legacy per-city
 `checkFreeBuildings` sweep was doing. ⚠ A one-shot fan passes every test on the cities standing at the time
 and silently misses every future one.
 ⚠ A separate ARRIVAL mechanism feeds the same targets and is not this: the buildings and heritages handed over
@@ -312,7 +312,7 @@ question [grants-machine.md](../specs/triggers.md) left open.
    `:4255`, `changeHealUnitCombatTypeVolume` `:4352`, `changeNumUnitFullHeal` `:4370`, all
    `kBuilding.getX() * iChange`) — no event/vote/espionage writer exists — so each is a Σ over the city's buildings
    of a static info field: the STORED-ACCUMULATOR DRIFT class, cut by
-   [DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform) via the
+   [the uniform legacy-accumulator cut](../cascade.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism) via the
    `Assets/savemigration.txt` soft-remove ([save.md §3](../specs/save.md)) — delete member + read + write, name
    the tag, no `WRAPPER_SKIP_ELEMENT`, **no `@SAVEBREAK`** (field removal is not a save break).
 
@@ -337,7 +337,7 @@ question [grants-machine.md](../specs/triggers.md) left open.
 
    **The ruling needed is which of these RE-HOME into `grants`** — a data-model change, so it triggers the
    curator update + regen in the same work item
-   ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)). Two are not merely
+   ([recurate on every decision](../../AGENTS.md#git--delivery)). Two are not merely
    homing: `extraGoody` feeds the goody-hut system that §2 rules OUT, and the advanced-start budget is flagged
    *"parked in identity … pending review"* by `curate_handicap.py:55` — an open curator question in its own right.
 
@@ -349,8 +349,7 @@ question [grants-machine.md](../specs/triggers.md) left open.
    home"** — a block that reached this doc, [json.md](../specs/json.md)'s bespoke list, the curator's mapping
    table and `CvTraitInfo`'s readers, so every layer ratified it and each reader in turn found it sanctioned.
    The block does not exist; the settler's considered action IS founding, which is precisely why the payload
-   needs no section of its own. What remains is the mechanical re-home of the data + the reader, tracked in
-   [todo.md](../plans/structural-cleanup/todo.md).
+   needs no section of its own. What remains is the mechanical re-home of the data + the reader.
 5. **Start-era grants applied forever.** `freePopulation` and `FreeStartEra` buildings fire at *every* city
    founding, not at game start — both are in scope per §0; the open question is only which TRIGGER owns them
    (city-founded, not player-init). Grounded evidence for the ruling: legacy fires `freePopulation` at

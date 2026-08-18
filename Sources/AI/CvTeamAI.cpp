@@ -1372,7 +1372,7 @@ int CvTeamAI::AI_getBarbarianCivWarVal(TeamTypes eTeam, int iMaxDistance) const
 }
 
 
-// ⛔ NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE ([DEC-no-float-in-sync]). A tech-trade value is an AI
+// ⛔ NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE (docs/reference/engine.md §NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE). A tech-trade value is an AI
 // DECISION every client computes, so a CPU-dependent `exp` differing in its last bits picks a different trade on
 // one machine and desyncs it. The squash is `3 x sigma(boost)^2 + 0.25` over a boost the ratio below BOUNDS to
 // [-1, 1], so it depends on ONE input and becomes a compile-time table in x10000 fixed point, interpolated and
@@ -1531,7 +1531,7 @@ DenialTypes CvTeamAI::AI_techTrade(const TechTypes eTech, const TeamTypes eTeam)
 				iNoTechTradeThreshold /= 100;
 
 				// diplomacy.team.noTechTrade.percent -- the difficulty scaling, on the rebuilt handicap surface
-				// (kind + scope as separate axes). A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]), so it combines
+				// (kind + scope as separate axes). A PERCENT IS NOT SCALED (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so it combines
 				// directly against the human-scale 100 base -- reducing it collapses the whole difficulty scaling.
 				iNoTechTradeThreshold *= std::max(0, 100 + GC.getHandicapInfo(GET_TEAM(eTeam).getHandicapType())
 					.getDiplomacy(DIPLOMACY_NO_TECH_TRADE, CASC_SCOPE_TEAM, /*bAiAudience*/ false));
@@ -4331,7 +4331,7 @@ void CvTeamAI::AI_doWar()
 			// overall war check (quite frequently true)
 			if (!bFinancesOpposeWar && (iGetBetterUnitsCount - iDaggerCount) * 3 < iNumMembers * 2
 			// random overall war chance -- diplomacy.empire.declareWar.ai.percent (the AI-audience leaf).
-			// ⛔ A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]): this is already 50..100, so it is compared
+			// ⛔ A PERCENT IS NOT SCALED (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)): this is already 50..100, so it is compared
 			// DIRECTLY against a rand(100). Dividing it truncates every difficulty to 0 and the AI never
 			// declares war -- the case fixed-point-and-scales.md carries as its worked warning.
 			&& GC.getGame().getSorenRandNum(100, "AI Declare War 1") < GC.getHandicapInfo(GC.getGame().getHandicapType())
@@ -4511,7 +4511,7 @@ void CvTeamAI::AI_doWar()
 bool CvTeamAI::AI_performNoWarRolls(TeamTypes eTeam)
 {
 	// The AI-audience declare-war probability, off the rebuilt handicap surface. An unscaled PERCENT compared
-	// straight against rand(100) ([DEC-fixedpoint-x100]) -- a divide here vetoes war on every difficulty.
+	// straight against rand(100) (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- a divide here vetoes war on every difficulty.
 	if (GC.getGame().getSorenRandNum(100, "AI Declare War 1") > GC.getHandicapInfo(GC.getGame().getHandicapType())
 		.getDiplomacy(DIPLOMACY_DECLARE_WAR, CASC_SCOPE_EMPIRE, /*bAiAudience*/ true))
 	{

@@ -578,9 +578,7 @@ cluster at the modifier cut, not before (skipping it alone would double-process 
 
 ========================
 The keyed improvement-yield accumulators (civic/trait/building-global on the player; tech rows on the team) --
-the stored-accumulator drift class (modifier.md par.2b; the engine under-yielded on every improved plot vs the
-spec oracle). Converted to recompute-from-source CvDerivedCacheVec (never serialized; dirty on construct/load;
-sources: adopted civics + active traits + cascade-ACTIVE buildings' global rows / held techs' improvement rows).
+the stored-accumulator drift class (modifier.md par.2b; the engine under-yielded on every improved plot).
 Reads are DRAINED under the original tags (discarded); writes dropped. The TEAM keeps a separate PERSISTED
 event-grant store CvTeam::m_eventGrants, the standardized CvEventGrantStore (Engine/CvEventGrants.h) under its
 own EventGrants* tags, soft-absent on old saves -- the
@@ -591,16 +589,13 @@ precedent). The drains flush at the next save-compat break.
 The per-type specialist empire-boost accumulators -- the stored-accumulator drift class. Their building
 feeders were poco STUBS returning 0 (the boosts were curated onto the SPECIALISTS as conditioned empire
 deposits per the deliveryguy own-output ruling), so the wonder/building specialist boosts never reached the
-output. Converted to recompute-from-source CvDerivedCacheVec (never serialized; sources: the specialist's own
-conditioned empire deposits evaluated via MMKernel::sumUnit + the active traits' keyed rows). Reads DRAINED
-under the original tags; writes dropped. Flush at the next save-compat break.
+output. Reads DRAINED under the original tags; writes dropped. Flush at the next save-compat break.
 
 ========================
 2026-07-21 -- WRAPPER_SKIP_ELEMENT -> central soft-remove conversion (owner ruling): the lingering per-object skips
 are replaced by the central drain here so the variables go fully dead. The bonus-fed wellbeing scalars, arresting-unit,
 trait-display and combat-focus are fully-removed members (no member, no read, no write). m_paiNumBonuses (city) and
-m_aiYield (plot) are recompute-only derived caches (CvDerivedCache, never serialized, rebuilt on load) -- their old
-serialized tags are drained here.
+m_aiYield (plot) are derived, never serialized, and rebuilt on load -- their old serialized tags are drained here.
 CvCity::m_iBonusGoodHealth
 CvCity::m_iBonusBadHealth
 CvCity::m_iBonusGoodHappiness
@@ -800,8 +795,7 @@ CvCity::m_iImprovementBadHealth
 | CvCity maintenance -- the DERIVED value and its hand-named modifier accumulator.
 | m_iMaintenance was a SERIALIZED derived value read back through an ensure-on-read getter -- both halves are
 | defects: derived data serializes NOTHING (save.md 5 / DEC-derived-never-trusted) and a read is a BARE FETCH
-| unconditionally (the ensure() protocol is tombstoned BY NAME, superseded-ideas 14). It is now the standardized
-| CvDerivedCache component on the city: mark-driven, recompute-only, never serialized.
+| unconditionally (the ensure() protocol is tombstoned BY NAME, superseded-ideas 14).
 | m_iMaintenanceModifier was one hand-named scalar per channel -- the shape DEC-uniform-cache-shape calls a
 | DEFECT: it cannot be addressed uniformly, so it forces its own bespoke invalidation path.
 | REPLACEMENT: the maintenance channel of the city's cascade package -- the flat leg carries the authored
@@ -821,7 +815,7 @@ CvCity::m_iMaintenanceModifier
 | which IS that predicate, so there is no area scope to keep (state-repositories.md: a landmass is not ownable).
 | m_iTotalMaintenance was a SERIALIZED derived total behind an ensure-on-read getter -- both halves defects.
 | REPLACEMENT: the maintenance channels of the cascade packages, read through the ONE cross-scope roll-up. The
-| empire total is now the standardized CvDerivedCache receiver sum over its cities' realized values.
+| empire total is the sum over its cities' realized values, re-summed at the read -- no stored receiver slot.
 CvPlayer::m_iMaintenanceModifier
 CvPlayer::m_iCoastalDistanceMaintenanceModifier
 CvPlayer::m_iConnectedCityMaintenanceModifier
@@ -921,7 +915,7 @@ CvPlayer::m_iWorkerSpeedModifier
 | scalar. The empire-scope authorings answer through the roll-up.
 | The CITY-scope accumulator is a DIFFERENT thing and stays: great people accrue PER CITY, which is where the
 | bulk of the data is authored. (Great GENERAL is neither -- its points are summed FROM cities into the player
-| counter, so it wants a receiver sum; see todo.md.)
+| counter, so it wants a receiver sum.)
 | REPLACEMENT: CvPlayer::getScalars()[SCALAR_GREAT_PEOPLE_RATE].
 CvPlayer::m_iGreatPeopleRateModifier
 ========================
@@ -1165,7 +1159,7 @@ The plot's PUSH-MAINTAINED base yield. It was a second copy of a number the casc
 | current by four hand-written delta blocks (plot type, terrain, feature, river), which is the drift class
 | ([DEC-accumulator-cut-uniform]) and also what made its one reader look cheap.
 | REPLACEMENT: the plot's own CvCascadePackage. ITS PRE-IMPROVEMENT slot is still owed -- calculateNatureYield
-| wants the pre-improvement, pre-route subset, which the realized package does not separate ([todo.md]).
+| wants the pre-improvement, pre-route subset, which the realized package does not separate.
 CvPlot::m_baseYields
 ========================
 Trait-fed PLAYER accumulators, cut with the pushes that were their only writer. Each was a hand-maintained
@@ -1335,7 +1329,8 @@ The city's DISABLED-POWER timer, re-homed onto the city STATUS store rather than
 | per-turn decrement and save field. Statuses are not serialized, so this carries NO conversion.
 | BEHAVIOUR: a save taken mid-blackout loads with the power already back on. Owner-ruled and accepted -- a
 | transient counter is not worth a migration for a short-term changeover.
-| REPLACEMENT: CvCity::hasStatus(CITYSTATUS_POWER_DISABLED), read through CvCity::isPower.
+| REPLACEMENT: CvCity::hasStatus(CITYSTATUS_POWER_DISABLED), read through CvCity::isPowered -- the GATED
+| verdict that composes the amenity's own hasPowerSource with the blackout status.
 CvCity::m_iDisabledPowerTimer
 
 The two remaining per-unit HEAL accumulators, REPLACED by the resolved UNIT plane. Both were hand-named
@@ -1890,7 +1885,7 @@ CvCity::BonusDefenseChanges              (int)
 | ⚠ The two CvCityAI terms are DROPPED, not re-pointed: both read the writerless array, so both returned 0 on
 | any new game and contributed nothing. Restoring an AI term wants a read of the per-scaler RATE for a given
 | count-key, which does not exist on the calc surface -- the same missing-read class as the unit-qualified
-| entry sum in todo.md, and a valuation improvement rather than a migration obligation.
+| entry sum, and a valuation improvement rather than a migration obligation.
 CvCity::m_paiImprovementFreeSpecialists  (class int array, IMPROVEMENTS)
 ========================
 | The military-happiness RATE: how much happiness one stationed military unit is worth, empire-wide.
@@ -2091,8 +2086,8 @@ CvPlayer::m_iMilitaryProductionModifier   (int)
 | were already landing in the city's package. The push was the duplicate.
 | ⚑ It escaped being a live double-count only because nothing on the PRODUCTION path ever read the
 | accumulator: its three readers were all CvCityAI weighting heuristics, which is why the duplication stayed
-| quiet ([roadmap.md] LEGACY STILL BREATHING -- a mutation choke point maintaining a derived store beside the
-| fact it emits, its tell being a consumer that never routes on that fact).
+| quiet (a mutation choke point maintaining a derived store beside the
+| fact it emits, its tell being a consumer that never routes on that fact -- validation.md).
 | REPLACEMENT: those three heuristics now read the BUILD_RATE_MILITARY category through getBuildRateKinds
 | (realizedAtCity = team + empire + city), so they see the whole picture instead of the corporation slice.
 | ⚠ STATED BEHAVIOUR CHANGE, and it is a repair: the AI's military-production weights previously saw ONLY

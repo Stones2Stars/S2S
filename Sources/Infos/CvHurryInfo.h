@@ -7,7 +7,7 @@
 //	read categories, nothing else). A rush type (gold-rush / population-rush): the bespoke §9 `conversion`
 //	block (json.md §9) held as ONE typed unit mirroring the authored keys -- the two rush rates are mutually
 //	exclusive in the data, each hurry authors exactly one -- plus the top-level `causesAnger` flag intrinsic.
-//	JSON-fed (Assets/Data/hurries/*.json via mapFrom); no XML read (DEC-no-xml-into-game). A hurry authors no
+//	JSON-fed (Assets/Data/hurries/*.json via mapFrom); no XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)). A hurry authors no
 //	availability/classification/modifier sections; type + identity text + the ui.art.icon button ride the base
 //	CvInfo reading.
 //

@@ -240,7 +240,7 @@ public:
 
 	bool canContinueProduction(const OrderData& order) const;
 	// The legs of getProductionExperience, filled only when a caller asks for them. The [XP/production] census
-	// reads them off the REAL calculation rather than re-deriving a second one ([DEC-single-implementation]).
+	// reads them off the REAL calculation rather than re-deriving a second one (docs/architecture/patterns.md §DRY (single implementation)).
 	struct ProductionExperienceLegs
 	{
 		int flat;
@@ -368,7 +368,7 @@ public:
 	// produces (modifier.md §2b). Distinct from getWellbeing on purpose: that one answers in the vocabulary a
 	// CANDIDATE also answers in, so the two compose; this one is the city's own level and composes with nothing.
 	// A consumer wanting ONE side of a pair reads the array -- there is no per-side getter, and the four legacy
-	// level getters it replaces are deleted, not renamed ([DEC-new-getter-surface]).
+	// level getters it replaces are deleted, not renamed (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 	void realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 	// The opposing-pair NETS, in WHOLE faces / health points (signed -- a surplus is as meaningful as a
 	// deficit). The pairing itself lives once on the calc surface (InfoValuation::netHappiness/netHealth).
@@ -553,7 +553,7 @@ public:
 	// (team + empire + city) by the cross-scope roll-up. It replaces the hand-summed city + player + area +
 	// connected-city legs: there is no area scope ([state-repositories.md]), an `area` modifier authors at
 	// EMPIRE, and the connected-city leg was never a KIND -- it is a CONDITION on an ordinary deposit
-	// ([DEC-conditions-are-predicates]).
+	// (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)).
 	int maintenancePercentStack(int iKind) const;
 	void maintenanceLegs(int iKind, int64_t& flatSum, int64_t& percentSum) const;
 
@@ -699,17 +699,17 @@ public:
 	// Plot ENTER (+1) / LEAVE (-1) -- fold the plot's HAS_/IS_ attributes into this city's context (plotAttrs, the one
 	// stored aggregate). THE ONE APPLIER, and it is reached ONLY from CityContext's own spine consumer, off the
 	// working-city MEMBERSHIP fact: as it fires at play, and from the buffered in-read facts at the load-finish
-	// reseed (DEC-spine-reseed). ⛔ Never called beside a mutation site -- the choke point announces, the store
-	// applies ([DEC-dict-is-a-consumer]).
+	// reseed (docs/spine.md §5 (the load reseed)). ⛔ Never called beside a mutation site -- the choke point announces, the store
+	// applies (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)).
 	void onCityPlotChanged(const CvPlot* pPlot, int iSign) { m_cityContext.onPlotChanged(pPlot, iSign); }
 
 	// The CITY-scope cascade package -- the one scope carrying BOTH sides of the origin rule (yield flats from
 	// buildings + the percent stacks), PLUS this city's RECEIVER sums (the realized rates it consumes:
-	// food/production/commerce/culture) riding the same cache beside the packages ([DEC-uniform-cache-shape]).
-	// A MAINTAINED SUM ([DEC-maintained-sum]): the DOMAIN fact names the source, the compiled index names that
+	// food/production/commerce/culture) riding the same cache beside the packages (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE).
+	// A MAINTAINED SUM (docs/cascade.md §THE MAINTAINED SUM): the DOMAIN fact names the source, the compiled index names that
 	// source's deposits, and APPLYING them is the whole maintenance -- nothing marked, deferred or rebuilt. Never
 	// serialized; the reseed's own in-read facts build it.
-	// ⛔ THE CITY HAS TWO YIELD PLANES AND THEY ARE DIFFERENT TYPES ([DEC-hard-typing-or-rollerskate],
+	// ⛔ THE CITY HAS TWO YIELD PLANES AND THEY ARE DIFFERENT TYPES (AGENTS.md Conventions §Design (hard typing or rollerskate),
 	// [state-repositories.md] § THE ORIGIN RULE). BUILDING yields are tier 2 -- added after the percent stack;
 	// SPECIALIST yields are tier 1 -- inside it. Handing one where the other belongs does not compile, which is
 	// the whole point: as prose this rule was re-corrected more times than the owner cares to count.
@@ -720,9 +720,9 @@ public:
 
 	// ---- THE ENABLER'S PER-CITY STATE (enabler.md §7.1) -- the "can I?" machine's host on this scope owner.
 	// ⛔ NOT a value cache and carrying NO dirty protocol: there is no dirty->recompute path at all. Both are
-	// built by the load reseed's events through the same O(delta) appliers play uses ([DEC-spine-reseed]) and
+	// built by the load reseed's events through the same O(delta) appliers play uses (docs/spine.md §5 (the load reseed)) and
 	// maintained by TARGETED PROPAGATION in place; a read is a bare O(1) fetch, so a propagation that fails to
-	// fire leaves the set VISIBLY WRONG rather than silently healed ([DEC-no-self-heal]). Neither is serialized
+	// fire leaves the set VISIBLY WRONG rather than silently healed (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). Neither is serialized
 	// -- empty from birth, so a loaded game is populated by the events, never from the save.
 	// They are PUBLIC and MUTABLE by requirement, not laxity: the domain enablers reach them for write through a
 	// `const CvCity&` (EnablerKernel / BuildingEnabler / UnitEnabler), the city being the owner of the storage
@@ -740,7 +740,7 @@ public:
 
 	// ---- THE AVAILABILITY READ SURFACE -- the ENABLER's "can I, right now?" half of the GAME-OBJECT read role
 	// (patterns.md § THE TWO READ ROLES). Distinct from the INFO role's authored what-do-I-CARRY answer and from
-	// the modifier's how-much groups beside it; the two machines stay separate ([DEC-enabler-not-cascade]).
+	// the modifier's how-much groups beside it; the two machines stay separate (docs/specs/enabler.md (enabler and cascade are two separate systems)).
 	//
 	// ONE READ PAIR PER DOMAIN -- the DOMAIN is the group, and the existing engine enum is the consumer's
 	// vocabulary (BuildingTypes / UnitTypes indexes the question). The domain set is FIXED and small, so it grows
@@ -749,7 +749,7 @@ public:
 	// ⛔ EVERY READ IS A BARE O(1) LOOKUP THAT NEVER CALLS A CALCULATOR (enabler.md §7): the verdict already sits
 	// in the maintained tri-state, put there by the events. A read never gates, never recomputes and never
 	// evaluates `requires` -- so a missed propagation leaves a visibly wrong verdict rather than being silently
-	// recomputed away ([DEC-no-self-heal]).
+	// recomputed away (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	//
 	// The TRI-STATE is returned whole rather than reduced to a bool: HIDDEN vs GREYED is the "why not" the build
 	// list needs, and §6's greying falls out of the same gate at no extra cost. Collapsing it here would force a
@@ -790,7 +790,7 @@ public:
 	// § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must never look like it.
 	// ONE GETTER PER GROUP: the call carries NO channel argument -- YieldTypes indexes the RESULT -- and there is
 	// no scalar getter per channel; a caller wanting one value indexes the group. The group grows by DATA, never
-	// by a new getter. Values are x100 NATIVE ([DEC-fixedpoint-x100]): no `100` in the name, no scale variant, a
+	// by a new getter. Values are x100 NATIVE (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)): no `100` in the name, no scale variant, a
 	// reader divides by 100 at the point of use. A BARE FETCH per channel, unconditionally -- nothing on a read
 	// path recomputes, gates, or ensures (state-repositories.md; superseded-ideas #14).
 	void getYields(int (&yields)[NUM_YIELD_TYPES]) const;
@@ -820,7 +820,7 @@ public:
 	// The CENSUS twin of getCommerces -- ONE channel's split, term by term, for a consumer that has to attribute a
 	// wrong number rather than merely show it (a tooltip; the served decomposition). It is the SAME gather and the
 	// SAME combine with the terms kept, so it can never describe arithmetic the realized read does not do
-	// ([DEC-single-implementation]).
+	// (docs/architecture/patterns.md §DRY (single implementation)).
 	void getCommerceTerms(CommerceTypes eCommerce, CvCommerceSplitTerms& kTerms) const;
 private:
 	// The ONE live-slider gather both public commerce reads come through.
@@ -1354,7 +1354,7 @@ public:
 
 
 	// The two-phase stream read: identity (the id alone) so the loader can register this city before the
-	// body streams, then the body ([DEC-spine-reseed]). `read` is the single-phase entry for direct callers.
+	// body streams, then the body (docs/spine.md §5 (the load reseed)). `read` is the single-phase entry for direct callers.
 	void readIdentity(FDataStreamBase* pStream);
 	void readBody(FDataStreamBase* pStream);
 	void read(FDataStreamBase* pStream);
@@ -1803,9 +1803,9 @@ private:
 	bool m_bVisibilitySetup;
 
 	// The city's realized MAINTENANCE, on the ONE standardized derived-cache component -- never a hand-rolled
-	// dirty-flag/value pair beside it ([DEC-uniform-cache-shape]: a hand-named scalar cannot be addressed
+	// dirty-flag/value pair beside it (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE: a hand-named scalar cannot be addressed
 	// uniformly, so it forces a bespoke invalidation path per field, which is how ~33 of them accumulated).
-	// Recompute-only and NEVER serialized ([DEC-derived-never-trusted] / [save.md §5]) -- dirty-on-construct
+	// Recompute-only and NEVER serialized (docs/specs/save.md §5 (derived data serializes NOTHING) / [save.md §5]) -- dirty-on-construct
 	// means a loaded game recomputes from current state rather than trusting a save's stale number.
 
 

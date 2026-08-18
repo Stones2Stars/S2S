@@ -4,7 +4,7 @@
 
 //
 //	CvCascadePackage -- the ONE uniform per-scope value package of the modifier cascade
-//	(state-repositories.md, the per-scope package model; [DEC-uniform-cache-shape]).
+//	(state-repositories.md, the per-scope package model; docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE).
 //
 //	EVERY scope object (team / player / city / plot) carries this SAME type as a data member; what
 //	varies between scopes is only WHICH SLOTS carry a value (the registry's data-derived channel set -- KEYS
@@ -18,17 +18,17 @@
 //	and is re-summed on the calc surface where the combine lives. See the callout above readValuesInto.
 //
 //	⛔ IT IS A MAINTAINED SUM, NOT A CACHE -- so it carries NO staleness protocol of any kind: no flag, no mask,
-//	no refresh delegate, no rebuild ([DEC-maintained-sum]). A DOMAIN fact names its SOURCE, the compiled deposit
+//	no refresh delegate, no rebuild (docs/cascade.md §THE MAINTAINED SUM). A DOMAIN fact names its SOURCE, the compiled deposit
 //	index names that source's deposits, and APPLYING them IS the maintenance, through the apply verbs below and
 //	nothing else. Three routed planes reach them and all three land in the same slot: the SOURCE route (±value),
 //	the COUNT route (±value × Δcount -- the context dictionaries' half, [contexts.md]) and the ATOM route (±value
 //	on a condition's verdict crossing). B and C are coupled: C is exact only because B guarantees no count moves
 //	unannounced, which is what makes `slot == Σ resolve(d, state_now)` hold at every instant.
 //
-//	NEVER serialized ([DEC-derived-never-trusted]); a package starts EMPTY and the LOAD build is the reseed's own
-//	in-read facts ([DEC-spine-reseed]), never a pass over populated objects. ⛔ A channel no fact ever reached
+//	NEVER serialized (docs/specs/save.md §5 (derived data serializes NOTHING)); a package starts EMPTY and the LOAD build is the reseed's own
+//	in-read facts (docs/spine.md §5 (the load reseed)), never a pass over populated objects. ⛔ A channel no fact ever reached
 //	therefore reads ZERO -- loudly and permanently, because nothing re-derives it. That is not a gap in the
-//	design, it IS the missed-emit tripwire ([DEC-no-self-heal]): the wrong value is how the missing fact is found.
+//	design, it IS the missed-emit tripwire (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT): the wrong value is how the missing fact is found.
 //
 //	Storage is sized lazily (ensureSized) from the registry layout -- the layout is minted at load, after the
 //	owners construct.
@@ -72,9 +72,9 @@ int64_t cascadePlotGoldenAge100(int iX, int iY, int iChannel, int64_t iOperand10
 // channels can arise.
 //
 // ⚠ The arithmetic itself is not here: it lives once on the calc surface (InfoValuation::plotScaledYield), which
-// the what-if plot reads share ([DEC-single-implementation]). This plane only stores and feeds.
+// the what-if plot reads share (docs/architecture/patterns.md §DRY (single implementation)). This plane only stores and feeds.
 
-// ⛔ THE YIELD ORIGIN IS PART OF THE PACKAGE'S TYPE ([DEC-hard-typing-or-rollerskate]).
+// ⛔ THE YIELD ORIGIN IS PART OF THE PACKAGE'S TYPE (AGENTS.md Conventions §Design (hard typing or rollerskate)).
 // A city's yields come from THREE origins -- plots, SPECIALISTS and BUILDINGS -- and they are three separate
 // packages, not one ([state-repositories.md] § THE ORIGIN RULE). The split is FORCED: modifier.md §2a puts
 // specialists in TIER 1 (inside the percent stack) and buildings in TIER 2 (added after it), while the maintained
@@ -102,7 +102,7 @@ struct CvCascadePackage
 	CvCascScope scope;                     // which layout this package lives on (set at bind)
 	int identityFirst;                     // the SERVED identity, interpreted per scope (CvCascadeSlotValues.h)
 	int identitySecond;                    // its second axis: city id / team id / plot y (-1 = none)
-	// ⛔ WIDTH IS PER UNIT, exactly as SCALE is ([DEC-fixedpoint-x100]). An AMOUNT accumulates -- across
+	// ⛔ WIDTH IS PER UNIT, exactly as SCALE is (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). An AMOUNT accumulates -- across
 	// sources, across scopes, at ×100 -- so it carries 64 bits; a PERCENT is a small whole number by ruling
 	// (no decimals, hence no ×100), so it has nothing to accumulate into and stays 32. Widening only the
 	// amount side is what lets the combine keep its shape while the overflow ceiling disappears.
@@ -126,7 +126,7 @@ struct CvCascadePackage
 	// `hasBuilding` answers true where this answers false -- and this one is right, because it records what was
 	// applied rather than what is held. It is the apply path's own bookkeeping and cannot disagree with itself.
 	// ⚑ Ordinary ContextDict semantics: a COUNT not a bit, because one source may deposit at several
-	// multiplicities, and zeroed at owner reset like every other delta store ([DEC-keyed-accumulator]).
+	// multiplicities, and zeroed at owner reset like every other delta store (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)).
 	mutable ContextDict appliedSources;
 	// A SEGMENT of `flat`: the plot's SUBSTRATE-only contribution -- terrain + feature + bonus, WITHOUT the
 	// improvement, the route or the owner's plot-scope sources. A package's parts are segments of it (owner),
@@ -155,7 +155,7 @@ struct CvCascadePackage
 	// modifier.md §2a floors it in three places: nature = max(0, terrain+feature+bonus), the improvement
 	// floored at −nature, the total floored at 0. A floor does not distribute over a delta
 	// (max(0, x+d) != max(0, x) + d), so the RESOLVED slot cannot itself be a maintained sum -- but each
-	// SEGMENT is a plain sum and therefore can be ([DEC-maintained-sum]: the fact applies, nothing recomputes).
+	// SEGMENT is a plain sum and therefore can be (docs/cascade.md §THE MAINTAINED SUM: the fact applies, nothing recomputes).
 	// So the SEGMENTS are what the facts maintain, and `flat` is re-derived from them at APPLY time by
 	// resolvePlotFlat -- O(1) arithmetic over the four stored numbers, never a walk, which is exactly what keeps
 	// every READ a bare fetch. Sized at PLOT scope only; only the yield channels ever carry one.
@@ -196,16 +196,16 @@ struct CvCascadePackage
 	// per scope (they expose no common id accessor), so identity is passed IN rather than read back off
 	// TOwner; either axis may be -1 where the scope has none.
 	// ⛔ THERE IS NO REFRESH DELEGATE, BECAUSE THERE IS NO REBUILD TO DELEGATE TO. A package starts EMPTY and is
-	// filled ONLY by the apply verbs below, from the facts ([DEC-maintained-sum]). A channel no fact ever reached
-	// reads ZERO -- loudly and permanently -- which IS the missed-emit tripwire ([DEC-no-self-heal]); the load
-	// build is the reseed's own in-read facts ([DEC-spine-reseed]), never a pass over populated objects.
+	// filled ONLY by the apply verbs below, from the facts (docs/cascade.md §THE MAINTAINED SUM). A channel no fact ever reached
+	// reads ZERO -- loudly and permanently -- which IS the missed-emit tripwire (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT); the load
+	// build is the reseed's own in-read facts (docs/spine.md §5 (the load reseed)), never a pass over populated objects.
 	void bind(CvCascScope ePackageScope, int iIdentityFirst, int iIdentitySecond)
 	{
 		scope = ePackageScope;
 		identityFirst = iIdentityFirst;
 		identitySecond = iIdentitySecond;
 		// ⛔ ZEROED AT OWNER RESET -- a delta store is correct ONLY from a known zero
-		// ([DEC-keyed-accumulator]; [state-repositories.md] § THE SEMIBOOLEAN STATE). Every bind() site is an
+		// (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator); [state-repositories.md] § THE SEMIBOOLEAN STATE). Every bind() site is an
 		// owner's reset/init (CvCity / CvPlot / CvPlayer / CvTeam), and `CvCity` and `CvPlot` are RECYCLED out of
 		// an FFreeListTrashArray -- so without this a reused slot inherits the previous occupant's sums, its
 		// applied-source record and its book, and NO later ±1 can ever correct them.
@@ -234,7 +234,7 @@ struct CvCascadePackage
 	// ---- never recomputes and there is nothing left on it to gate (state-repositories.md: an ensure-on-read
 	// ---- protocol is tombstoned, superseded-ideas #14). A channel no event ever marked therefore reads
 	// ---- whatever the events built -- visibly wrong if an emit is missing, which is exactly how the missing
-	// ---- emit gets found ([DEC-no-self-heal]). A never-authored channel answers 0 without any storage
+	// ---- emit gets found (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). A never-authored channel answers 0 without any storage
 	// ---- existing anywhere. ----
 
 	int64_t readFlat(int iChannel) const
@@ -281,7 +281,7 @@ struct CvCascadePackage
 	// Move the city's worked-plot Σ by an EXACT delta the caller computed (a resolve delta, or ± a whole plot
 	// as it joins or leaves the worked set). ⛔ Never a recount -- the caller always knows both ends.
 	// ⛑ EVERY WRITE IS TAGGED WITH THE LEG THAT MADE IT, and the tag is taken HERE rather than at the call
-	// sites: this is the Σ's ONE write point, so a leg added later cannot escape the trace ([DEC-single-implementation]
+	// sites: this is the Σ's ONE write point, so a leg added later cannot escape the trace (docs/architecture/patterns.md §DRY (single implementation)
 	// -- the same reason an emit lives in the internal setter rather than in a hand-kept list). The trace is
 	// LEVEL 4 and costs nothing below it.
 	void applyPlotBaseFlat(int iChannel, int64_t iDelta, const char* szLeg = NULL,
@@ -352,7 +352,7 @@ struct CvCascadePackage
 	// The IMPROVEMENT and REST segments, RAW -- the census decomposition of readFlat. readFlat collapses the
 	// segments into one number, so it can say a plot's yield is short and never WHICH leg is short: a
 	// dead improvement leg and a dead nature leg are indistinguishable in the total. These are the only reads
-	// that can tell them apart, and they exist for that census alone ([DEC-obs-scale]).
+	// that can tell them apart, and they exist for that census alone (docs/spine.md §The reconstruction bar (Orwell)).
 	// ⚠ RAW ON PURPOSE -- unfloored, so they sum to the pre-floor base and a NEGATIVE improvement (an
 	// improvement that consumes its nature yield) stays visible instead of being clamped into agreement.
 	// Never a consumer read: the value a consumer wants is readFlat, which is the floored §2a combine.
@@ -422,7 +422,7 @@ struct CvCascadePackage
 		}
 	}
 
-	// ---- THE WRITE PATH: THE MAINTAINED SUM'S ONE WRITER ([DEC-maintained-sum]) ----
+	// ---- THE WRITE PATH: THE MAINTAINED SUM'S ONE WRITER (docs/cascade.md §THE MAINTAINED SUM) ----
 	// A DOMAIN fact names its SOURCE, the compiled deposit index names that source's deposits, and APPLYING
 	// them IS the maintenance -- so the slot is correct at the instant the fact arrives, with nothing marked,
 	// deferred or batched. Three routed planes reach these verbs, and all three land in the SAME slot: the
@@ -430,13 +430,13 @@ struct CvCascadePackage
 	// ATOM route (±value on a condition's verdict crossing). There is deliberately no `set`-style writer:
 	// a maintained sum is only ever moved by a delta, exactly as ContextDict has no set().
 	// ⛔ A MISSED EMIT therefore leaves the slot visibly wrong and nothing re-derives it. That is the design
-	// ([DEC-no-self-heal]) -- it is how the missing fact gets found.
+	// (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT) -- it is how the missing fact gets found.
 
 	// ⛔ EVERY VERB SIZES FIRST. The storage grows to the load-minted layout on first write, so a delta always
-	// lands in a slot that exists and starts from a known ZERO ([DEC-keyed-accumulator]: a delta store is
+	// lands in a slot that exists and starts from a known ZERO (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator): a delta store is
 	// correct only from a known zero). ⚠ Sizing on the READ side instead would be the defect: an unsized
 	// vector makes every apply fall through its own bounds test and return, so the package answers 0 forever
-	// while reading as fully wired -- the quiet failure [DEC-no-legacy-masking] exists to forbid.
+	// while reading as fully wired -- the quiet failure docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap exists to forbid.
 	// A NEGATIVE slot is different and is correctly declined: it means this channel is not authored at this
 	// scope at all (the ORIGIN RULE), so there is no slot to move and nothing is being dropped.
 
@@ -517,7 +517,7 @@ struct CvCascadePackage
 	// rather than a deposit. The segments are untouched; only the non-linear step over them is recomputed.
 	// ⛔ The threshold is the case that needs it: it reads the plot OWNER's threshold channels, so it moves when a
 	// TRAIT is gained or lost, and that fact names no plot. Without this route every plot would keep the step it
-	// resolved under the old trait set, permanently ([DEC-no-self-heal]).
+	// resolved under the old trait set, permanently (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// ⚠ It is NOT a rebuild: nothing is re-derived from sources, and a plot whose step did not change writes the
 	// same number back.
 	int64_t refreshPlotResolve(int iChannel) const
@@ -571,14 +571,14 @@ struct CvCascadePackage
 		}
 		// JUST BEFORE OUTBOUND (owner): the plot-local yield SCALING, applied to the total those floors just
 		// produced and folded into the slot every consumer reads -- so the city base, the AI plot valuation and
-		// the tooltips all see one number ([DEC-single-implementation]).
+		// the tooltips all see one number (docs/architecture/patterns.md §DRY (single implementation)).
 		// ⚖ A RATE: whole intervals of the plot's OWN total, each granting `amount` of the SAME channel. 12 on a
 		// 1-per-5 scaling gains 2 and outputs 14.
 		// ⚠ The division is over the PRE-BONUS total, so the grant cannot feed itself; and both operands live on
 		// the ×100 plane, which the ratio cancels -- only `amount` carries the scale.
 		// ⛔ The arithmetic itself is NOT written here: it lives once on the calc surface
 		// (InfoValuation::plotScaledYield), which the what-if plot reads share. This end only FEEDS it the two
-		// stored numbers ([DEC-single-implementation]).
+		// stored numbers (docs/architecture/patterns.md §DRY (single implementation)).
 		if (scope == CASC_SCOPE_PLOT && iSlot < (int)yieldScaleInterval.size())
 		{
 			iTotal = InfoValuation::plotScaledYield(iTotal, yieldScaleInterval[iSlot], yieldScaleAmount[iSlot]);
@@ -626,8 +626,8 @@ struct CvCascadePackage
 
 	// ⛔ EVERY READ ABOVE IS A BARE FETCH, AND IT IS THE ONLY READ SURFACE THERE IS. A slot is correct the instant
 	// its fact arrives, so a read tests nothing and a cross-scope input needs no ordering guarantee: addition
-	// commutes, and the reseed's facts apply in whatever order they stream ([DEC-maintained-sum],
-	// [DEC-spine-reseed]). The load bracket therefore has nothing to drain.
+	// commutes, and the reseed's facts apply in whatever order they stream (docs/cascade.md §THE MAINTAINED SUM,
+	// docs/spine.md §5 (the load reseed)). The load bracket therefore has nothing to drain.
 
 	// ---- THE GATED-DEPOSIT BOOK ----
 	// ⛔ WHICH CONDITIONED DEPOSITS ARE CURRENTLY BOOKED INTO THIS PACKAGE. Without it the two planes that can
@@ -648,7 +648,7 @@ struct CvCascadePackage
 	// changing at all, so a boolean book cannot express it and the count route had to be a separate mechanism --
 	// which is why it was never wired. With the value booked, EVERY re-book is the same operation: resolve what
 	// the data says now, subtract what is recorded, apply the difference. Conditions, counts and scale changes
-	// all fall out of it, and it is idempotent, so no plane can stack on another ([DEC-maintained-sum]).
+	// all fall out of it, and it is idempotent, so no plane can stack on another (docs/cascade.md §THE MAINTAINED SUM).
 	bool isGatedBooked(const void* pEntry) const
 	{ return pEntry != NULL && bookedGated.find(pEntry) != bookedGated.end(); }
 
@@ -742,7 +742,7 @@ struct CvCascadePackage
 	// ⛔ RETURNS THE RESOLVED DELTA, exactly as the slot's other two writers do (applyPlotSegment,
 	// refreshPlotResolve), because the caller OWES that delta to the working city's worked-plot Σ. Moving a
 	// plot's resolved value without folding it leaves the city short, permanently and silently -- nothing
-	// rebuilds that Σ ([DEC-no-self-heal]). 0 when no operand moved, so a caller that changed nothing folds
+	// rebuilds that Σ (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). 0 when no operand moved, so a caller that changed nothing folds
 	// nothing.
 	int64_t setYieldScaling(int iChannel, int64_t iInterval, int64_t iAmount,
 	                        int64_t iLessInterval, int64_t iLessAmount) const

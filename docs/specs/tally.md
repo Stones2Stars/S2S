@@ -1,13 +1,13 @@
 # The tally — "how many?"
 
 The cascade machine that answers **"how many of X do I have?"** — presence (`≥ 1`) and thresholds (`≥ / ≤ N`) of
-any [Type](naming.md) at any scope. It is the **count sibling of the [modifier](modifier.md)** over the same scope
+any [Type](naming.md) at any scope. It is the **count sibling of the [modifier](../cascade.md)** over the same scope
 spine — where the modifier flows **DOWN** (summed deposits), the tally rolls **UP** (counts). But unlike the
 modifier it is **not a store**: the game objects already own their counts, so the tally is the standardized
 *accessor* that reads them and rolls up (§1).
 
 It is **engine machinery, never authored in JSON**. The JSON only carries the clauses that *read* it — an
-[enabler](enabler.md) `requires` count-atom, an [enabler](enabler.md) `allowed` cap, a [modifier](modifier.md)
+[enabler](enabler.md) `requires` count-atom, an [enabler](enabler.md) `allowed` cap, a [modifier](../cascade.md)
 `per` scaler. This doc is that machine.
 
 ---
@@ -52,7 +52,7 @@ to add a tally side-store.
 
 ## 3. Who reads it
 
-One module, several readers ([enabler](enabler.md) / [modifier](modifier.md) / engine):
+One module, several readers ([enabler](enabler.md) / [modifier](../cascade.md) / engine):
 
 1. **`requires` count-thresholds** — `min(TYPE,N)` / `max(TYPE,N)` at empire/team/world (city = local read).
 2. **`allowed` cap enforcement** — a build is permitted while `count(me, scope) < allowed`.
@@ -80,7 +80,7 @@ load-time seed, no incremental maintenance, no rebuild, and no shadow**:
 > The objects emit `DOMAIN` count events on change (already wired: `CvPlayer::changeBuildingCount` / unit-count →
 > `eventSpine().emit`). Those serve **observability** (the Orwell bar), **cache-invalidation** (the
 > modifier/enabler mark triggers), and the **out-of-process replay** — a consumer with no engine objects rebuilds
-> its model from the event stream + engine state ([event-spine.md](event-spine.md) KIND table). The **in-engine** tally
+> its model from the event stream + engine state ([spine.md](../spine.md) KIND table). The **in-engine** tally
 > needs none of it: it reads the live
 > objects ("let an object care about itself, and standardize the accessors + event emitters"). **Genuine historical counters** (e.g.
 > "units of type X ever created") are *not* the tally's — they live on their owning object and are saved there; the
@@ -121,7 +121,7 @@ reads 0 until it is added. *(Cross-scope `RELIGION_X` already answers from `coun
 evaluator, ahead of a tally domain of its own.)*
 
 The tally's `specialist` count domain (counting specialists, e.g. for `per:specialist` scaling) is DISTINCT from
-[modifier](modifier.md) §6's `freeSpecialists`/`allowedSpecialists` (which GRANT / CAP specialists — a deposit,
+[modifier](../cascade.md) §6's `freeSpecialists`/`allowedSpecialists` (which GRANT / CAP specialists — a deposit,
 not a count). No conflict — different mechanisms.
 
 ---
@@ -129,7 +129,7 @@ not a count). No conflict — different mechanisms.
 ## See also
 - [enabler.md](enabler.md) — the biggest reader: `requires` count-thresholds and the `allowed` cap both resolve
   through this machine at cross-city scopes.
-- [modifier.md](modifier.md) — the magnitude sibling; its `per` scaler reads the tally at cross-city scopes. Same
+- [modifier.md](../cascade.md) — the magnitude sibling; its `per` scaler reads the tally at cross-city scopes. Same
   accumulator substrate, opposite flow direction.
 - [json.md](json.md) — the count vocabulary that reads the tally (`min`/`max` atoms §3.4, `per` §3.7, `allowed`
   §4.4). The tally itself is never authored there.

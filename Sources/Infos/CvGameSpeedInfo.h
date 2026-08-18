@@ -8,7 +8,7 @@
 //	wave D, the config-heavy cut). A game speed is a CONFIG entity (state-repositories.md § WORLD is CONFIG):
 //	it scales costs/durations by its speed percent and stretches the game over proportionally more turns,
 //	read from its source, never cached behind a dirty protocol. JSON-fed (Assets/Data/gamespeeds/*.json via
-//	mapFrom); no XML read (DEC-no-xml-into-game).
+//	mapFrom); no XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 //
 //	The legacy scalar MIRRORS are DEAD: the two authored world percents are 1-kind stragglers riding the base
 //	getScalar --

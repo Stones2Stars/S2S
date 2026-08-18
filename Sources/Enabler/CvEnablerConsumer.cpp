@@ -273,7 +273,7 @@ private:
 		switch (kEvent.iEventId)
 		{
 		// The two PRESENCE happenings. The direction is the EVENT ID, so nothing here reads a delta int
-		// ([DEC-facts-name-happenings]); the two cases share a body only because the domain appliers are
+		// (docs/spine.md §A FACT NAMES THE HAPPENING); the two cases share a body only because the domain appliers are
 		// parameterized on held-ness, never because the fact was.
 		case SEVT_CITY_BUILDING_ADDED:
 		case SEVT_CITY_BUILDING_REMOVED:
@@ -297,7 +297,7 @@ private:
 			}
 			break;
 		}
-		// The EMPIRE-LEVEL building facts (DEC-empire-level-buildings): held by the PLAYER, reaching every city.
+		// The EMPIRE-LEVEL building facts (docs/specs/enabler.md §2 (empire-level buildings)): held by the PLAYER, reaching every city.
 		// The fan below is the grantor-fact leg; a city that starts existing later folds the owner's held set in
 		// its own seed (BuildingEnabler::onCityCreated) -- the two-leg shape. Per city the delta IS the ordinary
 		// city-building delta: the member reads held (leaves every offer at once), its edges contribute, its
@@ -346,7 +346,7 @@ private:
 			}
 			break;
 		}
-		// The NETWORK supply presence crossing. The direction is the event id ([DEC-facts-name-happenings]); the
+		// The NETWORK supply presence crossing. The direction is the event id (docs/spine.md §A FACT NAMES THE HAPPENING); the
 		// two cases share a body because the domain appliers take the crossing as a signed argument.
 		case SEVT_CITY_BONUS_ADDED:
 		case SEVT_CITY_BONUS_REMOVED:
@@ -428,7 +428,7 @@ private:
 				// PRESENCE CROSSING, announced here for exactly the bonuses this tech gates.
 				//
 				// ⛔ THE DIRECTION IS THE EVENT'S IDENTITY, NEVER A PAYLOAD FLAG
-				// ([DEC-facts-name-happenings]: "a consumer learns what happened BY WHICH EVENT IT RECEIVED, and
+				// (docs/spine.md §A FACT NAMES THE HAPPENING: "a consumer learns what happened BY WHICH EVENT IT RECEIVED, and
 				// reads the payload only for how much"). The emit carries `iA = 0` on BOTH ends -- the fact split
 				// into _ADDED / _REMOVED precisely so no discriminator is needed -- so decoding `iA != 0` reads
 				// EVERY tech acquisition as a REMOVAL.
@@ -477,7 +477,7 @@ private:
 				{
 					EnablerKernel::onPlayerScopeChangedActive(pLoopCity);
 				}
-				// The player-side OPERATE twin (DEC-empire-level-buildings): a held empire-level member's gate can
+				// The player-side OPERATE twin (docs/specs/enabler.md §2 (empire-level buildings)): a held empire-level member's gate can
 				// read a tech, so its verdict re-derives here too.
 				GET_PLAYER((PlayerTypes)kEvent.iC).updateEmpireBuildingOperate();
 			}
@@ -489,7 +489,7 @@ private:
 				// the HELD-TRAIT axis: a rung's own `enables.traits` edge is the developing ladder, so acquiring
 				// one is what puts the next rung in the tree (iType=Trait, iC=player).
 				// ⛔ The direction is the EVENT ID, like every other case here -- the emit carries iA = 0 on BOTH
-				// ends ([DEC-facts-name-happenings]), so reading a payload flag makes every acquisition a removal.
+				// ends (docs/spine.md §A FACT NAMES THE HAPPENING), so reading a payload flag makes every acquisition a removal.
 				const CvPlayer& kTraitOwner = GET_PLAYER((PlayerTypes)kEvent.iC);
 				EnablerKernel::applyPlayerHave(kTraitOwner, kTraitOwner.m_enabler.traits, EDGEB_TRAITS,
 					InfoRepo<CvTraitInfo>::get().get(kEvent.iType),
@@ -507,7 +507,7 @@ private:
 				{
 					EnablerKernel::onPlayerScopeChangedActive(pLoopCity);
 				}
-				// The player-side OPERATE twin (DEC-empire-level-buildings): the civic-gated members (the
+				// The player-side OPERATE twin (docs/specs/enabler.md §2 (empire-level buildings)): the civic-gated members (the
 				// worldview/belief/firewall markers) genuinely toggle on a swap.
 				GET_PLAYER((PlayerTypes)kEvent.iC).updateEmpireBuildingOperate();
 			}
@@ -624,7 +624,7 @@ private:
 			// CvPlayer::read / CvCity::read, where the city's other slots have NOT landed yet -- and unlike the
 			// small gate classes beside it, GATE_DYNAMIC contains the CAPPED buildings, so gating one mid-read
 			// reaches the wonder-category cap and reads GC.getCultureLevelInfo(NO_CULTURELEVEL): a fail-loud
-			// info-plane read that kills the load ([DEC-info-plane-read-only]). The load-end pass gates every city
+			// info-plane read that kills the load (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD). The load-end pass gates every city
 			// once after the stream ends, which is the par.7.1 order rule's second option and covers all of this.
 			if (spineGameLoadInProgress()) break;
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
@@ -658,7 +658,7 @@ private:
 		// The single largest gate axis in the authored data (MAPCATEGORY_ / TERRAIN_ / FEATURE_ / IMPROVEMENT_ /
 		// HAS_COAST / HAS_RIVER across thousands of entities): a terraform, a chop, an improvement built or
 		// pillaged must move the verdicts that named it, and a tri-state read is a bare fetch that nothing
-		// recomputes ([DEC-no-self-heal]), so a missed route leaves the stale verdict standing for the session.
+		// recomputes (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT), so a missed route leaves the stale verdict standing for the session.
 		// ⚑ TWO things keep it affordable at plot-fact frequency, and both are required:
 		//   - the CANDIDATES come from the enabler's own (kind, id) plot-atom index -- only what actually names
 		//     the atom. ⛔ NOT EDGEF_REQUIRED_BY: the reverse pass deliberately routes no plot-substrate prefix
@@ -712,7 +712,7 @@ private:
 		// appearing or vanishing on a radius tile, and that tile beginning or ceasing to SERVE it -- is announced by
 		// the PLOT facts ([event-spine.md], that fact's own contract). So this is where a `connection:"vicinity"`
 		// atom's map half re-gates, and without it the verdict stands stale for the session: a tri-state read is a
-		// bare fetch and nothing recomputes it ([DEC-no-self-heal]).
+		// bare fetch and nothing recomputes it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 		// ⛔ NOT reachable through the plot-atom index: that is keyed by (PlotAtomKind, id) over the SUBSTRATE
 		// prefixes, and a bonus atom names a BONUS -- so the improvement fact re-gates whoever named that
 		// IMPROVEMENT and never the mine that named the ORE. The candidates here come from the bonus's own
@@ -727,7 +727,7 @@ private:
 		{
 			// ⛔ NO LOAD GUARD, deliberately. `spineGameLoadInProgress` is the RESULT-PRODUCER suppression -- it
 			// stops the trigger/grant machinery handing things out for a load that is not an acquisition
-			// ([event-spine.md], [DEC-spine-reseed]) -- and the enabler is a LOAD-ACTIVE consumer that BUILDS from
+			// ([event-spine.md], docs/spine.md §5 (the load reseed)) -- and the enabler is a LOAD-ACTIVE consumer that BUILDS from
 			// the reseed's own facts. Borrowing it here would assert that the load cannot be trusted to build this,
 			// which is the claim the reseed exists to falsify.
 			// ⚑ Nothing is needed in its place: the map streams BEFORE the players, so while these facts fire no
@@ -786,9 +786,9 @@ private:
 			en_emitDomainCensus();
 			break;
 		// ---- a GAME OPTION flipped: re-gate EVERY city ----
-		// The entity-level gate is read at gate time and an option is its ONE axis ([DEC-entity-gate]), so a flip
+		// The entity-level gate is read at gate time and an option is its ONE axis (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT), so a flip
 		// can move any candidate's verdict at once -- and the tri-state is a BARE FETCH, so nothing would ever
-		// re-derive it ([DEC-no-self-heal]). Wholesale is the honest derivation here rather than a blanket hiding
+		// re-derive it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). Wholesale is the honest derivation here rather than a blanket hiding
 		// a missed route: the fact names no source to route from (the SEVT_AREAS_RECALCULATED shape), and a flip
 		// is WorldBuilder-rare, so it costs nothing at its real frequency.
 		// ⚠ The GAME space ONLY. Authored data references no MODDERGAMEOPTION_ at all -- every gate and every

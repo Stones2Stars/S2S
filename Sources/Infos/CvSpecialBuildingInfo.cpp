@@ -26,7 +26,7 @@ void CvSpecialBuildingInfo::mapFrom(const picojson::value& entity)
 	// idempotency (CvInfo.h): unconditional redefinition (the reverse-pass-fed tech FK is written AFTER the
 	// last mapFrom of a load, so it is never clobbered here)
 	m_bValid = true;
-	// the GROUP cap, off the base-dispatch-parsed composed unit ([DEC-materialize-at-mapfrom])
+	// the GROUP cap, off the base-dispatch-parsed composed unit (docs/architecture/patterns.md §Materialize at mapFrom)
 	m_iMaxPlayerInstances = m_allowed.cap(ALLOWEDCAP_EMPIRE);
 
 	if (!entity.is<picojson::object>())

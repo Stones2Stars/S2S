@@ -1,8 +1,8 @@
 # Economy reference — maintenance, upkeep, happiness, health, war-weariness, pollution
 
-> Lifted + condensed from the old observability docs. The per-subsystem **mechanics the validator re-derives**.
-> Behaviour as-is today; the cascade ([modifier](../specs/modifier.md)/[tally](../specs/tally.md)) replaces these
-> maintainers (verified live in-game) ([logging](../specs/logging.md) §6).
+> The per-subsystem **mechanics the validator re-derives**. Behaviour as-is today; the cascade
+> ([modifier](../cascade.md)/[tally](../specs/tally.md)) replaces these maintainers (verified live in-game)
+> ([spine.md § What to log](../spine.md)).
 
 ## Gold expense (player)
 
@@ -11,56 +11,54 @@
 supply + corporate maintenance.
 
 - **Treasury tax** (anti-hoarding): `(gold + 250·√gold) / (25 · gameSpeedPercent)`.
-- **City maintenance is ORDINARY CASCADE, end to end — there are no engine components left.** Distance, city
-  count and colonial separation are AUTHORED DEPOSITS on `TECH_GAME_START`'s `maintenance` block (the universal
-  start node every civ holds — the same baseline home `canTradeOn` uses, [capabilities.md](../specs/capabilities.md)):
-  distance scales `per: DISTANCE_TO_GOVERNMENT_CENTER`, city count `per: {CITY, empire, above: 1}`, and colony
-  rides `enabled: "!IS_HOME_AREA"` — the predicate [json.md §3.5](../specs/json.md) minted for exactly this.
+- **City maintenance is ORDINARY CASCADE, end to end — no engine components left.** Distance, city count and
+  colonial separation are AUTHORED DEPOSITS on `TECH_GAME_START`'s `maintenance` block (the universal start node
+  every civ holds — the same baseline home `canTradeOn` uses, [capabilities.md](../specs/capabilities.md)):
+  distance scales `per: DISTANCE_TO_GOVERNMENT_CENTER`,
+  city count `per: {CITY, empire, above: 1}`, colony rides `enabled: "!IS_HOME_AREA"` — the predicate
+  [json.md §3.5](../specs/json.md) minted for exactly this.
   ⚖ **TWO TIERS, and the order is the mechanic:** each component KIND resolves against its OWN modifiers (a
-  handicap authors `maintenance.empire.distance.percent`, so difficulty scales the distance leg without touching
-  the corporation one), and the TOTAL then takes the empire-wide `amount` stack. Flattening the two would apply
-  every kind's modifier to every other kind's cost.
+  handicap authoring `maintenance.empire.distance.percent` scales distance without touching corporation), and
+  the TOTAL then takes the empire-wide `amount` stack. Flattening the two would cross-apply every kind's modifier.
   ⚑ **The rebel discount is ONE authored entry** (`maintenance.empire.percent −50, enabled: "IS_REBEL"`),
-  replacing the four separate hardcoded halvings.
-  ⛔ **THE COMPONENTS ARE THOSE THREE — `MAINTENANCE_CORPORATION` IS NOT A CITY COMPONENT.** Corporate
-  maintenance is its own pre-inflation expense (the sixth component above, `calcCorporateMaintenance`), so the
-  city total SKIPS that kind. ⚠ The trap is that its authored deposit is a **city-scope FLAT** (the corp's own
-  per-city gold amount) and therefore lands in the city's package exactly like the other three — so a read that
-  loops every maintenance kind picks it up, looks entirely reasonable, and charges the same corporate gold
-  TWICE in one expense total. Skip the kind explicitly; do not infer the component set from the enum.
+  replacing four separate hardcoded halvings.
+  ⛔ **THE COMPONENTS ARE THOSE THREE — `MAINTENANCE_CORPORATION` IS NOT A CITY COMPONENT.** It is its own
+  pre-inflation expense (the sixth component above, `calcCorporateMaintenance`), so the city total SKIPS it.
+  ⚠ The trap: its deposit is a city-scope FLAT (the corp's own per-city gold amount), so it lands in the city's
+  package exactly like the other three — a read that loops every maintenance kind double-counts it. Skip the
+  kind explicitly; do not infer the component set from the enum.
   ⚠ **This EXPRESSES THE INTENT, it does not reproduce the legacy curve (owner ruling).** Size-scaling went
   multiplicative → additive; the colony quadratic and the corp handicap square went linear; the 2,000,000 cap
-  and the vassal-cities term are gone. A behaviour change is a fact to state and weigh
-  ([validation.md](../specs/validation.md): the spec leads), never a curve to preserve for its own sake.
-  The city's realized value is a BARE PACKAGE READ — nothing about maintenance is cached at the city any more,
-  because there is no longer a formula whose result would need caching. **The empire total is the Σ over its
-  cities' realized values, re-summed at the read** — no stored receiver slot holds it
-  ([state-repositories.md](../architecture/state-repositories.md) § A CROSS-SCOPE RECEIVER TOTAL). It is the one
-  non-commerce receiver, and it carries no cache of its own.
+  and the vassal-cities term are gone — a behaviour change to STATE and weigh
+  ([validation.md](../specs/validation.md): the spec leads), never to preserve for its own sake.
+  The city's realized value is a BARE PACKAGE READ; nothing is cached, because no formula's result needs it.
+  **The empire total is the Σ over its cities' realized values, re-summed at the read** — no stored receiver
+  slot holds it ([state-repositories.md](../cascade.md) § A CROSS-SCOPE RECEIVER TOTAL) —
+  the one non-commerce receiver with no cache of its own.
   > **⛔ THE ONE SPECIAL CASE MAINTENANCE HAS OVER ANY OTHER CASCADE CHANNEL (owner): a city emits 0 instead of
-  > its package while **WE LOVE THE KING DAY** or **DISORDER** holds.** The package is sent out to the rest of
-  > the cascade only if no status negates it.
-  > ⚑ **It suppresses the CONSUMPTION of the value, never its contents — so neither is a cache input and neither
-  > marks it.** WLTKD is a ONE-TURN status re-applied every turn by its trigger ([state.md](../specs/state.md)),
-  > so marking on it would thrash the cache every single turn over a number that never moved. The stored value
-  > stays the real one and the read declines to contribute it.
-  > ⚑ `isDisorder()` is itself the OR of two ticking counters — the city's occupation timer and the player's
-  > anarchy turns — i.e. a CITY status and a PLAYER status composed into one verdict
-  > ([CvStatus.h](../../Sources/Engine/CvStatus.h)). The legacy `population > 0` guard is dropped: it is not
-  > part of the model.
-  > ⚖ **There is NO effective-modifier sum to maintain, and no area surface.** The percent stack IS the
-  > roll-up over the chain the city sits under (team + empire + city), so the hand-summed city + player + area +
+  > its package while WE LOVE THE KING DAY or DISORDER holds** — sent to the rest of the cascade only if no
+  > status negates it.
+  > ⚑ **It suppresses CONSUMPTION of the value, never its contents — so neither is a cache input and neither
+  > marks it.** WLTKD is a
+  > ONE-TURN status re-applied every turn ([state.md](../specs/state.md)); marking on it would thrash the cache
+  > every turn over a number that never moved — the stored value stays real, and the read just declines to
+  > forward it.
+  > ⚑ `isDisorder()` is the OR of two ticking counters — the city's occupation timer and the player's anarchy
+  > turns, a CITY status and a PLAYER status composed into one verdict
+  > ([CvStatus.h](../../Sources/Engine/CvStatus.h)). The legacy `population > 0` guard is dropped.
+  > ⚖ **There is NO effective-modifier sum to maintain, and no area surface.** The percent stack IS the roll-up
+  > over the chain the city sits under (team + empire + city), so the hand-summed city + player + area +
   > connected-city legs collapse into one read. Three of those legs were never kinds but CONDITIONS wearing a
-  > member's name ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates)):
+  > member's name ([conditions are predicates, never bespoke members](../specs/json.md#35-predicates--a-systems-runtime-state-query)):
   > `coastalDistance` is *while coastal*, `connectedCity` is *while connected to the capital*, and
-  > `homeArea`/`otherArea` IS `IS_HOME_AREA` — *"maintenance increases in another area"* is literally
-  > "this city's area is not the capital's" ([json.md §3.5](../specs/json.md)), which is why `CvArea` carries no
+  > `homeArea`/`otherArea` IS `IS_HOME_AREA` — *"maintenance increases in another area"* is literally "this
+  > city's area is not the capital's" ([json.md §3.5](../specs/json.md)), which is why `CvArea` carries no
   > maintenance surface at all (a landmass is not an ownable scope,
-  > [state-repositories.md](../architecture/state-repositories.md)).
+  > [state-repositories.md](../cascade.md)).
   ⛔ **The COLONY CAP is GONE — data, kind and getter.** It bounded the colony component as a RATIO of the
-  distance component, a cross-component bound the entry grammar cannot express, so it went with the quadratic.
-  The `MAINTENANCE_CAP` kind, `CvHandicapInfo::getColonyMaintenanceCap` and the `iMaxColonyMaintenance` curator
-  row are all deleted; the curator DROPS the legacy tag rather than parking it in `identity`, which carries no
+  distance component, a cross-component bound the grammar cannot express, so it went with the quadratic:
+  `MAINTENANCE_CAP`, `CvHandicapInfo::getColonyMaintenanceCap` and the `iMaxColonyMaintenance` curator row are
+  all deleted, and the curator DROPS the legacy tag rather than parking it in `identity`, which carries no
   effects ([json.md §7](../specs/json.md)).
 - **Civic upkeep** = `max(0,(pop+offset)·popPct/100) + max(0,(cities+offset)·cityPct/100)`, handicap-scaled.
 - **Inflation** = `100 · hurriedCount · handicapInflationPct/100`, × civic/tech/building/event/rebel chain; decays per `HURRY_INFLATION_DECAY_RATE`.
@@ -75,9 +73,9 @@ supply + corporate maintenance.
   > reaches the intended one.
   > ⛔ **So do NOT re-point an inflation read onto a cascade kind to "finish" it.** Wiring a live read onto a
   > mechanic that is being replaced whole is the half-migration
-  > ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)), and the plan the replacement
+  > ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)), and the plan the replacement
   > needs is a DESIGN decision the owner has not taken — inventing one is the rollerskate
-  > ([DEC-no-guessing](../architecture/decisions.md#dec-no-guessing)).
+  > ([the no-guessing rule](../../AGENTS.md#conduct)).
   > ⚠ **THREE UNRELATED ADDRESSES SHARE THE WORD, and that is worth knowing before touching any of them** — a
   > reader who checks one concludes the wrong thing about the others:
   >
@@ -88,7 +86,7 @@ supply + corporate maintenance.
   > | `hurry.empire.inflation.percent` | `SCALAR_HURRY_INFLATION` | the modifier on the hurried-count DECAY rate — **now read by NOBODY** |
   >
   > ⚑ The third lost its only consumer when the stranded `hurryInflationModifier` accumulator was cut
-  > ([DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform)); its kind and its
+  > ([the uniform legacy-accumulator cut](../cascade.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism)); its kind and its
   > two civic authorings STAY, inert, because purging them is the remodel's call and not a tidy-up.
 - **Per-turn order:** `verifyGoldCommercePercent` (silently raises the gold slider on deficit) → `doGold` (strike +
   forced-disband when gold < 0) → `doAdvancedEconomy` (inflation decay, unmodified).
@@ -109,7 +107,7 @@ supply + corporate maintenance.
   > **⛔ UPKEEP *IS* MAINTENANCE — THERE IS NO DIFFERENCE (owner); IT ONLY COMES FROM UNITS INSTEAD OF CITIES.**
   > It is the same expense, subtracted from gold earned at the end, and it therefore rides the SAME empire
   > receiver rather than a parallel one. The receiver rule is unchanged — a cross-scope total is the Σ of its
-  > MEMBERS' realized values ([state-repositories.md](../architecture/state-repositories.md)) — and the only
+  > MEMBERS' realized values ([state-repositories.md](../cascade.md)) — and the only
   > thing that varies is WHICH members: maintenance sums the player's cities, upkeep sums its units. So the
   > empire's Σ has two legs into one slot.
   > ⛔ Do NOT mint a second receiver for it. Reading "upkeep" as its own machine is what produces a parallel
@@ -121,7 +119,7 @@ supply + corporate maintenance.
 
 - **Net happiness** = `happyLevel − unhappyLevel`; negative → `angryPopulation`. Bypass: `isNoUnhappiness` zeroes
   unhappy entirely — the city's `abolishedAnger` fold, so a capital-only grant is the grantor's own `IS_CAPITAL`
-  condition resolving at fold time rather than a second test beside it ([modifier.md §2b](../specs/modifier.md)).
+  condition resolving at fold time rather than a second test beside it ([modifier.md §2b](../cascade.md)).
 - **Percent-anger** (scale with pop via `angerPct·pop / PERCENT_ANGER_DIVISOR(1000)`): overcrowding, no-military,
   foreign-culture, enemy-religion-war, hurry/conscript/defy/rev timers, war-weariness, rev-index (only when > 325),
   civic. **Flat anger** (additive): buildings, features, bonuses, religion, commerce, area/player buildings, extra,
@@ -130,13 +128,11 @@ supply + corporate maintenance.
   `isNoUnhealthyPopulation`). `foodConsumption = consumed − angryPop − healthRate` (sick cities eat more).
 - **WLTK ("We Love the King/Emperor Day", civic-named text)** — cleared on occupation / anger / sickness; else
   stochastic (pop ≥ min, `pop-rand < WE_LOVE_THE_KING_RAND`); a random event may set it via the Python setter.
-  **Sole gameplay effect = maintenance: `updateMaintenance` (`CvCity.cpp:7025`) accrues 0 while celebrating** — the
-  city sends no maintenance to the central ledger (ALL components, not just distance+numCities; the
-  saved-maintenance-by-civic/building helpers read 0 during it too). The "no anger" half of the folklore is the
-  TRIGGER condition, not an effect; everything else is cosmetic (fireworks, celebrate text). *(A prior claim here
-  that it "doubles GPP" was FALSE — the exhaustive consumer sweep finds no such site; verified + owner-confirmed
-  2026-07-04. Distinct from the trait-fed "free-city yield" accumulator `m_aiFreeCityYield` —
-  [modifier.md §2a](../specs/modifier.md).)*
+  **Sole gameplay effect is maintenance suppression** (§ Gold expense above — the city emits 0 instead of its
+  package while it holds). The "no anger" half of the folklore is the TRIGGER condition, not an effect; everything
+  else is cosmetic (fireworks, celebrate text). *(A prior claim here that it "doubles GPP" was FALSE — the
+  exhaustive consumer sweep finds no such site. Distinct from the trait-fed "free-city yield" accumulator
+  `m_aiFreeCityYield` — [modifier.md §2a](../cascade.md).)*
 - **Decaying timers** (−1/turn): hurry, conscript, defy, happiness, rev-request, rev-success, landmark; the WW city
   timer −20/turn; event anger −1 per `10·speedPct/100` turns; espionage counters −1/turn.
 
@@ -166,9 +162,9 @@ supply + corporate maintenance.
   > ⚑ **It shares NOTHING with the C++ half**: it reads none of the removed defines (its weights are hardcoded
   > 100 / 10000 / 1000000) and never called `doGlobalWarming` in the DLL. That independence is what made the C++
   > removal safe, and it is the fact to re-check rather than re-derive.
-  > ⛔ It is NOT removed here: events are Python-authoritative and out of #430
-  > ([roadmap.md](../plans/structural-cleanup/roadmap.md) scope decision 4). ⚠ So do not read its survival as
-  > evidence the mechanic works, and do not "restore" a C++ leg to serve it.
+  > ⛔ It is NOT removed here: random events are a permanent, owner-ruled Python-authoritative carve-out, out of
+  > scope for this data model. ⚠ So do not read its survival as evidence the mechanic works, and do not "restore"
+  > a C++ leg to serve it.
 - **Pollution is LIVE** via the [property solver](engine.md#properties--the-generic-attribute-bag--its-legacy-auto-placement) (propagators → interactions → sources).
   Rates (`CIV4PropertyInfos.xml`): city decay ~6%/turn + 1/pop/turn; city→plot ~5%, plot→city ~12%, plot→plot ~4%;
   target 0. **24 band buildings** (12 air, `POLLUTION_LIGHT_SMOG`@≥400 … `BLACKENED_SKIES`@≥1950; 12 water …
@@ -178,4 +174,4 @@ supply + corporate maintenance.
 ## See also
 
 - [engine.md](engine.md) — the property solver + the save checksum these feed.
-- [../specs/modifier.md](../specs/modifier.md) / [../specs/tally.md](../specs/tally.md) — the machines that replace these maintainers.
+- [../specs/modifier.md](../cascade.md) / [../specs/tally.md](../specs/tally.md) — the machines that replace these maintainers.

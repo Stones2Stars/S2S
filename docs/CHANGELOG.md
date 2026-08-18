@@ -12,6 +12,13 @@
 
 ## Unreleased
 
+- **Optics no longer claims to extend how far your ships see.** The `canSeeFurtherFromWater`
+  capability (legacy `bExtraWaterSeeFrom`) is removed outright. Its effect ran through a vision
+  accessor the rebuilt sight model deleted, so the ability had already stopped doing anything —
+  but it was still granted, still shown in the pedia, and still made the AI value the tech and
+  score coastal city sites as if it worked. Vision now answers one way, through the budget the
+  observer spends walking outward. ⚑ Modders: the XML tag and its schema entry are gone; an
+  observer-side sight bonus is expressed on the vision channel, not as a capability.
 - **Buildings that grant a third ring of workable tiles now actually grant it.** Twelve buildings
   carry `adds3rdRing`, and nothing in the engine read it — the ring was promised in the data and
   never delivered, so those cities worked two rings like any other. The city now reads the amenity

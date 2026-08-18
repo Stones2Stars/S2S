@@ -3,7 +3,7 @@
 //	CvModifiers; the par.8 `skills` bool block; the entity-level gate; the edges/requires chain halves); this
 //	subclass parses ONLY what the type genuinely owns: the identity set, the par.9 vision + sizeMatters +
 //	promotionLine sections, the par.8 keyed-skill FK lists, the ai weight rows, and the sound asset. NO
-//	family-address read survives here ([DEC-materialize-at-mapfrom]).
+//	family-address read survives here (docs/architecture/patterns.md §Materialize at mapFrom).
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson + GC
@@ -106,7 +106,7 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 
 	// doubleMove is HALF MOVEMENT COST on that ground ([skills.md] par.1), so it is a keyed MOVEMENT
 	// modifier and NOT a skill. The typed FK lists are materialized once here from the compiled entries
-	// ([DEC-materialize-at-mapfrom]) so every consumer stays a bare member read.
+	// (docs/architecture/patterns.md §Materialize at mapFrom) so every consumer stays a bare member read.
 	InfoValuation::fillDoubleMoveTargets(getModifiers(), m_aiTerrainDoubleMove, m_aiFeatureDoubleMove);
 
 	// --- par.8 keyed-skill extras (the flat bools live on the composed m_skills block via the base dispatch) ---
@@ -289,7 +289,7 @@ void CvPromotionInfo::setDisqualifiedUnitCombatTypes()
 // ⚑ Materializing it here is what kills a WHOLE-DATABASE SCAN PER TOOLTIP: the display used to rebuild a
 // promotion's line by walking every promotion in the game on every hover. That walk is load-time work over
 // static data -- a promotion's line and rank never move -- so it belongs exactly here
-// ([DEC-materialize-at-mapfrom]: the getter is a bare member read).
+// (docs/architecture/patterns.md §Materialize at mapFrom: the getter is a bare member read).
 //
 // clear-first, like every other idempotent load-time derivation: the postmenu full-registry pass re-runs it.
 void CvPromotionInfo::deriveAtRegistryComplete(const std::vector<int>& aiLineAccrual)

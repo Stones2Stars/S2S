@@ -1,7 +1,7 @@
 //
 //	CvReligionInfo -- the religion poco's own typed reading on top of the base section dispatch (see the
 //	header). mapFrom materializes the census identity set + the §9 shrine value plane ONCE
-//	([DEC-materialize-at-mapfrom]); the conditioned per-commerce bonuses live on the compiled entries (base
+//	(docs/architecture/patterns.md §Materialize at mapFrom); the conditioned per-commerce bonuses live on the compiled entries (base
 //	surface), never as mirrored arrays. Idempotent by contract (unconditional assigns, clear-first containers).
 //
 

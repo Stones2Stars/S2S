@@ -25,7 +25,7 @@ public:
 	//	==== THE CITY READ SURFACE ====
 	//
 	//	The "what do I HAVE, right now?" half of the GAME-OBJECT read role, homed on the object it describes
-	//	([DEC-accessor-homing]). A city's data is asked OF THE CITY: a caller resolves the object and then asks it
+	//	(docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (accessor homing)). A city's data is asked OF THE CITY: a caller resolves the object and then asks it
 	//	(GC.getPlayer(i).getCity(id).getYields()), and that chain STATES the containment instead of flattening it
 	//	into an (owner, id) argument pair.
 	//
@@ -34,14 +34,14 @@ public:
 	//	    wanting one value indexes the returned list. The surface grows by GROUPS, never by channels.
 	//	  - THE EXISTING ENGINE ENUM INDEXES THE RESULT, never the call: getYields()[YieldTypes.YIELD_FOOD]. A
 	//	    family with no engine enum is indexed by its own kind enum, and the name says so (get<Family>Kinds).
-	//	  - EVERY AMOUNT IS x100 NATIVE ([DEC-fixedpoint-x100]) -- no `100` in any name, no scale variant, and no
+	//	  - EVERY AMOUNT IS x100 NATIVE (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- no `100` in any name, no scale variant, and no
 	//	    read reduces. A PERCENT is not scaled, so a percent-unit channel is already the number you want.
 	//	  - EVERY READ IS A BARE FETCH: nothing here gates, ensures or recomputes, so a missed invalidation shows
-	//	    up in script as a visibly wrong number rather than being repaired at the boundary ([DEC-no-self-heal]).
+	//	    up in script as a visibly wrong number rather than being repaired at the boundary (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	//
 	//	⛔ NO METHOD HERE CARRIES ANOTHER OBJECT'S NOUN. The receiver already IS the city, so `getPopulation()`,
 	//	never `getCityPopulation()` -- a noun in the name is the mechanical tell that a read is homed on the wrong
-	//	class ([DEC-accessor-homing]).
+	//	class (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (accessor homing)).
 
 	python::list getYields() const;
 	python::list getCommerces() const;
@@ -133,7 +133,7 @@ public:
 	int getCulturePercent(int iForPlayer) const;
 	int getTradeYield(int iYield, int iProfitTimes100) const;
 	//	The MAINTAINED traded count, not the engine relay -- a reader answering from a different source than the
-	//	deposits do is a second truth, not a second opinion ([DEC-single-implementation]).
+	//	deposits do is a second truth, not a second opinion (docs/architecture/patterns.md §DRY (single implementation)).
 	int getNumBonusesAvailable(int iBonus) const;
 	bool hasCorporationPresent(int iCorporation) const;
 	int getProjectProductionFor(int iProject) const;
@@ -404,7 +404,7 @@ public:
 	// handle needs to say WHICH object it holds, and re-pointing every such site is refactoring we are not doing
 	// ("I only want to refactor the python I have to, otherwise we never will be done").
 	// ⛔ SO THIS STAYS AN IDENTITY SET AND NEVER GROWS INTO THE LEGACY GETTER SURFACE: owner + id + position, the
-	// axes that ADDRESS a city ([DEC-cy-not-fixed] still bans the info/state getter contract). A consumer wanting
+	// axes that ADDRESS a city (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) still bans the info/state getter contract). A consumer wanting
 	// DATA asks CyState by that address; anything else added here is the escape hatch reopening.
 	static void pythonPublish();
 

@@ -109,7 +109,7 @@ class WBTeamScreen:
 		self.lVoteBuildings.sort()
 
 		self.lAbilities = []
-		for _ in xrange(13):
+		for _ in xrange(12):
 			self.lAbilities.append([WidgetTypes.WIDGET_GENERAL, -1])
 		for i in xrange(GC.getNumTechInfos()):
 			ItemInfo = GC.getTechInfo(i)
@@ -149,9 +149,6 @@ class WBTeamScreen:
 			if ItemInfo.isWaterWork():
 				self.lAbilities[11][0] = WidgetTypes.WIDGET_HELP_WATER_WORK
 				self.lAbilities[11][1] = i
-			if ItemInfo.isExtraWaterSeeFrom():
-				self.lAbilities[12][0] = WidgetTypes.WIDGET_HELP_LOS_BONUS
-				self.lAbilities[12][1] = i
 
 		self.placeStats()
 		self.placeMembers()
@@ -333,7 +330,7 @@ class WBTeamScreen:
 		screen.setText("AbilitiesAll", "Background", sText, 1<<1, iX + iWidth, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
-		screen.addTableControlGFC("WBAbilities", 1, iX, iY, iWidth, 13 * 24 + 2, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+		screen.addTableControlGFC("WBAbilities", 1, iX, iY, iWidth, 12 * 24 + 2, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader( "WBAbilities", 0, "", iWidth)
 
 		iRow = screen.appendTableRow("WBAbilities")
@@ -407,12 +404,6 @@ class WBTeamScreen:
 		if self.pTeam.isWaterWork():
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		screen.setTableText("WBAbilities", 0, iRow, "<font=3>" + sColor + CyTranslator().getText("TXT_KEY_WB_WATER_WORK",()) + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_TECH_WATERWORK").getPath(), self.lAbilities[11][0], self.lAbilities[11][1], -1, 1<<0 )
-
-		iRow = screen.appendTableRow("WBAbilities")
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if self.pTeam.isExtraWaterSeeFrom():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		screen.setTableText("WBAbilities", 0, iRow, "<font=3>" + sColor + CyTranslator().getText("TXT_KEY_WB_EXTRA_WATER_SIGHT",()) + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_TECH_LOS").getPath(), self.lAbilities[12][0], self.lAbilities[12][1], -1, 1<<0 )
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
@@ -511,7 +502,7 @@ class WBTeamScreen:
 			self.placeVotes()
 
 		elif inputClass.getFunctionName() == "AbilitiesAll":
-			for i in xrange(13):
+			for i in xrange(12):
 				self.doTeamAbilities(i, not self.bRemove)
 			self.placeAbilities()
 
@@ -541,8 +532,6 @@ class WBTeamScreen:
 				self.doTeamAbilities(10, -1)
 			elif iButton == WidgetTypes.WIDGET_HELP_WATER_WORK:
 				self.doTeamAbilities(11, -1)
-			elif iButton == WidgetTypes.WIDGET_HELP_LOS_BONUS:
-				self.doTeamAbilities(12, -1)
 			else:
 				self.doTeamAbilities(inputClass.getData1(), -1)
 			self.placeAbilities()
@@ -638,11 +627,5 @@ class WBTeamScreen:
 					self.pTeam.changeWaterWorkCount( - self.pTeam.getWaterWorkCount())
 			elif iType != 0:
 				self.pTeam.changeWaterWorkCount(1)
-		elif i == 12:
-			if self.pTeam.isExtraWaterSeeFrom():
-				if iType !=1:
-					self.pTeam.changeExtraWaterSeeFromCount( - self.pTeam.getExtraWaterSeeFromCount())
-			elif iType != 0:
-				self.pTeam.changeExtraWaterSeeFromCount(1)
 	def update(self, fDelta):
 		return 1

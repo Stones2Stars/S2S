@@ -5,7 +5,7 @@
 //
 //	CvReligionInfo -- the RELIGION poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP: the
 //	four read categories, nothing else). Styled for the JSON anatomy (json.md §2); every magnitude read is a
-//	load-compiled fetch ([DEC-materialize-at-mapfrom]); no legacy getter name returns ([DEC-new-getter-surface]).
+//	load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 //	CENSUS SHAPE (Assets/Data/religions, 29 entities): every modifier-family entry a religion authors is
 //	CONDITIONED -- the per-commerce bonuses ride {IS_HOLY_CITY: SELF} / {STATE_RELIGION: SELF} gates -- so

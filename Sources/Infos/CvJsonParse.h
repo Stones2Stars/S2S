@@ -5,7 +5,7 @@
 //
 //	CvJsonParse -- the SHARED, composable JSON parse primitives the JsonInfo layer reuses (relocated out of the
 //	retired Cascade-side parse-helper home, owner ruling 2026-07-08: parsing the info data is INFO-side, not cascade --
-//	[DEC-json-not-cascade]). The tiny reused primitives live here so the base CvInfo::mapFrom, every section
+//	docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)). The tiny reused primitives live here so the base CvInfo::mapFrom, every section
 //	UNIT (CvRequires/Edges/Allowed/Grants/...), AND each per-type subclass's mapFrom draw from ONE place --
 //	no walker is re-hand-rolled per type. Behaviour is a faithful relocation of the spec/StoneBase-proven logic
 //	(json.md; the ×100 rule is fixed-point-and-scales.md §1).
@@ -24,11 +24,11 @@
 #include <vector>
 
 // The single human -> ×100 fixed-point conversion (round half away from zero). 7 -> 700, 1.5 -> 150, -10 -> -1000.
-// The ONE place the human->int×100 conversion happens (determinism; DEC-fixedpoint-x100).
+// The ONE place the human->int×100 conversion happens (determinism; docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 // ⛔ IT IS NOT A BLANKET, AND READING IT AS ONE IS THE COSTLIEST MISTAKE ON THIS SURFACE. It converts AMOUNTS
 // only. A PERCENT IS NEVER SCALED -- mod_valueForUnit (CvModifiers.cpp) picks per LEAF from the authored key and
 // routes a percent leaf straight past this function, plain. "Zero per-FIELD scale knowledge" (the curator owns
-// that, DEC-curator-owns-descale) does NOT mean zero per-UNIT distinction: the unit IS the decision.
+// that, docs/specs/curators/fixed-point-and-scales.md §1 (curator owns descale)) does NOT mean zero per-UNIT distinction: the unit IS the decision.
 // ⚠ Consequence for every consumer: a value read with CASC_UNIT_PERCENT is already the human percent, so a
 // `/100` applied to it destroys it. Believing this was a blanket is what produced a family of such divides --
 // zeroed AI war declarations, culture thresholds and property decay among them. Ask the KIND's unit
@@ -78,7 +78,7 @@ const picojson::object* jsonWorldArt(const picojson::object& o);
 // by the poco read -- absent-reads-0 was the no-attacks combatLimit bug class.
 int jsonIdInt(const picojson::object& io, const char* key, int iDefault = 0);
 // An ART value, taken as authored. Art is not a cascade amount, so it carries no fixed-point scale
-// ([DEC-fixedpoint-x100] governs AMOUNTS); the animation numbers are handed to the EXE in its own units.
+// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) governs AMOUNTS); the animation numbers are handed to the EXE in its own units.
 float jsonIdFloat(const picojson::object& io, const char* key, float fDefault = 0.0f);
 bool jsonIdBool(const picojson::object& io, const char* key);
 int jsonIdFk(const picojson::object& io, const char* key);

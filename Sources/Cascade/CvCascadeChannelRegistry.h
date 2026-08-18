@@ -14,7 +14,7 @@
 //
 //	THE PER-SCOPE LAYOUT is the storage contract of the ONE uniform package (CvCascadePackage): a scope's
 //	channels get LOCAL slot indices in first-sight order, and RECEIVER sum slots (the realized totals the
-//	scope CONSUMES -- [DEC-uniform-cache-shape]: a receiver is the same cache holding a different slot) get
+//	scope CONSUMES -- docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE: a receiver is the same cache holding a different slot) get
 //	their own index space beside them. The contract is ORDER-INDEPENDENT BY CONSTRUCTION: slot indices are
 //	append-only (an assigned index never moves), so an index taken at ANY point of the load stays valid
 //	across later minting, and the layout grows with the authored data with no fixed ceiling (json.md §8: the
@@ -90,7 +90,7 @@ public:
 	// gold/research/culture/espionage/maintenance; every other scope: 0). MAINTENANCE is the one
 	// NON-commerce receiver: the empire's total is the Σ of its cities' realized maintenance, which is what a
 	// cross-scope receiver total IS ([state-repositories.md]) -- so it is a slot here rather than a hand-named
-	// cache beside the package ([DEC-uniform-cache-shape]).
+	// cache beside the package (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE).
 	static int scopeReceiverCount(CvCascScope eScope);
 	// The receiver slot of a channel at its consuming scope; -1 = eScope does not consume iChannel.
 	static int scopeReceiverIndex(CvCascScope eScope, int iChannel);

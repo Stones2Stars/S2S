@@ -37,7 +37,7 @@ public:
 	// ⛔ THE POLICY STATE IS NOT HELD HERE, and it is not reached THROUGH here either. It lives in its own
 	// dictionary, owned by CvPlayer exactly as the amenity dictionary is owned by CvCity, and that dictionary owns
 	// its storage, its maintenance AND the declared set of facts that drives it -- one place responsible
-	// (Engine/PolicyContext.h, [DEC-dict-is-a-consumer]). This context FORWARDS the read and stores nothing.
+	// (Engine/PolicyContext.h, docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). This context FORWARDS the read and stores nothing.
 	// ⚠ Its maintainer reaches `player.policies()` DIRECTLY -- never through this context, which owns none of it.
 	void clear() const {}
 	bool hasPolicy(int ePolicy) const;   // the O(1) enacted-policy read (ev_playerHasPolicy), forwarded
@@ -55,7 +55,7 @@ public:
 	// so the live sources have to be enumerable cheaply for that read to be the cheap one modifier.md §5 describes.
 	void heldTraits(std::vector<TraitContext::HeldTrait>& heldTraits) const;
 	bool hasHeritage(int eHeritage) const;    // CvPlayer::hasHeritage
-	// The EMPIRE-LEVEL building axis (DEC-empire-level-buildings): the held store and the player-side operate
+	// The EMPIRE-LEVEL building axis (docs/specs/enabler.md §2 (empire-level buildings)): the held store and the player-side operate
 	// verdict, both the object's own O(1) data -- FORWARDED, never stored (the STORES-vs-FORWARDS split).
 	bool hasEmpireBuilding(int eBuilding) const;         // CvPlayer::hasEmpireBuilding
 	bool isEmpireBuildingActive(int eBuilding) const;    // CvPlayer::isEmpireBuildingActive

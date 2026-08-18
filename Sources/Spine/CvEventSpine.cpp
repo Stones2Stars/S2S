@@ -6,7 +6,7 @@
 #include "CvGameCoreDLL.h"
 #include "Enabler/CvEnablerConsumer.h"     // the enabler registers its OWN consumer (one per system)
 #include "CvModifierConsumer.h"            // the modifier cascade's OWN consumer (one per system)
-// Each context store registers its OWN consumer with its OWN declared interest set ([DEC-dict-is-a-consumer]);
+// Each context store registers its OWN consumer with its OWN declared interest set (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer));
 // there is no central contexts router.
 #include "Engine/PlotContext.h"            // the plot's CASC_PRED_* verdict bits
 #include "Engine/CityContext.h"            // plotAttrs + the city-scope derived blocks
@@ -687,7 +687,7 @@ void spineRegisterConsumers()
 	// name-change, grant triggers, the load bracket) renders through the consumer's structured path
 	// (spineRenderEventLine), never an inline string. NULL log file => Cascade.log.
 	spineRegisterDomain(SD_SPINE, spineDomainPrefix, NULL, spineDomainFieldInfo);
-	// ONE consumer PER SYSTEM ([DEC-enabler-not-cascade]): the ENABLER's own consumer (load-active -- the
+	// ONE consumer PER SYSTEM (docs/specs/enabler.md (enabler and cascade are two separate systems)): the ENABLER's own consumer (load-active -- the
 	// reseed's in-read emits BUILD its domains) and the MODIFIER cascade's own consumer (load-active for
 	// cache building -- the reseed's emits derive the dirty marks; the first reads after load recompute from
 	// current state). Both derive their reactions from their own compiled surfaces; no shared consumer, no
@@ -704,7 +704,7 @@ void spineRegisterConsumers()
 	//     conditions against the same stores, so it goes LAST.
 	// Contexts -> enabler -> modifier. Anything reading a context store registers AFTER the contexts.
 	// ⚖ THE CONTEXTS BAND, and that is a contract rather than a placement: every context store is its own consumer
-	// with its own declared interest set ([DEC-dict-is-a-consumer]), so this file carries one line per store -- but
+	// with its own declared interest set (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)), so this file carries one line per store -- but
 	// every one of them lands HERE, ahead of the enabler, because the enabler's load-end gate pass evaluates
 	// through these stores. Order is a property of the band, never of which translation unit happened to
 	// initialize first.
@@ -759,7 +759,7 @@ void emitNameChange(int iKind, int iOwner, int iEntityId)
 }
 
 // ===== the DOMAIN emit ENDPOINTS. ONE per happening; the CALLER picks the endpoint that names what it just
-// did, so no endpoint takes a direction argument and no payload carries a sign ([DEC-facts-name-happenings]).
+// did, so no endpoint takes a direction argument and no payload carries a sign (docs/spine.md §A FACT NAMES THE HAPPENING).
 // A SLOT REPLACEMENT calls REMOVED then ADDED -- emit() is synchronous, so that ordering is what makes the
 // withdrawal resolve against the state it was computed against ([state-repositories.md] THE INVARIANT). =====
 
@@ -805,7 +805,7 @@ void emitCityBuildingDormanted(int iCity, int iOwner, int iBuilding)
 	eventSpine().emit(e);
 }
 
-// The EMPIRE-LEVEL building facts (DEC-empire-level-buildings): held once by the PLAYER, no city to name, so
+// The EMPIRE-LEVEL building facts (docs/specs/enabler.md §2 (empire-level buildings)): held once by the PLAYER, no city to name, so
 // iSrcLoc is -1 throughout. iA on ADDED = bFirst -- whether the first-build payload is owed (a load RESTORES).
 void emitEmpireBuildingAdded(int iOwner, int iBuilding, bool bFirst)
 {
@@ -1342,7 +1342,7 @@ void emitPlotCityRemoved(int iPlot, int iOwner, int iCity)
 }
 
 // The plot's own derived verdict crossed. iType carries the CASC_PRED_* id -- WHICH bit; the event id carries the
-// DIRECTION, so no payload sign, presence bool or old/new pair is needed ([DEC-facts-name-happenings]).
+// DIRECTION, so no payload sign, presence bool or old/new pair is needed (docs/spine.md §A FACT NAMES THE HAPPENING).
 void emitPlotPredicateAdded(int iPlot, int iOwner, int iPredicate)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_PREDICATE_ADDED, iPredicate, 0, 0, iOwner, iPlot);
@@ -2096,5 +2096,5 @@ void emitGameLoadFinished()
 // True in the load-active window (between GAME_LOAD_STARTED and GAME_LOAD_FINISHED). The R3 consumer's MODIFIER-MARK
 // half reads this to SKIP the play-time targeted ripples during the reseed -- the frontier/operating-building
 // reverse indices are not built until onFinalInitialized (buildFrontierIndices), so a mid-reseed ripple is invalid.
-// (Its ENABLER half stays load-active -- the reseed events BUILD the enabler domains, DEC-spine-reseed.)
+// (Its ENABLER half stays load-active -- the reseed events BUILD the enabler domains, docs/spine.md §5 (the load reseed).)
 bool spineGameLoadInProgress() { return s_bGameLoadInProgress; }

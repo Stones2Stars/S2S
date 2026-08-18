@@ -5,7 +5,7 @@ walking outward, where open ground costs 1 and difficult ground costs more. A si
 ground, and fewer through anything costlier.
 
 **Vision is ONE family** — `vision` — with three kinds and the scope axis
-([DEC-scope-is-an-axis](../architecture/decisions.md#dec-scope-is-an-axis)) saying whose is whose. It had no spec
+([scope is a separate axis, never folded into the kind](../architecture/patterns.md#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)) saying whose is whose. It had no spec
 until now, which is exactly why it had no family: each curator invented a shape, and `seeFrom` / `seeThrough` /
 `visibilityRange` ended up as three names sliding between the same two ideas.
 
@@ -107,7 +107,7 @@ rather than the unit's, and why it is authored on the GROUND rather than on whoe
 high whether or not anyone is looking at it.
 
 All values are ×100 fixed point internally and human in JSON like every other channel
-([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)) — an author writes `1`, `1.5`, `2`, so
+([the ×100 fixed-point model](curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)) — an author writes `1`, `1.5`, `2`, so
 fractional obstruction needs no new scale.
 
 **What the formula gives, by construction:**
@@ -341,6 +341,6 @@ see-through value IS its obstruction, an improvement's see-from IS its elevation
 
 ## See also
 - [json.md](json.md) — the modifier grammar this family is authored in (§6 the address, §3.9 the entry).
-- [modifier.md](modifier.md) — the machine, and the `movement` family this one mirrors (§6: a bespoke resolver
+- [modifier.md](../cascade.md) — the machine, and the `movement` family this one mirrors (§6: a bespoke resolver
   still reads an ordinary family).
 - [naming.md](naming.md) — the `TERRAIN_`/`FEATURE_`/`ROUTE_` ids that carry the ground side.

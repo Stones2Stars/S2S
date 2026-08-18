@@ -1,7 +1,7 @@
 # HTTP endpoints — the observability surface
 
-The local server (`127.0.0.1:7227`) publishes game state for reading. It is a **GET-only** dev server, gated by the
-BUG option `Autolog__HttpServer` (off by default), bound to loopback only.
+The local server publishes game state for reading (transport details in [§ The transport](#the-transport-what-exists)
+below).
 
 **This doc is nearly empty on purpose.** There is no route catalogue, and the emptiness is the design — read the
 next section before you change anything here.
@@ -19,26 +19,28 @@ A legacy data member whose only remaining reader is a route is **not actually st
 census cannot tell the difference**. The member compiles, so the delete-driven cut walks past it; it survives by
 being kept alive *self-referentially*: the member exists because the route reads it, and the route exists to read
 the member. A route is therefore the ideal hiding place for exactly the legacy this rebuild exists to remove, and
-it hides it from the one census we trust ([DEC-playability-not-a-gate](../architecture/decisions.md#dec-playability-not-a-gate)
+it hides it from the one census we trust ([neither playability nor compiling gates removing legacy](validation.md#playability-not-a-gate)
 — removal is delete-driven and the compiler is the census;
-[DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking) — legacy must fail LOUD, never be
+[legacy must fail loud, never mask a cascade gap](validation.md#legacy-must-fail-loud-never-mask-a-cascade-gap) — legacy must fail LOUD, never be
 preserved by a reader).
 
 ⛔ **So: restoring a route in order to read a legacy value is the BANNED move** — not a shortcut, not a stopgap,
 not "just for observability while we finish". It is the precise mechanism that would resurrect legacy, and it
 looks like helpfulness every single time. The surface is not restored until the new access/getter surface exists,
 because only then can an endpoint read what every other consumer reads
-([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)) instead of reaching around it.
+([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)) instead of reaching around it.
 
-**When the surface returns it is re-specced here, against that access surface** — ⛔ the roadmap's open item
-([THE OPEN ITEM — the ACCESS surface](../plans/structural-cleanup/roadmap.md#-the-open-item--the-access-surface)).
+**When the surface returns it is re-specced here, against that access surface** — ⛔ the still-open item of
+building ONE new uniform, parameterized getter set over the channel index and disconnecting the legacy
+channel-shaped getters ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner),
+[patterns.md § THE TWO READ ROLES](../architecture/patterns.md)).
 
 ⚖ **WHAT IT SHOULD CARRY *IS* DECIDED, THOUGH: DECOMPOSITION CENSUSES (owner).** *"Censuses like this are the
 exact censuses we want to have in the http endpoints, because they give us real breakdowns, that are
 observable."* A route that serves ONE number answers nothing when that number is wrong; a route that serves a
 value **term by term** — the growth threshold beside its base, its gamespeed percent and its era percent; the
 consumption beside its per-pop rate — attributes a divergence to a NAMED source without a code read. That is
-the [DEC-obs-scale](../architecture/decisions.md#dec-obs-scale) Orwell bar as a route shape, and it is what the
+the [the Orwell observability bar](../spine.md#the-reconstruction-bar-orwell) Orwell bar as a route shape, and it is what the
 no-guessing rule needs in order to be followable at all: at a gap the moves are VERIFY or ASK, and a bare total
 supports neither.
 ⛔ It does NOT reopen the route ban above — the test is unchanged: a census reads the cascade's OWN computed
@@ -53,19 +55,19 @@ is unanswerable against the total and immediately answerable against the terms.
 ⚑ **And a term that is itself a Σ decomposes again — `plotBase` carries its THREE SEGMENTS beside it**
 (`plotNature` · `plotImprovement` · `plotRest`, the plot package's own storage split), with **`plotRoute` as a
 BREAKDOWN of `plotRest`** rather than a fourth term: the package stores route apart (for the golden-age
-operand, [modifier.md §2](modifier.md)) while `plotRest` keeps reporting route + the owner's plot flats, so no
+operand, [modifier.md §2](../cascade.md)) while `plotRest` keeps reporting route + the owner's plot flats, so no
 stored segment goes unreported. ⚠ `plotRoute` reaches the
 `/computed/city/yield` document and the tooltip, NOT the `[MODIFIER] rateRead` line — that line stands at the
-16-field cap, where a seventeenth term is silently DROPPED ([event-spine.md](event-spine.md)). One level of
+16-field cap, where a seventeenth term is silently DROPPED ([spine.md](../spine.md)). One level of
 decomposition only moves the question: a short `plotBase` says the plots are short and not WHICH leg is short,
 and a dead improvement leg is the same number in the total as a dead nature leg. They come out of the SAME walk
-the total does ([DEC-single-implementation]).
+the total does ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 
 > **⛔ Σsegments DOES NOT EQUAL `plotBase`, AND THE DIFFERENCE IS THE WHOLE §2a PLOT RESOLVE — reading a gap as
 > drift is the misreading this callout exists to stop.** The segments are the package's STORAGE; `plotBase` is
 > the Σ of each worked plot's RESOLVED value, and `resolvePlotFlat` puts a whole composition between the two:
 > the three floors (nature at 0, improvement at −nature, the total at 0), **the city-centre block**, **both
-> scaling legs**, **the golden-age addend**, and the **MinCity** floor ([modifier.md §2](modifier.md)). None of
+> scaling legs**, **the golden-age addend**, and the **MinCity** floor ([modifier.md §2](../cascade.md)). None of
 > those is a segment, because none of them is a stored deposit — each is read LIVE off the plot at resolve.
 > ⚑ **So a gap is EXPECTED, and its ordinary size is one thing: the CENTRE plot's city block.** On a city with
 > no scaling, no golden age and no biting floor, `plotBase − Σsegments` is exactly `CityChange + population /
@@ -88,11 +90,11 @@ base — so it is a readable few tens of thousands of lines on a large save, not
 ⚑ **`specialists` decomposes too, and on its OWN line (`[MODIFIER] specialistRead`, one row per held type)** —
 because that Σ has an axis the term does not: WHICH specialist type. A per-type row is not a term, so it could
 never have ridden `rateRead` inline, and `rateRead` is at the field cap besides
-([event-spine.md](event-spine.md)). ⚠ Each row carries the ASSIGNED and the FREE-TYPED count **separately**: the
-term multiplies by assigned alone while [modifier.md §2a](modifier.md) and the engine both say the count is the
+([spine.md](../spine.md)). ⚠ Each row carries the ASSIGNED and the FREE-TYPED count **separately**: the
+term multiplies by assigned alone while [modifier.md §2a](../cascade.md) and the engine both say the count is the
 sum, so the two columns SIZE that gap without moving a value. A type held only as free-typed reports a row with
 contribution 0 rather than no row at all — an absent row would read as "no such specialist here". ⛔ Its terms come OUT of the real
-combine rather than being re-derived beside it ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)):
+combine rather than being re-derived beside it ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)):
 a census that recomputed its own decomposition could disagree with the number it claims to explain, which is the
 one thing it must never do.
 
@@ -108,7 +110,7 @@ one thing it must never do.
 - **`/events`** — the gated `[TAG]` SSE stream, served on the server thread, never ending (`: keepalive` ~15 s).
   There are **≤ 8 concurrent stream slots**; beyond that it answers `503 {"error":"too many event streams"}` — a
   capture that exhausts the slots records NOTHING while reading exactly like "the feature did not fire". Per-turn
-  lines burst at the top of `doTurn`, so connect *before* the turn ticks. See [logging.md](logging.md).
+  lines burst at the top of `doTurn`, so connect *before* the turn ticks. See [spine.md](../spine.md).
 - **The single-slot game-thread mailbox.** A data request is serviced on the game thread and waits up to
   **18 seconds**; a second concurrent data request — or one whose answer does not arrive in time — gets
   **`503 … retry`**.
@@ -123,7 +125,7 @@ one thing it must never do.
 `/computed/enabler/operating` answers the first: the active / obsolete / provided set the targeted propagation
 maintains. **That is only half the machine**, and for a long time the other half had no route at all — so the
 GREYED tier ("go get copper") could be seen on a screen and nowhere else, which is precisely what the
-[observability bar](../reference/observability.md) forbids.
+[observability bar](../spine.md) forbids.
 
 - **`/computed/enabler/buildings`** — the VISIBLE tri-state per city: `listed[]` (may be started now) and
   `greyed[]`, **every greyed row carrying the REASON that refused it**, plus a `greyedByReason` histogram. It reads
@@ -165,15 +167,10 @@ the missed-emit tripwire: the same values twice, event-built and recomputed-from
 
 **⛔ The oracle side CANNOT WORK the way things are set up (owner).** Reproducing event-built state means
 replaying the FULL EVENT CHAIN, and an endpoint cannot build that chain — so the oracle does not answer a second
-derivation of the same quantity. It answers a number that was never comparable.
-⚑ **The tell, before the numbers fool you:** an oracle fetch is supposed to be a full recompute and orders of
-magnitude slower than its stored twin. A whole-empire fetch returns in **half a second**. It is not slow because
-it is not recomputing — and the diff then reports ~1500 divergent city slots with the oracle 17-29x high, which
-reads as a catastrophic cascade failure and is entirely the instrument
-([superseded-ideas #33](../architecture/superseded-ideas.md)).
-⛔ **This is the single most-revived dead idea in the project** — *"agent after agent refuse to let it go"* — so
-the ban is on RUNNING it as evidence, not merely on rebuilding it. A number from a broken instrument is worse
-than no number: it is specific, plausible and wrong.
+derivation of the same quantity. It answers a number that was never comparable, and it is **the single
+most-revived dead idea in the project** — the ban is on RUNNING it as evidence, not merely on rebuilding it: a
+number from a broken instrument is worse than no number. The tell, and the measured damage when it ran anyway:
+[superseded-ideas #33](../architecture/superseded-ideas.md).
 
 **⚖ WHAT TO DO INSTEAD (owner) — the THREE legs, and two of them is not a check:** read the **LOGS** (what
 actually landed: source, channel, scope, unit, driving fact, apply COUNT), check them against the **JSON INFO**
@@ -182,7 +179,7 @@ hold, what the counts are). A deposit is conditioned and scaled, so the authored
 correctness is all three agreeing, attributed to a named source with numbers.
 
 ## See also
-- [logging.md](logging.md) — the SSE `[TAG]` stream and the read rules.
-- [observability.md](../reference/observability.md) — the operational surface as it stands today.
+- [spine.md](../spine.md) — the event source, the SSE `[TAG]` stream, the read rules, and the operational surface
+  as it stands today.
 - [validation.md](validation.md) — the live-verification discipline this surface feeds.
-- [state-repositories.md](../architecture/state-repositories.md) — the stored-vs-oracle tripwire's home.
+- [state-repositories.md](../cascade.md) — the stored-vs-oracle tripwire's home.

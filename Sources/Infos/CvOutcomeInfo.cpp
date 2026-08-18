@@ -67,7 +67,7 @@ void CvOutcomeInfo::mapFrom(const picojson::value& entity)
 	}
 
 	// requires.build.all -- a flat list of bare type ids, routed to its typed member by id prefix
-	// ([DEC-materialize-at-mapfrom]: resolved once here, never re-read on a gate call). The tree sits INSIDE the
+	// (docs/architecture/patterns.md §Materialize at mapFrom: resolved once here, never re-read on a gate call). The tree sits INSIDE the
 	// `build` timing clause (owner): an outcome is a leaf action checked once when it fires, so `build` is its
 	// timing, exactly as a unit carries build only.
 	const picojson::object* pkRequires = jsonChildObj(kEntity, "requires");

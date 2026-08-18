@@ -11,7 +11,7 @@
 //	pass calls setTechPrereq); getObsoleteTech reads the `obsoletedBy.techs` edge off the base dispatch (the
 //	group's obsoleting tech is ALSO curator-inherited onto its member buildings, which is what retires them --
 //	this group-level read serves the consumers that ask the GROUP: the pedia line + the reverse edge).
-//	No legacy getter name returns ([DEC-new-getter-surface]).
+//	No legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"
@@ -32,7 +32,7 @@ public:
 	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
 	bool isValid() const { return m_bValid; }   // identity.valid (default TRUE; a project unlock flips the false ones)
 	// The GROUP cap (-1 = uncapped) -- materialized at mapFrom from the composed `allowed` unit
-	// ([DEC-materialize-at-mapfrom]: this read sits under per-candidate hot loops), so the getter is a bare
+	// (docs/architecture/patterns.md §Materialize at mapFrom: this read sits under per-candidate hot loops), so the getter is a bare
 	// member read; the enabler's group gate still reads the SAME composed unit via getAllowed() (ONE representation).
 	int getMaxPlayerInstances() const { return m_iMaxPlayerInstances; }
 	TechTypes getObsoleteTech() const   // obsoletedBy.techs -- the same edge read as CvBuildingInfo

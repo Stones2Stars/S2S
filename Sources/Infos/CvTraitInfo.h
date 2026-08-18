@@ -7,7 +7,7 @@
 //	read categories, nothing else); base of CvSimpleTraitInfo / CvComplexTraitInfo (the two option-selected sets
 //	live in SEPARATE repos -- modifier.md §4: a consumer picks the ACTIVE set via MMKernel::traitData, never a
 //	runtime info swap). Styled for the JSON anatomy (json.md §2); no legacy getter name returns
-//	([DEC-new-getter-surface]).
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"

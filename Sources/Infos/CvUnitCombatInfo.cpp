@@ -2,7 +2,7 @@
 //	CvUnitCombatInfo -- the base dispatch fills the composed units (the par.6 modifier families compile into
 //	CvModifiers; the par.8 `skills` bool block; the entity-level gate); this subclass parses ONLY what the type
 //	genuinely owns: the identity set, the par.9 vision + sizeMatters sections, the par.8 keyed-skill FK lists,
-//	and the par.8 outcomes section. NO family-address read survives here ([DEC-materialize-at-mapfrom]: the
+//	and the par.8 outcomes section. NO family-address read survives here (docs/architecture/patterns.md §Materialize at mapFrom: the
 //	modifier values are served by the compiled point reads / entry lists, never re-parsed subclass-side).
 //
 
@@ -61,7 +61,7 @@ void CvUnitCombatInfo::mapFrom(const picojson::value& entity)
 
 	// doubleMove is HALF MOVEMENT COST on that ground ([skills.md] par.1), so it is a keyed MOVEMENT modifier
 	// and NOT a skill. The typed FK lists are materialized once here from the compiled entries
-	// ([DEC-materialize-at-mapfrom]) so every consumer stays a bare member read.
+	// (docs/architecture/patterns.md §Materialize at mapFrom) so every consumer stays a bare member read.
 	InfoValuation::fillDoubleMoveTargets(getModifiers(), m_aiTerrainDoubleMove, m_aiFeatureDoubleMove);
 
 	// --- the derived move-through-plots verdict, materialized over the type's own data (the ONE shared

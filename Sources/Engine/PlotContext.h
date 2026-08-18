@@ -9,7 +9,7 @@
 //	than snapshotting values, owner).
 //
 //	⛔ STORAGE, MAINTENANCE AND THE FACTS THAT DRIVE IT LIVE IN ONE PLACE (owner) -- the dictionaries here, the
-//	appliers here, and the DECLARED SET OF FACTS here ([DEC-dict-is-a-consumer]). A store whose state sits on one
+//	appliers here, and the DECLARED SET OF FACTS here (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). A store whose state sits on one
 //	object while a router elsewhere decides when it moves has two homes and no owner, and a missing route then hides
 //	in a `switch` that looks complete instead of being visible AT the store.
 //
@@ -56,13 +56,13 @@
 //	terrain, river, the plot city's own fresh-water access, impassability, a feature that adds fresh water, and the
 //	rect(1,1) neighbour scan) and the ENGINE still consults the same predicate for irrigation and farm gates -- so
 //	re-expressing it over stored bits would fork a live predicate into two implementations that drift, which is the
-//	disease [DEC-single-implementation] exists to prevent. Deriving a bit by calling the ONE accessor is what that
+//	disease docs/architecture/patterns.md §DRY (single implementation) exists to prevent. Deriving a bit by calling the ONE accessor is what that
 //	rule asks for; what contexts.md bans is re-deriving the WHOLE BLOCK, and per-bit routing is exactly what stops
 //	that. ⚠ Its neighbour leg is therefore the one walk left in this file, and it is now paid only when a fact
 //	that actually feeds it arrives at that plot -- never per read, and never on an unrelated substrate fact.
 //
-//	NEVER SERIALIZED (DEC-derived-never-trusted): the bitset is rebuilt from the save read's own in-read DOMAIN
-//	emits (DEC-spine-reseed), never trusted from a save.
+//	NEVER SERIALIZED (docs/specs/save.md §5 (derived data serializes NOTHING)): the bitset is rebuilt from the save read's own in-read DOMAIN
+//	emits (docs/spine.md §5 (the load reseed)), never trusted from a save.
 //
 
 #include "CvCondition.h"   // CASC_PRED_* -- the ONE predicate vocabulary the stored bitset keys on
@@ -95,7 +95,7 @@ public:
 	PlotContext() : m_plot(NULL), m_attributeBits(0), m_servedBonus(-1) {}
 	void bind(const CvPlot* plot) { m_plot = plot; }   // set once by the owning CvPlot; the pointer IS the owner (never dangles)
 	// ZEROED at owner reset. The verdict bits are a DELTA store -- each is SET by the fact that names it, never
-	// re-derived wholesale -- so they are correct only from a known zero ([DEC-keyed-accumulator]). A plot object is
+	// re-derived wholesale -- so they are correct only from a known zero (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)). A plot object is
 	// reused across a regen/load, and a bit no later fact happens to touch would otherwise survive from the last world.
 	// ⚠ The served bonus resets to -1, NOT 0: 0 is a REAL bonus id, so zeroing it would hand a recycled plot the
 	// first resource in the registry.

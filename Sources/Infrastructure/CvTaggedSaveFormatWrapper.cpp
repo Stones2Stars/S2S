@@ -3828,7 +3828,7 @@ namespace {
 	// ⛔ THERE IS NO FALL-THROUGH, AND THAT IS THE POINT (owner): *"if it is falling through, it means that the
 	// complex version of a trait is not complete."* `complex/` is a SUPERSET of `simple/`, so a prefixed id that
 	// does not resolve is a DATA COMPLETENESS defect in the complex set -- and answering it with the SIMPLE record
-	// is the masking that hides it ([DEC-no-legacy-masking]), leaving a complex game holding a simple rung while
+	// is the masking that hides it (docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap), leaving a complex game holding a simple rung while
 	// every log line and check reports success. It fails loud instead, naming the id that is missing.
 	// ⚑ Measured: three lines lost their prefixed id to a source-side authoring bug (a base and its rung-1 sharing
 	// one `ReplacementID`), and the fall-through absorbed all of them in silence.
@@ -3844,7 +3844,7 @@ namespace {
 			const std::string szComplex = std::string("TRAIT_COMPLEX_") + (szStoredType + 6);
 			int iComplex = GC.getInfoTypeForString(szComplex.c_str(), true);
 			// ⛔ THE COMPLEX SET HAS NO RUNG 0 -- A LINE RUNS 1 -> 2 -> 3
-			// ([DEC-trait-sets-separate](../../docs/architecture/decisions.md#dec-trait-sets-separate)), so a
+			// (docs/cascade.md §4, the two trait sets are separate), so a
 			// stored BASE id has no same-named twin to resolve to and its entry rung is rank 1. This is the same
 			// demotion the curator applies to a leaderhead's assignment and to a tech's gate edge; applying it
 			// here too is what keeps ONE rule across the save, the data and the edges.

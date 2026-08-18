@@ -1,6 +1,6 @@
 # The enabler — "can I?"
 
-> **⛔ NAMING ([DEC-enabler-not-cascade](../architecture/decisions.md#dec-enabler-not-cascade)).** This is **the
+> **⛔ NAMING.** This is **the
 > enabler** — a system SEPARATE from the modifier **cascade**. The two are routinely conflated; do not. "cascade"
 > names the modifier ("how much?") system ONLY. The enabler's classes carry no `Cascade` prefix
 > (`EnablerKernel`/`BuildingEnabler`/`UnitEnabler`/`TechEnabler`), and its availability getters read the enabler's
@@ -140,7 +140,7 @@ techs are monotonic, no `operate`.
 > load-time pass beside the reader. ⚠ **The TRAIT prereqs are the deliberate exception and their forward GETTER is
 > NOT reconstructed:** the rebuilt `CvTraitInfo` carries no prereq getter at all, because re-adding
 > `getPrereqTrait`/`getPrereqOrTrait1/2` would be a legacy getter name returning
-> ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Their consumers
+> ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)). Their consumers
 > (`CvPlayer`, `CvGameTextMgr`) read the trait's own edge families instead, as stage-4 consumer work.
 > ⛔ **"Not reconstructed" is about the GETTER ONLY — the prereqs THEMSELVES are live and load-bearing. Reading
 > this line as "trait prereqs are inert" is the misreading this callout exists to stop.** A trait's `TraitPrereq`
@@ -165,14 +165,14 @@ techs are monotonic, no `operate`.
 > `EDGEB_TECHS` mixes ENABLING techs with OBSOLETING ones. A consumer with **ANY** semantics is safe (a superset
 > only loosens); a consumer with **ALL** semantics is NOT — reading a merged bucket as "every one of these is
 > required" silently demands a unit's own obsoleting tech before it may be trained. Keep the exact predicate over
-> the family ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)); where ALL semantics are
+> the family ([reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1)); where ALL semantics are
 > genuinely needed the answer is the owning info's own `requires` section, never the merged family.
 
 **Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
 via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 
 > **⚖ THE EMPIRE-LEVEL BUILDING (`identity.empireLevel`) — a building the PLAYER holds, once (owner).** The home
-> of [DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings).
+> of [empire-level buildings](#2-pass-1--generate-the-frontier-the-enables-family).
 > **Membership is EMPIRE-UNIFORMITY BY CONSTRUCTION:** a building whose presence cannot vary per city — the
 > class that self-granted a copy into every city (`grants.buildings` on itself at empire scope: the folklores,
 > the elemental-knowledge and requirement markers), plus the `notConstructible` effect markers whose ONLY
@@ -182,20 +182,20 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 > entity.
 > - **HAVE is the player's held set** — genuine non-derivable state, serialized on `CvPlayer`
 >   ([save.md §5](save.md)), announced as `SEVT_EMPIRE_BUILDING_ADDED / _REMOVED` with the in-read half
->   emitted from `CvPlayer::read` ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)), and
+>   emitted from `CvPlayer::read` ([the load reseed](../spine.md#5-the-load-reseed)), and
 >   forwarded through `EmpireContext` beside the civic / trait / heritage axes
->   ([contexts.md](../architecture/contexts.md)).
+>   ([contexts.md](../cascade.md)).
 > - **An atom naming one resolves at EMPIRE scope by the implied-scope rule** ([json.md §3.4](json.md): scope
 >   is implied from the type's DOMAIN, and the tag IS the type's domain) — so the bare `requires`/`per` atoms
 >   naming class members stay bare and answer from the held set; a count atom reads the tally's empire domain,
 >   which the held set feeds.
 > - **Its deposits author at EMPIRE scope** and roll down to every city at the read, exactly as a civic's do
->   ([modifier.md §1](modifier.md)) — no fan, no per-city copies. Per-city variation stays expressible as
+>   ([modifier.md §1](../cascade.md)) — no fan, no per-city copies. Per-city variation stays expressible as
 >   city-conditioned entries (the city-realization law,
->   [state-repositories.md](../architecture/state-repositories.md)).
+>   [state-repositories.md](../cascade.md)).
 > - **The BUILD path is the PROJECT precedent (§7.1), exactly:** a constructible member is offered on the CITY
->   production queue; its axes are empire-held so the frontier is the PLAYER's domain — per-city copies would
->   be byte-identical duplicated state that must never drift — and a city-local atom (the plot map-category
+>   production queue; its axes are empire-held so the frontier is the PLAYER's domain (byte-identical
+>   duplication risk otherwise, per §7.1) — and a city-local atom (the plot map-category
 >   gate) stays a live check at the gate, the same split projects already use. Completion acquires it for the
 >   PLAYER, and it leaves every city's offer at once (the built leave-rule, keyed on the held set). A
 >   `notConstructible` member is placed by its own system (the grants machine, a unit's construct mission)
@@ -274,7 +274,7 @@ city a copy of entities whose own data says one may exist — a `{world: 1}` cor
 `{empire: 1}` achievement — and `allowed` cannot refuse it, because `allowed` gates a BUILD (§4) and a
 queue-excluded entity is never a build candidate. ⚑ **The damage is not confined to over-offering:** an entity
 that is ACTIVE in N cities deposits N times, so a scope-wide deposit it carries is multiplied by the city count —
-silently, on a plausible-looking number ([modifier.md §5](modifier.md)).
+silently, on a plausible-looking number ([modifier.md §5](../cascade.md)).
 ⚠ **The place-everywhere population is TWO data-identified classes, never the whole queue-excluded set (owner):
 the PROPERTY BANDS (a `requires.operate` PROPERTY band) and the `identity.autoBuild` set** — the legacy per-turn
 `doAutobuild` population: the housing ladder, the pests, the resource and presence markers, the civic markers,
@@ -307,7 +307,7 @@ already fact-maintained, so no per-turn re-check exists for either.
 ⚠ **A pseudobuilding representing a CHOICE (an ordinance ENACTED, a culture HELD, a folklore requirement) was
 the second, separate defect of the per-city placement: present everywhere AND active everywhere, its
 `requires.operate` naming only a tech and a map category — never the choice itself.** The empire-level move
-(§2, [DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings)) resolves it
+(§2, [empire-level buildings](#2-pass-1--generate-the-frontier-the-enables-family)) resolves it
 structurally for that class: the player HOLDS the marker iff the choice was actually made, so holding IS the
 choice and no per-city active-everywhere state exists to get wrong.
 
@@ -322,7 +322,7 @@ dormancy gate reads `operate` alone. A queue-excluded entity is never a queue ca
 no consumer at all, and anything left there would silently never be
 evaluated again (a cliff dwelling placed in a flat city would come up ACTIVE, its `TERRAIN_PEAK` clause sitting in
 the half nothing reads). The curator therefore folds `build` into `operate` for the whole class
-([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)).
+([recurate on every decision](../../AGENTS.md#git--delivery)).
 ⚑ The folded position is strictly MORE correct than the one it leaves: `operate` is re-checked every recompute, so
 the entity correctly dorms if the ground it needed stops existing (terrain levelled to sea level — the WMD case),
 which a checked-once `build` clause could never do.
@@ -386,7 +386,7 @@ relationships are **distinct gates, mirroring the engine** (`build`/`operate` sh
   own superseders), never the source-side `replaces.units` (which nothing authors).
 
 Other gates fold into `requires.build` as **declarative conditions** (no engine special-case, modder-extensible):
-**game options** → the **ENTITY-LEVEL `enabled`/`disabled` gate** ([DEC-entity-gate] — e.g. the inquisitor's
+**game options** → the **ENTITY-LEVEL `enabled`/`disabled` gate** ([the whole-entity applicability gate](json.md#2-anatomy-of-an-entity) — e.g. the inquisitor's
 `"enabled": "GAMEOPTION_RELIGION_INQUISITIONS"`),
 evaluated live against the active options; `requires` holds only genuine needs; a **unit** corp prereq →
 `{HAS_CORPORATION: X}` = **active** (`isActiveCorporation`), distinct from a building's bare `CORPORATION_` = present.
@@ -427,14 +427,14 @@ plus the **bonuses those operating buildings supply in-vicinity** (`provides.bon
 two form one **least-fixpoint** — an operating building's `operate` can consume a bonus another operating building
 provides, so an operating/dormant flip ripples.
 
-This set is the enabler's output the **[modifier](modifier.md) reads to decide which buildings deposit**: an
+This set is the enabler's output the **[modifier](../cascade.md) reads to decide which buildings deposit**: an
 operating building contributes its modifiers, a dormant one contributes nothing. It is the built-instance
 counterpart of the frontier (§2 — the frontier is "what can I build"; this is "of what I've built, what is
 operating right now").
 
 It is **maintained by targeted propagation, never a blanket recompute**: each HAVE-change ripples only the
 affected buildings into the authoritative set in place (via an operate reverse-index)
-— see [state-repositories](../architecture/state-repositories.md). In code it is
+— see [state-repositories](../cascade.md). In code it is
 `CvCity::m_operatingBuildings` (type **`OperatingBuildings`** — its `active` + `provided` + `obsolete` sets), read via
 `EnablerKernel::operatingBuildings` / `wireOperatingBuildings`.
 
@@ -450,16 +450,16 @@ affected buildings into the authoritative set in place (via an operate reverse-i
 > off a set the facts had already converged 55 seconds earlier. **The cascade and the enabler must build on the
 > SAME SEEDS (owner)**, and two compensating hacks were what stopped them.
 > ⛔ Do not reintroduce either half. A guard must never suppress an emit
-> ([event-spine.md](event-spine.md) § THE RECEIVED LINE), and a recompute beside an event-built set is banned
-> outright ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed): it "may never survive beside the
+> ([spine.md](../spine.md) § THE RECEIVED LINE), and a recompute beside an event-built set is banned
+> outright ([the load reseed](../spine.md#5-the-load-reseed): it "may never survive beside the
 > setters"). ⚠ Order is not what makes this safe — a package is additive, so arrival sequence is irrelevant
 > (owner); what matters is each fact arriving EXACTLY ONCE, which is precisely what a second builder breaks.
 
 > **⛔ THERE IS NO PER-TURN RE-CHECK OF ANY KIND, AND A "BOUNDED" ONE IS NOT AN EXCEPTION (owner).** A sweep that
 > re-gates a set once a turn — however small the set — **jumps over the core system**: the fact is what moves a
 > verdict, and a periodic pass is a second maintenance surface running beside it. It is
-> [DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal) (no blanket per-turn rebuild) and
-> [DEC-flag-is-fossil](../architecture/decisions.md#dec-flag-is-fossil) (a periodic re-check ASSERTS that we
+> [self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) (no blanket per-turn rebuild) and
+> [a staleness flag is the fossil of a missing emit](../cascade.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up) (a periodic re-check ASSERTS that we
 > cannot know what changed, which a saturated emit surface falsifies by construction).
 > ⚑ **Its real cost is not the cycles, it is the CONCEALMENT:** a sweep silently repairs the verdict a missing
 > route left wrong, so the gap stops being observable and the enable-side over-offer that would have named it
@@ -468,12 +468,12 @@ affected buildings into the authoritative set in place (via an operate reverse-i
 > ⛔ So a candidate whose `requires` reads live state does not earn a sweep: either its axis has a fact and is
 > routed on it, or the axis is STATIC for the city's life (a plot's latitude, a victory condition) and is gated
 > once at creation. Nothing in the authored data falls outside those two, and a future atom that appears to must
-> get its fact ([DEC-close-event-gaps-now](../architecture/decisions.md#dec-close-event-gaps-now)), never a
+> get its fact ([an event gap is closed the moment it is found](../spine.md#-a-fact-names-the-happening--something-changed-is-not-a-fact-owner)), never a
 > re-check.
 
 **Obsolescence is the THIRD outcome of this same pass.** A present building whose `obsoletedBy` tech is held is
 neither active nor dormant — it goes into the `obsolete` set (excluded from `active`, provides nothing), and the
-[modifier](modifier.md) reads its **`whenObsolete`** tree (§2 / [json](json.md) §4.2) in place of its normal
+[modifier](../cascade.md) reads its **`whenObsolete`** tree (§2 / [json](json.md) §4.2) in place of its normal
 families. It is maintained by the same targeted propagation (an `obsoletedBy.techs` reverse-index re-checked on a
 tech change), read via `cascadeIsBuildingObsolete`.
 
@@ -489,7 +489,7 @@ needs to do — so the apply lives on the TECH fact, in the enabler's `onTechCha
 that already runs there.
 
 ⚖ **AN "I HAVE BEEN OBSOLETED" FACT IS WELCOME — but it is PURELY for LOGGING and the NOTIFICATION (owner),
-never the mechanism.** That is the [event-spine.md](event-spine.md) player-alert shape exactly: the alert is a
+never the mechanism.** That is the [spine.md](../spine.md) player-alert shape exactly: the alert is a
 CONSUMER of a fact, never re-inlined at the mutation site, and the legacy "your building was obsoleted" message
 died with the legacy mutator this cut removes — so it is on the owed-alerts list. ⛔ What must NOT happen is the
 APPLY being moved onto that fact: the removal is not waiting on an announcement, and routing it through one
@@ -518,13 +518,13 @@ see, so it gates in the building domain's own gate beside the SpecialBuilding gr
 derived from **WHICH self-cap it authors** ([json.md §4.4](json.md): the cap's scope is what makes it a world /
 team / national wonder), never from an `isWorldWonder` mirror, and the comparison uses the city's RAW category
 counts — never the engine's `isWorldWondersMaxed()` verdict, which is a computed output a gate must not ride in on
-([DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)).
+([the pollution guardrail](validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)).
 
 ⚠ **Its two gate INPUTS name the candidate NOWHERE, so neither is reachable through the candidate's own
 `EDGEF_REQUIRED_BY` set** — the city's CULTURE LEVEL (which sets the max) and another wonder of the same category
 ARRIVING here (which moves the count). Both therefore re-gate the whole capped set: on the culture-level fact, and
 in this city on the building-changed fact beside the existing cap-scope fan. An unrouted gate input is a
-permanently stale verdict ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
+permanently stale verdict ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)).
 
 ⚖ **TWO GAME OPTIONS REMOVE THE CATEGORY CAP OUTRIGHT, and the gate must honour BOTH.**
 **`GAMEOPTION_NO_WONDER_LIMIT`** is the player asking for no limit — removing it is the whole point of the option —
@@ -534,11 +534,11 @@ does not apply.
 ⛔ There is deliberately **no curated cap variant** for either — neither RESCALES the limit, they REMOVE it, so the
 legacy per-culture-level OCC cap field is not migrated. The gate reads the options at the CONSUMING system (here,
 the enabler) while the info keeps serving ungated data ([json.md §9](json.md)).
-⚠ **The enabler computes this verdict itself and must therefore carry the carve-outs itself.** It may not read
-`CvCity::isWorldWondersMaxed()` — that is a computed output a gate must not ride in on
-([DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — so the option checks that answer
-holds there do NOT come along with the count, and an omitted one silently enforces a limit the player switched
-off. Re-deriving a verdict means re-deriving every carve-out on it, not just its arithmetic.
+⚠ **The enabler computes this verdict itself and must therefore carry the carve-outs itself.** Reading
+`CvCity::isWorldWondersMaxed()` is banned for the same reason as the raw-count rule above
+([the pollution guardrail](validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)), so the option checks stay with the
+count — an omitted one silently enforces a limit the player switched off. Re-deriving a verdict means re-deriving
+every carve-out on it, not just its arithmetic.
 
 ---
 
@@ -561,7 +561,7 @@ that, so the up-walk STAYS. What makes it cheap is that it re-runs **INCREMENTAL
 candidates** via the `EDGEF_REQUIRED_BY` reverse index (§7.1), never over the whole frontier.
 
 ⛔ **CORRECTNESS *IS* THE TARGETED INVALIDATION — there is no self-heal net behind it**
-([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)). The reverse index plus targeted propagation is
+([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). The reverse index plus targeted propagation is
 the WHOLE correctness mechanism: every HAVE-change re-gates exactly its dependents, and nothing blanket-rebuilds
 behind it absorbing misses. ⚑ The asymmetry to hold onto: **over-inclusion in the reverse index is SAFE** (a few
 harmless extra re-checks), while a **MISS is a bug to close, never an accepted one-slice lag** — it must surface as
@@ -584,84 +584,56 @@ Each clause carries a disposition (set once by its kind):
 Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resource on `requires` to **grey**
 (surfacing "go get copper"), or on `enables` to **hide** until present. General lean: grey on resources.
 
-> **⛔ THE GATE CARRIES *WHY* IT FAILED, NOT A BOOLEAN — OTHERWISE THE TOOLTIP CANNOT SAY WHAT IS NEEDED
-> (owner).** The verdict is the failing clause's IDENTITY; hide-vs-grey is then read off that identity rather
-> than being the whole of what is stored. A single failed bit satisfies neither consumer: the UI cannot tell a
-> capped-out wonder (nothing to do about it — HIDE) from a missing resource (go connect it — GREY), and the
-> player is told a thing is unavailable without being told what would make it available.
-> ⚑ **It is the same shape the yield census already has one plane over** — the refused deposits are served WITH
-> the atom that refused each one ([http-endpoints.md](http-endpoints.md)) — and it is why a reason is worth
-> storing rather than re-deriving: a consumer that re-evaluated the clauses to find the cause would be a second
-> gate implementation, free to disagree with the verdict it claims to explain
-> ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
-> ⛔ **So do NOT collapse the clause set into one flag.** Every clause the gate evaluates — dormancy, the
-> entity-level option gate, `requires`, and each `allowed` cap (self / group / per-city category) — is its own
-> reason, and a clause whose disposition is HIDE must not present as GREYED merely because it shares the bit.
-> ⚠ **This reaches the AI, not only the screen** (owner), which is why the disposition is part of the model and
-> not a rendering choice: the tri-state is the ONE shared choice set (below), so a consumer testing
-> `>= GREYED` ("could I build this eventually?") gets a different answer once a hide-clause stops greying.
-> ⚑ The REQUIRES reason names the clause kind; WHICH atom is unmet is the requires tree's own per-clause render,
-> so the two compose instead of the enabler duplicating the condition walk.
+> **⛔ THE GATE CARRIES *WHY* IT FAILED, NOT A BOOLEAN (owner)** — the tooltip and the AI both need to say what
+> is missing, so the stored verdict is the failing clause's IDENTITY and hide-vs-grey is read off it. A
+> capped-out wonder (HIDE — nothing to do) and a missing resource (GREY — go connect it) cannot share one bit.
+> ⛔ **So the clause set is never collapsed into one flag** — dormancy, the entity-level option gate, `requires`,
+> and each `allowed` cap (self / group / per-city category) are each their own reason; a HIDE clause must never
+> present as GREYED merely because it shares the bit. This reaches the AI as much as the screen: a consumer
+> testing `>= GREYED` gets a different answer once a hide-clause stops greying. The REQUIRES reason names the
+> clause KIND; which atom is unmet is the requires tree's own per-clause render, so the two compose.
+> ⚑ The reason is STORED rather than re-derived — a consumer that re-evaluated the clauses to find the cause
+> would be a second gate implementation, free to disagree with the verdict it claims to explain
+> ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 >
 > **⚖ THE REASON EXISTS SO NOBODY HAS TO GUESS — HUMAN OR AI (owner): *"otherwise a user would just have to
-> guess what is wrong when they see greyed stuff, be it human or ai, and we try to avoid that."*** This is
-> [DEC-no-guessing](../architecture/decisions.md#dec-no-guessing) pointed at the CONSUMER rather than at us: a
-> greyed entry that does not say what is missing hands the player — and the AI — a question instead of an
-> answer, which is the same defect a non-specific fact commits on the emit side
-> ([DEC-facts-name-happenings](../architecture/decisions.md#dec-facts-name-happenings)).
+> guess what is wrong when they see greyed stuff, be it human or ai, and we try to avoid that."*** —
+> [the no-guessing rule](../../AGENTS.md#conduct) pointed at the CONSUMER: a greyed entry that
+> does not say what is missing hands the player and the AI a question instead of an answer, the same defect a
+> non-specific fact commits on the emit side
+> ([a fact names the happening](../spine.md#-a-fact-names-the-happening--something-changed-is-not-a-fact-owner)).
 > ⇒ **So "unavailable" is never a complete verdict.** A candidate the player can act on says what to go get; one
-> they cannot says so and stops occupying the list. ⛔ Neither is served by a bit, which is why the reason is
-> STORED at the gate that already knows it rather than re-derived by whoever displays it.
+> they cannot says so and stops occupying the list — stored at the gate, never re-derived by whoever displays it.
 >
 > **⚖ THE DISPOSITION IS PER ATOM KIND, AND THE KINDS STAY DISTINCT (owner): *"per atom kind … then we can
-> collapse as needed when we want to."*** A `requires` tree mixes kinds freely — `all: [TECH_X, BONUS_Y]` is the
-> ordinary shape — so ONE disposition for the whole clause cannot be right for both halves: a missing BONUS is
-> exactly the "go get copper" case grey exists for, while an unresearched TECH is not something the player can go
-> and fetch. ⛔ So the reason names the ATOM KIND that refused, and hide-vs-grey is decided from that — never
-> from the clause as a whole, and never from one bundled REQUIRES verdict.
-> ⚑ **Carry the kinds SEPARATELY even where two currently share a disposition.** Collapsing is a deliberate later
-> decision and is cheap once the kinds are distinct (one mapping edits); pre-merging is not reversible without
-> re-deriving which kind an entry meant. ⇒ The disposition is a MAPPING OVER the kind, never a property stored
-> per entity.
-> ⚑ **Scale, so this is not read as an edge case: 4,381 of 5,180 buildings name a `TECH_` atom in
-> `requires.build`, 1,216 of them capped.** Nearly every building states its tech on BOTH sides — the `enables`
-> edge that proposes it and the `requires` clause that confirms it (§2's multi-parent rule) — so the tech clause's
+> collapse as needed when we want to."*** A `requires` tree mixes kinds freely (`all: [TECH_X, BONUS_Y]`), so one
+> disposition per clause is wrong for both halves — a missing BONUS is the "go get copper" case grey exists for,
+> an unresearched TECH is not fetchable. The reason names the ATOM KIND that refused, never the clause as a
+> whole. Carry kinds separately even where two share a disposition today: collapsing later is a cheap mapping
+> edit; pre-merging is not reversible — the disposition is a MAPPING OVER the kind, never a property stored per
+> entity.
+> ⚑ Scale: 4,381 of 5,180 buildings name a `TECH_` atom in `requires.build`, 1,216 of them capped — this
 > disposition decides the visible build list for thousands of entities, not a handful.
-> ⚠ **A `noneOf` names the thing it FORBIDS**, so "the tree mentions a tech" is not the same as "a tech refused
-> it" — the kind must come from the atoms that actually caused the failure, not from what the tree merely
-> mentions ([CvConditionQuery] draws that same line).
+> ⚠ A `noneOf` names what it FORBIDS, so "the tree mentions a tech" is not "a tech refused it" — the kind comes
+> from the atoms that actually caused the failure.
 >
-> **⚖ THE DISCRIMINATOR, so the mapping is re-derivable rather than memorized: CAN THE ASKER ACT ON IT?** That
-> is the whole test, and it is the one the ruling above already states from the other side — a candidate the
-> asker can act on says what to go get, one they cannot says so and stops occupying the list. Two calls it
-> decides are worth naming, because both read as surprising until the test is applied: a **TECH HIDES** (it is
-> not fetched, and §2's multi-parent rule means the tech is the `enables` edge as well, so before it lands the
-> entity is normally not in the tree at all — greying it would double-list every future building), and **THE
-> GROUND HIDES** — river, coast, hills, latitude, terrain, map category — because a city cannot acquire the tile
-> it stands on, so a landlocked city greying a harbour forever is pure noise.
-> ⚑ **The DEFAULT is GREY, including for an atom kind the vocabulary does not name yet.** That is §5's asymmetry
-> applied to the disposition: an extra greyed row costs a line, while a wrong HIDE costs the asker the answer
-> entirely — so an unrecognised kind leaves the candidate visible and merely unexplained.
-> ⚠ **Changing a kind's disposition moves entries between HIDDEN and GREYED and NOTHING ELSE.** LISTED is the
-> gate-passed state and membership is its own stored plane (§7.1), so no buildability verdict rides on this
-> mapping — which is exactly what makes collapsing a kind later the cheap edit the ruling says it is.
+> **⚖ THE DISCRIMINATOR: CAN THE ASKER ACT ON IT?** That is the whole test, already stated above from the other
+> side. Two calls it decides: a **TECH HIDES** (§2's multi-parent rule already keeps it out of the tree until it
+> lands — greying it would double-list every future building), and **THE GROUND HIDES** — river, coast, hills,
+> latitude, terrain, map category — because a city cannot acquire the tile it stands on.
+> ⚑ The DEFAULT is GREY, including for an unnamed atom kind — §5's asymmetry applied to disposition: an extra
+> greyed row costs a line, a wrong HIDE costs the asker the answer entirely.
+> ⚠ Changing a kind's disposition only moves entries between HIDDEN and GREYED — LISTED is membership's own
+> stored plane (§7.1) and never rides this mapping, which is what makes collapsing a kind later cheap.
 >
-> **⛔ AND WHEN SEVERAL CLAUSES FAIL, HIDE WINS (owner).** Only ONE reason is stored, so the disposition table
-> above is only half the rule — the other half is WHICH failing clause it is read from. A clause the asker
-> cannot act on makes the whole entity unactionable, so listing it greyed advertises an action that does not
-> exist. The verdict is therefore weighed over **every top-level clause of BOTH timings** (`requires.build` and
-> `requires.operate`): any hiding reason wins outright, and only if none hides does the first greying one stand.
-> ⚑ **The defect this replaces is the reason the rule is written down.** The gate took the FIRST failing clause,
-> so `all: [BONUS_COPPER, TECH_X]` with both unmet stored the BONUS reason and GREYED — while the unmet TECH
-> beside it hides. **Clause ORDER decided what the player saw**, and the symptom was a greyed build list
-> offering buildings whose tech was not researched.
-> ⚑ **It is machine-checkable, so it does not depend on anyone remembering it:**
-> `/computed/enabler/buildings`'s `greyedByReason` histogram must contain **no reason that `reasonHides`
-> returns true for** ([http-endpoints.md](http-endpoints.md)). A hiding reason in the greyed set is a selection
-> defect, visible without opening the game.
-> ⚠ The clause decomposition is SHARED with the tooltip renderer, which walks the same list to colour each
-> clause by its own verdict — one `all`-walk, not two with different stopping rules
-> ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+> **⛔ AND WHEN SEVERAL CLAUSES FAIL, HIDE WINS (owner).** Only ONE reason is stored, weighed over every
+> top-level clause of BOTH timings (`requires.build` and `requires.operate`): any hiding reason wins outright,
+> and only if none hides does the first greying one stand — a clause the asker cannot act on makes the whole
+> entity unactionable. *(The defect this replaces: taking the FIRST failing clause let `all: [BONUS_COPPER,
+> TECH_X]` grey on the bonus while the unresearched tech beside it — which should hide — sat exposed.)*
+> ⚑ Machine-checked: `/computed/enabler/buildings`'s `greyedByReason` histogram must contain no reason
+> `reasonHides` returns true for ([http-endpoints.md](http-endpoints.md)). The tooltip renderer shares this same
+> clause decomposition, one `all`-walk for both ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 
 **The frontier is one shared choice set — UI *and* AI.** It is computed once per recompute; the UI greys from
 it, and the AI's production decision iterates **only this small frontier** instead of scoring the whole entity
@@ -685,7 +657,7 @@ biggest systemic win.
 > waiver the real gate exists to grant.
 > ⚠ So an over-offer is diagnosed exactly as §3.2 already says — **a fact that is not being read, fixed at the
 > ROUTE** — never by re-filtering at the consumer, which hides the gap instead of naming it
-> ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+> ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 
 ---
 
@@ -702,7 +674,7 @@ the pure `HAVE → frontier` function, never leaking into the model.
 **The runtime realization (LOCKED) — a CONSTANTLY-UPDATED VECTOR, not recompute-on-read.** The
 `canConstruct` / `canResearch` / `canTrain` / … lists are **stored vectors the ENABLER OWNS**, built **once** at
 load by the **reseed events** (the in-read emits stream through the same appliers as play,
-[DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) — never a warm-up walk beside the event
+[the load reseed](../spine.md#5-the-load-reseed) — never a warm-up walk beside the event
 stream) and **updated in place on events** (a tech researched adds its `enables` / removes its
 obsoletes; a building built leaves `buildable`; …). Every read is a **pure O(1) lookup that NEVER calls a
 calculator**, and the enabler consumes ONLY events precisely so a missed emit surfaces as a visibly wrong
@@ -715,7 +687,7 @@ endpoint call twice over. A wrong verdict is caught by the THREE-LEG check
 (`/computed/enabler/operating` · `/buildings` · `/verdict` · `/units`), which serve the maintained verdict term
 by term and never recompute it. The `requires` gate re-runs **incrementally over only the affected candidates** (via the reverse
 index), and the operating-building set (§3.2) is maintained the same way — this is
-[state-repositories](../architecture/state-repositories.md)' targeted propagation applied to the availability
+[state-repositories](../cascade.md)' targeted propagation applied to the availability
 machine. The representation is deliberately primitive: **the HAS list, and the enabler list built from HAS, are
 literally TWO SETS OF INTS (enum ids)** — set algebra over int sets, nothing richer.
 
@@ -723,15 +695,14 @@ literally TWO SETS OF INTS (enum ids)** — set algebra over int sets, nothing r
 buildable/trainable lists are per-city derived state, so every `CvCity` carries its own enabler object — exactly
 as it carries its package set — and the player carries the player-domain lists (researchable / adoptable /
 hurries / …). It is **ONE unified enabler component**, instantiated per scope owner and fed by the eventspine
-consumer — a **SIBLING of `CvDerivedCache`, which CANNOT operate the same way**
-([state-repositories](../architecture/state-repositories.md): the two distinct kinds of derived cache). A value
-cache recomputes on its mark; the enabler **fundamentally behaves differently: the CAN-HAVE set is built PURELY on
+consumer. A value cache recomputes on its mark; the enabler
+**fundamentally behaves differently: the CAN-HAVE set is built PURELY on
 the events of ALREADY-HAS** — each HAVE-event applies its `enables`/removal edges in place, the load reseed's
 events are the one full build, and no mark-then-recompute path exists at all. A component's `requires` gate resolves
 cross-scope atoms by reading its parent scope's state up the chain (§5's upward callback, realized).
 
 **HAVE is NOT a new store — and its READ SURFACE is the per-scope CONTEXTS**
-([contexts.md](../architecture/contexts.md), owner). The object-owned has-lists that ALREADY EXIST (the city's
+([contexts.md](../cascade.md), owner). The object-owned has-lists that ALREADY EXIST (the city's
 buildings-present / religions / corporations, the player's civics / traits / heritages, the team's techs) stay
 where they are — the object owns its presence state, the [tally](tally.md) rule ("let an object care about
 itself") applied to presence — and each scope's CONTEXT forwards them (storing only a homeless aggregate, e.g.
@@ -743,7 +714,7 @@ recompute.
 
 **Event-fed, the end-state:** the enabler's derived sets — the **domain lists**, the **operating-building set**
 — are built by the **load reseed** (the in-read DOMAIN events populate them,
-[DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)) and **maintained incrementally by play-time
+[the load reseed](../spine.md#5-the-load-reseed)) and **maintained incrementally by play-time
 events** (building built → the city's lists re-gate its dependents; tech researched → its `enables`/`obsoletes`
 edges apply; bonus network shift → operate re-check) — never re-reading live game objects wholesale and never a
 per-turn blanket re-check. Exactly the modifier caches' model, applied to the "can I?" machine.
@@ -754,11 +725,11 @@ disproving "buildings-only" state-retraction), nuke, and `doAutobuild` add/remov
 **Gather order — "right-then-down".** Pass 1 gathers in dependency order: sticky top (techs/civics) first, then
 volatile bottom (resources/bonuses/buildings), so derived have-entries resolve against what's already gathered.
 
-**Game-option gates are the ENTITY-LEVEL `enabled`/`disabled` pair, evaluated LIVE ([DEC-entity-gate]).**
+**Game-option gates are the ENTITY-LEVEL `enabled`/`disabled` pair, evaluated LIVE ([the whole-entity applicability gate](json.md#2-anatomy-of-an-entity)).**
 The legacy engine checks the option tags at USE time, and the gate mirrors that: an entity whose `enabled` fails (or
 `disabled` holds) is simply never offered/valid while the option state says so. LOAD-STABLE machinery that genuinely
 resolves at load (the legacy whole-Info replacement swap — dissolved into the curated trait sets, see
-[modifier.md](modifier.md) — WorldBuilder/BUG, a per-civ research ban) is engine-side, not entity data.
+[modifier.md](../cascade.md) — WorldBuilder/BUG, a per-civ research ban) is engine-side, not entity data.
 
 ### 7.1 The concrete structure + the delta algorithm
 
@@ -796,7 +767,7 @@ for both big domains, and frontier iteration is a linear byte scan. The **only m
 2. **Re-gate:** the requires-reverse-index (HAVE-atom id → dependent candidate ids) names the in-tree
    candidates whose `requires` references H; **only those** re-evaluate, flipping GREYED↔LISTED. Its canonical
    home is **`EDGEF_REQUIRED_BY` on the referenced info**, populated by the readJson reverse pass
-   ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)) — never a bespoke side index
+   ([reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1)) — never a bespoke side index
    inside an enabler.
 3. **Caps / queue / built:** a count event re-checks `allowed` for that one type; queueing/completion is the
    targeted single-id erase. The leave-rules differ per domain: a **building** leaves the frontier when built; a
@@ -804,7 +775,7 @@ for both big domains, and frontier iteration is a linear byte scan. The **only m
 4. **Operate ripple:** operate-atoms referencing H drive the operating-building work-list fixpoint (§3.2).
 
 **⛔ ORDER-INDEPENDENCE is a HARD INVARIANT of the delta algorithm.** Events are facts, not causal steps
-([event-spine](event-spine.md)) — the sets must converge to the same content whatever order the events arrive
+([spine.md](../spine.md)) — the sets must converge to the same content whatever order the events arrive
 in (`TECH_GAME_START` last, first, or anywhere). The algorithm guarantees it because every piece is commutative:
 generation is the **refcounted membership formula** (step 1 — removal wins; sequenced add/erase is banned);
 gating is gate-on-entry *against current state* + re-gate via the reverse index when a referenced atom later
@@ -826,14 +797,13 @@ maintains the unlocked-builds set, and the plot-validity half stays a live per-p
 ## 8. The machine's shape — components, host, and the read surface
 
 > The structural half of the design: what the machine decomposes into, where its state lives, and the contract its
-> readers get. ⛔ It carries no build status and no worklist — what is NOT done is
-> [todo.md](../plans/structural-cleanup/todo.md)
-> ([DEC-spec-plus-todo](../architecture/decisions.md#dec-spec-plus-todo)).
+> readers get. ⛔ It carries no build status and no worklist — what is NOT done belongs in a short todo list, never
+> woven into this spec ([a doc is a SPEC or a TODO, never both](../../AGENTS.md#docs)).
 
 ### The components
 
 The enabler lives in **`Sources/Enabler/`** — its own tree, carrying no `Cascade` prefix
-([DEC-enabler-not-cascade](../architecture/decisions.md#dec-enabler-not-cascade)):
+(the enabler and the modifier cascade are two separate systems):
 
 - **`EnablerDomain`** (`CvEnabler.{h,cpp}`) — the §7.1 shape: the tri-state array + the two membership refcount
   planes + the removal-wins formula. One component, instantiated per scope owner.
@@ -844,13 +814,13 @@ The enabler lives in **`Sources/Enabler/`** — its own tree, carrying no `Casca
   event-delta calculator, all routed through the ONE `applyEdges`.
 - **`CvEnablerConsumer`** — the enabler's OWN spine consumer, registered by `enablerRegisterConsumer()`. It is
   **LOAD-ACTIVE**: the reseed's in-read emits BUILD the domains through the same appliers play uses
-  ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)) — there is no warm-up seed walk. One
+  ([the load reseed](../spine.md#5-the-load-reseed)) — there is no warm-up seed walk. One
   consumer per system; it never routes modifier work.
 - **`OperatingBuildings`** (`CvOperatingBuildings.h`) — the §3.2 set type (`active` + `provided` + `obsolete`).
 
 ⛔ **The empire-capability union is NOT one of these** — it is a keyed store the PLAYER holds, fed by the tech /
 civic / building facts ([capabilities.md](capabilities.md),
-[DEC-scope-contexts](../architecture/decisions.md#dec-scope-contexts)). The enabler is a SOURCE of those facts,
+[plot/city/player each own one live-state context](../cascade.md#the-contexts--the-per-scope-live-state-read-surface)). The enabler is a SOURCE of those facts,
 never the home of that answer.
 
 ### RESIDENCY — the network count lives on the PLOT GROUP, and only there
@@ -869,14 +839,14 @@ never the home of that answer.
 > over every plot of every city of the owner, dominating the entire load bracket. A connection fact moves no
 > tile's output at all: the resource was already on its tile producing it.
 > ⚑ **And a bonus's own yield reaches ONE tile — its own.** A resource changing a NEIGHBOURING tile's output is
-> the deliveryguy's ([DEC-deliveryguy](../architecture/decisions.md#dec-deliveryguy)) and is authored on that
+> the deliveryguy's ([the deliveryguy ownership rule](../cascade.md#4-ownership--the-deliveryguy-rule)) and is authored on that
 > tile's IMPROVEMENT, conditioned on the bonus — never on the bonus. ⇒ A plot-scope deposit is authored only by a
 > PLOT-RESIDENT source, so a plot-scope route with no named plot has no target by construction, and declining to
 > fan drops nothing.
 
 > **⛔ NO BONUS LIST IS SERIALIZED, ANYWHERE — the plot group's, `onSite`, any of them — and the plot group is
 > populated EXCLUSIVELY BY EVENTS ON LOAD (owner).** A resource list is DERIVED at every scope it appears at, so
-> it answers to [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted) with no
+> it answers to [derived data is never trusted from a save](save.md#5-derived-data-serializes-nothing-) with no
 > per-list judgement to make.
 > ⚖ **THE ONE EXCEPTION IS A TRADE, AND IT IS THE DEAL THAT PERSISTS, NEVER THE LIST (owner): *"bonuses traded
 > away needs to be serialized, otherwise the trade is lost — so that is the current trade DEAL itself being
@@ -896,12 +866,12 @@ and nothing else.
   player's minted-percent suppression, and the city's own corporation add-on. **The city declares no
   bonus-count member.**
 - **`CityContext::tradedBonusCount` FORWARDS to that read** — it is the object's own O(1) data, so the
-  STORES-vs-FORWARDS rule ([contexts.md](../architecture/contexts.md)) puts it on the forward side. A stored
+  STORES-vs-FORWARDS rule ([contexts.md](../cascade.md)) puts it on the forward side. A stored
   copy re-swept every bonus on every fact that could move one, for a number a pointer hop already answers.
 - **What the crossing fan-out is FOR.** `CvPlotGroup::changeNumBonuses` still fans into its member cities, and
   the city's plot-group moves still announce — but only to fire the **presence CROSSING** (`processBonus` + the
   corporation re-check), never to maintain a value. A count moving between two non-zero values announces
-  nothing, by ruling ([event-spine.md](event-spine.md)).
+  nothing, by ruling ([spine.md](../spine.md)).
 
 ⚑ **Why a per-city mirror is the wrong answer even though the read is hot.** Three copies of one number
 (group → city → context) is duplicated authoritative state with only drift to gain — the read-not-store rule
@@ -915,7 +885,7 @@ atoms and NOTHING else — it never adds a second owned count (one pasture is ON
 ### The host — where the state lives
 
 The machine's state lives on its scope owners, as plain DATA MEMBERS (the guardrail bars adding vtable *bases*
-to EXE-bound classes, never members — [state-repositories.md](../architecture/state-repositories.md)):
+to EXE-bound classes, never members — [state-repositories.md](../cascade.md)):
 
 | owner | member | what it holds |
 |---|---|---|
@@ -926,14 +896,14 @@ to EXE-bound classes, never members — [state-repositories.md](../architecture/
 All are **public and mutable** by requirement rather than laxity: the domain enablers write through a
 `const CvCity&` / `const CvPlayer&` — the owner holds the STORAGE, the enabler owns the delta LOGIC. **None is
 serialized**: every one starts empty and un-ready and is filled by the reseed's events through the same appliers
-play uses ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)). Each owner's `reset()` clears them,
+play uses ([the load reseed](../spine.md#5-the-load-reseed)). Each owner's `reset()` clears them,
 which is load-bearing because a `CvCity` is RECYCLED out of an `FFreeListTrashArray` — without it a new city
 inherits the previous occupant's frontier.
 
 ⛔ **REGISTRATION ORDER IS A CONTRACT: contexts → enabler → modifier.** The enabler's load-end gate pass evaluates
 through the CityContext / EmpireContext stores, which the contexts' consumer builds on the SAME
 `GAME_LOAD_FINISHED` event; gating ahead of it evaluates against empty stores and every verdict is silently wrong,
-with no self-heal to re-derive it ([state-repositories.md](../architecture/state-repositories.md)).
+with no self-heal to re-derive it ([state-repositories.md](../cascade.md)).
 
 ### The availability READ surface
 
@@ -962,7 +932,7 @@ grows by DOMAIN, never by candidate; there is no per-candidate getter and no wha
 
 ⛔ **Every read is a BARE O(1) FETCH of the maintained tri-state** — no gate runs, no calculator is called, and
 `requires` is never evaluated (§7). A missed propagation therefore leaves a visibly wrong verdict instead of
-being silently recomputed away ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
+being silently recomputed away ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)).
 
 **The tri-state is returned WHOLE, answering TREE + GATE only.** HIDDEN vs GREYED is the "why not" the build list
 needs (§6), so reducing it to a bool would force a second read to recover it. ⛔ The **QUEUED overlay is
@@ -1001,7 +971,7 @@ implementation of that shape and every hypothetical asker is a consumer of it, n
 ⛔ The overlay is the CALLER's, held in the caller's own scratch: it never writes the maintained planes. A
 hypothetical that mutated the domain would leave the real frontier describing a game state that never happened.
 ⛔ **The formula itself is NOT re-implemented alongside it** — the overlay and the maintained refresh resolve
-membership through the same `EnablerDomain::isMember` ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+membership through the same `EnablerDomain::isMember` ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 A second copy would diverge the first time the formula gained a term, and a hypothetical that disagrees with the
 frontier it is overlaid on is worse than no hypothetical at all.
 
@@ -1042,7 +1012,7 @@ implementation, carrying the PERMANENT bars the enabler does not model as member
 invented once by one player in a game"*) and the limited-religion hoarding guard.
 ⚠ **Do not re-derive it on the availability surface.** A second "ever" predicate reading only the membership
 planes silently drops those bars — it would call a religion tech already invented elsewhere a legitimate queue
-target ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)).
+target ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 ⚑ **It is published to Python as `CyEnabler::canEverResearch`, and the tech-tree browser MUST use it** — the
 plane is `CyEnabler` because the QUESTION is availability, while the answer delegates to the picking logic;
 the binding is not the enabler machine answering "ever".
@@ -1057,7 +1027,7 @@ never-researchable list — are static for a player's life and sit on the static
 ⚖ **BUT WHERE THE BAR *IS* AN ENTITY GATE, THE EVER QUESTION IS THE ENABLER'S — AND SO IS THE OPTION READ
 (owner).** *"For all unit/promotions that rely on game options, and anything else the enabler deals with, it is
 the enabler's job to call `hasGameOption`."* A whole-entity game-option bar authors as the entity-level
-`enabled`/`disabled` pair ([DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)), so answering "is this
+`enabled`/`disabled` pair ([the whole-entity applicability gate](json.md#2-anatomy-of-an-entity)), so answering "is this
 barred for the whole game" is just evaluating that gate — availability data, read by the availability machine.
 `EnablerKernel::everAvailable(bucket, id)` is that ONE implementation, parameterized over the domain axis rather
 than split per domain, and it is where the option read lives for every entity-gated domain.
@@ -1071,7 +1041,7 @@ than split per domain, and it is where the option read lives for every entity-ga
 - ⚑ **The verdict is STABLE for the game, and that is load-bearing (owner): nothing the enabler gates rides a
   BUG/live option.** A game option is fixed at setup, whereas a live option (`setDefineINT`) is changeable
   mid-game and its flip carries **no DOMAIN event** — so a maintained verdict gating on one would go permanently
-  stale with nothing to re-derive it ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)). The last
+  stale with nothing to re-derive it ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). The last
   enabler-facing live options went with the ranged-bombard removal
   ([superseded-ideas #24](../architecture/superseded-ideas.md)), so the hazard is absent from this surface rather
   than merely avoided. ⛔ Do not gate an enabler entity on a live option; if one is ever wanted, it needs its emit
@@ -1089,7 +1059,7 @@ decision points (§7.1). EMPIRE-capability reads are not here either: they are a
 union ([capabilities.md](capabilities.md)), which no availability read duplicates.
 
 ⛔ Do not re-attach the machine ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists
-to avoid ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). Every consumer reads
+to avoid ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)). Every consumer reads
 through this surface, never around it.
 
 ### The gate stages, by domain
@@ -1121,8 +1091,8 @@ promotion offer is not over-inclusive.
   [tally](tally.md) stays the count accessor.
 - **Evaluator depth:** `cascadeEvalCondition` reads raw object-owned state (legitimate live reads). What is
   event-driven is the MAINTENANCE — which dependents re-gate, when — never the read source.
-- **Component model:** one unified component, instantiated per §7.1 owner; the delta-apply SIBLING of
-  `CvDerivedCache`, which cannot operate the same way (§7 — no mark-then-recompute path exists at all).
+- **Component model:** one unified component, instantiated per §7.1 owner; delta-apply, never
+  mark-then-recompute — no such path exists at all (§7).
 - **The root rule:** no implicit "no-edge ⇒ available" engine rule. Start-available entities are authored onto
   `TECH_GAME_START`'s `enables` (§2, curator-derived), the tree is fully connected, a missing edge fails closed.
   The load backfill of `TECH_GAME_START` itself is the ONLY engine special case the model needs.
@@ -1135,7 +1105,7 @@ promotion offer is not over-inclusive.
 
 ### The reverse index, and what is deliberately NOT one
 
-**The canonical reverse axis is `EDGEF_REQUIRED_BY`** ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)),
+**The canonical reverse axis is `EDGEF_REQUIRED_BY`** ([reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1)),
 and a per-id bucket that duplicates it is a defect. ⛔ But the axis-flag lists (power / golden age / state
 religion / the coarse religion-civic-tech lists) and the PROPERTY band index are **NOT** convergence targets and
 must not be swept into one: the reverse pass deliberately excludes engine tokens, the plot substrate and
@@ -1164,7 +1134,7 @@ one place that hop lives.
 ⚑ **The bare plot BITS ride the verdict fact, not a substrate id.** `HAS_RIVER` / `HAS_COAST` / `IS_WATER` and
 their kin name no entity, so they index by their `CASC_PRED_*` id and re-gate off
 `SEVT_PLOT_PREDICATE_ADDED / _REMOVED` — which is exactly why that fact exists beside the substrate ones
-([event-spine.md](event-spine.md): one says what the tile CARRIES, the other what it MEANS).
+([spine.md](../spine.md): one says what the tile CARRIES, the other what it MEANS).
 ⚠ **Reading the empty reverse edge instead FAILS SILENTLY, which is why this is spelled out**: the walk
 succeeds, finds nothing, and re-gates nobody — indistinguishable from "no candidate needed re-gating" at every
 observation point, including a census read taken when nothing has changed since load. The index
@@ -1222,10 +1192,10 @@ state — `existedFor`, `IS_CAPITAL`, the count tokens, connection.
   > ⇒ **The fix is a load-end re-push through `CvPlotGroup::changeNumBonuses`** (the same live entry point
   > `provides.bonuses` normally uses) — walking each city's converged `providedCount` into its NEW group, after
   > the re-color, so the crossing is announced as a genuine `SEVT_PLOTGROUP_BONUS_ADDED` rather than seeded
-  > ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) bans a warm-up walk that leaves consumers
+  > ([the load reseed](../spine.md#5-the-load-reseed) bans a warm-up walk that leaves consumers
   > deaf; a real crossing emit is not one).
 - **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
-  [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
+  [the pollution guardrail](validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)) — applied through the engine's
   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
   the authored data does not carry (employed-population composition; the banned-non-state-religion policy). The
   load-end cross-city fixpoint — iterate {re-fixpoint each city's operating set → apply flips → the provides
@@ -1249,6 +1219,6 @@ to `listedIds`.
 - [json.md](json.md) — the data this machine reads: `enables`/`obsoletes`/`replaces`/`disables` (§4.1–4.2),
   `requires` build/operate (§4.3), `allowed` (§4.4), and the `all`/`any`/`noneOf` + atom/predicate vocabulary (§3).
 - [tally.md](tally.md) — the count machine the `requires` count-atoms and the `allowed` cap read at cross-city scopes.
-- [modifier.md](modifier.md) — the sibling "how much?" machine. A dormant/unavailable entity (per this doc)
+- [modifier.md](../cascade.md) — the sibling "how much?" machine. A dormant/unavailable entity (per this doc)
   simply deposits no modifiers.
 - [naming.md](naming.md) — the `INFOTYPE_NAME` ids that fill the `enables` buckets and `requires` atoms.

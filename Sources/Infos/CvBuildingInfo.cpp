@@ -1,6 +1,6 @@
 //
 //	CvBuildingInfo -- the building poco's own typed reading on top of the base section dispatch (see the
-//	header). mapFrom materializes the census identity set ONCE into typed members ([DEC-materialize-at-mapfrom]);
+//	header). mapFrom materializes the census identity set ONCE into typed members (docs/architecture/patterns.md §Materialize at mapFrom);
 //	idempotent by contract (unconditional scalar assigns, clear-first containers).
 //
 
@@ -198,7 +198,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	}
 
 	// The considered-action PULSES, materialized as HUMAN counts: `grants.population` per scope and
-	// `grants.freeTechs`. Interned key handles, resolved once ([DEC-materialize-at-mapfrom]); the pulses are
+	// `grants.freeTechs`. Interned key handles, resolved once (docs/architecture/patterns.md §Materialize at mapFrom); the pulses are
 	// ×100 at parse, so the /100 here is the single human boundary and no reader repeats it.
 	{
 		static const int iKeyPopulation = CvGrants::key("population");

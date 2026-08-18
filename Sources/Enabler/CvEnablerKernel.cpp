@@ -386,7 +386,7 @@ unsigned char EnablerKernel::requiresGateReason(const CvInfo* j, const CvCascade
 		return (unsigned char)EnablerDomain::GATEREASON_NONE;
 	}
 	// The same ctx + flags requiresMet builds, so the reason cannot be derived against a different reading of
-	// the gate than the verdict was ([DEC-single-implementation]).
+	// the gate than the verdict was (docs/architecture/patterns.md §DRY (single implementation)).
 	CvCascadeEvalCtx gateEc = ec;
 	gateEc.buildingAtomsPresence = true;
 	CvCascadeEvalFlags flags;
@@ -434,7 +434,7 @@ bool EnablerKernel::requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket e
 	CvCascadeEvalCtx ec;
 	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
-	if (!cascadeGateOk(j->getGate(), ec, gateFlags)) return false;   // entity-level enabled/disabled ([DEC-entity-gate])
+	if (!cascadeGateOk(j->getGate(), ec, gateFlags)) return false;   // entity-level enabled/disabled (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT)
 	return requiresMet(j, ec);
 }
 
@@ -504,7 +504,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 	{
 		// TECHS go through the TALLY like every other count domain: counting is the tally's job, so the
 		// world/team/empire resolution lives there ONCE instead of being re-derived here
-		// ([DEC-single-implementation]; tally.md -- a bespoke engine count-loop IS an unwired tally domain).
+		// (docs/architecture/patterns.md §DRY (single implementation); tally.md -- a bespoke engine count-loop IS an unwired tally domain).
 		// The live authoring is the 29 world-unique founder techs (allowed:{world:1}).
 		for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
 		{
@@ -565,7 +565,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 // May this queue-excluded building ARRIVE here -- a mission construct, a first-to-earn award? The direct gate
 // the queue tri-state cannot serve: a notConstructible entity is permanently HIDDEN there by design
 // (enabler.md §3), so its arrival gates are asked HERE, once, for every arriving system
-// ([DEC-single-implementation]): not already held, the allowed cap has room, not obsolete, and the authored
+// (docs/architecture/patterns.md §DRY (single implementation)): not already held, the allowed cap has room, not obsolete, and the authored
 // gate (build folded into operate for the whole class) holds through the ONE evaluator against the contexts.
 bool EnablerKernel::queueExcludedArrivalOk(const CvCity* pCity, int iBuilding)
 {
@@ -699,7 +699,7 @@ static std::vector<int> s_operateObsoletableBuildings;                      // b
 // The building-PRESENCE half already emits from processBuilding; this is the ACTIVE half, and without it the flip
 // was visible to nothing outside this function -- vicinity-conditioned packages were never re-marked and the
 // bonus's requires.BUILD dependents were never re-gated (this list walks only the OPERATE consumers). A missing
-// emit is a silently wrong value ([DEC-no-self-heal]: a miss must surface, never be swept away).
+// emit is a silently wrong value (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT: a miss must surface, never be swept away).
 //
 // ⛔ The crossings are announced AFTER the fixpoint converges, never inside it, because `emit()` dispatches
 // SYNCHRONOUSLY: a mid-loop emit hands every consumer a half-settled `provided` set to evaluate against. Today's
@@ -732,7 +732,7 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 	std::vector<std::pair<int, int> > supplyCrossings;   // (BONUS_ id, +1 gained / -1 lost) -- drained below
 	for (size_t i = 0; i < seeds.size(); ++i) if (pending.insert(seeds[i]).second) work.push_back(seeds[i]);
 	// A runaway guard, not a recovery: nothing repairs a truncated fixpoint, so tripping this leaves the
-	// operating set WRONG and is a defect to fix at its cause ([DEC-no-self-heal]).
+	// operating set WRONG and is a defect to fix at its cause (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	int cap = GC.getNumBuildingInfos() + 512;
 	while (!work.empty())
 	{
@@ -944,7 +944,7 @@ void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool 
 		// COASTAL is a `requires` CONDITION in the JSON model, never a property of the entity -- a rebuilt info
 		// carries no isWater(), because "needs a coast" is something the city must supply, not something the
 		// building IS. A consumer weighting a coastal-only candidate by how much coastline the empire has reads
-		// it from HERE rather than re-walking the tree ([DEC-single-implementation]).
+		// it from HERE rather than re-walking the tree (docs/architecture/patterns.md §DRY (single implementation)).
 		// HAS_COAST keeps the precise `coastal` flag its valuation consumer reads, and ALSO indexes as a plot
 		// bit: the flag is not a re-gate route (nothing fires on it), so without the second half a coastal-gated
 		// candidate re-gates on nothing at all.
@@ -1095,7 +1095,7 @@ void EnablerKernel::buildActiveIndex()
 	// consumer (CvProperties.cpp) -- so a boundary only a deposit's `{PROPERTY_X, min/max}` gate declares must be
 	// in it, or a value sweep crossing only that boundary announces nothing and the deposit's re-book never
 	// fires. The union keeps it ONE registry served from the two compiled surfaces, each scanned by its own
-	// compiler ([DEC-single-implementation]).
+	// compiler (docs/architecture/patterns.md §DRY (single implementation)).
 	{
 		const std::map<int, std::set<int> >& kGateThresholds = DepositIndex::propertyGateThresholds();
 		for (std::map<int, std::set<int> >::const_iterator it = kGateThresholds.begin();
@@ -1227,7 +1227,7 @@ const OperatingBuildings& EnablerKernel::operatingBuildings(const CvCity* pCity)
 	// kept current in place by the targeted on*Active hooks above (state-repositories.md: the enabler's sets are
 	// maintained by targeted PROPAGATION, never blanket-invalidated-and-recomputed -- blanket-recomputing the
 	// fixpoint per event is DESPAIR_INDEX #2). A propagation that fails to fire therefore leaves the set visibly
-	// wrong, which is how the missing hook gets found ([DEC-no-self-heal]); an external reader finds it by
+	// wrong, which is how the missing hook gets found (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT); an external reader finds it by
 	// reading the LOGS against the JSON info and what STATE expects ([superseded-ideas #33]).
 	return pCity->m_operatingBuildings;
 }

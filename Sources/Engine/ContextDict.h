@@ -4,7 +4,7 @@
 
 //
 //	ContextDict -- the ONE uniform keyed dictionary TYPE every derived POSSESSION store shares (CityContext /
-//	EmpireContext / ...): a SEMIBOOLEAN state, read as a bool and stored as a COUNT ([DEC-keyed-accumulator]).
+//	EmpireContext / ...): a SEMIBOOLEAN state, read as a bool and stored as a COUNT (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)).
 //	A dictionary, not a fixed struct, so each family's key set is OPEN -- a new key, never a reshape.
 //
 //	⛔ THE TYPE IS SHARED; THE INSTANCES ARE NOT. One dict PER AREA OF RESPONSIBILITY -- never one catch-all per
@@ -42,8 +42,8 @@
 
 //
 //	⚖ IT IS A BASE, NOT A MEMBER -- a dictionary family IS a ContextDict and does not HOLD one (owner,
-//	[DEC-dict-is-a-consumer]). A family that wraps this type instead of inheriting it becomes a bespoke class per
-//	store, which is the hand-named-per-store shape [DEC-uniform-cache-shape] calls a defect: "every store is the
+//	docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). A family that wraps this type instead of inheriting it becomes a bespoke class per
+//	store, which is the hand-named-per-store shape docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a defect: "every store is the
 //	SAME OBJECT TYPE everywhere, and they ALL MAINTAIN the SAME WAY".
 //
 //	THE CONSUMER CONTRACT a family adds on top, and it is the same three parts every time:

@@ -29,7 +29,7 @@ Observation runs on shipping FinalRelease infrastructure (no FASSERT there — s
   `/computed/*` census surface (`/computed/cascade/packages`, `/computed/enabler/operating`,
   `/computed/city/yield`, `/computed/capabilities` — see `docs/specs/http-endpoints.md`). Any
   future benchmarking run needs to re-derive its per-unit/per-player/per-city view from that
-  surface (or from the gated logs / `/events`, per `docs/reference/observability.md`), not from
+  surface (or from the gated logs / `/events`, per `docs/spine.md`), not from
   the routes named below.
 - **Playtest identity:** both endpoint wrappers carry `gameId` = `CvGame::getGameId()` —
   the id stamped at game creation and persisted in every save of that game (pre-existing

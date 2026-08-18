@@ -116,7 +116,7 @@ static void tr_registerDomain()
 	if (!s_reg) { spineRegisterDomain(SD_TRIGGERS, tr_prefix, "Cascade.log", tr_field); s_reg = true; }
 }
 
-// The LOAD-BRACKET flag (event-spine.md / DEC-spine-reseed). A grant is the RESULT of a genuine in-play
+// The LOAD-BRACKET flag (event-spine.md / docs/spine.md §5 (the load reseed)). A grant is the RESULT of a genuine in-play
 // acquisition and a LOAD IS NOT ONE: the save read replays every present fact as a DOMAIN event, so an applying
 // machine would re-grant a whole empire on every load. Suppression withholds the APPLY ONLY -- the machine still
 // RESOLVES and still emits, carrying `suppressed=1`, so "saw them and withheld" is distinguishable from "saw
@@ -131,7 +131,7 @@ static bool s_bFirstAcquire = true;
 
 // ===================== the grant-key handles =====================
 // Minted ONCE off the CvGrants LOCAL intern table (every runtime grant read is int-keyed; the authored strings
-// live on the parse surface only, [DEC-materialize-at-mapfrom]). Mint-on-first-ask makes static-init order safe.
+// live on the parse surface only, docs/architecture/patterns.md §Materialize at mapFrom). Mint-on-first-ask makes static-init order safe.
 static const int tr_keyPromotions       = CvGrants::key("promotions");
 static const int tr_keyBuildings        = CvGrants::key("buildings");
 static const int tr_keyUnits            = CvGrants::key("units");
@@ -195,7 +195,7 @@ static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries
 // (owner: both must grant). A unit TRAINED here is covered by its own creation path.
 // The rejected alternative was rescanning every city's buildings x units every turn: measured at 42,336
 // assign calls in ONE turn (one city alone at 1,859), nearly all of them re-checking promotions units already
-// held. That is the blanket-recompute shape [DEC-no-self-heal] rejects, and the enabler's targeted-propagation
+// held. That is the blanket-recompute shape docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT rejects, and the enabler's targeted-propagation
 // model is the house pattern for exactly this.
 //
 // It also closes a live defect: a unit that WALKED into a city never gained its promotions at all -- only units
@@ -207,7 +207,7 @@ static int tr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries
 // Two gates survive the move, for different reasons. `canAcquirePromotion(Promote|ForFree)` is the PROMOTION
 // SYSTEM's own validity rule and stays -- it is also why a granted promotion needs no take-away verb: when the
 // promotion stops being valid that system drops it (owner). The legacy per-promotion BoolExpr becomes the entry's
-// parsed `condition`, evaluated through the ONE evaluator ([DEC-single-implementation]) instead of a second tree.
+// parsed `condition`, evaluated through the ONE evaluator (docs/architecture/patterns.md §DRY (single implementation)) instead of a second tree.
 static int tr_promoteFromEntries(CvCity* pCity, CvUnit* pUnit, const CvInfo* j)
 {
 	if (pCity == NULL || pUnit == NULL || j == NULL || j->getTriggers() == NULL) return 0;
@@ -292,7 +292,7 @@ static int tr_placeGrantedBuilding(CvCity* pCity, CvPlayer& player, int iBuildin
 		return 0;
 	}
 	// ⚠ WHERE it may stand is the building's OWN `requires.build`, evaluated by the ONE evaluator
-	// ([DEC-single-implementation]) -- the coastal/river/terrain/map-category clauses the legacy placement gate
+	// (docs/architecture/patterns.md §DRY (single implementation)) -- the coastal/river/terrain/map-category clauses the legacy placement gate
 	// re-derived by hand are exactly that condition, authored. A grant changes the LIFETIME of the provision and
 	// skips the production cost; it does not change whether the receiver can hold the thing at all.
 	// ⛔ It is NOT the enabler's queue verdict: that answers "may this city QUEUE it", which a grant bypasses by
@@ -319,7 +319,7 @@ static int tr_placeGrantedBuilding(CvCity* pCity, CvPlayer& player, int iBuildin
 	return 1;
 }
 
-// THE FREE BUILDING -- the ONE placement both legs share ([DEC-single-implementation]). A grant hands the
+// THE FREE BUILDING -- the ONE placement both legs share (docs/architecture/patterns.md §DRY (single implementation)). A grant hands the
 // building OVER and the receiving city genuinely HAS it, which is load-bearing rather than cosmetic: the
 // authored data gates on holding these targets in over a thousand `requires` atoms, so a shape delivering only
 // the EFFECTS would satisfy none of them.
@@ -384,7 +384,7 @@ static void tr_awardContestedAutoBuilds(CvCity* pCity)
 	{
 		const int iBuilding = aContested[i];
 		// the ONE arrival gate for a queue-excluded building -- cap + obsolescence + the operate condition
-		// ([DEC-single-implementation]; the mission-construct path asks the same question of the same body)
+		// (docs/architecture/patterns.md §DRY (single implementation); the mission-construct path asks the same question of the same body)
 		if (!EnablerKernel::queueExcludedArrivalOk(pCity, iBuilding)) continue;
 		pCity->changeHasBuilding((BuildingTypes)iBuilding, true);   // a genuine first acquisition: bFirst fires the pulses
 	}
@@ -492,8 +492,7 @@ static void tr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 
 // The unit's OWN `grants.promotions`, handed to the created INSTANCE. This is the ONLY leg of the legacy
 // CvUnit::setFreePromotion that is a grant: the player free-promotion registry is written solely by
-// CvPlayer::applyEvent (random events -- out of scope) and the trait-derived promotions are refcounted with the
-// trait (a MODIFIER, alive-with-source). See grant-apply-sites.md §4.
+// CvPlayer::applyEvent (random events -- out of scope). See grant-apply-sites.md §4.
 static void tr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 {
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
@@ -618,7 +617,7 @@ static void tr_resolveCivic(int iCivic, int iPlayer)
 static void tr_resolveEraChanged(int iPlayer)
 {
 	// A load RESTORES an era rather than advancing into one, so the reseed's emit must not hand out the pulse
-	// again ([DEC-spine-reseed]: a grant is the RESULT of a genuine in-play acquisition).
+	// again (docs/spine.md §5 (the load reseed): a grant is the RESULT of a genuine in-play acquisition).
 	if (s_bSuppressed) return;
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
 	int iGranted = 0;
@@ -682,10 +681,10 @@ static void tr_resolvePlayerInit(int iPlayer)
 		CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
 		player.setGold(0);
 		// nGold is already HUMAN (tr_pulse reduces the ×100 pulse), and the speed percent is a PERCENT, which is
-		// NOT scaled ([DEC-fixedpoint-x100]) -- so this is the ordinary percent-as-ratio /100. ⛔ A /10000 here
+		// NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- so this is the ordinary percent-as-ratio /100. ⛔ A /10000 here
 		// reads the percent as ×100 and truncates the whole starting grant to nothing.
 		// ⚑ Asked through CvGameSpeedScale, the ONE consuming-system speed calc: re-reading the raw scalar per
-		// call site is what let three separate consumers each invent their own scale ([DEC-single-implementation]).
+		// call site is what let three separate consumers each invent their own scale (docs/architecture/patterns.md §DRY (single implementation)).
 		player.changeGold(nGold * CvGameSpeedScale::speedPercent() / 100);
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_GAMESTART, 1)
@@ -694,7 +693,7 @@ static void tr_resolvePlayerInit(int iPlayer)
 		.addI(TF_BUILDINGS, nBuild).addI(TF_STARTINGGOLD, nGold));
 }
 
-// ===================== THE LOAD-BRACKET SUPPRESSION (event-spine.md; DEC-spine-reseed) =====================
+// ===================== THE LOAD-BRACKET SUPPRESSION (event-spine.md; docs/spine.md §5 (the load reseed)) =====================
 // A grant is the RESULT of a genuine in-play acquisition, and a LOAD IS NOT ONE: the save read replays every
 // present fact as a DOMAIN event, so an applying machine would re-grant a whole empire's history on every load.
 // The suppression is therefore MANDATORY before the apply lands.
@@ -703,7 +702,7 @@ static void tr_resolvePlayerInit(int iPlayer)
 // records it here, so "the machine saw these and withheld them" is DISTINGUISHABLE from "the machine saw nothing"
 // (a bare early-return makes those two identical, which is how a resolution that reads 0 hides as normal quiet --
 // exactly the failure that let the game-start resolver no-op unnoticed). Read via /computed/grants: no log file,
-// no gate ([DEC-obs-hook-shapes] hook 3).
+// no gate (docs/spine.md §The three hook shapes hook 3).
 // ===================== increment 5: the PER-TURN provisions APPLY =====================
 //
 // The machine's per-turn work arrives on the PLAYER-scoped SEVT_TURN_STARTED. The machine is an IEventConsumer and
@@ -723,7 +722,7 @@ static void tr_resolvePlayerInit(int iPlayer)
 
 // The full-heal provision -- heal up to iCount damaged own-team units on the city plot, chosen at random.
 // ⛔ The selection shuffles on CvGame::SorenRand, the SYNCHRONIZED stream, so how many values are consumed here
-// is shared save state ([DEC-synced-rng-is-shared-state]). Changing the shuffle is a deliberate change to every
+// is shared save state (docs/reference/engine.md §THE SYNCHRONIZED RNG IS SHARED SAVE STATE). Changing the shuffle is a deliberate change to every
 // client's sequence, never a refactor -- and that, not "the legacy body did it", is why the draw stays as it is.
 static int tr_applyFullHeal(CvCity* pCity, int iCount)
 {
@@ -850,7 +849,7 @@ static void tr_resolveFeatureDestroy(int iOwner, int iCity)
 		{
 			continue;
 		}
-		// The threshold is an ordinary §3 state condition, through the ONE evaluator ([DEC-single-implementation]).
+		// The threshold is an ordinary §3 state condition, through the ONE evaluator (docs/architecture/patterns.md §DRY (single implementation)).
 		if (pEntry->condition != NULL && !cascadeEvalCondition(pEntry->condition, ec, kFlags))
 		{
 			continue;
@@ -889,7 +888,7 @@ static void tr_applyCityPerTurn(CvCity* pCity)
 			if (pEntry->happening != "onTurn") continue;
 			// RECURRENCE (json §3.8 / §5): "onTurn" = every turn; {"onTurn": N} = every Nth.
 			if (pEntry->happeningInterval > 1 && (iTurn % pEntry->happeningInterval) != 0) continue;
-			// The per-entry state condition, through the ONE evaluator (DEC-single-implementation).
+			// The per-entry state condition, through the ONE evaluator (docs/architecture/patterns.md §DRY (single implementation)).
 			if (pEntry->condition != NULL && !cascadeEvalCondition(pEntry->condition, ec, kFlags)) continue;
 
 			if (pEntry->healFull) { iFullHeal += (pEntry->healCount > 0 ? pEntry->healCount : 1); continue; }
@@ -934,7 +933,7 @@ static void tr_applyCityPerTurn(CvCity* pCity)
 }
 
 // The player's per-turn provisions. Suppressed inside the load bracket like every other apply: a grant is the
-// RESULT of a genuine in-play acquisition, and a load is not one ([DEC-spine-reseed]).
+// RESULT of a genuine in-play acquisition, and a load is not one (docs/spine.md §5 (the load reseed)).
 static void tr_applyPerTurn(int iPlayer)
 {
 	if (s_bSuppressed) return;
@@ -1157,7 +1156,7 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// placed dormant with bFirst=false), so the ACTIVATED case below fires its building-grant leg, which is
 	// idempotent under re-wake by construction (enabler.md §3).
 	// ⚑ The machine subscribes to the ARRIVAL and never sees a removal, so there is no direction to test: a payload
-	// guard here was the fact's missing name, wearing an `if` ([DEC-facts-name-happenings]).
+	// guard here was the fact's missing name, wearing an `if` (docs/spine.md §A FACT NAMES THE HAPPENING).
 	// iC = owner, iSrcLoc = city.
 	case SEVT_CITY_BUILDING_ADDED:
 		// iA = bFirst. A conquest transfer / load restore resolves (so it is visible) but is WITHHELD --
@@ -1179,7 +1178,7 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 		// A unit TRAINED in a city takes that city's free promotions -- the same payload, through the same ONE
 		// applier the entered-city and building-processed routes use. It rides the spine rather than a hook in
 		// CvCity: the promote payload lives in the `triggers` entries, so a second walk beside this one would be
-		// a duplicate implementation of it ([DEC-single-implementation]).
+		// a duplicate implementation of it (docs/architecture/patterns.md §DRY (single implementation)).
 		if (e.iC >= 0 && e.iA >= 0)
 		{
 			CvUnit* pNewUnit = GET_PLAYER((PlayerTypes)e.iC).getUnit(e.iA);
@@ -1238,7 +1237,7 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 	// Trigger (2) for free promotions: a building went ACTIVE in a city -- a fresh build OR a step out of
 	// dormancy (the operate crossing covers both). Hand its promotions to everyone already standing there.
 	// ⚑ The machine subscribes to the ACTIVATION alone, so there is no direction left to test
-	// ([DEC-facts-name-happenings]). iType = building, iC = owner, iSrcLoc = city.
+	// (docs/spine.md §A FACT NAMES THE HAPPENING). iType = building, iC = owner, iSrcLoc = city.
 	case SEVT_CITY_BUILDING_ACTIVATED:
 		if (!s_bSuppressed && e.iC >= 0)
 		{

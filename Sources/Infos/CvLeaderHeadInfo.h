@@ -9,7 +9,7 @@
 //	behaviour, never rules) plus identity text, the portrait art tag, and the era-keyed diplomacy music:
 //	the authored census (Assets/Data/leaderheads/*.json, 119 entities) carries NO modifier family and NO
 //	enabler section, so the type composes no section unit. JSON-fed via mapFrom; no XML read
-//	(DEC-no-xml-into-game).
+//	(AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 //
 //	The grouped tables each hold ONE typed member read by ONE getter parameterized over the group's
 //	natural index (never a per-key hand getter). Engine-enumerated axes reuse the engine enum

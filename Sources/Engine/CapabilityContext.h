@@ -4,10 +4,10 @@
 
 //
 //	CapabilityContext -- the empire's ABILITY state: storage, maintenance and its declared interest set in ONE
-//	place ([DEC-dict-is-a-consumer]). The PolicyContext shape, over the capability plane's four blocks.
+//	place (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). The PolicyContext shape, over the capability plane's four blocks.
 //
 //	⛔ IT IS THE PLAYER'S, NEVER THE TEAM'S. `CvTeam` is the TECH BRIDGE and owns no live-state surface, so a
-//	derived store landing on it is misplaced by construction ([DEC-scope-contexts], contexts.md). The team carries
+//	derived store landing on it is misplaced by construction (docs/cascade.md §The contexts (plot/city/player own one live-state context), contexts.md). The team carries
 //	the unified TECH and PROJECT lists as MEMBERSHIP; anything DERIVED off them -- this union -- is the player's.
 //
 //	⛔ FOUR DICTIONARIES, NEVER ONE. The blocks are DISJOINT REGISTRIES that each start at 0
@@ -19,7 +19,7 @@
 //
 //	⛔ id -> COUNT, never a set. Several grantors may confer the same ability -- capabilities.md keeps civic and
 //	building grantors as model headroom beside techs -- so dropping one must not clear a state another live
-//	grantor still justifies ([DEC-keyed-accumulator]). A whole-union REFILL hides that: it recounts every time, so
+//	grantor still justifies (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)). A whole-union REFILL hides that: it recounts every time, so
 //	the multi-grantor case appears to work while nothing delta-maintains it. That is what this replaced.
 //
 //	⚖ THE TECH LEG HAS TWO TRIGGERS, because tech is TEAM-held while this store is PER-PLAYER:
@@ -62,14 +62,14 @@ public:
 	bool hasCanWorkOn(int iCanWorkOnId) const;
 	bool canTradeOnTerrain(int iTerrain) const;
 	// The DERIVED-from-grantor corporation revenue modifier: a maintained SUM over the live grantors' compiled
-	// `commerce.<scope>.corporation` point reads, moved by the same fold ([DEC-maintained-sum]). A PERCENT, so it
-	// is not scaled ([DEC-fixedpoint-x100]) and its consumer combines it as the human percent it already is.
+	// `commerce.<scope>.corporation` point reads, moved by the same fold (docs/cascade.md §THE MAINTAINED SUM). A PERCENT, so it
+	// is not scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) and its consumer combines it as the human percent it already is.
 	int corporationRevenueModifier() const      { return m_corpRevenueMod; }
 
 	// The commerce channel -> its SLIDER capability id. GOLD is the RESIDUAL channel and has no slider
 	// (capabilities.md), so it answers -1 -- "no such capability", never a flag that would always read false.
 	// ONE implementation, because every consumer asking "may this channel's rate be set" needs the same map
-	// ([DEC-single-implementation]).
+	// (docs/architecture/patterns.md §DRY (single implementation)).
 	static int commerceRateCapability(int eCommerce);
 
 	// Zeroing at owner reset -- a delta store is correct only from a known zero.

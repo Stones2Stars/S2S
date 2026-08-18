@@ -3,7 +3,7 @@
 //	DISPATCH: each json.md section routes to the composing subclass's unit via the mut* write targets (write-once at
 //	load). A section the type composes NO unit for is recorded via jsonNoteUnconsumed -- never silently dropped.
 //	⛔ No section DATA lives here (owner 2026-07-08) and no cascade RUNTIME (no DepositIndex, no evaluator) --
-//	[DEC-json-not-cascade]; the per-type data is the composed units + typed members on the subclasses.
+//	docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side); the per-type data is the composed units + typed members on the subclasses.
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, CvString/CvWString
@@ -115,7 +115,7 @@ int CvInfo::expectedScalar(InfoScalar eScalar, CvCascUnit eUnit,
 }
 
 // #430: the 23 replaced infos load via LoadGlobalClassInfoJson (CvXMLLoadUtilitySet) -> mapFrom(json) directly; there
-// is no XML read() on this path (reading a replaced info's XML into the game is HARD BANNED -- DEC-no-xml-into-game).
+// is no XML read() on this path (reading a replaced info's XML into the game is HARD BANNED -- AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 // mapFrom below is the sole load hook.
 
 const std::vector<int>& CvInfo::dormantTriggers() const

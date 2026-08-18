@@ -6,7 +6,7 @@
 //
 //	⛔ Channel TOTALS are not summed here: they are the compiled (family, kind, scope, unit) slot sums
 //	(CvModifiers::sum / InfoValuation::groupSum) -- a packed-slot fetch over typed ids, never a runtime
-//	string-address scan ([DEC-materialize-at-mapfrom]).
+//	string-address scan (docs/architecture/patterns.md §Materialize at mapFrom).
 //
 
 #include "CvGameCoreDLL.h"
@@ -80,7 +80,7 @@ bool MMKernel::isRateFamily(ModifierFamily eFamily)
 
 // THE ONE PER-ENTRY RESOLVE (see the header): what this entry deposits at this scope, and nothing about where
 // the answer goes. Every consumer folds through it, so there is exactly one derivation
-// ([DEC-single-implementation]).
+// (docs/architecture/patterns.md §DRY (single implementation)).
 bool MMKernel::resolveEntry(const CvModEntry& kEntry, int iMultiplier, CvCascScope eScope,
 	const CvCascadeEvalCtx& evalCtx, const CvPlot* pKeyPlot, bool bSkipRateChannels,
 	int& iChannelOut, bool& bPercentSideOut, int64_t& iValueOut, PerScaling ePerScaling)
@@ -288,7 +288,7 @@ int64_t MMKernel::perApply(int64_t value, int64_t iCount, int iEach, bool bHasAb
 // THE generic §3.7 `per` count-scaler resolver (json.md §3.7; owner semantics: resolved value = value × (count /
 // each) -- count whatever per.type names at the per's scope, INTEGER-divide by `each` FIRST, multiply the deposit's
 // value; deterministic integer math only). The count resolves through cascadeCountOf -- the SAME core as the
-// condition count-atoms (DEC-single-implementation, never a parallel count path). A deposit without a per is
+// condition count-atoms (docs/architecture/patterns.md §DRY (single implementation), never a parallel count path). A deposit without a per is
 // returned byte-identical; an UNRESOLVED SELF token (json §3.1 -- the push could not resolve the owning entity)
 // SKIPS the multiply entirely (counting it 0 would wrongly zero the contribution).
 int64_t MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, int64_t value)

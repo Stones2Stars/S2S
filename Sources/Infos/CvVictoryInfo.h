@@ -7,7 +7,7 @@
 //	read categories, nothing else). A victory condition: the whole payload is the bespoke §9 `condition` block
 //	(json.md §9) -- the win-rule flags and numeric thresholds the victory-test system reads -- held as ONE
 //	typed unit mirroring the authored keys, plus the completion-movie intrinsic. JSON-fed
-//	(Assets/Data/victories/*.json via mapFrom); no XML read (DEC-no-xml-into-game). A victory authors no
+//	(Assets/Data/victories/*.json via mapFrom); no XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)). A victory authors no
 //	availability/classification/modifier sections; type + identity text keys ride the base CvInfo reading.
 //
 

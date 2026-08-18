@@ -223,7 +223,7 @@ void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 enum SpineDomainEvent
 {
 	// ⛔ A FACT NAMES THE HAPPENING. `*_CHANGED` IS NOT A VALID EVENT NAME -- there is no exempt category
-	// (event-spine.md § A FACT NAMES THE HAPPENING; [DEC-facts-name-happenings]). Every fact below is
+	// (event-spine.md § A FACT NAMES THE HAPPENING; docs/spine.md §A FACT NAMES THE HAPPENING). Every fact below is
 	// `<SCOPE>_<THING>_ADDED` / `_REMOVED`: the EVENT is the OPERATOR, and the payload is ONLY EVER A MAGNITUDE.
 	// A fact may carry HOW MANY (an ADDED of 3 adds three times over); it must never carry WHICH WAY -- a ±1, a
 	// presence bool or an old value beside a new one are all the same defect, a discriminator the consumer must
@@ -244,9 +244,9 @@ enum SpineDomainEvent
 	SEVT_TURN_STARTED               = 3,
 	SEVT_TURN_ENDED                 = 4,
 	// A GAME OPTION was turned ON / OFF (CvGame::setOption / setModderGameOption). An option is the ONE axis an
-	// entity-level gate reads ([DEC-entity-gate]), so a flip can change ANY entity's applicability at once, and
+	// entity-level gate reads (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT), so a flip can change ANY entity's applicability at once, and
 	// WorldBuilder can toggle one at will -- without this fact every maintained gate verdict silently keeps the
-	// pre-flip answer and NOTHING re-derives it ([DEC-no-self-heal]).
+	// pre-flip answer and NOTHING re-derives it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// ⚠ TWO ID SPACES ride these, so iB DISAMBIGUATES (GameOptionSpace) -- a game-option id and a modder-option id
 	// are otherwise the same int. iType = the option id, iA = the value's magnitude. DOMAIN.
 	SEVT_GAME_OPTION_ADDED          = 5,
@@ -421,7 +421,7 @@ enum SpineDomainEvent
 	// ⚠ The BUILDING half is the only half these facts carry. The MAP half -- a bonus appearing/vanishing on a
 	// radius tile, or that tile changing hands -- is announced by the PLOT facts and by the radius growth on the
 	// culture-level fact; a consumer holding a city-scope vicinity store folds both halves from those. There is
-	// deliberately no per-turn sweep behind this fact -- a missed emit must stay visibly wrong ([DEC-no-self-heal]).
+	// deliberately no per-turn sweep behind this fact -- a missed emit must stay visibly wrong (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// iType = Bonus, iC = owner, iSrcLoc = cityId. DOMAIN.
 	SEVT_CITY_VICINITY_BONUS_ADDED   = 72,
 	SEVT_CITY_VICINITY_BONUS_REMOVED = 73,
@@ -430,7 +430,7 @@ enum SpineDomainEvent
 	// against a remembered previous value, which is the derivation this split exists to remove. The one consumer
 	// that wants the total reads the city, which owns it. ⚑ The SAVE READ emits ADDED with the stored amount -- the
 	// ordinary fact with its magnitude, not a bespoke load verb -- so a loaded city's `per:{POPULATION}` deposits
-	// build from zero by applying, like every other ([DEC-spine-reseed]).
+	// build from zero by applying, like every other (docs/spine.md §5 (the load reseed)).
 	// iC = owner, iSrcLoc = cityId. DOMAIN.
 	SEVT_CITY_POPULATION_ADDED      = 74,
 	SEVT_CITY_POPULATION_REMOVED    = 75,
@@ -447,7 +447,7 @@ enum SpineDomainEvent
 	// ⚑ The fact is GENERIC OVER THE STATUS, and deliberately: the CityStatus enum is hand-maintained and GROWS,
 	// so a fact per status would mean an engine change per status -- exactly what an open registry exists to
 	// avoid. iType names WHICH status, the same standing a religion or property id has; it is not a direction
-	// discriminator, which is what [DEC-facts-name-happenings] actually bans. The direction is the event.
+	// discriminator, which is what docs/spine.md §A FACT NAMES THE HAPPENING actually bans. The direction is the event.
 	// ⚖ `CITYSTATUS_POWER_DISABLED` is MIDDLEWARE, not a leg: it gates what the power amenity DELIVERS while the
 	// store keeps its grantors (state.md § A STATUS IS MIDDLEWARE). So this fact reaches the AMENITY FOLD and
 	// stops -- the fold re-checks CvCity::isPowered and announces SEVT_CITY_POWER_* if that verdict crossed.
@@ -475,10 +475,10 @@ enum SpineDomainEvent
 	// happening a band consumer actually cares about, so that consumer routes on it with ZERO arithmetic.
 	// ⛔ The crossing is NOT re-derived per consumer. The boundaries live in ONE registry
 	// (EnablerKernel::propertyBandThresholds) and ONE place tests them, or every future consumer -- a trigger, a
-	// player alert -- re-implements the same sweep ([DEC-single-implementation]).
+	// player alert -- re-implements the same sweep (docs/architecture/patterns.md §DRY (single implementation)).
 	SEVT_CITY_PROPERTY_BAND_ADDED    = 196,
 	SEVT_CITY_PROPERTY_BAND_REMOVED  = 197,
-	// The EMPIRE-LEVEL BUILDING facts (DEC-empire-level-buildings, enabler-spec §2): the PLAYER gained / lost an
+	// The EMPIRE-LEVEL BUILDING facts (docs/specs/enabler.md §2 (empire-level buildings), enabler-spec §2): the PLAYER gained / lost an
 	// identity.empireLevel building -- held once, never present in any city. The held store is the player's own
 	// building count at 0/1, announced here at its crossing; iType = the building, iA = bFirst (a load RESTORES,
 	// so the reseed emits 0), iC = owner. DOMAIN.
@@ -492,7 +492,7 @@ enum SpineDomainEvent
 	SEVT_EMPIRE_BUILDING_DORMANTED   = 201,
 	// ⛔ THE CITY GAINED / LOST AN AMENITY -- the generic 0 <-> non-zero crossing of the city's amenity fold, for
 	// EVERY key. iType = the AMENITY_* classification id, iC = owner, iSrcLoc = cityId. DOMAIN.
-	// ⚑ The id is NOT the discriminator [DEC-facts-name-happenings] bans -- it names WHICH member of an OPEN
+	// ⚑ The id is NOT the discriminator docs/spine.md §A FACT NAMES THE HAPPENING bans -- it names WHICH member of an OPEN
 	// registry moved, exactly as a religion, property or status id does, and the DIRECTION is in the event name.
 	// A fact per amenity would mean an engine change per authored key, which is precisely what the open
 	// classification registry exists to avoid (the SEVT_CITY_STATUS pair settles the identical question).
@@ -603,7 +603,7 @@ enum SpineDomainEvent
 	SEVT_PLOT_IRRIGATION_REMOVED    = 127,
 	// The plot's OWNER slot moved (CvPlot::setOwner). ⚑ OWNERSHIP IS A MEMBERSHIP FACT: a plot gaining or losing a
 	// city's ownership adds or removes that plot's CASC_PRED_* bits from that city's dictionary through the ONE
-	// applier, exactly as entering or leaving the worked radius does ([DEC-contexts-are-never-marked]).
+	// applier, exactly as entering or leaving the worked radius does (docs/cascade.md §Maintained EVENT-DRIVEN (a context is never marked)).
 	// iC = the owner this fact is about, iSrcLoc = plotId. DOMAIN.
 	SEVT_PLOT_OWNER_ADDED           = 128,
 	SEVT_PLOT_OWNER_REMOVED         = 129,
@@ -696,7 +696,7 @@ enum SpineDomainEvent
 	// per-turn rescan of (promo buildings x every unit on the plot). NOT emitted on every move: only on a city
 	// entry/leave, so the stream stays proportional to a rare fact rather than to unit traffic.
 	// ⚠ These must never grow into cache invalidation -- unit movement invalidating cache is a standing owner
-	// "full stop" ([DEC-unit-modifiers-on-top]). A GRANT is one-shot state, not a recompute, which is why it rides.
+	// "full stop" (docs/cascade.md §2b (unit-carried modifiers apply on top, live)). A GRANT is one-shot state, not a recompute, which is why it rides.
 	// ⚠ The LEAVE is announced for EVERY city plot a unit vacates while the ENTRY's conquest branch resolves into an
 	// acquisition instead of an entry, so the two do NOT net to occupancy -- a consumer needing occupancy reads the
 	// unit's live plot. iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = city id. DOMAIN.
@@ -764,7 +764,7 @@ enum SpineDomainEvent
 	// ⛔ THE AGREEMENT ITSELF -- iType = the deal id, iB = first player, iC = second player. Distinct from the
 	// per-ITEM pair above and NOT a duplicate of it: an item fact says a resource moved, this says two empires
 	// are (or stop being) bound. They fire together and neither substitutes for the other -- several distinct
-	// happenings reaching one choke point are several facts ([DEC-facts-name-happenings]). DOMAIN.
+	// happenings reaching one choke point are several facts (docs/spine.md §A FACT NAMES THE HAPPENING). DOMAIN.
 	// ⚑ It exists because the DEAL carries what no item does: WHO it favoured, which is what the diplomacy side
 	// rides. A demand is a deal with one empty side, so the fact shape covers it with no discriminator.
 	SEVT_EMPIRE_DEAL_ADDED          = 204,
@@ -849,7 +849,7 @@ void emitNameChange(int iKind, int iOwner, int iEntityId);
 // (iSrcLoc), so a consumer can route it -- but the endpoints themselves only emit (no consumer/routing here).
 //
 // ⛔ THERE IS NO DIRECTION PARAMETER ANYWHERE ON THIS SURFACE, and its absence is the design. A `bool bHas` / an
-// `int iDelta` whose SIGN carries the direction is exactly the discriminator [DEC-facts-name-happenings] bans:
+// `int iDelta` whose SIGN carries the direction is exactly the discriminator docs/spine.md §A FACT NAMES THE HAPPENING bans:
 // it makes the caller state what happened in a payload the consumer must then branch on. The CALLER picks the
 // endpoint that names what it just did; a magnitude argument is always HOW MANY, never which way.
 //
@@ -861,7 +861,7 @@ void emitCityBuildingAdded(int iCity, int iOwner, int iBuilding, bool bFirst);
 void emitCityBuildingRemoved(int iCity, int iOwner, int iBuilding);
 void emitCityBuildingProcessed(int iCity, int iOwner, int iBuilding, int iCount);   // DIAGNOSTIC -- "the apply ran"
 void emitCityBuildingActivated(int iCity, int iOwner, int iBuilding);
-// The EMPIRE-LEVEL building facts (DEC-empire-level-buildings): the PLAYER's held crossing, and the player-side
+// The EMPIRE-LEVEL building facts (docs/specs/enabler.md §2 (empire-level buildings)): the PLAYER's held crossing, and the player-side
 // operate verdict crossing the member's own deposits ride. iSrcLoc is -1 -- there is no city.
 void emitEmpireBuildingAdded(int iOwner, int iBuilding, bool bFirst);
 void emitEmpireBuildingRemoved(int iOwner, int iBuilding);

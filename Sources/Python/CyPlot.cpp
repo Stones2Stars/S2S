@@ -455,7 +455,7 @@ void CyPlot::setRiverID(int iNewValue)
 
 int CyPlot::getYield(YieldTypes eIndex) const
 {
-	// THE READ EDGE -- ×100 becomes human here and nowhere upstream ([DEC-fixedpoint-x100]).
+	// THE READ EDGE -- ×100 becomes human here and nowhere upstream (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	return m_pPlot ? m_pPlot->getYield(eIndex) : -1;   // getYield IS the human edge now -- no second reduce
 }
 

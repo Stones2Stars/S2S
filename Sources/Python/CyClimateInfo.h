@@ -13,7 +13,7 @@
 //
 //	⚠ THE LATITUDE CHANGES ARE `float` AND STAY float. They are the legacy generator's own units, consumed in
 //	float arithmetic by the scripts, and they run on the MAP rng before the game exists -- so
-//	[DEC-fixedpoint-x100] does not reach them (it governs an AMOUNT the cascade carries and combines, and
+//	docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) does not reach them (it governs an AMOUNT the cascade carries and combines, and
 //	nothing here enters a package, a deposit or a synced decision). Converting them would change generated maps.
 //
 class CyClimateInfo

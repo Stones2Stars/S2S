@@ -196,7 +196,7 @@ bool CyEnabler::isEverAvailable(int eBucket, int iId) const
 // against the tech's own era, isRepeat, the world-unique religion-tech rule, the limited-religion hoarding
 // guard -- which no entity gate carries and an info structurally cannot answer. So this delegates to the
 // PICKING LOGIC's single implementation and never re-derives one
-// ([DEC-single-implementation]: a second "ever" predicate over the membership planes alone would silently
+// (docs/architecture/patterns.md §DRY (single implementation): a second "ever" predicate over the membership planes alone would silently
 // drop those bars and call an already-invented religion tech a legal queue target).
 // ⚑ Why the read exists at all: the enabler's tri-state answers CAN-I-NOW, and HIDDEN conflates "nothing
 // enables it YET" with "it can never be offered". A research QUEUE asks precisely that difference, so a
@@ -209,7 +209,7 @@ bool CyEnabler::canEverResearch(int iPlayer, int iTech) const
 }
 
 // The publication. ONE class, id-based, no CyCity/CyPlayer anywhere in the signature -- so the legacy
-// wrappers can be cut away without touching this ([DEC-cy-not-fixed]: the replacement is a NEW surface,
+// wrappers can be cut away without touching this (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract): the replacement is a NEW surface,
 // never a widened binding).
 void CyEnabler::pythonPublish()
 {

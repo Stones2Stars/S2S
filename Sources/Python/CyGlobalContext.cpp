@@ -87,7 +87,7 @@ const python::list CyGlobalContext::getFlavorTypes() const
 
 // The publication: the CONFIG half only. Every info accessor and every Cy* handle is deliberately absent --
 // a script asking for entity data gets an AttributeError here and goes to the library, which is exactly the
-// point of keeping the two apart ([DEC-cy-not-fixed]). The DEFINES are served BY NAME, so a new define is
+// point of keeping the two apart (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)). The DEFINES are served BY NAME, so a new define is
 // data rather than a new method.
 
 

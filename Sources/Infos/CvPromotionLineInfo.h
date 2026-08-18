@@ -8,7 +8,7 @@
 //	nothing; its tech prereq rides the base as tech.enables.promotionLines (the store-inverted FK reconstructed
 //	at load by the loadJson reverse-index pass via the setters below), its game-option gates are the composed
 //	entity-level `enabled`/`disabled` gate SERVED WHOLE (getGate -- no flattened option-list mirror survives,
-//	[DEC-new-getter-surface]), and the par.9 `buildUp` module is a bare typed read. The member promotions are a
+//	docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)), and the par.9 `buildUp` module is a bare typed read. The member promotions are a
 //	RUNTIME reverse index (rebuilt post-load from CvPromotionInfo::getPromotionLine), NOT JSON data.
 //
 

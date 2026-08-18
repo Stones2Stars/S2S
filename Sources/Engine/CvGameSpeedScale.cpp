@@ -7,7 +7,7 @@
 
 namespace
 {
-	// The live speed's straggler percent. A percent is NOT scaled ([DEC-fixedpoint-x100]), so nothing
+	// The live speed's straggler percent. A percent is NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so nothing
 	// is reduced here -- the value is already the human percent every caller wants.
 	int liveSpeedScalarAsPercent(InfoScalar eScalar)
 	{

@@ -7,7 +7,7 @@
 //	info-rebuild.md toolkit item 4). Transcribed from the live family census over Assets/Data
 //	(`python Tools/Migration/family_census.py`) under the owner's enum-walk rulings (info-rebuild.md):
 //	  - A kind names its CONCEPT only; the SCOPE a value is authored at is a SEPARATE axis of the deposit
-//	    address and a spelled-out getter parameter ([DEC-scope-is-an-axis]). No scope word ever appears in a
+//	    address and a spelled-out getter parameter (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)). No scope word ever appears in a
 //	    kind name; the per-family scope PARTICIPATION mask is declared beside each family's vocabulary.
 //	  - Families the engine already enumerates REUSE the engine enum (ruling 1): food/production/commerce key
 //	    YieldTypes; gold/research/culture/espionage key CommerceTypes; domain-keyed deposits key DomainTypes
@@ -134,7 +134,7 @@ enum ModifierFamily
 
 //
 // ============================ the kind enums (multi-kind families) ============================
-// Kind names the CONCEPT only ([DEC-scope-is-an-axis]); the scope-participation mask beside each enum records
+// Kind names the CONCEPT only (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); the scope-participation mask beside each enum records
 // WHERE the census authors the family. Entry 0 is always the scope-wide amount.
 //
 
@@ -625,7 +625,7 @@ CvCascUnit infoDefenseUnit(DefenseKind eKind);
 // units per scope (capture: unit flat / empire percent; experience amount: unit percent / city+empire flat;
 // maintenance corporation: city flat / empire percent; defense air: plot flat / city percent). A kind that
 // carries BOTH units at ONE (kind, scope) slot keeps the split in the getter NAME instead (getFlatYield vs
-// getYieldModifier -- [DEC-fixedpoint-x100]); for those dual slots this table answers the DOMINANT authored
+// getYieldModifier -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); for those dual slots this table answers the DOMINANT authored
 // plane (each documented at its row). The scope-blind overload delegates with the family's dominant authored
 // scope -- the transitional form for call sites that predate the scope axis.
 CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind, CvCascScope eScope);

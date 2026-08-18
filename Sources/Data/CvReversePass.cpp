@@ -1,7 +1,7 @@
 //
 //	reversePass -- see the header. ONE general pass over the COMPILED info surfaces (edges / requires trees /
 //	deposit entries / grants / provides / triggers), replacing the retired per-relationship inversions that read
-//	the legacy-mirror getters. Every write here is inside the write-once-at-load window ([DEC-one-reverse-view]).
+//	the legacy-mirror getters. Every write here is inside the write-once-at-load window (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 //
 
 #include "CvGameCoreDLL.h"             // PCH umbrella
@@ -406,7 +406,7 @@ namespace
 			}
 			//	WHAT LAYING THIS BUILD PRODUCES, landed back onto the produced thing -- so an improvement or a
 			//	route can answer "which builds make me" without a consumer sweeping the build registry asking
-			//	each one what it produces ([DEC-one-reverse-view]: the reverse view is derived ONCE, at load).
+			//	each one what it produces (docs/cascade.md §1 (reverse lookups are populated once, at load): the reverse view is derived ONCE, at load).
 			rp_landRelated(rp_infoForBucket(EDGEB_IMPROVEMENTS, (int)pBuild->getImprovement()), EDGEB_BUILDS, iBuild);
 			rp_landRelated(rp_infoForBucket(EDGEB_ROUTES,       (int)pBuild->getRoute()),       EDGEB_BUILDS, iBuild);
 		}
@@ -436,7 +436,7 @@ namespace
 	//	The CIVILIZATION -> LEADER roster, inverted. A civ names the leaders that may play it; a leaderhead names
 	//	no civ, so "which civs may this leader lead" is only answerable as the load-built inverse -- and without
 	//	it a consumer has to sweep every civilization asking each one, which is the own-data inversion
-	//	[DEC-one-reverse-view] bans.
+	//	docs/cascade.md §1 (reverse lookups are populated once, at load) bans.
 	void rp_relatedFromCivilizationLeaders()
 	{
 		const int iNumCivs = GC.getNumCivilizationInfos();
@@ -501,7 +501,7 @@ namespace
 
 			//	WHICH UNITS CAN PERFORM A BUILD is the inverse of the unit's own `builds` repertoire, and only
 			//	the BUILD can answer it. Landing it here is what stops a consumer sweeping every unit asking
-			//	`hasBuild` -- the whole-registry cross-link [DEC-one-reverse-view] bans ("a page walking a
+			//	`hasBuild` -- the whole-registry cross-link docs/cascade.md §1 (reverse lookups are populated once, at load) bans ("a page walking a
 			//	DIFFERENT registry to find what needs me is a cross-link the reverse families already answer").
 			const std::vector<int>& aiBuilds = pUnit->getBuilds();
 			for (size_t iBuild = 0; iBuild < aiBuilds.size(); ++iBuild)
@@ -1083,7 +1083,7 @@ namespace
 					CvBonusInfo* pBonus = static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*pLinkedIds)[iLinked]));
 					pBonus->setTechObsolete(eTech);
 					//	Land the INVERSE beside the FK, so the bonus answers "what obsoletes me?" the same way a
-					//	building already does ([DEC-one-reverse-view]) instead of only through a hand-named member
+					//	building already does (docs/cascade.md §1 (reverse lookups are populated once, at load)) instead of only through a hand-named member
 					//	that no reader can reach parameterically.
 					pBonus->addReverseEdge(EDGEF_OBSOLETED_BY, EDGEB_TECHS, (int)eTech);
 				}

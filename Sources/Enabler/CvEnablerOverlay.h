@@ -9,7 +9,7 @@
 //
 //	⛔ IT NEVER WRITES A DOMAIN. The overlay lives in the caller's own scratch and every read takes the domain by
 //	const reference. A hypothetical that mutated the maintained planes would leave the real frontier describing a
-//	game state that never happened -- and with no self-heal anywhere ([DEC-no-self-heal]) nothing would put it
+//	game state that never happened -- and with no self-heal anywhere (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT) nothing would put it
 //	back. That is the whole reason the raw membership reads (enableCount/removeCount) are public.
 //
 //	WHO ASKS. Any hypothetical asker (enabler.md par.8 -- one overlay implementation, never a second); the live
@@ -45,7 +45,7 @@ public:
 	// Fold ONE hypothetical HAVE source's edges into the scratch: its `enables` targets become hypothetical
 	// enable contributions, its obsoletes/replaces/disables targets hypothetical removals. Routed through the
 	// kernel's accumHave so the overlay and the maintained appliers read the SAME edges
-	// ([DEC-single-implementation]) -- an overlay walking its own edge set would answer for a tree the real
+	// (docs/architecture/patterns.md §DRY (single implementation)) -- an overlay walking its own edge set would answer for a tree the real
 	// appliers do not build. The source's own bucket + id are required so it also registers as hypothetically
 	// HELD (below); pass NO_EDGEB/-1 for a source that sits in no enabler domain.
 	//

@@ -36,7 +36,6 @@
     "bCanPassPeaks": {"scope": "team", "channel": "canPassPeaks", "kind": "enabler"},
     "bCanFoundOnPeaks": {"scope": "team", "channel": "canFoundOnPeaks", "kind": "enabler"},
     "bMoveFastPeaks": {"scope": "team", "channel": "canMoveFastOnPeaks", "kind": "enabler"},
-    "bExtraWaterSeeFrom": {"scope": "team", "channel": "canSeeFurtherFromWater", "kind": "enabler"},
     "bMapCentering": {"scope": "team", "channel": "hasCenteredMap", "kind": "enabler"},
     "bMapVisible": {"scope": "team", "channel": "hasWholeMapRevealed", "kind": "enabler"},
     "bRebaseAnywhere": {"scope": "player", "channel": "canRebaseAnywhere", "kind": "enabler"},

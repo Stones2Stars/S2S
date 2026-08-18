@@ -56,7 +56,7 @@ public:
 
 	// #430: the ONE load hook -- IDEMPOTENT BY CONTRACT (owner constraint: FK links register AFTER all JSONs are
 	// loaded). LoadGlobalClassInfoJson (CvXMLLoadUtilitySet) creates the poco and calls mapFrom on this entity's
-	// curated JSON -- NO XML read (DEC-no-xml-into-game). A per-type subclass overrides mapFrom, calls
+	// curated JSON -- NO XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)). A per-type subclass overrides mapFrom, calls
 	// CvInfo::mapFrom(entity) FIRST (clears + re-parses the composed sections), then parses its own typed members
 	// (keyed skills, FKs, flags). Because an ALIASED poco is mapFrom'd by its category's loader MID-registry (any
 	// FK naming a later-loading category silently drops), loadJson RE-RUNS the full mapFrom once the
@@ -162,7 +162,7 @@ public:
 	void addReverseEdge(EnEdgeFamily eFamily, EnEdgeBucket eBucket, int iId)
 	{ CvEdges* e = mutEdges(); if (e != NULL) e->add(eFamily, eBucket, iId); }
 	void sortUniqueEdges() { CvEdges* e = mutEdges(); if (e != NULL) e->sortUnique(); }
-	// The own-output reverse LANDING writer -- LOAD-ONLY (the readJson general reverse pass, [DEC-one-reverse-view],
+	// The own-output reverse LANDING writer -- LOAD-ONLY (the readJson general reverse pass, docs/cascade.md §1 (reverse lookups are populated once, at load),
 	// modifier.md §4): a source's target-keyed own-output deposit lands HERE, on the target, as a compiled
 	// conditioned entry ("+X while the source is present"). Takes ownership; a type composing no CvModifiers
 	// frees the entry (nothing to land on). Part of the write-once-at-load window; never called post-load.
@@ -214,7 +214,7 @@ public:
 	bool hasTriggerFullHeal() const;
 
 	// --- the compiled modifier point reads (patterns.md § THE GETTER SETUP; kind and scope are separate
-	// arguments per [DEC-scope-is-an-axis]; the unit picks the Σflat vs Σpercent slot, modifier.md §2).
+	// arguments per docs/architecture/patterns.md §The coherent surface (scope is a separate axis); the unit picks the Σflat vs Σpercent slot, modifier.md §2).
 	// AUDIENCE (json §3.9 `ai`): the default read is HUMAN; bIncludeAiOnly=true adds the ai-sibling sums
 	// (the value an AI player experiences) -- always an explicit ask, never a silent default. ---
 	int modifier(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const
@@ -241,7 +241,7 @@ public:
 	//	⚠ The two cannot double-count: an entry carries the `cities` target or it does not, and the point slot
 	//	rejects every entry that does.
 	//	⚑ ONE implementation, because the SAME planes feed wellbeing AND every yield channel -- a per-getter
-	//	copy is how one of them silently keeps summing half ([DEC-single-implementation]).
+	//	copy is how one of them silently keeps summing half (docs/architecture/patterns.md §DRY (single implementation)).
 	//	⚖ TWO tokens fold, and they are the two whose fan IS the deposit: `cities` (a source delivering to each
 	//	city of the scope) and `empires` ([modifier.md] §5 names it "the one target whose fold IS the deposit").
 	//	⛔ `plots` and `units` do NOT, and that is not an omission: they are PER-OBJECT and predicate-filtered,
@@ -286,7 +286,7 @@ public:
 	// folded into the experienced-here answer, plots-targets scaled by cityContext.plotAttrs, the audience
 	// resolved from the asking player, the entity active/dormant verdict FED IN via the enabler's operating set
 	// (a what-if NEVER evaluates requires). One-line delegations onto the ONE calc unit (InfoValuation,
-	// [DEC-single-implementation]) -- declared on the base so EVERY rebuilt info serves the same read. ---
+	// docs/architecture/patterns.md §DRY (single implementation)) -- declared on the base so EVERY rebuilt info serves the same read. ---
 	void expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext,
 		const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES],
 		const CvCascadeHypothetical* pHypothetical = NULL) const;

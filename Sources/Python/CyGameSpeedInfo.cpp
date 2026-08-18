@@ -7,7 +7,7 @@ namespace
 {
 	//	The ONE bounds gate for this registry, and it carries the ERA axis too. Both ids arrive from script, so
 	//	both are checked here rather than trusted: the engine's own era guard is FASSERT_BOUNDS, which is
-	//	compiled out of Release ([DEC-info-plane-read-only]) -- i.e. absent from the build this actually runs in.
+	//	compiled out of Release (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD) -- i.e. absent from the build this actually runs in.
 	const CvGameSpeedInfo* cygs_speed(int iGameSpeed)
 	{
 		if (iGameSpeed < 0 || iGameSpeed >= GC.getNumGameSpeedInfos())

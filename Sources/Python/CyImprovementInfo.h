@@ -22,7 +22,7 @@
 //	member: the placement gates are what `CvPlot::canHaveImprovement` runs on and the build list is what the
 //	worker AI walks, so the engine could not function without them. The boundary was missing a read, never the
 //	data -- so nothing here derives, and nothing here is a legacy per-FIELD getter revived
-//	([DEC-new-getter-surface] bans mirroring the old `CvXInfo` contract; a named accessor per info TYPE is a
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy) bans mirroring the old `CvXInfo` contract; a named accessor per info TYPE is a
 //	different axis).
 //
 //	The id is the IMPROVEMENT, passed per call: an accessor holds no bound entity, so it is a plain read surface

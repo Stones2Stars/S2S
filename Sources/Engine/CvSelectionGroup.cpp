@@ -141,7 +141,7 @@ bool CvSelectionGroup::sentryAlert() const
 	{
 		const CvPlot* myPlot = unit->plot();
 
-		//	⛔ THE RECT BOUND IS A PLOT COUNT, SO IT REDUCES -- and ONLY it ([DEC-fixedpoint-x100]: reduce at the
+		//	⛔ THE RECT BOUND IS A PLOT COUNT, SO IT REDUCES -- and ONLY it (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): reduce at the
 		//	point of use). sight() answers the vision BUDGET on the x100 native scale, which is the scale
 		//	canSeePlot below SPENDS it in (per-100 terrain costs), so the budget itself must stay whole. What is
 		//	NOT on that scale is the scan radius: handing the raw budget to rect() asks for a square 100x too
@@ -186,7 +186,7 @@ bool CvSelectionGroup::sentryAlertSameDomainType() const
 	{
 		const CvPlot* myPlot = unit->plot();
 
-		//	⛔ THE RECT BOUND IS A PLOT COUNT, SO IT REDUCES -- and ONLY it ([DEC-fixedpoint-x100]: reduce at the
+		//	⛔ THE RECT BOUND IS A PLOT COUNT, SO IT REDUCES -- and ONLY it (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): reduce at the
 		//	point of use). sight() answers the vision BUDGET on the x100 native scale, which is the scale
 		//	canSeePlot below SPENDS it in (per-100 terrain costs), so the budget itself must stay whole. What is
 		//	NOT on that scale is the scan radius: handing the raw budget to rect() asks for a square 100x too

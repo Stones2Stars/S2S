@@ -8,7 +8,7 @@
 //	EVALUATOR asks whether a tree HOLDS right now (it needs the live contexts); this asks what the tree
 //	MENTIONS, which is a pure function of the compiled data and needs no game state at all.
 //
-//	⛔ WHY IT EXISTS AS A SHARED SURFACE ([DEC-single-implementation]). The tree is already reachable --
+//	⛔ WHY IT EXISTS AS A SHARED SURFACE (docs/architecture/patterns.md §DRY (single implementation)). The tree is already reachable --
 //	CvRequires exposes `build`/`operate` as public CvCondition* and the node is a plain tagged struct -- so
 //	every consumer CAN write its own recursion, and that is exactly the failure: the building river/coastal
 //	counts, the corp prereq gate and the requires block composer would each grow one. A file-static walk is

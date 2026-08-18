@@ -1,6 +1,5 @@
 # External tools & workflows — out-of-tree tooling and side-channel dev workflows
 
-> **Status:** reference   ·   **Verified against:** 2026-06-20 (working tree, `json-data-migration`)
 > **Grounding:** `Sources/Defines/CvGlobals.cpp`, `Tools/` listing, `Tools/CI/DeployBuild.bat`, the
 > external repos under `c:\code\s2s\` (FpkBuilder). Line numbers drift — confirm the named
 > function, not the integer.
@@ -104,11 +103,11 @@ The in-tree tooling this doc deliberately does **not** restate — go to its own
   operational runner reference; the model lives in the cascade specs.
 - [`../specs/curators/fixed-point-and-scales.md`](../specs/curators/fixed-point-and-scales.md) — the ×100 fixed-point
   conversion and how the effective value is diffed against the live engine →
-  [DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100).
+  [the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries).
   The `readjson` harness (`Tools/ReadJson/`) is the in-DLL JSON loader's offline driver, exercised by the
   same value-verification flow.
-- [`observability.md`](observability.md) — **the live surveillance surface** the crash/known-
+- [`spine.md`](../spine.md) — **the live surveillance surface** the crash/known-
   issue debugging reads against (HTTP `127.0.0.1:7227`, `/events`, the four `/computed` censuses, and the
-  gated logs) → [DEC-obs-scale](../architecture/decisions.md#dec-obs-scale). Delegate bulk data reads to the
+  gated logs) → [the Orwell observability bar](../spine.md#the-reconstruction-bar-orwell). Delegate bulk data reads to the
   `data-reader` sub-agent rather than pulling raw dumps into context.
 - [`../README.md`](../README.md) — the comprehension map (where every subsystem doc lives).

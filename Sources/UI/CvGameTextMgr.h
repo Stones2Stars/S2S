@@ -146,7 +146,7 @@ public:
 		int iTargetFk, EnEdgeBucket eGateBucket, int iGateId) const;
 	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const;
 	// ONE `enables`-family EDGE list -> one "Unlocks: A, B, C" line. The info already CARRIES its edge lists (the
-	// readJson reverse pass lands them at load, [DEC-one-reverse-view]), so this is a forward list read of the
+	// readJson reverse pass lands them at load, docs/cascade.md §1 (reverse lookups are populated once, at load)), so this is a forward list read of the
 	// authored handful -- never the whole-database scan the backwards question would be.
 	// ⚖ Capped at a handful by default and UNCAPPED under ALT -- the obvious data at rest, the verbose version
 	// under the same hotkey the plot-yield breakdown already uses; the remainder is always shown as "+N more"
@@ -162,18 +162,18 @@ public:
 	// The §8/§9 CLASSIFICATION twin of the two above: an entity's authored block keys, rendered one per line
 	// through the ONE name renderer. What a capability/canTrade/canWorkOn block GRANTS is not a magnitude, so it
 	// has no compiled entry to hand appendEntryLines -- which is why the widget cases that ask about one were the
-	// only ones with nothing to call ([DEC-single-implementation]: one renderer, not a builder per key).
+	// only ones with nothing to call (docs/architecture/patterns.md §DRY (single implementation): one renderer, not a builder per key).
 	void appendClassificationLines(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock) const;
 	// ONE key of a block, for a widget that represents a single granted ability rather than the whole set.
 	void appendClassificationKey(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock, const char* szKey) const;
 	// The §5 PROVISIONS twin of the two renderers above: what the entity's CONSIDERED ACTION hands over. A grant
 	// is neither a magnitude nor a block key -- it is an entity handed to the player -- so it gets its own
-	// renderer rather than being hand-listed per composer ([DEC-single-implementation]). A conditioned entry
+	// renderer rather than being hand-listed per composer (docs/architecture/patterns.md §DRY (single implementation)). A conditioned entry
 	// carries its condition, because rendering one unconditionally claims something the data does not say.
 	void appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& info) const;
 	// WHY the enabler refuses a candidate, in one line ([enabler.md] par.6). The gate STORED the reason, so this
 	// reads it rather than re-deriving it -- a second evaluation here could disagree with the verdict it claims
-	// to explain ([DEC-single-implementation]). Without it a greyed row says only "unavailable", which leaves the
+	// to explain (docs/architecture/patterns.md §DRY (single implementation)). Without it a greyed row says only "unavailable", which leaves the
 	// player, and the AI reading the same tri-state, to guess what would unblock it.
 	void appendGateReason(CvWStringBuffer& szBuffer, unsigned char eReason) const;
 	// The derived PRICE, and the hammers this city has already banked into it (rendered only when non-zero).
@@ -212,7 +212,6 @@ public:
 	void buildHealthRateString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
 	void buildHappinessRateString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
 	void buildFreeTechString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
-	void buildLOSString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
 	void buildImprovementString(CvWStringBuffer& szBuffer, TechTypes eTech, BuildTypes eBuild, bool bList = false, bool bPlayerContext = false);
 	void buildDomainExtraMovesString( CvWStringBuffer& szBuffer, TechTypes eTech, int iCommerceType, bool bList = false, bool bPlayerContext = false );
 	void buildAdjustString( CvWStringBuffer& szBuffer, TechTypes eTech, int iCommerceType, bool bList = false, bool bPlayerContext = false );

@@ -286,7 +286,7 @@ bool isTechRequiredForProject(TechTypes eTech, ProjectTypes eProject)
 
 //	The RESOLVED max conscript: the civic's own `conscript.empire.flat` deposit scaled by the world size. The
 //	base is an ordinary cascade scalar now (SCALAR_CONSCRIPT), so it is ×100 and reduces here at the point of
-//	use ([DEC-fixedpoint-x100]); the world-size percent is CONFIG read from its source ([state-repositories.md]:
+//	use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the world-size percent is CONFIG read from its source ([state-repositories.md]:
 //	WORLD is config, never a package). One home for the composition, as CvGameSpeedScale is for gamespeed.
 int getWorldSizeMaxConscript(CivicTypes eCivic)
 {
@@ -3160,7 +3160,7 @@ void makeValueString(CvWString& szValue, const int iValue, const bool bWholeNumb
 // gameplay path, it is about anything that can reach SYNCHRONIZED state.
 //
 // The curve is unchanged, only its arithmetic: it factorizes into two terms that each depend on ONE input, so
-// both are compile-time tables in ×10000 fixed point ([DEC-fixedpoint-x100]) instead of a per-call pow/exp.
+// both are compile-time tables in ×10000 fixed point (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) instead of a per-call pow/exp.
 //   FALLOFF[d]     = (5 / (5 + d)) ^ 0.4          -- the gentle near-field decay, indexed by step distance
 //   CUTOFF[extra]  = exp(-0.1 × extra ^ 1.5)      -- the far-field cliff, indexed by distance past dist_break
 // CUTOFF[0] is unity, so the two multiply unconditionally and the old if/else disappears.

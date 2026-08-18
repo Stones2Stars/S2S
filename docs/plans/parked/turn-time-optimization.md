@@ -18,7 +18,7 @@ turns — what scales worse than "more cities"?
 **`CalculateAllBuildingValues` and `AI_FlushBuildingValueCache` no longer exist in `Sources/`** —
 the building-value recompute machinery this whole investigation chased has since been replaced
 by the enabler cascade ([`enabler.md`](../../specs/enabler.md)) and the maintained-sum repository
-model ([`state-repositories.md`](../../architecture/state-repositories.md)). Everything that
+model ([`state-repositories.md`](../../cascade.md)). Everything that
 follows through "Three orthogonal optimization tracks" below (originally several sessions'
 worth of `[PERF]` measurement against that machinery — ranked levers, the CABV PreLoop
 root-cause hunt, the reverse-prereq-index false leads) is now pure history: do not plan against
@@ -126,7 +126,7 @@ per-slice Python `gameUpdate` (~5 ms), `updateScore`, `testAlive`; `plotPaging` 
   defense needs once per change; units consume the published number; no per-unit map
   searches). Demand side already improved by the fortify-bonus fix (garrisons now read at
   full strength, easing the over-stacking attractor and the conscription of non-fortifying
-  units). Tied plans: [`state-repositories.md`](../../architecture/state-repositories.md), `unit-ai-valuation.md` (defender
+  units). Tied plans: [`state-repositories.md`](../../cascade.md), `unit-ai-valuation.md` (defender
   production glut), `ai-architecture-north-star.md` (per-UNITAI modules).
 - *STEP 1 SHIPPED (#384 — garrison tiers, see "City garrison tiers" in `AGENTS.md` and
   `Sources/AI/CvUnitAI.cpp`):* garrisoning no
@@ -630,7 +630,7 @@ compute concentrated in three spots, all scaling with on-screen units/cities:
    on-screen units for every game without S&D. **Follow-up (S&D-ON case):** cache the pre-surround intermediate
    (base + non-surround modifiers) for everyone and fold the live `surroundedDefenseModifier` delta on top — the
    "cache the stable core, add the volatile term live" seam (the same shape as unit-happiness-on-top,
-   [DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)). NOTE S&D is still
+   [unit-carried modifiers apply on top, live, never cached](../../cascade.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling)). NOTE S&D is still
    LIVE (removal is only PARKED — [surround-destroy-removal-map.md](surround-destroy-removal-map.md)); if it is
    removed, the bypass + the whole `surroundedDefenseModifier` term delete and the cache serves everyone.
 3. **Unit-stack walks per plot (OPEN — separate pass).** `CvPlot::isFighting`/`isVisibleEnemyUnit`/

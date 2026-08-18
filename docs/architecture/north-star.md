@@ -1,6 +1,6 @@
 # Architectural north-star — the structural compass
 
-> Read before any structural change. Condensed from the old north-star.
+> Read before any structural change.
 
 The engine resolves into **two halves**: the **data side** (cascade + tally — top-down declarative, the active
 rework) and the **AI side** (a consumer of data, out of active scope). Keeping that boundary clean **is** the
@@ -31,10 +31,10 @@ as unrelated bugs and get fixed one at a time:
   concretely — the enabler is load-ACTIVE while the modifier's cache build is not, and what each slot HOLDS is
   refcounted set membership versus a summed magnitude — so welding them forces one policy onto two that genuinely
   need different ones. ⚠ They no longer differ on MAINTENANCE: both are kept current in place by the fact that
-  names the source ([DEC-maintained-sum](decisions.md#dec-maintained-sum)), and the older framing of the modifier
+  names the source ([the maintained sum](../cascade.md#-the-maintained-sum--three-planes-one-slot-and-nothing-is-ever-recomputed)), and the older framing of the modifier
   as a mark-then-recompute value cache is exactly what let it alone keep a staleness protocol.
 - the cascade re-deriving whether a building is active = **the cascade doing the enabler's job**. It asks
-  ([DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)).
+  ([the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)).
 - a getter that reaches past the info surface into a per-type shape = **a consumer doing readJson's job**.
 
 **So the test for any new code is one question: whose job is this?** If the answer names two systems, the design
@@ -43,7 +43,7 @@ once, here, rather than re-deriving a fresh prohibition at each seam.
 
 **⛔ "KEEP" means OUTSIDE the four systems — nothing else (owner).** The ONLY legacy that is legitimately kept is
 work that is none of the four systems' job: the **trade-route network calculation** (the cascade cannot re-derive
-the network, so it folds the route yield as an INPUT — [modifier §2a `tradeYield`](../specs/modifier.md)), the
+the network, so it folds the route yield as an INPUT — [modifier §2a `tradeYield`](../cascade.md)), the
 **property engine's internal math** (the decay / diffusion / solver, owner-locked — [property-audit](../plans/structural-cleanup/property-audit.md)),
 and the **WAREHOUSE mechanics** below.
 
@@ -58,14 +58,14 @@ These pass the test above by naming NO system: ask "whose job is this?" and the 
 infos, nor cascade, nor enabler. **Anything a system SHOULD touch is never KEEP — it is wired or it is open.** A
 count is the tally's job, so a bespoke engine count-loop is an unwired tally domain, not a KEEP; availability is
 the enabler's, magnitudes the cascade's, state-changes the spine's. "KEEP — engine-owned, revisit later" applied
-to in-scope work is the deferral-in-disguise this rules out ([DEC-no-deferred](decisions.md#dec-no-deferred)):
+to in-scope work is the deferral-in-disguise this rules out (["deferred" is banned](../../AGENTS.md#design)):
 the honest label is OPEN, never KEEP. (A system reading a KEEP thing as a raw INPUT — the cascade folding trade
 yield, the enabler reading the property value across a band — is the boundary working, not a KEEP of the reading
 system's own work.)
 
 **Three core data-engine structures:**
 - **modifier** — magnitudes deposit DOWN the scope spine (integer ×100 fixed-point); the deliveryguy owns
-  cross-entity modifiers keyed by target ([modifier](../specs/modifier.md)).
+  cross-entity modifiers keyed by target ([modifier](../cascade.md)).
 - **enabler** — 2-pass generate-then-gate; narrows via enabled/replaced/obsoleted/disabled; `requires` checks only
   the "can get" subset via a `require` callback **UP** the chain (the AND mechanism — *why it is bidirectional*; a
   down-only model expresses OR but not AND and forces maintainers to the top of the chain) ([enabler](../specs/enabler.md)).
@@ -74,7 +74,7 @@ system's own work.)
 The engine is **bidirectional**: modifiers down, tally counts + `require` callbacks up. A down-only mental model is wrong.
 
 **Orwellian logging** (total observability) is a landed prerequisite, not a nicety — it is what made safe legacy
-deletion possible and remains the verification ground truth ([logging](../specs/logging.md)).
+deletion possible and remains the verification ground truth ([spine.md](../spine.md)).
 
 **The one unmovable constraint:** the closed Firaxis `.exe` ABI freezes the C++03/VC7.1 toolchain — it constrains
 **syntax, not architecture** ([engine](../reference/engine.md)). Clean Architecture **is** achievable here; "old
@@ -90,9 +90,9 @@ interface-bounded machines.
 
 **Engine state** follows the same discipline: a domain object's *derived* data (yields, commerce, …) lives in a
 **never-serialized, event-MAINTAINED** store that is the single **PULL** source up the chain — the
-[state-repositories](state-repositories.md) pattern. ⚑ **The unified `dataChanged` trigger this was written
+[state-repositories](../cascade.md) pattern. ⚑ **The unified `dataChanged` trigger this was written
 reaching for turned out to BE the event spine**, and once the spine covered every mutation the staleness flag it was
 paired with became obsolete: a flag only ever claimed we could not know what changed
-([DEC-flag-is-fossil](decisions.md#dec-flag-is-fossil)). So the "stale cache" bug class closes by the
+([a staleness flag is the fossil of a missing emit](../cascade.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up)). So the "stale cache" bug class closes by the
 fact naming its source, not by a better invalidation. `CvPlot`/`CvCity` stay as the domain objects; only the
 derived layer and `Cv*AI` change.

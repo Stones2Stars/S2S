@@ -2,10 +2,10 @@
 
 > How the engine's unit **action → outcome** subsystem behaves, and how the **DATA** was migrated to JSON (#430).
 >
-> **⛔ Owner ruling (2026-07-20) — the outcome DATA is migrated to clean JSON; the CvOutcome ENGINE stays, fed from
+> **⛔ Owner ruling — the outcome DATA is migrated to clean JSON; the CvOutcome ENGINE stays, fed from
 > JSON.** The `CvOutcome`/`CvOutcomeMission`/`CvOutcomeList`/`CvOutcomeInfo` classes and their `execute()`/dispatch are
 > **unchanged** — only the READ path flips from XML to JSON (`mapFrom`, like every other migrated info). The migration
-> is DATA-side, exactly as [DEC-data-first](../architecture/decisions.md#dec-data-first) requires — the *mission
+> is DATA-side, exactly as [data migration is never deferred](../specs/validation.md#the-observation-surface) requires — the *mission
 > concept* redesign is still a future ground-up rework, but the reward data is curated JSON NOW, not left in XML.
 >
 > **The shape (curator owns the conversion — old XML → correct new-system data):**
@@ -18,7 +18,7 @@
 >   `{ requires:{outcome:OUTCOME_*, plot?, unit?}, chance, <reward verbs> }`.
 > - **`Adapt*` is pure engine, NOT data** (owner) — the gamespeed-scaling wrapper is unwrapped by the curator; the
 >   engine scales the plain value at grant time. **Conditions → cascade `requires` vocabulary**, evaluated by the ONE
->   `cascadeEvalCondition` ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)) — **no
+>   `cascadeEvalCondition` ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — **no
 >   BoolExpr round-trip** (`m_pPlotCondition`/`m_pUnitCondition`/`toCity` are `CvCondition*`). Numerics build the
 >   existing `IntExpr` (`int`→`Constant`, `{base,random}`→`Plus(Constant,Random)`). Python-authoritative gates
 >   (`{python:fn}`) + inline `<Python>` bodies stay Python.

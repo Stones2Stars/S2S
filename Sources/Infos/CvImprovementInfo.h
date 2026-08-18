@@ -9,9 +9,9 @@
 //	and the reverse-landed building/civic/tech conditioned entries) lives on the compiled modifier surface; the
 //	point reads fetch the unconditioned sums, the conditioned tail is the base conditioned-list access. The
 //	placement/validity verdicts are MATERIALIZED at mapFrom from the composed requires.build tree
-//	([DEC-materialize-at-mapfrom] -- the getters are bare member reads, never per-call tree walks). The upgrade
+//	(docs/architecture/patterns.md §Materialize at mapFrom -- the getters are bare member reads, never per-call tree walks). The upgrade
 //	chain and the identity.bonuses discovery/depletion/trade data are genuine bespoke build/upgrade data. No
-//	legacy-mirror modifier member survives ([DEC-new-getter-surface]).
+//	legacy-mirror modifier member survives (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"

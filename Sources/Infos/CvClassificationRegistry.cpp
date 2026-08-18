@@ -166,7 +166,7 @@ void ClassificationRegistry::buildAndResolve(const std::vector<CvInfo*>& infos)
 	// seeded key takes exactly its table index -- which is what makes CvClassificationIds.h's constants BE the
 	// runtime ids, and therefore what lets every consumer read `info.hasSkill(CLS_SKILL_BLITZ)` instead of carrying a
 	// memoized id per key ([patterns.md] § THE GETTER SETUP).
-	// ⚑ The categories stay OPEN ([DEC-classification-infos]): the mint loop below still adds any authored key
+	// ⚑ The categories stay OPEN (docs/specs/json.md §8 + docs/architecture/patterns.md §The coherent surface (THE GETTER SETUP)): the mint loop below still adds any authored key
 	// absent from the table, appended after the seeded block, so authoring a new key needs no engine change --
 	// regenerating the table merely promotes it to a compile-time constant.
 	for (int d = 0; d < NUM_CLS_DOMAINS; ++d)

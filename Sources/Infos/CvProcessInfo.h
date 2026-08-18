@@ -8,8 +8,8 @@
 //	set is the per-commerce production->commerce CONVERSION rate, authored as the json.md §9 `conversion`
 //	bespoke block (hurry's home -- keys per commerce channel, human values; OWNER-CONFIRMED item 18: a process
 //	is a hammers->commerce CONVERSION, the idle-production fallback, never a commerce-modifier deposit) and
-//	materialized ONCE at mapFrom into the typed per-channel plane below ([DEC-materialize-at-mapfrom]). No
-//	legacy getter name returns ([DEC-new-getter-surface]).
+//	materialized ONCE at mapFrom into the typed per-channel plane below (docs/architecture/patterns.md §Materialize at mapFrom). No
+//	legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 //	The tech prereq + the only-latest-in-chain supersession are store-inverted onto the TECH
 //	(tech.enables.processes / this process's obsoletedBy.techs) -- base availability, reconstructed at LOAD by
@@ -33,7 +33,7 @@ public:
 	// The production->commerce conversion rate (×100: authored 50 reads 5000), per channel -- a bare member
 	// read over the plane mapFrom materializes from the `conversion` block. The conversion is the CITY's
 	// hammers-fold (the §2a EXTRA leg `production × prodToCommerce`), so only the city scope answers; the
-	// scope parameter stays spelled out ([DEC-scope-is-an-axis] -- the signature the consumers already ask).
+	// scope parameter stays spelled out (docs/architecture/patterns.md §The coherent surface (scope is a separate axis) -- the signature the consumers already ask).
 	int getProductionToCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
 	{
 		if (eScope != CASC_SCOPE_CITY || eCommerce < 0 || eCommerce >= NUM_COMMERCE_TYPES)

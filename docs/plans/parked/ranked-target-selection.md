@@ -9,7 +9,7 @@
 Some effects target the **top-N cities by a metric**, not a boolean per-city condition:
 - **largestCity happiness** — engine `getLargestCityHappiness` (`CvCity.cpp:5551`) applies a flat to a city whose
   `findPopulationRank() ≤ world TargetNumCities` (i.e. the empire's largest *cities*, plural — top-N, not the single
-  largest). This is the [DEC-conditions-are-predicates] retirement target for the `largestCity` member — **blocked on
+  largest). This is the [conditions are predicates, never bespoke members](../../specs/json.md#35-predicates--a-systems-runtime-state-query) retirement target for the `largestCity` member — **blocked on
   this design**.
 - **Wonders that grant to the X largest cities** — same selection shape on the `grants` side.
 
@@ -43,7 +43,7 @@ Ranking is a *selection/threshold* concern, not a yes/no state query — and it 
 **"There is no reason why we can't use the same sorting/filtering in all places."** The ranked TARGET selection
 here and the BUILD-LIST UI's filter/sort are the same operation — *order a set of objects by a named metric,
 optionally keep the top N* — so they are ONE implementation with one extensible metric registry, not two
-([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)). json.md §3.3 already
+([the DRY single-implementation law](../../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). json.md §3.3 already
 calls the metric set "an extensible registry", so this is the registry being taken at its word rather than a new
 concept.
 
@@ -88,5 +88,5 @@ through the reverse pass. Spelling is SETTLED — `orderedBy` / `orderedByDescen
   largestCity-happiness parity case.
 
 ## Related
-- [DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates) — the invention sweep this unblocks (`largestCity`).
+- [conditions are predicates, never bespoke members](../../specs/json.md#35-predicates--a-systems-runtime-state-query) — the invention sweep this unblocks (`largestCity`).
 - `Tools/Migration/curate_civic.py` / `curate_trait.py` — `iLargestCityHappiness` stays a `largestCity` member **until this lands**.

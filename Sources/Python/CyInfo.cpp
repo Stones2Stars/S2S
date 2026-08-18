@@ -17,7 +17,7 @@
 #include "CyInfo.h"
 #include "Data/CvReadJson.h"     // the ONE infotype-prefix -> InfoRepo dispatch, READ-ONLY half (rjInfoForTypeConst / rjCountForType)
 #include "Infos/CvInfo.h"
-#include "Infos/CvEdges.h"           // the load-derived edge families ([DEC-one-reverse-view])
+#include "Infos/CvEdges.h"           // the load-derived edge families (docs/cascade.md §1 (reverse lookups are populated once, at load))
 #include "Infos/CvModifiers.h"          // the compiled entry list the conditioned read walks
 #include "Infos/CvModEntry.h"
 #include "Conditions/CvConditionQuery.h" // the ONE read over a condition tree (atoms + the negation probe)
@@ -118,7 +118,7 @@ namespace
 	//	should have to model.
 	//
 	//	⚠ These are NOT the banned read surface. What crosses is the entity's own IDENTITY -- its stable type key,
-	//	its localized name, its button tag -- never a legacy getter contract ([DEC-cy-not-fixed] bans the
+	//	its localized name, its button tag -- never a legacy getter contract (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) bans the
 	//	info/state GETTER surface; a type key is what a scenario serializer and a config string need, and
 	//	python-read-map names CvWBDesc as requiring exactly it).
 	//
@@ -477,7 +477,7 @@ bool CyInfo::hasTag(const std::string& szTypePrefix, int iId, int iTagId) const
 //
 //	The NAMED classification tests -- the Python CONSUMER surface (the header's owner ruling). Each is a one-line
 //	delegate to the parameterized read above, so the bitset walk has exactly ONE implementation
-//	([DEC-single-implementation]) and a named endpoint costs a line rather than a second code path.
+//	(docs/architecture/patterns.md §DRY (single implementation)) and a named endpoint costs a line rather than a second code path.
 //	⚑ Note the two answer off DIFFERENT PLANES -- hidden nationality is a unit SKILL, spy is a unit TAG -- which
 //	is precisely what the naming buys: the caller asks its question and never learns which plane holds it.
 //
@@ -526,7 +526,7 @@ bool CyInfo::canSpreadReligion(int iUnitId) const
 //	recommender picking a missionary for the empire's own faith needs "spreads THIS one". Answering the
 //	specific question with the general read offers a unit that spreads somebody else's religion.
 //	⚑ It reads the unit's own authored `spread.religion` map by key -- never a sweep of the religion registry
-//	asking each id whether this unit spreads it, which is the own-data inversion [DEC-one-reverse-view] bans
+//	asking each id whether this unit spreads it, which is the own-data inversion docs/cascade.md §1 (reverse lookups are populated once, at load) bans
 //	and which the info's own accessor comment warns about.
 bool CyInfo::spreadsReligion(int iUnitId, int iReligion) const
 {

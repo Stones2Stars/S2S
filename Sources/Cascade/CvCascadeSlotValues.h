@@ -11,7 +11,7 @@
 //
 //	⛔ NOT a cache and NOT storage: a caller-owned buffer, copyable by value, holding no owner pointer. Anything
 //	that computes into one of these instead of into the stored package structurally cannot repair the package
-//	([DEC-no-self-heal]).
+//	(docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 //
 //	THE IDENTITY is TWO ints INTERPRETED PER SCOPE, exactly as the spine's DOMAIN ints are interpreted per
 //	event (the scope owners share no common id accessor, so identity is passed IN at bind):

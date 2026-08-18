@@ -5,11 +5,11 @@
 //
 //	CvCultureLevelInfo -- the CULTURE-LEVEL poco rebuilt to the exemplar surface (patterns.md § THE GETTER
 //	SETUP: the four read categories, nothing else). A city's culture tier: the tier's own city-scope defense
-//	(the one census modifier family, read as a compiled point fetch -- [DEC-scope-is-an-axis]), the per-city
+//	(the one census modifier family, read as a compiled point fetch -- docs/architecture/patterns.md §The coherent surface (scope is a separate axis)), the per-city
 //	wonder-category caps (json.md §4.4, riding the composed `allowed`), the culture threshold + radius
 //	intrinsics, and the entity-level game-option gate (the composed CvGate). The alternate-Info swap
 //	(replacedBy) + the tier's enables ride the composed edges. No legacy getter name returns
-//	([DEC-new-getter-surface]).
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"
@@ -47,7 +47,7 @@ public:
 	int getMaxNationalWonders() const { return m_iMaxNationalWonders; }
 	// The entity-level `enabled` GAMEOPTION gate, extracted for the one consumer that asks for the single
 	// option id (CvGlobals::cacheGameSpecificValues); the gate itself is the composed CvGate. Materialized at
-	// mapFrom ([DEC-materialize-at-mapfrom]) -- the getter is a bare read (see the .cpp).
+	// mapFrom (docs/architecture/patterns.md §Materialize at mapFrom) -- the getter is a bare read (see the .cpp).
 	int getPrereqGameOption() const { return m_iPrereqGameOption; }
 
 	// --- RUNTIME member (set at load by the tier-ordering pass, NOT JSON) ---

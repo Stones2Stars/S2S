@@ -10,7 +10,7 @@
 //	else: an info never reads game state, so a verdict composing
 //	GAMEOPTION_LEADER_* cannot live there (json.md §9 -- a game option gates AT THE CONSUMING SYSTEM).
 //	This class IS that consuming system, held in one place rather than re-derived per call site
-//	([DEC-single-implementation]) -- the same shape as CvGameSpeedScale, and for the same reason.
+//	(docs/architecture/patterns.md §DRY (single implementation)) -- the same shape as CvGameSpeedScale, and for the same reason.
 //
 //	It replaces the archived CvTraitInfo::isValidTrait, which was exactly that boundary violation, plus the
 //	hand-inlined copies of its option composition that had accumulated across CvPlayer and CvGameTextMgr.

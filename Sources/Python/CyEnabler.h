@@ -7,7 +7,7 @@
 //	CyEnabler -- the Python AVAILABILITY surface: the "can I, right now?" half of the GAME-OBJECT read role
 //	(enabler.md par.8), exposed to script.
 //
-//	⛔ THIS IS A NEW SURFACE, NOT A WIDENED BINDING ([DEC-cy-not-fixed]). The legacy per-type wrappers
+//	⛔ THIS IS A NEW SURFACE, NOT A WIDENED BINDING (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)). The legacy per-type wrappers
 //	(CyCity::canTrain, CyPlayer::canConstruct, ...) are NOT extended and NOT reused: bolting availability onto
 //	them is precisely how the boundary gets shaped by the old contract instead of by the model. It is therefore
 //	deliberately ID-BASED -- it takes plain player / city / entity ids and holds no CyCity or CyPlayer -- so the
@@ -87,7 +87,7 @@ public:
 	// Publishes this surface + the three tri-state constants a script compares against
 	// (ENABLER_HIDDEN / ENABLER_GREYED / ENABLER_LISTED). Called from DLLPublishToPython.
 	// The BONUSES a corporation's `requires` names -- the forward "what does this need?" read, answered from the
-	// compiled condition tree by the ONE shared walker ([DEC-single-implementation]) rather than by a caller's
+	// compiled condition tree by the ONE shared walker (docs/architecture/patterns.md §DRY (single implementation)) rather than by a caller's
 	// own recursion. ⚑ Its consumer is the trade screen: a corporation makes bonuses SEMI-VOLUMETRIC (it consumes
 	// copies), so a player still wants more of a resource they already hold -- the one case where presence is not
 	// the answer. The desired-bonus set is (theirs - mine) UNION this, so this term needs no holdings context.

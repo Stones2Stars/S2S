@@ -225,7 +225,7 @@ void CyUnit::setBaseCombatStr(int iCombat)
 	m_pUnit->setBaseCombatStr(iCombat);
 }
 
-// The Python boundary reads HUMAN -- strength is ×100 inside the engine ([DEC-fixedpoint-x100]).
+// The Python boundary reads HUMAN -- strength is ×100 inside the engine (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 int CyUnit::baseCombatStr() const
 {
 	return m_pUnit->baseCombatStrHuman();
@@ -713,7 +713,7 @@ bool CyUnit::isHiddenNationality() const
 }
 
 //	⚖ THE IDENTITY SET (CyUnit.h) plus the unit's OWN data, read from the unit's OWN accessor
-//	([DEC-accessor-homing](../../docs/architecture/decisions.md#dec-accessor-homing)). A unit's hit points and
+//	(docs/architecture/patterns.md §THE PYTHON READ BOUNDARY, accessor homing). A unit's hit points and
 //	whether it can fight are the unit's, so they are asked of the unit -- `STATE.getUnitFlags(owner, id)` is the
 //	mishomed shape that ruling names, and its tell is the NOUN in the method name: an accessor that owns its
 //	subject needs none.

@@ -284,7 +284,7 @@ int CyAct::createUnit(int iPlayer, int iUnitType, int iX, int iY, int iUnitAI, i
 	if (GC.getMap().plot(iX, iY) == NULL) return -1;
 
 	//	The creation sits AFTER the two validity tests because it draws on the synchronized stream, and a path
-	//	that rejects must not consume a draw ([DEC-synced-rng-is-shared-state]).
+	//	that rejects must not consume a draw (docs/reference/engine.md §THE SYNCHRONIZED RNG IS SHARED SAVE STATE).
 	CvUnit* pUnit =
 		GET_PLAYER((PlayerTypes)iPlayer).createUnit(
 			(UnitTypes)iUnitType, iX, iY, (UnitAITypes)iUnitAI, (DirectionTypes)iDirection);

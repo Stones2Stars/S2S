@@ -1,6 +1,6 @@
 # Triggers & grants — the provisions machine
 
-> The cascade's **provisions** consumer: an `IEventConsumer` on the [event spine](event-spine.md) that, on a
+> The cascade's **provisions** consumer: an `IEventConsumer` on the [event spine](../spine.md) that, on a
 > `DOMAIN` state change, resolves the source entity's payload off its info and APPLIES it. The AUTHORING shapes are
 > [json.md §5](json.md); this doc is the **machine** that consumes them.
 >
@@ -23,7 +23,7 @@ tech's research, a civic's adoption.
 ⛔ **The ODDS are data; the ROLL is not.** A trigger authors a `chance` — a plain number — and the engine compares
 its own draw against it. That draw comes off the SYNCHRONIZED stream, which is shared save state, so no JSON
 authors a seed, a stream or a draw and neither the cascade nor the curator models one
-([DEC-synced-rng-is-shared-state](../architecture/decisions.md#dec-synced-rng-is-shared-state)).
+([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)).
 
 ## ⛔ A GRANTED ENTITY IS AN ORDINARY ENTITY (owner)
 
@@ -34,7 +34,7 @@ is that the production/cost step is skipped. Settled by this, not open:
 
 - **A grant fires the ordinary DOMAIN events** — *"like anything else"* — so the enabler, the modifier packages and
   the tally see a granted building exactly as they see a constructed one. The machine FEEDS the spine; it never
-  bypasses it ([event-spine.md](event-spine.md): the spine is the SINGLE place a state change is announced).
+  bypasses it ([spine.md](../spine.md): the spine is the SINGLE place a state change is announced).
 - **A granted building runs its own first-build block**, because a construct would. The resulting grant→event→grant
   chain is intended behaviour, not re-entrancy to guard against.
 - **Nothing downstream may branch on "was this granted?"** — there is no such state to read.
@@ -80,8 +80,8 @@ is that the production/cost step is skipped. Settled by this, not open:
 > (owner).** *"The more unified we have createUnit the better it is; if there is 1 place that can create a unit
 > in other ways, that is a rollerskating surface, particularly for modders."* ⇒ **The EDITOR goes through it
 > too** — `CyAct` / `CyPlayer` create through the step, which is why it carries a FACING DIRECTION parameter;
-> WorldBuilder is exactly where an alternate path would teach the wrong lesson, and the roadmap already requires
-> WB to travel the engine's own paths ([roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision 1b).
+> WorldBuilder is exactly where an alternate path would teach the wrong lesson, and WorldBuilder is already
+> required to travel the engine's own paths — every WB mutation emits like any other ([spine.md](../spine.md)).
 > ⚑ **"Unified" means STANDARDIZED PATHS, not merely few of them (owner)** — the point is that a reader looking
 > for how a unit comes into being finds ONE answer and cannot invent a second.
 > ⛔ So a scope boundary is never a reason to keep a creation call off the step: an ARRIVAL created anywhere —
@@ -100,13 +100,13 @@ is that the production/cost step is skipped. Settled by this, not open:
 > (`m_pTempUnit`, the off-map pathing anchor, excluded from `units()` iteration and from every death sweep) and
 > a `(UnitTypes)0` probe at the origin in `CvGame`'s slot-takeover path, which passes birthmark `0` and so
 > consumes no draw; converting that one would ADD a draw to the synchronized stream
-> ([DEC-synced-rng-is-shared-state](../architecture/decisions.md#dec-synced-rng-is-shared-state)).
+> ([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)).
 
 ## ⛔ THE MACHINE REPLACES THE PER-TURN WORK — and the spine is its ONLY way in (owner)
 
 It is not a resolver running beside legacy: the per-turn work MOVES onto the machine, and the legacy call sites are
 DELETED, not re-pointed. Their ledgers become derived and are cut by
-[DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform) via the `savemigration.txt`
+[the uniform legacy-accumulator cut](../cascade.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism) via the `savemigration.txt`
 soft-remove ([save.md §3](save.md)) — never a `@SAVEBREAK`.
 
 ⛔ **The per-turn apply arrives as a spine EVENT, never a direct call from `doTurn`.** The machine is an
@@ -152,15 +152,39 @@ against nothing and quietly answers false.
 > ([validation.md](validation.md): the spec leads).
 > ⚑ **And it is RE-ADDABLE, not lost (owner): *"if we want the met part, we put that in after the fact."*** It
 > comes back as an ordinary CONDITION on the entry — a met predicate — which *extends* the vocabulary rather than
-> reshaping anything ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates):
+> reshaping anything ([conditions are predicates, never bespoke members](json.md#35-predicates--a-systems-runtime-state-query):
 > the predicate registry is extensible by design). ⛔ So do NOT preserve the legacy filter now "to keep the option
 > open" — the option is open by construction, and keeping it is the half-migration.
 > ⚠ Two residues of that swap, both harmless but worth knowing rather than rediscovering: the world count is over
 > **EVER-alive** teams, so a dead civ's tech still counts toward the threshold; and it does not exclude the asking
 > team, which is inert here because the trigger only fires for a tech you do NOT hold.
 >
-> ⛔ Its consumer stays DANGLING until the re-home lands — do not restore it by minting or keeping a kind
-> ([todo.md](../plans/structural-cleanup/todo.md)).
+> ⛔ Its consumer stays DANGLING until the re-home lands — do not restore it by minting or keeping a kind.
+
+## ⛔ Purely-Python, never-XML effects are out of scope for this data model — but out of scope is not their destination
+
+⚖ **They move to C++ after the rework, and most of them are triggers (owner): *"all these scripts is something we
+will port to C++ after rework is done; having scripts like this in Python is root of all evil"* — *"most of it
+can even be expressed as triggers."*** The gameplay scripts in `CvEventManager` and the contrib mods (the
+per-wonder combat and turn effects, the combat-promotion mod, the respawn and revive handouts) are
+**trigger-SHAPED by construction**: a happening, a chance, an action (this doc) — which is the same plane
+`CvEventReporter`'s successor already lands on ([patterns.md](../architecture/patterns.md): events move INTO
+C++, but that is a separate, later effort).
+
+A KEEP-WORKING repair on one of these — re-pointing a handler onto the id surface — holds a mechanic alive until
+its trigger exists; it is never an investment in the Python expression of it. Do the minimum that makes it work,
+and do not improve, restructure or extend the script while in there.
+
+⚠ **Do not start the port opportunistically.** Authoring one of these as a trigger needs its happening and its
+verb to exist, and minting either speculatively for one mechanic is banned outright (§ What the plane must NOT
+do, below). This data model migrates the **XML-dealt-with surface** (XML data + the engine machinery that reads
+it). Gameplay living ONLY in Python that reads NO XML field is a separate surface this model never touches — the
+hardcoded per-turn wonder spawns/grants in `CvEventManager`, and effects that are structurally INEXPRESSIBLE in
+the model (a culture burst when a unit dies has no home in the `grants`/modifier/enabler vocabulary, which
+declares provisions on standard triggers, not arbitrary event reactions). ⚑ Their absence from any migration
+inventory is the scope boundary working, not a gap — and there is **no exposure by construction**: the grants
+machine applies only what is in the XML-derived JSON, so an effect that was never in XML never enters the JSON
+and can never double-up or be lost.
 
 ## What the plane must NOT do
 
@@ -190,7 +214,7 @@ refuses malformed input — and being fail-closed is right. Being fail-closed *a
 loads, never applies, and reports nothing is invisible on both axes at once.
 
 Every drop routes through the ONE load-time census
-([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)) — the same mechanism the
+([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — the same mechanism the
 parser already uses for unknown verbs and keys, surfacing on readJson's coverage counts. ⛔ Do NOT add a second
 reporting path or a bespoke spine domain for this.
 
@@ -243,7 +267,7 @@ package, or era + handicap + civilization composing. Single-selection could not 
 already adds era + handicap counts today, so stacking is the behaviour-preserving choice as well as the flexible one.
 
 ⛔ **"Conditionally loaded" means the ENTITY GATE, never a load-time prune.** The applicability condition is the
-entity-level `enabled`/`disabled` pair evaluated LIVE ([DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)).
+entity-level `enabled`/`disabled` pair evaluated LIVE ([the whole-entity applicability gate](json.md#2-anatomy-of-an-entity)).
 Do NOT build a "load these files, skip those" prune — that is the killed `loadPrune`
 ([superseded-ideas](../architecture/superseded-ideas.md) #3). Every package loads; the gate decides which APPLY.
 
@@ -255,7 +279,7 @@ complete and there is no legacy XML to convert — the unit identities never exi
 
 ## See also
 - [json.md §5](json.md) — the authoring shapes (`grants`, `triggers`).
-- [event-spine.md](event-spine.md) — the `IEventConsumer` front door and the DOMAIN facts this dispatches on.
+- [spine.md](../spine.md) — the `IEventConsumer` front door and the DOMAIN facts this dispatches on.
 - [enabler.md §3.2](enabler.md) — the operating-building set the per-turn apply gates on.
 - [legacy-grant-apply-sites.md](../reference/legacy-grant-apply-sites.md) — where the legacy engine hands
   provisions over today (the surface this replaces).

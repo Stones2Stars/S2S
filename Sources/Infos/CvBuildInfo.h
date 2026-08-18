@@ -10,10 +10,10 @@
 //	read per natural enum. The build's own tech MEANS gate + its positive bonus prereqs are authored as
 //	requires.build atoms (census: a team-scoped TECH presence per gated build, plot-scoped BONUS_ connectivity
 //	atoms on the 3 geoglyph builds) and MATERIALIZED at mapFrom from the composed tree
-//	([DEC-materialize-at-mapfrom] -- bare member reads, never per-call tree walks). cost.gold / cost.time +
+//	(docs/architecture/patterns.md §Materialize at mapFrom -- bare member reads, never per-call tree walks). cost.gold / cost.time +
 //	identity.consumesUnit are intrinsics. Builds author NO §6 modifier family and NO §8 classification block
 //	(census: type/produces/cost/ui/identity/world/requires only), so no modifier surface is composed. No legacy
-//	getter name survives ([DEC-new-getter-surface]); the ObsoleteTech plane is CENSUS-DELETED (0/304 builds
+//	getter name survives (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)); the ObsoleteTech plane is CENSUS-DELETED (0/304 builds
 //	author `obsoletedBy`, 0 techs author `obsoletes.builds`, and no load pass ever fed the member).
 //
 //	Live callers (consumer rewiring is stage-4): getImprovement / getRoute -> worker-AI target selection;

@@ -1,7 +1,7 @@
 //
 //	CvWorldInfo -- the world (map size) poco's config materialization (see the header). Pure CONFIG: mapFrom
 //	reads the authored `identity` block into the typed members; every getter is a bare member read
-//	([DEC-materialize-at-mapfrom]). No section units are composed -- there is nothing per-turn here.
+//	(docs/architecture/patterns.md §Materialize at mapFrom). No section units are composed -- there is nothing per-turn here.
 //
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson

@@ -115,7 +115,7 @@ DllExport void DLLPublishToPython()
 
 	//
 	// The NEW uniform read surface. Not a widened Cy* binding -- an id-based surface with no dependency on the
-	// legacy wrappers, so they can be cut away without touching it ([DEC-cy-not-fixed]).
+	// legacy wrappers, so they can be cut away without touching it (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)).
 	//
 	// The VOCABULARY goes first: the group reads below are specified as `getYields()[YieldTypes.YIELD_FOOD]`,
 	// so the enum types have to exist before anything can consume a result.
@@ -151,7 +151,7 @@ DllExport void DLLPublishToPython()
 
 	// The COMMAND boundary: Python-authoritative UI telling the engine to ACT, through the net layer so
 	// multiplayer stays in lockstep. The cut is DIRECTIONAL -- only the READ surface dies -- so this is a kept
-	// boundary, not a revived getter contract ([DEC-cy-not-fixed]).
+	// boundary, not a revived getter contract (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)).
 	CyMessageControl::pythonPublish();
 
 	// The CONFIG half of the old global context, reintroduced deliberately (owner) WITHOUT the infos:
@@ -200,14 +200,14 @@ DllExport void DLLPublishToPython()
 	//
 	// ⚑ REGISTRATION IS NOT BINDING (patterns.md § THE PYTHON READ BOUNDARY). These carry `no_init` and ZERO
 	// `.def`s: Python can RECEIVE and pass one back, and can call NOTHING on it. That is the correct end state
-	// for a wrapper whose read surface is deliberately gone ([DEC-cy-not-fixed]) -- the legacy getters stay cut.
+	// for a wrapper whose read surface is deliberately gone (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)) -- the legacy getters stay cut.
 	// The Cy* BINDING purge took these registrations out along with the read surfaces it was aimed at; only the
 	// second half was ever the target.
 	// ⚖ THE HANDLES CARRY AN IDENTITY SET (owner) -- owner + id + position, and nothing else. A legacy consumer
 	// holding a handle must be able to say WHICH object it holds, and re-pointing every such site onto the read
 	// planes is refactoring we are deliberately not doing: *"I only want to refactor the python I have to,
 	// otherwise we never will be done."* ⛔ The registration-is-not-binding rule still governs everything ELSE --
-	// the info/state getter contract stays cut ([DEC-cy-not-fixed]); a consumer wanting DATA asks CyInfo /
+	// the info/state getter contract stays cut (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)); a consumer wanting DATA asks CyInfo /
 	// CyState / CyEnabler by that address. Each publish lives in the file named for its type, never here.
 	CyCity::pythonPublish();
 	CyUnit::pythonPublish();
@@ -215,7 +215,7 @@ DllExport void DLLPublishToPython()
 
 	// ⛔ THE PLAIN-STRUCT MARSHALLING VOCABULARY -- the SAME registration-is-not-binding rule as the wrappers
 	// above, one level down. These are VALUE structs, not handles: their fields ARE the value, so they answer
-	// no question about game state and constitute no read surface ([DEC-cy-not-fixed] bans the info/state
+	// no question about game state and constitute no read surface (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) bans the info/state
 	// GETTER contract, which a bare coordinate pair is not).
 	//
 	// ⚑ Both directions of the boundary need them, which is why the absence bites twice over:
@@ -248,14 +248,14 @@ DllExport void DLLPublishToPython()
 	//               ⚑ `get` is what a random is FOR: the map scripts draw through the handle at dozens of sites
 	//               (CvMapGeneratorUtil's mapRand), and those are an OPEN EXTENSION POINT whose contract is the
 	//               named Python callbacks -- a third-party script cannot be re-pointed, so the draw stays ON
-	//               the handle. [DEC-cy-not-fixed] bans the info/state GETTER contract; a draw is neither, the
+	//               the handle. docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) bans the info/state GETTER contract; a draw is neither, the
 	//               same reading that keeps def_readwrite on the plain value structs above.
 	//               ⛔ Do NOT add a second, named draw beside it. One job, one spelling: near-synonyms are the
 	//               duplication the boundary ruling actually warns about ([patterns.md]).
 	//               ⚠ It reaches the SYNCHRONIZED stream too, since getSorenRand hands that one across -- but
 	//               that capability already exists as the published getSorenRandNum, so this adds a spelling and
 	//               not a power. The draw COUNT on that stream is shared save state
-	//               ([DEC-synced-rng-is-shared-state]): a cosmetic pick belongs on getASyncRand and must stay
+	//               (docs/reference/engine.md §THE SYNCHRONIZED RNG IS SHARED SAVE STATE): a cosmetic pick belongs on getASyncRand and must stay
 	//               there.
 	//               ⚠ shuffleList is the EXE's, not ours -- it has never existed in Sources/.
 	python::class_<CvRandom>("CvRandom", python::no_init)
@@ -268,7 +268,7 @@ DllExport void DLLPublishToPython()
 	//               a TypeError arriving inside forceScreenRedraw, once per frame. Python also CONSTRUCTS one
 	//               (TradeUtil / MoreCiv4lerts / CvRandomEventInterface / CvForeignAdvisor), which needs the
 	//               default ctor. It is the marshalling VOCABULARY, not a getter contract, so the
-	//               [DEC-cy-not-fixed] ban does not reach it.
+	//               docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) ban does not reach it.
 	//	⚠ The published FIELD NAMES are not the member names: script reads `trade.ItemType` and `trade.iData`.
 	//	Renaming them here to match the C++ members would silently break every reader.
 	python::class_<TradeData>("TradeData")
@@ -367,7 +367,7 @@ DllExport void DLLPublishToPython()
 	//
 	//	THE SHARED CALC HELPERS -- free functions, not a surface of their own.
 	//
-	//	⛔ Published rather than reimplemented in script ([DEC-single-implementation]: every calculation exists
+	//	⛔ Published rather than reimplemented in script (docs/architecture/patterns.md §DRY (single implementation): every calculation exists
 	//	EXACTLY ONCE). getModifiedIntValue is the engine's own percentage application, used throughout the AI, and
 	//	the interface applies the SAME formula when it shows what a modifier did -- so a Python copy would be a
 	//	second implementation of a game formula that could silently drift from the one the game actually runs.
@@ -392,7 +392,7 @@ DllExport void DLLPublishToPython()
 	//	The MAP-POSITION helpers -- pure coordinate arithmetic (wrap-aware distances, the neighbour in a
 	//	direction, the ring-ordered city-radius tile) the map scripts and CvMapGeneratorUtil call throughout.
 	//	Same standing as the shuffle above: an open extension point's established names, published rather than
-	//	reimplemented in script ([DEC-single-implementation] -- a Python copy of the wrap arithmetic would
+	//	reimplemented in script (docs/architecture/patterns.md §DRY (single implementation) -- a Python copy of the wrap arithmetic would
 	//	silently disagree with the engine's on a wrapping map). Demand-published: the legacy registrar's other
 	//	free functions have zero callers and stay dead.
 	python::def("plotDistance", cyPlotDistance, "int (int iX1, int iY1, int iX2, int iY2)");

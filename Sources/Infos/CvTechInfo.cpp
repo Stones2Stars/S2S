@@ -1,10 +1,10 @@
 //
 //	CvTechInfo -- the tech poco's own typed reading on top of the base section dispatch (see the header).
 //	mapFrom materializes the capability-plane sibling blocks + the census identity set ONCE into typed members
-//	([DEC-materialize-at-mapfrom]) and walks the composed requires.build tree into the forward prereq views
+//	(docs/architecture/patterns.md §Materialize at mapFrom) and walks the composed requires.build tree into the forward prereq views
 //	(enabler.md §2). Idempotent by contract (unconditional scalar assigns, clear-first containers). Every
 //	modifier family the tech authors compiles into m_modifiers via the base dispatch -- no per-family raw read
-//	survives here ([DEC-new-getter-surface]).
+//	survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson

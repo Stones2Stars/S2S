@@ -5,7 +5,7 @@
 //
 //	The STANDARDIZED ENABLER component (enabler.md par.7 + par.7.1) -- DELTA-APPLIED, never a value cache:
 //	there is NO dirty->recompute path at all. The CAN-HAVE content is built
-//	PURELY on the events of already-HAS -- ONE mechanism for load and play (DEC-spine-reseed): at load the
+//	PURELY on the events of already-HAS -- ONE mechanism for load and play (docs/spine.md §5 (the load reseed)): at load the
 //	in-read reseed emits stream through the same O(delta) appliers the play-time emits use (the domain is
 //	init'd -- sized + static exclusions, NO content -- at its owner's lifecycle start, before the emits). The
 //	only non-event fold is the city-created applier's cross-scope fold (team techs + player civics predate the
@@ -57,7 +57,7 @@ public:
 		GATEREASON_NONE = 0,      // the gate passed
 		GATEREASON_DORMANT,       // a dormancy successor stands in this city (only-highest-active)
 		GATEREASON_REPLACED,      // HIDE_REPLACED: a reachable successor supersedes it
-		GATEREASON_OPTION,        // the entity-level enabled/disabled game-option gate (DEC-entity-gate)
+		GATEREASON_OPTION,        // the entity-level enabled/disabled game-option gate (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT)
 		GATEREASON_CAP_SELF,      // its own `allowed` world/team/empire cap is consumed
 		GATEREASON_CAP_GROUP,     // the SpecialBuilding group cap is consumed by a sibling
 		GATEREASON_CAP_CATEGORY,  // this city's culture-level wonder-CATEGORY cap is full
@@ -137,7 +137,7 @@ public:
 	// The DIAGNOSTIC spelling of a verdict, for the observability surface. ⛔ Not player text: these are the
 	// enum's own names, so an endpoint reader sees exactly the value the enabler stored and no translation sits
 	// between them. Player-facing wording is the text manager's, off the same reason.
-	// ⚑ ONE home, beside the enum it names ([DEC-single-implementation]) -- a second table in a consumer would
+	// ⚑ ONE home, beside the enum it names (docs/architecture/patterns.md §DRY (single implementation)) -- a second table in a consumer would
 	// drift the moment a reason is added, and silently, since a missing arm just prints the number.
 	static const char* stateName(unsigned char eState)
 	{
@@ -217,7 +217,7 @@ public:
 	// (a tech's identity.disable + its civilization's never-researchable list; a building's notConstructible; a
 	// unit's spawnOnly). It is the membership plane's own verdict, so a CAN-I-EVER consumer asks HERE rather
 	// than re-reading the authoring off the infos -- that duplicate is a second implementation of one verdict
-	// ([DEC-single-implementation]).
+	// (docs/architecture/patterns.md §DRY (single implementation)).
 	bool isStaticExcluded(int iId) const;
 
 	// The bare O(1) reads.
@@ -249,7 +249,7 @@ public:
 	int enableCount(int iId) const;
 	int removeCount(int iId) const;
 
-	// THE MEMBERSHIP FORMULA ITSELF, exposed so it exists exactly ONCE ([DEC-single-implementation]). The
+	// THE MEMBERSHIP FORMULA ITSELF, exposed so it exists exactly ONCE (docs/architecture/patterns.md §DRY (single implementation)). The
 	// maintained refresh() and the AS-IF-HELD overlay (CvEnablerOverlay.h) both resolve membership through
 	// this, so a hypothetical can never drift from the real frontier it is overlaid on -- a second copy would
 	// diverge silently the first time the formula gained a term, and the hypothetical would then describe a
@@ -270,7 +270,7 @@ public:
 private:
 	// FLAG_IN_TREE is the stored MEMBERSHIP verdict, written by refresh() alongside the display state. It exists
 	// because the two genuinely differ once a hide-clause is in play, and inTree() must answer the membership
-	// half ([DEC-single-implementation]: one formula, one place -- refresh() applies it and both reads take it
+	// half (docs/architecture/patterns.md §DRY (single implementation): one formula, one place -- refresh() applies it and both reads take it
 	// from there rather than each re-deriving it).
 	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_IN_TREE = 4, FLAG_QUEUED = 8 };
 

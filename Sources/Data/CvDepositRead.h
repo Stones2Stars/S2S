@@ -7,11 +7,11 @@
 //	the §3.9 `ai` audience gate, the ONE §3.7 `per` count-scaler, the ctx-less INTRINSIC read, and the active
 //	trait-set resolver. Every consumer of a compiled deposit (the cascade gather, the info valuation, the
 //	property channel) folds through these, so each rule exists exactly once (docs/architecture/patterns.md, the
-//	single-source law; [DEC-single-implementation]).
+//	single-source law; docs/architecture/patterns.md §DRY (single implementation)).
 //
 //	⛔ SUMMING IS NOT HERE. A channel total is the COMPILED (family, kind, scope, unit) slot sum --
 //	CvModifiers::sum / CvInfo::modifier / InfoValuation::groupSum -- a packed-slot fetch over typed ids. No read
-//	path addresses a deposit by a runtime-built std::string ([DEC-materialize-at-mapfrom]).
+//	path addresses a deposit by a runtime-built std::string (docs/architecture/patterns.md §Materialize at mapFrom).
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
 //
@@ -35,12 +35,12 @@ class MMKernel
 public:
 	// ⚖ THE ONE PER-ENTRY RESOLVE — what a compiled entry DEPOSITS at a scope, and nothing about where it goes.
 	// Answers the whole question "does this entry land here, and as what?": the scope test (incl. json §3.3's
-	// `empires` and `cities` plural fans), the unit-carried skip ([DEC-unit-modifiers-on-top]), the flat/percent
+	// `empires` and `cities` plural fans), the unit-carried skip (docs/cascade.md §2b (unit-carried modifiers apply on top, live)), the flat/percent
 	// side, the §2a specialist rate carve-out, the channel lookup, the plot-substrate target keys and the
 	// `plots` filter, the PURE_TRAITS sign filter, the `ai` audience gate, the §3.9 enabled/disabled gate, and
 	// the ONE §3.7 `per` scaler × the source's live multiplicity.
 	//
-	// ⛔ EVERY CONSUMER FOLDS THROUGH THIS ONE RESOLVE ([DEC-single-implementation]): the maintained sum applies
+	// ⛔ EVERY CONSUMER FOLDS THROUGH THIS ONE RESOLVE (docs/architecture/patterns.md §DRY (single implementation)): the maintained sum applies
 	// the resolved value into the package slot as its fact arrives, and every reader of that value reaches the
 	// same function. A second copy would be a second derivation, free to disagree for reasons that are not a
 	// missed emit.
@@ -53,13 +53,13 @@ public:
 	// combine, never a city flat).
 	// ⛔ There is deliberately NO pure-traits parameter: the alignment rule is applied ONCE as a parse transform
 	// that gates the entry (CvModifiers::applyPureTraitGate), so the `applies` call below enforces it like any
-	// other condition ([DEC-single-implementation]).
+	// other condition (docs/architecture/patterns.md §DRY (single implementation)).
 	// Returns false when the entry deposits nothing here; the out-params are then untouched.
 	// ⚖ WHICH VALUE THE CALLER WANTS, and it is decided by WHICH FACT is applying.
 	// A SOURCE fact deposits what the source is worth right now, so the `per` scaler is APPLIED: `value × count`.
 	// A COUNT fact moves an already-deposited amount, so it wants the per-UNIT value and multiplies by the delta
 	// the fact itself carries -- `Δ(value × count) = value × Δcount`, which is EXACT because `value` is a
-	// load-compiled constant ([DEC-maintained-sum] plane B). ⛔ Handing a count fact the SCALED value would
+	// load-compiled constant (docs/cascade.md §THE MAINTAINED SUM plane B). ⛔ Handing a count fact the SCALED value would
 	// re-deposit the whole scaled amount on every tick of that count instead of moving it by the difference.
 	enum PerScaling
 	{
@@ -99,7 +99,7 @@ public:
 	// value; ⛔ NOT in the property engine (self-contained by design, engine.md §Properties).
 	// TWO CARRIER SHAPES, ONE FORMULA: the cascade-side CascadeDeposit record and the info-side CvModEntry (the
 	// expected* valuation walks entries directly) adapt into the SAME perApply core below -- the §3.7
-	// arithmetic exists once (DEC-single-implementation), only the field plumbing differs per carrier.
+	// arithmetic exists once (docs/architecture/patterns.md §DRY (single implementation)), only the field plumbing differs per carrier.
 	static int64_t perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, int64_t value);
 	static int64_t perScale(const CvModEntry& entry, const CvCascadeEvalCtx& evalCtx, int64_t value);
 	// The shared §3.7 formula core both carriers feed: value × (max(0, count − above) / each), the above leg

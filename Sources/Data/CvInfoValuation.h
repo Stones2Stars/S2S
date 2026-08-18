@@ -5,7 +5,7 @@
 //
 //	InfoValuation -- the ONE per-GROUP what-if valuation walk + the §2a fold seams (patterns.md § THE GETTER
 //	SETUP category 3; contexts.md § The read). The rebuilt infos' `expected*` endpoints DELEGATE here
-//	([DEC-single-implementation] -- no per-type reimplementation): each endpoint answers *"what do I gain from
+//	(docs/architecture/patterns.md §DRY (single implementation) -- no per-type reimplementation): each endpoint answers *"what do I gain from
 //	this entity HERE?"* as the compiled unconditioned ×100 sums fetched straight PLUS the group's conditioned
 //	tail through the ONE evaluator (MMKernel::applies over a CvCascadeEvalCtx the CONTEXTS fill), `plots`-target
 //	deposits scaled by `cityContext.plotAttrs` counts, per-scalers resolved through the ONE §3.7 resolver
@@ -44,7 +44,7 @@ class CvTeam;
 class CvArea;
 
 //	One keyed heal deposit: `heal.unit.unitCombat.{UNITCOMBAT_X}.{heal|adjacentHeal}`. Both amounts are ×100
-//	([DEC-fixedpoint-x100]); the reader reduces at its point of use.
+//	(docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the reader reduces at its point of use.
 struct HealByUnitCombat
 {
 	int iUnitCombat;
@@ -59,11 +59,11 @@ struct HealByUnitCombat
 // channel's own percent stack, the channel's deposits, and the process conversion added after all of it), so
 // "research is too low" is unanswerable against the total and immediately answerable against the terms
 // ([http-endpoints.md]: a value served term by term attributes a divergence to a NAMED source).
-// ⛔ NOT a second combine ([DEC-single-implementation]): commerceSplit IS this with the terms discarded, so a
+// ⛔ NOT a second combine (docs/architecture/patterns.md §DRY (single implementation)): commerceSplit IS this with the terms discarded, so a
 // census can never describe arithmetic the split does not actually do.
 // Global scope on purpose -- `CvCity`'s census read forward-declares it instead of pulling the whole calc
 // surface into a core game-object header. Every magnitude is ×100 EXCEPT `sliderPercent` and `percentSum`,
-// which are plain counters ([DEC-fixedpoint-x100]: a percentage carries no decimals).
+// which are plain counters (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a percentage carries no decimals).
 struct CvCommerceSplitTerms
 {
 	int64_t commerceYield;      // the city's realized COMMERCE yield -- what the slider divides
@@ -81,7 +81,7 @@ struct CvCommerceSplitTerms
 class InfoValuation
 {
 public:
-	//	The KEYED heal read, collected ONCE for every consumer ([DEC-single-implementation]). It walks the
+	//	The KEYED heal read, collected ONCE for every consumer (docs/architecture/patterns.md §DRY (single implementation)). It walks the
 	//	entity's own COMPILED ENTRY LIST -- the handful of combat classes it actually authored -- rather than
 	//	enumerating the whole UnitCombat registry, which is the keyed-container inversion the rebuild deletes
 	//	(pedia-read-map finding 2). Entries for one combat class are merged into a single row.
@@ -100,9 +100,9 @@ public:
 	};
 
 	//	The POINT read: this entity's keyed combat percent against ONE target. Walks the entity's own compiled
-	//	entries -- the handful it authored -- never the target registry ([DEC-single-implementation]; the
+	//	entries -- the handful it authored -- never the target registry (docs/architecture/patterns.md §DRY (single implementation); the
 	//	keyed-container inversion is what pedia-read-map finding 2 names as the shape to delete).
-	//	⚠ A PERCENT, so it is NOT scaled ([DEC-fixedpoint-x100]): use it as returned.
+	//	⚠ A PERCENT, so it is NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)): use it as returned.
 	static int keyedCombat(const CvModifiers* modifiers, CombatTargetAxis eAxis, int iTargetFk, int iKind);
 
 	//	The COLLECT form: every (target, percent) this entity authored on one axis+kind. For a consumer that
@@ -121,7 +121,7 @@ public:
 	//	segment compiles to KIND 0, the scope-wide amount (`CvModifiers.cpp` mod_decodeLeaf). Reading the wildcard
 	//	as "what a keyless address compiles to" is the trap -- it happens to work here, and reads nothing at all
 	//	on the exact-match COLLECT forms above.
-	//	⚠ Returns the value AS COMPILED -- a percent is NOT scaled ([DEC-fixedpoint-x100]).
+	//	⚠ Returns the value AS COMPILED -- a percent is NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	//	⚖ iTargetSegment carries the SAME -1 semantics as the COLLECT form below, and the two must never drift:
 	//	-1 is the DIRECT-KEYED address shape (`allowedSpecialists.city.{SPECIALIST_X}` -- a named-entity key
 	//	sitting straight under the scope with no plural container token), not a failure code. Rejecting it here
@@ -144,14 +144,14 @@ public:
 	//	⛔ This is what a "for every domain / every unitcombat, does this entity deposit?" loop becomes: it walks
 	//	the handful the entity AUTHORED instead of the whole target registry, which is the own-data inversion
 	//	pedia-read-map finding 2 names as the shape to delete.
-	//	⚠ Values come back AS COMPILED (a flat is ×100, a percent is not -- [DEC-fixedpoint-x100]).
+	//	⚠ Values come back AS COMPILED (a flat is ×100, a percent is not -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	//	⛔ UNCONDITIONED ENTRIES ONLY -- the same condition semantics as the point form above and as
 	//	`CvModifiers::targetedSums`; the conditioned tail belongs to the valuation, not to this walk.
 	//	⚖ iTargetSegment is matched EXACTLY, and -1 is a REAL ADDRESS SHAPE, not a failure: a named-entity key
 	//	may sit directly under the scope with no plural container token (`religion.city.{RELIGION_X}` -- the
 	//	address decode routes an underscored segment to targetFk and leaves targetSeg unset), so -1 selects
 	//	precisely those. Serving both shapes here is what keeps this the ONE keyed read
-	//	([DEC-single-implementation]) instead of every direct-keyed consumer hand-rolling an entry walk.
+	//	(docs/architecture/patterns.md §DRY (single implementation)) instead of every direct-keyed consumer hand-rolling an entry walk.
 	//	⚑ A FAILED `keyedTargetSegment` lookup is STRUCTURALLY distinct from -1, so it cannot be mistaken for the
 	//	direct-keyed shape: it answers TARGET_SEGMENT_NONE and both keyed reads match nothing against it. That is
 	//	deliberate rather than a caution to remember -- the two meanings ("this address carries no container
@@ -184,7 +184,7 @@ public:
 	//	⚠ SIGN IS PRESERVED ON PURPOSE. The probes it replaces test `> 0` / `< 0`, and a building whose only
 	//	production entry is NEGATIVE is not a production building; collapsing to a bare "authors anything" would
 	//	quietly change which buildings the AI offers. iSign is +1 (any positive) or -1 (any negative).
-	//	⚠ Values are AS COMPILED, so this compares against 0 only -- never a magnitude ([DEC-fixedpoint-x100]).
+	//	⚠ Values are AS COMPILED, so this compares against 0 only -- never a magnitude (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	//	iKind / iScope filter exactly as they do on collectKeyedTarget (-1 = any).
 	static bool authorsAnySigned(const CvModifiers* modifiers, ModifierFamily eFamily, int iSign,
 		int iKind = -1, int iScope = -1);
@@ -210,7 +210,7 @@ public:
 	//	Materialize the doubleMove FK lists from an entity's OWN compiled MOVEMENT entries. doubleMove is half
 	//	movement cost on that ground ([skills.md] par.1) -- a keyed movement modifier, never a skill -- and the
 	//	consumers want the plain target list, so it materializes once at mapFrom
-	//	([DEC-materialize-at-mapfrom]). ONE implementation for every carrier ([DEC-single-implementation]).
+	//	(docs/architecture/patterns.md §Materialize at mapFrom). ONE implementation for every carrier (docs/architecture/patterns.md §DRY (single implementation)).
 	static void fillDoubleMoveTargets(const CvModifiers* modifiers,
 		std::vector<int>& terrainTargets, std::vector<int>& featureTargets);
 
@@ -304,12 +304,12 @@ public:
 	//	hypothetical: `allowedSpecialists.city.{SPECIALIST_X}` gated on a team tech is exactly that shape, and its
 	//	consumers dangled on it.
 	//	⛔ The conditioned tail goes through the ONE evaluator over a ctx the CONTEXTS fill -- never a second
-	//	evaluator and never an unconditional sum ([DEC-single-implementation]); an unconditional sum is what
+	//	evaluator and never an unconditional sum (docs/architecture/patterns.md §DRY (single implementation)); an unconditional sum is what
 	//	applies every tech-gated slot from turn 0.
 	//	⚑ It takes the SAME optional AS-IF-HELD hypothetical the point form does, so "how many slots would this
 	//	open if I ALSO had that tech" is the DELTA between two calls ([patterns.md] THE VALUATION PROTOCOL --
 	//	contexts in, delta out) rather than a second machine that re-derives which entries a tech gates.
-	//	⚠ Values come back AS COMPILED (a flat/count is ×100, a percent is not -- [DEC-fixedpoint-x100]).
+	//	⚠ Values come back AS COMPILED (a flat/count is ×100, a percent is not -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	static int expectedKeyedTarget(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		int iTargetSegment, int iTargetFk,
 		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup,
@@ -334,7 +334,7 @@ public:
 	///<summary>The PER-UNIT rate carried by this source's `unit:`-qualified entries of a family
 	/// (`happiness.empire.cities.{unit: IS_MILITARY}` -- [modifier.md] §6). Returns the rate ALONE; the caller
 	/// multiplies by its own live count of matching units and adds the product ON TOP, outside every percentage
-	/// ([DEC-unit-modifiers-on-top]).</summary>
+	/// (docs/cascade.md §2b (unit-carried modifiers apply on top, live)).</summary>
 	//	⚑ This is the read every other walk on this surface deliberately SKIPS, and it is why they skip it: a
 	//	unit-carried value must not enter a cached sum, so it has to be summed somewhere else -- here.
 	//	⚠ It matches the qualifier's TAG param, because a bare `IS_<X>` that names no built-in predicate parses to
@@ -359,7 +359,7 @@ public:
 	///<summary>The same plural-target sum keyed by ONE NAMED tag -- "what does this source give MILITARY units"
 	/// rather than "what does it give THIS unit". The AI-valuation and build-list-filter form, where there is a
 	/// tag in hand and no candidate.</summary>
-	//	⚑ It shares candidateTaggedTargetSum's single walk ([DEC-single-implementation]); the two differ only in
+	//	⚑ It shares candidateTaggedTargetSum's single walk (docs/architecture/patterns.md §DRY (single implementation)); the two differ only in
 	//	which matcher runs, so they can never disagree about what an entry means.
 	static int64_t taggedTargetSum(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 		CvCascScope eScope, CvCascUnit eUnit, int iTargetSegment, int iTagId);
@@ -368,7 +368,7 @@ public:
 	/// THAT unit, and -- unless it opts out of non-TYPE production modifiers -- the tag-filtered `units` rows
 	/// ([modifier.md] §4) plus the keyed domain and combat-class rows.</summary>
 	//	⚑ Lifted to the shared surface so the city's operating-building walk, the player's trait/civic walk and
-	//	the city's active-corporation walk are ONE implementation ([DEC-single-implementation]) -- the source's
+	//	the city's active-corporation walk are ONE implementation (docs/architecture/patterns.md §DRY (single implementation)) -- the source's
 	//	liveness is the CALLER's walk (operating / adopted / held / active), never re-tested here.
 	//	⚠ Keyed reads pin to the AUTHORED scope exactly as the tagged read does ([modifier.md] §5: the city- and
 	//	empire-scope halves are read at different scopes and must each filter to their own).
@@ -391,7 +391,7 @@ public:
 
 	// The SCOPE-RESTRICTED sibling of groupSum -- ONE info's (family, kind, unit) contribution AT one scope
 	// (unconditioned slot sum + the conditioned tail at that scope). The package plane's per-source fold and
-	// the receiver combine's specialist term read through this ([DEC-single-implementation]: the gather never
+	// the receiver combine's specialist term read through this (docs/architecture/patterns.md §DRY (single implementation): the gather never
 	// grows a second per-info fold beside the valuation's).
 	static int64_t groupSumAt(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
 		CvCascScope eScope, const CvCascadeEvalCtx& evalCtx);
@@ -409,7 +409,7 @@ public:
 	//   nature = max(0, terrain + feature + bonus own-output)  ·  improvement floored at −nature  ·  + route  ·
 	//   max(0, total)
 	// A NULL substrate slot contributes 0 (no feature / no improvement / no route / no bonus). The plot package
-	// rebuild AND every what-if plot read call THIS one function ([DEC-single-implementation]); the caller
+	// rebuild AND every what-if plot read call THIS one function (docs/architecture/patterns.md §DRY (single implementation)); the caller
 	// passes each present substrate's getModifiers() and a ctx whose `plot` is the target plot.
 	// pNatureYields optionally receives the SUBSTRATE segment (the floored terrain+feature+bonus term) this
 	// already derives, so a caller wanting the pre-improvement value never re-sums those legs itself.
@@ -427,7 +427,7 @@ public:
 	// the grant lands on that same channel -- there is no "1 hammer per 5 commerce", by construction.
 	// ⚠ The caller passes the PRE-BONUS total, so the grant can never feed itself; the ×100 plane cancels in the
 	// ratio, so only `amount` carries the scale. The package resolve and every what-if plot read call THIS one
-	// function ([DEC-single-implementation]) -- the arithmetic exists once, here on the calc surface.
+	// function (docs/architecture/patterns.md §DRY (single implementation)) -- the arithmetic exists once, here on the calc surface.
 	static int64_t plotScaledYield(int64_t iBaseTotal, int64_t iInterval, int64_t iAmount);
 
 	// THE CITY RATE COMBINE (modifier.md §2a -- the sharp two-tier shape, the order load-bearing):
@@ -457,7 +457,7 @@ public:
 	// SCALES: every magnitude is ×100 EXCEPT `iSliderPercent`, which is the player's plain slider counter 0..100
 	// (json §3.1's GOLD_RATE / RESEARCH_RATE / CULTURE_RATE / ESPIONAGE_RATE tokens, read through
 	// EmpireContext::commerceRates) and `channelPercentSum`, which is a PLAIN percent like every stored stack
-	// ([DEC-fixedpoint-x100]). `productionToCommerce` IS ×100 and carries its own ÷100 here.
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). `productionToCommerce` IS ×100 and carries its own ÷100 here.
 	// ⚠ CULTURE is the lone dual consumer: its `channelDeposits` is the city's MAINTAINED RECEIVER SUM (the
 	// combine the gather already wrote), not a roll-up -- so the receiver sum passes through untouched and only
 	// the commerce yield is slider-scaled. Scaling a receiver sum by a slider would re-scale a realized total.
@@ -465,7 +465,7 @@ public:
 	// is FIVE independent quantities collapsed into one int (the slider's share of the commerce yield, the
 	// channel's own percent stack, the channel deposits, and the process conversion added after it all), so
 	// "research is too low" is unanswerable against the total and immediately answerable against the terms.
-	// ⛔ NOT a second combine ([DEC-single-implementation]): commerceSplit IS this with the terms discarded, so
+	// ⛔ NOT a second combine (docs/architecture/patterns.md §DRY (single implementation)): commerceSplit IS this with the terms discarded, so
 	// a census can never describe arithmetic the split does not actually do.
 	// (The struct is CvCommerceSplitTerms at global scope -- a consumer that only passes one, above all `CvCity`'s
 	// census read, forward-declares it rather than taking this whole calc header into a core game-object header.)
@@ -479,10 +479,10 @@ public:
 	// ---- two answers sit on ONE calc surface so no second combine can appear beside them).
 	// ---- modifier.md §1: deposits accumulate in a package AT THEIR OWN SCOPE and the downward roll is realized
 	// ---- AT READ -- so a scope object's realized channel value is the combine over the packages it sits under,
-	// ---- computed HERE once for every consumer ([DEC-single-implementation]).
+	// ---- computed HERE once for every consumer (docs/architecture/patterns.md §DRY (single implementation)).
 	// ---- ⛔ A lower scope never STORES an upper scope's sums: this composes at read and caches nothing upward.
 	// ---- ⛔ Every package read below is a BARE FETCH (readFlat/readPercent/readSum) -- a package carries no other
-	// ---- read surface, and a read never triggers work of any kind ([DEC-maintained-sum]).
+	// ---- read surface, and a read never triggers work of any kind (docs/cascade.md §THE MAINTAINED SUM).
 
 	// The §2 combine over ONE channel's rolled sums. A group read has no external base (`base` = 0) and
 	// multiplier deposits are identity on every package channel, so the arithmetic is
@@ -492,7 +492,7 @@ public:
 	// own, so its realized value IS the ONE additive percent stack (modifier.md §2a); a FLAT-unit channel is the
 	// flat sum that stack scales. A kind the census records as DUAL takes its dominant plane as the base and the
 	// opposing plane as the scaler, which is exactly what the §2 combine says. A FLAT answer is ×100 native
-	// ([DEC-fixedpoint-x100]); the PERCENT operand carries no scale of its own -- a percentage has no decimals
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the PERCENT operand carries no scale of its own -- a percentage has no decimals
 	// to carry, so readJson never scales one and every stored stack is a plain percent that meets the identity
 	// constant 100 directly. cityRate combines its own stack identically: ONE convention on this surface.
 	// ⚠ NOT a duplicate of cityRate: that is the §2a RATE specialization (two tiers + the specialist layer) the
@@ -513,13 +513,13 @@ public:
 	// while the families the rule does not speak for (wellbeing's empire+area flats, the plot-scope health and
 	// defense percents) keep the sides their data actually authors.
 	// A channel the scope CONSUMES answers its maintained RECEIVER sum instead of a roll-up -- the receiving
-	// scope stores its own realized total ([DEC-uniform-cache-shape]: a receiver is the same cache holding a
+	// scope stores its own realized total (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE: a receiver is the same cache holding a
 	// different slot), so re-rolling it here would be a second derivation of a number that already exists.
 	// iChannel < 0 (never authored anywhere) answers 0.
 	static int realizedAtPlot(const CvPlot& plot, int iChannel);
 	// ⚖ THE SPECIALIST TERM of the §2a rate -- each assigned specialist's own output at CITY scope, times how
 	// many are assigned. Exposed rather than inlined because several readers need it and none may own it: a
-	// second copy would be a second derivation ([DEC-single-implementation]).
+	// second copy would be a second derivation (docs/architecture/patterns.md §DRY (single implementation)).
 	//
 	// ⚖ ONE ROW PER SPECIALIST TYPE -- the DECOMPOSITION of that Σ ([http-endpoints.md]: a term that is itself a
 	// Σ decomposes again). `specialists` reaches the rate census as ONE int over every held type, so a rate that
@@ -530,7 +530,7 @@ public:
 	// `assigned` alone, while [modifier.md §2a] and the engine (`CvCity::getSpecialistCount +
 	// getFreeSpecialistCount`) both say the count is the SUM. Reporting both measures that gap without moving a
 	// value -- which is the whole point, since which surface is the model is an open owner ruling and the
-	// arithmetic must not be touched ahead of it ([DEC-baseline-is-a-smell-test]: settle it by which surface the
+	// arithmetic must not be touched ahead of it (docs/specs/validation.md §A REFERENCE NUMBER IS A SMELL TEST, NEVER A TARGET: settle it by which surface the
 	// spec names, never by which number looks better).
 	struct SpecialistTermRow
 	{
@@ -578,7 +578,7 @@ public:
 	// ([http-endpoints.md]: a route serving ONE number answers nothing when that number is wrong; one serving a
 	// value term by term attributes a divergence to a NAMED source). A city's food rate is six independent
 	// quantities collapsed into one int, so "production is too low" is unanswerable against the total alone.
-	// ⛔ It is NOT a second combine ([DEC-single-implementation]) -- cityReceiverRate IS this function with the
+	// ⛔ It is NOT a second combine (docs/architecture/patterns.md §DRY (single implementation)) -- cityReceiverRate IS this function with the
 	// terms discarded, so the census can never describe arithmetic the rate does not actually do.
 	struct CityRateTerms
 	{
@@ -616,7 +616,7 @@ public:
 	// ⛔ THIS IS THE ONLY WINDOW ONTO THE REFUSED HALF OF THE COMBINE. Every package read, every receiver total
 	// and every term of CityRateTerms reports what IS there; a value that is short because a condition answered
 	// NO leaves no trace in any of them, so the shortfall cannot be attributed from the totals at all
-	// ([DEC-no-guessing]: at a gap the moves are VERIFY or ASK, and a bare total supports neither).
+	// (AGENTS.md Conventions §Conduct (do not guess): at a gap the moves are VERIFY or ASK, and a bare total supports neither).
 	// ⚠ It is a DIAGNOSTIC re-walk, not a maintained sum: nothing folds on it and nothing caches it. That is
 	// exactly why it may walk the authored entries, which the apply path must never do.
 	struct RefusedDeposit
@@ -680,11 +680,11 @@ public:
 	// and the pairing is a FINAL-STATE calculation over numbers a group read already handed out -- never a
 	// channel of its own and never a getter ([patterns.md] rule 6). It lives here, once, so the city's realized
 	// level, the AI's candidate valuation (expectedWellbeing) and the tooltips all net the SAME way
-	// ([DEC-single-implementation]).
+	// (docs/architecture/patterns.md §DRY (single implementation)).
 	// ⛔ PURE: fed the four channels, not an object -- the caller decides WHICH four (a city's realized set, or
 	// a candidate's expected delta), which is exactly what lets one implementation serve both.
 	// ×100 in, WHOLE out: the discrete boundary is here, because faces and health points are whole
-	// ([DEC-fixedpoint-x100]: a whole game count reduces at the point of use).
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a whole game count reduces at the point of use).
 	static int netHappiness(const int (&wellbeing)[NUM_WELLBEING_CHANNELS]);
 	static int netHealth(const int (&wellbeing)[NUM_WELLBEING_CHANNELS]);
 

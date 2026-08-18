@@ -21,23 +21,18 @@ Sibling of skills.md.
 sibling case — **policies enacted by a civic** → the `policies` block (emitted by `curate_civic`). Entity-level
 boolean gates that are neither (a building's `damageAllAttackers`, a wonder's `buildingOnlyHealthy`) stay as-is.
 
-**Current state:** readJson maps the `capabilities` block onto the entity's `CvJsonInfo` — each key realized as a
-runtime-generated **`CAPABILITY_*` info** ([DEC-classification-infos](../architecture/decisions.md#dec-classification-infos),
+**Current state:** readJson maps the `capabilities` block onto the entity's `CvInfo` — each key realized as a
+runtime-generated **`CAPABILITY_*` info** ([the classification-infos registry](json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities),
 [json.md §8](json.md)) with the grantor-side getters reading O(1) id bitsets; the legacy counters
 are deleted, their serialization retired by the soft-remove — the read + write dropped and the tags named in
 `Assets/savemigration.txt` ([save.md §3](save.md)).
 
 **The union is the PLAYER's, keyed and fact-fed** — `EmpireContext.policies`' shape with the `CAPABILITY_*` key
-space, fed by the tech / civic / building facts ([DEC-scope-contexts](../architecture/decisions.md#dec-scope-contexts):
-a team owns no live-state surface; [DEC-contextdict-replaces-derivedcache](../architecture/decisions.md#dec-contextdict-replaces-derivedcache)).
-⚠ **What that rules out, because the tree still holds it:** a per-team `CvDerivedCacheSet` memo bound to a
-recompute. Filled once at team CONSTRUCTION, before any tech exists, and marked by nothing thereafter — the reseed
-announces techs as FACTS, not through `CvTeam::setHasTech` — so it reads empty for the whole game, `canWorkOn.water`
-answers false and `CvCity::canWork` refuses every water tile. NPC guards + game-option compositions
-live in the getters; the side effects the deleted changers carried (the trade-network recompute
-`updatePlotGroups` + `MarkBridgesDirty`, the improvement-validity cache round, `updateYield`) survive in
-`processTech`. **The shadow phase has ended** ([validation.md](validation.md)) — the `[CAPSHADOW]` net no longer
-gates anything.
+space, fed by the tech / civic / building facts ([plot/city/player each own one live-state context](../cascade.md#the-contexts--the-per-scope-live-state-read-surface):
+a team owns no live-state surface; [ContextDict replaces CvDerivedCache](../cascade.md#-cvderivedcache-is-replaced-by-contextdict--virtually-everywhere-owner)).
+NPC guards + game-option compositions live in the getters; the side effects the deleted changers carried (the
+trade-network recompute `updatePlotGroups` + `MarkBridgesDirty`, the improvement-validity cache round,
+`updateYield`) survive in `processTech`.
 
 ## What a capability is (recap)
 
@@ -150,7 +145,6 @@ the block by this string and nothing translates.
 | `canBuildBridges` | `bBridgeBuilding` | roads cross rivers |
 | `hasRiverTrade` | `bRiverTrade` | a river acts as a trade ROAD (conduit — ruling above) |
 | `canRebaseAnywhere` | tech flag | air units may rebase to any friendly plot |
-| `canSeeFurtherFromWater` | `bExtraWaterSeeFrom` | see FROM water plots one level higher (`CvPlot::seeFromLevel`) |
 | `hasCenteredMap` | `bMapCentering` (TECH_GEOMETRY — the SOLE authoring; the building-side tag is schema-only, data-dead) | minimap centered on your civ + round-globe view; arrive-and-stay latch ≡ derived (tech-only grantor) |
 | `hasWholeMapRevealed` | `bMapVisible` | reveals the ENTIRE map on acquire (`setRevealedPlots`, `CvTeam.cpp:5292`) |
 | `hasLanguage` | `bLanguage` (TECH_LANGUAGE) | civ has developed language — gates `needLanguage` heritages (`CvPlayer.cpp:30970`) |
@@ -162,12 +156,6 @@ the block by this string and nothing translates.
 
 - **`canWorkOn.water`** (was `waterWork`) — cities may WORK water tiles at all (`CvCity::canWork` gate,
   `CvCity.cpp:1753`); granted by `TECH_TRAP_FISHING`.
-- **`canSeeFurtherFromWater`** — see FROM water plots one level higher (`CvPlot::seeFromLevel`, `CvPlot.cpp:2562`) —
-  ships stop being nearsighted; second consumer in AI settle scoring (`CvCity.cpp:6327`). It *could* be modelled in
-  the vision system proper, but **stays a capability — solve if/when it is a problem**; expected surfacing point:
-  when the visibility system is modelled properly during the cascade rebuild — whoever builds that system revisits this
-  key then (it sits next to the BLOCKED unit visibility/invisibility accumulators and the building `lineOfSight`
-  channel).
 - **`hasCenteredMap`** — *"when it arrives, map gets centered, and stays centered"* — an arrive-and-stay latch in
   practice, equivalent to the derived union because the sole grantor is a tech and techs are never lost. It *could*
   technically behave as a grant (a one-shot pulse), but no special grant type is minted for a thing like this — do
@@ -180,8 +168,10 @@ the block by this string and nothing translates.
 ## Open
 
 - **Ocean-working trace** — the half-remembered ocean/deepOcean requirement (see the `canWorkOn` ruling).
-- **Stale code comment** — `CvJsonTechInfo.h:7` still claims "techs are the ONLY grantor"; fix when the
-  capability union widens from techs-only to the full HAVE axis (civic/building grantors).
+- **Grantor-kind comments to revisit when data widens** — `Sources/Engine/CapabilityContext.h` (`foldTech`'s
+  comment), `Sources/Data/CvReadJson.cpp` (the §8 read-back survey), and `Sources/Python/CyInfo.cpp`
+  (`canTradeItem`) each note that techs are the only grantor kind the *data* authors today — accurate now, but
+  each needs revisiting the moment a civic or building actually authors a `capabilities` block.
 
 ## See also
 

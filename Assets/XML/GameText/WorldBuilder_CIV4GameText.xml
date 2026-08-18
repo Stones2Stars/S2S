@@ -233,15 +233,6 @@
 		<Russian>Всегда</Russian>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_WB_EXTRA_WATER_SIGHT</Tag>
-		<English>Extra Water Sight</English>
-		<French>Vision supplémentaire sur eau</French>
-		<Italian>Raggio di visibilità sull'acqua aumentato</Italian>
-		<Spanish>Visibilidad adicional sobre el agua</Spanish>
-		<Polish>Dodatkowe Oznaczenia na Wodzie</Polish>
-		<Russian>Увеличенный радиус видимости на воде</Russian>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_WB_FEATURE_VARIETY</Tag>
 		<English>Variety: %d1</English>
 		<French>Variété: %d1</French>

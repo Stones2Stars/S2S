@@ -1,6 +1,6 @@
 # Superseded ideas — the don't-revive registry
 
-> Dead approaches kept so they aren't reinvented ([DEC-keep-unkilled-ideas](decisions.md)). Condensed — one entry
+> Dead approaches kept so they aren't reinvented ([the keep-unkilled-ideas policy](../plans/parked/README.md#parked--out-of-active-scope-plans-kept-for-intent)). Condensed — one entry
 > per dead idea: what it was, why it's dead, what replaced it.
 
 1. **Derived-data repository pattern** *(mostly obsolete)* — a `TLazy` / version / dirty aggregation layer. Killed:
@@ -8,14 +8,14 @@
    (plot danger, unit-AI counts) is separate + out of scope. **Don't revive the repository as a
    data/derived-aggregation mechanism — that is the cascade's job.**
 2. **Cross-entity inversion** *(dead)* — ~37 inversions that physically moved cross-entity modifiers onto the keyed
-   target entity. Killed by [DEC-deliveryguy](decisions.md): the deliverer owns the modifier keyed by target, not
-   inverted onto it ([modifier](../specs/modifier.md) §4). **Don't reinstate inversion**,
+   target entity. Killed by [the deliveryguy ownership rule](../cascade.md#4-ownership--the-deliveryguy-rule): the deliverer owns the modifier keyed by target, not
+   inverted onto it ([modifier](../cascade.md) §4). **Don't reinstate inversion**,
    even for Terrain/Improvement/Bonus targets.
 3. **`loadPrune`** *(dead)* — a curator-era INVENTION: the legacy
    `OnGameOptions`/`NotOnGameOptions`/`PrereqGameOption` validity tags re-encoded as a bespoke "prune at load"
    section, named BACKWARDS (`onGameOptions` meant *keep only when on*) and spec'd wrong, while the spec already
    had the answer (`GAMEOPTION_X` as an ordinary condition). Killed whole: the payload
-   authors as the **entity-level `enabled`/`disabled` gate** ([DEC-entity-gate](decisions.md), json.md §2); the
+   authors as the **entity-level `enabled`/`disabled` gate** ([the whole-entity applicability gate](../specs/json.md#2-anatomy-of-an-entity), json.md §2); the
    complex-trait entries dropped outright (they restated the simple/complex FOLDER split, which is the selection
    mechanism). **Don't revive a bespoke game-option section.**
 4. **The offline DRY CALCULATOR — all four attempts** *(dead as an approach)* — an out-of-process reimplementation
@@ -24,11 +24,11 @@
    (4) **StoneBase**, whose original purpose was exactly this. All are retired — it proved easier to dump
    individual calcs from the game itself, and a dry calculator that judges the spec while drifting from it
    corrupts the loop it is meant to close. Verification is LIVE — done-is-observable endpoint polls
-   ([DEC-done-is-observable](decisions.md#dec-done-is-observable)) and turn time
-   ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)), and for the cascade the THREE-LEG check — the
+   ([done = observable in the running game](../specs/validation.md)) and turn time
+   ([turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), and for the cascade the THREE-LEG check — the
    LOGS, the JSON INFO, and what STATE expects, all three agreeing
    ([http-endpoints.md](../specs/http-endpoints.md)); the zero-ride-in principle still
-   holds ([DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)). **Never build a fifth dry calculator** —
+   holds ([the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)). **Never build a fifth dry calculator** —
    StoneBase was the fourth, and the approach is what died, not any one implementation. *(StoneBase itself lives
    on in other roles — it is the dry-calculator/verification job that is over.)*
 5. **The `any:[[…]]` "AND-of-ORs" condition shape** *(dead)* — `any` holding lists-of-lists to mean "OR-groups
@@ -40,17 +40,17 @@
    (json.md §6). **No bespoke era key.**
 7. **Condition-carrying sub-scope members** (`empire.capital`, `perMilitaryUnit`, …) *(dead as a class)* — encoding
    a deposit's condition as a bespoke member instead of a predicate/`unit:` qualifier. Killed by
-   [DEC-conditions-are-predicates](decisions.md) (the golden-age yield-effect member-mirror is the one PERMANENT exception).
+   [conditions are predicates, never bespoke members](../specs/json.md#35-predicates--a-systems-runtime-state-query) (the golden-age yield-effect member-mirror is the one PERMANENT exception).
    `perMilitaryUnit` specifically authors as the `cities.{unit: IS_MILITARY}` entry (json.md §3.7).
 8. **The "deliberately more permissive" vicinity model** *(dead)* — vicinity with no ownership filter. Killed:
    vicinity mirrors the engine's ownership tiers (owned ⊂ owned+neutral ⊂ crossBorder; json.md §3.4, enabler.md §3).
 9. **The tally as a store** *(dead)* — a tally-owned accumulator / load-time event-replay rebuild duplicating the
    object-owned counts. Killed: the tally is a read-only accessor + roll-up over the objects' own counts
-   ([tally.md](../specs/tally.md), [DEC-tally-serializes-nothing](decisions.md)). **Never re-add a tally-side store,
+   ([tally.md](../specs/tally.md), [the tally serializes nothing](../specs/tally.md#4-it-serializes-nothing--and-maintains-nothing-it-reads)). **Never re-add a tally-side store,
    seed, or shadow.**
 10. **`grants.specialists` for an ALIVE-WITH-SOURCE specialist** *(dead)* — the ordinary building/civic free
     specialist authored as a grant. Killed: those are the `freeSpecialists` MODIFIER family, which dies with its
-    source ([modifier.md §6](../specs/modifier.md)).
+    source ([modifier.md §6](../cascade.md)).
     ⚠ **The key itself is NOT dead — the LIFETIME is what was killed.** The spec reserved a carve-out for
     anything that "genuinely GRANTS permanent free specialists, surviving the destruction of its source", and
     that case exists: the trait's ERA-ADVANCE specialist is a persisted PULSE landing in the city's
@@ -59,7 +59,7 @@
     ([json.md §5](../specs/json.md)). ⛔ Do not read this entry as banning that shape, and do not "restore"
     the ban over it — the discriminator is whether removing the source removes the specialist.
 11. **Graded parity tolerance (the six-rung "care scale")** *(dead)* — grading a divergence's acceptability. Killed
-    by [DEC-parity](decisions.md): exact match, no tolerance band, no agent grading; a divergence is a
+    by [the completeness+attribution bar](../specs/validation.md#the-observation-surface): exact match, no tolerance band, no agent grading; a divergence is a
     data-collection gap to close.
 12. **The `/shadow/*` endpoint surface** *(dead)* — in-DLL cascade-vs-legacy sweep endpoints. Killed: the two
     verification legs never mix surfaces ([validation.md](../specs/validation.md)); the shadow rode the gated
@@ -69,22 +69,22 @@
     present fact ("for each building the city has, emit built"). Killed: it FABRICATES events from populated state
     rather than the events coming from the genuine save read — a pseudo-emit that feeds the cascade reconstructed
     values and invites the next agent to reconstruct more state the same way. The reseed must be **event-sourced from
-    inside the read** ([event-spine.md](../specs/event-spine.md) load-RESEED, [DEC-spine-reseed](decisions.md#dec-spine-reseed)):
+    inside the read** ([spine.md](../spine.md) § The load reseed, [the load reseed](../spine.md#5-the-load-reseed)):
     reading a fact off the stream is what fires its event. **Never re-add a post-deserialization state-walking emit
     pass.**
 14. **The bespoke per-scope modifier SUBSTRATE** (`CascadeAccumulator` + `CascadeCityPackages` /
     `CascadePlayerScope` / `CascadeAreaPackages` / `CascadeTeamCaps` / `CascadeUnitPackages`, the `CPK_*`/`PSC_*`
     box slices, `CascadeRateSlots` + epochs, `playerSliceRebuild`) *(dead)* — five hand-shaped structs with
     hand-named per-channel scalar members, each carrying its own bespoke invalidation path, reached through a
-    read-side `ensure()` protocol. Killed by [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape): every
+    read-side `ensure()` protocol. Killed by [every derived cache is one shape](../cascade.md#-every-derived-store-is-one-shape--a-keyed-accumulator-maintained-by-a-delta-owner): every
     derived cache is the SAME object type on every owner (one channel-indexed `CvDerivedCacheSet<TOwner>`, one mark
     derivation), so a hand-named scalar field is a DEFECT and a new scope/channel is DATA rather than a new struct.
     The whole tree is archived (`SourceArchive/Cascade/`). **Never re-add a per-scope package struct, an
     `ensure`-on-read protocol, or a `*Rebuild` blanket** — the replacement is the uniform channel-indexed cache on
-    each scope owner ([state-repositories.md](state-repositories.md)).
+    each scope owner ([state-repositories.md](../cascade.md)).
 15. **Re-bodying the legacy getters to read the cascade (the "computed-getter flip")** *(dead)* — keeping each
     legacy getter's signature and swapping its body to a cascade read, so no call site changed. Killed by
-    [DEC-new-getter-surface](decisions.md#dec-new-getter-surface): a legacy getter's contract encodes legacy
+    [build a new getter surface, never widen a legacy one](patterns.md#-the-two-read-roles--one-grammar-two-answers-owner): a legacy getter's contract encodes legacy
     scale/granularity/combine, so pointing the cascade at it makes the CASCADE bend to the legacy shape — the
     mechanism that produces the half-migrated state. **A change that leaves every consumer untouched is the tell,
     not the win.** The replacement is a NEW uniform parameterized getter set over the channel index, with the old
@@ -92,12 +92,12 @@
 16. **One shared spine consumer routing BOTH machines** (`CvCacheInvalidationConsumer` — enabler deltas and
     modifier marks in one `onEvent`) *(dead)* — it welded the two systems the docs work hardest to keep apart, and
     forced one load-suppression policy onto two that genuinely differ (the enabler is load-ACTIVE, the modifier
-    build is not). Killed by [DEC-enabler-not-cascade](decisions.md#dec-enabler-not-cascade): **one consumer per
+    build is not). Killed by [the enabler and the modifier cascade are two separate systems](../specs/enabler.md): **one consumer per
     system**. `enablerRegisterConsumer` is the enabler's own; the modifier gets its own when it is rebuilt.
 17. **The `*Legacy` / `*Recomputed` / `*Leg` ORACLE-TWIN surface** *(dead — and one of the reasons the hard rebuild
     was forced, owner)* — per-channel comparison getters + `/computed` twin fields, kept so a cascade value could be
     diffed against a "legacy" one. It rotted twice over: agents **cheated the comparison by sneaking legacy-computed
-    data into the cascade calc** so it could not fail (the abuse [DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)
+    data into the cascade calc** so it could not fail (the abuse [the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)
     now bans outright), and once the legacy accumulators were deleted both sides read the same derivation, so the
     check could never turn red at all. The rebuild removed the whole surface — **zero `*Legacy`/`*Recomputed`
     symbols remain in `Sources/`** — so this is solved STRUCTURALLY, not by a standing rule; the ledger entry that
@@ -105,7 +105,7 @@
     field.** ⚠ It does NOT follow that comparison is banned: a check whose two sides are genuinely different
     derivations — **event-built state vs a fresh recompute-from-source**, served on two endpoints and diffed
     OUTSIDE the DLL — is the missed-emit tripwire and is the sanctioned shape
-    ([state-repositories.md](state-repositories.md)). What is dead is the same-derivation twin, not verification.
+    ([state-repositories.md](../cascade.md)). What is dead is the same-derivation twin, not verification.
 18. **The whole-domain enabler frontier + implicit "no-enabler ⇒ always-available" rules** *(dead as a class)* —
     workarounds for entities with no inbound `enables` edge (PALACE, PROCESS_IDLE, the COMBAT1-5 promotions):
     making the frontier ALL entities of the domain gated by `requires`, or hardcoded always-unlocked whitelists
@@ -118,7 +118,7 @@
     `ensure()` reincarnated as a diagnostic. Killed on both halves: it put a gate test back on a read that must be
     a bare fetch, and it made a divergence an in-DLL HAPPENING — an event is an invitation to a consumer, and the
     next agent's consumer "handles" a value known to be wrong by CORRECTING it, so the shape itself licenses
-    self-heal ([DEC-no-self-heal](decisions.md#dec-no-self-heal)). ⚠ What this entry once named as its
+    self-heal ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). ⚠ What this entry once named as its
     replacement — a recompute-from-source served on a second route and diffed outside the DLL — is itself dead
     (#33), so nothing here nominates one: a divergence is found by the THREE-LEG check
     ([http-endpoints.md](../specs/http-endpoints.md)). **A divergence has NO in-DLL representation — never re-add a
@@ -133,13 +133,13 @@
     nothing it did not already say, and the failure it policed is no longer representable: solved STRUCTURALLY, not
     by a standing measurement. **Never re-add a calculation counter, a per-turn calc budget, or a ratio derived
     from one** — the live acceptance signals are done-is-observable endpoint polls
-    ([DEC-done-is-observable](decisions.md#dec-done-is-observable)) and turn time
-    ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)), and no successor metric replaces the gate.
+    ([done = observable in the running game](../specs/validation.md)) and turn time
+    ([turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), and no successor metric replaces the gate.
 21. **The BLANKET MODIFIER RECALCULATION** (a whole-world wipe-and-reapply pass: zero every accumulated total on
     game/team/player/city/area/plot, re-run every tech, civic, trait, building, religion, corporation and event,
     fronted by a "should the modifiers be recalculated?" popup on an asset-checksum mismatch, plus a hotkey and a
     net message to carry it) *(dead)* — the archetypal self-heal
-    ([DEC-no-self-heal](decisions.md#dec-no-self-heal)). It existed to purge derived data that had drifted **in a
+    ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). It existed to purge derived data that had drifted **in a
     save**, which no longer happens: no cache is serialized, so LOAD rebuilds everything from source and there is
     nothing to purge. Worse than a generic blanket, it fired precisely on the saves most likely to have drifted,
     silently papering over the missed invalidations the event spine is built to EXPOSE. The asset checksum gates
@@ -150,9 +150,9 @@
     redesign is deferred to post-migration"* *(dead — retired as `DEC-mirror-then-redesign`)*. It was **dead by its
     own construction (owner)**: it presupposed (a) a legacy implementation worth faithfully mirroring and (b) a LATER
     phase in which redesign unlocks. Neither exists — the legacy surface is being **NUKED, not mirrored** (the ~622
-    channel-shaped getters are a DELETION list, [DEC-new-getter-surface](decisions.md#dec-new-getter-surface)),
+    channel-shaped getters are a DELETION list, [build a new getter surface, never widen a legacy one](patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)),
     parity and shadow are closed, and there is no post-migration phase to hand work to
-    ([DEC-no-deferred](decisions.md#dec-no-deferred)). **The SPEC leads, now:** where code and spec disagree the
+    (["deferred" is banned](../../AGENTS.md#design)). **The SPEC leads, now:** where code and spec disagree the
     spec is right and the code is the defect. ⛔ Never re-argue that a shape must be preserved because it is what
     the engine does today — "this is how it works" carries no weight without a live named reason (a spec
     requirement, the EXE calling in, save state, a real ordering dependency). A behaviour change is a fact to state
@@ -180,7 +180,7 @@
     damage values and the curator emits NO key, NO kind and NO entry for any of them, so every consumer read a
     member that could not exist. ⛔ **Ranged bombard RETURNS as a ground-up redesign, so nothing here is a
     starting point** — do not revive the members, the AI terminals or the DCM globals to "build on", and do not
-    mint kinds for the old shape ([DEC-proper-once](decisions.md#dec-proper-once)).
+    mint kinds for the old shape ([build the proper structure once](../../AGENTS.md#design)).
     ⚠ NOT the same thing as the ordinary `bombard` FAMILY (`bombard.unit.rate` / `airBombRate`), which is live,
     authored and STAYS.
     ⚖ **THE RULE THAT DECIDES THE BOUNDARY (owner): *"if it uses the ranged attack, and is not an airplane, it
@@ -245,7 +245,7 @@
     ⚑ **Why it does not come back as a live fold, which is the tempting move:** cargo is neither a promotion nor
     a combat-class change, so the unit RESOLVED plane cannot gather it — nothing would ever dirty the slot — and
     the correct shape would therefore be a per-read walk of the transport's cargo
-    ([DEC-unit-modifiers-on-top](decisions.md#dec-unit-modifiers-on-top): a modifier that TRAVELS is folded live
+    ([unit-carried modifiers apply on top, live, never cached](../cascade.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling): a modifier that TRAVELS is folded live
     on top). That is real per-read work on the combat path for one authored entity.
     ⚖ **It is also on the way out wholesale (owner): land units carrying other land units "and all those
     shenanigans" go post-rework**, so the mechanic this served is itself scheduled for removal.
@@ -280,7 +280,7 @@
     out rather than the old shape being preserved. If the mechanic is wanted it is authored fresh on the trigger
     plane (an `onCaptured` happening + the `promote` action), never by restoring a promotion-side "apply me when
     X" flag, which is the condition-as-member shape
-    ([DEC-conditions-are-predicates](decisions.md#dec-conditions-are-predicates)) inverted onto the target.
+    ([conditions are predicates, never bespoke members](../specs/json.md#35-predicates--a-systems-runtime-state-query)) inverted onto the target.
     ⚠ **The revival risk is the surviving SCHEMA tag**: it reads like an unmigrated field. The curator now DROPs
     it explicitly so the mapping cannot quietly re-emit a key nothing reads.
 30. **DIRTY-AND-RECOMPUTE FOR THE CASCADE PACKAGES** — the mark protocol (`markDirty(mask)` → `rebuildMarked` →
@@ -290,7 +290,7 @@
     time, when it is in essence just a compiled sum that is always updated, based on incoming spine events"**)*.
     A package is a MAINTAINED SUM: the fact names the source, the compiled index names that source's deposits,
     and applying them IS the maintenance — so there is nothing to mark, nothing to defer, and nothing to batch
-    ([state-repositories.md](state-repositories.md) § THE MAINTAINED SUM).
+    ([state-repositories.md](../cascade.md) § THE MAINTAINED SUM).
     ⛔ **THIS IS A SUPERSEDED DESIGN, NOT A ROLLERSKATE — do not read it as one, and do not treat the code
     around it as suspect.** The protocol was among the FIRST things designed for this rework and was implemented
     faithfully; what changed is the premise, *"the moment we landed on eventspine for everything"* (owner). ⚠
@@ -299,13 +299,13 @@
     does not exist.
     ⚑ **The general form, because it outlives this instance:** a dirty flag is a CLAIM THAT WE DO NOT KNOW WHAT
     CHANGED, so a complete emit surface falsifies it by construction — *"a dirty flag is the fossil of an
-    incomplete emit surface"*, the [DEC-no-self-heal](decisions.md#dec-no-self-heal) fossil rule one level up.
+    incomplete emit surface"*, the [self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) fossil rule one level up.
     ⚠ It dissolved SILENTLY: a design whose premise goes away keeps returning correct numbers and merely does
     unnecessary work, so there is no symptom to notice — which is exactly why it survived.
     ⚑ **Three independent reasons it died, and the third is the deciding one:** a rebuild's cost scales with
     what a city HAS rather than with what CHANGED (so the walks do not get faster, they cease); a missed mark
     leaves a stale-but-plausible value that reads fine forever, where a missed emit leaves a loud compounding
-    one ([DEC-no-self-heal](decisions.md#dec-no-self-heal) prefers the failure that announces itself); and the
+    one ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) prefers the failure that announces itself); and the
     mark derivation is a SECOND completeness census that — unlike the emit census — is **not answerable at any
     one site, moves with the authored data, and cannot be made safe by over-inclusion** (*"it is far easier to
     ensure we have all the events than to ensure that we have all packages correctly dirtied"*).
@@ -342,7 +342,7 @@
     (`SEVT_CITY_BUILDING_ACTIVATED`) — which together maintain the relation *(active source × unit present)*.
     The per-turn rescan it replaced measured **42,336 assign calls in ONE turn**, nearly all re-checking
     promotions the units already held: the blanket-recompute shape
-    [DEC-no-self-heal](decisions.md#dec-no-self-heal) rejects.
+    [self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) rejects.
     ⚑ The token survived because the trigger plane could not name the real happening when it was written; once
     it could, the data said one thing while the engine did another. The happening is now
     `onUnitEnteredCity`, spelled once (`TRIGGER_UNIT_ENTERED_CITY`) because three sites string-match it.
@@ -389,17 +389,17 @@
     worth holding separately: even granting an endpoint could replay the chain, the replay is minutes of work, so
     it could never be an endpoint's answer. The two reasons compose — it cannot be done, and if it could it would
     not fit.
-    ⛔ **This is [DEC-no-staleness-vocabulary](decisions.md#dec-no-staleness-vocabulary) one plane over, and for
+    ⛔ **This is ["dirty" is not a term we use](../cascade.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up) one plane over, and for
     the identical reason**: a term that survives its mechanism is the evidence-of-the-abandoned-path that teaches
     the next agent to reach for it. "Dirty" was removed WITH the thing it named; so is this.
     ⚠ **It had spread into the load-bearing docs, which is HOW it kept teaching** — the decisions ledger,
     `validation.md` and the scale registry each described the four LIVE `/computed` routes as "oracle endpoints",
     directly contradicting [http-endpoints.md](../specs/http-endpoints.md) and
-    [observability.md](../reference/observability.md), which say there is no oracle side at all. Those four are
+    [spine.md](../spine.md), which say there is no oracle side at all. Those four are
     **STORED-side DECOMPOSITION CENSUSES** and are named that.
     ⇒ **Keep the word ONLY where it names this dead idea AS dead** (this entry, and the http-endpoints section
     that explains the ban). Anywhere it describes a live surface it is wrong on the facts, not merely stale —
-    delete it as you pass one ([DEC-docs-current-truth](decisions.md#dec-docs-current-truth)).
+    delete it as you pass one ([docs state current truth only](../../AGENTS.md#docs)).
 34. **The PER-CITY TRADED-BONUS MIRROR** (`CityContext::m_traded` — an `id → count` store answering
     `tradedBonusCount`, fed by the has-verdict crossing AND the vicinity supply count) *(dead)* — it replaced the
     RELAY that [enabler.md §8](../specs/enabler.md) RESIDENCY specifies (*"the `CvPlotGroup` is the ONLY
@@ -408,7 +408,7 @@
     ⛔ **Every leg of that argument was wrong, and the shape is what made it persuasive.** The ORACLE it wanted to
     be diffed against is itself dead (#33). A relay depends on NO emit, so none can go missing — the fact surface it
     was worried about maintains the plot group's count, which the relay reads. And it consumed TWO of the three
-    facts that describe one resource reaching one city, which [event-spine.md](../specs/event-spine.md) names as the
+    facts that describe one resource reaching one city, which [spine.md](../spine.md) names as the
     double-count outright: a city SUPPLYING a resource booked its own holding twice.
     ⚑ **Decisively, it answered a DIFFERENT NUMBER than the engine.** `CvCity::getNumBonuses` applies three
     genuinely per-asker adjustments — the bonus's `TechCityTrade` gate, the player's minted-percent suppression and
@@ -454,7 +454,8 @@
     `CvSelectionGroup`, plus the commented-out `#define`; deleted whole.
     ⛔ **So do not "re-enable nomadic start."** There is no working implementation to switch on and the concept
     is not wanted. If a start-condition of this kind is ever built, it is a `GAMEOPTION_*` evaluated live
-    ([DEC-entity-gate](decisions.md#dec-entity-gate)), never a compile switch.
+    ([the whole-entity applicability gate](../specs/json.md#2-anatomy-of-an-entity)), never a compile switch.
+
     ⚠ **WHY it never worked is NOT established, and the investigation is a trap worth naming.** The obvious
     reading — that the `TECH_SEDENTARY_LIFESTYLE` global-define binding is unbound, so the gate resolved to
     `NO_TECH`, which `CvTeam::isHasTech` answers TRUE for — does not survive its own control: `TECH_TRIBALISM`,
@@ -474,3 +475,19 @@
     override."* Cut whole: engine members/getters, enabler bars, barbarian-spawn and start-unit picker filters,
     curator emits and the data keys. ⛔ Do not re-introduce a civ whitelist for NPC shaping — the NPC culture
     plane already carries the limitation tools.
+39. **`CvCascadingModifierBundle`** *(dead)* — the unified effect-scope cascade bundle/repository (`#421`/`#423`)
+    designed as the implementation vehicle for empire/team-scope constructables (team buildings). Killed: it
+    never got past a working-tree prototype, and the #428/#430 top-down model needs no new machinery — an
+    empire/team-scope constructable authors `enables`/`disables`/`requires`/modifier families like any other
+    entity ([enabler.md §2](../specs/enabler.md)). **Don't revive the bundle/repository plumbing** — the
+    autobuild-replacement concept (shared hammer pool, empire-scope buildings) is still wanted and now lives in
+    enabler.md §2's empire-level-building model.
+40. **PER-MECHANIC PARITY COMPARISON** (`DEC-per-mechanic-parity` — verifying a value by diffing it,
+    mechanic-by-mechanic, against the engine's own legacy computation) *(dead)* — parity/shadow as an ACTIVE
+    validation phase is CLOSED ([parity and shadow are closed](../specs/validation.md)):
+    there is no legacy oracle left to diff a mechanic against on the cut surfaces
+    ([the red ratchet](../../AGENTS.md#build-and-test)). The completeness bar that survives
+    ([the completeness+attribution bar](../specs/validation.md#the-observation-surface)) is verified by the THREE-LEG check — the logs, the JSON info, and
+    what state expects, all three agreeing — never by comparing a mechanic's cascade value against its legacy
+    counterpart (entry #33 above). **Never re-frame a check as "compare this mechanic against its legacy
+    value" or re-invoke a per-mechanic comparison sweep.**

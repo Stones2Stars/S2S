@@ -2,14 +2,14 @@
 
 > **Reference — how the running DLL uses memory today.** The `CvGameCoreDLL.dll` is 32-bit and shares the
 > process address space with the closed Firaxis EXE, so it lives under a **~3.2 GB ceiling** (a `bad_alloc`
-> exit near it is the failure mode — [engine.md](engine.md), [roadmap §Verification](../plans/structural-cleanup/roadmap.md)).
+> exit near it is the failure mode — [engine.md](engine.md), [validation.md §Turn time](../specs/validation.md)).
 > Measured anchor: a late-game save (era 3, **185 cities / ~9,200 units / ~9,600 plots / 17 live players+teams**)
 > sits at **~2.2–2.4 GB working set** and **climbs ~+150–230 MB per turn-end**, and **the climb resets on reload**.
 > This doc attributes that number to structures, and answers "are textures loaded once or per-instance?".
 > ⛔ The only EXE-side window was the `workingSetMB`/`peakWorkingSetMB`/`pagefileMB` gauge (`GetProcessMemoryInfo`),
 > and **its route went with the route-table purge** — so there is currently NO way to read the process working set.
 > Every measurement this doc calls for needs that gauge re-emitted first, as a spine event rather than a route
-> ([observability.md](observability.md), [../specs/http-endpoints.md](../specs/http-endpoints.md)).
+> ([spine.md](../spine.md), [../specs/http-endpoints.md](../specs/http-endpoints.md)).
 
 ## The big picture — three FLAT static clusters (~126 MB), and a per-turn GROWER
 
@@ -35,7 +35,7 @@ trimming (the unitcombat purge, flattening the 2D arrays) buys single-digit MB �
 ~800 MB→2 GB is EXE scene + Python + fragmentation (§5). The one thing this audit *does* settle: the DLL is not
 where the memory goes, so the per-turn climb — whatever its exact split — is dominated by legacy turn-processing +
 EXE-side churn, which is why the memory hunt is sequenced *after* the legacy cut
-([DEC-legacy-decache-poisons-perf](../architecture/decisions.md#dec-legacy-decache-poisons-perf)) and confirmed by a
+([legacy decache poisons perf measurement](../cascade.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang-owner)) and confirmed by a
 delta measurement, not static estimation.
 
 ---
@@ -86,7 +86,7 @@ and cut fragmentation. **This cluster also scales with PLAYER/TEAM count:** the 
 
 ⚑ **The accumulator cut is what shrinks this cluster, and it is the lever that actually works here** — a
 Building×Specialist array on `CvTeam` was on its own the single largest entry in this table, and cutting the
-accumulator took its ~88k tiny blocks with it ([DEC-accumulator-cut-uniform](../architecture/decisions.md#dec-accumulator-cut-uniform)).
+accumulator took its ~88k tiny blocks with it ([the uniform legacy-accumulator cut](../cascade.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism)).
 Each further accumulator dimensioned by an info count pays back the same way, which is worth knowing while
 weighing a cut — though §5 still holds: this whole cluster is not where the process memory goes.
 
@@ -99,7 +99,7 @@ Maintained in place by the facts, into fixed-width storage; never grows per turn
 | Structure | Per object | ~total | Note |
 |---|---|--:|---|
 | **CityEnabler** tri-state arrays | ~42.6 KB/city | ~14.6 MB | (5202+2073 ids × 6 B). **~5× the spec's stale "8.5 KB/city" estimate** — the shipped `EnablerDomain` adds two `short` refcount planes + a flags byte per id ([enabler.md §7.1](../specs/enabler.md) budget predates this) |
-| **a dense per-building/per-unit keyed ledger** | ~30.4 KB/city + /player | ~10.4 MB | the shape to AVOID re-growing: a full-width `assign(5202,0)+assign(2073,0)` per touch is mostly-zero. Measured here so the space-for-time trade is made deliberately, under the [KEYS ONLY WHERE NEEDED](../architecture/state-repositories.md) ruling, not by default |
+| **a dense per-building/per-unit keyed ledger** | ~30.4 KB/city + /player | ~10.4 MB | the shape to AVOID re-growing: a full-width `assign(5202,0)+assign(2073,0)` per touch is mostly-zero. Measured here so the space-for-time trade is made deliberately, under the [KEYS ONLY WHERE NEEDED](../cascade.md) ruling, not by default |
 | Operating-building sets | ~6–10 KB/city | ~2.8 MB | scales with buildings-present |
 | Plot yield cache + plot properties | ~150 B/plot | ~2.2 MB | |
 | CvPlayer 8 history hash_maps | ~257 KB/player @T1338 | ~3.9 MB | **GROWING + serialized** (see §5) |
@@ -147,7 +147,7 @@ the (shared) Info, and per instance an index into the shared Info array.
   ⚖ **THE HOME RUN IS NAMED (owner): *"if we can have the actual game load faster, without FPKs, that is the
   home run."*** Halving memory is already established; the load time is the whole of what stands in the way, so
   the work is a LOAD-TIME problem, not a memory investigation. ⚠ Note this inverts the usual ordering rule —
-  [DEC-turn-time-is-king](../architecture/decisions.md#dec-turn-time-is-king) spends load time to buy turn time,
+  [turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture) spends load time to buy turn time,
   and here load time is the currency that has run out.
 
 **Implication:** the **DLL art surface is flat after load** (shared once — tag strings only), so a per-turn
@@ -191,6 +191,6 @@ against the cascade rather than a legacy/cascade mix.
 
 ## See also
 - [engine.md](engine.md) — the 32-bit/VC7.1 toolchain + the closed-EXE ABI that fixes the ceiling.
-- [observability.md](observability.md) — the memory gauge and why its route is gone.
-- [../architecture/state-repositories.md](../architecture/state-repositories.md) — the derived-cache model (§3).
-- [../plans/structural-cleanup/roadmap.md](../plans/structural-cleanup/roadmap.md) — the parked memory hunt + the legacy cut it waits on.
+- [spine.md](../spine.md) — the memory gauge and why its route is gone.
+- [../architecture/state-repositories.md](../cascade.md) — the derived-cache model (§3).
+- [../specs/validation.md](../specs/validation.md) — the parked memory hunt + the legacy cut it waits on.

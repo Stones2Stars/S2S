@@ -4,7 +4,7 @@
 
 //
 //	CvModEntry -- ONE COMPILED §3.9 modifier deposit (json.md §3.9 "the one entry shape"), the runtime form the
-//	load compile pass produces (patterns.md § coherent surface; [DEC-materialize-at-mapfrom]). Every axis of the
+//	load compile pass produces (patterns.md § coherent surface; docs/architecture/patterns.md §Materialize at mapFrom). Every axis of the
 //	full deposit address `<family>.<scope>[.<target>|.<targetType>.{TARGET}][.<member>].<unit>` is interned to a
 //	typed id AT PARSE: family -> the closed ModifierFamily vocabulary, scope -> CvCascScope, member -> the
 //	family's kind enum (CvInfoKinds.h), named-entity targets -> FK-resolved engine ids, conditions -> prebuilt
@@ -31,7 +31,7 @@ int modSegmentLookup(const std::string& szSegment);   // -1 = never authored any
 const char* modSegmentSpell(int iSegmentId);          // "" for an invalid id
 
 //	The CACHED lookup every READ PATH uses. `modSegmentLookup` takes a `std::string`, so passing a literal costs
-//	a heap string construction plus a map walk on EVERY call -- which is [DEC-materialize-at-mapfrom] violated
+//	a heap string construction plus a map walk on EVERY call -- which is docs/architecture/patterns.md §Materialize at mapFrom violated
 //	wherever it sits under a per-turn or per-candidate loop. The caller owns the cache slot (init it to -1).
 //
 //	⚠ A HIT is cached forever; a MISS re-looks-up. That asymmetry is the whole discipline: the interner is
@@ -40,7 +40,7 @@ const char* modSegmentSpell(int iSegmentId);          // "" for an invalid id
 //	"nothing is keyed on this" for the rest of the session -- silently, since -1 is also the honest answer.
 //
 //	⚑ It lives HERE, beside the interner it reads, because a file-static copy per consumer is the DRY hazard
-//	[DEC-single-implementation] names: the next consumer cannot see it and writes a fifth one.
+//	docs/architecture/patterns.md §DRY (single implementation) names: the next consumer cannot see it and writes a fifth one.
 int modSegmentCached(const char* szSegment, int& iCache);
 
 class CvModEntry;
@@ -80,7 +80,7 @@ public:
 	CvCondition* disabled;        // NULL = never-suppressed (owned)
 	// --- the §3.7 `unit:` predicate qualifier (cargo.space.{unit: IS_AIR}; happiness.empire.cities.{unit:
 	// IS_MILITARY}) -- evaluated at the CONSUMER against each candidate unit (live-on-top per
-	// [DEC-unit-modifiers-on-top]); NULL = unqualified. Owned. ---
+	// docs/cascade.md §2b (unit-carried modifiers apply on top, live)); NULL = unqualified. Owned. ---
 	CvCondition* unitQual;
 	// --- the §3.7 counted-kind RELIGION filter (`religion: "!IS_STATE_RELIGION"`, ruling 23): the value scales
 	// by the count of the city's religions matching this predicate (each religion tested via ctx.religion --

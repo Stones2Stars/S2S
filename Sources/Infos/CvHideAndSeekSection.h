@@ -22,7 +22,7 @@
 //	contest resolves live per (seeker, hider) and nothing here is a stored verdict. This block is pure authored
 //	magnitudes; no member of it is a runtime flag.
 //
-//	Values are ×100 at parse ([DEC-fixedpoint-x100]: readJson owns the scale, the reader reduces at its point of
+//	Values are ×100 at parse (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): readJson owns the scale, the reader reduces at its point of
 //	use). One open plot is VISION_PLOT authored / VISION_OPEN_GROUND_COST internally -- the SAME scale `vision`
 //	speaks in, so a concealment and a sight budget are directly comparable. WRITE-ONCE AT LOAD (parse is the sole
 //	writer; clear-first, idempotent under the full-registry re-map).
@@ -89,7 +89,7 @@ public:
 	mutable int classicMethod;
 
 private:
-	// THE ONE RESOLVE PATH ([DEC-single-implementation]). The id mints AFTER the entities parse, so it resolves
+	// THE ONE RESOLVE PATH (docs/architecture/patterns.md §DRY (single implementation)). The id mints AFTER the entities parse, so it resolves
 	// lazily on first ask; both readers above go through here so a late-minted method cannot resolve two ways.
 	int resolveMethodSkill(const CvDetectionRow& kRow) const;
 

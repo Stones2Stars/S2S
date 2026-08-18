@@ -9,7 +9,7 @@
 //	`threshold` pass rules as one parameterized read; the `role` vocabulary as a typed enum; the `voteSource`
 //	DIPLOVOTE_* FKs as a typed list. Carries ZERO cascade modifiers -- the effect payload feeds
 //	CvGame::processVote directly. JSON-fed (Assets/Data/votes/*.json via mapFrom); no XML read
-//	(DEC-no-xml-into-game). Type + identity text keys ride the base CvInfo reading.
+//	(AGENTS.md §Build And Test (no XML-into-game for replaced infos)). Type + identity text keys ride the base CvInfo reading.
 //
 
 #include "CvInfo.h"            // the JSON-info base (mapFrom); on /I -> bare include

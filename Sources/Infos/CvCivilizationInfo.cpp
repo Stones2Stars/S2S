@@ -2,7 +2,7 @@
 //	CvCivilizationInfo -- the civilization poco's own typed reading on top of the base section dispatch (see the
 //	header). mapFrom materializes the census identity/world/sound set + the typed game-start grant views -- read
 //	off the COMPOSED grants/edges units the base dispatch already parsed and FK-resolved (ONE representation,
-//	never a second raw-JSON walk) ([DEC-materialize-at-mapfrom]). Idempotent by contract (unconditional assigns,
+//	never a second raw-JSON walk) (docs/architecture/patterns.md §Materialize at mapFrom). Idempotent by contract (unconditional assigns,
 //	clear-first containers).
 //
 

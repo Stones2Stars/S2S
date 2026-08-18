@@ -788,7 +788,7 @@ void CvCityAI::AI_updateAssignWork()
 	// owes no re-decision at all.
 	// ⚑ The FLAG is deliberately left standing rather than cleared: whoever set it during the read still wants
 	// the work, so it is simply DEFERRED to the first sweep past GAME_LOAD_FINISHED -- the same suppress-then-
-	// resume shape the grants machine takes off the load bracket ([DEC-spine-reseed]).
+	// resume shape the grants machine takes off the load bracket (docs/spine.md §5 (the load reseed)).
 	// ⚠ This is the WORK's own guard, not the flag's: it covers every path that marks a city, including the
 	// whole-scope fans, so no caller has to remember the rule.
 	if (spineGameLoadInProgress())
@@ -1080,7 +1080,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 
 	// ⛔ THESE TWO ARE LOOP BOUNDS, NOT MAGNITUDES -- healthValue/happynessValue iterate ONCE PER health or
 	// happiness FACE (`for (iI = 0; iI < iAddedHealth; ++iI)`), so this is the whole-count POINT OF USE the
-	// scale rule names, and it reduces HERE ([DEC-fixedpoint-x100]). It is not a scale conversion for
+	// scale rule names, and it reduces HERE (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). It is not a scale conversion for
 	// comparison: you cannot iterate 1.5 times. Passing the x100 value ran the loop 100x over and inflated
 	// every wellbeing term by the same factor.
 	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY) / 100;
@@ -1539,7 +1539,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	int iHealth = netHealth(0);
-	// reduced at this use: it is weighed against whole health points below ([DEC-fixedpoint-x100])
+	// reduced at this use: it is weighed against whole health points below (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 	int iFoodDiffBase = foodDifference(false, false, true) / 100;
 
 	/// END OF #0 VARIABLES PREPARATION
@@ -4516,7 +4516,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 			iValue *= 100; // Need it multiplying up so that truncation errors don't render.
 
 			// Free XP is a cascade FLAT, so it reduces at the point of use like every other reader of it
-			// ([DEC-fixedpoint-x100]). Production weighs the XP amount and NOTHING beyond it: what those levels
+			// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). Production weighs the XP amount and NOTHING beyond it: what those levels
 			// would buy is deliberately not evaluated on this path (owner) -- see the unit-plane note in
 			// docs/reference/special-systems.md. A unit evaluates its own promotions once it exists, off its
 			// resolved cache (CvUnitAI::AI_promote).
@@ -4704,7 +4704,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 
 				// If this new building supersedes an old one, subtract the old value. The superseded set is a
 				// FORWARD EDGE FETCH off the candidate's own compiled `replaces` edge -- the same shape the
-				// `enables` walk below uses ([DEC-one-reverse-view]: an info already carries its own edges), not
+				// `enables` walk below uses (docs/cascade.md §1 (reverse lookups are populated once, at load): an info already carries its own edges), not
 				// a legacy keyed table.
 				if (iValue > 0)
 				{
@@ -4735,7 +4735,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 			// (AGENTS.md § AI valuation of ENABLEMENT): the edge IS the answer, so there is no reverse index
 			// to consult and no what-if to run. The legacy shape asked it BACKWARDS -- a static reverse index
 			// plus a BoolExpr BECOMES_TRUE overlay per dependent -- which is the whole-database question
-			// enabler.md §6 exists to delete ([DEC-one-reverse-view]: an info already carries its own edges).
+			// enabler.md §6 exists to delete (docs/cascade.md §1 (reverse lookups are populated once, at load): an info already carries its own edges).
 			{
 				const CvEdges* pEdges = buildingInfo.getEdges();
 				const std::vector<int>* pEnabled =
@@ -4973,7 +4973,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 // XXX should some of these count cities, buildings, etc. based on teams (because wonders are shared...)
 // XXX in general, this function needs to be more sensitive to what makes this city unique (more likely to build airports if there already is a harbor...)
 //
-// THE building valuation -- the single implementation ([DEC-single-implementation]). It is asked per candidate
+// THE building valuation -- the single implementation (docs/architecture/patterns.md §DRY (single implementation)). It is asked per candidate
 // over the enabler's maintained frontier (enabler.md §6); there is no precomputed all-buildings pass and no
 // partial-result cache feeding it, because a full recalc of every building is what this rebuild removed.
 int CvCityAI::AI_buildingValueThresholdOriginal(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bMaximizeFlaggedValue, bool bIgnoreCanBuildReplacement, bool bForTech, const CityValuationBasis* pBasis)
@@ -5310,7 +5310,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		// already answers it. Building replacement IS dormancy ([enabler.md §2/§3]), and `bd_gate` gates out a
 		// candidate whose `dormantTriggers` successor is present in the city (plus the HIDE_REPLACED option's
 		// reachable-successor case). Asking it again here was a second implementation of that gate
-		// ([DEC-single-implementation]) reading a legacy getter to do it.
+		// (docs/architecture/patterns.md §DRY (single implementation)) reading a legacy getter to do it.
 
 		int iPass1Value = 0;
 
@@ -5456,7 +5456,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 			if ((iFocusFlags & BUILDINGFOCUS_ESPIONAGE) || (iPass > 0))
 			{
-				// FLAT (×100) against a human /8 weight, so the reduction rides the divisor ([DEC-fixedpoint-x100]).
+				// FLAT (×100) against a human /8 weight, so the reduction rides the divisor (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 				iValue += cai_expectedScalarHere(kBuilding, SCALAR_ESPIONAGE_DEFENSE, CASC_UNIT_FLAT,
 					getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner())) / 800;
 			}
@@ -5661,7 +5661,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				// reverse index and then RE-DERIVED every unit prereq by hand -- tech, AND/OR buildings, AND/OR
 				// bonuses -- plus a BoolExpr what-if overlay. The edge already asserts the unlock, and whether the
 				// unit is actually trainable HERE is the enabler's verdict, not this loop's to recompute
-				// ([DEC-one-reverse-view], enabler.md §6).
+				// (docs/cascade.md §1 (reverse lookups are populated once, at load), enabler.md §6).
 				const CvEdges* pUnitEdges = kBuilding.getEdges();
 				const std::vector<int>* pEnabledUnits =
 					(pUnitEdges != NULL) ? pUnitEdges->find(EDGEF_ENABLES, EDGEB_UNITS) : NULL;
@@ -5961,7 +5961,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				if (iGreatPeopleRateModifier > 0)
 				{
 					// This valuation body is HUMAN-scale throughout, so the ×100 rate reduces at its point of
-					// use ([DEC-fixedpoint-x100]: a value consumed as a whole game count reduces at the use).
+					// use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a value consumed as a whole game count reduces at the use).
 					// It is NOT enough to lift the threshold: the rate also MULTIPLIES into iValue below.
 					const int iGreatPeopleRate = getBaseGreatPeopleRate() / 100;
 					const int kTargetGPRate = 10;
@@ -6014,7 +6014,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					InfoValuation::keyedTargetSegment("units"), GC.getInfoTypeForString("TAG_MILITARY", true));
 
 				// The unit-combat-keyed buildRate deposits, read as the ENTRY-LIST over what this building
-				// AUTHORED (modifier.md §5). A percent comes back unscaled ([DEC-fixedpoint-x100]).
+				// AUTHORED (modifier.md §5). A percent comes back unscaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 				std::vector<std::pair<int, int> > keyedCombatBuildRates;
 				InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
 					InfoValuation::keyedTargetSegment("unitCombats"), keyedCombatBuildRates);
@@ -6185,7 +6185,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				iValue += forcedTradeRoutesValue;
 				// The unit-keyed buildRate deposits, read as the ENTRY-LIST over what this building AUTHORED
 				// (modifier.md §5) -- the handful of units it names, never the unit registry. A percent comes
-				// back unscaled ([DEC-fixedpoint-x100]), so it feeds the cost arithmetic exactly as before.
+				// back unscaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so it feeds the cost arithmetic exactly as before.
 				std::vector<std::pair<int, int> > keyedUnitBuildRates;
 				InfoValuation::collectKeyedTarget(kBuilding.getModifiers(), MODFAM_BUILD_RATE, -1,
 					InfoValuation::keyedTargetSegment("units"), keyedUnitBuildRates);
@@ -6343,7 +6343,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				int religiousBuildingValue = 0;
 				// WHICH UNITS NEED THIS BUILDING? -- the building's own requires-reverse index names them
-				// ([DEC-one-reverse-view]). Asking all ~2,073 units the reverse question, once per candidate
+				// (docs/cascade.md §1 (reverse lookups are populated once, at load)). Asking all ~2,073 units the reverse question, once per candidate
 				// building, is the whole-database scan enabler.md §6 deletes.
 				std::set<int> unitsNeedingBuilding;
 				EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_BUILDINGS, (int)eBuilding), EDGEF_REQUIRED_BY, EDGEB_UNITS, unitsNeedingBuilding);
@@ -6402,7 +6402,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				// Is this building needed to build other buildings? Asked FORWARD off this building's OWN reverse
 				// edge family -- every info already carries its reverse lookups after load
-				// ([DEC-one-reverse-view]), so the dependents are a list fetch over ~a handful, never the
+				// (docs/cascade.md §1 (reverse lookups are populated once, at load)), so the dependents are a list fetch over ~a handful, never the
 				// backwards sweep of all ~5,200 buildings this used to run PER CANDIDATE.
 				// A prereq COUNT lives as a `min` on a requires atom now, and the AI's real question -- "is a
 				// dependent BLOCKED, and might I be why?" -- is the enabler's own O(1) verdict: a dependent
@@ -6449,7 +6449,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				// Does this building NEED the state religion present in its city? That is a `requires`
 				// question, so it is asked of the requires tree through the ONE scanner rather than of a
-				// flag ([DEC-single-implementation]). Scanned once per building, above the loop.
+				// flag (docs/architecture/patterns.md §DRY (single implementation)). Scanned once per building, above the loop.
 				CascadeCondDeps kVoteDeps;
 				if (kBuilding.getRequires() != NULL)
 				{
@@ -6630,7 +6630,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 	int iValue = tradeRouteValue(kBuilding, eYield, bForeignTrade);
 
 	// The city's REALIZED yield for this channel, off the cascade's receiver sum; ÷100 at the reader, since the
-	// cascade carries ×100 natively ([DEC-fixedpoint-x100]).
+	// cascade carries ×100 natively (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	getYields(aiRealizedYields);
 	int iBaseRate = aiRealizedYields[eYield] / 100;
@@ -6640,7 +6640,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 		// valuation scales each plots-target deposit by the city context's STORED plotAttrs count
 		// (patterns.md § THE GETTER SETUP read 3, contexts.md). The building-keyed improvement/terrain maps
 		// are gone by design -- cross-entity own-output lives on the TARGET, conditioned on this building's
-		// presence ([DEC-deliveryguy]), so the valuation reaches them from the plot side.
+		// presence (docs/cascade.md §4 (the deliveryguy ownership rule)), so the valuation reaches them from the plot side.
 		int aPlotYields[NUM_YIELD_TYPES];
 		kBuilding.expectedPlotYields(
 			getCityContext(), kOwner.getEmpireContext(), plotGroup(getOwner()), aPlotYields);
@@ -6655,7 +6655,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 
 	{
 		// The building's own yield contribution, from the ONE what-if driver rather than a hand-rolled sum
-		// ([DEC-single-implementation]). ⚑ The driver answers HUMAN, so the `100 *` that lifted the specialist
+		// (docs/architecture/patterns.md §DRY (single implementation)). ⚑ The driver answers HUMAN, so the `100 *` that lifted the specialist
 		// yield and the `/100` that took the total back down BOTH disappear -- the units already cancel, which is
 		// the acceptance signal for a cluster conversion (fixed-point-and-scales.md §4c-bis).
 		const int iYield = 8 * (iFreeSpecialistYield + cai_expectedHere(kBuilding, infoYieldFamily(eYield), (int)CHANNEL_AMOUNT,
@@ -6946,7 +6946,7 @@ int CvCityAI::AI_neededSeaWorkers() const
 	/* BETTER_BTS_AI_MOD                       END                                                  */
 	/************************************************************************************************/
 	// Limit the amount of Sea Workers: a cap that grows with the map.
-	// ⛔ NO FLOAT ON A SYNCED AI PATH ([DEC-no-float-in-sync]) -- this was a `pow` curve, and an AI decision every
+	// ⛔ NO FLOAT ON A SYNCED AI PATH (docs/reference/engine.md §NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE) -- this was a `pow` curve, and an AI decision every
 	// client computes cannot rest on one. ⚑ The curve was also measuring against a hardcoded SIX world sizes while
 	// the registry authors eight, so its divisor had already stopped describing the data. A cap that grows with
 	// the map is what a linear ramp across the AUTHORED sizes says directly: same endpoints, no transcendental,
@@ -8036,7 +8036,7 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 	int iFeatureFoodSurplus = 0;
 	int iHillFoodDeficit = 0;
 	// The accumulators below take x100 plot yields, so the human legacy-XML seed LIFTS to meet them -- a value
-	// is never reduced to fit a seed ([DEC-fixedpoint-x100]).
+	// is never reduced to fit a seed (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int iFoodTotal = 100 * GC.getYieldInfo(YIELD_FOOD).getMinCity();
 	int iProductionTotal = 100 * GC.getYieldInfo(YIELD_PRODUCTION).getMinCity();
 
@@ -8463,7 +8463,7 @@ void CvCityAI::AI_updateBestBuild()
 	}
 	m_bestBuildValuesStale = false;
 
-	// The city's REALIZED yields in ONE read; ÷100 at the reader ([DEC-fixedpoint-x100]).
+	// The city's REALIZED yields in ONE read; ÷100 at the reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int aiRealizedYields[NUM_YIELD_TYPES];
 	getYields(aiRealizedYields);
 	OutputRatios ratios = OutputRatios(
@@ -9493,7 +9493,7 @@ bool CvCityAI::AI_isPlotOptionOpen(const CitizenOption& kOption) const
 
 // Returns true if a worker was added to a plot...
 //	⚑ The single-placement entry point, kept for the JUGGLE pass (which removes one citizen and re-adds one).
-//	It reads the SAME scoring body as the priority fill ([DEC-single-implementation]) rather than carrying its
+//	It reads the SAME scoring body as the priority fill (docs/architecture/patterns.md §DRY (single implementation)) rather than carrying its
 //	own copy of "score every option".
 bool CvCityAI::AI_addBestCitizen(bool bWorkers, bool bSpecialists, int* piBestPlot, SpecialistTypes* peBestSpecialist)
 {
@@ -9766,7 +9766,7 @@ void CvCityAI::AI_juggleCitizens()
 
 //	Can this tile carry the citizen who works it -- feed its own consumption, or bring enough else to be worth
 //	the mouth? Both callers hand it the x100 GROUP read, so the whole-number comparands lift to meet it
-//	([DEC-fixedpoint-x100]: a value is never reduced to meet a count). Unlifted, every tile carrying any food at
+//	(docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a value is never reduced to meet a count). Unlifted, every tile carrying any food at
 //	all cleared a threshold of 4 hundredths and the test could only answer false for a tile yielding NOTHING --
 //	which is not a filter. The same lift is already spelled out for this define where the growth branch reads it.
 // ⛔ THIS TEST IS KNOWINGLY INERT, AND LIFTING ITS OPERANDS TO ×100 IS A BALANCE CHANGE, NOT A REPAIR.
@@ -10165,7 +10165,7 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		iValue += (aiYields[YIELD_FOOD] * 1);
 
 		// ⛔ THE FOOD-STATE LOCALS LIFT TO x100 HERE, ONCE -- the yields arriving are x100, and a value is never
-		// reduced to meet a count ([DEC-fixedpoint-x100]). Lifting at the declaration keeps every use below
+		// reduced to meet a count (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). Lifting at the declaration keeps every use below
 		// uniform instead of scattering conversions through the arithmetic.
 		int iFoodPerTurn = (foodDifference(false) - ((bRemove) ? aiYields[YIELD_FOOD] : 0));
 		int iFoodLevel = getFood() * 100;
@@ -10699,7 +10699,7 @@ int CvCityAI::AI_plotValue(const CvPlot* pPlot, bool bAvoidGrowth, bool bRemove,
 		else
 		{
 			//	the ×100 GROUP read, not the reducing single-yield getter: every term this score sums must
-			//	arrive on ONE scale, and an evaluation never converts ([DEC-fixedpoint-x100]).
+			//	arrive on ONE scale, and an evaluation never converts (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 			aiYields[iI] = aiPlotYields100[iI];
 		}
 	}
@@ -11379,7 +11379,7 @@ int CvCityAI::AI_getPlotMagicValue(const CvPlot* pPlot, bool bHealthy, bool bWor
 	FAssert(pPlot);
 
 	int yields100[NUM_YIELD_TYPES];
-	// the ×100 GROUP read is the internal surface -- getYield is the EXE's human edge ([DEC-fixedpoint-x100])
+	// the ×100 GROUP read is the internal surface -- getYield is the EXE's human edge (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 	int aiCurrentYields100[NUM_YIELD_TYPES];
 	pPlot->getYields(aiCurrentYields100);
 
@@ -11529,7 +11529,7 @@ int CvCityAI::AI_countGoodSpecialists(bool bHealthy) const
 		iValue += 40 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_GOLD);
 		iValue += 20 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_ESPIONAGE);
 		iValue += 15 * kPlayer.specialistCommerce(eSpecialist, COMMERCE_CULTURE);
-		// every term x100, nothing reduced -- the thresholds LIFT to meet them ([DEC-fixedpoint-x100]).
+		// every term x100, nothing reduced -- the thresholds LIFT to meet them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 		iValue += 25 * GC.getSpecialistInfo(eSpecialist).getScalar(SCALAR_GREAT_PEOPLE_RATE, CASC_SCOPE_CITY, CASC_UNIT_FLAT);
 
 		iValue += GC.getSpecialistInfo(eSpecialist).getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_CITY);
@@ -12860,7 +12860,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 		// ⛔ No TECH-keyed happiness read: zero authorings anywhere (keyed happiness is empire.buildings).
 		// Does this building do ANYTHING for happiness? The keyed deposits (onto named buildings/bonuses) are an
 		// entry-list read ([modifier.md §5]); war weariness is one SCALAR whose city and former "global" spellings
-		// are the same slot at two scopes ([DEC-scope-is-an-axis]), so the empire read covers what the second
+		// are the same slot at two scopes (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)), so the empire read covers what the second
 		// getter used to answer.
 		std::vector<std::pair<int, int> > kKeyedHappy;
 		kBuilding.getModifiers()->targetedSums(MODFAM_HAPPINESS, CHANNEL_AMOUNT, CASC_SCOPE_EMPIRE,
@@ -12928,7 +12928,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 	{
 		// The kinds that SURVIVE: the scope-wide amount (city + empire) and the three components. The coastal,
 		// connected-city, area and other-area "kinds" are gone -- each was a CONDITION wearing a member's name
-		// ([DEC-conditions-are-predicates]). A building that helps only while coastal / connected / abroad now
+		// (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)). A building that helps only while coastal / connected / abroad now
 		// says so as a conditioned deposit on the ordinary kind, so this same test still catches it.
 		if (kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_CITY) < 0
 		|| kBuilding.getMaintenanceModifier(MAINTENANCE_AMOUNT, CASC_SCOPE_EMPIRE) < 0
@@ -13155,7 +13155,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 
 	//	The empire's realized commerce arrives from the valuation BASIS -- the receiver Σ asked of the ONE
 	//	roll-up once per scoring PASS, not per candidate. ⛔ Asking CvPlayer::getCommerces here re-walked EVERY
-	//	CITY, per candidate, per channel, inside the building-scoring loop ([DEC-legacy-decache-poisons-perf]:
+	//	CITY, per candidate, per channel, inside the building-scoring loop (docs/cascade.md §LEGACY DECACHE POISONS PERF MEASUREMENT:
 	//	an AI loop asking a receiver sum per candidate is answered by the CALLER caching its own inputs, never
 	//	by reshaping the machine).
 	iResult += kBuilding.getCommerceModifier((CommerceTypes)iI, CASC_SCOPE_EMPIRE) * aiPlayerCommerceRate[iI] / 8;
@@ -13206,7 +13206,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	}
 
 	// The corp-HQ clamp below weighs its gold estimate against what this city already earns on the channel.
-	// That is the city's REALIZED commerce -- the group read ([DEC-new-getter-surface]); nothing stores a
+	// That is the city's REALIZED commerce -- the group read (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)); nothing stores a
 	// per-source breakdown, so there is no building-only slice to ask for.
 	int aiRealizedCommerce[NUM_COMMERCE_TYPES];
 	getCommerces(aiRealizedCommerce);
@@ -13301,7 +13301,7 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 	else if (iCurrentTradeRoutes > 0)
 	{
 		// the stored yield is ×100 and this weight is human-scaled like the rest of the building score, so the
-		// reduce happens HERE, at the point of use, and only once ([DEC-fixedpoint-x100])
+		// reduce happens HERE, at the point of use, and only once (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 		iTradeRouteValue = getTradeYield(eYield) / (100 * iCurrentTradeRoutes);
 	}
 	else
@@ -14152,7 +14152,7 @@ const {
 		iValue += kBuilding.getScalar(SCALAR_FOOD_KEPT, CASC_SCOPE_CITY, CASC_UNIT_PERCENT) / 2;
 	}
 	// What this building is worth THROUGH THE SPECIALISTS it improves. A building boosting a specialist's
-	// output is own-output landed on the SPECIALIST, gated on the building's presence ([DEC-deliveryguy]), so
+	// output is own-output landed on the SPECIALIST, gated on the building's presence (docs/cascade.md §4 (the deliveryguy ownership rule)), so
 	// the building carries no such row and asking it is the inversion the model deleted. The specialists that
 	// name it are its RELATED family, and the worth is the DELTA between holding it and not -- one array per
 	// specialist, hoisted out of the channel loop below ([patterns.md] THE VALUATION PROTOCOL).

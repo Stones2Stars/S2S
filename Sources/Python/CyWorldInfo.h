@@ -18,7 +18,7 @@
 //	generic prefix-addressed plane ([CyInfo]) is reserved for what is genuinely UNIFORM across every registry:
 //	identity text, the classification tests, the edge families. A value belonging to ONE type is named HERE.
 //
-//	⚠ NOT the legacy per-FIELD getter contract ([DEC-new-getter-surface]) -- that ban is on the ~300 hand-named
+//	⚠ NOT the legacy per-FIELD getter contract (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)) -- that ban is on the ~300 hand-named
 //	getters mirroring the old `CvXInfo` surface, which is a different axis from a named accessor per info TYPE.
 //	This carries the reads Python actually makes, and grows only as a real consumer asks for one.
 //

@@ -6,7 +6,7 @@
 //	DepositIndex -- the #430 COMPILED DEPOSIT INDEX: the load-time strings->ints compile over the info-side modifier
 //	families (modifier-substrate.md "the compiled deposit index"; cutover.md flip lesson: "the JSON stays
 //	HUMAN-shaped ... and the LOAD step programmatically compiles it into the top-down routing"). The INPUT SOURCE is
-//	the spec model ([DEC-json-not-cascade]): readJson's push walks each mapped info's compiled CvModifiers entries
+//	the spec model (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)): readJson's push walks each mapped info's compiled CvModifiers entries
 //	(`j->getModifiers()` / `j->getWhenObsolete()`) -- per CvModEntry, the spelled-back address + the entry's
 //	unit are interned ONCE into a cascade-side compiled record; the hot-path matchers (MMKernel et al.) then compare
 //	INTS, and a query address that was never authored anywhere answers 0 without touching a single deposit.
@@ -34,7 +34,7 @@ class CvInfo;
 class CvCondition;
 
 //
-//	The COMPILED DEPOSIT RECORD -- cascade-side ONLY ([DEC-json-not-cascade]: the retired info-side generic vector
+//	The COMPILED DEPOSIT RECORD -- cascade-side ONLY (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side): the retired info-side generic vector
 //	and its struct are gone; this equivalent record lives in the cascade's own index and is populated from the spec
 //	model's (address, CvModEntry) pairs at push time). The matchers read: addressId/unitId (whole-address +
 //	unit-segment ids), nSeg + seg[] (the compiled dotted segments), targetFk (the FK-resolved INFOTYPE tail),
@@ -48,7 +48,7 @@ struct CascadeDeposit
 	// The §3.9 ENTRY this record was compiled from. Held so a dependency route can hand the APPLY path the
 	// exact entries an atom gates or a count scales, and the apply resolves them through the ONE per-entry
 	// resolve (MMKernel::resolveEntry) rather than growing a second copy of it for this carrier
-	// ([DEC-single-implementation]). ⚑ Lifetime is exact, not assumed: entries live on the WRITE-ONCE info and
+	// (docs/architecture/patterns.md §DRY (single implementation)). ⚑ Lifetime is exact, not assumed: entries live on the WRITE-ONCE info and
 	// this index is dropped by clearCompiled() before any repo clear frees them, so the pointer cannot outlive
 	// its target.
 	const CvModEntry* entry;
@@ -136,7 +136,7 @@ public:
 	// compileDependencies() in ONE global pass over every compiled record's enabled/disabled trees, per
 	// scalers, and religion filters -- the routing stays a pure function of the index, never a hand-coded
 	// list per event site. The APPLY gets the DEPOSITS themselves: the exact entries that atom gates or that
-	// count scales, so it can move each slot by that entry's own resolved value ([DEC-maintained-sum]: B is
+	// count scales, so it can move each slot by that entry's own resolved value (docs/cascade.md §THE MAINTAINED SUM: B is
 	// ±value × Δcount on the COUNT fact, C is ±value on the ATOM's verdict crossing). Keys:
 	//  - an INFOTYPE the state names (a presence atom's `type`, a parameterized predicate's `param`, a typed
 	//    `per`): gatedByType, by the TYPE string ("BUILDING_X", "RELIGION_Y", ...);
@@ -158,7 +158,7 @@ public:
 	};
 	// ⚖ THE SOURCE INDEX -- a dense id per pushed source info, minted at push and stable for the load.
 	// The apply path records WHAT IT HAS DEPOSITED at an owner keyed on this, which is what plane B and C test
-	// before moving an already-deposited amount ([DEC-maintained-sum]: the count applies for every deposit whose
+	// before moving an already-deposited amount (docs/cascade.md §THE MAINTAINED SUM: the count applies for every deposit whose
 	// source is already live).
 	// ⛔ IT IS DELIBERATELY NOT THE ENGINE ID, and not a (kind, id) pair. Keying on the engine id would force the
 	// apply to route by INFOTYPE prefix to know which registry -- a per-call string walk on the event path, and a

@@ -29,7 +29,7 @@ class PlotContext;
 // ⛔ CALLER-OWNED, and NULL on every ordinary evaluation -- exactly the discipline the membership overlay keeps
 // (it never writes the maintained planes; this never writes a context). A hypothetical that mutated a context
 // store would leave every other reader evaluating against a game state that never happened, and with no
-// self-heal anywhere ([DEC-no-self-heal]) nothing would put it back.
+// self-heal anywhere (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT) nothing would put it back.
 //
 // ⚖ WHY IT IS SEPARATE FROM THE MEMBERSHIP OVERLAY rather than one class: a HAVE changes two different things
 // and only one of them is this. Whether a candidate is IN THE TREE is the membership formula over the enable/
@@ -92,7 +92,7 @@ struct CvCascadeEvalCtx
 	const std::set<int>* waivedPrereqBuildings;
 	// The cascade-COMPUTED ACTIVE (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for `city`; filled by
 	// EnablerKernel::recomputeOperatingBuildingsInto (the standing operatingBuildings cache). The evaluator READS it (stays decoupled from InfoRepo). Dormancy is 100%
-	// governed by operate enablers -- DERIVED here, NEVER read from the engine active-building/`/state` (DEC-calc-zero-ride-in).
+	// governed by operate enablers -- DERIVED here, NEVER read from the engine active-building/`/state` (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
 	// NULL = fall back to raw presence (hasBuilding).
 	const std::set<int>* activeBuildings;
 	// The cascade-COMPUTED OBSOLETE (present ∧ obsoleted-by-held-tech) building ids for `city`; filled by the SAME
@@ -161,7 +161,7 @@ bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec);
 
 // THE count implementation ("how many of TYPE/token at SCOPE?") -- the ONE countable core shared by the
 // condition count-atoms (ev_countOf) and the §3.7 `per` resolver (MMKernel::perScale); never a parallel count
-// path (DEC-single-implementation). Routes by type prefix / catch-all token, tally-resolved at the cross-city
+// path (docs/architecture/patterns.md §DRY (single implementation)). Routes by type prefix / catch-all token, tally-resolved at the cross-city
 // scopes (tally.md); a type naming no countable domain falls back to presence 0/1.
 int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, const CvCascadeEvalCtx& ec);
 
@@ -171,7 +171,7 @@ bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, con
 // WHICH ATOM refused -- the leaf a FALSE verdict actually turns on. Returns NULL when the tree holds (nothing
 // refused), so a caller tests the pointer rather than evaluating twice.
 //
-// ⛔ IT IS A NAVIGATION, NEVER A SECOND EVALUATOR ([DEC-single-implementation]). Every truth question it asks
+// ⛔ IT IS A NAVIGATION, NEVER A SECOND EVALUATOR (docs/architecture/patterns.md §DRY (single implementation)). Every truth question it asks
 // goes to cascadeEvalCondition above; all this decides is WHICH CHILD to descend into, mirroring that
 // function's own arms (including the waived-prereq skip). A consumer re-deriving the cause by re-testing the
 // clauses itself would be a second gate implementation, free to disagree with the verdict it claims to explain
@@ -187,7 +187,7 @@ const CvCondition* cascadeFailingAtom(const CvCondition* c, const CvCascadeEvalC
 
 // The TOP-LEVEL CLAUSE decomposition of a requires tree -- what a reader means by "the clauses" of a
 // requirement. An `all` root is a LIST of independent clauses; anything else is ONE clause standing whole.
-// [DEC-single-implementation]: two consumers need the same decomposition for OPPOSITE reasons and each had
+// docs/architecture/patterns.md §DRY (single implementation): two consumers need the same decomposition for OPPOSITE reasons and each had
 // grown its own -- the tooltip renderer walks the clauses to colour each by its own verdict, the enabler walks
 // them to weigh hide-vs-grey across ALL the failures. While both walks were private, one stopped at the first
 // failure and the other did not, so clause ORDER decided what the player saw in one place and nothing in the
@@ -198,7 +198,7 @@ void cascadeTopLevelClauses(const CvCondition* pRoot, std::vector<const CvCondit
 // The §3.7 counted-kind RELIGION filter's count leg (ruling 23): how many of ec.cityContext's present religions match
 // `filter` (each religion tested with ctx.religion set -- the IS_STATE_RELIGION predicate's input). A NULL
 // filter counts every present religion; no city -> 0. The ONE religion-count implementation -- the `religion:`
-// qualifier's resolver (MMKernel::perScale) and any future consumer share it (DEC-single-implementation).
+// qualifier's resolver (MMKernel::perScale) and any future consumer share it (docs/architecture/patterns.md §DRY (single implementation)).
 int cascadeCountCityReligions(const CvCondition* filter, const CvCascadeEvalCtx& ec);
 
 // The ENTITY-LEVEL applicability gate (json.md §2 Applicability; owner 2026-07-08): the entity applies only

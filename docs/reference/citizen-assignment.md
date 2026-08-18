@@ -12,7 +12,7 @@ them by value, and WALKS the order.
 
 | step | what it does |
 |---|---|
-| `AI_scoreCitizenOptions` | the ONE scoring body — every free workable plot + every valid specialist type, scored into a caller-owned list ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)) |
+| `AI_scoreCitizenOptions` | the ONE scoring body — every free workable plot + every valid specialist type, scored into a caller-owned list ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) |
 | `AI_fillCitizensByPriority` | sorts that list descending and seats the whole unassigned population from it |
 | `AI_addBestCitizen` | the single-placement entry point (the juggle pass uses it); reads the SAME scoring body |
 
@@ -158,7 +158,7 @@ then adds its own kind-specific terms:
 Both scores are built entirely from ×100 cascade values — plot yields via the `getYields()` group read,
 specialist yields/commerce from the ×100-native `CvPlayer::specialistYield` / `specialistCommerce`, and the
 GPP / keyed-XP / wellbeing / underworld terms straight off the info. **Nothing reduces anywhere in the chain**
-([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)); the single `÷100` lives at the read
+([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)); the single `÷100` lives at the read
 edge (Python / the `Cy` bindings).
 
 ⚑ **A score is only ever compared against another score, so its absolute scale CANCELS.** That is why no
@@ -189,7 +189,7 @@ ranks identically.
 > ⇒ **When converting a scoring function to ×100, the census is every ADDEND, every literal COMPARAND and every
 > mixed `min`/`max` — not the multipliers, which are the ones that need no attention.** A whole-number operand
 > LIFTS to meet the yields; the yields are never reduced to meet it
-> ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)).
+> ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)).
 
 ⛔ **The one requirement is that every input shares ONE scale — and a partial conversion is worse than none.**
 The worked failure: five of the specialist's six info reads carried a `/100` while the keyed XP read did not,
@@ -227,19 +227,19 @@ way to be told the best plots may have moved.
 load").** `CvGame::onFinalInitialized` marks every alive player's cities after the load-end rebuilds settle, so
 the first post-load sweep re-runs the assignment against this build's values rather than trusting the save's —
 a mark only; no assignment work runs inside the load path
-([event-spine.md](../specs/event-spine.md) § AI RE-EVALUATION).
+([spine.md](../spine.md) § AI RE-EVALUATION).
 
 **The call sites now conform to the set below, scoped to the cities whose inputs actually moved.** There is no
 game-wide fan any more (`CvGameAI` carries none): a civic/religion/wellbeing grantor fans its OWN player's
 cities, war and peace fan the TWO teams involved, a holy-city designation marks the two cities it moved
 between, and a city's population change marks that city. A mark whose value fed no citizen input at all — the
 Python-only yield/commerce modifier planes, non-state-religion building commerce, the corp-HQ designation — is
-gone ([DEC-flag-is-fossil](../architecture/decisions.md#dec-flag-is-fossil): each asserted a change no citizen
+gone ([a staleness flag is the fossil of a missing emit](../cascade.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up): each asserted a change no citizen
 decision could read).
 
 ⚖ **It LISTENS TO THE EVENT SPINE; no AI loop ever touches it directly (owner).** This is a ROUTING job, never a
 judgement re-made per call site — the same shape the player-alert re-attach uses
-([event-spine.md](../specs/event-spine.md)).
+([spine.md](../spine.md)).
 ⚑ **Every trigger below is already a DOMAIN fact** — the plot substrate, the building/population/civic/trait
 facts, the culture-level fact and the working-city fact all announce today. No new emit is a prerequisite here.
 
@@ -262,7 +262,7 @@ per-plot fact announces this) and the water-work TEAM capability.
 ⛔ **Three marks are UNIT-MOVEMENT driven and stand as live per-move marks PENDING A DELIBERATE DECISION
 (owner):** an enemy unit sieging a plot (`CvUnit::setXY`), a naval blockade (`CvPlot::changeBlockadedCount`),
 and the military-happiness garrison count (`CvCity::changeMilitaryHappinessUnits`). Unit movement never dirties
-a cache ([DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top)), so these must
+a cache ([unit-carried modifiers apply on top, live, never cached](../cascade.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling)), so these must
 not ride the spine routing when it lands — but they were NOT cut with the fossils, because the siege/blockade
 marks are LOAD-BEARING today: `verifyWorkingPlots` runs only inside the flag-gated assignment, so without them
 a besieged city would keep working a plot it cannot work. The deliberate decision (a turn-cadence `canWork`
@@ -282,10 +282,10 @@ value actually CHANGED, so an ungated stand-in adds to the very churn the instru
   the two sides differ on.
 - **`[CIT/assign/run]`** — one completed run (runs per city per turn is the churn shape).
 
-All are level 3 (the per-candidate tier, [observability.md](observability.md)), so they cost nothing until asked
+All are level 3 (the per-candidate tier, [spine.md](../spine.md)), so they cost nothing until asked
 for.
 
 ## See also
 - [yields-growth.md](yields-growth.md) — the food/growth mechanics the growth gates test.
-- [../specs/modifier.md](../specs/modifier.md) §6 — `freeSpecialists` / `allowedSpecialists`, the deposits that
+- [../specs/modifier.md](../cascade.md) §6 — `freeSpecialists` / `allowedSpecialists`, the deposits that
   set the caps this walk re-checks.

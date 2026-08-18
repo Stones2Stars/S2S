@@ -139,7 +139,7 @@ namespace
 
 // The [XP/production] decomposition. Emitted from CvCity::addProductionExperience -- a different translation unit --
 // so it sits at file scope rather than in the anonymous namespace above. Its terms come OUT of the real combine
-// ([DEC-single-implementation]): a census that re-derived its own decomposition could disagree with the number it
+// (docs/architecture/patterns.md §DRY (single implementation)): a census that re-derived its own decomposition could disagree with the number it
 // claims to explain, which is the one thing it must never do.
 void xpEmitProduction(const CvUnit* pUnit, int iCityId, int iFlat, int iPercent, int iKeyedCombat,
 	int iKeyedDomain, int iStateReligion, int iTotal)
@@ -774,7 +774,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	// ⚠ The ÷100 is a CLUSTER BOUNDARY, not a sanctioned shape: m_iBaseCombat100 is still a human whole number
 	// here (it mixes with getExtraStrength and the percent stack below), so this reduces to meet it. It goes
 	// when the combat cluster converts as a unit -- a scale conversion inside a calculation is the defect,
-	// never the fix ([DEC-fixedpoint-x100]; fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER).
+	// never the fix (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model); fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER).
 	// ⚠ -1 (not 0) on the NO_UNIT path: CvUnit::read() calls reset() with NO_UNIT before draining the stream, so
 	// this is also the pre-load value. 0 is a LEGITIMATE strength (non-combat units), so it cannot mark "unset";
 	// read() re-seeds from the type when the save carried no value (see the m_iBaseCombat100 read).
@@ -10649,7 +10649,7 @@ int CvUnit::airRange() const
 	// never a second channel -- only a second store that summed nothing.
 	// ⚠ A DOMAIN_AIR NUKE that is not a missile still answers its base alone, exactly as before; the nuke leg is
 	// its own kind (AIR_NUKE_RANGE, read by nukeRange) and is deliberately not folded in here.
-	// ⚠ AIR_RANGE is a FLAT slot, so it reduces at this point of use ([DEC-fixedpoint-x100]).
+	// ⚠ AIR_RANGE is a FLAT slot, so it reduces at this point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	const SpecialUnitTypes eMissile = GC.getSPECIALUNIT_MISSILE();
 	if (getDomainType() == DOMAIN_AIR && (nukeRange() == -1 || getSpecialUnitType() == eMissile))
 	{
@@ -10666,7 +10666,7 @@ int CvUnit::nukeRange() const
 	// ⛔ The -1 SENTINEL IS PRESERVED HERE, deliberately. The cascade sums an unauthored slot to 0 while the
 	// legacy field used -1 for "not a nuke", and that sentinel is load-bearing across this accessor's callers
 	// (`>= 0`, `> -1`, `!= -1`) -- returning 0 would make every one of them true for EVERY unit. The slot is a
-	// FLAT, so it reduces here ([DEC-fixedpoint-x100]); every authored range is >= 1, so 0 is unambiguous.
+	// FLAT, so it reduces here (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); every authored range is >= 1, so 0 is unambiguous.
 	const int iRange = m_pUnitInfo->getAir(AIR_NUKE_RANGE, CASC_SCOPE_UNIT) / 100;
 	return iRange > 0 ? iRange : -1;
 }
@@ -11059,7 +11059,7 @@ bool CvUnit::isDead() const
 
 
 // The human WRITE boundary (WorldBuilder / the Cy binding edit in whole numbers), so it lifts to the ×100
-// native scale here -- strength is ×100 everywhere inside the engine ([DEC-fixedpoint-x100]).
+// native scale here -- strength is ×100 everywhere inside the engine (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 void CvUnit::setBaseCombatStr(int iCombat)
 {
 	m_iBaseCombat100 = 100 * iCombat;
@@ -11091,7 +11091,7 @@ int CvUnit::airBaseCombatStr() const
 int CvUnit::baseCombatStrPreCheck() const
 {
 	// Both legs are ×100 and stay ×100 -- the base member and the resolved promotion/unit-combat delta are on the
-	// same scale, so they add directly and nothing is reduced inside the calculation ([DEC-fixedpoint-x100]).
+	// same scale, so they add directly and nothing is reduced inside the calculation (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int iStr = m_iBaseCombat100 + resolvedValue(URS_STRENGTH_FLAT);
 
 	if (iStr < 0)
@@ -12385,7 +12385,7 @@ int CvUnit::fortifyModifier() const
 	//	⛔ BOTH defines read from the CACHED set. getDefineINT("...") is a string-keyed lookup through the
 	//	variable system on EVERY call, and this sits under the pathfinder's per-node cost function
 	//	(generatePath -> NewPathCostFunc -> AI_compareStacks -> AI_sumStrength -> currCombatStr -> maxCombatStr),
-	//	which is exactly the per-step-gate cost class [DEC-materialize-at-mapfrom] names. Its neighbour on this
+	//	which is exactly the per-step-gate cost class docs/architecture/patterns.md §Materialize at mapFrom names. Its neighbour on this
 	//	same line was already cached; only this one was not.
 	return range(getFortifyTurns(), 0, GC.getMAX_FORTIFY_TURNS()) * GC.getFORTIFY_MODIFIER_PER_TURN();
 }
@@ -12463,7 +12463,7 @@ int CvUnit::maxXPValue(const CvUnit* pVictim, bool bBarb) const
 
 
 // ⚠ URS_FIRST_STRIKES is a FLAT slot (×100), and a first strike is a whole COMBAT ROUND, so it reduces at this
-// point of use ([DEC-fixedpoint-x100]). Returning it raw grants a hundred-plus retaliation-free rounds per
+// point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). Returning it raw grants a hundred-plus retaliation-free rounds per
 // promotion and feeds getCombatOddsImpl's binomial loops at n in the hundreds.
 int CvUnit::firstStrikes() const
 {
@@ -13040,7 +13040,7 @@ int CvUnit::cargoSpace() const
 		int iCargoCapacity = SMcargoSpaceFilter();
 
 		//	The empire's own hold allowances, by carrier kind. FLAT slots, so each reduces at its point of use
-		//	before the rank scaling ([DEC-fixedpoint-x100]).
+		//	before the rank scaling (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 		int aiCargo[NUM_CARGO_KINDS];
 		GET_PLAYER(getOwner()).getCargoKinds(aiCargo);
 
@@ -16554,7 +16554,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		return false;
 	}
 	//TB Combat Mods Begin
-	//	THE PROMOTION'S `requires.build`, through the ONE evaluator ([DEC-single-implementation]). This single
+	//	THE PROMOTION'S `requires.build`, through the ONE evaluator (docs/architecture/patterns.md §DRY (single implementation)). This single
 	//	gate replaces the whole hand-rolled prereq battery -- the AND prereq, the OR pair, and the plot-substrate
 	//	prereqs below -- because the curator authors every one of them into `requires`: 508 promotions carry a
 	//	requires.build, which is the LADDER (each rung naming the rung beneath it, json.md §9) plus two terrain
@@ -16749,7 +16749,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 
 		// The whole-entity game-option gate -- the promotion's own enabled/disabled pair, and its line's.
 		// The legacy On/NotOnGameOption lists author here now and are served WHOLE by getGate()
-		// ([DEC-entity-gate]); evaluating them through the ONE evaluator is what keeps the option test in a
+		// (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT); evaluating them through the ONE evaluator is what keeps the option test in a
 		// single place rather than hand-rolled per site.
 		CvCascadeEvalCtx ecGate;
 		GET_PLAYER(getOwner()).getEmpireContext().fillEvalCtx(ecGate);
@@ -17219,7 +17219,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	if (isWorker())
 	{
 		bool bChanged = false;
-		// The work-rate scalars are PERCENTS, so they are not scaled ([DEC-fixedpoint-x100]).
+		// The work-rate scalars are PERCENTS, so they are not scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 		const int iHillsWork = kUnitCombat.getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
 		if (iHillsWork != 0)
 		{
@@ -17261,7 +17261,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraNoDefensiveBonusCount((kUnitCombat.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS) ? 1 : 0) * iChange);
 	changeExtraGatherHerdCount((kUnitCombat.hasSkill(CLS_SKILL_GATHER_HERD) ? 1 : 0) * iChange);
 	changeSurvivorChance((kUnitCombat.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);//no merge/split
-	// The combat FLATS are ×100; the reader reduces at its point of use ([DEC-fixedpoint-x100]).
+	// The combat FLATS are ×100; the reader reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	changeExtraBreakdownChance(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split (larger/smaller just more/less survivable)
 	changeExtraBreakdownDamage(kUnitCombat.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split
 	// The SM figures are the `sizeMatters` BLOCK (json.md par.9), plain authored ints -- never a family, so no
@@ -17362,7 +17362,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	//	The TERRAIN / FEATURE / UNITCOMBAT keyed axes, read off the entity's OWN compiled entries -- the handful
 	//	it authored, never a walk of a keyed container the info no longer holds. `combat` is what modifies
 	//	`strength` (json.md §6), so attack/defense are combat kinds; the work rate is its own family.
-	//	⚠ All of these are PERCENTS, so none is scaled ([DEC-fixedpoint-x100]).
+	//	⚠ All of these are PERCENTS, so none is scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	std::vector<std::pair<int, int> > kKeyed;
 	InfoValuation::collectKeyedCombat(kUnitCombat.getModifiers(), InfoValuation::COMBAT_TARGET_TERRAIN, COMBAT_ATTACK, kKeyed);
 	for (size_t iK = 0; iK < kKeyed.size(); ++iK)
@@ -17623,7 +17623,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraGatherHerdCount((kPromotion.providesSkill(CLS_SKILL_GATHER_HERD) ? 1 : 0) * iChange);
 
 	changeSurvivorChance((kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);
-	//	the heal accumulators carry whole hit points; the deposits are ×100 flats ([DEC-fixedpoint-x100])
+	//	the heal accumulators carry whole hit points; the deposits are ×100 flats (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 
 	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraMoveDiscount(kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);
@@ -17643,7 +17643,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	}
 	changeOnslaughtCount((kPromotion.providesSkill(CLS_SKILL_ONSLAUGHT)) ? iChange : 0);
 
-	//	the combat accumulators carry whole points; the deposits are ×100 flats ([DEC-fixedpoint-x100])
+	//	the combat accumulators carry whole points; the deposits are ×100 flats (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 	changeExtraBreakdownChance(kPromotion.getFlatCombat(COMBAT_BREAKDOWN_CHANCE, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraBreakdownDamage(kPromotion.getFlatCombat(COMBAT_BREAKDOWN_DAMAGE, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExcileCount((kPromotion.providesSkill(CLS_SKILL_EXCILE) ? 1 : 0) * iChange);
@@ -17670,7 +17670,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	if (isWorker())
 	{
 		bool bChanged = false;
-		//	workRate percents are whole numbers and are NOT ×100 ([DEC-fixedpoint-x100]: a percent carries no
+		//	workRate percents are whole numbers and are NOT ×100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a percent carries no
 		//	decimals), so these re-point 1:1 with no scale step. The per-TERRAIN rows are applied by the
 		//	terrain loop below, which is where a peak's rate now lives too — TERRAIN_PEAK is a terrain.
 		const int iHillsWork = kPromotion.getScalar(SCALAR_WORK_RATE_HILLS, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT);
@@ -17830,7 +17830,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 
 	//	FLANKING is keyed by UNITCOMBAT ([json.md] §6: `combat.<scope>.flanking.{UNITCOMBAT_X}`), so the rows are
 	//	the entity's OWN authored handful rather than a sweep of every combat class. The values are percents and
-	//	are therefore not ×100 ([DEC-fixedpoint-x100]).
+	//	are therefore not ×100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	{
 		std::vector<std::pair<int, int> > flankRows;
 		InfoValuation::collectKeyedTarget(kPromotion.getModifiers(), MODFAM_COMBAT, COMBAT_AMOUNT,
@@ -18260,7 +18260,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 		m_iBaseCombat100 = m_pUnitInfo->getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT);
 	}
 	m_movementCharacteristicsHash = m_pUnitInfo->getZobristValue();
-	// THE RESEED EMIT (DEC-spine-reseed): the unit INSTANCE fact. A loaded unit never runs init(), so without this
+	// THE RESEED EMIT (docs/spine.md §5 (the load reseed)): the unit INSTANCE fact. A loaded unit never runs init(), so without this
 	// the stream shows an empire whose units all predate the save. Emitted HERE, the first point m_iID / m_eOwner /
 	// m_eUnitType have all deserialized. Result-producers suppress inside the load bracket, so this restores the
 	// instance without re-granting anything -- the emitCityBuildingAdded(bFirst = false) contract.
@@ -18602,7 +18602,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMaxHP);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iFliesToMoveCount);
-	// The three SM base totals are DERIVED, so they are not read from the save ([DEC-derived-never-trusted]).
+	// The three SM base totals are DERIVED, so they are not read from the save (docs/specs/save.md §5 (derived data serializes NOTHING)).
 	// Each is a pure copy of this unit TYPE's load-derived rank (the info's Sigma over its combat classes,
 	// json.md par.9) whose only writer is the assignment in processUnitCombat -- and that never runs on a load,
 	// because the combat-class set is written straight into the keyed map above. Trusting the stored copy meant
@@ -18847,7 +18847,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 		{
 			// The component's EXISTENCE is DERIVABLE -- init creates it from the info's builds list, so the save
 			// is authoritative only for the component's CONTENTS (the extras block above), never for whether a
-			// builds-authoring unit IS a worker ([DEC-derived-never-trusted]). A save chain that once wrote the
+			// builds-authoring unit IS a worker (docs/specs/save.md §5 (derived data serializes NOTHING)). A save chain that once wrote the
 			// bool false left every existing worker unable to build ANYTHING forever -- hasBuild's first gate --
 			// which no later fix could repair through the round-trip. Seed the hills base exactly as the stored
 			// path does; the saved extras of a component lost by an old save are gone and stay gone.
@@ -22360,7 +22360,7 @@ void CvUnit::addMission(const CvMissionDefinition& mission)
 //	⛔ A BARE FETCH of the resolved set, folded when the promotion landed. It used to sweep the WHOLE promotion
 //	registry per ask -- and the unit panel asks it once per promotion the unit carries, on every redraw, so the
 //	cost was `held x REGISTRY` and grew QUADRATICALLY with promotions held while an unpromoted unit paid nothing.
-//	That is the own-data inversion ([DEC-one-reverse-view]): the answer needs only what the unit HOLDS, and the
+//	That is the own-data inversion (docs/cascade.md §1 (reverse lookups are populated once, at load)): the answer needs only what the unit HOLDS, and the
 //	unit already enumerates that.
 bool CvUnit::isPromotionOverriden(PromotionTypes ePromotionType) const
 {
@@ -22551,7 +22551,7 @@ bool CvUnit::canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree, bool 
 		return false;
 	}
 
-	//	THE PROMOTION'S `requires.build`, through the ONE evaluator ([DEC-single-implementation]) -- the same
+	//	THE PROMOTION'S `requires.build`, through the ONE evaluator (docs/architecture/patterns.md §DRY (single implementation)) -- the same
 	//	single gate the ACQUIRE half asks. It replaces the whole hand-rolled prereq battery this function used to
 	//	walk field by field (the plot-substrate axes -- terrain / feature / plot bonus / improvement / local
 	//	building -- and the promotion AND/OR trio beneath them), because the curator authors every one of them
@@ -22893,7 +22893,7 @@ void CvUnit::doSetUnitCombats()
 		setHasUnitCombat((UnitCombatTypes)iSubCombat, true);
 	}
 	// The unit's era stamp comes from the tech that UNLOCKS it, off its own ENABLED_BY reverse family
-	// ([DEC-one-reverse-view]) -- a tech names the units it unlocks in `enables.units`, so the unit has no
+	// (docs/cascade.md §1 (reverse lookups are populated once, at load)) -- a tech names the units it unlocks in `enables.units`, so the unit has no
 	// forward prereq of its own to read.
 	const TechTypes eEnablingTech = m_pUnitInfo->getEnablingTech();
 	const EraTypes eEra =
@@ -23041,7 +23041,7 @@ int CvUnit::breakdownDamageTotal() const
 }
 
 // ⚠ URS_TAUNT is a FLAT slot (×100) consumed as a human percent (`iValue += tauntTotal() * iValue / 100`), so
-// it reduces here ([DEC-fixedpoint-x100]) -- raw, a +50% taunt applies as roughly x51.
+// it reduces here (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- raw, a +50% taunt applies as roughly x51.
 int CvUnit::tauntTotal() const
 {
 	return std::max(0, resolvedValue(URS_TAUNT) / 100);
@@ -23137,7 +23137,7 @@ int CvUnit::combatModifierPerVolumeLessTotal() const
 
 //	`strength` is the BASE and `combat` is what MODIFIES it (json.md par.6), so the strength MODIFIER is the
 //	combat percent the RESOLVED plane already gathers from the unit's held promotions + combat classes.
-//	⚠ A PERCENT is not scaled ([DEC-fixedpoint-x100]), so this reduces by nothing -- the callers stack it as
+//	⚠ A PERCENT is not scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so this reduces by nothing -- the callers stack it as
 //	`100 + value`, which is the unscaled form.
 int CvUnit::getExtraStrengthModifier() const
 {
@@ -25520,7 +25520,7 @@ int CvUnit::stealthStrikesTotal() const
 		return 0;
 	}
 	// URS_STEALTH_STRIKES is a FLAT slot (×100) consumed as a whole strike count, so it reduces here
-	// ([DEC-fixedpoint-x100] -- the reader ÷100s at the point of use). The slot already gathers the unit's OWN
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- the reader ÷100s at the point of use). The slot already gathers the unit's OWN
 	// type alongside its promotions and combat classes, so this is the whole value in one read.
 	return std::max(0, resolvedValue(URS_STEALTH_STRIKES) / 100);
 }

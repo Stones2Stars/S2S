@@ -5,7 +5,7 @@
 //
 //	TechEnabler -- the TECH domain on the standardized enabler component (enabler.md par.7/7.1; CvEnabler.h):
 //	the player's researchable list as a maintained tri-state vector, built PURELY from DOMAIN events (one
-//	mechanism for load and play -- the load reseed's in-read emits ARE the same events, DEC-spine-reseed).
+//	mechanism for load and play -- the load reseed's in-read emits ARE the same events, docs/spine.md §5 (the load reseed)).
 //	initDomain() is the lifecycle sizing (arrays + static exclusions, NO content); onTechChanged() is the
 //	O(delta) applier the spine consumer routes (play emits + the reseed's per-held-tech emits alike); the read
 //	is the owner's bare member lookup (CvPlayer::getTechAvailability reads m_enabler.techs directly).

@@ -2,7 +2,7 @@
 //	CvModifiers -- the load COMPILE pass over an entity's §6 modifier families (see the header). The walk
 //	recurses the family tree exactly as authored (a unit keyword ends the address; a bare-number/array
 //	non-unit key is the count-by-type leaf; any other key recurses one segment deeper), decodes every leaf's
-//	address ONCE to typed ids (family / scope / kind / target -- [DEC-materialize-at-mapfrom]), and RETAINS
+//	address ONCE to typed ids (family / scope / kind / target -- docs/architecture/patterns.md §Materialize at mapFrom), and RETAINS
 //	every §3.9 deposit as a typed entry (the COMPLETE list -- unconditioned entries included, ruling 29).
 //	finalizeCompiled then derives the (family, kind, scope, unit) slot sums FROM that list at compile end --
 //	one derivation, list -> sums. Strings exist only inside this load-time walk.
@@ -776,7 +776,7 @@ void CvModifiers::landReverseEntry(CvModEntry* pEntry)
 //
 //	⛔ IT GATES; IT DOES NOT DROP. The option is per-GAME while an info is loaded once per PROCESS and shared by
 //	every game in it, so baking the verdict into the compiled data would make a shared immutable object mutable
-//	per game rather than per load ([DEC-json-not-cascade]). Composing the option onto the entry's `disabled`
+//	per game rather than per load (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)). Composing the option onto the entry's `disabled`
 //	keeps the decision where it belongs -- evaluated live, by the ONE evaluator.
 //
 //	⚑ WHY THIS PLACE COSTS NOTHING ELSEWHERE, which is the whole point of doing it here: attaching a condition
@@ -798,7 +798,7 @@ void CvModifiers::applyPureTraitGate(bool bNegativeTrait)
 			continue;   // a zero carries no alignment to oppose
 		}
 		// ⛔ ALIGNMENT IS NOT THE SIGN -- ask the FAMILY which way its numbers point
-		// ([DEC-single-implementation]: the one polarity table, `infoKindAlignmentInverted`). On an INVERTED
+		// (docs/architecture/patterns.md §DRY (single implementation): the one polarity table, `infoKindAlignmentInverted`). On an INVERTED
 		// (family, kind) a positive value is the DOWNSIDE, so the test flips with it.
 		// ⚑ Getting this wrong is silent in both directions and was: `lessYieldThreshold: +5` on a POSITIVE
 		// trait survived the gate as though it were a gain, while `maintenance.distance: -10%` -- a genuine
@@ -811,7 +811,7 @@ void CvModifiers::applyPureTraitGate(bool bNegativeTrait)
 		{
 			continue;
 		}
-		// The ONE typed-condition parser builds it, never a hand-rolled node ([DEC-single-implementation],
+		// The ONE typed-condition parser builds it, never a hand-rolled node (docs/architecture/patterns.md §DRY (single implementation),
 		// enabler.md §3.1). One per entry: an entry OWNS its trees and frees them in its dtor.
 		const picojson::value kGateLeaf(std::string("GAMEOPTION_LEADER_PURE_TRAITS"));
 		CvCondition* pGate = cascadeParseCondition(kGateLeaf);

@@ -6,7 +6,7 @@
 #include <string>
 
 //
-//	CyState -- the RESIDUE of the flat live-state surface, and it is BEING DISSOLVED ([DEC-accessor-homing]).
+//	CyState -- the RESIDUE of the flat live-state surface, and it is BEING DISSOLVED (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (accessor homing)).
 //
 //	⛔ NOTHING NEW GOES HERE. A game object's data is read from that object's OWN accessor -- a city's from
 //	CyCity, an empire's from CyPlayer -- and the mechanical test is the method NAME: the moment a name carries a
@@ -31,13 +31,13 @@
 //	  - THE EXISTING ENGINE ENUM INDEXES THE RESULT, never the call. A family with no engine enum is indexed by
 //	    its own kind enum, and the name says so (get<Family>Kinds).
 //
-//	⛔ EVERY VALUE IS x100 NATIVE ([DEC-fixedpoint-x100]) -- there is no `100` in any name, no scale variant, and
+//	⛔ EVERY VALUE IS x100 NATIVE (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- there is no `100` in any name, no scale variant, and
 //	no getter reduces. A script divides by 100 at the point it displays or compares against a whole game count.
 //	A PERCENT is NOT scaled, so a percent-unit channel is already the number you want.
 //
 //	⛔ EVERY READ IS A BARE FETCH -- nothing here gates, ensures or recomputes, exactly as on the C++ side, so a
 //	missed invalidation shows up in script as a visibly wrong number rather than being silently repaired at the
-//	boundary (state-repositories.md; [DEC-no-self-heal]).
+//	boundary (state-repositories.md; docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 //
 //	BOOST: this file uses ONLY the `python::` alias, never a bare `boost::` and never a using-directive -- the
 //	tree carries TWO Boosts and an unqualified name can resolve to the wrong one through the PCH (engine.md).

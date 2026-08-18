@@ -543,8 +543,6 @@ class CvTechChooser:
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_POPULATION").getPath(), WidgetTypes.WIDGET_HELP_HAPPINESS_RATE, iTech, -1, False)
 						elif sType == "FreeTech":
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_FREETECH").getPath(), WidgetTypes.WIDGET_HELP_FREE_TECH, iTech, -1, False)
-						elif sType == "WaterSight":
-							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_LOS").getPath(), WidgetTypes.WIDGET_HELP_LOS_BONUS, iTech, -1, False)
 						elif sType == "MapCentering":
 							ddsgfc("Item", AFM.getInterfaceArtInfo("INTERFACE_TECH_MAPCENTER").getPath(), WidgetTypes.WIDGET_HELP_MAP_CENTER, iTech, -1, False)
 						elif sType == "MapVisible":
@@ -766,8 +764,6 @@ class CvTechChooser:
 					techBenefits[iTech].append(["Health", -1])
 				if aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]:
 					techBenefits[iTech].append(["Happiness", -1])
-				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER):
-					techBenefits[iTech].append(["WaterSight", -1])
 				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_HAS_CENTERED_MAP):
 					techBenefits[iTech].append(["MapCentering", -1])
 				if INFO.providesCapability("TECH_", iTech, CapabilityId.CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED):

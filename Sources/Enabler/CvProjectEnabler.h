@@ -6,7 +6,7 @@
 //	ProjectEnabler -- the PROJECTS domain's PURE CALCULATORS on the standardized enabler component (enabler.md
 //	par.7/7.1; CvEnabler.h): initDomain (the lifecycle sizing, NO content) + the tech/project event-delta
 //	appliers that maintain CvPlayer::m_enabler.projects. The content is built PURELY from DOMAIN events -- the
-//	load reseed's in-read emits and the play-time emits are one mechanism (DEC-spine-reseed). Project CREATION
+//	load reseed's in-read emits and the play-time emits are one mechanism (docs/spine.md §5 (the load reseed)). Project CREATION
 //	stays a city production-list thing (CvCity::canCreate is the gate), but the domain is PLAYER-held (owner
 //	ruling): its axes are team-scope (a project builds like a wonder -- one city's queue, team-wide effect; the
 //	designed multi-city production feed never worked), so per-city copies would be byte-identical duplicated

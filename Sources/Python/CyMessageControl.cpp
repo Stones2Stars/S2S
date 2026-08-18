@@ -65,7 +65,7 @@ int CyMessageControl::GetConnState(int iPlayer) const
 
 //
 //	THE COMMAND boundary, republished. ⛔ This is NOT the banned read surface: the Cy* cut is DIRECTIONAL and
-//	only the info/state GETTER contract dies ([DEC-cy-not-fixed]). Every method here SENDS a net message --
+//	only the info/state GETTER contract dies (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)). Every method here SENDS a net message --
 //	the MP-safe way Python-authoritative UI asks the engine to act -- so it answers no question about game
 //	state and constitutes no getter contract. It was collateral in the binding purge, like TXT and ART.
 //

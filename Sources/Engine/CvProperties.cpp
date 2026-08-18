@@ -170,7 +170,7 @@ static void emitPropertyFact(const CvGameObject* pObject, PropertyTypes ePropert
 	// (EnablerKernel::propertyBandThresholds), so this is where they are tested -- ONCE, for every consumer.
 	// ⛔ Not in a consumer: the raw value fact fires for nearly every property of every city every turn as the
 	// solver runs, so a consumer gating on it would re-derive this sweep per consumer and pay it per event
-	// ([DEC-single-implementation]).
+	// (docs/architecture/patterns.md §DRY (single implementation)).
 	if (pObject->getGameObjectType() != GAMEOBJECT_CITY || iNewValue == iOldValue)
 	{
 		return;   // only a CITY carries an operate band; the other bags announce the value alone

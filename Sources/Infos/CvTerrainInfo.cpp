@@ -1,8 +1,8 @@
 //
 //	CvTerrainInfo -- the terrain poco's own typed reading on top of the base section dispatch (see the header).
 //	The yield/defense/cultureDistance families compile into m_modifiers via the base dispatch -- no per-family
-//	raw read survives here ([DEC-new-getter-surface]). mapFrom materializes the identity/art/sound census set
-//	ONCE into typed members ([DEC-materialize-at-mapfrom]); idempotent by contract.
+//	raw read survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)). mapFrom materializes the identity/art/sound census set
+//	ONCE into typed members (docs/architecture/patterns.md §Materialize at mapFrom); idempotent by contract.
 //
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson

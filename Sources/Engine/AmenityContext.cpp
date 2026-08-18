@@ -63,7 +63,7 @@ bool AmenityContext::wantsEvent(int iEventId)
 	// then leaves the amenity standing after its last grantor is gone.
 	// ⛔ The owner-REMOVED half is deliberately NOT here either -- see the apply.
 	case SEVT_CITY_OWNER_ADDED:
-	// The EMPIRE-LEVEL building grantor leg (DEC-empire-level-buildings): a player-held member's amenities reach
+	// The EMPIRE-LEVEL building grantor leg (docs/specs/enabler.md §2 (empire-level buildings)): a player-held member's amenities reach
 	// every city of the owner, so its ACTIVE crossing fans exactly as a civic swap does (239 members author
 	// amenities -- the power markers among them).
 	case SEVT_EMPIRE_BUILDING_ACTIVATED:
@@ -153,7 +153,7 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 	// ⚖ A CITY STARTING TO EXIST UNDER AN OWNER IS THE *ONLY* CIVIC FOLD-IN, AND OWNER_ADDED IS THAT MOMENT.
 	// It is announced for BOTH paths that produce one -- founding (`CvPlayer::found`) and acquisition
 	// (`CvPlayer::acquireCity`) -- and in both the store has just been zeroed, so the fold is a delta from a
-	// known zero ([DEC-keyed-accumulator]).
+	// known zero (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)).
 	// ⛔ THE WITHDRAWAL HALF IS DELIBERATELY ABSENT, and that is not an unrouted pair. `acquireCity` announces
 	// the removal against the *NEW* city id (its own comment: "the surviving entity now under the new owner"),
 	// so a `-1` there withdraws the OLD owner's civics from a store that never held them -- driving the count
@@ -166,7 +166,7 @@ void AmenityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			if (pCity != NULL)
 			{
 				pCity->amenity().foldAllCivicsOf(kEvent.iC, +1);
-				// ...and the owner's ACTIVE empire-level members (DEC-empire-level-buildings) -- the same
+				// ...and the owner's ACTIVE empire-level members (docs/specs/enabler.md §2 (empire-level buildings)) -- the same
 				// city-starts-existing leg, one grantor kind over.
 				pCity->amenity().foldAllEmpireBuildingsOf(kEvent.iC, +1);
 			}
@@ -251,7 +251,7 @@ void AmenityContext::foldAllCivicsOf(int iPlayer, int iSign)
 	}
 }
 
-// The empire-building fold-in (DEC-empire-level-buildings): the owner's ACTIVE empire-level members, folded like
+// The empire-building fold-in (docs/specs/enabler.md §2 (empire-level buildings)): the owner's ACTIVE empire-level members, folded like
 // its civics -- reading the player's own held set is the ordinary HAVE forward, and only an ACTIVE member
 // confers (the dormant firewall marker darkens nothing, exactly as a dormant building would).
 void AmenityContext::foldAllEmpireBuildingsOf(int iPlayer, int iSign)
@@ -365,7 +365,7 @@ void AmenityContext::applyKey(int iAmenityId, int iSign)
 	// is middleware between a source and its targets, so the two values genuinely differ: a plant completed during
 	// a blackout moves the store while delivering nothing, and a blackout lifting delivers power while the store
 	// stands still. Announcing the refcount would put the fact and every consumer's read on two different values,
-	// leaving plane C holding deposits nothing withdraws ([DEC-maintained-sum]).
+	// leaving plane C holding deposits nothing withdraws (docs/cascade.md §THE MAINTAINED SUM).
 	const bool bIsPowerKey = (iAmenityId == CLS_AMENITY_PROVIDES_POWER);
 	const bool bPoweredBefore = bIsPowerKey && m_city != NULL && m_city->isPowered();
 	// ⚖ THE GOVERNMENT CENTRE is the same crossing one key over, and it is SIMPLER than power's: no status gates
@@ -378,7 +378,7 @@ void AmenityContext::applyKey(int iAmenityId, int iSign)
 	// SILENCE. What that actually cost is the PREDICATE-backed keys: IS_GOVERNMENT_CENTER and HAS_FRESHWATER
 	// resolve through this fold and gate real deposits, and neither had a fact the modifier consumed -- so a
 	// deposit gated on one was applied when its source arrived and never re-resolved again
-	// ([DEC-no-self-heal]).
+	// (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// ⚠ The REST of the keys are read LIVE at their point of use -- the abolished<Channel> off-switches are a
 	// bare fold read at the wellbeing combine, and zoneOfControl / protectedCulture / adds3rdRing still ride
 	// legacy counters -- so none of them NEEDS this fact today. They announce because a crossing is a genuine

@@ -8,11 +8,11 @@
 //	ONLY a GATE + IDENTITY + REPLACE-TIER tag: it carries NO effect payload (the payload lives on the per-carrier
 //	CvOutcome instances -- mission-outcome-system.md), so the type composes no modifier unit and no enabler
 //	section. The authored `requires.all` is a flat list of bare type ids, materialized ONCE at mapFrom into the
-//	typed prereq members the gate reads ([DEC-materialize-at-mapfrom]) -- no per-call string read, and no section
+//	typed prereq members the gate reads (docs/architecture/patterns.md §Materialize at mapFrom) -- no per-call string read, and no section
 //	unit standing in front of a scalar nothing else consumes.
 //
 //	JSON-fed via mapFrom from Assets/Data/outcomes/*.json (curate_outcome.py); the XML read path is GONE
-//	([DEC-no-xml-into-game]) -- no getDataMembers, no CvInfoUtil.
+//	(AGENTS.md §Build And Test (no XML-into-game for replaced infos)) -- no getDataMembers, no CvInfoUtil.
 //
 //	The grouped flag axes each hold ONE typed member read by ONE getter parameterized over the group's natural
 //	index, never a bool-per-key hand getter. An outcome gate carries no magnitude entering cascade math, so

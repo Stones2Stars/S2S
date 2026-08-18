@@ -2,9 +2,9 @@
 
 > **⚖ THE GOVERNING MODEL — EACH PROPERTY IS A CHANNEL IN THE CASCADE, AND THE CASCADE FEEDS WHEREVER THE
 > PROPERTIES ARE SUPPOSED TO GO (owner).** That is not a new axis: it is
-> [DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield) applied to the plane it already
+> [every modifiable number is a yield](../../cascade.md#1-one-step-deposit-down-accumulate-read-o1) applied to the plane it already
 > names — every number game mechanics modify is a channel in the ONE machine — and
-> [state-repositories.md](../../architecture/state-repositories.md) already carries `PROPERTY_*` as one channel
+> [state-repositories.md](../../cascade.md) already carries `PROPERTY_*` as one channel
 > per property info in the minted channel sets.
 > ⇒ **The line falls where the WORK differs, and both halves keep their owner:**
 > - **the CASCADE owns WHICH SOURCES APPLY and their summed per-turn contribution** — a maintained sum like any
@@ -68,7 +68,7 @@
 > > MISSING GATHER (owner).** Get the DIRECTION right and they separate instantly:
 > > - **the RECEIVER Σ — many cities → one empire total.** The empire's gold / research / culture / espionage
 > >   (and maintenance) summed from its cities' realized values at the read
-> >   ([state-repositories.md](../../architecture/state-repositories.md) § A CROSS-SCOPE RECEIVER). It is REQUIRED
+> >   ([state-repositories.md](../../cascade.md) § A CROSS-SCOPE RECEIVER). It is REQUIRED
 > >   and it is BUILT (`InfoValuation::realizedAtEmpire`, gated on `!isDisorder()`) — *"otherwise research would
 > >   have failed"* (owner).
 > > - **the PROPERTY FAN — one source → many cities.** A single building's property source applying in every city
@@ -77,7 +77,7 @@
 > > ⚖ **Doing so is WANTED but only as STATS (owner): *"there is nothing stopping us to gather it all, just for
 > > shits and giggles, stats more than anything else."*** So an empire-wide per-property total is un-killed
 > > forward intent for the demographics/observability surface
-> > ([DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas)) — ⛔ never a cascade input
+> > ([the keep-unkilled-ideas policy](../parked/README.md#parked--out-of-active-scope-plans-kept-for-intent)) — ⛔ never a cascade input
 > > and never a thing the solver reads, or it becomes a second maintenance surface for values the cities own.
 >
 > **Then validate** — the turn-level pass (per-turn `PROPERTY_*` deltas attributed, education/crime normalise) on
@@ -97,7 +97,7 @@
 >
 > ⛔ Both live in the CURATOR/additions pipeline, never in the derived JSON — hand-editing `Assets/Data/**` is
 > banned, and any further balance move is a curator change → recurate + regen
-> ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
+> ([recurate on every decision](../../../AGENTS.md#git--delivery)).
 > Why: the ORIGINAL property design made all pollution-class `<Properties>` one-shots, but building designers
 > after the original design authored against the same block ASSUMING per-turn — the shipped XML is mixed-intent
 > data sharing one shape, and the one-shot semantic "makes no sense whatsoever". A sanctioned intentional
@@ -253,6 +253,6 @@ source; Canterbury crime/education normalise; commerce recovers on its own.
 ## Reference
 
 - [json.md](../../specs/json.md) §5 (grants pulses `on`/`relation`/`distance`), §9 (`properties` bespoke section),
-  §6 (families) · [modifier.md](../../specs/modifier.md) (`per`). Legacy: `CvPropertySource`/`CvPropertyManipulators`/
+  §6 (families) · [modifier.md](../../cascade.md) (`per`). Legacy: `CvPropertySource`/`CvPropertyManipulators`/
   `CvPropertySolver`/`CvGameObject.cpp:626-747` · `CIV4PropertyInfos.xml` (curator input, never read at runtime).
 - Doc nit found: `Sources/Mainpage.md:373` links a non-existent `docs/reference/CvPropertySolver.md`.

@@ -7,7 +7,7 @@
 namespace
 {
 	//	The ONE bounds gate for this registry. The id arrives from script, so it is checked here rather than
-	//	trusted ([DEC-info-plane-read-only]: a read never creates, and FASSERT_BOUNDS is compiled out of Release,
+	//	trusted (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD: a read never creates, and FASSERT_BOUNDS is compiled out of Release,
 	//	which is where this runs).
 	const CvUnitInfo* cyunit_unit(int iUnit)
 	{

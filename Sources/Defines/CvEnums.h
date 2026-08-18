@@ -466,7 +466,6 @@ enum WidgetTypes
 	WIDGET_HELP_HEALTH_RATE,
 	WIDGET_HELP_HAPPINESS_RATE,
 	WIDGET_HELP_FREE_TECH,
-	WIDGET_HELP_LOS_BONUS,
 	WIDGET_HELP_MAP_CENTER,
 	WIDGET_HELP_MAP_REVEAL,
 	WIDGET_HELP_MAP_TRADE,
@@ -1249,7 +1248,7 @@ enum CityOrderRead
 
 //	A UNIT's own scalars, plus the order state its selection group holds. One group, because the plot list and
 //	every unit panel ask for most of it at once ([patterns.md] THE TWO READ ROLES: the getter IS the group).
-//	⚠ UNIT_READ_EXPERIENCE is x100 NATIVE like every amount ([DEC-fixedpoint-x100]) -- the reader divides. The
+//	⚠ UNIT_READ_EXPERIENCE is x100 NATIVE like every amount (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- the reader divides. The
 //	rest are whole game counts (hit points, moves, a level, an enum value) and are NOT scaled.
 //	⚠ The ORDER slots come from the unit's selection GROUP, which is where Civ4 keeps activity/automation/mission;
 //	UNIT_READ_MISSION is the head of the queue, or -1 when the queue is empty.
@@ -1416,7 +1415,7 @@ enum CityCountRead
 //	⛔ TRADE ROUTES ARE NOT ONE OF THESE, and the reason is the test for anything proposed here: the city's
 //	extra trade routes are a DERIVED cascade read (`cascadeValue(MODFAM_TRADE_ROUTES, …)`), so there is no
 //	stored value to grant and no setter to write one. A derived value falls out of its sources
-//	([DEC-derived-never-trusted]) -- it is never handed over and never restored.
+//	(docs/specs/save.md §5 (derived data serializes NOTHING)) -- it is never handed over and never restored.
 enum CityGrantedExtra
 {
 	GRANTED_EXTRA_HAPPINESS = 0,
@@ -1439,7 +1438,7 @@ enum BuildingGrantedKind
 //	⛔ The positions are the PUBLISHED contract: a consumer indexes this list by name, never by a literal, so
 //	inserting a term anywhere but before NUM_CITY_YIELD_TERMS silently re-points every reader.
 //	⚠ The AMOUNT terms are x100 like every amount; YIELD_TERM_PERCENT_SUM and YIELD_TERM_WORKED_PLOTS are whole
-//	numbers ([DEC-fixedpoint-x100] -- the reader reduces at the point of use).
+//	numbers (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- the reader reduces at the point of use).
 enum CityYieldTerm
 {
 	YIELD_TERM_PLOT_BASE = 0,

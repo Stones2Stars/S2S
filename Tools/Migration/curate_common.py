@@ -474,8 +474,7 @@ HIDE_SEE_BASELINE = 1
 HIDE_NEGATE_STRENGTH = 10
 
 
-# ---- unitcombat -> identity TAG mapping (first pass, owner-approved; worklist:
-# docs/plans/structural-cleanup/unitcombat-tag-mapping.md). A tag is what a unit IS; a UnitCombat is the
+# ---- unitcombat -> identity TAG mapping (owner-approved). A tag is what a unit IS; a UnitCombat is the
 # good/bad-AGAINST stat group ([engine.md] UnitCombat). The mapping is ADDITIVE -- the UnitCombat is KEPT as the
 # stat source and merely also says what its carrier IS.
 #
@@ -530,7 +529,7 @@ TAG_BY_UNITCOMBAT = {
     "UNITCOMBAT_EARLY_SPACESHIP": ["space"], "UNITCOMBAT_WORMHOLE_SPACESHIP": ["space"],
     "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": ["space"], "UNITCOMBAT_ANTIMATTER_SPACESHIP": ["space"],
     "UNITCOMBAT_NUCLEAR_SPACESHIP": ["space"],
-    # --- flagged-remainder second pass (owner-approved 2026-07-21, unitcombat-tag-mapping.md §FLAGGED) ---
+    # --- flagged-remainder second pass (owner-approved 2026-07-21) ---
     # map-to-existing vocabulary:
     "UNITCOMBAT_HUNTER": ["recon"], "UNITCOMBAT_STRIKE_TEAM": ["recon"],   # (STRIKE_TEAM also -> outlaw via its CRIMINAL subcombat)
     "UNITCOMBAT_EXECUTIVE": ["merchant"], "UNITCOMBAT_PACIFIST": ["civilian"],

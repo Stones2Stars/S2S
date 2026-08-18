@@ -18,7 +18,7 @@
 //	not have. Ask which QUESTION is being answered: about the promotion, or about the unit holding it.
 //
 //	A purely-organizational static-methods class: no data members, never instantiated, and a static class rather
-//	than a namespace (VC7.1 / Boost / closed-EXE ABI mangling) -- [DEC-single-implementation]. The membership it
+//	than a namespace (VC7.1 / Boost / closed-EXE ABI mangling) -- docs/architecture/patterns.md §DRY (single implementation). The membership it
 //	sums over is materialized at load (CvPromotionInfo::getLineAccrual), so this walks a handful of ids and never
 //	the registry.
 //

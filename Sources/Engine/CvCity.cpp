@@ -172,7 +172,7 @@ void CvCity::getYields(int (&yields)[NUM_YIELD_TYPES]) const
 // through the ONE cross-scope roll-up, and the process conversion off the city's active process.
 // The REALIZED read: the live sliders go in. Its what-if sibling below asks the same question against a
 // HYPOTHETICAL slider set, and both share the ONE gather so neither can drift from the other
-// ([DEC-single-implementation]).
+// (docs/architecture/patterns.md §DRY (single implementation)).
 // The LIVE-slider read, with the census optionally kept. Both public reads come through here so the slider
 // gather exists once -- a second copy of it is exactly how a census drifts from the number it explains.
 void CvCity::commercesAtLiveSliders(int (&commerces)[NUM_COMMERCE_TYPES], CvCommerceSplitTerms* aTermsOut) const
@@ -444,7 +444,7 @@ void CvCity::getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const
 	growth[GROWTH_READ_FOOD_STORED]        = getFood();
 	// A READ EDGE (this group is published to Python and read nowhere else), so the two x100 RATE slots reduce
 	// here -- which also keeps the group uniform, since every other member is already a whole quantity: the
-	// threshold and turns-left are the whole-unit food BAR's ([DEC-fixedpoint-x100]).
+	// threshold and turns-left are the whole-unit food BAR's (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	growth[GROWTH_READ_FOOD_PER_TURN]      = foodDifference() / 100;
 	growth[GROWTH_READ_FOOD_CONSUMPTION]   = foodConsumption() / 100;
 	growth[GROWTH_READ_THRESHOLD]          = growthThreshold();
@@ -852,23 +852,23 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
 	// ⛔ ZERO ITS DELTA STORES. A CvCity is recycled out of an FFreeListTrashArray, and a keyed accumulator is
 	// correct ONLY from a known zero -- a reused slot would inherit the previous occupant's plotAttrs / vicinity
-	// counts, which no later ±1 can ever correct ([DEC-keyed-accumulator]).
+	// counts, which no later ±1 can ever correct (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)).
 	m_cityContext.clear();
 	// bind the CITY-scope yield planes, one per ORIGIN ([state-repositories.md] § THE ORIGIN RULE). Both start
-	// EMPTY and are filled ONLY by the facts ([DEC-maintained-sum]).
+	// EMPTY and are filled ONLY by the facts (docs/cascade.md §THE MAINTAINED SUM).
 	m_buildingYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	m_plotYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	m_cityPercents.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	m_specialistYields.bind(CASC_SCOPE_CITY, (int)eOwner, iID);
 	// The enabler's per-city state starts EMPTY and UN-READY: the domains are init'd by their domain enabler at
-	// this city's lifecycle start and filled by DOMAIN events thereafter ([DEC-spine-reseed]) -- never from the
+	// this city's lifecycle start and filled by DOMAIN events thereafter (docs/spine.md §5 (the load reseed)) -- never from the
 	// save. Clearing here is load-bearing because a CvCity is RECYCLED out of an FFreeListTrashArray: without it
 	// a new city would inherit the previous occupant's frontier and operating set.
 	m_enabler.reset();
 	m_operatingBuildings = OperatingBuildings();
 	// The AMENITY context, for exactly the same reason and in the same breath: it is a DELTA store, so it is
 	// correct only from a KNOWN ZERO, and a recycled slot would inherit counts no later delta could ever correct
-	// ([DEC-keyed-accumulator]). Bound here too -- the pointer IS this city.
+	// (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)). Bound here too -- the pointer IS this city.
 	m_amenity.bind(this);
 	m_amenity.clear();
 
@@ -2029,7 +2029,7 @@ int CvCity::findBaseYieldRateRank(YieldTypes eYield) const
 	if (!m_abBaseYieldRankValid[eYield])
 	{
 		// Ranked on the REALIZED yield off the cascade. No ÷100 anywhere here: a comparison is scale-invariant,
-		// so the ×100 values rank identically ([DEC-fixedpoint-x100] -- only a reader that MIXES with a human
+		// so the ×100 values rank identically (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- only a reader that MIXES with a human
 		// number converts).
 		int aiRealizedYields[NUM_YIELD_TYPES];
 		getYields(aiRealizedYields);
@@ -2249,7 +2249,7 @@ bool CvCity::canMaintain(ProcessTypes eProcess) const
 int CvCity::getFoodTurnsLeft() const
 {
 	// The projection divides into the whole-unit food BAR (threshold - stored), so the x100 rate reduces at this
-	// use ([DEC-fixedpoint-x100]). A sub-1.00 surplus floors to 0 and correctly reports no growth rather than
+	// use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). A sub-1.00 surplus floors to 0 and correctly reports no growth rather than
 	// dividing by it.
 	const int iFoodDifference = foodDifference() / 100;
 
@@ -3244,7 +3244,7 @@ int CvCity::getProductionPerTurn(ProductionCalc::flags flags = ProductionCalc::Y
 	getYields(aiRealizedYields);
 
 	// Both rates reduce HERE, where the amount plane meets whole HAMMERS and whole food
-	// ([DEC-fixedpoint-x100] -- a reader reduces at its point of use).
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- a reader reduces at its point of use).
 	const int iFoodProduction = (flags & ProductionCalc::FoodProduction)
 		? std::max(0, (aiRealizedYields[YIELD_FOOD] - foodConsumption(true)) / 100) : 0;
 	const int iOverflow = (flags & ProductionCalc::Overflow) ? getOverflowProduction() + getFeatureProduction() : 0;
@@ -3586,9 +3586,9 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 	// happiness, the yield and commerce modifiers, and the bonus-conditioned power count -- each of them a
 	// WHOLE-DATABASE building scan summing a bonus-keyed building field. Those fields are compiled DEPOSITS
 	// now, folded per scope by the cascade, so re-summing them city-side would be a second, drifting copy
-	// ([DEC-accumulator-cut-uniform]) -- and the scans go with them.
+	// (docs/cascade.md §THE LEGACY-ACCUMULATOR CUT) -- and the scans go with them.
 	// The NETWORK supply presence crossing. processNumBonusChange reaches here only on a genuine 0 <-> non-zero
-	// flip and always with +-1, so this is two happenings and never a magnitude ([DEC-facts-name-happenings]).
+	// flip and always with +-1, so this is two happenings and never a magnitude (docs/spine.md §A FACT NAMES THE HAPPENING).
 	if (iChange > 0)
 	{
 		emitCityBonusAdded(getID(), getOwner(), (int)eBonus);
@@ -3654,7 +3654,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	// ⚖ WHAT THIS FUNCTION IS NOW. It used to be the maintainer for ~50 per-source accumulators, one `change*`
 	// per authored building field. Those fields no longer exist on the rebuilt info -- the values are compiled
 	// DEPOSITS the cascade folds per scope, so re-summing them into a city-side store would be a second,
-	// drifting copy of data the packages already hold ([DEC-accumulator-cut-uniform]).
+	// drifting copy of data the packages already hold (docs/cascade.md §THE LEGACY-ACCUMULATOR CUT).
 	// What legitimately remains is what is NOT a modifier deposit: the supply this building puts into the city's
 	// vicinity, the engine-side counters and caps, the cross-scope fan-out, and the announcement.
 	if (!bReligiously && kBuilding.hasAttribute(CLS_ATTRIBUTE_ORBITAL_INFRASTRUCTURE))
@@ -3671,7 +3671,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	// group -- fed from here -- carried 96, so an industrial farm's pig, sheep and cow were supplied according to
 	// one and absent according to the other. A deposit asking whether the city held pig was answered NO while
 	// the farm stood there supplying it. The enabler owns it end to end now
-	// ([DEC-single-implementation]).
+	// (docs/architecture/patterns.md §DRY (single implementation)).
 
 	changeMaxAirlift(kBuilding.getAirlift() * iChange);
 	changeAirUnitCapacity(kBuilding.getAirUnitCapacity() * iChange);
@@ -3947,7 +3947,7 @@ int CvCity::getCulturePercentAnger() const
 		}
 	}
 	// The result is a PERCENT-anger term, bounded by the modifier -- it is the ratio that is returned, never
-	// the culture, so the reduce belongs here at the point of use ([DEC-fixedpoint-x100]).
+	// the culture, so the reduce belongs here at the point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	return static_cast<int>(GC.getCULTURE_PERCENT_ANGER() * iAngryCulture / iTotalCulture);
 }
 
@@ -4166,11 +4166,11 @@ void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBE
 	getWellbeing(wellbeing);
 
 	// (2) The HAPPINESS pair's raw-state inputs. Every one is a whole-citizen count, so each is lifted ×100 to
-	// meet the channels -- never the channels reduced to meet them ([DEC-fixedpoint-x100]: no getter reduces).
+	// meet the channels -- never the channels reduced to meet them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): no getter reduces).
 	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getRevSuccessHappiness());
 	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getVassalHappiness());
 	// ⚖ Unit-carried happiness is computed LIVE and added ON TOP, outside every cached sum and every percentage
-	// ([DEC-unit-modifiers-on-top]) -- which is exactly why unit movement dirties no wellbeing cache.
+	// (docs/cascade.md §2b (unit-carried modifiers apply on top, live)) -- which is exactly why unit movement dirties no wellbeing cache.
 	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getMilitaryHappiness());
 	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getCelebrityHappiness());
 	if (getHappinessTimer() > 0)
@@ -4317,7 +4317,7 @@ int CvCity::unhealthyPopulation(int iExtra) const
 // The unhealth the city's BUILDINGS contribute -- the one slice the realized group read cannot answer, since a
 // group read hands back the channel TOTAL over every source. The per-building term is already the cascade read
 // (getBuildingBadHealth resolves it through expectedWellbeing), so this sums those rather than a second
-// derivation ([DEC-single-implementation]). ⚑ It walks the OPERATING set: a dormant building deposits nothing
+// derivation (docs/architecture/patterns.md §DRY (single implementation)). ⚑ It walks the OPERATING set: a dormant building deposits nothing
 // (enabler.md §3.2). The area leg went with the area scope and the player leg with the empire accumulator -- an
 // empire-scope deposit rolls DOWN into each building's resolved value rather than being summed beside it.
 // ⚠ Per-DECISION cadence only (the AI what-if deltas); it is not a read path.
@@ -4380,14 +4380,14 @@ int CvCity::getFoodConsumedPerPopulation(const int iExtra) const
 	return 100 * GC.getFOOD_CONSUMPTION_PER_POPULATION() + (iPop100 - 100) * GC.getFOOD_CONSUMPTION_PER_POPULATION_PERCENT() / 100;
 }
 
-// ⚖ THE FOOD PLANE IS x100 NATIVE, END TO END ([DEC-fixedpoint-x100]: no reduce anywhere but an edge). The whole
+// ⚖ THE FOOD PLANE IS x100 NATIVE, END TO END (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): no reduce anywhere but an edge). The whole
 // chain -- the yield rate, consumption, the surplus -- speaks in x100, and there are exactly THREE edges out of
 // it: the WAREHOUSE deposit (changeFood, the food BAR is a whole-unit ledger -- north-star.md's warehouse
 // carve-out, the same edge the great-people progress uses), the WASTAGE table's whole-surplus INDEX, and the UI.
 // ⛔ The DISCRETE operands are lifted to meet the rate, never the reverse: angry citizens and health points are
 // whole COUNTS, so they convert AT THIS EDGE rather than dragging the rate down to them. The earlier shape did
 // the opposite -- it manufactured x100 on both operands inside getFoodConsumedByPopulation and undid both with a
-// single /10000 -- which is a calculation scaling its own inputs, the defect [DEC-fixedpoint-x100] names.
+// single /10000 -- which is a calculation scaling its own inputs, the defect docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) names.
 int CvCity::getFoodConsumedByPopulation(const int iExtra) const
 {
 	// TWO x100 operands multiplied is x10000, so the rescale belongs AT THE MULTIPLY and lands x100
@@ -4806,11 +4806,11 @@ if (!bHasCalculatedNeighbors) return MAX_INT;
 	else
 	{
 		terrainDistance += GC.getTerrainInfo((TerrainTypes)terrainType).getScalar(SCALAR_CULTURE_DISTANCE, CASC_SCOPE_PLOT, CASC_UNIT_FLAT) / 100;
-		// Terrain distance increased if can't trade on water terrain, can't see far (optics)
+		// Terrain distance increased if can't trade on water terrain
 		if (bIsWater)
 		{
 			if (!kTeam.isTerrainTrade((TerrainTypes)terrainType)) terrainDistance += 2;
-			if (!mainPlot->isAdjacentToLand() && !kTeam.isExtraWaterSeeFrom()) terrainDistance += 1;
+			if (!mainPlot->isAdjacentToLand()) terrainDistance += 1;
 		}
 		else
 		{
@@ -5716,7 +5716,7 @@ void CvCity::changeNumGreatPeople(int iChange)
 int CvCity::getBaseGreatPeopleRate() const
 {
 	// A FRESH GATHER from the cascade's greatPeopleRate channel, replacing the serialized per-source
-	// accumulator ([DEC-accumulator-cut-uniform]). ×100 native, and GPP is a whole count, so the single ÷100
+	// accumulator (docs/cascade.md §THE LEGACY-ACCUMULATOR CUT). ×100 native, and GPP is a whole count, so the single ÷100
 	// is here at the discrete boundary. The realized city read IS the roll-up over the chain this city sits
 	// under (team + empire + city, modifier.md §1), so the empire-scope trait deposits are ALREADY inside it —
 	// adding an empire aggregate on top would count each of them once per city plus once more.
@@ -5956,9 +5956,9 @@ void CvCity::changeNumBuildings(int iChange)
 
 
 // The four city-scope AMENITY verdicts, read from the city's own fold (json §8 / contexts.md). Each replaces a
-// hand-named serialized counter maintained by its own changer -- the shape [DEC-uniform-cache-shape] calls a
+// hand-named serialized counter maintained by its own changer -- the shape docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a
 // DEFECT, and the reason a NEW attribute used to cost an engine change (a counter, a fact, a predicate) instead
-// of being pure data. The fold is derived, so it serializes nothing ([DEC-derived-never-trusted]).
+// of being pure data. The fold is derived, so it serializes nothing (docs/specs/save.md §5 (derived data serializes NOTHING)).
 bool CvCity::isGovernmentCenter() const CITY_HAS_AMENITY(getCityContext(), "governmentCenter")
 
 /*
@@ -5981,7 +5981,7 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 	// axis merges two of them -- there is no area scope, so an `area` modifier authors at EMPIRE alongside
 	// `global` ([state-repositories.md]) and summing both would double-count -- and the connected-city leg was
 	// never a KIND: it is a CONDITION on an ordinary deposit, which the what-if evaluates against THIS city
-	// through the eval ctx ([DEC-conditions-are-predicates]). That is why this is a valuation, not a point read.
+	// through the eval ctx (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)). That is why this is a valuation, not a point read.
 	const int iModifier = kBuilding.expectedModifier(MODFAM_MAINTENANCE, MAINTENANCE_AMOUNT, CASC_UNIT_PERCENT,
 		getCityContext(), owner.getEmpireContext(), plotGroup(getOwner()));
 
@@ -6074,7 +6074,7 @@ int64_t CvCity::getMaintenanceTimes100() const
 
 // The realized value of ONE maintenance kind at this city -- what the per-component breakdowns display. It is
 // the same per-kind composition the total sums, exposed once rather than re-walked by each consumer
-// ([DEC-single-implementation]).
+// (docs/architecture/patterns.md §DRY (single implementation)).
 int64_t CvCity::maintenanceOfKind(int iKind) const
 {
 	if (hasStatus(CITYSTATUS_WE_LOVE_THE_KING_DAY) || isDisorder())
@@ -6089,7 +6089,7 @@ int64_t CvCity::maintenanceOfKind(int iKind) const
 
 // The two LEGS of one maintenance KIND over the city's own chain (team + empire + city). ONE description of
 // the chain, shared by every maintenance read here -- a consumer that re-walked it would be a second
-// description of the same thing ([DEC-single-implementation]).
+// description of the same thing (docs/architecture/patterns.md §DRY (single implementation)).
 void CvCity::maintenanceLegs(int iKind, int64_t& flatSum, int64_t& percentSum) const
 {
 	InfoValuation::rolledLegsAtCity(
@@ -6114,8 +6114,8 @@ int CvCity::maintenancePercentStack(int iKind) const
 //	⚠ BEHAVIOUR: the legacy changer re-scaled an in-flight `m_iHurryAngerTimer` proportionally whenever the
 //	modifier moved. A computed value has no change moment to hook, so a timer already running now simply
 //	resolves against the CURRENT modifier -- which is the recompute-from-source side, and the side
-//	[DEC-accumulator-cut-uniform] rules correct.
-//	⚠ The kind is a PERCENT, so it is not ×100 and nothing reduces here ([DEC-fixedpoint-x100]).
+//	docs/cascade.md §THE LEGACY-ACCUMULATOR CUT rules correct.
+//	⚠ The kind is a PERCENT, so it is not ×100 and nothing reduces here (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 int CvCity::getHurryAngerModifier() const
 {
 	int aiScalars[NUM_INFO_SCALARS];
@@ -6341,7 +6341,7 @@ int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, i
 int CvCity::getAdditionalSpoiledFood(int iGood, int iBad, int iHealthAdjust) const
 {
 	// Whole health points throughout (iGood/iBad/iHealthAdjust and the returned food figure), so the ×100-native
-	// verdict reduces here to join them ([DEC-fixedpoint-x100]: the reduce lives at the point of use).
+	// verdict reduces here to join them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the reduce lives at the point of use).
 	const int iRate = netHealth() / 100 + iHealthAdjust;
 
 	return std::min(0, iRate) - std::min(0, iRate + iGood - iBad);
@@ -6400,7 +6400,7 @@ int CvCity::getBuildingHealth(BuildingTypes eBuilding) const
 // entries -- through the ONE evaluator against this city's contexts.
 // ⚑ Good and bad health are ONE signed authored number, not two fields: modifier.md §2b routes a negative
 // health deposit to the opposing UNHEALTH channel at fill, so the split falls out of the group read.
-// ⚠ The group answers ×100 ([DEC-fixedpoint-x100]); these two getters are whole-health-point readers, so the
+// ⚠ The group answers ×100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); these two getters are whole-health-point readers, so the
 // ÷100 belongs here, at the point of use. `getBuildingHealthChange` stays: it is EVENT/VOTE-granted one-shot
 // state, not a derivable deposit ([state-repositories.md] -- events in a recompute cache is the banned shape).
 void CvCity::buildingWellbeing(BuildingTypes eBuilding, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
@@ -6602,7 +6602,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	// ⛔ No per-commerce-rate loop: a slider rate is a §3.1 count-scaler TOKEN, so that happiness is an ordinary
 	// deposit carrying a `per` and is already inside the wellbeing read -- adding it here would double it.
 
-	// War Weariness Modifier -- ONE scalar at two scopes ([DEC-scope-is-an-axis]); the city and the former
+	// War Weariness Modifier -- ONE scalar at two scopes (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); the city and the former
 	// "global" getter were the same slot, so both scopes are read rather than two members.
 	int iWarWearinessModifier =
 		kBuilding.getScalar(SCALAR_WAR_WEARINESS, CASC_SCOPE_CITY, CASC_UNIT_PERCENT)
@@ -6723,7 +6723,7 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 	// ⚠ The ÷100 is a CLUSTER BOUNDARY, not a sanctioned shape: iGood/iBad are still human whole points here
 	// (they mix with population and food below), so this reduces to meet them. It goes when the yield/food/
 	// wellbeing cluster converts as a unit -- a scale conversion inside a calculation is the defect, never the
-	// fix ([DEC-fixedpoint-x100]; fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER). Do not copy it.
+	// fix (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model); fixed-point-and-scales.md § CONVERT BY ARITHMETIC CLUSTER). Do not copy it.
 	int aiOwnWellbeing[NUM_WELLBEING_CHANNELS];
 	buildingWellbeing(eBuilding, aiOwnWellbeing);
 	addGoodOrBad((aiOwnWellbeing[WELLBEING_HEALTH] - aiOwnWellbeing[WELLBEING_UNHEALTH]) / 100, iGood, iBad);
@@ -7148,7 +7148,7 @@ void CvCity::changeFeatureProduction(int iChange)
 
 
 // ⚠ TRADE_ROUTE_AMOUNT is a FLAT slot (×100) and a trade route is a whole COUNT, so it reduces at this point of
-// use -- exactly as the TRADE_ROUTE_MAX sibling below does ([DEC-fixedpoint-x100]).
+// use -- exactly as the TRADE_ROUTE_MAX sibling below does (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 int CvCity::getExtraTradeRoutes() const { return cascadeValue(MODFAM_TRADE_ROUTES, TRADE_ROUTE_AMOUNT) / 100; }
 
 
@@ -7935,7 +7935,7 @@ int CvCity::getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuild
 			getCityContext(), kOwner.getEmpireContext(), pPlotGroup, aiDormed);
 		iDelta -= aiDormed[eIndex];
 	}
-	return iDelta / 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
+	return iDelta / 100;   // ÷100 at the reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 }
 
 // note: player->invalidateYieldRankCache() must be called for anything that is checked here
@@ -8107,7 +8107,7 @@ int CvCity::getBaseTradeProfit(const CvCity* pCity) const
 
 // The profit one route carries, ×100 like every other amount. `getBaseTradeProfit` is already ×100 and
 // `totalTradeModifier` is a plain percent, so the single `/100` here APPLIES the percentage -- it is not a scale
-// reduce, and there is deliberately no human twin beside it ([DEC-fixedpoint-x100]: no getter has a ×100
+// reduce, and there is deliberately no human twin beside it (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): no getter has a ×100
 // variant, and no name carries the scale). A reader wanting whole gold divides at its own point of use.
 int CvCity::calculateTradeProfit(const CvCity* pCity) const
 {
@@ -8205,7 +8205,7 @@ void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& i
 // into the player's generic modifier AND tracked separately for the UI, so the read had to undo its own
 // double-count. That dedup disappears with the split: the cascade keeps ONE accumulator per channel per scope.
 // ⛔ The hand-rolled MIN_INT dirty cache goes with it: a read is a bare fetch over the package, and the package
-// is invalidated by the spine ([DEC-uniform-cache-shape]) -- never a second dirty protocol beside it.
+// is invalidated by the spine (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE) -- never a second dirty protocol beside it.
 int CvCity::getTotalCommerceRateModifier(CommerceTypes eIndex) const
 {
 	const int iChannel = CascadeChannelRegistry::channelLookup(infoCommerceFamily(eIndex), (int)CHANNEL_AMOUNT, -1);
@@ -8259,7 +8259,7 @@ int CvCity::getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes 
 	int iDelta = aiCandidate[eIndex];
 
 	// A candidate that dorms an incumbent nets that incumbent's contribution back out; the ENABLER owns which
-	// buildings it supersedes ([DEC-enabler-not-cascade]).
+	// buildings it supersedes (docs/specs/enabler.md (enabler and cascade are two separate systems)).
 	std::vector<int> kSuperseded;
 	EnablerKernel::dormedByBuilding(this, (int)eBuilding, kSuperseded);
 	for (size_t iI = 0; iI < kSuperseded.size(); ++iI)
@@ -8848,7 +8848,7 @@ int CvCity::getNumBonuses(BonusTypes eIndex) const
 
 // The HELD SET behind getNumBonuses. It walks the plot group's own sparse holdings -- never the bonus registry --
 // and puts each candidate through the SAME read the single-bonus question uses, so the two cannot answer
-// differently ([DEC-single-implementation]).
+// differently (docs/architecture/patterns.md §DRY (single implementation)).
 // ⛔ The corporation pass is not belt-and-braces: a corporation PRODUCES a resource the network may not carry at
 // all, so it is absent from the group's map however the gate answers, and a walk of the group alone silently
 // drops that whole source class from any census built on it.
@@ -9624,7 +9624,7 @@ int CvCity::getMaxSpecialistCount() const
 }
 
 //	The manual-assign slot cap this city opens for one specialist type: a FRESH GATHER over its OPERATING
-//	buildings' own `allowedSpecialists.city.{SPECIALIST_X}` deposits ([DEC-accumulator-cut-uniform] -- the
+//	buildings' own `allowedSpecialists.city.{SPECIALIST_X}` deposits (docs/cascade.md §THE LEGACY-ACCUMULATOR CUT -- the
 //	serialized per-city/per-team ledgers this replaces carried save history no live source could reproduce).
 //	⚑ It reads through the KEYED TWIN because the family authors both shapes: the plain slots a building always
 //	opens, and the tech-gated ones beside them. The twin evaluates that conditioned tail through the ONE
@@ -9703,7 +9703,7 @@ void CvCity::setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 // ⚠ The count unit is ×100 like every other compiled magnitude, so the derivable half reduces here; the
 // one-shot ledger is a whole count and does not.
 //	The one-specialist slice of the group read below -- ~30 call sites want a single count. NOT a second
-//	implementation ([DEC-single-implementation]).
+//	implementation (docs/architecture/patterns.md §DRY (single implementation)).
 //	⚠ A caller wanting SEVERAL specialists must take the GROUP: this builds an eval ctx and walks the city's
 //	whole operating set AND the empire's sources, so calling it in a loop pays all of that once per specialist.
 //	That was the measured stall -- 40 specialists x per CITIZEN, through AI_ignoreGrowth.
@@ -9851,7 +9851,7 @@ bool CvCity::isFreePromotion(PromotionTypes ePromo) const
 // and empire scope is a PERCENT (the trait modifier). cascadeValue asks infoKindUnit at CITY scope, gets FLAT,
 // and returns the flat sum -- DISCARDING every trait percent. The consumer applies the result as percentage
 // points (`100 + x`), so both legs are summed here in those units: the flat reduces to human, the percent is
-// already human ([DEC-fixedpoint-x100]).
+// already human (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 int CvCity::getEspionageDefenseModifier() const
 {
 	const int iChannel = CascadeChannelRegistry::channelLookup(MODFAM_ESPIONAGE_DEFENSE, (int)CHANNEL_AMOUNT, -1);
@@ -10014,7 +10014,7 @@ void CvCity::alterWorkingPlot(int iIndex)
 
 // The building OPERATE verdicts, forwarded from the ENABLER's operating set (enabler.md §3.2) -- the one place
 // the active/dormant fixpoint is computed. ⛔ Never a second derivation here: re-deriving it from prereq getters
-// is the camouflaged ride-in [DEC-calc-zero-ride-in] bans, and it is what the deleted checkBuildings did.
+// is the camouflaged ride-in docs/specs/validation.md §pollution guardrail (zero legacy ride-in) bans, and it is what the deleted checkBuildings did.
 // `active` is present ∧ operate-holds ∧ ¬dormant-trigger ∧ ¬obsolete, so ACTIVE already implies present.
 bool CvCity::isActiveBuilding(BuildingTypes eIndex) const
 {
@@ -10053,7 +10053,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 
-	// DEC-empire-level-buildings: an identity.empireLevel building is held by the PLAYER, once, and is never
+	// docs/specs/enabler.md §2 (empire-level buildings): an identity.empireLevel building is held by the PLAYER, once, and is never
 	// present in any city -- every placing system funnels through here, so the routing lives here ONCE and the
 	// placing systems never learn the tag exists. The city stores nothing.
 	if (GC.getBuildingInfo(eType).isEmpireLevel())
@@ -10083,7 +10083,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 		{
 			// A DORMANT building contributed nothing, so there is nothing to un-process -- only an ACTIVE one
 			// needs its contribution removed. The verdict is the ENABLER's operating set (enabler.md §3.2), never
-			// a legacy disabled-flag ([DEC-calc-zero-ride-in]).
+			// a legacy disabled-flag (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
 			if (m_operatingBuildings.active.count((int)eType) != 0)
 			{
 				processBuilding(eType, -1, false, true);
@@ -10094,7 +10094,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 		// including a building removed while disabled (which skips processBuilding entirely). The processed
 		// (operating) crossing is the enabler's separate SEVT_BUILDING_ACTIVATED / _DORMANTED.
 		// The two directions are two FACTS, so the branch is here ONCE rather than in every consumer's body
-		// ([DEC-facts-name-happenings]).
+		// (docs/spine.md §A FACT NAMES THE HAPPENING).
 		if (bNewValue)
 		{
 			emitCityBuildingAdded(getID(), getOwner(), (int)eType, bFirst);
@@ -10107,7 +10107,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 		// (Buildings REPLACED by this one are not disabled here: a predecessor standing under its successor is
 		// reversible DORMANCY, authored as the target's `requires.operate.dormant` and resolved by the enabler's
 		// operate fixpoint -- enabler.md §2. Re-deriving it here would be the hand re-derivation
-		// [DEC-calc-zero-ride-in] bans.)
+		// docs/specs/validation.md §pollution guardrail (zero legacy ride-in) bans.)
 	}
 }
 
@@ -10189,7 +10189,7 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 			}
 
 			// `enables.corporations` -- the building unlocks a corporation, and founding it here designates this
-			// city as its headquarters. The edge family is the load-compiled forward view ([DEC-one-reverse-view]).
+			// city as its headquarters. The edge family is the load-compiled forward view (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 			if (const std::vector<int>* pFounds = kBuilding.edge(EDGEF_ENABLES, EDGEB_CORPORATIONS))
 			{
 				for (std::vector<int>::const_iterator it = pFounds->begin(); it != pFounds->end(); ++it)
@@ -12242,7 +12242,7 @@ void CvCity::doGreatPeople()
 // The TWO-PHASE stream read (FFreeListTrashArray.h ReadStreamableFFreeListTrashArrayTwoPhase). Phase 1
 // deserializes ONLY the id so the loader can REGISTER the city in its owner's list before phase 2 streams the
 // rest -- which is what lets the DOMAIN events the body emits from inside its own read resolve through the
-// ordinary id lookup ([DEC-spine-reseed]). Same bytes in the same order as a single-phase read; only the
+// ordinary id lookup (docs/spine.md §5 (the load reseed)). Same bytes in the same order as a single-phase read; only the
 // moment the object becomes resolvable differs.
 void CvCity::readIdentity(FDataStreamBase* pStream)
 {
@@ -12442,7 +12442,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 		// The WORKED set, landed the same way as the wholesale arrays above. Without this no plot's IS_WORKED
 		// verdict is announced by a load at all: the array deserializes whole, setWorkingPlot never runs, and
-		// the bit is re-derived by its own fact and by nothing else ([DEC-contexts-are-never-marked]) -- so it
+		// the bit is re-derived by its own fact and by nothing else (docs/cascade.md §Maintained EVENT-DRIVEN (a context is never marked)) -- so it
 		// read FALSE for the entire session while isWorkingPlot said true.
 		// ⚑ The cities stream AFTER the map, so the plot exists to carry the bit; and the fact lands before the
 		// GAME_LOAD_FINISHED drain folds each plot's FINAL block into its city's plotAttrs, which is what keeps
@@ -12865,7 +12865,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 			if (eType != NO_BUILDING)
 			{
-				// DEC-empire-level-buildings: an old save's per-city copy of an empire-level building folds to
+				// docs/specs/enabler.md §2 (empire-level buildings): an old save's per-city copy of an empire-level building folds to
 				// the OWNER (idempotent -- the player read already normalized its count, so this is a no-op on
 				// every copy after the first); the city keeps nothing and writes nothing back.
 				if (GC.getBuildingInfo(eType).isEmpireLevel())
@@ -13366,7 +13366,7 @@ void CvCity::getCityBillboardSizeIconColors(NiColorA& kDotColor, NiColorA& kText
 	if ((getTeam() == GC.getGame().getActiveTeam()))
 	{
 		// A UI EDGE: reduced ONCE here, because the test below compares against a whole-food literal and the
-		// stored food beside it is the whole-unit bar ([DEC-fixedpoint-x100]).
+		// stored food beside it is the whole-unit bar (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 		const int iFoodDifference = foodDifference() / 100;
 		if (iFoodDifference < 0)
 		{
@@ -13461,7 +13461,7 @@ bool CvCity::getFoodBarPercentages(std::vector<float>& afPercentages) const
 	}
 	afPercentages.resize(NUM_INFOBAR_TYPES, 0.0f);
 	// A UI EDGE: every other term here is the whole-unit food BAR (stored food, the growth threshold), so the
-	// x100 surplus reduces ONCE into this local ([DEC-fixedpoint-x100]).
+	// x100 surplus reduces ONCE into this local (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	const int iFoodDifference = foodDifference() / 100;
 	if (iFoodDifference < 0)
 	{
@@ -14684,7 +14684,7 @@ void CvCity::changeWorkableArea(int iOldNumCityPlots, int iNewNumCityPlots) cons
 // as a RING DELTA (the plots between the two counts) instead of a re-derivation: the city-plot addressing is a
 // FIXED ring-ordered table (index 0 = the city, 1-8 = ring 1, 9-20 = ring 2, 21-36 = ring 3), so a radius IS a
 // prefix of it and a growth is exactly the indices [oldCount, newCount).
-// ⛔ ONE implementation ([DEC-single-implementation]) -- getNumCityPlots() delegates here rather than the two
+// ⛔ ONE implementation (docs/architecture/patterns.md §DRY (single implementation)) -- getNumCityPlots() delegates here rather than the two
 // carrying a copy of the override/level ladder each.
 int CvCity::getNumCityPlotsAtCultureLevel(int iCultureLevel) const
 {
@@ -14826,10 +14826,10 @@ void CvCity::setBuiltFoodProducedUnit(bool bNewValue)
 // (populationGrowthRate.city -- the SCALAR_POPULATION_GROWTH_RATE straggler slot). What this replaces was a
 // FLOAT log-space accumulator rebuilt by a blanket walk over every building in the game each turn: a float on a
 // deterministic-lockstep engine (an OOS hazard in its own right), a hand-named scalar that no derived mask could
-// address ([DEC-uniform-cache-shape]), and a self-heal ([DEC-no-self-heal]) all at once.
+// address (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE), and a self-heal (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT) all at once.
 // ⚠ BEHAVIOUR CHANGE, stated rather than hidden: the legacy form composed the sources MULTIPLICATIVELY through
 // the log. Percents are ADDITIVE deltas that sum and apply once ([modifier.md §2]), so the sources now add. A
-// percent is not ×100 scaled ([DEC-fixedpoint-x100]), so this needs no reduction.
+// percent is not ×100 scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so this needs no reduction.
 int CvCity::getPopulationgrowthratepercentage() const
 {
 	ModifierFamily eFamily = MODFAM_NONE;
@@ -16061,7 +16061,7 @@ int CvCity::getInvestigationTotal(bool bActual) const
 // UNDERWORLD, not espionage: the in-city criminal contest (json.md §6). The same words exist on the unit plane
 // as espionage spy stats -- a different mechanic, kept separate by family.
 // ⚠ Both are FLAT slots (×100) feeding a human contest rolled against a plain random, and the unit-plane twin
-// already reduces -- so they reduce here too ([DEC-fixedpoint-x100]). Raw, one building decides the contest.
+// already reduces -- so they reduce here too (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). Raw, one building decides the contest.
 int CvCity::getExtraInsidiousness() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INSIDIOUSNESS) / 100; }
 int CvCity::getExtraInvestigation() const { return cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_INVESTIGATION) / 100; }
 
@@ -16150,7 +16150,7 @@ int CvCity::getPropertyNeed(PropertyTypes eProperty) const
 //	where they started cancel to NOTHING, so the common case announces nothing at all.
 //
 //	⛔ The close does NOT hand-dirty a cache. It EMITS the net facts and lets the modifier consumer derive the
-//	marks, because that is the one mark derivation ([DEC-uniform-cache-shape]; the city package is "marked ONLY
+//	marks, because that is the one mark derivation (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE; the city package is "marked ONLY
 //	by the modifier consumer's derived masks"). An earlier version dirtied a per-scope accumulator directly --
 //	the archived substrate ([superseded-ideas] #14) -- and that is exactly what must not come back.
 //

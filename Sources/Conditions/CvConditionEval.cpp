@@ -8,7 +8,7 @@
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "Conditions/CvConditionEval.h"
 #include "CvGate.h"              // cascadeGateOk -- the entity-level enabled/disabled pair
-#include "CvBuildingInfo.h"      // isEmpireLevel -- the atom implied-scope override (DEC-empire-level-buildings)
+#include "CvBuildingInfo.h"      // isEmpireLevel -- the atom implied-scope override (docs/specs/enabler.md §2 (empire-level buildings))
 #include "CvFoldTargetInfo.h"    // FoldTargets -- what a generalized plot predicate MEANS (json.md §3.5)
 #include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
@@ -39,7 +39,7 @@ static bool en_starts(const std::string& s, const char* pfx) { return s.compare(
 
 
 // A BUILDING prereq must be ACTIVE -- present AND not dormant. Dormancy is CASCADE-COMPUTED (governed 100% by operate
-// enablers, DEC-calc-zero-ride-in), never read from the engine; cascadeIsBuildingActive reads that precomputed fact.
+// enablers, docs/specs/validation.md §pollution guardrail (zero legacy ride-in)), never read from the engine; cascadeIsBuildingActive reads that precomputed fact.
 static bool ev_hasActiveBuilding(const CvCascadeEvalCtx& ctx, int eBuilding)
 {
 	return cascadeIsBuildingActive(eBuilding, ctx);
@@ -100,7 +100,7 @@ static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicini
 	const CityContext* cityContext = ctx.cityContext;
 	if (cityContext == NULL) return false;
 	// An ACTIVE building in this city that `provides` eBonus supplies it IN-VICINITY (json §5a) -- computed from JSON
-	// (the enabler's vicinityProvidedBonuses set), NEVER read from the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
+	// (the enabler's vicinityProvidedBonuses set), NEVER read from the engine's hasVicinityBonus (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
 	if (ctx.vicinityProvidedBonuses != NULL && ctx.vicinityProvidedBonuses->count(eBonus) != 0) return true;
 	// CONNECTED = the engine's OBTAINED-in-vicinity (json §3.4: owned+valid+connected). CvCity::hasVicinityBonus
 	// (read through the city context) encodes EXACTLY that -- hasBonus-gated, then centre OR an
@@ -185,7 +185,7 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 	// mirror, exclusions included); deposits + the operate fixpoint read the cascade-computed ACTIVE set
 	if (en_starts(t, "BUILDING_"))
 	{
-		// DEC-empire-level-buildings: an identity.empireLevel building is never in any city, so a bare atom
+		// docs/specs/enabler.md §2 (empire-level buildings): an identity.empireLevel building is never in any city, so a bare atom
 		// naming one resolves at EMPIRE (json §3.4 -- the tag IS the type's domain): presence is the OWNER's
 		// held set, the active verdict the player-side operate crossing's store.
 		if (id >= 0 && GC.getBuildingInfo((BuildingTypes)id).isEmpireLevel())
@@ -214,7 +214,7 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 	// content gates on this and nothing else keeps it out of an Earth city's build list, so a Martian or lunar
 	// building became offerable the moment its tech landed.
 	// ⚑ The verdict is CvPlot::isMapCategoryType and nothing is re-expressed here
-	// ([DEC-single-implementation]) -- including its own permissive leg, where a plot whose terrain names NO
+	// (docs/architecture/patterns.md §DRY (single implementation)) -- including its own permissive leg, where a plot whose terrain names NO
 	// category is allowed everything. ⚠ A plot's categories are DERIVED from its terrain and have no fact of
 	// their own, which is exactly why the terrain fact seeds the map-category atom in the plot-atom index
 	// ([enabler.md] par.8) -- the re-gate route was already wired and waiting for this body.
@@ -241,7 +241,7 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 
 // ---- CountOf (StoneBase) ---------------------------------------------------------------------------------------
 
-// THE countable core -- ONE implementation (DEC-single-implementation), shared by the condition count-atoms
+// THE countable core -- ONE implementation (docs/architecture/patterns.md §DRY (single implementation)), shared by the condition count-atoms
 // (ev_countOf below) and the §3.7 `per` resolver (cascadeCountOf -> MMKernel::perScale). Fills iOut with the
 // count of TYPE/token at SCOPE and returns true; false = the type names no countable domain (the callers fall
 // back to presence 0/1). A bool-protocol, NOT a sentinel: a PROPERTY_* "count" is the city's property VALUE and
@@ -545,7 +545,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 		return empireContext != NULL && ctx.religion >= 0 && empireContext->stateReligion() == ctx.religion;
 	// {CIVIC_CATEGORY: CIVICOPTION_X}: the CIVIC whose value is being resolved sits in that category -- the
 	// authored shape for "this trait waives the upkeep of religion civics" (a WHICH is a PREDICATE, never a
-	// keyed member: [DEC-conditions-are-predicates]). A SOURCE-SLOT predicate, so no civic in hand answers
+	// keyed member: docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)). A SOURCE-SLOT predicate, so no civic in hand answers
 	// FALSE rather than resolving against whichever civic a walk happened to reach last
 	// (contexts.md § THE SOURCE SLOTS). ⚠ The civic-upkeep consumer must set ctx.civic per civic it charges;
 	// until it does, the deposit is inert -- visibly unapplied, never silently applied to every civic.
@@ -636,8 +636,8 @@ static bool ev_isWaivedPrereq(const CvCascadeEvalCtx& ctx, const CvCondition* c)
 
 // The §9 POLICY read (json §9): resolve the policy key to its minted POLICY_* id and read the player's PREBUILT
 // enacted-policy DICTIONARY the player owns (delta-maintained by the civic/trait/player-init facts, PolicyContext),
-// so the per-leaf read is O(1) with NO walk. The union IS the single source (DEC-single-implementation): it reads the
-// CvJson*Info policies sets, never a legacy counter (DEC-calc-zero-ride-in). Sole data grantors today: complex traits
+// so the per-leaf read is O(1) with NO walk. The union IS the single source (docs/architecture/patterns.md §DRY (single implementation)): it reads the
+// CvJson*Info policies sets, never a legacy counter (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)). Sole data grantors today: complex traits
 // (bigot/progressive/spiritual); the civic half is model headroom the union carries for free. (The naive per-leaf walk
 // -- ~1200 traits × a string+set lookup EACH, evaluated on millions of {STATE_RELIGION:X} leaves per turn -- is what
 // the prebuilt union eliminates; it also retired a per-player version memo whose invalidation trigger had been orphaned.)
@@ -651,7 +651,7 @@ static bool ev_hasPolicy(const EmpireContext* empireContext, const char* szKey)
 }
 
 // Reads the cascade-computed ACTIVE set, or -- absent it -- falls back to raw PRESENCE (hasBuilding, a raw
-// input; NOT the engine active-building read, the ride-in dormancy we replaced). See the header + DEC-calc-zero-ride-in.
+// input; NOT the engine active-building read, the ride-in dormancy we replaced). See the header + docs/specs/validation.md §pollution guardrail (zero legacy ride-in).
 bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec)
 {
 	return ec.activeBuildings != NULL ? (ec.activeBuildings->count(eBuilding) != 0)

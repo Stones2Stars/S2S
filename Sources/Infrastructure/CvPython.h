@@ -32,7 +32,7 @@ namespace Cy											\
 
 //
 //	The object crosses to Python as its (owner, id) IDENTITY rather than as a Cy* handle -- see Cy::PyIdentity.
-//	⛔ Declared ONCE per class, so EVERY push site converts together ([DEC-single-implementation]): the event
+//	⛔ Declared ONCE per class, so EVERY push site converts together (docs/architecture/patterns.md §DRY (single implementation)): the event
 //	reports, the outcome callbacks, anything doing `Cy::Args() << pObject`. A per-site conversion would leave the
 //	two representations live at the same time, which is the half-migration this closes.
 //	⚠ The `class_<Cy*>` REGISTRATION stays regardless: CvGameObject::createPythonWrapper builds those handles on

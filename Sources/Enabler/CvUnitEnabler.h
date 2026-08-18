@@ -6,7 +6,7 @@
 //	UnitEnabler -- the UNITS domain's PURE CALCULATORS on the standardized enabler component (enabler.md
 //	par.7/7.1; CvEnabler.h): onCityCreated (the lifecycle init + cross-scope fold) + the onCity* event-delta
 //	appliers that maintain CvCity::m_enabler.units. The content is built PURELY from DOMAIN events -- the load
-//	reseed's in-read emits and the play-time emits are one mechanism (DEC-spine-reseed); only the cross-scope
+//	reseed's in-read emits and the play-time emits are one mechanism (docs/spine.md §5 (the load reseed)); only the cross-scope
 //	HAVE that predates the city (team techs + player civics) folds at city creation. A static is a calculator
 //	ONLY -- reads are the owner's bare member lookups (canTrain reads m_enabler.units.listed directly).
 //	Enable-side stage: no requires gate, no allowed caps, no superseder/dormant-upgrade gates (those are the

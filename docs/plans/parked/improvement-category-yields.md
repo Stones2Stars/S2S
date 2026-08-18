@@ -21,7 +21,7 @@ walking the upgrade chain.
   needs to design that path rather than assume it exists.
 - Per-improvement yield bonuses on buildings exist in some form today (the
   cascade/modifier model, not the legacy `IDValueMap`/`readPairedArrays` shape this
-  plan was originally written against — see `docs/specs/modifier.md` for the current
+  plan was originally written against — see `docs/cascade.md` for the current
   yield-effect surface). Any implementation of the category idea below should target
   *that* surface, not the legacy accumulator shape described in earlier drafts of
   this plan.
@@ -67,7 +67,7 @@ case, just membership-driven instead of hand-listed. This keeps the hot per-plot
 yield read, the help text, and AI valuation all working unchanged, since they only
 ever see resolved per-improvement entries.
 
-**This needs re-scoping onto the current cascade/modifier surface** (`docs/specs/modifier.md`)
+**This needs re-scoping onto the current cascade/modifier surface** (`docs/cascade.md`)
 before it is actionable — the accumulator/schema shape this plan originally specified
 (`IDValueMap`, `readPairedArrays`, `processBuilding`) belongs to a data model that
 predates the JSON/cascade migration and no longer exists.

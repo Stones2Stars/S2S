@@ -9,7 +9,7 @@
 //	patterns.md § THE VALUATION PROTOCOL: the live CONTEXTS go in and the proposed INCREASE comes out. The AI
 //	weighting a candidate and the build list's filters/sorts are the TWO CONSUMERS OF ONE CALL, which is what
 //	makes the number the player is shown and the number the AI acts on the same number structurally
-//	([DEC-single-implementation]) -- so a criterion never re-derives a value, it asks here.
+//	(docs/architecture/patterns.md §DRY (single implementation)) -- so a criterion never re-derives a value, it asks here.
 //
 //	⚖ THE CITY-LESS VIEW VALUES AGAINST THE CAPITAL (owner). A criterion is asked either for a city's
 //	production list (a city is bound) or for the player-level "all buildings" view (none is). The second has no
@@ -19,7 +19,7 @@
 //	A player with no capital has nothing to value against; the fill functions answer false and the criterion
 //	ranks the candidate neutral rather than inventing a number.
 //
-//	⚠ Every value returned is ×100 ([DEC-fixedpoint-x100]) -- a caller mixing one with a human-scale number
+//	⚠ Every value returned is ×100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- a caller mixing one with a human-scale number
 //	reduces at ITS point of use, never here.
 //
 

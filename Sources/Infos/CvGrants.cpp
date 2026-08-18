@@ -7,7 +7,7 @@
 //	  flags      -- "goldenAge": true
 //	No §5 KEY is ever "unknown" -- the key axis is open, so every authored key interns through the LOCAL
 //	load-minted table (CvGrants::key) and storage + the runtime readers are int-keyed
-//	([DEC-materialize-at-mapfrom]). What CAN be dropped is a VALUE: an id resolving to nothing, a malformed
+//	(docs/architecture/patterns.md §Materialize at mapFrom). What CAN be dropped is a VALUE: an id resolving to nothing, a malformed
 //	array element, a conditioned entry naming nothing, a scope carrying a non-number. Every one of those goes
 //	through the ONE census (jsonNoteUnconsumed) -- a grant is a trigger (json.md §5), so it answers to the same
 //	contract the trigger side does: being fail-closed is right, being fail-closed AND SILENT is not.

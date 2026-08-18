@@ -3,26 +3,7 @@
 The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibious` vein. This is the **glossary**
 (the specific namings); the **system** is the [json spec](json.md) §8.
 
-> **The classification model (owner).** A **unit** carries three blocks. The **operative test: *can a promotion
-> grant it?*** — yes → a **`skill`** (you can train into `blitz`); no, it comes only from the unit's *type* (you
-> can't promote your way to firing guns — a swordsman must *upgrade* to a rifleman) → a **`tag`**; and if it's
-> **transient** (fired, then expires) it is neither — it is a **`state`**. The three, by lifecycle/mutability:
-> — **`skills`** — **mutable**: gained/lost over the unit's life (promotions); the classic abilities (`blitz`,
->   attack-over-river, …) catalogued in *this* file;
-> — **`state`** — **transient**: fired, counted down, then over (`paralyze`/immobilise/…). *Never a first-class
->   concept* — historically faked via **pseudo-promotions** + **Python event handlers** (e.g. `paralyze` is a
->   promotion firing `setImmobileTimer` from an event); the block **formalizes those hacks** — greenfield, with no
->   clean legacy field to migrate from;
-> — **`tags`** — **derived from the unit's *type***, re-set only at **creation — and upgrade counts as creation**
->   (a `mounted` horseman re-derives its tags on upgrade to a helicopter, which isn't mounted). No other change
->   (*a worker never spontaneously becomes military*). Overlapping, accounting-only membership
->   (`military`/`civilian`/`worker`/`spy`/criminal-types) read by `IS_<TAG>` predicates, where those memberships
->   are *defined*.
->
-> The **empire** counterpart to unit `skills` is **`capabilities`**. This file is the `skills` glossary only;
-> `state`, `tags`, and `capabilities` get their own sibling glossaries (json.md §8 = the model).
-
-> **Every skill key is a runtime-generated `SKILL_*` info** ([DEC-classification-infos](../architecture/decisions.md#dec-classification-infos),
+> **Every skill key is a runtime-generated `SKILL_*` info** ([the classification-infos registry](json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities),
 > [json.md §8](json.md)): minted at load from the union of authored keys, resolved onto per-entity bitsets, read by
 > the getters as O(1) id bit tests — never per-call string lookups.
 >
@@ -33,7 +14,7 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 > spellings, not the output key): **every unit / promotion / unit-combat ability block is
 > `skills`** (`capabilities` is reserved for the empire block). There is no pending rename.
 
-> **⚖ REPRESENTATION — pure boolean enablers, so the shape differs by carrier (owner 2026-07-20).** A skill is a
+> **⚖ REPRESENTATION — pure boolean enablers, so the shape differs by carrier (owner).** A skill is a
 > **pure boolean ENABLER** ("can walk over river", "can pass peaks") — the direct mirror of empire `capabilities`,
 > carrying no value; it cannot be `false` (absent ⇒ not held). So a **UNIT authors `skills` as an ARRAY OF STRINGS**
 > (`["pillage","blitz"]`), never `{name:true}`. The **object form** (`{name:true|false}`) is used **only where
@@ -67,6 +48,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `canMoveImpassable` | can move through impassable terrain |
 | `canPassPeaks` | can move through peak tiles (**dual-plane, same name as the empire capability**: a promotion grants the unit skill, `TECH_MOUNTAINEERING` grants it empire-wide as `capabilities.canPassPeaks`; effective check = skill ∪ capability, see [capabilities.md](capabilities.md)) |
 | `cannotMergeSplit` | cannot merge with / split from other units |
+| `celebrity` | grants the city it's in a happiness bonus (`iCelebrityHappy != 0`, folded to a boolean skill — the numeric amount is dropped, `CvCity` scans for celebrity-skilled units and awards the happiness itself); authored by `PROMOTION_INSPIRE3`/`6`/`9` |
 | `enemyRoute` | can use enemy (rival) roads |
 | `excile` | an investigation / criminal **ability** (legacy spelling, from `iExcileChange`) — distinct from the `exile` *unit* in the criminal-type tags ([tags.md](tags.md)) |
 | `firstStrikeImmune` / `immuneToFirstStrikes` | immune to first strikes |
@@ -122,7 +104,7 @@ question is settled by the data, not by taste: **73 promotions author a method**
 because tags are not promotion-grantable. ⚑ **`submarine` is the case that shows both planes at once** — it is a
 genuine identity TAG *and* carries the method SKILL, because a surfaced submarine is not hidden.
 
-### Per-type keyed abilities are NOT skills (owner 2026-07-20)
+### Per-type keyed abilities are NOT skills (owner)
 
 **A skill is a pure boolean ENABLER** (§0 / json.md §8) — it carries no value. An ability **keyed by a type** carries a
 value (*which* type), so it is not a skill; it lives in a modifier family:
@@ -242,8 +224,13 @@ engine-side oracle is gone, so confirming a composite means emitting it on the s
 A few skills are authored as **add/remove pairs** — `true` grants, `false` revokes (a promotion can take an
 ability *away*): `stampede`, `attackOnlyCities`, `ignoreNoEntryLevel`, `ignoreZoneOfControl`, `fliesToMove`.
 
-> **Owner direction — skills & capabilities are GRANT-ONLY.** An ability is granted, never revoked via a `false`;
-> the grant/revoke pairs listed above collapse to grant-only, removing the special case.
+> **Revoke is real — this is the ONE place the object form (`{name:true|false}`) is used** ([json.md
+> §8](json.md)): a skill is otherwise a pure boolean enabler authored as an array of strings (§0), never
+> `{name:true}`, because it cannot be `false` — absent already means not held. The grant/revoke pairs above are
+> the sole exception, and collapsing them to grant-only is the historical bug, not a simplification: it silently
+> inverted a real revoke into a grant (the THUG-as-assassin find, §3b) — `iAssassinChange=-1` on
+> `PROMOTION_WANTED` takes `assassin` away, and reading that as `true` gave the unit an ability it had just lost.
+> The curator (`curate_promotion.py`'s `CAP_PAIR` table) emits `false` for exactly this reason.
 
 ---
 

@@ -1,14 +1,16 @@
 # Fixed-point & the scale registry — the ONE place scales live
 
-> **Status:** reference (canonical scale registry) · **Verified against:** `Sources/Engine/CvCity.cpp`,
-> `SourceArchive/Infos/*.h` (the legacy Info headers — curator input; see §4b).
-> **Grounding:** every scale below was figured from the math in the cited accessor, not from the field
-> name. Line numbers drift — confirm the named function, not the integer.
+> **Grounding:** every scale below was figured from the math in the cited accessor, not from the field name —
+> never eyeball a name. Most citations below (§3, §4c) trace the **pre-migration engine** the curator was built
+> against; that source has since been fully superseded and no longer exists anywhere in the tree (not even in
+> `SourceArchive/`), so a `CvCity.cpp:NNNN` citation is historical grounding for how the scale was FIGURED, not a
+> live pointer to re-open — confirm a disputed scale against the `/computed` decomposition parity (§5), never
+> against the old line number. §4b's citations are the exception: those six `…100()` accessors are curator
+> input still present in `SourceArchive/Infos/*.h` (see §4b).
 >
 > This is the **single source of truth for value scales** in S2S. If you need to know whether a quantity
 > is human-readable, ×100 fixed-point, a percent, or a multiplier — it is here. Do not re-derive a scale
-> in another doc; link this one. Ruling: [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100),
-> [DEC-curator-owns-descale](../../architecture/decisions.md#dec-curator-owns-descale).
+> in another doc; link this one.
 
 ---
 
@@ -30,7 +32,7 @@ this is OOS-load-bearing (Civ4 MP is deterministic lockstep; CPU-dependent float
 > to reject. `flat` and `multiplier` DO convert (a flat is an amount; a multiplier is authored on the same
 > two-decimal footing, identity 100 → `×1.5` = `150`).
 >
-> ⚑ **This is NOT a per-channel carve-out** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)'s
+> ⚑ **This is NOT a per-channel carve-out** ([the ×100 fixed-point model](#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)'s
 > uniformity still binds): the rule is per **UNIT** and applies identically to every family. No channel gets a
 > special case; `percent` simply is not a two-decimal quantity in any of them.
 
@@ -58,15 +60,14 @@ Human numbers exist at exactly **two boundaries** — nobody in between guesses 
 > **never multiply two ×100 values together without rescaling** — the product is ×10000, so a `÷100` belongs at
 > the multiply. No site is believed to do this today; any found is a defect to flag, never a silent rescale.
 
-**Why ×100 out to the consumers, not reduced at the getter** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)):
+**Why ×100 out to the consumers, not reduced at the getter** ([the ×100 fixed-point model](#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)):
 reducing at the getter forces a human-variant getter (a `getX`+`getX100` split) the moment anything internal needs
 the ×100 form, and it lets the cascade be shoehorned into legacy-shaped getters instead of the consumers being
 rewired — the exact reflex that produced the half-migration. Carrying ×100 out makes format-tracking unnecessary
 (the answer is always "×100"), and the visible-100×-if-mis-wired forcing function makes every consumer wire
 correctly or be discarded. **Blast radius is never a reason to limit the conversion.** A consumer that only tests
 SIGN or ranks is scale-invariant (no change); one that mixes with a whole count reduces at that use; an aggregate
-stays ×100 and its own reader reduces. The conversion METHOD is §4c-bis below; what remains to convert is the
-[todo](../../plans/structural-cleanup/todo.md).
+stays ×100 and its own reader reduces. The conversion METHOD is §4c-bis below.
 
 **Consequence:** a ×100 value in a JSON file is a **curator bug** — it leaked an integer-math
 representation onto the human surface. Because the curator absorbs all scale mixing once, readJson has
@@ -102,7 +103,7 @@ has to be reasoned about. The per-unit rule governs what is STORED (where the me
 arithmetic.
 
 ⚠ **Widening costs no save work at all.** The cascade plane serializes nothing
-([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)), and a **serialized**
+([derived data is never trusted from a save](../save.md#5-derived-data-serializes-nothing-)), and a **serialized**
 field widens SOFTLY because the save READER absorbs the narrower stored form — keep the member, the name and the
 tag ([save.md §8](../save.md)). So width is decided on the merits of the value, never traded against migration
 cost.
@@ -169,7 +170,7 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 | `YieldsProduced` / `CommercesProduced` (Corporation) | **×100** | `getCorporationYieldByCorporation` (`CvCity.cpp:12594-12602`): `produced × Σ getNumBonuses(prereqBonus) × worldCorpMaintPct / 100`, then the corp result `/100` — so `produced=75` ⇒ 0.75/bonus. NOT the genuinely-×1 `*Changes` twin (`getYieldChange × 100` in-formula) | ÷100 de-scale → human (`curate_corporation`). The dedicated corp pass also verifies + de-scales `iMaintenance` (`calculateCorporationMaintenanceTimes100`, ×100) |
 | `iHealthPercent` / `iHappinessPercent` (Specialist) | **×100, and FLAT** | `processSpecialist` STORES them raw (`CvCity.cpp:5184/5192`, `change*Health/*Happiness(field × count)`) — the misleading part — but the REALIZED `goodHealth()`/`badHealth()`/`happyLevel()`/`unhappyLevel()` read them `/100` (`CvCity.cpp:5848/5876/5714/5654`). The `/100` is NOT AI-only weighting; it is the actual realized level. | ÷100 de-scale → human (FLAT; the "Percent" is a misnomer). `curate_specialist`. ⚠ Map at the CONSUMER, not the store — the raw `change*` store site is the trap that produces a wrong "it's FLAT ×1" correction |
 
-> The per-pop row is the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case in miniature:
+> The per-pop row is the [the no-guessing rule](../../../AGENTS.md#conduct) case in miniature:
 > the scale was *mapped* at the consumption site, never guessed from the field name.
 
 ### 4c-rev. ⛔ TWO SCALES IN ONE TAG — the RevolutionDCM mods
@@ -196,7 +197,7 @@ is a scale nobody has ruled on: `curate_common.ratio_to_percent` **RAISES** inst
 into the ratio the index formulas want.
 ⚠ The three `CvPlayer` float accumulators these also feed (`m_fRevIdx*Mod`) have **no readers at all** — the
 Python side reads `INFO.getRevolution(...)` directly — so they are inert here and belong to the
-writerless-accumulator sweep ([todo.md](../../plans/structural-cleanup/todo.md)), not to this scale question.
+writerless-accumulator sweep, not to this scale question.
 
 ## 4c-bis. ⛔ CONVERT BY ARITHMETIC CLUSTER, NEVER BY GETTER
 
@@ -218,12 +219,12 @@ constant then deletes itself, and it takes its scale question with it: a hand-ro
 ever needed to know its operands' units, so re-pointing DISSOLVES the question rather than answering it.
 ⚠ The failure mode is the opposite move — adding the multiplier and calling it done. That leaves the AI half on
 legacy while the surface beneath it moves, which is exactly the half-migrated state
-[DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface) names.
+[build a new getter surface, never widen a legacy one](../../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner) names.
 
 ⚑ **A cluster is defined by what MIXES, not by what looks similar.** Worked groupings: the yield/food/wellbeing
 chain is one unit because food consumption subtracts angry population and health rate; commerce joins it at the
 production→commerce term; gold/maintenance/upkeep joins commerce because gold IS a yield
-([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)); unit experience is genuinely
+([every modifiable number is a yield](../../cascade.md#1-one-step-deposit-down-accumulate-read-o1)); unit experience is genuinely
 self-contained and so is the one safely parallelizable cluster.
 ⚠ **Same SHAPE is not same NATURE:** a `…Times100` on AI unit counts or plot strength carries *fractional
 SizeMatters counts*, not a modifier channel — it is not a scale violation and must not be swept in with the yields.
@@ -343,7 +344,7 @@ CROSSES A BOUNDARY** — which makes the audit an ENUMERATION OF BOUNDARIES, nev
 3. a **sanctioned engine INPUT** — a value the cascade folds in rather than computes.
 
 ⚑ **The trade-route fold is THE EDGE (owner)** — the exemplar of class 3 and the reason class 3 exists.
-`tradeYield` is the ONE sanctioned live-yield input ([modifier.md §2a](../modifier.md)): the cascade cannot
+`tradeYield` is the ONE sanctioned live-yield input ([modifier.md §2a](../../cascade.md)): the cascade cannot
 re-derive the trade NETWORK, so that calculation stays engine-owned ([north-star.md](../../architecture/north-star.md)
 KEEP — it is none of the four systems' job) and its value is FOLDED IN. That is precisely why the scales differ
 there, and why **the conversion belongs THERE: an edge converts**, exactly as the IN and OUT boundaries do.
@@ -383,8 +384,8 @@ multiply.
 
 The owner cannot eyeball thousands of JSONs, so a mis-scaled field is found by the MATH: the effective value the
 authored JSON produces is observed live on the `/computed` decomposition censuses, on a real save
-([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). **Residual divergence localises
-the next mis-scaled field** → fix the curator → regenerate → re-check. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([DEC-parity](../../architecture/decisions.md#dec-parity)).
+([done = observable in the running game](../validation.md)). **Residual divergence localises
+the next mis-scaled field** → fix the curator → regenerate → re-check. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([the completeness+attribution bar](../validation.md#the-observation-surface)).
 
 ⚖ **CALIBRATION — a scale error BREAKS BALANCE AND BEHAVIOUR, NOT THE GAME (owner).** *"It's obvious when numbers
 are out of whack in a new game, and it does not actually break the game — it just breaks balance."* A wrong scale
@@ -399,13 +400,13 @@ because a mis-scaled field sitting unconverted is just as wrong and nobody is lo
 is unchanged: establish the unit from `infoKindUnit` + the authored data, then convert.
 ⛔ The exceptions that are NOT cheap, and still want care before landing: anything that changes what a SAVE means
 (a serialized member's scale), and anything feeding the synchronized RNG
-([DEC-synced-rng-is-shared-state](../../architecture/decisions.md#dec-synced-rng-is-shared-state)) — those fail
+([the synchronized RNG is shared state](../../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)) — those fail
 silently or desync rather than looking odd.
 
 ⚑ **AND THE AI DECISION LOG IS A SCALE INSTRUMENT (owner): a decision that NEVER VARIES is a truncated-to-zero
 input.** Integer division is what makes a mis-scaled value fail this way — a percent reduced by 100 lands on 0,
 and the branch it gates then resolves the same way forever. Because every AI decision is logged
-([logging.md](../logging.md)), that shows up as a decision going one way 100% of the time, which is far easier to
+([spine.md](../../spine.md)), that shows up as a decision going one way 100% of the time, which is far easier to
 spot than a number being quietly wrong.
 ⛔ So read an always-the-same AI decision as a SCALE SUSPECT first, before theorising about the AI logic — a
 rand-versus-threshold that never fires, a gate that never opens, a modifier that never applies.
@@ -413,6 +414,5 @@ rand-versus-threshold that never fires, a gate that never opens, a modifier that
 difficulty. The decision log would have shown that branch never taken; the code read as reasonable.)*
 
 ## See also
-- [decisions ledger](../../architecture/decisions.md) — `DEC-fixedpoint-x100`, `DEC-curator-owns-descale` index
-  this doc as their home.
-- [modifier.md](../modifier.md) — the §2 arithmetic that consumes ×100 values.
+- This doc is the permanent home of the ×100 fixed-point model and the curator-owns-descale rule (§1 above).
+- [modifier.md](../../cascade.md) — the §2 arithmetic that consumes ×100 values.

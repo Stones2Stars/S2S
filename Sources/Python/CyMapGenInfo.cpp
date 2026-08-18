@@ -10,7 +10,7 @@
 namespace
 {
 	//	One bounds gate per registry -- every id arrives from a script, so it is checked rather than trusted
-	//	([DEC-info-plane-read-only]: a read never creates, and FASSERT_BOUNDS is compiled out of Release).
+	//	(docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD: a read never creates, and FASSERT_BOUNDS is compiled out of Release).
 	const CvBonusInfo* cyg_bonus(int iBonus)
 	{
 		if (iBonus < 0 || iBonus >= GC.getNumBonusInfos()) return NULL;

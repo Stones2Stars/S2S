@@ -2685,7 +2685,7 @@ const char* cvInternalGlobals::getDefineSTRING(const char* szName, const char* s
 // duplicates). The emit follows cacheGlobals() so a consumer reading a cached accessor sees the NEW value.
 // A live-option SET is a slot REPLACEMENT, so it is TWO facts: the withdrawal names the value being taken
 // back -- carried in its payload, since by emit time the store already holds the new one -- then the arrival
-// names the new ([DEC-facts-name-happenings]). A define set for the FIRST time withdraws nothing.
+// names the new (docs/spine.md §A FACT NAMES THE HAPPENING). A define set for the FIRST time withdraws nothing.
 void cvInternalGlobals::setDefineINT(const char* szName, int iValue, bool bUpdate)
 {
 	int iOldValue = 0;

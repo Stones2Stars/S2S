@@ -21,7 +21,7 @@ static std::map<std::string, int> s_segs;    // segment string -> id (append-onl
 static std::map<std::string, int> s_addrs;   // whole-address string -> id (append-only)
 
 // The compiled-record registry: source info -> its compiled deposits (+ the whenObsolete tree's). Cascade-side
-// ONLY ([DEC-json-not-cascade]); rebuilt by the readJson push, dropped by clearCompiled() before a re-map.
+// ONLY (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)); rebuilt by the readJson push, dropped by clearCompiled() before a re-map.
 struct DiCompiledSet
 {
 	std::vector<CascadeDeposit> main;
@@ -50,7 +50,7 @@ static std::vector<DepositIndex::GatedDeposit> s_gatedReligionCounts;
 // condition scan that interns the gate. The band emit tests ONE registry of authored boundaries
 // (EnablerKernel::propertyBandThresholds), and the operate bands are only half of what the data authors -- a
 // deposit gated `{PROPERTY_X, min: N}` declares a boundary too, and a value sweep crossing ONLY that boundary
-// must still announce, or the deposit's re-book never fires ([DEC-close-event-gaps-now]).
+// must still announce, or the deposit's re-book never fires (docs/spine.md §A FACT NAMES THE HAPPENING (an event gap is closed the moment it's found)).
 static std::map<int, std::set<int> > s_propertyGateThresholds;
 
 
@@ -127,7 +127,7 @@ void DepositIndex::compile(CascadeDeposit& d)
 		start = dot + 1;
 	}
 	// The slot axes (family/kind/scope/channel/dictionary) are COPIED from the compiled CvModEntry at push --
-	// the parse typed every axis once ([DEC-materialize-at-mapfrom]); nothing here re-interprets an address
+	// the parse typed every axis once (docs/architecture/patterns.md §Materialize at mapFrom); nothing here re-interprets an address
 	// string. An entry outside the vocabulary leaves channel = -1 and every slot consumer skips it -- how the
 	// unit-plane families and any batch-pending member drop out with no special-casing.
 

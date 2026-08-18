@@ -596,7 +596,7 @@ int CyPlayer::getGreatGeneralsThresholdModifier() const
 
 int CyPlayer::specialistYield(int /*SpecialistTypes*/ eSpecialist, int /*YieldTypes*/ eCommerce) const
 {
-	// THE READ EDGE -- the one place a ×100 amount becomes human ([DEC-fixedpoint-x100]). The engine carries
+	// THE READ EDGE -- the one place a ×100 amount becomes human (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). The engine carries
 	// ×100 natively end to end; Python is a reader, so the ÷100 happens HERE and nowhere upstream.
 	return m_pPlayer->specialistYield((SpecialistTypes)eSpecialist, (YieldTypes)eCommerce) / 100;
 }

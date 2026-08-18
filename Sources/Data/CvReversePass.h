@@ -3,7 +3,7 @@
 #define CV_REVERSE_PASS_H
 
 //
-//	reversePass -- the ONE general reverse pass over the COMPILED info surfaces ([DEC-one-reverse-view];
+//	reversePass -- the ONE general reverse pass over the COMPILED info surfaces (docs/cascade.md §1 (reverse lookups are populated once, at load);
 //	modifier.md §1/§4; enabler.md §2/§7.1). Runs once per loadJson full pass, after every entity is mapped and
 //	its sections/deposits are compiled, and produces the complete reverse view in four sub-passes:
 //

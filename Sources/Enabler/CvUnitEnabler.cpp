@@ -47,7 +47,7 @@ static void ud_touched(const CvInfo* j, std::set<int>& touched);
 // the domain (size + the offerability static exclusions) and fold ONLY the cross-scope HAVE that predates the
 // city -- team techs + player civics. The city's OWN facts (buildings/religions/bonuses) arrive as DOMAIN
 // events -- at load from the in-read reseed emits, at founding from the real grant/build emits -- one
-// mechanism (DEC-spine-reseed).
+// mechanism (docs/spine.md §5 (the load reseed)).
 // ⛔ `identity.enabledCivilizations` is NOT a bar here: legacy applied it only inside the strongly-restricted
 // NPC lockdown (inert for every normal civ) -- see the building twin's note (CvBuildingEnabler.cpp).
 void UnitEnabler::onCityCreated(const CvCity& kCity)
@@ -204,7 +204,7 @@ void UnitEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int 
 // verified to full canTrain parity): the INSTANCE CAPS (world = lifetime-created + in-production `making`;
 // empire = live tally count + making vs the ERA-SCALED base-5 national cap, waived under
 // GAMEOPTION_NO_NATIONAL_UNIT_LIMIT unless unlimitedException -- units have no team cap), the ENTITY-LEVEL
-// enabled/disabled gate (DEC-entity-gate), requires.build (STRICT, the ONE evaluator, the SHARED AugmentState
+// enabled/disabled gate (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT), requires.build (STRICT, the ONE evaluator, the SHARED AugmentState
 // waiver + the standing operating-buildings wiring -- vicinity `provides` supply included), the SUPERSEDER
 // removal (replacedBy.units: HIDDEN the moment any superseder is AVAILABLE -- read from the poco's
 // m_superseding, NOT j->edge("replacedBy") which returns NULL, the inert-read trap; mirrors
@@ -254,7 +254,7 @@ static bool ud_isAvailable(int u, UdGateCtx& x)
 	if (EnablerKernel::obsoletedByHeldTech(j, *x.team)) return false;
 	if (ud_capped(j, u, *x.player, x.noNationalLimit)) return false;
 	if (j != NULL && !cascadeGateOk(j->getGate(), *x.ec, *x.flags)) return false;   // entity-level enabled/disabled
-	// through the ONE gate surface (DEC-single-implementation): requiresMet sets buildingAtomsPresence -- gate
+	// through the ONE gate surface (docs/architecture/patterns.md §DRY (single implementation)): requiresMet sets buildingAtomsPresence -- gate
 	// atoms read the §7 presence has-list, never the operate-derived ACTIVE set (a direct evaluator call here
 	// made unit gates fail on present-but-dormant prereq buildings, un-superseding whole upgrade chains).
 	if (!EnablerKernel::requiresMet(j, *x.ec)) return false;

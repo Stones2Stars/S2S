@@ -1,7 +1,7 @@
 //
 //	CvBuildInfo -- the build poco's own typed reading on top of the base section dispatch (see the header).
 //	mapFrom materializes the §9 `produces` section + the `cost` / `identity` / `world.art` rows ONCE into typed
-//	members ([DEC-materialize-at-mapfrom]); the tech MEANS gate + the positive bonus prereqs are derived from
+//	members (docs/architecture/patterns.md §Materialize at mapFrom); the tech MEANS gate + the positive bonus prereqs are derived from
 //	the composed requires.build tree (typed condition walk, never a raw-parse re-read). Idempotent by contract
 //	(unconditional assigns, clear-first containers).
 //

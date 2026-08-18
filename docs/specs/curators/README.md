@@ -9,6 +9,11 @@
 > data IS); this area is **how the data got there** (transient). It is **dropped when the migration completes** — do
 > NOT fold it into the durable JSON spec.
 >
+> ⚖ **ONE FILE IN THIS FOLDER IS THE EXCEPTION: `fixed-point-and-scales.md` does NOT drop.** It is the permanent
+> home of the ×100 fixed-point model and the curator-owns-descale rule — the ×100 scale MODEL and its per-field
+> registry are durable rulings, not a migration artifact, even though the file happens to live beside the
+> transient curator specs. It stays after every other file here is dropped.
+>
 > *(These were lifted intact from the old migration set rather than condensed: they are transient working specs, so
 > preserve-and-place beats a condensing investment. Their internal links still point at pre-move paths — part of the
 > global reference sweep follow-up.)*
@@ -27,7 +32,7 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 
 ## Post-curation additions (`curate_additions.py`) — the hand-authored layer
 
-> **Entity curation is complete (owner 2026-07-21), so new GAMEPLAY data no longer goes in the legacy XML
+> **Entity curation is complete (owner), so new GAMEPLAY data no longer goes in the legacy XML
 > (curator input) — it is a POST-CURATION ADDITION.** Additions author in `Assets/Data/_additions/<type>.json`
 > (an entity id → a partial object) and `curate_additions.py` DEEP-MERGES them into the curated
 > `Assets/Data/<type>/**` JSON as the **final offline step** (dicts recurse; leaves/lists override). It matches the
@@ -46,7 +51,7 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > So `curate_common` hooks the re-apply to the ONE act every writer must perform — clearing its folder
 > (`wipe_entity_json`) — and runs it at process exit over exactly the folders that run rewrote. The merge stays
 > the ONE implementation in `curate_additions`
-> ([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)); the hook only decides
+> ([the DRY single-implementation law](../../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)); the hook only decides
 > WHEN it runs, and re-merging the same partial is a no-op, so `curate_all`'s closing pass still lands the same
 > bytes.
 > ⛔ **The hook reaches ONLY a writer that calls `wipe_entity_json` — a bespoke in-place write skips BOTH halves**
@@ -54,8 +59,7 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > looking complete. That is not hypothetical: `curate_unit` and `curate_unitcombat` each had exactly that write,
 > and every unit regen dropped the settler's founder-culture overlay until they were routed through the wipe.
 > **A curator's `--write` block calls `wipe_entity_json` on every folder it writes — no exceptions**; several fat
-> curators still carry bespoke writes without it (inert only while their types have no `_additions` file — the
-> routing sweep is a [todo](../../plans/structural-cleanup/todo.md) item).
+> curators still carry bespoke writes without it (inert only while their types have no `_additions` file).
 > ⚠ A `--sample`/dry run clears nothing, so it registers nothing and applies no overlay — reading a sample still
 > shows the pre-overlay curator output, which is what you want when checking the CURATOR.
 
@@ -106,11 +110,14 @@ and is not fixed by re-admitting the module. Rationale + the known instances + t
 [plans/parked/module-system-rework.md](../../plans/parked/module-system-rework.md).
 
 ## Contents
-- **fixed-point-and-scales.md** — the curator de-scale registry: which Info fields are ×100 vs ×1 (the closed set of
-  `…100()` accessors + the blind-spot fields). The fixed-point *model* lives in [json.md §3.6](../json.md).
+- **fixed-point-and-scales.md** — the ×100 fixed-point model AND the curator de-scale registry (which Info fields
+  are ×100 vs ×1 — the closed set of `…100()` accessors + the blind-spot fields) in one file; it is the durable
+  Home of [the ×100 fixed-point model](fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries) / [the curator-owns-descale rule](fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries) (carve-out above), not merely a registry alongside
+  the model. [json.md §3.6](../json.md) is a separate, narrower thing — the `flat`/`percent`/`multiplier`
+  magnitude-unit taxonomy a modifier value authors — and links back here for the scale rulings themselves.
 
 The cascade ontology model (one cascade, every per-turn-effect producer is a target, sources/enablers are never
-targets, the stay-vs-invert rule) is **durable** and lives in the specs — [modifier.md](../modifier.md) (the
+targets, the stay-vs-invert rule) is **durable** and lives in the specs — [modifier.md](../../cascade.md) (the
 deliveryguy/inversion rules) and [enabler.md](../enabler.md) (the enabler topology). The per-entity curator
 decisions live in each `curate_<entity>.py` docstring (the old→new map *is* the curator, see above).
 

@@ -17,7 +17,7 @@
 //	an event gave. A store that held only amounts would force that rework to guess.
 //
 //	⚑ EXTENSIBLE BY DATA, not by members: a newly-granted channel is a new kind id inside an existing record,
-//	never a new field and never a second store (DEC-uniform-cache-shape -- a hand-named per-channel field cannot
+//	never a new field and never a second store (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE -- a hand-named per-channel field cannot
 //	be addressed uniformly, which is how the legacy accumulated one per flavour).
 //
 //	⚠ PRE-SPLIT GRANTS IN AN EXISTING SAVE ARE DEEMED LOST (owner). They were rolled directly into the dirtied
@@ -56,7 +56,7 @@ class CvTaggedSaveFormatWrapper;
 
 //
 //	The store. ONE implementation, held by every scope owner that can be granted to
-//	(DEC-single-implementation) -- the same move CvStatus.h makes for applied counters.
+//	(docs/architecture/patterns.md §DRY (single implementation)) -- the same move CvStatus.h makes for applied counters.
 //
 class CvEventGrantStore
 {
@@ -78,7 +78,7 @@ public:
 	//	Serialization support. The store cannot own its own read/write bodies: the wrapper macros build the tag
 	//	by concatenating STRING LITERALS (className "::" saveName), so the owning class name has to be present as
 	//	a literal at the call site. The macros below are therefore the ONE implementation
-	//	(DEC-single-implementation) and each owner invokes them from its own read()/write() with its own name.
+	//	(docs/architecture/patterns.md §DRY (single implementation)) and each owner invokes them from its own read()/write() with its own name.
 	void resize(int iCount);
 	CvEventGrant& mutableRecord(int iIndex);
 

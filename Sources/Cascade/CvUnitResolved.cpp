@@ -132,7 +132,7 @@ namespace
 	}
 
 	// ONE contributor's share of every slot, added in. A bare compiled-sum fetch per slot -- no anatomy walk,
-	// no string address, nothing evaluated ([DEC-materialize-at-mapfrom]).
+	// no string address, nothing evaluated (docs/architecture/patterns.md §Materialize at mapFrom).
 	void urs_addContributor(const CvInfo* pInfo, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS])
 	{
 		if (pInfo == NULL)
@@ -161,7 +161,7 @@ namespace
 	}
 }
 
-//	ONE WALK OF THE HELD SET, FILLING EVERY HALF ([DEC-single-implementation]). The slot table, the `hideAndSeek`
+//	ONE WALK OF THE HELD SET, FILLING EVERY HALF (docs/architecture/patterns.md §DRY (single implementation)). The slot table, the `hideAndSeek`
 //	block and the `heal` block fold over exactly the same three carriers and move on exactly the same two facts,
 //	so walking three times would be three implementations of one traversal -- and the extras would be the ones
 //	that drift.
@@ -177,7 +177,7 @@ static void urs_gatherAll(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SL
 	aOverriddenOut.clear();
 
 	// The self-recovery LINES, resolved ONCE per gather rather than once per candidate promotion. A per-call
-	// string-keyed lookup is what [DEC-materialize-at-mapfrom] bans; paying two at MARK cadence is not that.
+	// string-keyed lookup is what docs/architecture/patterns.md §Materialize at mapFrom bans; paying two at MARK cadence is not that.
 	const int iSelfHealLine = GC.getInfoTypeForString("PROMOTIONLINE_SELF_HEAL", /*bHideAssert*/true);
 	const int iSelfRepairLine = GC.getInfoTypeForString("PROMOTIONLINE_SELF_REPAIR", /*bHideAssert*/true);
 
@@ -215,7 +215,7 @@ static void urs_gatherAll(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SL
 	// "do I have this?" re-discovers a set the unit already enumerates, and each ask is a map lookup, so the
 	// cost tracks the DATABASE rather than the handful the unit carries. That is the O(registry) shape the
 	// event-built state exists to delete ([contexts.md]: a read that walks per call is the efficiency defect to
-	// reject in review) and it is the same own-data inversion [DEC-one-reverse-view] bans one plane over.
+	// reject in review) and it is the same own-data inversion docs/cascade.md §1 (reverse lookups are populated once, at load) bans one plane over.
 	// The keyed maps hold an entry per promotion / class the unit has ever touched, and the has-flag tested here
 	// is the SAME test isHasPromotion / isHasUnitCombat apply -- so the contributor set is identical.
 	std::vector<UnitHeldRung> aHeldLineRungs;

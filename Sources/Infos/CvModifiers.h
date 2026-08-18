@@ -6,7 +6,7 @@
 //	CvModifiers -- an entity's MODIFIER FAMILIES per json.md §6, COMPILED at load into the runtime forms
 //	(patterns.md § coherent surface; info-rebuild.md toolkit item 2). The anatomy walk is LOAD-ONLY: parseEntity
 //	walks every §6 family key of the entity's JSON ONCE, interning every string key to a typed id (family /
-//	kind / scope / unit / FK targets -- [DEC-materialize-at-mapfrom]) and producing:
+//	kind / scope / unit / FK targets -- docs/architecture/patterns.md §Materialize at mapFrom) and producing:
 //	  - the compiled ENTRY LIST -- COMPLETE (ruling 29): every §3.9 deposit as a typed CvModEntry, condition
 //	    trees prebuilt, UNCONDITIONED entries retained as entries (per-entry text + per-entry attribution both
 //	    require the full list); this list is the ONE compiled source;
@@ -17,7 +17,7 @@
 //	  - the per-family CONDITIONED ranges -- a family-sorted view over the CONDITIONED SUBSET of the list
 //	    (what the package rebuild, the pedia, and the what-if valuation walk).
 //	After load every read is a compiled-structure fetch; nothing string-shaped survives into any runtime read
-//	path. Pure data, ZERO cascade runtime ([DEC-json-not-cascade]); the DepositIndex push reads entries().
+//	path. Pure data, ZERO cascade runtime (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)); the DepositIndex push reads entries().
 //
 
 #include "CvModEntry.h"
@@ -50,7 +50,7 @@ public:
 	void parseEntity(const picojson::object& entity);
 	void clearParsed();   // frees the entries + resets (the dtor body; the clear-first half of the section re-map)
 
-	// LOAD-TIME ONLY (the readJson general reverse pass -- [DEC-one-reverse-view], modifier.md §4): land ONE
+	// LOAD-TIME ONLY (the readJson general reverse pass -- docs/cascade.md §1 (reverse lookups are populated once, at load), modifier.md §4): land ONE
 	// synthesized own-output entry on this (target) info's compiled surface -- the reverse side of a source's
 	// target-keyed deposit ("+X while the source is present": the source's presence rides as the entry's
 	// `enabled` condition). Takes OWNERSHIP; refinalizes the compiled forms so the entry is indistinguishable
@@ -86,7 +86,7 @@ public:
 	void keyedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const;
 	void conditionedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const;
 	// THE POINT READ: the load-compiled unconditioned ×100 sum of the (family, kind, scope, unit) slot --
-	// one lookup over the packed sorted slot table, 0 calculation ([DEC-scope-is-an-axis]: kind and scope are
+	// one lookup over the packed sorted slot table, 0 calculation (docs/architecture/patterns.md §The coherent surface (scope is a separate axis): kind and scope are
 	// separate arguments, exactly as the JSON's own <family>.<scope>.<member> separates them).
 	// THE AUDIENCE AXIS (json §3.9 `ai`): the default read is HUMAN-audience -- aiOnly entries fold into a
 	// SEPARATE slot table and never leak into it. The CvModAudience overload is THE spelled-out read (HUMAN /

@@ -8,7 +8,7 @@
 //	config-heavy cut). An era is a CONFIG entity (state-repositories.md § WORLD is CONFIG): world-scope cost
 //	multipliers read from their source (the compiled sums), never cached behind a dirty protocol; pacing
 //	identity + one-shot starting grants + era audio are plain config. JSON-fed (Assets/Data/eras/*.json via
-//	mapFrom); no XML read (DEC-no-xml-into-game).
+//	mapFrom); no XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 //
 //	The legacy modifier-family scalar MIRRORS are DEAD: the costs.world percents and the durations anarchy
 //	multipliers read via the parameterized point getters below; the singleton world families
@@ -40,7 +40,7 @@ public:
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =================
 	// (Conditioned-list access + the expected* valuations are the base CvInfo surface; kind and scope are
-	// separate arguments -- [DEC-scope-is-an-axis]; every magnitude is ×100 -- [DEC-fixedpoint-x100].)
+	// separate arguments -- docs/architecture/patterns.md §The coherent surface (scope is a separate axis); every magnitude is ×100 -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model).)
 	int getCostsModifier(CostsKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_COSTS, (int)eKind, eScope, CASC_UNIT_PERCENT); }
 	int getDurationsModifier(DurationsKind eKind, CvCascScope eScope) const

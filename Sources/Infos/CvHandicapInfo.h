@@ -7,7 +7,7 @@
 //	CvHandicapInfo -- the HANDICAP poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP;
 //	wave D, the config-heavy cut). A difficulty level is a CONFIG entity (state-repositories.md § WORLD is
 //	CONFIG): it enables nothing and is read from its source, never cached behind a dirty protocol. JSON-fed
-//	(Assets/Data/handicaps/*.json via mapFrom); no XML read (DEC-no-xml-into-game).
+//	(Assets/Data/handicaps/*.json via mapFrom); no XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 //
 //	The pervasive HUMAN/AI DUAL-LEAF duality (curate_handicap.py; engine.md § Handicaps): a leaf's bare unit
 //	is the BASE every player reads; the sibling `ai` object is the AI-AUDIENCE leaf the engine applies as its
@@ -47,7 +47,7 @@ public:
 
 	// ======================= 3. MODIFIER GROUPS -- game-start-base point reads ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Kind and
-	// scope are separate arguments -- [DEC-scope-is-an-axis]; every magnitude is ×100 -- [DEC-fixedpoint-x100];
+	// scope are separate arguments -- docs/architecture/patterns.md §The coherent surface (scope is a separate axis); every magnitude is ×100 -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model);
 	// bAiAudience selects the dual-leaf audience where the census authors an ai plane.)
 	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const;
 	int getUpkeepModifier(UpkeepKind eKind, CvCascScope eScope, bool bAiAudience) const;

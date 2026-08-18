@@ -1,5 +1,5 @@
 //
-//	CvSpecialUnitInfo -- mapFrom materializes the identity flags ONCE ([DEC-materialize-at-mapfrom]); the
+//	CvSpecialUnitInfo -- mapFrom materializes the identity flags ONCE (docs/architecture/patterns.md §Materialize at mapFrom); the
 //	combat/withdrawal families ride the base section dispatch into the composed CvModifiers (no family-address
 //	read survives here). Idempotent by contract (unconditional scalar assigns).
 //

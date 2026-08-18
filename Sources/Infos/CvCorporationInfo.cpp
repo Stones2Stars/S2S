@@ -1,7 +1,7 @@
 //
 //	CvCorporationInfo -- the corporation poco's own typed reading on top of the base section dispatch (see the
 //	header). mapFrom materializes the census identity set + the two value planes ONCE
-//	([DEC-materialize-at-mapfrom]); the value planes scan the COMPILED entry list (the one sanctioned load-time
+//	(docs/architecture/patterns.md §Materialize at mapFrom); the value planes scan the COMPILED entry list (the one sanctioned load-time
 //	scan source, patterns.md § Materialize at mapFrom), never the raw parse. Idempotent by contract
 //	(unconditional scalar assigns, clear-first containers).
 //

@@ -14,7 +14,7 @@
 //	on*Active hooks; enabler.md §7). It is never blanket-invalidated-and-recomputed -- running the fixpoint as a
 //	dirty/recompute cache is "burning down the library of Alexandria" (DESPAIR_INDEX #2) -- and never a parallel
 //	shadow-delta. Reads are BARE FETCHES: a propagation that fails to fire leaves the set visibly wrong, which is
-//	how the missing hook is found ([DEC-no-self-heal]). An EXTERNAL reader finds it by reading the LOGS against
+//	how the missing hook is found (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). An EXTERNAL reader finds it by reading the LOGS against
 //	the JSON info and what STATE expects ([superseded-ideas #33]) -- the DLL neither compares nor reports.
 //
 //	STATE HOME: a mutable CvCity member (`m_operatingBuildings`). Never serialized -- empty from birth, so a

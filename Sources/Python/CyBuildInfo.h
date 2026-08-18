@@ -20,7 +20,7 @@
 //	⛔ THERE IS NO "WHICH UNITS CAN DO THIS" READ HERE, and that is deliberate rather than an omission. It is a
 //	CROSS-LINK, so it is answered by the build's own reverse edge family (EDGEF_RELATED / EDGEB_UNITS, landed
 //	once at load by the reverse pass) through the generic CyInfo::getEdgeIds -- never by this accessor sweeping
-//	the unit registry per call, which is the own-data inversion [DEC-one-reverse-view] bans.
+//	the unit registry per call, which is the own-data inversion docs/cascade.md §1 (reverse lookups are populated once, at load) bans.
 //
 class CyBuildInfo
 {
@@ -32,7 +32,7 @@ public:
 	int getRoute(int iBuild) const;
 
 	// The build's own cost. `getTime` is x100 like every amount, so a reader reduces at its point of use
-	// ([DEC-fixedpoint-x100]); the gold cost is a whole count and is not scaled.
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the gold cost is a whole count and is not scaled.
 	int getGoldCost(int iBuild) const;
 	int getTime(int iBuild) const;
 
@@ -46,7 +46,7 @@ public:
 	// {"feature", "tech", "time", "production", "remove"}.
 	//
 	// ⚑ It is the build's OWN authored list, not a registry walk. The legacy page swept every feature id asking
-	// this build four questions about each, which is the own-data inversion [DEC-one-reverse-view] bans: a
+	// this build four questions about each, which is the own-data inversion docs/cascade.md §1 (reverse lookups are populated once, at load) bans: a
 	// build acts on a handful of features and already names them.
 	// ⚠ `tech` is -1 where the row gates on nothing, and `time` is x100 like every amount.
 	python::list getFeatureRows(int iBuild) const;

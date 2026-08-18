@@ -10,7 +10,7 @@
 //	which only an XML read() could build before this. Scoped, NOT a general bridge: the known predicate set
 //	(tech/bonus/building/civic/religion/corporation presence + the four diffuse tag-gates) translates; anything
 //	else returns NULL and the caller SKIPS the source -- fail closed, never over-apply.
-//	One implementation per translation ([DEC-single-implementation]); pure static functions, no state.
+//	One implementation per translation (docs/architecture/patterns.md §DRY (single implementation)); pure static functions, no state.
 //
 
 #include <string>
@@ -48,7 +48,7 @@ public:
 	// type is UB; the complete type lives here).
 	static void discard(const BoolExpr* pExpr);
 
-	// THE ONE per-poco family walk ([DEC-single-implementation]): every PROPERTY_X.{city|plot}.flat entry of
+	// THE ONE per-poco family walk (docs/architecture/patterns.md §DRY (single implementation)): every PROPERTY_X.{city|plot}.flat entry of
 	// pMods becomes a per-turn Constant/AttributeConstant source in kTarget, carrying eRelation/iRelationData
 	// (the category's legacy delivery shape: buildings NO_RELATION, units/promotions/specialists
 	// RELATION_SAME_PLOT, civics/traits/heritages/handicaps RELATION_ASSOCIATED — player-gathered, fanned to

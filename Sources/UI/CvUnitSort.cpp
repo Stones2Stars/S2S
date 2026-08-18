@@ -43,7 +43,7 @@ UnitSortBase::~UnitSortBase()
 }
 
 // The unit-statistic criteria are STAT sorts: each reads the unit type's OWN compiled data, so none of them
-// needs a city or a player. Every family/scalar read below is ×100 ([DEC-fixedpoint-x100]) and is left at that
+// needs a city or a player. Every family/scalar read below is ×100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) and is left at that
 // scale on purpose -- a sort only ORDERS, so it is scale-invariant and a ÷100 here would buy nothing but a
 // truncation. Where a criterion maxes several magnitudes they are all on the same ×100 plane.
 int UnitSortStrength::getUnitValue(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const

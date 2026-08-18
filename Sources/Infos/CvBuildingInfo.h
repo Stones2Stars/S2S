@@ -5,9 +5,9 @@
 //
 //	CvBuildingInfo -- the BUILDING poco rebuilt to the full exemplar surface (patterns.md § THE GETTER SETUP:
 //	the four read categories, nothing else). Styled for the JSON anatomy (json.md §2), members grouped by the
-//	entity anatomy; every magnitude read is a load-compiled fetch ([DEC-materialize-at-mapfrom]); kind and scope
-//	are separate parameters everywhere ([DEC-scope-is-an-axis]); every magnitude getter IS ×100
-//	([DEC-fixedpoint-x100]); no legacy getter name returns ([DEC-new-getter-surface]).
+//	entity anatomy; every magnitude read is a load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and scope
+//	are separate parameters everywhere (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); every magnitude getter IS ×100
+//	(docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"
@@ -42,7 +42,7 @@ public:
 	}
 	// The one-shot POPULATION and FREE-TECH payloads this building hands over on its CONSIDERED ACTION --
 	// `grants.population` at city vs empire scope, and `grants.freeTechs` ([json.md §5] numeric pulses).
-	// Materialized at mapFrom as HUMAN counts ([DEC-materialize-at-mapfrom]): the pulses are ×100 at parse and
+	// Materialized at mapFrom as HUMAN counts (docs/architecture/patterns.md §Materialize at mapFrom): the pulses are ×100 at parse and
 	// the key handles are interned once, so neither a scale nor a string lookup ever reaches a read.
 	int getPopulationChange() const { return m_iPopulationChange; }
 	int getGlobalPopulationChange() const { return m_iGlobalPopulationChange; }
@@ -50,7 +50,7 @@ public:
 	virtual const CvClassificationBlock* getAttributes()   const { return &m_attributes; }
 	virtual const CvClassificationBlock* getAmenities()    const { return &m_amenities; }
 	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
-	// The entity-level applicability gate ([DEC-entity-gate], json.md §2). A building composing NONE meant the
+	// The entity-level applicability gate (docs/specs/json.md §2 (Applicability row) + docs/specs/enabler.md §WHAT THE ENABLER IS NOT, json.md §2). A building composing NONE meant the
 	// base returned NULL and cascadeGateOk answered "never barred" (enabler.md §8), so the 23 corporate-HQ
 	// buildings that author `disabled` were silently ungated -- the authored clause reported unconsumed on every
 	// load and refused nothing.
@@ -76,7 +76,7 @@ public:
 	// city's whole anger / unhealthy-population / non-building-health side ceases to exist (modifier.md §2b).
 	// ⚑ `abolishedAnger` names the MECHANIC, never the WHERE: the legacy pair spelled it `bNoUnhappiness` on a
 	// building and `bNoCapitalUnhappiness` on a civic -- two names for ONE gate, the second baking its condition
-	// into the key ([DEC-conditions-are-predicates]). Both carriers now confer the SAME amenity.
+	// into the key (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)). Both carriers now confer the SAME amenity.
 	// No shipped BUILDING authors it -- deliberately, the mechanic being wildly overpowered -- so this read is
 	// false today; the chain is wired and lights up the moment data authors one.
 	// What the building PROVIDES to the empire (grantor-provided capabilities: setCultureRate, ...).
@@ -87,7 +87,7 @@ public:
 	// modifierConditioned()/modifierConditionedRange() + expectedFlatYields()/... -- one declaration for every
 	// rebuilt info, delegating to the ONE calc unit.)
 	// The engine-enum channel groups (ruling 1: the engine enum IS the kind axis; the flat-vs-modifier split
-	// lives in the NAME, never a scale suffix -- [DEC-fixedpoint-x100]).
+	// lives in the NAME, never a scale suffix -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
 	{ return flatWithFans(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 	int getYieldModifier(YieldTypes eYield, CvCascScope eScope) const
@@ -100,7 +100,7 @@ public:
 	// rate adds as `perPopulation × population` (modifier.md §2a's EXTRA tier). It is a THIRD unit on the family,
 	// not a third family: the split lives in the NAME exactly as flat-vs-modifier does, never a scale suffix.
 	// ⚠ perPopulation is FLAT-SIDE, so it is ×100 like a flat and the reader reduces at its point of use
-	// ([DEC-fixedpoint-x100]) -- NOT the legacy "latent /100" that made the old member look human.
+	// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- NOT the legacy "latent /100" that made the old member look human.
 	int getYieldPerPopulation(YieldTypes eYield, CvCascScope eScope) const
 	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_PER_POPULATION); }
 	int getCommercePerPopulation(CommerceTypes eCommerce, CvCascScope eScope) const
@@ -170,7 +170,7 @@ public:
 	// freeSpecialists.<scope>.any -- the GENERIC free-specialist slots this building grants ([modifier.md §6]:
 	// the count-by-type leaf, where the key IS the type or `any`). The AMOUNT is the cascade's half of the
 	// two-part seam; PLACEMENT stays the engine's. The data authors `any` at CITY and at EMPIRE, so scope is
-	// the caller's argument ([DEC-scope-is-an-axis]) -- the empire leaf is what the legacy global/area pair
+	// the caller's argument (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)) -- the empire leaf is what the legacy global/area pair
 	// authored, a landmass being no scope of its own. ×100 like every other getter; the reader reduces.
 	int getFreeSpecialistsAny(CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, eScope, CASC_UNIT_COUNT); }
@@ -189,7 +189,7 @@ public:
 	/// live here: an info does not know who is asking.</summary>
 	bool isOfferable() const                { return !m_bNotConstructible; }
 	// identity.empireLevel -- the building is held by the PLAYER, once, empire-wide, and is never present in any
-	// city (DEC-empire-level-buildings, enabler-spec §2). The ONE placement choke point routes an empire-level id
+	// city (docs/specs/enabler.md §2 (empire-level buildings), enabler-spec §2). The ONE placement choke point routes an empire-level id
 	// to the owner; an atom naming one implies EMPIRE scope (json §3.4 -- the tag IS the type's domain).
 	bool isEmpireLevel() const              { return m_bEmpireLevel; }
 	bool isNoInstanceLimit() const          { return m_bNoInstanceLimit; }

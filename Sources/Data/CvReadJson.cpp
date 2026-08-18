@@ -45,7 +45,7 @@
 #include "CvBonusClassInfo.h"
 #include "CvFoldTargetInfo.h"
 #include "CvInfos.h"               // the umbrella -- the remaining RJ_REPO_TYPES complete types with no own header
-#include "Data/CvReversePass.h"        // reversePassRun/reversePassCounts -- the ONE general reverse pass ([DEC-one-reverse-view])
+#include "Data/CvReversePass.h"        // reversePassRun/reversePassCounts -- the ONE general reverse pass (docs/cascade.md §1 (reverse lookups are populated once, at load))
 #include "Enabler/CvEnablerKernel.h"   // EnablerKernel::clearCompiledIndexes -- the operate index compiles from the infos this re-map frees
 #include "Enabler/CvBuildingEnabler.h" // BuildingEnabler::clearCompiledIndexes -- the gate-class / plot-atom / group / capped lists
 #include "Enabler/CvUnitEnabler.h"     // UnitEnabler::clearCompiledIndexes -- the class / unit-relation / plot-atom lists
@@ -59,7 +59,7 @@
 #include <string>
 
 // The REVERSE VIEW (RELATED / REQUIRED_BY / the own-output landing / the forward compat reconstructions) is
-// the ONE general pass in Data/CvReversePass.cpp ([DEC-one-reverse-view]) -- called from loadJson below.
+// the ONE general pass in Data/CvReversePass.cpp (docs/cascade.md §1 (reverse lookups are populated once, at load)) -- called from loadJson below.
 
 // ===================== [READJSON] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
 enum RjEvt
@@ -296,7 +296,7 @@ static bool rj_isAliased(const std::string& t)
 
 // The ONE INFOTYPE-prefix -> InfoRepo dispatch (exported; header decl) -- the /state/info observability read's
 // resolver. It routes through RJ_REPO_TYPES so a category is registered in exactly ONE place
-// ([DEC-single-implementation]): a second hand-maintained prefix list here is what silently drifted from the table
+// (docs/architecture/patterns.md §DRY (single implementation)): a second hand-maintained prefix list here is what silently drifted from the table
 // and left a whole cutover wave unresolvable by the standing /state/info verification. Broader than the reverse
 // pass's REQUIRED_BY router (HAVE-axis re-gate kinds only), and than the table itself, which carries no generated infos.
 //
@@ -323,7 +323,7 @@ const CvInfo* rjInfoForTypeConst(const std::string& t, int iId)
 //	How many ids a JSON-backed registry holds, by infotype prefix -- the registry's END, answered by the SAME
 //	dispatch that answers its entities. ⛔ It lives HERE, beside the dispatch, precisely so a consumer never
 //	grows a per-prefix count table of its own: the load pipeline's table stays the one source, and the two
-//	cannot drift ([DEC-single-implementation]).
+//	cannot drift (docs/architecture/patterns.md §DRY (single implementation)).
 //	Answers -1 for a prefix this dispatch does not own, so a caller can tell "not a JSON registry" from "empty".
 //
 int rjCountForType(const std::string& t)
@@ -343,7 +343,7 @@ CvInfo* rjInfoForType(const std::string& t, int iId)
 	RJ_REPO_TYPES(X)
 #undef X
 	// the runtime-GENERATED classification categories (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_) -- referenceable
-	// like any authored info ([DEC-classification-infos]); cold-path const view, cast for the shared return type.
+	// like any authored info (docs/specs/json.md §8 + docs/architecture/patterns.md §The coherent surface (THE GETTER SETUP)); cold-path const view, cast for the shared return type.
 	return const_cast<CvInfo*>(ClassificationRegistry::infoForType(t));
 }
 
@@ -376,7 +376,7 @@ static void rj_clearAllRepos()
 	                                              // reset-RECREATE (write-once discipline; a re-map gets a fresh node)
 }
 
-// ==================== THE RETAINED PARSE STORE (parse ONCE -- [DEC-one-json-reader]) ====================
+// ==================== THE RETAINED PARSE STORE (parse ONCE -- docs/architecture/patterns.md §The ONE reader) ====================
 // One record per *.json file under Assets/Data, built on FIRST use (the one disk read + one picojson parse of
 // the whole set) and RETAINED across the premenu->postmenu load window: the per-category registrations and
 // both full passes read from here, never from disk. Retention budget: ~21 MB of JSON text parses to an
@@ -674,7 +674,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] step spine-emits-done ms=%u", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 	// READ-BACK survey: reconstruct the modifier stats + per-entity structure counts from the MAPPED data (the
-	// home) -- the compiled §6 entries on getModifiers(), the spec model ([DEC-json-not-cascade]) -- proving the
+	// home) -- the compiled §6 entries on getModifiers(), the spec model (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)) -- proving the
 	// compile round-trips (values ×100'd, addresses interned, requires/edges/allowed/grants populated).
 	int iAttached = 0, iMapSample = 0, iModSample = 0;
 	int mMag = 0, mFlat = 0, mPercent = 0, mMult = 0, mOther = 0, mCond = 0, mPer = 0, mAiOnly = 0;
@@ -754,7 +754,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 			.addStr(RJF_KEY, it->first.c_str()).addI(RJF_COUNT, it->second)
 			.addStr(RJF_CLASS, jsonKeyClassName(keyClass[it->first])));
 
-	// THE GENERAL REVERSE PASS ([DEC-one-reverse-view]) -- the forward compat reconstructions, the
+	// THE GENERAL REVERSE PASS (docs/cascade.md §1 (reverse lookups are populated once, at load)) -- the forward compat reconstructions, the
 	// EDGEF_RELATED display inversion, the EDGEF_REQUIRED_BY re-gate index, and the own-output reverse
 	// landing, in ONE pass over the compiled surfaces (Data/CvReversePass.cpp). Runs after every entity is
 	// mapped so it inverts the final compiled state.
@@ -829,7 +829,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] END withData=%d reverseIndex+survey done totalMs=%u", iAttached, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
 	// The postmenu pass is the LAST reader of the retained parse: free the store completely -- after load, no
-	// JSON-shaped object survives ([DEC-one-json-reader]).
+	// JSON-shaped object survives (docs/architecture/patterns.md §The ONE reader).
 	if (eLoadPhase == JSON_LOAD_POSTMENU)
 	{
 		loadJsonFreeStore();

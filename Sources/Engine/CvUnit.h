@@ -923,8 +923,8 @@ public:
 	void setGameTurnCreated(int iNewValue);
 
 	// The unit-combat classes this unit HEALS AS -- its info's own authored `heal.unit.unitCombat.{UNITCOMBAT_X}`
-	// rows, projected off the ONE keyed collect ([DEC-single-implementation]). The heal MECHANIC is untouched;
-	// only its FEED moves onto the rebuilt info (roadmap.md: the carve-out is the mechanic, not the feed).
+	// rows, projected off the ONE keyed collect (docs/architecture/patterns.md §DRY (single implementation)). The heal MECHANIC is untouched;
+	// only its FEED moves onto the rebuilt info (the carve-out is the mechanic, not the feed).
 	void healAsUnitCombats(std::vector<UnitCombatTypes>& healAsTypes) const;
 	int getHealAsDamage(UnitCombatTypes eHealAsType) const;
 	void changeHealAsDamage(UnitCombatTypes eHealAsType, int iChange, PlayerTypes ePlayer = NO_PLAYER);
@@ -1488,7 +1488,7 @@ protected:
 
 	int m_iExtraMoves;
 	// The unit's stored per-turn upkeep (x100). DERIVED -- recomputed by calcUpkeep from the flat model
-	// (base + the resolved flat extra) and NEVER serialized ([DEC-derived-never-trusted]); the player
+	// (base + the resolved flat extra) and NEVER serialized (docs/specs/save.md §5 (derived data serializes NOTHING)); the player
 	// total tracks its delta. Its declaration was lost to a half-cut while the body kept using it, which
 	// is what truncated this TU at calcUpkeep.
 	int m_iUpkeep100;

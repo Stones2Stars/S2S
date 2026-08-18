@@ -4,7 +4,7 @@
 
 //
 //	TraitContext -- the empire's HELD-TRAIT set: storage, maintenance and its declared interest set in ONE place
-//	([DEC-dict-is-a-consumer]). The PolicyContext shape, over the TRAIT_ id space.
+//	(docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). The PolicyContext shape, over the TRAIT_ id space.
 //
 //	⚖ WHY IT IS A STORE AT ALL, WHEN `hasTrait` IS ALREADY O(1) -- the test is a SCAN, not a hop (contexts.md).
 //	Asking "does this player hold TRAIT_X" resolves through one pointer, so it is correctly FORWARDED
@@ -25,9 +25,9 @@
 //	⛔ THE RECORD IS THE ACTIVE SET'S, NEVER THE RAW REGISTRY ENTRY. A held id resolves through
 //	MMKernel::traitData (the GAMEOPTION_LEADER_COMPLEX_TRAITS selector), so a simple and a complex record can
 //	never be read for one another ([modifier.md] §4). That resolution lives HERE, once, rather than at each
-//	consumer ([DEC-single-implementation]).
+//	consumer (docs/architecture/patterns.md §DRY (single implementation)).
 //
-//	⛔ id -> COUNT, never a set ([DEC-keyed-accumulator]). The engine's own has-array is a bool and its setter
+//	⛔ id -> COUNT, never a set (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)). The engine's own has-array is a bool and its setter
 //	announces only genuine transitions, so the count sits at 0/1 today -- but a building's `grants.traits`
 //	confers a trait on the OWNER empire while it is active ([json.md] §8), so a second grantor is a DATA edit
 //	away and a bitset would break silently on one.
@@ -39,7 +39,7 @@
 //
 //	⚑ NO LOAD SPECIAL CASE, and it needs none for the reason PolicyContext needs none: a player EXISTS when its
 //	own facts stream, and `CvPlayer::read` emits ADDED per held trait after the wholesale has-array read, so the
-//	reseed builds this store through the appliers play uses ([DEC-spine-reseed]). The NEW-GAME half rides the
+//	reseed builds this store through the appliers play uses (docs/spine.md §5 (the load reseed)). The NEW-GAME half rides the
 //	same pair: initMore assigns the leader's traits through `setHasTraitInternal` AFTER the lifecycle announce
 //	has primed, so the initial assignment announces exactly as a runtime swap does -- one mechanism, no
 //	lifecycle fold beside it.

@@ -810,9 +810,9 @@ private:
 	template <class T>
 	void LoadGlobalClassInfo(std::vector<T*>& aInfos, const char* szFileRoot, const char* szFileDirectory, const wchar_t* szXmlPath, bool bTwoPass);
 	// #430: JSON-sourced sibling of LoadGlobalClassInfo -- a THIN REGISTRATION against the ONE reader
-	// ([DEC-one-json-reader]): loadJsonCategory serves the folder's already-parsed entities from readJson's
+	// (docs/architecture/patterns.md §The ONE reader): loadJsonCategory serves the folder's already-parsed entities from readJson's
 	// retained store; this registers ids in manifest order, creates the pocos, and mapFrom()s each. Never reads
-	// the archived CIV4<X>Infos.xml shell (HARD BANNED -- AGENTS.md / DEC-no-xml-into-game).
+	// the archived CIV4<X>Infos.xml shell (HARD BANNED -- AGENTS.md / AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 	template <class T>
 	void LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const char* szDataFolder);
 /************************************************************************************************/

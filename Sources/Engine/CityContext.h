@@ -21,12 +21,12 @@
 //
 //	MAINTENANCE IS EXTERNAL AND EVENT-DRIVEN -- a read NEVER recomputes, and NOTHING heals a missed fact. There is no
 //	periodic refresh, no recompute-on-read fallback, no staleness stamp: a fact that fails to fire leaves the stored
-//	value visibly wrong, which is how it gets found (DEC-no-self-heal; LOAD is the only full build). The refresh entry
+//	value visibly wrong, which is how it gets found (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT; LOAD is the only full build). The refresh entry
 //	points are const with the stores `mutable` (the PlotContext shape) so the maintainer can drive
 //	them through the bound city's const accessor without a second, mutable path onto the city.
 //
-//	NEVER SERIALIZED (DEC-derived-never-trusted): every store rebuilds from the save read's own in-read DOMAIN emits
-//	(DEC-spine-reseed).
+//	NEVER SERIALIZED (docs/specs/save.md §5 (derived data serializes NOTHING)): every store rebuilds from the save read's own in-read DOMAIN emits
+//	(docs/spine.md §5 (the load reseed)).
 //
 //	⛔ THE VICINITY SPLIT -- the context holds the MAP half, the enabler holds the BUILDING half, neither duplicates
 //	the other (contexts.md: the enabler's precomputed sets stay the ENABLER's derived output, fed to the evaluator as
@@ -86,7 +86,7 @@ public:
 	// A plot ENTERED (sign +1) / LEFT (sign -1) the city's owned worked-radius set: fold its stable HAS_/IS_ attributes
 	// (+/-1) into plotAttrs. COUNTS only; the plot is never stored. Reached ONLY from this store's own consumer, off
 	// the SEVT_PLOT_WORKING_CITY_ADDED / _REMOVED membership fact -- at play as it fires, and at load from the
-	// buffered in-read facts once the stream has ended (DEC-spine-reseed).
+	// buffered in-read facts once the stream has ended (docs/spine.md §5 (the load reseed)).
 	void onPlotChanged(const CvPlot* plot, int sign);
 	// A radius tile's BONUS arrived / left, or its OWNERSHIP moved it between partitions. ±1, applied by this
 	// store's own consumer off the plot facts -- never a radius walk, and never a fill pass
@@ -113,14 +113,14 @@ public:
 	// ⛔ THE AMENITY STATE IS NOT HELD HERE, and it is not reached THROUGH here either. It lives in its own
 	// context, owned by `CvCity` exactly as `m_operatingBuildings` is, and that context owns its storage, its
 	// maintenance AND the declared set of facts that drives it -- one place responsible (owner;
-	// Engine/AmenityContext.h, [DEC-dict-is-a-consumer]). This context FORWARDS the reads below, the same
+	// Engine/AmenityContext.h, docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). This context FORWARDS the reads below, the same
 	// STORES-vs-FORWARDS split every other object-owned aggregate takes.
 	// ⚠ Its maintainer reaches `pCity->amenity()` DIRECTLY -- never `getCityContext().amenity()`, which would
 	// make this class a pass-through facade for state it does not own.
 
 	// --- THE MAINTENANCE: reached ONLY through this store's own spine consumer -------------------------------------
 	// ⚖ THE DECLARED INTEREST SET -- the facts that maintain this store, stated AT the store rather than in a
-	// central switch that fans out to whichever store a case happens to name ([DEC-dict-is-a-consumer]). A fact
+	// central switch that fans out to whichever store a case happens to name (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). A fact
 	// absent from this list does not reach the store, and that is readable HERE.
 	static bool wantsEvent(int iEventId);
 
@@ -129,7 +129,7 @@ public:
 	// empty" and "the lists are full but the deposits refuse" produce the SAME observable -- a short yield -- and
 	// the difference between them is the difference between a broken store and a broken route. Reading the wiring
 	// cannot settle it: the interest set, the appliers and the drain all read correct while the answer stayed
-	// wrong ([DEC-no-guessing]: at a gap, EMIT the decomposition rather than infer it).
+	// wrong (AGENTS.md Conventions §Conduct (do not guess): at a gap, EMIT the decomposition rather than infer it).
 	// ⚠ Reports what the stores CONTAIN, never what they should -- it says nothing about correctness on its own,
 	// and it is not state anything may fold on ([event-spine.md] § THE RECEIVED LINE).
 	void reportBonusStoreCensus() const;
@@ -207,7 +207,7 @@ public:
 	int  amenityCount(int iAmenityId) const;
 	// The BY-KEY read, for a caller that has a name rather than an id. Same shape as CLS_HAS on the info side and
 	// for the same reason: amenity ids are MINTED AT LOAD, so there is no compile-time id to pass
-	// ([DEC-classification-infos]) -- the caller keeps a static cache the registry fills once.
+	// (docs/specs/json.md §8 + docs/architecture/patterns.md §The coherent surface (THE GETTER SETUP)) -- the caller keeps a static cache the registry fills once.
 	//   bool CvCity::isGovernmentCenter() const CITY_HAS_AMENITY(getCityContext(), "governmentCenter")
 	bool hasAmenityKey(int& iIdCache, const char* szKey) const;
 
@@ -217,7 +217,7 @@ public:
 	// (`CvCity::m_operatingBuildings`) exactly as it owns population -- this context neither computes nor
 	// mirrors it. The eval seam points the ctx's three set members at it, so a predicate asking "is this
 	// building ACTIVE / is this bonus provided in vicinity" reads the cascade-computed verdict rather than the
-	// engine's ([DEC-calc-zero-ride-in]). ⛔ Never STORE a copy: the enabler mutates its set in place as the
+	// engine's (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)). ⛔ Never STORE a copy: the enabler mutates its set in place as the
 	// operate fixpoint ripples, so a mirror would drift (the contexts.md vicinity-split reasoning).
 	const OperatingBuildings* operatingBuildings() const;
 	int  power() const;                       // the `providesPower` AMENITY fold (owner: power IS an amenity)
@@ -292,7 +292,7 @@ public:
 
 private:
 	// The ONE tier-dictionary selector, shared by the derivation and the read so the two cannot disagree about which
-	// tier a plot lands in (DEC-single-implementation).
+	// tier a plot lands in (docs/architecture/patterns.md §DRY (single implementation)).
 	const ContextDict& vicinityTier(CvCascVicinity eTier) const;
 
 	const CvCity* m_city;   // the bound game object; the derivation reads it -- never a value copy

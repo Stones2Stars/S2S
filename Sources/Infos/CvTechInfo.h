@@ -5,8 +5,8 @@
 //
 //	CvTechInfo -- the TECH poco rebuilt to the full exemplar surface (patterns.md § THE GETTER SETUP: the four
 //	read categories, nothing else). Styled for the JSON anatomy (json.md §2); every magnitude read is a
-//	load-compiled fetch ([DEC-materialize-at-mapfrom]); kind and scope are separate parameters
-//	([DEC-scope-is-an-axis]); no legacy getter name returns ([DEC-new-getter-surface]).
+//	load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate parameters
+//	(docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 //	A tech's UNLOCK surface (units/buildings/.../other techs) is store-inverted onto those entities'
 //	`enables.*` -- base availability data, never poco getters. The tech-side FORWARD views that survive are
@@ -72,7 +72,7 @@ public:
 	int getGridX() const        { return m_iGridX; }          // identity.gridX (tech-tree layout)
 	int getGridY() const        { return m_iGridY; }
 	// The two AI valuation magnitudes are ×100 (identity.worth/militaryWorth author fractional human values;
-	// [DEC-fixedpoint-x100]: the name says the VALUE, the scale is always ×100).
+	// docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the name says the VALUE, the scale is always ×100).
 	int getWorth() const         { return m_iWorth; }
 	int getMilitaryWorth() const { return m_iMilitaryWorth; }
 	bool isRepeat() const    { return m_bRepeat; }     // identity.repeat (repeatable research)

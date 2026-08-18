@@ -30,12 +30,12 @@
 //	per-unit editable base, which is why it is the only slot that carves out. ⚠ Counting the type in both places
 //	is a silent DOUBLE COUNT of every unit's authored strength -- the defect this carve-out exists to prevent.
 //	each contributing its `(family, kind, CASC_SCOPE_UNIT, unit)` compiled sum (CvModifiers::sum -- a bare array
-//	load, no anatomy walk, no string address, [DEC-materialize-at-mapfrom]). Percent-unit kinds sum as percents
+//	load, no anatomy walk, no string address, docs/architecture/patterns.md §Materialize at mapFrom). Percent-unit kinds sum as percents
 //	and flat-unit kinds as flats; nothing multiplies here, because a unit value is already resolved.
 //
 //	THE DIRTY TRIGGER -- exactly two spine facts, per the model's "ONLY when a promotion or combat class
 //	changes": SEVT_UNIT_PROMOTION_CHANGED and SEVT_UNIT_COMBAT_CHANGED. Unit MOVEMENT never dirties this (nor any
-//	cache -- [DEC-unit-modifiers-on-top]).
+//	cache -- docs/cascade.md §2b (unit-carried modifiers apply on top, live)).
 //
 //	⛔ COMMANDER-FREE BY CONSTRUCTION (owner, [modifier.md] §2b). A COMMANDER's contribution is NOT part of the
 //	unit -- it rides ON TOP, exactly as unit-sourced happiness rides on top of a city. It is deliberately absent
@@ -58,7 +58,7 @@ class CvUnit;
 //	⛔ IT IS ITS OWN BLOCK BESIDE THE SLOT TABLE, NOT A `URS_*` ROW, AND THAT IS THE SPEC. The slot table
 //	addresses modifier-FAMILY entries by `(family, kind, scope, unit)`; `hideAndSeek` is a SECTION
 //	([json.md] §9) with no such address, so it cannot ride the table -- and a hand-named scalar pair beside it
-//	would be the shape [DEC-uniform-cache-shape] calls a defect. It gets a cached block on the SAME MARK
+//	would be the shape docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a defect. It gets a cached block on the SAME MARK
 //	PROTOCOL instead, which is what keeps one fact route maintaining one unit's whole resolved state.
 //
 //	⚑ WHY IT BELONGS HERE AT ALL: it folds over EXACTLY the three carriers the slot table already folds over --
@@ -105,7 +105,7 @@ struct UnitResolvedHideAndSeek
 //	function of the unit's held promotions, so it is resolved ONCE on the promotion / combat-class fact and read
 //	as a bare fetch -- never re-derived by the reader.
 //
-//	⛔ THE MECHANIC IS UNTOUCHED, ONLY THE FEED ([roadmap.md]: "we don't change how heal works, but we have to
+//	⛔ THE MECHANIC IS UNTOUCHED, ONLY THE FEED (owner: "we don't change how heal works, but we have to
 //	change how the data is fed to heal"). The arithmetic that consumes this stands exactly as it did; what
 //	changed is that it is HANDED the verdict instead of rediscovering it per call.
 struct UnitResolvedHeal
@@ -144,7 +144,7 @@ enum UnitResolvedSlot
 	URS_HEAL_SUPPORT,             // heal.unit.support   -- how many others this unit can support-heal
 	URS_HEAL_VICTORY_STACK,       // heal.unit.victoryStack
 	URS_HEAL_VICTORY_ADJACENT,    // heal.unit.victoryAdjacent
-	URS_HEAL_SELF_MODIFIER,       // heal.unit.selfModifier -- a PERCENT, so unscaled ([DEC-fixedpoint-x100])
+	URS_HEAL_SELF_MODIFIER,       // heal.unit.selfModifier -- a PERCENT, so unscaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 	URS_EVASION,                  // air.unit.evasion
 	URS_INTERCEPT,                // air.unit.intercept
 	URS_AIR_RANGE,                // air.unit.range                -- the unit's OWN air range. The team's
@@ -182,7 +182,7 @@ enum UnitResolvedSlot
 
 //	The resolved values + their dirty flag. A DATA MEMBER on CvUnit (the guardrail bars adding vtable BASES to
 //	EXE-bound classes, never members -- patterns.md). NEVER SERIALIZED: derived data is never trusted from a save
-//	([DEC-derived-never-trusted]), and the held set it gathers from is itself restored by the save read.
+//	(docs/specs/save.md §5 (derived data serializes NOTHING)), and the held set it gathers from is itself restored by the save read.
 class UnitResolvedValues
 {
 public:
@@ -212,7 +212,7 @@ public:
 	//	promotion landed. Asked per read it was `held x REGISTRY` -- the panel asks it for every promotion a unit
 	//	carries, and each ask swept every promotion in the game to rediscover the unit's own lines, so the cost
 	//	grew QUADRATICALLY with promotions held and an unpromoted unit paid nothing. That shape is the own-data
-	//	inversion ([DEC-one-reverse-view]) and the per-read scan the event-built state exists to delete.
+	//	inversion (docs/cascade.md §1 (reverse lookups are populated once, at load)) and the per-read scan the event-built state exists to delete.
 	bool isPromotionOverridden(int iPromotion) const;
 
 	// The gathers, exposed so a caller can recompute FROM SOURCE into its own buffer without ever being handed

@@ -9,7 +9,7 @@
 #include "CvProperties.h"
 #include "CvEventGrants.h"
 #include "CvCascadePackage.h"      // the TEAM-scope cascade package (state-repositories.md)
-class CapabilityContext;   // the PLAYER-held ability union these relays read ([DEC-scope-contexts])
+class CapabilityContext;   // the PLAYER-held ability union these relays read (docs/cascade.md §The contexts (plot/city/player own one live-state context))
 
 class CvArea;
 
@@ -45,14 +45,14 @@ public:
 	CvGameObjectTeam* getGameObject() { return &m_GameObject; }
 
 	// The TEAM-scope cascade package -- the uniform CvCascadePackage on every scoped item
-	// ([DEC-uniform-cache-shape]; three channels measured at team scope -- trivial as keyed slots).
+	// (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE; three channels measured at team scope -- trivial as keyed slots).
 	// A MAINTAINED SUM: the fact names the source and applying its compiled deposits is the whole maintenance
-	// ([DEC-maintained-sum]). Never serialized.
+	// (docs/cascade.md §THE MAINTAINED SUM). Never serialized.
 	const CvCascadePackage<CvTeam>& getCascadePackage() const { return m_cascadePackage; }
 
 	// ---- THE EMPIRE-CAPABILITY SET (capabilities.md; json.md §8) -- active as the union over the live HAVE
 	// sources, so nothing is handed out and a capability lapses with its last live source. ⛔ THE TEAM DOES NOT
-	// HOLD IT: a team owns no live-state surface ([DEC-scope-contexts]), so the store is the PLAYER's keyed
+	// HOLD IT: a team owns no live-state surface (docs/cascade.md §The contexts (plot/city/player own one live-state context)), so the store is the PLAYER's keyed
 	// CapabilityContext, fed by the tech / civic / building facts, and the reads below are pure relays.
 
 	// Improvement yields a PYTHON EVENT granted this team (the wonder-event grants). One-shot state, so it is
@@ -209,8 +209,6 @@ public:
 	int getForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource) const;
 	bool isForceTeamVoteEligible(VoteSourceTypes eVoteSource) const;
 	void changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, int iChange);
-
-	bool isExtraWaterSeeFrom() const;
 
 	bool isMapTrading() const;
 

@@ -33,9 +33,6 @@
    ]
   }
  },
- "capabilities": {
-  "canSeeFurtherFromWater": true
- },
  "cost": {
   "research": 1445
  },

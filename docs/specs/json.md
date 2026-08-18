@@ -3,7 +3,7 @@
 The single source of truth for what a Stones2Stars data file may **contain**. Every game entity — a building,
 unit, tech, civic, religion, terrain, … — is **one JSON object in its own file** under `Assets/Data/<type>/`.
 The three **cascade** machines — the engine systems that read this data: [enabler](enabler.md) ("can I build
-it?"), [modifier](modifier.md) ("how much?"), [tally](tally.md) ("how many?") — plus `readJson` consume exactly
+it?"), [modifier](../cascade.md) ("how much?"), [tally](tally.md) ("how many?") — plus `readJson` consume exactly
 this shape; the future modder reference is *derived* from this spec, never the other way round.
 
 **The one promise — the data reads cold.** A well-authored file is understandable with zero engine knowledge.
@@ -55,47 +55,33 @@ of them.
 
 > **⚖ `tradeRoutes` IS ITS OWN BASE SECTION — the COUNTS and the MODIFIERS TO ROUTES live together in it (owner).**
 > *"Trade route counts, and the modifier to trade routes, should be in the base, because trade routes
-> fundamentally is its own section."* Everything about routes is addressed under this one key: how many routes an
-> entity grants, what caps them, and every percentage that scales what a route delivers.
+> fundamentally is its own section."*
 >
-> ⛔ **So a per-yield trade modifier is NOT a member of the yield family.** A trait that reduces the food a route
-> brings authors under `tradeRoutes`, never as `food.<scope>.tradeRoute` — the yield families carry what an
-> entity DEPOSITS, and "what a route is worth" is a property of the route, not of food.
-> ⚑ **The cost of getting this wrong is silent and total:** an address whose member has no row in its family's
-> kind table is parsed, reported once as `[READJSON] unkinded-member <family>.<member>`, and then produces
-> NOTHING. The trade-route surface is where this bit hardest — the per-yield modifiers, and the `coastal` /
-> `foreign` variants, all land on member names no table carries.
+> ⛔ **A per-yield trade modifier is NOT a member of the yield family** — a trait reducing a route's food authors
+> under `tradeRoutes`, never `food.<scope>.tradeRoute` — the yield families carry what an entity DEPOSITS, and
+> "what a route is worth" is a property of the route, not of food.
+> ⚑ Getting this wrong is silent: an unkinded member parses, logs once as `[READJSON] unkinded-member
+> <family>.<member>`, and produces NOTHING — the trade-route per-yield and `coastal`/`foreign` variants bite
+> hardest here.
 >
-> ⚖ **Two axes live in here and they are different questions, so neither is the other's member:**
-> - the **COUNT** axis — how many routes (a flat amount), and the CAP on them;
-> - the **MODIFIER** axis — the channel-agnostic route-PROFIT percentage, scoped by what KIND of route it is
->   (normal / coastal / foreign), plus the per-CHANNEL percentage that scales the yield a route delivers.
+> ⚖ **Two axes, neither the other's member:** the **COUNT** axis (how many routes, and the cap) and the
+> **MODIFIER** axis (the route-PROFIT percentage by route kind, plus the per-channel percentage on the yield a
+> route delivers). ⛔ **Route KIND is a CONDITION, never a kind of its own** —
+> `coastal`/`foreign`/`sharedCivic` are predicates on the entry ([§3.5](#35-predicates--a-systems-runtime-state-query)):
+> `IS_FOREIGN`/`SHARES_CIVIC` evaluate against the route's partner city. ⚠ Not the same predicate shape:
+> `coastal` is a verdict about the CITY; `foreign`/`sharedCivic` about the ROUTE.
 >
-> ⛔ **Route KIND is a CONDITION, never a kind of its own** — `coastal` / `foreign` / `sharedCivic` describe WHICH
-> routes a modifier applies to, so they are predicates on the entry ([§3.5](#35-predicates--a-systems-runtime-state-query):
-> `IS_FOREIGN` and `SHARES_CIVIC` are evaluated against the ROUTE's partner city, inside the profit stage).
-> ⚠ They are not all the same predicate SHAPE: `coastal` is a verdict about the CITY, while `foreign` /
-> `sharedCivic` are about the ROUTE — so where each is asked differs, and an author must not assume one form.
->
-> **⛔ WHY IT MUST BE ITS OWN SECTION, AND THIS IS THE PART THAT KEEPS GETTING LOST (owner): TRADE ROUTES ARE AN
-> ISOLATED SYSTEM WE DO NOT FULLY CONTROL, SO WE FEED IT WHAT WE HAVE *BEFORE* IT REACHES BASE.** The engine owns
-> the network calculation — which cities pair, what a route is worth — and the cascade cannot re-derive it. What
-> the cascade owns is the INPUTS to that stage, and they have to be assembled and handed over as one coherent
-> package before the engine runs, because afterwards there is nothing left to attach them to.
-> ⇒ **That is what makes it a SECTION rather than a family.** A modifier family deposits into a scope's package
-> and is read at the combine; this one has to be COMPLETE at a specific upstream moment, so it is addressed and
-> collected as one thing.
-> ⚑ **It is also why a route takes percentages TWICE, which otherwise reads as double-counting (owner):** once
-> here, on the route itself (the profit and per-channel modifiers, applied inside the engine stage), and again
-> when the resulting yield lands in the city's TIER-1 BASE and takes the ordinary percent stack
-> ([modifier.md §2a](modifier.md)). Two distinct stacks, exactly as a SPECIALIST's intrinsic takes its own
-> percent layer before joining BASE.
-> ⚠ So a trade-route modifier authored anywhere else does not merely land in the wrong slot — it arrives too
-> late to be fed to the system that consumes it.
->
-> ⚑ **The COUNT is cascade-computed; the trade YIELD is the engine's OUTPUT folded back in**
-> ([modifier.md §2a](modifier.md)) — the cascade owns how many routes there are and what scales them, and folds
-> in the yield the network calculation produces.
+> **⛔ WHY ITS OWN SECTION (owner): trade routes are an isolated system we don't fully control, so we feed it
+> what we have BEFORE it reaches base.** The engine owns the network calculation (which cities pair, what a route
+> is worth) and the cascade cannot re-derive it; the cascade owns only the INPUTS, assembled as one complete
+> package before the engine runs, because afterwards there is nothing left to attach them to. ⇒ That is what
+> makes it a SECTION rather than a family — a modifier family deposits into a scope's package and is read at
+> combine; this one has to be COMPLETE at a specific upstream moment.
+> ⚑ **A route therefore takes percentages TWICE, which is not double-counting (owner):** once on the route itself
+> (profit + per-channel, inside the engine stage), again when the yield lands in the city's TIER-1 BASE and takes
+> the ordinary percent stack ([modifier.md §2a](../cascade.md)) — the same two-stack shape a SPECIALIST's own
+> percent layer uses before joining BASE. ⚠ A trade-route modifier authored anywhere else arrives too late to
+> reach the system that consumes it.
 
 ---
 
@@ -204,7 +190,7 @@ An **atom** is `{ type, scope?, min?, max?, connection? }`. **Scope is IMPLIED f
 the ID prefix) — TECH→`team`, civic/heritage→`empire`, building/bonus/religion/corporation→`city`. One data-driven
 override: a building carrying `identity.empireLevel` (§7) has EMPIRE as its domain, so an atom naming one implies
 `empire` — the player-held set is the only place its presence exists
-([enabler.md §2](enabler.md), [DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings)).
+([enabler.md §2](enabler.md), [empire-level buildings](enabler.md#2-pass-1--generate-the-frontier-the-enables-family)).
 State `scope` explicitly ONLY when it differs from that default (e.g. a `world`-scope victory, a `player`-scope tech).
 So a **plain default-scope presence collapses to a bare type-string** — author the common case as a simple string
 array: `"all": ["BUILDING_FORGE", "TECH_ASTRONOMY"]` ≡ `[{type:"BUILDING_FORGE"},{type:"TECH_ASTRONOMY",scope:"team"}]`.
@@ -236,13 +222,13 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
     on a workable plot puts it here, and so does a building in the city that supplies it (a herd, a factory —
     `provides.bonuses`, §5a): those are the SAME act as far as this list is concerned, and the list cares only
     about what is there, never about provenance.
-    > **⛔ IT IS NAMED `onSite` BECAUSE "vicinity" AND "connected" BOTH MISLEAD, REPEATEDLY (owner).** The two
-    > sets are ORTHOGONAL, not nested: **onSite** = the resource is here; **`connection:"trade"`** = the plot
-    > group reaches it. A resource can be either without the other, and a gate asks for exactly one — a mounted
-    > unit needs horses ON SITE, a swordsman only needs iron wares in the NETWORK.
+    > **⛔ IT IS NAMED `onSite` BECAUSE "vicinity" AND "connected" BOTH MISLEAD (owner).** The two sets are
+    > ORTHOGONAL: **onSite** = the resource is here; **`connection:"trade"`** = the plot group reaches it. A
+    > resource can be either without the other — a mounted unit needs horses ON SITE, a swordsman only needs
+    > iron wares in the NETWORK.
     > ⚠ The retired spelling was `"connected"`, which took the trade side's word for a local question and is
-    > what made the two read as one thing. `owned` (raw presence on an owned tile, improved or not) stays its
-    > own tier and is strictly weaker than `onSite`.
+    > what made the two read as one thing. `owned` (raw presence, improved or not) stays its own tier and is
+    > strictly weaker than `onSite`.
     >
     > **⛔⛔ `onSite` IS AN ENABLER-SIDE CONCEPT ONLY. NO MODIFIER GATES ON IT — NOT ONE (owner).** A DEPOSIT
     > conditioned on a resource asks whether the CITY HAS IT, which is the TRADED question and is spelled as the
@@ -280,11 +266,11 @@ context: `IS_WATER` on `plots` = a water tile, on `units` = a sea unit. An **unk
 IGNORED**, never treated as false — retiring a system never spuriously disables unrelated data.
 
 > **The predicate registry is EXTENSIBLE — and a condition is ALWAYS a predicate, never a bespoke member
-> ([DEC-conditions-are-predicates]).** When a deposit's condition has no predicate named verbatim
+> ([conditions are predicates, never bespoke members](#35-predicates--a-systems-runtime-state-query)).** When a deposit's condition has no predicate named verbatim
 > below yet, **define a new predicate** (add it here, wire it in the evaluator, and emit the state fact it reads).
 > Adding a predicate *extends* the model within the structure. What you must NOT do is encode the condition as a new
 > sub-scope **member** (`{family}.empire.capital.percent`, `perMilitaryUnit`) — that changes the core structure (the
-> kraken way; see [modifier.md §3](modifier.md), which also notes the **golden-age exception**: `empire.goldenAge`
+> kraken way; see [modifier.md §3](../cascade.md), which also notes the **golden-age exception**: `empire.goldenAge`
 > is a PERMANENT engine member-mirror (effect-only), because the yield effect is engine-core and not data-defined;
 > golden-age length + grant ARE curated JSON (`goldenAge.empire.percent`, `grants.goldenAge`)).
 >
@@ -326,7 +312,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 > The fold set is what makes that reachable — once a predicate resolves to a NAMED set, distinguishing coast from
 > ocean from deep-sea is authoring another set rather than an engine change. ⛔ Do not build the granular split
 > ahead of the plain one working; this is an owner-ruled ORDERING, so
-> [DEC-no-deferred](../architecture/decisions.md#dec-no-deferred) does not reach it.
+> ["deferred" is banned](../../AGENTS.md#design) does not reach it.
 
 - **bare** (parameter-free string), four groups:
   - **environment / domain** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_AIR` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
@@ -374,11 +360,11 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   **`{CIVIC_CATEGORY: CIVICOPTION_X}`** (the CIVIC whose value is being resolved sits in that category — the gate a
   trait's *"religion civics cost no upkeep"* authors, as `upkeep.empire.civic.percent: -100` conditioned on it).
   ⛔ It carries the **FULL `CIVICOPTION_` id**, never a bare `RELIGION`, so it can never be read as a `RELIGION_`
-  type. ⚑ It is a SOURCE-SLOT predicate ([contexts.md](../architecture/contexts.md) § THE SOURCE SLOTS): the walk
+  type. ⚑ It is a SOURCE-SLOT predicate ([contexts.md](../cascade.md) § THE SOURCE SLOTS): the walk
   resolving a civic sets the slot, and with no civic in hand it answers **FALSE** — resolving it against whichever
   civic a walk reached last would be worse than declining. ⚠ The legacy shape was a target-keyed
   `upkeep.civicOptions.{CIVICOPTION_X}` member, which is the condition-as-member rollerskate
-  ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates)) AND matched no kind
+  ([conditions are predicates, never bespoke members](#35-predicates--a-systems-runtime-state-query)) AND matched no kind
   row, so it parsed, reported `unkinded-member` and produced nothing ·
   `{latitude:{min,max}}` · `{existedFor:{min:N}}` (GAME YEARS since built -- what the player has always been told: *"doubles in 1000 years"*. The city stores the build YEAR (`getGameTurnYear`) and every authored threshold is a year count; a turn's year is derived, never stored ([engine.md](../reference/engine.md)), so nothing needs converting) ·
   `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
@@ -402,9 +388,9 @@ A magnitude names the **nature** of the value, not how the engine combines it (�
 (Plus `postMultiplier` / `rawPercent` — rare **engine-internal** units, **not for normal authoring**; ignore them
 unless porting a specific engine quirk.)
 
-> **Values are human-readable. Always.** `7`, `25`, `1.5` — never ×100. **Rule (fixed-point):** all engine math
-> is integer fixed-point ×100 (no float — Civ4 MP is deterministic lockstep and float desyncs), but the single
-> human→×100 conversion happens once at load in `readJson`. **A ×100 value in a JSON file is a bug.**
+> **Values are human-readable. Always.** `7`, `25`, `1.5` — never ×100. readJson performs the one human→×100
+> conversion at load ([the ×100 fixed-point model](curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)). **A ×100 value in
+> a JSON file is a bug.**
 
 ### 3.7 `per` — count-scaling
 
@@ -427,7 +413,7 @@ depositing civic's own resolved limit. Composes with `each` (`(count − above) 
 scope; cross-city scopes (empire/team/world) resolve via the [tally](tally.md), `city`/`plot` are local.
 
 **`unit: <predicate>`** qualifies a deposit by a **unit predicate** — the *same* `unit:` qualifier cargo uses
-(`cargo.space.{unit: IS_AIR, …}`, [modifier](modifier.md) §6). On a count-scaling family it reads **per unit
+(`cargo.space.{unit: IS_AIR, …}`, [modifier](../cascade.md) §6). On a count-scaling family it reads **per unit
 matching**: `happiness.empire.cities.{unit: IS_MILITARY, flat: N}` = "N happiness per *military unit* stationed" —
 the unit-presence effect lives on the civic/trait that grants it, targeting each city.
 The qualifier generalizes by counted kind — the field NAMES what is counted and holds the filtering predicate:
@@ -675,7 +661,7 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 > **one-shot PAYLOAD**: this action, now, takes this away, with nothing to re-evaluate, exactly as `grants` is a
 > payload rather than an availability edge. Building it as an enabler edge would make a momentary effect into a
 > permanent rule. If it lands: curator + regen ride in the same work item
-> ([DEC-recurate-on-decision](../architecture/decisions.md#dec-recurate-on-decision)), with the scattered
+> ([recurate on every decision](../../AGENTS.md#git--delivery)), with the scattered
 > `destroy`/`consumes` verbs as migration input.
 
 > **`grants` is ONLY genuine provisions handed out on the considered action.** A unit's MISSION_CONSTRUCT
@@ -704,7 +690,7 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 
 - **lists** — `buildings · units · techs · civics · promotions · traits · bonuses · specialists`.
   ⛔ **`specialists` is a NARROW carve-out, and the test is the LIFETIME — never the payload.** Free specialists
-  are ordinarily the `freeSpecialists` MODIFIER family ([modifier.md §6](modifier.md)): alive-with-source, dying
+  are ordinarily the `freeSpecialists` MODIFIER family ([modifier.md §6](../cascade.md)): alive-with-source, dying
   with the building or civic that pays for them, on the two-part amount/placement seam. Authoring THOSE as a
   grant is the retired shape ([superseded-ideas #10](../architecture/superseded-ideas.md)) and stays retired.
   A specialist is a GRANT in exactly one case: a **persisted PULSE that outlives its source** — handed over
@@ -804,16 +790,16 @@ The full address of a deposit:
   member; `defense` uses an `amount` member, with a `min` member for the floor.
   ⚑ **`defense.amount` SUMS LIKE A FLAT and is APPLIED as a percentage (owner: "it is not a percentage in
   calculations, it's a flat sum added as a percentage for the defense calc") — which is exactly what the
-  `percent` unit already means** (§3.6 / [modifier.md §2](modifier.md): percents are ADDITIVE DELTAS that sum
+  `percent` unit already means** (§3.6 / [modifier.md §2](../cascade.md): percents are ADDITIVE DELTAS that sum
   and apply ONCE, never a per-source multiplier). So it authors `percent` and accumulates on the percent side;
-  the value is measured in defense points, not scaled ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100):
+  the value is measured in defense points, not scaled ([the ×100 fixed-point model](curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries):
   a percent is never ×100).
   ⚑ **The stack has a FLOOR and NO CEILING — verified, because the absence is load-bearing.** The floor is the
   `min` kind (`getExtraMinDefense`), applied at the realized read.
   ⛔ **THE WHOLE FAMILY IS `percent` — EVERY member, no exceptions to remember (owner).** The values are
   *technically* flat additive sums, and they are APPLIED as a percentage — *"it does increase combat of
   defending units by the percentage anyway"* — and **defense never carries decimals**, so the ×100 that the
-  `flat` unit exists to buy ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100): the
+  `flat` unit exists to buy ([the ×100 fixed-point model](curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries): the
   scaling exists ONLY to carry two decimals) is worth exactly nothing here. ⚑ **Uniformity is the requirement,
   not the label** — *"it does not really matter at the end of the day, as long as all defense modifiers do the
   same thing."*
@@ -842,7 +828,7 @@ The full address of a deposit:
 - **⛔ THE MEMBER TRIAGE TEST — a member is a KIND only if it answers *WHICH component does this modify* (owner).**
   `defense.bombardDefense` and `maintenance.distance` name components, so they are genuine kinds. A member that
   answers **WHEN or WHERE** the value applies is a **condition-as-member rollerskate** — the predicate simply has
-  not been defined yet ([DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates)),
+  not been defined yet ([conditions are predicates, never bespoke members](#35-predicates--a-systems-runtime-state-query)),
   and it re-authors as a conditioned deposit (the worked case: `maintenance.empire.{homeArea,otherArea}` →
   `enabled: "IS_HOME_AREA"` / `"!IS_HOME_AREA"`, §3.5). Run this test on every proposed member: the scope axis and
   the conditions must never inflate a family's vocabulary. ⚑ A **`per<X>`-named member is its own verdict** — it IS
@@ -877,7 +863,7 @@ The full address of a deposit:
   plus the entity's own self-data (`hurryCost` = "hurrying ME"; `buildTime`). (2) **What CHANGES a cost** is the ONE
   `costs` modifier family, kinds by category (`train`/`construct`/`create`/`build`/`research`/`improvementUpgrade`/
   `hurry`/`upgrade`), with **scope as the axis** — never a `world*`-prefixed kind
-  ([DEC-scope-is-an-axis](../architecture/decisions.md#dec-scope-is-an-axis)). (3) The **derived price** (upgrade
+  ([scope is a separate axis, never folded into the kind](../architecture/patterns.md#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)). (3) The **derived price** (upgrade
   gold, hurry gold/pop) is engine-computed from planes 1 × 2; its formula parameters are world/handicap config, never
   vocabulary.
 - **`underworld` is the in-city criminal contest** (criminals burrow, investigators drag them out): kinds
@@ -926,26 +912,17 @@ The full address of a deposit:
 
 ### 6.2 Ownership — the deliveryguy rule
 
-A cross-entity modifier lives on **whoever brings it to the table** (the deliveryguy), keyed by the target — never
-inverted onto the target. The other entity is referenced as a **condition** (`enabled`/`requires`), never the home.
-Two shapes, chosen by what reads sensibly:
-
-- **own-output** — an entity's own produced output (a specialist's yield, an improvement's tile yield, a unit's
-  strength) lives on that entity; tech/civic/building are `enabled` conditions. *A civic that boosts a Merchant's
-  commerce → on the specialist, `enabled:{civic}` — not on the civic.*
-- **governing-deliverer** — an entity that delivers/governs an effect on others lives on the actor, keyed by the
-  target. *A route upgrading improvements → on the route, keyed by improvement.*
-
-Plot-substrate entities (terrain/feature/improvement/route) each own their own `plot`-scope output.
+A cross-entity modifier lives on **whoever brings it to the table**, keyed by the target — never inverted onto the
+target; the other entity is only ever an `enabled`/`requires` condition, never the home. Full ruling, the
+own-output vs governing-deliverer split, and the plot-substrate case: [modifier.md §4](../cascade.md)
+([the deliveryguy ownership rule](../cascade.md#4-ownership--the-deliveryguy-rule)).
 
 ### 6.3 How values combine
 
-```
-effective = (base + Σflat) × (100 + Σpercent)/100 × Π(multiplier/100)
-```
-
-flats sum into base; percents (additive deltas) sum then apply once; multipliers compose by product. You author
-the values; the engine combines them — the combine mode is **family metadata**, never the per-value unit.
+The combine arithmetic — flats sum into base, percents (additive deltas) sum and apply once, multipliers compose
+by product — is the machine's, not the authoring model's: [modifier.md §2](../cascade.md). You author the values;
+the engine combines them, and the combine mode is **family metadata**, never the per-value unit (§6's member-triage
+test above).
 
 ---
 
@@ -972,9 +949,9 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > classified buildings in Python from seven legacy per-field getters plus, for three buckets, a **substring
   > match on the localized DISPLAY NAME** (`"Folklore -"`, `"Enclosure -"`, `"Remains -"`) — a taxonomy built out
   > of prose, silently wrong in every non-English localization. Publishing those getters so the classifier
-  > resolves would preserve it exactly ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface):
+  > resolves would preserve it exactly ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner):
   > a walk that compiles against the new surface while doing what it always did is the half-migration).
-  > ⚑ **The CURATOR derives the value once — CRAZY → curator, offline** (the [modifier.md §4](modifier.md) trait
+  > ⚑ **The CURATOR derives the value once — CRAZY → curator, offline** (the [modifier.md §4](../cascade.md) trait
   > precedent), and most of it falls out of data that already exists rather than being authored: world/national
   > wonder from **which self-cap the entity authors** ([enabler.md §4](enabler.md) — the category IS the cap's
   > scope, "never from an `isWorldWonder` mirror"), the system-placed buckets from `notConstructible`/`autoBuild`
@@ -1005,8 +982,7 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   - a **capability to trade / work / travel on something** is its own root block (`canTrade`, `canTradeOn`,
     `canWorkOn` — [capabilities.md](capabilities.md)).
 
-  ⚠ An effect authored into `identity` is a data error; the re-home worklist lives in
-  [todo.md](../plans/structural-cleanup/todo.md).
+  ⚠ An effect authored into `identity` is a data error.
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
   and `autoBuild` (the placing system is the band placer: placed once in every city at founding, its
   `requires.operate` toggling active/dormant forever — [enabler.md §3](enabler.md); a world/team-capped member is
@@ -1019,7 +995,7 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   A third holding-scope flag: **`empireLevel`** — the building is held by the PLAYER, once, empire-wide, and is
   never present in any city; an atom naming one implies EMPIRE scope (§3.4 — the tag IS the type's domain).
   Curator-DERIVED from empire-uniformity, never hand-authored; the machine and the membership rule are
-  [enabler.md §2](enabler.md) ([DEC-empire-level-buildings](../architecture/decisions.md#dec-empire-level-buildings)).
+  [enabler.md §2](enabler.md) ([empire-level buildings](enabler.md#2-pass-1--generate-the-frontier-the-enables-family)).
   **Civilization selectability** lives here too: `playable` / `aiPlayable` (can a human / the AI pick this civ) —
   **load-only metadata, no gameplay relevance** (animals/barbarians/neanderthals are technically civilizations), so
   it is intrinsic self-description, not a `policy`.
@@ -1033,7 +1009,7 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > **⛔ THE TAG KEY IS `define`, AND AN INFO THAT READS A DIFFERENT ONE FAILS AS A CRASH, NOT AS A MISSING
   > PICTURE.** `getArtInfo()` is `DllExport` and the EXE does **not** null-check it, so an unresolved tag makes
   > `ARTFILEMGR` answer NULL and the EXE dereferences it while reading the art's own path strings — an access
-  > violation in the EXE's frame with nothing naming the entity ([DEC-info-plane-read-only](../architecture/decisions.md#dec-info-plane-read-only):
+  > violation in the EXE's frame with nothing naming the entity ([the info plane is write-once-at-load](../architecture/patterns.md#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud):
   > the address is the bait). ⚠ The DLL-side reads around it (`getLeaderHead`, `getButton`) DO null-check, so
   > they degrade quietly to "no art" and hide the fault until the EXE asks.
   > ⚑ **The failure is a silent key mismatch, which no census catches:** the reader accounts every authored key
@@ -1058,8 +1034,16 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > ⚑ **What it costs when it is missing is measurable, not theoretical:** `CvCity::getVisibleBuildings` offers the
   > render engine every building the city holds, so without the flag a late-game save logs **26,273**
   > `is not associated with a CvCityLSystem node` warnings over 260 buildings plus **4,168** `Art/Empty.nif` shadow
-  > complaints ([observability.md](../reference/observability.md) — `LSystem.log`), once per layout rebuild, per city.
+  > complaints ([spine.md](../spine.md) — `LSystem.log`), once per layout rebuild, per city.
 
+  > **⛔ THE ART CARVE-OUT — art is OUT OF SCOPE, leave it alone (owner).** The art defines
+  > (`CIV4ArtDefines_*`), their `ART_`/`EFFECT_` tag ids, and the asset files are UNTOUCHED by this data model:
+  > JSON carries only the tag id, the definitions stay in the ART XML, and `ARTFILEMGR` keeps resolving them
+  > ([naming.md](naming.md)). This includes **not** cleaning up art that becomes orphaned when a consumer is
+  > removed — an unreferenced define is inert, and pruning it is neither a cascade job nor a tidiness licence.
+  > Same standing as TXT: an unmigrated system boundary, not a gap
+  > ([patterns.md § THE PYTHON READ BOUNDARY](../architecture/patterns.md)).
+  >
   > **⚖ ART IS ART, AND IT STAYS TOGETHER (owner).** A unit's MESH GROUPS were authored as one block with the
   > art tags that name their models (`<UnitMeshGroups>`: `iGroupSize` · `fMaxSpeed` · `fPadTime` ·
   > `iMeleeWaveSize` · `iRangedWaveSize`, then per `<UnitMeshGroup>` an `iRequired` and its **per-era** art
@@ -1076,11 +1060,10 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > not degrade to "no art": a max animation speed of **0** is a unit that plays its walk cycle and never
   > translates, and **0** group definitions is a formation with no per-member offsets, so the models stack on
   > one another.
-  > ⛔ It is NOT covered by the ART carve-out ([roadmap.md](../plans/structural-cleanup/roadmap.md) scope
-  > decision 3), which carves out the art DEFINES and asset files — these are the unit's own numbers, authored
-  > in the unit XML, that merely reference a define.
+  > ⛔ It is NOT covered by the ART CARVE-OUT above, which carves out the art DEFINES and asset files — these are
+  > the unit's own numbers, authored in the unit XML, that merely reference a define.
   > **⛔ ART IS NOT A DECIMAL (owner) — the animation numbers carry NO fixed-point scale.**
-  > [DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100) governs an AMOUNT, i.e. a magnitude
+  > [the ×100 fixed-point model](curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries) governs an AMOUNT, i.e. a magnitude
   > the cascade carries and combines; `maxSpeed` and `padTime` are neither — they are handed to the EXE in its
   > own animation units and never enter a calculation, a package or a synced decision. So they are read as
   > authored (`1.75` is `1.75`), and a ×100 on them would be a scale invented for a plane that has none.
@@ -1148,7 +1131,7 @@ the empire), and `nukeImmune` is an `amenity` (it makes the CITY immune — the 
 > turn, with no grantor involved after the moment it was applied. ⛔ Do not fold the two onto one mechanism on
 > the strength of both being id→COUNT: one expires, the other is held.
 > ⚑ **The READ is therefore the ordinary `ContextDict` one (owner): the status HOLDS while its value is above
-> zero** — `hasStatus(id)` ≡ `count > 0` ([contexts.md](../architecture/contexts.md)), so nothing needs a
+> zero** — `hasStatus(id)` ≡ `count > 0` ([contexts.md](../cascade.md)), so nothing needs a
 > separate present/absent plane beside the counter. Expiry is the counter reaching 0, not a second fact.
 > ⛔ A status is emphatically **NOT a [skill](skills.md)**: a skill is an ability the unit HAS, a status is a
 > condition something PUT ON it, for a number of turns.
@@ -1170,7 +1153,7 @@ by asking whose property it is:
 
 > **⚖ THE WELLBEING OFF-SWITCHES ARE ONE NAMED FAMILY — `abolished<Channel>` optionally `From<Source>` (owner:
 > "a group of names that all tell the same story for different targets").** They are HARD off-switches, not
-> modifiers ([modifier.md §2b](modifier.md)): the side ceases to exist rather than being reduced. The unqualified
+> modifiers ([modifier.md §2b](../cascade.md)): the side ceases to exist rather than being reduced. The unqualified
 > form abolishes the channel from EVERY source; a `From<Source>` suffix narrows it to one:
 >
 > | key | abolishes |
@@ -1186,7 +1169,7 @@ by asking whose property it is:
 > ⛔ **The legacy spellings it retires each hid something in the NAME.** `noUnhappiness`/`noUnhealthyPopulation`
 > used the `no…` negation; `buildingOnlyHealthy` named a CONSEQUENCE ("buildings are only ever healthy") rather
 > than the mechanic; and `noCapitalUnhappiness` baked the WHERE in — which is the condition-as-member shape
-> [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires, and it is
+> [conditions are predicates, never bespoke members](#35-predicates--a-systems-runtime-state-query) retires, and it is
 > now `abolishedAnger` gated `IS_CAPITAL`. ⛔ A future narrowing is a PREDICATE or a target, never a new key
 > spelling.
 
@@ -1199,14 +1182,14 @@ of the empire — the ordinary scope spine (§3.2), on the same derived-union-ov
 > *Several* sources can confer the same amenity, so the city holds a COUNT per amenity id and a removal
 > decrements it: losing one power plant must not darken a city that has two. A bitset cannot express that — an
 > "amenity removed" fact would clear a bit another live source still justifies. ⚑ This is the existing
-> `ContextDict` (`id → count`, `has(id)` ≡ `count > 0`, [contexts.md](../architecture/contexts.md)), the same
+> `ContextDict` (`id → count`, `has(id)` ≡ `count > 0`, [contexts.md](../cascade.md)), the same
 > refcount shape the enabler's membership formula and the operating set's provided-bonus counts already use —
 > and the semantic legacy had right all along in its per-flag counters. The city read is therefore O(1) and the
 > ⛔ **REMOVAL-WINS trap is structurally absent**, exactly as it is for enabler membership.
 > ⚑ **AND THE DICTIONARY IMMEDIATELY SOLVES VOLUMETRIC (owner) — a second payoff, free.** Because the slot is
 > already an int rather than a bit, an amenity that later becomes a QUANTITY (power CAPACITY a city draws
 > against, rather than a yes/no) needs **no reshape** — only a change in what the number means. That is the
-> reasoning [contexts.md](../architecture/contexts.md) already applies to power specifically ("power carries 0/1
+> reasoning [contexts.md](../cascade.md) already applies to power specifically ("power carries 0/1
 > today but stays `int` so a future volumetric model needs no reshape"), generalized to the whole block. ⛔ So
 > the count is never to be "optimized" into a bitset on the grounds that every value happens to be 0 or 1 today.
 >
@@ -1228,7 +1211,7 @@ of the empire — the ordinary scope spine (§3.2), on the same derived-union-ov
 > grantor does; a gate read only on arrival strands the amenity wherever it last landed.
 > ⚑ **This is what retires a WHERE baked into a key NAME.** The legacy `noCapitalUnhappiness` encoded its
 > condition in its spelling — the condition-as-member shape
-> [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires — so it is
+> [conditions are predicates, never bespoke members](#35-predicates--a-systems-runtime-state-query) retires — so it is
 > ONE key, `abolishedAnger`, gated by `IS_CAPITAL`, never a second key meaning "the same thing but over there".
 > ⛔ And the reverse is equally binding: dropping the condition to keep the block a plain bitset would abolish
 > anger in EVERY city. A shape whose only faithful reading is the wrong behaviour must not ship.
@@ -1275,11 +1258,11 @@ restricts nothing and is one. The question is whose property it is, never who is
   Unifies the hardcoded mission-abilities (MISSION_CONSTRUCT/DISCOVER/GOLDEN_AGE — carried today by `grants.buildings` /
   `greatPersonAction` / `goldenAge`) with the **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions`
   — data-driven MISSION→outcome-list with cost/conditions/kill). The CvOutcome DATA is ALREADY JSON-migrated into the
-  `outcomes` block below (owner 2026-07-20); what this future `missions` block adds is the CONCEPT unification with the
+  `outcomes` block below; what this future `missions` block adds is the CONCEPT unification with the
   hardcoded abilities.
   The distinction from `skills`: a **skill** is a standing/permanent property; a **mission** is an action (often
   consuming the unit). `grants` is therefore BOTH an entity-level handout AND a mission's outcome payload.
-  > **⚖ OUTCOME PAYLOAD VOCABULARY (owner 2026-07-20) — the `outcomes` block uses clean VERB-PER-PAYLOAD keys.**
+  > **⚖ OUTCOME PAYLOAD VOCABULARY (owner) — the `outcomes` block uses clean VERB-PER-PAYLOAD keys.**
   > `outcomes.kill[]` (combat-kill) / `outcomes.actions[]` (missions), each entry
   > `{ requires:{outcome:OUTCOME_*, plot?, unit?}, chance, <reward verbs> }`. Each effect is a verb, collision-checked
   > against the reserved words (avoiding `builds`/`provides`/`grants`/`construct`):
@@ -1309,7 +1292,7 @@ NOT `grants` (it is held-while-active, not a one-shot handout).
 "capabilities": { "moveOnWater": true, "setCultureRate": true }    // empire-HELD, grantor-PROVIDED (tech/civic/building)
 ```
 
-> **⚖ The classification categories are RUNTIME-GENERATED INFOS ([DEC-classification-infos]).** Every distinct
+> **⚖ The classification categories are RUNTIME-GENERATED INFOS ([the classification-infos registry](#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)).** Every distinct
 > authored block key mints one generated info at load — the camelCase key becomes an `INFOTYPE_NAME` id
 > (`"setScienceRate"` → `CAPABILITY_SET_SCIENCE_RATE`; prefixes `SKILL_` / `TAG_` / `ATTRIBUTE_` / `CHARACTERISTIC_` / `CAPABILITY_` /
 > `POLICY_`, [naming.md](naming.md)) registered in the global infotype map and created as an info in its category's
@@ -1317,7 +1300,7 @@ NOT `grants` (it is held-while-active, not a one-shot handout).
 > category (no data folder): the registry derives from the union of keys across all entities
 > (`ClassificationRegistry`, minted append-only per load), and every entity's blocks resolve their names to by-id
 > bitsets, so the whole classification getter surface is an O(1) bit test — never a per-call string lookup
-> ([DEC-materialize-at-mapfrom](../architecture/decisions.md#dec-materialize-at-mapfrom)). A block authors BOTH
+> ([materialize at mapFrom](../architecture/patterns.md#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling)). A block authors BOTH
 > planes: `true` = grant, `false` = revoke (the skills.md §4 grant/revoke pairs ride the same two-plane block).
 >
 > **⛔ These registries are OPEN BY DESIGN — the member set grows with authored data, permanently (owner).** Because
@@ -1370,7 +1353,7 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   THIS RUNG contributes (what the pedia says *about* a promotion), and the line accrual says what a unit
   HOLDING it actually has (what the unit's tooltip shows). Neither approximates the other; a consumer picking
   the wrong one displays a number the unit does not have. The accrual's membership is derived ONCE at load and
-  summed in exactly one place ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)),
+  summed in exactly one place ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)),
   never rebuilt per read.
   ⛔ **A STATUS promotion accrues only ITSELF** — status / affliction / equipment lines are parallel states
   rather than a ladder, so summing them would invent a compounding that does not exist.
@@ -1387,11 +1370,11 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   `<commerce>.city.flat` entry on the BUILDING, `per`-scaled by the count of cities holding the religion
   (`{type: RELIGION_X, scope: "world"}`, which resolves through the same count legacy scaled by). It needs no
   condition: a building deposits only where it stands and only while active, so its presence IS the gate — the
-  [DEC-deliveryguy](../architecture/decisions.md#dec-deliveryguy) rule read straight, since the shrine building
+  [the deliveryguy ownership rule](../cascade.md#4-ownership--the-deliveryguy-rule) rule read straight, since the shrine building
   is what brings the commerce to the table.
   ⛔ **The values do NOT live on the religion**, and a `shrine` block holding per-commerce magnitudes is not a
   home for them — that is a bespoke section carrying a MAGNITUDE, outside the one machine
-  ([DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)).
+  ([every modifiable number is a yield](../cascade.md#1-one-step-deposit-down-accumulate-read-o1)).
   ⚠ **Do NOT gate it on `IS_HOLY_CITY` instead.** The tempting symmetry with the corp HQ fails here: a
   headquarters building is PLACED by `setHeadquarters`, while a shrine must be BUILT — so a holy city that has
   not built its shrine would start collecting.
@@ -1414,7 +1397,7 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   from alone.
 - **`spread`** (UNIT) — the unit's per-religion / per-corporation **spread strength** (a standing capability, NOT a
   timed handout): `spread.religion: { RELIGION_X: N }` / `spread.corporation: { CORPORATION_X: N }` — keyed magnitude
-  maps (`N` = the legacy `iReligionSpread`/`iCorporationSpread`). Its **own** block on purpose (owner 2026-07-11):
+  maps (`N` = the legacy `iReligionSpread`/`iCorporationSpread`). Its **own** block on purpose (owner):
   burying spread strength under `grants` (one-shot/recurring handouts) misleads a modder — it is what the unit is
   *able* to spread and *how strongly*, read by the missionary / corporate-executive spread systems.
 - **`sizeMatters`** — the data the **Size-Matters** combat system needs (gated by `GAMEOPTION_COMBAT_SIZE_MATTERS`),
@@ -1433,7 +1416,7 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
     from how many units it can carry** — so it derives from the `cargo` family's capacity, the same
     derived-at-load class as the ranks below. The data agrees: **no unit authors it** (legacy `iSMCargo` appears
     in no unit record); the only authorings are the 23 PROMOTION deltas, which are the delta plane working as
-    intended. ⛔ So carrying capacity has ONE home — **`cargo`** ([modifier.md §6](modifier.md)) — and the SM
+    intended. ⛔ So carrying capacity has ONE home — **`cargo`** ([modifier.md §6](../cascade.md)) — and the SM
     figure is read off it, never a second authored number to keep in step.
     The unit's quality/group/size **RANK is DERIVED at load, never stored**: `Σ` over the unit's
     combat classes (primary `combatClass` + the `combatClasses` subs) of each `*Base` where `> −10` — reproducing the
@@ -1486,7 +1469,7 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > because a directly-built ranked unit IS the merged result and that discount exists precisely because units
   > merge. ⚠ The ceiling, the offer range and the equivalent cost must be ONE implementation shared with the
   > merge gate, or the price and the reachable rank can disagree
-  > ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)) — note the ceiling
+  > ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — note the ceiling
   > lives on `CvUnit` today, which a build menu cannot ask, having no unit yet.
   >
   > **⚖ A PRE-MERGED BUILT UNIT IS INDISTINGUISHABLE FROM A NORMALLY MERGED ONE (owner)** — that is the
@@ -1577,6 +1560,6 @@ marble; +10 culture, doubling after it has stood 1000 years.*
 
 ---
 
-*The machines that consume this shape: [enabler](enabler.md) (can I?) · [modifier](modifier.md) (how much?) ·
+*The machines that consume this shape: [enabler](enabler.md) (can I?) · [modifier](../cascade.md) (how much?) ·
 [tally](tally.md) (how many?). The legacy XML→JSON field mapping is migration-transient and lives with the
 migration, not here.*

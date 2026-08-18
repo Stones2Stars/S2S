@@ -184,7 +184,7 @@ public:
 	// them compose LIVE GAME STATE -- hammerCostPercent folds GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS --
 	// and an info never reads game state ([engine.md] Consuming-system calcs). All three relay to the ONE calc
 	// (CvGameSpeedScale), so a caller can never re-derive a different answer
-	// ([DEC-single-implementation]). Each returns a HUMAN percent, already unscaled.
+	// (docs/architecture/patterns.md §DRY (single implementation)). Each returns a HUMAN percent, already unscaled.
 	int getSpeedPercent() const;
 	int getHammerCostPercent() const;
 	int getMissionYieldPercent() const;

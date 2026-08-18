@@ -5,11 +5,11 @@
 //
 //	CvBonusInfo -- the BONUS (resource) poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
 //	Styled for the JSON anatomy (json.md §2): the bonus's own plot output and its empire wellbeing flats are
-//	compiled modifier reads ([DEC-materialize-at-mapfrom], [DEC-scope-is-an-axis]); the intrinsic set is
+//	compiled modifier reads (docs/architecture/patterns.md §Materialize at mapFrom, docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); the intrinsic set is
 //	identity/ai/mapGeneration self-description; the tech relationships are the LOAD-reconstructed forward FKs
 //	(store-inverted onto the tech's enables/obsoletes buckets, un-inverted by CvReversePass). What a bonus
 //	ENABLES rides the CvInfo base availability model (enables.* edges). No legacy getter name returns
-//	([DEC-new-getter-surface]).
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"

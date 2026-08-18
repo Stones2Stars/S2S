@@ -8,7 +8,7 @@
 #include "AI/CvGameAI.h"
 #include "CvFoldTargetInfo.h"
 #include "CvJsonParse.h"          // jsonIdStr / jsonReadIdList
-#include "CvJsonConditionParse.h" // cascadeSpellPredKind -- the ONE predicate speller ([DEC-single-implementation])
+#include "CvJsonConditionParse.h" // cascadeSpellPredKind -- the ONE predicate speller (docs/architecture/patterns.md §DRY (single implementation))
 #include "Defines/CvGlobals.h"    // GC.getFoldTargetInfo / getNumFoldTargetInfos
 #include <map>
 #include <set>
@@ -41,7 +41,7 @@ void CvFoldTargetInfo::mapFrom(const picojson::value& entity)
 namespace
 {
 	// predicate kind -> the terrain ids it MEANS. Built ONCE from the loaded fold-target infos, which are
-	// write-once-at-load, so there is nothing here that can go stale ([DEC-materialize-at-mapfrom] one plane
+	// write-once-at-load, so there is nothing here that can go stale (docs/architecture/patterns.md §Materialize at mapFrom one plane
 	// out: the authored strings resolve once and every later read is a lookup).
 	std::map<int, std::set<int> > s_foldSets;
 	bool s_bFoldSetsBuilt = false;

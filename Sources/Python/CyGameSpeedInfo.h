@@ -15,7 +15,7 @@
 //
 //	⚠ EACH READ IS EARNED BY A LIVE CALL SITE, which is the whole of why there are four: the TimeKeeper screen
 //	(Ctrl+F3) renders an era x gamespeed pacing table and asks for exactly these. It is not a mirror of the
-//	legacy per-field getter contract ([DEC-new-getter-surface]), which is a different axis.
+//	legacy per-field getter contract (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)), which is a different axis.
 //
 //	⚑ THESE ARE DERIVED READS OVER INFO DATA ONLY -- this speed's percent against CvEraInfo's Normal-speed turn
 //	count and historical year span ([CvGameSpeedInfo]). Nothing calendar-related is stored, so there is no cache

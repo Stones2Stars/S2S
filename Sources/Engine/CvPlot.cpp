@@ -342,9 +342,9 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_plotContext.bind(this);   // bind the per-plot context to its owner (the pointer IS this plot; forwarding reads it)
 	// ...and ZERO its stored verdict bits. They are a delta store fed by the plot's own ADDED/REMOVED facts, so
 	// they are correct only from a known zero; a plot object outlives a regen/load and would otherwise carry a
-	// verdict from the previous world that no later fact clears ([DEC-keyed-accumulator]).
+	// verdict from the previous world that no later fact clears (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)).
 	m_plotContext.clear();
-	// bind the PLOT-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
+	// bind the PLOT-scope cascade package. It starts EMPTY and is filled ONLY by the facts (docs/cascade.md §THE MAINTAINED SUM).
 	// PLOT identity is the coordinate pair (a plot has no owner-independent id; the map index needs a map that
 	// does not exist yet at reset), so a plot divergence reports owner=x id=y -- read with cache=plot.
 	m_cascadePackage.bind(CASC_SCOPE_PLOT, iX, iY);
@@ -355,7 +355,7 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_iUpgradeProgress = 0;
 	m_iCityRadiusCount = 0;
 	// DERIVED, so it is zeroed at reset and rebuilt from the cities' own work areas -- never trusted from a save
-	// ([DEC-derived-never-trusted]). A plot object is reused across a regen/load, so a membership left standing
+	// (docs/specs/save.md §5 (derived data serializes NOTHING)). A plot object is reused across a regen/load, so a membership left standing
 	// here would name a city from the previous world and no later delta could correct it.
 	m_workableByCities.clear();
 	m_iRiverID = -1;
@@ -1488,7 +1488,7 @@ bool CvPlot::updateSymbolsInternal()
 	if (isShowCitySymbols() || gDLL->getInterfaceIFace()->isShowYields() && !gDLL->getInterfaceIFace()->isCityScreenUp())
 	{
 		// The plot's own package, in one group read; the symbol stack draws WHOLE yields, so the single reduce
-		// is here at the display boundary ([DEC-fixedpoint-x100]).
+		// is here at the display boundary (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 		int yieldAmounts[NUM_YIELD_TYPES];
 		getYields(yieldAmounts);
 		int maxYield = 0;
@@ -2041,7 +2041,7 @@ bool CvPlot::isFreshWater() const
 // isFreshWater's rect(1,1) walk, so it is asked about plots OTHER than the one being examined -- and during
 // CvMap::read the stream fills the map one plot at a time, so a neighbour that has not deserialized yet still
 // carries NO_TERRAIN. Reading the info plane for id -1 is a LOAD defect everywhere else and correctly fails
-// loud ([DEC-info-plane-read-only]); here the id is simply not known YET, which is a sentinel to test, never an
+// loud (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD); here the id is simply not known YET, which is a sentinel to test, never an
 // unanswerable read to raise on.
 // ⚑ Answering false is not a guess and costs no accuracy: PLOTAXIS_TERRAIN is neighbour-visible, so when that
 // neighbour is read its own fact fans back over this ring and both sides re-derive -- the load order is
@@ -3063,7 +3063,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	{
 		// The plot's SUBSTRATE segment -- the pre-improvement value this threshold has always tested against,
 		// now a bare package fetch. ×100 native, and the authored threshold is a whole yield, so the reduce is
-		// here at the compare ([DEC-fixedpoint-x100]).
+		// here at the compare (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 		int aiNatureYields[NUM_YIELD_TYPES];
 		getNatureYields(aiNatureYields);
 		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
@@ -3871,7 +3871,7 @@ void CvPlot::doImprovementCulture(PlayerTypes ePlayer, const CvImprovementInfo& 
 		return;
 	}
 	const int iRange = std::max(0, imp.getCultureRange());
-	// Plot culture is carried ×100 like every other internal amount ([DEC-fixedpoint-x100]); only a READER
+	// Plot culture is carried ×100 like every other internal amount (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); only a READER
 	// of it (a tooltip, the pedia) normalizes down, so the flat is passed through at its native scale.
 	const int iCulture = imp.getFlatCommerce(COMMERCE_CULTURE, CASC_SCOPE_PLOT);
 
@@ -7828,7 +7828,7 @@ void CvPlot::updateWorkingCity()
 
 		// The spine DOMAIN fact (every mutation emits): the working-city assignment moved. THE FACT IS THE ONLY
 		// MAINTENANCE PATH -- CityContext folds the plot's attributes out of the old city and into the new one
-		// from its own consumer ([DEC-dict-is-a-consumer]), so this choke point ANNOUNCES and does not apply.
+		// from its own consumer (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)), so this choke point ANNOUNCES and does not apply.
 		// ⛔ A direct fold beside the emit is a SECOND surface maintaining one fact, and it double-counted the
 		// moment the consumer grew the route: the mutation site owns the SOURCE, never the store.
 		// ⚑ emit() dispatches SYNCHRONOUSLY, so the fold still lands here, against exactly this state; and each
@@ -7958,7 +7958,7 @@ void CvPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 // the deployed DLL's exports and the EXE image -- engine.md's decisive test), so the name, the signature and the
 // whole-yield return are FIXED by ABI and this read cannot be renamed or removed. It is no longer a cache
 // accessor: it reads the plot's package like every other consumer and reduces at the boundary, the EXE being a
-// reader like any other ([DEC-fixedpoint-x100]).
+// reader like any other (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 int CvPlot::getYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
@@ -7966,7 +7966,7 @@ int CvPlot::getYield(YieldTypes eIndex) const
 	getYields(aiYields);
 	// ⛔ THE EXE READ EDGE -- this symbol is `DllExport` AND its mangled name is present in the EXE image, so the
 	// closed binary resolves it and expects the value it has always had: WHOLE yield. That makes this the OUT
-	// boundary ([DEC-fixedpoint-x100]), not an ordinary getter, and the reduce belongs exactly here.
+	// boundary (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), not an ordinary getter, and the reduce belongs exactly here.
 	// ⚑ Internal ×100 consumers take the GROUP read (`getYields`) and index it -- the one-getter-per-group shape
 	// ([patterns.md]); this scalar survives only because the EXE binds it.
 	return aiYields[eIndex] / 100;
@@ -7976,7 +7976,7 @@ int CvPlot::getYield(YieldTypes eIndex) const
 int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
 {
 	// The GROUND's yield: this plot's base package with nothing BUILT on it -- the same one calc the package
-	// rebuild runs, handed no improvement and no route ([DEC-single-implementation]). bIgnoreFeature is the
+	// rebuild runs, handed no improvement and no route (docs/architecture/patterns.md §DRY (single implementation)). bIgnoreFeature is the
 	// CHOP what-if: it answers as though the feature were already cleared, which no stored segment can serve
 	// because it describes a plot that does not exist.
 	// ⚠ Carries no team: a plot resolves in ISOLATION (modifier.md §2), so its substrate has ONE value.
@@ -7989,7 +7989,7 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
 		(!bIgnoreFeature && getFeatureType() != NO_FEATURE) ? GC.getFeatureInfo(getFeatureType()).getModifiers() : NULL,
 		eBonus != NO_BONUS ? GC.getBonusInfo(eBonus).getModifiers() : NULL,
 		NULL, NULL, evalCtx, aiYields);
-	// ×100 NATIVE -- a getter never reduces ([DEC-fixedpoint-x100]); the READ EDGE reduces.
+	// ×100 NATIVE -- a getter never reduces (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the READ EDGE reduces.
 	return aiYields[eYield];
 }
 
@@ -8012,13 +8012,13 @@ int CvPlot::calculateTotalBestNatureYield(TeamTypes eTeam) const
 //
 //	⚑ IT LIVES HERE, BESIDE `calculateImprovementYieldChange`, BECAUSE THAT IS ITS OWN PRECEDENT: the improvement
 //	half of this question was already a shared plot method with ~18 AI callers, so the displayed number and the
-//	number the AI weighs are the same number for that half ([DEC-single-implementation]). The feature and terrain
+//	number the AI weighs are the same number for that half (docs/architecture/patterns.md §DRY (single implementation)). The feature and terrain
 //	halves had NO shared home and were composed inline in the build-action tooltip -- the only site in the tree
 //	that asked the whole question. Composing them here finishes the existing method rather than minting a parallel
-//	one ([DEC-it-already-exists]), and makes the whole answer available to the AI on the same terms.
+//	one (AGENTS.md Conventions §Conduct (it already exists)), and makes the whole answer available to the AI on the same terms.
 //
 //	⚠ The `/100` on the substrate legs is the READER reducing at its point of use
-//	([DEC-fixedpoint-x100]): `getFlatYield` serves the ×100 native value while
+//	(docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)): `getFlatYield` serves the ×100 native value while
 //	`calculateImprovementYieldChange` already answers in whole yields, so the two legs are brought onto one scale
 //	HERE rather than at each call site -- which is exactly the mixing this method exists to stop being re-derived.
 int CvPlot::calculateBuildYieldChange(BuildTypes eBuild, YieldTypes eYield) const
@@ -10757,7 +10757,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 
 	// IRRIGATION and LANDMARK, landed from the locals read further up. Both are own-plot axes whose verdict
 	// rows (HAS_IRRIGATION / HAS_LANDMARK) are re-derived by their own fact and by nothing else -- there is no
-	// rebuild anywhere that would set them later ([DEC-contexts-are-never-marked]), so a slot that deserialized
+	// rebuild anywhere that would set them later (docs/cascade.md §Maintained EVENT-DRIVEN (a context is never marked)), so a slot that deserialized
 	// straight into its member left the bit reading FALSE for the whole session while the accessor said true.
 	// ⛔ Irrigation goes through the INTERNAL setter: the public one repaints this plot and its neighbours, and
 	// an effect never runs on the load path. Landmark's setter is already commit + announce only.
@@ -10766,7 +10766,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_plotCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_plotCity.iID);
-	// THE RESEED EMIT (DEC-spine-reseed): m_plotCity deserializes WHOLESALE, so setPlotCity never runs and the
+	// THE RESEED EMIT (docs/spine.md §5 (the load reseed)): m_plotCity deserializes WHOLESALE, so setPlotCity never runs and the
 	// plot's city-presence fact is never announced. The terrain emit above does NOT cover it -- it re-derives the
 	// plot's stored verdict BITSET, and city-presence is a PlotContext FORWARD, not a bit in that block. Old city
 	// is -1: a deserializing plot has no prior assignment to unfold.
@@ -10776,7 +10776,7 @@ void CvPlot::read(FDataStreamBase* pStream)
 	}
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCity.iID);
-	// THE RESEED EMIT (DEC-spine-reseed): reading the working-city fact off the stream is what announces it --
+	// THE RESEED EMIT (docs/spine.md §5 (the load reseed)): reading the working-city fact off the stream is what announces it --
 	// the genuine in-read DOMAIN event the contexts' consumer buffers and folds into the city's
 	// CityContext.plotAttrs at the load-finish drain (the cities stream AFTER the map, so the fold cannot apply
 	// here). Old city is -1: a deserializing plot has no prior assignment to unfold.
@@ -11653,7 +11653,7 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 {
 	// THE WHAT-IF: this plot's base package recomputed with the BUILD's substrate substituted in -- the same
 	// one calc the package rebuild runs, handed the candidate instead of what is standing here
-	// ([DEC-single-implementation]). Feature, improvement and route are swapped; terrain and the bonus are the
+	// (docs/architecture/patterns.md §DRY (single implementation)). Feature, improvement and route are swapped; terrain and the bonus are the
 	// ground's and do not move. This is the read the AI's worker/improvement decisions weigh, so it answers the
 	// NEW yield rather than a hand-assembled delta.
 	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
@@ -11706,8 +11706,8 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 		eImprovement != NO_IMPROVEMENT ? GC.getImprovementInfo(eImprovement).getModifiers() : NULL,
 		eRoute != NO_ROUTE ? GC.getRouteInfo(eRoute).getModifiers() : NULL,
 		evalCtx, aiYields);
-	// x100 native; this read answers WHOLE yields, as its callers weigh them ([DEC-fixedpoint-x100])
-	// ×100 NATIVE -- a getter never reduces ([DEC-fixedpoint-x100]); the READ EDGE reduces.
+	// x100 native; this read answers WHOLE yields, as its callers weigh them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
+	// ×100 NATIVE -- a getter never reduces (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the READ EDGE reduces.
 	return aiYields[eYield];
 }
 
@@ -12046,7 +12046,7 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bTestVisible) const
 		return false;
 	}
 
-	//	THE UNIT'S `requires.build`, through the ONE evaluator ([DEC-single-implementation]) -- the same gate the
+	//	THE UNIT'S `requires.build`, through the ONE evaluator (docs/architecture/patterns.md §DRY (single implementation)) -- the same gate the
 	//	promotion planes ask. It replaces the hand-walked bonus battery here (the AND prereq and the OR list),
 	//	which re-derived by hand what the curator authors into `requires`.
 	//	⚑ The BONUS axis is GATE-ONLY ([enabler.md §8] resolved forks): a bonus never drives tree membership, so

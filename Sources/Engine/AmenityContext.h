@@ -9,13 +9,13 @@
 //	⛔ STORAGE AND MAINTENANCE ARE NOT SPLIT (owner): "splitting storage and maintenance on these objects creates
 //	a fragmentation we don't want -- we want to have 1 place responsible." So the dictionaries live HERE, the
 //	appliers that move them live HERE, and the DECLARED SET OF FACTS that reaches them lives HERE
-//	([DEC-dict-is-a-consumer]). A store whose state sits on one object while a router elsewhere decides when it
+//	(docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). A store whose state sits on one object while a router elsewhere decides when it
 //	moves has two homes and no owner.
 //
 //	⚖ IT IS A PACKAGE in the owner's sense -- a holder of FINAL STATE that something else will sum or evaluate,
 //	read as a bare fetch. The yield and percent packages are the same role over a different payload; what differs
 //	is only what a slot HOLDS (a grantor COUNT here, an x100 magnitude there), which decides scale rules and
-//	nothing else ([DEC-keyed-accumulator]).
+//	nothing else (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)).
 //
 //	⚖ THE READ IS BOOLEAN, THE STORAGE IS A COUNT (the semiboolean contract, [state-repositories.md]). Several
 //	grantors can confer the SAME amenity, so each contributes +1 and a departure DECREMENTS -- losing one power
@@ -27,7 +27,7 @@
 //	which is DIAGNOSTIC -- state is never derived from an announcement that an apply RAN.
 //	⚑ The crossing fires in BOTH phases -- the operate fixpoint at play, and the enabler's load seed announcing the
 //	verdict it just computed -- so this store builds itself with no load-phase special case and no second build
-//	mechanism beside the event stream ([DEC-spine-reseed]).
+//	mechanism beside the event stream (docs/spine.md §5 (the load reseed)).
 //
 //	⛔ IT ONLY CONSUMES. Facts in, state out, nothing back -- which is why it can close no loop, and why the
 //	ordering ban in [contexts.md] does not reach it: that ban is on a store that RE-DERIVES by reading another
@@ -36,7 +36,7 @@
 //	included -- reads it here.
 //	⚠ THE ONE THING THAT LEAVES is a derived VERDICT CROSSING (0 <-> non-zero for a key a consumer routes on).
 //	That is this context announcing a genuine derived state change, not a store talking back, and it is what stops
-//	the retired hand-named counters from taking their facts with them ([DEC-close-event-gaps-now]).
+//	the retired hand-named counters from taking their facts with them (docs/spine.md §A FACT NAMES THE HAPPENING (an event gap is closed the moment it's found)).
 //
 //	⚠ REGISTRATION ORDER IS A CONTRACT: registered inside the CONTEXTS band of
 //	contexts -> enabler -> modifier -> triggers, because the enabler's load-end gate pass evaluates THROUGH these
@@ -50,7 +50,7 @@ class CvCity;
 class CvClassificationBlock;   // a grantor's §8 `amenities` block, folded by pointer (never included here)
 struct CvSpineEvent;
 
-//	IS-A ContextDict: the storage is inherited, not held ([DEC-dict-is-a-consumer]). `has` / `count` /
+//	IS-A ContextDict: the storage is inherited, not held (docs/cascade.md §What a context STORES vs FORWARDS (a dictionary is a spine consumer)). `has` / `count` /
 //	`add` / `clear` are the base's; this type adds only the binding, the by-key read and its own
 //	declared interest set.
 class AmenityContext : public ContextDict
@@ -63,7 +63,7 @@ public:
 	// `has(id)` / `count(id)` / `clear()` are INHERITED -- there is no forwarding layer, because this IS the
 	// dictionary. `has` is `count > 0`: the semiboolean contract, unchanged.
 	// The BY-KEY read, for a caller holding a name rather than an id: amenity ids are MINTED AT LOAD, so there is
-	// no compile-time id to pass ([DEC-classification-infos]) -- the caller keeps a static cache the registry
+	// no compile-time id to pass (docs/specs/json.md §8 + docs/architecture/patterns.md §The coherent surface (THE GETTER SETUP)) -- the caller keeps a static cache the registry
 	// fills once.
 	bool hasKey(int& iIdCache, const char* szKey) const;
 
@@ -83,21 +83,21 @@ public:
 	// it reads no other system's built set, which is what lets it build identically at load and at play.
 	void onGrantorCrossing(int iBuilding, int iSign);
 	// The EMPIRE-scope grantors, as a DELTA. A civic confers on EVERY city of the empire, so a swap is
-	// `-old / +new` over the player's cities -- the fact carries both ([DEC-facts-name-happenings]).
+	// `-old / +new` over the player's cities -- the fact carries both (docs/spine.md §A FACT NAMES THE HAPPENING).
 	void foldCivic(int iCivic, int iSign);
 	// Every live civic of a player, folded with one sign. The initialization form: a city that STARTS EXISTING
 	// (founded, conquered, or streamed off a save) folds its owner's standing civics from zero. ⚠ It is a fold
 	// from a KNOWN state, never a re-derivation of an unknown one -- the distinction that separates it from the
 	// refresh this replaced.
 	void foldAllCivicsOf(int iPlayer, int iSign);
-	// The owner's ACTIVE empire-level members (DEC-empire-level-buildings) -- the same fold-in, one grantor
+	// The owner's ACTIVE empire-level members (docs/specs/enabler.md §2 (empire-level buildings)) -- the same fold-in, one grantor
 	// kind over: the city-starts-existing leg and the load build both call it beside the civic one.
 	void foldAllEmpireBuildingsOf(int iPlayer, int iSign);
 	// ⚖ THE GATE FLIP -- the conditioned tail as a DELTA rather than a re-resolution. When an atom a grant is
 	// gated on moves, the FACT supplies the verdict and its direction, so the entries gated on that atom are
 	// applied WITHOUT evaluating it. That is what makes the capital move exact: after the flip, asking
 	// "is this the capital?" of the city that just LOST it answers no, and a re-evaluating withdrawal would
-	// subtract nothing and strand the grant forever ([DEC-no-self-heal]).
+	// subtract nothing and strand the grant forever (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// ⛔ This is why no record of past contributions is kept: the fact remembers, so the store need not.
 	void foldGateFlip(int iPlayer, CvCascPredKind ePredicate, int iSign);
 	void foldBlock(const CvClassificationBlock* pBlock, int iSign);

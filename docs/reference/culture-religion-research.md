@@ -109,13 +109,13 @@ refcounted; an intentional divergence from the legacy autobuild tear-out, stated
   > modifier cascade READS, never a cascade-computed dormancy verdict.** Corporations spawn and spread themselves per
   > turn like religion (autonomously under `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`), so "is this corp active in
   > this city?" is asked of the engine (`isActiveCorporation`) — the same sanctioned class as religion presence and the
-  > connected-bonus network, NOT the [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in) trap
+  > connected-bonus network, NOT the [the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in) trap
   > (which bans reading a *cascade-owned* computed verdict — above all a BUILDING's active/dormant, which the cascade
   > DOES own via `cascadeIsBuildingActive`). Hence `{HAS_CORPORATION:X}` = ACTIVE ([enabler §3](../specs/enabler.md),
   > [json §3.5](../specs/json.md)), and the corp-commerce deposit gate reading `isActiveCorporation` is correct, not
   > interim debt. The verdict's CROSSINGS are announced by CityContext's verdict store
   > (`SEVT_CITY_CORPORATION_ACTIVE_ADDED / _REMOVED` — the threshold-crossing shape,
-  > [event-spine.md](../specs/event-spine.md)): the store re-reads this one engine implementation on each leg's
+  > [spine.md](../spine.md)): the store re-reads this one engine implementation on each leg's
   > fact and remembers only what held before, so the engine keeps owning the verdict while plane C's
   > `{HAS_CORPORATION}`-gated deposits get the crossing they route on.
 - **⚖ A CORPORATION CAN BE OBSOLETED, and the capability is KEPT (owner) — it is HEADROOM, not dead surface.**
@@ -133,4 +133,4 @@ refcounted; an intentional divergence from the legacy autobuild tear-out, stated
 ## See also
 
 - [economy.md](economy.md) · [engine.md](engine.md) (the property solver — corporations ride it) ·
-  [../specs/enabler.md](../specs/enabler.md) (the resource/tech dormancy gates) · [../specs/modifier.md](../specs/modifier.md).
+  [../specs/enabler.md](../specs/enabler.md) (the resource/tech dormancy gates) · [../specs/modifier.md](../cascade.md).

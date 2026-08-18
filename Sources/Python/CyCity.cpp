@@ -456,13 +456,13 @@ int CyCity::healthRate(int iExtra) const
 
 int CyCity::foodConsumption(bool bNoAngry, int iExtra) const
 {
-	// THE READ EDGE -- the food plane is x100 native; Python sees whole food ([DEC-fixedpoint-x100]).
+	// THE READ EDGE -- the food plane is x100 native; Python sees whole food (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	return m_pCity->foodConsumption(bNoAngry, iExtra) / 100;
 }
 
 int CyCity::foodDifference(bool bBottom) const
 {
-	// THE READ EDGE -- the food plane is x100 native; Python sees whole food ([DEC-fixedpoint-x100]).
+	// THE READ EDGE -- the food plane is x100 native; Python sees whole food (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	return m_pCity->foodDifference(bBottom) / 100;
 }
 
@@ -623,7 +623,7 @@ int CyCity::getNumGreatPeople() const
 
 int CyCity::getBaseGreatPeopleRate() const
 {
-	// THE READ EDGE -- ×100 becomes human here ([DEC-fixedpoint-x100]).
+	// THE READ EDGE -- ×100 becomes human here (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	return m_pCity->getBaseGreatPeopleRate() / 100;
 }
 
@@ -2243,7 +2243,7 @@ int CyCity::getProductionTurnsLeftFor(int iOrder, int iType, int iNum) const
 
 //	⚖ THE IDENTITY SET plus THE CITY READS (CyCity.h). Owner + id + position ADDRESS the city so a consumer
 //	holding a handle can say WHICH one it holds; the reads beside them answer what that city HAS, because a game
-//	object's data is asked of the object itself ([DEC-accessor-homing]).
+//	object's data is asked of the object itself (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (accessor homing)).
 void CyCity::pythonPublish()
 {
 	python::class_<CyCity>("CyCity", python::no_init)

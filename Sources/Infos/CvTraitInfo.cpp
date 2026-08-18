@@ -1,6 +1,6 @@
 //
 //	CvTraitInfo -- the trait poco's own typed reading on top of the base section dispatch (see the header).
-//	mapFrom materializes the census identity set ONCE into typed members ([DEC-materialize-at-mapfrom]);
+//	mapFrom materializes the census identity set ONCE into typed members (docs/architecture/patterns.md §Materialize at mapFrom);
 //	idempotent by contract (unconditional assigns).
 //
 

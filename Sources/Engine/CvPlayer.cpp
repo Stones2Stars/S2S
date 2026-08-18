@@ -663,7 +663,7 @@ void CvPlayer::uninit()
 
 // The ENABLER's per-player lifecycle start (enabler.md 7.1): size every player-held domain and apply its static
 // exclusions. SIZING ONLY -- the domains' CONTENT is built by the DOMAIN events through the same appliers load
-// and play share ([DEC-spine-reseed]); nothing here reads deserialized state, which is why the load path can
+// and play share (docs/spine.md §5 (the load reseed)); nothing here reads deserialized state, which is why the load path can
 // call it before its reseed emits. It exists as ONE helper because both lifecycle paths (new game via
 // initFreeState, load via read) must prime identically -- the appliers SKIP an un-init'd domain, so a path that
 // forgot it would leave that player's frontier permanently empty.
@@ -671,7 +671,7 @@ void CvPlayer::primeEnablerDomains() const
 {
 	TechEnabler::initDomain(*this);
 	CivicEnabler::initDomain(*this);
-	// The TRAITS domain rides the generic kernel applier -- no per-info enabler class ([DEC-single-implementation]).
+	// The TRAITS domain rides the generic kernel applier -- no per-info enabler class (docs/architecture/patterns.md §DRY (single implementation)).
 	m_enabler.traits.init(GC.getNumTraitInfos());
 	ProjectEnabler::initDomain(*this);
 	ProcessEnabler::initDomain(*this);
@@ -1002,7 +1002,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
 	// ...and ZERO the empire's POLICY dictionary. It is a delta store fed by the civic / trait / player-init
 	// facts, so it is correct only from a known zero -- a player slot is reused across games and loads, and a
-	// policy count no later fact happens to move would survive from the previous occupant ([DEC-keyed-accumulator]).
+	// policy count no later fact happens to move would survive from the previous occupant (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)).
 	m_policies.clear();
 	// The policy dictionary, bound and ZEROED: a delta store is correct only from a known zero.
 	m_policies.bind(this);
@@ -1014,10 +1014,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	// reused player slot must not inherit a count the previous occupant's traits left behind.
 	m_traits.bind(this);
 	m_traits.clear();
-	// bind the EMPIRE-scope cascade package. It starts EMPTY and is filled ONLY by the facts ([DEC-maintained-sum]).
+	// bind the EMPIRE-scope cascade package. It starts EMPTY and is filled ONLY by the facts (docs/cascade.md §THE MAINTAINED SUM).
 	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, (int)eID, -1);
 	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
-	// lifecycle start, then filled by DOMAIN events ([DEC-spine-reseed]); never read from the save. Cleared here
+	// lifecycle start, then filled by DOMAIN events (docs/spine.md §5 (the load reseed)); never read from the save. Cleared here
 	// because a player slot is REUSED across games.
 	m_enabler.reset();
 
@@ -1756,7 +1756,7 @@ void CvPlayer::setIsHuman( bool bNewValue )
 // COMMIT + ANNOUNCE. The fact is what lets the authored rebel maintenance discount ever resolve: it is gated
 // `enabled: IS_REBEL` on TECH_GAME_START, which every player holds from turn one and never loses -- so the
 // deposit's own SOURCE never moves again and the ATOM's crossing is the only thing that can apply or withdraw it
-// ([DEC-maintained-sum] plane C).
+// (docs/cascade.md §THE MAINTAINED SUM plane C).
 void CvPlayer::setIsRebel(bool bNewValue)
 {
 	if (m_bRebel == bNewValue)
@@ -1830,7 +1830,7 @@ void CvPlayer::setupGraphical()
 // EXE-driven player init, mid-game creation via initInGame, and the initFreeState fallback all pass through
 // here), so a player cannot be stood up without it. It primes the enabler domains and then announces the facts
 // the save read's reseed announces for a loaded player: load, new game and mid-game creation build the same
-// way, through the same appliers ([DEC-spine-reseed]). The INITIAL CIVICS and TRAITS are deliberately NOT
+// way, through the same appliers (docs/spine.md §5 (the load reseed)). The INITIAL CIVICS and TRAITS are deliberately NOT
 // announced here -- initMore sets them through their own emitting setters AFTER this has primed, which is the
 // whole point of it running first: a fact that lands on an un-primed domain is dropped permanently, and that
 // is exactly what happened to every initial civic while the announce waited for CvGame::initFreeState.
@@ -5047,7 +5047,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			// ⚠ The per-tech tradability flag is GONE from the infos and its replacement is not wired: a tech's
 			// own tradability belongs in its `canTrade` block ([capabilities.md]), which the `tradeable` re-home
 			// still owes. The clause is deleted rather than kept dangling, so the gap shows as an over-permissive
-			// offer instead of legacy quietly answering ([DEC-no-legacy-masking]); the empire-level
+			// offer instead of legacy quietly answering (docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap); the empire-level
 			// isTechTrading() capability and the NoTradeTech list below still bound it.
 			if (!GC.getGame().isOption(GAMEOPTION_NO_TECH_TRADING)
 			&& GET_TEAM(getTeam()).isHasTech((TechTypes)item.m_iData)
@@ -5708,7 +5708,7 @@ void CvPlayer::findNewCapital()
 			int iValue = pLoopCity->getPopulation() * 4;
 
 			// The score mixes yields with whole game COUNTS (population, culture level, religions, great
-			// people), so the rates reduce at this use ([DEC-fixedpoint-x100]).
+			// people), so the rates reduce at this use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 			int aiRealizedYields[NUM_YIELD_TYPES];
 			pLoopCity->getYields(aiRealizedYields);
 			iValue += aiRealizedYields[YIELD_FOOD] / 100;
@@ -6836,7 +6836,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	// The EMPIRE-scope route COUNT -- the memberless flat deposit (ruling 11: kind 0 IS the count). The slot is
-	// a FLAT amount and therefore ×100, so the reader reduces at its point of use ([DEC-fixedpoint-x100]): a
+	// a FLAT amount and therefore ×100, so the reader reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)): a
 	// route count is a whole game quantity.
 	// The cascade owns the AMOUNT now; what this site still owes is the changer's RIDER --
 	// the stored per-city trade YIELD must rebuild when a route input moves ([save.md] par.6).
@@ -6847,7 +6847,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	// `national` is a revolution KIND, not a scope fragment -- the data authors `revolution.city.national`, so the
 	// read is the kind at CITY scope. (Its sibling `local` is the same shape and carries the bulk of the data.)
 	// REVOLUTION_NATIONAL is a FLAT (×100) and this accumulator is human -- the civic path reduces, so this one
-	// must too, or a building outweighs every civic by 100x in the same total ([DEC-fixedpoint-x100]).
+	// must too, or a building outweighs every civic by 100x in the same total (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	changeRevIdxNational(kBuilding.getRevolution(REVOLUTION_NATIONAL, CASC_SCOPE_CITY) / 100 * iChange);
 
 	pArea->changeBorderObstacleCount(getTeam(), kBuilding.providesAmenity(CLS_AMENITY_BORDER_OBSTACLE) ? iChange : 0);
@@ -7150,7 +7150,7 @@ RouteTypes CvPlayer::getBestRouteInternal(const CvPlot* pPlot, bool bConnect, co
 //	⛔ TRAITS are the only keyed authors, so the walk is the player's HELD traits; `getTraitInfo` already resolves
 //	the option-selected active set ([modifier.md] §4), so nothing here picks between the simple/complex tables.
 //	⚠ The kind is a PERCENT, so neither leg carries the ×100 and nothing reduces here
-//	([DEC-fixedpoint-x100]: scale is decided per UNIT, and a percent is never scaled).
+//	(docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): scale is decided per UNIT, and a percent is never scaled).
 int CvPlayer::getImprovementUpgradeProgressRate(const ImprovementTypes eImprovement) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -7673,7 +7673,7 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 	// The two PERMANENT membership bars are the ENABLER's, on its static-exclusion plane (enabler.md par.8) --
 	// seeded once by TechEnabler::initDomain from identity.disable + this civilization's never-researchable
 	// list. Re-reading that authoring off the infos here was a second implementation of one verdict
-	// ([DEC-single-implementation]); the plane IS the answer.
+	// (docs/architecture/patterns.md §DRY (single implementation)); the plane IS the answer.
 	if (m_enabler.techs.isStaticExcluded(eTech)
 	|| !GC.getGame().canEverResearch(eTech)
 	|| GC.getTechInfo(eTech).getAllowed()->cap(ALLOWEDCAP_WORLD) > 0
@@ -8531,7 +8531,7 @@ int CvPlayer::greatPeopleThresholdNonMilitary() const
 
 int CvPlayer::specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) const
 {
-	// ×100 NATIVE, like every other cascade read -- a getter never reduces ([DEC-fixedpoint-x100]); the
+	// ×100 NATIVE, like every other cascade read -- a getter never reduces (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the
 	// consumer reduces at its own point of use, and an EVALUATION never scales at all.
 	return GC.getSpecialistInfo(eSpecialist).getFlatYield(eYield, CASC_SCOPE_CITY);
 }
@@ -8539,14 +8539,14 @@ int CvPlayer::specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) co
 
 int CvPlayer::specialistCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const
 {
-	// ×100 NATIVE -- the Times100 twin IS this value; a getter never reduces ([DEC-fixedpoint-x100]).
+	// ×100 NATIVE -- the Times100 twin IS this value; a getter never reduces (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	return specialistCommerceTimes100(eSpecialist, eCommerce);
 }
 
 int CvPlayer::specialistCommerceTimes100(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const
 {
 	// The intrinsic is already ×100 on the info, which is the scale this read returns -- so the legacy `100 *`
-	// is gone rather than relocated ([DEC-fixedpoint-x100]).
+	// is gone rather than relocated (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	return
 	(
 		GC.getSpecialistInfo(eSpecialist).getFlatCommerce(eCommerce, CASC_SCOPE_CITY)
@@ -9353,7 +9353,7 @@ int CvPlayer::getFreeUnitUpkeepMilitary() const
 	return static_cast<int>(iFloored / 100);
 }
 
-// PERCENT kinds -- an additive stack, never x100 scaled ([DEC-fixedpoint-x100]).
+// PERCENT kinds -- an additive stack, never x100 scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 int CvPlayer::getCivilianUnitUpkeepMod() const
 {
 	return static_cast<int>(InfoValuation::realizedAtEmpire(*this,
@@ -9399,7 +9399,7 @@ int64_t CvPlayer::getUnitUpkeepMilitary100() const
 
 namespace {
 	// The modifier stage both buckets share: the asymmetric cost combiner over a raw ×100 bucket sum, reduced
-	// to whole gold at the end ([DEC-fixedpoint-x100]).
+	// to whole gold at the end (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int64_t applyUnitUpkeepModifier(int64_t iRawUpkeep100, int iModifier)
 	{
 		uint64_t iUpkeep = std::max<int64_t>(0, iRawUpkeep100);
@@ -9742,7 +9742,7 @@ void CvPlayer::updateWarWearinessPercentAnger()
 			{
 				// ×100 weariness × a (100 + percent) factor, reduced ONCE by 10000. ⛔ This read used the HUMAN
 				// getWarWeariness against a /1000000, which truncated the whole term to nothing; its twin in
-				// CvTeamAI used a third divisor for the identical product ([DEC-fixedpoint-x100]).
+				// CvTeamAI used a third divisor for the identical product (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 				iNewWarWearinessPercentAnger += GET_TEAM(getTeam()).getWarWearinessTimes100((TeamTypes)iI) * std::max(0, 100 + kTeam.getEnemyWarWearinessModifier()) / 10000;
 			}
 		}
@@ -11344,7 +11344,7 @@ void CvPlayer::updateExtraYieldThreshold(YieldTypes eIndex)
 	int iBestValue = 0;
 
 	// The threshold is a whole yield count compared against a plot's own, so the trait's ×100 FLAT reduces
-	// here at the point of use ([DEC-fixedpoint-x100]); the SELECTION is the smallest positive one held.
+	// here at the point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the SELECTION is the smallest positive one held.
 	FAssertMsg((GC.getNumTraitInfos() > 0), "GC.getNumTraitInfos() is less than or equal to zero but is expected to be larger than zero in CvPlayer::updateExtraYieldThreshold");
 	for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 	{
@@ -11414,7 +11414,7 @@ void CvPlayer::updateLessYieldThreshold(YieldTypes eIndex)
 // the deposits are deltas against the engine's own base, not a replacement for it. Computed on every read from
 // live sources, never stored: a per-channel route modifier carried across a save is a value no live source can
 // reproduce, which is the STORED-ACCUMULATOR DRIFT class ([modifier.md] §2b,
-// [DEC-accumulator-cut-uniform]).
+// docs/cascade.md §THE LEGACY-ACCUMULATOR CUT).
 int CvPlayer::getTradeYieldModifier(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
@@ -11523,7 +11523,7 @@ void CvPlayer::changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iC
 //	The empire-wide state-religion building commerce. Its accumulator is CUT: the value is an ordinary
 //	cascade deposit (a building's `stateReligionCommerce` rolling down the scope chain), so the push that
 //	maintained this is gone with its feeders. The read answers 0 rather than a legacy-correct number, so
-//	the two surviving consumers show the gap instead of masking it ([DEC-no-legacy-masking]); they move to
+//	the two surviving consumers show the gap instead of masking it (docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap); they move to
 //	the cascade with the rest of the decomposition.
 int CvPlayer::getStateReligionBuildingCommerce(CommerceTypes eIndex) const
 {
@@ -12009,7 +12009,7 @@ int CvPlayer::getBuildingCount(BuildingTypes eIndex) const
 
 bool CvPlayer::hasEmpireBuilding(BuildingTypes eIndex) const
 {
-	// The held store IS the count at 0/1 for an empireLevel id (DEC-empire-level-buildings). TOTAL against a
+	// The held store IS the count at 0/1 for an empireLevel id (docs/specs/enabler.md §2 (empire-level buildings)). TOTAL against a
 	// player whose full reset has not run yet (the count array unallocated) -- the same map-read window the
 	// active read guards: a load-stream fact may evaluate a building-conditioned deposit before the players
 	// re-size, and the answer there is "not held", never a fault.
@@ -13801,7 +13801,7 @@ void CvPlayer::doEspionagePoints()
 	int aiRecvCommerces[NUM_COMMERCE_TYPES];
 	getCommerces(aiRecvCommerces);
 	// The group read is x100 like every realized amount, and espionage points are a whole count -- so the
-	// reduce lands at the point of use ([DEC-fixedpoint-x100]).
+	// reduce lands at the point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	doEspionageOneOffPoints(aiRecvCommerces[COMMERCE_ESPIONAGE] / 100);
 }
 
@@ -15801,7 +15801,7 @@ int CvPlayer::getAdvancedStartBuildingCost(BuildingTypes eBuilding, bool bAdd, c
 			}
 
 			// The building itself carries the buildings whose `requires` reference it
-			// ([DEC-one-reverse-view]), so the question is whether this city HOLDS one of that handful --
+			// (docs/cascade.md §1 (reverse lookups are populated once, at load)), so the question is whether this city HOLDS one of that handful --
 			// never a walk of everything the city has, asking each what it needs.
 			const std::vector<int>* pDependents =
 				GC.getBuildingInfo(eBuilding).edge(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS);
@@ -16216,7 +16216,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	if (bLimited)
 	{
 		// The civic's OWN `enables.specialists` list names the handful it unlocks; asking every specialist in
-		// the registry whether this civic validates it is the own-data inversion ([DEC-one-reverse-view]).
+		// the registry whether this civic validates it is the own-data inversion (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 		const std::vector<int>* pValidSpecialists = kCivic.getEdges()->find(EDGEF_ENABLES, EDGEB_SPECIALISTS);
 		if (pValidSpecialists != NULL)
 		{
@@ -16402,7 +16402,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStabilityIndexAverage);
 		// Lands through its setter, so a save taken mid-revolt announces the state it carries. m_bRebel is still
 		// false from reset(), so the read IS the crossing and the fact fires exactly once, from the one body that
-		// owns it ([DEC-spine-reseed]).
+		// owns it (docs/spine.md §5 (the load reseed)).
 		bool bLoadedRebel = false;
 		WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &bLoadedRebel, "m_bRebel");
 		setIsRebel(bLoadedRebel);
@@ -16543,7 +16543,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
 		//	The held-set is DERIVED from the count above and is never serialized
-		//	([DEC-derived-never-trusted]), so it is rebuilt HERE -- at the one place the count it mirrors arrives,
+		//	(docs/specs/save.md §5 (derived data serializes NOTHING)), so it is rebuilt HERE -- at the one place the count it mirrors arrives,
 		//	which is what stops the two drifting.
 		//	⛔ The city read restores building presence RAW (`m_bHasBuildings[eType] = true`) and only ANNOUNCES;
 		//	it does not go through changeHasBuilding -> handleBuildingCounts -> changeBuildingCount, so the
@@ -16551,7 +16551,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		//	⚠ Without it the set is EMPTY while the count says held, and the first REMOVAL of any held building
 		//	(a tech obsoleting one, a building destroyed, a city lost) erases an iterator that is end() -- memory
 		//	corruption, not a wrong number. It is load-only: a new game builds both together.
-		// DEC-empire-level-buildings: an OLD save's count for an empire-level id is its per-city copy count
+		// docs/specs/enabler.md §2 (empire-level buildings): an OLD save's count for an empire-level id is its per-city copy count
 		// (the copies this model deletes), so the held store NORMALIZES to 0/1 here -- and announces the held
 		// fact, the in-read half of the reseed. The cities stream later in this read; their per-city ledger
 		// copies then fold to no-ops at the one holding choke point. The OPERATE verdict seeds beside it: the
@@ -16831,7 +16831,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			ReadStreamableFFreeListTrashArray(*m_plotGroups[i], pStream);
 			// Cities load TWO-PHASE: the id first, so each city is registered before its body streams and the
 			// DOMAIN events it emits from inside its own read resolve by ordinary id lookup
-			// ([DEC-spine-reseed]). Identical bytes -- only the registration moment differs.
+			// (docs/spine.md §5 (the load reseed)). Identical bytes -- only the registration moment differs.
 			ReadStreamableFFreeListTrashArrayTwoPhase(*m_cities[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_units[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_selectionGroups[i], pStream);
@@ -20202,7 +20202,7 @@ void CvPlayer::doEvents()
 	}
 
 	// eventChance is a FLAT kind, so the era serves it ×100 and the roll -- a whole number of sides -- reduces
-	// here at the point of use ([DEC-fixedpoint-x100]); its `growth` sibling below is a PERCENT and reduces nowhere.
+	// here at the point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); its `growth` sibling below is a PERCENT and reduces nowhere.
 	const bool bNewEventEligible =
 	(
 		GC.getGame().getElapsedGameTurns() > 0
@@ -23242,7 +23242,7 @@ void CvPlayer::getResourceLayerColors(GlobeLayerResourceOptionTypes eOption, std
 					break;
 				case SHOW_RESOURCES_LUXURY:
 					// Both tests are pure SIGN, so they are scale-invariant and need no ÷100
-					// ([DEC-fixedpoint-x100]).
+					// (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 					bOfInterest = kBonusInfo.getFlatWellbeing(WELLBEING_HAPPINESS, CASC_SCOPE_EMPIRE) > 0
 						&& kBonusInfo.getFlatWellbeing(WELLBEING_HEALTH, CASC_SCOPE_EMPIRE) <= 0
 						|| kBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_LUXURY");
@@ -23923,10 +23923,10 @@ int CvPlayer::getSevoWondersScore(int mode)
 // The empire's growth percent (growth.empire -- the SCALAR_GROWTH straggler slot), the twin of the city's
 // populationGrowthRate channel. It replaces a FLOAT log-space accumulator rebuilt by a blanket walk over every
 // building in the game: a float on a deterministic-lockstep engine, a hand-named scalar no derived mask could
-// address ([DEC-uniform-cache-shape]), and a self-heal ([DEC-no-self-heal]) at once.
+// address (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE), and a self-heal (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT) at once.
 // ⚠ BEHAVIOUR CHANGE, stated rather than hidden: the log composed its sources MULTIPLICATIVELY; percents are
 // ADDITIVE deltas that sum and apply once ([modifier.md §2]), so the sources now add. A percent is not ×100
-// scaled ([DEC-fixedpoint-x100]), so this needs no reduction.
+// scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so this needs no reduction.
 int CvPlayer::getPopulationgrowthratepercentage() const
 {
 	ModifierFamily eFamily = MODFAM_NONE;
@@ -23967,7 +23967,7 @@ void CvPlayer::changeForceAllTradeRoutes(int iChange)
 }
 
 //	The one-specialist slice of the group read below. It exists because ~30 call sites want a single count;
-//	it is NOT a second implementation ([DEC-single-implementation]).
+//	it is NOT a second implementation (docs/architecture/patterns.md §DRY (single implementation)).
 //	⚠ So a caller wanting SEVERAL specialists must take the GROUP -- calling this in a loop re-walks the
 //	empire's sources once per specialist, which is exactly the shape the group read was added to delete.
 int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
@@ -24148,7 +24148,7 @@ int CvPlayer::getResourceConsumption(BonusTypes eBonus) const
 //	How heavily this empire leans on each resource. ONE pass over the cities, visiting per city only the
 //	bonuses its current production item and its built buildings actually touch -- never the whole bonus
 //	registry per city, and never a second per-bonus implementation beside this one
-//	([DEC-single-implementation]). This is SYNCED state (it feeds bonus-depletion odds and serializes), so
+//	(docs/architecture/patterns.md §DRY (single implementation)). This is SYNCED state (it feeds bonus-depletion odds and serializes), so
 //	every term stays integer arithmetic.
 void CvPlayer::recalculateAllResourceConsumption()
 {
@@ -24222,7 +24222,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 			}
 		}
 
-		// The BONUS carries the list of candidates whose `requires` reference it ([DEC-one-reverse-view]), so
+		// The BONUS carries the list of candidates whose `requires` reference it (docs/cascade.md §1 (reverse lookups are populated once, at load)), so
 		// the four legacy prereq axes collapse into ONE membership test -- the same read the per-bonus pass
 		// above makes. The merged bucket is safe here because the legacy collection OR'd all four (ANY
 		// semantics, which a superset only loosens); an ALL-semantics consumer must never read it this way.
@@ -24248,7 +24248,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 		cityX->getYields(aiBaseYieldRate);
 		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 		{
-			aiBaseYieldRate[iJ] /= 100;   // ÷100 at the reader ([DEC-fixedpoint-x100])
+			aiBaseYieldRate[iJ] /= 100;   // ÷100 at the reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 		}
 		// --- Building effects: what a bonus is worth to a building IS what holding it changes about what that
 		//     building delivers -- the AS-IF-HELD delta ([patterns.md] THE VALUATION PROTOCOL: the live contexts
@@ -24278,7 +24278,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 				InfoValuation::keyedTargetSegment("bonuses"), defenseByBonus, CASC_SCOPE_CITY);
 			for (size_t iRow = 0; iRow < defenseByBonus.size(); ++iRow)
 			{
-				//	A defense value is a PERCENT and therefore unscaled ([DEC-fixedpoint-x100]).
+				//	A defense value is a PERCENT and therefore unscaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 				aiConsumption[defenseByBonus[iRow].first] += defenseByBonus[iRow].second;
 			}
 
@@ -24519,7 +24519,7 @@ void CvPlayer::setHandicap(int iNewVal, bool bAdjustGameHandicap)
 		}
 		// The handicap is a MODIFIER SOURCE (the gather folds its families into this player's packages), so a
 		// difficulty move -- flexible difficulty's whole job -- must re-mark them or every handicap-derived
-		// deposit keeps the old difficulty's value with nothing to re-derive it ([DEC-no-self-heal]).
+		// deposit keeps the old difficulty's value with nothing to re-derive it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 		if (iOld != NO_HANDICAP)
 	{
 		emitEmpireHandicapRemoved((int)getID(), iOld);
@@ -24587,7 +24587,7 @@ int CvPlayer::getCorporationInfluence(CorporationTypes eIndex) const
 	//Find the prereq tech for corporate HQ
 	TechTypes ePrereqTech = GC.getCorporationInfo(eIndex).getTechPrereq();
 
-	// The corporation names its HQ buildings ([DEC-one-reverse-view]) -- the gating tech falls back to theirs,
+	// The corporation names its HQ buildings (docs/cascade.md §1 (reverse lookups are populated once, at load)) -- the gating tech falls back to theirs,
 	// which is the only live path since no corporation authors a tech prereq of its own.
 	const std::vector<BuildingTypes>& aeHeadquarters =
 		GC.getCorporationInfo(eIndex).getHeadquartersBuildings();
@@ -24829,7 +24829,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	//	⛔ A trait's MODIFIER families are deliberately NOT applied here. The gather folds every held trait's
 	//	modifiers into this player's scope packages -- selecting the active simple/complex set and applying the
 	//	PURE_TRAITS sign filter as it goes -- so a push into player-side accumulators would be a second copy of
-	//	the same numbers, maintained by hand ([DEC-accumulator-cut-uniform]). What is left below is only what the
+	//	the same numbers, maintained by hand (docs/cascade.md §THE LEGACY-ACCUMULATOR CUT). What is left below is only what the
 	//	cascade does not carry.
 
 	//	REVOLUTION is Python-authoritative, so the engine stores what Python reads back and models nothing. The
@@ -25269,7 +25269,7 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 	}
 }
 
-//	May this player LEARN this trait? The verdict is the ENABLER's ([DEC-enabler-not-cascade]: "can I?" is the
+//	May this player LEARN this trait? The verdict is the ENABLER's (docs/specs/enabler.md (enabler and cascade are two separate systems): "can I?" is the
 //	availability machine's), read as a bare O(1) fetch of the maintained tri-state -- no gate runs here and
 //	`requires` is never re-evaluated (enabler.md par.7).
 //	⚑ The developing LADDER needs no code at all: a rung is its predecessor's `enables.traits` edge, so it
@@ -25299,7 +25299,7 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 //	the player holds something this trait develops into, this one is not the top and stays.
 //	⛔ No rank, no line lookup, no sweep of the trait registry -- the succession battery that used to express this
 //	was comparing priorities to reconstruct a fact the has-state already carries (the own-data read,
-//	[DEC-one-reverse-view]; a whole-registry scan is the shape enabler.md par.8 singles out).
+//	docs/cascade.md §1 (reverse lookups are populated once, at load); a whole-registry scan is the shape enabler.md par.8 singles out).
 //	⚑ DIRECT successors are sufficient: a deeper rung is unreachable without the one beneath it, so holding rung 3
 //	implies holding rung 2, and rung 1's own edge already names rung 2.
 //	The ALIGNMENT leg is the other real rule: a level-up offers ONE sign, so bPositive drops a NEGATIVE trait and
@@ -25587,7 +25587,7 @@ int CvPlayer::getNationalTechResearchModifier(TechTypes eIndex) const
 	// the live sources, never a scope package -- folding it scope-wide would hand every tech one tech's bonus).
 	// ⚠ The incremental accumulator this replaces had NO writer left, so every one of those entries reached
 	// nothing and the term contributed save history (0 on a new game). Its member is now unread and belongs to
-	// the accumulator cut ([DEC-accumulator-cut-uniform]) -- delete + savemigration, not a re-point.
+	// the accumulator cut (docs/cascade.md §THE LEGACY-ACCUMULATOR CUT) -- delete + savemigration, not a re-point.
 	CvCascadeEvalCtx evalCtx;
 	getEmpireContext().fillEvalCtx(evalCtx);
 	const int iTechsSegment = InfoValuation::keyedTargetSegment("techs");
@@ -26171,7 +26171,7 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 
 	//	featureProduction is a percent and carries no scaling. Everything else here is a FLAT slot and reduces at
 	//	its point of use -- these accumulators hold whole routes, whole citizens, and the two demographics'
-	//	whole-number totals ([DEC-fixedpoint-x100]).
+	//	whole-number totals (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	changeFeatureProductionModifier(
 		tech.getScalar(SCALAR_FEATURE_PRODUCTION, CASC_SCOPE_EMPIRE, CASC_UNIT_PERCENT) * iChange);
 	// The cascade owns the AMOUNT now; what this site still owes is the changer's RIDER --

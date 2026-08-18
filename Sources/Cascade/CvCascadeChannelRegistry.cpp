@@ -132,7 +132,7 @@ namespace
 	// cross-scope receiver total is the Σ of its members' REALIZED values ([state-repositories.md]), and the
 	// empire's maintenance is exactly that Σ over its cities. It is therefore the same cache holding a different
 	// slot -- never a hand-named scalar beside the package, which is the shape
-	// [DEC-uniform-cache-shape] calls a DEFECT precisely because it forces its own bespoke invalidation path.
+	// docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a DEFECT precisely because it forces its own bespoke invalidation path.
 	// ⚠ It is the FIRST non-commerce receiver, so it is also the first to exercise the gather's plain-rate
 	// branch instead of the commerce split.
 	void cr_addReceivers(CascadeScopeLayout& kLayout, const ModifierFamily* aFamilies, int iCount)
@@ -594,7 +594,7 @@ void CascadeChannelRegistry::reportPlotsFan(const char* szSource, CvCascScope eE
 // ONE deposit landing in ONE slot. This is the ATTRIBUTION the totals cannot give: a package read says a channel
 // holds N, and nothing anywhere says WHO put it there or how many times -- which is why a wrong total has only ever
 // been answerable by hypothesis. Emitted per apply, so a grep over one load answers "who contributes to empire
-// happiness, and how often" directly ([DEC-no-guessing]: at a gap, EMIT the decomposition rather than infer it).
+// happiness, and how often" directly (AGENTS.md Conventions §Conduct (do not guess): at a gap, EMIT the decomposition rather than infer it).
 // ⚠ DIAGNOSTIC by kind, so it rides gStreamLogLevel and NO consumer may build state from it
 // ([event-spine.md] § THE RECEIVED LINE -- a line that says code ran is never a fact anything folds on).
 // ⚑ Level 3 (the per-candidate tier): this is per-deposit and would drown a level-1 read.
@@ -640,7 +640,7 @@ void CascadeChannelRegistry::reportDepositApply(const char* szSource, int iChann
 
 // The bounded decomposition: one line per (source, channel, scope, unit, driving fact) that actually deposited,
 // carrying HOW MANY applies and their SUMMED value. A channel whose total is impossible against the authored data
-// is then attributable to a NAMED source without reading any code -- which is the whole point ([DEC-no-guessing]:
+// is then attributable to a NAMED source without reading any code -- which is the whole point (AGENTS.md Conventions §Conduct (do not guess):
 // at a gap, EMIT the decomposition; a bare total supports neither VERIFY nor ASK).
 void CascadeChannelRegistry::reportDepositCensus()
 {

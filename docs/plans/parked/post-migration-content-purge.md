@@ -1,7 +1,7 @@
 # Post-migration content purge backlog
 
 > **Status:** parked partition · **Policy:**
-> [DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas).
+> [the keep-unkilled-ideas policy](README.md#parked--out-of-active-scope-plans-kept-for-intent).
 
 These are content reclassifications/collapses deferred to AFTER the #428/#430 cascade migration — the
 migration preserves each faithfully for now; clean up later. Per the migration's content-vs-structure rule

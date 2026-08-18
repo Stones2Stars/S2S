@@ -1,7 +1,7 @@
 //
 //	CvVictoryInfo -- the victory poco's own typed reading on top of the base section dispatch (see the header).
 //	mapFrom materializes the bespoke §9 `condition` unit + the movie intrinsic ONCE
-//	([DEC-materialize-at-mapfrom]). Idempotent by contract (reset-first unit, unconditional assigns).
+//	(docs/architecture/patterns.md §Materialize at mapFrom). Idempotent by contract (reset-first unit, unconditional assigns).
 //
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson

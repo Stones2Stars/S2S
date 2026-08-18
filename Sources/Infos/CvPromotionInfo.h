@@ -7,10 +7,10 @@
 //	SETUP: the four read categories, nothing else). A promotion is the unit plane's runtime GRANTOR: it PROVIDES
 //	skills (the par.8 grant/revoke planes) and deposits par.6 unit-scope self-accumulator values (modifier.md
 //	par.6 -- the additive promotion stack) the unit folds in as it is gained. Styled for the JSON anatomy
-//	(json.md par.2): every magnitude read is a load-compiled fetch ([DEC-materialize-at-mapfrom]); kind and
-//	scope are separate parameters ([DEC-scope-is-an-axis]); every magnitude getter IS x100
-//	([DEC-fixedpoint-x100]); the type-keyed vs-entries (terrain/feature/unitCombat/domain/flanking/build
-//	targets) stay compiled ENTRY-LIST reads by design; no legacy getter name returns ([DEC-new-getter-surface]).
+//	(json.md par.2): every magnitude read is a load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and
+//	scope are separate parameters (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); every magnitude getter IS x100
+//	(docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the type-keyed vs-entries (terrain/feature/unitCombat/domain/flanking/build
+//	targets) stay compiled ENTRY-LIST reads by design; no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 //	The chain edges: enables.promotions rides the composed CvEdges (store-inverted onto the tech is
 //	reconstructed at load via the setters below -- the loadJson tech-FK reverse-index pass); the chain's
@@ -152,7 +152,7 @@ public:
 	//
 	// Derived by deriveAtRegistryComplete: it reads OTHER promotions, so it cannot be a mapFrom read (the twin
 	// of CvUnitInfo::m_aiUpgradeChain). The getter is a bare member read; the SUM over it is
-	// CvPromotionAccrual ([DEC-single-implementation]), never open-coded at a consumer.
+	// CvPromotionAccrual (docs/architecture/patterns.md §DRY (single implementation)), never open-coded at a consumer.
 	const std::vector<int>& getLineAccrual() const { return m_aiLineAccrual; }
 	// Fed the finished ordered list by the reverse pass, which groups the lines ONCE rather than having every
 	// promotion re-scan the registry for its siblings.

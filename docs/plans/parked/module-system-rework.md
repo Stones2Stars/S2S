@@ -1,7 +1,7 @@
 # Module / modmod system — a fresh mechanism (parked intent)
 
 > **Status:** parked partition · **Policy:**
-> [DEC-keep-unkilled-ideas](../../architecture/decisions.md#dec-keep-unkilled-ideas).
+> [the keep-unkilled-ideas policy](README.md#parked--out-of-active-scope-plans-kept-for-intent).
 
 **S2S does not use the inherited C2C module mechanism as a live extension system any more, and it is not the
 shape the future one takes.** A new way to handle **modules and modmods** is intended; its design is open. This

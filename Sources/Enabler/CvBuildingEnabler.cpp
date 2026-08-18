@@ -94,7 +94,7 @@ static void bd_applyAxis(EnablerDomain& d, int eAxis, int iId, int iDelta)
 // the domain (size + the offerability static exclusions) and fold ONLY the cross-scope HAVE that predates
 // the city -- team techs + player civics (no events can carry 400 pre-existing techs to a new city). The
 // city's OWN facts (buildings/religions/corps/bonuses/culture) arrive as DOMAIN events -- at load from the
-// in-read reseed emits, at founding from the real grant/build emits -- one mechanism (DEC-spine-reseed).
+// in-read reseed emits, at founding from the real grant/build emits -- one mechanism (docs/spine.md §5 (the load reseed)).
 // ⛔ `identity.enabledCivilizations` is NOT a bar here: legacy applied it only inside the strongly-restricted
 // NPC lockdown (a whitelist for WHICH restricted NPCs may build this -- inert for every normal civ), and that
 // lockdown is a requires.build civ-membership gate when civilizations wire (json.md par.9 policies note).
@@ -118,7 +118,7 @@ void BuildingEnabler::onCityCreated(const CvCity& kCity)
 		const CivicTypes c = kPlayer.getCivics((CivicOptionTypes)co);
 		if (c != NO_CIVIC) bd_applyAxis(d, AX_CIVIC, (int)c, +1);
 	}
-	// DEC-empire-level-buildings: the owner's held EMPIRE-LEVEL buildings are HAVE this city starts under -- the
+	// docs/specs/enabler.md §2 (empire-level buildings): the owner's held EMPIRE-LEVEL buildings are HAVE this city starts under -- the
 	// member reads held here (never offerable) and its edges contribute, the civic fold's two-leg shape: the
 	// grantor fact fans the standing cities, and a city that starts existing folds what the owner already holds.
 	const std::vector<BuildingTypes>& heldBuildings = kPlayer.getHasBuildings();
@@ -168,7 +168,7 @@ static const std::vector<int>& bd_sbMembers(int iSb)
 // / team / national wonder, so it is derived from which cap the building authors -- no `isWorldWonder` mirror.
 // The counts are the city's own raw category counts (ordinary state reads, not a derived verdict: the engine's
 // own isWorldWondersMaxed() answer is exactly the kind of computed output a gate must not ride in on,
-// [DEC-calc-zero-ride-in]).
+// docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
 // Every building carrying a self-cap, i.e. every building the per-city CATEGORY cap can gate. Built once from
 // static data (the bd_sbMembers precedent). This is the re-gate SET for the two facts that move a category
 // verdict without referencing the building at all -- the city's culture level, and another wonder of the same
@@ -343,7 +343,7 @@ static void bd_gateSet(const CvCity& kCity, const std::set<int>& ids)
 
 // The TOUCHED candidate set of one HAVE-event source (all read off the source's OWN info, O(delta)): its
 // enables proposals, its removal-family targets, and its EDGEF_REQUIRED_BY building dependents (the readJson
-// requires-reverse-index, DEC-one-reverse-view).
+// requires-reverse-index, docs/cascade.md §1 (reverse lookups are populated once, at load)).
 static void bd_touched(const CvInfo* j, std::set<int>& touched)
 {
 	if (j == NULL) return;
@@ -356,7 +356,7 @@ static void bd_touched(const CvInfo* j, std::set<int>& touched)
 	// ONE-LEVEL expansion: whoever REQUIRES a touched candidate re-gates too. The hide-replaced gate leg reads
 	// the SUCCESSOR's tree membership, so a source that (un)reaches the successor must re-gate its
 	// predecessors -- carried by the successor's own EDGEF_REQUIRED_BY (the dormant triggers invert there,
-	// DEC-one-reverse-view; other requires-dependents re-gate idempotently).
+	// docs/cascade.md §1 (reverse lookups are populated once, at load); other requires-dependents re-gate idempotently).
 	const std::set<int> firstOrder = touched;
 	for (std::set<int>::const_iterator it = firstOrder.begin(); it != firstOrder.end(); ++it)
 	{
@@ -452,7 +452,7 @@ void BuildingEnabler::onLoadFinished()
 	// the ENABLER had been event-built all along. The two must build on the SAME SEEDS (owner).
 	// â Do not reintroduce one: the objects and their contexts exist before the facts flow (the game could not
 	// load otherwise), so there is nothing for a rebuild to discover that the stream did not already carry
-	// ([DEC-spine-reseed], [DEC-no-self-heal]).
+	// (docs/spine.md §5 (the load reseed), docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// the par.7.1 order rule's "gate once after the stream ends" option: every city's full gate pass, exactly
 	// once, against the fully-loaded state (fires from GAME_LOAD_FINISHED at the end of onFinalInitialized).
 	gateAllCities();
@@ -636,7 +636,7 @@ void BuildingEnabler::onBuildingCountChanged(PlayerTypes ePlayer, int eBuilding)
 // ⚑ THIS IS THE ROUTE THE PLOT PLANE NEVER HAD. The substrate atoms are the single largest gate axis in the
 // authored data -- MAPCATEGORY_ / TERRAIN_ / FEATURE_ / HAS_COAST / HAS_RIVER across thousands of entities -- and
 // none of them re-gated at all: a terraform, a chop, an improvement built or pillaged moved no verdict, and the
-// tri-state is a BARE FETCH that nothing recomputes ([DEC-no-self-heal]), so the stale verdict simply stood.
+// tri-state is a BARE FETCH that nothing recomputes (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT), so the stale verdict simply stood.
 // ⛔ It must NOT ride the GATE_DYNAMIC class the rare player/city facts use: that class is effectively the whole
 // registry (anything the deps scanner does not recognise falls through to it), and plot facts are HIGH frequency
 // -- a worked-plot flip would re-gate every building in the city. The reverse edge is what makes this affordable.
@@ -760,7 +760,7 @@ void BuildingEnabler::onCityCultureLevelChanged(const CvCity& kCity, int iLevel,
 		bd_touched(bd_sourceInfo(AX_CULTURE, iLevel), touched);
 		// ...plus every CAPPED building here: the per-city wonder-CATEGORY cap reads the culture level's max, so a
 		// level change moves that verdict for candidates referencing the level NOWHERE -- the touched set above
-		// cannot reach them, and an unrouted gate input is a permanently stale verdict ([DEC-no-self-heal]).
+		// cannot reach them, and an unrouted gate input is a permanently stale verdict (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 		const std::vector<int>& capped = bd_cappedBuildings();
 		touched.insert(capped.begin(), capped.end());
 		bd_gateSet(kCity, touched);

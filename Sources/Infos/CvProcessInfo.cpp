@@ -1,7 +1,7 @@
 //
 //	CvProcessInfo -- the process poco (see the header). The §9 `conversion` block (item 18: hammers->commerce
 //	conversion, hurry's bespoke-block home) materializes ONCE at mapFrom into the typed per-channel plane
-//	([DEC-materialize-at-mapfrom]); the getter is a bare member read.
+//	(docs/architecture/patterns.md §Materialize at mapFrom); the getter is a bare member read.
 //
 
 #include "CvGameCoreDLL.h"

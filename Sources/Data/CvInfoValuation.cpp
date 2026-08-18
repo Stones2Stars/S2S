@@ -139,7 +139,7 @@ namespace
 	// ⚠ The tag id resolves LAZILY exactly as the evaluator's own IS_TAG case does: the TAG_* infotypes mint
 	// after condition parse, so the node's `id` is -1 and `param` carries the TAG_<SUFFIX> name. An UNMINTED tag
 	// is an unknown predicate and is IGNORED -- true, json §3.5 -- which is the evaluator's semantic and is
-	// deliberately not second-guessed here ([DEC-single-implementation]: one meaning for one predicate).
+	// deliberately not second-guessed here (docs/architecture/patterns.md §DRY (single implementation): one meaning for one predicate).
 	// ⛔ Anything that is not a BARE IS_TAG predicate answers NOT_A_TAG. A combinator, a negation or a
 	// parameterized predicate is a filter this read cannot honour, and declining is the fail-safe direction: the
 	// deposit goes unserved and visibly missing, never applied to a unit that does not match.
@@ -690,7 +690,7 @@ int64_t InfoValuation::cityRate(int64_t base, int64_t specialists, int iPercentS
 	// gotcha mirrored verbatim, never "fixed").
 	//
 	// SCALE: iPercentSum is a plain percent (25 = +25%), which is what a percent IS everywhere on this surface --
-	// readJson does not scale one ([DEC-fixedpoint-x100]: a percentage has no decimals to carry), so the stored
+	// readJson does not scale one (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a percentage has no decimals to carry), so the stored
 	// sums are plain too and every consumer combines them the same way.
 	int64_t iModifier = 100 + (int64_t)iPercentSum;
 	if (iModifier < 0)
@@ -1097,7 +1097,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 			if (pWorkedPlot != NULL)
 			{
 				// ⚠ The census reads the SEGMENTS the total is made of rather than re-deriving them beside it
-				// ([DEC-single-implementation]). It deliberately does NOT re-sum the total: pTermsOut->plotBase
+				// (docs/architecture/patterns.md §DRY (single implementation)). It deliberately does NOT re-sum the total: pTermsOut->plotBase
 				// reports the SLOT, which is the number every consumer actually uses. ⛔ The two are NOT expected
 				// to agree, and reading a gap as drift is the standing misreading: the whole §2a plot resolve
 				// sits between them -- the floors, the city-centre block, both scaling legs, the golden-age
@@ -1181,7 +1181,7 @@ int64_t InfoValuation::cityReceiverRate(const CvCity& city, int iChannel, CityRa
 					iBase += iContribution;
 					// ⚑ The census row comes OUT of this fold, never a second walk beside it: a decomposition
 					// that recomputed itself could disagree with the number it claims to explain
-					// ([DEC-single-implementation]).
+					// (docs/architecture/patterns.md §DRY (single implementation)).
 					if (pTermsOut != NULL)
 					{
 						TraitImprovementRow kTraitRow;
@@ -1384,14 +1384,14 @@ void InfoValuation::cityRefusedDeposits(const CvCity& city, int iChannel,
 			// buff is authored at EMPIRE scope with a `cities` TARGET (json §3.3) and only RESOLVES at city scope,
 			// so a raw scope comparison drops every rolled-down source -- which is precisely what the cascade is
 			// for. Measured: the hand-rolled test admitted 190 entries and explained 82 of a 155-point stack; the
-			// rolled-down half was invisible to it ([DEC-single-implementation]).
+			// rolled-down half was invisible to it (docs/architecture/patterns.md §DRY (single implementation)).
 			if (pEntry == NULL || pEntry->family != eFamily || pEntry->kind != iKind)
 			{
 				continue;
 			}
 			// THE ONE RESOLVE decides whether this entry lands here and as what -- scope, target fan, audience,
 			// unit side and the §3.9 gate, all of it. A census that re-implemented any of that could disagree
-			// with the apply it claims to explain ([DEC-single-implementation]).
+			// with the apply it claims to explain (docs/architecture/patterns.md §DRY (single implementation)).
 			int iEntryChannel = -1;
 			bool bEntryPercent = false;
 			int64_t iEntryValue = 0;
@@ -1461,7 +1461,7 @@ int InfoValuation::realizedAtEmpire(const CvPlayer& player, int iChannel)
 		// espionage as four independent channels -- it receives the COMMERCE yield, and the EMPIRE'S SLIDERS
 		// divide that yield across the four, each adding its own deposits and the process conversion. So the
 		// member value is the city's realized COMMERCE group read, which is the ONE implementation of that split
-		// ([DEC-single-implementation]); cityReceiverRate answers the deposits leg and is the wrong member here.
+		// (docs/architecture/patterns.md §DRY (single implementation)); cityReceiverRate answers the deposits leg and is the wrong member here.
 		// ⚑ Without this the sliders moved nothing at the empire: the Σ summed a yield-shaped combine over the
 		// gold channel, which the slider is not an input to.
 		const int iCommerceIndex = val_commerceIndexOfChannel(iChannel);
@@ -1684,7 +1684,7 @@ void InfoValuation::expectedWellbeing(const CvModifiers* modifiers,
 			}
 			if (pEntry->unitQual != NULL)
 			{
-				continue;   // unit-carried wellbeing rides ON TOP live ([DEC-unit-modifiers-on-top])
+				continue;   // unit-carried wellbeing rides ON TOP live (docs/cascade.md §2b (unit-carried modifiers apply on top, live))
 			}
 			if (!MMKernel::audienceOk(pEntry->aiOnly, evalCtx))
 			{
@@ -1784,7 +1784,7 @@ int64_t InfoValuation::keyedTargetSum(const CvModifiers* modifiers, ModifierFami
 	return iTotal;
 }
 
-//	The ONE walk both tagged-target reads share ([DEC-single-implementation]). Exactly one matcher is active:
+//	The ONE walk both tagged-target reads share (docs/architecture/patterns.md §DRY (single implementation)). Exactly one matcher is active:
 //	iTagId >= 0 matches the entries naming THAT tag; a non-NULL candidate matches the entries naming ANY tag it
 //	carries. Two public names because the two questions are genuinely different -- "what does this source give
 //	military units" vs "what does this source give THIS unit" -- and a caller must not have to pick a mode.
@@ -1925,7 +1925,7 @@ int64_t InfoValuation::unitQualifiedRate(const CvModifiers* modifiers, ModifierF
 //	The COLLECT twin of keyedTargetSum: the SAME two halves and the SAME filters, accumulated across every
 //	target instead of matched against one. Keeping the filter order identical to the per-target form is what
 //	makes the two answer alike -- they are one walk with one predicate, not two implementations
-//	([DEC-single-implementation]).
+//	(docs/architecture/patterns.md §DRY (single implementation)).
 void InfoValuation::collectKeyedTargetSums(const CvModifiers* modifiers, ModifierFamily eFamily, int iKind,
 	int iTargetSegment, const CvCascadeEvalCtx& evalCtx, std::vector<int64_t>& targetTotals)
 {

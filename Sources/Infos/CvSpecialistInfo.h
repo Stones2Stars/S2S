@@ -8,10 +8,10 @@
 //	(modifier.md §2a: the specialist carries its OWN percent layer -- the civic-conditioned percent entries --
 //	applied to its intrinsic output BEFORE it joins the city BASE; the empire-scope wonder-conditioned entries
 //	are the own-output inversions of the legacy building SpecialistYieldChanges). Every magnitude read is a
-//	load-compiled fetch ([DEC-materialize-at-mapfrom]); kind and scope are separate parameters
-//	([DEC-scope-is-an-axis]); every magnitude getter IS ×100 ([DEC-fixedpoint-x100] -- NB the wellbeing values
+//	load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate parameters
+//	(docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); every magnitude getter IS ×100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- NB the wellbeing values
 //	are the curator's ÷100 de-scale of the legacy latent-×100, so the compiled ×100 sum IS the legacy-scale
-//	number); no legacy getter name returns ([DEC-new-getter-surface]).
+//	number); no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 //	The expected* what-if on this type means the SPECIALIST'S OWN OUTPUT LAYER per §2a (what one assigned
 //	specialist of this type yields under the passed contexts) -- its own percent stack resolves inside that

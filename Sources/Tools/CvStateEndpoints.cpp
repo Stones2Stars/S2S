@@ -194,7 +194,7 @@ namespace
 	}
 
 	// Render a dictionary by its AUTHORED KEY rather than by id, so an external differ names the ability that
-	// moved instead of a bit position. The registry owns the id -> key direction ([DEC-classification-infos]).
+	// moved instead of a bit position. The registry owns the id -> key direction (docs/specs/json.md §8 + docs/architecture/patterns.md §The coherent surface (THE GETTER SETUP)).
 	picojson::value oe_renderClsDict(const ContextDict& kDict, int eDomain)
 	{
 		picojson::value::array kOut;
@@ -255,7 +255,7 @@ namespace
 			// The receiver plane is NOT a stored slot (CvCascadePackage.h: the receiver re-sums its
 			// participating members), so the census asks the ONE realized read every consumer uses -- a census
 			// that re-derived its own Σ beside it could disagree with the number it claims to explain
-			// ([DEC-single-implementation]).
+			// (docs/architecture/patterns.md §DRY (single implementation)).
 			for (size_t iSlot = 0; iSlot < kValues.sum.size(); ++iSlot)
 			{
 				const int iChannel = CascadeChannelRegistry::scopeReceiverChannel(CASC_SCOPE_CITY, (int)iSlot);
@@ -522,7 +522,7 @@ CvString StateEndpoints::enablerVerdict(int iPlayer, int iCity, const char* szBu
 // express (spawn-only, obsoleted, capped, the upgrade-dormancy closure, supersession by a buildable successor),
 // so UnitEnabler::Explain names each and this serves them side by side. ⛔ It is a DECOMPOSITION of the
 // MAINTAINED verdict, never a recompute of it -- the enabler's tri-state stays the answer and these legs say
-// WHY it reads as it does ([DEC-no-guessing]: a greyed entry must hand the asker an answer, not a question).
+// WHY it reads as it does (AGENTS.md Conventions §Conduct (do not guess): a greyed entry must hand the asker an answer, not a question).
 CvString StateEndpoints::enablerUnits(int iPlayer, int iCity, const char* szUnit)
 {
 	const PlayerTypes ePlayer = oe_resolvePlayer(iPlayer);
@@ -681,7 +681,7 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 		kCity["onSite"] = picojson::value(kOnSiteNames);
 
 		// EVERY TERM OF THE COMBINE, per yield -- out of the real combine, never re-derived beside it
-		// ([DEC-single-implementation]).
+		// (docs/architecture/patterns.md §DRY (single implementation)).
 		picojson::value::object kYields;
 		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 		{

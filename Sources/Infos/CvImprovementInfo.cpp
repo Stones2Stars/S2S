@@ -1,10 +1,10 @@
 //
 //	CvImprovementInfo -- the improvement poco's own typed reading on top of the base section dispatch (see the
 //	header). The yield/culture/defense families compile into m_modifiers via the base dispatch -- no per-family
-//	raw read survives here ([DEC-new-getter-surface]); the conditioned tile-output entries (irrigated /
+//	raw read survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)); the conditioned tile-output entries (irrigated /
 //	riverside / per-bonus / tech-gated + the reverse-landed cross-entity boosts) live on the compiled
 //	conditioned list. mapFrom materializes the identity/mapGeneration census set AND the placement/validity
-//	verdicts (ONE walk of the composed requires.build tree) into typed members ([DEC-materialize-at-mapfrom]);
+//	verdicts (ONE walk of the composed requires.build tree) into typed members (docs/architecture/patterns.md §Materialize at mapFrom);
 //	idempotent by contract.
 //
 

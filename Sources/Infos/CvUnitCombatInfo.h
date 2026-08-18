@@ -7,10 +7,10 @@
 //	SETUP: the four read categories, nothing else). A unitcombat is a GRANTOR on the unit plane: it PROVIDES
 //	skills (the par.8 grant/revoke planes) and deposits par.6 unit-scope self-accumulator values (modifier.md
 //	par.6) that the unit's ACTIVE set folds in on the instance. Styled for the JSON anatomy (json.md par.2):
-//	every magnitude read is a load-compiled fetch ([DEC-materialize-at-mapfrom]); kind and scope are separate
-//	parameters ([DEC-scope-is-an-axis]); every magnitude getter IS x100 ([DEC-fixedpoint-x100]); the type-keyed
+//	every magnitude read is a load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate
+//	parameters (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); every magnitude getter IS x100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the type-keyed
 //	vs-entries (terrain/feature/unitCombat/build targets) stay compiled ENTRY-LIST reads by design; no legacy
-//	getter name returns ([DEC-new-getter-surface]).
+//	getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"
@@ -49,7 +49,7 @@ public:
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
 	// stragglers -- withdrawal / revoltProtection -- read through the base getScalar. The mixed-unit groups
 	// keep the flat-vs-modifier split in the NAME, the getFlatYield/getYieldModifier convention --
-	// [DEC-fixedpoint-x100]: the name says the VALUE, never a scale suffix.)
+	// docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the name says the VALUE, never a scale suffix.)
 	int getFlatCombat(CombatKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_FLAT); }
 	int getCombatModifier(CombatKind eKind, CvCascScope eScope) const

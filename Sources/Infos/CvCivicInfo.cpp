@@ -1,6 +1,6 @@
 //
 //	CvCivicInfo -- the civic poco's own typed reading on top of the base section dispatch (see the header).
-//	mapFrom materializes the census identity set ONCE into typed members ([DEC-materialize-at-mapfrom]) and
+//	mapFrom materializes the census identity set ONCE into typed members (docs/architecture/patterns.md §Materialize at mapFrom) and
 //	SOURCE-resolves the CITY_LIMIT per.above token onto its own compiled entries (ruling 26, the SELF-collapse
 //	precedent, json §3.1). Idempotent: unconditional assignment + the resolver only fills entries the fresh
 //	parse left unresolved.

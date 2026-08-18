@@ -7,7 +7,7 @@ namespace
 {
 	//	The ONE bounds gate for this registry. The id arrives from script, so it is checked here rather than
 	//	trusted -- an out-of-range read reaches the info plane, which fails LOUD by design
-	//	([DEC-info-plane-read-only]) and takes the process with it.
+	//	(docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD) and takes the process with it.
 	const CvEspionageMissionInfo* cyem_mission(int iMission)
 	{
 		if (iMission < 0 || iMission >= GC.getNumEspionageMissionInfos())

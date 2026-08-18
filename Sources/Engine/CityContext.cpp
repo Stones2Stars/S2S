@@ -2,7 +2,7 @@
 //	CityContext -- the ONE derivation of the city's stored blocks (see the header for what each block is and the
 //	vicinity split against the enabler), plus the forwards for the raw data CvCity already holds O(1).
 //
-//	DEC-single-implementation: each stored fact is derived by calling the SAME engine accessor a read used to call --
+//	docs/architecture/patterns.md §DRY (single implementation): each stored fact is derived by calling the SAME engine accessor a read used to call --
 //	once, at maintenance time, instead of once per read. No predicate's logic is re-implemented here.
 //
 //	CONSTRAINT: refreshAreaFacts reads the CENTRE plot's neighbours' CvArea, so it is valid only once the map is
@@ -11,7 +11,7 @@
 //	has settled. World generation and the save read announce their plot facts while no city stands, so the radius
 //	sweep finds nobody and the derivation is never entered; the area-recalculated fact re-runs it after a
 //	wholesale reassignment. There is deliberately NO staleness check on the read side: a fact that fails to fire leaves the
-//	value visibly wrong rather than being silently rebuilt (DEC-no-self-heal).
+//	value visibly wrong rather than being silently rebuilt (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 //
 
 #include "CvGameCoreDLL.h"
@@ -495,7 +495,7 @@ void CityContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
 	ec.plotContext = (m_city != NULL) ? &m_city->plot()->getPlotContext() : NULL;
 	//	The ENABLER's derived output, fed in rather than re-derived: the ctx's active / obsolete / provided sets
 	//	point at the city's own standing set (enabler.md §3.2), so a building-presence or vicinity-provides
-	//	predicate reads the cascade-computed verdict and never the engine's ([DEC-calc-zero-ride-in]).
+	//	predicate reads the cascade-computed verdict and never the engine's (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
 	const OperatingBuildings* pOperating = operatingBuildings();
 	if (pOperating != NULL)
 	{
@@ -670,7 +670,7 @@ namespace
 	// that city alone: no radius walk, no re-derivation, and the direction comes from the fact's own id.
 	// ⚡ THIS IS ALSO THE SEEDING PATH. A city establishing its work area (born, or rebuilt at load) announces one
 	// membership fact per plot, so the store fills through the SAME route that maintains it -- there is no separate
-	// build pass, and no second mechanism beside the event stream ([DEC-spine-reseed]).
+	// build pass, and no second mechanism beside the event stream (docs/spine.md §5 (the load reseed)).
 	void cc_applyVicinityMembership(const CvPlot* pPlot, const CvCity* pCity, int iSign)
 	{
 		if (pPlot == NULL || pCity == NULL)
@@ -686,7 +686,7 @@ namespace
 		// resource is gone can still be the one the improvement stands on. ⚡ This is also the ON-SITE SEEDING
 		// PATH -- the map streams before the cities, so at load nothing could announce a served resource to a city
 		// that did not exist, and re-establishing the work area folds each tile's CURRENT verdict through exactly
-		// the route that maintains it ([DEC-spine-reseed]: no second build mechanism beside the event stream).
+		// the route that maintains it (docs/spine.md §5 (the load reseed): no second build mechanism beside the event stream).
 		const int iServedBonus = pPlot->getPlotContext().servedBonus();
 		if (iServedBonus >= 0 && bOwnershipBand && eBand == CITYVIC_OWNED)
 		{
@@ -1120,7 +1120,7 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			break;
 		}
 		// Only the corporations THIS tech obsoletes -- the tech's own edge names the handful, never a registry
-		// scan ([DEC-one-reverse-view]).
+		// scan (docs/cascade.md §1 (reverse lookups are populated once, at load)).
 		std::set<int> kObsoletedCorporations;
 		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, kEvent.iType),
 			EDGEF_OBSOLETES, EDGEB_CORPORATIONS, kObsoletedCorporations);

@@ -34,11 +34,11 @@ public:
 	// ======================= INTRINSIC -- bare typed reads =======================
 	// The authored predicate spelling this set defines ("IS_WATER"). Resolved to its CvCascPredKind by the
 	// index that consumes it, through the ONE public speller (cascadeSpellPredKind) rather than a second
-	// string->enum map ([DEC-single-implementation]).
+	// string->enum map (docs/architecture/patterns.md §DRY (single implementation)).
 	const std::string& getPredicate() const { return m_szPredicate; }
 
 	// The TERRAIN ids this predicate means, in authored order. FK-resolved at mapFrom, so the read is a bare
-	// member ([DEC-materialize-at-mapfrom]).
+	// member (docs/architecture/patterns.md §Materialize at mapFrom).
 	const std::vector<int>& getTerrains() const { return m_aiTerrains; }
 
 private:

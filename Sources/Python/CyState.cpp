@@ -508,7 +508,7 @@ std::wstring CyState::getPlayerName(int iPlayer) const
 	return pPlayer ? std::wstring(pPlayer->getName()) : std::wstring();
 }
 
-// The publication -- what is left after the CITY plane moved onto CyCity ([DEC-accessor-homing]).
+// The publication -- what is left after the CITY plane moved onto CyCity (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (accessor homing)).
 void CyState::pythonPublish()
 {
 	python::class_<CyState>("CyState")

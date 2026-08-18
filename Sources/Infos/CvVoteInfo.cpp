@@ -1,7 +1,7 @@
 //
 //	CvVoteInfo -- the vote poco's own typed reading on top of the base section dispatch (see the header).
 //	mapFrom materializes the bespoke §9 units (`effect` / `threshold` / `role` / `voteSource`) ONCE
-//	([DEC-materialize-at-mapfrom]). Idempotent by contract (reset-first units, unconditional assigns).
+//	(docs/architecture/patterns.md §Materialize at mapFrom). Idempotent by contract (reset-first units, unconditional assigns).
 //	All scalars carry a load default of 0 (the curator elides zeros).
 //
 

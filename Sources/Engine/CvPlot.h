@@ -132,15 +132,15 @@ public:
 
 	// The PLOT-scope cascade package -- this plot's ISOLATED base-value cache (modifier.md §2: one base
 	// package per plot, resolved in isolation; the origin rule's yield side). The uniform CvCascadePackage
-	// on every scoped item ([DEC-uniform-cache-shape]), a MAINTAINED SUM: the fact that names a source applies
-	// that source's compiled deposits, and nothing is marked or rebuilt ([DEC-maintained-sum]).
+	// on every scoped item (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE), a MAINTAINED SUM: the fact that names a source applies
+	// that source's compiled deposits, and nothing is marked or rebuilt (docs/cascade.md §THE MAINTAINED SUM).
 	const CvCascadePackage<CvPlot>& getCascadePackage() const { return m_cascadePackage; }
 
 	// THE PLOT'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
 	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the PLOT scope carries channels of
 	// (the set is the data's -- CvInfoKinds.h's census scope masks). The call carries NO channel argument and NO
 	// scope argument (the object IS the scope); the group's enum indexes the RESULT; there is no scalar getter
-	// per channel. ×100 NATIVE ([DEC-fixedpoint-x100]). A BARE FETCH per channel, unconditionally.
+	// per channel. ×100 NATIVE (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). A BARE FETCH per channel, unconditionally.
 	// ⚑ A PLOT IS RESOLVED IN ISOLATION (modifier.md §2 plot-as-base): these answer this plot's OWN package and
 	// take NO upper-scope percent -- the city stack scales the already-summed base later, once. That is also why
 	// the yield group here is the plot's flat base and never a rate.

@@ -331,7 +331,7 @@ public:
 	// The TECH permanent bar stays a game-scope read: NO_FUTURE is a game option composed against a tech's own
 	// era/repeat data, which no entity gate carries. Its building/unit/corporation siblings moved to the enabler
 	// (EnablerKernel::everAvailable) -- an availability verdict belongs to the availability machine
-	// ([DEC-enabler-not-cascade]), and their bars are entity gates rather than a composition.
+	// (docs/specs/enabler.md (enabler and cascade are two separate systems)), and their bars are entity gates rather than a composition.
 	bool canEverResearch(TechTypes eTech) const;
 	bool canNPCFieldUnit(UnitTypes eUnit) const;
 

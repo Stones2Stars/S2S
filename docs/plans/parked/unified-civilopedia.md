@@ -1,124 +1,49 @@
 # Unified Civilopedia — Game-side: clean, single-source content & loading
 
-Status: **design captured (2026-06-13).** This is the **game repo's** side of the unified
-Civilopedia vision: getting the game's *content* — its XML game-data, its GameText, its
-mechanics prose — **clean, single-sourced, and well-loaded into the game.** It is worth
-doing for the game's own health (a uniform, drift-free data model) independent of anything
-downstream.
+**The entity single-source problem this doc originally scoped is solved — by the JSON/cascade migration, not the
+`#196` declarative-registry route this plan first proposed.** `CvBuildingInfo`, `CvUnitInfo`, `CvPromotionInfo`,
+`CvTraitInfo`, `CvImprovementInfo`, `CvCivicInfo` are rebuilt JSON pocos fed from `Assets/Data/**`, one JSON-fed
+declaration per class driving read/validation/inspection uniformly — see [`json.md`](../../specs/json.md) for the
+current model. That is this doc's entity-content goal, delivered. What's left is the non-entity content taxonomy
+below and its guardrails.
 
-**The website is NOT here.** The web Civilopedia — the XML⇄JSON converter, the JSON content
-store, the React frontend, the backend, accounts/forum/community — is a **separate project**
-planned in [`s2swebsite/unified-civilopedia-plan.md`](../../../../s2swebsite/unified-civilopedia-plan.md)
-(sibling of this repo, like FpkBuilder). That project is purely *downstream*; its
-only dependency on this repo is the **clean XML** the work below produces. This document owns
-the upstream half: the data model and its loading. Nothing about the website lives here.
+**The website is NOT here.** The web Civilopedia — the XML⇄JSON converter, the JSON content store, the React
+frontend, the backend, accounts/forum/community — is a **separate project** planned in
+[`s2swebsite/unified-civilopedia-plan.md`](../../../../s2swebsite/unified-civilopedia-plan.md) (sibling of this
+repo). It is purely *downstream*; its only dependency on this repo is the clean XML this repo produces. The two
+halves meet at exactly one seam: **clean, uniform, declarative XML + GameText.**
 
-> The two halves meet at exactly one seam: **clean, uniform, declarative XML (+ GameText).**
-> This repo produces it; `s2swebsite` consumes it. Keeping that the *only* contract is the
-> anti-piecemeal discipline both sides follow.
+## Content taxonomy & single sources (game-side)
 
----
+Three kinds of game content, each with exactly one authoritative home. (Developer reference — `docs/` — is a
+fourth kind, already single-sourced under [`docs/README.md`](../README.md); not repeated here.)
 
-## 1. The single-source principle (why this matters for the game)
-
-> **One source of truth per *kind* of content; every other surface is GENERATED or RENDERED
-> from it. No hand-maintained duplicate that can drift.**
-
-This C2C-derived codebase is "in this mess" precisely because the same fact lives in several
-hand-maintained places that fall out of sync — the premise of the
-dead-code / dead-XML pass (zombie data, orphan `<Type>`s, dead
-`TXT_KEY_*`), and the very pattern the declarative-loading work *deleted* inside the DLL: the
-four hand-written methods (`read`/`copyNonDefaults`/`getCheckSum`/ctor) that "all had to agree
-field-for-field" (see [`json.md`](../../specs/json.md)).
-Every game-content duplicate is a future drift bug. So the game-side goal is a data model where
-**a fact is authored once and loaded uniformly** — and the cleanup + loading work below is how
-we get there.
-
----
-
-## 2. Content taxonomy & single sources (game-side)
-
-Three kinds of game content, each with exactly one authoritative home. (Developer reference —
-`docs/` — is the fourth kind and is already single-sourced under
-[`docs/README.md`](../README.md); not repeated here.)
-
-| Kind | Single source of truth | Surfaces it should feed (generated/rendered, never re-typed) |
+| Kind | Single source of truth | Surfaces it feeds (generated/rendered, never re-typed) |
 |---|---|---|
-| **Game-data entities** — units, buildings, techs, civics, traits, bonuses/resources, improvements, promotions, projects, eras, terrain, features, religions, specialists, … | the loaded `Cv*Info` tables, defined by `Assets/Data/**` JSON and read via the `CvJson<X>Info` poco model ([`json.md`](../../specs/json.md)). JSON is the on-disk form; the loaded table is the in-memory truth. | the in-game Python pedia (queries the loaded tables); downstream, the website (via the converter, in `s2swebsite`). |
-| **Display / help text** — names, pedia paragraphs, strategy, help | the GameText `TXT_KEY_*` catalog (`Assets/XML/GameText/*.xml`, multilingual). Entities hold only the *key*; resolution is `CyTranslator.getText`. | the in-game pedia (resolved at runtime); downstream, the website. |
-| **Game-mechanics prose** — "how X works" narrative not tied to one entity (active defense, conscription, power, combat odds, BUG options…) | the **`NewConceptInfo` Civilopedia text** (`TXT_KEY_CONCEPT_*_PEDIA`), declared in `Assets/XML/BasicInfos/CIV4NewConceptInfos.xml`. This is the ONE home. | the in-game pedia "Concepts/Strategy/Shortcuts" sections (already render concept text); the player docs under `docs/players/mechanics/` **link/transclude** it, they do not re-author it; downstream, the website. |
+| **Game-data entities** — units, buildings, techs, civics, traits, bonuses/resources, improvements, promotions, projects, eras, terrain, features, religions, specialists, … | the loaded `Cv*Info` tables, defined by `Assets/Data/**` JSON and read via the `CvJson<X>Info` poco model ([`json.md`](../../specs/json.md)) | the in-game Python pedia (queries the loaded tables); downstream, the website (via the converter, in `s2swebsite`) |
+| **Display / help text** — names, pedia paragraphs, strategy, help | the GameText `TXT_KEY_*` catalog (`Assets/XML/GameText/*.xml`, multilingual); entities hold only the *key* | the in-game pedia (resolved via `CyTranslator.getText`); downstream, the website |
+| **Game-mechanics prose** — "how X works" narrative not tied to one entity (active defense, conscription, power, combat odds, BUG options…) | the `NewConceptInfo` Civilopedia text (`TXT_KEY_CONCEPT_*_PEDIA`, `Assets/XML/BasicInfos/CIV4NewConceptInfos.xml`) | the in-game pedia's Concepts/Strategy/Shortcuts sections; player docs under `docs/players/mechanics/` link/transclude it, they do not re-author it; downstream, the website |
 
-**The cross-cutting join.** Entities and concepts carry only `TXT_KEY_*` references; the strings
-live separately. The audit lever: a key referenced by an entity with no GameText entry is a
-content bug (Tier-3 `TXT_KEY` audit, the dead-code / dead-XML pass).
+The audit lever: a `TXT_KEY` referenced by an entity/concept with no GameText entry is a content bug, covered by
+the dead-code/dead-XML pass (see [`json.md`](../../specs/json.md)) and [`codebase-bug-hunt.md`](codebase-bug-hunt.md)
+— not re-tracked here.
 
-**Not a content kind here:** live game state / telemetry (`CvHttpServer`,
-`Benchmarks/`) — internal dev tooling for monitoring AI behaviour, nothing to do with content.
+## Still open
 
----
+- **De-duplicate authored prose against the data.** Where a player doc restates a value that lives
+  authoritatively in XML/`CvCity.cpp`/concept text (e.g. a mechanics page re-typing a cost or requirement
+  number), retrofit it to link/transclude the governing concept instead of re-editing a copy whenever the
+  source moves.
+- **CI validation for the GameText join.** `Tools/XmlValidator.exe -a` and `verify-python-callbacks.py` already
+  gate XML/Python; extend with a `TXT_KEY` resolve check (every entity/concept key has a GameText entry) — not
+  yet built.
 
-## 3. The cleanup work — a uniform, drift-free XML data model
+## Guardrails
 
-This is the heart of the game-side effort, and it is the prerequisite that makes the content
-*worth* anything (to the in-game pedia today, and to `s2swebsite` later). **Don't port garbage:**
-a clean, minimal, uniform model first; never bless the current haphazard XML as-is.
-
-- **The entity single-source problem is now solved by the JSON/cascade migration, not the `#196`
-  declarative-registry route this plan originally proposed.** `CvBuildingInfo`, `CvUnitInfo`,
-  `CvPromotionInfo`, `CvTraitInfo`, `CvImprovementInfo`, `CvCivicInfo` are rebuilt JSON pocos
-  fed from `Assets/Data/**` — see [`json.md`](../../specs/json.md) for the current model. That
-  supersedes the `getDataMembers`/`CvInfoUtil` convergence described below (§4); this document's
-  entity-content single-source goal is delivered for those classes.
-- **Run the dead-XML pass.** Orphan `<Type>` entries, dead schema tags, dead `TXT_KEY_*`
-  (Tier 3). Dead data is drift waiting to
-  happen and noise in every surface.
-- **De-duplicate authored prose against the data.** Where a player doc restates numbers that
-  live authoritatively in XML/`CvCity.cpp`/concept text (e.g. a player mechanics doc such as the
-  conscription page re-typing
-  cost/requirement values), retrofit the doc to **link/transclude the governing concept**, not
-  re-edit a copy whenever the source moves.
-
-**Exit:** the targeted categories are fully declarative, their `TXT_KEY` references all resolve,
-and no authored doc restates a value that lives in XML/concept text.
-
----
-
-## 4. Loading the content into the game
-
-For the entity classes covered above (§3), the loading mechanism *is*
-[`json.md`](../../specs/json.md)'s `CvJson<X>Info` poco model — one JSON-fed declaration per
-class drives read, validation and inspection uniformly, which is exactly the single-source win
-this section originally specified via a different (now superseded) mechanism. Read that spec for
-the current loading model rather than reconstructing it here.
-
-**In-game pedia stays table-backed.** The Python pedia reads the loaded tables and resolves
-`TXT_KEY` at runtime — it is a generated surface over the single source already, and needs no
-change here; it is the canonical **content-schema reference** (what a Tech/Building/Unit entry
-shows) for any other renderer, including a future downstream one.
-
----
-
-## 5. Guardrails (so the data model stays single-sourced)
-
-1. **Single-source rule, per content kind (§2).** Reject any change that *re-states* a value
-   already owned by XML/GameText/concept text in a second hand-maintained place. Mechanics docs
-   link/transclude; they never re-type numbers.
-2. **Generation over duplication.** New surfaces over the content are renderers over the loaded
-   model, never new copies.
-3. **CI validation, reusing what exists.** `Tools/XmlValidator.exe -a` and
-   `verify-python-callbacks.py` already gate XML/Python; extend with a `TXT_KEY` resolve check
-   (every entity/concept key has GameText).
-4. **Don't port garbage.** A category is not declared "done" (or handed downstream) until it is
-   clean and declarative. We never bless data we know is dead or malformed.
-5. **Docs governance is already the model.** [`docs/README.md`](../README.md) + the
-   `AGENTS.md` "every owner ruling goes into the repo immediately" rule keep knowledge
-   single-sourced; this plan extends the same discipline to game *content*.
-
----
-
-## Downstream
-
-The website / web Civilopedia (converter, JSON contract, React frontend, community) consumes the
-clean XML this plan produces and is planned entirely in
-[`s2swebsite/unified-civilopedia-plan.md`](../../../../s2swebsite/unified-civilopedia-plan.md).
-This repo's responsibility ends at "clean, uniform, declaratively-loaded content."
+1. **Single-source rule, per content kind (above).** Reject any change that *re-states* a value already owned
+   by XML/GameText/concept text in a second hand-maintained place. Mechanics docs link/transclude; they never
+   re-type numbers.
+2. **Generation over duplication.** New surfaces over the content are renderers over the loaded model, never
+   new copies.
+3. **Don't port garbage.** A category is not "done" (or handed downstream) until it is clean and declarative —
+   never bless data known to be dead or malformed.

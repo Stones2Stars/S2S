@@ -3,7 +3,7 @@
 > **The one place the whole bonus model lives.** A resource's behaviour was previously only assemblable from six
 > machine docs — residency from [enabler.md §8](../specs/enabler.md), the atoms from
 > [json.md §3.4](../specs/json.md), supply from [§5a](../specs/json.md), the vicinity stores from
-> [contexts.md](../architecture/contexts.md), the network from [special-systems.md](special-systems.md), trading
+> [contexts.md](../cascade.md), the network from [special-systems.md](special-systems.md), trading
 > from `CvDeal` — so anyone asking *"how does a resource get here"* had to reassemble it and reliably got it
 > wrong. This is the subject-side view; the machine docs keep owning their machines.
 
@@ -11,21 +11,14 @@
 
 ## 1. ⛔ ONE LIST OWNS THE NUMBER — the plot group, and nothing mirrors it
 
-**`CvPlotGroup` is the only authoritative holder of what a player HAS.** A plot group is a connectivity
-component spanning the map; its holdings are a sparse `id → count` map maintained by
-`CvPlotGroup::changeNumBonuses`. Everything below it RELAYS ([enabler.md §8](../specs/enabler.md) RESIDENCY).
+**`CvPlotGroup` is the only authoritative holder of what a player HAS**, a sparse `id → count` map maintained by
+`CvPlotGroup::changeNumBonuses`. `CvCity::getNumBonuses` RELAYS through the city's plot-group pointer (applying
+the three genuinely per-asker adjustments — `TechCityTrade` gate, minted-percent suppression, corporation
+add-on) and `CityContext::tradedBonusCount` forwards to that read. Full ruling, the ownership funneling through
+cities/forts, and the host table: [enabler.md §8](../specs/enabler.md) RESIDENCY.
 
-- **`CvCity::getNumBonuses` is a relay, not a stored count.** It reads the group through the city's plot-group
-  pointer and applies the three things that are genuinely PER-ASKER: the bonus's `TechCityTrade` gate, the
-  player's minted-percent suppression, and the city's own corporation add-on. **The city declares no bonus
-  count member.**
-- **`CityContext::tradedBonusCount` FORWARDS to that read** — one pointer hop, so the
-  STORES-vs-FORWARDS rule ([contexts.md](../architecture/contexts.md)) puts it on the forward side.
-- ⛔ **A per-city mirror is a retired idea** ([superseded-ideas #34](../architecture/superseded-ideas.md)): it
-  answered a DIFFERENT number than the engine, because it carried none of the three per-asker adjustments.
-
-⚠ **A plot group is a pure OWNERSHIP question and is always funneled through the CITIES and forts that
-participate in it — never through a plot.** The plot is merely where the resource sits; the city is the asker.
+⛔ **A per-city mirror is a retired idea** ([superseded-ideas #34](../architecture/superseded-ideas.md)): it
+answered a DIFFERENT number than the engine, because it carried none of the three per-asker adjustments.
 
 ---
 
@@ -145,48 +138,31 @@ A trade is an entry in a **`CvDeal`**, which serializes the two players, the sta
 
 ⚑ **The agreement is the state; the counts follow from it.** Per [enabler.md §8](../specs/enabler.md), a deal is
 the ONE serialized exception in the bonus plane — the per-bonus import/export counts are derived from the held
-deals ([DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted)).
+deals ([derived data is never trusted from a save](../specs/save.md#5-derived-data-serializes-nothing-)).
 
 ---
 
 ## 7. THE FACTS — and the trap of three
 
 ⛔ **Three facts describe one resource reaching one city, and only ONE of them is a crossing a value may be
-applied on** ([event-spine.md](../specs/event-spine.md)):
+applied on** — this is bonuses' own worked instance of the general fact-vs-count ruling; full table + reasoning:
+[spine.md](../spine.md) § A FACT NAMES THE HAPPENING (the counter-case). In short: the
+has-verdict (`SEVT_CITY_BONUS_ADDED`/`_REMOVED`, 0 ⇄ non-zero only) is the one a value may ride; the vicinity and
+plot-group facts carry a count and must never drive a deposit — only a gate re-check, which is idempotent.
 
-| fact | announces | payload |
-|---|---|---|
-| **`SEVT_CITY_BONUS_ADDED` / `_REMOVED`** | the city's HAS-verdict — **0 ⇄ non-zero only** | — (a crossing) |
-| `SEVT_CITY_VICINITY_BONUS_ADDED` / `_REMOVED` | the local supply COUNT moving | how many |
-| `SEVT_PLOTGROUP_BONUS_ADDED` / `_REMOVED` | the network component's holdings moving | how many |
-
-The has-verdict is the only one a VALUE may ride. The other two are the same holding seen from the local tile
-set and from the connectivity component, and each already CAUSES the crossing. ⚠ They fail worse than a plain
-double: their payload is a multiplicity, so a consumer using it scales the deposit by the count.
-
-⚑ A **gate re-check** on all three is correct and is not this — re-resolving a deposit CONDITIONED on a resource
-is idempotent.
-
-⚠ **A count moving between two non-zero values announces nothing.** That is the ruling, not an oversight: a
-per-count fact would force attribution the crossing sidesteps. The named revisit trigger is VOLUMETRIC.
-
-Beside them, the plot substrate announces `SEVT_PLOT_BONUS_ADDED` / `_REMOVED` (what the TILE carries) and
+Beside those three, the plot substrate announces `SEVT_PLOT_BONUS_ADDED` / `_REMOVED` (what the TILE carries) and
 `SEVT_PLOT_SERVED_BONUS_ADDED` / `_REMOVED` (the plot's own served-resource verdict, which the city's on-site
-store folds).
+store folds) — neither appears in the event-spine table, since neither is a city-scope fact.
 
 ---
 
 ## 8. LOAD
 
-Neither the counts nor plot-group MEMBERSHIP are trusted from a save. The deserialized groups are drained and
-discarded; a load-end rebuild RE-COLORS membership from current state (`CvPlotGroup::colorRegion`) and folds the
-counts through the live entry points as each plot joins, announcing every bonus fact as a genuine crossing
-before the `GAME_LOAD_FINISHED` gate pass.
-
-⚠ **The re-color re-folds the TILE half only** — `updatePlotGroupBonus` covers a plot's own extracted resource,
-a city's free bonuses and the capital's import/export. Every resource an ACTIVE BUILDING supplies must be
-re-pushed behind it through `CvPlotGroup::changeNumBonuses`, or a whole CLASS of resource goes invisible while
-tile-supplied ones beside it are unaffected ([enabler.md §8](../specs/enabler.md)).
+Neither the counts nor plot-group MEMBERSHIP are trusted from a save; a load-end rebuild RE-COLORS membership
+from current state and re-folds the counts as a genuine crossing per plot, before the `GAME_LOAD_FINISHED` gate
+pass. ⚠ **That re-color re-folds the TILE half only** — every resource an ACTIVE BUILDING supplies must be
+re-pushed behind it separately, or a whole CLASS of resource goes invisible while tile-supplied ones beside it
+are unaffected. Full mechanism + the fix: [enabler.md §8](../specs/enabler.md) Load-end reconciliation.
 
 ---
 
@@ -196,5 +172,5 @@ tile-supplied ones beside it are unaffected ([enabler.md §8](../specs/enabler.m
   operate/provides fixpoint that supplies manufactured resources.
 - [json.md §3.4](../specs/json.md) — the atom vocabulary (`connection`, `vicinity`); [§5a](../specs/json.md) —
   `provides`.
-- [contexts.md](../architecture/contexts.md) — the city's vicinity dictionaries and the on-site store.
+- [contexts.md](../cascade.md) — the city's vicinity dictionaries and the on-site store.
 - [special-systems.md](special-systems.md) — trade routes and the plot group as the connection oracle.

@@ -45,7 +45,7 @@ techShare is RULED (owner): it is NOT a diplomacy magnitude and never was. "If 2
 has the wonder also gets the tech" -- the 2 is the FIRE CONDITION of an onTechResearched trigger whose action
 grants the tech, not an amount anything accumulates (it never combines with another techShare). It therefore
 re-homes to the TRIGGER plane and loses its DIPLOMACY_TECH_SHARE kind; the emission below is the shape being
-retired, kept only until the trigger-plane re-home lands (docs/specs/triggers.md, structural-cleanup/todo.md).
+retired, kept only until the trigger-plane re-home lands (docs/specs/triggers.md).
 Sole author: PROJECT_ENCYCLOPEDIA.
 
   python3 curate_project.py --sample PROJECT_SDI PROJECT_SS_ENGINE PROJECT_THE_INTERNET

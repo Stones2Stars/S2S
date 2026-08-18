@@ -15,7 +15,7 @@
 //	It covers BOTH build domains, because they are one question asked of two entity kinds: a BUILDING composes
 //	its authored cost bands under GAMEOPTION_REALISTIC_BUILDING_COST, and a UNIT composes the Size-Matters
 //	production pace under GAMEOPTION_COMBAT_SIZE_MATTERS. Neither belongs at a call site
-//	([DEC-single-implementation]).
+//	(docs/architecture/patterns.md §DRY (single implementation)).
 //
 //	⚑ THE THREE COST PLANES stay separate (json.md §6): the entity's own AUTHORED cost is the `cost` section; what
 //	CHANGES a cost is the `costs` MODIFIER family; the derived PRICE is engine-computed from the two. This class is
@@ -23,7 +23,7 @@
 //	fold `costs` deposits, which the cascade already carries.
 //
 //	⚠ EVERY method returns a PERCENT (100 = the authored cost unmodified), matching CvGameSpeedScale's contract,
-//	so a caller multiplies and divides by 100 once. A PERCENT IS NOT SCALED ([DEC-fixedpoint-x100]).
+//	so a caller multiplies and divides by 100 once. A PERCENT IS NOT SCALED (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state
 //	(patterns.md static-class law; a namespace risks VC7.1/Boost name-mangling).
@@ -41,7 +41,7 @@ public:
 	//
 	//	⚠ INTEGER, deliberately. The inline derivation this replaces accumulated a `float` multiplier
 	//	(`1.0f`, `-= 0.2f`, `iBaseCost * totalModifier`) on a path every build decision runs. Civ4 multiplayer is
-	//	deterministic lockstep and CPU-dependent float math desyncs ([DEC-fixedpoint-x100]: all engine math is
+	//	deterministic lockstep and CPU-dependent float math desyncs (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): all engine math is
 	//	integer, no float), so carrying it as whole percent points removes a real OOS hazard. The bands are all
 	//	multiples of 5%, so nothing is lost in the conversion and the resulting cost is unchanged.
 	//

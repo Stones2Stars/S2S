@@ -176,7 +176,7 @@ public:
 	//	⛔ Everything in here describes the CITY, so it cannot differ between two candidates scored in one pass --
 	//	which is exactly why it must not be computed inside the per-candidate valuation. Measured before this
 	//	landed: three full wellbeing realizations, two whole-yield group reads, a worked-plot scan and a
-	//	specialist scan, PER CANDIDATE BUILDING ([DEC-legacy-decache-poisons-perf]: the caller must stop asking a
+	//	specialist scan, PER CANDIDATE BUILDING (docs/cascade.md §LEGACY DECACHE POISONS PERF MEASUREMENT: the caller must stop asking a
 	//	scope-wide question per candidate).
 	//	⚠ A candidate-DEPENDENT value never belongs here, however convenient -- the what-if
 	//	(expectedWellbeing and its kin) is the whole point of the per-candidate half and stays there.
@@ -791,7 +791,7 @@ protected:
 	int	getPlayerDangerPercentage(PlayerTypes ePlayer, int& iModifier) const;
 
 	bool AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseChance, UnitTypes* eBestSpreadUnit, int* iBestSpreadUnitValue) const;
-	//	The ONE place every assignable citizen option is scored ([DEC-single-implementation]) -- both the
+	//	The ONE place every assignable citizen option is scored (docs/architecture/patterns.md §DRY (single implementation)) -- both the
 	//	priority-list fill and AI_addBestCitizen read it, so "what is this option worth" has a single body.
 	//	Fills a CALLER-OWNED list (the patterns.md group-read shape); clears it first.
 	void AI_scoreCitizenOptions(std::vector<CitizenOption>& kOptions, bool bWorkers, bool bSpecialists, bool bAvoidGrowth, bool bIgnoreGrowth) const;

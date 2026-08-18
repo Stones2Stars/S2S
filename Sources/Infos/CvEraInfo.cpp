@@ -1,7 +1,7 @@
 //
 //	CvEraInfo -- the era poco's exemplar reads on top of the base section dispatch (see the header). The
 //	legacy modifier-family scalar MIRRORS are DEAD (wave D): the base dispatch compiles the world-scope
-//	families into m_modifiers and the point getters read the compiled sums ([DEC-materialize-at-mapfrom] --
+//	families into m_modifiers and the point getters read the compiled sums (docs/architecture/patterns.md §Materialize at mapFrom --
 //	no raw-JSON family walker survives). mapFrom materializes ONCE, idempotently: the §5 grants views, the
 //	identity pacing config, and the era audio (the two runtime-resolved audio-tag arrays).
 //

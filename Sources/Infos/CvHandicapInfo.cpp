@@ -1,7 +1,7 @@
 //
 //	CvHandicapInfo -- the handicap poco's exemplar reads on top of the base section dispatch (see the header).
 //	The legacy modifier-family scalar MIRRORS are DEAD (wave D): every magnitude read is a game-start-base
-//	point read over the COMPILED forms ([DEC-materialize-at-mapfrom] -- no raw-JSON family walker survives).
+//	point read over the COMPILED forms (docs/architecture/patterns.md §Materialize at mapFrom -- no raw-JSON family walker survives).
 //	mapFrom materializes ONCE, idempotently: the per-ERA-at-one tail from the compiled entry list (the one
 //	sanctioned load-time scan source), the §7 ai config, the §5 grants views, and the identity roster.
 //

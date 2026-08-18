@@ -3,8 +3,8 @@
 > **A core spec.** How S2S serializes game state and stays load-compatible. The cascade's entire "derived data
 > serializes nothing / rebuild on load" discipline rests on this. **The soft-remove mechanism (§3) is SETTLED — read
 > it HERE and trust it; do NOT re-derive it from `CvTaggedSaveFormatWrapper.cpp` each session** (the recurring
-> rollerskate). Home of [DEC-save-remove-is-soft](../architecture/decisions.md#dec-save-remove-is-soft) +
-> [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted).
+> rollerskate). Home of [the soft-remove save discipline](#3-removing-a-serialized-field--the-soft-remove-via-assetssavemigrationtxt-) +
+> [derived data is never trusted from a save](#5-derived-data-serializes-nothing-).
 
 ## 1. The format — name-keyed, not positional
 
@@ -20,7 +20,7 @@ untouched, and the member keeps its default (`CvTaggedSaveFormatWrapper.cpp` ~:3
 
 ## 3. Removing a serialized field — the SOFT-REMOVE via `Assets/savemigration.txt` ⭐
 
-> [DEC-save-remove-is-soft](../architecture/decisions.md#dec-save-remove-is-soft) — this is its authoritative home.
+> [the soft-remove save discipline](#3-removing-a-serialized-field--the-soft-remove-via-assetssavemigrationtxt-) — this is its authoritative home.
 
 **FULL-DELETE the member + its read + its write, and NAME the orphan tag in `Assets/savemigration.txt`.** That is the
 whole procedure. The reader (`Expect` → `sm_isCut`, `CvTaggedSaveFormatWrapper.cpp` ~:3944) parses that file **once**
@@ -29,7 +29,7 @@ header loop and falls through to read the next tag, so **consecutive orphan tags
 The field is then FULLY GONE from the object: no member, no read, no write.
 
 - **⛔ NO `WRAPPER_SKIP_ELEMENT` for a removed field.** A lingering skip still names the dead member in the read path —
-  a rollerskate target ([DEC-no-rollerskate-evidence](../architecture/decisions.md#dec-no-rollerskate-evidence)) — and
+  a rollerskate target ([leave no evidence of the abandoned path](../../AGENTS.md#design)) — and
   the central drain makes it redundant. The old two-stage `SKIP_ELEMENT`-now / flush-at-the-next-break model is
   **RETIRED**; there is no "flush."
 - **Save-breaking is OBSOLETE for field removal.** A listed tag loads clean from any old save, forever — no version
@@ -111,15 +111,13 @@ drain / read-to-throwaway? ⇒ the member is dead ⇒ case (a), convert per §3.
 
 ## 5. Derived data serializes NOTHING ⭐
 
-> [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted) — this is its authoritative home.
-
 A recompute-only cache (yields, commerce, the cascade packages, network bonus counts, power, dormancy verdicts, …) is
 **never trusted from a save**: don't read it, don't write it, drain any old-save orphan via §3. `reset()` /
 marked-on-construct means the first read after load recomputes from current state — never stale-from-save. This is
 **universal, not per-field-optional** (owner ruling): no cache is ever serialized. With nothing derived read from a
-save there is nothing to purge, so no blanket recompute exists to purge it ([DEC-no-self-heal](../architecture/decisions.md#dec-no-self-heal)).
+save there is nothing to purge, so no blanket recompute exists to purge it ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)).
 A serialized store survives ONLY for genuine **non-derivable** state (event/vote grants,
-e.g. `CvCity::m_paiFreeBonusEvents`). Cache mechanics: [state-repositories.md](../architecture/state-repositories.md).
+e.g. `CvCity::m_paiFreeBonusEvents`). Cache mechanics: [state-repositories.md](../cascade.md).
 
 ## 6. Deleting a changer? Audit its whole BODY for side effects
 
@@ -238,7 +236,7 @@ match the read inspects `m_iNextElementType` to see which form the stream actual
 
 ⚑ **Why the reader and not the field:** the alternative is a read-old/write-new dance in every widened member —
 a per-field transitional shape, repeated forever, that each future reader has to recognise. One rule in the
-reader retires the whole class ([DEC-proper-once](../architecture/decisions.md#dec-proper-once)). It is the same
+reader retires the whole class ([build the proper structure once](../../AGENTS.md#design)). It is the same
 move `savemigration.txt` already makes for removal and rename: the format absorbs the change centrally rather
 than every field carrying its own migration.
 
@@ -249,7 +247,7 @@ there is no safe conversion, only truncation. The direction is one-way by design
 still real save-break #1 (the silent-wrong-load class) and this does nothing for it.
 ## See also
 
-- [state-repositories.md](../architecture/state-repositories.md) — the derived-cache model that rests on §5.
-- [decisions.md](../architecture/decisions.md) — [DEC-save-remove-is-soft], [DEC-derived-never-trusted],
-  [DEC-no-rollerskate-evidence].
+- [state-repositories.md](../cascade.md) — the derived-cache model that rests on §5.
+- [leave no evidence of the abandoned path](../../AGENTS.md#design) — the same discipline applied to a lingering
+  `WRAPPER_SKIP_ELEMENT`.
 - [engine.md](../reference/engine.md) — the closed-`.exe` VC7.1 toolchain the save format is frozen by.

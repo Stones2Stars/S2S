@@ -7,7 +7,7 @@
 //	(enabler.md par.7/7.1; CvEnabler.h): initDomain (the lifecycle sizing, NO content) + the onTechChanged
 //	event-delta applier that maintain CvPlayer::m_enabler.promotions -- the par.7.1 player unlocked-promotions
 //	set. The content is built PURELY from DOMAIN events (the load reseed's in-read per-held-tech emits and the
-//	play-time emits, one mechanism -- DEC-spine-reseed). The ONE maintained HAVE axis is team techs (incl. the
+//	play-time emits, one mechanism -- docs/spine.md §5 (the load reseed)). The ONE maintained HAVE axis is team techs (incl. the
 //	TECH_GAME_START root, which carries the from-start promotions): enables.promotions feeds the enable plane,
 //	the removal families the remove plane, through the ONE kernel applier. Per par.7.1 there are NO per-unit
 //	maintained sets (thousands of units x hundreds of promotions, churned on every tech, for a decision that

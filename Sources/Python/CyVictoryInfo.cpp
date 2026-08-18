@@ -7,7 +7,7 @@ namespace
 {
 	//	The ONE bounds gate for this registry. Both the id and the KEY arrive from script, so both are checked
 	//	here rather than trusted -- an out-of-range id reaches the info plane, which fails LOUD by design
-	//	([DEC-info-plane-read-only]), and an out-of-range key would index straight off the block's array.
+	//	(docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD), and an out-of-range key would index straight off the block's array.
 	const CvVictoryInfo* cyv_victory(int iVictory)
 	{
 		if (iVictory < 0 || iVictory >= GC.getNumVictoryInfos())

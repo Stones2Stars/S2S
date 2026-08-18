@@ -2,7 +2,7 @@
 //	CyEnums -- the Python ENUM VOCABULARY, and the name->id resolution beside it.
 //
 //	⛔ THIS IS NOT THE BANNED BINDING SURFACE, and the distinction is what makes it publishable at all.
-//	[DEC-cy-not-fixed] bans the `Cy*` .def GETTER contract -- a surface of reads. This file contains ZERO `.def`
+//	docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) bans the `Cy*` .def GETTER contract -- a surface of reads. This file contains ZERO `.def`
 //	and ZERO class_: it publishes CONSTANTS, and constants are what the new surface's own grammar is written in.
 //	`CyState::getYields()[YieldTypes.YIELD_FOOD]` is the specified shape (patterns.md § THE TWO READ ROLES: "the
 //	EXISTING ENGINE ENUM indexes the RESULT, not the call"), so without this publication the replacement surface
@@ -26,13 +26,13 @@
 #include "Defines/CvGlobals.h"
 #include "Enabler/CvEnabler.h"   // EnablerDomain::State -- the availability tri-state
 #include "Infos/CvAllowed.h"    // EnAllowedCap -- the cap axes
-#include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes ([DEC-one-reverse-view])
+#include "Infos/CvEdges.h"       // EnEdgeFamily / EnEdgeBucket -- the edge axes (docs/cascade.md §1 (reverse lookups are populated once, at load))
 #include "Conditions/CvConditionQuery.h" // EnRequiresClause -- mandatory / one-of / FORBIDDEN
 #include "Python/CyInfo.h"       // PyIntrinsicSlot -- the straggler slots CyInfo::getIntrinsic is addressed by
 #include "Infos/CvInfoKinds.h"  // WellbeingChannel -- the group enum getRealizedWellbeing is indexed by
 #include "Engine/CvStatus.h"    // UnitStatus -- the vocabulary ACT.setUnitStatus is indexed by
 #include "Infos/CvVictoryInfo.h" // VictoryConditionFlag / Value -- CyVictoryInfo's two grouped reads' key spaces
-#include "Infos/CvClassificationIds.h"  // CapabilityClsTypes -- the GENERATED capability ids ([DEC-classification-infos])
+#include "Infos/CvClassificationIds.h"  // CapabilityClsTypes -- the GENERATED capability ids (docs/specs/json.md §8 + docs/architecture/patterns.md §The coherent surface (THE GETTER SETUP))
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingGrouping.h"
 #include "UI/CvBuildingSort.h"
@@ -61,7 +61,7 @@ void CyEnums::pythonPublish()
 		.value("ENABLER_LISTED", EnablerDomain::STATE_LISTED)
 		;
 
-	// The EDGE axes ([DEC-one-reverse-view]) -- the vocabulary CyInfo::getEdgeIds is addressed by. Every info
+	// The EDGE axes (docs/cascade.md §1 (reverse lookups are populated once, at load)) -- the vocabulary CyInfo::getEdgeIds is addressed by. Every info
 	// ALREADY CARRIES its reverse lookups after load, so a consumer asking "what unlocks me" / "what needs me"
 	// reads them instead of scanning a whole registry and testing a per-id predicate.
 	// ⚠ EDGEF_RELATED is a candidate SUPERSET (display axis): it merges every relation, so it cannot tell an
@@ -110,7 +110,7 @@ void CyEnums::pythonPublish()
 	// publishing all of it ahead of demand is the pre-emptive surface [patterns.md] refuses.
 	python::enum_<ModifierFamily>("ModifierFamily")
 		//	What SPEEDS UP building a specific thing -- the resource page's "units this makes cheaper" panel,
-		//	where the bonus is the entry's GATE rather than a key ([DEC-conditions-are-predicates]).
+		//	where the bonus is the entry's GATE rather than a key (docs/specs/json.md §3.5 Predicates (conditions are predicates, never bespoke members)).
 		.value("MODFAM_BUILD_RATE", MODFAM_BUILD_RATE)
 		//	The three OUTPUT-producing yields ([modifier.md] §1 THE ORIGIN RULE). They are SPLIT families, one
 		//	per concept ([json.md] §6), so a consumer wanting "every yield" asks for the three -- there is no
@@ -237,12 +237,11 @@ void CyEnums::pythonPublish()
 		.value("PYINT_MAX_LATITUDE", PYINT_MAX_LATITUDE)
 		;
 
-	//	The generated CAPABILITY ids ([DEC-classification-infos]) -- CONSTANTS, not a read surface, so this is
+	//	The generated CAPABILITY ids (docs/specs/json.md §8 + docs/architecture/patterns.md §The coherent surface (THE GETTER SETUP)) -- CONSTANTS, not a read surface, so this is
 	//	not the banned `.def` getter contract ([patterns.md] THE PYTHON READ BOUNDARY: an enum publication
 	//	carrying zero .def and zero class_ is vocabulary). Script asks providesCapability() BY ID, exactly as
 	//	the engine does, never by key name.
 	python::enum_<CapabilityClsTypes>("CapabilityId")
-		.value("CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER", CLS_CAPABILITY_CAN_SEE_FURTHER_FROM_WATER)
 		.value("CLS_CAPABILITY_HAS_CENTERED_MAP",           CLS_CAPABILITY_HAS_CENTERED_MAP)
 		.value("CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED",     CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED)
 		.value("CLS_CAPABILITY_HAS_LANGUAGE",               CLS_CAPABILITY_HAS_LANGUAGE)
@@ -914,7 +913,6 @@ void CyEnums::pythonPublish()
 		.value("WIDGET_HELP_HEALTH_RATE", WIDGET_HELP_HEALTH_RATE)
 		.value("WIDGET_HELP_HAPPINESS_RATE", WIDGET_HELP_HAPPINESS_RATE)
 		.value("WIDGET_HELP_FREE_TECH", WIDGET_HELP_FREE_TECH)
-		.value("WIDGET_HELP_LOS_BONUS", WIDGET_HELP_LOS_BONUS)
 		.value("WIDGET_HELP_MAP_CENTER", WIDGET_HELP_MAP_CENTER)
 		.value("WIDGET_HELP_MAP_REVEAL", WIDGET_HELP_MAP_REVEAL)
 		.value("WIDGET_HELP_MAP_TRADE", WIDGET_HELP_MAP_TRADE)

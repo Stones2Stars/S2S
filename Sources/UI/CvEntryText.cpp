@@ -1,6 +1,6 @@
 //
 //	CvEntryText -- the ONE per-entry text renderer (see the header). Rendering rules:
-//	  - the magnitude is /100 here (the single OUT boundary division -- [DEC-fixedpoint-x100]);
+//	  - the magnitude is /100 here (the single OUT boundary division -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model));
 //	  - names resolve through the UNCACHED gDLL->getObjectText read of the referenced info's text key (never
 //	    the caching getDescription -- this renderer also runs inside the load window ([READJSON] samples), and
 //	    a pre-text-load call must not poison the per-info description cache);
@@ -232,7 +232,7 @@ namespace
 		//	"+0.03%" and a free-specialist count of 1 as "+0.01". Flats and multipliers genuinely are x100.
 		//	⚑ The question a reader must ask is "is this stored unscaled", NOT "is this a percent": the second
 		//	answers NO for a count and reduces it anyway. One shared predicate, never a second copy
-		//	([DEC-single-implementation]).
+		//	(docs/architecture/patterns.md §DRY (single implementation)).
 		const CvWString szNumber = MMKernel::unitIsUnscaled(entry.unit)
 			? CvWString::format(L"%d", iAbsValue)
 			: etx_number100(iAbsValue);

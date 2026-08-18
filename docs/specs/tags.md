@@ -15,17 +15,7 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 > which is precisely what blocks the class purge ([engine.md](../reference/engine.md) UnitCombat). ⛔ So do not
 > withhold a tag pending a decision about what it means — author it and refine later; a wrong tag is a one-line
 > data edit. This is what the asymmetry looks like applied to classification, and it mirrors the emit surface's
-> *"too many events is better than not enough"* ([event-spine.md](event-spine.md)).
-
-## What a tag is (recap)
-
-- **Immutable** — derived from the unit's *type*, re-set only at creation/upgrade; **not** promotion-grantable.
-- **Accounting-only** — pure membership, **no behaviour or modifiers**; read by `IS_<TAG>` predicates for
-  counting/gating.
-- **Overlapping** — a unit holds several at once.
-- **Represented as an ALWAYS-PRESENT ARRAY OF STRINGS** (owner 2026-07-20) — `"tags": ["military","landUnit"]`,
-  never `{name:true}` (a tag carries no value, like a skill). The array is **mandatory even when empty** (`[]`):
-  there is no real unit with zero tags, but the schema keeps it present (the unitcombat→tag pass fills the rest).
+> *"too many events is better than not enough"* ([spine.md](../spine.md)).
 
 ## Tags (first pass)
 
@@ -81,7 +71,7 @@ promotion-grantable** — a combat class a PROMOTION grants therefore contribute
 not walking the runtime set.
 
 Only the OBVIOUS identities map; the size/species/motility/weapon taxonomy stays FLAGGED
-(`sizeMatters`/data), never forced ([unitcombat-tag-mapping.md](../plans/structural-cleanup/unitcombat-tag-mapping.md)):
+(`sizeMatters`/data), never forced:
 
 - **tech / equipment:** `gunpowder` (uses gunpowder) · `mechanized` (mechanical/motorised) · `mounted` (cavalry) ·
   `armored` (vehicular/tank armour). *Type classes a unit gains/loses on upgrade — a swordsman → rifleman gains
@@ -154,7 +144,7 @@ Derived MECHANICALLY from the unit's own group (`SPECIALUNIT_PEOPLE` → `people
 never a table — a new group needs no curator edit.
 
 ⚑ **This is what made the cargo restriction expressible.** A carrier says WHAT it may carry as the ordinary
-`{unit: IS_<TAG>}` qualifier ([modifier.md §6](modifier.md)), so the group had to be a tag first — and had to be
+`{unit: IS_<TAG>}` qualifier ([modifier.md §6](../cascade.md)), so the group had to be a tag first — and had to be
 DISCRIMINATING: `people` and `troop` both reduce to `landUnit` and nothing else, so converting before these
 existed would have silently WIDENED every people-only transport into a troop carrier.
 
@@ -180,11 +170,9 @@ covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `R
 
 ## Open
 
-- **The FLAGGED unitcombat remainder** — the 317 unitcombats (of 455) still carrying no identity tag
-  ([unitcombat-tag-mapping.md](../plans/structural-cleanup/unitcombat-tag-mapping.md)): the taxonomy families
-  (weapon/size/species/quality/group — stay `sizeMatters`/data) + the ambiguous individual classes
-  (`COMBATANT`/`PACIFIST`/`HITECH`/`ROBOT`/`LAW_ENFORCEMENT`/… — need owner calls, e.g. a `police`/`medic`/`missile`
-  tag). Editable follow-up; map-the-obvious-flag-the-unsure, no completeness gate.
+- **The FLAGGED unitcombat remainder** — the unitcombats still carrying no identity tag: the taxonomy families
+  (weapon/size/species/quality/group — stay `sizeMatters`/data). Editable follow-up; map-the-obvious-flag-the-unsure,
+  no completeness gate.
 - `IS_*` predicates are **independent queries** (not tag-membership), but **may be defined to encompass tags**;
   JSON-definable + predicate groups come post-migration ([json](json.md) §3.7).
 

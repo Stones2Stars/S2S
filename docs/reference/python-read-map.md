@@ -4,8 +4,8 @@
 > Python surface, everything OUTSIDE the pedia. The pedia slice is mapped in
 > [pedia-map.md](pedia-read-map.md) and is excluded from the detailed work here (§1 reconciles the totals).
 >
-> Per [DEC-cy-not-fixed](../architecture/decisions.md#dec-cy-not-fixed) and
-> [DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface) this maps **NEEDS, not getters
+> Per [the Cy* surface is not a fixed contract](../architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner) and
+> [build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner) this maps **NEEDS, not getters
 > to port**. The legacy `Cy*` read bindings are GONE, and the replacement surface stands beside their absence:
 > the composition root (`DLLPublishToPython`, `Infrastructure/CvDLLPython.cpp`) publishes the enum
 > int-conversions, the vector + `IDValueMap` container interfaces, the debug/Win32 helpers, and the four
@@ -112,7 +112,7 @@ overcounts by thousands. And the published surface no longer answers reads, so a
 
 That last row is the whole Python→C++ read surface today, and it is the size of the gap the library is built
 toward answering; **it is an END STATE, never a gate on cutting**
-([roadmap.md](../plans/structural-cleanup/roadmap.md)).
+([the Cy* surface is not a fixed contract](../architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner)).
 
 ⚠ **The unserved total FALLS as the library grows, so a shrinking number is the work landing, not the surface
 being re-measured differently.** Every read the library serves leaves the demand set, which is why this row is
@@ -153,11 +153,9 @@ Unserved engine-shaped reads, per §1.1. This is the demand each family places o
 ⚑ **`EntryPoints/` has moved from the heaviest family to seventh, and that is the library working rather than a
 measurement artefact** — the engine's call-in surface was re-pointed first because it is where a failed read
 raises. **`Screens/Worldbuilder/` is now the largest remaining block by a wide margin.**
-⛔ **That is a block awaiting its own pass, NOT a family whose breakage is accepted** — scope decision 1b says
-WorldBuilder may temporarily LAG a cut, never that a visible break may stand
-([roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision 1b; the misreading it warns about has
-already cost one pass). What actually holds it is a structure call — which mutators the WB write surface
-carries — recorded as [issues.md](../plans/structural-cleanup/issues.md) § 12.
+⛔ **That is a block awaiting its own pass, NOT a family whose breakage is accepted** — WorldBuilder may
+temporarily LAG a cut, never that a visible break may stand (the misreading it warns about has already cost one
+pass). What actually holds it is a structure call — which mutators the WB write surface carries.
 ⚑ **`pyWB/` is the same shape ALREADY DONE, which is why it fell from 70 sites to 16:** the scenario
 serializer's city half reads through `CyState`/`CyInfo` and writes through `CyAct` by (owner, id). It is the
 worked precedent the screens follow, not a different problem.
@@ -193,8 +191,8 @@ lists, the rendered entry lines, the requires section object. **Nothing in the r
 projection of those same five shapes. That is the real content of the owner's intuition and it survives contact
 with the data: the pedia is the **shape** oracle.
 
-It is also close to a *type* oracle for the modifier-carrying and enabler-carrying types — the critical set from
-the [green gate](../plans/structural-cleanup/roadmap.md). For buildings, units, techs, promotions, bonuses, improvements, civics,
+It is also close to a *type* oracle for the modifier-carrying and enabler-carrying types — the critical set for a
+compiling tree. For buildings, units, techs, promotions, bonuses, improvements, civics,
 traits, terrains, features, routes, corporations, religions, projects and specialists, the pedia already reads
 the widest field set of any consumer.
 
@@ -232,8 +230,8 @@ exactly wrong for the biggest ones: `CIVICOPTION_`, `CULTURELEVEL_`, `PROPERTY_`
 tables, or check behaviour.**
 
 ⛔ **`ART_` is NOT on that list and is not a gap** — art is an untouched system boundary, JSON carries only the
-tag id and `ARTFILEMGR` keeps resolving it ([roadmap](../plans/structural-cleanup/roadmap.md) § scope
-decision 3). Do not "complete" the appendix by routing it.
+tag id and `ARTFILEMGR` keeps resolving it (the ART carve-out, [json.md](../specs/json.md)). Do not "complete"
+the appendix by routing it.
 
 The four clusters this split into, and where each now stands:
 
@@ -338,7 +336,7 @@ indices, which the identity block must keep serving.
 addressed by (owner, id), the reads are `CyState`/`CyInfo`, and the handle is used only to CREATE the city and
 then to name it. ⛔ The SCREENS are not the same job merely because they sit in the same folder: they still
 mutate through the handle and are blocked on which mutators the WB write surface should carry, which is a
-structure call rather than a sweep ([issues.md](../plans/structural-cleanup/issues.md) § 12).
+structure call rather than a sweep.
 
 ### 3.3 The Revolution stack
 
@@ -382,7 +380,7 @@ that needs the **complete per-type index across every registered type**, includi
 > ⚠ **It reads EXACTLY like an abandoned screen, which is the hazard:** it is reached only by an undocumented
 > **Ctrl+F1** (`CvEventManager.onKbdEvent`), appears on no menu, and no XML or BUG config names it. Every
 > mechanical dead-code test flags it. It is un-killed forward intent
-> ([DEC-keep-unkilled-ideas](../architecture/decisions.md#dec-keep-unkilled-ideas)), and the reason it looks dead
+> ([the keep-unkilled-ideas policy](../plans/parked/README.md#parked--out-of-active-scope-plans-kept-for-intent)), and the reason it looks dead
 > is recorded here precisely so the next sweep does not eat it.
 >
 > **⚑ AND IT IS NOT ALONE — `CvEventManager.onKbdEvent` HIDES A WHOLE DEV KEYMAP, THREE OF IT UNGATED.** The
@@ -479,8 +477,8 @@ already owes **rendered entry lines** (ruling 29, `Sources/UI/CvEntryText.{h,cpp
 serves**; free-standing `getText("TXT_KEY_…")` lookups for a screen's own chrome (labels, headers, button text)
 remain a localization service call. That keeps the one-surface ruling intact — no consumer ever asks the
 *library* for an entity's text and gets a raw key back — without making the library the TXT gateway.
-Per [the todo](../plans/structural-cleanup/todo.md) the vocabulary TXT keys are sequenced after the stages complete, so the
-renderer's spell-back fallback is the accepted output meanwhile.
+The vocabulary TXT keys are still unauthored, so the renderer's spell-back fallback is the accepted output for
+now.
 
 The concentration is informative: `Screens/` 655 · `Revolution/Gameready/` 329 · `Contrib/` 302 ·
 `Screens/Advisors/` 292 · `EntryPoints/` 201 · `Screens/Pedia/` 190 · `PitBoss/` 153. TEXT is a **UI-layer**
@@ -506,7 +504,7 @@ buckets — `getRequiresIdsInClause` is the read that keeps the AND/OR split, no
 
 This confirms independently the same conclusion as [pedia-map.md finding 3](pedia-read-map.md): *"no
 boolean-expression API belongs on the new surface."* The
-[DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view) edge families answer the inverse
+[reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1) edge families answer the inverse
 direction (what requires me), never the forward requirement tree.
 
 ### 4.3 (d) MUTATION — out of scope for the library, but still needed
@@ -532,7 +530,7 @@ handler that reads through the library writes through this path. Two sub-shapes:
 `EntryPoints/`, `<root>`, Revolution, the editor and `Screens/`.
 
 The availability half (`canConstruct` / `canTrain` / `canResearch` / `canDo*`) is **the enabler's surface, not
-the cascade's** — [DEC-enabler-not-cascade](../architecture/decisions.md#dec-enabler-not-cascade) — and
+the cascade's** — [the enabler and the modifier cascade are two separate systems](../specs/enabler.md) — and
 Python must read the enabler's own cached verdict, never re-derive it. The rate half (`calculateTotalCulture`,
 `foodDifference`, growth/production turn estimates) is cascade-computed. **Both are live-context reads that sit
 beside the info payload, never inside it** — the same conclusion as
@@ -585,7 +583,7 @@ reachable ONLY through this string table**:
 table is evidence that *this advisor demands this column of per-city data*, and the demand is what the coherent
 surface answers. It is not a binding to keep, re-point or widen, and "the census would have dropped it" must not
 be read as "the library must therefore carry it" — the whole map is
-**[NEEDS, not getters to port](../architecture/decisions.md#dec-new-getter-surface)**, and a method name is the
+**[NEEDS, not getters to port](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)**, and a method name is the
 form the demand happens to be written in, never its unit. The other 16 names in the same table
 (`getPopulation`, `getX`, `getY`, `getMaintenance`, `getCommerceRate`, `foodDifference`, `getGreatPeopleRate`,
 `getGreatPeopleProgress`, `getPlotYield`, `findBaseYieldRateRank`, `getRealPopulation`,
@@ -705,7 +703,7 @@ Stated plainly, because a completeness gate depends on it:
 
 ## 6. The Python-authoritative systems
 
-These stay Python by [owner carve-out](../architecture/decisions.md#dec-no-deferred) and become **consumers**
+These stay Python by [owner carve-out](../../AGENTS.md#design) and become **consumers**
 of the library.
 
 ### 6.1 Revolution
@@ -771,7 +769,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    the `Cy*` cut", and BOTH were wrong.** The callback names are unaffected; the reads are not, and every one
    of them went dead with the cut. ⛔ **The measured cost of that wording: map GENERATION cannot read its data,
    so a NEW GAME cannot be generated at all** — `CvMapGeneratorUtil.py` is the DLL's own fallback
-   implementation, so this is the generation path rather than one screen ([todo.md](../plans/structural-cleanup/todo.md)).
+   implementation, so this is the generation path rather than one screen.
    ⚑ It reads as a scope boundary and is a BLOCKER, which is exactly why an agent files it as out-of-scope and
    moves on. That has now happened; do not repeat it.
    ⚑ The shape is the ordinary one: a per-info accessor per map-gen type, the `CyWorldInfo` shape — which
@@ -829,11 +827,11 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    and it takes effect immediately**.
 
    That is the difference in kind: a **game option** is chosen at game setup and fixed for the game (so JSON may
-   gate an entity on it, [DEC-entity-gate](../architecture/decisions.md#dec-entity-gate)); a **live option**
+   gate an entity on it, [the whole-entity applicability gate](../specs/json.md#2-anatomy-of-an-entity)); a **live option**
    is a user setting changeable mid-game. They are NOT to be folded into `GAMEOPTION_*` on the assumption that
    they are strays. The consequence worth knowing rather than re-deriving: **JSON cannot gate on a live option** —
    nothing static may depend on a value that moves under it.
-   ⚑ A flip DOES announce: `SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED` ([event-spine.md](../specs/event-spine.md)) fires from the
+   ⚑ A flip DOES announce: `SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED` ([spine.md](../spine.md)) fires from the
    three `cvInternalGlobals::setDefine*` setters, so a consumer that needs to answer one can. That closes the
    reactability gap; it does not license gating authored data on a live option, which is a separate ruling and
    unchanged. The writes themselves belong to the contrib stacks' own reworks, not here.
@@ -856,7 +854,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    name)` *and* `setattr(WidgetTypes, name, widget)` — BUG MINTS new enum members at runtime from config names
    and hands them back to the engine as widget ids. A read-only lookup would not serve it. This generalizes what
    the engine already does for infotypes (`getInfoTypeForString`) and pairs naturally with the load-minted
-   classification registries ([DEC-classification-infos](../architecture/decisions.md#dec-classification-infos)),
+   classification registries ([the classification-infos registry](../specs/json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)),
    which are the same idea on the info plane: names minted to ids at load, resolved by id thereafter.
 
    And the completeness argument that makes it load-bearing: a library WITHOUT name→type resolution forces those
@@ -867,7 +865,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    `CvPythonPlayerLoader` / `CvPythonPlotLoader` / `CyGame` / `CyTeam` / `CyMap` / `CyArea` / `CyAct` — the cut
    was DIRECTIONAL and took the READ bindings only. ⛔ So this is not an open question and must not be cited as
    one: a mutating consumer that fails is WIRED, and a write it needs that is not published yet is ADDED to that
-   surface ([roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision 6). The paragraph below is the
+   surface ([patterns.md](../architecture/patterns.md)). The paragraph below is the
    ORIGINAL framing, kept only because its LAST sentence is the thing that was wrong:
    987 sites are writes. They are explicitly out of scope for a *data-fetching* library, but the same handlers
    read through it, and the legacy `Cy*` surface cannot be disconnected while a write path still depends on it.
@@ -883,14 +881,14 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    `UnitFlagKind` for *is this unit cargo* because nothing in the game model asks it; only the editor does. So
    those reads are **not missing from the library — they are out of scope for it**, and widening `CyState`/`CyAct`
    to carry them would shoehorn unmodelled fields into the modelled surface, which is
-   [DEC-cy-not-fixed](../architecture/decisions.md#dec-cy-not-fixed)'s failure mode aimed at the NEW surface
+   [the Cy* surface is not a fixed contract](../architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner)'s failure mode aimed at the NEW surface
    instead of the old one. Measured: **34 cargo/transport sites and 31 unit-write sites, every one of them in
    `Screens/Worldbuilder/` or `pyWB/`** — zero in gameplay.
    ⛔ **The binding half of the ruling — the editor writes through the engine's OWN mutator, never a field poke.**
    An editor that sets a member directly leaves the cascade unaware, so the derived caches diverge SILENTLY —
    precisely what the event spine exists to prevent. ⚠ And the fix is NOT "poke the field, then also emit": that
    is two implementations of one transition and they drift
-   ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). Routing through the
+   ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). Routing through the
    mutator makes the emit STRUCTURAL — it cannot be forgotten by a future verb, because no verb owns it.
    ⚑ The pattern already exists and is the model to copy: every `CyAct` verb resolves a handle, validates, then
    calls the real engine setter (`CyAct::setCityBuilding` → `CvCity::changeHasBuilding` → `setHasBuilding`, which

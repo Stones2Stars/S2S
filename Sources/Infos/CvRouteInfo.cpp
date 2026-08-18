@@ -1,9 +1,9 @@
 //
 //	CvRouteInfo -- the route poco's own typed reading on top of the base section dispatch (see the header).
 //	The yield and movement families compile into m_modifiers via the base dispatch -- no per-family raw read
-//	survives here ([DEC-new-getter-surface]); the improvement-keyed rows and the tech-conditioned move deltas
+//	survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)); the improvement-keyed rows and the tech-conditioned move deltas
 //	are compiled keyed/conditioned entries. mapFrom materializes the identity census set ONCE into typed
-//	members ([DEC-materialize-at-mapfrom]); idempotent by contract. The bonus-prereq forward FKs reset here
+//	members (docs/architecture/patterns.md §Materialize at mapFrom); idempotent by contract. The bonus-prereq forward FKs reset here
 //	and are re-landed by CvReversePass after every re-map.
 //
 

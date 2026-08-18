@@ -12,7 +12,7 @@
 //	Base traversal cost is intrinsic self-data (identity.movementCost / flatMovementCost). The bonus
 //	prerequisites are the LOAD-reconstructed forward FKs (store-inverted onto the bonus's enables.routes /
 //	enables.routesAnd, un-inverted by CvReversePass). No legacy-mirror modifier member survives
-//	([DEC-new-getter-surface]).
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"
@@ -53,7 +53,7 @@ public:
 	int getAdvancedStartCost() const { return m_iAdvancedStartCost; } // identity.advancedStart.cost
 	// The substrate's own base movement cost, served as the family it is authored in
 	// ([modifier.md] par.6: a plot substrate's base movement cost IS the `movement` family). x100 native like
-	// every compiled sum -- the reader reduces at its point of use ([DEC-fixedpoint-x100]).
+	// every compiled sum -- the reader reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 	int getFlatMovement(MovementKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
 	bool isSeaTunnel() const { return m_bSeaTunnel; }               // identity.seaTunnel

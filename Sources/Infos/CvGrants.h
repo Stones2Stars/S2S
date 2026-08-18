@@ -19,7 +19,7 @@
 //	`grants.<channel>: value`, plus authored buckets beyond the named lists -- greatPeople, the starting*
 //	channels, the `ai` sibling), so it is interned through a LOAD-MINTED key table (CvGrants::key -- the
 //	ClassificationRegistry mechanic, LOCAL to grants): the authored strings exist on the parse surface only;
-//	every runtime read is int-keyed ([DEC-materialize-at-mapfrom]).
+//	every runtime read is int-keyed (docs/architecture/patterns.md §Materialize at mapFrom).
 //
 //	Scale: numeric pulse values are ×100 at parse (the one human->fixed-point boundary); readers take
 //	pulse()/100 for the human count -- the shape the grants machine's ÷100 reads were written against.

@@ -17,7 +17,7 @@ root `AGENTS.md`.
   for the human reading it.
 - **No 2-letter or cryptic-abbreviation identifiers (owner)** — no `ss`, `fd`, `cx`, `pg`; names are spelled out
   in full for locals, parameters, members, and enum entries alike (the no-abbreviated-parameters ruling in
-  [contexts.md](../docs/architecture/contexts.md), generalized to every identifier).
+  [cascade.md](../docs/cascade.md), generalized to every identifier).
   **⛔ THE REASON IS ANTI-CONCEALMENT, not style (owner): *"it is not unknown for agents to hide poor
   implementation behind abbreviated variables, that I don't immediately catch."*** An unreadable name defeats
   REVIEW — the owner cannot audit what they cannot read, so the abbreviation is where a weak or wrong structure
@@ -55,7 +55,7 @@ root `AGENTS.md`.
   define `FASSERT_ENABLE`, per `fbuild.bff` — *not* the `.vcxproj`). FinalRelease is the build players
   run, so to verify anything in a FinalRelease run use the gated logging system (`[PERF]` via
   `gPerfLogLevel`/`Autolog__LogLevelPerf`, or a `log<Domain>AI` helper), which ships in every DLL —
-  see `docs/reference/observability.md`.
+  see `docs/spine.md`.
 - `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only). **fbuild RECURSIVELY
   globs** every `.cpp` under `$SOURCE_DIR$`, so a new `Sources/<Dir>/` is compiled **automatically — no
   `.UnityInputPath` edit needed** (regen the `.vcxproj`(+`.filters`) for IDE display only).
@@ -70,7 +70,7 @@ root `AGENTS.md`.
   SCOPE of the work:** a targeted fix inside a tightly-coupled core file stays minimal — don't sprawl it or
   gratuitously refactor around it — but this is **no brake** on deliberate structural rework (the cascade, the
   docs rebuild, dissolving the `Cv*AI` god-classes), which is large by design and answers to
-  [DEC-proper-once](../docs/architecture/decisions.md#dec-proper-once).
+  the "build the proper structure once" rule (`AGENTS.md` Conventions § Design).
 - Preserve save compatibility by default; for intentional save breaks, coordinate and mark with `@SAVEBREAK` where relevant.
 - If C++ changes affect XML/Python interfaces, validate related XML and callback references.
 

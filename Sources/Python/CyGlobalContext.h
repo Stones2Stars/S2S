@@ -13,7 +13,7 @@
 //
 //	⛔ WHAT IT NO LONGER DOES, AND MUST NEVER DO AGAIN: hand out INFOS. The per-entity `get<X>Info(i)`
 //	accessors and the `Cy*` object HANDLES are gone and stay gone -- that is the read surface the library
-//	replaces ([DEC-cy-not-fixed]), and it is precisely the half whose return values let a script reach the
+//	replaces (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)), and it is precisely the half whose return values let a script reach the
 //	whole legacy getter set. A script wanting entity data asks the library; a script wanting a SETTING asks
 //	here. The split is the point: the escape hatch closes, the config stays.
 //

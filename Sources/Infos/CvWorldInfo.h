@@ -9,7 +9,7 @@
 //	enables nothing, deposits nothing per-turn, and every value is a parameter an engine formula reads off the
 //	selected map size -- so it composes NO section units and the whole surface is category 4, INTRINSIC bare
 //	typed reads (config; human values, like CvHandicapInfo's intrinsic block). JSON-fed
-//	(Assets/Data/worlds/*.json via mapFrom); no XML read (DEC-no-xml-into-game).
+//	(Assets/Data/worlds/*.json via mapFrom); no XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 //
 //	The authored data is the `identity` block (a map size IS its config numbers -- the cultureLevel
 //	cityRadius/cultureThreshold precedent, json.md §7); mapFrom materializes it into the typed members below.

@@ -2,7 +2,7 @@
 
 > Lifted + condensed from the old `reference/engine/` set. The durable engine facts a fresh S2S engineer needs:
 > the closed-`.exe` constraints, the systems the cascade reads or replaces, and the footguns. Behaviour **as it is
-> today** — the cascade rework replaces each legacy maintainer ([logging](../specs/logging.md) §6), verified live before cutting it.
+> today** — the cascade rework replaces each legacy maintainer ([spine.md § What to log](../spine.md)), verified live before cutting it.
 
 ## Toolchain — the locked closed-`.exe` stack
 
@@ -42,14 +42,14 @@ so run it against the last good build, not a red tree.
 
 The name-keyed save format, the soft-add / soft-remove rules, the `Assets/savemigration.txt` drain, the two kinds of
 `WRAPPER_SKIP_ELEMENT`, derived-serializes-nothing, and the changer-body side-effect audit now live in their own core
-spec — **[../specs/save.md](../specs/save.md)** (home of [DEC-save-remove-is-soft](../architecture/decisions.md#dec-save-remove-is-soft)
-+ [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted)). The one-line reminders that
+spec — **[../specs/save.md](../specs/save.md)** (home of [the soft-remove save discipline](../specs/save.md#3-removing-a-serialized-field--the-soft-remove-via-assetssavemigrationtxt-)
++ [derived data is never trusted from a save](../specs/save.md#5-derived-data-serializes-nothing-)). The one-line reminders that
 matter for engine work: field removal is a soft `savemigration.txt` drain (**never** a `WRAPPER_SKIP_ELEMENT`, never a
 save-break); derived data serializes nothing; deleting a changer means auditing its whole body for riders.
 
 ## ⛔ NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE (owner)
 
-**Home of [DEC-no-float-in-sync](../architecture/decisions.md#dec-no-float-in-sync).**
+**Home of [no float where it can reach synchronized state](#-no-float-where-it-can-reach-synchronized-state-owner).**
 
 > *"Using float in any calc that is used in any kind of multiplayer scenario sounds like a gigantic no."*
 
@@ -78,7 +78,7 @@ difference 66 on a score of 1,000,000, and every ranking change confined to cand
 
 ## ⛔ THE SYNCHRONIZED RNG IS SHARED SAVE STATE — do not touch the draws (owner)
 
-**Home of [DEC-synced-rng-is-shared-state](../architecture/decisions.md#dec-synced-rng-is-shared-state).**
+**Home of [the synchronized RNG is shared state](#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner).**
 
 There are three random streams, and only the distinction between them is what keeps a game in sync:
 
@@ -127,7 +127,7 @@ the synchronized stream. Authoring the threshold is data; performing the draw is
   (game…plot). The mutating *rules* are **not** on it — they live in **`CvPropertyManipulators`** on info objects
   (buildings / handicaps / bonuses), run by the solver each turn. Every value change announces
   `SEVT_PROPERTY_ADDED / _REMOVED` from the bag's own mutation sites (+ the in-read reseed) —
-  [event-spine.md](../specs/event-spine.md). ⚠ The same class doubles as authored INFO data (`CvOutcome`,
+  [spine.md](../spine.md). ⚠ The same class doubles as authored INFO data (`CvOutcome`,
   `CvEventInfo`, `CvEventTriggerInfo` prereqs); those instances are default-constructed with a NULL game object,
   which is exactly what keeps a data parse silent on both the notification hook and the spine.
 - **`CvPropertySolver`** is a member of `CvGame` (**not** a singleton — `GC.getPropertySolver()` does NOT exist),
@@ -161,20 +161,20 @@ the synchronized stream. Authoring the threshold is data; performing the draw is
   derivation is a consuming-system calc (json.md §9 — never an info getter).
 - **`CvGameSpeedScale` (`Sources/Engine/`) is the ONE consuming-system calc for "scale this by game speed"** —
   `speedPercent()` / `hammerCostPercent()` / `missionYieldPercent()`, each returning a HUMAN percent
-  ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). It exists because the
+  ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). It exists because the
   info deliberately cannot serve two of them: `hammerCostPercent` composes `GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS`
   with `UPSCALED_HAMMER_COST_MODIFIER`, and **an info never reads game state** (json.md §9 — a game option gates
   at the CONSUMING system). ⚠ It converts NOTHING: `CvGameSpeedInfo` serves `speed.world.percent` /
   `missionYieldMultiplier.world.percent` as straggler scalars (`getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD,
   CASC_UNIT_PERCENT)`), and a **percent is not scaled**
-  ([DEC-fixedpoint-x100](../architecture/decisions.md#dec-fixedpoint-x100)), so the value is already what every
+  ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)), so the value is already what every
   caller wants. ⛔ Do not re-derive either percent at a call site, and do not add a `/100` to "correct" it.
 
 ## Consuming-system calcs — where an option-composed verdict lives
 
 **⚖ An info never reads game state, so a value composing a GAME OPTION gets its own consuming-system calc — one
 place, never re-derived per call site** (json.md §9 +
-[DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)). This generalizes the
+[the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). This generalizes the
 `CvGameSpeedScale` note above, and is the shape any future one copies: a purely-organizational static-methods
 class (no data members, never instantiated — a namespace risks VC7.1/Boost name-mangling) holding the
 composition the info structurally cannot.
@@ -205,7 +205,7 @@ where it is. Read what the option is being ASKED, never match on the option name
 
 ## Info loading — `readJson` (the ONE JSON reader) + `CvInfoUtil` (XML residue)
 
-- **The ONE JSON reader ([DEC-one-json-reader]) is the load pipeline in `Sources/Data/CvReadJson.{h,cpp}`, entry
+- **The ONE JSON reader ([exactly one JSON reader](../architecture/patterns.md#the-one-reader--the-load-pipeline-law)) is the load pipeline in `Sources/Data/CvReadJson.{h,cpp}`, entry
   point `loadJson()`.** `Assets/Data` is walked, read, and parsed exactly ONCE per process, on first use, into a
   RETAINED in-memory store (~21 MB of JSON text → ~70 MB of picojson structures on the 32-bit heap); every
   downstream step reads the store, never the disk:
@@ -220,7 +220,7 @@ where it is. Read what the option is being ASKED, never match on the option name
     `mapFrom` on EVERY entity against the complete registry, mints + resolves the classification registries,
     runs the FK/reverse passes — whose closing `rp_derive*` sub-passes are the ONE home for a member derived
     from ANOTHER info's edges (`deriveAtRegistryComplete`; the reverse view is final there, so such a member
-    materializes once and its getter is a bare read, [DEC-materialize-at-mapfrom]) — and compiles the
+    materializes once and its getter is a bare read, [materialize at mapFrom](../architecture/patterns.md#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling)) — and compiles the
     DepositIndex. The premenu/postmenu PHASING is load-bearing:
     premenu consumers need premenu categories mapped before the menu; the postmenu types
     (processes/votes/espionage-missions/spawns) register late, so the postmenu re-run is what completes every
@@ -292,6 +292,11 @@ where it is. Read what the option is being ASKED, never match on the option name
   types. `identity.religion` is read FROM already-attached combats (`CvUnit::getReligion`, `:30868`), NOT an attach
   selector; `identity.culture` has no attach path at all. A blunt 2026-06-14 purge over-reached on the module blind
   spot and was fully reverted.
+- **The 344 `UNITCOMBAT_CULTURE_*` classes were deleted outright, not distilled to a tag** — each was a redundant
+  `{description, culture: BONUS_X}` shell duplicating data already owned by `BONUS_X.enables.units` +
+  `identity.bonusClassType: BONUSCLASS_CULTURE`, and `CvUnitCombatInfo::getCulture()` had zero engine consumers
+  (unlike `getReligion()`, which is live — hence religion classes stay). This is why `identity.culture` has no
+  attach path: there is nothing left to attach.
 - **Cascade migration:** a UnitCombat is a modifier SOURCE — its vs-tag stats deposit onto the units that carry it,
   sharing Promotion's modifier-family vocabulary (**do UnitCombat + Promotion together**). Its non-stat content
   distills out: identity → tags, abilities → skills, leaving the pure strengths/weaknesses list. Verify live, then
@@ -321,11 +326,10 @@ where it is. Read what the option is being ASKED, never match on the option name
   mid-rework — the additive model above is exactly why coexistence costs nothing.
   ⚠ **Meeting the gate is NOT a green light, and this is the trap to name explicitly.** Tags taking over the
   identifier role was the purge's stated precondition, so as identity tags land it starts to *read* as permission
-  to begin purging — it is not. The purge is a separate, owner-scheduled piece of work, and
-  [unitcombat-merge-candidates.md](../plans/structural-cleanup/unitcombat-merge-candidates.md) is a study of what
-  a future pass could merge, **never a live worklist** to act on.
+  to begin purging — it is not. The purge is a separate, owner-scheduled piece of work, never a live worklist to
+  act on now.
 
 ## See also
 
-- [../specs/](../specs/) — the cascade model the engine feeds. [../specs/logging.md](../specs/logging.md) — the
+- [../specs/](../specs/) — the cascade model the engine feeds. [../spine.md](../spine.md) — the
   map-before-delete + observability bar that gates cutting any legacy maintainer above.

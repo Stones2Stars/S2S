@@ -87,7 +87,7 @@ class CvHurryInfo; class CvBonusClassInfo; class CvWorldInfo; class CvFoldTarget
 void infoPlaneUnloadedRead(const char* szTypeName, int iId, int iMappedCount);
 
 //	THE SAME READ, for a registry still held as a BARE ENGINE ARRAY rather than through an InfoRepo.
-//	⛔ One implementation, two access paths ([DEC-single-implementation]): the guard cannot be allowed to differ
+//	⛔ One implementation, two access paths (docs/architecture/patterns.md §DRY (single implementation)): the guard cannot be allowed to differ
 //	between them, because which path a registry uses is a migration detail and the CALLER never knows which it got.
 //	⚠ The unguarded form (`return *(m_pa<X>[iId])`) is a live crash, not a theoretical one: FASSERT_BOUNDS above it
 //	compiles out of Release, so an out-of-range id dereferences a GARBAGE POINTER and the failure lands wherever
@@ -198,9 +198,9 @@ public:
 	//	⛔ THE READ. The info plane is WRITE-ONCE-AT-LOAD; a read NEVER creates and NEVER grows it.
 	//
 	//	edit()/editPtr() above are the LOAD-TIME WRITE path and belong to the ONE reader (loadJson), the reverse
-	//	pass and the classification registry -- nothing else ([DEC-one-json-reader]). An info is a pure data
+	//	pass and the classification registry -- nothing else (docs/architecture/patterns.md §The ONE reader). An info is a pure data
 	//	source, loaded once and SHARED by every player, so a read that writes makes an immutable shared object
-	//	mutable per GAME rather than per LOAD ([DEC-json-not-cascade]) -- and a read is specified as a bare fetch
+	//	mutable per GAME rather than per LOAD (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)) -- and a read is specified as a bare fetch
 	//	with nothing on it to gate ([state-repositories.md]).
 	//	⚑ What get-or-create actually answers with is a BLANK info, and a blank is indistinguishable from a real
 	//	one until something asks it a question: its getType() answers NULL (CvInfoBase), which is handed to the
@@ -210,7 +210,7 @@ public:
 	//	getNum<X>Infos() -- a READ silently redefines the registry's own bound, and every bounded walk then runs
 	//	off into the entries the walk itself created.
 	//	⇒ An id outside the mapped range, or a slot no load pass ever filled, is a LOAD DEFECT. It is NAMED and
-	//	fails HERE, at the bad read, while the type and the id are still known ([DEC-no-legacy-masking]: what is
+	//	fails HERE, at the bad read, while the type and the id are still known (docs/specs/validation.md §Legacy must fail loud, never mask a cascade gap: what is
 	//	missing must be immediately visible, never quietly answered).
 	CvInfo* atPtr(int iId, const char* szTypeName) const
 	{

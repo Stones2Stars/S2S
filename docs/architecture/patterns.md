@@ -1,7 +1,6 @@
 # Patterns — interface contracts in C++03 (poor-man's DI)
 
-> The concrete shape of [DEC-interface-contracts](decisions.md) under the frozen C++03/VC7.1 toolchain. Condensed
-> from `composability.md` + `faking-di.md`.
+> Depend on interfaces, not concretions — the concrete shape below under the frozen C++03/VC7.1 toolchain.
 
 ## The interface shape (composability)
 
@@ -37,7 +36,7 @@ No DI container exists (C++03/VC7.1; the EXE binds concretes), so:
 > The law that keeps the cascade from becoming C2C again. C2C's decades-old disease is **N evaluators computing the
 > same thing slightly differently**; this rule forbids it. Grounded in the reference impl: **StoneBase already has this
 > separation** (one exposed unit per `Calc/*` package, one `ConditionEvaluator`) — the C++ port must carry it over, not
-> flatten it. Binding: [DEC-single-implementation](decisions.md#dec-single-implementation).
+> flatten it. Binding: [the DRY single-implementation law](#dry--one-implementation-per-calculation--evaluation-the-single-source-law).
 
 **The law.** Every calculation and every evaluation exists **exactly once**, as a **pure static function fed its
 inputs** (data + context → value), reachable by every consumer. No machine reimplements another's logic; a machine that
@@ -55,43 +54,34 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    `PercentStack` · `YieldBasePackages` · `YieldRate` · `YieldSplit` · `CommerceSplit` · `CommercePackages` ·
    `BuildingPackage` · `CalcContributions`. No parallel or near-duplicate calc anywhere.
 3. **Pure static functions, no hidden state.** A calculator/evaluator takes everything it needs as parameters and
-   returns a value; it holds **no data members** — data lives in the `InfoRepo`, counts in the tally. That purity is
-   *why* one implementation is callable everywhere: it **is** the DRY guarantee. **Grouping them is fine and encouraged**
-   — as a **purely-organizational static-methods class** (a named holder, à la StoneBase's `static class PercentStack`):
-   **no data members, never instantiated, no per-instance state.** **Use a static-methods class, NOT a namespace**:
-   namespaces can produce funky name-mangling under the frozen VC7.1 toolchain + Boost / `boost::python`
-   bindings + the closed EXE ABI; a static class sidesteps it. The container is *organization only*. Forbidden: an
+   returns a value, holding **no data members** — data lives in the `InfoRepo`, counts in the tally; that purity
+   *is* the DRY guarantee. Grouping is fine as a **static-methods class** (à la StoneBase's `static class
+   PercentStack`), never a namespace (funky name-mangling risk under VC7.1/Boost/`boost::python`). Forbidden: an
    instance, any member field, a namespace grouping, or a file-`static` function no other unit can reach.
-4. **Exposed, never file-`static`-hidden.** Each calculator/evaluator is a **declared surface** (a header) reachable by
-   every consumer. **A file-`static` calculator is a DRY hazard**: the next consumer can't see it, so it reimplements it
-   — the exact mechanism of the C2C rot. *(Realized: BOTH data-machines are split into static-methods classes — the
-   **deposit-read side** (`MMKernel`, the per-deposit leaf primitives, `Data/CvDepositRead.h`; `InfoValuation`,
-   `Data/CvInfoValuation.h`, carrying StoneBase's higher `Calc/*` packages — the per-group walk, the `YieldRate`
-   §2a combine `cityRate`, the `CommerceSplit` combine `commerceSplit`, the plot-as-base package, and the
-   cross-scope roll-up) and the **enabler**
-   (`EnablerKernel` + `TechEnabler` / `BuildingEnabler` / `UnitEnabler` / `CivicEnabler` / `ProcessEnabler` /
-   `ProjectEnabler` / `PromotionEnabler` / `BuildEnabler`, each `Sources/Enabler/Cv<X>Enabler.{h,cpp}`,
-   mirroring StoneBase `CascadingEnabler/*`).)*
+4. **Exposed, never file-`static`-hidden.** Each calculator/evaluator is a declared surface (a header) reachable by
+   every consumer — a file-`static` calculator is a DRY hazard the next consumer can't see, so it reimplements it,
+   the exact mechanism of the C2C rot. *(Realized: the deposit-read side — `MMKernel` (the per-deposit leaf
+   primitives), `Data/CvDepositRead.h`; `InfoValuation`, `Data/CvInfoValuation.h`, carrying StoneBase's `Calc/*` packages (the per-group walk, `YieldRate`
+   §2a's `cityRate` combine, `CommerceSplit`'s `commerceSplit`, the plot-as-base package, the cross-scope roll-up)
+   — and the enabler (`EnablerKernel` + `TechEnabler`/`BuildingEnabler`/`UnitEnabler`/`CivicEnabler`/
+   `ProcessEnabler`/`ProjectEnabler`/`PromotionEnabler`/`BuildEnabler`, `Sources/Enabler/Cv<X>Enabler.{h,cpp}`,
+   mirroring StoneBase `CascadingEnabler/*`) are both split this way.)*
 5. **Harness ≠ calc.** The observability surface and the spine logging are
    **separate consumers** of the calc surface, never folded into the calc functions.
 6. **Single source of "active".** "Is X active / available / connected / non-dormant" is computed **once, by the
-   enabler**; the modifier **reads** it — it never recomputes from the live engine, and above all never reads the
-   engine's *dormancy verdict* (the camouflaged ride-in, [DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)).
-   *(Realized for building active/dormant — `EnablerKernel::recomputeOperatingBuildingsInto` derives it from
-   `requires.operate` + dormant triggers into `CvCascadeEvalCtx::activeBuildings` (the precomputed operating-building
-   set, twin of `waivedPrereqBuildings`); the modifier + evaluator read `cascadeIsBuildingActive`, never
-   `isActiveBuilding`. Vicinity-`provides` (an active building providing a bonus ⇒ in-vicinity, json §5a) is
-   likewise computed — `vicinityProvidedBonuses`, filled with `activeBuildings` in one
-   `recomputeOperatingBuildingsInto` pass feeding both machines.
-   Two active-states stay ENGINE-OWNED inputs the modifier reads (not cascade-computed), because the engine drives
-   them and the cascade does not model the driver: the route/trade `CONNECTED` "obtained" case (the network we don't
-   model), and **CORPORATION active/dormant** (engine-driven per-turn spread state, like religion — `isActiveCorporation`,
-   owner ruling; [culture-religion-research.md](../reference/culture-religion-research.md) Corporations). These are the
-   sanctioned-input class, distinct from the BUILDING dormancy verdict the cascade owns.)*
+   enabler**; the modifier reads it, never recomputing from the live engine or the engine's *dormancy verdict*
+   (the camouflaged ride-in, [the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)). *(Realized: for
+   buildings, `EnablerKernel::recomputeOperatingBuildingsInto` derives active/dormant from `requires.operate` +
+   dormant triggers into `CvCascadeEvalCtx::activeBuildings` (twin of `waivedPrereqBuildings`), read via
+   `cascadeIsBuildingActive` (never `isActiveBuilding`); the same pass fills `vicinityProvidedBonuses` for
+   in-vicinity `provides` (json §5a). Two
+   states stay ENGINE-OWNED inputs instead, because the cascade does not model their driver: route/trade
+   `CONNECTED` (the network), and CORPORATION active/dormant (per-turn spread state, like religion —
+   `isActiveCorporation`; [culture-religion-research.md](../reference/culture-religion-research.md)).)*
 7. **No duplication is sanctioned.** During the migration the legacy shadow was the one sanctioned duplication (the
-   cascade running *alongside* legacy, diffed, with a defined death — [DEC-map-before-delete](decisions.md#dec-map-before-delete));
+   cascade running *alongside* legacy, diffed, with a defined death — [the map-before-delete discipline](../../AGENTS.md#cascade-observability--the-total-observability-orwell-bar));
    **the shadow phase has ended** ([validation](../specs/validation.md)), so no duplication is sanctioned at all.
-8. **Composition root names concretes** ([DEC-interface-contracts](decisions.md#dec-interface-contracts)) — the
+8. **Composition root names concretes** ([the interface-contracts pattern](#the-interface-shape-composability)) — the
    active-set / game-option swaps are picked there; a leaked concrete `#include` into a consumer breaks the single wiring point.
 
 **Enforcement (how to keep certainty).** The data-machine trees (`Sources/Data/`, `Sources/Conditions/`,
@@ -102,7 +92,7 @@ anti-rollerskate check an agent runs before adding cascade calc/eval code.
 
 ## The INFO DATA-OUT contract — what an info hands to the cascade
 
-> **This section is the home of [DEC-json-not-cascade](decisions.md#dec-json-not-cascade)** — parsing and holding
+> **This section is the home of [parsing/holding info data is info-side, never cascade-side](#the-info-data-out-contract--what-an-info-hands-to-the-cascade)** — parsing and holding
 > the info data is INFO-side, and cascade runtime never lives on an info.
 >
 > The **infos** row of [EACH IS ITS OWN SYSTEM](north-star.md): readJson puts data into infos, infos SERVE that
@@ -129,8 +119,8 @@ authored JSON and the compiled deposit index.
 
 ### ⛔ WRITE-ONCE-AT-LOAD — A READ NEVER CREATES, AND AN UNANSWERABLE READ FAILS LOUD
 
-> Binding: [DEC-info-plane-read-only](decisions.md#dec-info-plane-read-only). The read-side twin of
-> [DEC-one-json-reader](decisions.md#dec-one-json-reader) — that rule says there is exactly ONE writer; this one
+> Binding: [the info plane is write-once-at-load](#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud). The read-side twin of
+> [exactly one JSON reader](#the-one-reader--the-load-pipeline-law) — that rule says there is exactly ONE writer; this one
 > says everybody else is a reader, and says what a reader does when it cannot be served.
 
 **Two access paths, and they are not interchangeable.** `InfoRepo::edit`/`editPtr` are **get-or-create**: they
@@ -138,8 +128,8 @@ resize the array and `new` a payload for whatever id they are handed. That is co
 is what they were written for, and they belong to exactly three callers — the one reader (`loadJson`), the reverse
 pass, and the classification registry. **Every other caller is a READ and uses `atPtr` / `get`.** A read that
 creates violates all three of the contract's clauses at once: it writes to the plane outside the one writer, it
-does work on a path specified as a bare fetch ([state-repositories.md](state-repositories.md)), and it answers
-quietly where it should fail ([DEC-no-legacy-masking](decisions.md#dec-no-legacy-masking)).
+does work on a path specified as a bare fetch ([state-repositories.md](../cascade.md)), and it answers
+quietly where it should fail ([legacy must fail loud, never mask a cascade gap](../specs/validation.md#legacy-must-fail-loud-never-mask-a-cascade-gap)).
 
 **What get-or-create actually answers with is a BLANK info, and that is why this is a hard rule rather than a
 preference.** A blank is indistinguishable from a real one until something asks it a question — and then
@@ -171,7 +161,7 @@ path, precisely so an incompletely stood-up info plane fails where the failure i
 ([python-load-sequence.md](../reference/python-load-sequence.md)).
 
 **The failure this closes.** Asking each info type for its data through a DIFFERENT accessor is the same defect as
-a hand-named scalar per channel ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)): it cannot be
+a hand-named scalar per channel ([every derived cache is one shape](../cascade.md#-every-derived-store-is-one-shape--a-keyed-accumulator-maintained-by-a-delta-owner)): it cannot be
 addressed uniformly, so every type needs bespoke read code, and the cascade ends up shaped by the info surface
 instead of the other way round.
 
@@ -184,7 +174,7 @@ the JSON model drives the info's shape; the legacy variable set is gone, not for
 
 - **The exemplar is the classification block — generalize it.** `m_attributes` is a **JSON-derived bitset** (the
   `ClassificationRegistry` ids minted from the authored `attributes` block,
-  [DEC-classification-infos](decisions.md#dec-classification-infos)), read by the parameterized
+  [the classification-infos registry](../specs/json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)), read by the parameterized
   `CvInfo::hasAttribute(id)` over `clsHasId` — never a legacy `m_bDestroyedOnCapture`, and never a named per-key
   body. Every block gets this shape, one member per block the entity authors (`m_attributes` beside
   `m_amenities` on a building, [json.md §8](../specs/json.md)).
@@ -194,9 +184,9 @@ the JSON model drives the info's shape; the legacy variable set is gone, not for
   the sane form holds the JSON structure and reads it, so a new field is DATA, not a new member + getter.
 - **An info holds only ITS OWN side — cross-entity own-output lives on the TARGET (owner).** A building does not
   project yield onto an improvement; the **improvement** says *"I produce this much now, because a building is
-  present"* — own-output, the building's presence a condition on the improvement's own deposit ([DEC-deliveryguy],
+  present"* — own-output, the building's presence a condition on the improvement's own deposit ([the deliveryguy ownership rule](../cascade.md#4-ownership--the-deliveryguy-rule),
   modifier.md §4). So `CvBuildingInfo` carries no `improvements`/`terrains` yield map. This needs **no curator
-  re-home**: the **load-time reverse structure** ([DEC-one-reverse-view]) builds cross-entity links both ways at
+  re-home**: the **load-time reverse structure** ([reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1)) builds cross-entity links both ways at
   readJson, so a modder may author *either* side and the relationship is landed on the other programmatically — the
   improvement ends up owning its yield regardless of which side authored it. A target-keyed map survives on the
   source **only** where the source is the genuine deliverer with no target-owner (governing-deliverer, modifier.md §4).
@@ -213,7 +203,7 @@ group's natural index** — never N individual getters for a groupable set. This
   `<family>.<scope>[.<target>|.<targetType>.{TARGET}][.<member>].<unit>` — is what the reader parses, with
   **every string key interned to a typed id** (family/member → the shared kind-enum vocabulary, scope → the
   scope enum, named-entity targets → FK-resolved ids, conditions → parsed trees;
-  [DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom)), nothing flattened away, the §3.9
+  [materialize at mapFrom](#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling)), nothing flattened away, the §3.9
   mechanism UNREDUCED (`per`, the `ai` sibling, the `enabled`/`disabled` twin trees in their spec'd order —
   `enabled` first, a holding `disabled` OVERRIDES; a plural-target filter is the entry's own `enabled`
   predicate, [json.md §6.1](../specs/json.md)).
@@ -221,14 +211,14 @@ group's natural index** — never N individual getters for a groupable set. This
   ever walks the anatomy.** A **null-condition entry's value folds STRAIGHT into its group's compiled member
   array** — the enum-keyed `[kind × family-scope-set]` unconditioned ×100 sums, the grouped member pattern,
   scope-free kind names (Σflat vs Σpercent separate slots — the unit is part of the slot key,
-  [modifier.md §2](../specs/modifier.md)). A **conditioned entry** lands in the group's compiled conditioned
+  [modifier.md §2](../cascade.md)). A **conditioned entry** lands in the group's compiled conditioned
   list, its condition tree prebuilt, evaluated ONLY at event-driven package rebuild and the per-decision
   `expected*` read — never re-parsed, never re-derived. Classification compiles to JSON-derived bitsets
   (`m_attributes` / `m_capabilities` / `m_skills` / `m_policies`); edges to the load-populated forward/reverse
-  families ([DEC-one-reverse-view](decisions.md#dec-one-reverse-view)); intrinsic lone values to plain typed
+  families ([reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1)); intrinsic lone values to plain typed
   members. No string, no parse node, and no anatomy tree survives into a runtime read path.
 - **⛔ THE SCOPE AXIS — a kind-enum names its CONCEPT ONLY; scope is a separate dimension**
-  ([DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis)). Scope is its own axis of the deposit address + a
+  ([scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)). Scope is its own axis of the deposit address + a
   spelled-out getter parameter, NEVER a fragment of an enum, member, or getter name — a scope word (`GLOBAL`,
   `ALL_CITY`, `WORLD`, `AREA`, …) inside a kind name collapses two of the address's axes into bespoke per-pair
   entries. `getDefense(DEFENSE_AMOUNT, SCOPE_CITY)` — kind and scope are separate arguments, exactly as the
@@ -251,7 +241,7 @@ group's natural index** — never N individual getters for a groupable set. This
   time: when the AI asks, the verdict already sits in the tri-state vector. *"What do I gain from building
   this?"* fetches the compiled unconditioned sums straight — one load per slot — and only the compiled
   CONDITIONED tail is ever evaluated (through the ONE evaluator against the contexts,
-  [contexts.md](contexts.md)), at per-decision cadence in the `expected*` read. The entity-level active/dormant
+  [contexts.md](../cascade.md)), at per-decision cadence in the `expected*` read. The entity-level active/dormant
   verdict stays the ENABLER's, fed in via the precomputed operating set — a what-if read never re-evaluates
   `requires`.
 - **THE GETTER SETUP — one exemplar shape for every info (the aim). Four read categories, nothing else:**
@@ -269,44 +259,41 @@ group's natural index** — never N individual getters for a groupable set. This
      > block — so a block-less info answers FALSE and the read is total.
      > ⛔ **A new authored key is a REGENERATED TABLE ENTRY, never a new function.** Do not add a named getter,
      > and do not re-introduce a per-key read class: that shape is what this replaced.
-     > ⚑ **How the open registry still hands out a compile-time id** — the blocker was never the openness, it was
-     > that the id ORDER was DISCOVERED at load. `Tools/Migration/curate_classification_ids.py` enumerates the
-     > authored keys and pins the order, exactly as `curate_order.py` pins category id order in `_order.json`;
-     > `ClassificationRegistry::buildAndResolve` SEEDS from that table before minting, so the constant IS the
-     > runtime id. The category stays OPEN ([DEC-classification-infos](decisions.md#dec-classification-infos)): a
-     > key authored but absent from the table still mints at load, appended after the seeded block — regenerating
-     > merely promotes it to a constant. Nothing serializes, so a regenerated table is save-neutral.
-     > ⚠ **The constants carry a reserved `CLS_` namespace** (`CLS_TAG_MILITARY`), while the runtime INFOTYPE
-     > STRING stays `TAG_MILITARY`. The property engine already owns global `TagTypes` / `AttributeTypes` in
-     > `CvEnums.h` and is owner-locked; more decisively, an OPEN registry means any future authored key could
-     > collide with any engine enumerator, so the namespace closes that class by construction.
-     > ⚑ A **spec-named key that no data authors yet** (the skills.md §1/§2 headroom — `noSelfHeal`, `freeDrop`,
-     > …) is seeded from the generator's small `HEADROOM` list so a legitimate consumer still compiles and simply
-     > reads false; it leaves that list the moment data authors it.
+     > ⚑ **How the open registry still hands out a compile-time id:** the blocker was the id ORDER being
+     > DISCOVERED at load, not the openness. `Tools/Migration/curate_classification_ids.py` pins the order (as
+     > `curate_order.py` pins `_order.json`); `ClassificationRegistry::buildAndResolve` SEEDS from that table
+     > before minting, so the constant IS the runtime id. The category stays OPEN
+     > ([the classification-infos registry](../specs/json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)): an unlisted key still mints at load,
+     > appended after the seeded block — regenerating just promotes it to a constant, save-neutral since nothing
+     > serializes.
+     > ⚠ **The constants carry a reserved `CLS_` namespace** (`CLS_TAG_MILITARY`) distinct from the runtime
+     > INFOTYPE STRING (`TAG_MILITARY`): the property engine owns global `TagTypes`/`AttributeTypes` in
+     > `CvEnums.h`, and an OPEN registry could otherwise collide with any engine enumerator.
+     > ⚑ A **spec-named key that no data authors yet** (skills.md §1/§2 headroom — `noSelfHeal`, `freeDrop`, …) is
+     > seeded from the generator's `HEADROOM` list so a legitimate consumer still compiles and reads false, until
+     > data authors it.
      >
      > ⛔ **THE INFO-SIDE NAMED `CLS_HAS` BODIES ARE GONE TOO — the whole per-key shape is retired, both halves.**
-     > ⚠ **What made that conversion delicate is permanent and applies to any future one: the names COLLIDE with
-     > live game-object methods.** `isCapital` is a building AMENITY *and* `CvCity::isCapital`; `isNukeImmune` is a
-     > building amenity, a plot-substrate CHARACTERISTIC *and* `CvUnit::isNukeImmune`; `isGovernmentCenter` is an
-     > amenity *and* a `CvCity` method. Which one a call site means is decided by its RECEIVER, never by the name —
-     > a textual sweep destroys the game-object half. Convert receiver-by-receiver, with an allowlist of
-     > info-typed receivers, and leave everything else standing.
+     > ⚠ The names permanently COLLIDE with live game-object methods: `isCapital` is a building AMENITY *and*
+     > `CvCity::isCapital`; `isNukeImmune` is a building amenity, a plot-substrate CHARACTERISTIC *and*
+     > `CvUnit::isNukeImmune`; `isGovernmentCenter` is an amenity *and* a `CvCity` method. The RECEIVER decides
+     > which one a call site means, never the name — a textual sweep destroys the game-object half. Convert
+     > receiver-by-receiver, with an allowlist of info-typed receivers.
      >
-     > **⚖ AND FOR AN AMENITY THE RECEIVER IS THE QUESTION ITSELF (json.md §8, [contexts.md](contexts.md)).** An
-     > amenity is CITY-HELD, grantor-PROVIDED, so *"does THIS CITY have it"* is answered by the city's FOLD
-     > (`CityContext::hasAmenity`), never by asking a grantor — and re-pointing such a gate at
-     > `kBuilding.providesAmenity(...)` would leave it doing exactly what it did before while reading as migrated.
-     > ⚑ But the converse is equally true and is what most sites actually are: an **AI VALUATION** (*"what would
-     > building this give me?"*) and a **FOLD APPLY** (`processBuilding`) legitimately ask the GRANTOR — that is
-     > the what-if plane and the fold's own maintenance, where the candidate's own block IS the answer. Classify by
-     > the QUESTION, not by the domain: gate → the city; valuation / apply / display → the grantor.
+     > **⚖ AND FOR AN AMENITY THE RECEIVER IS THE QUESTION ITSELF (json.md §8, [contexts.md](../cascade.md)).** An
+     > amenity is CITY-HELD, grantor-PROVIDED: *"does THIS CITY have it"* is answered by the city's FOLD
+     > (`CityContext::hasAmenity`), never by asking a grantor — re-pointing such a gate at
+     > `kBuilding.providesAmenity(...)` would leave it unchanged while reading as migrated. ⚑ The converse holds
+     > for most sites: an AI VALUATION and a FOLD APPLY (`processBuilding`) legitimately ask the GRANTOR, since
+     > the candidate's own block IS the answer there. Classify by the QUESTION: gate → the city; valuation/apply/
+     > display → the grantor.
   3. **Modifier groups — three reads per group, all over the LOAD-COMPILED forms:**
      - the **straight point read** over the compiled unconditioned sum — `getDefense(DefenseKind eKind,
        ScopeKind eScope)` → one array load, **0 calculation** (kind and scope separate arguments,
-       [DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis));
+       [scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king));
      - the **compiled conditioned list** (`defenseConditioned()` / `yieldConditioned()` / … — the typed entries
        with prebuilt condition trees; what the package rebuild, the pedia, and the valuation walk);
-     - the **what-if valuation** — the [contexts.md](contexts.md) per-GROUP endpoints
+     - the **what-if valuation** — the [contexts.md](../cascade.md) per-GROUP endpoints
        (`expectedFlatYields(cityContext, empireContext, plotGroup, flatYields)` and siblings): the compiled
        sums fetched straight PLUS the group's conditioned tail through the ONE evaluator, `plots`-targets scaled
        by `cityContext.plotAttrs`, scopes folded into the experienced-here answer, the active/dormant verdict fed
@@ -327,104 +314,87 @@ group's natural index** — never N individual getters for a groupable set. This
   5. **The per-entry TEXT render (owner: "so that tooltips work properly")** — every compiled entry renders
      itself as ONE localized detail line (`+25% Production — while Coal connected`), the `detailLines` pattern
      of the combat calculator (`CvCombatModel::computeCombatPreview`'s itemised per-modifier breakdown),
-     through ONE shared renderer ([DEC-single-implementation](decisions.md#dec-single-implementation)) — the
+     through ONE shared renderer ([the DRY single-implementation law](#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — the
      tooltip/pedia composers consume rendered entry lines, never hand-assemble from getters. Cold path:
      spell-back segments + TXT keys are the honest cost there. **Structural consequence: the compiled entry
      list is COMPLETE — unconditioned entries are RETAINED as entries** (the folded sums are the derived fast
      plane beside them, never a replacement) — per-entry text and per-entry attribution both require the list.
 
      > **⚖ THE DIVISION OF LABOUR — `CvGameTextMgr` KEEPS THE BLOCKS AND LOSES THE SUB-BLOCKS (owner).** The
-     > renderer is expected to remove *"the vast majority of bespoke work GameTextMgr used to do"*: the text
-     > manager *"should only care about TXT_KEY replacements, and be the `Cy` target for actual string
-     > content — it should not need to manually convert entries for each individual tooltip, or text box, when
-     > that text conversion can be built programmatically."*
-     > ⛔ **But the BLOCKS STAY, and the reason is what makes the line findable: *"the blocks are different
-     > sources put together"*.** A block is a COMPOSITION — one heading over contributions from several
-     > distinct sources (the building, the civic, the trait all feeding one happiness block) — so deciding
-     > which sources compose it, in what order, under which TXT_KEY heading, is genuinely the text manager's
-     > job and cannot be derived from any single entry list. ⛔ **What must never be hand-built is every
-     > SUB-BLOCK** — the per-source render inside the block. That is one `appendEntryLines` call per (source,
-     > family), and a block simply issues several.
-     > ⚑ The practical test on any composer edit: if you are writing `getText` around a MAGNITUDE, you are
-     > building a sub-block by hand and it is wrong; if you are writing `getText` for a HEADING or choosing
-     > which sources belong together, that is the block and it is right.
+     > renderer removes *"the vast majority of bespoke work GameTextMgr used to do"*: the text manager
+     > *"should only care about TXT_KEY replacements, and be the `Cy` target for actual string content — it
+     > should not need to manually convert entries for each individual tooltip, or text box, when that text
+     > conversion can be built programmatically."*
+     > ⛔ **But the BLOCKS STAY: *"the blocks are different sources put together"*.** A block is a COMPOSITION —
+     > one heading over contributions from several distinct sources (building, civic, trait all feeding one
+     > happiness block) — so which sources compose it, in what order, under which TXT_KEY heading, is genuinely
+     > the text manager's job. ⛔ What must never be hand-built is every SUB-BLOCK — one `appendEntryLines` call
+     > per (source, family), and a block simply issues several.
+     > ⚑ The test: `getText` around a MAGNITUDE is a hand-built sub-block and wrong; `getText` for a HEADING or
+     > choosing which sources belong together is the block, and right.
      >
-     > **⛔ A BREAKDOWN ITEMISES WHAT THE OBJECT HAS, AND NOTHING ELSE (owner).** A block that accounts for a
-     > realized value lists the sources DELIVERING it — never a candidate that WOULD deliver one. The two read
-     > identically once rendered, so a panel carrying both is not a richer breakdown, it is an unusable one: a
-     > reader cannot tell which lines explain the number at the bottom. ⚠ A separator does not rescue it, and
-     > neither does an option defaulting on.
-     > ⚑ **The discriminator is the ENABLER STATE the line was selected by:** a source the object HOLDS belongs in
-     > the breakdown; anything chosen off the frontier (`STATE_LISTED` — what could be built) is a WHAT-IF and
-     > belongs to the valuation surface that answers *"what do I gain from this?"*
-     > ([THE VALUATION PROTOCOL](#) — the same read the AI weighs and the build-list hover prints), never to the
-     > account of what a city already has.
-     > ⛔ So a whole-entity "render every family at once" dump is NOT the shape — it flattens the composition
-     > the blocks exist to express, which is why the surface is per-family.
+     > **⛔ A BREAKDOWN ITEMISES WHAT THE OBJECT HAS, AND NOTHING ELSE (owner).** It lists sources DELIVERING a
+     > realized value — never a candidate that WOULD deliver one; the two read identically once rendered, so a
+     > panel carrying both is unusable, not richer. ⚠ A separator does not rescue it, nor an option defaulting on.
+     > ⚑ The discriminator is the ENABLER STATE the line was selected by: a source the object HOLDS belongs in
+     > the breakdown; anything off the frontier (`STATE_LISTED`) is a WHAT-IF, for the valuation surface
+     > answering *"what do I gain from this?"* — never the account of what a city already has.
+     > ⛔ A whole-entity "render every family at once" dump is NOT the shape — it flattens the composition the
+     > blocks exist to express, which is why the surface is per-family.
      >
      > **⛔ THE ACCEPTANCE TEST ON A COMPOSER IS *DOES IT STILL READ A LEGACY GETTER*, NEVER *DOES IT READ
      > NICELY* (owner): "we just want to make sure that we don't rely on legacy, and have legacy purged, when
-     > creating tooltips."** A composer that renders identically but still reaches a legacy accessor is NOT
-     > done; one whose wording changed but whose legacy reads are gone IS
-     > ([DEC-no-legacy-masking](decisions.md#dec-no-legacy-masking) — a surviving legacy read masks the hole its
-     > replacement has not filled). ⚑ That is why a conversion DELETES rather than ports: each converted band
-     > removes its legacy accessor call with it.
-     > ⛔ **Altered visible text is therefore never a reason to hesitate** — say what changed and move on.
+     > creating tooltips."** A composer rendering identically but still reaching a legacy accessor is NOT done;
+     > one whose wording changed but whose legacy reads are gone IS
+     > ([legacy must fail loud, never mask a cascade gap](../specs/validation.md#legacy-must-fail-loud-never-mask-a-cascade-gap)). ⚑ A conversion DELETES rather than ports:
+     > each converted band removes its legacy accessor call with it. ⛔ Altered visible text is never a reason
+     > to hesitate — say what changed and move on.
      >
      > **⚖ TOOLTIPS ARE NOW THE INSTRUMENT — FEATURE-COMPLETE, AND THEY MUST LOOK RIGHT (owner): *"we are now
      > so far along that tooltips are now very relevant … I want them to look right, get all the data, so we can
      > find the final missing pieces."*** A tooltip carrying every term of a value is a DECOMPOSITION CENSUS in
-     > UI form — the shape [http-endpoints.md](../specs/http-endpoints.md) specs for a route (*"a route that
-     > serves ONE number answers nothing when that number is wrong"*), reached through the screen instead of the
-     > wire. That is why completeness is the bar and not polish: an incomplete tooltip does not merely look
+     > UI form, reached through the screen instead of the wire — an incomplete tooltip does not merely look
      > sparse, it **hides the gap it exists to reveal**.
-     > ⛔ **So the acceptance test is EVERY FAMILY THE ENTITY CARRIES RENDERS, not the subset a composer happens
-     > to have been converted onto.** ⚑ **MOVEMENT is the named exemplar (owner): *"especially with things like
-     > movement, it's easy to spot when it's wrong."*** A player checks a movement number against the unit in
-     > front of them, so that channel is where a missing or mis-scaled term is caught by eye — which makes it the
-     > canary for the rest, not a special case.
-     > ⚠ **The composer that renders NOTHING is the one to hunt, and it is silent:** an empty tooltip logs no
-     > line, fails no build and reads exactly like an entity with nothing to say. Enumerate the composers
-     > mechanically (which are empty, which are still called) rather than trusting that a screen looks populated.
+     > ⛔ The acceptance test is EVERY FAMILY THE ENTITY CARRIES RENDERS, not the subset a composer happens to
+     > have been converted onto. ⚑ MOVEMENT is the named exemplar (owner: *"especially with things like
+     > movement, it's easy to spot when it's wrong"*) — a player checks it against the unit in front of them, so
+     > it is the canary for the rest.
+     > ⚠ The composer that renders NOTHING is the one to hunt, and it is silent — an empty tooltip logs no line,
+     > fails no build, and reads like an entity with nothing to say. Enumerate composers mechanically rather
+     > than trusting a screen looks populated.
      >
-     > ⛔ **The retired ruling, recorded because its ABSENCE will look like drift to anyone who remembers it:**
-     > tooltips were once explicitly end-stage — *"how tooltips are rendered is fairly irrelevant right now,
-     > these are bugs we catch at the end"*. That was an **ANTI-RATHOLE GUARD, not a judgement about value**
-     > (owner): it was written when *"everything was fucked"* and agents *"consistently and constantly tried to
-     > 'keep the game running' despite it not even compiling"* — the owner *"could not drag agents off the
-     > tooltip to save my life"*. A red tree renders nothing, so attention spent there was unrecoverable. ⇒ The
-     > guard was scoped to a CONDITION, and the condition is over: the tree builds and the game runs, so the
-     > work it deferred is now the work. ⚑ Read this as the pattern rather than as one reversal — a sequencing
-     > guard earns its keep only while its premise holds, and the premise is the thing to re-check.
-     > ⚠ What does NOT come back with it is legacy PARITY: the tooltip SET is still demand-driven (owner: *"we
-     > will figure out what tooltips we need, and what we miss, from community requests and playtests"*), so a
-     > legacy line removed by a cut is not a regression to restore. **Completeness is measured against what the
-     > ENTITY CARRIES, never against what the legacy composer used to print.**
+     > ⛔ **The retired ruling, recorded because its ABSENCE will look like drift:** tooltips were once
+     > explicitly end-stage — *"how tooltips are rendered is fairly irrelevant right now, these are bugs we
+     > catch at the end"*. That was an ANTI-RATHOLE GUARD, not a judgement of value: written when *"everything
+     > was fucked"* and agents *"consistently and constantly tried to 'keep the game running' despite it not
+     > even compiling"*. A red tree renders nothing, so attention spent there was unrecoverable. ⇒ The guard was
+     > scoped to a CONDITION that is over — the tree builds, so the work it deferred is now the work.
+     > ⚠ What does NOT come back: legacy PARITY — the tooltip SET stays demand-driven (owner: *"we will figure
+     > out what tooltips we need … from community requests and playtests"*), so a legacy line a cut removed is
+     > not a regression. Completeness is measured against what the ENTITY CARRIES, never what the legacy
+     > composer used to print.
      >
      > **⚖ THE DEMAND ORDER, MEASURED BY USE (owner) — worker · combat · plot · building · unit.** That is the
-     > order they are actually hovered in, so it is the order they are worked in; COMBAT is already the
-     > standardized exemplar the rest converge onto, so the live work is worker → plot → building → unit.
-     > ⚑ **WORKER is two composers, not one**, and both are the same question from opposite ends: what a worker
-     > CAN do here (`CvDLLWidgetData::parseActionHelp`, the build-action buttons) and what it IS doing
-     > (`CvGameTextMgr::setUnitHelp`'s instance form, the build and its turns left).
+     > order they are hovered in, so it is the order they are worked in; COMBAT is the standardized exemplar, so
+     > live work is worker → plot → building → unit. ⚑ WORKER is two composers, not one: what a worker CAN do
+     > here (`CvDLLWidgetData::parseActionHelp`) and what it IS doing (`CvGameTextMgr::setUnitHelp`'s instance
+     > form).
      >
      > **⚖ A TOOLTIP IS AN ORDERED SET OF BLOCKS, AND THE BLOCKS ARE THE DESIGN (owner): *"we do design tooltips
-     > around the concepts of blocks"*.** So a composer's deliverable is a BLOCK LIST, and per block there are
-     > exactly three decisions — which sources compose it, what heading it sits under, and WHEN IT SHOWS.
-     > ⛔ **The content is NOT the concern (owner): *"most of the info should be able to be programmatically
+     > around the concepts of blocks"*.** A composer's deliverable is a BLOCK LIST; per block there are exactly
+     > three decisions — which sources compose it, what heading it sits under, and WHEN IT SHOWS.
+     > ⛔ The content is NOT the concern (owner: *"most of the info should be able to be programmatically
      > generated — it is the final structuring of the tooltips themselves, and when they show, that is the
-     > trick."*** The sub-block is `appendEntryLines` and needs no design; a pass that spends itself on generating
-     > lines has worked on the half that was never the problem.
-     > ⚠ **A run-on comma-separated line is therefore NOT a block structure**, however complete its content — which
-     > is the shape the unit instance composer is in today, and what makes a worker's build read as buried rather
-     > than as absent.
-     > ⛔ A SHOW CONDITION is a design call and is not derivable from the data — it is asked, never inferred.
+     > trick"*) — `appendEntryLines` needs no design; a pass spent generating lines worked the half that was
+     > never the problem.
+     > ⚠ A run-on comma-separated line is NOT a block structure, however complete its content. ⛔ A SHOW
+     > CONDITION is a design call, asked never inferred.
      >
      > **⚖ THE DLL DOES NOT CONVERT FOR DISPLAY — THE CONSUMER CONVERTS ITSELF (owner: "let python convert
-     > themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL performing
-     > the presentation layer's arithmetic, and it puts FLOAT in the DLL for a value the engine holds as an
-     > integer. ⚠ Not an OOS risk while it is display-only — which is exactly why it survives unnoticed — but it
-     > is the wrong side of the boundary: remove it as each composer moves, and never copy it into a new one.
+     > themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL doing the
+     > presentation layer's arithmetic, in FLOAT, for a value the engine holds as an integer. ⚠ Not an OOS risk
+     > while display-only — exactly why it survives unnoticed — but it is the wrong side of the boundary: remove
+     > it as each composer moves, never copy it into a new one.
 
   ```cpp
   // SECTIONS — whole typed objects
@@ -445,10 +415,10 @@ group's natural index** — never N individual getters for a groupable set. This
   **A point getter reads the LOAD-COMPILED sum and nothing else** — compiled once from the anatomy by the one
   compile pass, never runtime-summed, never a second hand-maintained store beside it. And no read anywhere on
   the surface does a per-call string address, map walk, or channel resolution
-  ([DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom)).
+  ([materialize at mapFrom](#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling)).
 - **THE SINGLE-THREAD BUDGET — why this shape is efficient on the one game thread.** The layering is the
   efficiency: (1) repeated hot reads (a BUILT thing's realized value) hit the package caches on the game objects
-  ([state-repositories.md](state-repositories.md)) — O(1) bare fetches, never an info read; (2) **the anatomy
+  ([state-repositories.md](../cascade.md)) — O(1) bare fetches, never an info read; (2) **the anatomy
   walk is LOAD-ONLY** — every runtime ask is a straight fetch of a compiled structure: the point reads over the
   compiled sums, the edge-family lists, the enabler's maintained frontier vectors — **0 calculation on the
   straight asks**; (3) the ONLY thing ever evaluated is the compiled CONDITIONED tail — condition evaluation is
@@ -460,23 +430,20 @@ group's natural index** — never N individual getters for a groupable set. This
   a per-DECISION read — once per (city, candidate) per pass; an AI needing repeated score access caches its OWN
   scores (the sanctioned AI-heuristic residual, [superseded-ideas #1](superseded-ideas.md)) — it never re-asks the
   what-if in an inner loop. A regression in any of this surfaces where every performance regression surfaces — the
-  per-turn wall clock ([DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
-- **Every AMOUNT getter is ×100; a PERCENT is NOT scaled** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) —
-  no `getX`/`getX100` pair, no `100` suffix; the name says the VALUE, never the scale. A reader wanting human
-  divides an AMOUNT by 100 at the boundary. The split lives in the flat-vs-modifier member name (`getFlatYield`
-  vs `getYieldModifier`), never a scale suffix.
-  ⛔ **A `÷100` applied to a PERCENT read is a defect, not a boundary reduction** — the parse converts amounts
-  and returns percents plain, so dividing one destroys it. ⚑ The tell is a comment asserting the read "stays
-  ×100" beside a percent-unit slot; the failures it produces are silent (a probability that becomes 0, a
-  multiplier that becomes the identity) and survive every smoke test.
+  per-turn wall clock ([turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)).
+- **Every AMOUNT getter is ×100 native; a PERCENT is never scaled, and there is no `getX`/`getX100` pair**
+  ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries) —
+  [fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md) has the full boundary/unit rules and
+  the silent-failure tell of a `÷100` landing on a percent slot). The name says the VALUE, never the scale; the
+  flat-vs-modifier split lives in the member name (`getFlatYield` vs `getYieldModifier`), never a scale suffix.
 - **⚑ A LEGACY `Global*` / `Area*` / `National*` PREFIX IS A SCOPE FRAGMENT — its successor is the SAME kind read
   with a scope ARGUMENT.** This is the single most common disposition in the compiler census, and reading it as a
   missing member instead sends an agent looking for a getter that was never meant to come back:
   `getGlobalYieldModifier` → `getYieldModifier(eYield, CASC_SCOPE_EMPIRE)`, `getCommerceChange` →
   `getFlatCommerce(eCommerce, CASC_SCOPE_CITY)`, `getGlobalFreeSpecialist` / `getAreaFreeSpecialist` →
   `getFreeSpecialistsAny(CASC_SCOPE_EMPIRE)` (area authors at EMPIRE — a landmass is not a scope,
-  [state-repositories.md](state-repositories.md)). The name lost the fragment because scope became an axis
-  ([DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis)); nothing was removed.
+  [state-repositories.md](../cascade.md)). The name lost the fragment because scope became an axis
+  ([scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)); nothing was removed.
   ⚠ Confirm the KIND enum at the call site rather than pattern-matching the name — the prefix tells you the
   SCOPE, never which kind the value is, and a wrong kind compiles clean and reports a plausible wrong number.
 - **Extensible by DATA, not by new members/getters.** A new scalar family is a new `m_scalars` enum entry; a new
@@ -484,13 +451,13 @@ group's natural index** — never N individual getters for a groupable set. This
 - Intrinsic self-description (`getAirlift`, `getMaxStartEra`, the shrine/corpHQ FKs, flavours) stays a bare typed
   read — genuine lone values, not a groupable set. The ~300 hand-named getters mirroring the legacy `CvXInfo`
   contract collapse into this surface, and consumers rewire onto it
-  ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)) — the info half of the access surface.
+  ([build a new getter surface, never widen a legacy one](#-the-two-read-roles--one-grammar-two-answers-owner)) — the info half of the access surface.
 
 ## ⚖ THE TWO READ ROLES — ONE GRAMMAR, TWO ANSWERS (owner)
 
 > The keystone of the ACCESS surface. The section above is the INFO half; this states what the info half and the
 > GAME-OBJECT half share, and what must stay different. Binding:
-> [DEC-new-getter-surface](decisions.md#dec-new-getter-surface).
+> [build a new getter surface, never widen a legacy one](#-the-two-read-roles--one-grammar-two-answers-owner).
 
 **⛔ The new surface is NOT a replacement mapping of the existing getters (owner).** No legacy getter name,
 signature, or shape survives into it. The measured 622 channel-shaped declarations on `CvCity`/`CvPlayer` are a
@@ -523,7 +490,7 @@ precisely how that surface accumulated.
 
 ⛔ **They are NOT interchangeable and must never LOOK interchangeable.** Giving both the identical signature
 invites a consumer to treat authored data and live state as the same answer — the shared-vocabulary trap that
-[DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in) exists to police from the other direction. Two roles,
+[the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in) exists to police from the other direction. Two roles,
 two surfaces.
 
 **What IS standardized is the GRAMMAR — both surfaces obey all of it:**
@@ -548,10 +515,10 @@ two surfaces.
    while the call itself carries no channel argument. The data-minted channel id remains the CACHE's internal
    key and is never something a consumer learns.
 3. **×100 native, always** — no `100` in any name, no `getX`/`getX100` pair, no scale variant
-   ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)). A reader ÷100s at the point of use.
-4. **Scope is a spelled-out ARGUMENT, never a name fragment** ([DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis)).
+   ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)). A reader ÷100s at the point of use.
+4. **Scope is a spelled-out ARGUMENT, never a name fragment** ([scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)).
 5. **⛔ THE VALUATION PROTOCOL — THE LIVE CONTEXTS GO IN, THE PROPOSED INCREASE COMES OUT (owner).** The caller
-   passes the live [contexts](contexts.md) and gets back **the DELTA** — what this candidate would ADD — never
+   passes the live [contexts](../cascade.md) and gets back **the DELTA** — what this candidate would ADD — never
    the raw percentage and never the new total.
    - **⛔ THE CONTEXT *IS* THE CURRENT VALUE — that is the whole point of it (owner).** A percent deposit has no
      value on its own: *"+25% production"* is worth a little in a small city and a lot in a large one, so it
@@ -559,16 +526,16 @@ two surfaces.
      bound live-state surface for its scope. ⛔ **Do NOT pass current amounts as a separate parameter** — that
      hands the read data the context already carries, and re-introduces the ad-hoc state-reach the contexts
      exist to end. A context that cannot answer a base the resolution needs is a **CONTEXT GAP to close by
-     adding the forward** ([contexts.md](contexts.md)), never a reason to widen the signature.
+     adding the forward** ([contexts.md](../cascade.md)), never a reason to widen the signature.
    - **Why the DELTA comes out:** the question is *"what do I gain from this?"*. A delta is directly weighable;
      a new total forces every caller to subtract against a base it must fetch separately.
    - The contexts serve BOTH halves in one pass: they carry the base the percent resolves against (the
-     `CityContext` forwards the city's CURRENT REALIZED YIELDS for exactly this, [contexts.md](contexts.md)),
+     `CityContext` forwards the city's CURRENT REALIZED YIELDS for exactly this, [contexts.md](../cascade.md)),
      and they are what the compiled CONDITIONED tail is evaluated over (*"+25% more while coal is connected"*).
    - **⚖ A CITY-LESS VIEW EVALUATES AGAINST THE CAPITAL (owner).** The valuation needs a `CityContext`, and a
      player-level "all buildings" view (the build list) has no city bound. The rule is the AI's own precedent
      made explicit: **the bound city if there is one, else the player's CAPITAL** — and it lives in ONE place
-     every criterion reads ([DEC-single-implementation](decisions.md#dec-single-implementation)), never
+     every criterion reads ([the DRY single-implementation law](#dry--one-implementation-per-calculation--evaluation-the-single-source-law)), never
      re-derived per filter or per sort. A player with no capital has no valuation to give, and the criterion
      ranks neutral rather than inventing one.
    - **⚑ TWO CONSUMERS, ONE CALL (owner): the AI's evaluation AND the build-list HOVER TOOLTIP.** The same
@@ -576,7 +543,7 @@ two surfaces.
      tooltip. That is not a convenience — it is what makes the displayed number and the acted-on number the
      SAME number, structurally. The classic failure it removes is a UI advertising one value while the AI plans
      against another, which no amount of care prevents once they are two implementations
-     ([DEC-single-implementation](decisions.md#dec-single-implementation)). It is also why the resolved DELTA is
+     ([the DRY single-implementation law](#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). It is also why the resolved DELTA is
      the right return: it is simultaneously what an AI weight multiplies and what a tooltip line prints.
    - **⛔ A "HOW VALUABLE IS THIS YIELD" WEIGHT IS ASKED AT MOST ONCE PER YIELD, AT THE START OF A doTurn
      (owner).** *"Those 'how valuable is this yield' questions is a question that at most should be asked once
@@ -592,7 +559,7 @@ two surfaces.
      property of the asking empire — its obligations against its means — so it is answerable from that
      empire's own standing. ⛔ Deriving it by re-totalling every member's realized output is the wrong
      question wearing the right answer's clothes: it makes a per-empire constant cost `O(cities)`, and at the
-     receiver Σ that is `O(cities)` per ask ([state-repositories.md](state-repositories.md) § A CROSS-SCOPE
+     receiver Σ that is `O(cities)` per ask ([state-repositories.md](../cascade.md) § A CROSS-SCOPE
      receiver total).
      ⚑ **The measured case this rules on:** the gold-value weight reached the empire's realized gold commerce,
      which re-sums all 185 cities' §2a combines — asked once per BUILDING CANDIDATE, it was the whole of a
@@ -601,18 +568,18 @@ two surfaces.
    group returns `happiness` and `anger` as **two separate numbers** (and `health`/`unhealth` likewise) — *"then
    you will know the results from that"*. The realized end-state values (`angryPopulation`, `healthRate`) are
    **NOT group entries and NOT getters**: they are a final-state calculation over numbers the group already
-   handed out ([modifier.md §2b](../specs/modifier.md) specs the arithmetic). ⛔ Folding a final-state value into
+   handed out ([modifier.md §2b](../cascade.md) specs the arithmetic). ⛔ Folding a final-state value into
    the channel array is a category error — it puts a computed OUTCOME in a slot that means "a channel a source
    deposited into", and it hides the opposing-pair structure the four channels exist to express. The calculation
    still exists **exactly once** as a pure static function on the calc surface
-   ([DEC-single-implementation](decisions.md#dec-single-implementation)); it is simply not part of the read.
+   ([the DRY single-implementation law](#dry--one-implementation-per-calculation--evaluation-the-single-source-law)); it is simply not part of the read.
 7. **The group read FILLS A CALLER-OWNED ARRAY** — one call in, the whole group out, indexed by the group's
    enum. Passing state once and getting the whole resolved group back is also what keeps a future
    whole-candidate snapshot possible without building it now; a design answering one scalar per call would
    foreclose it *and* would re-resolve the same state per channel.
 6. **Extensible by DATA, not by new members/getters** — a new channel is a new id, not a new function.
 7. **Parameters spelled in full**, index parameters named for the enum they key
-   ([contexts.md](contexts.md) naming rule).
+   ([contexts.md](../cascade.md) naming rule).
 
 **The GAME-OBJECT half's realized shape.** Each scope owner (`CvPlot` / `CvCity` / `CvPlayer` / `CvTeam`)
 carries **one group read per modifier FAMILY whose channels the data authors AT
@@ -642,18 +609,19 @@ getters that hold the bare family name.
 > per-type accessor split and the import conversion are the SEPARATE INDEPENDENT PASS, taken as its own piece of
 > work when the demand map is known — never as a rider on a repair, and never opportunistically mid-sweep.
 >
-> ⛔ **It is NOT licence to skip a fix, and that is the failure this callout most needs to prevent** — the
-> roadmap already records the owner on exactly that (*"the amount of fixes getting skipped because of that
-> excuse is starting to drive me nuts"*, [roadmap.md](../plans/structural-cleanup/roadmap.md) § scope decision
-> 6). "The surface is not organized yet" is never a reason to leave a broken handler broken, and "it cannot be
-> done properly yet" is never a reason to do nothing.
+> ⛔ **It is NOT licence to skip a fix, and that is the failure this callout most needs to prevent (owner): *"the
+> amount of fixes getting skipped because of that excuse is starting to drive me nuts — we have a write
+> surface."*** The mutation surface is published and live (`set*`/`change*`/`do*`/`create*`/`push*` defs across
+> `CvPythonPlayerLoader`/`CvPythonPlotLoader`/`CyGame`/`CyTeam`/`CyMap`/`CyArea`/`CyAct`); it was never cut, since
+> the cut above was directional and took the READ bindings only. "The surface is not organized yet" is never a
+> reason to leave a broken handler broken, and "it cannot be done properly yet" is never a reason to do nothing.
 > ⛔ Equally it is NOT licence to call the current shape correct, or to ADD to the disorder knowingly: the point
 > of laying groundwork is that the later pass stays MECHANICAL, and every unnamed or unfindable read added
 > meanwhile is what makes it stop being mechanical.
-> ⚠ Owner-ruled SEQUENCING with a named end state, so [DEC-no-deferred](decisions.md#dec-no-deferred) does not
+> ⚠ Owner-ruled SEQUENCING with a named end state, so ["deferred" is banned](../../AGENTS.md#design) does not
 > reach it — the same standing as the golden-age / anarchy status carve-out ([state.md](../specs/state.md)).
 >
-> The Python half of the access surface. Binding: [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed) — the `Cy*`
+> The Python half of the access surface. Binding: [the Cy* surface is not a fixed contract](#-the-python-read-boundary--one-complete-data-fetching-library-owner) — the `Cy*`
 > `.def` surface is NOT a contract to preserve. **This is a REBUILD, not an invention:** Python has always fetched
 > through a binding layer and that MECHANISM (boost::python) is fine and stays. What is wrong is the SHAPE —
 > scattered per-type interfaces, one getter per legacy field, no coherent payload anywhere. ⛔ "It kind of exists
@@ -691,7 +659,7 @@ Four words carry the whole requirement:
   > nothing about how many accessors the one library is composed of, and the per-type accessor ruling below
   > says plainly that it is composed of several. ⇒ A flat class accumulating every type's reads behind an
   > `(owner, id)` address satisfies the word and violates the design — which is exactly the failure
-  > [DEC-accessor-homing](decisions.md#dec-accessor-homing) now makes mechanically checkable.
+  > [a game object's own data is read from its own accessor](#-the-python-read-boundary--one-complete-data-fetching-library-owner) now makes mechanically checkable.
   > ⚠ Read "one surface" as ONE LIBRARY, COHERENTLY HOMED. A game object's data lives on that object's
   > accessor, and the library is one because there is no second place to ask — never because there is one class.
   >
@@ -717,13 +685,13 @@ Four words carry the whole requirement:
   **resolution AND EXTENSION**: BUG resolves `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits` by name from config
   strings *and* MINTS new `WidgetTypes` members at runtime, handing them back as widget ids. A read-only lookup
   does not serve that. It generalizes `getInfoTypeForString` and mirrors the load-minted classification
-  registries ([DEC-classification-infos](decisions.md#dec-classification-infos)).
+  registries ([the classification-infos registry](../specs/json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)).
   ⚑ **THE ENUM VOCABULARY IS A PREREQUISITE OF THE READ SURFACE, not a convenience beside it.** The group reads
   are specified as `getYields()[YieldTypes.YIELD_FOOD]` (§ THE TWO READ ROLES: the existing engine enum indexes
   the RESULT), so until the enum TYPES are published the replacement surface cannot be consumed at all — a
   script cannot name the slot it wants, and neither can any screen that would render one.
   ⛔ **Publishing them is therefore NOT a survival of the banned surface.**
-  [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed) bans the `.def` GETTER contract; a publication carrying zero
+  [the Cy* surface is not a fixed contract](#-the-python-read-boundary--one-complete-data-fetching-library-owner) bans the `.def` GETTER contract; a publication carrying zero
   `.def` and zero `class_` is CONSTANTS, not reads. ⚠ The distinction is worth stating because the enum
   publication was once swept up in the binding purge as though it were one, which takes the whole Python layer
   down with it — every module names an engine constant.
@@ -754,7 +722,7 @@ Four words carry the whole requirement:
 > out everything.
 > ⇒ **So a PER-INFO accessor, explicitly bound at module scope, is the WANTED shape** — the bindings list then IS
 > the module's dependency list. ⛔ What stays banned is unchanged and is a different axis: the ~300 hand-named
-> getters mirroring the legacy per-FIELD contract ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)).
+> getters mirroring the legacy per-FIELD contract ([build a new getter surface, never widen a legacy one](#-the-two-read-roles--one-grammar-two-answers-owner)).
 > A named accessor per info TYPE is not that.
 > ⚠ **And an opaque SLOT enum re-creates the very fault it was meant to cure.**
 > `INFO.getIntrinsic("WORLD_", id, PYINT_CORP_MAINT_PERCENT)` is decoupled from `GC` and still fails the test —
@@ -784,13 +752,10 @@ Four words carry the whole requirement:
 > **⚖ THE ENEMY IS UNORGANIZED SPAGHETTI, NOT ENDPOINTS — AND A PER-TYPE ACCESSOR OBJECT IS WANTED, GAME
 > OBJECTS INCLUDED (owner): *"I do not mind named endpoints, or a CyCity object with named endpoints related to
 > city; what I don't like is when we get full getter spaghetti without organization or structure."*** This
-> widens the per-INFO accessor ruling above to the whole boundary: the shape is judged on whether a reader can
-> tell WHERE an endpoint lives and WHAT it addresses, and a `Cy<Type>` carrying that type's named reads passes
-> on both counts. ⛔ So **do NOT ration endpoints, and do not weigh their COUNT as a cost** — that is the wrong
-> axis, and deliberating over whether five named reads are "a lot" is the mistake this callout exists to stop.
-> ⚠ **What the ruling does bind is HOMING**: an endpoint belongs on the accessor for the type it addresses. A
-> flat class accumulating UNIT, BUILDING and HANDICAP reads side by side is the spaghetti wearing named
-> endpoints — organized is the requirement, and "named" alone does not satisfy it.
+> widens the per-INFO accessor ruling to the whole boundary — endpoint count is not the axis (as above); what
+> binds is HOMING: an endpoint belongs on the accessor for the type it addresses. A flat class accumulating
+> UNIT, BUILDING and HANDICAP reads side by side is the spaghetti wearing named endpoints — organized is the
+> requirement, "named" alone does not satisfy it.
 >
 > **⛔ AND THE FAILURE ORGANIZATION EXISTS TO PREVENT IS DUPLICATION, WHICH IS WHAT MAKES THIS MORE THAN TASTE
 > (owner): *"we need the endpoints we need, that is never a problem; what is a problem is 3 similarly named
@@ -800,7 +765,7 @@ Four words carry the whole requirement:
 > spellings of one question that drift apart.
 > ⇒ **Two obligations follow, and the first is the cheap one: LOOK BEFORE YOU ADD.** Read the accessor for the
 > type you are about to serve; a near-synonym you did not find is the defect you are about to file.
-> ⚑ **It is [DEC-single-implementation](decisions.md#dec-single-implementation) on the boundary** — *"a
+> ⚑ **It is [the DRY single-implementation law](#dry--one-implementation-per-calculation--evaluation-the-single-source-law) on the boundary** — *"a
 > file-`static` calculator is a DRY hazard: the next consumer can't see it, so it reimplements it — the exact
 > mechanism of the C2C rot"* — and the mechanism is identical whether the thing reimplemented is a calculator
 > or a read. ⚠ The in-tree worked case is C++ rather than Python and is the more convincing for it:
@@ -812,15 +777,10 @@ Four words carry the whole requirement:
 >
 > **⚖ THE ORGANIZING PASS IS SCHEDULED, AND THE CURRENT PILE IS ACKNOWLEDGED DEBT (owner): *"we have created
 > some of that ourselves now, and we will go back to wire that up properly in a final pass when everything is
-> actually in and working."*** ⇒ Keep ADDING named reads wherever a call site demands one; the homing is
-> corrected wholesale later, not negotiated per endpoint.
-> ⚑ It is the DISCOVERY-FIRST sequencing below applied to the accessor layout rather than to imports — the
-> expensive work is finding every read and homing it on the right surface, and re-pointing the layer afterwards
-> is mechanical, so organizing AHEAD of the demand map is the failure that gets paid for twice.
-> ⚠ This is owner-ruled SEQUENCING with a named end state, so
-> [DEC-no-deferred](decisions.md#dec-no-deferred) does not reach it — the same standing as the golden-age /
-> anarchy status carve-out ([state.md](../specs/state.md)). ⛔ It is NOT licence to call the flat pile correct,
-> and NOT a reason to withhold a read a call site needs meanwhile.
+> actually in and working."*** ⇒ Keep ADDING named reads wherever a call site demands one; homing is corrected
+> wholesale later, not negotiated per endpoint — the same discovery-first sequencing as import conversion below
+> (§ THE SEQUENCING IS DISCOVERY-FIRST), applied to accessor layout instead of imports. ⛔ Not licence to call
+> the flat pile correct, nor a reason to withhold a read a call site needs meanwhile.
 >
 > **⚖ THE REASON IS TRACING, AND IT IS THE POINT THE OTHER TWO SERVE (owner): *"it infinitely helps tracing —
 > for me, other modders, and agents; when you read the python code today anyone is hard pressed to figure out
@@ -843,7 +803,7 @@ Four words carry the whole requirement:
 > layer afterwards is mechanical. ⛔ So converting imports AHEAD of the demand map is the failure — it is done
 > twice, and the second pass is the expensive one. ⚠ Equally, this is not licence to call the star import
 > acceptable: it is a real defect with a scheduled fix, not a sanctioned shape
-> ([DEC-no-deferred](decisions.md#dec-no-deferred) does not reach an owner-ruled ORDERING).
+> (["deferred" is banned](../../AGENTS.md#design) does not reach an owner-ruled ORDERING).
 >
 > ⚑ **The corroboration, because it shows the cost is not hypothetical: the espionage advisor crash.**
 > `INFO.getIntrinsic("ESPIONAGEMISSION_", i, PYINT_COST)` names a SLOT, so nothing at the call site said where
@@ -875,7 +835,7 @@ entity exhaustively, so it is not a sample of the info surface, it **is** the in
 >   naming composes from them), so collapsing them destroys content. Their `uiForm` argument is carried through —
 >   it selects the grammatical variant localization needs.
 > - **A WHOLE-REGISTRY LOOP is the actual defect.** Sweeping every id to ask a per-id predicate re-derives what the
->   entity already carries ([DEC-one-reverse-view](decisions.md#dec-one-reverse-view)), and it does not survive the
+>   entity already carries ([reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1)), and it does not survive the
 >   rewire: the per-id reads it walks are the ones being deleted. It converts to the maintained set, the entity's
 >   own compiled entries, or its reverse edge families — never to a faster per-id getter, which leaves the loop
 >   doing exactly what it did before while reading as migrated.
@@ -896,7 +856,7 @@ of them:
 - **Engine → Python CALLBACKS** — **NEEDED, and kept (owner: "we need eventreporter, we need mapscript, amongst
   other things")**. `CvEventReporter`, the map-script hooks and `CvOutcome`'s Python outcomes are what makes
   Python-authoritative gameplay possible at all, so this is REQUIRED FUNCTIONALITY, not a deferral —
-  [DEC-no-deferred](decisions.md#dec-no-deferred) does not apply to it and it is not a thing to "finish later".
+  ["deferred" is banned](../../AGENTS.md#design) does not apply to it and it is not a thing to "finish later".
   ⚠ The list is open ("amongst other things"): treat a callback you find as kept unless ruled otherwise.
   ⚖ **KEPT THROUGH #430, not kept forever — the successor is named (owner): `CvEventReporter` is replaced by
   the TRIGGERS machine and events move INTO C++, "but that is not 430."** So this is a SCOPE boundary with a
@@ -913,7 +873,7 @@ of them:
   > a handle must be able to say WHICH object it holds; re-pointing every such site onto the read planes is
   > refactoring that buys nothing and does not converge.
   > ⛔ **It is the ADDRESS, and it is what a legacy consumer needs to name its object.** Owner, id, position.
-  > [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed)'s ban on the legacy info/state GETTER contract is untouched:
+  > [the Cy* surface is not a fixed contract](#-the-python-read-boundary--one-complete-data-fetching-library-owner)'s ban on the legacy info/state GETTER contract is untouched:
   > what a handle must never become is the old per-field surface restored wholesale.
   >
   > **⛔ BUT A GAME OBJECT'S OWN DATA IS READ FROM ITS OWN ACCESSOR — `CyCity`, NEVER A STATE CLASS KEYED BY
@@ -942,7 +902,7 @@ of them:
   > the next agent reads it as the surface, a re-homed read COLLIDES with it, and "just publish what is already
   > declared" looks like the cheap fix at exactly the moment the new surface arrives. ⇒ The declaration AND its
   > body go, the moment they are seen — not scheduled as a later tidy-up
-  > ([DEC-no-rollerskate-evidence](decisions.md#dec-no-rollerskate-evidence): leftover evidence of the abandoned
+  > ([leave no evidence of the abandoned path](../../AGENTS.md#design): leftover evidence of the abandoned
   > path is what the next agent rollerskates off).
   > ⚑ **So a re-home does not have a collision PROBLEM — the collision is the work.** The legacy name dies as the
   > coherent read takes its place, and the wrapper converges on exactly the identity set plus the new surface.
@@ -954,16 +914,16 @@ of them:
   > (§ endpoint COUNT is explicitly not the target — properly organized is); what it is never derived from is the
   > legacy list.
   > ⇒ **The two rules are one move, and each fails alone:** killing without serving pushes the next consumer
-  > back onto legacy ([DEC-no-legacy-masking](decisions.md#dec-no-legacy-masking)), and serving by preserving
+  > back onto legacy ([legacy must fail loud, never mask a cascade gap](../specs/validation.md#legacy-must-fail-loud-never-mask-a-cascade-gap)), and serving by preserving
   > the legacy set re-creates the per-field contract
-  > ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface): a DELETION list *plus a COVERAGE checklist*).
+  > ([build a new getter surface, never widen a legacy one](#-the-two-read-roles--one-grammar-two-answers-owner): a DELETION list *plus a COVERAGE checklist*).
   > ⛔ So "something might still call it" is NOT a reason to keep a declaration — verify the demand, and where a
   > read is genuinely wanted, ADD it as the coherent read rather than sparing the legacy one.
   > ⚠ **What is NOT killed with them:** the `class_<>` REGISTRATION and the identity set (the kept engine→Python
   > direction depends on both), and anything the ENGINE itself calls on the wrapper — the compiler names those,
   > and a compile error there is a worklist entry like any other.
   > ⚠ **What this does NOT license** is reviving the legacy `.def` field-by-field contract on the handle
-  > ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)): the reads a game-object accessor carries are
+  > ([build a new getter surface, never widen a legacy one](#-the-two-read-roles--one-grammar-two-answers-owner)): the reads a game-object accessor carries are
   > the coherent GROUP reads and named concepts of the new surface, homed on their own object — never the ~300
   > per-legacy-field getters re-registered because a screen once called them.
   > ⚑ **Each publish lives in the file named for its type** (`CyCity::pythonPublish`, the `CyInfo` pattern), never
@@ -997,7 +957,7 @@ of them:
   > The purge deleted the struct registrar whole (`NiPoint3`/`NiPoint2`/`NiColorA`/`POINT`/`IDInfo`/`OrderData`/
   > `MissionData`/…), and those are the MARSHALLING VOCABULARY, not handles: a coordinate pair or an RGBA
   > quadruple answers no question about game state, so `def_readwrite` on it is the VALUE ITSELF and
-  > [DEC-cy-not-fixed](decisions.md#dec-cy-not-fixed)'s ban — which is on the info/state GETTER contract —
+  > [the Cy* surface is not a fixed contract](#-the-python-read-boundary--one-complete-data-fetching-library-owner)'s ban — which is on the info/state GETTER contract —
   > does not reach it. ⛔ A struct registered without its fields is useless: Python cannot read the point it
   > was handed, nor build the colour it must pass.
   > ⚑ **They fail in BOTH directions, which is why the absence is easy to misread.** Python CONSTRUCTS some
@@ -1019,7 +979,7 @@ of them:
   > ⚠ It does reach the SYNCHRONIZED stream (`getSorenRand` hands that one across), but `getSorenRandNum` is
   > already published, so restoring the draw adds a SPELLING and not a POWER. What still binds is where a given
   > draw belongs: a cosmetic pick — which greeting variant a leader uses — is `getASyncRand`, because the synced
-  > stream's draw COUNT is shared save state ([DEC-synced-rng-is-shared-state](decisions.md#dec-synced-rng-is-shared-state)).
+  > stream's draw COUNT is shared save state ([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)).
 
 **⛔ TWO THINGS THE LIBRARY DOES NOT OWN:**
 
@@ -1060,7 +1020,7 @@ of them:
 
 ## Materialize at mapFrom — no runtime string reads in info getters (the single-source law's load-time sibling)
 
-> Binding: [DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom). Owner ruling: *"all of these should
+> Binding: [materialize at mapFrom](#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling). Owner ruling: *"all of these should
 > use the standardized jsonreader and be loaded properly into the info — remapping directly from a json read is a
 > gigantic nono."*
 
@@ -1077,7 +1037,7 @@ turn-time/FPS tax.
   push, the reverse passes, a poco materialization) iterates the typed entries; a getter never walks them — it
   reads the compiled `(family, kind, scope, unit)` slot sums (`sum100`) or its own materialized members.
 - **Classification blocks read by GENERATED ID** — the §8/§9 bool blocks resolve their keys to the
-  `ClassificationRegistry`'s runtime-minted ids ([DEC-classification-infos](decisions.md#dec-classification-infos)),
+  `ClassificationRegistry`'s runtime-minted ids ([the classification-infos registry](../specs/json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)),
   and the getters are `CLS_HAS`/`CLS_COUNT` bit tests (memoized id + O(1) bitset read; the pre-resolve load window
   falls back to the string set so early consumers stay correct).
 - mapFrom is idempotent by contract, so the materialized members are fully redefined on every (re-)map —
@@ -1100,12 +1060,12 @@ turn-time/FPS tax.
 
 ## The ONE reader — the load pipeline law
 
-> Binding: [DEC-one-json-reader](decisions.md#dec-one-json-reader). Owner rulings: exactly one JsonReader exists;
+> Binding: [exactly one JSON reader](#the-one-reader--the-load-pipeline-law). Owner rulings: exactly one JsonReader exists;
 > JSON is read at GAME LOAD only; no string matching on any read path.
 
 - **Exactly ONE JSON reader exists** — the load pipeline in `Sources/Data`, entry point `loadJson()`. The
   reader is **readJson**, the first of the four systems ([north-star.md](north-star.md)) — it is NOT the
-  cascade, and no reader name carries a `cascade` prefix ([DEC-enabler-not-cascade](decisions.md#dec-enabler-not-cascade)'s
+  cascade, and no reader name carries a `cascade` prefix ([the enabler and the modifier cascade are two separate systems](../specs/enabler.md)'s
   naming guard, applied one system over). It enumerates `Assets/Data` once,
   parses each file ONCE into memory, registers every type→id before any `mapFrom` (the two-pass rule), maps every
   entity, runs the full-registry FK/reverse pass over the RETAINED in-memory parse (never a disk re-read), and
@@ -1118,5 +1078,5 @@ turn-time/FPS tax.
   runtime-resident type carries no `Json` in its name — so a `Json*`-named type living past load is, by its own
   name, misnamed or misplaced.
 - **After load, nothing string-shaped remains readable** — the reader's half of
-  [DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom): every served value is typed, id-resolved,
+  [materialize at mapFrom](#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling): every served value is typed, id-resolved,
   and ×100 before the first turn runs.

@@ -264,11 +264,6 @@ void CyTeam::changeForceTeamVoteEligibilityCount(int /*VoteSourceTypes*/ eVoteSo
 	m_pTeam->changeForceTeamVoteEligibilityCount((VoteSourceTypes)eVoteSource, iChange);
 }
 
-bool CyTeam::isExtraWaterSeeFrom() const
-{
-	return m_pTeam->isExtraWaterSeeFrom();
-}
-
 bool CyTeam::isMapTrading() const
 {
 	return m_pTeam->isMapTrading();
@@ -710,7 +705,6 @@ void CyTeam::pythonPublish()
 		.def("getForceTeamVoteEligibilityCount", &CyTeam::getForceTeamVoteEligibilityCount)
 		.def("isForceTeamVoteEligible", &CyTeam::isForceTeamVoteEligible)
 		.def("changeForceTeamVoteEligibilityCount", &CyTeam::changeForceTeamVoteEligibilityCount)
-		.def("isExtraWaterSeeFrom", &CyTeam::isExtraWaterSeeFrom)
 		.def("isMapTrading", &CyTeam::isMapTrading)
 		.def("isTechTrading", &CyTeam::isTechTrading)
 		.def("isGoldTrading", &CyTeam::isGoldTrading)

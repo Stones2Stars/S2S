@@ -4,12 +4,12 @@
 //	source DEPOSITS is never decided here -- it comes from that source's own compiled entries, resolved through
 //	the ONE per-entry resolve (MMKernel::resolveEntry).
 //
-//	⚖ A FACT APPLIES; NOTHING IS MARKED AND NOTHING IS REBUILT ([DEC-maintained-sum]). The DOMAIN fact names the
+//	⚖ A FACT APPLIES; NOTHING IS MARKED AND NOTHING IS REBUILT (docs/cascade.md §THE MAINTAINED SUM). The DOMAIN fact names the
 //	SOURCE and carries the DIRECTION as a signed multiplicity (+1 arriving, -1 leaving, ±N for a count), the
 //	compiled index names that source's deposits, and applying them IS the maintenance -- so every slot is correct
 //	at the instant the fact arrives, with nothing deferred and no load-bracket drain to order.
 //	⛔ A MISSED EMIT therefore leaves a loud compounding error that nothing re-derives. That is the design, not a
-//	weakness of it ([DEC-no-self-heal]): it is how the missing fact gets found.
+//	weakness of it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT): it is how the missing fact gets found.
 //
 //	⚠ WHAT IS NOT WIRED HERE, and is a HOLE rather than a decision: the COUNT route (plane B), and the ATOM route
 //	(plane C) for every axis EXCEPT the two that are wired -- plot predicates (mc_applyPlotPredicate) and BONUS
@@ -45,7 +45,7 @@ namespace
 	//	`basePlotYield` is a maintained slot rather than a per-read ring walk, and the only exact delta available
 	//	is the one the resolve itself moved -- the §2a floors make the slot non-linear in a DEPOSIT delta.
 	//	⛔ Every plot-segment apply goes through here. A direct applyPlotSegment call would move the plot and
-	//	leave the city's Σ short, permanently and silently ([DEC-no-self-heal]).
+	//	leave the city's Σ short, permanently and silently (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	//	⚠ WORKED, not owned: only a worked plot is in the city's base, so an unworked plot moves its own slot and
 	//	folds nothing. Its value joins when the worked fact arrives (the MEMBERSHIP leg, applyWorkedPlot).
 	void foldPlotSegment(const CvPlot& kPlot, CvCascadePackage<CvPlot>::PlotSegment eSegment,
@@ -346,7 +346,7 @@ namespace
 		}
 	}
 
-	// ---- PLANE A: THE SOURCE ROUTE -- a source arrived or left, so its deposits are applied ([DEC-maintained-sum]) ----
+	// ---- PLANE A: THE SOURCE ROUTE -- a source arrived or left, so its deposits are applied (docs/cascade.md §THE MAINTAINED SUM) ----
 	//
 	// iMultiplicity is SIGNED and is the whole of the direction: +1 for a source arriving, -1 for one leaving,
 	// ±N where the fact moves a count (an owned-building count, a project count). resolveEntry multiplies the
@@ -368,7 +368,7 @@ namespace
 	// ⛔ THE DIRECTION IS WHICH EVENT ARRIVED. Nothing here decodes a payload to find out which way a source
 	// moved: this function used to carry THREE conventions at once -- an id pairing, a presence boolean in iA,
 	// and a signed count delta in iB -- and all three went with the *_CHANGED facts that needed them
-	// ([DEC-facts-name-happenings]). The payload is now read for HOW MANY and never for which way.
+	// (docs/spine.md §A FACT NAMES THE HAPPENING). The payload is now read for HOW MANY and never for which way.
 	int mc_sourceDirection(const CvSpineEvent& kEvent)
 	{
 		switch (kEvent.iEventId)
@@ -477,7 +477,7 @@ namespace
 	// resolve against THIS city -- which is the whole reason an above-city deposit is folded per city rather
 	// than resolved once and handed out.
 	// Apply ONE resolved entry into whichever yield plane its ORIGIN names. Templated because the planes are
-	// DIFFERENT TYPES ([DEC-hard-typing-or-rollerskate]): no runtime reference could hold either, which is the
+	// DIFFERENT TYPES (AGENTS.md Conventions §Design (hard typing or rollerskate)): no runtime reference could hold either, which is the
 	// property that stops a specialist deposit ever reaching the building plane.
 	template <class TPkg>
 	void mc_applyValueToPlane(const TPkg& kPackage, int iChannel, bool bPercentSide, int64_t iValue)
@@ -495,7 +495,7 @@ namespace
 	// ⛔ THE BOOK HAS ONE HOME, WHATEVER PLANE THE VALUE LANDS ON. It is a per-entry record keyed by entry
 	// pointer, not a yield slot -- and plane C (mc_rebookCity) looks it up to see what plane A already applied.
 	// Split the book across the planes and plane C stops finding plane A's entry and applies a SECOND copy,
-	// which is precisely the double-apply the booking exists to prevent ([DEC-maintained-sum]).
+	// which is precisely the double-apply the booking exists to prevent (docs/cascade.md §THE MAINTAINED SUM).
 	void mc_bookCityEntry(const CvCity& city, const CvModEntry* pEntry, int iChannel, bool bPercentSide,
 		int64_t iValue, int iMultiplicity)
 	{
@@ -522,7 +522,7 @@ namespace
 		// condition asking an active-building or vicinity-provides question evaluates against nothing and
 		// quietly answers false").
 		// ⚑ It is the APPLY path, so the loss is permanent rather than momentary — the deposit is never added to
-		// the package at all, and nothing re-derives it ([DEC-no-self-heal]). BOTH legs are wired here for that
+		// the package at all, and nothing re-derives it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). BOTH legs are wired here for that
 		// reason, not as a fix for any particular channel: adding the second moved no observed rate, so do NOT
 		// read it as the cause of a divergence.
 		InfoValuation::fillEvalCtx(city.getCityContext(), GET_PLAYER(city.getOwner()).getEmpireContext(),
@@ -605,7 +605,7 @@ namespace
 	// ⚑ So the load bracket's `plots` facts are BANKED and drained once at GAME_LOAD_FINISHED, when every city and
 	// plot stands -- the identical buffer-then-fold CityContext uses for its own membership facts, for the same
 	// reason. ⛔ It is NOT a deferred recompute: what is banked is the FACT (its source + signed multiplicity), and
-	// the drain applies exactly the deposits that fact names ([DEC-maintained-sum]). Nothing is re-derived from
+	// the drain applies exactly the deposits that fact names (docs/cascade.md §THE MAINTAINED SUM). Nothing is re-derived from
 	// live state.
 	struct PlotsFanFact
 	{
@@ -618,7 +618,7 @@ namespace
 
 	// ⛔ THE SOURCE'S OWN ENTRIES ARE SELECTED **ONCE**, BEFORE ANY OWNER IS WALKED -- a consumer applies exactly
 	// the deposits the fact names and never sweeps a scope to find out whether it cares
-	// ([DEC-maintained-sum]: "emit liberally, apply precisely"). The overwhelming majority of sources author no
+	// (docs/cascade.md §THE MAINTAINED SUM: "emit liberally, apply precisely"). The overwhelming majority of sources author no
 	// `plots` deposit at all, and for those this must cost NOTHING: selecting inside the plot loop instead made
 	// every building fact walk every city's plots to discover it had nothing to do, which is a blanket sweep
 	// wearing an event's clothes.
@@ -811,7 +811,7 @@ namespace
 				// and what it MAKES; the census carried only the first, so a food deficit could be attributed to
 				// the threshold and never to a term of the rate.
 				// ⛔ The terms come OUT of the real combine rather than being re-derived here
-				// ([DEC-single-implementation]) -- a census that recomputed its own decomposition could disagree
+				// (docs/architecture/patterns.md §DRY (single implementation)) -- a census that recomputed its own decomposition could disagree
 				// with the value it claims to explain, which is the one thing it must never do.
 				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 				{
@@ -858,7 +858,7 @@ namespace
 	// its own entries (resolveEntry declines any entry not at the scope being applied), so nothing here decides
 	// what a source deposits -- only WHERE the owner objects are.
 	// ⛔ eOrigin is REQUIRED and has NO DEFAULT: a new yield source must state which plane it deposits into
-	// ([DEC-hard-typing-or-rollerskate]). A default would silently send the next provider to the building plane,
+	// (AGENTS.md Conventions §Design (hard typing or rollerskate)). A default would silently send the next provider to the building plane,
 	// which is the exact bug this split exists to end.
 	void mc_applySourceDeposits(const CvInfo* pSourceInfo, int iMultiplicity,
 		const CvPlayer* pPlayer, const CvCity* pCity, const CvPlot* pPlot,
@@ -879,7 +879,7 @@ namespace
 
 		// PLOT: the plot the fact NAMES, and no other. A plot-scope deposit is authored only by a PLOT-RESIDENT
 		// source, whose output is its own tile's -- an effect on a NEIGHBOURING tile is the deliveryguy's and is
-		// authored on that tile's improvement ([DEC-deliveryguy]). So a plot-scope entry with no named plot has
+		// authored on that tile's improvement (docs/cascade.md §4 (the deliveryguy ownership rule)). So a plot-scope entry with no named plot has
 		// no target by construction and nothing is dropped by declining.
 		if (pPlot != NULL)
 		{
@@ -905,7 +905,7 @@ namespace
 					// DIFFERENCE between what is booked and what the gate now owes, so an entry plane A applied
 					// while leaving the book at zero would be re-applied in full by the next crossing (a double) and
 					// never withdrawn when its gate later turns off (a miss). Booking every conditioned entry the
-					// moment it is applied is what makes that difference exact ([DEC-maintained-sum]).
+					// moment it is applied is what makes that difference exact (docs/cascade.md §THE MAINTAINED SUM).
 					if (pEntry->enabled != NULL || pEntry->disabled != NULL)
 					{
 						const CvCascadePackage<CvPlot>::BookedDeposit kPrev =
@@ -917,7 +917,7 @@ namespace
 					// unanswerable rather than merely unlogged: no served surface carries a plot package, so a
 					// plot-scope deposit left no trace anywhere. "Does a resource fold its yield when its fact
 					// fires?" is the shape of it -- an EVENT-DRIVEN fold that cannot be observed is one nobody can
-					// tell apart from a fold that never happens ([DEC-obs-scale]).
+					// tell apart from a fold that never happens (docs/spine.md §The reconstruction bar (Orwell)).
 					CascadeChannelRegistry::reportDepositApply(
 						(pSourceInfo != NULL) ? pSourceInfo->getType() : "?", iChannel, CASC_SCOPE_PLOT,
 						false, iValue, (int)pPlot->getOwner(), -1, szOnFact);
@@ -1001,7 +1001,7 @@ namespace
 		}
 
 		// EMPIRE and TEAM: both read the empire ctx (team is the TECH BRIDGE and holds no context of its own --
-		// every team fact is asked of the player, [DEC-scope-contexts]).
+		// every team fact is asked of the player, docs/cascade.md §The contexts (plot/city/player own one live-state context)).
 		if (pPlayer != NULL)
 		{
 			CvCascadeEvalCtx evalCtx;
@@ -1079,10 +1079,10 @@ namespace
 	// correctness depend on a guard staying in step with an emit order nobody controls; this depends on the
 	// package's own record of what it holds, which cannot disagree with what was applied.
 	// ⛔ Not a recompute and not a sweep: the worklist is the owner's HELD sources, and each one goes through the
-	// ONE per-entry resolve ([DEC-single-implementation]). A source nobody holds is never reached.
+	// ONE per-entry resolve (docs/architecture/patterns.md §DRY (single implementation)). A source nobody holds is never reached.
 	// The owner's HELD empire-level sources (team techs + projects, adopted civics, active traits, heritages) --
 	// the ONE enumeration, shared by the city fold below and the plots-fan membership fold
-	// ([DEC-single-implementation]: a second copy of this walk would drift the moment a source kind is added).
+	// (docs/architecture/patterns.md §DRY (single implementation): a second copy of this walk would drift the moment a source kind is added).
 	void mc_collectOwnerHeldSources(const CvPlayer& kOwner, std::vector<const CvInfo*>& heldSources)
 	{
 		const CvTeam& kTeam = GET_TEAM(kOwner.getTeam());
@@ -1186,7 +1186,7 @@ namespace
 	// plots standing in the working set AT THAT MOMENT; without this leg a plot that changes hands afterwards
 	// keeps the departed owner's deposits in PLOTSEG_REST and never receives the new owner's -- the two legs
 	// together are what keep the segment total, and dropping either leaves it permanently wrong with nothing to
-	// re-derive it ([DEC-no-self-heal]).
+	// re-derive it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// ⚑ This is also where the DEPARTED owner's obligation on an ownership flip lives: CvPlot::setOwner calls
 	// updateWorkingCity ([contexts.md]: a city cannot work a plot it does not own), so the REMOVED crossing names
 	// the departing city and owner while the ADDED names the arriving ones -- one route, both ends, and the
@@ -1239,7 +1239,7 @@ namespace
 	// ⛔ THE LOAD-BRACKET BANK FOR ATOM-ROUTED DEPOSITS -- an ORDERING fact, never a staleness mechanism.
 	// MEASURED: 749,264 of the bonus route's deposits are dropped during the load because the gated deposit's
 	// SOURCE is not in that city's package yet -- the atom crossing arrives while the buildings it would modify
-	// are still activating. The drop is silent and permanent ([DEC-no-self-heal]).
+	// are still activating. The drop is silent and permanent (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	// ⚖ WHAT IS BANKED IS THE **SKIPPED DEPOSIT**, NOT THE CROSSING, and that is what makes the drain exact.
 	// A replayed CROSSING would have to withdraw before it applies, and the withdrawal can only be exact if it
 	// resolves against the verdict the deposit was BOOKED under -- which at load is whatever held when its
@@ -1282,7 +1282,7 @@ namespace
 	// The per-pass OUTCOME tally. ⛔ It exists because "the route fired" and "the route MOVED something" are
 	// different claims, and only the second one matters: a pass that finds 389 deposits and applies none looks
 	// exactly like a pass that finds none, from the outside. Counting the three ways a deposit is dropped is what
-	// separates an empty index from an unapplied source from a refused condition ([DEC-no-guessing]).
+	// separates an empty index from an unapplied source from a refused condition (AGENTS.md Conventions §Conduct (do not guess)).
 	struct McGatedTally
 	{
 		int iFound;
@@ -1392,7 +1392,7 @@ namespace
 					else              team.getCascadePackage().applyFlat(iChannel, iValue);
 					// ⛔ The census covers EVERY plane, and the two that did not report are exactly the two that
 					// hid a defect: an empire slot can be wrong by orders of magnitude with the whole deposit
-					// census reading clean, because nothing on it ever named this write ([DEC-obs-scale] -- an
+					// census reading clean, because nothing on it ever named this write (docs/spine.md §The reconstruction bar (Orwell) -- an
 					// apply nobody can see is one nobody can attribute).
 					CascadeChannelRegistry::reportDepositApply(
 						(kGated.source != NULL) ? kGated.source->getType() : "?", iChannel, CASC_SCOPE_TEAM,
@@ -1531,7 +1531,7 @@ namespace
 	// because a PAST-TENSE fact has already moved the state; the BOOK remembers it directly, which is both exact
 	// and cheaper ([state-repositories.md] § THE INVARIANT).
 	// ⛔ Still not a recompute: the worklist is exactly the deposits the arriving FACT names, never a sweep of the
-	// package or a re-derivation of state ([DEC-no-self-heal]).
+	// package or a re-derivation of state (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 	void mc_bookGated(const std::vector<DepositIndex::GatedDeposit>* pGated, const CvCity& kCity,
 		McGatedTally* pTally)
 	{
@@ -1542,7 +1542,7 @@ namespace
 		// ⚑ The ctx is filled LAZILY, on the first entry that actually has a source in this package. Filling it is
 		// the expensive part (the whole eval fill plus the enabler's operating set), and the turn-cadence route
 		// asks this of EVERY city of EVERY player -- where the overwhelming majority hold none of the atom's
-		// sources and bail on an O(1) dictionary test ([DEC-turn-time-is-king]).
+		// sources and bail on an O(1) dictionary test (docs/cascade.md §THE PER-SCOPE PACKAGE MODEL (turn time is king)).
 		CvCascadeEvalCtx evalCtx;
 		bool bCtxFilled = false;
 		for (size_t iGated = 0; iGated < pGated->size(); ++iGated)
@@ -1618,7 +1618,7 @@ namespace
 	// ⛔ PLANE C ON THE PLOT PLANE -- the half that did not exist. mc_applyGated's plot branch needs a PLOT, and
 	// every atom route passed NULL, so NO plot-scope deposit was ever re-booked by ANY crossing: a tech acquired
 	// after a farm is built never upgraded that farm's yield, and nothing would ever have corrected it
-	// ([DEC-no-self-heal]). At LOAD it hid, because the improvement facts stream while every tech is already
+	// (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). At LOAD it hid, because the improvement facts stream while every tech is already
 	// held, so the conditions resolved true on the way in -- which is exactly why it survived: it is invisible on
 	// the one path anybody measures.
 	// ⚑ Same IDEMPOTENT booking as the city plane: want-vs-booked, so it can never stack on the apply that the
@@ -1829,7 +1829,7 @@ namespace
 	// absent. Pass 1 pins the atom to its OLD verdict and withdraws what WAS applying; pass 2 pins the NEW verdict
 	// and applies what SHOULD be. Nothing is re-derived and nothing is swept: each pass is the ordinary resolve
 	// against a pinned atom, so this is a DELTA route like plane A and plane B -- never a re-evaluation of state
-	// ([DEC-no-self-heal] stands: no reader repairs itself, a FACT moves the sum).
+	// (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT stands: no reader repairs itself, a FACT moves the sum).
 	// ⚑ The pair is also what makes `enabled` and `disabled` gates uniform without a special case: a
 	// `disabled: BONUS_X` deposit was applying while the bonus was ABSENT, so pass 1 withdraws it on arrival and
 	// pass 2 re-applies it on loss -- the same two lines, read in the other direction.
@@ -1932,18 +1932,18 @@ namespace
 	// the fully-read game -- the sources are all in their packages and every store is final.
 	// ⛔ It is NOT a recompute and NOT a sweep: the worklist is the exact set of deposits the banked FACTS named
 	// and could not reach, and each one goes through the ONE per-entry resolve like every other apply
-	// ([DEC-single-implementation]). Nothing is re-derived from live state, so [DEC-no-self-heal] stands -- a
+	// (docs/architecture/patterns.md §DRY (single implementation)). Nothing is re-derived from live state, so docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT stands -- a
 	// deposit nobody's fact named is still never applied here.
 	// ⚑ NO HYPOTHETICAL: the pin exists to reconstruct a verdict that has already moved on, and at the drain the
 	// live verdict IS the one in force. A deposit whose atom ended the load un-held simply resolves false and is
 	// correctly not applied.
 	// ONE banked deposit applied at the drain: the source is present, the state is final, so the live verdict is
 	// the one in force and no pin is needed. Shared by both drains so the two can never disagree about what
-	// "apply an owed arrival" means ([DEC-single-implementation]).
+	// "apply an owed arrival" means (docs/architecture/patterns.md §DRY (single implementation)).
 	// A drain's outcome, PER CHANNEL. ⛔ A bulk refusal count is unfalsifiable: 566,224 refusals are exactly what
 	// a correct drain looks like AND exactly what a broken condition looks like. Split by channel it stops being
 	// either -- a channel refusing far out of proportion to its siblings is a finding, and one refusing in
-	// proportion is evidence the refusals are real ([DEC-no-guessing]).
+	// proportion is evidence the refusals are real (AGENTS.md Conventions §Conduct (do not guess)).
 	struct McDrainByChannel
 	{
 		std::map<int, int> refused;
@@ -1954,7 +1954,7 @@ namespace
 	// mc_drainApplyOne declines for three unrelated reasons and the route line summed them into one number, which
 	// cannot tell a bank storing NEGATIVE SPACE (the city simply never holds that source) from a bank duplicating
 	// plane A (the deposit is already booked). Those two have OPPOSITE fixes -- shrink what is banked, versus
-	// delete the bank -- so collapsing them makes the number unactionable ([DEC-no-guessing]: at a gap, EMIT the
+	// delete the bank -- so collapsing them makes the number unactionable (AGENTS.md Conventions §Conduct (do not guess): at a gap, EMIT the
 	// decomposition; a bare total supports neither VERIFY nor ASK).
 	struct McDrainReasons
 	{
@@ -2046,7 +2046,7 @@ namespace
 	// route reaches during a save read; its CITY half is served by the two-leg fold -- a city that starts existing
 	// folds the city-scope deposits of every source its owner already holds ([modifier.md] §5) -- so replaying the
 	// crossing over the owner's cities here would be a second maintenance surface for work another route already
-	// does ([roadmap.md]: a wrong wiring is removed on sight).
+	// does (a wrong wiring is removed on sight, [validation.md]).
 	void mc_drainBankedAtomFanPlots()
 	{
 		for (std::map<std::pair<std::string, int>, bool>::const_iterator it = s_bankedAtomFans.begin();
@@ -2231,7 +2231,7 @@ namespace
 			// A player's DIFFICULTY -- established at init, announced by the load reseed, or moved by flexible
 			// difficulty. The handicap is an ORDINARY modifier source: the fact names it, so its compiled
 			// deposits apply into this player's packages here (plane A), and a difficulty change's
-			// REMOVED(old) + ADDED(new) pair is the exact withdraw-then-apply ([DEC-maintained-sum]).
+			// REMOVED(old) + ADDED(new) pair is the exact withdraw-then-apply (docs/cascade.md §THE MAINTAINED SUM).
 			case SEVT_EMPIRE_HANDICAP_ADDED:
 			case SEVT_EMPIRE_HANDICAP_REMOVED:
 				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumHandicapInfos())
@@ -2297,7 +2297,7 @@ namespace
 				}
 				break;
 			}
-			// The EMPIRE-LEVEL building pairs (DEC-empire-level-buildings) -- the city pair's split, one scope
+			// The EMPIRE-LEVEL building pairs (docs/specs/enabler.md §2 (empire-level buildings)) -- the city pair's split, one scope
 			// up: the member's OWN deposits ride its player-side OPERATE crossing (a held-but-dormant member
 			// deposits nothing), and plane-C atom re-resolution rides the held crossing. No city -- the deposits
 			// are empire-scope by curation and land in the player's package, rolling down at the read.
@@ -2385,7 +2385,7 @@ namespace
 					// PLANE C: what everything ELSE deposits BECAUSE this city holds the resource -- the building
 					// yields gated on it. ⛔ Without this the two are silently different questions with one answer:
 					// the resource's own deposits move and every deposit CONDITIONED on it keeps whatever verdict it
-					// was booked at, forever ([DEC-no-self-heal] -- nothing re-derives a maintained sum).
+					// was booked at, forever (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT -- nothing re-derives a maintained sum).
 					// ⚑ It falls hardest on FOOD, whose building deposits are gated overwhelmingly on BONUS_* atoms
 					// where production's are gated on TECH_* -- techs sit on the team and are already correct when
 					// the cities deserialize, so food alone read short while every other channel looked right.
@@ -2431,7 +2431,7 @@ namespace
 			// replays them at endDeferredBonusProcessing against the entry snapshot). Every one of those lands in
 			// the case above, naming its bonus. Re-gating the whole owner on the membership fact as well would be
 			// the same work a second time -- a blanket bought because the fact used to name nothing
-			// ([DEC-facts-name-happenings]).
+			// (docs/spine.md §A FACT NAMES THE HAPPENING).
 			// ---- plot substrate changes: the plot's isolated base package refills whole (the substrate IS
 			// ---- the base; the event carries no old-type to narrow by) + the working city's rates ----
 			// ---- THE UNIT PLANE: resolved values, not a package (state-repositories.md). The model names
@@ -2597,7 +2597,7 @@ namespace
 			// never fans to a neighbour: a substrate swap that moves several verdicts in opposite directions
 			// (grassland to hills LOSES IS_FLATLANDS and GAINS HAS_HILLS) simply emits one fact per bit, and the
 			// emitter is what guarantees both are sent. That is the whole reason the pairs exist
-			// ([DEC-facts-name-happenings]).
+			// (docs/spine.md §A FACT NAMES THE HAPPENING).
 			// ⛔ So there are NO cases here for plot TYPE / river / irrigation / landmark / city / worked. They are
 			// not deposit KEYS (gt_foldInfo keys targeted entries on improvement / terrain / feature / bonus /
 			// route ONLY), so a CONDITIONED deposit was the only thing that could read them -- which is exactly
@@ -2643,7 +2643,7 @@ namespace
 			// the per-read walk [state-repositories.md] bans and which hung a late-game turn inside the citizen
 			// assignment. It is a MAINTAINED SLOT (CvCascadePackage::plotBaseFlat), and this is its MEMBERSHIP
 			// leg; the RESOLVE leg is foldPlotSegment above. ⚠ The two together are total -- drop either and the
-			// slot goes permanently short, with nothing to re-derive it ([DEC-no-self-heal]).
+			// slot goes permanently short, with nothing to re-derive it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 			case SEVT_PLOT_WORKED_ADDED:
 			case SEVT_PLOT_WORKED_REMOVED:
 			{
@@ -2810,7 +2810,7 @@ namespace
 			// the city's fold, so a deposit gated on one must be applied or withdrawn exactly here. Without this
 			// route the deposits gated on IS_GOVERNMENT_CENTER and HAS_FRESHWATER were never re-resolved at all:
 			// they had no fact of their own that the modifier consumed, so the slot kept whatever it was given
-			// when the source arrived and nothing could ever correct it ([DEC-no-self-heal]).
+			// when the source arrived and nothing could ever correct it (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
 			// ⛔ POWER IS DELIBERATELY ABSENT. Its predicate reads the GATED verdict (CvCity::isPowered), which
 			// has its own fact above; routing the store crossing here as well would apply the same gate twice --
 			// and the two do not even agree (a plant finished during a blackout moves this store and delivers
@@ -2960,7 +2960,7 @@ namespace
 				// Assets/Data (all empire-scope: research 565, culture 565) kept whatever verdict they were booked
 				// at when their source arrived -- for the rest of the game.
 				// ⚑ It reads as wired, which is why it survived: a token and a type are the same string here, and an
-				// empty list is indistinguishable from a list with nothing to do ([DEC-no-guessing] -- the tally is
+				// empty list is indistinguishable from a list with nothing to do (AGENTS.md Conventions §Conduct (do not guess) -- the tally is
 				// what tells them apart).
 				// ⚑ Re-BOOKED, not crossed: a threshold has no held/not-held verdict to pin (see mc_bookGatedEmpire).
 				McGatedTally kEraTally;
@@ -3085,7 +3085,7 @@ namespace
 			// WORKED pair moves the city's worked-plot Σ. Routing any of it here as well would apply one
 			// happening twice. The IS_OWNED verdict is PlotContext's -- it derives the bit off this fact and
 			// announces the crossing, and the predicate route serves the deposits gated on it. Cross-scope
-			// receiver totals store nothing ([DEC-uniform-cache-shape]), so there is no empire-side slot to
+			// receiver totals store nothing (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE), so there is no empire-side slot to
 			// move for either owner.
 			case SEVT_PLOT_OWNER_ADDED:
 			case SEVT_PLOT_OWNER_REMOVED:
@@ -3131,7 +3131,7 @@ namespace
 			}
 			// ---- the turn boundary (game scope only): the channel-set census's new-game fallback, for the run
 			// ---- that never passes through a load. NOT a self-heal site -- nothing is marked here
-			// ---- ([DEC-no-self-heal]). ----
+			// ---- (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT). ----
 			case SEVT_TURN_ENDED:
 			{
 				if (kEvent.iC == -1)
@@ -3177,7 +3177,7 @@ namespace
 		// fact NAMES the source, so it is an ordinary plane-A apply above.)
 		// ⚠ This IS a whole-scope blanket, and it is the SANCTIONED kind: the fact is not deposit-addressed, so no
 		// union of per-source routes can express it -- exactly the SEVT_AREAS_RECALCULATED shape. It is NOT the
-		// banned self-heal, which papers over a MISSED invalidation ([DEC-no-self-heal]); this ANNOUNCES a genuine
+		// banned self-heal, which papers over a MISSED invalidation (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT); this ANNOUNCES a genuine
 		// wholesale one. The caller is also vanishingly rare (a WB toggle), so the "emit liberally, mark precisely"
 		// cost argument does not bite: there is nothing finer to derive.
 		static void mc_markPlayerWhole(const CvPlayer* pPlayer, const char* szSource)

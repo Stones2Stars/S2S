@@ -11,10 +11,10 @@
 //	par.2): identity/cost are bare typed intrinsics; skills/tags are the par.8 held-classification bitsets
 //	(hold-vs-provide: a unit HAS its skills/tags); builds / spread / groupSpawn / vision / sizeMatters /
 //	outcomes are par.8-par.9 bespoke typed sections; every magnitude read is a load-compiled fetch
-//	([DEC-materialize-at-mapfrom]); kind and scope are separate parameters ([DEC-scope-is-an-axis]); every
-//	magnitude getter IS x100 ([DEC-fixedpoint-x100]); the type-keyed vs-entries (terrain/feature/unitCombat/
+//	(docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate parameters (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); every
+//	magnitude getter IS x100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the type-keyed vs-entries (terrain/feature/unitCombat/
 //	domain/flanking/vsUnit targets) stay compiled ENTRY-LIST reads by design; no legacy getter name returns
-//	([DEC-new-getter-surface]).
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
 //
 
 #include "CvInfo.h"

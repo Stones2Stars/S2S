@@ -106,7 +106,7 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 		if (jsonIdStr(*txt, "prereqMax", szMax) && !szMax.empty()) m_szPrereqMaxDisplayText = CvWString(szMax.c_str());
 	}
 
-	// -- the property-engine SOURCE bridge (property-audit.md increments A/B/4; DEC-data-first / DEC-no-xml-into-game).
+	// -- the property-engine SOURCE bridge (property-audit.md increments A/B/4; docs/specs/validation.md §observation surface (data migration is never deferred) / AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
 	// The KEEP-legacy CvPropertySolver reads m_PropertyManipulators; feed the property's OWN manipulators from the
 	// curated JSON: decay (<self>.{city|plot}.percent -> CvPropertySourceDecay toward targetLevel), the per-POPULATION
 	// baseline (<self>.city.flat + per:POPULATION -> AttributeConstant), the spatial diffuse propagators (the
@@ -127,7 +127,7 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 			if (e->scope != CASC_SCOPE_CITY && e->scope != CASC_SCOPE_PLOT) continue;
 			if (e->enabled != NULL || e->disabled != NULL) continue;   // no property authors a conditioned own-source; fail-closed skip
 			const GameObjectTypes eObj = (e->scope == CASC_SCOPE_PLOT) ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
-			// ⛔ The DECAY rate is a PERCENT, and a percent is NOT scaled ([DEC-fixedpoint-x100]) -- it arrives as
+			// ⛔ The DECAY rate is a PERCENT, and a percent is NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- it arrives as
 			// the human percent the decay source consumes, so it does NOT take the reduction its FLAT neighbours
 			// below do. Dividing it truncates a single-digit rate to zero and switches decay off entirely.
 			if (e->unit == CASC_UNIT_PERCENT)
