@@ -545,10 +545,12 @@ class CvDomesticAdvisor:
 		return ""
 
 	def calculateNetHappiness(self, city, szKey="", arg=0):
-		return city.happyLevel() - city.unhappyLevel(0)
+		aWellbeing = city.getWellbeing()
+		return aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER]
 
 	def calculateNetHealth(self, city, szKey="", arg=0):
-		return city.goodHealth() - city.badHealth(False)
+		aWellbeing = city.getWellbeing()
+		return aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]
 
 	def calculateGrowth(self, CyCity, szKey, arg):
 		# Turns til Growth
@@ -980,21 +982,21 @@ class CvDomesticAdvisor:
 
 	def findGlobalYieldRateRank(self, CyCity, szKey, arg):
 
-		y = CyCity.getYieldRate(arg)
+		y = CyCity.getYields()[arg]
 		aList = []
 		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
-				aList.append(CyCity.getYieldRate(arg))
+				aList.append(CyCity.getYields()[arg])
 
 		return len([i for i in aList if i > y]) + 1
 
 	def findGlobalCommerceRateRank(self, CyCity, szKey, arg):
 
-		y = CyCity.getCommerceRate(arg)
+		y = CyCity.getCommerces()[arg]
 		aList = []
 		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
-				aList.append(CyCity.getCommerceRate(arg))
+				aList.append(CyCity.getCommerces()[arg])
 
 		return len([i for i in aList if i > y]) + 1
 

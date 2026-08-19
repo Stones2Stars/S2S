@@ -249,7 +249,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 
 				CivInfoFnx = [
 					pPlayer.getPower(), pPlayer.getAssets(), pPlayer.getGold(),
-					pPlayer.getCommerceRate(CommerceTypes.COMMERCE_GOLD),
+					pPlayer.getCommerces()[CommerceTypes.COMMERCE_GOLD],
 					pPlayer.calculateResearchRate(TechTypes.NO_TECH),
 					pPlayer.getTotalMaintenance(), pPlayer.getCivicUpkeep(False),
 					pPlayer.calculateUnitCost(), pPlayer.calculateUnitSupply(),

@@ -390,7 +390,7 @@ class CvFinanceAdvisor:
 					# Research is subject to modifiers.
 					iRate = CyPlayer.calculateResearchRate(CyPlayer.getCurrentResearch())
 				else:
-					iRate = CyPlayer.getCommerceRate(CommerceTypes(iType))
+					iRate = CyPlayer.getCommerces()[iType]
 				szRate = uFont2b + str(iRate) + iconCommerceList[iType]
 				screen.setLabelAt(aName(), Pnl, szRate, 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
 				y += Btnsize
@@ -442,7 +442,7 @@ class CvFinanceAdvisor:
 		eWealth = GC.getInfoTypeForString("PROCESS_WEALTH")
 		for CyCity in CyPlayer.cities():
 			if not CyCity.isDisorder():
-				fCityTaxes = CyCity.getYieldRate(YieldTypes.YIELD_COMMERCE) * iTaxRate / 100.0
+				fCityTaxes = CyCity.getYields()[YieldTypes.YIELD_COMMERCE] * iTaxRate / 100.0
 				fTaxes += fCityTaxes
 
 				fCityBuildings = 0.0
@@ -475,7 +475,7 @@ class CvFinanceAdvisor:
 
 				fCityWealth = 0.0
 				if CyCity.isProductionProcess() and CyCity.getProductionProcess() == eWealth:
-					fCityWealth = CyCity.getProductionToCommerceModifier(eComGold) * CyCity.getYieldRate(YieldTypes.YIELD_PRODUCTION) / 100.0
+					fCityWealth = CyCity.getProductionToCommerceModifier(eComGold) * CyCity.getYields()[YieldTypes.YIELD_PRODUCTION] / 100.0
 					fWealth += fCityWealth
 					iWealthCount += 1
 
