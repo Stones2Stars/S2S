@@ -818,7 +818,7 @@ class CvDomesticAdvisor:
 
 	def calculatePower(self, city, szKey, arg):
 		szReturn = u""
-		if city.isPower():
+		if city.getFlags()[CityFlagKind.CITY_FLAG_POWER]:
 			szReturn += unichr(8872)
 		return szReturn
 
@@ -1076,7 +1076,7 @@ class CvDomesticAdvisor:
 							bestOrder = iType
 							bestData = value
 					elif type == "Spaceship":
-						if not CyCity.isPower():
+						if not CyCity.getFlags()[CityFlagKind.CITY_FLAG_POWER]:
 							if False:   # ⚠ building isPower() has no published read yet
 								value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 								if value > bestData:
@@ -1123,7 +1123,7 @@ class CvDomesticAdvisor:
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
-							if not CyCity.isPower():
+							if not CyCity.getFlags()[CityFlagKind.CITY_FLAG_POWER]:
 								if False:   # ⚠ building isPower() has no published read yet
 									value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 									if value > bestData:

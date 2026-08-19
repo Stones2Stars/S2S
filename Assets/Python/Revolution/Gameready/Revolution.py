@@ -1150,7 +1150,7 @@ class Revolution:
 				cityDistCommBonus += iCityCulterModifier
 				cityDistCommBonus += iCityGoldModifier / 2
 
-			bCityisPower = pCity.isPower()
+			bCityisPower = pCity.getFlags()[CityFlagKind.CITY_FLAG_POWER]
 			if bCityisPower :
 				cityDistCommBonus += 150
 			iCityAirlift = pCity.getMaxAirlift()

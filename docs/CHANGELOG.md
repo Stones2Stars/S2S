@@ -12,6 +12,12 @@
 
 ## Unreleased
 
+- **Three power checks in Python were calling a binding that does not exist.** `CyCity` publishes no
+  `isPower()`, so every one of those call sites raised at runtime: the "unlimited power" random-event
+  trigger, the Revolution index's power bonus, and the domestic advisor's power column (plus its
+  spaceship build advice). They now read `getFlags()[CityFlagKind.CITY_FLAG_POWER]`, which is the
+  published route to that fact. ⚑ Modders: city status bits are read off the `getFlags()` list, not
+  from per-bit accessors.
 - **Optics no longer claims to extend how far your ships see.** The `canSeeFurtherFromWater`
   capability (legacy `bExtraWaterSeeFrom`) is removed outright. Its effect ran through a vision
   accessor the rebuilt sight model deleted, so the ability had already stopped doing anything —
