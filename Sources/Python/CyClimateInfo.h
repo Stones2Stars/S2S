@@ -30,10 +30,8 @@ public:
 	// Latitude bands -- the generator's own float units (see the note above).
 	float getSnowLatitudeChange(int iClimate) const;
 	float getTundraLatitudeChange(int iClimate) const;
-	float getGrassLatitudeChange(int iClimate) const;
 	float getDesertBottomLatitudeChange(int iClimate) const;
 	float getDesertTopLatitudeChange(int iClimate) const;
-	float getIceLatitude(int iClimate) const;
 	float getRandIceLatitude(int iClimate) const;
 
 	static void pythonPublish();

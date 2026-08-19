@@ -178,11 +178,6 @@ bool CyPlayer::isNPC() const
 	return m_pPlayer->isNPC();
 }
 
-bool CyPlayer::isHominid() const
-{
-	return m_pPlayer->isHominid();
-}
-
 std::wstring CyPlayer::getName() const
 {
 	return m_pPlayer->getName();
@@ -191,11 +186,6 @@ std::wstring CyPlayer::getName() const
 void CyPlayer::setName(std::wstring szNewValue)
 {
 	m_pPlayer->setName(szNewValue);
-}
-
-std::wstring CyPlayer::getNameForm(int iForm) const
-{
-	return m_pPlayer->getName((uint)iForm);
 }
 
 std::wstring CyPlayer::getNameKey() const
@@ -248,19 +238,9 @@ bool CyPlayer::isWhiteFlag() const
 	return m_pPlayer->isWhiteFlag();
 }
 
-std::wstring CyPlayer::getStateReligionName(int iForm) const
-{
-	return m_pPlayer->getStateReligionName((int)iForm);
-}
-
 std::wstring CyPlayer::getStateReligionKey() const
 {
 	return m_pPlayer->getStateReligionKey();
-}
-
-std::wstring CyPlayer::getBestAttackUnitName(int iForm) const
-{
-	return m_pPlayer->getBestAttackUnitName((uint)iForm);
 }
 
 std::wstring CyPlayer::getWorstEnemyName() const
@@ -273,19 +253,9 @@ int /*ArtStyleTypes*/ CyPlayer::getArtStyleType() const
 	return (int) m_pPlayer->getArtStyleType();
 }
 
-std::string CyPlayer::getUnitButton(int eUnit) const
-{
-	return m_pPlayer->getUnitButton((UnitTypes)eUnit);
-}
-
 int CyPlayer::countNumCoastalCities() const
 {
 	return m_pPlayer->countNumCoastalCities();
-}
-
-int CyPlayer::countOwnedBonuses(int /*BonusTypes*/ eBonus) const
-{
-	return m_pPlayer->countOwnedBonuses((BonusTypes)eBonus);
 }
 
 int CyPlayer::countNumBuildings(int /*BuildingTypes*/ eBuilding) const
@@ -356,11 +326,6 @@ bool CyPlayer::isTurnActive() const
 void CyPlayer::receiveGoody(const CyPlot* pPlot, int /*GoodyTypes*/ iIndex, const CyUnit* pUnit)
 {
 	m_pPlayer->receiveGoody(pPlot->getPlot(), (GoodyTypes) iIndex, pUnit->getUnit());
-}
-
-void CyPlayer::doGoody(const CyPlot* pPlot, const CyUnit* pUnit)
-{
-	m_pPlayer->doGoody(pPlot->getPlot(), pUnit->getUnit());
 }
 
 bool CyPlayer::canFound(int iX, int iY) const
@@ -522,11 +487,6 @@ bool CyPlayer::canRevolution() const
 	return m_pPlayer->canRevolution(NULL);
 }
 
-bool CyPlayer::canChangeReligion() const
-{
-	return m_pPlayer->canChangeReligion();
-}
-
 bool CyPlayer::canConvert(int /*ReligionTypes*/ iIndex) const
 {
 	return m_pPlayer->canConvert((ReligionTypes)iIndex);
@@ -545,11 +505,6 @@ bool CyPlayer::hasHolyCity(int /*ReligionTypes*/ eReligion) const
 int CyPlayer::countHolyCities() const
 {
 	return m_pPlayer->countHolyCities();
-}
-
-bool CyPlayer::hasHeadquarters(int /*CorporationTypes*/ eCorporation) const
-{
-	return m_pPlayer->hasHeadquarters((CorporationTypes)eCorporation);
 }
 
 int CyPlayer::getCivicAnarchyLength(const python::list& /*CivicTypes*/ lNewCivics) const
@@ -582,13 +537,6 @@ int CyPlayer::greatPeopleThresholdNonMilitary() const
 int CyPlayer::getGreatGeneralsThresholdModifier() const
 {
 	return m_pPlayer->getGreatGeneralsThresholdModifier();
-}
-
-int CyPlayer::specialistYield(int /*SpecialistTypes*/ eSpecialist, int /*YieldTypes*/ eCommerce) const
-{
-	// THE READ EDGE -- the one place a ×100 amount becomes human (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)). The engine carries
-	// ×100 natively end to end; Python is a reader, so the ÷100 happens HERE and nowhere upstream.
-	return m_pPlayer->specialistYield((SpecialistTypes)eSpecialist, (YieldTypes)eCommerce) / 100;
 }
 
 CyPlot* CyPlayer::getStartingPlot() const
@@ -765,11 +713,6 @@ void CyPlayer::changeGreatGeneralsThresholdModifier(int iChange)
 	m_pPlayer->changeGreatGeneralsThresholdModifier(iChange);
 }
 
-int CyPlayer::getFeatureProductionModifier() const
-{
-	return m_pPlayer->getFeatureProductionModifier();
-}
-
 int CyPlayer::getBestUnitType(int /*UnitAITypes*/ eUnitAI) const
 {
 	return (int) m_pPlayer->getBestUnitType(UnitAITypes(eUnitAI));
@@ -778,11 +721,6 @@ int CyPlayer::getBestUnitType(int /*UnitAITypes*/ eUnitAI) const
 bool CyPlayer::isNonStateReligionCommerce() const
 {
 	return m_pPlayer->isNonStateReligionCommerce();
-}
-
-int CyPlayer::getRevIdxNational() const
-{
-	return m_pPlayer->getRevIdxNational();
 }
 
 int CyPlayer::getRevIdxDistanceModifier() const
@@ -1056,11 +994,6 @@ int CyPlayer::getPlayerTextColorA() const
 	return m_pPlayer->getPlayerTextColorA();
 }
 
-int CyPlayer::getYieldRateModifier(YieldTypes eIndex) const
-{
-	return m_pPlayer->getYieldRateModifier(eIndex);
-}
-
 int CyPlayer::getCommercePercent(int /*CommerceTypes*/ eIndex) const
 {
 	return m_pPlayer->getCommercePercent((CommerceTypes)eIndex);
@@ -1214,11 +1147,6 @@ int CyPlayer::getHasReligionCount(int /*ReligionTypes*/ iIndex) const
 int CyPlayer::getHasCorporationCount(int /*CorporationTypes*/ iIndex) const
 {
 	return m_pPlayer->getHasCorporationCount((CorporationTypes)iIndex);
-}
-
-bool CyPlayer::isSpecialistValid(int /*SpecialistTypes*/ iIndex) const
-{
-	return m_pPlayer->isSpecialistValid((SpecialistTypes)iIndex);
 }
 
 bool CyPlayer::isResearchingTech(int /*TechTypes*/ iIndex) const
@@ -1571,11 +1499,6 @@ int CyPlayer::getNumSelectionGroups() const
 	return m_pPlayer->getNumSelectionGroups();
 }
 
-CySelectionGroup* CyPlayer::getSelectionGroup(int iID) const
-{
-	return new CySelectionGroup(m_pPlayer->getSelectionGroup(iID));
-}
-
 void CyPlayer::trigger(/*EventTriggerTypes*/int eEventTrigger)
 {
 	m_pPlayer->trigger((EventTriggerTypes)eEventTrigger);
@@ -1855,11 +1778,6 @@ int CyPlayer::getBuildingListNumInGroup(int iGroup)
 int CyPlayer::getBuildingListType(int iGroup, int iPos)
 {
 	return m_pPlayer->getBuildingListType(iGroup, iPos);
-}
-
-void CyPlayer::setUnitListInvalid()
-{
-	m_pPlayer->setUnitListInvalid();
 }
 
 bool CyPlayer::getUnitListFilterActive(int eFilter)

@@ -508,11 +508,6 @@ bool CyTeam::isTerrainTrade(int /*TerrainTypes*/ eIndex) const
 	return m_pTeam->isTerrainTrade((TerrainTypes)eIndex);
 }
 
-bool CyTeam::isRiverTrade() const
-{
-	return m_pTeam->isRiverTrade();
-}
-
 bool CyTeam::isHasTech(int /*TechTypes*/ iIndex) const
 {
 	return m_pTeam->isHasTech((TechTypes)iIndex);

@@ -140,7 +140,6 @@ public:
 	int getTechCount(int /*TechTypes*/ eIndex) const;
 
 	bool isTerrainTrade(int /*TerrainTypes*/ eIndex) const;
-	bool isRiverTrade() const;
 	bool isHasTech(int /*TechTypes*/ iIndex) const;
 	void setHasTech(int /*TechTypes*/ eIndex, bool bNewValue, int /*PlayerTypes*/ ePlayer, bool bFirst, bool bAnnounce);
 	bool isNoTradeTech(int /*TechType */ iIndex) const;

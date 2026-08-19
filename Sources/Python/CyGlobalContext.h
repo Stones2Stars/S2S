@@ -38,7 +38,6 @@ public:
 	// Publishes the config half. Called from DLLPublishToPython.
 	static void pythonPublish();
 
-	bool isDebugBuild() const;
 
 	// The Cy* HANDLES. These are NOT infos -- they are the game-object wrappers the engine already hands to
 	// Python callbacks, and the ruling that this class serves no INFOS does not reach them. Cutting them was
@@ -51,10 +50,7 @@ public:
 	// over-reach: getPlayer/getTeam/getMap/getGame are the most-called names in the whole tree.
 	CyGame* getCyGame() const;
 	CyMap* getCyMap() const;
-	void switchMap(MapTypes eMap);
 	CyMap* getMapByIndex(MapTypes eMap) const;
-	python::list getMaps() const;
-	int getNumMapsInitialized() const;
 	CyPlayer* getCyPlayer(PlayerTypes ePlayer) const;
 	CyPlayer* getCyActivePlayer() const;
 	CvRandom& getCyASyncRand() const;
@@ -63,9 +59,6 @@ public:
 
 	int getInfoTypeForString(const char* szInfoType, bool bHideAssert = false) const;
 
-	int getNumFlavorTypes() const;
-	const char* getFlavorType(FlavorTypes e) const;
-	const python::list getFlavorTypes() const;
 
 
 	const char* getArtStyleTypes(int i) const { return GC.getArtStyleTypes((ArtStyleTypes) i); }
@@ -75,74 +68,54 @@ public:
 
 	int getNumEffectInfos() const { return GC.getNumEffectInfos(); }
 	int getNumTerrainInfos() const { return GC.getNumTerrainInfos(); }
-	int getNumSpecialBuildingInfos() const { return GC.getNumSpecialBuildingInfos(); }
 	int getNumBonusInfos() const { return GC.getNumBonusInfos(); }
 	int getNumPlayableCivilizationInfos() const { return GC.getNumPlayableCivilizationInfos(); }
 	int getNumCivilizatonInfos() const { return GC.getNumCivilizationInfos(); }
 	int getNumLeaderHeadInfos() const { return GC.getNumLeaderHeadInfos(); }
 	int getNumTraitInfos() const { return GC.getNumTraitInfos(); }
 	int getNumUnitInfos() const { return GC.getNumUnitInfos(); }
-	int getNumSpecialUnitInfos() const { return GC.getNumSpecialUnitInfos(); }
 	int getNumRouteInfos() const { return GC.getNumRouteInfos(); }
 	int getNumFeatureInfos() const { return GC.getNumFeatureInfos(); }
 	int getNumImprovementInfos() const { return GC.getNumImprovementInfos(); }
-	int getNumGoodyInfos() const { return GC.getNumGoodyInfos(); }
 	int getNumBuildInfos() const { return GC.getNumBuildInfos(); }
 	int getNumHandicapInfos() const { return GC.getNumHandicapInfos(); }
 	int getNumGameSpeedInfos() const { return GC.getNumGameSpeedInfos(); }
 	int getNumBuildingInfos() const { return GC.getNumBuildingInfos(); }
 	int getNumUnitCombatInfos() const { return GC.getNumUnitCombatInfos(); }
-	int getNumPromotionLineInfos() const { return GC.getNumPromotionLineInfos(); }
-	int getNumCommandInfos() const { return NUM_COMMAND_TYPES; }
-	int getNumControlInfos() const { return NUM_CONTROL_TYPES; }
 	int getNumMissionInfos() const { return GC.getNumMissionInfos(); }
-	int getNumActionInfos() const { return GC.getNumActionInfos(); }
 	int getNumPromotionInfos() const { return GC.getNumPromotionInfos(); }
 	int getNumTechInfos() const { return GC.getNumTechInfos(); }
 	int getNumReligionInfos() const { return GC.getNumReligionInfos(); }
-	int getNumHeritageInfos() const { return GC.getNumHeritageInfos(); }
 	int getNumCorporationInfos() const { return GC.getNumCorporationInfos(); }
 	int getNumSpecialistInfos() const { return GC.getNumSpecialistInfos(); }
 	int getNumCivicInfos() const { return GC.getNumCivicInfos(); }
-	int getNumDiplomacyInfos() const { return GC.getNumDiplomacyInfos(); }
 	int getNumCivicOptionInfos() const { return GC.getNumCivicOptionInfos(); }
 	int getNumProjectInfos() const { return GC.getNumProjectInfos(); }
 	int getNumVoteInfos() const { return GC.getNumVoteInfos(); }
 	int getNumProcessInfos() const { return GC.getNumProcessInfos(); }
 	int getNumEmphasizeInfos() const { return GC.getNumEmphasizeInfos(); }
 	int getNumHurryInfos() const { return GC.getNumHurryInfos(); }
-	int getNumUpkeepInfos() const { return GC.getNumUpkeepInfos(); }
 	int getNumCultureLevelInfos() const { return GC.getNumCultureLevelInfos(); }
 	int getNumEraInfos() const { return GC.getNumEraInfos(); }
 	int getNumVictoryInfos() const { return GC.getNumVictoryInfos(); }
 	int getNumWorldInfos() const { return GC.getNumWorldInfos(); }
-	int getNumSeaLevelInfos() const { return GC.getNumSeaLevelInfos(); }
-	int getNumClimateInfos() const { return GC.getNumClimateInfos(); }
-	int getNumConceptInfos() const { return GC.getNumConceptInfos(); }
-	int getNumNewConceptInfos() const { return GC.getNumNewConceptInfos(); }
-	int getNumCalendarInfos() const { return GC.getNumCalendarInfos(); }
 	int getNumGameOptionInfos() const { return GC.getNumGameOptionInfos(); }
 	int getNumMPOptionInfos() const { return GC.getNumMPOptionInfos(); }
 	int getNumForceControlInfos() const { return GC.getNumForceControlInfos(); }
-	int getNumSeasonInfos() const { return GC.getNumSeasonInfos(); }
-	int getNumDenialInfos() const { return GC.getNumDenialInfos(); }
 	int getNumEventTriggerInfos() const { return GC.getNumEventTriggerInfos(); }
 	int getNumEventInfos() const { return GC.getNumEventInfos(); }
 	int getNumEspionageMissionInfos() const { return GC.getNumEspionageMissionInfos(); }
 	int getNumMainMenus() const { return GC.getNumMainMenus(); }
 	int getNumVoteSourceInfos() const { return GC.getNumVoteSourceInfos(); }
 	int getNumPropertyInfos() const { return GC.getNumPropertyInfos(); }
-	int getNumPlayerColorInfos() const { return GC.getNumPlayerColorInfos(); }
 
 	//////////////////////
 	// Globals Defines
 	//////////////////////
 
 	int getDefineINT( const char * szName ) const { return GC.getDefineINT( szName ); }
-	float getDefineFLOAT( const char * szName ) const { return GC.getDefineFLOAT( szName ); }
 
 	void setDefineINT( const char * szName, int iValue ) { return GC.setDefineINT( szName, iValue ); }
-	void setDefineFLOAT( const char * szName, float fValue ) { return GC.setDefineFLOAT( szName, fValue ); }
 
 	bool isDCM_ACTIVE_DEFENSE() const { return GC.isDCM_ACTIVE_DEFENSE(); }
 	bool isDCM_FIGHTER_ENGAGE() const { return GC.isDCM_FIGHTER_ENGAGE(); }

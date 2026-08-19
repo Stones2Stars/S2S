@@ -50,12 +50,10 @@ public:
 	bool isHuman() const;
 	bool isHumanDisabled() const;
 	bool isNPC() const;
-	bool isHominid() const;
 	std::wstring getName() const;
 
 	void setName(std::wstring szNewValue);
 
-	std::wstring getNameForm(int iForm) const;
 	std::wstring getNameKey() const;
 	std::wstring getCivilizationDescription(int iForm) const;
 
@@ -68,16 +66,12 @@ public:
 	std::wstring getCivilizationAdjectiveKey() const;
 	std::wstring getFlagDecal() const;
 	bool isWhiteFlag() const;
-	std::wstring getStateReligionName(int iForm) const;
 	std::wstring getStateReligionKey() const;
-	std::wstring getBestAttackUnitName(int iForm) const;
 	std::wstring getWorstEnemyName() const;
 	int /*ArtStyleTypes*/ getArtStyleType() const;
-	std::string getUnitButton(int eUnit) const;
 
 	int countNumCoastalCities() const;
 
-	int countOwnedBonuses(int /*BonusTypes*/ eBonus) const;
 	int countNumBuildings(int /*BuildingTypes*/ eBuilding) const;
 	bool hasBuilding(int /*BuildingTypes*/ eBuilding) const;
 
@@ -96,7 +90,6 @@ public:
 	bool isTurnActive() const;
 
 	void receiveGoody(const CyPlot* pPlot, int /*GoodyTypes*/ eGoody, const CyUnit* pUnit);
-	void doGoody(const CyPlot* pPlot, const CyUnit* pUnit);
 	bool canFound(int iX, int iY) const;
 	void found(int iX, int iY);
 
@@ -136,7 +129,6 @@ public:
 	bool canDoCivics(int /*CivicTypes*/ eCivic) const;
 	bool canRevolution() const;
 
-	bool canChangeReligion() const;
 	bool canConvert(int /*ReligionTypes*/ iIndex) const;
 	void convert(int /*ReligionTypes*/ iIndex);
 	bool hasHolyCity(int /*ReligionTypes*/ eReligion) const;
@@ -145,13 +137,11 @@ public:
 	int getCivicAnarchyLength(const python::list& /*CivicTypes*/ lNewCivics) const;
 	int getReligionAnarchyLength() const;
 
-	bool hasHeadquarters(int /*CorporationTypes*/ eCorporation) const;
 
 	int unitsRequiredForGoldenAge() const;
 	int greatPeopleThresholdMilitary() const;
 	int greatPeopleThresholdNonMilitary() const;
 	int getGreatGeneralsThresholdModifier() const;
-	int specialistYield(int /*SpecialistTypes*/ eSpecialist, int /*YieldTypes*/ eCommerce) const;
 
 	CyPlot* getStartingPlot() const;
 	void setStartingPlot(const CyPlot* pPlot, bool bUpdateStartDist);
@@ -194,13 +184,11 @@ public:
 	void changeAnarchyTurns(int iChange);
 	void changeGreatGeneralsThresholdModifier(int iChange);
 
-	int getFeatureProductionModifier() const;
 
 	int getBestUnitType(int /*UnitAITypes*/ eUnitAI) const;
 
 	bool isNonStateReligionCommerce() const;
 
-	int getRevIdxNational() const;
 	int getRevIdxDistanceModifier() const;
 
 	bool canFoundReligion() const;
@@ -275,7 +263,6 @@ public:
 	int getPlayerTextColorB() const;
 	int getPlayerTextColorA() const;
 
-	int getYieldRateModifier(YieldTypes eIndex) const;
 	int getCommercePercent(int /*CommerceTypes*/ eIndex) const;
 	void changeCommercePercent(CommerceTypes eIndex, int iChange);
 
@@ -310,7 +297,6 @@ public:
 	int getHasReligionCount(int /*ReligionTypes*/ eIndex) const;
 	int getHasCorporationCount(int /*CorporationTypes*/ eIndex) const;
 
-	bool isSpecialistValid(int /*SpecialistTypes*/ iIndex) const;
 	bool isResearchingTech(int /*TechTypes*/ iIndex) const;
 	int /*CivicTypes*/ getCivics(int /*CivicOptionTypes*/ iIndex) const;
 	int getSingleCivicUpkeep(int /*CivicTypes*/ eCivic, bool bIgnoreAnarchy) const;
@@ -392,7 +378,6 @@ public:
 
 	python::list groups() const;
 	int getNumSelectionGroups() const;
-	CySelectionGroup* getSelectionGroup(int iID) const;
 
 	void trigger(/*EventTriggerTypes*/int eEventTrigger);
 	const EventTriggeredData* getEventOccured(int /*EventTypes*/ eEvent) const;
@@ -464,7 +449,6 @@ public:
 	int getBuildingListNumInGroup(int iGroup);
 	int /*BuildingTypes*/ getBuildingListType(int iGroup, int iPos);
 
-	void setUnitListInvalid();
 	bool getUnitListFilterActive(int /*UnitFilterTypes*/ eFilter);
 	void setUnitListFilterActive(int /*UnitFilterTypes*/ eFilter, bool bActive);
 	int /*UnitGroupingTypes*/ getUnitListGrouping();

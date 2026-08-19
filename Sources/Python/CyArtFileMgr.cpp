@@ -39,31 +39,6 @@ CvArtInfoMisc* CyArtFileMgr::getMiscArtInfo(const char* szArtDefineTag) const
 	return m_pArtFileMgr.getMiscArtInfo(szArtDefineTag);
 }
 
-CvArtInfoUnit* CyArtFileMgr::getUnitArtInfo(const char* szArtDefineTag) const
-{
-	return m_pArtFileMgr.getUnitArtInfo(szArtDefineTag);
-}
-
-CvArtInfoBuilding* CyArtFileMgr::getBuildingArtInfo(const char* szArtDefineTag) const
-{
-	return m_pArtFileMgr.getBuildingArtInfo(szArtDefineTag);
-}
-
-CvArtInfoCivilization* CyArtFileMgr::getCivilizationArtInfo(const char* szArtDefineTag) const
-{
-	return m_pArtFileMgr.getCivilizationArtInfo(szArtDefineTag);
-}
-
-CvArtInfoBonus* CyArtFileMgr::getBonusArtInfo(const char* szArtDefineTag) const
-{
-	return m_pArtFileMgr.getBonusArtInfo(szArtDefineTag);
-}
-
-CvArtInfoImprovement* CyArtFileMgr::getImprovementArtInfo(const char* szArtDefineTag) const
-{
-	return m_pArtFileMgr.getImprovementArtInfo(szArtDefineTag);
-}
-
 //
 //	THE ART BOUNDARY, republished. ART IS EXPLICITLY OUT OF SCOPE for this rework (roadmap Scope decisions:
 //	the art defines stay in the ART XML and ARTFILEMGR keeps resolving them), so this is a KEPT boundary like

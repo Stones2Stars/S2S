@@ -26,36 +26,25 @@ public:
 	int getType();
 	CyMap& operator = (CvMap& kMap);
 
-	bool plotsInitialized() const;
 
-	bool viewportsEnabled();
 	int	getViewportWidth();
 	int	getViewportHeight();
-	int	getMapXFromViewportX(int iX);
-	int	getMapYFromViewportY(int iY);
 	int	getViewportXFromMapX(int iX);
 	int	getViewportYFromMapY(int iY);
 	bool isInViewport(int X, int Y);
-	void setViewportActionState(ViewportDeferredActionState newState);
-	bool isMidSwitch() const;
 
 	void closeAdvisor(int advisorWidth, int iMinimapLeft, int iMinimapRight, int iMinimapTop, int iMinimapBottom);
 	void bringIntoView(int iX, int iY, bool bLookAt, bool bForceCenter, bool bDisplayCityScreen, bool bSelectCity, bool bAddSelectedCity);
 
 	void verifyUnitValidPlot();
 
-	void erasePlots();
-	void setRevealedPlots(int /*TeamTypes*/ eTeam, bool bNewValue, bool bTerrainOnly);
 	void resetRevealedPlots(int /*TeamTypes*/ eTeam);
 	void setAllPlotTypes(int /*PlotTypes*/ ePlotType);
 
-	void updateVisibility();
-	CyPlot* syncRandPlot(int iFlags, int iArea, int iMinUnitDistance, int iTimeout);
 
 	CyArea* findBiggestArea(bool bWater);
 
 	int getMapFractalFlags();
-	bool isPlot(int iX, int iY);
 	int numPlots();
 	int plotNum(int iX, int iY);
 	int plotX(int iIndex);
@@ -85,10 +74,8 @@ public:
 
 	python::list plots() const;
 	CyPlot* plotByIndex(int iIndex);
-	CyPlot* sPlotByIndex(int iIndex);
 	CyPlot* plot(int iX, int iY);
 	CyPlot* sPlot(int iX, int iY) ;
-	CyPlot* pointToPlot(float fX, float fY);
 
 	int getNumAreas();
 	int getNumLandAreas();
@@ -99,10 +86,7 @@ public:
 
 	int calculatePathDistance(const CyPlot* pSource, const CyPlot* pDest) const;
 	void rebuild(int iGridW, int iGridH, int iTopLatitude, int iBottomLatitude, bool bWrapX, bool bWrapY, WorldSizeTypes eWorldSize, ClimateTypes eClimate, SeaLevelTypes eSeaLevel, int iNumCustomMapOptions, CustomMapOptionTypes * aeCustomMapOptions);
-	void regenerateGameElements();
-	void updateFog();
 	void updateMinimapColor();
-	void updateMinOriginalStartDist(const CyArea* pArea);
 
 	// AIAndy: Expose path generation functionality to Python
 	bool generatePathForHypotheticalUnit(const CyPlot* pFrom, const CyPlot* pTo, int /*PlayerTypes*/ ePlayer, int /*UnitTypes*/ eUnit, int iFlags, int iMaxTurns) const;

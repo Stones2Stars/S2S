@@ -48,41 +48,9 @@ CyGlobalContext& CyGlobalContext::getInstance()
 	return globalContext;
 }
 
-bool CyGlobalContext::isDebugBuild() const
-{
-#ifdef _DEBUG
-	return true;
-#else
-	return false;
-#endif
-}
-
 int CyGlobalContext::getInfoTypeForString(const char* szInfoType, bool bHideAssert) const
 {
 	return GC.getInfoTypeForString(szInfoType, bHideAssert);
-}
-
-int CyGlobalContext::getNumFlavorTypes() const
-{
-	return GC.getNumFlavorTypes();
-}
-
-const char* CyGlobalContext::getFlavorType(FlavorTypes e) const
-{
-	return GC.getFlavorTypes(e).c_str();
-}
-
-const python::list CyGlobalContext::getFlavorTypes() const
-{
-	PROFILE_EXTRA_FUNC();
-	python::list l = python::list();
-	const CvString*& flavorTypes = GC.getFlavorTypes();
-
-	for (int i = 0, num = GC.getNumFlavorTypes(); i < num; i++)
-	{
-		l.append(flavorTypes[i].c_str());
-	}
-	return l;
 }
 
 // The publication: the CONFIG half only. Every info accessor and every Cy* handle is deliberately absent --
@@ -104,31 +72,10 @@ CyMap* CyGlobalContext::getCyMap() const
 	//return g_cyMaps[CURRENT_MAP];
 }
 
-void CyGlobalContext::switchMap(MapTypes eMap)
-{
-	GC.switchMap(eMap);
-}
-
 CyMap* CyGlobalContext::getMapByIndex(MapTypes eMap) const
 {
 	FASSERT_BOUNDS(0, NUM_MAPS, eMap);
 	return &g_cyMaps[eMap];
-}
-
-python::list CyGlobalContext::getMaps() const
-{
-	python::list l = python::list();
-
-	foreach_(CyMap& mapX, g_cyMaps)
-	{
-		l.append(mapX);
-	}
-	return l;
-}
-
-int CyGlobalContext::getNumMapsInitialized() const
-{
-	return algo::count_if(GC.getMaps(), bind(CvMap::plotsInitialized, _1));
 }
 
 CyPlayer* CyGlobalContext::getCyPlayer(PlayerTypes ePlayer) const

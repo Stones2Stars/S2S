@@ -53,12 +53,6 @@ float CyClimateInfo::getTundraLatitudeChange(int iClimate) const
 	return pClimate ? pClimate->getTundraLatitudeChange() : 0.0f;
 }
 
-float CyClimateInfo::getGrassLatitudeChange(int iClimate) const
-{
-	const CvClimateInfo* pClimate = cyc_climate(iClimate);
-	return pClimate ? pClimate->getGrassLatitudeChange() : 0.0f;
-}
-
 float CyClimateInfo::getDesertBottomLatitudeChange(int iClimate) const
 {
 	const CvClimateInfo* pClimate = cyc_climate(iClimate);
@@ -69,12 +63,6 @@ float CyClimateInfo::getDesertTopLatitudeChange(int iClimate) const
 {
 	const CvClimateInfo* pClimate = cyc_climate(iClimate);
 	return pClimate ? pClimate->getDesertTopLatitudeChange() : 0.0f;
-}
-
-float CyClimateInfo::getIceLatitude(int iClimate) const
-{
-	const CvClimateInfo* pClimate = cyc_climate(iClimate);
-	return pClimate ? pClimate->getIceLatitude() : 0.0f;
 }
 
 float CyClimateInfo::getRandIceLatitude(int iClimate) const

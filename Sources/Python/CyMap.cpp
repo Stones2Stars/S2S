@@ -37,16 +37,6 @@ CyMap& CyMap::operator=(CvMap& kMap)
 	return *this;
 }
 
-bool CyMap::plotsInitialized() const
-{
-	return m_pMap->plotsInitialized();
-}
-
-bool CyMap::viewportsEnabled()
-{
-	return GC.viewportsEnabled();
-}
-
 int	CyMap::getViewportWidth()
 {
 	return GC.getCurrentViewport()->getGridWidth();
@@ -55,16 +45,6 @@ int	CyMap::getViewportWidth()
 int	CyMap::getViewportHeight()
 {
 	return GC.getCurrentViewport()->getGridHeight();
-}
-
-int	CyMap::getMapXFromViewportX(int iX)
-{
-	return GC.getCurrentViewport()->getMapXFromViewportX(iX);
-}
-
-int	CyMap::getMapYFromViewportY(int iY)
-{
-	return GC.getCurrentViewport()->getMapYFromViewportY(iY);
 }
 
 int	CyMap::getViewportXFromMapX(int iX)
@@ -82,16 +62,6 @@ bool CyMap::isInViewport(int iX, int iY)
 	return GC.getCurrentViewport()->isInViewport(iX, iY);
 }
 
-void CyMap::setViewportActionState(ViewportDeferredActionState newState)
-{
-	GC.getCurrentViewport()->setActionState(newState);
-}
-
-bool CyMap::isMidSwitch() const
-{
-	return CvMap::m_bSwitchInProgress;
-}
-
 void CyMap::closeAdvisor(int advisorWidth, int iMinimapLeft, int iMinimapRight, int iMinimapTop, int iMinimapBottom)
 {
 	GC.getCurrentViewport()->closeAdvisor(advisorWidth, iMinimapLeft, iMinimapRight, iMinimapTop, iMinimapBottom);
@@ -100,18 +70,6 @@ void CyMap::closeAdvisor(int advisorWidth, int iMinimapLeft, int iMinimapRight, 
 void CyMap::bringIntoView(int iX, int iY, bool bLookAt, bool bForceCenter, bool bDisplayCityScreen, bool bSelectCity, bool bAddSelectedCity)
 {
 	GC.getCurrentViewport()->bringIntoView(iX, iY, NULL, bForceCenter, bDisplayCityScreen, bSelectCity, bAddSelectedCity);
-}
-
-void CyMap::erasePlots()
-{
-	if (m_pMap)
-		m_pMap->erasePlots();
-}
-
-void CyMap::setRevealedPlots(int /*TeamTypes*/ eTeam, bool bNewValue, bool bTerrainOnly)
-{
-	if (m_pMap)
-		m_pMap->setRevealedPlots((TeamTypes) eTeam, bNewValue, bTerrainOnly);
 }
 
 void CyMap::resetRevealedPlots(int /*TeamTypes*/ eTeam)
@@ -133,17 +91,6 @@ void CyMap::verifyUnitValidPlot()
 		m_pMap->verifyUnitValidPlot();
 }
 
-void CyMap::updateVisibility()
-{
-	if (m_pMap)
-		m_pMap->updateVisibility();
-}
-
-CyPlot* CyMap::syncRandPlot(int iFlags, int iArea, int iMinUnitDistance, int iTimeout)
-{
-	return m_pMap ? new CyPlot(m_pMap->syncRandPlot(iFlags, iArea, iMinUnitDistance, iTimeout)) : NULL;
-}
-
 CyArea* CyMap::findBiggestArea(bool bWater)
 {
 	CvArea* area = m_pMap->findBiggestArea(bWater);
@@ -153,11 +100,6 @@ CyArea* CyMap::findBiggestArea(bool bWater)
 int CyMap::getMapFractalFlags()
 {
 	return m_pMap ? m_pMap->getMapFractalFlags() : -1;
-}
-
-bool CyMap::isPlot(int iX, int iY)
-{
-	return m_pMap ? m_pMap->isPlot(iX, iY) : false;
 }
 
 int CyMap::numPlots()
@@ -291,16 +233,6 @@ CyPlot* CyMap::plotByIndex(int iIndex)
 //
 // static version
 //
-CyPlot* CyMap::sPlotByIndex(int iIndex)
-{
-	if (m_pMap && m_pMap->plotByIndex(iIndex))
-	{
-		static CyPlot plot;
-		plot.setPlot(m_pMap->plotByIndex(iIndex));
-		return &plot;
-	}
-	return NULL;
-}
 
 CyPlot* CyMap::plot(int iX, int iY)
 {
@@ -319,11 +251,6 @@ CyPlot* CyMap::sPlot(int iX, int iY)
 	static CyPlot p;
 	p.setPlot(m_pMap->plot(iX, iY));
 	return &p;
-}
-
-CyPlot* CyMap::pointToPlot(float fX, float fY)
-{
-	return m_pMap ? new CyPlot(m_pMap->pointToPlot(fX, fY)) : NULL;
 }
 
 int CyMap::getNumAreas()
@@ -376,40 +303,11 @@ void CyMap::rebuild(int iGridW, int iGridH, int iTopLatitude, int iBottomLatitud
 		m_pMap->rebuild(iGridW, iGridH, iTopLatitude, iBottomLatitude, bWrapX, bWrapY, eWorldSize, eClimate, eSeaLevel, iNumCustomMapOptions, aeCustomMapOptions);
 }
 
-void CyMap::regenerateGameElements()
-{
-	if (m_pMap)
-	{
-		CvMapGenerator* pMapGen = &CvMapGenerator::GetInstance();
-		pMapGen->eraseRivers();
-		pMapGen->eraseFeatures();
-		pMapGen->eraseBonuses();
-		pMapGen->eraseGoodies();
-		pMapGen->addGameElements();
-	}
-}
-
-void CyMap::updateFog()
-{
-	if (m_pMap)
-	{
-		m_pMap->updateFog();
-	}
-}
-
 void CyMap::updateMinimapColor()
 {
 	if (m_pMap)
 	{
 		m_pMap->updateMinimapColor();
-	}
-}
-
-void CyMap::updateMinOriginalStartDist(const CyArea* pArea)
-{
-	if (m_pMap)
-	{
-		m_pMap->updateMinOriginalStartDist(pArea->getArea());
 	}
 }
 

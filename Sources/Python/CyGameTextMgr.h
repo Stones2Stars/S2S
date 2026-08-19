@@ -56,7 +56,6 @@ public:
 
 	std::wstring getTimeStr(int iGameTurn, bool bSave);
 	std::wstring getDateStr(int iGameTurn, bool bSave, int /*CalendarTypes*/ eCalendar, int iStartYear, int /*GameSpeedTypes*/ eSpeed);
-	std::wstring getInterfaceTimeStr(int /*PlayerTypes*/ iPlayer);
 	std::wstring getOOSSeeds(int /*PlayerTypes*/ iPlayer);
 	std::wstring getNetStats(int /*PlayerTypes*/ iPlayer);
 	std::wstring getTechHelp(int iTech, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, int iFromTech);
@@ -83,13 +82,11 @@ public:
 	std::wstring parseLeaderTraits(int /*LeaderHeadTypes*/ iLeader, bool bDawnOfMan, bool bCivilopediaText);
 	std::wstring parseTraits(int /*TraitTypes*/ eTrait, bool bDawnOfMan, bool bEffectsOnly);
 	std::wstring getHappinessHelp();
-	std::wstring getTradeString(TradeData* pTradeData, int iPlayer1, int iPlayer2);
 	std::wstring getSpecialistHelp(int iSpecialist, bool bCivilopediaText);
 	std::wstring buildHintsList();
 	std::wstring getAttitudeString(int iPlayer, int iTargetPlayer);
 	std::wstring setConvertHelp(int iPlayer, int iReligion);
 	std::wstring setRevolutionHelp(int iPlayer);
-	std::wstring setVassalRevoltHelp(int iMaster, int iVassal);
 	std::wstring getActiveDealsString(int iThisPlayer, int iOtherPlayer);
 	std::wstring getDealString(CyDeal* pDeal, int iPlayerPerspective);
 	std::wstring getFinanceUnitUpkeepString(int iPlayer);

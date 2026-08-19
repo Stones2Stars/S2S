@@ -165,11 +165,6 @@ bool CyPlot::isAdjacentNonrevealed(int /*TeamTypes*/ eTeam) const
 	return m_pPlot ? m_pPlot->isAdjacentNonrevealed((TeamTypes) eTeam) : false;
 }
 
-bool CyPlot::isGoody() const
-{
-	return m_pPlot ? m_pPlot->isGoody() : false;
-}
-
 bool CyPlot::isCity() const
 {
 	return m_pPlot ? m_pPlot->isCity() : false;
@@ -180,19 +175,9 @@ bool CyPlot::isOccupation() const
 	return m_pPlot ? m_pPlot->isOccupation() : false;
 }
 
-bool CyPlot::isUnit() const
-{
-	return m_pPlot ? m_pPlot->isUnit() : false;
-}
-
 int CyPlot::getNumDefenders(int /*PlayerTypes*/ ePlayer) const
 {
 	return m_pPlot ? m_pPlot->getNumDefenders((PlayerTypes) ePlayer) : -1;
-}
-
-int CyPlot::getNumVisiblePotentialEnemyDefenders(const CyUnit& kUnit) const
-{
-	return m_pPlot ? m_pPlot->getNumVisiblePotentialEnemyDefenders(kUnit.getUnit()) : -1;
 }
 
 bool CyPlot::isVisibleEnemyUnit(int /*PlayerTypes*/ ePlayer) const
@@ -238,11 +223,6 @@ int CyPlot::getY() const
 int CyPlot::getLatitude() const
 {
 	return m_pPlot ? m_pPlot->getLatitude() : -1;
-}
-
-int CyPlot::getLongitude() const
-{
-	return m_pPlot ? m_pPlot->getLongitude() : -1;
 }
 
 CyArea* CyPlot::area() const
@@ -512,11 +492,6 @@ void CyPlot::changeCulture(int /*PlayerTypes*/ eIndex, int iChange, bool bUpdate
 int CyPlot::getFoundValue(int /*PlayerTypes*/ eIndex) const
 {
 	return m_pPlot ? m_pPlot->getFoundValue((PlayerTypes)eIndex) : -1;
-}
-
-bool CyPlot::isPlayerCityRadius(int /*PlayerTypes*/ eIndex) const
-{
-	return m_pPlot ? m_pPlot->isPlayerCityRadius((PlayerTypes)eIndex) : false;
 }
 
 int /*PlayerTypes*/ CyPlot::getRevealedOwner(int /*TeamTypes*/ eTeam, bool bDebug) const

@@ -65,12 +65,9 @@ public:
 	bool isActiveVisible(bool bDebug) const;
 	bool isAdjacentRevealed(int /*TeamTypes*/ eTeam) const;
 	bool isAdjacentNonrevealed(int /*TeamTypes*/ eTeam) const;
-	bool isGoody() const;
 	bool isCity() const;
 	bool isOccupation() const;
-	bool isUnit() const;
 	int getNumDefenders(int /*PlayerTypes*/ ePlayer) const;
-	int getNumVisiblePotentialEnemyDefenders(const CyUnit& kUnit) const;
 	bool isVisibleEnemyUnit(int /*PlayerTypes*/ ePlayer) const;
 
 	bool canHaveFeature(int /*FeatureTypes*/ eFeature) const;
@@ -83,7 +80,6 @@ public:
 	int getX() const;
 	int getY() const;
 	int getLatitude() const;
-	int getLongitude() const;
 	CyArea* area() const;
 	CyArea* waterArea() const;
 	int getArea() const;
@@ -151,7 +147,6 @@ public:
 
 	int getFoundValue(int /*PlayerTypes*/ eIndex) const;
 
-	bool isPlayerCityRadius(int /*PlayerTypes*/ eIndex) const;
 
 	int /*PlayerTypes*/ getRevealedOwner(int /*TeamTypes*/ eTeam, bool bDebug) const;
 
