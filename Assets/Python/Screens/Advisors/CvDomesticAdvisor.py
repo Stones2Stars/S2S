@@ -1,6 +1,7 @@
 from CvPythonExtensions import *
 import HandleInputUtil
 import cPickle
+import sys
 
 # globals
 # The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
@@ -208,10 +209,10 @@ class CvDomesticAdvisor:
 ("TRADE_ROUTES",			40,		"int",	None,					self.countTradeRoutes,	None,			"#" + unichr(8860)),
 ("TRADE_ROUTES_DOMESTIC",	40,		"int",	None,					self.countTradeRoutes,	"D",			"D#" + unichr(8860)),
 ("TRADE_ROUTES_FOREIGN",	40,		"int",	None,					self.countTradeRoutes,	"F",			"F#" + unichr(8860)),
-("WORLD_WONDERS",			40,		"int", "getNumWorldWonders",		None,				None,			"WW"),
-("MAX_WORLD_WONDERS",		40,		"int", "getMaxNumWorldWonders",		None,				None,			"MWW"),
-("NATIONAL_WONDERS",		40,		"int", "getNumNationalWonders",		None,				None,			"NW"),
-("MAX_NATIONAL_WONDERS",	40,		"int", "getMaxNumNationalWonders",	None,				None,			"MNW")
+("WORLD_WONDERS",			40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_WORLD_WONDERS,			"WW"),
+("MAX_WORLD_WONDERS",		40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_MAX_WORLD_WONDERS,		"MWW"),
+("NATIONAL_WONDERS",		40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_NATIONAL_WONDERS,		"NW"),
+("MAX_NATIONAL_WONDERS",	40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_MAX_NATIONAL_WONDERS,	"MNW")
 			]
 			# Yield
 			aList = [
@@ -223,8 +224,8 @@ class CvDomesticAdvisor:
 				COLUMNS_LIST.append((aList[i] + "BASE", 40, "int", "getPlotYield", None, i, "B" + self.yieldIcons[i]))
 				COLUMNS_LIST.append((aList[i] + "GRANK_BASE", 42, "int", None, self.findGlobalBaseYieldRateRank, i, "B" + self.yieldIcons[i] + "g"))
 				COLUMNS_LIST.append((aList[i] + "GRANK", 40, "int", None, self.findGlobalYieldRateRank, i, self.yieldIcons[i] + "g"))
-				COLUMNS_LIST.append((aList[i] + "NRANK_BASE", 42, "int", "findBaseYieldRateRank", None, i, "B" + self.yieldIcons[i] + "n"))
-				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", "findYieldRateRank", None, i, self.yieldIcons[i] + "n"))
+				COLUMNS_LIST.append((aList[i] + "NRANK_BASE", 42, "int", None, self.calculateBaseYieldRateRank, i, "B" + self.yieldIcons[i] + "n"))
+				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", None, self.calculateYieldRateRank, i, self.yieldIcons[i] + "n"))
 			# Commerce
 			aList = [
 				"GOLD_",
@@ -233,9 +234,9 @@ class CvDomesticAdvisor:
 				"ESPIONAGE_"
 			]
 			for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				COLUMNS_LIST.append((aList[i] + "RATE", 40, "int", "getCommerceRate", None, i, "&#177 " + self.commerceIcons[i]))
+				COLUMNS_LIST.append((aList[i] + "RATE", 40, "int", None, self.calculateCommerceRate, i, "&#177 " + self.commerceIcons[i]))
 				COLUMNS_LIST.append((aList[i] + "GRANK", 40, "int", None, self.findGlobalCommerceRateRank, i, self.commerceIcons[i] + "g"))
-				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", "findCommerceRateRank", None, i, self.commerceIcons[i] + "n"))
+				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", None, self.calculateCommerceRateRank, i, self.commerceIcons[i] + "n"))
 			# Buildings
 			self.BUILDING_INFO_LIST = []
 			for i in xrange(GC.getNumBuildingInfos()):
@@ -970,6 +971,24 @@ class CvDomesticAdvisor:
 
 		return unicode(freeXP)
 
+	#	The grouped reads cannot be named as a bare method in COLUMNS_LIST -- that slot builds
+	#	`CyCity.<name>(<arg>)` and evals it, which has nowhere to put the index. So these columns take the
+	#	selfFunction slot instead, exactly as their global-rank siblings below already do.
+	def calculateCityCount(self, CyCity, szKey, arg):
+		return CyCity.getCounts()[arg]
+
+	def calculateBaseYieldRateRank(self, CyCity, szKey, arg):
+		return CyCity.getBaseYieldRateRanks()[arg]
+
+	def calculateYieldRateRank(self, CyCity, szKey, arg):
+		return CyCity.getYieldRateRanks()[arg]
+
+	def calculateCommerceRate(self, CyCity, szKey, arg):
+		return CyCity.getCommerces()[arg]
+
+	def calculateCommerceRateRank(self, CyCity, szKey, arg):
+		return CyCity.getCommerceRateRanks()[arg]
+
 	def findGlobalBaseYieldRateRank(self, CyCity, szKey, arg):
 
 		y = CyCity.getPlotYield(arg)
@@ -1341,7 +1360,11 @@ class CvDomesticAdvisor:
 							szValue = self.ColorCityValues(unicode(calcFunc(cityList[i], key, columnDef[5])), key)
 							funcTableWrite(PAGE, value + 2, i, szValue, "", eWidGen, 1, 1, justify)
 				except:
-					print ("draw table failure!", value, key)
+					#	The column list is customizable, so one bad column must not take the screen down --
+					#	but it must SAY what broke. The bare message here hid every column whose read had
+					#	been renamed or retired: they rendered blank and looked merely empty.
+					print ("CvDomesticAdvisor: column '%s' failed to draw: %s: %s"
+						% (key, sys.exc_info()[0], sys.exc_info()[1]))
 
 
 	def switchPage(self, page):
