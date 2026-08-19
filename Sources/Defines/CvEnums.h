@@ -1434,7 +1434,7 @@ enum BuildingGrantedKind
 	NUM_BUILDING_GRANTED_KINDS
 };
 
-//	The city's YIELD CENSUS for one channel -- the decomposition CyState::getCityYieldTerms returns, in order.
+//	The city's YIELD CENSUS for one channel -- the decomposition CyCity::getYieldTerms returns, in order.
 //	⛔ The positions are the PUBLISHED contract: a consumer indexes this list by name, never by a literal, so
 //	inserting a term anywhere but before NUM_CITY_YIELD_TERMS silently re-points every reader.
 //	⚠ The AMOUNT terms are x100 like every amount; YIELD_TERM_PERCENT_SUM and YIELD_TERM_WORKED_PLOTS are whole

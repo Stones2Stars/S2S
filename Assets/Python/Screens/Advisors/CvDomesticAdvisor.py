@@ -221,7 +221,7 @@ class CvDomesticAdvisor:
 				"COMMERCE_"
 			]
 			for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-				COLUMNS_LIST.append((aList[i] + "BASE", 40, "int", "getPlotYield", None, i, "B" + self.yieldIcons[i]))
+				COLUMNS_LIST.append((aList[i] + "BASE", 40, "int", None, self.calculatePlotYield, i, "B" + self.yieldIcons[i]))
 				COLUMNS_LIST.append((aList[i] + "GRANK_BASE", 42, "int", None, self.findGlobalBaseYieldRateRank, i, "B" + self.yieldIcons[i] + "g"))
 				COLUMNS_LIST.append((aList[i] + "GRANK", 40, "int", None, self.findGlobalYieldRateRank, i, self.yieldIcons[i] + "g"))
 				COLUMNS_LIST.append((aList[i] + "NRANK_BASE", 42, "int", None, self.calculateBaseYieldRateRank, i, "B" + self.yieldIcons[i] + "n"))
@@ -977,6 +977,12 @@ class CvDomesticAdvisor:
 	def calculateCityCount(self, CyCity, szKey, arg):
 		return CyCity.getCounts()[arg]
 
+	#	The worked-plot total for one yield. PLOT_BASE is that total -- the three PLOT_ segments beside it
+	#	decompose it rather than adding to it, so summing them would double-count. x100 like every amount, so
+	#	the column reduces here, at its display.
+	def calculatePlotYield(self, CyCity, szKey, arg):
+		return int(CyCity.getYieldTerms(arg)[CityYieldTerm.YIELD_TERM_PLOT_BASE]) / 100
+
 	def calculateBaseYieldRateRank(self, CyCity, szKey, arg):
 		return CyCity.getBaseYieldRateRanks()[arg]
 
@@ -991,11 +997,11 @@ class CvDomesticAdvisor:
 
 	def findGlobalBaseYieldRateRank(self, CyCity, szKey, arg):
 
-		y = CyCity.getPlotYield(arg)
+		y = self.calculatePlotYield(CyCity, szKey, arg)
 		aList = []
 		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
-				aList.append(CyCity.getPlotYield(arg))
+				aList.append(self.calculatePlotYield(CyCity, szKey, arg))
 
 		return len([i for i in aList if i > y]) + 1
 

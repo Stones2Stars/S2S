@@ -59,7 +59,7 @@ LABEL_KEYS = (
 	"TXT_KEY_CONCEPT_SPECIALISTS",
 	"TXT_KEY_CONCEPT_BASE_MODIFIER"
 )
-# The census term ORDER, as CyState::getCityYieldTerms returns it. One list, one order, both sides.
+# The census term ORDER, as CyCity::getYieldTerms returns it. One list, one order, both sides.
 NUM_TERMS = 12
 (
 	T_PLOT_BASE,
