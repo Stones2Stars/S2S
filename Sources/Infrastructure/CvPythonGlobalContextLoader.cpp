@@ -25,11 +25,8 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 {
 	OutputDebugString("Python Extension Module - CyGlobalContextPythonInterface1\n");
 	inst
-		.def("isDebugBuild", &CyGlobalContext::isDebugBuild, "() - returns true if running a debug build")
 		.def("getGame", &CyGlobalContext::getCyGame, boost::python::return_value_policy<boost::python::reference_existing_object>(), "() - CyGame()")
 		.def("getMap", &CyGlobalContext::getCyMap, boost::python::return_value_policy<boost::python::reference_existing_object>(), "() - CyMap()")
-		.def("getMaps", &CyGlobalContext::getMaps)
-		.def("getNumMapsInitialized", &CyGlobalContext::getNumMapsInitialized)
 		.def("getPlayer", &CyGlobalContext::getCyPlayer, boost::python::return_value_policy<boost::python::reference_existing_object>(), "(iPlayer) - iPlayer instance")
 		.def("getActivePlayer", &CyGlobalContext::getCyActivePlayer, boost::python::return_value_policy<boost::python::reference_existing_object>(), "() - active player instance")
 		.def("getASyncRand", &CyGlobalContext::getCyASyncRand, boost::python::return_value_policy<boost::python::reference_existing_object>(), "Non-Synch'd random #")
@@ -48,7 +45,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 
 		.def("getNumFeatureInfos", &CyGlobalContext::getNumFeatureInfos, "() - Total Feature Infos XML\\Terrain\\CIV4FeatureInfos.xml")
 
-		.def("getNumUpkeepInfos", &CyGlobalContext::getNumUpkeepInfos, "int () - Number of upkeep infos")
 
 		.def("getNumCultureLevelInfos", &CyGlobalContext::getNumCultureLevelInfos, "int () - Number of culture level infos")
 
@@ -56,9 +52,7 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 
 		.def("getNumWorldInfos", &CyGlobalContext::getNumWorldInfos, "int () - Number of world infos")
 
-		.def("getNumClimateInfos", &CyGlobalContext::getNumClimateInfos, "int () - Number of climate infos")
 
-		.def("getNumSeaLevelInfos", &CyGlobalContext::getNumSeaLevelInfos, "int () - Number of seal level infos")
 
 		.def("getNumPlayableCivilizationInfos", &CyGlobalContext::getNumPlayableCivilizationInfos, "() - Total # of Playable Civs")
 		.def("getNumCivilizationInfos", &CyGlobalContext::getNumCivilizatonInfos, "() - Total Civilization Infos XML\\Civilizations\\CIV4CivilizationInfos.xml")
@@ -69,7 +63,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 
 		.def("getNumUnitInfos", &CyGlobalContext::getNumUnitInfos, "() - Total Unit Infos XML\\Units\\CIV4UnitInfos.xml")
 
-		.def("getNumSpecialUnitInfos", &CyGlobalContext::getNumSpecialUnitInfos, "() - Total SpecialUnit Infos XML\\Units\\CIV4SpecialUnitInfos.xml")
 
 
 
@@ -77,7 +70,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 
 		.def("getNumImprovementInfos", &CyGlobalContext::getNumImprovementInfos, "() - Total Improvement Infos XML\\Terrain\\CIV4ImprovementInfos.xml")
 
-		.def("getNumGoodyInfos", &CyGlobalContext::getNumGoodyInfos, "() - Total Goody Infos XML\\GameInfo\\CIV4GoodyInfos.xml")
 
 		.def("getNumBuildInfos", &CyGlobalContext::getNumBuildInfos, "() - Total Build Infos XML\\Units\\CIV4BuildInfos.xml")
 
@@ -90,9 +82,7 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 		.def("getNumUnitCombatInfos", &CyGlobalContext::getNumUnitCombatInfos, "() - Total Unit Combat Infos XML\\Units\\CIV4UnitCombatInfos.xml")
 
 
-		.def("getNumActionInfos", &CyGlobalContext::getNumActionInfos, "() - Total Action Infos XML\\Units\\CIV4ActionInfos.xml")
 
-		.def("getNumPromotionLineInfos", &CyGlobalContext::getNumPromotionLineInfos, "() - Total Promotion Line Infos XML\\Units\\CIV4PromotionLineInfos.xml")
 
 
 
@@ -121,9 +111,7 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface2(boost::python:
 		.def("isSS_ASSASSINATE", &CyGlobalContext::isSS_ASSASSINATE, "bool ()")
 
 		.def("getDefineINT", &CyGlobalContext::getDefineINT, "int ( string szName )")
-		.def("getDefineFLOAT", &CyGlobalContext::getDefineFLOAT, "float ( string szName )")
 		.def("setDefineINT", &CyGlobalContext::setDefineINT, "void ( string szName, int iValue )")
-		.def("setDefineFLOAT", &CyGlobalContext::setDefineFLOAT, "void setDefineFLOAT( string szName, float fValue )")
 		.def("setNoUpdateDefineFLOAT", &CyGlobalContext::setNoUpdateDefineFLOAT, "void setDefineFLOAT( string szName, float fValue )")
 
 		.def("getMAX_PC_PLAYERS", &CyGlobalContext::getMAX_PC_PLAYERS, "int ()")
@@ -148,7 +136,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface3(boost::python:
 	OutputDebugString("Python Extension Module - CyGlobalContextPythonInterface3\n");
 
 	inst
-		.def("switchMap", &CyGlobalContext::switchMap, "void (int)")
 		.def("getMapByIndex", &CyGlobalContext::getMapByIndex, boost::python::return_value_policy<boost::python::reference_existing_object>(), "CyMap (int)")
 
 
@@ -156,11 +143,8 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface3(boost::python:
 
 		.def("getNumHurryInfos", &CyGlobalContext::getNumHurryInfos, "() - Total Hurry Infos")
 
-		.def("getNumConceptInfos", &CyGlobalContext::getNumConceptInfos, "int () - NumConceptInfos")
 
-		.def("getNumNewConceptInfos", &CyGlobalContext::getNumNewConceptInfos, "int () - NumNewConceptInfos")
 
-		.def("getNumCalendarInfos", &CyGlobalContext::getNumCalendarInfos, "int () - Returns NumCalendarInfos")
 
 		.def("getNumGameOptionInfos", &CyGlobalContext::getNumGameOptionInfos, "int () - Returns NumGameOptionInfos")
 
@@ -168,9 +152,7 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface3(boost::python:
 
 		.def("getNumForceControlInfos", &CyGlobalContext::getNumForceControlInfos, "int () - Returns NumForceControlInfos")
 
-		.def("getNumSeasonInfos", &CyGlobalContext::getNumSeasonInfos, "int () - Returns NumSeasonInfos")
 
-		.def("getNumDenialInfos", &CyGlobalContext::getNumDenialInfos, "int () - Returns NumDenialInfos")
 		;
 }
 void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(boost::python::class_<CyGlobalContext>& inst)
@@ -179,19 +161,15 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(boost::python:
 	inst
 		.def("getNumMissionInfos", &CyGlobalContext::getNumMissionInfos, "() - Total Mission Infos XML\\Units\\CIV4MissionInfos.xml")
 
-		.def("getNumCommandInfos", &CyGlobalContext::getNumCommandInfos, "() - Total Command Infos XML\\Units\\CIV4CommandInfos.xml")
 
-		.def("getNumControlInfos", &CyGlobalContext::getNumControlInfos, "() - Total Control Infos XML\\Units\\CIV4ControlInfos.xml")
 
 		.def("getNumPromotionInfos", &CyGlobalContext::getNumPromotionInfos, "() - Total Promotion Infos XML\\Units\\CIV4PromotionInfos.xml")
 
 		.def("getNumTechInfos", &CyGlobalContext::getNumTechInfos, "() - Total Technology Infos XML\\Technologies\\CIV4TechInfos.xml")
 
-		.def("getNumSpecialBuildingInfos", &CyGlobalContext::getNumSpecialBuildingInfos, "() - Total Special Building Infos")
 
 		.def("getNumReligionInfos", &CyGlobalContext::getNumReligionInfos, "() - Total Religion Infos XML\\GameInfo\\CIV4ReligionInfos.xml")
 
-		.def("getNumHeritageInfos", &CyGlobalContext::getNumHeritageInfos, "() - Total Heritage Infos XML\\GameInfo\\HeritageInfos.xml")
 
 		.def("getNumCorporationInfos", &CyGlobalContext::getNumCorporationInfos, "() - Total Corporation Infos XML\\GameInfo\\CIV4CorporationInfos.xml")
 
@@ -203,7 +181,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(boost::python:
 
 		.def("getNumCivicInfos", &CyGlobalContext::getNumCivicInfos, "() - Total Civic Infos XML\\Misc\\CIV4CivicInfos.xml")
 
-		.def("getNumDiplomacyInfos", &CyGlobalContext::getNumDiplomacyInfos, "() - Total diplomacy Infos XML\\GameInfo\\CIV4DiplomacyInfos.xml")
 
 		.def("getNumProjectInfos", &CyGlobalContext::getNumProjectInfos, "() - Total Project Infos XML\\GameInfo\\CIV4ProjectInfos.xml")
 
@@ -219,11 +196,7 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(boost::python:
 
 		.def("getInfoTypeForString", &CyGlobalContext::getInfoTypeForString, CyGlobalContext_getInfoTypeForString_overloads())
 
-		.def("getNumFlavorTypes", &CyGlobalContext::getNumFlavorTypes)
-		.def("getFlavorType", &CyGlobalContext::getFlavorType)
-		.def("getFlavorTypes", &CyGlobalContext::getFlavorTypes)
 
-		.def("getNumPlayerColorInfos", &CyGlobalContext::getNumPlayerColorInfos, "int () - Returns number of PlayerColorInfos")
 
 		.def("getNumEventTriggerInfos", &CyGlobalContext::getNumEventTriggerInfos, "int () - Returns number of EventTriggerInfos")
 

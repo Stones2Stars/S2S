@@ -469,36 +469,25 @@ void CyMap::pythonPublish()
 	python::class_<CyMap>("CyMap")
 		.def("getType", &CyMap::getType)
 
-		.def("plotsInitialized", &CyMap::plotsInitialized)
 
-		.def("viewportsEnabled", &CyMap::viewportsEnabled)
 		.def("getViewportWidth", &CyMap::getViewportWidth)
 		.def("getViewportHeight", &CyMap::getViewportHeight)
-		.def("getMapXFromViewportX", &CyMap::getMapXFromViewportX)
-		.def("getMapYFromViewportY", &CyMap::getMapYFromViewportY)
 		.def("getViewportXFromMapX", &CyMap::getViewportXFromMapX)
 		.def("getViewportYFromMapY", &CyMap::getViewportYFromMapY)
 		.def("isInViewport", &CyMap::isInViewport)
-		.def("setViewportActionState", &CyMap::setViewportActionState)
-		.def("isMidSwitch", &CyMap::isMidSwitch)
 
 		.def("closeAdvisor", &CyMap::closeAdvisor)
 		.def("bringIntoView", &CyMap::bringIntoView)
 
-		.def("erasePlots", &CyMap::erasePlots)
-		.def("setRevealedPlots", &CyMap::setRevealedPlots)
 		.def("resetRevealedPlots", &CyMap::resetRevealedPlots)
 		.def("setAllPlotTypes", &CyMap::setAllPlotTypes)
 
 		.def("verifyUnitValidPlot", &CyMap::verifyUnitValidPlot)
 
-		.def("updateVisibility", &CyMap::updateVisibility)
-		.def("syncRandPlot", &CyMap::syncRandPlot, python::return_value_policy<python::manage_new_object>())
 
 		.def("findBiggestArea", &CyMap::findBiggestArea, python::return_value_policy<python::manage_new_object>())
 
 		.def("getMapFractalFlags", &CyMap::getMapFractalFlags)
-		.def("isPlot", &CyMap::isPlot)
 		.def("numPlots", &CyMap::numPlots)
 		.def("plotNum", &CyMap::plotNum)
 		.def("plotX", &CyMap::plotX)
@@ -530,10 +519,8 @@ void CyMap::pythonPublish()
 
 		.def("plots", &CyMap::plots)
 		.def("plotByIndex", &CyMap::plotByIndex, python::return_value_policy<python::manage_new_object>())
-		.def("sPlotByIndex", &CyMap::sPlotByIndex, python::return_value_policy<python::reference_existing_object>())
 		.def("plot", &CyMap::plot, python::return_value_policy<python::manage_new_object>())
 		.def("sPlot", &CyMap::sPlot, python::return_value_policy<python::reference_existing_object>())
-		.def("pointToPlot", &CyMap::pointToPlot, python::return_value_policy<python::manage_new_object>())
 
 		.def("getNumAreas", &CyMap::getNumAreas)
 		.def("getNumLandAreas", &CyMap::getNumLandAreas)
@@ -544,10 +531,7 @@ void CyMap::pythonPublish()
 
 		.def("calculatePathDistance", &CyMap::calculatePathDistance)
 		.def("rebuild", &CyMap::rebuild)
-		.def("regenerateGameElements", &CyMap::regenerateGameElements)
-		.def("updateFog", &CyMap::updateFog)
 		.def("updateMinimapColor", &CyMap::updateMinimapColor)
-		.def("updateMinOriginalStartDist", &CyMap::updateMinOriginalStartDist)
 
 		// AIAndy: Expose path generation functionality to Python
 		.def("generatePathForHypotheticalUnit", &CyMap::generatePathForHypotheticalUnit)

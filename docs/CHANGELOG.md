@@ -12,6 +12,11 @@
 
 ## Unreleased
 
+- **143 unused bindings are gone from the Python API.** Every one was published to script and called from
+  nowhere in the shipped Python or the map scripts — legacy surface from `CyGame`, `CyPlayer`, `CyPlot`,
+  `CyMap`, the global context and the art/text managers. ⚑ Modders: if you used one, say so and it comes back
+  as a read on the new surface rather than as the old binding. Nothing that Python, a map script, or the
+  domestic advisor's name-table reaches was touched.
 - **A city can be asked whether it is the capital, a government centre, in disorder, or under occupation.**
   All four getters existed in C++ and were never published to Python, so the ~33 places that asked — the
   revolution loop, several event triggers, the finance and corporation advisors, the occupation alert — raised

@@ -745,7 +745,6 @@ void CyTeam::pythonPublish()
 		.def("setResearchProgress", &CyTeam::setResearchProgress)
 		.def("changeResearchProgress", &CyTeam::changeResearchProgress)
 		.def("isTerrainTrade", &CyTeam::isTerrainTrade)
-		.def("isRiverTrade", &CyTeam::isRiverTrade)
 		.def("getTechCount", &CyTeam::getTechCount)
 
 		.def("isHasTech", &CyTeam::isHasTech)

@@ -46,14 +46,11 @@ void CvPythonPlotLoader::CyPlotPythonInterface1(boost::python::class_<CyPlot>& i
 		.def("isAdjacentNonrevealed", &CyPlot::isAdjacentNonrevealed)
 		.def("isAdjacentRevealed", &CyPlot::isAdjacentRevealed)
 
-		.def("isGoody", &CyPlot::isGoody, "bool ()")
 
 		.def("isCity", &CyPlot::isCity, "bool ()")
 		.def("isOccupation", &CyPlot::isOccupation, "bool ()")
 
-		.def("isUnit", &CyPlot::isUnit, "bool ()")
 		.def("getNumDefenders", &CyPlot::getNumDefenders, "int (int /*PlayerTypes*/ ePlayer)")
-		.def("getNumVisibleEnemyDefenders", &CyPlot::getNumVisiblePotentialEnemyDefenders, "int (CyUnit* pUnit)")
 		.def("isVisibleEnemyUnit", &CyPlot::isVisibleEnemyUnit, "bool (int /*PlayerTypes*/ ePlayer)")
 
 		.def("canHaveFeature", &CyPlot::canHaveFeature, "bool (int /*FeatureTypes*/ eFeature)")
@@ -66,7 +63,6 @@ void CvPythonPlotLoader::CyPlotPythonInterface1(boost::python::class_<CyPlot>& i
 		.def("getX", &CyPlot::getX, "int ()")
 		.def("getY", &CyPlot::getY, "int ()")
 		.def("getLatitude", &CyPlot::getLatitude, "int ()")
-		.def("getLongitude", &CyPlot::getLongitude, "int ()")
 		.def("area", &CyPlot::area, boost::python::return_value_policy<boost::python::manage_new_object>(), "CyArea* ()")
 		.def("waterArea", &CyPlot::waterArea, boost::python::return_value_policy<boost::python::manage_new_object>(), "CyArea* ()")
 		.def("getArea", &CyPlot::getArea, "int ()")
@@ -126,7 +122,6 @@ void CvPythonPlotLoader::CyPlotPythonInterface1(boost::python::class_<CyPlot>& i
 
 		.def("getFoundValue", &CyPlot::getFoundValue, "int (int /*PlayerTypes*/ eIndex)")
 
-		.def("isPlayerCityRadius", &CyPlot::isPlayerCityRadius, "bool (int /*PlayerTypes*/ eIndex)")
 
 		.def("getRevealedOwner", &CyPlot::getRevealedOwner, "int (int (TeamTypes) eTeam, bool bDebug)")
 

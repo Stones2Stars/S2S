@@ -92,10 +92,8 @@ void CyClimateInfo::pythonPublish()
 		.def("getPeakPercent",               &CyClimateInfo::getPeakPercent)
 		.def("getSnowLatitudeChange",        &CyClimateInfo::getSnowLatitudeChange)
 		.def("getTundraLatitudeChange",      &CyClimateInfo::getTundraLatitudeChange)
-		.def("getGrassLatitudeChange",       &CyClimateInfo::getGrassLatitudeChange)
 		.def("getDesertBottomLatitudeChange",&CyClimateInfo::getDesertBottomLatitudeChange)
 		.def("getDesertTopLatitudeChange",   &CyClimateInfo::getDesertTopLatitudeChange)
-		.def("getIceLatitude",               &CyClimateInfo::getIceLatitude)
 		.def("getRandIceLatitude",           &CyClimateInfo::getRandIceLatitude)
 		;
 }

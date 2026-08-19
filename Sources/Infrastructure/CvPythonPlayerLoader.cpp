@@ -34,12 +34,10 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("isHuman", &CyPlayer::isHuman, "bool ()")
 		.def("isHumanDisabled", &CyPlayer::isHumanDisabled, "bool ()")
 		.def("isNPC", &CyPlayer::isNPC, "bool () - returns True if player is an NPC")
-		.def("isHominid", &CyPlayer::isHominid, "bool () - returns True if player is a Hominid")
 		.def("getName", &CyPlayer::getName, "str ()")
 
 		.def("setCivName", &CyPlayer::setCivName)
 		.def("setName", &CyPlayer::setName, "void (std::wstring szNewValue)")
-		.def("getNameForm", &CyPlayer::getNameForm, "str ()")
 		.def("getNameKey", &CyPlayer::getNameKey, "str ()")
 		.def("getCivilizationDescription", &CyPlayer::getCivilizationDescription, "str() - returns the Civilization Description String")
 		.def("getCivilizationShortDescription", &CyPlayer::getCivilizationShortDescription, "str() - returns the short Civilization Description")
@@ -49,16 +47,12 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("getCivilizationAdjectiveKey", &CyPlayer::getCivilizationAdjectiveKey, "str() - returns the Civilization name in adjective form")
 		.def("getFlagDecal", &CyPlayer::getFlagDecal, "str() - returns the Civilization flag decal")
 		.def("isWhiteFlag", &CyPlayer::isWhiteFlag, "bool () - Whether or not this player is using a custom texture flag (set in WBS)")
-		.def("getStateReligionName", &CyPlayer::getStateReligionName, "str() - returns the name of the Civilizations State Religion")
-		.def("getBestAttackUnitName", &CyPlayer::getBestAttackUnitName, "str () - returns the name of the best attack unit")
 		.def("getWorstEnemyName", &CyPlayer::getWorstEnemyName, "str () - returns the name of the worst enemy")
 		.def("getStateReligionKey", &CyPlayer::getStateReligionKey, "str() - returns the name of the Civilizations State Religion")
 		.def("getArtStyleType", &CyPlayer::getArtStyleType, " int () - Returns the ArtStyleType for this player (e.g. European)")
-		.def("getUnitButton", &CyPlayer::getUnitButton, " string (int eUnit) - Returns the unit button for this player")
 
 		.def("countNumCoastalCities", &CyPlayer::countNumCoastalCities, "int ()")
 
-		.def("countOwnedBonuses", &CyPlayer::countOwnedBonuses, "int (int (BonusTypes) eBonus) ")
 		.def("countNumBuildings", &CyPlayer::countNumBuildings, "int (int /*BuildingTypes*/ eBuilding) - Returns the number of buildings")
 		.def("hasBuilding", &CyPlayer::hasBuilding, "bool (int /*BuildingTypes*/ eBuilding)")
 
@@ -74,7 +68,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("hasBonus", &CyPlayer::hasBonus, "int (int /*BonusType*/ ePlayer)")
 
 		.def("receiveGoody", &CyPlayer::receiveGoody, "void (CyPlot* pPlot, int /*GoodyTypes*/ eGoody, CyUnit* pUnit)")
-		.def("doGoody", &CyPlayer::doGoody, "void (CyPlot* pPlot, CyUnit* pUnit)")
 		.def("canFound", &CyPlayer::canFound, "bool (int iX, int iY)")
 		.def("found", &CyPlayer::found, "void (int iX, int iY)")
 		.def("canCreate", &CyPlayer::canCreate, "bool (int /*ProjectTypes*/ eProject, bool bContinue, bool bTestVisible)")
@@ -110,14 +103,12 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("canDoCivics", &CyPlayer::canDoCivics, "bool (int (CivicTypes) eCivic)")
 		.def("canRevolution", &CyPlayer::canRevolution, "bool ()")
 
-		.def("canChangeReligion", &CyPlayer::canChangeReligion, "bool ()")
 		.def("canConvert", &CyPlayer::canConvert, "bool (int /*ReligionTypes*/ iIndex)")
 		.def("convert", &CyPlayer::convert, "void (int /*ReligionTypes*/ iIndex)")
 		.def("hasHolyCity", &CyPlayer::hasHolyCity, "bool (int (ReligionTypes) eReligion)")
 
 		.def("countHolyCities", &CyPlayer::countHolyCities, "int () - Counts the # of holy cities this player has")
 
-		.def("hasHeadquarters", &CyPlayer::hasHeadquarters, "bool (int (CorporationTypes) eCorporation)")
 
 		.def("getCivicAnarchyLength", &CyPlayer::getCivicAnarchyLength, "int (int (CivicTypes*) paeNewCivics)")
 		.def("getReligionAnarchyLength", &CyPlayer::getReligionAnarchyLength, "int ()")
@@ -125,7 +116,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("unitsRequiredForGoldenAge", &CyPlayer::unitsRequiredForGoldenAge, "int ()")
 		.def("greatPeopleThresholdNonMilitary", &CyPlayer::greatPeopleThresholdNonMilitary, "int ()")
 		.def("greatPeopleThresholdMilitary", &CyPlayer::greatPeopleThresholdMilitary, "int ()")
-		.def("specialistYield", &CyPlayer::specialistYield, "int (int (SpecialistTypes) eSpecialist, int (YieldTypes) eCommerce)")
 
 		.def("getStartingPlot", &CyPlayer::getStartingPlot, boost::python::return_value_policy<boost::python::manage_new_object>(), "CyPlot* ()")
 		.def("setStartingPlot", &CyPlayer::setStartingPlot, "void (CyPlot*, bool) - sets the player's starting plot")
@@ -215,7 +205,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface2(boost::python::class_<CyPlay
 		.def("getBuildingListNumInGroup", &CyPlayer::getBuildingListNumInGroup, "int (int)")
 		.def("getBuildingListType", &CyPlayer::getBuildingListType, "int (int,int)")
 
-		.def("setUnitListInvalid", &CyPlayer::setUnitListInvalid, "void ()")
 		.def("getUnitListFilterActive", &CyPlayer::getUnitListFilterActive, "bool (int)")
 		.def("setUnitListFilterActive", &CyPlayer::setUnitListFilterActive, "void (int,bool)")
 		.def("getUnitListGrouping", &CyPlayer::getUnitListGrouping, "int ()")
@@ -279,9 +268,7 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("getGreatGeneralsThresholdModifier", &CyPlayer::getGreatGeneralsThresholdModifier, "int ()")
 		.def("changeGreatGeneralsThresholdModifier", &CyPlayer::changeGreatGeneralsThresholdModifier, "void (int iChange)")
 
-		.def("getFeatureProductionModifier", &CyPlayer::getFeatureProductionModifier, "int ()")
 
-		.def("getRevIdxNational", &CyPlayer::getRevIdxNational, "int ()")
 		.def("getRevIdxDistanceModifier", &CyPlayer::getRevIdxDistanceModifier, "int ()")
 
 		.def("canFoundReligion", &CyPlayer::canFoundReligion, "bool ()")
@@ -353,7 +340,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("getPlayerTextColorB", &CyPlayer::getPlayerTextColorB, "int ()")
 		.def("getPlayerTextColorA", &CyPlayer::getPlayerTextColorA, "int ()")
 
-		.def("getYieldRateModifier", &CyPlayer::getYieldRateModifier, "int (YieldTypes eIndex)")
 		.def("getCommercePercent", &CyPlayer::getCommercePercent, "int (CommerceTypes eIndex)")
 		.def("changeCommercePercent", &CyPlayer::changeCommercePercent, "int (CommerceTypes eIndex, int iChange)")
 		.def("isCommerceFlexible", &CyPlayer::isCommerceFlexible, "bool (CommerceTypes eIndex)")
@@ -387,7 +373,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 		.def("getHasReligionCount", &CyPlayer::getHasReligionCount)
 		.def("getHasCorporationCount", &CyPlayer::getHasCorporationCount)
 
-		.def("isSpecialistValid", &CyPlayer::isSpecialistValid, "bool (int /*SpecialistTypes*/ iIndex)")
 		.def("isResearchingTech", &CyPlayer::isResearchingTech, "bool (int /*TechTypes*/ iIndex)")
 		.def("getCivics", &CyPlayer::getCivics, "int /*CivicTypes*/ (int /*CivicOptionTypes*/ iIndex)")
 		.def("getSingleCivicUpkeep", &CyPlayer::getSingleCivicUpkeep, "int (int /*CivicTypes*/ eCivic, bool bIgnoreAnarchy)")
@@ -444,7 +429,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface3(boost::python::class_<CyPlay
 
 		.def("groups", &CyPlayer::groups)
 		.def("getNumSelectionGroups", &CyPlayer::getNumSelectionGroups, "int ()")
-		.def("getSelectionGroup", &CyPlayer::getSelectionGroup, boost::python::return_value_policy<boost::python::manage_new_object>(), "CvSelectionGroup* (int iID)")
 
 		.def("trigger", &CyPlayer::trigger, "void (/*EventTriggerTypes*/int eEventTrigger)")
 		.def("getEventOccured", &CyPlayer::getEventOccured, boost::python::return_value_policy<boost::python::reference_existing_object>(), "EventTriggeredData* (int /*EventTypes*/ eEvent)")
