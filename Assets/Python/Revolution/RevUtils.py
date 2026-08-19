@@ -333,7 +333,7 @@ def getHandoverUnitTypes(CyCity):
 		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:
 			continue
 
-		if not CyCity.canTrain(iUnit, False, False, False, False): continue
+		if not ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED: continue
 
 		# Defender (Archer,Longbow)
 		if CvUnitInfo.getDefaultUnitAIType() == UnitAITypes.UNITAI_CITY_DEFENSE:
@@ -378,7 +378,7 @@ def getUprisingUnitTypes(CyCity):
 		if not CvUnitInfo.hasUnitCombat(UnitCombatTypes(GC.getInfoTypeForString("UNITCOMBAT_COMBATANT"))):
 			continue
 
-		if CyCity.canTrain(iUnit, False, False, False, False):
+		if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			for i in xrange(iCombat/4 + 1):
 				aList.append(iUnit)
 	return aList

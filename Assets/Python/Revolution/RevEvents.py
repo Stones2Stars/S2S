@@ -512,7 +512,7 @@ def checkRebelBonuses(argsList):
 						info = GC.getUnitInfo(iUnitX)
 						if (info.getDomainType() == DomainTypes.DOMAIN_SEA
 						and info.getUnitAIType(UnitAITypes.UNITAI_ASSAULT_SEA)
-						and newOwner.canTrain(iUnitX,False,False)
+						and ENABLER.getUnitAvailabilityAnywhere(newOwner.getID(), iUnitX) == EnablerState.ENABLER_LISTED
 						):
 							iCombat = info.getCombat()
 							if iBestCombat < iCombat:

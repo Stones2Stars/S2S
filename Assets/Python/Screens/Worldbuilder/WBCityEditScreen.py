@@ -291,7 +291,7 @@ class WBCityEditScreen:
 		iMaxRow = -1
 		iRow = 0
 		for i in xrange(GC.getNumUnitInfos()):
-			if pCity.canTrain(i, True, False, False, False):
+			if ENABLER.getUnitAvailability(pCity.getOwner(), pCity.getID(), i) == EnablerState.ENABLER_LISTED:
 				if iRow > iMaxRow:
 					screen.appendTableRow("WBCityProduction")
 					iMaxRow = iRow

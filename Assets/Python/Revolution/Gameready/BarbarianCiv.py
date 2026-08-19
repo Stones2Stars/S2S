@@ -255,7 +255,7 @@ class BarbarianCiv:
 			iMinEra = iEra - self.RevOpt.getNewWorldErasBehind()
 			if iMinEra > -1:
 				for iTech in xrange(iNumTechs):
-					if CyPlayer.canResearch(iTech, False, True) and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) <= iMinEra:
+					if ENABLER.getTechAvailability(CyPlayer.getID(), iTech) == EnablerState.ENABLER_LISTED and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) <= iMinEra:
 						CyTeam.setHasTech(iTech, True, iPlayer, False, False)
 		else:
 			iNumTeams = GAME.countCivTeamsAlive()
@@ -265,7 +265,7 @@ class BarbarianCiv:
 				if iTech in techsOwned:
 					CyTeam.setHasTech(iTech, True, iPlayer, False, False)
 					continue
-				if not CyPlayer.canResearch(iTech, False, True):
+				if ENABLER.getTechAvailability(CyPlayer.getID(), iTech) != EnablerState.ENABLER_LISTED:
 					continue
 				iKnownRatio = 100 * GAME.countKnownTechNumTeams(iTech) / iNumTeams
 				if iKnownRatio < 100 and closeTeams:
@@ -424,7 +424,7 @@ class BarbarianCiv:
 			):
 				continue
 
-			if not CyPlayer.canTrain(iUnit, False, False): continue
+			if ENABLER.getUnitAvailabilityAnywhere(CyPlayer.getID(), iUnit) != EnablerState.ENABLER_LISTED: continue
 
 			iStr = CvUnitInfo.getCombat()
 			if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_CITY_DEFENSE):

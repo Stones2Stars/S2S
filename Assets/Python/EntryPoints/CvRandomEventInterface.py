@@ -2491,7 +2491,7 @@ def getGreedUnit(CyPlayer, CyPlot):
 		iUnit = kEntry["id"]
 		if INFO.hasUnitInstanceCap(iUnit):
 			continue
-		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) == DomainTypes.DOMAIN_LAND and CyPlayer.canTrain(iUnit, False, False):
+		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) == DomainTypes.DOMAIN_LAND and ENABLER.getUnitAvailabilityAnywhere(CyPlayer.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			#  The unit's own bonus references. EDGEF_RELATED is a MERGED bucket ([enabler.md] §2), so this
 			#  reads as ANY referenced bonus -- safe for picking a flavourful reward, never as a gate.
 			if iBonus in INFO.getEdgeIds("UNIT_", iUnit, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_BONUSES):
@@ -4785,7 +4785,7 @@ def canTriggerMercenariesAncient(argsList):
 
 	CyCity, iter = CyPlayer.firstCity(False)
 	while CyCity:
-		if CyCity.canTrain(iUnit, False, False, False, False):
+		if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			break
 		CyCity, iter = CyPlayer.nextCity(iter, False)
 	else:
@@ -4874,7 +4874,7 @@ def canTriggerMercenariesClassical(argsList):
 
 	CyCity, iter = CyPlayer.firstCity(False)
 	while CyCity:
-		if CyCity.canTrain(iUnit, False, False, False, False):
+		if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			break
 		CyCity, iter = CyPlayer.nextCity(iter, False)
 	else:
@@ -4962,7 +4962,7 @@ def canTriggerMercenariesMedieval(argsList):
 
 	CyCity, iter = CyPlayer.firstCity(False)
 	while CyCity:
-		if CyCity.canTrain(iUnit, False, False, False, False):
+		if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			break
 		CyCity, iter = CyPlayer.nextCity(iter, False)
 	else:
@@ -5300,7 +5300,10 @@ def applySilverRain3(argsList):
 	iCounterUnit1 = GC.getInfoTypeForString("UNIT_TACTICAL_NUKE")
 	iCounterUnit2 = GC.getInfoTypeForString("UNIT_ICBM")
 	for CyCity in player.cities():
-		if CyCity.canTrain(iCounterUnit1, False, False, False, False) or CyCity.canTrain(iCounterUnit2, False, False, False, False):
+		iCityOwner = CyCity.getOwner()
+		iCityId = CyCity.getID()
+		if (ENABLER.getUnitAvailability(iCityOwner, iCityId, iCounterUnit1) == EnablerState.ENABLER_LISTED
+		or ENABLER.getUnitAvailability(iCityOwner, iCityId, iCounterUnit2) == EnablerState.ENABLER_LISTED):
 			iNukeUnit = GC.getPlayer(GC.getBARBARIAN_PLAYER()).createUnit(GC.getInfoTypeForString("UNIT_NANITE_CLOUD"), x, y, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			plot.nukeExplosion(1, iNukeUnit)
 			iNukeUnit.kill(False, -1)
@@ -5904,7 +5907,7 @@ def triggerNewWorldCities(argsList):
 			iStrength = INFO.getScalar("UNIT_", iUnit, InfoScalar.SCALAR_STRENGTH, CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT)
 			if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND or iStrength <= iBestStrength:
 				continue
-			if CyCity.canTrain(iUnit, False, False, False, False):
+			if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 				eBestUnit = iUnit
 				iBestStrength = iStrength
 
@@ -6764,7 +6767,7 @@ def ApplyNativegood2(argsList):
 	for iUnit in xrange(GC.getNumUnitInfos()):
 		if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND or UNIT.getDefaultUnitAI(iUnit) not in aList:
 			continue
-		if CyCity.canTrain(iUnit, False, True):
+		if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			iValue = UNIT.getCost(iUnit)
 			if iValue >= iHighest:
 				iHighest = iValue

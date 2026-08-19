@@ -826,7 +826,7 @@ class Revolution:
 		# Occasionally spawn a spy as well
 		if 40 - 20*pRevPlayer.AI_getNumAIUnits(UnitAITypes.UNITAI_SPY) > GAME.getSorenRandNum(100,'Rev - Spy'):
 			iSpy = pRevPlayer.getBestUnitType(UnitAITypes.UNITAI_SPY)
-			if iSpy != -1 and revStrength > 1.5 and pRevPlayer.canTrain(iSpy,False,False):
+			if iSpy != -1 and revStrength > 1.5 and ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iSpy) == EnablerState.ENABLER_LISTED:
 				pSpy = pRevPlayer.createUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				pSpy.setFortifyTurns(GC.getDefineINT("MAX_FORTIFY_TURNS"))
 
@@ -6430,7 +6430,7 @@ class Revolution:
 							print "[REV] Revolt: Great General (%d) spawned in %s" % (iGeneral, pCity.getName())
 						pRevPlayer.createUnit(iGeneral, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
-				if (iSpy != -1 and pRevPlayer.canTrain(iSpy, False, False)
+				if (iSpy != -1 and ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iSpy) == EnablerState.ENABLER_LISTED
 				and pRevPlayer.AI_getNumAIUnits(UnitAITypes.UNITAI_SPY) < 3):
 					iNumRevolts = pCity.getNumRevolts(pCity.getOwner())
 					if (iNumRevolts > 1 and revIdx > self.alwaysViolentThreshold
@@ -6560,14 +6560,14 @@ class Revolution:
 						pRevPlayer.createUnit(iGeneral, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 					if iScout != -1:
-						if pRevPlayer.canTrain(iScout, False, False):
+						if ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iScout) == EnablerState.ENABLER_LISTED:
 							pRevPlayer.createUnit(iScout, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 					if not bIsBarbRev and not bIsJoinWar and iSettler != -1 and pCity.area().getNumTiles() / pCity.area().getNumCities() > 25:
 						# Settler if there is sufficient empty land available?
 						pRevPlayer.createUnit(iSettler, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
-				if iSpy != -1 and pRevPlayer.canTrain(iSpy,False,False) and pRevPlayer.AI_getNumAIUnits( UnitAITypes.UNITAI_SPY ) < 3:
+				if iSpy != -1 and ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iSpy) == EnablerState.ENABLER_LISTED and pRevPlayer.AI_getNumAIUnits( UnitAITypes.UNITAI_SPY ) < 3:
 					if pCity.getNumRevolts(pCity.getOwner()) > 1 and revIdx > self.alwaysViolentThreshold or pCity.getNumRevolts(pCity.getOwner()) > 2 and revIdx > self.revInstigatorThreshold:
 						pSpy = pRevPlayer.createUnit( iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 						pSpy.setFortifyTurns(GC.getDefineINT("MAX_FORTIFY_TURNS"))

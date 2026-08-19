@@ -101,11 +101,11 @@ class EnhancedTechConquest:
 			# Continue if the new team can't ever get the tech
 			if (CyTeamN.isHasTech(iTech)
 			or not CyTeamO.isHasTech(iTech)
-			or not CyPlayerN.canResearch(iTech, False, False)):
+			or not ENABLER.canEverResearch(CyPlayerN.getID(), iTech)):
 				continue
 			iTechsBehind += 1
 			# Continue if the conquerer cannot research the technology
-			bImmediateTech = CyPlayerN.canResearch(iTech, True, True);
+			bImmediateTech = ENABLER.getTechAvailability(CyPlayerN.getID(), iTech) == EnablerState.ENABLER_LISTED
 			if bCheckPrereq and not bImmediateTech:
 				continue
 			# Append the technology to the possible technology list
@@ -158,7 +158,7 @@ class EnhancedTechConquest:
 				bFirstList = False
 				iTech, iCost, iRemaining = aList1.pop(GAME.getSorenRandNum(iLen1, "random"))
 				iLen1 -= 1
-				if bGotTech and CyPlayerN.canResearch(iTech, True, True):
+				if bGotTech and ENABLER.getTechAvailability(CyPlayerN.getID(), iTech) == EnablerState.ENABLER_LISTED:
 					iRemaining = iCost - CyTeamN.getResearchProgress(iTech)
 				else: iCost = iRemaining
 
