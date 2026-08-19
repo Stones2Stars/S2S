@@ -5524,7 +5524,7 @@ def canEventTriggerLessDictator(argsList):
 def TriggerLessDictator1(argsList):
 	data = argsList[1]
 	for loopCity in GC.getPlayer(data.ePlayer).cities():
-		loopCity.setWeLoveTheKingDay(True)
+		ACT.setCityWeLoveTheKingDay(loopCity.getOwner(), loopCity.getID(), True)
 
 def getHelpLessDictator1(argsList):
 	return TRNSLTR.getText("TXT_KEY_EVENT_NATIONAL_HOLIDAY",())

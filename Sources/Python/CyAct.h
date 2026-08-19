@@ -177,6 +177,7 @@ public:
 	bool pushCityOrder(int iPlayer, int iCity, int iOrderType, int iId) const;
 	bool setCityDefenseDamage(int iPlayer, int iCity, int iDamage) const;
 	bool setCityOccupation(int iPlayer, int iCity, int iTurns) const;
+	bool setCityWeLoveTheKingDay(int iPlayer, int iCity, bool bNewValue) const;
 	// The one-shot EVENT/VOTE grant store -- the twin of CyState's getCityGrantedExtras. A scenario that could
 	// read them and not write them back would drop them on every round trip.
 	bool setCityGrantedExtra(int iPlayer, int iCity, int iKind, int iValue) const;

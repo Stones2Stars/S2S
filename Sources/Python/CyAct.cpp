@@ -444,6 +444,14 @@ bool CyAct::setCityOccupation(int iPlayer, int iCity, int iTurns) const
 	return true;
 }
 
+bool CyAct::setCityWeLoveTheKingDay(int iPlayer, int iCity, bool bNewValue) const
+{
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL) return false;
+	pCity->setWeLoveTheKingDay(bNewValue);
+	return true;
+}
+
 bool CyAct::setCityGrantedExtra(int iPlayer, int iCity, int iKind, int iValue) const
 {
 	CvCity* pCity = cya_city(iPlayer, iCity);
@@ -552,6 +560,7 @@ void CyAct::pythonPublish()
 		.def("pushCityOrder", &CyAct::pushCityOrder)
 		.def("setCityDefenseDamage", &CyAct::setCityDefenseDamage)
 		.def("setCityOccupation", &CyAct::setCityOccupation)
+		.def("setCityWeLoveTheKingDay", &CyAct::setCityWeLoveTheKingDay)
 		.def("setCityGrantedExtra", &CyAct::setCityGrantedExtra)
 		.def("setBuildingGrantedYield", &CyAct::setBuildingGrantedYield)
 		.def("setBuildingGrantedCommerce", &CyAct::setBuildingGrantedCommerce)
