@@ -510,6 +510,26 @@ two surfaces.
    > to** — a gate tapping it, a predicate resolving through it — never whether a caller would like one value
    > without indexing. A getter that only names a channel is the spaghetti; a getter that names the thing a
    > status suppresses is a seam.
+   >
+   > **⛔ AND A GROUP IS A VECTOR OF ONE KIND OF QUANTITY — NEVER A BAG OF UNRELATED STATUS BITS (owner).**
+   > `getYields()` is a group because every slot answers the same question in the same unit. A flags list does
+   > not: `CITY_FLAG_POWER` and `CITY_FLAG_OCCUPATION` are DIFFERENT QUESTIONS sharing a bus. So a flags read
+   > serves a caller that genuinely wants MANY BITS FROM ONE FETCH — a status bar drawing four icons — and a
+   > single status question is asked by NAME. ⛔ Answering `is this city powered?` with
+   > `getFlags()[CityFlagKind.CITY_FLAG_POWER]` is the banned shape even though the value is right.
+   >
+   > **⚑ THE REASON IS THE MODDER, and it is why this is a hard line rather than a preference (owner): *"the
+   > moment we start using a generic getFlags for things like isPowered, is the day we gonna end up being
+   > screwed by a modder taking that too far."*** An indexed bag teaches every consumer that city state is a
+   > bit array addressed by ordinal — and once mod code indexes it, the LAYOUT is frozen: a flag cannot be
+   > reordered, retired, or split without breaking code we do not control. A named getter keeps the layout an
+   > implementation detail and leaves exactly one thing published: the question.
+   >
+   > **⚖ THE FRAME — C++ IS THE API FOR THE FRONTEND, and it answers like a normal web API (owner)** (*"yes I
+   > know there are differences"*). A web API publishes NAMED resources whose internal representation stays
+   > private; it does not hand back an array the client indexes by magic number and call that an endpoint.
+   > ⇒ Read every published binding as an endpoint someone else will build against, and the two halves above
+   > follow from it directly: name the question, keep the layout yours.
 2. **The EXISTING ENGINE ENUM indexes the RESULT, not the call** (`YieldTypes`, `CommerceTypes`, …); a family
    with no engine enum uses its own kind enum (`CvInfoKinds.h`). So the enum stays the consumer's vocabulary
    while the call itself carries no channel argument. The data-minted channel id remains the CACHE's internal
