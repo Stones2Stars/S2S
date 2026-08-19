@@ -315,7 +315,7 @@ class CvCorporationScreen:
 			bFirstColumn = (i % 2 == 0)
 
 			szCityName = ""
-			if cityX.getFlags()[CityFlagKind.CITY_FLAG_CAPITAL]:
+			if cityX.isCapital():
 				szCityName += u"%c" % CyGame().getSymbolID(FontSymbols.STAR_CHAR)
 
 			#	ONE crossing for the corporations this city HAS -- rows are [corporationId, bIsHeadquarters],

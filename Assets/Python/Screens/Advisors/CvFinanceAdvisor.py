@@ -138,7 +138,7 @@ class CvFinanceAdvisor:
 		iCommerce = iTiles = iYield0 = iYield1 = iYield2 = iYield3 = iYield4 = 0
 		iTeam = CyPlayer.getTeam()
 		for CyCity in CyPlayer.cities():
-			if not CyCity.getFlags()[CityFlagKind.CITY_FLAG_DISORDER]:
+			if not CyCity.isDisorder():
 				#  The city's own yield CENSUS answers the worked-plot total and the tile count together, so this
 				#  panel reads the SAME document the tooltip does instead of re-deriving it a plot at a time
 				#  ([CyCity.h]: a panel that recomputes its own breakdown is a second answer that drifts).
@@ -441,7 +441,7 @@ class CvFinanceAdvisor:
 		fWealth = 0.0
 		eWealth = GC.getInfoTypeForString("PROCESS_WEALTH")
 		for CyCity in CyPlayer.cities():
-			if not CyCity.getFlags()[CityFlagKind.CITY_FLAG_DISORDER]:
+			if not CyCity.isDisorder():
 				fCityTaxes = CyCity.getYieldRate(YieldTypes.YIELD_COMMERCE) * iTaxRate / 100.0
 				fTaxes += fCityTaxes
 

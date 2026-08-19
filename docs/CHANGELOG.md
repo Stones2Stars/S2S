@@ -12,6 +12,11 @@
 
 ## Unreleased
 
+- **A city can be asked whether it is the capital, a government centre, in disorder, or under occupation.**
+  All four getters existed in C++ and were never published to Python, so the ~33 places that asked — the
+  revolution loop, several event triggers, the finance and corporation advisors, the occupation alert — raised
+  instead of answering. ⚑ Modders: ask a city a single status question by name; the `getFlags()` list is for a
+  screen that wants several bits from one fetch, such as the city bar drawing its icons.
 - **`CyTeam.isHominid()` is gone from the Python API.** It was published as a second name for `isNPC` — the
   registration pointed at `CyTeam::isNPC`, so the real `isHominid` body was never reachable and the name answered
   a different question than it asked. Nothing called it. ⚑ Modders: use `isNPC()`.

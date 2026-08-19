@@ -4364,7 +4364,7 @@ class CvMainInterface:
 		# x100 native ([DEC-fixedpoint-x100]); it is compared against whole food counts, so it reduces here.
 		iFoodYield = aYields[YieldTypes.YIELD_FOOD] / 100
 		iFoodEaten = aGrowth[CityGrowthRead.GROWTH_READ_FOOD_CONSUMPTION]
-		if iFoodYield == iFoodEaten or bFoodProduction or GC.getPlayer(iCityOwner).getCity(iCityID).getFlags()[CityFlagKind.CITY_FLAG_DISORDER]:
+		if iFoodYield == iFoodEaten or bFoodProduction or GC.getPlayer(iCityOwner).getCity(iCityID).isDisorder():
 			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_STAGNATE", (iFoodYield, iFoodYield))
 		elif iFoodYield > iFoodEaten:
 			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_GROW", (iFoodYield, iFoodEaten, iFoodYield - iFoodEaten))

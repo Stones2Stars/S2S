@@ -3063,7 +3063,7 @@ def canTriggerDissidentPriestCity(argsList):
 def canTriggerImpeachmentCity(argsList):
 	iCity = argsList[2]
 	player = GC.getPlayer(argsList[1])
-	return player.getCity(iCity).getFlags()[CityFlagKind.CITY_FLAG_CAPITAL]
+	return player.getCity(iCity).isCapital()
 
 ######## FUTBOL_WAR #######
 #Need to stop vassals from being selected as "other player" b/c can't DoW them.  Also, b/c this event railroads other player into war, don't
@@ -3449,7 +3449,7 @@ def canTriggerSyntheticFuels(argsList):
 	return True
 
 def canTriggerCitySyntheticFuels(argsList):
-	return not GC.getPlayer(argsList[1]).getCity(argsList[2]).getFlags()[CityFlagKind.CITY_FLAG_GOVERNMENT_CENTER]
+	return not GC.getPlayer(argsList[1]).getCity(argsList[2]).isGovernmentCenter()
 
 def getHelpSyntheticFuels1(argsList):
 	data = argsList[1]
@@ -3542,7 +3542,7 @@ def canTriggerIndustrialAction(argsList):
 	return not GC.getPlayer(argsList[0].ePlayer).hasBuilding(GC.getInfoTypeForString("BUILDING_WORLDVIEW_SLAVERY_ACTIVE"))
 
 def canDoTriggerCityIndustrialAction(argsList):
-	return not GC.getPlayer(argsList[1]).getCity(argsList[2]).getFlags()[CityFlagKind.CITY_FLAG_GOVERNMENT_CENTER]
+	return not GC.getPlayer(argsList[1]).getCity(argsList[2]).isGovernmentCenter()
 
 def canDoIndustrialAction2(argsList):
 	data = argsList[1]
