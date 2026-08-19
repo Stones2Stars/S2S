@@ -5572,7 +5572,7 @@ def getHelpLessDictator2(argsList):
 
 def canTriggerUnlimitedPower1(argsList):
 	data = argsList[1]
-	return not GC.getPlayer(data.ePlayer).getCity(data.iCityId).getFlags()[CityFlagKind.CITY_FLAG_POWER]
+	return not GC.getPlayer(data.ePlayer).getCity(data.iCityId).isPowered()
 
 def TriggerUnlimitedPower1(argsList):
 	data = argsList[1]

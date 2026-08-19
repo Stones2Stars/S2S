@@ -2311,6 +2311,7 @@ void CyCity::pythonPublish()
 		.def("getBestUnitForRole",    &CyCity::getBestUnitForRole)
 		.def("getProductionTurnsLeftFor", &CyCity::getProductionTurnsLeftFor)
 
+		.def("isPowered",             &CyCity::isPowered)
 		.def("getFlags",              &CyCity::getFlags)
 		.def("getProperties",         &CyCity::getProperties)
 		.def("getReligions",          &CyCity::getReligions)
