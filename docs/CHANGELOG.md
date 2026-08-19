@@ -12,6 +12,9 @@
 
 ## Unreleased
 
+- **`CyTeam.isHominid()` is gone from the Python API.** It was published as a second name for `isNPC` — the
+  registration pointed at `CyTeam::isNPC`, so the real `isHominid` body was never reachable and the name answered
+  a different question than it asked. Nothing called it. ⚑ Modders: use `isNPC()`.
 - **Power checks in Python were calling a binding that was never registered.** `CyCity::isPowered()` was
   written but never published to Python, and the call sites asked for `isPower()`, which does not exist
   at all — so each raised whenever it was reached: the "unlimited power" random-event trigger, the

@@ -278,11 +278,6 @@ std::string CyPlayer::getUnitButton(int eUnit) const
 	return m_pPlayer->getUnitButton((UnitTypes)eUnit);
 }
 
-int CyPlayer::countReligionSpreadUnits(const CyArea* pArea, int /*ReligionTypes*/ eReligion) const
-{
-	return m_pPlayer->countReligionSpreadUnits(pArea->getArea(), (ReligionTypes) eReligion);
-}
-
 int CyPlayer::countNumCoastalCities() const
 {
 	return m_pPlayer->countNumCoastalCities();
@@ -301,11 +296,6 @@ int CyPlayer::countNumBuildings(int /*BuildingTypes*/ eBuilding) const
 bool CyPlayer::hasBuilding(int /*BuildingTypes*/ eBuilding) const
 {
 	return m_pPlayer->hasBuilding((BuildingTypes) eBuilding);
-}
-
-int CyPlayer::countNumCitiesConnectedToCapital() const
-{
-	return m_pPlayer->countNumCitiesConnectedToCapital();
 }
 
 bool CyPlayer::canContact(int /*PlayerTypes*/ ePlayer) const
@@ -1820,11 +1810,6 @@ void CyPlayer::setAutomatedCanBuild(int /*BuildTypes*/ eIndex, bool bNewValue)
 int64_t CyPlayer::getCulture() const
 {
 	return m_pPlayer->getCulture();
-}
-
-CvProperties* CyPlayer::getProperties() const
-{
-	return m_pPlayer->getProperties();
 }
 
 bool CyPlayer::getBuildingListFilterActive(int eFilter)

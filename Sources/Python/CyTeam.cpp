@@ -16,16 +16,6 @@ CyTeam::CyTeam() : m_pTeam(NULL) {}
 CyTeam::CyTeam(CvTeam* pTeam) : m_pTeam(pTeam) {}
 
 
-bool CyTeam::isRebel() const
-{
-	return m_pTeam->isRebel();
-}
-
-bool CyTeam::isSingleCityTeam() const
-{
-	return m_pTeam->isSingleCityTeam();
-}
-
 bool CyTeam::isRebelAgainst(int iTeam) const
 {
 	return m_pTeam->isRebelAgainst((TeamTypes)iTeam);
@@ -179,11 +169,6 @@ bool CyTeam::isHuman() const
 bool CyTeam::isNPC() const
 {
 	return m_pTeam->isNPC();
-}
-
-bool CyTeam::isHominid() const
-{
-	return m_pTeam->isHominid();
 }
 
 bool CyTeam::isMinorCiv() const
@@ -687,7 +672,6 @@ void CyTeam::pythonPublish()
 
 		.def("isHuman", &CyTeam::isHuman)
 		.def("isNPC", &CyTeam::isNPC)
-		.def("isHominid", &CyTeam::isNPC)
 		.def("isMinorCiv", &CyTeam::isMinorCiv)
 		.def("setIsMinorCiv", &CyTeam::setIsMinorCiv)
 

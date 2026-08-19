@@ -75,14 +75,11 @@ public:
 	int /*ArtStyleTypes*/ getArtStyleType() const;
 	std::string getUnitButton(int eUnit) const;
 
-	int countReligionSpreadUnits(const CyArea* pArea, int /*ReligionTypes*/ eReligion) const;
-
 	int countNumCoastalCities() const;
 
 	int countOwnedBonuses(int /*BonusTypes*/ eBonus) const;
 	int countNumBuildings(int /*BuildingTypes*/ eBuilding) const;
 	bool hasBuilding(int /*BuildingTypes*/ eBuilding) const;
-	int countNumCitiesConnectedToCapital() const;
 
 	bool canContact(int /*PlayerTypes*/ ePlayer) const;
 	void contact(int /*PlayerTypes*/ ePlayer);
@@ -456,8 +453,6 @@ public:
 	void setAutomatedCanBuild(int /*BuildTypes*/ eIndex, bool bNewValue);
 
 	int64_t getCulture() const;
-
-	CvProperties* getProperties() const;
 
 	bool getBuildingListFilterActive(int /*BuildingFilterTypes*/ eFilter);
 	void setBuildingListFilterActive(int /*BuildingFilterTypes*/ eFilter, bool bActive);

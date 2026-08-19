@@ -21,8 +21,6 @@ public:
 
 	//const CvTeam* getTeam() const { return m_pTeam; }	// Call from C++
 
-	bool isRebel() const;
-	bool isSingleCityTeam() const;
 	bool isRebelAgainst(int iTeam) const;
 	void setRebelAgainst(int iTeam, bool bNewValue);
 	int countRebelAgainst() const;
@@ -64,7 +62,6 @@ public:
 
 	bool isHuman() const;
 	bool isNPC() const;
-	bool isHominid() const;
 	bool isMinorCiv() const;
 
 	void setIsMinorCiv(bool bNewValue);
