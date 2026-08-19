@@ -6,7 +6,13 @@
 >
 > Per [the Cy* surface is not a fixed contract](../architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner) and
 > [build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner) this maps **NEEDS, not getters
-> to port**. The legacy `Cy*` read bindings are GONE, and the replacement surface stands beside their absence:
+> to port**. ⛔ **THE CUT IS HALF DONE, AND READING IT AS UNIFORM IS THE TRAP.** The legacy read bindings are gone
+on **`CyCity`** (95 defs, group-shaped, zero mutations) and **`CyUnit`** (8) — and Python's channel-scalar read
+demand on `CyCity` is down to a *handful of sites*, so that half is finished rather than merely cut. They are
+**NOT** gone on **`CyPlayer`** (348 defs), **`CyGame`** (236), **`CyTeam`** (118) or **`CyPlot`** (111), which
+still publish broad legacy channel surfaces and carry essentially all of the surviving demand. ⇒ Of the legacy
+channel-shaped getters on `CvCity.h`/`CvPlayer.h`, **the `CvCity` side has no Python demand left to re-serve;
+the `CvPlayer`/`CvTeam` side is where the work is.** The replacement surface stands beside that absence:
 > the composition root (`DLLPublishToPython`, `Infrastructure/CvDLLPython.cpp`) publishes the enum
 > int-conversions, the vector + `IDValueMap` container interfaces, the debug/Win32 helpers, and the four
 > planes of the read library — **`CyEnums`** (the vocabulary, published FIRST because a group read is indexed

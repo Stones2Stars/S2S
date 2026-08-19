@@ -83,6 +83,19 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    **the shadow phase has ended** ([validation](../specs/validation.md)), so no duplication is sanctioned at all.
 8. **Composition root names concretes** ([the interface-contracts pattern](#the-interface-shape-composability)) — the
    active-set / game-option swaps are picked there; a leaked concrete `#include` into a consumer breaks the single wiring point.
+9. **⛔ ONE PATH PER MUTATION — EVENTS AND WORLDBUILDER GO THROUGH THE SAME ONE (owner).** The law above governs
+   reads and evaluations; it governs WRITES identically. A given state change has ONE published path, and every
+   caller uses it: a random event granting a tech, a WorldBuilder screen setting it, and any other mutator are the
+   SAME call, never a per-caller variant.
+   ⚑ **The reason is that a second path is how the two drift into disagreeing about what the mutation MEANS** —
+   one remembers to announce the crossing, refresh the dependents or refcount the grantor and the other does not,
+   so the editor produces a state the game can never reach and a bug reproducible only through one of them. That
+   is the C2C disease in write form, and it is worse than the read form: a divergent read is wrong, a divergent
+   write is CORRUPTING.
+   ⚠ **A WorldBuilder caller is not licence to bypass the path** because "it is only an editor". If a mutation is
+   safe to perform, it is safe through the shared path; if the shared path refuses it, the editor must not be
+   doing it either. ⇒ Where an editor genuinely needs a capability gameplay lacks, that is a MISSING VERB on the
+   shared surface to add deliberately, never a private setter beside it.
 
 **Enforcement (how to keep certainty).** The data-machine trees (`Sources/Data/`, `Sources/Conditions/`,
 `Sources/Enabler/`) should read like `StoneBase/src` — one unit per `Calc` package, one evaluator. To verify: grep for a second implementation of any calc/predicate; confirm every
