@@ -31,7 +31,7 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 | `merchant` | trade-mission unit | `UNITAI_MERCHANT` → `merchant` + `civilian` |
 | `spy` | runs espionage missions (only spies do) | `UNITAI_SPY` → `spy` (not civilian, not military) |
 
-### Domain — from the unit's `DOMAIN_*` (owner 2026-07-20)
+### Domain — from the unit's `DOMAIN_*`
 
 | tag | meaning | derivation |
 |---|---|---|

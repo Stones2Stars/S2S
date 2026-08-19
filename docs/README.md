@@ -1,16 +1,20 @@
 # Stones2Stars — docs
 
-The condensed spec surface. **Session-start protocol (AGENTS.md banner): read ALL of `specs/`, `architecture/`,
-and `reference/` in full before any work** — these exist so an agent ends up with a correct model of the system,
-not a reverse-engineered guess.
+The condensed spec surface, **ONE FILE PER CONCEPT**. Find the file that owns the subsystem you are touching and
+read **that one** end to end — then confirm it against `Sources/`, because [the tree outranks the
+doc](../AGENTS.md). ⛔ The blanket read-everything protocol is **retired**: it front-loaded a corpus too large to
+actually re-read, which is what made a stale line dangerous rather than harmless.
 
 > Rules & conventions for agents/contributors live in the root **[AGENTS.md](../AGENTS.md)** (the one rule home),
 > never here. This is the *knowledge* map.
 
-## How the three tiers differ — and which one to trust
+## Where a concept lives — and which home to trust
 
-The tiers are not interchangeable, and the difference decides what a stale line costs you:
+The homes are not interchangeable, and the difference decides what a stale line costs you:
 
+- **TOP LEVEL = a concept whose spec and design are ONE thing.** [cascade.md](cascade.md) and
+  [spine.md](spine.md) live here because splitting either across `specs/` and `architecture/` is what let two
+  accounts of one machine drift apart. A concept gets one file; where that file sits is a detail.
 - **`specs/` + `architecture/` = the DESIGN and the RULINGS. Timeless, authoritative, and kept free of
   implementation status.** What is BUILT belongs in `plans/`, not here. This is deliberate: when an
   implementation is archived or reverted, a spec carrying build-status silently becomes a lie that the next
@@ -34,8 +38,10 @@ Verify against the tree before acting on any claim that something is built.
   (`all`/`any`/`noneOf`), predicates, modifier families, the entry shape, the unit classification (§8). Start here.
 - **[specs/naming.md](specs/naming.md)** — the infotype id-prefix glossary (`UNIT_`/`BONUS_`/`BUILDING_`/…).
 - **[specs/enabler.md](specs/enabler.md)** — the **"can I?"** machine (2-pass generate→gate; `enables`/`requires`/`allowed`).
-- **[cascade.md](cascade.md)** — the **"how much?"** machine (deposit-down, combine, the deliveryguy ownership
-  rule); see "Also at this level" below.
+- **[cascade.md](cascade.md)** — the **"how much?"** machine: deposit-down and the combine arithmetic, the
+  conditioning (dormancy) model, the deliveryguy ownership rule, the MAINTAINED SUM (derived state moved by the
+  fact that names its source, never marked and never recomputed), and the per-scope
+  `PlotContext`/`CityContext`/`EmpireContext` live-state read surface.
 - **[specs/tally.md](specs/tally.md)** — the **"how many?"** machine (counts roll up, serializes nothing).
 - **[specs/vision.md](specs/vision.md)** — the **"how far can I see?"** machine (a budget spent walking outward,
   exactly as movement works; the STRENGTH vs ELEVATION split).
@@ -43,6 +49,9 @@ Verify against the tree before acting on any claim that something is built.
   trigger with a null condition), incl. the game-start START PACKAGES.
 - **[specs/save.md](specs/save.md)** — the name-keyed save format + the **soft-remove** discipline (`savemigration.txt` drain, no `WRAPPER_SKIP_ELEMENT`, derived-serializes-nothing).
 - **[specs/validation.md](specs/validation.md)** — the live-verification discipline: done-is-observable endpoint polls + turn time (parity and shadow are closed).
+- **[spine.md](spine.md)** — the **event spine**: the one dispatch primitive + KIND firewall, the fact vocabulary,
+  what to log (the Orwell bar, hook shapes), and the live tag registry / gate knobs / HTTP server / field census /
+  PlotSnapshot as they exist today.
 - **[specs/http-endpoints.md](specs/http-endpoints.md)** — the HTTP transport + its two standing invariants, and
   ⛔ **why the route surface is EMPTY and must stay empty** (an endpoint is a live consumer: a route keeps a legacy
   member alive past the compiler census). Four STORED-side decomposition censuses are the whole surface today;
@@ -56,6 +65,9 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/engine.md](reference/engine.md)** — the engine constraints (toolchain, save-load, pathfinding, properties, gamespeed, unitcombat).
 - **[reference/economy.md](reference/economy.md)** — maintenance, upkeep, happiness, health, war-weariness, pollution.
 - **[reference/yields-growth.md](reference/yields-growth.md)** — civics, food, improvements/plot yields, city production, golden ages & era.
+- **[reference/citizen-assignment.md](reference/citizen-assignment.md)** — how a city seats its population: plots and
+  specialists as ONE scored priority list walked with two cursors (a specialist repeats, a plot is consumed), and why
+  an emphasis must both promote and suppress or it does nothing.
 - **[reference/golden-age.md](reference/golden-age.md)** — the complete golden-age reference: its 3 base-yield additions (incl. the per-plot **pre-improvement** threshold), faster growth & great people, zero-anarchy civic swaps, all triggers/duration. (So we stop re-deriving it from the engine.)
 - **[reference/bonuses.md](reference/bonuses.md)** — what a resource IS: the plot group owns the number and nothing mirrors it; the two mutually-exclusive origins (`trade` vs `onSite`) and why `vicinity` is a different axis; manufactured bonuses being the same class as any other; every route a resource takes IN and OUT; trading, and the three facts of which only one is a crossing.
 - **[reference/culture-religion-research.md](reference/culture-religion-research.md)** — culture, religion, research/tech, heritage, corporations.
@@ -86,14 +98,6 @@ Verify against the tree before acting on any claim that something is built.
   paths and stale status are expected, and each is re-grounded only when its initiative becomes active.
 
 ## Also at this level
-- **[cascade.md](cascade.md)** — the cascade/modifier machine: deposit-down and the combine arithmetic, the
-  conditioning (dormancy) model, the deliveryguy ownership rule, the MAINTAINED SUM (derived state moved by the
-  fact that names its source, never marked and never recomputed), and the per-scope
-  `PlotContext`/`CityContext`/`EmpireContext` live-state read surface. One concept, so one file, at the top
-  level rather than split between `specs/` and `architecture/`.
-- **[spine.md](spine.md)** — the event spine: the one dispatch primitive + KIND firewall, the fact vocabulary, what
-  to log (the Orwell bar, hook shapes), and the live tag registry / gate knobs / HTTP server / field census /
-  PlotSnapshot as they exist today.
 - **[MOD-README.md](MOD-README.md)** — the mod's front-door / build-pipeline readme (the code repo's mirror).
 - **[CHANGELOG.md](CHANGELOG.md)** — the mod changelog.
 - The hosted catalogs (DESPAIR / REALISM / COMPLEXITY) → **[`/indexes/`](../indexes/)** (repo root, served via Pages).
