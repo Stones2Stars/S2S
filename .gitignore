@@ -111,3 +111,9 @@ Sources/sweep_tmp
 # Python bytecode, anywhere -- the per-directory rules above kept missing new locations
 __pycache__/
 *.pyc
+
+# Debug scratch — ad-hoc hunt/probe logs and WinDbg session artifacts.
+# These are per-session local output; nothing in the repo reads them.
+*.log
+.cdb_path.txt
+.cdb_pid.txt
