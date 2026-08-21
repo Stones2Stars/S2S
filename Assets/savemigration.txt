@@ -2302,4 +2302,4 @@ CvPlayer::iBonusImportCount
 | answers to [DEC-derived-never-trusted] like every other derived value and must not come off a save.
 | REPLACEMENT: CvCity::hasThirdRing -- the ONE getter owning both sources, the refcounted amenity
 | (CityContext::hasAmenity(CLS_AMENITY_ADDS_3RD_RING)) and the culture level under EXP_LARGER_CITIES.
-CvCity::iWorkableRadiusOverride
+CvCity::m_iWorkableRadiusOverride
