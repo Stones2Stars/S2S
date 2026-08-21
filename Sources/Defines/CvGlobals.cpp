@@ -296,7 +296,7 @@ std::string describeException(EXCEPTION_POINTERS* pep)
 // the process kept running -- so a dump from one must never land in the same name space as a real crash dump, or
 // the crash workflow starts symbolizing dumps of a game that never died.
 static bool s2sWriteMiniDumpFile(EXCEPTION_POINTERS* pep, const char* szPrefix, _TCHAR* szFilenameOut,
-	DWORD& dumpErrorOut)
+	DWORD& dumpErrorOut, MINIDUMP_TYPE eDumpType)
 {
 	time_t rawtime;
 	struct tm* timeinfo;
@@ -323,7 +323,7 @@ static bool s2sWriteMiniDumpFile(EXCEPTION_POINTERS* pep, const char* szPrefix, 
 	mdei.ExceptionPointers  = pep;
 	mdei.ClientPointers     = FALSE;
 
-	const BOOL result = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal,
+	const BOOL result = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, eDumpType,
 		(pep != NULL) ? &mdei : NULL, NULL, NULL);
 	// ⛔ A FAILED WRITE MUST NOT LEAVE A FILE BEHIND (see the caller's note): CreateFile has already made the
 	// .dmp, so a discarded failure leaves a ZERO-BYTE husk that reads as a real dump until cdb refuses it.
@@ -455,7 +455,14 @@ LONG WINAPI S2SVectoredHandler(EXCEPTION_POINTERS* pep)
 					s_dumped = true;
 					_TCHAR caughtFile[256];
 					DWORD caughtErr = 0;
-					const bool ok = s2sWriteMiniDumpFile(pep, "CaughtDump", caughtFile, caughtErr);
+					//	⚑ INDIRECTLY-REFERENCED MEMORY, unlike the crash dump. A caught AV is almost always the
+					//	EXE walking a STRING we handed it, and MiniDumpNormal captures registers + stack only --
+					//	so the buffer the fault address points into reads as "????" in the debugger and the one
+					//	question worth asking (WHICH string is it?) cannot be answered. This flag captures the
+					//	memory the stack and registers point AT, which is exactly that buffer.
+					//	⚠ Affordable only because it is ONE dump per session; the crash path keeps MiniDumpNormal.
+					const bool ok = s2sWriteMiniDumpFile(pep, "CaughtDump", caughtFile, caughtErr,
+						(MINIDUMP_TYPE)(MiniDumpNormal | MiniDumpWithIndirectlyReferencedMemory));
 					line += ok ? CvString::format(" caughtDump=%s", caughtFile)
 					           : CvString::format(" caughtDump=FAILED err=0x%08X", (unsigned)caughtErr);
 				}
