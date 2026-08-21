@@ -38,34 +38,6 @@ Measured against the deployed `Assets/CvGameCoreDLL.dll`: **1,205 of 1,302 expor
 not.** The 97 are the ones a cut may freely take. ⚠ The test needs a DEPLOYED DLL to read the export table from,
 so run it against the last good build, not a red tree.
 
-## ⛔ WHAT WE HAND THE EXE ACROSS THAT BOUNDARY — the string contract
-
-A symbol being EXE-bound fixes its NAME and SIGNATURE. It also fixes something the signature does not say: **what
-the EXE is willing to receive.** The EXE never validates our return values — it walks them straight into
-`strlen`/`wcslen`/`assign`, with no null check and no length of its own. Two rules follow, and each was paid for.
-
-**⛔ A `NULL` RETURN CAN BE LOAD-BEARING — DO NOT "TIDY" ONE INTO AN EMPTY STRING.** For a *display* string, empty
-and absent mean the same thing. For a **KEY** they do not: `NULL` says *there is no key, skip the lookup*, while
-`L""` says *look up the empty key*, which sends the EXE down a path it was skipping. ⚑ Measured: changing
-`CvActionInfo::getTextKeyWide`'s no-hotkey fallback from `NULL` to `L""` — purely for symmetry with the four
-sibling getters beside it, which legitimately return `L""` because they return TEXT — **crashed the game on load**,
-in the EXE's own `basic_string::assign` → `_Grow` → `memcpy`, with no DLL frame on the stack. Our own code treats
-the null key as an expected state (`CvInfoBase.cpp`'s `getTextKeyWide() == NULL` test), which is the tell that was
-there to read. ⇒ The siblings' convention is not evidence about a key; ask what the value IS, not what its
-neighbours return.
-
-**⛔ A POINTER WE RETURN MUST OUTLIVE THE CALL — THE EXE KEEPS IT.** Anything handed out as `const wchar_t*` /
-`const char*` must stay valid for the life of the object, because the EXE caches it and re-walks it later. ⚑ The
-worked case is `CvInfoBase::getDescription`, which returns a pointer INTO an element of its own translated-text
-cache: while that cache was a `std::vector`, the next `push_back` reallocated and moved every element, so every
-pointer issued earlier pointed at freed heap. It is a `std::deque` for exactly this reason — `push_back` never
-invalidates references to existing elements (C++03 23.2.1.3). ⚠ The signature is `wcslen` faulting on a garbage,
-NON-ZERO, VARYING address with the EXE as the only caller on the stack; a fault at address 0 is the null case
-above instead, and they are different bugs.
-⚑ **Both are diagnosable the same way:** the caught-exception dump (`CaughtDump-*.dmp`,
-[external-tools-and-workflows.md](external-tools-and-workflows.md)) names the faulting CRT routine and the bad
-address, which is what separates "we returned nothing" from "we returned something that has since died".
-
 ## Save / load
 
 The name-keyed save format, the soft-add / soft-remove rules, the `Assets/savemigration.txt` drain, the two kinds of
