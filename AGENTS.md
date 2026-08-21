@@ -866,6 +866,19 @@ the total-observability bar below.)
   `Asserts.log` entries. Known pre-existing assert families on mature saves (filter, already filed):
   `CvContractBroker::makeContract` NULL pJoinUnit (#336), `AI_formArmies` army-ID format (#364), unit stuck-in-loop
   short-circuit (#189 family).
+  - **⚖ ONE KNOWN-BENIGN `[EXCEPTION.caught]` LINE, characterized so it is not re-investigated.** Exactly one
+    appears per session and it is **EXE-internal, handled, and has no DLL frame**:
+    `ACCESS_VIOLATION addr=0x7C350440 access=read faultAddr=0x00104000` — `msvcr71!wcslen+0x4` called from
+    `Civ4BeyondSword+0xdf94b`. The pointer is `0x00104000` at the loop's FIRST instruction, so it is the argument
+    the EXE passed in, not somewhere it walked to; the value is IDENTICAL every session, which is what marks it
+    deterministic rather than heap garbage. ⛔ **It is not diagnosable further from our side and is not to be
+    chased again:** the whole stack is EXE frames, there are no Firaxis symbols to name them, and
+    `MiniDumpWithIndirectlyReferencedMemory` cannot capture the buffer because the pointer was never valid.
+    ⚠ **What it is NOT, all ruled out by dump:** a dangling string we handed over (that class faults at garbage,
+    NON-ZERO, VARYING addresses), a NULL we returned (faults at 0), and a `CvInfoBase` layout break (faults in
+    `memcpy` under `basic_string::assign`). Those three ARE ours and each has its own signature
+    ⇒ the fault ADDRESS is read before anything else; a caught line matching THIS one is noise, and any other
+    caught line is a finding.
 - **⛔ `agentstart.bat` is FIRE-AND-FORGET, and MUST be launched from PowerShell — NEVER from the Bash tool.**
   Invoking it through Bash/Git-Bash (`cmd //c agentstart.bat`, backgrounding it inside a shell script, …) **mangles
   the paths and the game does not start** — while the shell still reports success, so it reads as launched and the
