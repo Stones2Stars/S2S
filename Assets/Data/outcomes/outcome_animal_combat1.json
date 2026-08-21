@@ -4,5 +4,8 @@
   "description": "TXT_KEY_OUTCOME_ANIMAL_COMBAT1",
   "message": "TXT_KEY_OUTCOME_ANIMAL_COMBAT_MESSAGE"
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city"
 }

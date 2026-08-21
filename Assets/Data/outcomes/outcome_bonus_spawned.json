@@ -10,5 +10,10 @@
     "TECH_CANINE_DOMESTICATION"
    ]
   }
- }
+ },
+ "territory": [
+  "friendly",
+  "neutral",
+  "hostile"
+ ]
 }

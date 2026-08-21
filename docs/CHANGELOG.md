@@ -12,6 +12,15 @@
 
 ## Unreleased
 
+- **Unit actions with an outcome work again — butchering a subdued animal above all.** Every action that resolves
+  through an outcome was silently unavailable *inside your own borders*: butchering and fighting a subdued animal,
+  and the whole captive repertoire (butcher, sacrifice, and joining a city as a slave). The button did not grey
+  out, it was simply absent, because an action nothing can perform is never offered. Outcomes each carry a list of
+  territories they are allowed in, and "your own" had been dropped from all of them — an outcome that names no
+  territory is allowed nowhere, and the vast majority never named one because permission at home was the thing you
+  never had to write down. ⚑ Modders: `territory` on an outcome now always states the full allowed set. It is only
+  ever written to DENY; leaving it out no longer means "nowhere".
+
 - **A building is never obsoleted by another building — those are upgrade chains.** Every ladder in the game
   (bridges, gatherers, medicine, arenas) was carrying two contradictory fates for the same successor: "destroy me
   when it exists" and "park me while it exists". 1,521 of the 1,522 buildings that named an obsoleting building

@@ -11,6 +11,9 @@
    ]
   }
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city",
  "replaces": [
   "OUTCOME_ANIMAL_RECORD_TALE_ORAL"

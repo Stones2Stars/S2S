@@ -25,12 +25,20 @@ import curate_common as cc
 from store import REPO
 
 # territory bool tag -> clean whitelist name (owner-approved shape 2026-07-20: a compact enum, not requires.plot preds)
-_TERRITORY = [("bFriendlyTerritory", "friendly"), ("bNeutralTerritory", "neutral"),
-              ("bHostileTerritory", "hostile"), ("bBarbarianTerritory", "barbarian")]
+# ⛔ THE THIRD ELEMENT IS THE LEGACY DEFAULT, AND IT IS LOAD-BEARING. The XML read defaulted
+# friendly/neutral/hostile to TRUE and barbarian to FALSE:
+#     .add(m_bFriendlyTerritory, L"bFriendlyTerritory", true)   ... .add(m_bBarbarianTerritory, L"bBarbarianTerritory")
+# so an ABSENT tag means ALLOWED for the first three. Reading absent-as-false inverts the meaning of
+# every entry that relies on the default -- and 72 of the 105 outcomes never state bFriendlyTerritory,
+# because "allowed in your own borders" was the thing you never had to say. The visible result was
+# every outcome mission refused inside your own territory: no butcher on a subdued animal, no captive
+# missions, nothing. The tag is only ever written to DENY.
+_TERRITORY = [("bFriendlyTerritory", "friendly", True), ("bNeutralTerritory", "neutral", True),
+              ("bHostileTerritory", "hostile", True), ("bBarbarianTerritory", "barbarian", False)]
 
 # every field this curator shapes itself -> DROP from the base curate() (else the bool flags leak into identity).
 _DROP = ["Message", "PrereqTech", "ObsoleteTech", "PrereqCivic", "bToCoastalCity", "bCity", "bNotCity",
-         "bCapture", "PrereqBuildings", "ExtraChancePromotions", "ReplaceOutcomes"] + [t for t, _ in _TERRITORY]
+         "bCapture", "PrereqBuildings", "ExtraChancePromotions", "ReplaceOutcomes"] + [t for t, _, _d in _TERRITORY]
 
 CFG = cc.EntityConfig("OutcomeInfo", extra_drop=_DROP)
 
@@ -40,8 +48,12 @@ def _txt(rec, tag):
     return v if v and v != "NONE" else None
 
 
-def _bool(rec, tag):
-    return engine.text(rec.find(tag)) in ("1", "true", "True")
+def _bool(rec, tag, bDefault=False):
+    #	An ABSENT tag takes the legacy read's default; only a PRESENT tag is read as a value.
+    node = rec.find(tag)
+    if node is None:
+        return bDefault
+    return engine.text(node) in ("1", "true", "True")
 
 
 def post_process(typ, obj, rec, store):
@@ -74,7 +86,7 @@ def post_process(typ, obj, rec, store):
     if ot:
         obj["obsoletedBy"] = ot
 
-    terr = [name for tag, name in _TERRITORY if _bool(rec, tag)]
+    terr = [name for tag, name, bDefault in _TERRITORY if _bool(rec, tag, bDefault)]
     if terr:
         obj["territory"] = terr
 

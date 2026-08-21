@@ -3,5 +3,8 @@
  "identity": {
   "description": "TXT_KEY_OUTCOME_UPGRADE_TO_NEANDERTHAL_TRACKER",
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_NEANDERTHAL_TRACKER_MESSAGE"
- }
+ },
+ "territory": [
+  "friendly"
+ ]
 }

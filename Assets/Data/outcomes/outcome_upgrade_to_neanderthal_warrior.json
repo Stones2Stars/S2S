@@ -3,5 +3,8 @@
  "identity": {
   "description": "TXT_KEY_OUTCOME_UPGRADE_TO_NEANDERTHAL_WARRIOR",
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_NEANDERTHAL_WARRIOR_MESSAGE"
- }
+ },
+ "territory": [
+  "friendly"
+ ]
 }

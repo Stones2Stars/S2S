@@ -11,5 +11,8 @@
    ]
   }
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city"
 }

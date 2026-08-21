@@ -4,5 +4,8 @@
   "description": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_ORAL",
   "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city"
 }

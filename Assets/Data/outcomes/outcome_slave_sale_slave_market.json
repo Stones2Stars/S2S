@@ -12,6 +12,9 @@
    ]
   }
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city",
  "replaces": [
   "OUTCOME_SLAVE_SALE_SLAVERY"

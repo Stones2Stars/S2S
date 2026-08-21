@@ -11,6 +11,9 @@
    ]
   }
  },
+ "territory": [
+  "friendly"
+ ],
  "replaces": [
   "OUTCOME_UPGRADE_TO_GATHERER"
  ]

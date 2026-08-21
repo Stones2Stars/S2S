@@ -3,5 +3,8 @@
  "identity": {
   "description": "TXT_KEY_OUTCOME_UPGRADE_TO_STONE_THROWER",
   "message": "TXT_KEY_OUTCOME_UPGRADE_TO_STONE_THROWER_MESSAGE"
- }
+ },
+ "territory": [
+  "friendly"
+ ]
 }

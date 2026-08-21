@@ -5,6 +5,7 @@
   "message": "TXT_KEY_OUTCOME_TALES_MESSAGE"
  },
  "territory": [
+  "friendly",
   "neutral",
   "hostile",
   "barbarian"

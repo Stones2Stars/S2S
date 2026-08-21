@@ -11,6 +11,9 @@
    ]
   }
  },
+ "territory": [
+  "friendly"
+ ],
  "replaces": [
   "OUTCOME_BUILD_DOMESTICATED_HERD"
  ]

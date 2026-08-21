@@ -11,6 +11,9 @@
    ]
   }
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city",
  "replaces": [
   "OUTCOME_JOIN_AS_SLAVE_TUTOR"

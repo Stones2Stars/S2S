@@ -11,6 +11,9 @@
    ]
   }
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city",
  "replaces": [
   "OUTCOME_SACRIFICE_CAPTIVE_ALTER_II"

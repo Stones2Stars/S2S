@@ -4,5 +4,8 @@
   "description": "TXT_KEY_OUTCOME_LAWYER_LITIGATION",
   "message": "TXT_KEY_OUTCOME_LAWYER_LITIGATION_MESSAGE"
  },
+ "territory": [
+  "friendly"
+ ],
  "in": "city"
 }
