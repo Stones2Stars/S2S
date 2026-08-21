@@ -8,6 +8,14 @@ actually re-read, which is what made a stale line dangerous rather than harmless
 > Rules & conventions for agents/contributors live in the root **[AGENTS.md](../AGENTS.md)** (the one rule home),
 > never here. This is the *knowledge* map.
 
+## Start here if you are new
+
+**[overview.md](overview.md) — the guided tour.** How the data is stored, how "can I build it?" and "how much?"
+are answered, how state changes are announced, how things get handed over — and what each of those replaced. It
+is the fastest way to get a real map of the engine and to work out WHICH file below owns your subsystem.
+⛔ It is a PRIMER and **never an authority**: it links every ruling to the doc that owns it rather than restating
+one. Where it and a spec disagree, the spec wins; where a spec and the tree disagree, the tree wins.
+
 ## Where a concept lives — and which home to trust
 
 The homes are not interchangeable, and the difference decides what a stale line costs you:
