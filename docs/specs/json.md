@@ -545,6 +545,19 @@ Same per-kind bucket shape as `enables`.
   > team nor refused by its own `requires.build` in this city**, which is exactly what the legacy culture-shell
   > swap did. ⚠ If the walk finds nothing placeable the fate falls back to **HARD REMOVED** — the predecessor is
   > obsolete either way; there is simply no tier to hand it to.
+  > ⚖ **THE FATE FIRES ROUTINELY; THE PLACEMENT LEG IS *VERY* RARE (owner) — and the two must not be conflated.**
+  > The obsoleting tech sits typically **2–3 eras past** the successor's own availability, and *"it is very rare
+  > that we have not already built the building"* — so the walk almost always finds the successor already held,
+  > stops on its first test, and the fate resolves to a plain REMOVAL.
+  > ⚑ **It still fires, and visibly, BECAUSE OF DORMANCY (owner).** A superseded predecessor is parked, not
+  > removed, so it is still PRESENT in the city for those 2–3 eras; the obsoleting tech is what finally clears it.
+  > ⇒ The routine, observable behaviour of this fate is *the long-dormant predecessor disappearing when its tech
+  > lands* — not a building turning into another one.
+  > ⛔ **Do not optimise the walk, cache its result, or narrow it for cost.** Its expensive leg is the cold one,
+  > and its bound exists to stop a spin rather than to be tight.
+  > ⚠ **The real hazard of a rare leg is the opposite of cost** — it is exercised late and seldom, so a defect in
+  > it survives far longer than in a hot path. Keep it obviously correct rather than clever.
+  >
   > ⚑ **Placement is IDEMPOTENT and needs no extra rule** — the ONE placement choke point already refuses a
   > building the city holds, refuses an obsolete one, and evaluates the successor's `requires.build`
   > ([triggers.md](triggers.md)). ⚠ **Convergence is therefore SAFE but LOSSY, and that is the intended
