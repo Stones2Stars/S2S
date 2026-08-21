@@ -428,6 +428,13 @@ LONG WINAPI S2SVectoredHandler(EXCEPTION_POINTERS* pep)
 	static int s_logged = 0;
 	static std::string s_last;
 	static bool s_dumped = false;   // one caught-exception dump per session (see the write below)
+	//	⛔ HOW OFTEN, not just THAT it happened. Deduping on the identical line makes a fault that fires once
+	//	and one that fires ten thousand times look the SAME in the log -- and the difference decides whether
+	//	it is a curiosity or a hard crash for players on Wine/Proton, where the SEH that swallows a
+	//	first-chance AV on Windows is not a guarantee. Re-emitted at powers of ten, so frequency becomes
+	//	visible without the line ever flooding the file.
+	static int s_repeats = 0;
+	static int s_nextReport = 10;
 	if (pep != NULL && pep->ExceptionRecord != NULL && gDLL != NULL && s_logged < 200)
 	{
 		const DWORD code = pep->ExceptionRecord->ExceptionCode;
@@ -436,7 +443,18 @@ LONG WINAPI S2SVectoredHandler(EXCEPTION_POINTERS* pep)
 			code == EXCEPTION_ACCESS_VIOLATION)
 		{
 			const std::string exc = describeException(pep);
-			if (!exc.empty() && exc != s_last)
+			if (!exc.empty() && exc == s_last)
+			{
+				//	A REPEAT of the standing line: silent until the next power of ten, then one line saying how
+				//	many. That is the whole frequency signal, at a bounded cost.
+				if (++s_repeats >= s_nextReport)
+				{
+					gDLL->logMsg("Exceptions.log", CvString::format(
+						"[EXCEPTION.repeat] count=%d %s", s_repeats, exc.c_str()).c_str(), true, false);
+					s_nextReport *= 10;
+				}
+			}
+			else if (!exc.empty())
 			{
 				s_last = exc;
 				++s_logged;
