@@ -10,7 +10,6 @@
 #ifndef CV_INFOBASE_H
 #define CV_INFOBASE_H
 
-#include <deque>                 // m_aCachedDescriptions -- issued pointers must survive a later push_back
 #include "Tools/FProfiler.h"
 
 #include "Engine/CvProperties.h"
@@ -106,14 +105,7 @@ protected:
 
 	// translated text
 	std::vector<CvString> m_aszExtraXMLforPass3;
-	//	⛔ A DEQUE, NOT A VECTOR, AND THAT IS LOAD-BEARING. getDescription hands the EXE a `const wchar_t*`
-	//	pointing INTO an element, and the EXE holds it. A vector's push_back REALLOCATES and moves every
-	//	element, so the next form appended to ANY info dangles every pointer handed out before it -- the EXE
-	//	then walks freed heap in wcslen. deque::push_back never invalidates references to existing elements
-	//	(C++03 23.2.1.3), so an issued pointer stays valid for the life of the info.
-	//	⚠ clear() still invalidates, and correctly so: that is the info being re-read, after which no pointer
-	//	from the previous load may be held anyway.
-	mutable std::deque<CvWString> m_aCachedDescriptions;
+	mutable std::vector<CvWString> m_aCachedDescriptions;
 	mutable CvWString m_szCachedText;
 	mutable CvWString m_szCachedHelp;
 	mutable CvWString m_szCachedStrategy;

@@ -312,22 +312,17 @@ const wchar_t* CvActionInfo::getStrategy() const
 }
 
 
-//	⛔ THE NO-HOTKEY FALLBACK IS AN EMPTY STRING, NEVER NULL. These two are read BY THE EXE while it builds the
-//	unit's button row, and it does not null-check what we hand it -- it walks the pointer straight into
-//	strlen/wcslen. Their four siblings above already return L""/""; these returned NULL, which is the same
-//	defect the whole family exists to avoid and the house convention everywhere else (every other getButton in
-//	the tree ends `: ""`).
 const char* CvActionInfo::getButton() const
 {
 	const CvHotkeyInfo* pHotkeyInfo = getHotkeyInfo();
-	return pHotkeyInfo ? pHotkeyInfo->getButton() : "";
+	return pHotkeyInfo ? pHotkeyInfo->getButton() : NULL;
 }
 
 
 const wchar_t* CvActionInfo::getTextKeyWide() const
 {
 	const CvHotkeyInfo* pHotkeyInfo = getHotkeyInfo();
-	return pHotkeyInfo ? pHotkeyInfo->getTextKeyWide() : L"";
+	return pHotkeyInfo ? pHotkeyInfo->getTextKeyWide() : NULL;
 }
 
 
