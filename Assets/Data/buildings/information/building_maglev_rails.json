@@ -8,12 +8,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_VACTRAIN_TERMINAL"
-  ],
   "techs": [
    "TECH_FRICTIONLESS_FLIGHT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_VACTRAIN_TERMINAL"
  },
  "requires": {
   "build": {

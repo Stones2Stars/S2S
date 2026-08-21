@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_INTESTINAL_RATS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_JAIL"
-  ],
   "techs": [
    "TECH_PSYCHOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
  },
  "requires": {
   "build": {

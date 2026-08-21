@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GUARD_TOWER"
-  ],
   "techs": [
    "TECH_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GUARD_TOWER"
  },
  "requires": {
   "build": {

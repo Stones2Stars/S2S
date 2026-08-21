@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GAMBLING_HALL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CASINO"
-  ],
   "techs": [
    "TECH_ONLINE_COMMUNITY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CASINO"
  },
  "requires": {
   "build": {

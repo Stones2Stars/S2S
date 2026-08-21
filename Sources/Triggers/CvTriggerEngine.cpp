@@ -281,39 +281,16 @@ static int tr_promoteCityUnits(CvCity* pCity, const CvInfo* j)
 static int tr_placeGrantedBuilding(CvCity* pCity, CvPlayer& player, int iBuilding,
 	const CvCondition* pEnabled, const CvCascadeEvalFlags& kFlags)
 {
-	if (pCity == NULL || iBuilding < 0 || pCity->hasBuilding((BuildingTypes)iBuilding))
-	{
-		return 0;
-	}
-	// An obsolete building must not be resurrected in every city. The team already owns the tech list, so this is
-	// the derived predicate rather than a stored flag.
-	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding))
-	{
-		return 0;
-	}
-	// ⚠ WHERE it may stand is the building's OWN `requires.build`, evaluated by the ONE evaluator
-	// (docs/architecture/patterns.md §DRY (single implementation)) -- the coastal/river/terrain/map-category clauses the legacy placement gate
-	// re-derived by hand are exactly that condition, authored. A grant changes the LIFETIME of the provision and
-	// skips the production cost; it does not change whether the receiver can hold the thing at all.
+	// ⚠ WHERE it may stand is the building's OWN `requires.build`, evaluated by the ONE placement gate
+	// (EnablerKernel::canPlaceBuilding -- docs/architecture/patterns.md §DRY (single implementation)): the
+	// coastal/river/terrain/map-category clauses the legacy placement gate re-derived by hand are exactly that
+	// condition, authored. A grant changes the LIFETIME of the provision and skips the production cost; it does
+	// not change whether the receiver can hold the thing at all. The entry's own `enabled` rides the same ctx.
 	// ⛔ It is NOT the enabler's queue verdict: that answers "may this city QUEUE it", which a grant bypasses by
 	// construction (triggers.md -- the only divergence from normal creation is the cost step).
-	const CvInfo* pBuildingInfo = &GC.getBuildingInfo((BuildingTypes)iBuilding);
-	const CvCondition* pRequiresBuild = pBuildingInfo->requiresBuild();
-	if (pRequiresBuild != NULL || pEnabled != NULL)
+	if (!EnablerKernel::canPlaceBuilding(pCity, iBuilding, pEnabled, kFlags))
 	{
-		// the contexts ARE the eval state (contexts.md): the fill seams, never a hand-assembled raw ctx
-		CvCascadeEvalCtx ec;
-		pCity->getCityContext().fillEvalCtx(ec);
-		player.getEmpireContext().fillEvalCtx(ec);
-		EnablerKernel::wireOperatingBuildings(pCity, ec);   // the enabler's sets are the third leg
-		if (pRequiresBuild != NULL && !cascadeEvalCondition(pRequiresBuild, ec, kFlags))
-		{
-			return 0;
-		}
-		if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags))
-		{
-			return 0;
-		}
+		return 0;
 	}
 	pCity->changeHasBuilding((BuildingTypes)iBuilding, true);
 	return 1;

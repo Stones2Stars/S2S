@@ -49,12 +49,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GRANARY"
-  ],
   "techs": [
    "TECH_AGRICULTURAL_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GRANARY"
  },
  "requires": {
   "build": {

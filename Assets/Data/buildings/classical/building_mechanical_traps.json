@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MECHANICAL_TRAPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LANDMINES"
-  ],
   "techs": [
    "TECH_GUERRILLA_WARFARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LANDMINES"
  },
  "requires": {
   "build": {

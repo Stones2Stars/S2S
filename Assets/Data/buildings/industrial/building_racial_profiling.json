@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RACIAL_PROFILING",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GENETIC_PROFILING"
-  ],
   "techs": [
    "TECH_SOCIAL_CALCULUS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GENETIC_PROFILING"
  },
  "requires": {
   "build": {

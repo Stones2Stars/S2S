@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_SCULPTURES"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_SCULPTURES"
  },
  "requires": {
   "build": {

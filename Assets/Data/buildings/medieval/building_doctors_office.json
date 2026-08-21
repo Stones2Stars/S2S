@@ -18,12 +18,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SURGEONS_OFFICE"
-  ],
   "techs": [
    "TECH_MODERN_HEALTH_CARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SURGEONS_OFFICE"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ELECTRIC_VEHICLE_RECHARGING_STATION",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_WIRELESS_EV_CHARGING"
-  ],
   "techs": [
    "TECH_TELEPORTATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WIRELESS_EV_CHARGING"
  },
  "requires": {
   "build": {

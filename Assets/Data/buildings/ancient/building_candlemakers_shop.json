@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CANDLEMAKERS_SHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_CANDLES"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_CANDLES"
  },
  "requires": {
   "build": {

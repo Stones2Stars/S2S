@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TOLL_HOUSE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CUSTOMS_OFFICE"
-  ],
   "techs": [
    "TECH_APPLIED_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CUSTOMS_OFFICE"
  },
  "requires": {
   "build": {

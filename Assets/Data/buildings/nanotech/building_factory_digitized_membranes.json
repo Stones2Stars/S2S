@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FACTORY_DIGITIZED_MEMBRANES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NANOTECH_COMPLEX"
-  ],
   "techs": [
    "TECH_FEMTOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOTECH_COMPLEX"
  },
  "requires": {
   "build": {

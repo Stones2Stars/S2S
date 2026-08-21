@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_LEATHER"
-  ],
   "techs": [
    "TECH_REPLACEMENT_ORGANS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_LEATHER"
  },
  "requires": {
   "build": {

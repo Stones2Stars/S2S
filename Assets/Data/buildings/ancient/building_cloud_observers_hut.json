@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CLOUD_OBSERVERS_HUT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_WEATHER_VANES"
-  ],
   "techs": [
    "TECH_METEOROLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WEATHER_VANES"
  },
  "requires": {
   "build": {

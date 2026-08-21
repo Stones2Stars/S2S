@@ -439,6 +439,27 @@ bool EnablerKernel::requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket e
 }
 
 // The city twin (see the header). Same ONE evaluator, over a ctx the city + empire contexts fill.
+bool EnablerKernel::canPlaceBuilding(const CvCity* pCity, int iBuilding, const CvCondition* pExtra,
+	const CvCascadeEvalFlags& kFlags)
+{
+	if (pCity == NULL || iBuilding < 0) return false;
+	if (pCity->hasBuilding((BuildingTypes)iBuilding)) return false;
+	// An obsolete building must not be resurrected. The team already owns the tech list, so this is the derived
+	// predicate rather than a stored flag.
+	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)) return false;
+	const CvInfo* j = &GC.getBuildingInfo((BuildingTypes)iBuilding);
+	const CvCondition* pRequiresBuild = j->requiresBuild();
+	if (pRequiresBuild == NULL && pExtra == NULL) return true;
+	// the contexts ARE the eval state: the fill seams, never a hand-assembled raw ctx
+	CvCascadeEvalCtx ec;
+	pCity->getCityContext().fillEvalCtx(ec);
+	GET_PLAYER(pCity->getOwner()).getEmpireContext().fillEvalCtx(ec);
+	wireOperatingBuildings(pCity, ec);                       // the enabler's sets are the third leg
+	if (pRequiresBuild != NULL && !cascadeEvalCondition(pRequiresBuild, ec, kFlags)) return false;
+	if (pExtra != NULL && !cascadeEvalCondition(pExtra, ec, kFlags)) return false;
+	return true;
+}
+
 bool EnablerKernel::requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible,
 	const CvCascadeHypothetical* pHypothetical)
 {

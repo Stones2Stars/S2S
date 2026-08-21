@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BATTLEBOT_ARENA",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BATTLEMECH_ARENA"
-  ],
   "techs": [
    "TECH_NANO_DISASSEMBLY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BATTLEMECH_ARENA"
  },
  "requires": {
   "build": {

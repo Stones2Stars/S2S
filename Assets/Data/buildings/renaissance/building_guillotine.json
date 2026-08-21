@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELECTRIC_CHAIR"
-  ],
   "techs": [
    "TECH_MODERN_HEALTH_CARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRIC_CHAIR"
  },
  "requires": {
   "build": {

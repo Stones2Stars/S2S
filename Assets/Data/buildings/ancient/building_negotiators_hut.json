@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_NEGOTIATORS_HUT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AMBASSADORS_HOUSE"
-  ],
   "techs": [
    "TECH_FOREIGN_POLICY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AMBASSADORS_HOUSE"
  },
  "requires": {
   "build": {

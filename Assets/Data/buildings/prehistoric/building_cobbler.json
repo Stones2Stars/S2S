@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_COBBLER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_SHOES"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_SHOES"
  },
  "requires": {
   "build": {

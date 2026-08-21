@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TOWNCLOCK"
-  ],
   "techs": [
    "TECH_MANAGEMENT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOWNCLOCK"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ARCOLOGY_SHIELDING",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ADVANCED_SHIELDING"
-  ],
   "techs": [
    "TECH_ATOMIZATION_FIELD"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_SHIELDING"
  },
  "requires": {
   "build": {

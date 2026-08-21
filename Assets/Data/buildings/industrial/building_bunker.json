@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BUNKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BOMB_SHELTERS"
-  ],
   "techs": [
    "TECH_SUPERSTRONG_ALLOYS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BOMB_SHELTERS"
  },
  "requires": {
   "build": {

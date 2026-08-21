@@ -15,12 +15,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TOWN_PATROL"
-  ],
   "techs": [
    "TECH_WARRANTS_AND_DECREES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOWN_PATROL"
  },
  "requires": {
   "build": {

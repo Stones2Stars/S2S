@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_NETWORKS"
-  ],
   "techs": [
    "TECH_EXOCORTEX_NETWORKS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_NETWORKS"
  },
  "requires": {
   "build": {

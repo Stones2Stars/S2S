@@ -13,12 +13,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT"
-  ],
   "techs": [
    "TECH_ZERO_POINT_ENERGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT"
  },
  "requires": {
   "build": {

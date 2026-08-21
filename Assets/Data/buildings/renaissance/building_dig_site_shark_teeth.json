@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_EARTHWORKS"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
  },
  "requires": {
   "build": {

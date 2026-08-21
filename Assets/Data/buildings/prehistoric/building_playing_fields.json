@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ATHLETIC_FIELDS"
-  ],
   "techs": [
    "TECH_TEAM_SPORTS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_FIELDS"
  },
  "requires": {
   "build": {

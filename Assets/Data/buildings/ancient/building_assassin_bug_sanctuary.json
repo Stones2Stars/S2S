@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARBORETUM"
-  ],
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARBORETUM"
  },
  "requires": {
   "build": {

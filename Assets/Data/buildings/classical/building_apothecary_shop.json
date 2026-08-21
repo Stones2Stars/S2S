@@ -14,12 +14,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PHARMACY"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PHARMACY"
  },
  "requires": {
   "build": {

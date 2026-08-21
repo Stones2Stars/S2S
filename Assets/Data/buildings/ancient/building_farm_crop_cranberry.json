@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FARMSCRAPER_II"
-  ],
   "techs": [
    "TECH_GAIA_ECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_II"
  },
  "requires": {
   "build": {

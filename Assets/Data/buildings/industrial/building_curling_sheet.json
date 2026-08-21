@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CURLING_SHEET",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ATHLETIC_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_WEATHER_CONTROL"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
  },
  "requires": {
   "build": {

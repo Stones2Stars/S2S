@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_WIND_WATER_PUMP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_WATER_PUMPING_STATION"
-  ],
   "techs": [
    "TECH_MANUFACTURING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WATER_PUMPING_STATION"
  },
  "requires": {
   "build": {

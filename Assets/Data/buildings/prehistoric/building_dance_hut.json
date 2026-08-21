@@ -14,12 +14,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_DANCE_HALL"
-  ],
   "techs": [
    "TECH_ELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_DANCE_HALL"
  },
  "requires": {
   "build": {

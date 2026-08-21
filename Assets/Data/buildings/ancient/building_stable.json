@@ -19,12 +19,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_KNIGHTS_STABLE"
-  ],
   "techs": [
    "TECH_CAVALRY_TACTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_KNIGHTS_STABLE"
  },
  "requires": {
   "build": {

@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PORT"
-  ],
   "techs": [
    "TECH_COMPASS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PORT"
  },
  "requires": {
   "build": {

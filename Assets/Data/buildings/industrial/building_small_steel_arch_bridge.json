@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LARGE_STEEL_ARCH_BRIDGE"
-  ],
   "techs": [
    "TECH_HIGHWAY_SYSTEMS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LARGE_STEEL_ARCH_BRIDGE"
  },
  "requires": {
   "build": {

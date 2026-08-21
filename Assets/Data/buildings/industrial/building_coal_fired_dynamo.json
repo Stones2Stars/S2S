@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_COAL_FIRED_DYNAMO",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HIGH_TECH_COAL_POWER_PLANT"
-  ],
   "techs": [
    "TECH_FUSION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_COAL_POWER_PLANT"
  },
  "requires": {
   "build": {

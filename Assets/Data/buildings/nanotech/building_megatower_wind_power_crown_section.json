@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RENEWABLE_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_FEMTOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RENEWABLE_MEGACOMPLEX"
  },
  "requires": {
   "build": {

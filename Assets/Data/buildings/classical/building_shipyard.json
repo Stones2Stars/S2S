@@ -8,12 +8,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_DRYDOCK"
-  ],
   "techs": [
    "TECH_GLOBALIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_DRYDOCK"
  },
  "requires": {
   "build": {

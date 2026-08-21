@@ -492,25 +492,74 @@ routes · votes · hurries · traits · specialists`. **Tech unlocks live here**
 Same per-kind bucket shape as `enables`.
 
 - **`obsoletes`** — supersession: new builds barred; **existing instances persist** (an obsolete unit stays on the map).
+  ⛔ **For a BUILDING the target-side `obsoletedBy` carries `techs` ONLY — no building ever obsoletes a building**
+  ([enabler.md §2](enabler.md#2-pass-1--generate-the-frontier-the-enables-family)): a building→building relation is
+  an UPGRADE CHAIN, expressed as the predecessor's reversible `requires.operate.dormant` (§4.3). The two fates
+  cannot coexist on one pair — obsolescence is checked before the operate verdict, so it wins and destroys what the
+  chain meant to park.
 - **`whenObsolete`** — the built instance's **fate once obsolete** (its `obsoletedBy` tech is held), authored
   **target-side** as a **full modifier tree in the §6 grammar** (channels · scopes · units · `enabled`/`disabled`
   predicates — a *separate* tree, not a gate on the normal families). When the building is obsolete its **normal
   modifier families stop and this tree applies instead**; the surviving output is authored directly here and may
   differ from the working values.
 
-  > **⚖ OBSOLESCENCE HAS EXACTLY TWO FATES, AND `whenObsolete` DECIDES WHICH (owner).** This is the whole rule;
-  > there is no third case and no flag beside it:
+  > **⚖ OBSOLESCENCE HAS THREE FATES, AND `whenObsolete` DECIDES WHICH (owner).** This is the whole rule; there
+  > is no fourth case and no flag beside it:
   >
   > | `whenObsolete` | the built instance |
   > |---|---|
   > | **absent / empty** | **HARD REMOVED** — the building is gone from the city |
   > | **carries any modifier** | **STAYS**, and that tree **TAKES OVER** from its normal families |
+  > | **carries the UPGRADE** | **BECOMES its successor** — the predecessor goes, the successor is placed |
   >
-  > ⛔ **NO SUCCESSOR IS PLACED in either case.** The legacy `getObsoletesToBuilding` culture-shell swap walked a
-  > chain to put a replacement building in the city; what that swap used to place is exactly what the curator now
-  > reads to emit this tree ON THE BUILDING ITSELF, so keeping the swap would deliver the same effect twice.
+  > **⛔ `whenObsolete` LIVES IN ISOLATION AND DOES NOT CARE *WHAT* OBSOLETES (owner).** It declares what becomes
+  > of the INSTANCE once the building is obsolete, full stop. It never names its cause, never branches on one, and
+  > nothing in it may be read as "…when a tech does it". ⚑ That a **tech is the only obsoleter today** is a fact
+  > about the CAUSE side (`obsoletedBy`, [enabler.md §2](enabler.md)) and is stated there — so a second obsoleter
+  > kind arriving later changes that side alone and leaves every authored fate untouched. ⛔ Do not couple the two:
+  > a fate that knows its trigger is a fate that has to be re-authored the first time the trigger set grows.
+  >
+  > **⚖ THE UPGRADE LIVES HERE — `whenObsolete` IS WHERE THE UPGRADE GOES (owner).** Becoming obsolete and what
+  > becomes of the instance are ONE happening, so the fate and the successor are authored in one place. ⛔ Do
+  > **not** mint a separate top-level upgrade section for it. The key is **`becomes`** (owner: *"becomes works
+  > well, it's unambiguous"*), a reserved key beside the modifier families in the tree:
+  >
+  > ```jsonc
+  > "whenObsolete": { "becomes": "BUILDING_FOUNDRY" }
+  > ```
+  >
+  > **⛔ THERE IS NO GOLD-PAID BUILDING UPGRADE, AND THERE WILL NOT BE ONE (owner).** The upgrade is a
+  > CONSEQUENCE of becoming obsolete, applied automatically — never a player action, never priced, never
+  > prompted. ⚑ The unit parallel is where the temptation comes from and it stops at the structure: a unit
+  > upgrade is CHOSEN and PRICED (`CvUnit::upgrade` / `upgradePrice`); a building's is neither. **Do not port
+  > `upgradePrice`-shaped machinery to buildings, and do not add a cost, a prompt or a player action to this
+  > fate.** ([superseded-ideas #41](../architecture/superseded-ideas.md).)
+  > ⚑ **It is the OTHER half of the upgrade chain, and the two must not be confused**
+  > ([enabler.md §2](enabler.md)): the successor being BUILT parks the predecessor (reversible dormancy, keyed on
+  > PRESENCE); the TECH landing turns the predecessor INTO the successor (one-way, keyed on the tech). Different
+  > triggers, different directions, no contradiction — a building may carry both, and the Forge does.
+  >
+  > ⛔ **THE PLACEMENT WALKS THE CHAIN.** Chains are real and deep — 437 upgrade edges whose target ITSELF
+  > upgrades, and the bridge ladder runs 14 links — so the successor named may itself already be obsolete by the
+  > time the tech lands. The walk follows the chain to the **first successor that is neither obsolete for this
+  > team nor refused by its own `requires.build` in this city**, which is exactly what the legacy culture-shell
+  > swap did. ⚠ If the walk finds nothing placeable the fate falls back to **HARD REMOVED** — the predecessor is
+  > obsolete either way; there is simply no tier to hand it to.
+  > ⚑ **Placement is IDEMPOTENT and needs no extra rule** — the ONE placement choke point already refuses a
+  > building the city holds, refuses an obsolete one, and evaluates the successor's `requires.build`
+  > ([triggers.md](triggers.md)). ⚠ **Convergence is therefore SAFE but LOSSY, and that is the intended
+  > behaviour, not a defect:** many predecessors upgrade into one receiver (83 buildings converge on
+  > `BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT`, 47 on `BUILDING_FOOD_MANUFACTURING_DISTRICT`), so a city holding
+  > several of them ends with ONE. The count is not preserved and was never preserved in legacy either.
+  >
+  > ⛔ **THE OLD "NO SUCCESSOR IS PLACED" BAN NARROWS TO THE RELIC SHELL, and only there.** Its rationale was
+  > DOUBLE-APPLICATION: for a **non-constructible** target (the wonder relics) the curator emits that relic's OWN
+  > modifier tree as this building's `whenObsolete`, so also placing the relic would deliver the same effect
+  > twice. That reasoning does not reach a **constructible** successor, for which no tree is emitted at all — so
+  > placing it delivers the effect exactly once. Relic ⇒ tree, never placed; real tier ⇒ placed.
   > ⚑ The enabler's `obsolete` set ([enabler.md §3.2](enabler.md)) is therefore the **tree-carrying** population —
-  > present, non-active, depositing `whenObsolete` — never the removed ones, which are not in the city to hold.
+  > present, non-active, depositing `whenObsolete` — never the removed ones, and never the upgraded ones, which
+  > are not in the city to hold.
 
   The canonical use is a wonder keeping culture/tourism while it loses its working bonus:
   `"whenObsolete": { "culture": { "city": { "flat": 5 } } }`.

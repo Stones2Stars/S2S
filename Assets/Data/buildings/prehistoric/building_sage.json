@@ -8,12 +8,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ALTERNATIVE_MEDICINE"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ALTERNATIVE_MEDICINE"
  },
  "requires": {
   "build": {

@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HYPERMARKET"
-  ],
   "techs": [
    "TECH_SMART_DUST"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HYPERMARKET"
  },
  "requires": {
   "build": {

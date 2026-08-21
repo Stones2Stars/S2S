@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PLANETARY_IMMIGRATION_OFFICE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE"
-  ],
   "techs": [
    "TECH_TACHYON_COMMUNICATIONS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE"
  },
  "requires": {
   "build": {

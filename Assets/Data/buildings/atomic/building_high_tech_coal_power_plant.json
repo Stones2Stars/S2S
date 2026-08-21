@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_D_T_FUSION_POWER_PLANT"
-  ],
   "techs": [
    "TECH_ELECTROMAGNETIC_VOLTAGE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_D_T_FUSION_POWER_PLANT"
  },
  "requires": {
   "build": {

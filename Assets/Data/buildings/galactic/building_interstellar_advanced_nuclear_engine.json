@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_INTERSTELLAR_ADVANCED_NUCLEAR_ENGINE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_FUSION_ENGINE"
-  ],
   "techs": [
    "TECH_SPACE_CREASING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INTERSTELLAR_FUSION_ENGINE"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TAVERN",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PUB"
-  ],
   "techs": [
    "TECH_REFRIGERATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PUB"
  },
  "requires": {
   "build": {

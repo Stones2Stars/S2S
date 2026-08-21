@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MUSIC_SCHOOL"
-  ],
   "techs": [
    "TECH_FREE_ARTISTRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MUSIC_SCHOOL"
  },
  "requires": {
   "build": {

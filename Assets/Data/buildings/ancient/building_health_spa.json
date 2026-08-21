@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HEALTH_SPA",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_PICOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
  },
  "requires": {
   "operate": {

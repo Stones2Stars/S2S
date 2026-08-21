@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_WEATHER_VANES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_METEOROLOGY_LAB"
-  ],
   "techs": [
    "TECH_CLIMATE_MODELS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METEOROLOGY_LAB"
  },
  "requires": {
   "build": {

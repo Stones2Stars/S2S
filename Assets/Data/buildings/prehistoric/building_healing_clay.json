@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HEALING_CLAY",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ALTERNATIVE_MEDICINE"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ALTERNATIVE_MEDICINE"
  },
  "requires": {
   "build": {

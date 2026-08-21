@@ -13,12 +13,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NAVAL_YARD"
-  ],
   "techs": [
    "TECH_MILITARY_ROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NAVAL_YARD"
  },
  "requires": {
   "build": {

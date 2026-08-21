@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_PETROLEUM_PRODUCTS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ULTRAFUEL_REFINERY"
-  ],
   "techs": [
    "TECH_BOTANICAL_ALCHEMY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ULTRAFUEL_REFINERY"
  },
  "requires": {
   "operate": {

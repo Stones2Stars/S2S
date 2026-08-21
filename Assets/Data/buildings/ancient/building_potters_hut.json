@@ -9,12 +9,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_POTTERS_WORKSHOP"
-  ],
   "techs": [
    "TECH_ASSEMBLY_LINE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_POTTERS_WORKSHOP"
  },
  "requires": {
   "build": {

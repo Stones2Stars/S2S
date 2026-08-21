@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TERRACOTTA_WORKSHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_TERRACOTTA_WARES"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_TERRACOTTA_WARES"
  },
  "requires": {
   "build": {

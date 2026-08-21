@@ -52,12 +52,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_GRANARY"
-  ],
   "techs": [
    "TECH_GLOBALIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_GRANARY"
  },
  "requires": {
   "build": {

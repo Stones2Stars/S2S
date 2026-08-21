@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_SCHOOL"
-  ],
   "techs": [
    "TECH_MIND_UPLOADING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_SCHOOL"
  },
  "requires": {
   "build": {

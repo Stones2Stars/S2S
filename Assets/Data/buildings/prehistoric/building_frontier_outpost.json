@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FRONTIER_OUTPOST",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FORTIFIED_OUTPOST"
-  ],
   "techs": [
    "TECH_MATHEMATICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FORTIFIED_OUTPOST"
  },
  "requires": {
   "build": {

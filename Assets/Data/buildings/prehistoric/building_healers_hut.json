@@ -17,12 +17,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_DOCTORS_OFFICE"
-  ],
   "techs": [
    "TECH_ELIXIRS_AND_TONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_DOCTORS_OFFICE"
  },
  "requires": {
   "build": {

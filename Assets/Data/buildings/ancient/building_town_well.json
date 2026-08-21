@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TOWN_WELL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARTESIAN_WELL"
-  ],
   "techs": [
    "TECH_NEW_URBANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARTESIAN_WELL"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FACTORY_CALCULATORS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-  ],
   "techs": [
    "TECH_NANOELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
  },
  "requires": {
   "build": {

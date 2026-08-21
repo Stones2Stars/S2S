@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_COVERED_BRIDGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_VIADUCT"
-  ],
   "techs": [
    "TECH_METALLURGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_VIADUCT"
  },
  "requires": {
   "build": {

@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NANOBOTIC_PRINTING_MILL"
-  ],
   "techs": [
    "TECH_MOLECULAR_ASSEMBLY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOBOTIC_PRINTING_MILL"
  },
  "requires": {
   "build": {

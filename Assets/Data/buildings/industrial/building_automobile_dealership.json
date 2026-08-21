@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_AUTOMOBILE_DEALERSHIP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP"
-  ],
   "techs": [
    "TECH_INTERNAL_SHOCKWAVE_ENGINE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP"
  },
  "requires": {
   "build": {

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TATTOO_PARLOR"
-  ],
   "techs": [
    "TECH_TRANSHUMANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TATTOO_PARLOR"
  },
  "requires": {
   "build": {

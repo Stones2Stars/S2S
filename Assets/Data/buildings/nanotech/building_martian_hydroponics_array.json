@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
-  ],
   "techs": [
    "TECH_BOTANICAL_ALCHEMY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
  },
  "requires": {
   "build": {

@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HIGH_WALLS"
-  ],
   "techs": [
    "TECH_GUNPOWDER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_WALLS"
  },
  "requires": {
   "build": {

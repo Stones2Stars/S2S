@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HAREMS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BROTHEL"
-  ],
   "techs": [
    "TECH_LEGALIZED_GAMBLING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BROTHEL"
  },
  "requires": {
   "build": {

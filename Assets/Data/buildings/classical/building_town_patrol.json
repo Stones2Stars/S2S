@@ -20,12 +20,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GUARDHOUSE"
-  ],
   "techs": [
    "TECH_FLINTLOCK"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GUARDHOUSE"
  },
  "requires": {
   "build": {

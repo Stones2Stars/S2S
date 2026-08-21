@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TREADMILL_CRANE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_STEAM_CRANE"
-  ],
   "techs": [
    "TECH_ELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_STEAM_CRANE"
  },
  "requires": {
   "build": {

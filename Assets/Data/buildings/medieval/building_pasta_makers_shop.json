@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PASTA_MAKERS_SHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_PASTA"
-  ],
   "techs": [
    "TECH_AUGMENTED_CONSUMABLES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_PASTA"
  },
  "requires": {
   "build": {

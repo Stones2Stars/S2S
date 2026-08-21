@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
-  ],
   "techs": [
    "TECH_NANO_DISASSEMBLY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
  },
  "requires": {
   "build": {

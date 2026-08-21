@@ -212,12 +212,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SHOPPING_DISTRICT"
-  ],
   "techs": [
    "TECH_COMMUNICATION_NETWORKS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SHOPPING_DISTRICT"
  },
  "requires": {
   "build": {

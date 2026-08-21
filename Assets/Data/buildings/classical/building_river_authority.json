@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RIVER_AUTHORITY",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_STEAMBOAT_PORT"
-  ],
   "techs": [
    "TECH_COAST_GUARD"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_STEAMBOAT_PORT"
  },
  "requires": {
   "build": {

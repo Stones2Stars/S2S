@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONIC_PAPER_MAKER"
-  ],
   "techs": [
    "TECH_ANIMAMATERIALS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRONIC_PAPER_MAKER"
  },
  "requires": {
   "build": {

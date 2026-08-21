@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARTILLERY_BATTERY"
-  ],
   "techs": [
    "TECH_MANUFACTURING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARTILLERY_BATTERY"
  },
  "requires": {
   "build": {

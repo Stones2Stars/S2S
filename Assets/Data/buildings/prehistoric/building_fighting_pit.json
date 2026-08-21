@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FIGHTING_PIT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARENA"
-  ],
   "techs": [
    "TECH_COMBAT_SPORTS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARENA"
  },
  "requires": {
   "build": {

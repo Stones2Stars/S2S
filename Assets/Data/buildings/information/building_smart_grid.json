@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_WIRELESS_GRID"
-  ],
   "techs": [
    "TECH_ELECTROMAGNETIC_VOLTAGE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WIRELESS_GRID"
  },
  "requires": {
   "build": {

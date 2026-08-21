@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BOMBARD_TOWER"
-  ],
   "techs": [
    "TECH_ARTILLERY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BOMBARD_TOWER"
  },
  "requires": {
   "build": {

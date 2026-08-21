@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OBSERVATORY"
-  ],
   "techs": [
    "TECH_COMPULSORY_EDUCATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OBSERVATORY"
  },
  "requires": {
   "build": {

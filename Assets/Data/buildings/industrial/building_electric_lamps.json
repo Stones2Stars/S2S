@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ELECTRIC_LAMPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OLED_LAMPS"
-  ],
   "techs": [
    "TECH_PHOTON_THERMODYNAMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OLED_LAMPS"
  },
  "requires": {
   "build": {

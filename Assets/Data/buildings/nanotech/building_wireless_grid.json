@@ -8,12 +8,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_EMP_GRID"
-  ],
   "techs": [
    "TECH_FRICTIONLESS_FLIGHT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_EMP_GRID"
  },
  "requires": {
   "build": {

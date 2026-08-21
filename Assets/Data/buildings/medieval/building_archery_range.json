@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ARCHERY_RANGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SHOOTING_CLUB"
-  ],
   "techs": [
    "TECH_MILITARY_TRADITION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SHOOTING_CLUB"
  },
  "requires": {
   "build": {

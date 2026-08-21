@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MEDICAL_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_POSTHUMANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEDICAL_MEGACOMPLEX"
  },
  "requires": {
   "build": {

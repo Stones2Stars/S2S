@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MATERIALIZATION_COMPLEX"
-  ],
   "techs": [
    "TECH_OMEGA_POINT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALIZATION_COMPLEX"
  },
  "requires": {
   "build": {

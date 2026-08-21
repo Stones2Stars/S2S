@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_QUANTUM_SUPERCOMPUTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
-  ],
   "techs": [
    "TECH_STRING_MANIPULATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
  },
  "requires": {
   "build": {

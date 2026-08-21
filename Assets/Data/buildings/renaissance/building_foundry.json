@@ -27,12 +27,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_METALS_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METALS_MEGACOMPLEX"
  },
  "requires": {
   "build": {

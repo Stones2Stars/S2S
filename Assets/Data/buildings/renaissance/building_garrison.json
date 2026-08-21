@@ -16,12 +16,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MILITARY_BASE"
-  ],
   "techs": [
    "TECH_MILITARY_ROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MILITARY_BASE"
  },
  "requires": {
   "build": {

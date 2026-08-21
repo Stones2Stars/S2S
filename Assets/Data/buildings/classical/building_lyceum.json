@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_LYCEUM",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELEMENTARY_SCHOOL"
-  ],
   "techs": [
    "TECH_HOLOGRAPHICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELEMENTARY_SCHOOL"
  },
  "requires": {
   "build": {

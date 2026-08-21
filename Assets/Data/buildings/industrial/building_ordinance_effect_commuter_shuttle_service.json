@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ORDINANCE_EFFECT_COMMUTER_SHUTTLE_SERVICE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TELEPORT_BOOTH"
-  ],
   "techs": [
    "TECH_WORMHOLE_HIVEMIND"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
  },
  "requires": {
   "operate": {

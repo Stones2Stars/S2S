@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SMITH_STEEL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ADVANCED_IRONWORKS"
-  ],
   "techs": [
    "TECH_NANOMINING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_IRONWORKS"
  },
  "requires": {
   "build": {

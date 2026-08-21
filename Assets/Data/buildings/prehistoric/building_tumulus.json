@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANCIENT_CUSTOMS"
-  ],
   "techs": [
    "TECH_CITY_PLANNING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANCIENT_CUSTOMS"
  },
  "requires": {
   "build": {

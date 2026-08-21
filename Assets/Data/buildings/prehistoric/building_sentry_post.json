@@ -12,12 +12,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TOWN_WATCH"
-  ],
   "techs": [
    "TECH_LAW_ENFORCEMENT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOWN_WATCH"
  },
  "requires": {
   "build": {

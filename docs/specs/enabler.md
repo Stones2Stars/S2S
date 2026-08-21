@@ -101,6 +101,38 @@ pre-concept save produces an empty tree. **This backfill is the ONLY engine spec
 > pollution effects (blackened-skies dorms the observatory). `replaces` stays a defined family member for a future
 > genuine-removal source; there is none today.
 
+> **⛔ NO BUILDING EVER OBSOLETES A BUILDING — a building→building relation is an UPGRADE CHAIN (owner).** *"I
+> don't think having a building obsoleting another building is very good design at all; they should be considered
+> upgrade chains more than anything else."* So a building's `obsoletedBy` carries **`techs` only**, and the
+> successor relation is carried by the chain's reversible dormancy (above). ⛔ Do not emit, author, or wire
+> `obsoletedBy.buildings` for a building.
+> ⚑ **The two mechanisms CANNOT COEXIST on one pair, and obsolescence wins silently.** Obsolescence is evaluated
+> BEFORE the operate verdict (`EnablerKernel`'s `EK_OBSOLETE` — *"obsolete regardless of operate, so it is
+> checked FIRST"*), and pass 1 alone decides tree membership (§1), so an `obsoletedBy.buildings` edge HARD-REMOVES
+> the predecessor the instant its successor exists — `whenObsolete` being absent — and the dormancy on the very
+> same pair becomes unreachable. The upgrade chain stops being reversible and the predecessor is destroyed rather
+> than parked.
+> ⚠ **The inversion that produced it, so it is not re-derived:** legacy `ObsoletesToBuilding` is the **SWAP
+> DESTINATION** — what this building turned INTO when its OWN `ObsoleteTech` fired — so it was never a cause, never
+> a destroy, and never keyed on the successor's presence. Reading it as a "superseding building" turns a
+> destination into a trigger and invents a presence-keyed removal the engine never had. A CONSTRUCTIBLE
+> `ObsoletesToBuilding` target therefore emits **nothing**: the tech edge already carries the obsolescence, and the
+> successor relation is the dormancy. (The NON-constructible relic-shell target still becomes `whenObsolete` —
+> [json.md §4.2](json.md).)
+> ⚑ **Measured, which is why this is a rule and not a note: 1,521 of the 1,522 buildings carrying
+> `obsoletedBy.buildings` named that same building in `requires.operate.dormant`** — every upgrade ladder in the
+> mod (bridges, gatherers, medicine, arenas) asserting both fates at once. It was inert only because nothing reads
+> the buildings bucket; wiring it would have deleted all 1,521 predecessors on the turn their successor was built.
+> ⚑ **THE CHAIN HAS TWO HALVES AND THIS IS ONLY ONE OF THEM.** Dormancy is the PRESENCE half — the successor
+> being built parks the predecessor, reversibly. The TECH half is the UPGRADE: when the predecessor's own
+> `obsoletedBy.techs` fires it BECOMES its successor, authored on `whenObsolete`
+> ([json.md §4.2](json.md#42-obsoletes--replaces--disables--removal-permanent-source-side)). Different triggers,
+> different directions, and a building carries both — the Forge parks when a Foundry is built, and turns into one
+> when `TECH_NANOMINING` lands.
+> ⚖ **DIRECTION (owner): the upgrade chain is a concept to LEAN INTO further** — see
+> [plans/parked/upgrade-chains.md](../plans/parked/upgrade-chains.md) for what is still not modelled (chain
+> identity, tier order, a chosen-and-paid upgrade). Do not build chain machinery ahead of that work.
+
 **`obsoletes` vs `disables` kept SEPARATE for clear semantics** (progress-supersedes vs policy-forbids) + the
 pedia line ("Obsoleted by [tech]"). `disables` = a hard "be gone" (the source commands; the target gets no say);
 `obsoletes` = a soft signal — the instance's fate is authored on the TARGET via `whenObsolete`, a **separate full

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_MOOSE"
-  ],
   "techs": [
    "TECH_PLANETARY_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_MOOSE"
  },
  "requires": {
   "build": {

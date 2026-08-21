@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SUPERMARKET"
-  ],
   "techs": [
    "TECH_PLASTIC_ELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SUPERMARKET"
  },
  "requires": {
   "build": {

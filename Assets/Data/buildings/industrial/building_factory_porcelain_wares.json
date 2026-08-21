@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_DISTRICT"
-  ],
   "techs": [
    "TECH_NANOROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_DISTRICT"
  },
  "requires": {
   "build": {

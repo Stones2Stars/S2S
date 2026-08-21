@@ -9,12 +9,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SUPERCONDUCTING_GRID"
-  ],
   "techs": [
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SUPERCONDUCTING_GRID"
  },
  "requires": {
   "build": {

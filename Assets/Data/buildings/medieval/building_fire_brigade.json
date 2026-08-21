@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FIRE_BRIGADE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FIRE_STATION"
-  ],
   "techs": [
    "TECH_FIRE_SUPPRESSION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FIRE_STATION"
  },
  "requires": {
   "build": {

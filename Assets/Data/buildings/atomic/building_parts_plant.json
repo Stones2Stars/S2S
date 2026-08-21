@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_3D_PRINTING_MILL"
-  ],
   "techs": [
    "TECH_NANOROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_3D_PRINTING_MILL"
  },
  "requires": {
   "build": {

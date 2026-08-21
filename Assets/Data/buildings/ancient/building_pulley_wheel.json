@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PULLEY_WHEEL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TREADMILL_CRANE"
-  ],
   "techs": [
    "TECH_STEAM_POWER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TREADMILL_CRANE"
  },
  "requires": {
   "build": {

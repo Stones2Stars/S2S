@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_VILLAGE_HALL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TOWN_HALL"
-  ],
   "techs": [
    "TECH_CITY_PLANNING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOWN_HALL"
  },
  "requires": {
   "build": {

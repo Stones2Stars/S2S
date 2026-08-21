@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MICROWAVE_POWER_PLANT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RENEWABLE_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_FEMTOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RENEWABLE_MEGACOMPLEX"
  },
  "requires": {
   "build": {

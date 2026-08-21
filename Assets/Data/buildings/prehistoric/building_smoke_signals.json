@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SMOKE_SIGNALS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SEAL_MAKER"
-  ],
   "techs": [
    "TECH_PLASTIC_ELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SEAL_MAKER"
  },
  "requires": {
   "build": {

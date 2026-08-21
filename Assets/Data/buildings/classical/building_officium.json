@@ -39,12 +39,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_OFFICES"
-  ],
   "techs": [
    "TECH_PERSONAL_COMPUTERS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_OFFICES"
  },
  "requires": {
   "build": {

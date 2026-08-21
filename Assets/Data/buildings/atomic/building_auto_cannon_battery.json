@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MISSILE_BATTERY"
-  ],
   "techs": [
    "TECH_RAILGUN"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MISSILE_BATTERY"
  },
  "requires": {
   "build": {

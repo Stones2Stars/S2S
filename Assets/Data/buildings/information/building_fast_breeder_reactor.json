@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FAST_BREEDER_REACTOR",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GENERATION_IV_REACTOR"
-  ],
   "techs": [
    "TECH_FUSION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GENERATION_IV_REACTOR"
  },
  "requires": {
   "build": {

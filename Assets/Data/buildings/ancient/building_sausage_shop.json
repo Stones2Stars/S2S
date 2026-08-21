@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SAUSAGE_SHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_SAUSAGE"
-  ],
   "techs": [
    "TECH_AUGMENTED_CONSUMABLES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_SAUSAGE"
  },
  "requires": {
   "build": {

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_KEEP_TOWER"
-  ],
   "techs": [
    "TECH_GUNPOWDER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_KEEP_TOWER"
  },
  "requires": {
   "build": {

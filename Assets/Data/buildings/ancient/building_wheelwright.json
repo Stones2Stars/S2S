@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CARRIAGE_BUILDER"
-  ],
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CARRIAGE_BUILDER"
  },
  "requires": {
   "build": {

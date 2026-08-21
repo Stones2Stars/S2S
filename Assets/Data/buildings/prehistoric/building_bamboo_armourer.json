@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BAMBOO_ARMOURER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARMOURER"
-  ],
   "techs": [
    "TECH_ARTILLERY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARMOURER"
  },
  "requires": {
   "build": {

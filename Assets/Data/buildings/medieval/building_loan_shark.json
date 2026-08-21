@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_LOAN_SHARK",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
-  ],
   "techs": [
    "TECH_CYBERSOCIAL_INTEGRATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
  },
  "requires": {
   "build": {

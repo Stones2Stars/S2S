@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_STEAMBOAT_PORT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FERRY_TERMINAL"
-  ],
   "techs": [
    "TECH_MEGACITIES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FERRY_TERMINAL"
  },
  "requires": {
   "build": {

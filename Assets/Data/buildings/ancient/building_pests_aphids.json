@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PESTS_APHIDS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LADYBUG_SANCTUARY"
-  ],
   "techs": [
    "TECH_BOTANY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LADYBUG_SANCTUARY"
  },
  "requires": {
   "operate": {

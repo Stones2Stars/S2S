@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_INTERSTELLAR_NETWORK_NODE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_COSMIC_NODE"
-  ],
   "techs": [
    "TECH_OMEGA_POINT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INTERSTELLAR_COSMIC_NODE"
  },
  "requires": {
   "build": {

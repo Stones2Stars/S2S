@@ -1,9 +1,7 @@
 {
  "type": "BUILDING_WATER_TROUGH",
- "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARTESIAN_WELL"
-  ]
+ "whenObsolete": {
+  "becomes": "BUILDING_ARTESIAN_WELL"
  },
  "requires": {
   "build": {

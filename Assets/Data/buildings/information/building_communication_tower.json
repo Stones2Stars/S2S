@@ -13,12 +13,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NETWORK_NODE"
-  ],
   "techs": [
    "TECH_DATA_ARCHIVAL"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NETWORK_NODE"
  },
  "requires": {
   "build": {

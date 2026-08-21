@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RIVER_RAFTING_DOCK",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ATHLETIC_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_WEATHER_CONTROL"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
  },
  "requires": {
   "build": {

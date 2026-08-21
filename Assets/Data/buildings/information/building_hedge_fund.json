@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HEDGE_FUND",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INTERTEMPORAL_STOCK_MARKET"
-  ],
   "techs": [
    "TECH_ATEMPORAL_BEINGS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INTERTEMPORAL_STOCK_MARKET"
  },
  "requires": {
   "build": {

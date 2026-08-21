@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ACOUSTIC_CROWD_CONTROL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GRAVITY_CROWD_CONTROL"
-  ],
   "techs": [
    "TECH_ZERO_POINT_ENERGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GRAVITY_CROWD_CONTROL"
  },
  "requires": {
   "build": {

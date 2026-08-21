@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PARKING_GARAGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AUTOMATED_PARKING_GARAGE"
-  ],
   "techs": [
    "TECH_TELEPORTATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AUTOMATED_PARKING_GARAGE"
  },
  "requires": {
   "build": {

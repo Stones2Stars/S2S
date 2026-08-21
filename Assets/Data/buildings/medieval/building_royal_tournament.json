@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SPEEDWAY"
-  ],
   "techs": [
    "TECH_COUNTERCULTURE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SPEEDWAY"
  },
  "requires": {
   "build": {

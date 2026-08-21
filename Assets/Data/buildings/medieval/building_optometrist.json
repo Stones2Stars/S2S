@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_OPTOMETRIST",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HEALTHCARE_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_PICOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
  },
  "requires": {
   "build": {

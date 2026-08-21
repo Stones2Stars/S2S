@@ -17,12 +17,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_REPET"
-  ],
   "techs": [
    "TECH_ARTIFICIAL_LIFE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_REPET"
  },
  "requires": {
   "build": {

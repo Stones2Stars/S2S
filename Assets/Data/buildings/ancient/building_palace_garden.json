@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PALACE_GARDEN",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_IMPERIAL_FORTRESS"
-  ],
   "techs": [
    "TECH_TRENCH_WARFARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
  },
  "requires": {
   "build": {

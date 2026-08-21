@@ -8,12 +8,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FIRING_RANGE"
-  ],
   "techs": [
    "TECH_MECHANIZED_WARFARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FIRING_RANGE"
  },
  "requires": {
   "build": {

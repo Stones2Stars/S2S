@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HI_TECH_NUCLEAR_REACTOR"
-  ],
   "techs": [
    "TECH_INDUSTRIAL_ECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HI_TECH_NUCLEAR_REACTOR"
  },
  "requires": {
   "build": {

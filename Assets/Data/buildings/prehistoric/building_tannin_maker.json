@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TANNIN_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_TANNIN"
-  ],
   "techs": [
    "TECH_NOVUS_CHEMISTRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_TANNIN"
  },
  "requires": {
   "build": {

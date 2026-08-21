@@ -285,6 +285,16 @@ public:
 	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
 	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);
 
+	/// <summary>The ONE placement gate: may this city HOLD this building right now? Refuses a building the city
+	/// already has, one obsoleted by a held tech, and one whose own `requires.build` is unmet in this city.
+	/// `pExtra` is an optional additional condition evaluated against the same ctx (a grant entry's `enabled`),
+	/// so one context build serves both. Every path that hands a building over -- the grants machine, the
+	/// obsolescence upgrade -- goes through here rather than re-deriving the gate (the single-source law).
+	/// It answers "can this city hold it", NOT "may this city queue it" -- a handover bypasses the queue verdict
+	/// by construction, since the only divergence from normal construction is the production cost.</summary>
+	static bool canPlaceBuilding(const CvCity* pCity, int iBuilding, const CvCondition* pExtra,
+		const CvCascadeEvalFlags& kFlags);
+
 	// THE ON-SITE VERDICT for a bound city: is this bonus AVAILABLE here, however it got here?
 	// ⛔ IT IS NOT A TIER AND IT TAKES NONE. A vicinity BAND selects which PLOTS count; on-site is the verdict
 	// about the BONUS reached through that band, so there is nothing to parameterize

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NANOMORPHIC_REPLICATOR"
-  ],
   "techs": [
    "TECH_ASTROANTHROPOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOMORPHIC_REPLICATOR"
  },
  "requires": {
   "build": {

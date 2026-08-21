@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PIERCER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PIERCING_SHOP"
-  ],
   "techs": [
    "TECH_TRANSHUMANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PIERCING_SHOP"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_WATER_BURIALS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FUNERARY_SERVICES"
-  ],
   "techs": [
    "TECH_TRANSHUMANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FUNERARY_SERVICES"
  },
  "requires": {
   "build": {

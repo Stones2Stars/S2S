@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FACTORY_GRAVITY_GENERATORS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MATERIALIZATION_COMPLEX"
-  ],
   "techs": [
    "TECH_OMEGA_POINT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALIZATION_COMPLEX"
  },
  "requires": {
   "build": {

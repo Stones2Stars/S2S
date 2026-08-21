@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_DRIED_FISH_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AQUAFARM"
-  ],
   "techs": [
    "TECH_AUTOMATED_URBANIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
  },
  "requires": {
   "build": {

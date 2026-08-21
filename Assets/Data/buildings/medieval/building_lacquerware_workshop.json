@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_LACQUERWARE_WORKSHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_LACQUERWARE"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_LACQUERWARE"
  },
  "requires": {
   "build": {

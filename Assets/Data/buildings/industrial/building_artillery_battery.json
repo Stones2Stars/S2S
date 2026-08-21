@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AUTO_CANNON_BATTERY"
-  ],
   "techs": [
    "TECH_ADVANCED_ROCKETRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AUTO_CANNON_BATTERY"
  },
  "requires": {
   "build": {

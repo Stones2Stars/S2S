@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BRIDAL_SHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MALL"
-  ],
   "techs": [
    "TECH_PLASTIC_ELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MALL"
  },
  "requires": {
   "build": {

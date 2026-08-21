@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
-  ],
   "techs": [
    "TECH_REALITY_REPROGRAMMING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
  },
  "requires": {
   "build": {

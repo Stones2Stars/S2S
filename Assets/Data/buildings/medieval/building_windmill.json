@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_MILL"
-  ],
   "techs": [
    "TECH_AUGMENTED_CONSUMABLES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_MILL"
  },
  "requires": {
   "build": {

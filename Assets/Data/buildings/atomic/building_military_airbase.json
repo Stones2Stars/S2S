@@ -26,12 +26,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AEROSPACE_COMPLEX"
-  ],
   "techs": [
    "TECH_PLANETARY_DEFENSES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AEROSPACE_COMPLEX"
  },
  "requires": {
   "build": {

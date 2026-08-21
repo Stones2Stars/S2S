@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SPONGE_GATHERER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SPONGE_FARM"
-  ],
   "techs": [
    "TECH_ABYSS_COLONIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SPONGE_FARM"
  },
  "requires": {
   "build": {

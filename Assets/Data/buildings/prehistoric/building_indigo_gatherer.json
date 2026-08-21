@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FARM_FLOWER_INDIGO"
-  ],
   "techs": [
    "TECH_AGRICULTURAL_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARM_FLOWER_INDIGO"
  },
  "requires": {
   "build": {

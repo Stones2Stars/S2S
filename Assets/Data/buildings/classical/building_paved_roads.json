@@ -21,12 +21,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ASPHALT_ROADS"
-  ],
   "techs": [
    "TECH_SKYROADS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ASPHALT_ROADS"
  },
  "requires": {
   "build": {

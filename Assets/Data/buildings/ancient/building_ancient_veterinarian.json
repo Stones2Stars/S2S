@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_VETERINARIAN"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_VETERINARIAN"
  },
  "requires": {
   "build": {

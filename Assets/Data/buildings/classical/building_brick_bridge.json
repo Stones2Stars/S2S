@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BRICK_BRIDGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_COVERED_BRIDGE"
-  ],
   "techs": [
    "TECH_INVENTION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_COVERED_BRIDGE"
  },
  "requires": {
   "build": {

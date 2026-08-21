@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_WIG_SHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MALL"
-  ],
   "techs": [
    "TECH_PLASTIC_ELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MALL"
  },
  "requires": {
   "build": {

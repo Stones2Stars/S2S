@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_THE_RACK",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_JAIL"
-  ],
   "techs": [
    "TECH_PSYCHOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
  },
  "requires": {
   "build": {

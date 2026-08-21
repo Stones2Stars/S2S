@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BOATYARD",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MARINA"
-  ],
   "techs": [
    "TECH_MANUFACTURING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARINA"
  },
  "requires": {
   "build": {

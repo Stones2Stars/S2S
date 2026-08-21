@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_E_CLOTHING_OUTFITTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
-  ],
   "techs": [
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
  },
  "requires": {
   "build": {

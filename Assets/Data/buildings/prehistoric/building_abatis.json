@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ABATIS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FIRE_ABATIS"
-  ],
   "techs": [
    "TECH_BARBED_WIRE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FIRE_ABATIS"
  },
  "requires": {
   "build": {

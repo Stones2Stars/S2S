@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_JAI_ALAI_COURT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ATHLETIC_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_WEATHER_CONTROL"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
  },
  "requires": {
   "build": {

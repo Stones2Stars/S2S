@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FACTORY_POTATO_CHIPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FOOD_MANUFACTURING_DISTRICT"
-  ],
   "techs": [
    "TECH_MIND_UPLOADING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FOOD_MANUFACTURING_DISTRICT"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SPEARFISHER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HARBOR"
-  ],
   "techs": [
    "TECH_CITY_PLANNING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HARBOR"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_COMBAT_SIMULATOR",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR"
-  ],
   "techs": [
    "TECH_SIMULATED_REALITY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR"
  },
  "requires": {
   "build": {

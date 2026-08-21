@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TOY_CARVER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TOY_MAKER"
-  ],
   "techs": [
    "TECH_PLASTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOY_MAKER"
  },
  "requires": {
   "build": {

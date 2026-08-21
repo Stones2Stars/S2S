@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ROBOTIC_TRAPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_EMP_TRAPS"
-  ],
   "techs": [
    "TECH_NANOELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_EMP_TRAPS"
  },
  "requires": {
   "build": {

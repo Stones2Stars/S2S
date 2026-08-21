@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FRESCO_MURAL"
-  ],
   "techs": [
    "TECH_LITERATURE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FRESCO_MURAL"
  },
  "requires": {
   "build": {

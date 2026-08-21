@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MINE_JADE"
-  ],
   "techs": [
    "TECH_NANOMINING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MINE_JADE"
  },
  "requires": {
   "build": {

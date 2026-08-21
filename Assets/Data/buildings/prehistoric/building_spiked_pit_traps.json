@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SPIKED_PIT_TRAPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MECHANICAL_TRAPS"
-  ],
   "techs": [
    "TECH_MINE_WARFARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MECHANICAL_TRAPS"
  },
  "requires": {
   "build": {

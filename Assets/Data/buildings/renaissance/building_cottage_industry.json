@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_COTTAGE_INDUSTRY",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_PLANT"
-  ],
   "techs": [
    "TECH_NANOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_PLANT"
  },
  "requires": {
   "build": {

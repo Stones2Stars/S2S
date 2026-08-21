@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_LIZARDS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_REPET"
-  ],
   "techs": [
    "TECH_ARTIFICIAL_LIFE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_REPET"
  },
  "requires": {
   "operate": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GUINEA_PIG_BREEDER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INDUSTRIAL_FARMS"
-  ],
   "techs": [
    "TECH_REPLACEMENT_ORGANS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
  },
  "requires": {
   "build": {

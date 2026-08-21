@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CISTERN",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RESERVOIR"
-  ],
   "techs": [
    "TECH_NEW_URBANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RESERVOIR"
  },
  "requires": {
   "build": {

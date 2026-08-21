@@ -12,12 +12,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_D_HE3_FUSION_PLANT"
-  ],
   "techs": [
    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_D_HE3_FUSION_PLANT"
  },
  "requires": {
   "build": {

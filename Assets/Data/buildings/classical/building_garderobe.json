@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GARDEROBE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PUBLIC_RESTROOMS"
-  ],
   "techs": [
    "TECH_VIRTUAL_SOCIETY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PUBLIC_RESTROOMS"
  },
  "requires": {
   "build": {

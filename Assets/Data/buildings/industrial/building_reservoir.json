@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESERVOIR",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_WATERWORKS"
-  ],
   "techs": [
    "TECH_MEGACITIES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_WATERWORKS"
  },
  "requires": {
   "build": {

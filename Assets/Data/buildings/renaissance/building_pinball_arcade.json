@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PINBALL_ARCADE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_VIDEO_GAME_ARCADE"
-  ],
   "techs": [
    "TECH_VIRTUAL_SOCIETY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_VIDEO_GAME_ARCADE"
  },
  "requires": {
   "build": {

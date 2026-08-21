@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ROYAL_TOURNAMENT"
-  ],
   "techs": [
    "TECH_MOTORSPORTS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ROYAL_TOURNAMENT"
  },
  "requires": {
   "build": {

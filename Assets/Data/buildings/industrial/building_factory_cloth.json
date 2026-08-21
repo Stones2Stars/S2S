@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FACTORY_CLOTH",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
-  ],
   "techs": [
    "TECH_NANOROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PUBLIC_STONING",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CRUCIFIXION_CROSSES"
-  ],
   "techs": [
    "TECH_EXECUTIONS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CRUCIFIXION_CROSSES"
  },
  "requires": {
   "build": {

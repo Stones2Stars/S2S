@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MARTIAN_CAVE_DWELLING",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MARTIAN_SKYSCRAPER"
-  ],
   "techs": [
    "TECH_NANOSHIELDING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARTIAN_SKYSCRAPER"
  },
  "requires": {
   "build": {

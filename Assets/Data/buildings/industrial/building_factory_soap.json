@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FACTORY_SOAP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CHEMICALS_DISTRICT"
-  ],
   "techs": [
    "TECH_ANIMAMATERIALS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMICALS_DISTRICT"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RIVER_PORT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RIVER_AUTHORITY"
-  ],
   "techs": [
    "TECH_STEAM_POWER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RIVER_AUTHORITY"
  },
  "requires": {
   "build": {

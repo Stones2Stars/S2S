@@ -28,12 +28,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_METROPOLITAN_ADMINISTRATION"
-  ],
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METROPOLITAN_ADMINISTRATION"
  },
  "requires": {
   "build": {

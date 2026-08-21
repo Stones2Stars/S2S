@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FORTUNE_TELLER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PSYCHIC_ADVISOR"
-  ],
   "techs": [
    "TECH_TRANSHUMANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PSYCHIC_ADVISOR"
  },
  "requires": {
   "build": {

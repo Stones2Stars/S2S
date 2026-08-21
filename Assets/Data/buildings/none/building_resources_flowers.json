@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_FLOWERS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GREENHOUSE"
-  ],
   "techs": [
    "TECH_INDUSTRIAL_ECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GREENHOUSE"
  },
  "requires": {
   "operate": {

@@ -16,12 +16,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ORBITAL_TARGETS"
-  ],
   "techs": [
    "TECH_BATTLEFIELD_SPORTS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ORBITAL_TARGETS"
  },
  "requires": {
   "build": {

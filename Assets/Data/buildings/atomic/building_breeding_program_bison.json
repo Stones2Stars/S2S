@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANIMAL_PRESERVE"
-  ],
   "techs": [
    "TECH_SENTIENT_EARTH"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANIMAL_PRESERVE"
  },
  "requires": {
   "build": {

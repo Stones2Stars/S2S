@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SMITH_COPPER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ADVANCED_COPPERWORKS"
-  ],
   "techs": [
    "TECH_NANOMINING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_COPPERWORKS"
  },
  "requires": {
   "build": {

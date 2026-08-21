@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BICYCLE_BOULEVARD",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELEVATED_BICYCLE_TRACK"
-  ],
   "techs": [
    "TECH_EVOLVED_CONSTRUCTION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELEVATED_BICYCLE_TRACK"
  },
  "requires": {
   "build": {

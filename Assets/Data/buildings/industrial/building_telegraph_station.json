@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TELEPHONE_NETWORK"
-  ],
   "techs": [
    "TECH_COMPUTER_NETWORKS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPHONE_NETWORK"
  },
  "requires": {
   "build": {

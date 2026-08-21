@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HIGH_TECH_CRANE"
-  ],
   "techs": [
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CRANE"
  },
  "requires": {
   "build": {

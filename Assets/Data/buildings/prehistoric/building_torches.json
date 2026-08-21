@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TORCHES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OIL_LAMPS"
-  ],
   "techs": [
    "TECH_GAS_LIGHTING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OIL_LAMPS"
  },
  "requires": {
   "build": {

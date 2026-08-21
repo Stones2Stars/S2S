@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_GLASSWARE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MANUFACTURING_DISTRICT"
-  ],
   "techs": [
    "TECH_NANOROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_DISTRICT"
  },
  "requires": {
   "operate": {

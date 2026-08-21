@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TOY_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_TOYS"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_TOYS"
  },
  "requires": {
   "build": {

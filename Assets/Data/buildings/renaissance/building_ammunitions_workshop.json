@@ -14,12 +14,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_AMMUNITION"
-  ],
   "techs": [
    "TECH_MILITARY_ROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_AMMUNITION"
  },
  "requires": {
   "build": {

@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SMALL_SUSPENSION_BRIDGE"
-  ],
   "techs": [
    "TECH_NEW_URBANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SMALL_SUSPENSION_BRIDGE"
  },
  "requires": {
   "build": {

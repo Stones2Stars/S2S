@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CARPET_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_CARPETS"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_CARPETS"
  },
  "requires": {
   "build": {

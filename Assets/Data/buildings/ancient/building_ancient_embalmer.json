@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ANCIENT_EMBALMER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_EMBALMER"
-  ],
   "techs": [
    "TECH_MODERN_SANITATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EMBALMER"
  },
  "requires": {
   "build": {

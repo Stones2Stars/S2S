@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_COOPER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_BARRELS"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_BARRELS"
  },
  "requires": {
   "build": {

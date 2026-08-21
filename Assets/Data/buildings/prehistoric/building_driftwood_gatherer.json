@@ -8,12 +8,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LUMBER_CAMP"
-  ],
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LUMBER_CAMP"
  },
  "requires": {
   "build": {

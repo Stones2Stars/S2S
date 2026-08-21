@@ -8,12 +8,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_COLOSSEUM"
-  ],
   "techs": [
    "TECH_TEAM_SPORTS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_COLOSSEUM"
  },
  "requires": {
   "build": {

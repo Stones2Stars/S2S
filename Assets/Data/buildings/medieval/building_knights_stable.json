@@ -21,12 +21,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_STABLE"
-  ],
   "techs": [
    "TECH_VERTICAL_FLIGHT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_STABLE"
  },
  "requires": {
   "build": {

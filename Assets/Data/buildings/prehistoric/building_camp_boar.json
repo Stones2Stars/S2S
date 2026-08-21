@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_BOAR"
-  ],
   "techs": [
    "TECH_PLANETARY_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_BOAR"
  },
  "requires": {
   "build": {

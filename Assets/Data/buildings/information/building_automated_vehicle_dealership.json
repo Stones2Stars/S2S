@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
-  ],
   "techs": [
    "TECH_LEVITATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
  },
  "requires": {
   "build": {

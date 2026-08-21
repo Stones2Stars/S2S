@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_PLASTIC",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MATERIALS_CONGLOMERATE"
-  ],
   "techs": [
    "TECH_SMART_DUST"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALS_CONGLOMERATE"
  },
  "requires": {
   "operate": {

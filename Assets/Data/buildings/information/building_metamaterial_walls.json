@@ -11,12 +11,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SUPERSTRONG_ALLOY_WALLS"
-  ],
   "techs": [
    "TECH_MEGASTRONG_ALLOYS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SUPERSTRONG_ALLOY_WALLS"
  },
  "requires": {
   "build": {

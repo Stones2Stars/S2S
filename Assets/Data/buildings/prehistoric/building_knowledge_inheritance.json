@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LYCEUM"
-  ],
   "techs": [
    "TECH_COMPULSORY_EDUCATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LYCEUM"
  },
  "requires": {
   "build": {

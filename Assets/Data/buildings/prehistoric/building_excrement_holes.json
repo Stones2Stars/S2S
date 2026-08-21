@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_EXCREMENT_HOLES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OUTHOUSE"
-  ],
   "techs": [
    "TECH_SANITATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OUTHOUSE"
  },
  "requires": {
   "build": {

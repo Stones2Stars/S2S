@@ -22,12 +22,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SHERIFFS_OFFICE"
-  ],
   "techs": [
    "TECH_CRIMINOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SHERIFFS_OFFICE"
  },
  "requires": {
   "build": {

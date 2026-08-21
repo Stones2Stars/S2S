@@ -8,10 +8,61 @@
 > digests anything that slipped, from the marker below. The old commit-message-derived
 > changelog script is dead and stays dead.
 
-<!-- last-digested: bc719eb4e -->
+<!-- last-digested: d77601a35 -->
 
 ## Unreleased
 
+- **A building is never obsoleted by another building — those are upgrade chains.** Every ladder in the game
+  (bridges, gatherers, medicine, arenas) was carrying two contradictory fates for the same successor: "destroy me
+  when it exists" and "park me while it exists". 1,521 of the 1,522 buildings that named an obsoleting building
+  named that same building as a dormancy source. Obsolescence is decided before the still-running check, so the
+  destroy would have won — a predecessor would have been demolished the turn its successor went up, instead of
+  going quiet and waking again if the successor were ever lost. Only a **tech** obsoletes a building now.
+  ⚑ Modders: `obsoletedBy.buildings` is gone from the data model; a building's `obsoletedBy` carries `techs` only.
+- **An obsolete building now becomes its successor instead of just vanishing.** When the tech that obsoletes a
+  building lands, it upgrades into the next tier in its line rather than being demolished — the behaviour the
+  original game had and that had been lost. It walks the line to find a tier you can actually take, so
+  researching far past a building doesn't strand you: an ancient bridge that has been superseded four times over
+  arrives at one you can hold. If you already own the successor, the old building simply goes.
+  ⚑ Modders: this is `whenObsolete.becomes`, the third fate beside "vanish" (empty) and "stay with reduced
+  output" (a modifier tree). It says what becomes of the building and deliberately never names what obsoleted
+  it. 1,522 buildings now carry one. There is no gold-paid building upgrade and there will not be one.
+- **The customizable domestic advisor works again — 12 of its 20 columns were rendering nothing.** The screen
+  holds each column's read as a NAME it evaluates at draw time, so a read that no longer exists fails per column
+  rather than per screen — and the draw loop caught every one of those failures and printed `draw table failure!`
+  without saying which column or why, so the columns looked merely empty instead of broken. The base and global
+  rank columns, the commerce columns, the wonder counts, maintenance, food difference and espionage defence all
+  answer again, and the catch now names the column and the error. Saved BUG layouts still resolve — the columns
+  kept their keys.
+- **A sick city loses the food it should.** The unhealth penalty was being subtracted on the wrong scale, so each
+  missing health cost about one hundredth of the food it was meant to — unhealth was very nearly free, and a
+  plagued city grew as though it were not.
+- **Loading a save no longer strips every city centre of its city yields.** The plot re-binds its identity before
+  the save stream has delivered its coordinates, so after a load every centre plot answered as though it were
+  somewhere else and lost the whole city block — the population term and the guaranteed minimums — on every
+  channel. Food happened to land on the right number at sizes 5–9, which is why this looked like a
+  production-and-commerce-only fault.
+- **"Can I build this?" is asked of the one machine that knows.** 22 places asked cities and players a pair of
+  questions the engine does not answer at all, and raised every time they were reached: the revolution loop,
+  barbarian civilization setup, tech conquest, several random events, the victory screen and the WorldBuilder
+  city editor. They now read the availability verdict directly.
+- **We Love the King Day fires again** — the event that starts it called a method that does not exist, so it
+  raised every time it came up. ⚑ Modders: the write lives on the action surface, not on the city; the city
+  surface is read-only by design.
+- **A civilization with several leaders draws the right one.** The leaderhead lookup counted every leader in the
+  game into an index it then compared against a per-civilization position, so any civ past the first with more
+  than one leader picked up somebody else's portrait.
+- **"Deal cancelled" tells you again**, and a loaded save re-derives its trade counts from the deals it actually
+  holds rather than trusting a stored tally. On the standing test save 314 deals load and the turn cancels 109,
+  every one of them attributable to a named reason.
+- Modders: **a resource crossing the trade network now reports how many copies moved**, not a literal 1. A source
+  supplying six of a resource announced one, so anything tracking holdings off the event stream — the
+  out-of-process readers above all — believed the network held a single copy and diverged further with every
+  trade after the first.
+- Modders: **the Python callback validator runs again, and no longer edits your data.** It was parsing 2.4-era
+  source with a 3.x parser and dying on the first `print` statement, so it reported nothing; worse, on an
+  unresolved callback it blanked the element and rewrote the XML in place. A validator reports — fixing is
+  yours. 457 XML files against 1,644 functions in 366 Python files, clean.
 - **143 unused bindings are gone from the Python API.** Every one was published to script and called from
   nowhere in the shipped Python or the map scripts — legacy surface from `CyGame`, `CyPlayer`, `CyPlot`,
   `CyMap`, the global context and the art/text managers. ⚑ Modders: if you used one, say so and it comes back

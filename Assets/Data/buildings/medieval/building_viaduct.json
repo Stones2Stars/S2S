@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_VIADUCT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CAUSEWAY"
-  ],
   "techs": [
    "TECH_PHYSICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CAUSEWAY"
  },
  "requires": {
   "build": {

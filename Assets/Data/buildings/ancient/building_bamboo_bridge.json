@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BAMBOO_BRIDGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_STONE_BRIDGE"
-  ],
   "techs": [
    "TECH_CONSTRUCTION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_STONE_BRIDGE"
  },
  "requires": {
   "build": {

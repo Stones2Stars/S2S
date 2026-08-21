@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RICE_PADDY"
-  ],
   "techs": [
    "TECH_VERTICAL_FARMING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RICE_PADDY"
  },
  "requires": {
   "build": {

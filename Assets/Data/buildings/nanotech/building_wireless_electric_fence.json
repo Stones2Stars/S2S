@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_WIRELESS_ELECTRIC_FENCE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARCOLOGY_SHIELDING"
-  ],
   "techs": [
    "TECH_ADVANCED_SHIELDING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARCOLOGY_SHIELDING"
  },
  "requires": {
   "build": {

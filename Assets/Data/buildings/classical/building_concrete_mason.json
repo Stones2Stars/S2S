@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CEMENT_MILL"
-  ],
   "techs": [
    "TECH_MODERN_SEISMOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CEMENT_MILL"
  },
  "requires": {
   "build": {

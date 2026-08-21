@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PRINTERS_WORKSHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_BOOKS"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_BOOKS"
  },
  "requires": {
   "build": {

@@ -1669,11 +1669,15 @@ def curate(typ, rec, store):
     # --- enables / obsoletes / replaces (store-derived; COPIED so pass2 can extend FoundsCorporation/ObsoletesToBuilding) ---
     enables = OrderedDict((k, list(v)) for k, v in (store.enabled_by(typ) or {}).items())
     # supersession, TARGET-side (owner ruling 2026-06-22): authored on THIS (the superseded) building, read off
-    # its OWN fields, no store inversion. obsoletedBy = obsoleting tech (ObsoleteTech) + superseding building
-    # (ObsoletesToBuilding). NB `ReplacementBuildings` is NOT authored as `replacedBy` here -- it is reversible
-    # DORMANCY in the engine (setDisabledBuilding, not removal), so it lands on `requires.operate.dormant` (above);
-    # the `replaces` enabler edge stays a defined concept but is now UNUSED. The cascade builds the obsoletion
-    # reverse map (superseder -> [superseded]) at load — never stored in the JSON.
+    # its OWN fields, no store inversion. obsoletedBy carries the obsoleting TECH and nothing else.
+    # ⛔ NO BUILDING EVER OBSOLETES A BUILDING (owner) -- a building-to-building relation is an UPGRADE CHAIN,
+    # and an upgrade chain is expressed as reversible DORMANCY (`requires.operate.dormant`, emitted above from
+    # `ReplacementBuildings` = the engine's setDisabledBuilding). See enabler.md §2.
+    # `ObsoletesToBuilding` is the legacy SWAP DESTINATION -- what this building turned INTO when its own
+    # ObsoleteTech fired -- so it was never a cause and never a destroy. Reading it as a "superseding building"
+    # inverted it into a presence-keyed removal the legacy engine never had, and since obsolescence is checked
+    # BEFORE the operate verdict (CvEnablerKernel EK_OBSOLETE), that edge would have hard-removed the predecessor
+    # the instant its successor existed -- silently overriding the dormancy on the very same pair.
     obsoleted_by = OrderedDict()
     _ot = _txt(rec, "ObsoleteTech")
     if _ot:
@@ -1682,15 +1686,18 @@ def curate(typ, rec, store):
     when_obsolete = None
     if _otb:
         _otb_rec = store.table("BuildingInfo").get(_otb)
-        # A NON-CONSTRUCTIBLE ObsoletesToBuilding target is a RELIC SHELL (the 6 wonder relics; owner 2026-07-07):
-        # the source keeps a REDUCED output once obsolete, so the relic's OWN modifier tree becomes the source's
-        # `whenObsolete` (a separate full modifier tree, json §4.2 / enabler §2) -- NOT `obsoletedBy.buildings`
-        # (a relic is not a buildable superseder). A CONSTRUCTIBLE target is a real upgrade tier and stays the
-        # obsoletedBy supersession edge. (Non-constructible == the curator's iCost -1/absent gate, line ~1318.)
+        # The two dispositions of ObsoletesToBuilding, both landing on `whenObsolete` (json §4.2 -- the fate,
+        # declared in isolation; it never names what obsoleted the building).
+        #   NON-CONSTRUCTIBLE target = a RELIC SHELL (the 6 wonder relics; owner 2026-07-07): the source keeps a
+        #     REDUCED output once obsolete, so the relic's OWN modifier tree becomes the source's `whenObsolete`.
+        #     The relic is never PLACED -- placing it as well would deliver the same effect twice.
+        #   CONSTRUCTIBLE target = a real tier, so it is the UPGRADE: `whenObsolete.becomes` (owner). No tree is
+        #     emitted for it, so there is nothing to double-apply and the successor IS placed.
+        # (Non-constructible == the curator's iCost -1/absent gate, line ~1318.)
         if _otb_rec is not None and _int(_otb_rec, "iCost") in (None, -1):
             when_obsolete = _families_of(curate(_otb, _otb_rec, store)) or None
         else:
-            obsoleted_by["buildings"] = [_otb]
+            when_obsolete = OrderedDict([("becomes", _otb)])
     # SpecialBuilding GROUP obsoletion inherited onto the MEMBER, target-side (owner 2026-06-22: put the group's
     # ObsoleteTech on the monastery itself; double-representation with the store's source-side _inherit_group_obsoletes
     # is fine). The target-side cascade reads the member's obsoletedBy, not the tech's obsoletes, so author it here —
@@ -1817,7 +1824,7 @@ def curate(typ, rec, store):
     if obsoleted_by:
         out["obsoletedBy"] = OrderedDict((k, obsoleted_by[k]) for k in sorted(obsoleted_by))
     if when_obsolete:
-        out["whenObsolete"] = when_obsolete   # the relic shell's modifier tree (json §4.2) -- fires for the 6 wonder relics
+        out["whenObsolete"] = when_obsolete   # the instance's FATE (json §4.2): a relic shell's modifier tree, or `becomes` (the upgrade)
     if requires:
         out["requires"] = requires
     if allowed:

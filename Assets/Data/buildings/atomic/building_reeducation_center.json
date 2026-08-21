@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_REEDUCATION_CENTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CYBERNETIC_PRISON"
-  ],
   "techs": [
    "TECH_COLONY_ARCOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CYBERNETIC_PRISON"
  },
  "requires": {
   "build": {

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_COMPUTER_NETWORK"
-  ],
   "techs": [
    "TECH_VIRTUAL_SOCIETY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_COMPUTER_NETWORK"
  },
  "requires": {
   "build": {

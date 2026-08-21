@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HOUSING_HOLO_SUITES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HOUSING_COLONY_ARCOLOGY"
-  ],
   "techs": [
    "TECH_INTERSTELLAR_COLONIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOUSING_COLONY_ARCOLOGY"
  },
  "requires": {
   "operate": {

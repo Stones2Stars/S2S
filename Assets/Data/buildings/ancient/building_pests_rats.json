@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PESTS_RATS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RAT_CATCHER"
-  ],
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RAT_CATCHER"
  },
  "requires": {
   "operate": {

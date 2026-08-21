@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_SHELLFISH",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AQUAFARM"
-  ],
   "techs": [
    "TECH_AUTOMATED_URBANIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
  },
  "requires": {
   "operate": {

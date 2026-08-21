@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANTI_MATTER_BATTERY"
-  ],
   "techs": [
    "TECH_ZERO_POINT_ENERGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANTI_MATTER_BATTERY"
  },
  "requires": {
   "build": {

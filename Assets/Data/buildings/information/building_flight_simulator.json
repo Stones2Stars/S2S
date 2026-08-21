@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FLIGHT_SIMULATOR",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
-  ],
   "techs": [
    "TECH_ASTROGATION_CONSTELLATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_CHARCOAL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CHARCOAL_BURNER"
-  ],
   "techs": [
    "TECH_FIRE_BRIGADES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHARCOAL_BURNER"
  },
  "requires": {
   "operate": {

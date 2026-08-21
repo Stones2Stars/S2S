@@ -14,12 +14,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_EXOCORTEX_NETWORKS"
-  ],
   "techs": [
    "TECH_TERRA_COMPUTER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_EXOCORTEX_NETWORKS"
  },
  "requires": {
   "build": {

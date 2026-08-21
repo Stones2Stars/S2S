@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BIOMASS_POWER_PLANT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BIOFUEL_POWER_PLANT"
-  ],
   "techs": [
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BIOFUEL_POWER_PLANT"
  },
  "requires": {
   "build": {

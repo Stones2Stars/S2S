@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CASTLE_GARDEN",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CITY_PARK"
-  ],
   "techs": [
    "TECH_ECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CITY_PARK"
  },
  "requires": {
   "build": {

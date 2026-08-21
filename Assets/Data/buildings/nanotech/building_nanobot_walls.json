@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_NANOBOT_WALLS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SMART_DUST_WALLS"
-  ],
   "techs": [
    "TECH_ATOMIZATION_FIELD"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SMART_DUST_WALLS"
  },
  "requires": {
   "build": {

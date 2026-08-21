@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MATERIALIZER"
-  ],
   "techs": [
    "TECH_OMEGA_POINT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALIZER"
  },
  "requires": {
   "build": {

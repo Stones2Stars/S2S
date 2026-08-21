@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ROPER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_ROPE"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_ROPE"
  },
  "requires": {
   "build": {

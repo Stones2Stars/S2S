@@ -11,12 +11,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MEGASTRONG_ALLOY_WALLS"
-  ],
   "techs": [
    "TECH_ELECTROWEAK_MATTER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEGASTRONG_ALLOY_WALLS"
  },
  "requires": {
   "build": {

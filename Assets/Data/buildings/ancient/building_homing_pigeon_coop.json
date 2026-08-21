@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FALCONRY_SCHOOL"
-  ],
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FALCONRY_SCHOOL"
  },
  "requires": {
   "build": {

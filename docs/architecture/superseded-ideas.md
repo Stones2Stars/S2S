@@ -491,3 +491,23 @@
     what state expects, all three agreeing — never by comparing a mechanic's cascade value against its legacy
     counterpart (entry #33 above). **Never re-frame a check as "compare this mechanic against its legacy
     value" or re-invoke a per-mechanic comparison sweep.**
+41. **THE GOLD-PAID BUILDING UPGRADE** *(dead — ruled out, never built)* — giving buildings the unit-upgrade
+    treatment: a player-chosen, priced "upgrade this Forge to a Foundry for N gold", mirroring
+    `CvUnit::upgrade` / `upgradePrice`. Killed outright (owner): *"we won't have a gold-paid version for
+    buildings."* A building upgrade is a **consequence of becoming obsolete, applied automatically** — authored
+    as `whenObsolete.becomes` ([json.md §4.2](../specs/json.md#42-obsoletes--replaces--disables--removal-permanent-source-side)),
+    which declares the fate in isolation and never names what obsoleted the building.
+    **⛔ THE REASON IS TWOFOLD, AND IT IS RECORDED BECAUSE IT IS WHAT PROTECTS THE RULE (owner):**
+    (1) **It is astronomically exploitable.** Buildings sit in a priced LADDER, so a player hoards gold, builds
+    the *lowest production-cost* rung in every city, and upgrades the lot in a single turn — converting gold
+    straight into top-tier buildings while paying the production of the cheapest one. Units do not break this way
+    because a unit upgrade buys ONE unit; a building upgrade buys a whole empire's worth of tiers at once, and
+    the many-to-one convergence in the data (83 buildings feed one receiver) makes the arbitrage worse, not
+    better. (2) **The UX would be a nightmare to build** — choosing which buildings, in which cities, at which
+    prices, is a whole interface for a mechanic nobody asked for.
+    ⚑ **The revival risk is the SYMMETRY, which is why this is a tombstone and not a footnote:** units genuinely
+    do have a chosen, priced upgrade, so "buildings should too" reads as an obvious consistency fix rather than a
+    new mechanic — and the two upgrade paths otherwise share a shape (a succession edge, an availability
+    consequence, a transformation verb that is not the creation path,
+    [parked/upgrade-chains.md](../plans/parked/upgrade-chains.md)). **Don't add a cost, a price function, a
+    prompt or a player action to the building-obsolescence fate.**

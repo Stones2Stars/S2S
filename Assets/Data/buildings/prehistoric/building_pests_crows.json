@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PESTS_CROWS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SCARECROWS"
-  ],
   "techs": [
    "TECH_VERTICAL_FARMING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SCARECROWS"
  },
  "requires": {
   "operate": {

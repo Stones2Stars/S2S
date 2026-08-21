@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANTIQUE_SHOP"
-  ],
   "techs": [
    "TECH_INDUSTRIALISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANTIQUE_SHOP"
  },
  "requires": {
   "build": {

@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TEXTILE_MILL"
-  ],
   "techs": [
    "TECH_ASSEMBLY_LINE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TEXTILE_MILL"
  },
  "requires": {
   "build": {

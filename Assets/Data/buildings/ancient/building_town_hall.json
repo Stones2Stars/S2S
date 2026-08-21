@@ -9,12 +9,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CITY_COUNCIL"
-  ],
   "techs": [
    "TECH_SOCIAL_CONTRACT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CITY_COUNCIL"
  },
  "requires": {
   "build": {

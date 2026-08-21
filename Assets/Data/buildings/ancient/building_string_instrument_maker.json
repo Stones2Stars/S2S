@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_STRING_INSTRUMENT_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MUSIC_FACTORY"
-  ],
   "techs": [
    "TECH_COMPOSITES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MUSIC_FACTORY"
  },
  "requires": {
   "build": {

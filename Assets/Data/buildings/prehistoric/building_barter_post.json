@@ -71,12 +71,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TRADING_POST"
-  ],
   "techs": [
    "TECH_CONSUMERISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TRADING_POST"
  },
  "requires": {
   "build": {

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_WHEELWRIGHT"
-  ],
   "techs": [
    "TECH_MACHINERY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WHEELWRIGHT"
  },
  "requires": {
   "build": {

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BREEDING_PROGRAM_HIPPO"
-  ],
   "techs": [
    "TECH_PLANETARY_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_HIPPO"
  },
  "requires": {
   "build": {

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CHEMISTRY_LAB"
-  ],
   "techs": [
    "TECH_NOVUS_CHEMISTRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMISTRY_LAB"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FORTIFIED_OUTPOST",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_WATCH_TOWER"
-  ],
   "techs": [
    "TECH_SIEGE_WARFARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WATCH_TOWER"
  },
  "requires": {
   "build": {

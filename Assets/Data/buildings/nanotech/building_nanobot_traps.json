@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_NANOBOT_TRAPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GRAVITY_TRAPS"
-  ],
   "techs": [
    "TECH_ATOMIZATION_FIELD"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GRAVITY_TRAPS"
  },
  "requires": {
   "build": {

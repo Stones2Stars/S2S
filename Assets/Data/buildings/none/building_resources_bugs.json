@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_BUGS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARBORETUM"
-  ],
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARBORETUM"
  },
  "requires": {
   "operate": {

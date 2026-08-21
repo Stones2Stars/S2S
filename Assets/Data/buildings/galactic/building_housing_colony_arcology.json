@@ -21,12 +21,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LAUNCH_ARCOLOGY"
-  ],
   "techs": [
    "TECH_ULTIMA_ARCHITECTURE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LAUNCH_ARCOLOGY"
  },
  "requires": {
   "build": {

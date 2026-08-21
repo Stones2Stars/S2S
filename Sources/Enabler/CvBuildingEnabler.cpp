@@ -474,6 +474,58 @@ void BuildingEnabler::onPlayerGateClass(PlayerTypes ePlayer, int eClass)
 		bd_gateSet(*pCity, s_gateClass[eClass]);
 }
 
+// THE UPGRADE TARGET -- walk `whenObsolete.becomes` to the first link this city can actually take (json.md §4.2).
+// Chains are real and deep (the bridge line runs 14 links), so by the time a late tech lands the named successor
+// may itself already be obsolete; the legacy culture-shell swap walked the chain for exactly this reason.
+// ⚠ ALREADY-HOLDING the successor STOPS the walk and places nothing -- continuing would hand the city a HIGHER
+// tier for free, which is the one outcome an upgrade must never produce.
+// Returns NO_BUILDING when nothing down the chain is placeable, which leaves the predecessor's fate a plain
+// removal: it is obsolete either way, there is simply no tier to hand it to.
+static int bd_resolveUpgradeTarget(const CvCity* pCity, int iFrom)
+{
+	const CvCascadeEvalFlags kFlags;
+	int iAt = GC.getBuildingInfo((BuildingTypes)iFrom).getWhenObsoleteBecomes();
+	for (int iGuard = 0; iAt >= 0 && iGuard < 64; ++iGuard)   // the chain is authored data: bound the walk
+	{
+		if (pCity->hasBuilding((BuildingTypes)iAt)) return NO_BUILDING;   // already up the ladder
+		if (EnablerKernel::canPlaceBuilding(pCity, iAt, NULL, kFlags)) return iAt;
+		const int iNext = GC.getBuildingInfo((BuildingTypes)iAt).getWhenObsoleteBecomes();
+		if (iNext == iAt) break;                                          // a self-edge would spin
+		iAt = iNext;
+	}
+	return NO_BUILDING;
+}
+
+// THE INSTANCE'S FATE once the building is obsolete -- the three outcomes of `whenObsolete` (json.md §4.2):
+//   `becomes`      -> the UPGRADE: the predecessor goes and its successor is placed in its stead
+//   a tree of mods -> STAYS, and that tree deposits in place of its normal families (the enabler's obsolete set)
+//   empty / absent -> HARD REMOVED
+// ⛔ The fate is declared in ISOLATION and names no cause (owner) -- this reads only what BECOMES of the
+// instance, never what obsoleted it.
+static void bd_applyObsoleteFate(CvCity* pCity, int b)
+{
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)b);
+	if (kBuilding.getWhenObsoleteBecomes() != NO_BUILDING)
+	{
+		// Resolve BEFORE removing: the walk asks whether the city can hold each link, and the predecessor
+		// leaving could itself change that answer.
+		const int iTarget = bd_resolveUpgradeTarget(pCity, b);
+		pCity->changeHasBuilding((BuildingTypes)b, false);
+		if (iTarget != NO_BUILDING)
+		{
+			// The ordinary placement, so the enabler, the cascade and the tally see the successor exactly as a
+			// constructed one -- nothing downstream may tell an upgraded building from a built one (triggers.md).
+			pCity->changeHasBuilding((BuildingTypes)iTarget, true);
+		}
+		return;
+	}
+	const CvModifiers* pWhenObsolete = kBuilding.getWhenObsolete();
+	if (pWhenObsolete == NULL || pWhenObsolete->empty())
+	{
+		pCity->changeHasBuilding((BuildingTypes)b, false);
+	}
+}
+
 // The tech delta. SEVT_TECH_CHANGED is documented BROAD (fires on any set), so the flip guard is the PLAYER tech
 // domain's held flag -- which means this MUST run BEFORE TechEnabler::onTechChanged flips it (the invalidation
 // route owns that ordering).
@@ -507,19 +559,12 @@ void BuildingEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool b
 					const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get(b);
 					if (EnablerKernel::obsoletedByOtherHeldTech(jb, kTeam, eTech)) continue;
 					EnablerKernel::applyEdges(d, jb, EDGEB_BUILDINGS, -iDelta);
-					// ⚖ THE INSTANCE'S FATE, decided here because a TECH is the only thing that can obsolete
-					// (owner): an EMPTY `whenObsolete` is a HARD REMOVAL, while a tree carrying modifiers leaves
-					// the building standing for that tree to take over ([json.md §4.2], [enabler.md §3.2] -- the
-					// enabler's own obsolete set is exactly the tree-carrying population). ⛔ No successor is
-					// placed: what the retired culture-shell chain used to put here is what the curator now reads
-					// to emit the tree on the building itself.
+					// ⚖ THE INSTANCE'S FATE, applied here because this is where obsolescence is DECIDED -- the
+					// crossing emit below is observability only and no consumer may route an apply through it.
+					// The three outcomes live in `whenObsolete` ([json.md §4.2]); bd_applyObsoleteFate owns them.
 					if (bHas)
 					{
-						const CvModifiers* pWhenObsolete = jb->getWhenObsolete();
-						if (pWhenObsolete == NULL || pWhenObsolete->empty())
-						{
-							pCity->changeHasBuilding((BuildingTypes)b, false);
-						}
+						bd_applyObsoleteFate(pCity, b);
 					}
 				}
 			if (bGate) bd_gateSet(*pCity, touched);   // gate-on-entry + the par.7.1 step-2 re-gates

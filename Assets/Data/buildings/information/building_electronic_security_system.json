@@ -9,12 +9,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
-  ],
   "techs": [
    "TECH_BINARY_LEGISLATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
  },
  "requires": {
   "build": {

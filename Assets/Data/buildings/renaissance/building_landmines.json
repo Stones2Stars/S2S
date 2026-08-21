@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_LANDMINES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BOOBY_TRAPS"
-  ],
   "techs": [
    "TECH_BIOLOGICAL_WARFARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BOOBY_TRAPS"
  },
  "requires": {
   "build": {

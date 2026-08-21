@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LARGE_SUSPENSION_BRIDGE"
-  ],
   "techs": [
    "TECH_TELEPORTATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LARGE_SUSPENSION_BRIDGE"
  },
  "requires": {
   "build": {

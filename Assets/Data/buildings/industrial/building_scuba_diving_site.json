@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SCUBA_DIVING_SITE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TOURISM_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_FUSION_SPACECRAFT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOURISM_MEGACOMPLEX"
  },
  "requires": {
   "build": {

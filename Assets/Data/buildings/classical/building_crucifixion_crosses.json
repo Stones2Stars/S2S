@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CRUCIFIXION_CROSSES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GALLOWS"
-  ],
   "techs": [
    "TECH_JURISPRUDENCE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GALLOWS"
  },
  "requires": {
   "build": {

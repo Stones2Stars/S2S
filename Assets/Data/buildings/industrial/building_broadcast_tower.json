@@ -11,12 +11,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_COMMUNICATION_TOWER"
-  ],
   "techs": [
    "TECH_TERRA_COMPUTER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_COMMUNICATION_TOWER"
  },
  "requires": {
   "build": {

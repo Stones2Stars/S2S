@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_LEVEE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RIVER_ADMINISTRATION"
-  ],
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RIVER_ADMINISTRATION"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PALISADE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_EARTH_WALL"
-  ],
   "techs": [
    "TECH_MASONRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_EARTH_WALL"
  },
  "requires": {
   "build": {

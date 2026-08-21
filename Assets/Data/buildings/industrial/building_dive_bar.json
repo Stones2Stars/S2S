@@ -11,12 +11,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GALACTIC_CANTINA"
-  ],
   "techs": [
    "TECH_PURE_INFORMATION_SOCIETY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GALACTIC_CANTINA"
  },
  "requires": {
   "build": {

@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GUILLOTINE"
-  ],
   "techs": [
    "TECH_CRIMINOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GUILLOTINE"
  },
  "requires": {
   "build": {

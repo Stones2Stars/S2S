@@ -17,12 +17,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PAVED_ROADS"
-  ],
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PAVED_ROADS"
  },
  "requires": {
   "build": {

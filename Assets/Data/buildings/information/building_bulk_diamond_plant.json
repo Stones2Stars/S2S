@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BULK_DIAMOND_PLANT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PICOTECH_COMPLEX"
-  ],
   "techs": [
    "TECH_ELECTROWEAK_MATTER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PICOTECH_COMPLEX"
  },
  "requires": {
   "build": {

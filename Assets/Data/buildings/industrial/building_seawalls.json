@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SEAWALLS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ADVANCED_FLOODWALL"
-  ],
   "techs": [
    "TECH_ABYSS_COLONIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_FLOODWALL"
  },
  "requires": {
   "build": {

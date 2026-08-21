@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LASER_BATTERY"
-  ],
   "techs": [
    "TECH_WEAPONIZED_ANTIMATTER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LASER_BATTERY"
  },
  "requires": {
   "build": {

@@ -15,12 +15,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AGROFOREST"
-  ],
   "techs": [
    "TECH_SENTIENT_EARTH"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
  },
  "requires": {
   "build": {

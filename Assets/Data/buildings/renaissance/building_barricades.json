@@ -11,12 +11,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CEMENT_BARRIER"
-  ],
   "techs": [
    "TECH_METAMATERIALS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CEMENT_BARRIER"
  },
  "requires": {
   "build": {

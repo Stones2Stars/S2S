@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LETHAL_INJECTION"
-  ],
   "techs": [
    "TECH_CRYONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LETHAL_INJECTION"
  },
  "requires": {
   "build": {

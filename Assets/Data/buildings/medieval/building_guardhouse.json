@@ -21,12 +21,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GUARD_STATION"
-  ],
   "techs": [
    "TECH_DEPUTIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GUARD_STATION"
  },
  "requires": {
   "build": {

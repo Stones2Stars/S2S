@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PLANTATION_HENNA"
-  ],
   "techs": [
    "TECH_AGRICULTURAL_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PLANTATION_HENNA"
  },
  "requires": {
   "build": {

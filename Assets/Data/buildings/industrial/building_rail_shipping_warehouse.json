@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
-  ],
   "techs": [
    "TECH_WORMHOLE_HIVEMIND"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
  },
  "requires": {
   "build": {

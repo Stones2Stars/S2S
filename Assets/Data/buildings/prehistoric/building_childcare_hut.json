@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_DAY_CARE_CENTER"
-  ],
   "techs": [
    "TECH_TRANSHUMANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_DAY_CARE_CENTER"
  },
  "requires": {
   "build": {

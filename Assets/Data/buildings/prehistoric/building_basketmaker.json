@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BASKETMAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BASKET_MAKERS_WORKSHOP"
-  ],
   "techs": [
    "TECH_ASSEMBLY_LINE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BASKET_MAKERS_WORKSHOP"
  },
  "requires": {
   "build": {

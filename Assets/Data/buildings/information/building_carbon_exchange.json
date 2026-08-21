@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CARBON_EXCHANGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ECOSYSTEM_SERVICES_MARKET"
-  ],
   "techs": [
    "TECH_SENTIENT_EARTH"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ECOSYSTEM_SERVICES_MARKET"
  },
  "requires": {
   "build": {

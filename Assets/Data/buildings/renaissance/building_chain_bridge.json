@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CHAIN_BRIDGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_TRUSS_BRIDGE"
-  ],
   "techs": [
    "TECH_STEEL"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TRUSS_BRIDGE"
  },
  "requires": {
   "build": {

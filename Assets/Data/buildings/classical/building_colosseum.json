@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MINOR_LEAGUE_STADIUM"
-  ],
   "techs": [
    "TECH_MODERN_SPORTS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MINOR_LEAGUE_STADIUM"
  },
  "requires": {
   "build": {

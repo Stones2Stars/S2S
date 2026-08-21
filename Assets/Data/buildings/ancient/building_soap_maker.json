@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SOAP_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_SOAP"
-  ],
   "techs": [
    "TECH_NOVUS_CHEMISTRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_SOAP"
  },
  "requires": {
   "build": {

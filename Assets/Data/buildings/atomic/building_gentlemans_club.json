@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GENTLEMANS_CLUB",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANDROID_BROTHEL"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANDROID_BROTHEL"
  },
  "requires": {
   "build": {

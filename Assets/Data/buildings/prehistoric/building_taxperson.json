@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TAXPERSON",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OFFICIUM"
-  ],
   "techs": [
    "TECH_CIVIL_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OFFICIUM"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GAMBLING_DEN",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GAMBLING_HALL"
-  ],
   "techs": [
    "TECH_LEGALIZED_GAMBLING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GAMBLING_HALL"
  },
  "requires": {
   "build": {

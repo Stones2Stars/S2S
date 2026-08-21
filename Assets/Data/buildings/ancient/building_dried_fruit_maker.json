@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_DRIED_FRUIT_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FARMSCRAPER_III"
-  ],
   "techs": [
    "TECH_GAIA_ECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_III"
  },
  "requires": {
   "build": {

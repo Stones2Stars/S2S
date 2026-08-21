@@ -9,12 +9,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NANOTECH_COMPLEX"
-  ],
   "techs": [
    "TECH_FEMTOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOTECH_COMPLEX"
  },
  "requires": {
   "build": {

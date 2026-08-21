@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BROTHEL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GENTLEMANS_CLUB"
-  ],
   "techs": [
    "TECH_PERSONAL_ROBOTS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GENTLEMANS_CLUB"
  },
  "requires": {
   "build": {

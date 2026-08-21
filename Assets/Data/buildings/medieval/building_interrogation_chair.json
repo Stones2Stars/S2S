@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_INTERROGATION_CHAIR",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_JAIL"
-  ],
   "techs": [
    "TECH_PSYCHOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
  },
  "requires": {
   "build": {

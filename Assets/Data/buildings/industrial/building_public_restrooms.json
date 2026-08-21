@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PUBLIC_RESTROOMS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SANITATION_CHAMBER"
-  ],
   "techs": [
    "TECH_HOMO_SUPERIOR"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SANITATION_CHAMBER"
  },
  "requires": {
   "build": {

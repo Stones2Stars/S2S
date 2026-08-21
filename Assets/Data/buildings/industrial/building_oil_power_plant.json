@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_OIL_POWER_PLANT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_METHANE_POWER_PLANT"
-  ],
   "techs": [
    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METHANE_POWER_PLANT"
  },
  "requires": {
   "build": {

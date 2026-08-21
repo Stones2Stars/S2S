@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_LOCAL_COURTHOUSE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AI_LEGAL_SYSTEM"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AI_LEGAL_SYSTEM"
  },
  "requires": {
   "build": {

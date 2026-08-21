@@ -14,12 +14,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NIGHT_CLUB"
-  ],
   "techs": [
    "TECH_ONLINE_COMMUNITY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NIGHT_CLUB"
  },
  "requires": {
   "build": {

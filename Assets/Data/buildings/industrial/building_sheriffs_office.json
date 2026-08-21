@@ -24,12 +24,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_POLICE_STATION"
-  ],
   "techs": [
    "TECH_FORENSICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_POLICE_STATION"
  },
  "requires": {
   "build": {

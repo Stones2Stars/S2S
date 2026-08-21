@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ROPE_BRIDGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LOG_BRIDGE"
-  ],
   "techs": [
    "TECH_SEDENTARY_LIFESTYLE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LOG_BRIDGE"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BALLISTA_TURRET",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CANNON_TURRET"
-  ],
   "techs": [
    "TECH_ROMANTICISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CANNON_TURRET"
  },
  "requires": {
   "build": {

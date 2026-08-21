@@ -39,6 +39,7 @@ CvBuildingInfo::CvBuildingInfo()
 	, m_iGreatPeopleUnitType(-1)
 	, m_iAdvisor(-1)
 	, m_iSpecialBuildingType(-1)
+	, m_iWhenObsoleteBecomes(-1)
 	, m_iFreeStartEra(-1)
 	, m_iDiploVoteType(-1)
 	, m_iReligion(-1)
@@ -223,6 +224,14 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	m_bNoInstanceLimit = jsonIdBool(identity, "noInstanceLimit");
 	m_bAllowsNukes = jsonIdBool(identity, "allowsNukes");
 	m_bForceNoPrereqScaling = jsonIdBool(identity, "forceNoPrereqScaling");
+	// `whenObsolete.becomes` -- the UPGRADE fate (json §4.2). Read off the whenObsolete SECTION rather than
+	// identity: the fate and its successor are one authored thing. Materialized here so no read ever touches a
+	// string (docs/architecture/patterns.md §Materialize at mapFrom), and fully redefined on every mapFrom --
+	// the absent case must land -1 rather than inherit a previous run's value.
+	{
+		const picojson::object* pWhenObsoleteObj = jsonChildObj(entityObj, "whenObsolete");
+		m_iWhenObsoleteBecomes = (pWhenObsoleteObj != NULL) ? jsonIdFk(*pWhenObsoleteObj, "becomes") : -1;
+	}
 	m_iGreatPeopleUnitType = jsonIdFk(identity, "greatPeopleUnitType");
 	m_iAdvisor = jsonIdFk(identity, "advisor");
 	m_iSpecialBuildingType = jsonIdFk(identity, "specialBuildingType");

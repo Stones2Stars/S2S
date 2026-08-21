@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_EMP_TRAPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_NANOBOT_TRAPS"
-  ],
   "techs": [
    "TECH_ANTI_GRAVITY_FIELDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOBOT_TRAPS"
  },
  "requires": {
   "build": {

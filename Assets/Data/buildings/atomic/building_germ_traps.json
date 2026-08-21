@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GERM_TRAPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ROBOTIC_TRAPS"
-  ],
   "techs": [
    "TECH_ELECTRIC_ARC_WEAPONRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ROBOTIC_TRAPS"
  },
  "requires": {
   "build": {

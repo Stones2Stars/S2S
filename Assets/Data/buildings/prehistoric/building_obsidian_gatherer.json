@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_OBSIDIAN_GATHERER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OBSIDIAN_QUARRY"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OBSIDIAN_QUARRY"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FURNITURE_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_FURNITURE"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_FURNITURE"
  },
  "requires": {
   "build": {

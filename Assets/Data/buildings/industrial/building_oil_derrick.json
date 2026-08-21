@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_OIL_DERRICK",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ULTRAFUEL_REFINERY"
-  ],
   "techs": [
    "TECH_BOTANICAL_ALCHEMY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ULTRAFUEL_REFINERY"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_WEAVER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_CLOTH"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_CLOTH"
  },
  "requires": {
   "build": {

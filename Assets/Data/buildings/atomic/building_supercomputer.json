@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SUPERCOMPUTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OPTRONIC_SUPERCOMPUTER"
-  ],
   "techs": [
    "TECH_DATA_ARCHIVAL"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OPTRONIC_SUPERCOMPUTER"
  },
  "requires": {
   "build": {

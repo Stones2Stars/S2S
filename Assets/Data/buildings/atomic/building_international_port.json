@@ -15,12 +15,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_OCEAN_ADMINISTRATION"
-  ],
   "techs": [
    "TECH_LAUNCH_ARCOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OCEAN_ADMINISTRATION"
  },
  "requires": {
   "build": {

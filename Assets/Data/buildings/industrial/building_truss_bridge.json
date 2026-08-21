@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TRUSS_BRIDGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SMALL_STEEL_ARCH_BRIDGE"
-  ],
   "techs": [
    "TECH_MOTORIZED_TRANSPORTATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SMALL_STEEL_ARCH_BRIDGE"
  },
  "requires": {
   "build": {

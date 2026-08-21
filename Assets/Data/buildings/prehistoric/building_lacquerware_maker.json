@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_LACQUERWARE_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LACQUERWARE_WORKSHOP"
-  ],
   "techs": [
    "TECH_ASSEMBLY_LINE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LACQUERWARE_WORKSHOP"
  },
  "requires": {
   "build": {

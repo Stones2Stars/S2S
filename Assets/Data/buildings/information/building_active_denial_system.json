@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ACTIVE_DENIAL_SYSTEM",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ACOUSTIC_CROWD_CONTROL"
-  ],
   "techs": [
    "TECH_WEAPONIZED_GRAVITY_FIELDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ACOUSTIC_CROWD_CONTROL"
  },
  "requires": {
   "build": {

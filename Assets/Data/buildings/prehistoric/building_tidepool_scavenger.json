@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TIDEPOOL_SCAVENGER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FISHERMANS_HUT"
-  ],
   "techs": [
    "TECH_AQUACULTURE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FISHERMANS_HUT"
  },
  "requires": {
   "build": {

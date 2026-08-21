@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_POLICE_DRONE_CONTROL_CENTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AI_POLICE_FORCE"
-  ],
   "techs": [
    "TECH_COLONY_ARCOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AI_POLICE_FORCE"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BOOBY_TRAPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GERM_TRAPS"
-  ],
   "techs": [
    "TECH_ROBOTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GERM_TRAPS"
  },
  "requires": {
   "build": {

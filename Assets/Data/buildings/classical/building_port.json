@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_COMMERCIAL_PORT"
-  ],
   "techs": [
    "TECH_LOGISTICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_COMMERCIAL_PORT"
  },
  "requires": {
   "build": {

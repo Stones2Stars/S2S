@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BATHING_RITUAL",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_BATH_HOUSE"
-  ],
   "techs": [
    "TECH_MEDICINE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BATH_HOUSE"
  },
  "requires": {
   "build": {

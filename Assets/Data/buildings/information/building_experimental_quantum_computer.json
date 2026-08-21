@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_QUANTUM_SUPERCOMPUTER"
-  ],
   "techs": [
    "TECH_GRAVITRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_QUANTUM_SUPERCOMPUTER"
  },
  "requires": {
   "build": {

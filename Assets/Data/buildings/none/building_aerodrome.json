@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_AERODROME",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GRAND_AERODROME"
-  ],
   "techs": [
    "TECH_HYPERSONIC_FLIGHT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GRAND_AERODROME"
  },
  "requires": {
   "build": {

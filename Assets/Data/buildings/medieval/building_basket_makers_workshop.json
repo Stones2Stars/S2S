@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BASKET_MAKERS_WORKSHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_BASKETS"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_BASKETS"
  },
  "requires": {
   "build": {

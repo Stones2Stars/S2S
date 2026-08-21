@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INTERSTELLAR_DYSON_SPHERE"
-  ],
   "techs": [
    "TECH_ZERO_POINT_ENERGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INTERSTELLAR_DYSON_SPHERE"
  },
  "requires": {
   "build": {

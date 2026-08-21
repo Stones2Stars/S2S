@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SENTRY_POST"
-  ],
   "techs": [
    "TECH_DUALISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SENTRY_POST"
  },
  "requires": {
   "build": {

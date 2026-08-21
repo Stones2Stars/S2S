@@ -11,12 +11,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_INTERNATIONAL_PORT"
-  ],
   "techs": [
    "TECH_ABYSS_COLONIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INTERNATIONAL_PORT"
  },
  "requires": {
   "build": {

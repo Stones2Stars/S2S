@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MINE_TUNGSTEN",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CORE_MINE"
-  ],
   "techs": [
    "TECH_ATOMIC_SCALE_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CORE_MINE"
  },
  "requires": {
   "build": {

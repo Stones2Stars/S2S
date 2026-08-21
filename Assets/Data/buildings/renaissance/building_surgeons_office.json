@@ -20,12 +20,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MEDICAL_CLINIC"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEDICAL_CLINIC"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FARM_CROP_WHITE_MUSHROOM",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FARMSCRAPER_I"
-  ],
   "techs": [
    "TECH_GAIA_ECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_I"
  },
  "requires": {
   "build": {

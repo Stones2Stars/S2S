@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_TIDAL_FARM",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RENEWABLE_MEGACOMPLEX"
-  ],
   "techs": [
    "TECH_FEMTOTECHNOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RENEWABLE_MEGACOMPLEX"
  },
  "requires": {
   "build": {

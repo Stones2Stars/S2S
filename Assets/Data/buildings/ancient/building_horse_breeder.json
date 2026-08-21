@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ANIMAL_TAMER_COMPLEX"
-  ],
   "techs": [
    "TECH_GENE_MANIPULATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANIMAL_TAMER_COMPLEX"
  },
  "requires": {
   "build": {

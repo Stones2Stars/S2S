@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HEALTH_FOOD_STORE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HYPERMARKET"
-  ],
   "techs": [
    "TECH_SMART_DUST"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HYPERMARKET"
  },
  "requires": {
   "build": {

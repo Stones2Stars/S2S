@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MECHANICAL_ORGANS_LAB",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MEDICAL_PROSTHETICS_LAB"
-  ],
   "techs": [
    "TECH_NANOTROIDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEDICAL_PROSTHETICS_LAB"
  },
  "requires": {
   "build": {

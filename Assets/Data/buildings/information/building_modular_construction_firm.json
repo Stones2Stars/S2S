@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MODULAR_CONSTRUCTION_FIRM",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SELF_CONSTRUCTION_FIRM"
-  ],
   "techs": [
    "TECH_STABLE_TIME_LOOPS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SELF_CONSTRUCTION_FIRM"
  },
  "requires": {
   "build": {

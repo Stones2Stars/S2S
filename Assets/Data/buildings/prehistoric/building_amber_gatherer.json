@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MINE_AMBER"
-  ],
   "techs": [
    "TECH_NANOMINING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MINE_AMBER"
  },
  "requires": {
   "build": {

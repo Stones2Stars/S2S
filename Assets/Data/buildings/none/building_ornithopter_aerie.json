@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ORNITHOPTER_AERIE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_AIRPORT"
-  ],
   "techs": [
    "TECH_ADVANCED_AVIATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AIRPORT"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_NUCLEAR_PLANT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FAST_BREEDER_REACTOR"
-  ],
   "techs": [
    "TECH_INDUSTRIAL_ECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FAST_BREEDER_REACTOR"
  },
  "requires": {
   "build": {

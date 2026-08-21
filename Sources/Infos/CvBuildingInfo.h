@@ -40,6 +40,12 @@ public:
 		const std::vector<int>* pTechs = edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS);
 		return (TechTypes)((pTechs != NULL && !pTechs->empty()) ? (*pTechs)[0] : NO_TECH);
 	}
+	/// <summary>`whenObsolete.becomes` -- the UPGRADE fate: once obsolete, this building BECOMES the named
+	/// successor. NO_BUILDING when the tree carries none, which leaves the other two fates (an empty tree is a
+	/// hard removal; a tree carrying modifiers leaves the building standing to deposit it). json.md §4.2.
+	/// The fate names no CAUSE and must never be given one -- `whenObsolete` is declared in isolation and does
+	/// not care what obsoleted the building; a tech being the only obsoleter today belongs to `obsoletedBy`.</summary>
+	BuildingTypes getWhenObsoleteBecomes() const { return (BuildingTypes)m_iWhenObsoleteBecomes; }
 	// The one-shot POPULATION and FREE-TECH payloads this building hands over on its CONSIDERED ACTION --
 	// `grants.population` at city vs empire scope, and `grants.freeTechs` ([json.md §5] numeric pulses).
 	// Materialized at mapFrom as HUMAN counts (docs/architecture/patterns.md §Materialize at mapFrom): the pulses are ×100 at parse and
@@ -293,6 +299,7 @@ private:
 	bool m_bNotShownInCity;   // world.art.notShownInCity (curator-derived from the art define)
 	std::string m_szMovieDefineTag;
 	int m_iSpecialBuildingType;
+	int m_iWhenObsoleteBecomes;   // whenObsolete.becomes -- BUILDING_* FK, NO_BUILDING when absent (json §4.2)
 	int m_iFreeStartEra;
 	int m_iDiploVoteType;
 	int m_iReligion;

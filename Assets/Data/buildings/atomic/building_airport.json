@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_COMMERCIAL_AIRPORT"
-  ],
   "techs": [
    "TECH_HYPERSONIC_FLIGHT"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_COMMERCIAL_AIRPORT"
  },
  "requires": {
   "build": {

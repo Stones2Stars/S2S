@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CAUSEWAY",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CHAIN_BRIDGE"
-  ],
   "techs": [
    "TECH_STEAM_POWER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHAIN_BRIDGE"
  },
  "requires": {
   "build": {

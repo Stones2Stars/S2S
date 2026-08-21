@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BURIAL_GROUND",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GRAVEYARD"
-  ],
   "techs": [
    "TECH_MODERN_SANITATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GRAVEYARD"
  },
  "requires": {
   "build": {

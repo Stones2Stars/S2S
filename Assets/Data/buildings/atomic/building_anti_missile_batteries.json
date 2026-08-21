@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ANTI_MISSILE_BATTERIES",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ARCOLOGY_SHIELDING"
-  ],
   "techs": [
    "TECH_ADVANCED_SHIELDING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARCOLOGY_SHIELDING"
  },
  "requires": {
   "build": {

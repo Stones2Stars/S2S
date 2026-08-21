@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SCAVENGERS_DAUGHTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_JAIL"
-  ],
   "techs": [
    "TECH_PSYCHOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
  },
  "requires": {
   "build": {

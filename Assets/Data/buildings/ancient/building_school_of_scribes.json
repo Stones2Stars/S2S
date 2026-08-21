@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LIBRARY"
-  ],
   "techs": [
    "TECH_EDUCATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LIBRARY"
  },
  "requires": {
   "build": {

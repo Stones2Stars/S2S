@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_RESOURCES_LARD",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
-  ],
   "techs": [
    "TECH_PLANETARY_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
  },
  "requires": {
   "operate": {

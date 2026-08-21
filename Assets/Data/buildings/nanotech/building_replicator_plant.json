@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_REPLICATOR_PLANT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MOLECULAR_ASSEMBLER"
-  ],
   "techs": [
    "TECH_GRAVITRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MOLECULAR_ASSEMBLER"
  },
  "requires": {
   "build": {

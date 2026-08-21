@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GAS_LAMPS",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELECTRIC_LAMPS"
-  ],
   "techs": [
    "TECH_ORGANIC_PHOTONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRIC_LAMPS"
  },
  "requires": {
   "build": {

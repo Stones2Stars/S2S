@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_OUTHOUSE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_GARDEROBE"
-  ],
   "techs": [
    "TECH_MODERN_SANITATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GARDEROBE"
  },
  "requires": {
   "build": {

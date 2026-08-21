@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ALMSHOUSE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RETIREMENT_HOME"
-  ],
   "techs": [
    "TECH_TRANSHUMANISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RETIREMENT_HOME"
  },
  "requires": {
   "build": {

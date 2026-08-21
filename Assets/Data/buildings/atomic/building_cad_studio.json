@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CAD_STUDIO",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODULAR_CONSTRUCTION_FIRM"
-  ],
   "techs": [
    "TECH_AUTOMATED_URBANIZATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODULAR_CONSTRUCTION_FIRM"
  },
  "requires": {
   "build": {

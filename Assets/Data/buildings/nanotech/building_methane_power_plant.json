@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_METHANE_POWER_PLANT",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HE3_FUSION_POWER_PLANT"
-  ],
   "techs": [
    "TECH_ANTIMATTER_PRODUCTION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HE3_FUSION_POWER_PLANT"
  },
  "requires": {
   "build": {

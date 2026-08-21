@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FARM_CROP_WHEAT"
-  ],
   "techs": [
    "TECH_VERTICAL_FARMING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARM_CROP_WHEAT"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_GHEE_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_GHEE_OIL"
-  ],
   "techs": [
    "TECH_REPLACEMENT_ORGANS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_GHEE_OIL"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HAND_WATER_PUMP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_WIND_WATER_PUMP"
-  ],
   "techs": [
    "TECH_SCREW_PROPELLER"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WIND_WATER_PUMP"
  },
  "requires": {
   "build": {

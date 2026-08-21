@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_ORPHANAGE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
-  ],
   "techs": [
    "TECH_CULTURAL_EVOLUTION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
  },
  "requires": {
   "build": {

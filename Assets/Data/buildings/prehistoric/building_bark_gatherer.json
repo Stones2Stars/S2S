@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_BARK_GATHERER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_LUMBER_MILL"
-  ],
   "techs": [
    "TECH_ENVIRONMENTAL_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LUMBER_MILL"
  },
  "requires": {
   "build": {

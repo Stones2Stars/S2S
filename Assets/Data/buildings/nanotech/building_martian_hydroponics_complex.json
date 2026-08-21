@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MARTIAN_VERTICAL_FARM"
-  ],
   "techs": [
    "TECH_ASTROECOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARTIAN_VERTICAL_FARM"
  },
  "requires": {
   "build": {

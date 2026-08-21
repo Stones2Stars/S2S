@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RAILGUN_BATTERY"
-  ],
   "techs": [
    "TECH_ELECTRIC_ARC_WEAPONRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RAILGUN_BATTERY"
  },
  "requires": {
   "build": {

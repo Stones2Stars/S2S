@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_STEAM_CRANE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_CRANE"
-  ],
   "techs": [
    "TECH_MEGASTRUCTURE_ENGINEERING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_CRANE"
  },
  "requires": {
   "build": {

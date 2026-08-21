@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PARTS_PLANT"
-  ],
   "techs": [
    "TECH_3D_PRINTING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PARTS_PLANT"
  },
  "requires": {
   "build": {

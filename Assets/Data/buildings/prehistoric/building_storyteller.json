@@ -7,12 +7,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_SCHOOL_OF_SCRIBES"
-  ],
   "techs": [
    "TECH_LITERATURE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SCHOOL_OF_SCRIBES"
  },
  "requires": {
   "build": {

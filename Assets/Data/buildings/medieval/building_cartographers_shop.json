@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_CARTOGRAPHERS_SHOP",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MODERN_CARTOGRAPHER"
-  ],
   "techs": [
    "TECH_LUNAR_BASES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_CARTOGRAPHER"
  },
  "requires": {
   "build": {

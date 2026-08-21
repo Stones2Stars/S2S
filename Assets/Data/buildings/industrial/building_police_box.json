@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_POLICE_BOX",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_POLICE_PRECINCT"
-  ],
   "techs": [
    "TECH_BINARY_LEGISLATION"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_POLICE_PRECINCT"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PORTRAIT_PAINTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_PHOTOGRAPHY_STUDIO"
-  ],
   "techs": [
    "TECH_PLASTIC_ELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PHOTOGRAPHY_STUDIO"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PIZZA_PARLOR",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_UNIVERSAL_RESTAURANT"
-  ],
   "techs": [
    "TECH_MIND_UPLOADING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_UNIVERSAL_RESTAURANT"
  },
  "requires": {
   "build": {

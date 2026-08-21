@@ -9,12 +9,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONIC_SECURITY_SYSTEM"
-  ],
   "techs": [
    "TECH_BIOMETRIC_WARFARE"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRONIC_SECURITY_SYSTEM"
  },
  "requires": {
   "build": {

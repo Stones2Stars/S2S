@@ -25,12 +25,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_STAR_FORT"
-  ],
   "techs": [
    "TECH_ROMANTICISM"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_STAR_FORT"
  },
  "requires": {
   "build": {

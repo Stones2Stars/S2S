@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_MATHEMATICS_ACADEMY",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_MATHEMATICS_DEPARTMENT"
-  ],
   "techs": [
    "TECH_COMPUTER_NETWORKS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATHEMATICS_DEPARTMENT"
  },
  "requires": {
   "build": {

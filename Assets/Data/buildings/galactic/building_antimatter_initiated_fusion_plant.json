@@ -13,12 +13,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
-  ],
   "techs": [
    "TECH_SENTIENT_ENERGY_FIELDS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
  },
  "requires": {
   "build": {

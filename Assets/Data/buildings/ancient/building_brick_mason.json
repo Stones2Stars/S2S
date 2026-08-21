@@ -6,12 +6,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_BRICKS"
-  ],
   "techs": [
    "TECH_MODERN_SEISMOLOGY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_BRICKS"
  },
  "requires": {
   "build": {

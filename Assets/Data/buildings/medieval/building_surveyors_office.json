@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_SURVEYORS_OFFICE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_CONSTRUCTION_FIRM"
-  ],
   "techs": [
    "TECH_SATELLITES"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CONSTRUCTION_FIRM"
  },
  "requires": {
   "build": {

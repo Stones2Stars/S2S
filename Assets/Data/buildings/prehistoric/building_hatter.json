@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_HATTER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_HATS"
-  ],
   "techs": [
    "TECH_RAPID_PROTOTYPING"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_HATS"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_DYE_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_DYE"
-  ],
   "techs": [
    "TECH_NOVUS_CHEMISTRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_DYE"
  },
  "requires": {
   "build": {

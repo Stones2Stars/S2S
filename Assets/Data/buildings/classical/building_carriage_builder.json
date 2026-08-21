@@ -10,12 +10,12 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_AUTOMOBILES"
-  ],
   "techs": [
    "TECH_SYNERGETICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_AUTOMOBILES"
  },
  "requires": {
   "build": {

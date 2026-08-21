@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_PERFUME_MAKER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_FACTORY_PERFUME"
-  ],
   "techs": [
    "TECH_NOVUS_CHEMISTRY"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_PERFUME"
  },
  "requires": {
   "build": {

@@ -1,12 +1,12 @@
 {
  "type": "BUILDING_FACTORY_WASHER_DRYER",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
-  ],
   "techs": [
    "TECH_NANOELECTRONICS"
   ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
  },
  "requires": {
   "build": {
