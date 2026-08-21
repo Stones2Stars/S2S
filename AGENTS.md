@@ -260,6 +260,20 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   object-kind value itself.)* ⛔ If it fires, fix the side that is WRONG — and prefer the raw int, since a payload
   carries typed fields and never a pre-resolved string ([spine.md](docs/spine.md)); never widen
   the tool.
+- **Varargs text widths: `python Tools/verify-gettext-widths.py`** — ⛔ **a 64-bit value must NEVER be passed to
+  the EXE's `gDLL->getText`.** It is VARARGS, so arguments match the TXT_KEY's placeholders positionally **by
+  4-byte slot**: an 8-byte argument occupies TWO slots and every LATER placeholder reads one slot early, until a
+  `%s` lands on an integer and the EXE runs `wcslen` on it — an ACCESS_VIOLATION **at an address equal to that
+  value**. ⛔ The fix is NEVER a cast to `int` (that re-introduces the wrap the widening exists to prevent):
+  pre-render it against a `%s` placeholder — `CvWString::format(L"%I64d", x).GetCString()`, which is what the
+  tree already does for `TXT_KEY_LEADER_LEVEL_PROGRESS_1`. ⚑ It is a check because the compiler CANNOT see it
+  (varargs accept anything), it is silent until that one tooltip branch renders, and the faulting value belongs
+  to a DIFFERENT argument than the wrong one. *(Worked: `CvCity::getCulture` was widened to `int64_t` — correct,
+  it wrapped negative in long games — but still passed raw to `TXT_KEY_CITY_BAR_CULTURE`, so `%d2` read culture's
+  HIGH half and `%s3` read the culture THRESHOLD as a `wchar_t*`. Hovering a city bar faulted once per session
+  for months.)* ⚖ Names are matched with their ARITY, since a receiver decides which overload a call means
+  (`CvCity::getCulture(PlayerTypes)` is 64-bit, `CvEventInfo::getCulture()` is not); a same-arity pair declared at
+  both widths is REPORTED for a human and does not fail.
 - **Doc references: `python Tools/verify-docs.py`** — two silent decay modes the corpus cannot see in a diff.
   **LINKS + ANCHORS (fails the run):** every intra-repo link and `#anchor`, by GitHub's own slug algorithm. The
   cross-reference IS the design — the ledger is *"an INDEX, not a re-statement"*, so a doc LINKS a ruling instead
@@ -871,21 +885,26 @@ the total-observability bar below.)
     violation that Windows' SEH swallows is **not guaranteed to be swallowed under Wine/Proton**, so
     "caught and handled" is a WINDOWS-ONLY guarantee and a handled fault here can be a hard crash for a player
     there. ⛔ So a caught line is never written off as cosmetic, and never left standing in the log.
-    ⚠ **It was also NOT there when the branch started (owner)** — the vectored handler has been watching since
-    2026-07-09, so this is a regression to find rather than inherited behaviour.
-    **The one standing today**, recorded so the next reader starts where this left off rather than from zero:
-    `ACCESS_VIOLATION addr=0x7C350440 access=read faultAddr=0x00104000` — `msvcr71!wcslen+0x4` called from
-    `Civ4BeyondSword+0xdf94b`. The pointer is already `0x00104000` at the loop's FIRST instruction, so it is the
-    argument the EXE was PASSED, not somewhere it walked to; the value is identical every session (deterministic,
-    not heap garbage) and the fault time varies (uptime 7m and 44m on two dumps), so it is not a startup event.
-    ⚠ Every frame on the stack is the EXE's and there are no Firaxis symbols, so it cannot be attributed from a
-    dump alone — the open lead is WHICH of our wide-string exports handed that pointer over.
-    ⛔ **Its FREQUENCY is unknown and that is the first thing to establish**, because the handler dedups the
-    identical line: one occurrence and ten thousand look the same. `[EXCEPTION.repeat] count=N` now re-emits at
-    powers of ten — read that before judging severity.
-    ⚡ **What it is NOT, each ruled out by dump and each with its own signature** — read the fault ADDRESS first:
-    a dangling string we handed over faults at garbage NON-ZERO VARYING addresses; a `NULL` we returned faults at
-    **0**; a `CvInfoBase` layout break faults in `memcpy` under `basic_string::assign`. Those three ARE ours.
+    ⛔ **READ THE FAULT ADDRESS FIRST — it names the defect class, and each class is ours.** Four signatures,
+    every one of them paid for:
+    - the address **equals a plausible GAME VALUE** (a threshold, a count, a population) ⇒ a 64-bit argument was
+      passed to the EXE's **varargs** `gDLL->getText`, which shifted every later placeholder by one 4-byte slot
+      until a `%s` landed on an integer and the EXE ran `wcslen` on it. `python Tools/verify-gettext-widths.py`
+      is the check; **§ Validation** has the rule.
+    - garbage, NON-ZERO, VARYING ⇒ a **dangling** string we handed over (the EXE keeps a returned
+      `const wchar_t*` and walks it later, so anything that can MOVE is a defect — see `CvInfoBase`'s
+      heap-owned description cache).
+    - exactly **0** ⇒ a `NULL` we returned where the EXE does not null-check.
+    - inside `memcpy` under `basic_string::assign` ⇒ a **`CvInfoBase` layout break** (its member layout is bound
+      by the closed EXE).
+    ⚑ **Judge severity from `[EXCEPTION.repeat] count=N`, never from the number of lines.** The handler dedups on
+    the whole rendered line, so one occurrence and ten thousand look identical; the repeat line re-emits at powers
+    of ten. ⚠ Two DIFFERENT fault addresses are two different lines, not repeats of each other — and
+    `Exceptions.log` is truncated per session, so what you are reading is one run.
+    ⚠ A dump is written **once per session** and only for an access violation; it carries indirectly-referenced
+    memory, and `.lines` + `ln <return-address>` maps our frames to an exact source line
+    ([external-tools-and-workflows.md](docs/reference/external-tools-and-workflows.md)). Every EXE frame is
+    unsymbolized, so the DLL return addresses on the raw stack are what attributes the fault.
 
 - **⛔ `agentstart.bat` is FIRE-AND-FORGET, and MUST be launched from PowerShell — NEVER from the Bash tool.**
   Invoking it through Bash/Git-Bash (`cmd //c agentstart.bat`, backgrounding it inside a shell script, …) **mangles

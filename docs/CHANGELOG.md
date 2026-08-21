@@ -12,6 +12,14 @@
 
 ## Unreleased
 
+- **The city bar's culture line reads correctly, and no longer faults.** Hovering a city showed its culture
+  against a threshold of `0`, and the culture level's name was missing — while the game quietly took an access
+  violation behind the scenes, several times a session. Culture is stored as a 64-bit number (it used to overflow
+  into negatives in long games); the tooltip was still handing that wide number to the game's own text formatter,
+  which counts its arguments in 32-bit steps. Everything after the culture was therefore read one step early, so
+  the threshold was rendered as the *level name* and the engine tried to walk it as text. On Windows the fault was
+  swallowed; under Wine/Proton it need not be. The same slip is fixed in the city population line.
+
 - **Great people can build their wonders again.** A Great Prophet's shrines, and every other "consume me to put up
   this building" action, had no button at all — the unit's list of what it may construct was being read with a
   parser that only understood the short form of an entry, so any entry written in the longer form (the one that

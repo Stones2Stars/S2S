@@ -3158,14 +3158,14 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_BAR_CULTURE</Tag>
-		<English>[NEWLINE][ICON_CULTURE]: %d1/%d2 (%s3: Lvl %d4)</English>
-		<French>[NEWLINE][ICON_CULTURE] : %d1/%d2 (%s3 : Niv %d4)</French>
-		<Italian>[NEWLINE][ICON_CULTURE]: %d1 / %d2[NEWLINE]Livello culturale [COLOR_HIGHLIGHT_TEXT]%d4[COLOR_REVERT]: %s3</Italian> <!-- hoover city -->
+		<English>[NEWLINE][ICON_CULTURE]: %s1/%d2 (%s3: Lvl %d4)</English>
+		<French>[NEWLINE][ICON_CULTURE] : %s1/%d2 (%s3 : Niv %d4)</French>
+		<Italian>[NEWLINE][ICON_CULTURE]: %s1 / %d2[NEWLINE]Livello culturale [COLOR_HIGHLIGHT_TEXT]%d4[COLOR_REVERT]: %s3</Italian> <!-- hoover city -->
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_BAR_CULTURE_MAX</Tag>
-		<English>[NEWLINE][ICON_CULTURE]: %d1 (%s2: Lvl %d3)</English>
-		<French>[NEWLINE][ICON_CULTURE] : %d1 (%s2 : Niv %d3)</French>
+		<English>[NEWLINE][ICON_CULTURE]: %s1 (%s2: Lvl %d3)</English>
+		<French>[NEWLINE][ICON_CULTURE] : %s1 (%s2 : Niv %d3)</French>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_BAR_FOOD_GROW</Tag>
@@ -3381,11 +3381,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_POPULATION</Tag>
-		<English>Population: %d1</English>
-		<French>Population : %d1</French>
-		<German>Bevölkerung: %d1</German>
-		<Italian>Popolazione: [COLOR_HIGHLIGHT_TEXT]%d1[COLOR_REVERT]</Italian> <!-- city screen hover city name -->
-		<Spanish>Población: %d1</Spanish>
+		<English>Population: %s1</English>
+		<French>Population : %s1</French>
+		<German>Bevölkerung: %s1</German>
+		<Italian>Popolazione: [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT]</Italian> <!-- city screen hover city name -->
+		<Spanish>Población: %s1</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_PROPERTY_SPAWN_BARB</Tag>

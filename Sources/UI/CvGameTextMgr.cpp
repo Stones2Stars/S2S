@@ -2078,10 +2078,15 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		const int iThreshold = pCity->getCultureThreshold();
 		if (iThreshold > 0)
 		{
+			//	⛔ The culture goes over as a PRE-RENDERED STRING against a %s placeholder, never as the raw
+			//	64-bit value against %d. gDLL->getText is VARARGS, so an 8-byte argument occupies two 4-byte
+			//	slots and every LATER placeholder reads one slot early -- %s3 then received the threshold and
+			//	the EXE ran wcslen on it, faulting at an address equal to the threshold. Truncating to int
+			//	instead would re-introduce the negative wrap that widening culture to 64-bit exists to fix.
 			szString.append(
 				gDLL->getText(
 					"TXT_KEY_CITY_BAR_CULTURE",
-					pCity->getCulture(pCity->getOwner()), iThreshold,
+					CvWString::format(L"%I64d", pCity->getCulture(pCity->getOwner())).GetCString(), iThreshold,
 					GC.getCultureLevelInfo(pCity->getCultureLevel()).getTextKeyWide(),
 					GC.getCultureLevelInfo(pCity->getCultureLevel()).getLevel()
 				)
@@ -2104,7 +2109,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 			szString.append(
 				gDLL->getText(
 					"TXT_KEY_CITY_BAR_CULTURE_MAX",
-					pCity->getCulture(pCity->getOwner()),
+					CvWString::format(L"%I64d", pCity->getCulture(pCity->getOwner())).GetCString(),
 					GC.getCultureLevelInfo(pCity->getCultureLevel()).getTextKeyWide(),
 					GC.getCultureLevelInfo(pCity->getCultureLevel()).getLevel()
 				)

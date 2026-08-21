@@ -1815,7 +1815,8 @@ void CvDLLWidgetData::parseCityNameHelp(CvWidgetDataStruct &widgetDataStruct, Cv
 		szBuffer.append(pHeadSelectedCity->getName());
 
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_CITY_POPULATION", pHeadSelectedCity->getRealPopulation()));
+		szBuffer.append(gDLL->getText("TXT_KEY_CITY_POPULATION",
+			CvWString::format(L"%I64d", pHeadSelectedCity->getRealPopulation()).GetCString()));
 
 		bool bHistoricalCalendar = GC.getGame().isModderGameOption(MODDERGAMEOPTION_USE_HISTORICAL_ACCURATE_CALENDAR);
 		if (bHistoricalCalendar)
