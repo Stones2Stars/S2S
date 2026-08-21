@@ -94,6 +94,9 @@ public:
 protected:
 
 	bool doneReadingXML(CvXMLLoadUtility* pXML);
+	/// <summary>Frees the heap-owned cached descriptions. The ONE free path -- both the destructor and reset()
+	/// call it, so the delete loop cannot drift between them.</summary>
+	void clearCachedDescriptions() const;
 
 	bool m_bGraphicalOnly;
 	CvString m_szType;
@@ -105,7 +108,15 @@ protected:
 
 	// translated text
 	std::vector<CvString> m_aszExtraXMLforPass3;
-	mutable std::vector<CvWString> m_aCachedDescriptions;
+	//	⛔ POINTERS, and the element type is the ONLY thing that may change here. getDescription hands the EXE a
+	//	`const wchar_t*` into an element and the EXE KEEPS it; holding the strings BY VALUE meant a later
+	//	push_back reallocated the vector, moved every element, and left every pointer issued earlier pointing at
+	//	freed heap (seen as msvcr71!wcslen faulting on a garbage, non-zero, varying address with the EXE as the
+	//	only caller). Heap-owned strings never move, so an issued pointer stays valid for the life of the info.
+	//	⛔ sizeof(std::vector<T>) is identical for every T, so this does NOT move a single member. Changing the
+	//	CONTAINER would: CvInfoBase's layout is bound by the closed EXE (AGENTS.md, patterns.md) -- a std::deque
+	//	here crashed the game on load, in the EXE's own basic_string::assign, exactly as adding a member did.
+	mutable std::vector<CvWString*> m_aCachedDescriptions;
 	mutable CvWString m_szCachedText;
 	mutable CvWString m_szCachedHelp;
 	mutable CvWString m_szCachedStrategy;

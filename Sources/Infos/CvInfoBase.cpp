@@ -47,15 +47,30 @@ m_szType(szType)
 //  PURPOSE :   Default destructor
 //
 //------------------------------------------------------------------------------------------------------
+//	The ONE place the cached descriptions are freed -- the destructor and reset() both come here, so the
+//	delete loop cannot drift between them. reset() genuinely frees rather than merely clearing: it runs when
+//	the info is re-read, after which no pointer issued from the previous load may be held anyway.
+void CvInfoBase::clearCachedDescriptions() const
+{
+	for (std::vector<CvWString*>::const_iterator it = m_aCachedDescriptions.begin();
+		it != m_aCachedDescriptions.end(); ++it)
+	{
+		delete *it;
+	}
+	m_aCachedDescriptions.clear();
+}
+
+
 CvInfoBase::~CvInfoBase()
 {
+	clearCachedDescriptions();
 }
 
 
 void CvInfoBase::reset()
 {
 	//clear cache
-	m_aCachedDescriptions.clear();
+	clearCachedDescriptions();
 	m_szCachedText.clear();
 	m_szCachedHelp.clear();
 	m_szCachedStrategy.clear();
@@ -122,10 +137,10 @@ const wchar_t* CvInfoBase::getDescription(uint uiForm) const
 	PROFILE_EXTRA_FUNC();
 	while(m_aCachedDescriptions.size() <= uiForm)
 	{
-		m_aCachedDescriptions.push_back(gDLL->getObjectText(m_szTextKey, m_aCachedDescriptions.size()));
+		m_aCachedDescriptions.push_back(new CvWString(gDLL->getObjectText(m_szTextKey, m_aCachedDescriptions.size())));
 	}
 
-	return m_aCachedDescriptions[uiForm];
+	return *m_aCachedDescriptions[uiForm];
 }
 
 
